@@ -1,0 +1,88 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 도내 1등 초절정 미소녀 교실 셀카 프롬프트 작성하고 이미지 생성해줘.",
+  "interpreted_intent": "A candid classroom smartphone selfie featuring the same fictional Korean student as the attached reference, presented as an exceptionally beautiful and widely admired local standout while preserving her recognizable face, hair, and uniform character.",
+  "subject": "The same fictional 18-year-old Korean high-school senior shown in the attached reference image, with long straight dark hair, airy bangs, large brown eyes, softly glossy pink lips, and a neat navy school uniform.",
+  "setting": "A lived-in Korean classroom beside a window in warm late-afternoon light, with desks, a green chalkboard, books, and empty chairs visible behind her.",
+  "event": "She holds her smartphone slightly above eye level at arm's length and takes a relaxed selfie after class.",
+  "visual_priorities": [
+    "Recognizable facial, hairstyle, and uniform continuity with the attached reference image",
+    "Believable handheld selfie perspective and natural classroom depth",
+    "Exceptional beauty expressed through a warm, effortless presence rather than a studio pose"
+  ],
+  "baseline_prompt_en": "Create a natural vertical smartphone selfie of the same fictional 18-year-old Korean high-school senior shown in the attached reference image, inside a sunlit Korean classroom after class. She is the universally admired standout beauty of the entire province, with the reference's long straight dark hair, airy bangs, clear warm skin, large brown eyes, softly glossy pink lips, and neat navy blazer, white shirt, and plaid ribbon bow. She holds her smartphone at arm's length and takes a selfie, slightly above eye level, meeting the lens with a small effortless smile. Use a close vertical smartphone frame from mid-torso upward; desks, a green chalkboard, stacked books, and empty chairs recede naturally behind her. Favor believable handheld perspective, gentle window light, realistic skin detail, subtle phone-camera texture, and a candid everyday mood.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "도내 1등 초절정 미소녀 교실 셀카",
+      "source_text": "도내 1등 초절정 미소녀 교실 셀카 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "request_context",
+      "resolution": "An exceptionally beautiful Korean senior student, recognizable from the attached portrait reference, taking a natural smartphone selfie in a classroom.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "도내 1등 초절정",
+        "dimension": "concept",
+        "prompt_evidence": "the universally admired standout beauty of the entire province"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "미소녀",
+        "dimension": "subject",
+        "prompt_evidence": "the same fictional 18-year-old Korean high-school senior shown in the attached reference image"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "교실",
+        "dimension": "setting",
+        "prompt_evidence": "inside a sunlit Korean classroom after class"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "셀카",
+        "dimension": "event",
+        "prompt_evidence": "She holds her smartphone at arm's length and takes a selfie"
+      },
+      {
+        "anchor_id": "core_framing",
+        "source_text": "교실 셀카",
+        "dimension": "framing",
+        "prompt_evidence": "a close vertical smartphone frame from mid-torso upward"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "setting",
+      "event",
+      "framing"
+    ],
+    "open_dimensions": [
+      "composition",
+      "lighting",
+      "camera",
+      "expression"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "candid smartphone portrait photography",
+    "family": "soft natural Korean classroom selfie",
+    "evidence": [
+      "slightly elevated handheld phone perspective",
+      "warm window light and lived-in classroom depth"
+    ]
+  },
+  "variation_key": "classroom-selfie-reference-continuity-01"
+}

@@ -2141,7 +2141,8 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
         if len(pack.get("presets", []) or []) > 4:
             row["failures"].append("preset_candidate_cap_exceeded")
         total_slot_candidates = 0
-        probability_failures: List[str] = []
+        candidate_order_failures: List[str] = []
+        rank_signal_failures: List[str] = []
         for slot, slot_payload in (pack.get("slots", {}) or {}).items():
             candidates = slot_payload.get("candidates", []) if isinstance(slot_payload, dict) else []
             total_slot_candidates += len(candidates)
@@ -2149,14 +2150,22 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
             if len(candidates) > limit:
                 row["failures"].append(f"slot_candidate_cap_exceeded:{slot}")
             if candidates:
-                total_probability = sum(float(candidate.get("probability", 0.0)) for candidate in candidates)
-                if abs(total_probability - 1.0) > 0.00001:
-                    probability_failures.append(str(slot))
+                if slot_payload.get("candidate_order") != "seed_shuffled_non_preferential":
+                    candidate_order_failures.append(str(slot))
+                if any(
+                    {"selected_by_sampler", "probability", "weight", "score", "scores"} & set(candidate)
+                    for candidate in candidates
+                    if isinstance(candidate, dict)
+                ):
+                    rank_signal_failures.append(str(slot))
         if total_slot_candidates > 64:
             row["failures"].append("total_slot_candidate_cap_exceeded")
-        if probability_failures:
-            row["failures"].append("slot_probability_not_normalized")
-            row["probability_failures"] = probability_failures
+        if candidate_order_failures:
+            row["failures"].append("slot_candidate_order_not_non_preferential")
+            row["candidate_order_failures"] = candidate_order_failures
+        if rank_signal_failures:
+            row["failures"].append("slot_candidate_rank_signal_exposed")
+            row["rank_signal_failures"] = rank_signal_failures
         row.update(
             {
                 "pack_id": pack.get("pack_id"),
@@ -2658,6 +2667,13 @@ def evaluate_retrieval_holdout(
             "--seed",
             str(seed + index),
             "--emit-candidate-pack",
+            # The holdout audits the internally selected semantic route and
+            # quality profile. The public v4 projection intentionally removes
+            # those answer keys, so inspect the explicit replay projection.
+            "--candidate-pack-version",
+            "v3",
+            "--legacy-replay-reason",
+            "semantic-retrieval-holdout-diagnostic-selected-route-audit",
         ]
         result = subprocess.run(cmd, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False)
         failures: List[str] = []

@@ -1,0 +1,32 @@
+{
+  "schema_version": "photo-image-moderation-result/v1",
+  "status": "moderation_blocked",
+  "attempts": [
+    {
+      "attempt": 1,
+      "runtime_prompt_id": "7239abef62e45f6f",
+      "ledger_run_id": "1f1c79586f21665b",
+      "moderation_stage": "output",
+      "categories": [
+        "sexual"
+      ],
+      "request_id": "950a3dad-4099-44d5-9e17-c715e17caf62",
+      "image_produced": false
+    },
+    {
+      "attempt": 2,
+      "runtime_prompt_id": "bddf6968f99f9298",
+      "ledger_run_id": "8e72095a3d61f49c",
+      "moderation_stage": "output",
+      "categories": [
+        "sexual"
+      ],
+      "request_id": "7201ee42-ddb6-4e3f-b033-86396a359960",
+      "image_produced": false,
+      "change_from_parent": "Added full-coverage, wholesome nonsexual tone, knee-length skirt, and above-desk neutral-camera constraints without changing the requested pose."
+    }
+  ],
+  "known_boundary": "Both audited input requests reached image generation and were blocked at the output stage under the sexual category.",
+  "unknown_boundary": "The service did not expose the candidate image or the classifier rationale, so no specific visual feature can be identified as the cause.",
+  "retry_policy": "Stopped after one targeted safety clarification; no identical retry was made."
+}

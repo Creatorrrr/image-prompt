@@ -3297,6 +3297,166 @@
         "role": 1
       }
     },
+    "마녀": {
+      "preset": "folk_creature_threshold_portrait",
+      "identity_core": {
+        "subject": "witch_practitioner_role_model"
+      },
+      "scene_variants": [
+        {
+          "id": "threshold_salt_ward",
+          "weight": 1.0,
+          "set": {
+            "location": "home_kitchen_steam_window",
+            "action": "pouring_salt_line",
+            "prop": "salt_jar_prop",
+            "surreal_physics_detail": "salt_grains_vibrating",
+            "aftermath_trace": "frost_creep_trace"
+          },
+          "intent_axis": [
+            "adult witch completing a household threshold ward as salt grains vibrate and frost records the local consequence"
+          ]
+        },
+        {
+          "id": "contract_wax_binding",
+          "weight": 0.95,
+          "set": {
+            "location": "notary_office_after_hours",
+            "action": "pressing_seal_into_wax",
+            "prop": "red_seal_contract_prop",
+            "surreal_physics_detail": "wax_melting_resolidifying",
+            "aftermath_trace": "dimmed_bulb_trace"
+          },
+          "intent_axis": [
+            "adult witch binding a textless contract as wax melts and resolidifies around the seal contact"
+          ]
+        },
+        {
+          "id": "thread_fate_working",
+          "weight": 0.9,
+          "set": {
+            "location": "tailor_workshop_night",
+            "action": "threading_needle_midair",
+            "prop": "measuring_tape_sigil_prop",
+            "surreal_physics_detail": "thread_tension_visible",
+            "aftermath_trace": "single_glove_left"
+          },
+          "intent_axis": [
+            "adult witch working a suspended needle while one thread visibly tightens across a night tailor workshop"
+          ]
+        },
+        {
+          "id": "weather_omen_reading",
+          "weight": 0.85,
+          "set": {
+            "location": "storm_glass_weather_lab",
+            "action": "reading_barometer_omen",
+            "prop": "barometer_brass_prop",
+            "surreal_physics_detail": "localized_refraction_at_contact",
+            "aftermath_trace": "frost_creep_trace"
+          },
+          "intent_axis": [
+            "adult witch reading a weather omen through a brass barometer while refraction and frost remain localized to the contact point"
+          ]
+        },
+        {
+          "id": "moon_broom_flight",
+          "weight": 0.8,
+          "set": {
+            "location": "moonlit_rooftop_airspace",
+            "action": "broom_flight_across_moon",
+            "prop": "working_broom_prop",
+            "surreal_physics_detail": "tiny_levitation_contact_shadow"
+          },
+          "intent_axis": [
+            "adult witch in physically readable low broom flight across moonlit rooftop airspace, with a displaced shadow proving lift"
+          ]
+        }
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "location",
+        "action",
+        "prop",
+        "surreal_physics_detail",
+        "aftermath_trace"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "subject": [
+          "adult witch practitioner"
+        ],
+        "action": [
+          "warding",
+          "wax binding",
+          "thread working",
+          "omen reading",
+          "broom flight"
+        ],
+        "surreal_physics_detail": [
+          "vibrating salt",
+          "resolidifying wax",
+          "visible thread tension",
+          "localized refraction",
+          "levitation shadow"
+        ]
+      },
+      "additional": [
+        "witch identity is mechanism-first: an intentional action must pass through a physical medium and create a localized material or force change with a visible trace",
+        "hat, robe, cat, candle, broom, cauldron, moon and grimoire are historically recurring visual symbols, but no one of them is sufficient by itself; appearance can range widely and is not the identity core",
+        "keep the active causal chain readable in one frame: practitioner action, contact medium, local anomaly, then residual consequence",
+        "distinct from stage magician, herbalist, generic fantasy costume and occult still life: no card trick, audience showmanship, ingredients-only tableau or costume-only Halloween reading"
+      ],
+      "intent_axis": [
+        "adult fictional witch practitioner expressed through observable spellwork rather than a fixed face, age-coded costume, or one inherited icon"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult fictional subject only; symbolic non-instructional magic only; no gore, sacrifice, victim, injury, coercive ritual, religious mockery, or real-world harmful ritual instructions"
+      ],
+      "salience_cues": [
+        "the action-medium-change chain and one aftermath trace should survive removal of robe, hat, broom or grimoire"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "guide": {
+        "definition_ko": "마녀 역할은 고정된 외모나 할로윈 복장이 아니라, 의도적인 수행자가 물질·힘에 국소적 변화를 일으키는 가시적 인과로 정의한다. 전승 아이콘은 장면 변형 축이지 정체성 단독 증거가 아니다.",
+        "dominant_axes": [
+          "domestic_warding",
+          "contract_binding",
+          "thread_working",
+          "weather_omen",
+          "broom_flight"
+        ],
+        "anchor_guidance": "한 프레임에서 손의 행동 또는 몸의 균형 → 소금·왁스·실·기압계·빗자루 같은 매개체 → 진동·재응고·장력·굴절·그림자 변위 → 서리·빛 저하 같은 잔여 흔적을 연결한다.",
+        "anti_patterns": [
+          "wide-brim hat와 robe만 있는 Halloween costume portrait",
+          "책·촛불·수정구만 정물처럼 놓인 occult still life",
+          "generic glowing magic circle, blue aura, 폭발형 주문",
+          "마술사 드리프트: playing cards, tailcoat, 관객, sleight of hand"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "witch_subject_identity_core",
+          "check": "subject가 witch_practitioner_role_model로 고정되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "subject",
+            "any_of": [
+              "witch_practitioner_role_model"
+            ]
+          }
+        },
+        {
+          "id": "witch_visible_causal_chain",
+          "check": "행동-매개체-국소 변화-흔적 중 최소 세 단계가 같은 프레임에서 읽히고, 복장만으로 마녀를 주장하지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ]
+    },
     "마법사": {
       "preset": "archive_ledger_threshold",
       "set": [
@@ -3573,6 +3733,170 @@
         {
           "id": "visible_consequence",
           "check": "물리적 결과로 마법이 가시화되어야 한다(평면 마크/장식 미광 금지).",
+          "machine_checkable": false
+        }
+      ]
+    },
+    "트레저헌터": {
+      "preset": "compact_cinematic_prop_portrait",
+      "identity_core": {
+        "subject": "treasure_hunter_role_model"
+      },
+      "scene_variants": [
+        {
+          "id": "ruin_clue_triangulation",
+          "weight": 1.0,
+          "set": {
+            "location": "collapsed_ruin_clue_chamber",
+            "action": "triangulating_ruin_clues",
+            "prop": "annotated_treasure_map_prop",
+            "narrative_phase": "search_before_discovery",
+            "aftermath_trace": "disturbed_dust_clue_trace"
+          },
+          "intent_axis": [
+            "adult fictional treasure hunter triangulating map marks, architecture and disturbed dust before the target is visible"
+          ]
+        },
+        {
+          "id": "sealed_cache_partial_reveal",
+          "weight": 0.95,
+          "set": {
+            "location": "collapsed_ruin_clue_chamber",
+            "action": "revealing_sealed_cache_edge",
+            "prop": "partially_revealed_sealed_cache_prop",
+            "narrative_phase": "partial_reveal_moment",
+            "aftermath_trace": "disturbed_dust_clue_trace"
+          },
+          "intent_axis": [
+            "adult fictional treasure hunter exposing only the sealed edge of a cache while leaving its contents and context intact"
+          ]
+        },
+        {
+          "id": "post_discovery_context_record",
+          "weight": 0.9,
+          "set": {
+            "location": "cliff_overlook_after_discovery",
+            "action": "documenting_find_in_place",
+            "prop": "sealed_discovery_case_prop",
+            "narrative_phase": "post_discovery_verification",
+            "aftermath_trace": "documented_find_marker_trace"
+          },
+          "intent_axis": [
+            "adult fictional treasure hunter documenting a sealed find in place before transport, with surrounding context preserved"
+          ]
+        },
+        {
+          "id": "coastal_wreck_anomaly_survey",
+          "weight": 0.85,
+          "set": {
+            "location": "coastal_wreck_survey_deck",
+            "action": "reviewing_wreck_anomaly",
+            "prop": "sonar_anomaly_tablet_prop",
+            "capture_context": "wreck_survey_documentation_capture",
+            "narrative_phase": "search_before_discovery"
+          },
+          "intent_axis": [
+            "adult fictional treasure hunter linking a broad-area wreck anomaly to a visible survey site before any recovery"
+          ]
+        },
+        {
+          "id": "modern_geocache_find",
+          "weight": 0.8,
+          "set": {
+            "location": "forest_geocache_search_site",
+            "action": "logging_geocache_find",
+            "prop": "geocache_log_container_prop",
+            "narrative_phase": "post_discovery_verification",
+            "aftermath_trace": "documented_find_marker_trace"
+          },
+          "intent_axis": [
+            "adult modern treasure hunter logging and carefully returning a coordinate-led geocache without digging"
+          ]
+        }
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "location",
+        "action",
+        "prop",
+        "narrative_phase",
+        "aftermath_trace",
+        "capture_context"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "subject": [
+          "adult fictional treasure hunter"
+        ],
+        "action": [
+          "triangulating clues",
+          "partial cache reveal",
+          "documenting a find",
+          "reviewing a wreck anomaly",
+          "logging a geocache"
+        ],
+        "narrative_phase": [
+          "before discovery",
+          "partial reveal",
+          "post-discovery verification"
+        ],
+        "aftermath_trace": [
+          "disturbed dust clue",
+          "documented find marker"
+        ]
+      },
+      "additional": [
+        "treasure-hunter identity requires a hidden or lost target, a clue-directed search and a readable discovery phase; boots, ruins, compass or adventure clothing alone are insufficient",
+        "rotate among land clue triangulation, partial sealed-cache reveal, post-discovery context recording, marine anomaly survey and modern geocache logging",
+        "preserve the distinction from generic explorer, archaeologist, prospector, detective, salvage worker and looter through target relation and phase evidence",
+        "for archaeological or wreck-like variants, show in-place documentation and context preservation rather than commercial extraction; do not invent actionable real coordinates or excavation instructions"
+      ],
+      "intent_axis": [
+        "adult fictional treasure hunter whose role is made visible by clue relation, discovery state and verification consequence rather than generic adventure styling"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "fictional or permission-based search only; no looting, trespass, illegal salvage, destructive excavation, trafficking, real coordinates, sensitive-site disclosure or bypass instructions"
+      ],
+      "salience_cues": [
+        "at least one clue and the current discovery phase must remain readable if the costume and compass are removed"
+      ],
+      "anchor_floor": {
+        "role": 1
+      },
+      "guide": {
+        "definition_ko": "트레저헌터는 단순 탐험가가 아니라 숨었거나 잃어버린 목표를 단서로 추적하는 성인 가상 역할이다. 화면에는 단서 관계와 발견 전·부분 발견·발견 후 검증 중 하나가 보여야 한다.",
+        "dominant_axes": [
+          "clue_triangulation",
+          "partial_reveal",
+          "context_preservation",
+          "wreck_anomaly_survey",
+          "modern_geocache"
+        ],
+        "anchor_guidance": "지도 표식과 건축 특징의 대조, 끊긴 먼지선, 봉인된 용기의 일부 노출, 위치 보존 기록, 센서 이상과 현장 시야의 연결, 좌표 기반 캐시의 로그·원위치 복귀처럼 목표-단서-단계의 관계를 한 프레임에 만든다.",
+        "anti_patterns": [
+          "compass와 backpack만 든 generic explorer portrait",
+          "유물 감정·보존만 보이는 archaeologist/curator 드리프트",
+          "금화 더미 앞 승리 포즈처럼 탐색 과정이 사라진 treasure tableau",
+          "도굴, 파괴적 발굴, 상업적 난파선 인양, 실제 민감 위치 공개"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "treasure_hunter_subject_identity_core",
+          "check": "subject가 treasure_hunter_role_model로 고정되어야 한다",
+          "machine_checkable": true,
+          "assert": {
+            "type": "forced_slot_any",
+            "slot": "subject",
+            "any_of": [
+              "treasure_hunter_role_model"
+            ]
+          }
+        },
+        {
+          "id": "treasure_hidden_target_relation",
+          "check": "숨은 목표와 단서의 관계 및 발견 단계가 보이고 generic explorer나 looter로 읽히지 않아야 한다.",
           "machine_checkable": false
         }
       ]
@@ -20877,44 +21201,65 @@
     "마녀": {
       "preset": "folk_creature_threshold_portrait",
       "set": {
-        "costume_style": "witch_robe_wide_hat",
-        "prop": "grimoire_candle_prop",
+        "prop": [
+          "grimoire_candle_prop",
+          "salt_jar_prop",
+          "red_seal_contract_prop",
+          "measuring_tape_sigil_prop",
+          "barometer_brass_prop",
+          "working_broom_prop"
+        ],
+        "surreal_physics_detail": [
+          "salt_grains_vibrating",
+          "wax_melting_resolidifying",
+          "thread_tension_visible",
+          "localized_refraction_at_contact",
+          "tiny_levitation_contact_shadow"
+        ],
         "mood": "folk_ritual_unease",
-        "aesthetic_trend": "whimsigoth_aesthetic",
-        "composition": "lace_partial_occlusion_frame",
-        "light_type": "ritual_candle_cluster"
+        "aesthetic_trend": "whimsigoth_aesthetic"
       },
       "soft_anchor_slots": [
-        "costume_style",
         "prop",
-        "light_type",
+        "surreal_physics_detail",
         "mood",
         "sensory_focus",
         "aftermath_trace"
       ],
       "soft_min_anchors": 2,
       "anchor_terms": {
-        "costume_style": [
-          "witch robe"
-        ],
         "prop": [
-          "grimoire"
+          "grimoire",
+          "salt line",
+          "wax seal",
+          "taut thread",
+          "barometer omen",
+          "working broom"
+        ],
+        "surreal_physics_detail": [
+          "vibrating salt",
+          "resolidifying wax",
+          "visible thread tension",
+          "localized refraction",
+          "levitation shadow"
         ],
         "aesthetic_trend": [
           "whimsigoth"
         ]
       },
       "additional": [
-        "witch identity reads through grimoire, candle cluster, hat or robe silhouette, and learned ritual authority; avoid caricatured Halloween costume alone"
+        "as a mixin, witch identity must remain a small mechanism layer on top of the requested role: physical medium plus localized change, without replacing role wardrobe, location or ordinary adult anatomy",
+        "historical icons such as grimoire, candle, hat, broom, cauldron, cat and moon are optional visual vocabulary, not a costume-only definition",
+        "prefer one readable causal pair such as salt-vibration, wax-rebinding, thread-tension, barometer-refraction or broom-lift shadow; avoid occult still life and Halloween caricature"
       ],
       "intent_axis": [
-        "witch portrait, grimoire, candlelit ritual authority, whimsigoth mood, learned occult intelligence"
+        "adult witch mechanism layered onto another role through one physical medium and one localized consequence"
       ],
       "safety_requirements": [
-        "adult subject only; symbolic magic with no gore, sacrifice, or depicted harm"
+        "adult fictional subject only; symbolic non-instructional magic with no gore, sacrifice, victim, coercion, injury, religious mockery or real-world harmful ritual instructions"
       ],
       "salience_cues": [
-        "grimoire or candle cluster must be close to the hands or face"
+        "one medium-change pair should remain visible near the role action even if hat, robe and grimoire are absent"
       ],
       "anchor_pool": {
         "sensory_focus": [
@@ -20924,7 +21269,250 @@
           "frost_creep_trace",
           "dimmed_bulb_trace"
         ]
-      }
+      },
+      "guide": {
+        "definition_ko": "다른 역할과 결합된 마녀는 역할 의상과 장소를 지우지 않고, 물리적 매개체와 국소 변화 한 쌍을 덧입히는 소프트 레이어다.",
+        "dominant_axes": [
+          "medium_change_pair",
+          "role_preservation",
+          "localized_aftermath"
+        ],
+        "anchor_guidance": "역할 행동 가까이에 소금 진동, 왁스 재응고, 실 장력, 접점 굴절, 빗자루 부양 그림자 중 하나를 배치한다. 복장과 얼굴형은 기존 역할·코어를 따른다.",
+        "anti_patterns": [
+          "역할 의상을 wide-brim hat와 robe로 교체",
+          "책·촛불만 있는 occult still life",
+          "generic magic circle 또는 aura만 추가"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "witch_mixin_mechanism_survives_costume_removal",
+          "check": "마녀 모자가 없어도 매개체-국소 변화 쌍으로 마녀 레이어가 읽히고, 원래 역할 의상과 행동은 유지되어야 한다.",
+          "machine_checkable": false
+        }
+      ]
+    },
+    "지역 최상위 미모 평판": {
+      "preset": "compact_urban_fashion_portrait",
+      "soft_anchor_slots": [
+        "social_cue",
+        "crowd_density",
+        "capture_context",
+        "situation_context",
+        "narrative_phase",
+        "camera_direction"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "social_cue": [
+          "several independent observers recognize the same adult",
+          "press lenses converge",
+          "crowd opens a path"
+        ],
+        "situation_context": [
+          "local reputation",
+          "community honor",
+          "playful local legend"
+        ],
+        "narrative_phase": [
+          "local reputation arrival",
+          "self-aware superlative entrance"
+        ],
+        "capture_context": [
+          "local press recognition",
+          "hidden-in-crowd candid"
+        ]
+      },
+      "additional": [
+        "treat the phrase as four semantic layers: an appearance reputation label, an emphatic superlative, a region-bounded social claim and a playful meme register; express the claim through the community response rather than fixed facial morphology",
+        "the frozen core keeps adult status, face, hair, body, ethnicity, wardrobe and styling; this mixin may only add social recognition, crowd geometry, capture context, situation and narrative timing",
+        "make local reputation observable through at least two independent cues in one frame, such as unrelated bystanders recognizing the subject plus several camera sightlines or a naturally opened path",
+        "no readable number-one label, beauty score, sash, crown or ranking graphic is required; the social reaction must carry the superlative"
+      ],
+      "intent_axis": [
+        "adult subject with an exaggerated region-wide beauty reputation externalized through multiple independent observers and local context, while appearance remains user/core controlled"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult subject only; no school uniform, age-ambiguous styling, sexualized framing, body ranking, ethnicity ranking, demeaning comparison, harassment, stalking, readable score or real-person claim"
+      ],
+      "salience_cues": [
+        "two independent community-response cues should establish local renown without changing the subject's anatomy or relying on written rank"
+      ],
+      "render_suppress_terms": [
+        "readable number-one ranking",
+        "beauty score overlay",
+        "pageant sash",
+        "beauty crown",
+        "school uniform",
+        "minor-coded styling",
+        "fixed ideal face proportions",
+        "fixed ethnicity",
+        "body-first framing",
+        "sexualized crowd attention",
+        "worshipful crowd"
+      ],
+      "bundles": [
+        {
+          "id": "neighborhood_recognition_walk",
+          "weight": 1.0,
+          "set": {
+            "social_cue": "multi_observer_recognition_cue",
+            "crowd_density": "crowd_gap_single_subject",
+            "capture_context": "hidden_in_crowd_candid_capture",
+            "situation_context": "local_reputation_beauty_context",
+            "narrative_phase": "local_reputation_arrival",
+            "camera_direction": "through_crowd_gap_direction"
+          },
+          "soft_anchor_slots": [
+            "social_cue",
+            "crowd_density",
+            "capture_context",
+            "situation_context",
+            "narrative_phase",
+            "camera_direction"
+          ],
+          "soft_min_anchors": 3,
+          "render_suppress_terms": [
+            "readable number-one ranking",
+            "beauty score overlay",
+            "pageant sash or crown",
+            "school uniform",
+            "minor-coded styling",
+            "fixed ideal face proportions",
+            "body-first framing",
+            "sexualized crowd attention"
+          ],
+          "safety_negative_floor": [
+            "school uniform",
+            "minor-coded styling",
+            "body ranking",
+            "sexualized crowd attention"
+          ],
+          "additional": [
+            "several unrelated neighborhood adults recognize the arriving adult subject from different sightlines while the crowd leaves a modest natural gap",
+            "keep the reaction restrained and documentary; local familiarity, not pageant staging or a written score, carries the reputation"
+          ],
+          "intent_axis": [
+            "neighborhood-known adult beauty reputation seen through independent recognition in a candid crowd gap"
+          ]
+        },
+        {
+          "id": "community_honor_camera_arrival",
+          "weight": 0.9,
+          "set": {
+            "social_cue": "crowd_path_opening_for_subject",
+            "crowd_density": "crowd_gap_single_subject",
+            "capture_context": "local_press_recognition_capture",
+            "situation_context": "community_honor_arrival",
+            "narrative_phase": "local_reputation_arrival",
+            "camera_direction": "through_crowd_gap_direction"
+          },
+          "soft_anchor_slots": [
+            "social_cue",
+            "crowd_density",
+            "capture_context",
+            "situation_context",
+            "narrative_phase",
+            "camera_direction"
+          ],
+          "soft_min_anchors": 3,
+          "render_suppress_terms": [
+            "readable number-one ranking",
+            "beauty score overlay",
+            "pageant sash or crown",
+            "school uniform",
+            "minor-coded styling",
+            "fixed ideal face proportions",
+            "body-first framing",
+            "sexualized crowd attention"
+          ],
+          "safety_negative_floor": [
+            "school uniform",
+            "minor-coded styling",
+            "body ranking",
+            "sexualized crowd attention"
+          ],
+          "additional": [
+            "a textless community-event arrival uses an opened path and several independent cameras to make local renown visible",
+            "avoid red-carpet grandeur, crowns and celebrity score graphics; the scale stays plausibly regional and human"
+          ],
+          "intent_axis": [
+            "adult local figure recognized at a community event through crowd geometry and converging cameras"
+          ]
+        },
+        {
+          "id": "playful_superlative_press_cluster",
+          "weight": 0.8,
+          "set": {
+            "social_cue": "press_lens_attention_cluster",
+            "crowd_density": "bystander_ring",
+            "capture_context": "local_press_recognition_capture",
+            "situation_context": "playful_hyperbole_public_entrance",
+            "narrative_phase": "self_aware_superlative_entrance",
+            "camera_direction": "through_crowd_gap_direction"
+          },
+          "soft_anchor_slots": [
+            "social_cue",
+            "crowd_density",
+            "capture_context",
+            "situation_context",
+            "narrative_phase",
+            "camera_direction"
+          ],
+          "soft_min_anchors": 3,
+          "render_suppress_terms": [
+            "readable number-one ranking",
+            "beauty score overlay",
+            "pageant sash or crown",
+            "school uniform",
+            "minor-coded styling",
+            "fixed ideal face proportions",
+            "body-first framing",
+            "sexualized crowd attention"
+          ],
+          "safety_negative_floor": [
+            "school uniform",
+            "minor-coded styling",
+            "body ranking",
+            "sexualized crowd attention"
+          ],
+          "additional": [
+            "the playful superlative is carried by a plausible cluster of local cameras and restrained bystander reactions while the adult subject remains composed",
+            "the scene may feel meme-aware, but it must remain photoreal and must not turn into anime anatomy, a beauty contest, idol worship or sexualized spectacle"
+          ],
+          "intent_axis": [
+            "self-aware adult local legend entering a public scene as multiple independent lenses converge"
+          ]
+        }
+      ],
+      "guide": {
+        "definition_ko": "‘도내 1등 초절정 미소녀’류 표현은 특정 얼굴 공식이 아니라 미모 평판+최상급 강조+지역 범위+밈식 과장의 합성이다. 런타임에서는 성인 피사체의 외모를 고정하지 않고 지역 공동체의 복수 반응으로 평판만 시각화한다.",
+        "dominant_axes": [
+          "local_social_reputation",
+          "independent_observer_convergence",
+          "playful_superlative_register"
+        ],
+        "anchor_guidance": "서로 관계없는 관찰자 2명 이상의 시선·멈칫·카메라 방향, 군중이 여는 작은 통로, 지역 행사 문맥 중 최소 두 가지를 같은 프레임에 둔다. 얼굴형·눈·머리·체형·민족·의상·메이크업은 코어를 따른다.",
+        "anti_patterns": [
+          "큰 눈·V라인·특정 피부색처럼 미모를 하나의 얼굴 공식으로 고정",
+          "숫자 1, 왕관, 띠, 점수표, 읽히는 랭킹 문구",
+          "학교 교복, 미성년 암시, 몸매 품평, 성적 대상화",
+          "한 명의 과장된 표정만으로 지역 평판을 주장"
+        ]
+      },
+      "review_gates": [
+        {
+          "id": "local_reputation_multiple_observers",
+          "check": "서로 독립된 사회 반응 단서가 최소 두 개 보이고, 지역 평판이 단일 팬·문구·왕관에 의존하지 않아야 한다.",
+          "machine_checkable": false
+        },
+        {
+          "id": "local_reputation_no_morphology_ownership",
+          "check": "이 믹스인이 얼굴·머리·눈·체형·민족·나이·의상 슬롯을 소유하거나 미모 순위를 신체 공식으로 환원하지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ]
     },
     "선녀": {
       "preset": "folk_creature_threshold_portrait",
@@ -38902,6 +39490,22 @@
     "track suit": "운동복",
     "sportswear": "운동복",
     "위치": "마녀",
+    "witch": "마녀",
+    "Witch": "마녀",
+    "魔女": "마녀",
+    "트레저 헌터": "트레저헌터",
+    "보물 사냥꾼": "트레저헌터",
+    "treasure hunter": "트레저헌터",
+    "treasure-hunter": "트레저헌터",
+    "トレジャーハンター": "트레저헌터",
+    "도내 1등 초절정 미소녀": "지역 최상위 미모 평판",
+    "도내1등 초절정 미소녀": "지역 최상위 미모 평판",
+    "도내 1위 초절정 미소녀": "지역 최상위 미모 평판",
+    "도내 1등 미소녀": "지역 최상위 미모 평판",
+    "도내 최상위 랭크 미소녀": "지역 최상위 미모 평판",
+    "도내 최상위 미소녀": "지역 최상위 미모 평판",
+    "県内一の美少女": "지역 최상위 미모 평판",
+    "local legendary beauty": "지역 최상위 미모 평판",
     "고딕로리": "고스로리",
     "고스 로리": "고스로리",
     "고딕 로리타": "고스로리",
