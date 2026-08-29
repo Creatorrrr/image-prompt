@@ -3034,6 +3034,1904 @@
         "multiple_unrelated_mismatch_channels",
         "unease_asserted_without_matched_visual_comparison"
       ]
+    },
+    {
+      "id": "aircraft_pilot_operation",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "aircraft pilot",
+          "airline pilot",
+          "aviator",
+          "pilot",
+          "항공기 조종사",
+          "비행기 조종사",
+          "민항기 조종사",
+          "파일럿"
+        ],
+        "exclude_if_any_terms": [
+          "pilot program",
+          "pilot project",
+          "pilot study",
+          "pilot episode",
+          "pilot light",
+          "ship pilot",
+          "harbor pilot",
+          "mecha pilot",
+          "racing pilot",
+          "파일럿 프로그램",
+          "파일럿 프로젝트",
+          "파일럿 방송",
+          "메카 파일럿"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "aircraft cockpit",
+            "flight deck",
+            "flight controls",
+            "instrument panel",
+            "runway",
+            "aircraft operation",
+            "cockpit checklist",
+            "항공기 조종석",
+            "비행 갑판",
+            "비행 계기",
+            "조종간",
+            "활주로",
+            "항공기 운항"
+          ],
+          "exclude_if_any_terms": [
+            "television episode",
+            "trial rollout",
+            "experimental program",
+            "gas appliance flame",
+            "ship navigation",
+            "robot cockpit cosplay",
+            "방송 시범편",
+            "시범 사업",
+            "가스 점화 불꽃",
+            "선박 도선",
+            "메카 코스프레"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult operator visibly responsible for flying an aircraft, proven by a coherent relationship among the pilot station, primary flight controls or checklist work, and an instrument or outside-flight state that matches the depicted phase of operation.",
+        "paraphrase_examples": [
+          "조종간과 계기를 함께 확인하며 항공기를 운항하는 성인 조종사",
+          "활주로와 계기 상태를 교차 확인하는 실제 비행 승무원",
+          "an adult operator cross-checking flight controls and the outside runway state",
+          "a cockpit crew member whose hands, instruments, and flight phase agree"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "pilot_station_identity",
+            "control_or_checklist_contact",
+            "matched_flight_state"
+          ],
+          "groups": [
+            {
+              "id": "pilot_station_identity",
+              "any_terms": [
+                "adult pilot seated at the aircraft controls",
+                "pilot station on a flight deck",
+                "성인 조종사가 항공기 조종석에 앉아 있음",
+                "비행 갑판의 조종사 좌석"
+              ]
+            },
+            {
+              "id": "control_or_checklist_contact",
+              "any_terms": [
+                "hand on the yoke or control stick",
+                "throttle contact during a check",
+                "finger following a cockpit checklist",
+                "조종간이나 스로틀에 닿은 손",
+                "체크리스트를 따라가는 손가락"
+              ]
+            },
+            {
+              "id": "matched_flight_state",
+              "any_terms": [
+                "instruments agree with the visible runway",
+                "attitude display matches the horizon",
+                "taxi state matches the outside view",
+                "계기와 활주로 상태가 일치",
+                "자세계와 외부 수평선이 일치"
+              ]
+            },
+            {
+              "id": "operational_phase",
+              "any_terms": [
+                "preflight control check",
+                "taxi and run-up",
+                "approach cross-check",
+                "비행 전 점검",
+                "택시 또는 접근 단계"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a fashion model holding a pilot helmet away from any aircraft controls",
+          "a cabin attendant standing in an airplane aisle",
+          "a mecha or racing costume whose wearer does not operate an aircraft",
+          "a television pilot, trial program, ship pilot, or pilot light"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult aircraft operator",
+          "flight deck responsibility",
+          "primary control contact",
+          "cockpit checklist work",
+          "instrument and outside-view agreement",
+          "preflight taxi or approach phase",
+          "operational rather than costume-only pilot identity"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "aircraft pilot"
+        ],
+        "forbidden_prompt_terms": [
+          "pilot program",
+          "pilot episode",
+          "pilot light",
+          "ship pilot",
+          "mecha pilot"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult aircraft operator, one primary control or checklist contact, and a matching instrument-to-outside flight state readable in the same frame. Choose one operational phase and make the cockpit relationship carry the role instead of a helmet, flight suit, logo, or generic technology styling.",
+      "required_evidence_fields": [
+        "adult_aircraft_operator_phrase",
+        "pilot_station_phrase",
+        "primary_control_contact_phrase",
+        "matched_flight_state_phrase",
+        "operational_phase_phrase"
+      ],
+      "evidence_requirements": {
+        "adult_aircraft_operator_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "adult aircraft pilot",
+            "adult aircraft operator",
+            "adult flight-deck pilot"
+          ]
+        },
+        "pilot_station_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "seated at the aircraft controls",
+            "pilot station on the flight deck",
+            "inside the aircraft cockpit"
+          ]
+        },
+        "primary_control_contact_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "hand on the yoke",
+            "hand on the control stick",
+            "throttle contact",
+            "finger following the cockpit checklist"
+          ]
+        },
+        "matched_flight_state_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "instruments agree with the visible runway",
+            "attitude display matches the horizon",
+            "taxi state matches the outside view"
+          ]
+        },
+        "operational_phase_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "preflight control check",
+            "taxi and run-up phase",
+            "approach cross-check phase"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_pilot_aircraft_operator_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as the operator of a real aircraft rather than a traveler, attendant, racer, or costume model."
+        },
+        {
+          "id": "vo_pilot_control_contact",
+          "review_scale": "both",
+          "description": "A hand, foot, or checklist interaction visibly connects the pilot to a primary aircraft-control task."
+        },
+        {
+          "id": "vo_pilot_flight_state_coherence",
+          "review_scale": "native",
+          "description": "The depicted controls, instruments, runway or horizon, and operational phase agree rather than forming decorative cockpit noise."
+        },
+        {
+          "id": "vo_pilot_cockpit_relationship",
+          "review_scale": "both",
+          "description": "The pilot station and aircraft environment remain large and legible enough to carry the professional role."
+        },
+        {
+          "id": "vo_pilot_not_costume_or_helmet_only",
+          "review_scale": "thumbnail",
+          "description": "A helmet, flight suit, badge, mecha cockpit, or generic instrument wall alone does not substitute for aircraft operation."
+        }
+      ],
+      "reject_substitutes": [
+        "pilot_helmet_or_flight_suit_only",
+        "cabin_crew_or_airport_staff",
+        "air_traffic_controller",
+        "mecha_or_racing_pilot",
+        "ship_or_harbor_pilot",
+        "pilot_program_episode_or_light",
+        "cockpit_background_without_control_relation"
+      ]
+    },
+    {
+      "id": "cabin_crew_safety_role",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "flight attendant",
+          "cabin crew",
+          "stewardess",
+          "객실 승무원",
+          "항공 승무원",
+          "승무원",
+          "스튜어디스",
+          "캐빈크루"
+        ],
+        "exclude_if_any_terms": [
+          "train attendant",
+          "rail crew",
+          "ship steward",
+          "cruise steward",
+          "열차 승무원",
+          "철도 승무원",
+          "선박 승무원"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "aircraft cabin",
+            "airplane aisle",
+            "cabin safety",
+            "emergency exit",
+            "safety demonstration",
+            "cabin cross-check",
+            "항공기 객실",
+            "비행기 통로",
+            "객실 안전",
+            "비상구",
+            "안전 시연",
+            "도어 크로스체크"
+          ],
+          "exclude_if_any_terms": [
+            "rail carriage",
+            "train platform",
+            "cruise ship",
+            "restaurant server",
+            "철도 객차",
+            "열차 플랫폼",
+            "유람선",
+            "식당 서버"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult aircraft cabin-safety professional whose role is made visible through a coherent relationship among cabin identity, one normal or emergency safety procedure, and the exit, equipment, passenger, or secured-cabin consequence governed by that procedure.",
+        "paraphrase_examples": [
+          "비상 장비와 출입문을 점검하는 성인 객실 승무원",
+          "승객 앞에서 안전 시연을 진행하는 항공 승무원",
+          "an adult cabin-safety professional cross-checking an aircraft exit",
+          "flight crew securing the cabin before turbulence"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "aircraft_cabin_identity",
+            "safety_procedure",
+            "governed_safety_target"
+          ],
+          "groups": [
+            {
+              "id": "aircraft_cabin_identity",
+              "any_terms": [
+                "adult cabin crew member inside an aircraft",
+                "professional flight attendant at the cabin exit",
+                "항공기 객실 안의 성인 객실 승무원",
+                "비상구 옆의 항공 승무원"
+              ]
+            },
+            {
+              "id": "safety_procedure",
+              "any_terms": [
+                "exit arming cross-check",
+                "emergency equipment inspection",
+                "passenger safety demonstration",
+                "cabin secure check",
+                "출입문 크로스체크",
+                "비상 장비 점검",
+                "안전 시연"
+              ]
+            },
+            {
+              "id": "governed_safety_target",
+              "any_terms": [
+                "the checked exit mechanism",
+                "visible emergency equipment",
+                "passengers following the demonstration",
+                "secured aisle and overhead bins",
+                "점검 중인 비상구",
+                "보이는 안전 장비",
+                "안전 시연을 보는 승객"
+              ]
+            },
+            {
+              "id": "professional_uniform_support",
+              "any_terms": [
+                "coherent professional cabin-crew uniform",
+                "generic non-branded airline uniform system",
+                "일관된 객실 승무원 제복",
+                "실존 항공사 로고가 없는 제복"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a uniformed fashion model holding a tray with no aircraft safety task",
+          "a restaurant server or hotel attendant",
+          "a train or ship crew member",
+          "generic travel fashion inside an airplane set"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult aircraft cabin-safety professional",
+          "emergency equipment inspection",
+          "exit arming cross-check",
+          "passenger safety demonstration",
+          "cabin secure procedure",
+          "professional non-branded uniform",
+          "service as one optional branch rather than the whole identity"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "flight attendant"
+        ],
+        "forbidden_prompt_terms": [
+          "train attendant",
+          "ship steward",
+          "restaurant server"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the adult cabin professional, one concrete aircraft-safety procedure, and the exit, equipment, passenger, or secured-cabin consequence in the same frame. Keep service props secondary, use a generic non-branded uniform, and let procedure rather than a tray or fashion pose carry the role.",
+      "required_evidence_fields": [
+        "adult_cabin_professional_phrase",
+        "aircraft_cabin_context_phrase",
+        "safety_procedure_phrase",
+        "safety_target_phrase",
+        "procedure_consequence_phrase"
+      ],
+      "evidence_requirements": {
+        "adult_cabin_professional_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "adult flight attendant",
+            "adult cabin crew member",
+            "adult cabin-safety professional"
+          ]
+        },
+        "aircraft_cabin_context_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "inside the aircraft cabin",
+            "beside the aircraft exit",
+            "in the airplane aisle"
+          ]
+        },
+        "safety_procedure_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "exit arming cross-check",
+            "emergency equipment inspection",
+            "passenger safety demonstration",
+            "cabin secure check"
+          ]
+        },
+        "safety_target_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "checked exit mechanism",
+            "visible emergency equipment",
+            "passengers following the demonstration",
+            "secured overhead bins"
+          ]
+        },
+        "procedure_consequence_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the exit indicator confirms the check",
+            "the equipment seal remains visibly intact",
+            "passengers mirror the demonstrated posture",
+            "the aisle is visibly secured"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_cabin_crew_aircraft_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject and environment first read as aircraft cabin crew rather than generic hospitality or fashion."
+        },
+        {
+          "id": "vo_cabin_crew_safety_action",
+          "review_scale": "both",
+          "description": "One specific normal or emergency cabin-safety procedure is visibly underway."
+        },
+        {
+          "id": "vo_cabin_crew_target_relation",
+          "review_scale": "native",
+          "description": "The exit, equipment, passenger, or secured-cabin target of the procedure is concrete and visually connected to the action."
+        },
+        {
+          "id": "vo_cabin_crew_procedure_consequence",
+          "review_scale": "both",
+          "description": "A visible checked, secured, demonstrated, or assisted state shows the consequence of the cabin procedure."
+        },
+        {
+          "id": "vo_cabin_crew_not_service_or_uniform_only",
+          "review_scale": "thumbnail",
+          "description": "A tray, smile, scarf, uniform, or airplane aisle alone does not substitute for the cabin-safety role."
+        }
+      ],
+      "reject_substitutes": [
+        "service_tray_or_cart_only",
+        "uniformed_airline_fashion_model",
+        "restaurant_or_hotel_server",
+        "train_or_ship_attendant",
+        "airplane_aisle_without_safety_task",
+        "real_airline_logo_as_role_proof"
+      ]
+    },
+    {
+      "id": "school_uniform_institutional_system",
+      "category": "institutional_garment",
+      "activation": {
+        "exact_terms": [
+          "school uniform",
+          "student uniform",
+          "school-uniform outfit",
+          "교복",
+          "학생복"
+        ],
+        "exclude_if_any_terms": [
+          "no school uniform",
+          "without school uniform",
+          "교복 제외",
+          "교복 없이"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "coordinated uniform garments",
+            "school clothing system",
+            "uniform blazer",
+            "uniform shirt",
+            "uniform skirt",
+            "uniform trousers",
+            "school crest",
+            "교복 의상",
+            "학교 제복",
+            "교복 블레이저",
+            "교복 셔츠",
+            "교복 치마",
+            "교복 바지"
+          ],
+          "exclude_if_any_terms": [
+            "uniform cost policy",
+            "school dress code essay",
+            "uniform regulation text",
+            "교복 가격 정책",
+            "복장 규정 설명",
+            "교복 제도 보고서"
+          ]
+        },
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A coordinated institutional clothing system whose upper and lower garments or one-piece option share a consistent color, cut, trim, fabric, seasonal logic, and generic school identity, without requiring one fixed gendered silhouette or a real school emblem.",
+        "paraphrase_examples": [
+          "같은 색과 트림 체계로 구성된 학교 제복 한 벌",
+          "동복과 하복이 하나의 제복군으로 이어지는 교복 디자인",
+          "a coordinated blazer shirt and trousers system with a generic school identity",
+          "seasonal uniform options that remain visibly part of one institution"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "coordinated_garment_set",
+            "institutional_consistency",
+            "school_identity_context"
+          ],
+          "groups": [
+            {
+              "id": "coordinated_garment_set",
+              "any_terms": [
+                "matched blazer shirt and lower garment",
+                "coordinated one-piece school dress",
+                "상하의가 맞춰진 교복 한 벌",
+                "학교용 원피스 제복"
+              ]
+            },
+            {
+              "id": "institutional_consistency",
+              "any_terms": [
+                "repeated color trim and cut",
+                "consistent fabric and piping",
+                "seasonal variants share the same identity",
+                "반복되는 색상과 트림",
+                "동복과 하복의 일관된 체계"
+              ]
+            },
+            {
+              "id": "school_identity_context",
+              "any_terms": [
+                "generic school crest placement",
+                "school reference studio",
+                "institutional garment presentation",
+                "일반화된 학교 문장 위치",
+                "교복 디자인 스튜디오"
+              ]
+            },
+            {
+              "id": "option_and_season_variation",
+              "any_terms": [
+                "trousers skirt shorts or dress option",
+                "summer and winter uniform variants",
+                "바지 치마 반바지 원피스 선택형",
+                "동복과 하복 변형"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a random plaid skirt with an unrelated blouse",
+          "generic preppy or office fashion",
+          "a sailor costume with no institutional garment system",
+          "a real school logo used as the only proof"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "coordinated institutional school clothing",
+          "consistent color cut trim and fabric",
+          "summer and winter variants",
+          "trousers skirt shorts or dress options",
+          "generic non-branded school identity",
+          "flat-lay mannequin or adult reference editorial",
+          "uniform system rather than student personality"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "school uniform"
+        ],
+        "forbidden_prompt_terms": [
+          "real school logo",
+          "real school badge"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Present a coherent school-uniform system through matched garments, repeated color or trim, and one generic institutional cue. Keep trousers, skirt, shorts, and one-piece options available, avoid copying a real school identity, and do not let one plaid item, sailor styling, or an inferred student personality replace the garment system.",
+      "required_evidence_fields": [
+        "coordinated_uniform_set_phrase",
+        "consistent_color_trim_phrase",
+        "school_identity_context_phrase",
+        "season_or_option_phrase",
+        "generic_nonbranded_identity_phrase"
+      ],
+      "evidence_requirements": {
+        "coordinated_uniform_set_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "matched school-uniform garments",
+            "coordinated blazer shirt and lower garment",
+            "coordinated one-piece school dress"
+          ]
+        },
+        "consistent_color_trim_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "repeated color and trim",
+            "consistent cut and piping",
+            "shared fabric and edge treatment"
+          ]
+        },
+        "school_identity_context_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "generic school identity",
+            "school reference studio",
+            "institutional garment presentation"
+          ]
+        },
+        "season_or_option_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "summer and winter variants",
+            "trousers skirt or dress option",
+            "seasonal uniform option"
+          ]
+        },
+        "generic_nonbranded_identity_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "generic non-branded crest",
+            "fictional school badge placement",
+            "unbranded institutional trim"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_school_uniform_coordinated_set",
+          "review_scale": "thumbnail",
+          "description": "The clothing first reads as one coordinated institutional uniform rather than unrelated preppy separates."
+        },
+        {
+          "id": "vo_school_uniform_system_consistency",
+          "review_scale": "native",
+          "description": "Color, cut, trim, fabric, and edge treatment remain consistent across the selected garments or seasonal variant."
+        },
+        {
+          "id": "vo_school_uniform_identity_context",
+          "review_scale": "both",
+          "description": "A generic school or institutional presentation cue supports the uniform reading without copying a real identity."
+        },
+        {
+          "id": "vo_school_uniform_option_legibility",
+          "review_scale": "both",
+          "description": "The selected trousers, skirt, shorts, or one-piece option remains structurally legible as part of the same uniform family."
+        },
+        {
+          "id": "vo_school_uniform_not_generic_prep",
+          "review_scale": "thumbnail",
+          "description": "A plaid item, business outfit, sailor costume, or generic preppy styling alone does not carry the school-uniform meaning."
+        }
+      ],
+      "reject_substitutes": [
+        "random_plaid_skirt_or_tie",
+        "generic_preppy_fashion",
+        "business_or_office_uniform",
+        "sailor_costume_without_school_system",
+        "real_school_logo_as_identity_proof",
+        "student_personality_without_uniform_structure"
+      ]
+    },
+    {
+      "id": "one_piece_dress_construction",
+      "category": "garment_construction",
+      "activation": {
+        "exact_terms": [
+          "one-piece dress",
+          "one piece dress",
+          "single-piece dress",
+          "원피스 드레스",
+          "원피스"
+        ],
+        "exclude_if_any_terms": [
+          "One Piece anime",
+          "One Piece manga",
+          "Luffy",
+          "one-piece swimsuit",
+          "one piece swimsuit",
+          "romper",
+          "jumpsuit",
+          "원피스 애니",
+          "원피스 만화",
+          "루피",
+          "원피스 수영복",
+          "점프수트",
+          "롬퍼"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "dress garment",
+            "bodice to hem",
+            "dress silhouette",
+            "neckline and skirt",
+            "dress closure",
+            "dress drape",
+            "드레스 의복",
+            "보디스에서 밑단",
+            "원피스 실루엣",
+            "네크라인과 스커트",
+            "드레스 여밈",
+            "드레이프"
+          ],
+          "exclude_if_any_terms": [
+            "pirate crew",
+            "straw hat pirate",
+            "anime franchise",
+            "swimwear product",
+            "trouser legs",
+            "해적단",
+            "밀짚모자 해적",
+            "애니 프랜차이즈",
+            "수영복 상품",
+            "바지통"
+          ]
+        },
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A dress that reads as one continuous garment unit from neckline or bodice through the lower silhouette and hem, even when it uses seams, panels, a zipper, buttons, or a wrap closure; it is not required to be cut from one literal piece of fabric.",
+        "paraphrase_examples": [
+          "상체와 스커트가 한 벌로 이어지는 드레스",
+          "네크라인에서 밑단까지 하나의 실루엣으로 읽히는 원피스",
+          "a continuous dress silhouette from bodice to hem",
+          "one garment with visible seams closure and drape"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "continuous_garment_unit",
+            "dress_silhouette",
+            "construction_and_drape"
+          ],
+          "groups": [
+            {
+              "id": "continuous_garment_unit",
+              "any_terms": [
+                "one garment from neckline to hem",
+                "bodice and skirt remain one unit",
+                "네크라인에서 밑단까지 한 벌",
+                "보디스와 스커트가 하나의 의복"
+              ]
+            },
+            {
+              "id": "dress_silhouette",
+              "any_terms": [
+                "A-line dress silhouette",
+                "sheath or fit-and-flare outline",
+                "shirt-dress or wrap-dress outline",
+                "A라인 원피스 실루엣",
+                "시스 또는 핏앤플레어 윤곽"
+              ]
+            },
+            {
+              "id": "construction_and_drape",
+              "any_terms": [
+                "waist seam and closure",
+                "panel construction and drape",
+                "wrap overlap and hem movement",
+                "허리 절개와 여밈",
+                "패널 구조와 드레이프"
+              ]
+            },
+            {
+              "id": "product_view_legibility",
+              "any_terms": [
+                "front three-quarter and back construction view",
+                "full hem and neckline remain visible",
+                "정면과 후면 구조가 보이는 상품 뷰",
+                "네크라인과 밑단이 함께 보임"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a matching blouse and skirt that remain two separate garments",
+          "a jumpsuit or romper with trouser legs",
+          "a one-piece swimsuit",
+          "the One Piece manga or animation franchise"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "continuous bodice-to-hem garment",
+          "A-line sheath fit-and-flare shirt or wrap dress",
+          "visible seam closure and drape",
+          "front three-quarter or back product view",
+          "one garment rather than matching separates",
+          "dress construction rather than one literal fabric piece"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "one-piece dress"
+        ],
+        "forbidden_prompt_terms": [
+          "One Piece anime",
+          "One Piece manga",
+          "Luffy"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the neckline or bodice, waist construction, lower silhouette, and hem visible enough to read as one continuous dress. Choose one dress family and make seams, closure, drape, and movement support that construction without turning it into separates, a jumpsuit, a romper, swimwear, or an entertainment franchise reference.",
+      "required_evidence_fields": [
+        "continuous_garment_phrase",
+        "dress_silhouette_phrase",
+        "seam_or_closure_phrase",
+        "drape_and_hem_phrase",
+        "one_unit_legibility_phrase"
+      ],
+      "evidence_requirements": {
+        "continuous_garment_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "one garment from neckline to hem",
+            "bodice and skirt remain one unit",
+            "continuous bodice-to-hem garment"
+          ]
+        },
+        "dress_silhouette_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "A-line dress silhouette",
+            "sheath dress outline",
+            "fit-and-flare silhouette",
+            "shirt-dress outline",
+            "wrap-dress outline"
+          ]
+        },
+        "seam_or_closure_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "visible waist seam and closure",
+            "buttoned shirt-dress closure",
+            "wrap overlap and fastening",
+            "panel seam construction"
+          ]
+        },
+        "drape_and_hem_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "drape continues into the hem",
+            "full hem movement remains visible",
+            "skirt drape follows the bodice"
+          ]
+        },
+        "one_unit_legibility_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "the whole dress reads as one garment",
+            "one continuous dress unit remains unmistakable",
+            "neckline waist and hem remain connected"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_one_piece_continuous_unit",
+          "review_scale": "thumbnail",
+          "description": "The outfit first reads as one continuous dress from upper garment to lower hem."
+        },
+        {
+          "id": "vo_one_piece_silhouette_legible",
+          "review_scale": "both",
+          "description": "The selected A-line, sheath, fit-and-flare, shirt, wrap, slip, or maxi silhouette remains readable."
+        },
+        {
+          "id": "vo_one_piece_construction_detail",
+          "review_scale": "native",
+          "description": "Seams, panels, closure, waist treatment, and drape form a plausible dress construction."
+        },
+        {
+          "id": "vo_one_piece_neckline_to_hem",
+          "review_scale": "both",
+          "description": "Framing preserves enough neckline, waist, skirt, and hem continuity to prove the one-garment structure."
+        },
+        {
+          "id": "vo_one_piece_not_adjacent_sense",
+          "review_scale": "thumbnail",
+          "description": "Matching separates, jumpsuit legs, romper construction, swimwear, or entertainment-franchise cues do not replace the requested dress."
+        }
+      ],
+      "reject_substitutes": [
+        "matching_two_piece_separates",
+        "jumpsuit_or_romper",
+        "one_piece_swimsuit",
+        "anime_or_manga_franchise_reference",
+        "cropped_framing_hiding_garment_continuity",
+        "dress_label_without_visible_construction"
+      ]
+    },
+    {
+      "id": "sheer_garment_optical_layering",
+      "category": "material_optics",
+      "activation": {
+        "exact_terms": [
+          "sheer garment",
+          "sheer clothing",
+          "see-through garment",
+          "see-through clothing",
+          "transparent fabric clothing",
+          "시어 의상",
+          "시스루 의상",
+          "시스루"
+        ],
+        "exclude_if_any_terms": [
+          "see-through bangs",
+          "sheer bangs",
+          "transparent glass",
+          "x-ray vision",
+          "시스루뱅",
+          "시스루 앞머리",
+          "투명 유리",
+          "엑스레이"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "translucent textile",
+            "sheer fabric layer",
+            "opaque underlayer",
+            "transmitted light through fabric",
+            "visible weave and edge",
+            "반투명 직물",
+            "시어 원단 레이어",
+            "불투명 안감",
+            "원단을 통과하는 빛",
+            "보이는 직조와 가장자리"
+          ],
+          "exclude_if_any_terms": [
+            "hair fringe",
+            "bangs hairstyle",
+            "glass window",
+            "medical imaging",
+            "software transparency",
+            "앞머리 헤어스타일",
+            "유리창",
+            "의료 영상",
+            "소프트웨어 투명도"
+          ]
+        },
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A textile optical relationship in which the garment remains visibly present through weave, seam, edge, fold, and surface diffusion while light and part of an opaque underlayer or background transmit through it; the effect depends on fabric, layering, stretch, angle, and illumination rather than nudity.",
+        "paraphrase_examples": [
+          "불투명 안감 위로 빛이 통과하는 시어 오버레이",
+          "직조와 가장자리가 남아 있는 반투명 소매",
+          "a translucent organza layer whose weave and seam stay visible over an opaque base",
+          "backlight passes through chiffon while folds and garment edges remain readable"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "translucent_textile_surface",
+            "transmission_relationship",
+            "garment_boundary_and_layer"
+          ],
+          "groups": [
+            {
+              "id": "translucent_textile_surface",
+              "any_terms": [
+                "visible organza or chiffon weave",
+                "tulle mesh or lace textile surface",
+                "보이는 오간자 또는 쉬폰 직조",
+                "튤 메시 또는 레이스 표면"
+              ]
+            },
+            {
+              "id": "transmission_relationship",
+              "any_terms": [
+                "light passes through the fabric",
+                "opaque underlayer remains partly visible",
+                "background tone transmits through the sleeve",
+                "원단을 통과하는 빛",
+                "부분적으로 비치는 불투명 안감"
+              ]
+            },
+            {
+              "id": "garment_boundary_and_layer",
+              "any_terms": [
+                "visible seam edge and fold",
+                "sheer overlay above an opaque base",
+                "시어 가장자리와 봉제선",
+                "불투명 베이스 위의 투명 레이어"
+              ]
+            },
+            {
+              "id": "illumination_and_material_behavior",
+              "any_terms": [
+                "backlight increases transmission",
+                "folds become denser and less transparent",
+                "stretch changes the visible openness",
+                "역광에서 투과가 증가",
+                "겹친 주름에서 투명도가 낮아짐"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "clear glass or plastic rather than a textile",
+          "wet fabric or overexposure mistaken for sheerness",
+          "a transparent body or generation artifact",
+          "lace pattern with no readable light-transmission relationship"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "translucent organza chiffon tulle mesh or lace",
+          "visible textile weave seam edge and fold",
+          "opaque underlayer or background transmission",
+          "backlight and layer-density relationship",
+          "sheer sleeves yoke panel or overlay",
+          "material study rather than automatic nudity"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "sheer layered garment"
+        ],
+        "forbidden_prompt_terms": [
+          "transparent body",
+          "invisible clothing",
+          "x-ray clothing"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Make the textile itself visible through weave, seams, edges, folds, and diffusion while controlled light reveals an opaque underlayer or background through it. Choose one material and one lighting relationship, preserve the requested coverage, and do not substitute glass, wetness, overexposure, invisible fabric, or a transparent body.",
+      "required_evidence_fields": [
+        "translucent_textile_phrase",
+        "visible_weave_edge_phrase",
+        "transmitted_light_phrase",
+        "layer_contrast_phrase",
+        "material_behavior_phrase"
+      ],
+      "evidence_requirements": {
+        "translucent_textile_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "translucent organza layer",
+            "sheer chiffon garment",
+            "tulle mesh textile",
+            "sheer lace panel"
+          ]
+        },
+        "visible_weave_edge_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "visible weave seam and edge",
+            "textile surface and folded edge remain visible",
+            "mesh structure and stitched boundary"
+          ]
+        },
+        "transmitted_light_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "light passes through the fabric",
+            "backlight transmits through the sleeve",
+            "background tone passes through the panel"
+          ]
+        },
+        "layer_contrast_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "opaque underlayer remains partly visible",
+            "sheer overlay above an opaque base",
+            "translucent panel contrasts with solid fabric"
+          ]
+        },
+        "material_behavior_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "folds become denser and less transparent",
+            "stretch changes the visible openness",
+            "illumination changes transmission without erasing the textile"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_sheer_textile_first_read",
+          "review_scale": "thumbnail",
+          "description": "A translucent garment layer is immediately readable rather than a vague bright or glossy region."
+        },
+        {
+          "id": "vo_sheer_weave_edge_legibility",
+          "review_scale": "native",
+          "description": "Weave, seam, stitched boundary, edge, or fold proves that the transmitting surface is textile."
+        },
+        {
+          "id": "vo_sheer_transmission_relationship",
+          "review_scale": "both",
+          "description": "Light and an opaque underlayer or background visibly transmit through the garment in a coherent direction."
+        },
+        {
+          "id": "vo_sheer_layer_coherence",
+          "review_scale": "native",
+          "description": "Overlaps, folds, stretch, and lighting change transparency consistently across the same material."
+        },
+        {
+          "id": "vo_sheer_not_optical_or_generation_substitute",
+          "review_scale": "both",
+          "description": "Glass, wetness, overexposure, invisible clothing, or transparent-body artifacts do not carry the requested textile effect."
+        }
+      ],
+      "reject_substitutes": [
+        "clear_glass_or_plastic",
+        "wet_fabric_only",
+        "overexposure_or_bloom_only",
+        "transparent_body_or_missing_clothing_artifact",
+        "lace_pattern_without_transmission",
+        "thin_opaque_fabric_without_layer_contrast",
+        "see_through_bangs_or_hair"
+      ]
+    },
+    {
+      "id": "military_uniform_duty_system",
+      "category": "institutional_garment",
+      "activation": {
+        "exact_terms": [
+          "military uniform",
+          "service dress uniform",
+          "combat uniform",
+          "field uniform",
+          "군복",
+          "정복",
+          "전투복",
+          "야전복"
+        ],
+        "exclude_if_any_terms": [
+          "no military uniform",
+          "without military uniform",
+          "군복 제외",
+          "군복 없이"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "military garment system",
+            "service uniform",
+            "field uniform components",
+            "dress uniform insignia",
+            "military duty clothing",
+            "군 제복 체계",
+            "근무복 구성",
+            "전투복 구성품",
+            "정복 계급장",
+            "군 임무 의복"
+          ],
+          "exclude_if_any_terms": [
+            "uniform regulation essay",
+            "military dress code text",
+            "camouflage fashion trend",
+            "police uniform",
+            "security uniform",
+            "군복 규정 설명",
+            "카모 패션",
+            "경찰 제복",
+            "보안 제복"
+          ]
+        },
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A coherent military clothing system whose dress, service, field, or work variant uses internally consistent garments, footwear, headgear, equipment interfaces, and fictional rank or unit placement appropriate to one duty context, without making camouflage, a weapon, or a real insignia sufficient.",
+        "paraphrase_examples": [
+          "정복과 근무복이 같은 가상 군 조직 체계로 이어지는 제복",
+          "임무에 맞는 전투복 구성과 장비 접점이 보이는 군복",
+          "a coherent service uniform with fictional rank placement",
+          "field clothing whose components match one practical duty context"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "uniform_variant_identity",
+            "component_system_consistency",
+            "duty_context_alignment"
+          ],
+          "groups": [
+            {
+              "id": "uniform_variant_identity",
+              "any_terms": [
+                "dress service field or work uniform",
+                "one clearly selected military uniform family",
+                "정복 근무복 전투복 또는 작업복",
+                "하나로 선택된 군복 유형"
+              ]
+            },
+            {
+              "id": "component_system_consistency",
+              "any_terms": [
+                "matched jacket trousers footwear and headgear",
+                "coherent pocket closure and equipment interface",
+                "일관된 상하의 신발과 헤드기어",
+                "주머니 여밈과 장비 접점의 일관성"
+              ]
+            },
+            {
+              "id": "duty_context_alignment",
+              "any_terms": [
+                "ceremony inspection training maintenance or support duty",
+                "uniform variant matches the assigned task",
+                "의식 점검 훈련 정비 또는 지원 임무",
+                "군복 유형과 임무의 일치"
+              ]
+            },
+            {
+              "id": "fictional_insignia_placement",
+              "any_terms": [
+                "generic fictional rank placement",
+                "unbranded unit patch system",
+                "가상의 계급장 위치",
+                "실존 부대가 아닌 패치 체계"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "camouflage streetwear with no military garment system",
+          "a police or private-security uniform",
+          "a firearm used as the only military cue",
+          "paintball tactical cosplay or mixed real-world insignia"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "dress service field or work uniform family",
+          "coherent jacket trousers footwear and headgear",
+          "fictional rank and unit placement",
+          "ceremony inspection training maintenance or support duty",
+          "military garment rather than automatic combat story",
+          "no real unit insignia or propaganda identity"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "military uniform"
+        ],
+        "forbidden_prompt_terms": [
+          "real unit insignia",
+          "real military logo"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Choose one dress, service, field, or work-uniform family and keep its garments, footwear, headgear, closures, equipment interfaces, and fictional insignia internally consistent with one ceremony, inspection, training, maintenance, or support context. Do not infer combat, weapon emphasis, nationality, or a real unit identity from the garment alone.",
+      "required_evidence_fields": [
+        "uniform_variant_phrase",
+        "component_system_phrase",
+        "fictional_insignia_phrase",
+        "duty_context_phrase",
+        "variant_context_alignment_phrase"
+      ],
+      "evidence_requirements": {
+        "uniform_variant_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "dress military uniform",
+            "service military uniform",
+            "field military uniform",
+            "military work uniform"
+          ]
+        },
+        "component_system_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "matched jacket trousers footwear and headgear",
+            "coherent pockets closures and equipment interfaces",
+            "consistent uniform component system"
+          ]
+        },
+        "fictional_insignia_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "generic fictional rank placement",
+            "unbranded unit patch system",
+            "fictional non-national insignia"
+          ]
+        },
+        "duty_context_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "ceremonial inspection duty",
+            "field training task",
+            "maintenance or logistics duty",
+            "medical or aviation support duty"
+          ]
+        },
+        "variant_context_alignment_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "uniform variant matches the assigned task",
+            "garment system agrees with the duty context",
+            "equipment interfaces fit the selected uniform"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_military_uniform_variant_identity",
+          "review_scale": "thumbnail",
+          "description": "One military dress, service, field, or work-uniform family is immediately readable."
+        },
+        {
+          "id": "vo_military_uniform_component_coherence",
+          "review_scale": "native",
+          "description": "Garments, footwear, headgear, pockets, closures, and equipment interfaces form one coherent system."
+        },
+        {
+          "id": "vo_military_uniform_duty_alignment",
+          "review_scale": "both",
+          "description": "The selected uniform variant agrees with the visible ceremony, inspection, training, maintenance, or support duty."
+        },
+        {
+          "id": "vo_military_uniform_fictional_insignia",
+          "review_scale": "native",
+          "description": "Rank and unit marks remain generic, fictional, internally consistent, and unrelated to a real organization."
+        },
+        {
+          "id": "vo_military_uniform_not_adjacent_role",
+          "review_scale": "thumbnail",
+          "description": "Camouflage fashion, police, private security, paintball gear, or a firearm alone does not carry the military-uniform meaning."
+        }
+      ],
+      "reject_substitutes": [
+        "camouflage_streetwear_only",
+        "police_or_private_security_uniform",
+        "firearm_or_tactical_prop_only",
+        "paintball_or_airsoft_cosplay",
+        "mixed_incompatible_uniform_components",
+        "real_unit_patch_or_rank_copy",
+        "generic_officer_portrait_without_uniform_system"
+      ]
+    },
+    {
+      "id": "wearable_protective_armor_system",
+      "category": "wearable_protective_system",
+      "activation": {
+        "exact_terms": [
+          "wearable armor",
+          "wearable armour",
+          "plate armor",
+          "plate armour",
+          "fantasy armor",
+          "body armor system",
+          "갑옷",
+          "판금 갑옷",
+          "사슬 갑옷"
+        ],
+        "exclude_if_any_terms": [
+          "vehicle armor",
+          "vehicle armour",
+          "armored car",
+          "tank armor",
+          "plot armor",
+          "software armor",
+          "robot armor shell",
+          "차량 장갑",
+          "전차 장갑",
+          "플롯 아머",
+          "로봇 장갑 외피",
+          "revealing fantasy armor",
+          "revealing armour",
+          "skimpy armor",
+          "bikini armor",
+          "chainmail bikini",
+          "노출 갑옷",
+          "노출도 높은 갑옷",
+          "비키니 아머",
+          "체인메일 비키니",
+          "상업적 방어력",
+          "상업적인 방어력",
+          "상업적 방어력이 높은 갑옷",
+          "상업적인 방어력 높은 갑옷"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "worn protective plates",
+            "articulated armor joints",
+            "plate and mail",
+            "arming garment",
+            "human-scale armor",
+            "착용하는 보호 판",
+            "관절형 갑옷",
+            "판금과 사슬",
+            "갑옷 하부 의복",
+            "사람 크기의 갑옷"
+          ],
+          "exclude_if_any_terms": [
+            "vehicle hull",
+            "tank chassis",
+            "robot chassis",
+            "narrative invincibility",
+          "software protection",
+          "차량 차체",
+          "전차 차체",
+          "로봇 섀시",
+          "서사적 무적",
+          "소프트웨어 보호",
+          "revealing fantasy armor",
+          "revealing armour",
+          "skimpy armor",
+          "bikini armor",
+          "chainmail bikini",
+          "노출 갑옷",
+          "노출도 높은 갑옷",
+          "비키니 아머",
+          "체인메일 비키니",
+          "상업적 방어력",
+          "상업적인 방어력",
+          "상업적 방어력이 높은 갑옷",
+          "상업적인 방어력 높은 갑옷"
+        ]
+      },
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A human-scale wearable protective system whose plates, mail, scales, lamellae, padding, straps, and underlayers distribute coverage around the body while articulated overlaps and deliberate gap treatment preserve movement at the neck, shoulders, elbows, hips, knees, and other joints.",
+        "paraphrase_examples": [
+          "판금과 사슬 하부층이 관절을 따라 겹치는 착용식 갑옷",
+          "보호 범위와 움직임을 함께 설명하는 사람 크기의 방호 장비",
+          "human-scale plate and mail with articulated overlap at the joints",
+          "a wearable armor system whose straps underlayer and gap treatment remain visible"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "wearable_protective_geometry",
+            "articulated_mobility",
+            "underlayer_attachment_and_gap_control"
+          ],
+          "groups": [
+            {
+              "id": "wearable_protective_geometry",
+              "any_terms": [
+                "human-scale plates follow the torso and limbs",
+                "mail scale or lamellar coverage follows the body",
+                "사람 몸을 따라 배치된 판금",
+                "신체를 따라 이어지는 사슬 또는 라멜라"
+              ]
+            },
+            {
+              "id": "articulated_mobility",
+              "any_terms": [
+                "overlapping plates at shoulder elbow hip and knee",
+                "sliding or segmented joint articulation",
+                "어깨 팔꿈치 골반 무릎의 겹침 판",
+                "분절된 관절 가동 구조"
+              ]
+            },
+            {
+              "id": "underlayer_attachment_and_gap_control",
+              "any_terms": [
+                "padded or mail underlayer beneath plates",
+                "visible straps buckles and edge protection",
+                "neck armpit and groin gaps intentionally handled",
+                "판 아래 패딩 또는 메일 하부층",
+                "끈 버클과 가장자리 보호",
+                "목 겨드랑이 사타구니 틈새 처리"
+              ]
+            },
+            {
+              "id": "load_distribution_and_fit",
+              "any_terms": [
+                "weight distributes through shoulders waist and hips",
+                "armor follows an adult human range of motion",
+                "어깨 허리 골반으로 하중 분산",
+                "성인 인체 가동 범위에 맞는 착용"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a rigid robot shell or armored vehicle",
+          "sports pads or foam costume pieces with no armor system",
+          "decorative metal surfaces with exposed unplanned joints",
+          "a weapon shield or knight title used without wearable protection"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "human-scale wearable protective geometry",
+          "plate mail scale lamellar or brigandine system",
+          "articulated shoulder elbow hip and knee overlaps",
+          "padded or mail underlayer",
+          "straps buckles and deliberate gap treatment",
+          "load distribution and adult range of motion",
+          "historical fantasy or speculative original design"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "wearable armor system",
+          "plate-and-mail armor"
+        ],
+        "forbidden_prompt_terms": [
+          "vehicle armor",
+          "plot armor",
+          "robot chassis armor"
+        ],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the armor human-scale and visibly wearable: show protective plates, mail, scale, or lamellar elements following the body; preserve articulated overlap at major joints; and expose enough underlayer, straps, edge treatment, gap control, and load distribution to explain both coverage and movement. Do not let a robot shell, vehicle, weapon, shield, sports pad, or foam costume carry the meaning alone.",
+      "required_evidence_fields": [
+        "wearable_protective_geometry_phrase",
+        "articulated_joint_phrase",
+        "underlayer_attachment_phrase",
+        "gap_treatment_phrase",
+        "load_distribution_phrase"
+      ],
+      "evidence_requirements": {
+        "wearable_protective_geometry_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "human-scale protective plates follow the body",
+            "wearable plate and mail system",
+            "lamellar or scale coverage follows the torso and limbs"
+          ]
+        },
+        "articulated_joint_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "overlapping plates at the major joints",
+            "segmented shoulder elbow hip and knee articulation",
+            "sliding plate articulation preserves movement"
+          ]
+        },
+        "underlayer_attachment_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "padded or mail underlayer beneath the plates",
+            "visible straps buckles and attachment points",
+            "arming garment supports the plate system"
+          ]
+        },
+        "gap_treatment_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "neck armpit and groin gaps are intentionally handled",
+            "mail and padding protect the plate gaps",
+            "edge overlap controls exposed joint gaps"
+          ]
+        },
+        "load_distribution_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "weight distributes through shoulders waist and hips",
+            "fitted harness carries the armor load",
+            "balanced armor fit preserves adult movement"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_armor_wearable_human_scale",
+          "review_scale": "thumbnail",
+          "description": "The protective system first reads as armor worn by a human-scale body rather than a robot or vehicle shell."
+        },
+        {
+          "id": "vo_armor_articulated_mobility",
+          "review_scale": "both",
+          "description": "Major joints use overlapping, sliding, segmented, mail, or padded structures that visibly preserve movement."
+        },
+        {
+          "id": "vo_armor_underlayer_and_attachment",
+          "review_scale": "native",
+          "description": "Underlayers, straps, buckles, hinges, rivets, or attachment points plausibly connect the armor to the wearer."
+        },
+        {
+          "id": "vo_armor_gap_treatment",
+          "review_scale": "native",
+          "description": "Neck, armpit, elbow, hip, groin, and knee gaps are intentionally protected or structurally bounded."
+        },
+        {
+          "id": "vo_armor_not_costume_shell_or_prop",
+          "review_scale": "thumbnail",
+          "description": "Foam costume panels, sports pads, a shield, a weapon, metallic paint, or generic fantasy styling alone do not carry the armor system."
+        }
+      ],
+      "reject_substitutes": [
+        "robot_or_vehicle_armor_shell",
+        "foam_costume_plate_without_structure",
+        "sports_padding_only",
+        "weapon_or_shield_only",
+        "metallic_body_paint",
+        "unplanned_exposed_joint_gaps",
+        "rigid_plate_layout_without_human_mobility",
+        "armor_label_without_wearable_attachment"
+      ]
+    },
+    {
+      "id": "commercial_appeal_revealing_armor",
+      "category": "adult_fantasy_garment_mixin",
+      "activation": {
+        "exact_terms": [
+          "revealing fantasy armor",
+          "revealing armour",
+          "skimpy armor",
+          "bikini armor",
+          "chainmail bikini",
+          "노출 갑옷",
+          "노출도 높은 갑옷",
+          "비키니 아머",
+          "체인메일 비키니"
+        ],
+        "project_glossary_aliases": [
+          "상업적 방어력",
+          "상업적인 방어력",
+          "상업적 방어력이 높은 갑옷",
+          "상업적인 방어력 높은 갑옷"
+        ],
+        "exclude_if_any_terms": [
+          "actual protection",
+          "real protection",
+          "full coverage armor",
+          "realistic full plate",
+          "ballistic armor",
+          "body armor certification",
+          "실제 방어력",
+          "현실적인 전신 갑옷",
+          "노출 없는 중장갑",
+          "방탄복",
+          "실전 방호"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "adult original fantasy character",
+            "deliberately high-exposure armor design",
+            "armor pieces with exposed midriff and thighs",
+            "commercial character appeal",
+            "opaque intimate coverage",
+            "성인 오리지널 판타지 캐릭터",
+            "의도적으로 노출도가 높은 갑옷",
+            "복부와 허벅지가 드러나는 갑옷",
+            "캐릭터 상품성",
+            "불투명한 민감 부위 커버"
+          ],
+          "exclude_if_any_terms": [
+            "minor character",
+            "school-age character",
+            "school uniform",
+            "actual battlefield protection",
+            "real ballistic rating",
+            "미성년 캐릭터",
+            "학생 캐릭터",
+            "교복",
+            "실전 방호력",
+            "실제 방탄 등급"
+          ]
+        },
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "A requester-defined adult fantasy-character design in which commercial visual appeal is expressed through deliberately high body exposure while enough rigid plate, mail, scale, leather, articulated accessory, and attachment structure remains visible for the outfit to read as armor rather than ordinary swimwear, lingerie, body paint, or literal high-protection equipment.",
+        "paraphrase_examples": [
+          "갑옷 부품은 분명하지만 복부와 허벅지 노출이 넓은 성인 판타지 디자인",
+          "견갑 브레이서 그리브와 소형 판금이 높은 노출도와 함께 보이는 캐릭터 갑옷",
+          "an adult original fantasy character in deliberately high-exposure plate-and-mail styling",
+          "commercial character armor whose rigid pieces frame exposed midriff waist and thighs"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "unmistakably_adult_original_character",
+            "armor_identity_structure",
+            "deliberate_high_exposure_pattern",
+            "opaque_intimate_coverage"
+          ],
+          "groups": [
+            {
+              "id": "unmistakably_adult_original_character",
+              "any_terms": [
+                "unmistakably adult original fantasy character",
+                "adult fictional armor model",
+                "명백한 성인 오리지널 판타지 캐릭터",
+                "성인 가상 갑옷 모델"
+              ]
+            },
+            {
+              "id": "armor_identity_structure",
+              "any_terms": [
+                "rigid pauldrons bracers greaves and plate segments",
+                "mail scale leather and metal armor components",
+                "견갑 브레이서 그리브와 판금 조각",
+                "사슬 비늘 가죽과 금속 갑옷 부품"
+              ]
+            },
+            {
+              "id": "deliberate_high_exposure_pattern",
+              "any_terms": [
+                "broad exposed midriff waist and thighs",
+                "strategic open areas between armor components",
+                "넓게 드러난 복부 허리와 허벅지",
+                "갑옷 부품 사이의 의도적인 노출 영역"
+              ]
+            },
+            {
+              "id": "opaque_intimate_coverage",
+              "any_terms": [
+                "stable opaque coverage at the chest and pelvis",
+                "secure nontransparent intimate-area panels",
+                "가슴과 골반의 안정적인 불투명 커버",
+                "비치지 않는 민감 부위 패널"
+              ]
+            },
+            {
+              "id": "attachment_and_commercial_presentation",
+              "any_terms": [
+                "visible straps buckles and plate connections",
+                "game key-art or character lookbook presentation",
+                "보이는 끈 버클과 판 연결부",
+                "게임 키아트 또는 캐릭터 룩북 연출"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "realistic full-coverage heavy armor or ballistic body armor",
+          "an ordinary bikini or lingerie set with metallic color but no armor structure",
+          "body paint, jewelry, or fantasy accessories used as the entire outfit",
+          "a youthful or school-coded character in revealing armor"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult original fantasy character",
+          "deliberately high-exposure armor design",
+          "rigid pauldrons bracers greaves plate mail or scale",
+          "broad exposed midriff waist and thighs",
+          "stable opaque chest and pelvis coverage",
+          "visible straps buckles and structural connections",
+          "commercial game key art character lookbook or turntable",
+          "requested exposure without automatic erotic pose or body-part close-up"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "상업적 방어력",
+          "상업적인 방어력",
+          "상업적 방어력이 높은 갑옷",
+          "상업적인 방어력 높은 갑옷",
+          "commercial defense",
+          "commercial armor defense"
+        ],
+        "runtime_forbidden_labels": [
+          "상업적 방어력",
+          "상업적인 방어력",
+          "상업적 방어력이 높은 갑옷",
+          "상업적인 방어력 높은 갑옷",
+          "commercial defense",
+          "commercial armor defense"
+        ]
+      },
+      "composition_instruction": "Show one unmistakably adult original fantasy character in deliberately high-exposure armor whose rigid, mail, scale, or leather components remain first-read. Make the exposure pattern across midriff, waist, sides, and thighs intentional; preserve stable opaque chest and pelvis coverage and visible attachment logic; and keep pose, expression, camera, and body emphasis subordinate to the request rather than automatically erotic. Literal physical protection is not the meaning of this requester-defined shorthand.",
+      "required_evidence_fields": [
+        "adult_original_character_phrase",
+        "armor_identity_phrase",
+        "deliberate_exposure_pattern_phrase",
+        "opaque_intimate_coverage_phrase",
+        "structural_attachment_phrase",
+        "commercial_character_presentation_phrase"
+      ],
+      "evidence_requirements": {
+        "adult_original_character_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "unmistakably adult original fantasy character",
+            "adult fictional armor model",
+            "clearly adult original character"
+          ],
+          "must_not_contain": [
+            "girl",
+            "teen",
+            "schoolgirl",
+            "student"
+          ]
+        },
+        "armor_identity_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "rigid pauldrons bracers greaves and plate segments",
+            "mail scale leather and metal armor components",
+            "clearly readable fantasy armor structure"
+          ]
+        },
+        "deliberate_exposure_pattern_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "broad exposed midriff waist and thighs",
+            "strategic open areas between armor components",
+            "deliberately high-exposure armor layout"
+          ]
+        },
+        "opaque_intimate_coverage_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "stable opaque coverage at the chest and pelvis",
+            "secure nontransparent intimate-area panels",
+            "opaque chest and pelvis coverage remains fixed"
+          ]
+        },
+        "structural_attachment_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "visible straps buckles and plate connections",
+            "armor pieces attach through a readable harness",
+            "rigid components remain structurally connected"
+          ]
+        },
+        "commercial_character_presentation_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "commercial game key-art presentation",
+            "character lookbook presentation",
+            "front three-quarter and back armor turntable"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_revealing_armor_adult_original",
+          "review_scale": "both",
+          "description": "The wearer is unmistakably adult and original, with no youthful, student, school-uniform, or protected-character coding."
+        },
+        {
+          "id": "vo_revealing_armor_first_read",
+          "review_scale": "thumbnail",
+          "description": "Rigid plate, mail, scale, leather, or articulated components make the outfit read as fantasy armor before ordinary swimwear or lingerie."
+        },
+        {
+          "id": "vo_revealing_armor_exposure_legible",
+          "review_scale": "thumbnail",
+          "description": "Broad deliberate exposure across the midriff, waist, sides, or thighs is visibly central to the requested character design."
+        },
+        {
+          "id": "vo_revealing_armor_opaque_intimate_coverage",
+          "review_scale": "both",
+          "description": "Chest and pelvis coverage remains stable, opaque, nontransparent, and anatomically secure throughout the pose."
+        },
+        {
+          "id": "vo_revealing_armor_attachment_logic",
+          "review_scale": "native",
+          "description": "Straps, buckles, harnesses, mail links, or plate connections explain how the sparse armor components stay attached."
+        },
+        {
+          "id": "vo_revealing_armor_not_plain_swimwear",
+          "review_scale": "both",
+          "description": "A metallic bikini, lingerie set, body paint, jewelry, or isolated accessories do not substitute for readable armor structure."
+        },
+        {
+          "id": "vo_revealing_armor_request_tone_preserved",
+          "review_scale": "both",
+          "description": "The requested exposure is preserved without automatically adding an erotic pose, body-part close-up, submissive framing, or literal high-protection claim."
+        }
+      ],
+      "reject_substitutes": [
+        "realistic_full_coverage_heavy_armor",
+        "ballistic_body_armor_or_certification_claim",
+        "ordinary_bikini_or_lingerie_without_armor",
+        "metallic_body_paint_or_jewelry_only",
+        "youthful_student_or_school_coding",
+        "transparent_intimate_coverage",
+        "unrequested_erotic_pose_or_body_part_closeup",
+        "armor_label_without_rigid_mail_scale_or_attachment_evidence"
+      ]
     }
   ]
 }

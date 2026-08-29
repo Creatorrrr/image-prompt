@@ -11508,7 +11508,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             if match:
                 failures.append((key, match.group(0), text[:240]))
 
-        self.assertEqual(len(rows), 6549)
+        self.assertEqual(len(rows), 6638)
         self.assertEqual(failures, [])
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):

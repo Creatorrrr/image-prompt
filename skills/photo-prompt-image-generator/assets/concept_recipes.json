@@ -1747,6 +1747,98 @@
       ],
       "mixin_cue_budget": 2
     },
+    "파일럿": {
+      "preset": "aircraft_pilot_operation_portrait",
+      "set": {
+        "subject": "aircraft_pilot_role_model",
+        "costume_style": "professional_aircraft_pilot_uniform",
+        "prop": "flight_controls_checklist_prop",
+        "location": [
+          "aircraft_flight_deck",
+          "general_aviation_cockpit"
+        ],
+        "action": [
+          "pilot_preflight_control_check",
+          "pilot_taxi_instrument_crosscheck",
+          "pilot_approach_control_scan"
+        ]
+      },
+      "identity_core": {
+        "subject": "aircraft_pilot_role_model",
+        "costume_style": "professional_aircraft_pilot_uniform"
+      },
+      "scene_variants": [
+        {
+          "id": "preflight_control_verification",
+          "weight": 1.0,
+          "set": {
+            "location": "aircraft_flight_deck",
+            "action": "pilot_preflight_control_check",
+            "prop": "flight_controls_checklist_prop",
+            "composition": "cockpit_over_shoulder"
+          }
+        },
+        {
+          "id": "taxi_instrument_outside_scan",
+          "weight": 0.9,
+          "set": {
+            "location": "general_aviation_cockpit",
+            "action": "pilot_taxi_instrument_crosscheck",
+            "prop": "flight_controls_checklist_prop",
+            "composition": "frame_within_frame"
+          }
+        },
+        {
+          "id": "approach_control_state_agreement",
+          "weight": 0.85,
+          "set": {
+            "location": "aircraft_flight_deck",
+            "action": "pilot_approach_control_scan",
+            "prop": "flight_controls_checklist_prop",
+            "composition": "rule_of_thirds"
+          }
+        }
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "costume_style",
+        "location",
+        "action",
+        "prop"
+      ],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "subject": ["adult aircraft pilot"],
+        "costume_style": ["professional pilot uniform"],
+        "location": ["aircraft flight deck", "general aviation cockpit"],
+        "action": ["control and instrument cross-check", "outside-state scan"],
+        "prop": ["primary flight controls", "generic checklist"]
+      },
+      "additional": [
+        "파일럿은 헬멧이나 제복만으로 표현하지 말고, 실제 항공기 조종석의 파일럿 스테이션에서 주 조종장치 접촉, 체크리스트 또는 계기 교차 확인, 외부 비행 상태가 한 동작으로 연결되게 한다.",
+        "항공사 로고와 읽을 수 있는 호출부호는 피하고, 메카 파일럿·레이싱 드라이버·관제사·객실승무원으로 대체하지 않는다."
+      ],
+      "intent_axis": [
+        "adult aircraft pilot operating a real flight deck through controls, instruments, checklist discipline and outside-state agreement"
+      ],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "subject": ["aircraft_pilot_role_model"],
+        "costume_style": ["professional_aircraft_pilot_uniform"],
+        "location": ["aircraft_flight_deck", "general_aviation_cockpit"],
+        "action": ["pilot_preflight_control_check", "pilot_taxi_instrument_crosscheck", "pilot_approach_control_scan"],
+        "prop": ["flight_controls_checklist_prop"]
+      },
+      "critical_anchor_slots": ["subject", "location", "action"],
+      "safety_requirements": [
+        "adult fictional subject only; professional aviation operation, no active emergency or readable real-airline identity"
+      ],
+      "salience_cues": [
+        "pilot station, primary control contact, instrument or checklist cross-check and outside aircraft state must agree at first glance"
+      ],
+      "anchor_floor": {"role": 2},
+      "mixin_cue_budget": 2
+    },
     "승무원": {
       "preset": "flight_attendant_service_portrait",
       "set": [
@@ -1755,11 +1847,71 @@
         "location=airplane_cabin_aisle",
         "action=cabin_service_pause"
       ],
+      "identity_core": {
+        "subject": "flight_attendant_role_model",
+        "costume_style": [
+          "professional_cabin_crew_uniform",
+          "flight_attendant_uniform_costume"
+        ]
+      },
+      "scene_variants": [
+        {
+          "id": "emergency_equipment_readiness",
+          "weight": 1.0,
+          "set": {
+            "location": [
+              "aircraft_cabin_exit_galley",
+              "airplane_cabin_aisle"
+            ],
+            "action": [
+              "cabin_emergency_equipment_check",
+              "cabin_service_pause"
+            ],
+            "prop": "cabin_emergency_equipment_prop"
+          }
+        },
+        {
+          "id": "door_exit_crosscheck",
+          "weight": 0.95,
+          "set": {
+            "location": [
+              "aircraft_cabin_exit_galley",
+              "airplane_cabin_aisle"
+            ],
+            "action": [
+              "cabin_exit_crosscheck",
+              "cabin_service_pause"
+            ],
+            "prop": "cabin_emergency_equipment_prop"
+          }
+        },
+        {
+          "id": "passenger_safety_demonstration",
+          "weight": 0.9,
+          "set": {
+            "location": "airplane_cabin_aisle",
+            "action": [
+              "cabin_safety_demonstration",
+              "cabin_service_pause"
+            ],
+            "prop": "cabin_emergency_equipment_prop"
+          }
+        },
+        {
+          "id": "passenger_service_secondary_duty",
+          "weight": 0.55,
+          "set": {
+            "location": "airplane_cabin_aisle",
+            "action": "cabin_service_pause"
+          }
+        }
+      ],
       "soft_anchor_slots": [
         "subject",
         "costume_style",
         "location",
-        "action"
+        "action",
+        "prop"
       ],
       "soft_min_anchors": 1,
       "anchor_terms": {
@@ -1769,24 +1921,32 @@
         ],
         "location": [
           "airplane cabin aisle",
-          "cabin"
+          "cabin",
+          "aircraft exit and galley zone"
         ],
         "action": [
+          "emergency equipment check",
+          "door and exit cross-check",
+          "safety demonstration",
           "cabin service"
+        ],
+        "prop": [
+          "generic cabin emergency equipment"
         ]
       },
       "additional": [
-        "adult flight-attendant role identity stays readable through cabin-crew uniform, airplane aisle, and service posture; do not turn it into generic travel fashion"
+        "adult cabin-crew role identity stays readable through professional uniform, aircraft cabin zone, and a concrete safety procedure with a visible target and consequence; passenger service is one secondary duty rather than the sole definition",
+        "do not reduce the role to a tray pose, generic travel fashion, train or ship attendant, or a uniform-only portrait"
       ],
       "intent_axis": [
-        "adult flight attendant portrait, cabin crew uniform, airplane aisle, controlled service authority"
+        "adult cabin crew safety professional, aircraft cabin, emergency-equipment check, exit cross-check or safety demonstration, with service as an optional secondary duty"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
-        "adult subject only; covered professional cabin-crew uniform, no fetishized uniform framing"
+        "adult subject only; covered professional cabin-crew uniform, concrete safety duty, no fetishized uniform framing"
       ],
       "salience_cues": [
-        "airplane cabin and cabin-crew uniform must read at first glance"
+        "airplane cabin, cabin-crew uniform and one concrete safety procedure must read at first glance"
       ],
       "mixin_cue_budget": 2
     },
@@ -7586,6 +7746,250 @@
     }
   },
   "mixins": {
+    "교복": {
+      "preset": "adult_school_uniform_reference_portrait",
+      "set": {
+        "subject": "adult_school_uniform_cosplay_model",
+        "costume_style": [
+          "coordinated_school_uniform_system",
+          "adult_school_uniform_cosplay_costume"
+        ],
+        "garment_detail": "school_uniform_consistent_trim_system",
+        "action": "school_uniform_component_inspection",
+        "location": [
+          "school_reference_studio",
+          "garment_design_studio"
+        ]
+      },
+      "bundle_override_slots": ["subject", "costume_style", "garment_detail", "action", "location"],
+      "soft_anchor_slots": ["costume_style", "garment_detail", "action", "location"],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "costume_style": ["coordinated school-uniform clothing system"],
+        "garment_detail": ["consistent institutional trim and palette"],
+        "action": ["component-system inspection"],
+        "location": ["neutral adult reference or garment-design studio"]
+      },
+      "additional": [
+        "교복은 임의의 체크 치마나 학생 성격이 아니라 재킷·카디건, 셔츠, 하의, 타이·리본, 트림, 계절 선택지가 한 기관의 색상과 재단 언어로 이어지는 의복 체계로 표현한다.",
+        "인물이 등장하면 명확한 성인 레퍼런스 모델과 중립적 의상 검사 구도를 사용하고, 미성년자 코딩이나 성적 학교 판타지로 변환하지 않는다."
+      ],
+      "intent_axis": ["coherent institutional school-uniform system with consistent components, cut, palette, trim and seasonal options"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": ["coordinated_school_uniform_system", "adult_school_uniform_cosplay_costume"],
+        "garment_detail": ["school_uniform_consistent_trim_system"],
+        "action": ["school_uniform_component_inspection"],
+        "location": ["school_reference_studio", "garment_design_studio"]
+      },
+      "critical_anchor_slots": ["costume_style", "garment_detail"],
+      "safety_requirements": ["adult subject only when worn; covered neutral reference styling, no minor coding or sexualized school-uniform treatment"],
+      "salience_cues": ["multiple coordinated uniform components and repeated trim must make the institutional system readable without relying on a school-age face"],
+      "anchor_floor": {"mixin": 2},
+      "mixin_cue_budget": 2
+    },
+    "원피스": {
+      "preset": "retro_era_fashion_editorial",
+      "set": {
+        "wardrobe_style": ["one_piece_a_line_dress", "one_piece_wrap_dress", "one_piece_shirt_dress"],
+        "garment_detail": ["one_piece_continuous_bodice_to_hem", "one_piece_seam_closure_drape"],
+        "action": "one_piece_drape_turnaround",
+        "location": "garment_design_studio"
+      },
+      "bundle_override_slots": ["wardrobe_style", "garment_detail", "action", "location"],
+      "soft_anchor_slots": ["wardrobe_style", "garment_detail", "action"],
+      "soft_min_anchors": 2,
+      "anchor_terms": {
+        "wardrobe_style": ["single one-piece dress"],
+        "garment_detail": ["continuous neckline-to-bodice-to-hem construction", "seam closure and drape"],
+        "action": ["garment construction turnaround"]
+      },
+      "additional": [
+        "원피스는 상의와 하의의 코디가 아니라 네크라인·보디스·허리·밑단이 한 벌로 이어지는 드레스 구조로 고정하고, 실루엣·봉제선·여밈·드레이프를 함께 보여준다.",
+        "해적 만화 IP, 수영복 one-piece, 점프수트나 롬퍼 의미가 문맥에 명시되면 드레스 믹스인을 적용하지 않는다."
+      ],
+      "intent_axis": ["single dress construction from neckline and bodice through waist to hem, with silhouette, seam, closure and drape legible"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "wardrobe_style": ["one_piece_a_line_dress", "one_piece_wrap_dress", "one_piece_shirt_dress"],
+        "garment_detail": ["one_piece_continuous_bodice_to_hem", "one_piece_seam_closure_drape"],
+        "action": ["one_piece_drape_turnaround"]
+      },
+      "critical_anchor_slots": ["wardrobe_style", "garment_detail"],
+      "safety_requirements": ["garment construction first; preserve requested length and coverage without inventing exposure"],
+      "salience_cues": ["the dress must visibly continue as one garment from bodice to hem rather than reading as coordinated separates"],
+      "anchor_floor": {"mixin": 2},
+      "mixin_cue_budget": 2
+    },
+    "시스루": {
+      "preset": "retro_era_fashion_editorial",
+      "set": {
+        "subject": "adult_glamour_model",
+        "adult_context": "adult_fashion_material_study_context",
+        "wardrobe_style": ["sheer_opaque_overlay_garment", "sheer_panel_tailored_garment"],
+        "garment_detail": ["sheer_transmission_opaque_underlayer", "sheer_visible_edge_weave"],
+        "surface_material": "sheer_organza_chiffon_transmission",
+        "action": "sheer_backlight_transmission_test",
+        "location": "textile_backlight_studio"
+      },
+      "bundle_override_slots": ["subject", "adult_context", "wardrobe_style", "garment_detail", "surface_material", "action", "location"],
+      "soft_anchor_slots": ["wardrobe_style", "garment_detail", "surface_material", "action"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "wardrobe_style": ["sheer textile over a stable opaque underlayer"],
+        "garment_detail": ["visible weave edge and seam", "overlap-dependent opacity"],
+        "surface_material": ["organza or chiffon light transmission"],
+        "action": ["controlled backlight textile test"]
+      },
+      "additional": [
+        "시스루는 노출의 동의어가 아니라 직조·가장자리·봉제선이 보이는 반투명 직물이 역광을 투과하고, 겹침과 불투명 안감에 따라 광학적으로 달라지는 의복 층으로 표현한다.",
+        "유리, 젖은 피부, 과노출, 투명 효과만으로 대체하지 말고, 요청하지 않은 누드화나 에로틱 포즈를 추가하지 않는다."
+      ],
+      "intent_axis": ["adult fashion textile optics: visible sheer weave and edge, transmitted light, overlap-dependent opacity and stable opaque layering"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "wardrobe_style": ["sheer_opaque_overlay_garment", "sheer_panel_tailored_garment"],
+        "garment_detail": ["sheer_transmission_opaque_underlayer", "sheer_visible_edge_weave"],
+        "surface_material": ["sheer_organza_chiffon_transmission"],
+        "action": ["sheer_backlight_transmission_test"],
+        "location": ["textile_backlight_studio"]
+      },
+      "critical_anchor_slots": ["wardrobe_style", "garment_detail", "surface_material"],
+      "safety_requirements": ["adult subject only when worn; stable opaque coverage, neutral textile-study framing, no automatic nudity or erotic pose"],
+      "salience_cues": ["weave, edge, transmitted light and opaque underlayer must all remain separately readable"],
+      "anchor_floor": {"mixin": 2},
+      "mixin_cue_budget": 2
+    },
+    "군복": {
+      "preset": "military_uniform_duty_editorial",
+      "set": {
+        "subject": "military_uniform_duty_model",
+        "costume_style": ["military_service_uniform_system", "military_field_uniform_system"],
+        "action": "military_uniform_duty_inspection",
+        "prop": "generic_fictional_insignia_set",
+        "location": "military_uniform_inspection_room"
+      },
+      "bundle_override_slots": ["subject", "costume_style", "action", "prop", "location"],
+      "soft_anchor_slots": ["costume_style", "action", "prop", "location"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "costume_style": ["complete dress service field or work uniform system"],
+        "action": ["duty-context component inspection"],
+        "prop": ["fictional unreadable identifiers"],
+        "location": ["neutral uniform inspection room"]
+      },
+      "additional": [
+        "군복은 정복·근무복·야전복·작업복 중 한 임무 체계를 선택하고 상의, 하의, 헤드기어, 신발, 식별표지, 제한된 장비를 그 체계에 맞게 통일한다.",
+        "민간 카무플라주 패션, 경찰·경비 제복, 총기 하나, 실재 조직 로고나 선전물로 대체하지 않는다."
+      ],
+      "intent_axis": ["adult fictional military uniform as a coherent dress service field or work duty system with generic identifiers"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": ["military_service_uniform_system", "military_field_uniform_system"],
+        "action": ["military_uniform_duty_inspection"],
+        "prop": ["generic_fictional_insignia_set"],
+        "location": ["military_uniform_inspection_room"]
+      },
+      "critical_anchor_slots": ["costume_style", "action"],
+      "safety_requirements": ["adult fictional subject only; no active combat, graphic violence, propaganda framing or copied real-unit identity"],
+      "salience_cues": ["complete matched uniform components and one duty context must read before camouflage pattern or weapon imagery"],
+      "anchor_floor": {"mixin": 2},
+      "mixin_cue_budget": 2
+    },
+    "갑옷": {
+      "preset": "wearable_armor_reference_editorial",
+      "set": {
+        "subject": "armor_reference_adult_model",
+        "costume_style": "wearable_plate_mail_armor_system",
+        "garment_detail": "armor_articulated_overlap_attachment",
+        "surface_material": "armor_plate_mail_leather_material",
+        "action": "armor_articulation_stance",
+        "prop": "armor_articulation_detail_board",
+        "location": "fantasy_armor_campaign_studio"
+      },
+      "bundle_override_slots": ["subject", "costume_style", "garment_detail", "surface_material", "action", "prop", "location"],
+      "soft_anchor_slots": ["costume_style", "garment_detail", "surface_material", "action"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "costume_style": ["human-scale wearable plate or mail armor"],
+        "garment_detail": ["articulated joint overlap and visible attachment"],
+        "surface_material": ["plate mail leather or textile transition"],
+        "action": ["movement stance demonstrating articulation"]
+      },
+      "additional": [
+        "갑옷은 인간이 실제로 착용하는 판금·사슬·비늘·찰갑 구조로 읽혀야 하며, 어깨·팔꿈치·엉덩이·무릎의 관절 겹침, 하부층, 끈·버클, 틈 처리와 하중 분산을 보여준다.",
+        "로봇 외피, 차량 장갑, 폼 코스튬, 스포츠 패드, 무기만 든 인물로 대체하지 않는다."
+      ],
+      "intent_axis": ["human-scale wearable armor system with articulation, underlayer, attachments, gap treatment and believable load distribution"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": ["wearable_plate_mail_armor_system"],
+        "garment_detail": ["armor_articulated_overlap_attachment"],
+        "surface_material": ["armor_plate_mail_leather_material"],
+        "action": ["armor_articulation_stance"],
+        "prop": ["armor_articulation_detail_board"],
+        "location": ["fantasy_armor_campaign_studio", "historical_armory_exhibit_room", "castle_armory_hall"]
+      },
+      "critical_anchor_slots": ["costume_style", "garment_detail", "surface_material"],
+      "safety_requirements": ["adult fictional or museum-reference subject; no active combat, injury or graphic violence"],
+      "salience_cues": ["wearable armor silhouette, articulated overlaps and attachment logic must remain readable at full-body scale"],
+      "anchor_floor": {"mixin": 2},
+      "mixin_cue_budget": 2
+    },
+    "노출 갑옷": {
+      "preset": "commercial_revealing_fantasy_armor_editorial",
+      "set": {
+        "subject": "revealing_armor_adult_model",
+        "adult_context": "adult_original_fantasy_character_context",
+        "costume_style": "commercial_revealing_fantasy_armor",
+        "garment_detail": ["revealing_armor_deliberate_exposure_pattern", "revealing_armor_opaque_intimate_coverage", "armor_articulated_overlap_attachment"],
+        "surface_material": "armor_plate_mail_leather_material",
+        "action": "revealing_armor_design_turntable",
+        "location": "fantasy_armor_campaign_studio",
+        "subject_framing": "full_body_framing"
+      },
+      "bundle_override_slots": ["subject", "adult_context", "costume_style", "garment_detail", "surface_material", "action", "location", "subject_framing"],
+      "soft_anchor_slots": ["costume_style", "garment_detail", "surface_material", "action", "subject_framing"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "costume_style": ["original high-exposure fantasy armor"],
+        "garment_detail": ["deliberate exposure pattern", "stable opaque chest and pelvis coverage", "visible armor attachments"],
+        "surface_material": ["rigid plate or mail material transitions"],
+        "action": ["neutral design-turntable pose"],
+        "subject_framing": ["full-body armor design read"]
+      },
+      "additional": [
+        "프로젝트에서 '상업적 방어력'과 '상업적인 방어력'은 실제 방호 성능이 아니라 성인 오리지널 판타지 갑옷의 높은 노출도를 뜻한다. 이 요청자 정의를 literal 고방어 갑옷보다 우선한다.",
+        "노출은 크게 읽히되 갑옷 정체성을 유지하고, 가슴과 골반은 안정적인 불투명 부품으로 덮으며 각 판금·사슬 부품의 끈·링·겹침 연결을 보여준다.",
+        "일반 수영복, 란제리, 바디페인트, 전신 중갑, 자동 에로틱 포즈, 신체 부위 클로즈업, 미성년자 코딩으로 대체하지 않는다."
+      ],
+      "intent_axis": ["adult original high-exposure fantasy armor for commercial key art, armor-first read, stable opaque intimate coverage and visible attachment logic"],
+      "likeness_mode": "inspired",
+      "anchor_pool": {
+        "costume_style": ["commercial_revealing_fantasy_armor"],
+        "garment_detail": ["revealing_armor_deliberate_exposure_pattern", "revealing_armor_opaque_intimate_coverage", "armor_articulated_overlap_attachment"],
+        "surface_material": ["armor_plate_mail_leather_material"],
+        "action": ["revealing_armor_design_turntable"],
+        "location": ["fantasy_armor_campaign_studio"],
+        "subject_framing": ["full_body_framing"]
+      },
+      "critical_anchor_slots": ["costume_style", "garment_detail", "subject_framing"],
+      "safety_requirements": ["clearly adult original fictional subject only; stable opaque chest and pelvis coverage; no minor coding, nudity, automatic erotic pose or intimate-part close-up"],
+      "salience_cues": ["high exposure and armor-first silhouette must coexist; visible rigid or mail components, opaque intimate coverage and attachment logic must survive thumbnail review"],
+      "anchor_floor": {"mixin": 3},
+      "mixin_cue_budget": 3,
+      "guide": {
+        "definition_ko": "상업적 방어력은 이 프로젝트에서 방어 수치가 아니라 고노출 판타지 갑옷 디자인을 뜻한다. 성인 오리지널 캐릭터, 갑옷 정체성, 높은 노출, 불투명 핵심 커버, 부착 논리를 동시에 유지한다.",
+        "dominant_axes": ["high_exposure", "armor_identity", "opaque_intimate_coverage", "attachment_logic"],
+        "anchor_guidance": "전신 또는 3/4 전신에서 판금·사슬 부품이 노출 영역을 설계하고, 가슴·골반 불투명 커버가 안정적으로 연결되는 모습을 보여준다.",
+        "anti_patterns": ["literal full-protection armor", "ordinary bikini with metallic trim", "lingerie", "body paint", "erotic pose", "minor coding"]
+      },
+      "review_gates": [
+        {"id": "adult_original_character", "check": "clearly adult original fantasy character with no minor or franchise coding", "machine_checkable": false},
+        {"id": "armor_and_exposure_dual_read", "check": "thumbnail reads both deliberate high exposure and a connected armor system", "machine_checkable": false},
+        {"id": "opaque_coverage_and_attachment", "check": "native review confirms stable opaque chest and pelvis coverage plus visible attachment logic", "machine_checkable": false}
+      ]
+    },
     "회사원": {
       "preset": "corporate_startup_profile",
       "set": {
@@ -39441,8 +39845,18 @@
     "자동인형": "로봇",
     "인조인간": "로봇",
     "휴머노이드": "로봇",
+    "조종사": "파일럿",
+    "항공기 조종사": "파일럿",
+    "비행기 조종사": "파일럿",
+    "aircraft pilot": "파일럿",
+    "airline pilot": "파일럿",
+    "commercial pilot": "파일럿",
     "스튜어디스": "승무원",
     "캐빈크루": "승무원",
+    "객실승무원": "승무원",
+    "객실 승무원": "승무원",
+    "flight attendant": "승무원",
+    "cabin crew": "승무원",
     "소방": "소방관",
     "보안": "보안요원",
     "경비원": "보안요원",
@@ -39453,7 +39867,43 @@
     "쉐프": "요리사",
     "장교": "군장교",
     "성인 학생": "학생",
-    "교복": "학생",
+    "성인 교복": "교복",
+    "학교 교복": "교복",
+    "school uniform": "교복",
+    "school-uniform clothing": "교복",
+    "원피스 드레스": "원피스",
+    "일체형 드레스": "원피스",
+    "one-piece dress": "원피스",
+    "one piece dress": "원피스",
+    "셔츠 원피스": "원피스",
+    "랩 원피스": "원피스",
+    "시어 의상": "시스루",
+    "반투명 직물 의상": "시스루",
+    "sheer garment": "시스루",
+    "sheer clothing": "시스루",
+    "transparent textile garment": "시스루",
+    "군 제복": "군복",
+    "군 근무복": "군복",
+    "군 야전복": "군복",
+    "military uniform": "군복",
+    "military service uniform": "군복",
+    "착용형 갑옷": "갑옷",
+    "판금 갑옷": "갑옷",
+    "판금·사슬 갑옷": "갑옷",
+    "wearable armor": "갑옷",
+    "plate armor": "갑옷",
+    "plate and mail armor": "갑옷",
+    "노출도 높은 갑옷": "노출 갑옷",
+    "비키니 아머": "노출 갑옷",
+    "체인메일 비키니": "노출 갑옷",
+    "revealing fantasy armor": "노출 갑옷",
+    "skimpy armor": "노출 갑옷",
+    "bikini armor": "노출 갑옷",
+    "chainmail bikini": "노출 갑옷",
+    "상업적 방어력": "노출 갑옷",
+    "상업적인 방어력": "노출 갑옷",
+    "상업적 방어력이 높은 갑옷": "노출 갑옷",
+    "상업적인 방어력 높은 갑옷": "노출 갑옷",
     "무당": "무녀",
     "사서": "도서관 사서",
     "아키비스트": "기록가",

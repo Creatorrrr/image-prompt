@@ -1571,6 +1571,137 @@ class PhotoVisualObligationTests(unittest.TestCase):
             {failure["check"] for failure in failures},
         )
 
+    def test_role_garment_and_revealing_armor_profiles_are_structurally_complete(self):
+        expected = {
+            "aircraft_pilot_operation": {
+                "adult": True,
+                "required_groups": {
+                    "pilot_station_identity",
+                    "control_or_checklist_contact",
+                    "matched_flight_state",
+                },
+                "gate": "vo_pilot_flight_state_coherence",
+                "reject": "pilot_helmet_or_flight_suit_only",
+            },
+            "cabin_crew_safety_role": {
+                "adult": True,
+                "required_groups": {
+                    "aircraft_cabin_identity",
+                    "safety_procedure",
+                    "governed_safety_target",
+                },
+                "gate": "vo_cabin_crew_not_service_or_uniform_only",
+                "reject": "service_tray_or_cart_only",
+            },
+            "school_uniform_institutional_system": {
+                "adult": False,
+                "required_groups": {
+                    "coordinated_garment_set",
+                    "institutional_consistency",
+                    "school_identity_context",
+                },
+                "gate": "vo_school_uniform_not_generic_prep",
+                "reject": "random_plaid_skirt_or_tie",
+            },
+            "one_piece_dress_construction": {
+                "adult": False,
+                "required_groups": {
+                    "continuous_garment_unit",
+                    "dress_silhouette",
+                    "construction_and_drape",
+                },
+                "gate": "vo_one_piece_not_adjacent_sense",
+                "reject": "matching_two_piece_separates",
+            },
+            "sheer_garment_optical_layering": {
+                "adult": False,
+                "required_groups": {
+                    "translucent_textile_surface",
+                    "transmission_relationship",
+                    "garment_boundary_and_layer",
+                },
+                "gate": "vo_sheer_not_optical_or_generation_substitute",
+                "reject": "transparent_body_or_missing_clothing_artifact",
+            },
+            "military_uniform_duty_system": {
+                "adult": False,
+                "required_groups": {
+                    "uniform_variant_identity",
+                    "component_system_consistency",
+                    "duty_context_alignment",
+                },
+                "gate": "vo_military_uniform_not_adjacent_role",
+                "reject": "camouflage_streetwear_only",
+            },
+            "wearable_protective_armor_system": {
+                "adult": False,
+                "required_groups": {
+                    "wearable_protective_geometry",
+                    "articulated_mobility",
+                    "underlayer_attachment_and_gap_control",
+                },
+                "gate": "vo_armor_underlayer_and_attachment",
+                "reject": "robot_or_vehicle_armor_shell",
+            },
+            "commercial_appeal_revealing_armor": {
+                "adult": True,
+                "required_groups": {
+                    "unmistakably_adult_original_character",
+                    "armor_identity_structure",
+                    "deliberate_high_exposure_pattern",
+                    "opaque_intimate_coverage",
+                },
+                "gate": "vo_revealing_armor_opaque_intimate_coverage",
+                "reject": "ordinary_bikini_or_lingerie_without_armor",
+            },
+        }
+        profiles = {profile["id"]: profile for profile in self.registry["profiles"]}
+        self.assertTrue(set(expected) <= set(profiles))
+        for profile_id, contract in expected.items():
+            with self.subTest(profile_id=profile_id):
+                profile = profiles[profile_id]
+                self.assertIs(
+                    profile["activation"]["requires_adult_character"],
+                    contract["adult"],
+                )
+                self.assertEqual(
+                    set(
+                        profile["semantics"]["component_semantics"][
+                            "required_group_ids"
+                        ]
+                    ),
+                    contract["required_groups"],
+                )
+                self.assertIn(
+                    contract["gate"],
+                    {gate["id"] for gate in profile["render_gates"]},
+                )
+                self.assertIn(contract["reject"], profile["reject_substitutes"])
+
+        revealing = profiles["commercial_appeal_revealing_armor"]
+        self.assertEqual(
+            set(revealing["activation"]["project_glossary_aliases"]),
+            {
+                "상업적 방어력",
+                "상업적인 방어력",
+                "상업적 방어력이 높은 갑옷",
+                "상업적인 방어력 높은 갑옷",
+            },
+        )
+        self.assertEqual(
+            revealing["runtime_expression"]["default_mode"],
+            "definition_only",
+        )
+        self.assertTrue(
+            set(revealing["activation"]["project_glossary_aliases"])
+            <= set(revealing["runtime_expression"]["runtime_forbidden_labels"])
+        )
+        base_armor = profiles["wearable_protective_armor_system"]
+        self.assertTrue(
+            set(revealing["activation"]["project_glossary_aliases"])
+            <= set(base_armor["activation"]["exclude_if_any_terms"])
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
