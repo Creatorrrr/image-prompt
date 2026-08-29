@@ -608,6 +608,276 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
         self.assertEqual(relation_hit["match_basis"], "embedding")
         self.assertTrue(relation_hit["optional_eligible"])
 
+    def test_role_and_garment_exact_terms_require_their_visual_context(self):
+        positives = {
+            "aircraft_pilot_operation": (
+                "파일럿",
+                "adult aircraft pilot in an aircraft cockpit with flight controls, instrument panel, and runway state",
+            ),
+            "cabin_crew_safety_role": (
+                "스튜어디스",
+                "adult cabin crew in an aircraft cabin performing a cabin-safety check at the emergency exit",
+            ),
+            "school_uniform_institutional_system": (
+                "교복",
+                "coordinated uniform garments with a uniform blazer, uniform shirt, and one school clothing system",
+            ),
+            "one_piece_dress_construction": (
+                "원피스",
+                "dress garment with bodice-to-hem continuity, neckline and skirt, closure, and dress drape",
+            ),
+            "sheer_garment_optical_layering": (
+                "시스루",
+                "translucent textile and sheer fabric layer over an opaque underlayer with visible weave and edge",
+            ),
+            "military_uniform_duty_system": (
+                "군복",
+                "military garment system with service-uniform components aligned to one military duty context",
+            ),
+            "wearable_protective_armor_system": (
+                "갑옷",
+                "human-scale armor with worn protective plates, articulated armor joints, and plate-and-mail underlayers",
+            ),
+            "commercial_appeal_revealing_armor": (
+                "상업적인 방어력 높은 갑옷",
+                "clearly adult original fantasy character in deliberately high-exposure armor with opaque intimate coverage",
+            ),
+        }
+        for expected_id, (term, interpretation) in positives.items():
+            with self.subTest(expected_id=expected_id):
+                resolution = prompt_generator.resolve_visual_profile_hits(
+                    self.registry,
+                    [
+                        {
+                            "source": "concept_lock",
+                            "text": term,
+                            "polarity": "required",
+                        },
+                        {
+                            "source": "authorial_core_interpretation",
+                            "text": interpretation,
+                            "polarity": "advisory",
+                        },
+                    ],
+                    visual_profile_index=self.index,
+                    adult_context=True,
+                )
+                hard_ids = {
+                    hit["profile_id"]
+                    for hit in resolution["hits"]
+                    if hit["hard_eligible"]
+                }
+                self.assertIn(expected_id, hard_ids)
+                if expected_id == "commercial_appeal_revealing_armor":
+                    self.assertNotIn("wearable_protective_armor_system", hard_ids)
+
+        negatives = {
+            "aircraft_pilot_operation": (
+                "파일럿 프로젝트",
+                "trial rollout and experimental program, not an aircraft operation",
+            ),
+            "cabin_crew_safety_role": (
+                "열차 승무원",
+                "rail carriage and train-platform passenger service",
+            ),
+            "school_uniform_institutional_system": (
+                "교복",
+                "a school dress-code essay about uniform cost policy, with no garment image",
+            ),
+            "one_piece_dress_construction": (
+                "원피스 애니",
+                "an anime franchise and straw-hat pirate crew",
+            ),
+            "sheer_garment_optical_layering": (
+                "시스루뱅",
+                "a bangs hairstyle and hair fringe",
+            ),
+            "military_uniform_duty_system": (
+                "군복",
+                "a camouflage fashion trend and civilian streetwear editorial",
+            ),
+            "wearable_protective_armor_system": (
+                "갑옷",
+                "vehicle hull and tank chassis protection",
+            ),
+            "commercial_appeal_revealing_armor": (
+                "상업적 방어력",
+                "actual battlefield protection with a real ballistic rating and full coverage armor",
+            ),
+        }
+        for blocked_id, (term, interpretation) in negatives.items():
+            with self.subTest(blocked_id=blocked_id):
+                resolution = prompt_generator.resolve_visual_profile_hits(
+                    self.registry,
+                    [
+                        {
+                            "source": "concept_lock",
+                            "text": term,
+                            "polarity": "required",
+                        },
+                        {
+                            "source": "authorial_core_interpretation",
+                            "text": interpretation,
+                            "polarity": "advisory",
+                        },
+                    ],
+                    visual_profile_index=self.index,
+                    adult_context=True,
+                )
+                hard_ids = {
+                    hit["profile_id"]
+                    for hit in resolution["hits"]
+                    if hit["hard_eligible"]
+                }
+                self.assertNotIn(blocked_id, hard_ids)
+
+    def test_commercial_defense_glossary_honors_alignment_override_and_negation(self):
+        rows = [
+            {
+                "source": "concept_lock",
+                "text": "상업적인 방어력 높은 갑옷",
+                "polarity": "required",
+            },
+            {
+                "source": "authorial_core_interpretation",
+                "text": (
+                    "an adult original fantasy character wearing deliberately high-exposure "
+                    "armor with opaque intimate coverage and visible armor attachments"
+                ),
+                "polarity": "advisory",
+            },
+        ]
+        aligned = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            rows,
+            visual_profile_index=self.index,
+            user_definitions=[
+                {
+                    "term": "상업적인 방어력",
+                    "source_text": "상업적인 방어력 높은 갑옷",
+                    "interpreted_meaning": (
+                        "unmistakably adult original fantasy character in a deliberately "
+                        "high-exposure armor design with stable opaque chest and pelvis "
+                        "coverage and visible straps, buckles, and structural connections"
+                    ),
+                }
+            ],
+            adult_context=True,
+        )
+        aligned_hit = next(
+            hit
+            for hit in aligned["hits"]
+            if hit["profile_id"] == "commercial_appeal_revealing_armor"
+        )
+        self.assertEqual(aligned_hit["applicability_status"], "required")
+        self.assertTrue(aligned_hit["hard_eligible"])
+
+        overridden = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            rows,
+            visual_profile_index=self.index,
+            user_definitions=[
+                {
+                    "term": "상업적인 방어력",
+                    "source_text": "상업적인 방어력 높은 갑옷",
+                    "interpreted_meaning": "an unrelated retail pricing score",
+                }
+            ],
+            adult_context=True,
+        )
+        override_hit = next(
+            hit
+            for hit in overridden["hits"]
+            if hit["profile_id"] == "commercial_appeal_revealing_armor"
+        )
+        self.assertEqual(
+            override_hit["applicability_status"],
+            "user_definition_override",
+        )
+        self.assertFalse(override_hit["hard_eligible"])
+        self.assertFalse(override_hit["optional_eligible"])
+
+        negated = prompt_generator.resolve_visual_profile_hits(
+            self.registry,
+            [
+                {
+                    "source": "concept_lock",
+                    "text": "상업적인 방어력 없는 성인 판타지 갑옷",
+                    "polarity": "required",
+                },
+                {
+                    "source": "authorial_core_interpretation",
+                    "text": "adult original fantasy character with ordinary covered armor",
+                    "polarity": "advisory",
+                },
+            ],
+            visual_profile_index=self.index,
+            adult_context=True,
+        )
+        self.assertNotIn(
+            "commercial_appeal_revealing_armor",
+            {
+                hit["profile_id"]
+                for hit in negated["hits"]
+                if hit["hard_eligible"] or hit["optional_eligible"]
+            },
+        )
+
+    def test_new_profile_embedding_paraphrases_remain_optional_only(self):
+        paraphrases = {
+            profile["id"]: profile["semantics"]["paraphrase_examples"][0]
+            for profile in self.registry["profiles"]
+            if profile["id"]
+            in {
+                "aircraft_pilot_operation",
+                "cabin_crew_safety_role",
+                "school_uniform_institutional_system",
+                "one_piece_dress_construction",
+                "sheer_garment_optical_layering",
+                "military_uniform_duty_system",
+                "wearable_protective_armor_system",
+                "commercial_appeal_revealing_armor",
+            }
+        }
+        self.assertEqual(len(paraphrases), 8)
+        for expected_id, paraphrase in paraphrases.items():
+            with self.subTest(expected_id=expected_id):
+                vectors = {
+                    profile["id"]: (
+                        [1.0, 0.0]
+                        if profile["id"] == expected_id
+                        else [0.0, 1.0]
+                    )
+                    for profile in self.registry["profiles"]
+                }
+                fake_index = prompt_generator.build_visual_profile_index_payload(
+                    self.registry,
+                    vectors=vectors,
+                    dimensions=2,
+                )
+                resolution = prompt_generator.resolve_visual_profile_hits(
+                    self.registry,
+                    [
+                        {
+                            "source": "authorial_core_interpretation",
+                            "text": paraphrase,
+                            "polarity": "advisory",
+                        }
+                    ],
+                    visual_profile_index=fake_index,
+                    query_text=paraphrase,
+                    query_vector=[1.0, 0.0],
+                    adult_context=True,
+                )
+                hit = next(
+                    hit
+                    for hit in resolution["hits"]
+                    if hit["profile_id"] == expected_id
+                )
+                self.assertEqual(hit["match_basis"], "embedding")
+                self.assertFalse(hit["hard_eligible"])
+                self.assertTrue(hit["optional_eligible"])
+
 
 if __name__ == "__main__":
     unittest.main()

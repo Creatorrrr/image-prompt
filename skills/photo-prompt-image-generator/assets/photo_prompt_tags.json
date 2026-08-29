@@ -1,6 +1,6 @@
 {
-  "version": "1.23",
-  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text. Version 1.23 adds coherent science-inspection, mobility-logistics, and climate-adaptation packs plus reusable relation, event, process, capture-modality, weather-effect, and movement facets for broader operational photography.",
+  "version": "1.24",
+  "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text. Version 1.23 adds coherent science-inspection, mobility-logistics, and climate-adaptation packs plus reusable relation, event, process, capture-modality, weather-effect, and movement facets for broader operational photography. Version 1.24 adds role and garment semantics for aircraft pilots, cabin-crew safety work, institutional school uniforms, one-piece dress construction, sheer textile optics, military duty uniforms, wearable armor, and requester-defined adult high-exposure fantasy armor.",
   "facet_vocab": {
     "subject_kind": [
       "human",
@@ -34954,6 +34954,143 @@
       "family": "covert_surveillance_family"
     },
     {
+      "id": "aircraft_pilot_operation_portrait",
+      "ko": "항공기 파일럿 조종 임무 포트레이트",
+      "en": "aircraft pilot operational portrait",
+      "weight": 0.74,
+      "template_style": "natural",
+      "required_slots": [
+        "medium", "genre", "subject", "action", "costume_style", "prop",
+        "location", "lighting", "camera_direction", "composition", "lens",
+        "mood", "quality"
+      ],
+      "optional_slots": [
+        {"slot": "focus", "probability": 0.55},
+        {"slot": "motion", "probability": 0.35}
+      ],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "film_still", "magazine_feature"]},
+        "genre": {"ids": ["documentary", "portrait", "cinematic"]},
+        "subject": {"ids": ["aircraft_pilot_role_model"]},
+        "action": {"ids": ["pilot_preflight_control_check", "pilot_taxi_instrument_crosscheck", "pilot_approach_control_scan"]},
+        "costume_style": {"ids": ["professional_aircraft_pilot_uniform"]},
+        "prop": {"ids": ["flight_controls_checklist_prop"]},
+        "location": {"ids": ["aircraft_flight_deck", "general_aviation_cockpit"]},
+        "lighting": {"ids": ["cockpit_instrument_glow", "soft_window", "low_key"]},
+        "camera_direction": {"ids": ["over_shoulder", "eye_level_three_quarter", "eye_level_front"]},
+        "composition": {"ids": ["cockpit_over_shoulder", "rule_of_thirds", "frame_within_frame"]},
+        "lens": {"ids": ["35mm", "50mm", "wide_24mm"]},
+        "focus": {"ids": ["selective_foreground_focus", "eye_focus"]},
+        "motion": {"ids": ["stable_tripod", "handheld_microshake"]},
+        "mood": {"ids": ["professional_detachment", "mature_poised_elegance"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]}
+      },
+      "embedding_text": "adult real-aircraft pilot at a pilot station, primary control contact, checklist or instrument cross-check, and outside flight state agreeing in one operational frame",
+      "family": "professional_observation_family"
+    },
+    {
+      "id": "military_uniform_duty_editorial",
+      "ko": "가상 군복 임무 체계 에디토리얼",
+      "en": "fictional military-uniform duty-system editorial",
+      "weight": 0.68,
+      "template_style": "natural",
+      "required_slots": [
+        "medium", "genre", "subject", "action", "costume_style", "prop",
+        "location", "lighting", "camera_direction", "composition", "lens",
+        "mood", "quality"
+      ],
+      "optional_slots": [
+        {"slot": "color", "probability": 0.45},
+        {"slot": "subject_framing", "probability": 0.7}
+      ],
+      "filters": {
+        "medium": {"ids": ["fashion_editorial", "documentary_photo", "magazine_feature"]},
+        "genre": {"ids": ["portrait", "fashion", "documentary"]},
+        "subject": {"ids": ["military_uniform_duty_model"]},
+        "action": {"ids": ["military_uniform_duty_inspection", "standing_silence"]},
+        "costume_style": {"ids": ["military_service_uniform_system", "military_field_uniform_system"]},
+        "prop": {"ids": ["generic_fictional_insignia_set"]},
+        "location": {"ids": ["military_uniform_inspection_room"]},
+        "lighting": {"ids": ["soft_window", "studio_flash", "low_key"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter"]},
+        "composition": {"ids": ["centered_symmetry", "rule_of_thirds"]},
+        "lens": {"ids": ["50mm", "85mm"]},
+        "mood": {"ids": ["professional_detachment", "mature_poised_elegance"]},
+        "quality": {"ids": ["photoreal", "high_detail", "editorial_quality"]},
+        "subject_framing": {"ids": ["full_body_framing", "three_quarter_body_framing"]}
+      },
+      "embedding_text": "adult fictional military dress service field or work uniform as one coherent duty system, complete matched components and generic unreadable identifiers, not civilian camouflage fashion",
+      "family": "professional_observation_family"
+    },
+    {
+      "id": "wearable_armor_reference_editorial",
+      "ko": "착용형 갑옷 구조 레퍼런스 에디토리얼",
+      "en": "wearable armor system reference editorial",
+      "weight": 0.66,
+      "template_style": "natural",
+      "required_slots": [
+        "medium", "genre", "subject", "action", "costume_style", "prop",
+        "location", "lighting", "camera_direction", "composition", "lens",
+        "surface_material", "garment_detail", "subject_framing", "mood", "quality"
+      ],
+      "optional_slots": [{"slot": "motion", "probability": 0.4}],
+      "filters": {
+        "medium": {"ids": ["concept_photo", "magazine_feature", "fashion_editorial"]},
+        "genre": {"ids": ["portrait", "fashion", "documentary"]},
+        "subject": {"ids": ["armor_reference_adult_model"]},
+        "action": {"ids": ["armor_articulation_stance"]},
+        "costume_style": {"ids": ["wearable_plate_mail_armor_system"]},
+        "prop": {"ids": ["armor_articulation_detail_board"]},
+        "location": {"ids": ["fantasy_armor_campaign_studio", "historical_armory_exhibit_room", "castle_armory_hall"]},
+        "lighting": {"ids": ["rim_light", "softbox", "studio_flash"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter"]},
+        "composition": {"ids": ["centered_symmetry", "silhouette_outline_negative_space", "rule_of_thirds"]},
+        "lens": {"ids": ["50mm", "85mm"]},
+        "surface_material": {"ids": ["armor_plate_mail_leather_material"]},
+        "garment_detail": {"ids": ["armor_articulated_overlap_attachment"]},
+        "subject_framing": {"ids": ["full_body_framing", "three_quarter_body_framing"]},
+        "motion": {"ids": ["stable_tripod", "flash_freeze"]},
+        "mood": {"ids": ["elegant", "professional_detachment"]},
+        "quality": {"ids": ["photoreal", "high_detail", "editorial_quality"]}
+      },
+      "embedding_text": "human-scale wearable armor reference with articulated plates or mail, underlayer, overlap, straps and believable joint movement visible in one full-body frame",
+      "family": "fantasy_material_system_family"
+    },
+    {
+      "id": "commercial_revealing_fantasy_armor_editorial",
+      "ko": "상업용 고노출 판타지 갑옷 에디토리얼",
+      "en": "commercial high-exposure fantasy armor editorial",
+      "weight": 0.64,
+      "template_style": "natural",
+      "required_slots": [
+        "medium", "genre", "subject", "adult_context", "action", "costume_style",
+        "location", "lighting", "camera_direction", "composition", "lens",
+        "surface_material", "garment_detail", "subject_framing", "mood", "quality"
+      ],
+      "optional_slots": [{"slot": "prop", "probability": 0.3}],
+      "filters": {
+        "medium": {"ids": ["campaign_photo", "fashion_editorial", "concept_photo", "magazine_feature"]},
+        "genre": {"ids": ["fashion", "portrait", "cinematic"]},
+        "subject": {"ids": ["revealing_armor_adult_model"]},
+        "adult_context": {"ids": ["adult_original_fantasy_character_context"]},
+        "action": {"ids": ["revealing_armor_design_turntable"]},
+        "costume_style": {"ids": ["commercial_revealing_fantasy_armor"]},
+        "prop": {"ids": ["armor_articulation_detail_board"]},
+        "location": {"ids": ["fantasy_armor_campaign_studio"]},
+        "lighting": {"ids": ["rim_light", "studio_flash", "softbox"]},
+        "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter"]},
+        "composition": {"ids": ["centered_symmetry", "silhouette_outline_negative_space", "rule_of_thirds"]},
+        "lens": {"ids": ["50mm", "85mm"]},
+        "surface_material": {"ids": ["armor_plate_mail_leather_material"]},
+        "garment_detail": {"ids": ["revealing_armor_deliberate_exposure_pattern", "revealing_armor_opaque_intimate_coverage", "armor_articulated_overlap_attachment"]},
+        "subject_framing": {"ids": ["full_body_framing", "three_quarter_body_framing"]},
+        "mood": {"ids": ["elegant", "mature_poised_elegance"]},
+        "quality": {"ids": ["photoreal", "high_detail", "editorial_quality", "not_overdone"]}
+      },
+      "embedding_text": "adult original fantasy armor with deliberate high exposure, armor-first silhouette, stable opaque chest and pelvis coverage, visible attachments, commercial key-art framing and no automatic erotic pose",
+      "family": "fantasy_material_system_family"
+    },
+    {
       "id": "flight_attendant_service_portrait",
       "ko": "승무원 서비스 포트레이트",
       "en": "flight attendant service portrait",
@@ -34965,6 +35102,7 @@
         "subject",
         "action",
         "costume_style",
+        "prop",
         "location",
         "lighting",
         "camera_direction",
@@ -34974,10 +35112,6 @@
         "quality"
       ],
       "optional_slots": [
-        {
-          "slot": "prop",
-          "probability": 0.35
-        },
         {
           "slot": "world",
           "probability": 0.45
@@ -35005,6 +35139,9 @@
         },
         "action": {
           "ids": [
+            "cabin_emergency_equipment_check",
+            "cabin_exit_crosscheck",
+            "cabin_safety_demonstration",
             "cabin_service_pause",
             "looking_camera",
             "standing_silence"
@@ -35012,11 +35149,18 @@
         },
         "costume_style": {
           "ids": [
+            "professional_cabin_crew_uniform",
             "flight_attendant_uniform_costume"
+          ]
+        },
+        "prop": {
+          "ids": [
+            "cabin_emergency_equipment_prop"
           ]
         },
         "location": {
           "ids": [
+            "aircraft_cabin_exit_galley",
             "airplane_cabin_aisle"
           ]
         },
@@ -35061,7 +35205,7 @@
           ]
         }
       },
-      "embedding_text": "adult flight attendant cabin-crew uniform, airplane cabin aisle, service authority, controlled gaze",
+      "embedding_text": "adult cabin crew safety professional in an aircraft cabin, performing an emergency-equipment check, exit cross-check or safety demonstration; passenger service remains only one optional duty",
       "family": "professional_observation_family"
     },
     {
@@ -114008,6 +114152,50 @@
         "keywords": ["material recovery", "contamination removal", "separation process"],
         "embedding_text": "a mixed stream of recoverable materials moving through a sorting line with separated fractions, a contamination point and clear flow direction",
         "facets": {"subject_kind": ["object"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"], "movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "aircraft_pilot_role_model",
+        "ko": "항공기 조종 임무를 수행하는 성인 파일럿",
+        "en": "an adult aircraft pilot performing flight-deck duties",
+        "weight": 0.82,
+        "kind": ["human", "adult"],
+        "tags": ["human", "adult", "occupation", "aviation", "pilot", "operations"],
+        "aliases": ["aircraft pilot", "commercial pilot", "비행기 조종사", "항공기 파일럿"],
+        "keywords": ["flight controls", "instrument scan", "checklist discipline", "pilot station"],
+        "embedding_text": "adult aircraft pilot seated at a real flight-deck pilot station, one hand at a primary control, cross-checking instruments and outside flight state"
+      },
+      {
+        "id": "military_uniform_duty_model",
+        "ko": "군복 체계를 갖춘 성인 군인 역할 모델",
+        "en": "an adult military-duty role model in a coherent uniform system",
+        "weight": 0.76,
+        "kind": ["human", "adult"],
+        "tags": ["human", "adult", "occupation", "military", "uniform", "duty"],
+        "aliases": ["military uniform model", "service member role model", "군복 모델", "군인 역할"],
+        "keywords": ["service uniform", "field uniform", "duty alignment", "fictional insignia"],
+        "embedding_text": "adult fictional service-member role model wearing a complete dress, service, field or work uniform whose components match one duty context"
+      },
+      {
+        "id": "armor_reference_adult_model",
+        "ko": "착용형 갑옷 구조를 보여주는 성인 모델",
+        "en": "an adult model demonstrating a human-scale wearable armor system",
+        "weight": 0.72,
+        "kind": ["human", "adult"],
+        "tags": ["human", "adult", "armor", "fantasy", "wearable", "reference"],
+        "aliases": ["wearable armor model", "armored adult model", "갑옷 착용 모델"],
+        "keywords": ["articulated plates", "mail underlayer", "visible attachment logic"],
+        "embedding_text": "adult human-scale armor reference model showing articulated plates or mail, underlayers, straps, overlap and believable joint movement"
+      },
+      {
+        "id": "revealing_armor_adult_model",
+        "ko": "노출도 높은 오리지널 판타지 갑옷의 성인 모델",
+        "en": "an adult model for an original high-exposure fantasy armor design",
+        "weight": 0.7,
+        "kind": ["human", "adult"],
+        "tags": ["human", "adult", "armor", "fantasy", "revealing", "fashion_editorial"],
+        "aliases": ["revealing fantasy armor model", "bikini armor model", "노출 갑옷 성인 모델"],
+        "keywords": ["deliberate exposure pattern", "opaque intimate coverage", "armor-first read", "commercial key art"],
+        "embedding_text": "adult original fantasy character in deliberately high-exposure armor that still reads as attached armor, with stable opaque chest and pelvis coverage and no automatic erotic posing"
       }
     ],
     "person_origin": [
@@ -120087,6 +120275,83 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "professional_aircraft_pilot_uniform",
+        "ko": "식별 표지가 무문자 처리된 전문 항공기 파일럿 제복",
+        "en": "a professional aircraft-pilot uniform with generic unreadable identifiers",
+        "weight": 0.78,
+        "tags": ["human", "adult", "uniform", "aviation", "pilot", "professional", "no_text"],
+        "aliases": ["pilot uniform", "airline pilot uniform", "조종사 제복", "파일럿 유니폼"],
+        "keywords": ["pilot shirt", "epaulet structure", "aviation duty wear", "generic insignia"],
+        "embedding_text": "professional adult aircraft-pilot uniform with coherent shirt, trousers or skirt, jacket and generic unreadable rank structure, no real airline logo",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "professional_cabin_crew_uniform",
+        "ko": "안전 임무에 맞춘 전문 객실승무원 제복",
+        "en": "a professional cabin-crew uniform suitable for aircraft safety duties",
+        "weight": 0.8,
+        "tags": ["human", "adult", "uniform", "aviation", "cabin_crew", "professional", "no_text"],
+        "aliases": ["cabin crew uniform", "flight attendant uniform", "객실승무원 제복", "스튜어디스 유니폼"],
+        "keywords": ["cabin safety duty", "coherent uniform components", "generic carrier identity"],
+        "embedding_text": "adult professional cabin-crew uniform with coherent jacket, blouse or shirt, lower garment and practical footwear for cabin safety duties, no real carrier logo",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "coordinated_school_uniform_system",
+        "ko": "색상·재단·트림이 일관된 교복 구성 체계",
+        "en": "a coordinated school-uniform clothing system with consistent cut, color and trim",
+        "weight": 0.77,
+        "tags": ["human", "uniform", "school_uniform", "institutional", "coordinated", "covered"],
+        "aliases": ["coordinated school uniform", "institutional schoolwear system", "교복 구성", "학교 제복 체계"],
+        "keywords": ["consistent trim", "seasonal uniform option", "coordinated blazer shirt lower garment"],
+        "embedding_text": "coordinated institutional schoolwear system whose blazer or cardigan, shirt, lower garment, tie or ribbon and trim share one controlled color and cut language",
+        "for_any": ["human"]
+      },
+      {
+        "id": "military_service_uniform_system",
+        "ko": "한 임무 맥락으로 통일된 군 정복·근무복 체계",
+        "en": "a coherent military dress or service-uniform system",
+        "weight": 0.78,
+        "tags": ["human", "adult", "military", "uniform", "dress", "service", "no_text"],
+        "aliases": ["military service uniform", "dress uniform system", "군 정복", "군 근무복"],
+        "keywords": ["matched coat trousers headgear", "fictional insignia", "formal duty context"],
+        "embedding_text": "complete fictional military dress or service uniform with matched coat, lower garment, headgear, footwear and generic unreadable insignia aligned to one duty context",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "military_field_uniform_system",
+        "ko": "임무 장비와 구성품이 일치하는 군 야전·작업복 체계",
+        "en": "a coherent military field or work-uniform system",
+        "weight": 0.75,
+        "tags": ["human", "adult", "military", "uniform", "field", "workwear", "no_text"],
+        "aliases": ["military field uniform", "military work uniform", "군 야전복", "군 작업복"],
+        "keywords": ["field blouse trousers boots", "duty equipment", "fictional identifiers"],
+        "embedding_text": "complete fictional military field or work uniform with matched blouse, trousers, boots and limited duty equipment, not civilian camouflage fashion",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "wearable_plate_mail_armor_system",
+        "ko": "관절·하부층·결속이 보이는 착용형 판금·사슬 갑옷 체계",
+        "en": "a wearable plate-and-mail armor system with articulated joints and visible attachments",
+        "weight": 0.76,
+        "tags": ["human", "adult", "armor", "plate", "mail", "wearable", "fantasy"],
+        "aliases": ["wearable plate armor", "plate and mail armor", "착용형 갑옷", "판금 사슬 갑옷"],
+        "keywords": ["articulated joint overlaps", "mail underlayer", "straps and buckles", "human load distribution"],
+        "embedding_text": "human-scale wearable plate and mail armor with articulated shoulder elbow hip and knee overlaps, textile or leather underlayer, and visible straps or buckles",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "commercial_revealing_fantasy_armor",
+        "ko": "갑옷 정체성을 유지하는 상업용 고노출 판타지 갑옷",
+        "en": "commercial high-exposure fantasy armor that retains clear armor identity",
+        "weight": 0.7,
+        "tags": ["human", "adult", "armor", "fantasy", "revealing", "commercial", "editorial"],
+        "aliases": ["revealing fantasy armor", "skimpy armor", "bikini armor", "chainmail bikini", "노출 갑옷", "비키니 아머"],
+        "keywords": ["deliberate high exposure", "opaque intimate coverage", "visible armor attachments", "original fantasy design"],
+        "embedding_text": "adult original high-exposure fantasy armor for commercial key art, using rigid or mail armor components and visible attachments while stable opaque pieces cover chest and pelvis; no default erotic pose",
+        "for_any": ["human", "adult"]
       }
     ],
     "wardrobe_style": [
@@ -121192,6 +121457,61 @@
           "athletic shorts with oversized blazer",
           "TikTok contrast styling"
         ]
+      },
+      {
+        "id": "one_piece_a_line_dress",
+        "ko": "네크라인부터 밑단까지 이어지는 A라인 원피스 드레스",
+        "en": "a continuous bodice-to-hem A-line one-piece dress",
+        "weight": 0.78,
+        "tags": ["human", "wardrobe", "dress", "one_piece", "a_line", "fashion"],
+        "aliases": ["A-line one-piece dress", "A라인 원피스", "일체형 A라인 드레스"],
+        "keywords": ["continuous bodice to hem", "single garment", "A-line silhouette"],
+        "embedding_text": "single A-line dress constructed continuously from neckline and bodice through waist seam to hem, clearly not a separate top and skirt",
+        "for_any": ["human"]
+      },
+      {
+        "id": "one_piece_wrap_dress",
+        "ko": "교차 여밈과 연속 치마판이 있는 랩 원피스",
+        "en": "a wrap one-piece dress with a continuous overlapping front",
+        "weight": 0.74,
+        "tags": ["human", "wardrobe", "dress", "one_piece", "wrap", "fashion"],
+        "aliases": ["wrap one-piece dress", "랩 원피스", "랩 드레스"],
+        "keywords": ["continuous wrap front", "waist tie closure", "single dress construction"],
+        "embedding_text": "single wrap dress with continuous overlapping bodice and skirt panels, a readable waist-tie closure and fabric drape to the hem",
+        "for_any": ["human"]
+      },
+      {
+        "id": "one_piece_shirt_dress",
+        "ko": "칼라·앞여밈이 밑단까지 이어지는 셔츠 원피스",
+        "en": "a one-piece shirt dress with a continuous button-front construction",
+        "weight": 0.72,
+        "tags": ["human", "wardrobe", "dress", "one_piece", "shirt_dress", "fashion", "no_text"],
+        "aliases": ["one-piece shirt dress", "셔츠 원피스", "버튼 프런트 원피스"],
+        "keywords": ["collar to hem continuity", "button-front closure", "single garment"],
+        "embedding_text": "single shirt dress whose collar, bodice, button-front closure and skirt continue as one garment to the hem, with no readable brand text",
+        "for_any": ["human"]
+      },
+      {
+        "id": "sheer_opaque_overlay_garment",
+        "ko": "불투명 안감 위에 반투명 직물을 겹친 의상",
+        "en": "a sheer textile overlay over a stable opaque underlayer",
+        "weight": 0.74,
+        "tags": ["human", "adult", "wardrobe", "sheer", "overlay", "opaque_underlayer", "fashion"],
+        "aliases": ["sheer overlay garment", "transparent fabric overlay", "시스루 오버레이", "반투명 겹옷"],
+        "keywords": ["visible weave", "transmitted backlight", "opaque lining", "layer separation"],
+        "embedding_text": "adult fashion garment with a visibly woven sheer overlay transmitting backlight over a stable opaque lining, with readable edges and layered drape",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "sheer_panel_tailored_garment",
+        "ko": "불투명 재단복에 구조적으로 삽입된 반투명 패널 의상",
+        "en": "a tailored opaque garment with structurally placed sheer textile panels",
+        "weight": 0.7,
+        "tags": ["human", "adult", "wardrobe", "sheer", "panel", "tailored", "fashion"],
+        "aliases": ["sheer panel garment", "transparent textile panel", "시스루 패널 의상"],
+        "keywords": ["panel seam", "visible textile edge", "opaque base garment", "light transmission"],
+        "embedding_text": "adult tailored opaque garment with selected sheer textile panels whose seams, weave, edges and light transmission stay clearly visible",
+        "for_any": ["human", "adult"]
       }
     ],
     "adult_context": [
@@ -121252,6 +121572,28 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "adult_original_fantasy_character_context",
+        "ko": "성인 오리지널 판타지 캐릭터의 상업용 디자인 레퍼런스 맥락",
+        "en": "an adult original-fantasy-character commercial design-reference context",
+        "weight": 0.78,
+        "tags": ["adult", "fantasy", "original_character", "commercial", "design_reference"],
+        "aliases": ["adult original fantasy character", "성인 오리지널 판타지 캐릭터"],
+        "keywords": ["adult only", "original design", "commercial key art", "neutral design review"],
+        "embedding_text": "clearly adult original fantasy character in a commercial key-art or design-turntable context, no school or minor coding, no copied franchise identity",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "adult_fashion_material_study_context",
+        "ko": "성인 패션 소재와 의복 구조를 검토하는 중립적 에디토리얼 맥락",
+        "en": "an adult neutral fashion-material and garment-construction study context",
+        "weight": 0.82,
+        "tags": ["adult", "fashion", "material_study", "garment_construction", "editorial"],
+        "aliases": ["adult fashion material study", "성인 패션 소재 연구"],
+        "keywords": ["adult only", "textile optics", "garment construction", "neutral editorial"],
+        "embedding_text": "clearly adult fashion subject in a neutral material-study editorial focused on textile optics, garment construction and layered coverage rather than erotic posing",
+        "for_any": ["human", "adult"]
       }
     ],
     "action": [
@@ -128507,6 +128849,138 @@
         "keywords": ["quality control", "material separation", "recovery yield"],
         "embedding_text": "removing a visible contaminant before the material stream separates into clean recovery fractions",
         "facets": {"relation_type": ["team", "handoff"], "event_phase": ["active_process", "handoff"], "process_stage": ["inspection", "transfer", "cleanup"], "capture_modality": ["machine_vision", "inspection"], "movement_type": ["mechanical_cycle"]}
+      },
+      {
+        "id": "pilot_preflight_control_check",
+        "ko": "체크리스트와 주 조종장치를 연결해 비행 전 점검하는",
+        "en": "performing a preflight checklist-to-control verification",
+        "weight": 0.82,
+        "tags": ["human", "adult", "pilot", "aviation", "preflight", "inspection"],
+        "for_any": ["human", "adult"],
+        "aliases": ["pilot preflight check", "flight control check", "파일럿 비행 전 점검"],
+        "keywords": ["checklist item", "control contact", "instrument indication", "outside state"],
+        "embedding_text": "adult pilot verifies one checklist item with a hand on the corresponding primary flight control while matching the instrument indication to the aircraft state"
+      },
+      {
+        "id": "pilot_taxi_instrument_crosscheck",
+        "ko": "지상 활주 중 계기와 외부 경로를 교차 확인하는",
+        "en": "cross-checking instruments and the outside taxi path",
+        "weight": 0.76,
+        "tags": ["human", "adult", "pilot", "aviation", "taxi", "operations"],
+        "for_any": ["human", "adult"],
+        "aliases": ["pilot taxi cross-check", "taxi instrument scan", "지상 활주 계기 확인"],
+        "keywords": ["outside scan", "instrument scan", "steering control", "taxi phase"],
+        "embedding_text": "adult pilot alternates a readable instrument scan with the outside taxi route while maintaining contact with the relevant steering or power control"
+      },
+      {
+        "id": "pilot_approach_control_scan",
+        "ko": "접근 단계에서 주 조종장치와 계기·외부 상태를 함께 스캔하는",
+        "en": "scanning controls, instruments and outside state during approach",
+        "weight": 0.74,
+        "tags": ["human", "adult", "pilot", "aviation", "approach", "operations"],
+        "for_any": ["human", "adult"],
+        "aliases": ["pilot approach scan", "approach control cross-check", "접근 조종 스캔"],
+        "keywords": ["primary control contact", "instrument cross-check", "runway state", "approach phase"],
+        "embedding_text": "adult pilot maintains a primary control input while cross-checking flight instruments and the visible approach or runway state"
+      },
+      {
+        "id": "cabin_emergency_equipment_check",
+        "ko": "객실 비상장비의 위치와 상태를 점검하는",
+        "en": "checking the location and readiness of cabin emergency equipment",
+        "weight": 0.82,
+        "tags": ["human", "adult", "cabin_crew", "aviation", "safety", "inspection"],
+        "for_any": ["human", "adult"],
+        "aliases": ["cabin emergency equipment check", "flight attendant safety check", "객실 비상장비 점검"],
+        "keywords": ["equipment access", "readiness check", "cabin zone", "safety consequence"],
+        "embedding_text": "adult cabin crew member physically checks one emergency-equipment location and its accessible ready state before passenger operation"
+      },
+      {
+        "id": "cabin_exit_crosscheck",
+        "ko": "도어·출구 상태를 지정된 절차로 교차 확인하는",
+        "en": "cross-checking an aircraft door and exit state by procedure",
+        "weight": 0.8,
+        "tags": ["human", "adult", "cabin_crew", "aviation", "safety", "procedure"],
+        "for_any": ["human", "adult"],
+        "aliases": ["cabin exit cross-check", "door cross-check", "항공기 출구 교차 확인"],
+        "keywords": ["door state", "exit zone", "procedural gesture", "operational consequence"],
+        "embedding_text": "adult cabin crew member performs a specific door and exit-state cross-check in the aircraft exit zone, with the target and operational consequence visually clear"
+      },
+      {
+        "id": "cabin_safety_demonstration",
+        "ko": "승객에게 비상 절차를 시각적으로 안내하는",
+        "en": "demonstrating one aircraft emergency procedure to passengers",
+        "weight": 0.76,
+        "tags": ["human", "adult", "cabin_crew", "aviation", "safety", "instruction"],
+        "for_any": ["human", "adult"],
+        "aliases": ["cabin safety demonstration", "flight attendant safety demo", "기내 안전 시연"],
+        "keywords": ["demonstration object", "passenger sightline", "emergency procedure"],
+        "embedding_text": "adult cabin crew member demonstrates one emergency procedure with a concrete safety object and clear passenger sightline, not merely posing with a service tray"
+      },
+      {
+        "id": "school_uniform_component_inspection",
+        "ko": "교복 구성품의 재단·색상·트림 일관성을 점검하는",
+        "en": "inspecting the cut, color and trim consistency of school-uniform components",
+        "weight": 0.72,
+        "tags": ["human", "uniform", "school_uniform", "inspection", "fashion_reference"],
+        "for_any": ["human"],
+        "aliases": ["school uniform component inspection", "교복 구성 점검"],
+        "keywords": ["coordinated components", "consistent trim", "seasonal option"],
+        "embedding_text": "inspecting blazer or cardigan, shirt, lower garment, tie or ribbon and footwear as one coordinated school-uniform system"
+      },
+      {
+        "id": "one_piece_drape_turnaround",
+        "ko": "원피스의 연속 구조와 드레이프를 보여주며 천천히 회전하는",
+        "en": "turning slowly to show a one-piece dress construction and drape",
+        "weight": 0.72,
+        "tags": ["human", "fashion", "dress", "one_piece", "turnaround", "drape"],
+        "for_any": ["human"],
+        "aliases": ["one-piece dress turnaround", "원피스 드레이프 회전"],
+        "keywords": ["bodice to hem continuity", "seam and closure", "silhouette motion"],
+        "embedding_text": "slow garment turn that keeps the neckline-to-bodice-to-hem continuity, seam placement, closure and fabric drape legible"
+      },
+      {
+        "id": "sheer_backlight_transmission_test",
+        "ko": "역광으로 반투명 직물의 투과·직조·안감 관계를 보여주는",
+        "en": "using backlight to reveal sheer-textile transmission, weave and opaque layering",
+        "weight": 0.72,
+        "tags": ["human", "adult", "fashion", "sheer", "textile", "backlight", "inspection"],
+        "for_any": ["human", "adult"],
+        "aliases": ["sheer textile transmission test", "시스루 역광 테스트"],
+        "keywords": ["visible weave", "transmitted light", "opaque underlayer", "edge separation"],
+        "embedding_text": "adult fashion subject turns the sheer textile edge into controlled backlight so the weave, transmitted light, opaque underlayer and layered drape remain separately readable"
+      },
+      {
+        "id": "military_uniform_duty_inspection",
+        "ko": "군복 구성품과 임무 맥락의 일치를 점검하는",
+        "en": "inspecting military-uniform components for one coherent duty context",
+        "weight": 0.74,
+        "tags": ["human", "adult", "military", "uniform", "duty", "inspection"],
+        "for_any": ["human", "adult"],
+        "aliases": ["military uniform inspection", "군복 구성 점검"],
+        "keywords": ["complete uniform system", "fictional insignia", "duty alignment"],
+        "embedding_text": "adult fictional service member checks that coat or blouse, lower garment, headgear, footwear, identifiers and limited equipment all match one dress service field or work duty"
+      },
+      {
+        "id": "armor_articulation_stance",
+        "ko": "갑옷의 관절 겹침과 결속 구조가 보이는 동작 자세를 취하는",
+        "en": "holding a movement stance that reveals armor articulation and attachments",
+        "weight": 0.76,
+        "tags": ["human", "adult", "armor", "articulation", "wearable", "reference"],
+        "for_any": ["human", "adult"],
+        "aliases": ["armor articulation stance", "갑옷 관절 구조 자세"],
+        "keywords": ["joint overlap", "underlayer", "strap attachment", "load distribution"],
+        "embedding_text": "adult armor wearer bends shoulder elbow hip and knee enough to reveal articulated overlap, underlayer, attachment points and believable load distribution"
+      },
+      {
+        "id": "revealing_armor_design_turntable",
+        "ko": "고노출 갑옷의 노출 패턴·불투명 커버·결속 구조를 보여주는 턴테이블 포즈",
+        "en": "holding a neutral turntable pose for a high-exposure armor design",
+        "weight": 0.72,
+        "tags": ["human", "adult", "armor", "revealing", "fantasy", "design_reference"],
+        "for_any": ["human", "adult"],
+        "aliases": ["revealing armor turntable", "bikini armor design pose", "노출 갑옷 턴테이블"],
+        "keywords": ["deliberate exposure pattern", "opaque intimate coverage", "attachment logic", "armor-first read"],
+        "embedding_text": "neutral adult design-turntable stance showing deliberate high exposure, stable opaque chest and pelvis coverage, and how each rigid or mail armor component attaches; no erotic pose by default"
       }
     ],
     "capture_context": [
@@ -140161,6 +140635,50 @@
         "aliases": ["sorted material tote", "recovery fraction bin", "선별 재료 토트"],
         "keywords": ["separated fraction", "material recovery", "flow destination"],
         "embedding_text": "unlabelled industrial tote receiving one clean separated material fraction at the end of a sorting route"
+      },
+      {
+        "id": "flight_controls_checklist_prop",
+        "ko": "읽을 수 없는 항목과 주 조종장치가 함께 보이는 비행 점검 도구",
+        "en": "a generic unreadable flight checklist beside the primary controls",
+        "weight": 0.74,
+        "tags": ["prop", "aviation", "pilot", "checklist", "controls", "no_text"],
+        "for_any": ["human", "adult"],
+        "aliases": ["flight checklist and controls", "pilot checklist prop", "비행 체크리스트"],
+        "keywords": ["primary flight control", "instrument cross-check", "generic checklist"],
+        "embedding_text": "generic unreadable flight checklist positioned beside a yoke stick or thrust control so one checked item can be visually tied to the operated control"
+      },
+      {
+        "id": "cabin_emergency_equipment_prop",
+        "ko": "객실 안전 절차용 무표기 비상장비",
+        "en": "generic unbranded aircraft-cabin emergency equipment",
+        "weight": 0.74,
+        "tags": ["prop", "aviation", "cabin_crew", "safety", "emergency", "no_text"],
+        "for_any": ["human", "adult"],
+        "aliases": ["cabin emergency equipment", "flight attendant safety equipment", "기내 비상장비"],
+        "keywords": ["safety demonstration", "equipment readiness", "exit zone"],
+        "embedding_text": "one generic unbranded cabin emergency item such as a demonstration oxygen mask life vest or flashlight, shown in a concrete check or instruction procedure"
+      },
+      {
+        "id": "generic_fictional_insignia_set",
+        "ko": "실재 조직을 모사하지 않은 무문자 가상 식별표지 세트",
+        "en": "a generic fictional set of unreadable rank and unit identifiers",
+        "weight": 0.68,
+        "tags": ["prop", "uniform", "military", "insignia", "fictional", "no_text"],
+        "for_any": ["human", "adult"],
+        "aliases": ["fictional military insignia", "generic rank identifiers", "가상 군 표지"],
+        "keywords": ["unreadable insignia", "fictional organization", "uniform coherence"],
+        "embedding_text": "small generic fictional rank and unit identifiers whose placement supports uniform hierarchy without copying a real organization or rendering readable text"
+      },
+      {
+        "id": "armor_articulation_detail_board",
+        "ko": "갑옷의 관절 겹침·끈·버클을 보여주는 무문자 구조 보드",
+        "en": "an unlabelled armor-articulation detail board with joints and attachments",
+        "weight": 0.66,
+        "tags": ["prop", "armor", "reference", "articulation", "attachment", "no_text"],
+        "for_any": ["human", "adult"],
+        "aliases": ["armor articulation reference", "armor attachment board", "갑옷 구조 보드"],
+        "keywords": ["joint overlap", "strap buckle", "mail transition", "underlayer"],
+        "embedding_text": "unlabelled reference board showing one articulated plate overlap, one strap or buckle attachment and one plate-to-mail or plate-to-textile transition"
       }
     ],
     "fetish_styling": [
@@ -148587,6 +149105,76 @@
         "keywords": ["material flow", "separation process", "contamination checkpoint"],
         "embedding_text": "industrial materials-recovery line with a readable input route, contamination checkpoint, separation equipment and clean output fractions",
         "facets": {"place_type": ["waste", "industrial", "warehouse"]}
+      },
+      {
+        "id": "aircraft_flight_deck",
+        "ko": "주 조종석·계기판·외부 시야가 함께 보이는 항공기 비행갑판",
+        "en": "an aircraft flight deck with pilot station, instruments and outside view",
+        "weight": 0.8,
+        "tags": ["interior", "aviation", "pilot", "cockpit", "operations", "no_text"],
+        "aliases": ["aircraft flight deck", "airliner cockpit", "항공기 조종실", "비행갑판"],
+        "keywords": ["pilot station", "primary controls", "instrument panel", "outside flight state"],
+        "embedding_text": "realistic generic aircraft flight deck where the pilot station, primary controls, instrument indications and outside aircraft state can be read in one coherent frame"
+      },
+      {
+        "id": "general_aviation_cockpit",
+        "ko": "요크 또는 스틱과 계기·외부 시야가 보이는 소형 항공기 조종석",
+        "en": "a general-aviation cockpit with controls, instruments and outside view",
+        "weight": 0.72,
+        "tags": ["interior", "aviation", "pilot", "cockpit", "general_aviation", "no_text"],
+        "aliases": ["general aviation cockpit", "small aircraft cockpit", "소형 항공기 조종석"],
+        "keywords": ["yoke or stick", "instrument cluster", "windshield state"],
+        "embedding_text": "generic small-aircraft cockpit with a readable yoke or stick, throttle, instrument cluster and windshield view for a concrete pilot operation"
+      },
+      {
+        "id": "aircraft_cabin_exit_galley",
+        "ko": "출구 상태와 비상장비 위치가 보이는 항공기 도어·갤리 구역",
+        "en": "an aircraft cabin door-and-galley zone with exit and safety equipment context",
+        "weight": 0.78,
+        "tags": ["interior", "aviation", "cabin_crew", "safety", "exit", "galley", "no_text"],
+        "aliases": ["aircraft cabin exit zone", "cabin door galley", "기내 출구 갤리"],
+        "keywords": ["door state", "exit access", "emergency equipment", "cabin procedure"],
+        "embedding_text": "generic aircraft cabin door and galley zone with unobstructed exit access, a visible door-state mechanism and one emergency-equipment location, no real carrier branding"
+      },
+      {
+        "id": "garment_design_studio",
+        "ko": "전신 실루엣과 봉제 구조를 점검하는 의상 디자인 스튜디오",
+        "en": "a garment-design studio for inspecting silhouette and construction",
+        "weight": 0.72,
+        "tags": ["interior", "fashion", "garment", "design", "studio", "no_text"],
+        "aliases": ["garment design studio", "fashion construction studio", "의상 디자인 스튜디오"],
+        "keywords": ["full garment view", "seam inspection", "neutral backdrop"],
+        "embedding_text": "neutral garment-design studio with enough full-body clearance and controlled light to inspect silhouette, seams, closures, trim and drape without readable brand boards"
+      },
+      {
+        "id": "textile_backlight_studio",
+        "ko": "직물 투과·직조·겹침을 비교하는 제어된 역광 스튜디오",
+        "en": "a controlled textile backlight studio for transmission and layering tests",
+        "weight": 0.72,
+        "tags": ["interior", "fashion", "textile", "sheer", "backlight", "studio"],
+        "aliases": ["textile backlight studio", "sheer fabric test studio", "직물 역광 스튜디오"],
+        "keywords": ["transmitted light", "visible weave", "opaque reference layer", "edge contrast"],
+        "embedding_text": "controlled studio with a broad backlight, darker edge flags and an opaque reference layer so sheer textile transmission, weave, seams and drape stay distinct"
+      },
+      {
+        "id": "military_uniform_inspection_room",
+        "ko": "가상 군복 구성과 임무 장비를 점검하는 무표기 검사실",
+        "en": "an unbranded inspection room for a fictional military-uniform system",
+        "weight": 0.7,
+        "tags": ["interior", "military", "uniform", "inspection", "fictional", "no_text"],
+        "aliases": ["military uniform inspection room", "fictional service fitting room", "군복 검사실"],
+        "keywords": ["uniform component layout", "duty equipment", "generic identifiers"],
+        "embedding_text": "neutral unbranded inspection room with a full-length view and a small component bench for a coherent fictional military uniform and limited duty equipment"
+      },
+      {
+        "id": "fantasy_armor_campaign_studio",
+        "ko": "갑옷 전신 구조와 재질을 읽히게 하는 판타지 캠페인 스튜디오",
+        "en": "a fantasy campaign studio designed to keep the full armor system legible",
+        "weight": 0.72,
+        "tags": ["interior", "adult", "armor", "fantasy", "campaign", "studio"],
+        "aliases": ["fantasy armor campaign studio", "armor key-art studio", "판타지 갑옷 화보 스튜디오"],
+        "keywords": ["full-body armor read", "edge light", "attachment visibility", "neutral turntable"],
+        "embedding_text": "commercial fantasy key-art studio with full-body clearance, controlled edge light and neutral floor so armor silhouette, attachments, material transitions and coverage pattern remain legible"
       }
     ],
     "world": [
@@ -173088,6 +173676,28 @@
         "aliases": ["sorted polymer flake", "recovered plastic fraction", "선별 폴리머 플레이크"],
         "keywords": ["clean fraction", "material recovery", "contamination evidence"],
         "embedding_text": "cleaned sorted polymer flakes with visible size distribution, mixed color and a clearly isolated contaminant fragment"
+      },
+      {
+        "id": "sheer_organza_chiffon_transmission",
+        "ko": "직조와 가장자리가 보이며 빛을 투과하는 오간자·시폰 표면",
+        "en": "light-transmitting organza or chiffon with visible weave and edge structure",
+        "weight": 0.72,
+        "tags": ["surface", "human", "adult", "textile", "sheer", "organza", "chiffon", "transmission"],
+        "for_any": ["human", "adult"],
+        "aliases": ["sheer organza transmission", "chiffon light transmission", "시스루 직물 표면"],
+        "keywords": ["visible yarn weave", "transmitted backlight", "edge seam", "layered opacity"],
+        "embedding_text": "fine organza or chiffon surface whose yarn weave, hem edge, transmitted backlight and overlap-dependent opacity remain optically distinct from glass or bare skin"
+      },
+      {
+        "id": "armor_plate_mail_leather_material",
+        "ko": "판금·사슬·가죽 또는 직물 하부층이 구분되는 갑옷 재질",
+        "en": "distinct plate, mail and leather-or-textile armor material transitions",
+        "weight": 0.74,
+        "tags": ["surface", "human", "adult", "armor", "plate", "mail", "leather", "textile"],
+        "for_any": ["human", "adult"],
+        "aliases": ["plate mail leather armor material", "갑옷 재질 전이"],
+        "keywords": ["rigid plate edge", "interlinked rings", "soft underlayer", "attachment wear"],
+        "embedding_text": "readable transition among rigid plate edges, interlinked mail rings and a soft leather or textile underlayer, including localized wear around attachment points"
       }
     ],
     "aesthetic_trend": [
@@ -182795,6 +183405,94 @@
         "for_any": [
           "human"
         ]
+      },
+      {
+        "id": "one_piece_continuous_bodice_to_hem",
+        "ko": "네크라인·보디스·허리·밑단이 한 벌로 이어지는 원피스 구조",
+        "en": "continuous neckline-to-bodice-to-hem one-piece construction",
+        "weight": 0.78,
+        "tags": ["human", "garment", "dress", "one_piece", "construction"],
+        "aliases": ["continuous one-piece construction", "원피스 일체형 구조"],
+        "keywords": ["single garment", "bodice to hem continuity", "not separate coordinates"],
+        "embedding_text": "visible single-garment continuity from neckline through bodice and waist into the hem, without a separate top-and-skirt break",
+        "for_any": ["human"]
+      },
+      {
+        "id": "one_piece_seam_closure_drape",
+        "ko": "원피스의 봉제선·여밈·드레이프 관계",
+        "en": "one-piece dress seam, closure and drape relationship",
+        "weight": 0.74,
+        "tags": ["human", "garment", "dress", "one_piece", "seam", "closure", "drape"],
+        "aliases": ["one-piece seam and drape", "원피스 봉제 드레이프"],
+        "keywords": ["seam placement", "closure path", "fabric fall", "silhouette"],
+        "embedding_text": "seam placement and closure path visibly organize how one continuous dress falls from bodice through waist to hem",
+        "for_any": ["human"]
+      },
+      {
+        "id": "school_uniform_consistent_trim_system",
+        "ko": "재킷·셔츠·하의·넥웨어에 반복되는 교복 트림 체계",
+        "en": "a consistent school-uniform trim and component system",
+        "weight": 0.72,
+        "tags": ["human", "garment", "school_uniform", "institutional", "trim", "coordinated"],
+        "aliases": ["school uniform trim system", "교복 트림 체계"],
+        "keywords": ["repeated piping", "controlled palette", "matched component cut"],
+        "embedding_text": "the same controlled palette piping or edge trim repeats across blazer or cardigan, shirt, lower garment and tie or ribbon so the outfit reads as one institutional system",
+        "for_any": ["human"]
+      },
+      {
+        "id": "sheer_transmission_opaque_underlayer",
+        "ko": "반투명 직물의 빛 투과와 불투명 안감 관계",
+        "en": "sheer light transmission over a stable opaque underlayer",
+        "weight": 0.76,
+        "tags": ["human", "adult", "garment", "sheer", "transmission", "opaque_underlayer"],
+        "aliases": ["sheer opaque underlayer", "시스루 불투명 안감"],
+        "keywords": ["transmitted light", "overlap opacity", "stable coverage", "layer separation"],
+        "embedding_text": "controlled transmitted light varies across the sheer overlay while a stable opaque underlayer remains separately readable and maintains intentional coverage",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "sheer_visible_edge_weave",
+        "ko": "반투명 직물임을 증명하는 가장자리·봉제선·직조",
+        "en": "visible sheer-textile edge, seam and weave evidence",
+        "weight": 0.74,
+        "tags": ["human", "adult", "garment", "sheer", "edge", "seam", "weave"],
+        "aliases": ["visible sheer weave", "시스루 직조 가장자리"],
+        "keywords": ["yarn weave", "hem edge", "panel seam", "fabric drape"],
+        "embedding_text": "visible yarn weave, hem or panel edge and fabric drape prove a physical sheer textile rather than glass, wet skin, overexposure or an empty transparent effect",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "armor_articulated_overlap_attachment",
+        "ko": "관절 겹침·하부층·끈·버클이 연결된 갑옷 구조",
+        "en": "articulated armor overlap, underlayer and attachment structure",
+        "weight": 0.78,
+        "tags": ["human", "adult", "garment", "armor", "articulation", "attachment"],
+        "aliases": ["armor articulated attachments", "갑옷 관절 결속 구조"],
+        "keywords": ["joint overlap", "mail or textile underlayer", "strap buckle", "load path"],
+        "embedding_text": "plate or scale overlaps articulate across major joints while mail or textile underlayers, straps and buckles explain how the human-scale armor stays attached and carries its load",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "revealing_armor_deliberate_exposure_pattern",
+        "ko": "갑옷 부품 사이에 의도적으로 설계된 높은 노출 패턴",
+        "en": "a deliberately designed high-exposure pattern between armor components",
+        "weight": 0.72,
+        "tags": ["human", "adult", "garment", "armor", "revealing", "fantasy", "design"],
+        "aliases": ["revealing armor exposure pattern", "노출 갑옷 패턴"],
+        "keywords": ["high exposure", "armor-first silhouette", "designed negative space", "commercial appeal"],
+        "embedding_text": "large deliberate areas of exposed adult skin are organized by rigid or mail armor components so the silhouette reads first as original fantasy armor rather than ordinary swimwear",
+        "for_any": ["human", "adult"]
+      },
+      {
+        "id": "revealing_armor_opaque_intimate_coverage",
+        "ko": "가슴·골반의 안정적인 불투명 커버와 보이는 갑옷 결속",
+        "en": "stable opaque chest-and-pelvis coverage with visible armor attachments",
+        "weight": 0.76,
+        "tags": ["human", "adult", "garment", "armor", "revealing", "opaque_coverage", "attachment"],
+        "aliases": ["revealing armor opaque coverage", "노출 갑옷 불투명 커버"],
+        "keywords": ["stable opaque coverage", "chest and pelvis", "straps or mail connections", "no wardrobe malfunction"],
+        "embedding_text": "stable opaque armor pieces cover chest and pelvis while visible straps, rings or linked plates connect them to the wider armor system throughout a neutral full-body pose",
+        "for_any": ["human", "adult"]
       }
     ],
     "companion_animal": [
