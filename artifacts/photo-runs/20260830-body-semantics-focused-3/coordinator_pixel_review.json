@@ -1,0 +1,78 @@
+{
+  "schema_version": "photo-body-semantics-coordinator-review/v1",
+  "run_id": "20260830-body-semantics-focused-3",
+  "reviewer": {
+    "reviewer_id": "root-coordinator",
+    "method": "direct_pixel_inspection"
+  },
+  "review_rule": "Each case passes only when every registry-bound hard gate coexists in one saved image at its required thumbnail and native scales.",
+  "cases": [
+    {
+      "arm_id": "arm-1-contrapposto",
+      "case_id": "body_semantics_contrapposto_full_load_path",
+      "profile_id": "contrapposto_weight_shift",
+      "pack_id": "01e98ff747195536",
+      "selected_attempt": 2,
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-2.png",
+      "image_sha256": "4ea9a0127e26a31b1bae24c5faf5b0749c7d6193b5103968a4a400e3ae81910a",
+      "gates": [
+        {"gate_id":"vo_contrapposto_support_leg","status":"pass","evidence":"One near-straight image-left leg forms the visible load column into a planted boot."},
+        {"gate_id":"vo_contrapposto_free_leg","status":"pass","evidence":"The opposite knee is flexed and its boot touches lightly forward across the support side."},
+        {"gate_id":"vo_contrapposto_counter_tilt","status":"fail","evidence":"At thumbnail scale the vest, hair, clipboard, and coverall obscure the pelvic line, while the visible shoulder and hip cues do not resolve into unmistakably opposing slopes."},
+        {"gate_id":"vo_contrapposto_full_body_read","status":"pass","evidence":"Head, pelvis region, both legs, both ankles, and both boots remain visible with floor margin."}
+      ],
+      "technical_verdict": "fail",
+      "agent_coordinator_agreement": true,
+      "repair_limit_exhausted": true
+    },
+    {
+      "arm_id": "arm-2-arm-waist-negative-space",
+      "case_id": "body_semantics_arm_waist_negative_space",
+      "profile_id": "body_bounded_negative_space",
+      "pack_id": "42ac3b8c1c72c009",
+      "selected_attempt": 2,
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-2-arm-waist-negative-space/attempt-2.png",
+      "image_sha256": "7d802eb04e50eb7cc33c477ba55efcf527cd5a7d7aae68ef154d9bc4c91082f8",
+      "gates": [
+        {"gate_id":"vo_body_negative_space_real_boundaries","status":"fail","evidence":"The apparent inner edge is a long coat flap or strip, not an unambiguous anatomical waist contour."},
+        {"gate_id":"vo_body_negative_space_continuous_background","status":"fail","evidence":"A pale wall patch exists, but a coat strip and hanging plumb line traverse the intended opening."},
+        {"gate_id":"vo_body_negative_space_shape_legible","status":"pass","evidence":"The large triangular pale wedge remains immediately legible in the recorded thumbnail."},
+        {"gate_id":"vo_body_negative_space_region_specific","status":"fail","evidence":"The wedge reads as a garment-created side cutout rather than an opening bounded by the actual raised arm and waist."}
+      ],
+      "technical_verdict": "fail",
+      "agent_coordinator_agreement": true,
+      "repair_limit_exhausted": true
+    },
+    {
+      "arm_id": "arm-3-philtral-contour",
+      "case_id": "body_semantics_philtral_surface_topography",
+      "profile_id": "upper_lip_philtral_contour",
+      "pack_id": "bc2da31d2a6a73ac",
+      "selected_attempt": 1,
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/attempt-1.png",
+      "image_sha256": "e7b570767d61cdc86f0e3e43655f8a5fc856dea33ab6125834e15a80f13bb999",
+      "gates": [
+        {"gate_id":"vo_philtrum_paired_ridges","status":"pass","evidence":"Two shallow raised skin ridges flank one continuous midline groove in the native mouth crop."},
+        {"gate_id":"vo_philtrum_upper_lip_arc","status":"pass","evidence":"The groove terminates at a center dip between two upper-lip peaks, and the paired arc remains discernible in the 256 by 320 whole-frame thumbnail."},
+        {"gate_id":"vo_philtrum_face_geometry_coherent","status":"pass","evidence":"Nose base, philtral planes, vermilion border, lip volume, corners, and surrounding skin join coherently."},
+        {"gate_id":"vo_philtrum_not_makeup_only","status":"pass","evidence":"Form-light relief above the vermilion, rather than lip color or a drawn outline alone, carries the ridges and groove."}
+      ],
+      "technical_verdict": "pass",
+      "agent_coordinator_agreement": true,
+      "repair_limit_exhausted": false
+    }
+  ],
+  "aggregate": {
+    "technical_passes": 1,
+    "technical_failures": 2,
+    "pass_rate": 0.3333333333,
+    "sufficient_to_claim_three-keyword_render_fidelity": false,
+    "decision": "revise"
+  },
+  "reference_boundary": {
+    "role": "facial_appearance_only",
+    "identity_or_biometric_claim": "not_made",
+    "ethnicity_or_race_inference": "not_performed",
+    "requesting_user_judgment": "pending"
+  }
+}

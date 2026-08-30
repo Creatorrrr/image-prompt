@@ -1,0 +1,95 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently randomized, complex photographic test case that uses the attached image only as the main adult subject's appearance reference and makes the coordinator-assigned decision uncertainty display observable in rendered pixels.",
+  "subject": "the unmistakably adult person from the attached reference image portrayed as an astronomical instrument technician",
+  "setting": "a high-altitude observatory optical calibration room before dawn",
+  "event": "the technician pauses before choosing between two physically distinct narrowband filter cassettes while the calibration slot remains empty",
+  "visual_priorities": [
+    "decision uncertainty display with divided comparison gaze and mild facial tension",
+    "two distinct visible alternatives plus a precision tool paused before selection",
+    "reference-image adult facial appearance preserved without borrowing psychological meaning"
+  ],
+  "baseline_prompt_en": "Create a photorealistic editorial photograph of the unmistakably adult person from the attached reference image as an astronomical instrument technician inside a high-altitude observatory calibration room before dawn. Stage a decision uncertainty display at a waist-high optical bench: a crimson round narrowband filter cassette and a cyan square-edged filter cassette sit as two distinct visible alternatives, equally reachable on separate pads beside spectrum cards. Her gaze and slight head angle divide between the two options; one eyebrow rises asymmetrically while the brow lightly knits, and her lips hold mild tension. Her gloved right hand keeps a precision spectral loupe paused exactly midway above the gap before selection, while the left hand rests near the open calibration rig. Neither option is selected; both remain untouched and the instrument slot stays visibly empty. Frame her face, paused tool, both alternatives, and empty slot in one coherent medium shot. Preserve the reference image's adult facial appearance while wardrobe, setting, and action follow this scene. Let red instrument task light meet cool predawn window light, with tactile metal, glass, and frost detail.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "multi-arm randomized attached-image generation and pixel test",
+      "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm must independently create one random complex photographic concept, use the attached image only as the main adult subject's visual reference, generate an image, and test the selected keyword through observable pixels.",
+      "sources": []
+    },
+    {
+      "term": "decision uncertainty display",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "The coordinator-assigned experimental keyword is treated as an agent-owned test parameter, realized through two visible options, divided comparison gaze and head angle, slight brow asymmetry or knit, mild lip tension, a hand-held tool paused before selection, and an unresolved choice.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "decision uncertainty display"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "the unmistakably adult person from the attached reference image as an astronomical instrument technician"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "a precision spectral loupe paused exactly midway above the gap before selection"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "expression",
+        "prompt_evidence": "Her gaze and slight head angle divide between the two options; one eyebrow rises asymmetrically while the brow lightly knits, and her lips hold mild tension."
+      },
+      {
+        "anchor_id": "reference_identity",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Preserve the reference image's adult facial appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "expression",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic occupational editorial photography",
+    "family": "observational scientific-workplace portrait",
+    "evidence": [
+      "tactile metal and optical glass detail",
+      "red instrument task light meeting cool predawn window light"
+    ]
+  },
+  "variation_key": "arm-03-seed-805331-decision-uncertainty-display"
+}

@@ -1,0 +1,81 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Evaluate whether an independently conceived industrial transport editorial photograph can visibly realize a contrapposto weight shift as observable full-body load-bearing geometry while using the supplied photograph only to guide facial appearance.",
+  "subject": "An original adult woman working as a night-ferry vehicle-deck loadmaster, fully clothed in operational protective workwear, with facial appearance guided only by the provided reference photograph.",
+  "setting": "A working roll-on/roll-off ferry vehicle deck at night, between numbered loading lanes near the illuminated ramp.",
+  "event": "During a cargo-securing inspection, she pauses to mark a checklist while turning her attention toward an arriving truck.",
+  "visual_priorities": [
+    "A full-body view with unmistakable one-leg load bearing, a relaxed free leg, counter-tilted shoulders and pelvis, and a natural asymmetric torso curve.",
+    "Credible ferry-deck operations conveyed by protective workwear, wet anti-slip steel, numbered lanes, chain tensioners, secured cargo, ramp lights, and vehicle lamps.",
+    "Professional documentary realism with physically plausible joints, work-focused expression, and unobstructed hips, knees, ankles, and both feet."
+  ],
+  "baseline_prompt_en": "Create a photorealistic transport-operations editorial photograph of an original adult woman working as a night-ferry vehicle-deck loadmaster, fully clothed in a zipped navy coverall, reflective safety vest, steel-toe boots, hard hat, and work gloves. Her facial appearance is guided only by the provided reference photograph. On a working vehicle deck at night, she pauses between numbered loading lanes beside secured cargo chains while checking a clipboard. Capture her full body in a clearly readable natural contrapposto: nearly all body weight settles through one straight supporting leg; the opposite knee bends and its foot rests lightly ahead without bearing load; the pelvis drops on the free-leg side while the shoulders counter-tilt, producing a relaxed S-shaped alignment through the torso. One gloved hand marks the checklist as she turns toward an arriving truck. Prioritize unmistakable load-bearing asymmetry and authentic ferry-deck details: wet anti-slip steel, chain tensioners, ramp lamps, and distant vehicle lights. Keep the moment professional and documentary, with natural workwear folds and unobstructed hips, knees, ankles, and both feet.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "contrapposto_weight_shift",
+      "source_text": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "For this assigned keyword arm, contrapposto is interpreted from general knowledge as a standing pose with most weight carried by one straight supporting leg, the other leg relaxed, and the pelvis and shoulder line counter-tilted into a natural asymmetric torso curve.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "her full body in a clearly readable natural contrapposto"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서",
+        "dimension": "subject",
+        "prompt_evidence": "an original adult woman working as a night-ferry vehicle-deck loadmaster"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "One gloved hand marks the checklist as she turns toward an arriving truck"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "아까 첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her facial appearance is guided only by the provided reference photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "industrial or transport operational editorial",
+    "family": "night-ferry operational documentary",
+    "evidence": [
+      "wet anti-slip steel and numbered loading lanes",
+      "reflective workwear, cargo chains, ramp lamps, and distant vehicle lights"
+    ]
+  },
+  "variation_key": "seed-142076113-concept-08"
+}

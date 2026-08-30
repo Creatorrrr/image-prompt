@@ -1,0 +1,51 @@
+{
+  "schema_version": "photo-body-semantics-focused-experiment/v1",
+  "run_id": "20260830-body-semantics-focused-3",
+  "request_sha256": "2215db543ae95360539cbb06595c00c75e813b4cc2afe61abc506260d3e4a9c5",
+  "reference_image": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "facial_appearance_only",
+    "identity_claims_allowed": false
+  },
+  "test_case_fixture": "tests/fixtures/photo_prompt/body_semantics_pixel_test_cases_v1.jsonl",
+  "shared_rules": {
+    "independent_arm_files": true,
+    "sibling_arm_reads_allowed": false,
+    "freeze_core_before_project_asset_reads": true,
+    "randomized_complex_concept": true,
+    "adult_original_subject": true,
+    "fully_clothed_nonsexual": true,
+    "maximum_render_attempts": 2,
+    "repair_scope": "one targeted visible failure only",
+    "technical_pass_rule": "all profile render gates pass in one saved image",
+    "prompt_audit_is_pixel_proof": false,
+    "requesting_user_judgment": "pending"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-1-contrapposto",
+      "profile_id": "contrapposto_weight_shift",
+      "case_id": "body_semantics_contrapposto_full_load_path",
+      "seed": 142076113,
+      "concept_domain": "industrial or transport operational editorial",
+      "output_directory": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto"
+    },
+    {
+      "arm_id": "arm-2-arm-waist-negative-space",
+      "profile_id": "body_bounded_negative_space",
+      "case_id": "body_semantics_arm_waist_negative_space",
+      "seed": 999609921,
+      "concept_domain": "architectural ritual or investigative narrative with an uncluttered arm-waist region",
+      "output_directory": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-2-arm-waist-negative-space"
+    },
+    {
+      "arm_id": "arm-3-philtral-contour",
+      "profile_id": "upper_lip_philtral_contour",
+      "case_id": "body_semantics_philtral_surface_topography",
+      "seed": 394414666,
+      "concept_domain": "speculative botanical or scientific close portrait",
+      "output_directory": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour"
+    }
+  ]
+}

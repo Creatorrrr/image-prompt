@@ -1,0 +1,36 @@
+{
+  "schema_version": "photo-body-semantics-validation-summary/v1",
+  "test_case_fixture": "tests/fixtures/photo_prompt/body_semantics_pixel_test_cases_v1.jsonl",
+  "jsonl_validation": {
+    "status": "pass",
+    "rows": 3,
+    "method": "line-by-line json.loads"
+  },
+  "related_regression_suite": {
+    "status": "pass",
+    "tests": 50,
+    "elapsed_seconds": 346.518,
+    "command": "python3 -m unittest tests.test_photo_body_aesthetic_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_concept_candidate_expansion"
+  },
+  "final_focused_rerun": {
+    "status": "pass",
+    "tests": 8,
+    "elapsed_seconds": 26.954,
+    "command": "python3 -m unittest tests.test_photo_body_aesthetic_semantics"
+  },
+  "final_visual_profile_retrieval_rerun": {
+    "status": "pass",
+    "tests": 12,
+    "elapsed_seconds": 40.158,
+    "command": "python3 -m unittest tests.test_photo_visual_profile_retrieval"
+  },
+  "git_diff_check": "pass",
+  "render_summary": {
+    "arms": 3,
+    "saved_native_attempts": 5,
+    "technical_passes": 1,
+    "technical_failures": 2,
+    "user_judgment": "pending"
+  },
+  "claim_boundary": "Package and prompt checks do not establish rendered-pixel fidelity; the aggregate render result is one pass in three independent focused cases."
+}

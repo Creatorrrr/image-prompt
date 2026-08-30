@@ -1,0 +1,157 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "c8cf6a25b1c2adb7170000121b0633b8c1867bec",
+    "candidate_revision": "working-tree-20260830-body-semantics-focused-3"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Persist three researched body-aesthetic keyword pixel test cases, then test each in an independently randomized complex reference-informed render."
+  },
+  "evidence": [
+    {
+      "id": "e-test-contract",
+      "kind": "source-observation",
+      "claim": "The fixture binds one global, one regional, and one local semantic profile to exact hard gates, false substitutes, thumbnail/native scales, and an all-gates-in-one-image verdict.",
+      "artifact": "tests/fixtures/photo_prompt/body_semantics_pixel_test_cases_v1.jsonl"
+    },
+    {
+      "id": "e-package-tests",
+      "kind": "package-check",
+      "claim": "The JSONL parsed and the related 50-test suite passed; a final focused 8-test rerun also passed.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/validation_summary.json"
+    },
+    {
+      "id": "e-prompt-contrapposto",
+      "kind": "prompt-evaluation",
+      "claim": "The contrapposto v6 pack activated the exact hard profile and both composed and runtime audits passed.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/composed_audit.json and runtime_request_audit_attempt2.json"
+    },
+    {
+      "id": "e-prompt-negative-space",
+      "kind": "prompt-evaluation",
+      "claim": "The arm-waist negative-space v6 pack activated the exact hard profile and both composed and corrected runtime audits passed.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-2-arm-waist-negative-space/composed_audit.json and runtime_request_audit_attempt_2.json"
+    },
+    {
+      "id": "e-prompt-philtrum",
+      "kind": "prompt-evaluation",
+      "claim": "The philtral-contour v6 pack activated the exact hard profile and the composed and runtime audits passed.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/composed_audit.json and runtime_request_audit_attempt_1.json"
+    },
+    {
+      "id": "e-render-contrapposto",
+      "kind": "render-observation",
+      "claim": "Three of four contrapposto gates passed, but the thumbnail counter-tilt remained ambiguous after the one allowed repair.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/pixel_review.json and attempt-2.png sha256 4ea9a0127e26a31b1bae24c5faf5b0749c7d6193b5103968a4a400e3ae81910a"
+    },
+    {
+      "id": "e-render-negative-space",
+      "kind": "render-observation",
+      "claim": "Only the void-shape gate passed; the final wedge was garment-created and crossed by a cord, so three of four gates failed after the one allowed repair.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-2-arm-waist-negative-space/pixel_review.json and attempt-2.png sha256 7d802eb04e50eb7cc33c477ba55efcf527cd5a7d7aae68ef154d9bc4c91082f8"
+    },
+    {
+      "id": "e-render-philtrum",
+      "kind": "render-observation",
+      "claim": "All four philtral surface-topography gates passed in the first saved image at the required scales.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/pixel_review.json and attempt-1.png sha256 e7b570767d61cdc86f0e3e43655f8a5fc856dea33ab6125834e15a80f13bb999"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For each selected keyword, every registry-bound hard gate must coexist in one saved independently generated image at its required review scales.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "all-gates-one-image",
+        "statement": "Prompt wording, audit success, or components split across attempts cannot substitute for all hard gates in one saved image.",
+        "evidence_ids": ["e-test-contract"],
+        "causal_controls": ["exact gate set", "single-image unit", "partial fails closed"]
+      },
+      {
+        "id": "core-before-pack",
+        "statement": "Each arm freezes a randomized standalone authorial core before reading the local profile and candidate pack data.",
+        "evidence_ids": ["e-prompt-contrapposto", "e-prompt-negative-space", "e-prompt-philtrum"],
+        "causal_controls": ["request envelope hash", "seeded concept selection", "pre-core isolation"]
+      },
+      {
+        "id": "appearance-only-reference",
+        "statement": "The supplied portrait guides facial appearance only and cannot establish identity, ethnicity, health, or body value.",
+        "evidence_ids": ["e-render-contrapposto", "e-render-negative-space", "e-render-philtrum"],
+        "causal_controls": ["reference role", "non-biometric review boundary"]
+      }
+    ],
+    "flexible_dimensions": ["setting", "event", "camera", "lighting", "fully clothed wardrobe", "non-target props"]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-global-counter-tilt",
+      "scale": "global",
+      "axis": "opposed pelvis and shoulder tilt",
+      "source_state": "A thumbnail-readable counter-tilt completes the support-leg and free-leg load path.",
+      "render_state": "The vest, hair, clipboard, and coverall conceal or flatten the pelvic and shoulder slopes, leaving a generic crossed-leg weight shift.",
+      "evidence_ids": ["e-render-contrapposto"]
+    },
+    {
+      "id": "mismatch-regional-body-void",
+      "scale": "regional",
+      "axis": "actual arm-waist boundary ownership",
+      "source_state": "An uninterrupted background patch is bounded by the real raised arm and waist contours.",
+      "render_state": "A coat flap and plumb line create or cross the triangular wedge, which reads as a garment cutout rather than a body-bounded opening.",
+      "evidence_ids": ["e-render-negative-space"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-counter-tilt-occlusion",
+      "stage": "prompt-interaction",
+      "statement": "Operational wardrobe and the handheld checklist compete with the low-contrast pelvis and shoulder landmarks, so the requested counter-tilt loses thumbnail salience despite literal prompt coverage.",
+      "evidence_ids": ["e-prompt-contrapposto", "e-render-contrapposto"],
+      "falsifier": "A held-out full-body scene with the same profile, unobscured hip and shoulder lines, and no handheld torso occluder still fails the counter-tilt gate."
+    },
+    {
+      "id": "h-void-garment-substitution",
+      "stage": "generator-response",
+      "statement": "The generator satisfies a requested triangular void by inventing a high-contrast garment opening before it preserves anatomical boundary ownership.",
+      "evidence_ids": ["e-prompt-negative-space", "e-render-negative-space"],
+      "falsifier": "A held-out arm-waist case with a continuous solid garment surface and no cord or side flap produces an actual two-contour background opening."
+    },
+    {
+      "id": "h-local-pixel-allocation",
+      "stage": "observation",
+      "statement": "A face-dominant close portrait allocates enough pixels and form light for the philtral ridges, groove, and paired lip arc to survive both native and 256-pixel review.",
+      "evidence_ids": ["e-prompt-philtrum", "e-render-philtrum"],
+      "falsifier": "A held-out close portrait with comparable face scale and form light fails one or more philtral gates."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["test"],
+    "general_rule": "Persist exact profile-bound pixel cases that fail closed on substitutes and require every hard gate in one saved image at thumbnail and native scales.",
+    "generalization_basis": "The three cases span global pose, regional composition, and local surface anatomy rather than repeating one body feature or one photographic concept.",
+    "hypothesis_ids": ["h-counter-tilt-occlusion", "h-void-garment-substitution", "h-local-pixel-allocation"],
+    "changed_paths": [
+      "tests/fixtures/photo_prompt/body_semantics_pixel_test_cases_v1.jsonl",
+      "tests/test_photo_body_aesthetic_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package-tests"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt-contrapposto", "e-prompt-negative-space", "e-prompt-philtrum"]},
+    "render": {"status": "fail", "evidence_ids": ["e-render-contrapposto", "e-render-negative-space", "e-render-philtrum"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {"id":"contrapposto-randomized-concept","case_role":"motivating","status":"fail","covered_axes":["global support path","counter tilt","full-body crop"],"evidence_ids":["e-render-contrapposto"]},
+      {"id":"arm-waist-randomized-concept","case_role":"held-out","status":"fail","covered_axes":["regional boundary ownership","continuous background","thumbnail void shape"],"evidence_ids":["e-render-negative-space"]},
+      {"id":"philtrum-randomized-concept","case_role":"held-out","status":"pass","covered_axes":["local surface relief","paired lip arc","thumbnail survival"],"evidence_ids":["e-render-philtrum"]}
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The test contract and prompt routing are implemented and validated, but only one of three independent renders passed every pixel gate; the keyword set is not sufficiently render-validated.",
+    "evidence_ids": ["e-package-tests", "e-prompt-contrapposto", "e-prompt-negative-space", "e-prompt-philtrum", "e-render-contrapposto", "e-render-negative-space", "e-render-philtrum"]
+  }
+}
