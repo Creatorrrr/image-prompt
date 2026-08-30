@@ -1,0 +1,65 @@
+{
+  "schema_version": "photo-body-semantics-pixel-review/v1",
+  "case_id": "body_semantics_contrapposto_full_load_path",
+  "attempt": 1,
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-1.png",
+  "image_sha256": "db05dd1d713dc378c1db1ab8758f04e7e65c4f4e434026a67b7a6cc9d015de6c",
+  "review_inputs": {
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-1-thumbnail.png",
+    "thumbnail_sha256": "f2d49ce3a9d5a6e51571a17fecba0fa7a6b54e2067ed892d78dfbdb9d8e0d5d3",
+    "thumbnail_dimensions": "213x320",
+    "native_dimensions": "1024x1536",
+    "view_image_reviewed": [
+      "thumbnail",
+      "native"
+    ]
+  },
+  "hard_gates": [
+    {
+      "gate_id": "vo_contrapposto_support_leg",
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "At thumbnail and native scales, the image-left leg forms a nearly straight vertical load column from hip through a fully planted boot, with the torso settling over it."
+    },
+    {
+      "gate_id": "vo_contrapposto_free_leg",
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, the opposite image-right knee is visibly flexed and its boot is set lightly forward across the support leg rather than mirroring a second straight load column."
+    },
+    {
+      "gate_id": "vo_contrapposto_counter_tilt",
+      "required_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At 213x320 the safety vest and clipboard obscure the landmarks, and the shoulder line and pelvic line do not separate into an unmistakable opposed tilt; the silhouette can still read as a generic crossed-leg weight shift."
+    },
+    {
+      "gate_id": "vo_contrapposto_full_body_read",
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "Helmet, head, torso, pelvis, both knees, both ankles, and both boots are fully visible with clear floor margin at both scales."
+    }
+  ],
+  "technical_qualified": false,
+  "overall_verdict": "fail",
+  "failed_gate_ids": [
+    "vo_contrapposto_counter_tilt"
+  ],
+  "targeted_repair": {
+    "allowed": true,
+    "repair_axis": "composition and pose-line visibility only",
+    "preserve": [
+      "image-left straight loaded support leg",
+      "image-right bent relaxed free leg",
+      "both visible feet and full-body framing",
+      "facial appearance reference role",
+      "workwear, clipboard, ferry deck, camera, and lighting"
+    ],
+    "change": "Make the pelvis slope and shoulder slope visibly oppose each other at thumbnail scale while the head remains balanced over the support leg."
+  },
+  "appearance_review": {
+    "reference_role": "facial appearance only",
+    "observation": "The result visibly uses facial-appearance cues from the supplied portrait; this is not a biometric identity or ethnicity determination.",
+    "requesting_user_judgment": "pending"
+  }
+}

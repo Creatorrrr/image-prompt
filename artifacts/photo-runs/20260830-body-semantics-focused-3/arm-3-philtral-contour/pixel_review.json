@@ -1,0 +1,94 @@
+{
+  "schema_version": "photo-body-semantic-pixel-review/v1",
+  "case_id": "body_semantics_philtral_surface_topography",
+  "profile_id": "upper_lip_philtral_contour",
+  "pack_id": "bc2da31d2a6a73ac",
+  "effective_visual_contract_sha256": "72e6cfacc51e790a3a5ec29d61b9150989e17a88e5dc6b0ec43ad4216a83fdf9",
+  "reviewer": "codex_agent_direct_pixel_review",
+  "verdict_rule": "one_saved_image_all_required_gates_pass",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/attempt-1.png",
+      "result_sha256": "e7b570767d61cdc86f0e3e43655f8a5fc856dea33ab6125834e15a80f13bb999",
+      "native_review": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/attempt-1.png",
+        "width": 1122,
+        "height": 1402,
+        "viewed_with": "view_image detail=original",
+        "status": "completed"
+      },
+      "thumbnail_review": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/review/attempt-1-thumbnail.png",
+        "sha256": "6743648506f2d014c563b9af5e0561fb6f0e08ae80528578f3a5be98e54ecb8f",
+        "width": 256,
+        "height": 320,
+        "derivation": "sips proportional resample from the exact saved image",
+        "viewed_with": "view_image detail=original",
+        "status": "completed"
+      },
+      "supplemental_native_crop": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/review/attempt-1-native-mouth-crop.png",
+        "sha256": "4b6dd9de95bbcac2296e66c2e37244d907c05cd6f159db932a67a8eaed3c6b25",
+        "width": 620,
+        "height": 500,
+        "derivation": "center crop from the exact native saved image; supplemental only",
+        "viewed_with": "view_image detail=original"
+      },
+      "hard_gates": {
+        "vo_philtrum_paired_ridges": {
+          "review_scale": "native",
+          "status": "pass",
+          "evidence": "In the native image and native mouth crop, two shallow raised skin ridges separately flank a continuous midline depression between the nose base and upper lip; the relief is modeled by surface light rather than a single painted stroke."
+        },
+        "vo_philtrum_upper_lip_arc": {
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "At native scale the central groove ends at a distinct center dip between two upper-lip peaks, forming a paired arc; the same two-lobed upper border and center dip remain discernible in the 256 by 320 whole-frame thumbnail."
+        },
+        "vo_philtrum_face_geometry_coherent": {
+          "review_scale": "native",
+          "status": "pass",
+          "evidence": "The nostril base, philtral planes, vermilion border, lip volume, mouth corners, and adjacent cheek and chin skin join continuously with plausible proportions, pores, highlights, and shadows; no fusion or broken contour is visible."
+        },
+        "vo_philtrum_not_makeup_only": {
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "Mild natural lip color is present, but the decisive evidence is the raised skin relief above the vermilion, the intervening groove, and their light-consistent continuation into the paired lip edge; thumbnail shape and native form agree."
+        }
+      },
+      "all_required_gates_coexist_in_one_image": true,
+      "technical_status": "pass",
+      "repair_needed": false
+    }
+  ],
+  "required_gate_ids": [
+    "vo_philtrum_paired_ridges",
+    "vo_philtrum_upper_lip_arc",
+    "vo_philtrum_face_geometry_coherent",
+    "vo_philtrum_not_makeup_only"
+  ],
+  "selected_attempt": 1,
+  "selected_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-3-philtral-contour/attempt-1.png",
+  "selected_image_sha256": "e7b570767d61cdc86f0e3e43655f8a5fc856dea33ab6125834e15a80f13bb999",
+  "technical_verdict": "pass",
+  "repair_attempt_count": 0,
+  "render_call_count": 1,
+  "reference_assessment": {
+    "role": "facial_appearance_only",
+    "agent_similarity_score": "not_performed",
+    "identity_or_biometric_claim": "not_made",
+    "ethnicity_or_race_inference": "not_performed",
+    "requesting_user_judgment": "pending"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "boundary": "Technical pixel qualification does not establish user-perceived resemblance or preference."
+  },
+  "limitations": [
+    "Thumbnail survival was tested on a 256 by 320 proportional whole-frame derivative, not every possible smaller display size.",
+    "The supplemental crop supports inspection but does not replace the native full-image and whole-frame thumbnail judgments.",
+    "This is direct visual review by the agent; metadata alone cannot prove the observations."
+  ]
+}

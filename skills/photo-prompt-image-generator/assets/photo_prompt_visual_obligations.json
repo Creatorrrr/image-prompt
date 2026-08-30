@@ -5342,6 +5342,214 @@
         {"id": "vo_hourglass_not_value_claim", "review_scale": "thumbnail", "description": "The silhouette is shown as neutral visual geometry without beauty, health, fertility, or value inference."}
       ],
       "reject_substitutes": ["belt_or_corset_only", "one_sided_crop", "pose_or_lens_distortion_only", "fixed_numeric_ratio", "beauty_health_fertility_or_value_inference"]
+    },
+    {
+      "id": "achievement_reward_smile",
+      "category": "context_bound_affect_display",
+      "activation": {
+        "exact_terms": ["achievement reward smile", "success reward smile", "성취 보상 미소", "성공 직후 보상 미소"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A context-bound positive display immediately after the same adult visibly completes or verifies a difficult task, combining a readable successful outcome with a mostly symmetric smile, attention to the result, and a post-success action consequence; it does not prove a hidden or genuine emotional state.",
+        "paraphrase_examples": ["성인 작업자가 고친 장치의 정상 작동을 확인한 직후 입꼬리와 볼이 함께 올라가는 장면", "a mostly symmetric lip-corner pull as the adult looks at the working result they just produced", "task completion, visible success feedback, result-directed attention, and a restrained celebratory response in one frame"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["authored_success_result", "symmetric_positive_face_action", "result_directed_attention", "post_success_consequence"],
+          "groups": [
+            {"id": "authored_success_result", "any_terms": ["the same adult visibly completes or verifies the task", "working device restored signal finished craft or passed test", "본인이 수행한 과업의 성공 결과가 화면에 보임"]},
+            {"id": "symmetric_positive_face_action", "any_terms": ["both lip corners lift with cheek movement", "mostly symmetric closed or slightly open smile", "양쪽 입꼬리와 볼의 상승이 함께 보임"]},
+            {"id": "result_directed_attention", "any_terms": ["eyes remain on the successful result", "gaze returns from the result to a collaborator", "성공 결과 또는 함께한 사람을 향한 시선"]},
+            {"id": "post_success_consequence", "any_terms": ["hand releases the completed control or gives a small celebratory gesture", "collaborator responds to the restored outcome", "완료 직후 손의 긴장이 풀리거나 작은 축하 동작이 이어짐"]}
+          ]
+        },
+        "contrast_examples": ["a generic posed portrait smile with no visible task outcome", "a polite affiliative smile directed only at another person", "an asymmetric superiority smirk", "a success prop shown without a post-outcome facial or action change"]
+      },
+      "concept_candidate": {"concept_terms": ["visible authored success result", "mostly symmetric lip-corner pull", "cheek movement", "result-directed gaze", "post-success timing", "small release or celebration action", "no hidden-state claim"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["achievement-reward smile display"], "forbidden_prompt_terms": ["genuine happiness proved", "true emotion revealed"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the adult face, the task result they personally completed, and the immediate consequence readable in one frame: show both lip corners and cheeks changing while gaze remains tied to the successful result or collaborator, with a small release or celebration action after verification rather than a generic portrait smile.",
+      "required_evidence_fields": ["successful_result_phrase", "symmetric_smile_action_phrase", "result_attention_phrase", "post_success_consequence_phrase"],
+      "evidence_requirements": {
+        "successful_result_phrase": {"min_content_words": 4, "must_mention_any": ["the completed device visibly works", "the restored signal is visibly active", "the finished test visibly passes", "the repaired object visibly functions"]},
+        "symmetric_smile_action_phrase": {"min_content_words": 4, "must_mention_any": ["both lip corners lift with cheek movement", "mostly symmetric smile with raised cheeks"]},
+        "result_attention_phrase": {"min_content_words": 4, "must_mention_any": ["eyes remain on the successful result", "gaze returns from the result to the collaborator"]},
+        "post_success_consequence_phrase": {"min_content_words": 4, "must_mention_any": ["hand releases the completed control", "small celebratory gesture follows verification", "collaborator responds to the restored outcome"]}
+      },
+      "render_gates": [
+        {"id": "vo_achievement_reward_visible_success", "review_scale": "both", "description": "The adult's successful task result is visibly readable without relying on prompt text or a caption."},
+        {"id": "vo_achievement_reward_face_action", "review_scale": "native", "description": "Both lip corners and cheeks show a mostly symmetric positive facial action rather than a one-sided smirk."},
+        {"id": "vo_achievement_reward_result_attention", "review_scale": "both", "description": "Eye direction and body orientation remain tied to the completed result or the collaborator sharing it."},
+        {"id": "vo_achievement_reward_temporal_relation", "review_scale": "thumbnail", "description": "The result, release gesture, and reaction compose an immediately-after-success event rather than a generic smiling portrait."}
+      ],
+      "reject_substitutes": ["generic_portrait_smile", "polite_affiliation_only", "dominance_smirk", "success_prop_without_reaction", "hidden_state_or_genuineness_claim"]
+    },
+    {
+      "id": "affiliative_reassurance_smile",
+      "category": "context_bound_affect_display",
+      "activation": {
+        "exact_terms": ["affiliative reassurance smile", "reassuring affiliation smile", "안심시키는 친화 미소", "관계 회복 친화 미소"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A restrained relationship-directed smile used while one adult performs a concrete supportive action toward a visibly concerned adult peer, with mutual orientation and an observable easing or acceptance response; the cues show an interaction function, not sincerity, consent, trustworthiness, or personality.",
+        "paraphrase_examples": ["걱정하는 성인 동료에게 물건을 건네며 작게 닫힌 미소를 보이고 상대가 받아드는 장면", "a small lip-pressed smile paired with a practical helping action and mutual orientation", "supportive handoff, restrained friendly mouth action, and visible peer response rather than a solo friendly portrait"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["concerned_peer_target", "restrained_affiliative_face", "concrete_support_action", "peer_response_consequence"],
+          "groups": [
+            {"id": "concerned_peer_target", "any_terms": ["a visibly concerned adult peer shares the frame", "peer watches the uncertain damaged or missing item", "걱정하거나 긴장한 성인 동료가 같은 화면에 보임"]},
+            {"id": "restrained_affiliative_face", "any_terms": ["small closed or lip-pressed smile", "soft bilateral lip-corner lift without a broad victory grin", "작고 절제된 양측 입꼬리 상승"]},
+            {"id": "concrete_support_action", "any_terms": ["returns repairs steadies or offers the needed object", "open handoff or shoulder-level supportive gesture", "필요한 물건을 돌려주거나 실제 도움을 수행함"]},
+            {"id": "peer_response_consequence", "any_terms": ["peer accepts the handoff or visibly eases posture", "mutual gaze or shared target closes the interaction", "동료가 받아들이거나 자세의 긴장을 늦추는 결과"]}
+          ]
+        },
+        "contrast_examples": ["a bright solo friendliness smile", "a sales or service smile with no concerned peer", "a dominance grin or teasing smirk", "supportive proximity alone with no action or peer response"]
+      },
+      "concept_candidate": {"concept_terms": ["concerned adult peer", "small restrained bilateral smile", "mutual orientation", "practical supportive handoff", "peer acceptance or easing", "relationship-directed function", "no sincerity inference"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["affiliative-reassurance smile display"], "forbidden_prompt_terms": ["sincere smile proved", "trustworthy personality", "consent implied"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame both adults, the peer's visible concern, the main adult's small bilateral closed or lip-pressed smile, and one concrete helping or handoff action; include the peer's acceptance or easing response so affiliation is carried by the relationship event rather than a generic friendly face.",
+      "required_evidence_fields": ["concerned_peer_phrase", "restrained_smile_phrase", "support_action_phrase", "peer_response_phrase"],
+      "evidence_requirements": {
+        "concerned_peer_phrase": {"min_content_words": 4, "must_mention_any": ["visibly concerned adult peer shares the frame", "adult peer watches the uncertain item"]},
+        "restrained_smile_phrase": {"min_content_words": 4, "must_mention_any": ["small closed bilateral smile", "small lip-pressed smile with both corners lifted"]},
+        "support_action_phrase": {"min_content_words": 4, "must_mention_any": ["returns the needed object", "repairs and offers the needed item", "open practical handoff"]},
+        "peer_response_phrase": {"min_content_words": 4, "must_mention_any": ["peer accepts the handoff", "peer visibly eases posture", "mutual gaze closes the interaction"]}
+      },
+      "render_gates": [
+        {"id": "vo_affiliative_reassurance_dyad", "review_scale": "thumbnail", "description": "Both adult participants and their mutual or shared-target orientation remain legible in the same frame."},
+        {"id": "vo_affiliative_reassurance_restrained_face", "review_scale": "native", "description": "The main adult shows a small bilateral closed or lip-pressed smile rather than a broad victory grin or smirk."},
+        {"id": "vo_affiliative_reassurance_support_action", "review_scale": "both", "description": "A concrete repair, return, steadying, or handoff action visibly explains the relationship-directed display."},
+        {"id": "vo_affiliative_reassurance_peer_response", "review_scale": "both", "description": "The adult peer visibly accepts, eases, or reciprocally orients so the interaction has an observable consequence."}
+      ],
+      "reject_substitutes": ["solo_friendly_portrait", "service_smile_without_peer_concern", "dominance_or_teasing_smirk", "proximity_without_support_action", "sincerity_consent_or_personality_inference"]
+    },
+    {
+      "id": "decision_uncertainty_display",
+      "category": "context_bound_affect_display",
+      "activation": {
+        "exact_terms": ["decision uncertainty display", "visible choice uncertainty", "선택지 사이 혼란", "결정 전 혼란 반응"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A visible pre-decision display in which an adult compares at least two readable alternatives, gaze or head direction divides between them, slight brow or mouth tension accompanies a paused hand or tool, and the choice remains unresolved; no single face action is treated as proof of confusion.",
+        "paraphrase_examples": ["두 개의 실제 선택지를 번갈아 보며 손을 중간에서 멈춘 성인의 비교 장면", "gaze divided between two labeled physical alternatives with slight brow asymmetry and a paused reach", "an unresolved choice shown by targets, comparison behavior, restrained facial tension, and interrupted action"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["two_visible_alternatives", "comparison_gaze", "restrained_face_tension", "paused_choice_action", "unresolved_decision_state"],
+          "groups": [
+            {"id": "two_visible_alternatives", "any_terms": ["two distinct physical options remain visible", "two swatches samples routes or controls can be compared", "서로 다른 두 선택 대상이 동시에 보임"]},
+            {"id": "comparison_gaze", "any_terms": ["eyes or head angle divide between the two options", "gaze shifts from one visible alternative toward the other", "두 선택지 사이를 오가는 시선 또는 머리 방향"]},
+            {"id": "restrained_face_tension", "any_terms": ["slight brow asymmetry or knit with mild lip tension", "one brow lifts while the mouth remains lightly pressed", "한쪽 눈썹 변화와 약한 입술 긴장이 함께 보임"]},
+            {"id": "paused_choice_action", "any_terms": ["hand tool or pen pauses midway between options", "reach stops before touching either alternative", "손이나 도구가 선택 전 중간에서 멈춤"]},
+            {"id": "unresolved_decision_state", "any_terms": ["neither option has yet been selected", "both alternatives remain available and unchanged", "어느 선택도 아직 실행되지 않음"]}
+          ]
+        },
+        "contrast_examples": ["focused inspection of one object", "skeptical side-eye toward a person", "frustration after a failed choice", "a confused face with no visible alternatives or paused action"]
+      },
+      "concept_candidate": {"concept_terms": ["two visible alternatives", "divided comparison gaze", "slight brow asymmetry", "mild lip tension", "paused hand between options", "unresolved choice", "not face-only confusion"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["decision-uncertainty display"], "forbidden_prompt_terms": ["mind is confused", "indecisive personality"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep two genuinely different options, the adult's eyes or head angle comparing them, slight brow or mouth tension, and a hand, pen, or tool paused before selection in one readable frame; neither option may already be chosen, and a generic puzzled face is insufficient.",
+      "required_evidence_fields": ["visible_alternatives_phrase", "comparison_gaze_phrase", "facial_tension_phrase", "paused_action_phrase", "unresolved_choice_phrase"],
+      "evidence_requirements": {
+        "visible_alternatives_phrase": {"min_content_words": 4, "must_mention_any": ["two distinct physical options remain visible", "two swatches remain visible", "two samples remain visible", "two controls remain visible"]},
+        "comparison_gaze_phrase": {"min_content_words": 4, "must_mention_any": ["eyes divide between the two options", "gaze shifts from one visible alternative toward the other", "head angle divides between both options"]},
+        "facial_tension_phrase": {"min_content_words": 4, "must_mention_any": ["slight brow asymmetry with mild lip tension", "one brow lifts while the mouth remains lightly pressed", "slight brow knit and lightly pressed lips"]},
+        "paused_action_phrase": {"min_content_words": 4, "must_mention_any": ["hand pauses midway between options", "tool pauses midway between options", "reach stops before touching either alternative"]},
+        "unresolved_choice_phrase": {"min_content_words": 4, "must_mention_any": ["neither option has yet been selected", "both alternatives remain available and unchanged"]}
+      },
+      "render_gates": [
+        {"id": "vo_decision_uncertainty_two_options", "review_scale": "both", "description": "Two distinct and comparable physical alternatives are simultaneously visible and remain clearly separate."},
+        {"id": "vo_decision_uncertainty_comparison_gaze", "review_scale": "native", "description": "Eye or head direction visibly divides between the alternatives rather than fixing on one unrelated target."},
+        {"id": "vo_decision_uncertainty_face_action", "review_scale": "native", "description": "Restrained brow asymmetry or knitting and mild mouth tension support comparison without becoming an exaggerated cartoon face."},
+        {"id": "vo_decision_uncertainty_paused_action", "review_scale": "both", "description": "A hand, pen, or tool is visibly paused before either alternative is selected."},
+        {"id": "vo_decision_uncertainty_unresolved", "review_scale": "thumbnail", "description": "The whole frame reads as an unresolved comparison rather than completed selection, inspection, skepticism, or failure."}
+      ],
+      "reject_substitutes": ["single_target_concentration", "skeptical_person_directed_side_eye", "post_failure_frustration", "puzzled_face_without_options", "completed_choice"]
+    },
+    {
+      "id": "embarrassment_repair_display",
+      "category": "context_bound_affect_display",
+      "activation": {
+        "exact_terms": ["embarrassment repair display", "minor mishap repair reaction", "당황 수습 반응", "사소한 실수 뒤 수습 표정"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A short social-repair sequence after an adult causes a minor, non-harmful, visible mishap: the adult briefly breaks gaze or lowers the head, shows a small closed smile or face-touch cue, performs concrete restitution, and receives an observable peer response; the display is not a moral or personality diagnosis.",
+        "paraphrase_examples": ["가벼운 공개 실수 직후 잠깐 시선을 떼고 작게 웃으며 흩어진 물건을 다시 정리하는 성인", "a brief gaze break and small closed smile while the adult immediately repairs a harmless social mishap", "minor visible mistake, restrained face or hand-to-face cue, concrete restitution, and peer acceptance in one scene"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["minor_visible_mishap", "brief_gaze_break_face_cue", "concrete_repair_action", "peer_acceptance_response"],
+          "groups": [
+            {"id": "minor_visible_mishap", "any_terms": ["spilled lightweight items dropped cards or a harmless mix-up remains visible", "no injury threat or serious damage", "사소하고 무해한 실수의 결과가 보임"]},
+            {"id": "brief_gaze_break_face_cue", "any_terms": ["head dips or gaze breaks then starts to return", "small closed smile with a brief cheek or face touch", "고개나 시선을 잠깐 피한 뒤 작은 닫힌 미소 또는 얼굴 만짐"]},
+            {"id": "concrete_repair_action", "any_terms": ["gathers reorders wipes replaces or returns the affected items", "hands actively restore the disrupted arrangement", "흩어진 것을 줍거나 원상태로 되돌리는 수습 행동"]},
+            {"id": "peer_acceptance_response", "any_terms": ["adult peer helps accepts or gives an open-palm okay response", "shared action visibly de-escalates the moment", "동료가 돕거나 받아들이는 관찰 가능한 반응"]}
+          ]
+        },
+        "contrast_examples": ["laughing at another person's accident", "shame withdrawal with no repair action", "a flushed face caused only by heat or lighting", "generic clumsiness with no peer or social consequence"]
+      },
+      "concept_candidate": {"concept_terms": ["minor harmless visible mishap", "brief gaze break then return", "small closed smile or face touch", "immediate restitution action", "peer help or acceptance", "social repair sequence", "no moral diagnosis"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["embarrassment-repair display"], "forbidden_prompt_terms": ["guilty personality", "shameful person", "deception cue"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the harmless mishap residue, the adult's brief gaze or head break plus a small closed smile or restrained face touch, both hands beginning a concrete repair, and an adult peer helping or accepting; keep the restitution sequence legible rather than relying on blush or an embarrassed label.",
+      "required_evidence_fields": ["minor_mishap_phrase", "gaze_break_face_cue_phrase", "repair_action_phrase", "peer_acceptance_phrase"],
+      "evidence_requirements": {
+        "minor_mishap_phrase": {"min_content_words": 4, "must_mention_any": ["harmless dropped cards remain visible", "lightweight spilled items remain visible", "minor harmless mix-up remains visible"]},
+        "gaze_break_face_cue_phrase": {"min_content_words": 5, "must_mention_any": ["gaze briefly breaks then starts to return", "head dips with a small closed smile", "small closed smile with a brief cheek touch"]},
+        "repair_action_phrase": {"min_content_words": 4, "must_mention_any": ["hands actively gather and reorder the items", "hands wipe and restore the arrangement", "immediately replaces the affected item"]},
+        "peer_acceptance_phrase": {"min_content_words": 4, "must_mention_any": ["adult peer helps with the repair", "adult peer accepts the restored item", "adult peer gives an open-palm okay response"]}
+      },
+      "render_gates": [
+        {"id": "vo_embarrassment_repair_minor_mishap", "review_scale": "both", "description": "A minor non-harmful mishap and its affected objects remain visibly identifiable in the scene."},
+        {"id": "vo_embarrassment_repair_face_sequence", "review_scale": "native", "description": "A brief gaze or head break and restrained closed smile or face-touch cue are photographically readable without exaggerated cartoon symbols."},
+        {"id": "vo_embarrassment_repair_restitution", "review_scale": "both", "description": "The adult visibly gathers, reorders, wipes, replaces, or returns what the mishap disrupted."},
+        {"id": "vo_embarrassment_repair_peer_response", "review_scale": "thumbnail", "description": "An adult peer visibly helps, accepts, or signals that the small social rupture is being repaired."}
+      ],
+      "reject_substitutes": ["amusement_at_another_accident", "withdrawal_without_repair", "heat_or_lighting_blush_only", "clumsiness_without_social_response", "guilt_shame_or_deception_diagnosis"]
+    },
+    {
+      "id": "verified_safety_relief",
+      "category": "context_bound_affect_display",
+      "activation": {
+        "exact_terms": ["verified-safety relief", "relief after safety confirmation", "안전 확인 뒤 안도", "무사 확인 후 안도"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A post-verification release display after an adult checks a previously uncertain but non-graphic safety condition and receives visible evidence that a person, system, or route is safe, combining the verification action with loosened shoulders, jaw or eyelids and an immediate practical consequence; face alone does not establish relief.",
+        "paraphrase_examples": ["경보 뒤 게이지와 동료의 안전 표시를 직접 확인하고 어깨와 턱의 긴장을 늦추는 성인", "an adult checks the safe reading before shoulders drop, jaw parts slightly, and the working hand releases", "prior risk marker, explicit safety confirmation, tension release, and resumed safe action in one post-event frame"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["prior_risk_marker", "explicit_safety_verification", "visible_tension_release", "post_verification_consequence"],
+          "groups": [
+            {"id": "prior_risk_marker", "any_terms": ["inactive alarm warning residue stopped machinery or blocked route shows what was uncertain", "non-graphic risk context remains readable", "이전에 위험 가능성이 있었음을 보여주는 경보 또는 정지 단서"]},
+            {"id": "explicit_safety_verification", "any_terms": ["adult reads a safe gauge indicator signal or colleague check", "hand touches or points to the confirmed safe status", "게이지 신호 또는 동료 상태를 직접 확인함"]},
+            {"id": "visible_tension_release", "any_terms": ["shoulders visibly drop while jaw loosens or lips part", "eyelids soften and gripping hand releases", "어깨 턱 눈꺼풀 손의 긴장이 눈에 띄게 풀림"]},
+            {"id": "post_verification_consequence", "any_terms": ["the adult resumes the safe task or lowers the emergency tool", "a colleague returns to work after confirmation", "확인 뒤 비상 도구를 내리거나 안전한 작업을 재개함"]}
+          ]
+        },
+        "contrast_examples": ["fatigue after exertion with no safety check", "sadness or pain shown by slumped posture", "generic calm beside an inactive alarm", "a smiling face while the system status remains unknown"]
+      },
+      "concept_candidate": {"concept_terms": ["prior non-graphic risk marker", "explicit safe-status verification", "shoulder and jaw release", "softened eyelids or released grip", "post-verification consequence", "temporal after-safety relation", "not face-only relief"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["verified-safety relief display"], "forbidden_prompt_terms": ["inner relief proved", "trauma diagnosis"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Place the prior risk marker, the adult's explicit check of a safe reading or colleague, and the immediate release response in one frame: shoulders drop, jaw or eyelids loosen, and the gripping hand releases before the adult lowers an emergency tool or resumes the safe task.",
+      "required_evidence_fields": ["prior_risk_phrase", "safety_verification_phrase", "tension_release_phrase", "post_verification_phrase"],
+      "evidence_requirements": {
+        "prior_risk_phrase": {"min_content_words": 4, "must_mention_any": ["inactive alarm remains visible", "warning residue remains visible", "stopped machinery shows the prior uncertainty", "blocked route shows the prior uncertainty"]},
+        "safety_verification_phrase": {"min_content_words": 4, "must_mention_any": ["adult reads the safe gauge indicator", "adult checks the confirmed safe signal", "adult visually confirms the colleague is safe"]},
+        "tension_release_phrase": {"min_content_words": 5, "must_mention_any": ["shoulders visibly drop while the jaw loosens", "eyelids soften while the gripping hand releases", "shoulders drop and lips part on an exhale"]},
+        "post_verification_phrase": {"min_content_words": 4, "must_mention_any": ["adult lowers the emergency tool", "adult resumes the safe task", "colleague returns to work after confirmation"]}
+      },
+      "render_gates": [
+        {"id": "vo_verified_relief_prior_risk", "review_scale": "thumbnail", "description": "A non-graphic alarm, warning residue, stopped machine, or blocked route makes the prior uncertainty visually legible."},
+        {"id": "vo_verified_relief_safety_check", "review_scale": "both", "description": "The adult visibly checks a gauge, signal, route, or colleague before the release response occurs."},
+        {"id": "vo_verified_relief_tension_release", "review_scale": "native", "description": "Shoulders, jaw, eyelids, or gripping hand visibly loosen in a coordinated release rather than generic fatigue."},
+        {"id": "vo_verified_relief_post_event", "review_scale": "both", "description": "Lowering the emergency tool or resuming the safe task makes the display read as after confirmation rather than calm before an unknown outcome."}
+      ],
+      "reject_substitutes": ["fatigue_without_safety_check", "sadness_or_pain_slump", "generic_calm_beside_alarm", "smile_before_status_known", "hidden_state_or_trauma_diagnosis"]
     }
   ]
 }

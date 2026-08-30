@@ -1,0 +1,81 @@
+{
+  "schema_version": "photo-body-semantics-pixel-review/v1",
+  "case_id": "body_semantics_contrapposto_full_load_path",
+  "profile_id": "contrapposto_weight_shift",
+  "pack_id": "01e98ff747195536",
+  "effective_visual_contract_sha256": "a8f445a7fb652150150af04b1def82ac1dd4a62a52a0cdeac77614c645a918cf",
+  "selected_attempt": 2,
+  "render_count": 2,
+  "render_limit_reached": true,
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-2.png",
+  "result_sha256": "4ea9a0127e26a31b1bae24c5faf5b0749c7d6193b5103968a4a400e3ae81910a",
+  "review_inputs": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-2-thumbnail.png",
+      "sha256": "8a6cd96f8aae146d9988013bcc0a0d781f8df60ff96ea561b4d3c2bc369b9640",
+      "dimensions": "213x320",
+      "view_image_reviewed": true
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-focused-3/arm-1-contrapposto/attempt-2.png",
+      "sha256": "4ea9a0127e26a31b1bae24c5faf5b0749c7d6193b5103968a4a400e3ae81910a",
+      "dimensions": "1024x1536",
+      "view_image_reviewed": true
+    }
+  },
+  "hard_gates": {
+    "vo_contrapposto_support_leg": {
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show the image-left leg as a nearly straight load column from hip to a fully planted boot, with the trunk visibly settling over that side."
+    },
+    "vo_contrapposto_free_leg": {
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show the image-right knee flexed and its boot placed lightly forward across the support leg, distinctly unlike a second straight supporting leg."
+    },
+    "vo_contrapposto_counter_tilt": {
+      "required_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At 213x320, the safety vest, hair, and clipboard mask the anatomical landmarks; the visible shoulder and pelvic cues do not resolve into unmistakably opposing slopes, so the silhouette can still be read as a generic crossed-leg weight shift."
+    },
+    "vo_contrapposto_full_body_read": {
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales the hard hat and head, torso, pelvis, both legs, both ankles, and both boots are visible with floor margin, allowing the complete head-to-feet load path to be inspected."
+    }
+  },
+  "failed_hard_gate_ids": [
+    "vo_contrapposto_counter_tilt"
+  ],
+  "technical_qualified": false,
+  "overall_verdict": "technical_fail",
+  "verdict_rule": "all four required gates must pass in one saved image; prompt evidence and components split across attempts are insufficient",
+  "attempt_history": [
+    {
+      "attempt": 1,
+      "image_sha256": "db05dd1d713dc378c1db1ab8758f04e7e65c4f4e434026a67b7a6cc9d015de6c",
+      "verdict": "technical_fail",
+      "failed_gate_ids": [
+        "vo_contrapposto_counter_tilt"
+      ]
+    },
+    {
+      "attempt": 2,
+      "image_sha256": "4ea9a0127e26a31b1bae24c5faf5b0749c7d6193b5103968a4a400e3ae81910a",
+      "verdict": "technical_fail",
+      "failed_gate_ids": [
+        "vo_contrapposto_counter_tilt"
+      ]
+    }
+  ],
+  "appearance_review": {
+    "reference_role": "facial appearance only",
+    "observation": "The final pixels visibly follow facial-appearance cues from the supplied portrait while remaining an original generated adult subject; this is not a biometric identity, ethnicity, or same-person determination.",
+    "user_acceptance": "pending"
+  },
+  "requesting_user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

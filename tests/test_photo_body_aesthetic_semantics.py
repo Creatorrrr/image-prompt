@@ -12,6 +12,13 @@ SCRIPT_DIR = SKILL_DIR / "scripts"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 EVIDENCE_PATH = ROOT / "docs" / "research-evidence" / "photo-prompt" / "research_evidence.jsonl"
+PIXEL_CASES_PATH = (
+    ROOT
+    / "tests"
+    / "fixtures"
+    / "photo_prompt"
+    / "body_semantics_pixel_test_cases_v1.jsonl"
+)
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -29,6 +36,11 @@ class PhotoBodyAestheticSemanticsTests(unittest.TestCase):
             slot: {row["id"]: row for row in rows}
             for slot, rows in cls.tags["slots"].items()
         }
+        cls.pixel_cases = [
+            json.loads(line)
+            for line in PIXEL_CASES_PATH.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
 
     def hard_matches(self, text: str) -> set[str]:
         rows = [
@@ -200,6 +212,78 @@ class PhotoBodyAestheticSemanticsTests(unittest.TestCase):
                 self.assertTrue(set(row["candidate_ids"]) <= known_candidates)
                 self.assertTrue(row["research_limitations"])
                 self.assertTrue(row["reuse_note"])
+
+    def test_selected_pixel_cases_are_registry_bound_and_fail_closed(self):
+        expected_profile_ids = {
+            "contrapposto_weight_shift",
+            "body_bounded_negative_space",
+            "upper_lip_philtral_contour",
+        }
+        self.assertEqual(
+            {case["profile_id"] for case in self.pixel_cases},
+            expected_profile_ids,
+        )
+        self.assertEqual(len(self.pixel_cases), len(expected_profile_ids))
+
+        for case in self.pixel_cases:
+            with self.subTest(case_id=case["case_id"]):
+                profile = self.profiles[case["profile_id"]]
+                registry_gate_ids = [gate["id"] for gate in profile["render_gates"]]
+
+                self.assertEqual(
+                    case["schema_version"],
+                    "photo-body-semantic-pixel-case/v1",
+                )
+                self.assertEqual(
+                    self.hard_matches(case["activation_text"]),
+                    {case["profile_id"]},
+                )
+                self.assertEqual(case["required_gate_ids"], registry_gate_ids)
+                self.assertEqual(
+                    set(case["reject_substitutes"]),
+                    set(profile["reject_substitutes"]),
+                )
+                self.assertEqual(
+                    set(case["required_review_scales"]),
+                    {"thumbnail", "native"},
+                )
+                self.assertEqual(
+                    case["verdict_rule"],
+                    {
+                        "unit": "one_saved_image",
+                        "pass": "all_required_gates_pass",
+                        "partial_or_missing": "fail",
+                        "prompt_presence_only": "insufficient",
+                    },
+                )
+                self.assertEqual(
+                    case["reference_image_role"],
+                    "facial_appearance_only",
+                )
+                self.assertTrue(case["randomized_complex_concept_required"])
+                self.assertTrue(case["non_activating_confusers"])
+                self.assertTrue(case["neutrality_boundaries"])
+                for confuser in case["non_activating_confusers"]:
+                    self.assertEqual(self.hard_matches(confuser), set())
+
+    def test_pixel_cases_cover_global_regional_and_local_visual_scales(self):
+        self.assertEqual(
+            {case["visual_scale"] for case in self.pixel_cases},
+            {"global_full_body", "regional_composition", "local_surface_anatomy"},
+        )
+        cases = {case["profile_id"]: case for case in self.pixel_cases}
+        self.assertEqual(
+            cases["body_bounded_negative_space"]["target_region"],
+            "arm_waist",
+        )
+        self.assertIn(
+            "both feet visible",
+            cases["contrapposto_weight_shift"]["observable_success_signals"],
+        )
+        self.assertIn(
+            "paired upper-lip arc survives thumbnail review",
+            cases["upper_lip_philtral_contour"]["observable_success_signals"],
+        )
 
 
 if __name__ == "__main__":

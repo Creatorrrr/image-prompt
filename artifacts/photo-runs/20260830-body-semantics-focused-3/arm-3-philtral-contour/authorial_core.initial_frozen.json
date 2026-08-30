@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently test whether a complex, randomized speculative botanical close portrait can preserve the supplied reference's facial appearance while visibly realizing natural upper-lip philtral topography: two philtral columns, one central groove, and a paired Cupid's-bow contour.",
+  "subject": "One unmistakably adult woman whose facial appearance follows the supplied reference only, fully clothed as a lunar seed-archive conservator",
+  "setting": "A humid nocturnal conservatory inside a speculative lunar seed archive, beside a spectral germination scanner and dew-covered glass specimens",
+  "event": "She pauses mid-scan and faces the camera while one gloved hand steadies a luminous seed plate low at her sternum",
+  "visual_priorities": [
+    "Natural upper-lip surface topography remains readable in the final close portrait",
+    "The paired upper-lip arcs remain legible at thumbnail scale",
+    "Facial appearance is guided only by the supplied reference without making an identity claim",
+    "Botanical-science atmosphere supports rather than obscures the face"
+  ],
+  "baseline_prompt_en": "Create a photorealistic, nonsexual head-and-shoulders close portrait of one unmistakably adult woman whose facial appearance follows the supplied reference only, reimagined as a lunar seed-archive conservator. Inside a humid nocturnal conservatory, she pauses mid-scan and faces the camera, fully clothed in a high-collared cobalt field coat; one gloved hand steadies a luminous seed plate low at her sternum. Dewy specimen glass and a spectral germination scanner glow softly behind her. Keep her lower face large, frontal, relaxed, and unobstructed. Her gently closed lips show two naturally raised philtral columns framing one centered vertical groove from the nose base to the upper lip, meeting a clearly paired double-arc Cupid's-bow contour across the upper-lip border. Gentle lateral surface light skims these shallow planes so the columns, central depression, and twin upper-lip arcs read as plausible skin relief rather than makeup or graphic lines. Prioritize realistic pores, restrained color, precise mouth-scale focus, and a calm scientific atmosphere.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "delegated randomized keyword render test",
+      "source_text": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm tests the assigned upper-lip philtral contour keyword in an independently randomized speculative botanical close portrait using the supplied image only for facial appearance.",
+      "sources": []
+    },
+    {
+      "term": "upper_lip_philtral_contour",
+      "source_text": "그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스",
+      "basis": "agent_general_knowledge",
+      "resolution": "A visible natural relief consisting of paired philtral columns around a centered groove, terminating in the paired arcs of the upper lip's Cupid's bow.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정해서",
+      "basis": "request_context",
+      "resolution": "Eight distinct concepts were authored from general knowledge in the assigned domain and one was selected with Python random.Random(394414666).",
+      "sources": []
+    },
+    {
+      "term": "아까 첨부한 이미지를 활용하여",
+      "source_text": "아까 첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as a facial-appearance reference only, without identity, ethnicity, race, or biometric inference.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "upper_lip_philtral_contour"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스",
+        "dimension": "concept",
+        "prompt_evidence": "two naturally raised philtral columns framing one centered vertical groove"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "아까 첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult woman whose facial appearance follows the supplied reference only"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "she pauses mid-scan and faces the camera"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color_palette",
+      "materials"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "speculative botanical or scientific close portrait",
+    "family": "lunar seed-archive field-science realism",
+    "evidence": [
+      "dewy specimen glass and a spectral germination scanner",
+      "realistic pores and restrained color"
+    ]
+  },
+  "variation_key": "seed-394414666-concept-1"
+}

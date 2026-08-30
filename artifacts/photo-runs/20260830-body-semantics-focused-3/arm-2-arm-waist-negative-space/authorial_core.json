@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "A random complex investigative architectural photograph that tests whether an intentional body-bounded negative space appears as a clean, continuous patch of background between an adult woman's arm and waist, while using the supplied portrait only for facial appearance.",
+  "subject": "One original adult woman, fully clothed in a buttoned cobalt survey coat, high-neck shirt, and dark straight trousers, with the supplied portrait guiding facial appearance only.",
+  "setting": "The circular interior of a derelict civic observatory, with pale plaster walls, a terrazzo star mosaic, worn brass instruments, and chalk azimuth marks.",
+  "event": "She compares a suspended brass plumb line with a narrow sunbeam to test a disputed architectural meridian.",
+  "visual_priorities": [
+    "A clean triangular window of continuous pale plaster wall is plainly visible between the actual contour of her right arm and the actual contour of her waist.",
+    "Both arm and waist contours remain readable, with the opening free of hair, straps, tools, and loose coat fabric.",
+    "The facial appearance takes guidance from the supplied portrait without copying its pose, wardrobe, or background.",
+    "The observatory and measuring action form a coherent investigative narrative rather than a posed fashion image."
+  ],
+  "baseline_prompt_en": "Create a photorealistic investigative architectural photograph inside a derelict circular civic observatory. An original adult woman whose facial appearance is guided only by the supplied portrait stands fully clothed in a buttoned cobalt survey coat, high-neck shirt, and dark straight trousers. She compares a suspended brass plumb line with a narrow sunbeam crossing the terrazzo star mosaic, testing whether the building's disputed meridian is misaligned. Her right upper arm angles outward and her forearm rises to steady the line; a clean triangular window of continuous pale plaster wall is plainly visible between the actual contour of her right arm and the actual contour of her waist. The opening contains only the uninterrupted wall patch, while hair, straps, tools, and coat fabric remain visibly clear of it. Emphasize a natural face guided by the portrait, precise arm-waist geometry, and the tense stillness of evidence being measured. Use a three-quarter standing view from head to mid-thigh, with worn brass, chalk azimuth marks, and directional early light supporting the investigation.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉과 각 테스트 주제",
+      "source_text": "리서치한 키워드 중 3가지를 뽑아서 실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘. 그 다음 독립된 서브에이전트에서 각각의 테스트 주제로 아까 첨부한 이미지를 활용하여 랜덤한 복잡한 컨셉을 정해서 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "For this assigned arm, independently select a complex investigative-architecture concept and make the visible test condition a continuous patch of background bounded by the woman's arm and waist.",
+      "sources": []
+    },
+    {
+      "term": "아까 첨부한 이미지 활용",
+      "source_text": "아까 첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as a facial-appearance reference only, without treating its pose, clothing, background, identity, ethnicity, or biography as part of the requested scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "실제로 이미지에 그 키워드에 대한 내용이 반영되었는지를 테스트하는 테스트케이스를 추가해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a clean triangular window of continuous pale plaster wall is plainly visible between the actual contour of her right arm and the actual contour of her waist"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "아까 첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "An original adult woman whose facial appearance is guided only by the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "She compares a suspended brass plumb line with a narrow sunbeam crossing the terrazzo star mosaic"
+      },
+      {
+        "anchor_id": "reference_role",
+        "source_text": "아까 첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Emphasize a natural face guided by the portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "architectural ritual or investigative narrative with an uncluttered arm-waist region",
+    "family": "forensic civic-architecture editorial photography",
+    "evidence": [
+      "worn brass instruments and chalk azimuth marks",
+      "directional early light crossing a terrazzo star mosaic"
+    ]
+  },
+  "variation_key": "seed-999609921-c04-observatory-meridian-dispute"
+}
