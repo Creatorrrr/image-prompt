@@ -57,17 +57,15 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An attractive, deliberately framed pocket of visible background bounded by the actual upper inner-thigh contours while the legs and knees remain close rather than spread apart.",
+        "definition": "A pose- and camera-dependent pocket of continuous visible background bounded by the actual upper inner-thigh contours while both feet touch or nearly touch and the straight legs remain close. It is visual geometry, not evidence of health, weight, body fat, fertility, age, gender, or personal value.",
         "paraphrase_examples": [
           "허벅지 사이 공간",
           "허벅지 사이의 공간",
           "모은 다리의 허벅지 사이로 비치는 빈 공간",
-          "매력적인 허벅지",
-          "허벅지 매력",
-          "각선미 강조",
-          "attractive thighs",
-          "thigh appeal",
-          "shapely thighs",
+          "두 발을 붙이고 곧게 선 다리 사이의 연속된 배경",
+          "건강이나 체형 가치와 무관한 자세·카메라 의존적 음영 공간",
+          "continuous background between straight close legs with both feet touching",
+          "a stance-dependent upper-inner-thigh opening without body-value inference",
           "a narrow opening between close upper inner thighs"
         ],
         "component_semantics": {
@@ -85,12 +83,16 @@
                 "무릎이 나란히",
                 "무릎끼리 가까",
                 "다리를 모은",
-                "다리를 교차",
+                "두 발을 붙인",
+                "두 발이 거의 붙은",
+                "곧게 선 다리",
                 "knees together",
                 "knees close",
                 "knees side by side",
                 "legs together",
-                "legs crossed",
+                "feet touching",
+                "feet nearly touching",
+                "straight close legs",
                 "adducted legs"
               ]
             },
@@ -124,19 +126,23 @@
         },
         "contrast_examples": [
           "wide stance space below separated knees",
+          "an accidental opening made by crossed legs",
           "a skirt or coat opening mistaken for body-bounded negative space",
-          "a dark garment seam or shadow"
+          "a dark garment seam or shadow",
+          "a health, weight, body-fat, fertility, age, gender, or value claim"
         ]
       },
       "concept_candidate": {
         "concept_terms": [
           "thigh gap",
           "close knees",
+          "feet touching or nearly touching",
+          "straight close legs",
           "adducted legs",
           "upper inner-thigh contours",
           "inverted triangle",
           "narrow background opening",
-          "deliberate attractive negative-space emphasis",
+          "deliberate negative-space composition",
           "thumbnail crop",
           "false-gap exclusion"
         ]
@@ -150,19 +156,18 @@
         "forbidden_prompt_terms": [],
         "runtime_forbidden_labels": []
       },
-      "composition_instruction": "Show a narrow background opening bounded by the actual upper inner-thigh contours while the legs remain adducted, crossed, or otherwise close; make that true negative space a deliberate attractive compositional feature and crop tightly enough that the geometry survives thumbnail review.",
+      "composition_instruction": "Show a narrow continuous background opening bounded by the actual upper inner-thigh contours while both feet touch or nearly touch and the legs remain straight and close. Compose the true negative space deliberately and crop tightly enough that the geometry survives thumbnail review; treat appeal as request-conditioned rather than inherent.",
       "required_evidence_fields": [
         "close_leg_geometry_phrase",
         "inner_thigh_boundary_phrase",
         "negative_space_phrase",
-        "appeal_emphasis_phrase",
         "false_gap_exclusion_phrase",
         "thumbnail_crop_phrase"
       ],
       "evidence_requirements": {
         "close_leg_geometry_phrase": {
           "min_content_words": 3,
-          "must_mention_any": ["knees together", "knees close", "side by side", "legs together", "legs close", "legs crossed", "adducted"]
+          "must_mention_any": ["knees together", "knees close", "side by side", "legs together", "legs close", "feet touching", "feet nearly touching", "straight close legs", "adducted"]
         },
         "inner_thigh_boundary_phrase": {
           "min_content_words": 3,
@@ -171,10 +176,6 @@
         "negative_space_phrase": {
           "min_content_words": 3,
           "must_mention_any": ["background opening", "negative space", "triangular opening", "inverted triangle", "diamond opening"]
-        },
-        "appeal_emphasis_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": ["attractive negative space", "deliberate visual attraction", "appealing focal geometry", "visually alluring geometry"]
         },
         "false_gap_exclusion_phrase": {
           "min_content_words": 3,
@@ -189,7 +190,7 @@
         {
           "id": "vo_inner_thigh_legs_close",
           "review_scale": "both",
-          "description": "The thighs and knees read as close, adducted, or crossed rather than spread apart."
+          "description": "Both feet touch or nearly touch and the straight thighs and knees read as close or adducted rather than crossed or spread apart."
         },
         {
           "id": "vo_inner_thigh_true_negative_space",
@@ -199,12 +200,12 @@
         {
           "id": "vo_inner_thigh_attractive_composition",
           "review_scale": "thumbnail",
-          "description": "The true inner-thigh negative space is intentionally framed as an attractive focal geometry rather than an incidental gap."
+          "description": "The true inner-thigh negative space is intentionally composed and legible rather than incidental; attractiveness is evaluated only when explicitly requested."
         },
         {
           "id": "vo_inner_thigh_not_false_gap",
           "review_scale": "native",
-          "description": "The opening is not merely wide stance, skirt opening, garment seam, shadow, or space below separated knees."
+          "description": "The opening is not merely crossed legs, wide stance, skirt opening, garment seam, shadow, or space below separated knees."
         },
         {
           "id": "vo_inner_thigh_thumbnail_legibility",
@@ -214,10 +215,12 @@
       ],
       "reject_substitutes": [
         "wide_stance_space",
+        "crossed_leg_accidental_opening",
         "space_below_separated_knees",
         "skirt_or_coat_opening",
         "dark_garment_seam_or_shadow",
-        "full_body_crop_where_the_gap_is_too_small_to_read"
+        "full_body_crop_where_the_gap_is_too_small_to_read",
+        "health_weight_body_fat_fertility_age_gender_or_value_inference"
       ]
     },
     {
@@ -4932,6 +4935,413 @@
         "unrequested_erotic_pose_or_body_part_closeup",
         "armor_label_without_rigid_mail_scale_or_attachment_evidence"
       ]
+    },
+    {
+      "id": "upper_lip_philtral_contour",
+      "category": "facial_surface_landmark",
+      "activation": {
+        "exact_terms": ["Cupid's bow", "cupid bow", "philtral contour", "philtrum", "큐피드 보우", "인중 윤곽", "인중"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A front or slight three-quarter facial view in which two philtral columns bound a central groove and descend into the paired upper-lip arcs commonly called Cupid's bow.",
+        "paraphrase_examples": ["두 인중 기둥과 중앙 홈이 윗입술의 이중 호로 이어지는 얼굴 디테일", "a central philtral groove descending between two ridges into a double upper-lip arc", "upper-lip topography visible through natural form light rather than drawn outline"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["paired_philtral_ridges", "central_groove", "upper_lip_double_arc"],
+          "groups": [
+            {"id": "paired_philtral_ridges", "any_terms": ["two philtral columns", "paired philtral ridges", "양쪽 인중 기둥"]},
+            {"id": "central_groove", "any_terms": ["central philtral groove", "midline philtrum depression", "중앙 인중 홈"]},
+            {"id": "upper_lip_double_arc", "any_terms": ["double upper-lip arc", "M-shaped vermilion border", "윗입술의 이중 호"]},
+            {"id": "form_light", "any_terms": ["soft form light across the upper lip", "natural lip topography", "입술 표면을 따르는 부드러운 빛"]}
+          ]
+        },
+        "contrast_examples": ["a lipstick outline with no visible philtral relief", "a smile crease or nose shadow mistaken for the philtrum", "an over-smoothed upper lip whose ridges and groove disappear"]
+      },
+      "concept_candidate": {"concept_terms": ["paired philtral columns", "central philtral groove", "double upper-lip arc", "natural vermilion topography", "front or slight three-quarter facial detail"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["philtral contour", "Cupid's bow"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a front or slight three-quarter facial crop and soft directional form light so the paired philtral ridges, central groove, and double upper-lip arc coexist as natural surface anatomy rather than makeup alone.",
+      "required_evidence_fields": ["philtral_ridges_phrase", "central_groove_phrase", "upper_lip_arc_phrase", "facial_view_phrase"],
+      "evidence_requirements": {
+        "philtral_ridges_phrase": {"min_content_words": 3, "must_mention_any": ["two philtral columns", "paired philtral ridges"]},
+        "central_groove_phrase": {"min_content_words": 3, "must_mention_any": ["central philtral groove", "midline philtrum depression"]},
+        "upper_lip_arc_phrase": {"min_content_words": 3, "must_mention_any": ["double upper-lip arc", "M-shaped vermilion border"]},
+        "facial_view_phrase": {"min_content_words": 3, "must_mention_any": ["front facial close-up", "slight three-quarter facial crop", "soft form light across the upper lip"]}
+      },
+      "render_gates": [
+        {"id": "vo_philtrum_paired_ridges", "review_scale": "native", "description": "Two separate philtral ridges and the groove between them remain visibly modeled rather than painted on."},
+        {"id": "vo_philtrum_upper_lip_arc", "review_scale": "both", "description": "The central groove resolves into a readable paired upper-lip arc at the vermilion border."},
+        {"id": "vo_philtrum_face_geometry_coherent", "review_scale": "native", "description": "Nose base, upper lip, mouth corners, and surrounding skin remain anatomically coherent and naturally textured."},
+        {"id": "vo_philtrum_not_makeup_only", "review_scale": "both", "description": "Lipstick outline, highlight, smoothing, or shadow alone does not substitute for surface topography."}
+      ],
+      "reject_substitutes": ["lipstick_outline_without_relief", "nose_shadow_or_smile_crease", "over_smoothed_upper_lip", "single_flat_upper_lip_curve"]
+    },
+    {
+      "id": "clavicle_supraclavicular_hollow",
+      "category": "upper_torso_surface_landmark",
+      "activation": {
+        "exact_terms": ["supraclavicular hollow", "supraclavicular fossa", "collarbone hollow", "쇄골 위 오목", "쇄골 위 함몰", "쇄골상와"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A lower-lateral neck surface landmark where a readable clavicle edge borders a shallow supraclavicular depression whose visibility varies with pose, light, and soft tissue.",
+        "paraphrase_examples": ["쇄골 경계 바로 위 목 아래 가쪽에 보이는 얕은 오목", "a shallow lower-neck depression bounded by the clavicle under soft raking light", "normal position-dependent clavicle and hollow topography"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["clavicle_boundary", "lower_lateral_neck_hollow", "pose_light_ownership"],
+          "groups": [
+            {"id": "clavicle_boundary", "any_terms": ["readable clavicle edge", "collarbone boundary", "쇄골 경계"]},
+            {"id": "lower_lateral_neck_hollow", "any_terms": ["shallow lower-lateral neck hollow", "supraclavicular depression", "목 아래 가쪽의 얕은 함몰"]},
+            {"id": "pose_light_ownership", "any_terms": ["neutral shoulder position and soft raking light", "pose-dependent surface relief", "자세와 빛에 따른 표면 굴곡"]},
+            {"id": "natural_variation", "any_terms": ["normal soft-tissue variation", "non-diagnostic surface landmark", "정상적인 연부조직 변이"]}
+          ]
+        },
+        "contrast_examples": ["a painted dark triangle above the collarbone", "a deep pathological cavity or injury", "an inference about thinness health or body value"]
+      },
+      "concept_candidate": {"concept_terms": ["clavicle boundary", "shallow supraclavicular hollow", "lower lateral neck topography", "neutral shoulder position", "soft raking form light", "no health inference"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["supraclavicular hollow"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the clavicle edge and shallow lower-lateral neck hollow visible together under restrained form light and a neutral shoulder position, preserving natural soft-tissue variation without treating the landmark as a thinness or health signal.",
+      "required_evidence_fields": ["clavicle_boundary_phrase", "neck_hollow_phrase", "pose_light_phrase", "non_diagnostic_phrase"],
+      "evidence_requirements": {
+        "clavicle_boundary_phrase": {"min_content_words": 3, "must_mention_any": ["readable clavicle edge", "collarbone boundary"]},
+        "neck_hollow_phrase": {"min_content_words": 3, "must_mention_any": ["shallow lower-lateral neck hollow", "supraclavicular depression"]},
+        "pose_light_phrase": {"min_content_words": 4, "must_mention_any": ["neutral shoulder position and soft raking light", "pose-dependent surface relief"]},
+        "non_diagnostic_phrase": {"min_content_words": 3, "must_mention_any": ["normal soft-tissue variation", "non-diagnostic surface landmark", "without health inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_supraclavicular_clavicle_boundary", "review_scale": "both", "description": "The clavicle edge remains a coherent anatomical boundary rather than a painted line or garment seam."},
+        {"id": "vo_supraclavicular_shallow_hollow", "review_scale": "native", "description": "A shallow lower-lateral neck depression is visible adjacent to the clavicle with natural soft-tissue transitions."},
+        {"id": "vo_supraclavicular_pose_light_coherence", "review_scale": "native", "description": "Shoulder position, light direction, shadow, and visible surface relief agree with one another."},
+        {"id": "vo_supraclavicular_not_health_proxy", "review_scale": "both", "description": "Extreme emaciation, injury, painted shadow, or a health-value claim does not carry the concept."}
+      ],
+      "reject_substitutes": ["painted_dark_triangle", "garment_neckline_shadow", "injury_or_pathology", "thinness_health_or_value_inference"]
+    },
+    {
+      "id": "decolletage_neckline_exposure",
+      "category": "adult_garment_body_boundary",
+      "activation": {
+        "exact_terms": ["décolletage", "decolletage", "décolleté", "decollete", "데콜테", "데콜타주"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult fashion relation in which a low garment neckline defines a visible region spanning the lower neck, clavicles, shoulders, and upper chest without requiring an intermammary cleavage line.",
+        "paraphrase_examples": ["낮은 네크라인이 목 아래와 쇄골, 어깨, 위가슴의 노출 영역을 함께 정하는 성인 패션", "an adult neckline-defined expanse of lower neck shoulders clavicles and upper chest", "garment edge and exposed upper-chest region reading as one fashion boundary"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["adult_fashion_context", "low_neckline_boundary", "upper_chest_region"],
+          "groups": [
+            {"id": "adult_fashion_context", "any_terms": ["unmistakably adult fashion subject", "adult editorial styling", "명확한 성인 패션 인물"]},
+            {"id": "low_neckline_boundary", "any_terms": ["low garment neckline defines the edge", "readable neckline boundary", "낮은 의복 네크라인 경계"]},
+            {"id": "upper_chest_region", "any_terms": ["lower neck clavicles shoulders and upper chest", "broad upper-chest exposure region", "목 아래 쇄골 어깨 위가슴 영역"]},
+            {"id": "garment_body_continuity", "any_terms": ["neckline and exposed region remain spatially continuous", "garment edge follows the torso", "네크라인과 노출 영역의 연속성"]}
+          ]
+        },
+        "contrast_examples": ["cleavage alone with shoulders and neckline cropped away", "a high neckline with only painted chest highlight", "a garment opening detached from the body surface"]
+      },
+      "concept_candidate": {"concept_terms": ["adult fashion decolletage", "low neckline boundary", "lower neck and clavicles", "shoulders and upper chest region", "garment-body continuity", "distinct from cleavage"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["décolletage"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame an unmistakably adult fashion subject so one readable low neckline defines the lower-neck, clavicle, shoulder, and upper-chest region in a coherent garment-body relation; do not use cleavage alone as the substitute.",
+      "required_evidence_fields": ["adult_fashion_subject_phrase", "low_neckline_phrase", "upper_chest_region_phrase", "garment_body_continuity_phrase"],
+      "evidence_requirements": {
+        "adult_fashion_subject_phrase": {"min_content_words": 3, "must_mention_any": ["unmistakably adult fashion subject", "adult editorial subject"]},
+        "low_neckline_phrase": {"min_content_words": 3, "must_mention_any": ["low garment neckline defines the edge", "readable neckline boundary"]},
+        "upper_chest_region_phrase": {"min_content_words": 4, "must_mention_any": ["lower neck clavicles shoulders and upper chest", "broad upper-chest exposure region"]},
+        "garment_body_continuity_phrase": {"min_content_words": 4, "must_mention_any": ["neckline and exposed region remain spatially continuous", "garment edge follows the torso"]}
+      },
+      "render_gates": [
+        {"id": "vo_decolletage_adult_fashion_context", "review_scale": "thumbnail", "description": "The subject and styling read as unmistakably adult fashion rather than age-ambiguous body display."},
+        {"id": "vo_decolletage_neckline_boundary", "review_scale": "both", "description": "A low garment neckline visibly defines the exposed upper-torso region and remains attached to the garment."},
+        {"id": "vo_decolletage_region_coverage", "review_scale": "both", "description": "Lower neck, clavicles, shoulder relation, and upper chest remain jointly readable in the frame."},
+        {"id": "vo_decolletage_not_cleavage_only", "review_scale": "both", "description": "A cleavage line, chest highlight, or detached opening alone does not substitute for neckline-defined exposure."}
+      ],
+      "reject_substitutes": ["cleavage_only_crop", "high_neckline_with_chest_highlight", "detached_garment_opening", "age_ambiguous_body_display"]
+    },
+    {
+      "id": "lateral_waist_hip_contour_transition",
+      "category": "adult_body_contour_relation",
+      "activation": {
+        "exact_terms": ["waist-to-hip transition", "waist to hip curve", "waist-to-hip flare", "hip dip", "trochanteric depression", "허리-골반 전환", "허리에서 골반으로 퍼지는 곡선", "힙딥", "대전자 함몰"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult lateral torso-to-thigh contour relation showing the waist hollow, iliac region, optional normal trochanteric depression, outer hip expansion, and continuation into the outer thigh under a declared pose and viewpoint.",
+        "paraphrase_examples": ["허리의 오목함에서 장골 부근과 정상적인 힙딥을 지나 바깥 허벅지로 이어지는 측면 전환", "a side contour moving from waist hollow through iliac and trochanteric regions into the outer thigh", "pose- and viewpoint-conditioned waist hip and thigh transition without an ideal ratio"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["waist_hollow", "iliac_or_hip_region", "outer_thigh_transition", "view_pose_state"],
+          "groups": [
+            {"id": "waist_hollow", "any_terms": ["lateral waist hollow", "inward waist contour", "옆 허리의 오목한 윤곽"]},
+            {"id": "iliac_or_hip_region", "any_terms": ["iliac crest to outer hip expansion", "normal trochanteric depression", "장골능에서 바깥 골반으로 이어지는 전환"]},
+            {"id": "outer_thigh_transition", "any_terms": ["outer hip continues into the outer thigh", "hip-to-thigh contour transition", "골반에서 바깥 허벅지로 이어지는 윤곽"]},
+            {"id": "view_pose_state", "any_terms": ["declared three-quarter or side view", "pose and camera conditioned contour", "명시된 측면 또는 사선 시점"]},
+            {"id": "garment_ownership", "any_terms": ["body contour distinguished from garment compression", "fabric follows rather than invents the contour", "의복 압박과 신체 윤곽을 구분"]}
+          ]
+        },
+        "contrast_examples": ["a belt or corset manufacturing the entire silhouette", "a shadow stripe painted on a flat torso", "a fixed ideal ratio or health judgment inferred from one photograph"]
+      },
+      "concept_candidate": {"concept_terms": ["lateral waist hollow", "iliac crest region", "normal trochanteric depression", "outer hip expansion", "hip-to-thigh transition", "declared side or three-quarter view", "garment compression separated"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["waist-to-hip contour transition"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult side or three-quarter view that keeps the waist hollow, iliac or trochanteric region, outer hip, and outer-thigh continuation readable as one contour sequence while separating pose, camera, and garment compression from intrinsic body claims.",
+      "required_evidence_fields": ["waist_hollow_phrase", "iliac_hip_region_phrase", "outer_thigh_transition_phrase", "view_pose_phrase", "garment_ownership_phrase"],
+      "evidence_requirements": {
+        "waist_hollow_phrase": {"min_content_words": 3, "must_mention_any": ["lateral waist hollow", "inward waist contour"]},
+        "iliac_hip_region_phrase": {"min_content_words": 4, "must_mention_any": ["iliac crest to outer hip expansion", "normal trochanteric depression"]},
+        "outer_thigh_transition_phrase": {"min_content_words": 4, "must_mention_any": ["outer hip continues into the outer thigh", "hip-to-thigh contour transition"]},
+        "view_pose_phrase": {"min_content_words": 4, "must_mention_any": ["declared three-quarter or side view", "pose and camera conditioned contour"]},
+        "garment_ownership_phrase": {"min_content_words": 4, "must_mention_any": ["body contour distinguished from garment compression", "fabric follows rather than invents the contour"]}
+      },
+      "render_gates": [
+        {"id": "vo_waist_hip_contour_sequence", "review_scale": "both", "description": "Waist hollow, iliac or hip region, and outer thigh read as one continuous lateral contour sequence."},
+        {"id": "vo_waist_hip_landmark_coherence", "review_scale": "native", "description": "The iliac and trochanteric surface transitions remain anatomically coherent instead of becoming dents or pasted shadows."},
+        {"id": "vo_waist_hip_view_pose_declared", "review_scale": "both", "description": "The selected side or three-quarter viewpoint and body pose visibly support the contour relation."},
+        {"id": "vo_waist_hip_not_garment_only", "review_scale": "native", "description": "A belt, corset, seam, or hard garment edge alone does not manufacture the requested body relation."},
+        {"id": "vo_waist_hip_not_value_claim", "review_scale": "thumbnail", "description": "The image communicates contour geometry without implying an ideal ratio, health, fitness, or personal value."}
+      ],
+      "reject_substitutes": ["belt_or_corset_only", "painted_shadow_stripe", "isolated_hip_dent_without_transition", "fixed_ideal_ratio", "health_fitness_or_value_inference"]
+    },
+    {
+      "id": "posterior_lumbosacral_landmarks",
+      "category": "adult_posterior_surface_landmark",
+      "activation": {
+        "exact_terms": ["Dimples of Venus", "Venus dimples", "back dimples", "PSIS dimples", "비너스 보조개", "허리 보조개", "뒤 허리 보조개"],
+        "exclude_if_any_terms": ["비너스의 언덕", "mons pubis", "앞쪽 치골", "anterior pubic mound"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult posterior lower-back surface relation combining a central spinal or lumbar groove with a bilateral pair of shallow dimples over the posterior iliac region, without using them to diagnose pelvic alignment.",
+        "paraphrase_examples": ["등 아래 중앙 홈과 양쪽 뒤 골반 부근의 얕은 허리 보조개", "a paired posterior lower-back dimple relation flanking the lumbar midline", "bilateral surface curvature landmarks without skeletal alignment claims"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["posterior_view", "lumbar_midline", "bilateral_dimples"],
+          "groups": [
+            {"id": "posterior_view", "any_terms": ["adult posterior lower-back view", "three-quarter back view", "성인 뒤 허리 시점"]},
+            {"id": "lumbar_midline", "any_terms": ["central lumbar or spinal groove", "posterior midline reference", "허리 중앙의 얕은 척추 홈"]},
+            {"id": "bilateral_dimples", "any_terms": ["paired shallow dimples over the posterior iliac region", "bilateral PSIS-area dimples", "양쪽 뒤 골반 부근의 얕은 보조개"]},
+            {"id": "non_diagnostic_boundary", "any_terms": ["surface landmarks without alignment diagnosis", "normal asymmetry allowed", "정렬 진단 없는 표면 랜드마크"]}
+          ]
+        },
+        "contrast_examples": ["the anterior mons pubis called Venus mound", "two painted dots without lower-back topology", "a claim about pelvic alignment posture health or fertility"]
+      },
+      "concept_candidate": {"concept_terms": ["adult posterior lower back", "central lumbar groove", "paired PSIS-area dimples", "normal shallow asymmetry", "surface curvature landmarks", "no pelvic alignment diagnosis"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["Dimples of Venus", "posterior lower-back dimples"], "forbidden_prompt_terms": ["비너스의 언덕", "mons pubis"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult posterior or three-quarter-back crop that includes the lumbar midline and both shallow posterior iliac dimples in one coherent surface-light system, allowing normal asymmetry and avoiding pelvic-alignment or health claims.",
+      "required_evidence_fields": ["posterior_view_phrase", "lumbar_midline_phrase", "bilateral_dimples_phrase", "non_diagnostic_phrase"],
+      "evidence_requirements": {
+        "posterior_view_phrase": {"min_content_words": 3, "must_mention_any": ["adult posterior lower-back view", "three-quarter back view"]},
+        "lumbar_midline_phrase": {"min_content_words": 3, "must_mention_any": ["central lumbar or spinal groove", "posterior midline reference"]},
+        "bilateral_dimples_phrase": {"min_content_words": 4, "must_mention_any": ["paired shallow dimples over the posterior iliac region", "bilateral PSIS-area dimples"]},
+        "non_diagnostic_phrase": {"min_content_words": 3, "must_mention_any": ["surface landmarks without alignment diagnosis", "normal asymmetry allowed", "without pelvic alignment inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_lumbosacral_posterior_view", "review_scale": "thumbnail", "description": "The crop clearly reads as an adult posterior lower-back or three-quarter-back view."},
+        {"id": "vo_lumbosacral_midline_and_pair", "review_scale": "both", "description": "One lumbar midline and two shallow lateral dimples coexist in the same lower-back surface."},
+        {"id": "vo_lumbosacral_surface_coherence", "review_scale": "native", "description": "Skin texture, soft tissue, light gradient, and shallow asymmetry remain anatomically coherent."},
+        {"id": "vo_lumbosacral_not_anterior_or_diagnostic", "review_scale": "both", "description": "An anterior pubic mound, painted dots, or a pelvic alignment diagnosis does not substitute for the landmarks."}
+      ],
+      "reject_substitutes": ["anterior_mons_pubis", "painted_lower_back_dots", "single_unpaired_dimple", "pelvic_alignment_health_or_fertility_inference"]
+    },
+    {
+      "id": "contrapposto_weight_shift",
+      "category": "classical_pose_geometry",
+      "activation": {
+        "exact_terms": ["contrapposto", "contrapposto stance", "contrapposto pose", "콘트라포스토", "콘트라포스토 자세"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A balanced full-body standing pose in which most weight rests on one support leg, the other leg relaxes or bends, and the pelvis and shoulders counter-tilt around a stable head and torso balance.",
+        "paraphrase_examples": ["한쪽 지지 다리에 체중을 싣고 반대 다리를 풀며 골반과 어깨가 대응해 기울어진 전신 자세", "a support leg and relaxed free leg producing opposed pelvic and shoulder tilts", "balanced classical weight shift readable from head to feet"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["support_leg", "free_leg", "counter_tilt", "full_body_balance"],
+          "groups": [
+            {"id": "support_leg", "any_terms": ["most weight on one straight support leg", "loaded standing leg", "체중을 받는 한쪽 지지 다리"]},
+            {"id": "free_leg", "any_terms": ["opposite leg relaxed or bent", "unloaded free leg", "힘을 뺀 반대쪽 다리"]},
+            {"id": "counter_tilt", "any_terms": ["pelvis and shoulders tilt in opposed balance", "counter-tilted hip and shoulder lines", "골반과 어깨의 대응 경사"]},
+            {"id": "full_body_balance", "any_terms": ["head-to-feet full-body balance", "stable head over the weight shift", "머리부터 발끝까지 보이는 균형"]}
+          ]
+        },
+        "contrast_examples": ["a generic relaxed standing pose with no readable support leg", "both knees equally bent in a symmetrical fashion pose", "an S-shaped crop that hides the feet and load path"]
+      },
+      "concept_candidate": {"concept_terms": ["one loaded support leg", "one relaxed free leg", "opposed pelvis and shoulder tilt", "stable head balance", "head-to-feet framing", "classical asymmetrical stance"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["contrapposto"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the complete body visible from head to feet so one loaded support leg, one relaxed free leg, the opposed pelvis-and-shoulder tilt, and the balanced head position can be read together instead of as a generic weight shift.",
+      "required_evidence_fields": ["support_leg_phrase", "free_leg_phrase", "counter_tilt_phrase", "full_body_balance_phrase"],
+      "evidence_requirements": {
+        "support_leg_phrase": {"min_content_words": 4, "must_mention_any": ["most weight on one straight support leg", "one loaded support leg"]},
+        "free_leg_phrase": {"min_content_words": 3, "must_mention_any": ["opposite leg relaxed or bent", "one relaxed free leg"]},
+        "counter_tilt_phrase": {"min_content_words": 4, "must_mention_any": ["pelvis and shoulders tilt in opposed balance", "counter-tilted hip and shoulder lines"]},
+        "full_body_balance_phrase": {"min_content_words": 4, "must_mention_any": ["head-to-feet full-body balance", "stable head over the weight shift"]}
+      },
+      "render_gates": [
+        {"id": "vo_contrapposto_support_leg", "review_scale": "both", "description": "One clearly loaded support leg carries most of the visible body weight."},
+        {"id": "vo_contrapposto_free_leg", "review_scale": "both", "description": "The opposite leg is visibly unloaded, relaxed, or bent rather than symmetrically supporting weight."},
+        {"id": "vo_contrapposto_counter_tilt", "review_scale": "thumbnail", "description": "Pelvic and shoulder lines counter-tilt while the head and torso retain balanced continuity."},
+        {"id": "vo_contrapposto_full_body_read", "review_scale": "both", "description": "Head, pelvis, both legs, and both feet remain visible enough to verify the complete load path."}
+      ],
+      "reject_substitutes": ["generic_weight_shift", "symmetrical_bent_knee_pose", "feet_cropped_out", "editorial_s_curve_without_support_leg"]
+    },
+    {
+      "id": "body_bounded_negative_space",
+      "category": "body_composition_geometry",
+      "activation": {
+        "exact_terms": ["body-bounded negative space", "body bounded negative space", "figure-bounded negative space", "신체 경계 네거티브 스페이스", "몸 윤곽 사이 여백", "신체 윤곽으로 둘러싸인 빈 공간"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "An enclosed or strongly bounded patch of continuous background whose recognizable shape is created by two or more real body contours, such as an arm-waist triangle, bent-elbow torso opening, or hand-face opening.",
+        "paraphrase_examples": ["팔과 허리 윤곽이 삼각형 배경 여백을 만드는 인체 구도", "a continuous background opening enclosed by arm and torso contours", "a hand and face forming a readable body-bounded void rather than an object hole"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["body_contour_boundaries", "continuous_background", "readable_void_shape"],
+          "groups": [
+            {"id": "body_contour_boundaries", "any_terms": ["two or more real body contours bound the opening", "arm waist elbow hand or face boundaries", "두 개 이상의 실제 신체 윤곽"]},
+            {"id": "continuous_background", "any_terms": ["continuous background visible through the opening", "unbroken backdrop patch", "공간 안으로 이어지는 실제 배경"]},
+            {"id": "readable_void_shape", "any_terms": ["readable triangular oval or curved void", "intentional enclosed negative-space shape", "식별 가능한 삼각형 타원형 곡선형 여백"]},
+            {"id": "region_identity", "any_terms": ["named arm-waist hand-face or elbow-torso region", "body region stays identifiable", "팔-허리 손-얼굴 팔꿈치-몸통 영역"]}
+          ]
+        },
+        "contrast_examples": ["a gap between unrelated objects", "a garment cutout or shadow mistaken for background", "generic negative space with no body boundary", "an upper-inner-thigh gap selected without thigh-specific geometry"]
+      },
+      "concept_candidate": {"concept_terms": ["real body-contour enclosure", "continuous visible background", "arm-waist triangle", "bent-elbow torso opening", "hand-face opening", "readable void shape", "region-specific negative space"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["body-bounded negative space"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Name one body region, arrange at least two real body contours around a continuous patch of background, and give that void a clear shape that survives thumbnail review; do not silently reinterpret a generic arm, hand, or elbow opening as an inner-thigh gap.",
+      "required_evidence_fields": ["body_boundaries_phrase", "continuous_background_phrase", "void_shape_phrase", "body_region_phrase"],
+      "evidence_requirements": {
+        "body_boundaries_phrase": {"min_content_words": 4, "must_mention_any": ["two or more real body contours bound the opening", "arm and torso contours enclose the opening"]},
+        "continuous_background_phrase": {"min_content_words": 3, "must_mention_any": ["continuous background visible through the opening", "unbroken backdrop patch"]},
+        "void_shape_phrase": {"min_content_words": 3, "must_mention_any": ["readable triangular oval or curved void", "intentional enclosed negative-space shape"]},
+        "body_region_phrase": {"min_content_words": 3, "must_mention_any": ["arm-waist region", "hand-face region", "elbow-torso region", "named body region"]}
+      },
+      "render_gates": [
+        {"id": "vo_body_negative_space_real_boundaries", "review_scale": "native", "description": "Two or more anatomically coherent body contours visibly form the opening's boundary."},
+        {"id": "vo_body_negative_space_continuous_background", "review_scale": "both", "description": "The opening contains continuous scene background rather than shadow, fabric, or deleted anatomy."},
+        {"id": "vo_body_negative_space_shape_legible", "review_scale": "thumbnail", "description": "The void has a deliberate recognizable shape and remains legible at thumbnail scale."},
+        {"id": "vo_body_negative_space_region_specific", "review_scale": "both", "description": "The named body region remains identifiable and is not silently replaced by inner-thigh geometry."}
+      ],
+      "reject_substitutes": ["unrelated_object_gap", "garment_cutout_or_shadow", "generic_empty_margin", "deleted_body_part", "inner_thigh_gap_without_thigh_request"]
+    },
+    {
+      "id": "hogarth_waving_line_of_beauty",
+      "category": "classical_composition_line",
+      "activation": {
+        "exact_terms": ["Hogarth line of beauty", "waving line of beauty", "line of beauty composition", "호가스 미의 선", "물결치는 미의 선"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A planar compositional path built from two contrasted curves that produce a readable waving or ogee-like S rhythm across subject contours, drapery, props, or light without requiring three-dimensional twisting.",
+        "paraphrase_examples": ["서로 반대되는 두 곡선이 화면에서 물결치는 S 경로를 이루는 구성", "a planar ogee-like path linking contour drape and light", "two contrasted curves creating a line-of-beauty rhythm without depth twisting"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["opposed_curves", "planar_path", "cross_element_continuity"],
+          "groups": [
+            {"id": "opposed_curves", "any_terms": ["two contrasted opposed curves", "double-curved ogee rhythm", "서로 반대되는 두 곡선"]},
+            {"id": "planar_path", "any_terms": ["planar waving S path", "readable two-dimensional curve route", "화면 평면의 물결치는 S 경로"]},
+            {"id": "cross_element_continuity", "any_terms": ["curve continues through contour drape prop or light", "linked visual path across several elements", "윤곽 천 소품 빛을 잇는 곡선"]},
+            {"id": "hierarchy", "any_terms": ["one dominant curve rhythm", "secondary elements support the path", "하나의 주된 곡선 리듬"]}
+          ]
+        },
+        "contrast_examples": ["a single arbitrary bent pose", "a snake or winding road used literally", "a three-dimensional serpentine twist with occlusion as the main evidence"]
+      },
+      "concept_candidate": {"concept_terms": ["two contrasted curves", "planar waving S path", "ogee-like rhythm", "contour drape prop and light continuity", "one dominant composition route", "distinct from depth twist"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["Hogarth line of beauty", "waving line of beauty"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Build one dominant planar path from two opposed curves and let subject contour, drapery, prop placement, or light continue that waving S rhythm across the frame, keeping the route readable without relying on a literal snake or a three-dimensional twist.",
+      "required_evidence_fields": ["opposed_curves_phrase", "planar_path_phrase", "cross_element_continuity_phrase", "dominant_hierarchy_phrase"],
+      "evidence_requirements": {
+        "opposed_curves_phrase": {"min_content_words": 3, "must_mention_any": ["two contrasted opposed curves", "double-curved ogee rhythm"]},
+        "planar_path_phrase": {"min_content_words": 3, "must_mention_any": ["planar waving S path", "readable two-dimensional curve route"]},
+        "cross_element_continuity_phrase": {"min_content_words": 4, "must_mention_any": ["curve continues through contour drape prop or light", "linked visual path across several elements"]},
+        "dominant_hierarchy_phrase": {"min_content_words": 3, "must_mention_any": ["one dominant curve rhythm", "secondary elements support the path"]}
+      },
+      "render_gates": [
+        {"id": "vo_hogarth_waving_opposed_curves", "review_scale": "thumbnail", "description": "Two opposed curves form one readable waving or ogee-like rhythm across the image."},
+        {"id": "vo_hogarth_waving_planar_path", "review_scale": "both", "description": "The dominant route reads primarily in the picture plane rather than through depth twisting."},
+        {"id": "vo_hogarth_waving_cross_element", "review_scale": "both", "description": "At least two visual systems such as contour, drapery, props, or light continue the same curve path."},
+        {"id": "vo_hogarth_waving_not_literal_or_arbitrary", "review_scale": "thumbnail", "description": "A literal snake, road, random bent pose, or decorative flourish alone does not carry the composition."}
+      ],
+      "reject_substitutes": ["single_arbitrary_curve", "literal_snake_or_road", "random_s_pose", "serpentine_depth_twist_only"]
+    },
+    {
+      "id": "hogarth_serpentine_line_of_grace",
+      "category": "classical_composition_line",
+      "activation": {
+        "exact_terms": ["Hogarth serpentine line", "serpentine line of grace", "line of grace composition", "호가스 세르펜타인 선", "뱀처럼 비트는 우아함의 선"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A three-dimensional compositional path that winds and twists through depth, evidenced by changing contour orientation, occlusion and reappearance, and coherent shifts of light or material around the form.",
+        "paraphrase_examples": ["윤곽이 깊이 방향으로 비틀리며 가려졌다 다시 나타나는 입체적 곡선 경로", "a winding path whose contour orientation and light change as it turns in depth", "three-dimensional line of grace carried by form drape and occlusion"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["depth_twist", "orientation_change", "occlusion_reappearance", "material_light_continuity"],
+          "groups": [
+            {"id": "depth_twist", "any_terms": ["winding three-dimensional path", "serpentine twist through depth", "깊이 방향으로 비트는 곡선"]},
+            {"id": "orientation_change", "any_terms": ["contour orientation changes around the form", "front side and back directions evolve", "형태를 돌며 바뀌는 윤곽 방향"]},
+            {"id": "occlusion_reappearance", "any_terms": ["path disappears behind and reappears", "depth occlusion confirms the winding route", "가려졌다 다시 나타나는 경로"]},
+            {"id": "material_light_continuity", "any_terms": ["light and material response follow the twist", "drape highlight and shadow rotate together", "재질과 빛이 비틀림을 따라감"]}
+          ]
+        },
+        "contrast_examples": ["a flat S curve with no depth evidence", "a literal snake placed in the scene", "several unrelated twists with no single path"]
+      },
+      "concept_candidate": {"concept_terms": ["three-dimensional winding path", "changing contour orientation", "occlusion and reappearance", "rotating drape light and shadow", "single coherent depth route", "distinct from planar S curve"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["serpentine line of grace"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Create one three-dimensional winding route whose contour orientation changes through depth, disappears and reappears through occlusion, and carries a coherent rotation of drapery, material highlights, and shadows; keep it distinct from a flat S curve or literal snake.",
+      "required_evidence_fields": ["depth_twist_phrase", "orientation_change_phrase", "occlusion_reappearance_phrase", "material_light_phrase"],
+      "evidence_requirements": {
+        "depth_twist_phrase": {"min_content_words": 3, "must_mention_any": ["winding three-dimensional path", "serpentine twist through depth"]},
+        "orientation_change_phrase": {"min_content_words": 4, "must_mention_any": ["contour orientation changes around the form", "front side and back directions evolve"]},
+        "occlusion_reappearance_phrase": {"min_content_words": 4, "must_mention_any": ["path disappears behind and reappears", "depth occlusion confirms the winding route"]},
+        "material_light_phrase": {"min_content_words": 4, "must_mention_any": ["light and material response follow the twist", "drape highlight and shadow rotate together"]}
+      },
+      "render_gates": [
+        {"id": "vo_hogarth_serpentine_depth_twist", "review_scale": "thumbnail", "description": "One coherent curve visibly winds through depth rather than remaining a flat S path."},
+        {"id": "vo_hogarth_serpentine_orientation_change", "review_scale": "native", "description": "Contour orientation changes consistently as the path turns around the three-dimensional form."},
+        {"id": "vo_hogarth_serpentine_occlusion", "review_scale": "both", "description": "The route disappears behind a form and reappears in a way that confirms depth continuity."},
+        {"id": "vo_hogarth_serpentine_material_light", "review_scale": "native", "description": "Drapery, material texture, highlight, and shadow rotate coherently with the same winding path."}
+      ],
+      "reject_substitutes": ["flat_s_curve", "literal_snake", "unrelated_multiple_twists", "depthless_decorative_flourish"]
+    },
+    {
+      "id": "hourglass_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["hourglass silhouette", "hourglass figure", "hourglass body relation", "모래시계 실루엣", "아워글래스 실루엣", "아워글래스 체형 관계"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult bilateral silhouette relation in which the upper torso and hip regions visibly expand around a comparatively narrower waist, with smooth transitions whose apparent strength is separated from pose, viewpoint, and garment cinching.",
+        "paraphrase_examples": ["상체와 골반이 비교적 좁은 허리 양쪽으로 부드럽게 확장되는 성인 실루엣 관계", "a bilateral upper-torso waist and hip width relation with smooth transitions", "hourglass reading separated from belt corset pose and camera effects"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "upper_torso_expansion", "narrower_waist", "hip_expansion"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult front or restrained three-quarter bilateral silhouette", "both side contours remain visible", "성인 정면 또는 완만한 사선 양측 실루엣"]},
+            {"id": "upper_torso_expansion", "any_terms": ["upper torso expands above the waist", "shoulder or bust region forms the upper mass", "허리 위 상체가 확장되는 윤곽"]},
+            {"id": "narrower_waist", "any_terms": ["comparatively narrower natural waist", "inward bilateral waist transition", "상대적으로 좁아지는 양쪽 허리"]},
+            {"id": "hip_expansion", "any_terms": ["hips expand below the waist", "bilateral waist-to-hip flare", "허리 아래 골반의 양측 확장"]},
+            {"id": "capture_garment_separation", "any_terms": ["pose viewpoint and garment cinching declared separately", "natural relation distinguished from belt or corset", "자세 시점 의복 조임과 분리"]}
+          ]
+        },
+        "contrast_examples": ["a belt or corset alone creating a pinched middle", "a one-sided three-quarter crop hiding the opposite contour", "a fixed numerical ratio or beauty-health-value judgment"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral silhouette", "upper torso expansion", "comparatively narrower waist", "hip expansion", "smooth waist transitions", "pose viewpoint and garment separated", "no fixed ratio"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["hourglass silhouette relation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter view that keeps both side contours visible from upper torso through waist to hips, showing smooth relative width changes while explicitly separating the silhouette from belt, corset, pose, and camera effects.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "upper_torso_phrase", "narrower_waist_phrase", "hip_expansion_phrase", "capture_garment_separation_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult front or restrained three-quarter bilateral silhouette", "both side contours remain visible"]},
+        "upper_torso_phrase": {"min_content_words": 3, "must_mention_any": ["upper torso expands above the waist", "shoulder or bust region forms the upper mass"]},
+        "narrower_waist_phrase": {"min_content_words": 3, "must_mention_any": ["comparatively narrower natural waist", "inward bilateral waist transition"]},
+        "hip_expansion_phrase": {"min_content_words": 3, "must_mention_any": ["hips expand below the waist", "bilateral waist-to-hip flare"]},
+        "capture_garment_separation_phrase": {"min_content_words": 5, "must_mention_any": ["pose viewpoint and garment cinching declared separately", "natural relation distinguished from belt or corset"]}
+      },
+      "render_gates": [
+        {"id": "vo_hourglass_bilateral_silhouette", "review_scale": "thumbnail", "description": "Both outer contours remain visible and support one coherent upper-torso waist and hip relation."},
+        {"id": "vo_hourglass_upper_waist_hip_relation", "review_scale": "both", "description": "Upper torso expansion, comparatively narrower waist, and hip expansion are all readable in sequence."},
+        {"id": "vo_hourglass_smooth_transitions", "review_scale": "native", "description": "Waist transitions remain anatomically and photographically smooth without pinching, warping, or pasted shadows."},
+        {"id": "vo_hourglass_not_garment_or_ratio_only", "review_scale": "both", "description": "A belt, corset, pose trick, crop, or fixed numerical ratio alone does not substitute for the relation."},
+        {"id": "vo_hourglass_not_value_claim", "review_scale": "thumbnail", "description": "The silhouette is shown as neutral visual geometry without beauty, health, fertility, or value inference."}
+      ],
+      "reject_substitutes": ["belt_or_corset_only", "one_sided_crop", "pose_or_lens_distortion_only", "fixed_numeric_ratio", "beauty_health_fertility_or_value_inference"]
     }
   ]
 }

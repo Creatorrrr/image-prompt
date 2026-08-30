@@ -1,0 +1,61 @@
+{
+  "contract_version": "photo-semantic-family-evaluation/v1",
+  "pack_id": "bcb6f8c4fa6bb417",
+  "post_core_only": true,
+  "families": [
+    {
+      "family": "contrapposto counter-tilt",
+      "profile_id": "contrapposto_weight_shift",
+      "profile_surfaced": false,
+      "candidate_surfaced": true,
+      "surfaced_candidate_ids": [
+        "slot:body_pose:contrapposto_full_body"
+      ],
+      "adopted_ids": [
+        "slot:body_pose:contrapposto_full_body"
+      ],
+      "decision": "adopted_candidate_level",
+      "reason": "The frozen full-body action already places one boot on a curb, so a loaded support leg, relaxed free leg, opposed hip-shoulder tilt, and stable head are physically coherent and remain inside open pose and body_geometry dimensions.",
+      "prompt_evidence": "Most weight settles through her straight left support leg; her right boot rests lightly on a low inspection curb with the knee relaxed, so hip and shoulder lines counter-tilt beneath a steady head."
+    },
+    {
+      "family": "body-bounded negative space",
+      "profile_id": "body_bounded_negative_space",
+      "profile_surfaced": false,
+      "candidate_surfaced": true,
+      "surfaced_candidate_ids": [
+        "slot:composition:negative_space"
+      ],
+      "adopted_ids": [
+        "slot:composition:negative_space"
+      ],
+      "decision": "adopted_transformed_candidate_not_profile_hard_gate",
+      "reason": "The plan-holding gesture can naturally leave a continuous triangular view of the teal-lit atrium between a bent forearm and the waist. The exact profile was not exposed, so this is recorded as a candidate-level proxy and is not claimed as a promoted profile contract.",
+      "prompt_evidence": "A readable triangular patch of continuous teal-lit background remains between her bent right forearm and waist."
+    },
+    {
+      "family": "Hogarth waving line",
+      "profile_id": "hogarth_waving_line_of_beauty",
+      "profile_surfaced": false,
+      "candidate_surfaced": false,
+      "surfaced_candidate_ids": [],
+      "adopted_ids": [],
+      "decision": "profile_rejected_not_selectable_authorial_probe_only",
+      "reason": "The exact profile did not surface in the immutable pack, so adding its ID would violate candidate provenance. Its planar two-curve idea genuinely fits the frozen window wave, bowed plan, and coat hem, so it is tested only as an open composition decision and not counted as a semantic-profile hard pass.",
+      "prompt_evidence": "Two opposed planar curves create one restrained S-route from that wave through the bowed plan edge into her coat hem."
+    }
+  ],
+  "other_surfaced_visual_profiles": [
+    {
+      "id": "visual-concept:medium_native_glitch",
+      "decision": "rejected",
+      "reason": "The frozen surrealism is physical architecture, not capture-medium failure."
+    },
+    {
+      "id": "visual-concept:kuudere_composed_warmth_relation",
+      "decision": "rejected",
+      "reason": "The frozen scene has no relationship counterpart and must not invent one."
+    }
+  ],
+  "adopted_id_count": 2
+}

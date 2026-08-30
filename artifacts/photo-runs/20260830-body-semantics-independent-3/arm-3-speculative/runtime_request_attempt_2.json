@@ -1,0 +1,39 @@
+{
+  "schema_version": "photo-image-render-request/v2",
+  "pack_id": "76dac2c49dd72185",
+  "source_intent_lock_sha256": "6c02bfae27c1131e957311665859682327e04358ad182f9fba6d79cb159478f2",
+  "render_repair_contract_sha256": null,
+  "effective_visual_contract_sha256": "622faceda348bb264dff01e9dfeb41aa3c41116b08ba4da5942b07085bee174e",
+  "tool": "built_in_image_gen",
+  "intent": "single_targeted_local_repair",
+  "attempt": 2,
+  "retry_of_runtime_prompt_id": "370b98159ba1e630",
+  "failed_visual_gate_ids": [
+    "vo_philtrum_paired_ridges",
+    "vo_philtrum_upper_lip_arc",
+    "vo_philtrum_not_makeup_only",
+    "vo_hourglass_bilateral_silhouette",
+    "vo_hourglass_not_garment_or_ratio_only"
+  ],
+  "runtime_prompt_en": "Use case: identity-preserve precise local repair\nInput images: Image 1 is the edit target; Image 2 supplies facial appearance only.\nPreserved state: Keep Image 1's square canvas, flooded lunar archive, storm cabinet, tuning-ring hand contact, waist-height aurora, close-collar black-and-copper uniform, face arrangement, hair, lighting, materials, and overall color unchanged.\nTargeted repair: First, let subtle natural form light reveal two separate philtral ridges, the central groove, and the paired upper-lip arc as surface relief while maintaining Image 2's overall lip and lower-face appearance. Second, retain both hands on the same cabinet controls while angling the forearms slightly forward to reveal both outer torso contours from upper torso through waist to hips. Replace the wide metallic belt-like waist band with uninterrupted fitted uniform fabric so the smooth silhouette remains visually independent of a hard seam; keep the translucent aurora at waist height. Preserve every other pixel relationship as closely as possible.\nFrozen prompt: Photorealistic square head-to-knees portrait of one clearly adult original woman in a flooded lunar archive refitted as a pressure-safe domestic study. In an adult restrained three-quarter view where both side contours remain visible, beside a glass cabinet she is decoding a palm-sized storm trapped inside it by aligning three copper tuning rings. A miniature aurora crosses her waist; glacial-cyan reflections rise from the flooded floor and contour her face. Her structured black-and-copper observatory uniform is practical, fully clothed, close-collared. Render a neutral hourglass silhouette relation: the upper torso expands above the waist around a comparatively narrower natural waist, then the hips expand below the waist; smooth transitions, pose viewpoint and garment cinching declared separately, fabric following form. Preserve stable facial appearance indicated by the reference image. In a slight three-quarter facial crop with soft form light across the upper lip, model the philtral contour as two philtral columns around a central philtral groove descending into a double upper-lip arc. Eye-level 50 mm, natural skin, wet reflections, smoke glass, oxidized copper, restrained haze; prioritize the storm interaction and aurora boundary.\nAvoid: 3D render look, distorted fingers, over-processed retouching, cartoon style, unrealistic hands, broken facial features, low resolution, excessive HDR, body distortion",
+  "runtime_negative_en": "3D render look, distorted fingers, over-processed retouching, cartoon style, unrealistic hands, broken facial features, low resolution, excessive HDR, body distortion",
+  "audit_boundary": {
+    "composed_prompt_audit_status": "pass",
+    "composed_prompt_quality_status": "warn",
+    "runtime_prompt_audit_status": "not_run",
+    "inherits_composed_prompt_pass": false
+  },
+  "references": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-3-speculative/render-attempt-1.png",
+      "sha256": "87c539cfd41fc45a9e4e2f5135e8e6e8c5be7a408b916213492fe32f2741781a",
+      "role": "edit_target_for_local_visual_gate_repair"
+    },
+    {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "facial_appearance_reference_only",
+      "viewed_before_generation": true
+    }
+  ]
+}

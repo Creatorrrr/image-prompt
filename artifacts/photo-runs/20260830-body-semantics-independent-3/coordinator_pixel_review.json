@@ -1,0 +1,71 @@
+{
+  "schema_version": "photo-independent-three-arm-coordinator-review/v1",
+  "reviewer": "root_coordinator",
+  "review_method": "direct_original_pixel_inspection_after_independent_arm_completion",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "facial_appearance_reference_only",
+    "identity_or_biometric_claim": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm-1-urban",
+      "concept": "The Rain Atlas Exchange",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-1-urban/rain-atlas-exchange-attempt-2.png",
+      "sha256": "e1349d7c0576ae68f2ecc8732b2c1bf472c11b1a27a52eee6f8ff17ef92331eb",
+      "dimensions": "1023x1537",
+      "frozen_concept": "pass",
+      "facial_appearance_consistency": "pass_with_caveat",
+      "semantic_units": {
+        "contrapposto_counter_tilt": "fail",
+        "arm_waist_body_bounded_negative_space": "fail",
+        "hogarth_waving_line_probe": "fail"
+      },
+      "coordinator_observation": "The support and free legs read, but the plan hides the pelvis and the shoulders remain nearly level. The plan and coat also fill the requested arm-waist opening, and the architectural C-curve never joins the plan and coat into one planar S-route."
+    },
+    {
+      "arm_id": "arm-2-heritage",
+      "concept": "Cloud-forest storm-compass calibration",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_2.png",
+      "sha256": "09c85691f047420937d08a70f84870e71f0a562b6c9c0cc74b995e78736aa2a9",
+      "dimensions": "1086x1448",
+      "frozen_concept": "pass",
+      "facial_appearance_consistency": "pass_with_caveat",
+      "semantic_units": {
+        "hogarth_serpentine_line_of_grace": "pass_4_of_4_gates",
+        "lateral_waist_hip_contour_transition": "fail_3_of_5_gates_passed",
+        "hourglass_silhouette_relation": "fail_4_of_5_gates_passed"
+      },
+      "coordinator_observation": "The luminous liana, turning coat, root path, occlusion, and rotating wet highlights form a convincing three-dimensional serpentine route. The closed tailored coat and belt prevent anatomical landmark ownership and natural-versus-garment contour separation."
+    },
+    {
+      "arm_id": "arm-3-speculative",
+      "concept": "The Selenographic Storm Cabinet",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-3-speculative/render-attempt-2.png",
+      "sha256": "ce0d4b5581298025999d9b36d157d935c9f84a73dea9ae1cf512c21c5abe8edc",
+      "dimensions": "1254x1254",
+      "frozen_concept": "pass",
+      "facial_appearance_consistency": "pass_with_caveat",
+      "semantic_units": {
+        "upper_lip_philtral_contour": "fail_3_of_4_gates_passed",
+        "hourglass_silhouette_relation": "fail_4_of_5_gates_passed"
+      },
+      "artifact": "small_pseudo_text_beneath_sleeve_emblem",
+      "coordinator_observation": "Philtral relief and the waist-to-hip sequence are visible at native scale, but the upper-lip arc is not dependable at thumbnail scale and the near arms occlude one side of the required bilateral silhouette."
+    }
+  ],
+  "summary": {
+    "independent_arms_completed": 3,
+    "actual_images_generated": 3,
+    "frozen_concepts_passed": 3,
+    "prompt_and_runtime_audits_passed": 3,
+    "semantic_units_tested": 8,
+    "semantic_units_fully_passed": 1,
+    "semantic_units_partially_passed": 4,
+    "semantic_units_failed_without_gate_majority": 3,
+    "render_fidelity_decision": "revise",
+    "user_judgment": "pending"
+  },
+  "boundary": "Successful generation and prompt audit do not establish strict semantic pixel fidelity, biometric identity, overall model quality, or requesting-user acceptance."
+}

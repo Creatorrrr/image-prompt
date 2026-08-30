@@ -1,0 +1,194 @@
+{
+  "contract_version": "photo-pixel-review/v1",
+  "arm_id": "arm-2-heritage",
+  "reviewed_at": "2026-08-30T09:52:44Z",
+  "review_method": {
+    "thumbnail_review": true,
+    "native_scale_review": true,
+    "thumbnail_dimensions": "240x320",
+    "native_dimensions": "1086x1448",
+    "boundary": "This is a visual inspection of rendered pixels. It does not establish biometric identity or substitute for requesting-user judgment."
+  },
+  "selected_attempt": 2,
+  "selected_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_2.png",
+  "selected_image_sha256": "09c85691f047420937d08a70f84870e71f0a562b6c9c0cc74b995e78736aa2a9",
+  "selection_rationale": "Attempt 2 repairs the full-length crop while retaining the frozen operation, facial-appearance reference role, and serpentine depth mechanism. It is the best available attempt, but it does not pass every strict semantic hard gate.",
+  "overall_status": "fail",
+  "technically_qualified": false,
+  "failed_hard_gate_ids": [
+    "vo_waist_hip_landmark_coherence",
+    "vo_waist_hip_not_garment_only",
+    "vo_hourglass_not_garment_or_ratio_only"
+  ],
+  "package_pixel_boundary": "The composed-prompt and runtime-request audits pass. That package-level result is separate from this failed strict pixel qualification.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_1.png",
+      "image_sha256": "5e84eea43932575e7eb1ce23b2957e30d6f1c01875bb34f54ba0527901a4f8f6",
+      "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_1_thumb.png",
+      "thumbnail_sha256": "10a6b3320365210d5479802332c9121697bc429dbacce930a84083d697096f81",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "fail",
+      "facial_appearance_consistency": "Broadly consistent facial appearance under an oblique wet-scene treatment: similar overall face proportions, eyes, nose, lips, and hairline appearance. This is non-biometric visual comparison only.",
+      "frozen_concept": "The cloud-forest calibration action and three-quarter rear pose are present, but both feet are cropped at the lower frame edge, so the frozen full-length requirement fails.",
+      "semantic_profile_summary": {
+        "hogarth_serpentine_line_of_grace": "pass: the root, turned coat, ring, and luminous liana form a coherent winding depth route",
+        "lateral_waist_hip_contour_transition": "fail: the belt and tailored coat dominate the waist-to-hip reading",
+        "hourglass_silhouette_relation": "fail: the belt appears to manufacture the narrower waist"
+      },
+      "material_failures": [
+        "Both feet are cropped, preventing a complete full-length working pose.",
+        "The natural lateral contour cannot be distinguished confidently from coat tailoring and belt compression.",
+        "The bilateral silhouette relation cannot be distinguished confidently from belt cinching."
+      ],
+      "repair": "One targeted edit was made to restore full framing and reduce garment-manufactured contour."
+    },
+    {
+      "attempt": 2,
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_2.png",
+      "image_sha256": "09c85691f047420937d08a70f84870e71f0a562b6c9c0cc74b995e78736aa2a9",
+      "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/render_attempt_2_thumb.png",
+      "thumbnail_sha256": "9a168df98b13ca0c7724e6737cd617cab4863c0d06aa5a25d88cfa9ddff97db3",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "best_available_but_not_technically_qualified",
+      "full_length_repair": "pass: both boots and feet are fully inside the frame",
+      "facial_appearance_consistency": "Broadly consistent facial appearance under a three-quarter turn and stylized environmental light: similar overall face proportions, eyes, nose, lips, and hairline appearance. No identity, ethnicity, health, age-estimation, or biometric claim is made.",
+      "frozen_concept": "pass: an original adult woman appears in a full-length three-quarter rear working pose, wearing a fully closed opaque coat, trousers, gloves, and boots in a wet strangler-fig canopy observatory. The hand-to-luminous-liana-to-bronze-ring calibration action is legible amid rain, fog, moss glow, and amber light.",
+      "artifact_review": {
+        "anatomy": "No gross anatomy error is visible; the single visible gloved hand, legs, and boots read plausibly.",
+        "materials": "Wet bark, bronze, fabric, and luminous vine are coherent. The skin and lighting retain a slightly polished generated-image finish, but no material failure is severe enough to reject the scene independently.",
+        "mechanism": "The bronze ring, vine, and hand interaction remain spatially legible.",
+        "text": "No accidental or malformed text is visible.",
+        "sexual_content": "None; wardrobe is fully closed and opaque, and the action is operational rather than sexualized."
+      }
+    }
+  ],
+  "adopted_semantic_obligations": [
+    {
+      "profile_id": "lateral_waist_hip_contour_transition",
+      "overall_status": "fail",
+      "gates": [
+        {
+          "gate_id": "vo_waist_hip_contour_sequence",
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "The visible outer contour moves continuously from the lateral waist hollow through the outer hip into the upper outer thigh."
+        },
+        {
+          "gate_id": "vo_waist_hip_landmark_coherence",
+          "review_scale": "native",
+          "status": "fail",
+          "evidence": "The closed waxed coat hides the iliac and trochanteric surface landmarks, so their anatomical coherence cannot be directly verified in the pixels."
+        },
+        {
+          "gate_id": "vo_waist_hip_view_pose_declared",
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "The full-length three-quarter rear stance visibly supports inspection of the lateral contour."
+        },
+        {
+          "gate_id": "vo_waist_hip_not_garment_only",
+          "review_scale": "native",
+          "status": "fail",
+          "evidence": "The belt and tailored coat remain the dominant visible causes of the waist-to-hip shape; the natural body contour cannot be separated confidently from garment construction."
+        },
+        {
+          "gate_id": "vo_waist_hip_not_value_claim",
+          "review_scale": "thumbnail",
+          "status": "pass",
+          "evidence": "The image presents neutral working-body geometry without a health, fitness, beauty, or personal-value claim."
+        }
+      ]
+    },
+    {
+      "profile_id": "hogarth_serpentine_line_of_grace",
+      "overall_status": "pass",
+      "gates": [
+        {
+          "gate_id": "vo_hogarth_serpentine_depth_twist",
+          "review_scale": "thumbnail",
+          "status": "pass",
+          "evidence": "A coherent winding route travels from the foreground root and liana through the turned figure toward the ring and misty depth rather than reading as a flat S ornament."
+        },
+        {
+          "gate_id": "vo_hogarth_serpentine_orientation_change",
+          "review_scale": "native",
+          "status": "pass",
+          "evidence": "The root edge, coat turn, ring, and vine change contour orientation consistently as the route wraps through three-dimensional space."
+        },
+        {
+          "gate_id": "vo_hogarth_serpentine_occlusion",
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "The route disappears behind the figure and ring structure and reappears as illuminated vine, confirming depth continuity."
+        },
+        {
+          "gate_id": "vo_hogarth_serpentine_material_light",
+          "review_scale": "native",
+          "status": "pass",
+          "evidence": "Highlights and shadows rotate coherently across wet root, coat folds, bronze, and translucent vine along the same winding path."
+        }
+      ]
+    },
+    {
+      "profile_id": "hourglass_silhouette_relation",
+      "overall_status": "fail",
+      "gates": [
+        {
+          "gate_id": "vo_hourglass_bilateral_silhouette",
+          "review_scale": "thumbnail",
+          "status": "pass",
+          "evidence": "Both outer contours remain visible in the full-length restrained three-quarter view."
+        },
+        {
+          "gate_id": "vo_hourglass_upper_waist_hip_relation",
+          "review_scale": "both",
+          "status": "pass",
+          "evidence": "Upper torso expansion, a comparatively narrower waist region, and hip expansion are readable in sequence."
+        },
+        {
+          "gate_id": "vo_hourglass_smooth_transitions",
+          "review_scale": "native",
+          "status": "pass",
+          "evidence": "The visible silhouette transitions are smooth, with no pinched anatomy, pasted shadow, or geometric warp."
+        },
+        {
+          "gate_id": "vo_hourglass_not_garment_or_ratio_only",
+          "review_scale": "both",
+          "status": "fail",
+          "evidence": "The belt and fitted coat still provide too much of the apparent narrower-waist relation for a confident natural-silhouette reading."
+        },
+        {
+          "gate_id": "vo_hourglass_not_value_claim",
+          "review_scale": "thumbnail",
+          "status": "pass",
+          "evidence": "The silhouette is shown as neutral geometry without beauty, health, fertility, or value inference."
+        }
+      ]
+    }
+  ],
+  "rejected_post_core_profiles": [
+    {
+      "profile_id": "posterior_lumbosacral_landmarks",
+      "reason": "Not genuinely compatible with the frozen fully closed work coat because posterior skin landmarks would be occluded."
+    },
+    {
+      "profile_id": "waist_to_glute_transition",
+      "reason": "A direct posterior body-focus treatment would conflict with the operational full-body scene and was not required by the frozen event."
+    }
+  ],
+  "limitations": [
+    "Three strict semantic hard gates fail on the selected pixels; the image must not be described as fully qualified or representative of complete profile compliance.",
+    "Facial similarity is a non-biometric appearance judgment under different pose and lighting, not an identity determination.",
+    "The requesting user's acceptance has not been collected.",
+    "The allowed single repair was used; no further rendering was performed."
+  ],
+  "requesting_user_judgment": "pending"
+}

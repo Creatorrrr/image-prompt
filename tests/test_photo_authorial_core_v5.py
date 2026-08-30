@@ -666,7 +666,8 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         )
         thigh = self.obligation(absolute, "inner_thigh_negative_space")
         self.assertIsNotNone(thigh)
-        self.assertIn("appeal_emphasis_phrase", thigh["prompt_binding"]["required_evidence_fields"])
+        self.assertNotIn("appeal_emphasis_phrase", thigh["prompt_binding"]["required_evidence_fields"])
+        self.assertIn("both feet touch or nearly touch", thigh["composition_instruction"])
         self.assertIn(
             "vo_inner_thigh_attractive_composition",
             {row["id"] for row in thigh["render_gates"]},

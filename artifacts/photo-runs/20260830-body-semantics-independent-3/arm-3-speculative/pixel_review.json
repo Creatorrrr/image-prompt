@@ -1,0 +1,103 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "attempt": 2,
+  "retry_of_attempt": 1,
+  "pack_id": "76dac2c49dd72185",
+  "effective_visual_contract_sha256": "622faceda348bb264dff01e9dfeb41aa3c41116b08ba4da5942b07085bee174e",
+  "reviewer": {
+    "reviewer_id": "codex-arm-3-agent",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "render-attempt-2.png",
+    "sha256": "ce0d4b5581298025999d9b36d157d935c9f84a73dea9ae1cf512c21c5abe8edc",
+    "width": 1254,
+    "height": 1254
+  },
+  "review_artifacts": {
+    "thumbnail": "render-attempt-2-thumbnail.png",
+    "native_face_crop": "review-attempt-2-face-native.png",
+    "native_silhouette_crop": "review-attempt-2-silhouette-native.png",
+    "native_hands_crop": "review-attempt-2-hands-native.png",
+    "reference_face_crop": "review-reference-face.png"
+  },
+  "hard_gates": {
+    "vo_philtrum_paired_ridges": {
+      "status": "pass",
+      "reviewed_scales": ["native"],
+      "evidence": "The repaired native face crop shows two softly lit vertical ridges flanking a shallow central philtral depression."
+    },
+    "vo_philtrum_upper_lip_arc": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "The paired upper-lip arc is visible in the native crop, but the groove-to-arc transition is not reliable at the required thumbnail scale."
+    },
+    "vo_philtrum_face_geometry_coherent": {
+      "status": "pass",
+      "reviewed_scales": ["native"],
+      "evidence": "Nose base, philtral region, mouth corners, jaw, and surrounding skin retain coherent anatomy and continuous texture."
+    },
+    "vo_philtrum_not_makeup_only": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "At native scale, the groove and ridge relief are carried by form light and skin topography rather than the lip color boundary alone."
+    },
+    "vo_hourglass_bilateral_silhouette": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail"],
+      "evidence": "The repaired right contour is clear, but the near forearms still occlude the opposite upper-torso-to-waist edge, preventing a complete bilateral read."
+    },
+    "vo_hourglass_upper_waist_hip_relation": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "Upper torso, narrower waist, and hip expansion remain legible in sequence, especially along the unobstructed right contour."
+    },
+    "vo_hourglass_smooth_transitions": {
+      "status": "pass",
+      "reviewed_scales": ["native"],
+      "evidence": "The repaired waist-to-hip path is smooth, continuous, and free of anatomical pinching, pasted shadow, or geometric warping."
+    },
+    "vo_hourglass_not_garment_or_ratio_only": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "The wide metallic waistband is gone; continuous fitted fabric and soft seams follow the contour instead of manufacturing a hard pinched middle."
+    },
+    "vo_hourglass_not_value_claim": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail"],
+      "evidence": "The body relation stays a neutral geometric observation inside a technical research action with no value, health, or fertility claim."
+    }
+  },
+  "supplemental_findings": {
+    "facial_appearance_consistency": "Moderate visual consistency without an identity claim: face length, eye spacing, brow line, nose-lip balance, lower-face width, and dark hair framing broadly follow the reference, with slightly rounder eye aperture and a somewhat narrower lower face remaining.",
+    "frozen_concept": "Pass at both scales: the flooded lunar archive, contained storm, active tuning-ring interaction, waist-height cyan aurora, close-collar black-and-copper uniform, square head-to-knees framing, and wet copper-glass environment are all visible.",
+    "hands_and_contact": "Both hands remain attached to plausible forearms and maintain readable contact with the cabinet controls; dense jewelry and ring geometry add clutter but no unambiguous extra digit is visible.",
+    "materials": "Water, wet reflections, smoke glass, oxidized copper, fitted fabric, hair, and storm light retain distinct material behavior and coherent illumination.",
+    "text_artifact": "Small pseudo-lettering remains beneath the sleeve emblem even though the prompt requested no text.",
+    "content_boundary": "The subject is clearly presented as an adult original fictional woman, fully clothed, and nonsexual.",
+    "repair_effect": "Attempt 2 reduced failed strict gates from five to two by improving philtral surface relief and removing the belt-like waist band while preserving the scene."
+  },
+  "failed_gate_ids": [
+    "vo_philtrum_upper_lip_arc",
+    "vo_hourglass_bilateral_silhouette"
+  ],
+  "passed_gate_ids": [
+    "vo_philtrum_paired_ridges",
+    "vo_philtrum_face_geometry_coherent",
+    "vo_philtrum_not_makeup_only",
+    "vo_hourglass_upper_waist_hip_relation",
+    "vo_hourglass_smooth_transitions",
+    "vo_hourglass_not_garment_or_ratio_only",
+    "vo_hourglass_not_value_claim"
+  ],
+  "technical_qualified": false,
+  "qualification_status": "failed_strict_visual_hard_gates",
+  "selected_attempt_for_delivery": 2,
+  "representative_eligible": false,
+  "repair_limit_exhausted": true,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "boundary": "Prompt and runtime audits passed, but two required pixel gates failed. This record does not claim biometric identity, model quality, or requesting-user acceptance."
+}
