@@ -1,0 +1,64 @@
+{
+  "schema_version": "photo-cross-blind-visual-obligation-review/v1",
+  "reviewer_arm_id": "arm-04",
+  "reviewed_arm_id": "arm-05",
+  "profile_id": "verified_safety_relief",
+  "review_method": "direct_pixel_inspection_then_render_gate_text_only",
+  "blindness_protocol": {
+    "native_and_thumbnail_viewed_before_gate_text": true,
+    "prompt_read": false,
+    "existing_pixel_review_read": false,
+    "existing_self_review_read": false,
+    "candidate_pack_scope_read": "visual_obligations.obligations[id=verified_safety_relief].render_gates only",
+    "hidden_psychology_inference_allowed": false
+  },
+  "artifacts": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-05/verified-safety-relief.png",
+      "sha256": "2602bc37ef63db3a721e076121582545601a41b4807deafc731b6a1e4650d051",
+      "dimensions_px": [1448, 1086]
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-05/verified-safety-relief-thumbnail.png",
+      "sha256": "5f1caa1d84cc7bb719e60852618446aa9a9ddc772d44ec10ac1d08ba67f79462",
+      "dimensions_px": [320, 240]
+    }
+  },
+  "hard_gates": [
+    {
+      "gate_id": "vo_verified_relief_prior_risk",
+      "required_review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail clearly shows a conspicuous illuminated amber warning beacon on the left control cabinet amid industrial machinery, providing a legible non-graphic alarm or warning-residue cue."
+    },
+    {
+      "gate_id": "vo_verified_relief_safety_check",
+      "required_review_scale": "both",
+      "status": "fail",
+      "evidence": "At native and thumbnail scales, the main adult's eyes remain directed at the clipboard. She does not visibly look toward the gauge, green signal, route, or colleague; the colleague's pointing gesture and merely present instruments cannot establish her own visible safety check."
+    },
+    {
+      "gate_id": "vo_verified_relief_tension_release",
+      "required_review_scale": "native",
+      "status": "fail",
+      "evidence": "Native pixels show lowered eyes and a neutral mouth, but no coordinated loosening of shoulders, jaw, eyelids, or grip. Her pen grip and clipboard-supporting hand remain actively engaged, so the pose is equally readable as ordinary concentration and does not visibly prove a release response."
+    },
+    {
+      "gate_id": "vo_verified_relief_post_event",
+      "required_review_scale": "both",
+      "status": "pass",
+      "evidence": "Both scales clearly show the main adult actively writing on a clipboard while the panel's green light and the gauge's green zone remain visible, making resumed safe documentation after an instrument indication legible as a post-event task."
+    }
+  ],
+  "summary": {
+    "required_gate_count": 4,
+    "passed_gate_count": 2,
+    "failed_gate_count": 2,
+    "failed_gate_ids": [
+      "vo_verified_relief_safety_check",
+      "vo_verified_relief_tension_release"
+    ],
+    "overall_status": "fail"
+  },
+  "boundary": "This is a strict pixel-only cross review. Visible posture and object relations were assessed; no unshown emotional state, event chronology, or intention was credited."
+}

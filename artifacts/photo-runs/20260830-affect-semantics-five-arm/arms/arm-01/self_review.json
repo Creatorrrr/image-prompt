@@ -1,0 +1,46 @@
+{
+  "contract_version": "photo-affect-render-self-review/v1",
+  "arm_id": "arm-01",
+  "pack_id": "8f73992ae62946ab",
+  "profile_id": "achievement_reward_smile",
+  "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/generated_achievement_reward_smile.png",
+  "result_sha256": "fe9989c01e5bde0e3926fb713cf0382f91c823e7029746999b8715cf09217067",
+  "render_available": true,
+  "thumbnail_review": "completed",
+  "native_review": "completed",
+  "hard_gates": [
+    {
+      "id": "vo_achievement_reward_visible_success",
+      "required_scale": "both",
+      "status": "pass",
+      "evidence": "At thumbnail and native scales, three green status lamps and a live waveform make the active sensor result readable."
+    },
+    {
+      "id": "vo_achievement_reward_face_action",
+      "required_scale": "native",
+      "status": "pass",
+      "evidence": "At native scale, both lip corners and both cheeks rise in a positive smile rather than a one-sided smirk."
+    },
+    {
+      "id": "vo_achievement_reward_result_attention",
+      "required_scale": "both",
+      "status": "fail",
+      "evidence": "At both scales, the irises face the camera rather than the working console or teammate."
+    },
+    {
+      "id": "vo_achievement_reward_temporal_relation",
+      "required_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At thumbnail scale, both adults still appear to operate controls; no clear release gesture or collaborator reaction establishes an immediately-after-success beat."
+    }
+  ],
+  "structure_preflight": "pass",
+  "pixel_qualification": "fail_two_of_four_hard_gates",
+  "representative_eligibility": "not_eligible_failed_hard_gates",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending_requesting_user_judgment",
+    "summary": "No direct requesting-user judgment exists; technical review found two failed hard gates."
+  },
+  "next_required_input": "A new render would require fresh authorization because the resumed task allowed exactly one generation call; user acceptance remains pending."
+}

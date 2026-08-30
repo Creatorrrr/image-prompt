@@ -1,0 +1,54 @@
+{
+  "contract_version": "photo-render-self-review/v1",
+  "arm_id": "arm-05",
+  "profile_id": "verified_safety_relief",
+  "pack_id": "c7849baaf065fa15",
+  "image_path": null,
+  "image_sha256": null,
+  "structural_preflight": {
+    "candidate_pack_hard_obligation": "pass",
+    "candidate_pack_profile_id": "verified_safety_relief",
+    "composed_prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "evidence": "The representative v6 pack activates the assigned profile as a request-scoped hard obligation with all four evidence fields and all four render gates; the exact composed and runtime requests have zero blocking failures."
+  },
+  "pixel_review": {
+    "status": "not_run",
+    "reason": "The single allowed built-in imagegen call failed before generation because zero conversation images were available for num_last_images_to_include=1.",
+    "thumbnail_review": "not_evaluable_no_pixels",
+    "native_review": "not_evaluable_no_pixels",
+    "hard_gates": [
+      {
+        "gate_id": "vo_verified_relief_prior_risk",
+        "review_scale": "thumbnail",
+        "status": "not_evaluable",
+        "evidence": "No generated pixels exist; the fading alarm cue cannot be inspected."
+      },
+      {
+        "gate_id": "vo_verified_relief_safety_check",
+        "review_scale": "both",
+        "status": "not_evaluable",
+        "evidence": "No generated pixels exist; the gauge and colleague verification cannot be inspected."
+      },
+      {
+        "gate_id": "vo_verified_relief_tension_release",
+        "review_scale": "native",
+        "status": "not_evaluable",
+        "evidence": "No generated pixels exist; coordinated shoulder, jaw, eyelid, and grip release cannot be inspected."
+      },
+      {
+        "gate_id": "vo_verified_relief_post_event",
+        "review_scale": "both",
+        "status": "not_evaluable",
+        "evidence": "No generated pixels exist; lowering the torque wrench and resuming the checklist cannot be inspected."
+      }
+    ]
+  },
+  "structural_pass_is_pixel_pass": false,
+  "technical_pixel_qualification": "blocked_missing_reference_attachment",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "next_action": "Reattach the intended source image, then rerun the same audited runtime prompt with exactly one reference-image transport and perform thumbnail plus native review."
+}

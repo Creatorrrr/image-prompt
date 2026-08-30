@@ -1,0 +1,73 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-05",
+  "reviewer": "arm-05 independent agent pixel reviewer",
+  "profile_id": "verified_safety_relief",
+  "pack_id": "c7849baaf065fa15",
+  "effective_visual_contract_sha256": "b54045d16951031a979695a2b1558be0f84588989e2107e55a5900b97d3ca38b",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-05/verified-safety-relief.png",
+  "result_sha256": "2602bc37ef63db3a721e076121582545601a41b4807deafc731b6a1e4650d051",
+  "review_scales": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-05/verified-safety-relief-thumbnail.png",
+      "sha256": "5f1caa1d84cc7bb719e60852618446aa9a9ddc772d44ec10ac1d08ba67f79462",
+      "width": 320,
+      "height": 240,
+      "inspected": true
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-05/verified-safety-relief.png",
+      "sha256": "2602bc37ef63db3a721e076121582545601a41b4807deafc731b6a1e4650d051",
+      "width": 1448,
+      "height": 1086,
+      "inspected": true
+    }
+  },
+  "hard_gates": {
+    "vo_verified_relief_prior_risk": {
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 320x240, a bright amber alarm beacon remains immediately legible on the left machinery panel, alongside industrial bilge-pump hardware, establishing a non-graphic warning context."
+    },
+    "vo_verified_relief_safety_check": {
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "Thumbnail and native pixels show the colleague pointing at a green lamp and a large pressure gauge reading inside its green band, but the primary adult looks down at the clipboard rather than visibly checking the gauge, signal, or colleague."
+    },
+    "vo_verified_relief_tension_release": {
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "Native pixels show lowered eyelids and a slightly loose mouth, yet the overall pose reads as quiet checklist concentration: both gloved hands actively hold and write on the clipboard, and no coordinated shoulder, jaw, eyelid, and grip-release transition is visibly established."
+    },
+    "vo_verified_relief_post_event": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, the torque wrench is visibly set down on the foreground work surface while the primary adult writes on the clipboard, making the lowered-tool and resumed-task consequence readable."
+    }
+  },
+  "hard_gate_summary": {
+    "pass_count": 2,
+    "fail_count": 2,
+    "all_required_gates_pass": false,
+    "technical_pixel_qualification": "fail"
+  },
+  "reference_appearance_review": {
+    "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "adult_age_presentation": "pass",
+    "visible_appearance_continuity": "The generated primary adult retains long dark center-parted wavy hair, a similar oval facial silhouette, natural adult eye scale, and a comparable skin-tone presentation.",
+    "claim_boundary": "This is a visible appearance-continuity observation, not biometric identity verification and not a claim that the image depicts the same real person."
+  },
+  "supplemental_observations": [
+    "The engine-room environment, green status cues, amber warning cue, large pressure gauge, colleague, clipboard, and foreground torque wrench are photographically coherent and easy to locate.",
+    "The result expresses an operational aftermath more strongly than it expresses the exact visible moment of relief.",
+    "No post-generation prompt or concept revision was used to reinterpret the failed gates."
+  ],
+  "structural_prompt_audit_status": "pass",
+  "structural_pass_is_pixel_pass": false,
+  "promotion_status": "not_promotable_two_hard_gate_failures",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

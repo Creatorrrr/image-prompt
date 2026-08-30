@@ -1,0 +1,65 @@
+{
+  "contract_version": "photo-render-self-review/v1",
+  "arm_id": "arm-04",
+  "pack_id": "e98d6c14f901b5e8",
+  "profile_id": "embarrassment_repair_display",
+  "structural_preflight": {
+    "candidate_pack_hard_obligation": "pass",
+    "hard_evidence_fields": 4,
+    "hard_gate_count": 4,
+    "composed_prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "effective_visual_contract_sha256": "b7ebbd76ffef2c82b454dee6dc26c14fa119b531d1aa2e190dec0024d0d33626"
+  },
+  "render_transport": {
+    "status": "fail",
+    "image_call_count": 1,
+    "requested_reference_count": 1,
+    "available_conversation_image_count": 0,
+    "generated_bytes": false,
+    "error": "requested the last 1 conversation images, but only 0 were available"
+  },
+  "pixel_review": {
+    "status": "not_run",
+    "thumbnail_review": "not_run_no_generated_image",
+    "native_review": "not_run_no_generated_image",
+    "generated_image_path": null,
+    "generated_image_sha256": null,
+    "gate_results": [
+      {
+        "gate_id": "vo_embarrassment_repair_minor_mishap",
+        "review_scale": "both",
+        "status": "not_evaluated",
+        "evidence": "No generated image bytes exist, so the visible minor-mishap residue cannot be inspected."
+      },
+      {
+        "gate_id": "vo_embarrassment_repair_face_sequence",
+        "review_scale": "native",
+        "status": "not_evaluated",
+        "evidence": "No native-resolution image exists, so the gaze/head break, closed smile, and cheek-touch cue cannot be inspected."
+      },
+      {
+        "gate_id": "vo_embarrassment_repair_restitution",
+        "review_scale": "both",
+        "status": "not_evaluated",
+        "evidence": "No generated image exists, so hand-to-card restitution geometry cannot be inspected."
+      },
+      {
+        "gate_id": "vo_embarrassment_repair_peer_response",
+        "review_scale": "thumbnail",
+        "status": "not_evaluated",
+        "evidence": "No thumbnail exists, so the adult peer's visible help or accepting response cannot be inspected."
+      }
+    ]
+  },
+  "qualification": {
+    "structural_contract_status": "pass",
+    "rendered_pixel_status": "not_evaluated",
+    "representative_eligible": false,
+    "promotion_decision": "blocked_until_reference_is_reattached_and_one_new_authorized_render_is_run"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending_requesting_user_judgment"
+  }
+}

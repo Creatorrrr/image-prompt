@@ -1,0 +1,62 @@
+{
+  "contract_version": "photo-affect-render-self-review/v1",
+  "arm_id": "arm-03",
+  "pack_id": "9b4c945b828e8896",
+  "profile_id": "decision_uncertainty_display",
+  "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/decision-uncertainty-observatory-render.png",
+  "result_sha256": "d27552a11c032fdb4b8f72332920531d8252b45e4637818a5f678610b72cf287",
+  "generated_bytes": true,
+  "structural_prompt_audit": "pass",
+  "runtime_request_audit": "pass",
+  "pixel_review_status": "pass",
+  "pixel_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/pixel_review.json",
+  "thumbnail_review": {
+    "status": "pass",
+    "evidence": "The 240x320 thumbnail preserves the two-option red-circle/cyan-square opposition, the suspended tool, the empty center, and an unresolved comparison reading."
+  },
+  "native_review": {
+    "status": "pass",
+    "evidence": "The 1086x1448 native pixels show split eye/head orientation, restrained asymmetric brow knit, mild mouth tension, the loupe suspended without contact, two separate alternatives, and an empty calibration opening."
+  },
+  "hard_gates": [
+    {
+      "id": "vo_decision_uncertainty_two_options",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Separate crimson circular and cyan square-edged cassettes are readable at thumbnail and native scale."
+    },
+    {
+      "id": "vo_decision_uncertainty_comparison_gaze",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The irises aim toward the crimson side while the face axis remains toward the central/right comparison area."
+    },
+    {
+      "id": "vo_decision_uncertainty_face_action",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "A restrained asymmetric inner-brow knit and mild mouth tension are concurrently visible."
+    },
+    {
+      "id": "vo_decision_uncertainty_paused_action",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The gloved hand suspends the loupe over the center without contacting either cassette."
+    },
+    {
+      "id": "vo_decision_uncertainty_unresolved",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "Both alternatives remain available while the central opening is empty and the tool is still hovering."
+    }
+  ],
+  "technical_qualification": "pass",
+  "causal_qualification": "single_prompt_single_render_profile_consistent",
+  "representative_eligibility": "pending_requesting_user_judgment",
+  "reference_appearance_boundary": "Observable appearance continuity only; no biometric identity verification and no personality, psychology, or relationship inference from the reference.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "summary": "All declared pixel gates passed agent review; only the requesting user can accept or reject the result."
+  }
+}

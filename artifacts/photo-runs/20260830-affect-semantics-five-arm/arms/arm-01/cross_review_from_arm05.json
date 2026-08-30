@@ -1,0 +1,119 @@
+{
+  "contract_version": "photo-cross-blind-pixel-review/v1",
+  "reviewed_at_utc": "2026-08-30T11:02:37Z",
+  "reviewer": {
+    "arm": "arm-05",
+    "role": "independent_cross_blind_pixel_reviewer"
+  },
+  "target": {
+    "arm": "arm-01",
+    "profile_id": "achievement_reward_smile"
+  },
+  "blindness_protocol": {
+    "order_followed": [
+      "Viewed the native image and the supplied thumbnail before reading any gate wording.",
+      "Froze a free visual observation based only on those pixels.",
+      "Read only the achievement_reward_smile render_gates slice from candidate_pack.json.",
+      "Re-inspected the same two images at each gate's declared review scale."
+    ],
+    "not_inspected": [
+      "generation prompt",
+      "composed prompt",
+      "runtime request",
+      "existing pixel review",
+      "existing self review",
+      "other reviewer conclusions"
+    ],
+    "hidden_psychology_inference_used": false,
+    "candidate_pack_access_scope": "achievement_reward_smile.render_gates only"
+  },
+  "inputs": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/generated_achievement_reward_smile.png",
+      "sha256": "fe9989c01e5bde0e3926fb713cf0382f91c823e7029746999b8715cf09217067",
+      "pixel_width": 1402,
+      "pixel_height": 1122
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/generated_achievement_reward_smile.thumbnail-256.png",
+      "sha256": "0976baae9faac5a197c158a15c5e329c8d600be7c44a0a5684f9d4ea8bdd124c",
+      "pixel_width": 256,
+      "pixel_height": 205
+    },
+    "gate_source": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/candidate_pack.json"
+  },
+  "free_observation_frozen_before_gate_read": {
+    "native": "A foreground adult woman in a dark fur-trimmed glaciology parka faces the camera with parted lips, visible upper teeth, and both mouth corners raised. Her gloved hand is closed around a metal probe or rod inserted into a sensor console. The console visibly carries a teal waveform, three green indicator lamps, and legible stable-signal/depth markings; a transparent core cylinder rests below it. A second bundled adult continues operating cylindrical machinery in the icy tunnel behind her.",
+    "thumbnail": "The smiling foreground adult, camera-facing gaze, hand on the rod, lit waveform console, green status lights, core cylinder, and working background adult remain distinguishable. Fine console and cylinder lettering is not legible at this scale."
+  },
+  "hard_gates": [
+    {
+      "id": "vo_achievement_reward_visible_success",
+      "review_scale": "both",
+      "description": "The adult's successful task result is visibly readable without relying on prompt text or a caption.",
+      "status": "PASS",
+      "scale_findings": {
+        "native": {
+          "status": "PASS",
+          "pixel_evidence": "The console visibly shows an active waveform, three green status lamps, and readable stable-signal/depth markings beside a recovered transparent core cylinder carrying the same depth number. These co-visible result indicators make a successful measurement/result readable from the image itself."
+        },
+        "thumbnail": {
+          "status": "PASS",
+          "pixel_evidence": "The fine lettering is lost, but the bright waveform display, three green status lamps, and the recovered core cylinder remain simultaneously distinguishable as positive equipment output plus a concrete result object."
+        }
+      }
+    },
+    {
+      "id": "vo_achievement_reward_face_action",
+      "review_scale": "native",
+      "description": "Both lip corners and cheeks show a mostly symmetric positive facial action rather than a one-sided smirk.",
+      "status": "PASS",
+      "scale_findings": {
+        "native": {
+          "status": "PASS",
+          "pixel_evidence": "Both lip corners turn upward to a similar degree, upper teeth are exposed centrally, and both cheeks show comparable lift; no unilateral corner pull dominates."
+        }
+      }
+    },
+    {
+      "id": "vo_achievement_reward_result_attention",
+      "review_scale": "both",
+      "description": "Eye direction and body orientation remain tied to the completed result or the collaborator sharing it.",
+      "status": "FAIL",
+      "scale_findings": {
+        "native": {
+          "status": "FAIL",
+          "pixel_evidence": "Her hand and torso remain near the console, but both eyes are visibly directed toward the camera/viewer rather than down-right toward the console/result or back toward the collaborator. The gate requires eye direction as well as body orientation."
+        },
+        "thumbnail": {
+          "status": "FAIL",
+          "pixel_evidence": "The face and gaze still read as camera-facing while the result console sits separately to frame right and the collaborator remains behind her."
+        }
+      }
+    },
+    {
+      "id": "vo_achievement_reward_temporal_relation",
+      "review_scale": "thumbnail",
+      "description": "The result, release gesture, and reaction compose an immediately-after-success event rather than a generic smiling portrait.",
+      "status": "FAIL",
+      "scale_findings": {
+        "thumbnail": {
+          "status": "FAIL",
+          "pixel_evidence": "A result display and smile coexist, but no release gesture is visible: the foreground glove remains closed around the rod and the background adult remains engaged with the machinery. The pixels therefore do not secure the required immediately-after-success sequence over an ongoing-work portrait."
+        }
+      }
+    }
+  ],
+  "summary": {
+    "pass_count": 2,
+    "fail_count": 2,
+    "all_hard_gates_pass": false,
+    "technical_pixel_qualification": "FAIL",
+    "failed_gate_ids": [
+      "vo_achievement_reward_result_attention",
+      "vo_achievement_reward_temporal_relation"
+    ],
+    "structural_or_prompt_status": "NOT_REVIEWED",
+    "user_acceptance": "PENDING"
+  }
+}

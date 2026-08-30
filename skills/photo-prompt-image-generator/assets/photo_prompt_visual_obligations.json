@@ -5366,23 +5366,23 @@
         },
         "contrast_examples": ["a generic posed portrait smile with no visible task outcome", "a polite affiliative smile directed only at another person", "an asymmetric superiority smirk", "a success prop shown without a post-outcome facial or action change"]
       },
-      "concept_candidate": {"concept_terms": ["visible authored success result", "mostly symmetric lip-corner pull", "cheek movement", "result-directed gaze", "post-success timing", "small release or celebration action", "no hidden-state claim"]},
+      "concept_candidate": {"concept_terms": ["visible authored success result", "mostly symmetric lip-corner pull", "cheek movement", "off-camera result-directed irises", "post-success timing", "open hand separated from the completed control", "small release or celebration action", "no hidden-state claim"]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["achievement-reward smile display"], "forbidden_prompt_terms": ["genuine happiness proved", "true emotion revealed"], "runtime_forbidden_labels": []},
-      "composition_instruction": "Keep the adult face, the task result they personally completed, and the immediate consequence readable in one frame: show both lip corners and cheeks changing while gaze remains tied to the successful result or collaborator, with a small release or celebration action after verification rather than a generic portrait smile.",
+      "composition_instruction": "Keep the adult face, the task result they personally completed, and the immediate consequence readable in one frame. Place the result or sharing collaborator on an unmistakable eyeline and aim the adult's irises there, not at the viewer. Show both lip corners and cheeks changing, plus an open released hand visibly separated from the completed control or an unmistakable collaborator response after verification; a smile beside a working prop while anyone still operates it is insufficient.",
       "required_evidence_fields": ["successful_result_phrase", "symmetric_smile_action_phrase", "result_attention_phrase", "post_success_consequence_phrase"],
       "evidence_requirements": {
         "successful_result_phrase": {"min_content_words": 4, "must_mention_any": ["the completed device visibly works", "the restored signal is visibly active", "the finished test visibly passes", "the repaired object visibly functions"]},
         "symmetric_smile_action_phrase": {"min_content_words": 4, "must_mention_any": ["both lip corners lift with cheek movement", "mostly symmetric smile with raised cheeks"]},
         "result_attention_phrase": {"min_content_words": 4, "must_mention_any": ["eyes remain on the successful result", "gaze returns from the result to the collaborator"]},
-        "post_success_consequence_phrase": {"min_content_words": 4, "must_mention_any": ["hand releases the completed control", "small celebratory gesture follows verification", "collaborator responds to the restored outcome"]}
+        "post_success_consequence_phrase": {"min_content_words": 4, "must_mention_any": ["hand releases the completed control", "open hand separates from the completed control", "small celebratory gesture follows verification", "collaborator responds to the restored outcome"]}
       },
       "render_gates": [
         {"id": "vo_achievement_reward_visible_success", "review_scale": "both", "description": "The adult's successful task result is visibly readable without relying on prompt text or a caption."},
         {"id": "vo_achievement_reward_face_action", "review_scale": "native", "description": "Both lip corners and cheeks show a mostly symmetric positive facial action rather than a one-sided smirk."},
-        {"id": "vo_achievement_reward_result_attention", "review_scale": "both", "description": "Eye direction and body orientation remain tied to the completed result or the collaborator sharing it."},
-        {"id": "vo_achievement_reward_temporal_relation", "review_scale": "thumbnail", "description": "The result, release gesture, and reaction compose an immediately-after-success event rather than a generic smiling portrait."}
+        {"id": "vo_achievement_reward_result_attention", "review_scale": "both", "description": "Iris direction and body orientation remain tied to the completed result or the collaborator sharing it, not the camera or viewer."},
+        {"id": "vo_achievement_reward_temporal_relation", "review_scale": "thumbnail", "description": "The result, a visibly released or open hand separated from the completed control, and the reaction compose an immediately-after-success event; continued operation is not a post-success consequence."}
       ],
-      "reject_substitutes": ["generic_portrait_smile", "polite_affiliation_only", "dominance_smirk", "success_prop_without_reaction", "hidden_state_or_genuineness_claim"]
+      "reject_substitutes": ["generic_portrait_smile", "camera_facing_gaze_at_viewer", "still_gripping_or_operating_control", "polite_affiliation_only", "dominance_smirk", "success_prop_without_reaction", "hidden_state_or_genuineness_claim"]
     },
     {
       "id": "affiliative_reassurance_smile",
@@ -5434,14 +5434,14 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A visible pre-decision display in which an adult compares at least two readable alternatives, gaze or head direction divides between them, slight brow or mouth tension accompanies a paused hand or tool, and the choice remains unresolved; no single face action is treated as proof of confusion.",
-        "paraphrase_examples": ["두 개의 실제 선택지를 번갈아 보며 손을 중간에서 멈춘 성인의 비교 장면", "gaze divided between two labeled physical alternatives with slight brow asymmetry and a paused reach", "an unresolved choice shown by targets, comparison behavior, restrained facial tension, and interrupted action"],
+        "definition": "A visible pre-decision display in which an adult compares at least two readable alternatives, the still-frame eyeline lands on one alternative while head or tool geometry keeps both in active comparison, slight brow or mouth tension accompanies a paused hand or tool, and the choice remains unresolved; no single face action is treated as proof of confusion.",
+        "paraphrase_examples": ["두 개의 실제 선택지를 번갈아 보던 중 한 선택지에 시선이 닿고 손은 둘 사이에서 멈춘 성인의 비교 장면", "irises landing on one labeled alternative while head angle and a paused reach preserve both options in the comparison", "an unresolved choice shown by targets, still-frame comparison geometry, restrained facial tension, and interrupted action"],
         "component_semantics": {
           "minimum_component_groups": 5,
           "required_group_ids": ["two_visible_alternatives", "comparison_gaze", "restrained_face_tension", "paused_choice_action", "unresolved_decision_state"],
           "groups": [
             {"id": "two_visible_alternatives", "any_terms": ["two distinct physical options remain visible", "two swatches samples routes or controls can be compared", "서로 다른 두 선택 대상이 동시에 보임"]},
-            {"id": "comparison_gaze", "any_terms": ["eyes or head angle divide between the two options", "gaze shifts from one visible alternative toward the other", "두 선택지 사이를 오가는 시선 또는 머리 방향"]},
+            {"id": "comparison_gaze", "any_terms": ["irises land on one option while head or tool geometry remains between both", "gaze lands on one visible alternative during a shift from the other", "시선은 한 선택지에 닿고 머리나 도구는 두 선택지 사이의 비교축을 유지함"]},
             {"id": "restrained_face_tension", "any_terms": ["slight brow asymmetry or knit with mild lip tension", "one brow lifts while the mouth remains lightly pressed", "한쪽 눈썹 변화와 약한 입술 긴장이 함께 보임"]},
             {"id": "paused_choice_action", "any_terms": ["hand tool or pen pauses midway between options", "reach stops before touching either alternative", "손이나 도구가 선택 전 중간에서 멈춤"]},
             {"id": "unresolved_decision_state", "any_terms": ["neither option has yet been selected", "both alternatives remain available and unchanged", "어느 선택도 아직 실행되지 않음"]}
@@ -5449,25 +5449,25 @@
         },
         "contrast_examples": ["focused inspection of one object", "skeptical side-eye toward a person", "frustration after a failed choice", "a confused face with no visible alternatives or paused action"]
       },
-      "concept_candidate": {"concept_terms": ["two visible alternatives", "divided comparison gaze", "slight brow asymmetry", "mild lip tension", "paused hand between options", "unresolved choice", "not face-only confusion"]},
+      "concept_candidate": {"concept_terms": ["two visible alternatives", "still-frame comparison eyeline", "head or tool axis spanning both options", "slight brow asymmetry", "mild lip tension", "paused hand between options", "unresolved choice", "not face-only confusion"]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["decision-uncertainty display"], "forbidden_prompt_terms": ["mind is confused", "indecisive personality"], "runtime_forbidden_labels": []},
-      "composition_instruction": "Keep two genuinely different options, the adult's eyes or head angle comparing them, slight brow or mouth tension, and a hand, pen, or tool paused before selection in one readable frame; neither option may already be chosen, and a generic puzzled face is insufficient.",
+      "composition_instruction": "Keep two genuinely different options, slight brow or mouth tension, and a hand, pen, or tool paused before selection in one readable frame. A still image cannot show eyes looking in two directions at once: aim the irises at one visible option while the head angle or suspended tool remains geometrically between both, so the comparison axis survives without a split-gaze artifact. Neither option may already be chosen, and a generic puzzled face or ordinary inspection of one item is insufficient.",
       "required_evidence_fields": ["visible_alternatives_phrase", "comparison_gaze_phrase", "facial_tension_phrase", "paused_action_phrase", "unresolved_choice_phrase"],
       "evidence_requirements": {
         "visible_alternatives_phrase": {"min_content_words": 4, "must_mention_any": ["two distinct physical options remain visible", "two swatches remain visible", "two samples remain visible", "two controls remain visible"]},
-        "comparison_gaze_phrase": {"min_content_words": 4, "must_mention_any": ["eyes divide between the two options", "gaze shifts from one visible alternative toward the other", "head angle divides between both options"]},
+        "comparison_gaze_phrase": {"min_content_words": 5, "must_mention_any": ["irises land on one option while the tool remains between both", "gaze lands on one visible alternative during a shift from the other", "head angle and suspended tool preserve both options in comparison"]},
         "facial_tension_phrase": {"min_content_words": 4, "must_mention_any": ["slight brow asymmetry with mild lip tension", "one brow lifts while the mouth remains lightly pressed", "slight brow knit and lightly pressed lips"]},
         "paused_action_phrase": {"min_content_words": 4, "must_mention_any": ["hand pauses midway between options", "tool pauses midway between options", "reach stops before touching either alternative"]},
         "unresolved_choice_phrase": {"min_content_words": 4, "must_mention_any": ["neither option has yet been selected", "both alternatives remain available and unchanged"]}
       },
       "render_gates": [
         {"id": "vo_decision_uncertainty_two_options", "review_scale": "both", "description": "Two distinct and comparable physical alternatives are simultaneously visible and remain clearly separate."},
-        {"id": "vo_decision_uncertainty_comparison_gaze", "review_scale": "native", "description": "Eye or head direction visibly divides between the alternatives rather than fixing on one unrelated target."},
+        {"id": "vo_decision_uncertainty_comparison_gaze", "review_scale": "native", "description": "The irises visibly land on one alternative while head angle or paused-tool geometry keeps both alternatives in active comparison; impossible simultaneous split gaze and unrelated fixation both fail."},
         {"id": "vo_decision_uncertainty_face_action", "review_scale": "native", "description": "Restrained brow asymmetry or knitting and mild mouth tension support comparison without becoming an exaggerated cartoon face."},
         {"id": "vo_decision_uncertainty_paused_action", "review_scale": "both", "description": "A hand, pen, or tool is visibly paused before either alternative is selected."},
         {"id": "vo_decision_uncertainty_unresolved", "review_scale": "thumbnail", "description": "The whole frame reads as an unresolved comparison rather than completed selection, inspection, skepticism, or failure."}
       ],
-      "reject_substitutes": ["single_target_concentration", "skeptical_person_directed_side_eye", "post_failure_frustration", "puzzled_face_without_options", "completed_choice"]
+      "reject_substitutes": ["single_target_concentration", "ordinary_single_item_inspection", "impossible_simultaneous_split_gaze", "skeptical_person_directed_side_eye", "post_failure_frustration", "puzzled_face_without_options", "completed_choice"]
     },
     {
       "id": "embarrassment_repair_display",
@@ -5535,21 +5535,22 @@
       },
       "concept_candidate": {"concept_terms": ["prior non-graphic risk marker", "explicit safe-status verification", "shoulder and jaw release", "softened eyelids or released grip", "post-verification consequence", "temporal after-safety relation", "not face-only relief"]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["verified-safety relief display"], "forbidden_prompt_terms": ["inner relief proved", "trauma diagnosis"], "runtime_forbidden_labels": []},
-      "composition_instruction": "Place the prior risk marker, the adult's explicit check of a safe reading or colleague, and the immediate release response in one frame: shoulders drop, jaw or eyelids loosen, and the gripping hand releases before the adult lowers an emergency tool or resumes the safe task.",
-      "required_evidence_fields": ["prior_risk_phrase", "safety_verification_phrase", "tension_release_phrase", "post_verification_phrase"],
+      "composition_instruction": "Place the prior risk marker, the main adult's explicit check of a safe reading or colleague, and the immediate release response in one frame. The main adult's pupils and face must visibly align with the safe gauge, signal, route, or colleague; a colleague pointing while the main adult looks only at a checklist cannot substitute. After that check, show at least two coordinated release channels among lowered shoulders, loosened jaw or eyelids, and an opened gripping hand before the adult lowers an emergency tool or resumes the safe task.",
+      "required_evidence_fields": ["prior_risk_phrase", "safety_verification_phrase", "main_subject_check_eyeline_phrase", "tension_release_phrase", "post_verification_phrase"],
       "evidence_requirements": {
         "prior_risk_phrase": {"min_content_words": 4, "must_mention_any": ["inactive alarm remains visible", "warning residue remains visible", "stopped machinery shows the prior uncertainty", "blocked route shows the prior uncertainty"]},
         "safety_verification_phrase": {"min_content_words": 4, "must_mention_any": ["adult reads the safe gauge indicator", "adult checks the confirmed safe signal", "adult visually confirms the colleague is safe"]},
+        "main_subject_check_eyeline_phrase": {"min_content_words": 6, "must_mention_any": ["main adult's eyes align with the safe gauge", "main adult's face and pupils align with the confirmed signal", "main adult looks directly at the colleague being checked"]},
         "tension_release_phrase": {"min_content_words": 5, "must_mention_any": ["shoulders visibly drop while the jaw loosens", "eyelids soften while the gripping hand releases", "shoulders drop and lips part on an exhale"]},
         "post_verification_phrase": {"min_content_words": 4, "must_mention_any": ["adult lowers the emergency tool", "adult resumes the safe task", "colleague returns to work after confirmation"]}
       },
       "render_gates": [
         {"id": "vo_verified_relief_prior_risk", "review_scale": "thumbnail", "description": "A non-graphic alarm, warning residue, stopped machine, or blocked route makes the prior uncertainty visually legible."},
-        {"id": "vo_verified_relief_safety_check", "review_scale": "both", "description": "The adult visibly checks a gauge, signal, route, or colleague before the release response occurs."},
-        {"id": "vo_verified_relief_tension_release", "review_scale": "native", "description": "Shoulders, jaw, eyelids, or gripping hand visibly loosen in a coordinated release rather than generic fatigue."},
+        {"id": "vo_verified_relief_safety_check", "review_scale": "both", "description": "The main adult's pupils and face visibly align with the gauge, signal, route, or colleague being checked; a second person pointing while the main adult reads unrelated paperwork does not count."},
+        {"id": "vo_verified_relief_tension_release", "review_scale": "native", "description": "At least two channels among shoulders, jaw, eyelids, and gripping hand visibly loosen together rather than reading as generic fatigue, calm, or checklist concentration."},
         {"id": "vo_verified_relief_post_event", "review_scale": "both", "description": "Lowering the emergency tool or resuming the safe task makes the display read as after confirmation rather than calm before an unknown outcome."}
       ],
-      "reject_substitutes": ["fatigue_without_safety_check", "sadness_or_pain_slump", "generic_calm_beside_alarm", "smile_before_status_known", "hidden_state_or_trauma_diagnosis"]
+      "reject_substitutes": ["fatigue_without_safety_check", "sadness_or_pain_slump", "generic_calm_beside_alarm", "colleague_only_verification", "checklist_focus_without_visible_check", "neutral_work_posture_without_coordinated_release", "smile_before_status_known", "hidden_state_or_trauma_diagnosis"]
     }
   ]
 }

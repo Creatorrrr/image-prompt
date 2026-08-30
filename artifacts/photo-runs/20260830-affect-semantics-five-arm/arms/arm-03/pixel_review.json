@@ -1,0 +1,104 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-03",
+  "pack_id": "9b4c945b828e8896",
+  "profile_id": "decision_uncertainty_display",
+  "exact_activation_term": "decision uncertainty display",
+  "reviewer": {
+    "reviewer_id": "codex-arm-03",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/decision-uncertainty-observatory-render.png",
+    "sha256": "d27552a11c032fdb4b8f72332920531d8252b45e4637818a5f678610b72cf287",
+    "width": 1086,
+    "height": 1448
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/decision-uncertainty-observatory-render-thumbnail.png",
+    "sha256": "d137200b3e2ec6dcbab6294ef987004f9412b68cfa5d551210a376f97810f932",
+    "width": 240,
+    "height": 320
+  },
+  "gate_contract": {
+    "source": "candidate_pack.json visual_obligations.required_hard_gates and obligations[decision_uncertainty_display].render_gates",
+    "strict_gate_set": true,
+    "required_hard_gate_count": 5,
+    "required_hard_gate_ids": [
+      "vo_decision_uncertainty_two_options",
+      "vo_decision_uncertainty_comparison_gaze",
+      "vo_decision_uncertainty_face_action",
+      "vo_decision_uncertainty_paused_action",
+      "vo_decision_uncertainty_unresolved"
+    ]
+  },
+  "hard_gates": [
+    {
+      "id": "vo_decision_uncertainty_two_options",
+      "review_scale": "both",
+      "reviewed_scales": ["thumbnail", "native"],
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, a luminous crimson circular cassette is visibly separate on the left and a cyan square-edged cassette is visibly separate on the right; their color, outline, and bench positions remain distinct and comparable in the same frame.",
+      "thumbnail_observation": "The red circle and cyan square remain immediately distinguishable as two opposed bench choices.",
+      "native_observation": "Both cassette assemblies have separate housings and positions, with the empty central opening between them."
+    },
+    {
+      "id": "vo_decision_uncertainty_comparison_gaze",
+      "review_scale": "native",
+      "reviewed_scales": ["native"],
+      "status": "pass",
+      "evidence": "At native scale, the irises turn toward the viewer-left crimson cassette while the face and nose axis stay angled down toward the central gap and viewer-right side, producing a visibly divided eye/head comparison rather than direct camera contact or an unrelated stare.",
+      "native_observation": "Eye direction and head/face axis are not aligned on one target; the split remains within the triangle formed by the two cassettes and empty slot."
+    },
+    {
+      "id": "vo_decision_uncertainty_face_action",
+      "review_scale": "native",
+      "reviewed_scales": ["native"],
+      "status": "pass",
+      "evidence": "At native scale, the inner brows show a restrained knit with slight left-right height asymmetry, while the mouth corners and gently parted lips retain mild tension; the expression is subtle and non-cartoonish.",
+      "native_observation": "The brow and mouth cues coexist with the comparison action without becoming a smile, grimace, or exaggerated puzzled face."
+    },
+    {
+      "id": "vo_decision_uncertainty_paused_action",
+      "review_scale": "both",
+      "reviewed_scales": ["thumbnail", "native"],
+      "status": "pass",
+      "evidence": "At both scales, the gloved hand visibly suspends the cylindrical spectral loupe above the central gap; the tool does not touch the crimson cassette, cyan cassette, or empty opening.",
+      "thumbnail_observation": "The hovering hand-and-tool silhouette is readable above the space between the alternatives.",
+      "native_observation": "A clear air gap remains beneath the loupe and around both alternatives, showing the reach paused before contact."
+    },
+    {
+      "id": "vo_decision_uncertainty_unresolved",
+      "review_scale": "thumbnail",
+      "reviewed_scales": ["thumbnail"],
+      "status": "pass",
+      "evidence": "At thumbnail scale, both alternatives remain present, the central calibration opening remains visibly empty, and the suspended loupe plus downward comparison pose reads as a choice still in progress rather than a completed insertion or post-failure reaction.",
+      "thumbnail_observation": "No cassette occupies the central opening and neither side has been reached or lifted."
+    }
+  ],
+  "supplemental_reference_appearance_review": {
+    "status": "pass_non_biometric_visual_continuity",
+    "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "evidence": "The generated adult subject visibly preserves the reference's long dark wavy hair, center-parted hairline, frontal oval-face presentation, dark eyes, and natural adult facial treatment. This is an appearance-continuity observation only, not biometric identity verification.",
+    "biometric_identity_claim": false,
+    "personality_or_psychology_inference": false
+  },
+  "structural_preflight": {
+    "composed_prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "boundary": "These audits establish frozen prompt/request structure only and do not establish pixel truth."
+  },
+  "pixel_qualification": {
+    "status": "pass",
+    "all_required_hard_gates_pass": true,
+    "failed_hard_gate_ids": [],
+    "boundary": "This status is based on direct inspection of the saved native image and its saved 320-pixel thumbnail."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "evidence": "",
+    "representative_eligibility": "pending_requesting_user_judgment"
+  }
+}

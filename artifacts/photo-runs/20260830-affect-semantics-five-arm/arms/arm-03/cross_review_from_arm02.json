@@ -1,0 +1,65 @@
+{
+  "schema_version": "photo-affect-cross-blind-review/v1",
+  "reviewer_arm_id": "arm-02",
+  "reviewed_arm_id": "arm-03",
+  "profile_id": "decision_uncertainty_display",
+  "blind_protocol": {
+    "status": "followed",
+    "sequence": [
+      "Viewed only the native generated image.",
+      "Viewed only its thumbnail derivative.",
+      "Then read only decision_uncertainty_display.render_gates from candidate_pack.json."
+    ],
+    "prompt_read": false,
+    "existing_pixel_or_self_review_read": false,
+    "psychology_inferred_from_pixels": false
+  },
+  "result_image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/decision-uncertainty-observatory-render.png",
+    "sha256": "d27552a11c032fdb4b8f72332920531d8252b45e4637818a5f678610b72cf287",
+    "dimensions": "1086x1448"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-03/decision-uncertainty-observatory-render-thumbnail.png",
+    "sha256": "d137200b3e2ec6dcbab6294ef987004f9412b68cfa5d551210a376f97810f932",
+    "dimensions": "240x320"
+  },
+  "hard_gates": {
+    "vo_decision_uncertainty_two_options": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Native and thumbnail both show two separate, simultaneously visible instrument alternatives: a red-lit circular assembly on frame-left and a blue-screen rectangular assembly on frame-right. Their paired foreground placement keeps them visually comparable and distinct."
+    },
+    "vo_decision_uncertainty_comparison_gaze": {
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "At native scale, both irises point down toward frame-left, closest to the red assembly; neither eye nor head direction visibly splits or bridges toward the blue assembly on frame-right. A divided comparison gaze is therefore not directly observable."
+    },
+    "vo_decision_uncertainty_face_action": {
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "At native scale, the brows are mildly knitted with subtle asymmetry and the closed mouth carries restrained tension; the expression remains natural and non-cartoonish."
+    },
+    "vo_decision_uncertainty_paused_action": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, the gloved hand visibly suspends a cylindrical tool above the central open fixture without contacting either the red or blue foreground assembly."
+    },
+    "vo_decision_uncertainty_unresolved": {
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At thumbnail scale, the dominant read is a technician inspecting or positioning a tool over a central machine opening. The red and blue assemblies do not form a sufficiently explicit either-or decision, so unresolved comparison cannot be distinguished from ongoing inspection."
+    }
+  },
+  "summary": {
+    "passed_gate_count": 3,
+    "failed_gate_count": 2,
+    "failed_gate_ids": [
+      "vo_decision_uncertainty_comparison_gaze",
+      "vo_decision_uncertainty_unresolved"
+    ],
+    "final_status": "fail",
+    "reason": "Every declared hard gate must pass in the same image; the comparison-gaze and unresolved-whole-frame gates lack direct pixel evidence."
+  },
+  "boundary": "This cross review judges only observable pixels against the supplied gate wording. It does not infer indecision, doubt, intent, or any other hidden psychological state."
+}

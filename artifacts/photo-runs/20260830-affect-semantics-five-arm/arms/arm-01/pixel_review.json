@@ -1,0 +1,71 @@
+{
+  "contract_version": "photo-visual-obligation-render-review/v1",
+  "arm_id": "arm-01",
+  "pack_id": "8f73992ae62946ab",
+  "profile_id": "achievement_reward_smile",
+  "reviewer": "codex-agent-arm-01",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/generated_achievement_reward_smile.png",
+  "result_sha256": "fe9989c01e5bde0e3926fb713cf0382f91c823e7029746999b8715cf09217067",
+  "thumbnail_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-01/generated_achievement_reward_smile.thumbnail-256.png",
+  "thumbnail_sha256": "0976baae9faac5a197c158a15c5e329c8d600be7c44a0a5684f9d4ea8bdd124c",
+  "review_scales": {
+    "thumbnail": "256x205",
+    "native": "1402x1122"
+  },
+  "structure_preflight": {
+    "composed_audit": "pass",
+    "runtime_request_audit": "pass",
+    "claim_boundary": "Literal prompt evidence is not pixel proof."
+  },
+  "hard_gate_set_source": "candidate_pack.visual_obligations.required_hard_gates",
+  "hard_gates": {
+    "vo_achievement_reward_visible_success": {
+      "status": "pass",
+      "required_scale": "both",
+      "thumbnail_evidence": "At 256px, the rugged sensor console remains prominent with three bright green status lamps and a luminous live waveform.",
+      "native_evidence": "At 1402x1122, the powered console, continuous waveform, and green indicator stack visibly establish an active working device without needing a caption."
+    },
+    "vo_achievement_reward_face_action": {
+      "status": "pass",
+      "required_scale": "native",
+      "native_evidence": "The main adult woman's upper teeth are visible, both lip corners rise, and both cheeks lift; minor natural asymmetry does not collapse into a one-sided smirk."
+    },
+    "vo_achievement_reward_result_attention": {
+      "status": "fail",
+      "required_scale": "both",
+      "thumbnail_evidence": "The main face is oriented toward the viewer and reads as camera-facing rather than result-directed.",
+      "native_evidence": "The irises look forward toward the camera, not down-right toward the console and not back toward the teammate; the hand and torso remain near the device, but the required eye-direction relation is missing."
+    },
+    "vo_achievement_reward_temporal_relation": {
+      "status": "fail",
+      "required_scale": "thumbnail",
+      "thumbnail_evidence": "The teammate is still operating the crank and the main gloved hand still holds a control-like rod, so the frame reads as active work plus a posed smile rather than a released-control or collaborator-reaction beat immediately after success."
+    }
+  },
+  "hard_gate_counts": {
+    "pass": 2,
+    "fail": 2,
+    "total": 4
+  },
+  "failed_hard_gate_ids": [
+    "vo_achievement_reward_result_attention",
+    "vo_achievement_reward_temporal_relation"
+  ],
+  "profile_pixel_qualification": "fail",
+  "representative_eligibility": "not_eligible_failed_hard_gates",
+  "supplemental_observations": {
+    "adult_subject": "pass; the main subject and teammate are visibly adults",
+    "reference_appearance": "Broad visible continuity is present in the long dark wavy hair, eye spacing, skin tone, and facial proportions. This is an appearance observation, not biometric identity verification.",
+    "scene_coherence": "The ice tunnel, insulated clothing, borehole sensor, green status lamps, waveform, teammate, and core tube form one coherent polar field scene.",
+    "no_posthoc_prompt_change": true
+  },
+  "retry": {
+    "performed": false,
+    "reason": "The parent instruction authorized exactly one resumed generation call and prohibited re-calling after this result."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "summary": "Technical hard-gate failure and requesting-user preference remain separate; no user acceptance has been received."
+  }
+}
