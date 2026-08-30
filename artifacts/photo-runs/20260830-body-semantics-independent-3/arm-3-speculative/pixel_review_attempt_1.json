@@ -1,0 +1,91 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "attempt": 1,
+  "pack_id": "76dac2c49dd72185",
+  "effective_visual_contract_sha256": "622faceda348bb264dff01e9dfeb41aa3c41116b08ba4da5942b07085bee174e",
+  "reviewer": {
+    "reviewer_id": "codex-arm-3-agent",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "render-attempt-1.png",
+    "sha256": "87c539cfd41fc45a9e4e2f5135e8e6e8c5be7a408b916213492fe32f2741781a",
+    "width": 1254,
+    "height": 1254
+  },
+  "review_artifacts": {
+    "thumbnail": "render-attempt-1-thumbnail.png",
+    "native_face_crop": "review-face-native.png",
+    "native_silhouette_crop": "review-silhouette-native.png",
+    "native_hands_crop": "review-hands-cabinet-native.png",
+    "reference_face_crop": "review-reference-face.png"
+  },
+  "hard_gates": {
+    "vo_philtrum_paired_ridges": {
+      "status": "fail",
+      "reviewed_scales": ["native"],
+      "evidence": "The native face crop shows a faint midline shadow, but two separately modeled philtral ridges are not reliably visible."
+    },
+    "vo_philtrum_upper_lip_arc": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "A soft upper-lip arc exists at native scale, but the groove-to-paired-arc transition is not legible at thumbnail scale."
+    },
+    "vo_philtrum_face_geometry_coherent": {
+      "status": "pass",
+      "reviewed_scales": ["native"],
+      "evidence": "Nose base, mouth corners, jaw, and surrounding skin are spatially coherent with continuous natural shading."
+    },
+    "vo_philtrum_not_makeup_only": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "The upper-lip read is carried mostly by vermilion color and specular highlight because distinct philtral surface relief is too weak."
+    },
+    "vo_hourglass_bilateral_silhouette": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail"],
+      "evidence": "The right contour is clear, but both forearms and the cabinet conceal most of the opposite torso-to-waist contour."
+    },
+    "vo_hourglass_upper_waist_hip_relation": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "The visible contour moves from upper torso through a narrower midsection into an expanded hip region in one continuous sequence."
+    },
+    "vo_hourglass_smooth_transitions": {
+      "status": "pass",
+      "reviewed_scales": ["native"],
+      "evidence": "The visible waist-to-hip edge is smooth and photographically continuous without pinched anatomy or pasted shadow."
+    },
+    "vo_hourglass_not_garment_or_ratio_only": {
+      "status": "fail",
+      "reviewed_scales": ["thumbnail", "native"],
+      "evidence": "A wide metallic waist band and the bright aurora coincide with the narrowest point, so garment cinching is not cleanly separated from the silhouette."
+    },
+    "vo_hourglass_not_value_claim": {
+      "status": "pass",
+      "reviewed_scales": ["thumbnail"],
+      "evidence": "The silhouette appears as neutral geometry inside a technical work scene with no health, fertility, or personal-value messaging."
+    }
+  },
+  "supplemental_findings": {
+    "facial_appearance_consistency": "Moderate visual consistency: face length, eye spacing, nose-lip balance, dark hair framing, and overall facial arrangement remain recognizable, while the rendered eye aperture is slightly rounder and the lower face slightly narrower than the reference.",
+    "frozen_concept": "Pass at thumbnail and native scale: flooded lunar archive, transparent storm cabinet, waist-height cyan aurora, close-collar black-and-copper uniform, and active hand interaction are immediately readable.",
+    "hands_and_contact": "Both hands make plausible contact with cabinet controls; fingers are crowded by jewelry and rings but no unambiguous extra digit or fused-hand failure is visible.",
+    "materials": "Wet floor, smoke glass, oxidized copper, fabric, hair, and storm light remain materially distinct with coherent reflections.",
+    "text_artifact": "Small pseudo-lettering appears on the sleeve patch even though no text was requested.",
+    "content_boundary": "The subject is fully clothed and the scene is nonsexual."
+  },
+  "failed_gate_ids": [
+    "vo_philtrum_paired_ridges",
+    "vo_philtrum_upper_lip_arc",
+    "vo_philtrum_not_makeup_only",
+    "vo_hourglass_bilateral_silhouette",
+    "vo_hourglass_not_garment_or_ratio_only"
+  ],
+  "technical_qualified": false,
+  "repair_authorized_by_protocol": true,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

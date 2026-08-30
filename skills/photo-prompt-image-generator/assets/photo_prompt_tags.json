@@ -1,5 +1,5 @@
 {
-  "version": "1.24",
+  "version": "1.25",
   "description": "Photographic prompt dictionary with expanded concept-role, folklore, personality, season, era, digital-entity, and environmental-transformation coverage for semantic and recipe-driven prompt generation. Version 1.13 expands robot semantics with disembodied AI, screen-face terminals, sensory apparatus, fabrication origin, lifecycle wear/repair, drones, mecha, prosthetics, domestic systems, surveillance networks and AI-temple metaphors. Version 1.14 adds opt-in visible multi-subject relationship framing, visible in-frame partner roles, and a small-group documentary preset while preserving single-subject defaults. Version 1.15 adds perspective-rich beastkin evidence, procedural-duty, daily-errand, stagecraft, anti-diagram, POV-task, opt-in species, and expanded role/mixin coverage. Version 1.16 adds skin-finish, eye-detail, body-marking, summer stream, orchard shoot-through, cozy sofa, and CCD flash pet-closeup portrait coverage. Version 1.17 broadens realistic/candid portrait variation with expanded skin, eye, body-marking, lens-artifact, gaze-engagement, hand-pose, skin-state, ambient-particle, grain, garment-detail, companion-animal, color-grading, and natural-light lifestyle preset coverage. Version 1.18 adds 2026 fashion dailywear coverage with footwear and silhouette-proportion slots, clean social/dailywear presets, generalized trend tags, and no-readable-text fashion-commerce safeguards. Version 1.19 expands background, environment, and situation coverage with space-condition, crowd-density, everyday-situation, and occasion-context slots plus clean routine, commute, local-shop, event, digital-life, sustainable-local, and surreal-environment presets while keeping social/text cues non-readable. Version 1.20 expands flatlay, tabletop staging, prop styling, tactile surfaces, aesthetic still-life bundles, and product-riser scenes while keeping paper ephemera, packaging, screens, labels, tickets, and social-commerce cues blank, fictional, unreadable, or unbranded. Version 1.21 adds clean pose, shot-scale, and platform-safe framing controls for social, editorial, portrait, mirror-selfie, and composition-heavy photo prompts. Version 1.22 adds narrative-core and concept-tension slots for poetic story anchors, modern social themes, analog/AI contrast, romantic decay, ordinary magic, and clean concept-rich editorial scenes while keeping persona and photo-approach ideas mapped to existing subject, medium, genre, capture-context, and composition controls with no readable text. Version 1.23 adds coherent science-inspection, mobility-logistics, and climate-adaptation packs plus reusable relation, event, process, capture-modality, weather-effect, and movement facets for broader operational photography. Version 1.24 adds role and garment semantics for aircraft pilots, cabin-crew safety work, institutional school uniforms, one-piece dress construction, sheer textile optics, military duty uniforms, wearable armor, and requester-defined adult high-exposure fantasy armor.",
   "facet_vocab": {
     "subject_kind": [
@@ -155958,6 +155958,70 @@
     ],
     "composition": [
       {
+        "id": "arm_waist_triangle_negative_space",
+        "ko": "팔과 옆 허리의 실제 윤곽이 삼각형 배경 여백을 만드는 구도",
+        "en": "triangular negative space bounded by the real arm and waist contours",
+        "weight": 0.66,
+        "tags": ["human", "composition", "negative_space", "body_bounded"],
+        "aliases": ["arm-waist triangle", "팔 허리 네거티브 스페이스"],
+        "keywords": ["arm contour", "waist contour", "continuous background triangle"],
+        "embedding_text": "real arm and waist contours enclose a continuous triangular patch of background with deliberate thumbnail-readable body-bounded negative space",
+        "for_any": ["human"]
+      },
+      {
+        "id": "bent_elbow_torso_negative_space",
+        "ko": "굽힌 팔꿈치와 몸통이 타원형 배경 여백을 만드는 구도",
+        "en": "oval negative space bounded by a bent elbow and torso",
+        "weight": 0.6,
+        "tags": ["human", "composition", "negative_space", "body_bounded"],
+        "aliases": ["elbow-torso opening", "팔꿈치 몸통 여백"],
+        "keywords": ["bent elbow", "torso boundary", "background opening"],
+        "embedding_text": "a bent elbow and torso boundary form one oval continuous-background opening, distinct from garment cutouts and shadows",
+        "for_any": ["human"]
+      },
+      {
+        "id": "hand_face_negative_space",
+        "ko": "손가락과 얼굴 옆 윤곽 사이의 작은 배경 여백을 읽히게 하는 구도",
+        "en": "small negative space shaped between the hand and side of the face",
+        "weight": 0.56,
+        "tags": ["human", "composition", "negative_space", "portrait"],
+        "aliases": ["hand-face opening", "손 얼굴 여백"],
+        "keywords": ["hand contour", "face contour", "continuous background"],
+        "embedding_text": "portrait composition where a hand and facial side contour shape a small continuous-background void without merging fingers into the face",
+        "for_any": ["human"]
+      },
+      {
+        "id": "hogarth_waving_line_path",
+        "ko": "서로 반대되는 두 곡선이 윤곽·천·소품·빛을 따라 이어지는 평면 미의 선",
+        "en": "planar Hogarth waving line built from two opposed curves across contour, drape, props, and light",
+        "weight": 0.6,
+        "tags": ["composition", "classical_line", "s_curve", "planar"],
+        "aliases": ["Hogarth line of beauty", "waving line path", "호가스 미의 선"],
+        "keywords": ["opposed curves", "ogee rhythm", "planar S path"],
+        "embedding_text": "one planar waving composition path made from two contrasted curves, continued across subject contour drapery prop placement and light without depth twisting"
+      },
+      {
+        "id": "hogarth_serpentine_depth_path",
+        "ko": "윤곽이 깊이로 비틀리고 가려졌다 다시 나타나며 빛과 재질이 함께 회전하는 입체 우아함의 선",
+        "en": "three-dimensional Hogarth serpentine path confirmed by orientation change, occlusion, and rotating material light",
+        "weight": 0.58,
+        "tags": ["composition", "classical_line", "serpentine", "depth"],
+        "aliases": ["serpentine line of grace", "Hogarth serpentine line", "호가스 세르펜타인 선"],
+        "keywords": ["depth twist", "occlusion reappearance", "rotating highlight shadow"],
+        "embedding_text": "one three-dimensional winding composition route whose contour changes orientation, disappears and reappears through occlusion, and carries coherent drape highlights and shadows"
+      },
+      {
+        "id": "contour_transition_sequence",
+        "ko": "여러 인접 신체 윤곽 전환을 한 흐름으로 읽히게 하는 구도",
+        "en": "composition that keeps adjacent body-contour transitions readable as one sequence",
+        "weight": 0.52,
+        "tags": ["human", "composition", "contour", "sequence"],
+        "aliases": ["contour sequence", "윤곽 전환 흐름"],
+        "keywords": ["shoulder waist hip thigh", "linked contour", "regional transition"],
+        "embedding_text": "camera framing and form light organize shoulder-to-waist, waist-to-hip, or hip-to-thigh transitions into one readable regional contour sequence",
+        "for_any": ["human"]
+      },
+      {
         "id": "wide_establishing",
         "ko": "공간감을 강조한 와이드 샷",
         "en": "wide establishing shot",
@@ -159845,6 +159909,56 @@
     ],
     "body_framing": [
       {
+        "id": "philtrum_lip_landmark_closeup",
+        "ko": "코 아래부터 턱까지 담아 인중 기둥·중앙 홈·윗입술 이중 호를 보여주는 클로즈업",
+        "en": "lower-face close-up showing philtral columns, central groove, and the upper-lip double arc",
+        "weight": 0.62,
+        "tags": ["human", "face", "closeup", "surface_landmark"],
+        "embedding_text": "front or slight three-quarter lower-face close-up from nose base to chin, preserving natural philtral and upper-lip surface relief",
+        "for_any": ["human"],
+        "facets": {"soft_body_role": ["narrative_safe"]}
+      },
+      {
+        "id": "clavicle_upper_chest_landmark_crop",
+        "ko": "목 아래·쇄골·어깨·위가슴의 표면 경계를 함께 담는 크롭",
+        "en": "crop containing lower neck, clavicles, shoulders, and upper-chest surface boundaries",
+        "weight": 0.58,
+        "tags": ["human", "adult", "clavicle", "upper_torso", "framing"],
+        "embedding_text": "adult upper-torso crop that keeps the lower neck clavicle edges shoulder relation and upper-chest garment boundary visible together",
+        "for_any": ["human"],
+        "facets": {"soft_body_role": ["narrative_safe"]}
+      },
+      {
+        "id": "lumbosacral_back_landmark_crop",
+        "ko": "뒤 허리 중앙선과 양쪽 뒤 골반 보조개를 함께 담는 성인 후면 크롭",
+        "en": "adult posterior lower-back crop containing the lumbar midline and paired iliac dimples",
+        "weight": 0.44,
+        "tags": ["human", "adult", "back", "surface_landmark", "body_emphasis"],
+        "embedding_text": "adult posterior or three-quarter-back crop with lumbar midline and paired shallow PSIS-area dimples visible under coherent form light",
+        "for_any": ["human"],
+        "facets": {"soft_body_role": ["body_emphasis"]}
+      },
+      {
+        "id": "waist_hip_transition_three_quarter_crop",
+        "ko": "옆 허리에서 골반과 바깥 허벅지 전환까지 담는 성인 3/4 크롭",
+        "en": "adult three-quarter crop preserving the lateral waist, hip, and outer-thigh transition",
+        "weight": 0.5,
+        "tags": ["human", "adult", "waist", "hip", "body_emphasis"],
+        "embedding_text": "adult side or three-quarter framing that keeps the lateral waist hollow iliac region outer hip and outer-thigh transition readable in one contour sequence",
+        "for_any": ["human"],
+        "facets": {"soft_body_role": ["body_emphasis"]}
+      },
+      {
+        "id": "full_body_countertilt_pose_read",
+        "ko": "지지 다리·자유 다리·골반과 어깨의 대응 경사를 확인할 수 있는 머리부터 발끝 전신 프레임",
+        "en": "head-to-feet full-body frame for reading support leg, free leg, and counter-tilted pelvis and shoulders",
+        "weight": 0.66,
+        "tags": ["human", "full_body", "pose", "contrapposto", "narrative_safe"],
+        "embedding_text": "complete head-to-feet full-body framing that preserves both feet, support-leg load, relaxed free leg, pelvis line, shoulder line, and stable head balance",
+        "for_any": ["human"],
+        "facets": {"soft_body_role": ["narrative_safe"]}
+      },
+      {
         "id": "clothed_bodyline_emphasis",
         "ko": "노출 없이 옷을 입은 보디라인을 강조하는 프레이밍",
         "en": "clothed bodyline-emphasis framing without nudity",
@@ -159886,8 +160000,8 @@
       },
       {
         "id": "legs_heels_framing",
-        "ko": "다리 라인과 힐을 화면 안에서 강조하는 프레이밍",
-        "en": "legs and heels emphasized within the frame",
+        "ko": "무릎 아래부터 종아리 볼륨·발목 테이퍼·신발 접점을 함께 보여주는 프레이밍",
+        "en": "lower-leg framing that keeps calf volume, ankle taper, and footwear contact readable",
         "weight": 0.9,
         "tags": [
           "adult",
@@ -159898,6 +160012,7 @@
         "for_any": [
           "human"
         ],
+        "embedding_text": "lower-leg crop preserving the calf-to-ankle contour transition, both ankle boundaries, and coherent footwear contact rather than a generic leg close-up",
         "facets": {
           "soft_body_role": [
             "body_emphasis"
@@ -159906,8 +160021,8 @@
       },
       {
         "id": "collarbone_lips_focus",
-        "ko": "쇄골과 입술을 뷰티 디테일로 강조하는 클로즈업",
-        "en": "collarbone and lips emphasized as beauty details",
+        "ko": "인중·윗입술 표면 윤곽과 쇄골·쇄골 위 오목을 같은 빛 체계에서 연결하는 클로즈업",
+        "en": "close-up linking philtral upper-lip topography with clavicle and supraclavicular surface relief",
         "weight": 0.9,
         "tags": [
           "adult",
@@ -159918,6 +160033,7 @@
         "for_any": [
           "human"
         ],
+        "embedding_text": "portrait close-up that preserves paired philtral ridges and upper-lip arc while the clavicle edge and shallow supraclavicular hollow remain coherent under the same soft form light",
         "facets": {
           "soft_body_role": [
             "narrative_safe"
@@ -159926,8 +160042,8 @@
       },
       {
         "id": "over_shoulder_hip_line",
-        "ko": "어깨 너머 시선과 허리/골반 라인을 강조하는 포즈 프레이밍",
-        "en": "over-the-shoulder pose framing with waist and hip-line emphasis",
+        "ko": "어깨 너머 시선과 뒤 허리·장골·골반에서 바깥 허벅지로 이어지는 윤곽을 함께 담는 포즈 프레이밍",
+        "en": "over-the-shoulder framing that preserves the posterior waist, iliac region, outer hip, and thigh transition",
         "weight": 0.95,
         "tags": [
           "adult",
@@ -159939,6 +160055,7 @@
         "for_any": [
           "human"
         ],
+        "embedding_text": "adult three-quarter-back pose framing with one continuous posterior waist-to-iliac-to-outer-hip-to-thigh contour, distinguished from garment seams and lens distortion",
         "facets": {
           "soft_body_role": [
             "body_emphasis"
@@ -179903,6 +180020,182 @@
     ],
     "anatomical_connection": [
       {
+        "id": "philtral_columns_cupid_bow",
+        "ko": "두 인중 기둥과 중앙 홈이 윗입술의 이중 호로 이어지는 표면 윤곽",
+        "en": "paired philtral columns and central groove descending into a double upper-lip arc",
+        "weight": 0.68,
+        "tags": ["human", "face", "surface_landmark", "lips"],
+        "aliases": ["philtral contour", "Cupid's bow detail", "인중 윤곽"],
+        "keywords": ["philtral columns", "central groove", "upper lip double arc"],
+        "embedding_text": "paired philtral columns, central philtral groove, and a naturally modeled double upper-lip arc under soft facial form light",
+        "for_any": ["human"]
+      },
+      {
+        "id": "jawline_soft_tissue_contour",
+        "ko": "하악골과 피부·연부조직이 함께 만드는 아래 얼굴 윤곽",
+        "en": "lower-face jaw contour jointly shaped by mandible and overlying soft tissue",
+        "weight": 0.58,
+        "tags": ["human", "face", "contour", "jawline"],
+        "aliases": ["jawline contour", "턱선 윤곽"],
+        "keywords": ["lower face contour", "mandible soft tissue", "jaw transition"],
+        "embedding_text": "lower-face jawline contour with bone and overlying soft-tissue ownership separated from makeup shadow or extreme lens distortion",
+        "for_any": ["human"]
+      },
+      {
+        "id": "zygomatic_cheek_plane",
+        "ko": "광대뼈와 볼 연부조직·표정이 함께 만드는 볼의 면 전환",
+        "en": "zygomatic cheek plane shaped by bone, facial fat, muscle, and expression",
+        "weight": 0.56,
+        "tags": ["human", "face", "cheek", "surface_landmark"],
+        "aliases": ["cheekbone plane", "광대 윤곽"],
+        "keywords": ["zygomatic plane", "cheek contour", "expression dependent"],
+        "embedding_text": "zygomatic cheek plane with coherent bone soft-tissue and expression-dependent contour rather than a painted highlight stripe",
+        "for_any": ["human"]
+      },
+      {
+        "id": "nape_hairline_transition",
+        "ko": "목덜미 피부와 뒤 헤어라인이 만나는 자연스러운 전환",
+        "en": "natural transition between the nape skin and posterior hairline",
+        "weight": 0.54,
+        "tags": ["human", "nape", "hairline", "surface_landmark"],
+        "aliases": ["nape line", "목덜미 선"],
+        "keywords": ["posterior hairline", "neck skin transition", "nape contour"],
+        "embedding_text": "natural posterior hairline meeting nape skin with fine flyaway hairs and a coherent neck-to-shoulder transition",
+        "for_any": ["human"]
+      },
+      {
+        "id": "clavicle_supraclavicular_hollow",
+        "ko": "쇄골 경계와 목 아래 가쪽의 얕은 쇄골 위 오목",
+        "en": "readable clavicle boundary beside a shallow lower-lateral supraclavicular hollow",
+        "weight": 0.66,
+        "tags": ["human", "clavicle", "surface_landmark", "upper_torso"],
+        "aliases": ["supraclavicular hollow", "collarbone hollow", "쇄골 위 오목"],
+        "keywords": ["clavicle edge", "lower lateral neck hollow", "soft tissue variation"],
+        "embedding_text": "clavicle edge and shallow lower-lateral supraclavicular depression under restrained raking light with no thinness or health inference",
+        "for_any": ["human"]
+      },
+      {
+        "id": "decolletage_neckline_exposure_boundary",
+        "ko": "낮은 네크라인이 목 아래·쇄골·어깨·위가슴의 노출 영역을 정하는 경계",
+        "en": "low neckline defining the lower-neck, clavicle, shoulder, and upper-chest exposure region",
+        "weight": 0.62,
+        "tags": ["human", "adult", "decolletage", "garment_body_boundary"],
+        "aliases": ["décolletage boundary", "decolletage neckline", "데콜테 경계"],
+        "keywords": ["low neckline", "upper chest region", "shoulder clavicle exposure"],
+        "embedding_text": "adult fashion decolletage where one low garment neckline defines a continuous lower-neck clavicle shoulder and upper-chest region, distinct from cleavage alone",
+        "for_any": ["human"]
+      },
+      {
+        "id": "intermammary_cleavage_boundary",
+        "ko": "성인 가슴의 양쪽 볼륨 사이에 형성되는 중앙 분리 경계",
+        "en": "adult intermammary separation boundary between the two breast volumes",
+        "weight": 0.42,
+        "tags": ["human", "adult", "chest", "direct_body_focus"],
+        "aliases": ["intermammary cleavage", "cleavage boundary", "가슴골 경계"],
+        "keywords": ["central breast separation", "intermammary sulcus", "adult direct request"],
+        "embedding_text": "explicit adult direct-request intermammary separation with coherent bilateral volume and garment support, distinct from broad decolletage",
+        "for_any": ["human"]
+      },
+      {
+        "id": "inframammary_crease_boundary",
+        "ko": "가슴 아래 피부 주름과 하부 유방 경계를 이루는 성인 표면 랜드마크",
+        "en": "adult inframammary skin crease marking the lower breast boundary",
+        "weight": 0.4,
+        "tags": ["human", "adult", "chest", "skin_crease", "direct_body_focus"],
+        "aliases": ["inframammary crease", "inframammary fold", "유방 밑 주름"],
+        "keywords": ["lower breast boundary", "skin crease", "not under-bust measurement level"],
+        "embedding_text": "explicit adult direct-request inframammary skin crease as a lower breast boundary, separated from ISO under-bust measurement level and garment band",
+        "for_any": ["human"]
+      },
+      {
+        "id": "linea_alba_navel_axis",
+        "ko": "복부 중앙선과 배꼽이 정렬되는 앞몸통 표면 축",
+        "en": "anterior abdominal midline aligned through the navel",
+        "weight": 0.54,
+        "tags": ["human", "abdomen", "surface_landmark", "midline"],
+        "aliases": ["abdominal midline", "linea alba axis", "복부 중앙선"],
+        "keywords": ["linea alba", "navel axis", "front torso midline"],
+        "embedding_text": "subtle anterior abdominal midline aligned through the navel, visible through posture and form light rather than painted contrast",
+        "for_any": ["human"]
+      },
+      {
+        "id": "iliac_crest_side_landmark",
+        "ko": "옆 허리 아래에서 만져지는 장골능의 표면 경계",
+        "en": "surface landmark of the iliac crest below the lateral waist",
+        "weight": 0.54,
+        "tags": ["human", "adult", "iliac_crest", "surface_landmark"],
+        "aliases": ["iliac crest contour", "장골능 윤곽"],
+        "keywords": ["highest hip-bone region", "lateral pelvis landmark", "waist hip transition"],
+        "embedding_text": "lateral iliac-crest surface landmark participating in a waist-to-hip contour sequence under a declared side or three-quarter view",
+        "for_any": ["human"]
+      },
+      {
+        "id": "trochanteric_depression_hip_dip",
+        "ko": "장골 부근과 바깥 허벅지 사이 대전자 주변의 정상적인 힙딥",
+        "en": "normal trochanteric depression between the iliac region and outer thigh",
+        "weight": 0.56,
+        "tags": ["human", "adult", "hip_dip", "contour"],
+        "aliases": ["hip dip", "trochanteric depression", "힙딥"],
+        "keywords": ["outer hip depression", "normal anatomical variation", "iliac to thigh transition"],
+        "embedding_text": "normal trochanteric depression within the iliac-to-outer-thigh contour transition, not an ideal, defect, health, or fitness indicator",
+        "for_any": ["human"]
+      },
+      {
+        "id": "posterior_spinal_groove_lumbar_curve",
+        "ko": "등 중앙의 얕은 척추 홈이 요추 곡선으로 이어지는 뒤몸통 표면",
+        "en": "posterior spinal groove continuing into the lumbar curve",
+        "weight": 0.56,
+        "tags": ["human", "adult", "back", "surface_landmark"],
+        "aliases": ["spinal groove", "lumbar back curve", "척추 홈"],
+        "keywords": ["posterior midline", "lower back curve", "back-to-waist transition"],
+        "embedding_text": "posterior spinal groove and lumbar curve under coherent back form light, distinct from a painted shadow stripe or alignment diagnosis",
+        "for_any": ["human"]
+      },
+      {
+        "id": "posterior_psis_dimples_pair",
+        "ko": "허리 중앙선 양쪽 뒤 골반 부근의 얕은 비너스 보조개 한 쌍",
+        "en": "paired shallow posterior dimples flanking the lumbar midline over the PSIS region",
+        "weight": 0.58,
+        "tags": ["human", "adult", "back_dimples", "surface_landmark"],
+        "aliases": ["Dimples of Venus", "PSIS dimples", "비너스 보조개"],
+        "keywords": ["paired lower-back dimples", "posterior iliac region", "no alignment inference"],
+        "embedding_text": "adult posterior lower-back crop with paired shallow PSIS-area dimples flanking one lumbar midline, allowing natural asymmetry without pelvic-alignment claims",
+        "for_any": ["human"]
+      },
+      {
+        "id": "inguinal_skin_crease",
+        "ko": "하복부와 위 허벅지 사이의 성인 서혜부 피부 주름",
+        "en": "adult inguinal skin crease between lower abdomen and upper thigh",
+        "weight": 0.36,
+        "tags": ["human", "adult", "groin", "skin_crease", "direct_body_focus"],
+        "aliases": ["inguinal crease", "groin crease", "서혜부 주름"],
+        "keywords": ["lower abdomen upper thigh crease", "skin flexure line", "not V-line alias"],
+        "embedding_text": "explicit adult direct-request inguinal skin crease between lower abdomen and upper thigh, not assumed to match the inguinal ligament and never routed from ambiguous V-line alone",
+        "for_any": ["human"]
+      },
+      {
+        "id": "infragluteal_crease_boundary",
+        "ko": "둔부 아래와 뒤 허벅지 사이의 성인 피부 주름 경계",
+        "en": "adult infragluteal skin crease between the lower buttock and posterior thigh",
+        "weight": 0.34,
+        "tags": ["human", "adult", "gluteal", "skin_crease", "direct_body_focus"],
+        "aliases": ["infragluteal crease", "gluteal fold", "둔부 아래 주름"],
+        "keywords": ["lower buttock thigh crease", "posterior skin fold", "not muscle border"],
+        "embedding_text": "explicit adult direct-request infragluteal skin crease and posterior thigh transition, described as a surface fold rather than the lower border of gluteus maximus",
+        "for_any": ["human"]
+      },
+      {
+        "id": "calf_to_ankle_taper",
+        "ko": "종아리의 볼륨이 발목으로 점차 가늘어지는 아래다리 윤곽 전환",
+        "en": "lower-leg contour tapering from calf volume into the ankle",
+        "weight": 0.52,
+        "tags": ["human", "leg", "calf", "ankle", "contour_transition"],
+        "aliases": ["calf-to-ankle taper", "ankle line", "종아리 발목 전환"],
+        "keywords": ["calf curve", "ankle taper", "lower leg contour"],
+        "embedding_text": "continuous lower-leg contour moving from calf volume through tendon transitions into a narrower ankle under a side or three-quarter view",
+        "for_any": ["human"]
+      },
+      {
         "id": "tail_base_under_waistband",
         "ko": "tail emerging from the tailbone under the waistband, fabric tailored around the living tail base",
         "en": "tail emerging from the tailbone under the waistband, fabric tailored around the living tail base",
@@ -184194,6 +184487,72 @@
     ],
     "silhouette_proportion": [
       {
+        "id": "natural_hourglass_relation",
+        "ko": "상체와 골반이 상대적으로 좁은 자연 허리 양쪽으로 확장되는 아워글래스 관계",
+        "en": "natural bilateral hourglass relation across upper torso, waist, and hips",
+        "weight": 0.62,
+        "tags": ["human", "adult", "silhouette", "hourglass", "body_relation"],
+        "aliases": ["hourglass silhouette relation", "natural hourglass", "아워글래스 실루엣"],
+        "keywords": ["upper torso waist hips", "bilateral contour", "not corset only"],
+        "embedding_text": "adult bilateral upper-torso waist and hip relation with a comparatively narrower natural waist and smooth transitions, separated from corset belt pose or lens effects",
+        "for_any": ["human"]
+      },
+      {
+        "id": "shoulder_to_waist_taper",
+        "ko": "어깨와 상체 폭이 자연 허리로 점차 좁아지는 양측 윤곽",
+        "en": "bilateral contour tapering from shoulders and upper torso toward the natural waist",
+        "weight": 0.56,
+        "tags": ["human", "adult", "silhouette", "contour_transition"],
+        "aliases": ["shoulder-to-waist taper", "어깨 허리 테이퍼"],
+        "keywords": ["upper torso taper", "natural waist", "bilateral sides"],
+        "embedding_text": "both outer contours taper smoothly from shoulder and upper-torso mass toward the natural waist under a front or restrained three-quarter view",
+        "for_any": ["human"]
+      },
+      {
+        "id": "waist_to_hip_flare",
+        "ko": "자연 허리에서 양쪽 골반으로 부드럽게 퍼지는 윤곽",
+        "en": "smooth bilateral flare from the natural waist into the hips",
+        "weight": 0.58,
+        "tags": ["human", "adult", "silhouette", "waist", "hips"],
+        "aliases": ["waist-to-hip flare", "허리 골반 플레어"],
+        "keywords": ["natural waist", "bilateral hip expansion", "smooth transition"],
+        "embedding_text": "smooth bilateral contour widening from the natural waist into the hips without a hard corset pinch or garment seam substitute",
+        "for_any": ["human"]
+      },
+      {
+        "id": "hip_to_outer_thigh_transition",
+        "ko": "바깥 골반의 곡선이 바깥 허벅지 윤곽으로 이어지는 전환",
+        "en": "outer hip contour continuing into the outer thigh",
+        "weight": 0.56,
+        "tags": ["human", "adult", "silhouette", "hip", "thigh"],
+        "aliases": ["hip-to-thigh transition", "골반 허벅지 전환"],
+        "keywords": ["outer hip", "outer thigh", "continuous contour"],
+        "embedding_text": "continuous side or three-quarter outer contour from hip expansion through any normal trochanteric depression into the outer thigh",
+        "for_any": ["human"]
+      },
+      {
+        "id": "back_to_waist_curve",
+        "ko": "뒤몸통의 등선이 요추를 지나 자연 허리로 이어지는 곡선",
+        "en": "posterior back contour transitioning through the lumbar region into the natural waist",
+        "weight": 0.52,
+        "tags": ["human", "adult", "silhouette", "back", "waist"],
+        "aliases": ["back-to-waist curve", "등 허리 곡선"],
+        "keywords": ["posterior back contour", "lumbar transition", "natural waist"],
+        "embedding_text": "three-quarter or side posterior contour moving from the back through the lumbar curve into the natural waist with coherent posture and form light",
+        "for_any": ["human"]
+      },
+      {
+        "id": "waist_to_glute_transition",
+        "ko": "뒤 허리와 골반의 곡선이 둔부 볼륨으로 이어지는 전환",
+        "en": "posterior waist and pelvis contour transitioning into gluteal volume",
+        "weight": 0.46,
+        "tags": ["human", "adult", "silhouette", "posterior", "direct_body_focus"],
+        "aliases": ["waist-to-glute transition", "허리 둔부 전환"],
+        "keywords": ["posterior waist", "pelvis curve", "gluteal transition"],
+        "embedding_text": "explicit adult posterior waist-to-pelvis-to-glute contour relation under a side or three-quarter-back view, with garment pressure distinguished from body form",
+        "for_any": ["human"]
+      },
+      {
         "id": "dropped_low_waistline",
         "ko": "드롭된 로우 웨이스트라인",
         "en": "dropped low waistline",
@@ -187333,8 +187692,8 @@
       },
       {
         "id": "contrapposto_full_body",
-        "ko": "클린한 전신 콘트라포스토 포즈",
-        "en": "clean full-body contrapposto pose",
+        "ko": "한쪽 지지 다리와 이완된 반대 다리, 골반·어깨의 대응 경사가 읽히는 전신 콘트라포스토",
+        "en": "full-body contrapposto with one loaded support leg, one relaxed free leg, and opposed pelvis-shoulder tilt",
         "weight": 0.9,
         "tags": [
           "human",
@@ -187342,13 +187701,17 @@
           "editorial",
           "narrative_safe"
         ],
-        "embedding_text": "clean full-body contrapposto pose, fashion editorial posture without fetish framing",
+        "embedding_text": "head-to-feet contrapposto with most weight on one straight support leg, the opposite leg relaxed or bent, counter-tilted pelvis and shoulders, and a balanced head position",
         "aliases": [
-          "contrapposto"
+          "contrapposto",
+          "contrapposto stance",
+          "콘트라포스토"
         ],
         "keywords": [
-          "full body",
-          "contrapposto"
+          "loaded support leg",
+          "relaxed free leg",
+          "counter-tilted pelvis shoulders",
+          "full body"
         ],
         "facets": {
           "safety_tier": [
@@ -187838,8 +188201,8 @@
       },
       {
         "id": "editorial_s_curve_pose",
-        "ko": "클린한 에디토리얼 S-커브 스탠딩 포즈",
-        "en": "clean editorial S-curve standing pose",
+        "ko": "몸의 한 평면에서 연속된 S 리듬을 만드는 에디토리얼 스탠딩 포즈",
+        "en": "editorial standing pose creating a continuous planar S rhythm through the body",
         "weight": 0.72,
         "tags": [
           "human",
@@ -187847,13 +188210,15 @@
           "editorial",
           "narrative_safe"
         ],
-        "embedding_text": "clean editorial S-curve standing pose without body-first framing",
+        "embedding_text": "editorial standing pose with a continuous planar S rhythm through head torso hips and limbs, distinct from contrapposto load-path proof and Hogarthian three-dimensional serpentine composition",
         "aliases": [
-          "editorial pose"
+          "editorial S-curve pose",
+          "S-curve pose"
         ],
         "keywords": [
-          "editorial",
-          "standing"
+          "planar S rhythm",
+          "editorial standing",
+          "body flow"
         ],
         "facets": {
           "safety_tier": [

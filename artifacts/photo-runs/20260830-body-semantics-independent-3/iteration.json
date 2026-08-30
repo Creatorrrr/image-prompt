@@ -1,0 +1,233 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "e27e2dd816506ba148a9b775458897d5f6334273",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Prior researched female-body visual terms were to be encoded as observable candidate-pack semantics and tested by three independent agents using one supplied facial-appearance reference in unrelated complex concepts."
+  },
+  "evidence": [
+    {
+      "id": "e-source-thread",
+      "kind": "source-observation",
+      "claim": "The referenced research conversation separates anatomical landmarks, fashion boundaries, silhouette transitions, classical composition lines, and body-bounded negative space.",
+      "artifact": "chatgpt-conversation://6a93eaf8-dc68-83ee-acb7-f1c5169dea13"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied 1086x1448 JPEG was inspected and used only as a facial-appearance reference.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Twelve approved evidence rows bind anatomical, museum, standards, photographic-perception, and body-value boundaries to concrete candidates and limitations.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl ids=body_semantics_*"
+    },
+    {
+      "id": "e-protocol",
+      "kind": "measurement",
+      "claim": "Three arms shared only immutable request and reference inputs, used distinct seeds and domains, froze authorial cores before pack inspection, and did not read sibling artifacts.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/experiment_protocol.json plus per-arm core hashes"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All photo pipeline tests and focused index, retrieval, scene, and body-semantics checks passed.",
+      "artifact": "python -m unittest discover -s tests -p test_photo_*.py -v => 176 tests OK in 1091.491s; candidate pack 6/6; holdout 22/22; scene audit 112/112"
+    },
+    {
+      "id": "e-prompt-arm1",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 1 composed and runtime requests passed while profile surfacing remained candidly limited to candidate-level adoption and an authorial probe.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-1-urban/composed_prompt_audit.json and runtime_request_audit.json"
+    },
+    {
+      "id": "e-prompt-arm2",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 2 composed and both runtime requests passed with three post-core visual profiles bound to explicit evidence.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/composed_prompt_audit.json and runtime request audits"
+    },
+    {
+      "id": "e-prompt-arm3",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 3 composed and both runtime requests passed with philtral and neutral silhouette profiles bound to explicit evidence.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-3-speculative/composed_prompt_audit.json and runtime request audits"
+    },
+    {
+      "id": "e-render-arm1",
+      "kind": "render-observation",
+      "claim": "The urban concept and facial appearance survived, but all three tested semantic units failed strict pixel inspection after one repair.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-1-urban/pixel_review.json image_sha256=e1349d7c0576ae68f2ecc8732b2c1bf472c11b1a27a52eee6f8ff17ef92331eb"
+    },
+    {
+      "id": "e-render-arm2",
+      "kind": "render-observation",
+      "claim": "The three-dimensional Hogarth serpentine profile passed all four gates, while garment ownership prevented strict waist-hip and hourglass qualification.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-2-heritage/pixel_review.json image_sha256=09c85691f047420937d08a70f84870e71f0a562b6c9c0cc74b995e78736aa2a9"
+    },
+    {
+      "id": "e-render-arm3",
+      "kind": "render-observation",
+      "claim": "Seven of nine hard gates passed, but thumbnail upper-lip topology and bilateral silhouette visibility remained unresolved after one repair.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/arm-3-speculative/pixel_review.json image_sha256=ce0d4b5581298025999d9b36d157d935c9f84a73dea9ae1cf512c21c5abe8edc"
+    },
+    {
+      "id": "e-coordinator-review",
+      "kind": "render-observation",
+      "claim": "The coordinator independently inspected all three final images at original resolution and agreed with the arm-level success and failure boundaries.",
+      "artifact": "artifacts/photo-runs/20260830-body-semantics-independent-3/coordinator_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A selected body-aesthetic term must resolve to observable geometry, ownership, camera or pose conditions, rejected substitutes, and pixel gates that remain legible inside unrelated complex scenes.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-components-not-labels",
+        "statement": "Named aesthetics are represented by visible component relations and false-substitute exclusions rather than aliases alone.",
+        "evidence_ids": ["e-source-thread", "e-research", "e-package"],
+        "causal_controls": ["component groups", "evidence fields", "render gates", "reject substitutes"]
+      },
+      {
+        "id": "body-value-neutrality",
+        "statement": "Visible geometry does not authorize health, weight, body-fat, fertility, age, gender, attractiveness, or personal-value inference.",
+        "evidence_ids": ["e-research", "e-package"],
+        "causal_controls": ["neutral definitions", "request-conditioned appeal", "negative inference boundaries"]
+      },
+      {
+        "id": "reference-role-boundary",
+        "statement": "The supplied image controls facial appearance only while person identity, body, clothing, pose, scene, and story remain original.",
+        "evidence_ids": ["e-reference", "e-render-arm1", "e-render-arm2", "e-render-arm3"],
+        "causal_controls": ["reference hash", "identity edit role", "non-biometric review language"]
+      },
+      {
+        "id": "prepack-independence",
+        "statement": "Each randomized concept and authorial core is frozen before candidate-pack inspection and cannot borrow sibling-arm artifacts.",
+        "evidence_ids": ["e-protocol", "e-prompt-arm1", "e-prompt-arm2", "e-prompt-arm3"],
+        "causal_controls": ["separate envelopes", "distinct seeds", "core hashes", "isolated output directories"]
+      }
+    ],
+    "flexible_dimensions": ["randomized concept", "wardrobe", "setting", "lighting", "camera", "supporting props", "color palette"]
+  },
+  "mismatches": [
+    {
+      "id": "m-arm1-occlusion",
+      "scale": "regional",
+      "axis": "pose and body-bounded negative-space visibility",
+      "source_state": "Counter-tilted pelvis and shoulders plus a continuous arm-waist background triangle were required in the prompt.",
+      "render_state": "The city plan hid the pelvis and filled the arm-waist opening; the shoulders remained nearly level.",
+      "evidence_ids": ["e-render-arm1", "e-coordinator-review"]
+    },
+    {
+      "id": "m-arm2-ownership",
+      "scale": "regional",
+      "axis": "anatomical contour versus garment construction",
+      "source_state": "Natural waist-hip landmarks and silhouette were to remain separable from coat and belt construction.",
+      "render_state": "The opaque tailored coat and belt remained the dominant visible causes of the contour.",
+      "evidence_ids": ["e-render-arm2", "e-coordinator-review"]
+    },
+    {
+      "id": "m-arm3-scale-occlusion",
+      "scale": "local",
+      "axis": "thumbnail lip topography and bilateral silhouette",
+      "source_state": "The groove-to-upper-lip arc transition and both torso-waist-hip contours were required to survive review.",
+      "render_state": "The lip relation survived only at native scale and a near arm obscured one silhouette side.",
+      "evidence_ids": ["e-render-arm3", "e-coordinator-review"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-profile-surfacing",
+      "stage": "representation",
+      "statement": "Indirect authorial wording can correctly remain advisory, but may fail to surface a newly added exact profile even when the agent later recognizes a fitting visual relation.",
+      "evidence_ids": ["e-prompt-arm1", "e-package"],
+      "falsifier": "Unrelated held-out cores consistently surface the relevant new candidate or profile without exact labels and without false-positive hard obligations."
+    },
+    {
+      "id": "h-occlusion-budget",
+      "stage": "prompt-interaction",
+      "statement": "Props, arms, and garments can satisfy the scene action while simultaneously hiding the body relationship, so semantic evidence needs an explicit occlusion budget at composition time.",
+      "evidence_ids": ["e-render-arm1", "e-render-arm2", "e-render-arm3"],
+      "falsifier": "Held-out renders with equally complex interactions preserve every required body boundary without reserving unoccluded contour space."
+    },
+    {
+      "id": "h-minimum-pixel-scale",
+      "stage": "generator-response",
+      "statement": "Small surface landmarks can be anatomically present at native scale while failing the intended thumbnail contract unless a minimum landmark pixel scale is reserved.",
+      "evidence_ids": ["e-render-arm3", "e-coordinator-review"],
+      "falsifier": "Multiple held-out head-to-knees scenes reliably preserve the full philtrum-to-upper-lip topology at thumbnail scale without a tighter crop or larger face."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "test"],
+    "general_rule": "Encode body semantics as componentized observable relations with explicit ownership, view and pose conditions, request-conditioned adult or appeal gates, rejected substitutes, and thumbnail/native pixel checks; ambiguous shorthand stays fail-closed.",
+    "generalization_basis": "The data separates anatomical landmarks, garment boundaries, silhouette transitions, classical pose and composition, and camera-dependent negative space so each can transfer across unrelated scenes without importing one motivating story.",
+    "hypothesis_ids": ["h-profile-surfacing", "h-occlusion-budget", "h-minimum-pixel-scale"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "tests/test_photo_body_aesthetic_semantics.py",
+      "tests/test_photo_visual_obligations.py",
+      "tests/test_photo_authorial_core_v5.py",
+      "tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt-arm1", "e-prompt-arm2", "e-prompt-arm3"]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": ["e-render-arm1", "e-render-arm2", "e-render-arm3", "e-coordinator-review"]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "urban-rain-atlas",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": ["contrapposto", "body-bounded negative space", "planar waving line"],
+        "evidence_ids": ["e-render-arm1"]
+      },
+      {
+        "id": "cloud-forest-calibration",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["serpentine depth line", "lateral waist-hip transition", "hourglass silhouette"],
+        "evidence_ids": ["e-render-arm2"]
+      },
+      {
+        "id": "lunar-storm-cabinet",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["philtral contour", "hourglass silhouette"],
+        "evidence_ids": ["e-render-arm3"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The implementation is structurally and prompt-level sound and one unrelated semantic profile fully passed pixels, but every arm retained at least one strict render-gate failure after its allowed repair. Render-fidelity promotion and user-aesthetic claims are therefore withheld.",
+    "evidence_ids": ["e-package", "e-prompt-arm1", "e-prompt-arm2", "e-prompt-arm3", "e-render-arm1", "e-render-arm2", "e-render-arm3", "e-coordinator-review"]
+  }
+}

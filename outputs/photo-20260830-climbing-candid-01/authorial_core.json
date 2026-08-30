@@ -1,0 +1,129 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 흰색 크롭티 위에 회색 후드티와 검정 데님 바지 실내 클라이밍장 벤치에 앉아서 클라이밍화를 고쳐 신는 kpop 아이돌 느낌의 20대 초반 한국 여성 필름 그레인과 아이폰으로 누가 몰래 찍은 느낌의 일상적인 사진 프롬프트 작성하고 이미지 생성해줘.",
+  "interpreted_intent": "A casual, off-guard iPhone-style photograph of a stylish but non-specific young adult Korean woman pausing to refit a climbing shoe during an ordinary indoor bouldering session.",
+  "subject": "An unmistakably adult Korean woman in her early twenties with polished contemporary pop-star styling and an original, non-specific appearance.",
+  "setting": "A lived-in indoor bouldering gym, centered on a bench near climbing walls and everyday gear.",
+  "event": "She sits on the bench, leans forward, and readjusts and fastens one climbing shoe.",
+  "visual_priorities": [
+    "The shoe-adjusting action and layered white, gray, and black outfit read clearly at first glance.",
+    "The image feels like an imperfect, spontaneous iPhone snapshot with film grain rather than a posed editorial shoot."
+  ],
+  "baseline_prompt_en": "Create a natural, everyday candid photograph inside a lived-in indoor bouldering gym. An unmistakably adult Korean woman in her early twenties, with polished young-pop-star styling, sits on a climbing-gym bench. She wears a gray hoodie loosely layered over a visible white cropped T-shirt with black denim jeans. Seated on a climbing-gym bench, leaning forward to readjust and fasten one climbing shoe, she lets the other foot rest casually on the rubber flooring. Capture an unposed everyday snapshot with polished young-pop-star styling, as though a nearby friend noticed the moment before she looked up. Use the imperfect look of a handheld iPhone snapshot: slightly tilted framing, available mixed gym light, gentle motion softness, realistic skin texture, muted indoor colors, subtle film grain and an off-guard, quietly observed candid mood. Climbing walls, chalk marks, rental cubbies, and scattered gear remain softly recognizable in the background.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete_scene_request",
+      "source_text": "흰색 크롭티 위에 회색 후드티와 검정 데님 바지 실내 클라이밍장 벤치에 앉아서 클라이밍화를 고쳐 신는 kpop 아이돌 느낌의 20대 초반 한국 여성 필름 그레인과 아이폰으로 누가 몰래 찍은 느낌의 일상적인 사진 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "request_context",
+      "resolution": "A prompt-and-image request for an ordinary candid climbing-gym moment with the specified adult subject, clothing, action, smartphone capture, and grainy everyday aesthetic.",
+      "sources": []
+    },
+    {
+      "term": "kpop 아이돌 느낌",
+      "source_text": "kpop 아이돌 느낌의",
+      "basis": "agent_general_knowledge",
+      "resolution": "Polished contemporary Korean pop-star-inspired grooming and styling without depicting any named or identifiable real person.",
+      "sources": []
+    },
+    {
+      "term": "누가 몰래 찍은 느낌",
+      "source_text": "누가 몰래 찍은 느낌의 일상적인 사진",
+      "basis": "request_context",
+      "resolution": "An off-guard, unposed nearby-observer snapshot that feels spontaneous and quietly noticed rather than formally staged.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "kpop 아이돌 느낌의 20대 초반 한국 여성 필름 그레인과 아이폰으로 누가 몰래 찍은 느낌의 일상적인 사진",
+        "dimension": "concept",
+        "prompt_evidence": "an unposed everyday snapshot with polished young-pop-star styling"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "20대 초반 한국 여성",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult Korean woman"
+      },
+      {
+        "anchor_id": "core_age",
+        "source_text": "20대 초반",
+        "dimension": "age",
+        "prompt_evidence": "in her early twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "벤치에 앉아서 클라이밍화를 고쳐 신는",
+        "dimension": "event",
+        "prompt_evidence": "leaning forward to readjust and fasten one climbing shoe"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "벤치에 앉아서",
+        "dimension": "pose",
+        "prompt_evidence": "sits on a climbing-gym bench"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "실내 클라이밍장",
+        "dimension": "setting",
+        "prompt_evidence": "inside a lived-in indoor bouldering gym"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "흰색 크롭티 위에 회색 후드티와 검정 데님 바지",
+        "dimension": "appearance",
+        "prompt_evidence": "a gray hoodie loosely layered over a visible white cropped T-shirt with black denim jeans"
+      },
+      {
+        "anchor_id": "core_camera",
+        "source_text": "아이폰으로",
+        "dimension": "camera",
+        "prompt_evidence": "the imperfect look of a handheld iPhone snapshot"
+      },
+      {
+        "anchor_id": "core_style",
+        "source_text": "필름 그레인과 아이폰으로 누가 몰래 찍은 느낌의 일상적인 사진",
+        "dimension": "style",
+        "prompt_evidence": "subtle film grain and an off-guard, quietly observed candid mood"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "age",
+      "event",
+      "pose",
+      "setting",
+      "appearance",
+      "camera",
+      "style"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "expression"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "casual candid smartphone photography",
+    "family": "off-guard everyday climbing-gym snapshot",
+    "evidence": [
+      "imperfect handheld framing with available indoor light",
+      "subtle film grain and realistic unretouched texture"
+    ]
+  },
+  "variation_key": "climbing-bench-iphone-candid-a"
+}

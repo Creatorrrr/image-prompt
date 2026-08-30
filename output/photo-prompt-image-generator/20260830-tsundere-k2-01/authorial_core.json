@@ -1,0 +1,150 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 츤데레 표정 네코미미 메이드복 k2 소총 카메라를 향해 조준 도시 전쟁터 가로 비율 프롬프트 작성하고 이미지 생성해줘.",
+  "interpreted_intent": "A photorealistic horizontal urban-war portrait using the supplied adult portrait as appearance reference: a cat-eared maid visibly performs a guarded, prickly-but-protective response toward the same camera-viewer while aiming a recognizable K2 rifle directly through the lens.",
+  "subject": "An unmistakably adult Korean woman matching the supplied portrait, wearing black cat ears and a practical black-and-white maid uniform.",
+  "setting": "A shattered modern city street during an active urban battle.",
+  "event": "She aims a recognizable K2 rifle directly through the camera while ordering the same viewer behind cover and physically shielding them from collapsing debris.",
+  "visual_priorities": [
+    "The reference-derived adult face remains clear and recognizable despite the rifle's strong foreshortening.",
+    "The outward irritation, involuntary affectionate leak, direct K2 aim, and already-visible protective consequence read together in one horizontal frame."
+  ],
+  "baseline_prompt_en": "Create a cinematic horizontal 16:9 war photograph of an unmistakably adult Korean woman matching the supplied portrait, preserving the same oval face, warm brown eyes, and long dark wavy hair. She wears black cat ears and a black-and-white combat-ready maid dress with a high neckline, apron, and practical boots. In a shattered modern city street, as collapsing masonry erupts behind her, she braces a recognizable Republic of Korea K2 rifle. The same camera-viewer is her clear relationship target. Brows knitted and lips pressed into an irritated pout, she scolds the same camera-viewer to stay behind cover while keeping the K2 rifle aimed directly through the lens. A blush across her cheeks and a brief softness in her eyes betray protective affection. Her shoulders tense as she shields the viewer, and the camera-viewpoint is now low and safely tucked behind a concrete barrier. Every gaze, warning, and protective movement addresses that same camera-viewer. Frame her from the knees up with the rifle foreshortened toward the lens and her face unobstructed. Use smoky daylight, orange fires, drifting dust, crisp skin texture, realistic fabric, and documentary-cinematic depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complete scene request",
+      "source_text": "츤데레 표정 네코미미 메이드복 k2 소총 카메라를 향해 조준 도시 전쟁터 가로 비율 프롬프트 작성하고 이미지 생성해줘.",
+      "basis": "request_context",
+      "resolution": "A horizontal photorealistic image of the referenced adult woman in cat-ear maid attire on an urban battlefield, aiming a K2 rifle directly at the camera; the named expression is realized as outward irritation contrasted with a protective-affection leak toward that same viewer.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [
+    "츤데레"
+  ],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "츤데레 표정",
+        "dimension": "concept",
+        "prompt_evidence": "Brows knitted and lips pressed into an irritated pout"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "네코미미 메이드복",
+        "dimension": "subject",
+        "prompt_evidence": "black cat ears and a black-and-white combat-ready maid dress"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "k2 소총 카메라를 향해 조준",
+        "dimension": "event",
+        "prompt_evidence": "keeping the K2 rifle aimed directly through the lens"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "츤데레 표정",
+        "dimension": "character_response",
+        "prompt_evidence": "A blush across her cheeks and a brief softness in her eyes betray protective affection"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "도시 전쟁터",
+        "dimension": "setting",
+        "prompt_evidence": "a shattered modern city street"
+      },
+      {
+        "anchor_id": "core_framing",
+        "source_text": "가로 비율",
+        "dimension": "framing",
+        "prompt_evidence": "a cinematic horizontal 16:9 war photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "character_response",
+      "setting",
+      "framing"
+    ],
+    "open_dimensions": [
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "tsundere_camera_viewer_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "axes": {
+        "surface_affect": "irritated scolding",
+        "underlying_affiliation": "protective affection",
+        "relationship_target": "the same camera-viewer",
+        "primary_action": "orders the viewer behind cover while keeping the K2 rifle aimed directly through the lens",
+        "affect_leak_timing": "during the warning",
+        "affect_leak_channels": [
+          "cheek blush"
+        ],
+        "event_phase": "the viewer has just reached cover"
+      },
+      "relations": [
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "underlying_affiliation"
+        },
+        {
+          "operator": "same_target",
+          "members": [
+            "relationship_target",
+            "primary_action",
+            "underlying_affiliation",
+            "immediate_consequence"
+          ]
+        },
+        {
+          "operator": "temporal_order",
+          "first": "primary_action",
+          "then": "affect_leak_timing"
+        }
+      ],
+      "evidence": {
+        "actor_phrase": "an unmistakably adult Korean woman matching the supplied portrait",
+        "baseline_phrase": "Brows knitted and lips pressed into an irritated pout",
+        "trigger_phrase": "as collapsing masonry erupts behind her",
+        "target_phrase": "The same camera-viewer is her clear relationship target",
+        "primary_action_phrase": "she scolds the same camera-viewer to stay behind cover while keeping the K2 rifle aimed directly through the lens",
+        "affective_leak_phrase": "A blush across her cheeks and a brief softness in her eyes betray protective affection",
+        "visible_response_phrase": "Her shoulders tense as she shields the viewer",
+        "immediate_consequence_phrase": "the camera-viewpoint is now low and safely tucked behind a concrete barrier",
+        "continuity_phrase": "Every gaze, warning, and protective movement addresses that same camera-viewer"
+      },
+      "affected_dimensions": [
+        "character_response"
+      ]
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic conflict editorial photography",
+    "family": "photorealistic first-person urban battlefield portrait",
+    "evidence": [
+      "smoky daylight and orange firelight",
+      "wide low-angle documentary composition"
+    ]
+  },
+  "variation_key": "tsundere-k2-urban-16x9-v1"
+}

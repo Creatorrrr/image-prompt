@@ -426,19 +426,19 @@ class PhotoVisualObligationTests(unittest.TestCase):
         )
         obligation = visual["obligations"][0]
         self.assertIn("actual upper inner-thigh contours", obligation["composition_instruction"])
-        self.assertIn("legs remain adducted", obligation["composition_instruction"])
+        self.assertIn("both feet touch or nearly touch", obligation["composition_instruction"])
         self.assertEqual(
             obligation["prompt_binding"]["required_evidence_fields"],
             [
                 "close_leg_geometry_phrase",
                 "inner_thigh_boundary_phrase",
                 "negative_space_phrase",
-                "appeal_emphasis_phrase",
                 "false_gap_exclusion_phrase",
                 "thumbnail_crop_phrase",
             ],
         )
         self.assertIn("wide_stance_space", obligation["reject_substitutes"])
+        self.assertIn("crossed_leg_accidental_opening", obligation["reject_substitutes"])
         self.assertIn("skirt_or_coat_opening", obligation["reject_substitutes"])
         self.assertEqual(
             {gate["id"] for gate in obligation["render_gates"]},

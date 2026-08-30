@@ -1,0 +1,140 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "최소한도 수정으로 이미지를 생성해줘.",
+  "interpreted_intent": "Retry the prior beach-fashion image with the smallest semantic change: replace use of the attached portrait as an appearance reference with an original clearly adult model, while preserving the bikini, beach, natural thigh-gap geometry, low rear camera position, sunlight, and back-view composition.",
+  "subject": "A clearly adult original woman in her mid-twenties with long dark wavy hair, cast independently of the attached portrait.",
+  "setting": "A bright ocean shoreline with pale sand, gentle surf, and warm late-afternoon sun.",
+  "event": "She stands barefoot at the waterline with her back toward the camera and a slight head turn toward the horizon.",
+  "visual_priorities": [
+    "Preserve the prior bikini beach scene, natural inner-thigh opening, low rear camera position, warm sunlight, and clear back-view composition.",
+    "Make the sole semantic change an original adult fashion-model casting rather than portrait-derived appearance."
+  ],
+  "baseline_prompt_en": "Create a photorealistic mainstream swimwear campaign featuring a clearly adult original woman in her mid-twenties wearing a deep-cobalt bikini. The casting is an original adult fashion model. She stands barefoot at a bright ocean waterline with her back toward the camera, her body remaining a clear rear view as she turns her head slightly toward the horizon. Frame her full figure from a low camera position behind her at knee height. Her legs stay close and softly adducted so the actual upper inner-thigh contours create a small patch of visible beach between them, producing a visible thigh gap with believable anatomy. Warm late-afternoon sunlight outlines her long dark wavy hair, shoulders, and calves; gentle surf, pale sand, and a clean horizon complete the serene coastal setting. Keep the result polished and realistic, with natural proportions, authentic skin texture, and balanced emphasis on the overall swimwear silhouette and sunlit atmosphere.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "최소한도 수정으로 이미지를 생성해줘.",
+      "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+      "basis": "request_context",
+      "resolution": "Preserve every prior locked scene dimension except reference use, changing only the portrait-derived casting to an original clearly adult fashion model before generating again.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a photorealistic mainstream swimwear campaign"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "a clearly adult original woman in her mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "event",
+        "prompt_evidence": "She stands barefoot at a bright ocean waterline"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "setting",
+        "prompt_evidence": "gentle surf, pale sand, and a clean horizon"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "appearance",
+        "prompt_evidence": "wearing a deep-cobalt bikini"
+      },
+      {
+        "anchor_id": "core_body_geometry",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "body_geometry",
+        "prompt_evidence": "a visible thigh gap with believable anatomy"
+      },
+      {
+        "anchor_id": "core_camera",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "camera",
+        "prompt_evidence": "a low camera position behind her at knee height"
+      },
+      {
+        "anchor_id": "core_lighting",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "lighting",
+        "prompt_evidence": "Warm late-afternoon sunlight"
+      },
+      {
+        "anchor_id": "core_composition",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "composition",
+        "prompt_evidence": "her body remaining a clear rear view"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "최소한도 수정으로 이미지를 생성해줘.",
+        "dimension": "reference_use",
+        "prompt_evidence": "The casting is an original adult fashion model"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "appearance",
+      "body_geometry",
+      "camera",
+      "lighting",
+      "composition",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "pose",
+      "color",
+      "material",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": {
+    "parent_request_id": "20260830-01a04e62-beach-backview",
+    "parent_core_sha256": "63840440aaac843dc27146ba029632d15cbfd3465a064dd28a8e16656045bab1",
+    "preserved_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "appearance",
+      "body_geometry",
+      "camera",
+      "lighting",
+      "composition"
+    ],
+    "allowed_changes": [
+      "reference_use"
+    ]
+  },
+  "style": {
+    "domain": "mainstream commercial swimwear photography",
+    "family": "sunlit natural-luxury beach campaign",
+    "evidence": [
+      "realistic skin and wind-shaped hair texture",
+      "warm rim light and a clean ocean horizon"
+    ]
+  },
+  "variation_key": "beach-backview-minimal-retry-v1"
+}
