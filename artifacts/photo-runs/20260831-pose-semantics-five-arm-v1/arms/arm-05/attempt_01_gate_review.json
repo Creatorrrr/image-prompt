@@ -1,0 +1,60 @@
+{
+  "schema_version": "photo-pose-attempt-gate-review/v1",
+  "arm_id": "arm-05",
+  "attempt": 1,
+  "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-05/image-attempt-01.png",
+  "image_sha256": "2f8ffa8368b8107551f81d69254b3caab8d40ec963c304f5ec756e6f33335ed9",
+  "dimensions": {
+    "width": 1448,
+    "height": 1086
+  },
+  "gates": [
+    {
+      "id": "vo_body_negative_space_real_boundaries",
+      "status": "fail",
+      "evidence": "The supporting sleeve and side torso meet as one solid blue mass; two separated body contours do not visibly bound an opening."
+    },
+    {
+      "id": "vo_body_negative_space_continuous_background",
+      "status": "fail",
+      "evidence": "Ocean and tide-pool water are visible around the body, but no continuous background patch passes through an elbow-torso opening."
+    },
+    {
+      "id": "vo_body_negative_space_shape_legible",
+      "status": "fail",
+      "evidence": "At full-frame thumbnail scale there is no recognizable void shape enclosed by the supporting arm and torso."
+    },
+    {
+      "id": "vo_body_negative_space_region_specific",
+      "status": "fail",
+      "evidence": "The elbow-torso region is visible, yet it contains clothing rather than the specified body-bounded background region."
+    },
+    {
+      "id": "pose_arm05_elbow_load_path",
+      "status": "pass",
+      "evidence": "The bent right elbow rests on a thick padded stone ledge; its forearm rises to the gloved hand supporting the head, making the load path readable."
+    },
+    {
+      "id": "pose_arm05_single_c_arc",
+      "status": "fail",
+      "evidence": "Head, torso, pelvis, and legs read mainly as a straight diagonal recline rather than one unmistakable same-side C arc."
+    },
+    {
+      "id": "pose_arm05_elbow_torso_void",
+      "status": "fail",
+      "evidence": "The inner forearm, elbow, and torso do not enclose a continuous readable background patch."
+    }
+  ],
+  "retry_authorized": true,
+  "smallest_failed_pose_gate_set": [
+    "vo_body_negative_space_real_boundaries",
+    "vo_body_negative_space_continuous_background",
+    "vo_body_negative_space_shape_legible",
+    "vo_body_negative_space_region_specific",
+    "pose_arm05_single_c_arc",
+    "pose_arm05_elbow_torso_void"
+  ],
+  "passed_gate_lock": [
+    "pose_arm05_elbow_load_path"
+  ]
+}

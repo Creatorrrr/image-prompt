@@ -5551,6 +5551,86 @@
         {"id": "vo_verified_relief_post_event", "review_scale": "both", "description": "Lowering the emergency tool or resuming the safe task makes the display read as after confirmation rather than calm before an unknown outcome."}
       ],
       "reject_substitutes": ["fatigue_without_safety_check", "sadness_or_pain_slump", "generic_calm_beside_alarm", "colleague_only_verification", "checklist_focus_without_visible_check", "neutral_work_posture_without_coordinated_release", "smile_before_status_known", "hidden_state_or_trauma_diagnosis"]
+    },
+    {
+      "id": "figura_serpentinata_spiral_pose",
+      "category": "classical_pose_geometry",
+      "activation": {
+        "exact_terms": ["figura serpentinata", "figura serpentinata pose", "serpentinata pose", "피구라 세르펜티나타", "세르펜티나타 자세"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A full-body spiral pose in which an offset support or lifted free foot initiates a three-dimensional chain of opposed pelvis, ribcage, shoulder, arm, and head directions that remains legible through depth rather than as a flat S silhouette.",
+        "paraphrase_examples": ["한쪽 발의 지지와 굽힌 반대 무릎에서 시작해 골반·흉곽·어깨·머리가 깊이 방향으로 반대 회전하는 나선형 전신 자세", "a raised or offset foot and flexed knee initiating opposed pelvis and shoulder rotation", "the arm crosses or extends around the twist while the head counter-turns and the full figure reads from several directions"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["support_initiator", "segment_opposition", "arm_head_counterturn", "three_dimensional_read"],
+          "groups": [
+            {"id": "support_initiator", "any_terms": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral", "지지 발과 들리거나 비껴난 반대 발"]},
+            {"id": "segment_opposition", "any_terms": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions", "골반과 흉곽 또는 어깨의 반대 회전"]},
+            {"id": "arm_head_counterturn", "any_terms": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction", "팔과 머리가 몸통 비틀림에 대응해 반대 방향을 만듦"]},
+            {"id": "three_dimensional_read", "any_terms": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes", "단축과 겹침으로 읽히는 입체 나선"]}
+          ]
+        },
+        "contrast_examples": ["a flat editorial S-curve with no axial rotation", "contrapposto with counter-tilt but no spiral through depth", "a camera tilt or winding drapery creating the curve while the body stays frontal"]
+      },
+      "concept_candidate": {"concept_terms": ["offset support and free foot", "flexed free knee", "opposed pelvis and ribcage azimuth", "arm around the twist", "head counter-turn", "full-body foreshortened spiral", "depth overlap"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["figura serpentinata"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the full body and both feet readable while one support-to-free-leg offset initiates opposed pelvis, ribcage, shoulder, arm, and head directions; use three-quarter depth, foreshortening, and overlap to make one continuous anatomical spiral rather than a flat S outline.",
+      "required_evidence_fields": ["support_initiator_phrase", "segment_opposition_phrase", "arm_head_counterturn_phrase", "three_dimensional_read_phrase"],
+      "evidence_requirements": {
+        "support_initiator_phrase": {"min_content_words": 5, "must_mention_any": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral"]},
+        "segment_opposition_phrase": {"min_content_words": 5, "must_mention_any": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions"]},
+        "arm_head_counterturn_phrase": {"min_content_words": 5, "must_mention_any": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction"]},
+        "three_dimensional_read_phrase": {"min_content_words": 5, "must_mention_any": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes"]}
+      },
+      "render_gates": [
+        {"id": "vo_serpentinata_support_initiator", "review_scale": "both", "description": "A planted support foot and visibly offset, lifted, or flexed free leg initiate the spiral instead of a symmetrical base."},
+        {"id": "vo_serpentinata_segment_opposition", "review_scale": "both", "description": "Pelvis and ribcage or shoulder planes visibly face different depth directions in one coherent anatomical chain."},
+        {"id": "vo_serpentinata_head_arm_counterturn", "review_scale": "native", "description": "At least one arm carries the torso twist while the head counter-turn remains anatomically coherent and visible."},
+        {"id": "vo_serpentinata_three_dimensional_read", "review_scale": "thumbnail", "description": "The complete figure reads as a three-dimensional spiral through overlap and foreshortening, not merely a flat S contour."}
+      ],
+      "reject_substitutes": ["flat_editorial_s_curve", "contrapposto_without_axial_twist", "hogarth_serpentine_composition_only", "camera_tilt_only", "winding_drapery_only"]
+    },
+    {
+      "id": "tribhanga_three_bend_pose",
+      "category": "classical_pose_geometry",
+      "activation": {
+        "exact_terms": ["tribhanga", "tribhaṅga", "tribhanga pose", "three-bend tribhanga pose", "트리방가", "트리방가 자세"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A full-body three-bend stance organized by an inclined head, a middle torso-and-hip deflection, and a bent-knee lower return whose alternating directions create one rhythmic vertical chain; it is pose geometry rather than a costume, ethnicity, deity, or hand-gesture label.",
+        "paraphrase_examples": ["기울어진 머리, 반대 방향으로 돌출된 골반과 몸통, 굽힌 무릎의 하부 복귀가 교대로 이어지는 삼중 굴곡", "inclined head, jutting hip, and bent knee creating an alternating three-bend rhythm", "head and lower limbs echo one direction while the torso and hip deflect across the vertical axis"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["inclined_head", "opposing_middle_bend", "bent_knee_return", "alternating_three_bend_rhythm"],
+          "groups": [
+            {"id": "inclined_head", "any_terms": ["head inclines away from the vertical axis", "neck and head create the upper bend", "머리와 목의 상부 기울기"]},
+            {"id": "opposing_middle_bend", "any_terms": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend", "몸통과 골반이 중심축을 가로질러 만드는 중간 굴곡"]},
+            {"id": "bent_knee_return", "any_terms": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee", "굽힌 무릎이 하부 선을 되돌림"]},
+            {"id": "alternating_three_bend_rhythm", "any_terms": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain", "머리부터 발끝까지 교대하는 세 굴곡"]}
+          ]
+        },
+        "contrast_examples": ["generic contrapposto with no inclined-head upper bend", "a costume or mudra presented without the three-bend body chain", "a flat S crop that hides the bent knee and feet"]
+      },
+      "concept_candidate": {"concept_terms": ["inclined head", "opposing torso and hip bend", "jutting hip", "one flexed knee", "lower-line return", "alternating three-bend rhythm", "head-to-feet framing"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["tribhanga"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the complete pose from head to feet so the inclined head, opposing middle torso-and-hip bend, and flexed-knee lower return form one alternating three-bend rhythm. Treat the term as body geometry independent of wardrobe, ethnicity, iconography, or hand gesture.",
+      "required_evidence_fields": ["inclined_head_phrase", "opposing_middle_bend_phrase", "bent_knee_return_phrase", "alternating_three_bend_phrase"],
+      "evidence_requirements": {
+        "inclined_head_phrase": {"min_content_words": 4, "must_mention_any": ["head inclines away from the vertical axis", "neck and head create the upper bend"]},
+        "opposing_middle_bend_phrase": {"min_content_words": 5, "must_mention_any": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend"]},
+        "bent_knee_return_phrase": {"min_content_words": 5, "must_mention_any": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee"]},
+        "alternating_three_bend_phrase": {"min_content_words": 5, "must_mention_any": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain"]}
+      },
+      "render_gates": [
+        {"id": "vo_tribhanga_inclined_head", "review_scale": "both", "description": "The head and neck create a visible upper bend rather than remaining vertically neutral."},
+        {"id": "vo_tribhanga_opposing_middle_bend", "review_scale": "thumbnail", "description": "Torso and jutting hip deflect across the vertical axis to form a distinct middle bend."},
+        {"id": "vo_tribhanga_bent_knee_return", "review_scale": "both", "description": "One flexed knee and the lower limbs visibly return the line instead of forming a symmetric stance."},
+        {"id": "vo_tribhanga_full_body_three_bend_read", "review_scale": "thumbnail", "description": "All three alternating bends remain legible together from head through hips to both feet."}
+      ],
+      "reject_substitutes": ["generic_contrapposto", "costume_or_mudra_only", "flat_s_curve_without_three_bends", "symmetrical_bent_knee_pose", "cropped_lower_body"]
     }
   ]
 }

@@ -1,0 +1,80 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently invented, complex photographic test case that uses the attached portrait only as facial-appearance reference and makes an agent-selected pose-semantics variation visibly inspectable in the rendered image.",
+  "subject": "One clearly adult female heritage dancer in a fully opaque ceremonial costume, with facial appearance guided only by the attached portrait reference.",
+  "setting": "A rain-damp 13th-century Kakatiya temple mandapa prepared for a torchlit heritage reenactment.",
+  "event": "The dancer is caught midway through lighting the final brass ceremonial lamp before a carved stone gateway.",
+  "visual_priorities": [
+    "A full-body, both-feet-readable view that makes alternating head-ribcage-hip curvature, axial elongation with relaxed lowered shoulders, and a plantar-flexed trailing lower-limb line visibly judgeable.",
+    "Opaque period-appropriate clothing, wet stone texture, carved heritage architecture, and a clearly legible lamp-lighting event."
+  ],
+  "baseline_prompt_en": "Create a full-body historical-performance photograph in a rain-damp 13th-century Kakatiya temple mandapa during a torchlit heritage reenactment. One clearly adult female heritage dancer, her facial appearance guided only by the attached portrait reference, is caught midway through lighting the final brass lamp before a carved stone gateway. She wears a fully opaque indigo silk sari ensemble with a high-neck blouse, fitted underlayer, long draped panels, and ankle bells. Shape her stance as a readable tribhanga: head, ribcage, and hips offset in alternating lateral curves; keep her spine axially elongated while both shoulders rest low and relaxed. Her weight-bearing foot stays planted as the other leg extends behind in a continuous plantar-flexed line through a pointed foot. Show her entire figure and both unobstructed feet on wet flagstones, with amber flames, rain haze, ceremonial drums, and painted stage banners lining the deep colonnade.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "agent-selected pose-semantics test variation",
+      "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Independently select a heritage-performance concept and test tribhanga as alternating lateral offsets of head, ribcage, and hips; axial elongation as a visibly lengthened spine with relaxed lowered shoulders; and a plantar-flexed lower-limb line as an extended trailing leg continuing through a pointed foot. These are agent-selected test interpretations, not requester definitions.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a rain-damp 13th-century Kakatiya temple mandapa during a torchlit heritage reenactment"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "subject",
+        "prompt_evidence": "One clearly adult female heritage dancer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "caught midway through lighting the final brass lamp"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "facial appearance guided only by the attached portrait reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "historical-scene photography",
+    "family": "rainlit conservation-documentary reenactment",
+    "evidence": [
+      "wet carved stone under practical amber flame light",
+      "documentary full-body clarity within a staged heritage event"
+    ]
+  },
+  "variation_key": "arm-02-agent-selected-tribhanga-axial-elongation-lowered-shoulders-plantar-flexion"
+}

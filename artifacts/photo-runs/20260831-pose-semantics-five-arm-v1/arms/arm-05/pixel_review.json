@@ -1,0 +1,104 @@
+{
+  "schema_version": "photo-pose-semantic-pixel-review/v1",
+  "case_id": "pose-arm-05-propped-c-curve-negative-space",
+  "arm_id": "arm-05",
+  "pack_id": "04cf124135c1a79d",
+  "runtime_prompt_id": "82b8be5bf8a76935",
+  "attempt": 2,
+  "image": {
+    "path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-05/image-attempt-02.png",
+    "sha256": "d88a962c80c44e5ea1d11b568716590fa216685c528073c16b1521b565f522dc",
+    "width": 1448,
+    "height": 1086,
+    "inspection_tool": "view_image",
+    "inspection_detail": "original"
+  },
+  "same_saved_image_for_every_gate": true,
+  "registry_profile_id": "body_bounded_negative_space",
+  "registry_gates": [
+    {
+      "id": "vo_body_negative_space_real_boundaries",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "At native size the raised supporting forearm and bent elbow are visible on the image-right padded ledge, but the blue upper sleeve visually joins the shoulder and side torso as one filled mass; two separated anatomical contours do not form an opening."
+    },
+    {
+      "id": "vo_body_negative_space_continuous_background",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The ocean is visible behind the figure and tide-pool water is visible below her, yet neither passes continuously through the elbow-torso region, which is filled by blue fabric and dark hair."
+    },
+    {
+      "id": "vo_body_negative_space_shape_legible",
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At full-frame thumbnail scale there is no recognizable triangular, oval, or curved void enclosed by the supporting arm and torso; the readable empty areas are environmental margins outside that body region."
+    },
+    {
+      "id": "vo_body_negative_space_region_specific",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The intended image-right bent elbow, inner forearm, shoulder, and adjacent torso are all clearly identifiable at both scales, and the composition does not substitute inner-thigh geometry for the named elbow-torso region."
+    }
+  ],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm05_elbow_load_path",
+      "status": "pass",
+      "evidence": "One bent elbow is visibly planted on a broad padded stone ledge; the forearm rises to the gloved hand supporting her head, and sleeve flattening at the ledge makes the upper-body load path legible."
+    },
+    {
+      "id": "pose_arm05_single_c_arc",
+      "status": "pass",
+      "evidence": "Her head begins at upper right, ribcage and pelvis descend through the center, and both bent legs continue toward the lower-left boots along one same-side sweeping arc without an alternating S reversal."
+    },
+    {
+      "id": "pose_arm05_elbow_torso_void",
+      "status": "fail",
+      "evidence": "The supporting inner forearm, elbow, and side torso do not enclose a continuous background patch; their intervening area is occupied by sleeve fabric, shoulder, and hair."
+    }
+  ],
+  "reject_substitute_checks": [
+    {
+      "substitute": "decorative floating elbow",
+      "observed": false,
+      "evidence": "The elbow has real contact with a stable padded ledge and is not floating."
+    },
+    {
+      "substitute": "camera tilt only",
+      "observed": false,
+      "evidence": "The body itself follows a same-side reclined arc; the reading is not produced solely by a tilted horizon."
+    },
+    {
+      "substitute": "alternating S curve",
+      "observed": false,
+      "evidence": "The head-to-boot path does not reverse direction into alternating curves."
+    },
+    {
+      "substitute": "shadow or garment cutout mistaken for background",
+      "observed": false,
+      "evidence": "No elbow-torso void is credited at all; blue garment and hair occupying that region are explicitly treated as a gate failure."
+    }
+  ],
+  "verdict_rule": "all_registry_and_atomic_gates_pass",
+  "verdict": "fail",
+  "failed_gate_ids": [
+    "vo_body_negative_space_real_boundaries",
+    "vo_body_negative_space_continuous_background",
+    "vo_body_negative_space_shape_legible",
+    "pose_arm05_elbow_torso_void"
+  ],
+  "prompt_presence_used_as_pixel_proof": false,
+  "reference_evaluation": {
+    "role": "facial_appearance_only",
+    "identity_control": false,
+    "biometric_or_same_person_claim": false,
+    "resemblance_judgment": "pending_requesting_user_judgment"
+  },
+  "user_preference": {
+    "status": "pending_requesting_user_judgment",
+    "source": "not_yet_received"
+  },
+  "image_call_count": 2,
+  "additional_retry_allowed": false
+}

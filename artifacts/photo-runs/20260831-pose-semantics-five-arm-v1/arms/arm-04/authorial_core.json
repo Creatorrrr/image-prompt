@@ -1,0 +1,110 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Prepare one independently varied, complex photographic image-generation test case, use the attached portrait only for facial appearance, and make an agent-selected pose-semantic variation visibly testable. Arm-04 interprets that variation as a perched edge-sit with grounded support, crossed ankles forming a narrow believable base, and a relaxed wrist offset; these are agent-selected test meanings, not requester definitions.",
+  "subject": "One clearly adult woman, fully and opaquely clothed, with facial appearance guided by the attached portrait",
+  "setting": "A restored 1930s walnut-and-brass luxury dining car converted into a working marquetry restoration atelier at dawn",
+  "event": "She pauses during hand restoration to inspect a freshly burnished sunburst veneer panel while seated on the edge of a leather tool chest",
+  "visual_priorities": [
+    "The complete seated body and both feet remain unobstructed and readable",
+    "Grounded edge support, the low crossed-ankle base, and the relaxed offset wrist read as distinct visible geometry",
+    "Analog marquetry tools, veneer, shellac, leather, walnut, and brass make the invented atelier event concrete"
+  ],
+  "baseline_prompt_en": "Create a single full-body editorial photograph built around an independently invented 1930s luxury-train marquetry atelier concept. One clearly adult woman whose facial appearance is guided by the attached portrait works inside a restored walnut-and-brass dining car, surrounded by veneer fans, shellac jars, hand planes, cotton polishing cloths, and a sunburst panel on a compact easel. Fully and opaquely dressed in a high-neck teal cotton blouse, charcoal wool trousers, a long leather apron, and closed oxford shoes, she pauses mid-restoration to inspect a burnished sunburst veneer panel. She visibly realizes a perched edge-sit with grounded support, crossed ankles forming a narrow believable base, and a relaxed wrist offset: her pelvis rests on the front edge of a sturdy leather tool chest, her torso balances upright, both shoes remain fully visible and contact the parquet, and her free forearm rests lightly along one thigh while its wrist falls softly outward with loose fingers. Frame head to toe at eye level, with warm task-lamp pools, cool dawn window light, crisp material texture, and unobstructed pose geometry.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉",
+      "source_text": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로",
+      "basis": "request_context",
+      "resolution": "Each arm independently invents a distinct complex concept; arm-04 selects a 1930s luxury-train marquetry restoration atelier.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached image as a facial-appearance reference only; identity control is false and no same-person or biometric conclusion is intended.",
+      "sources": []
+    },
+    {
+      "term": "agent-selected pose-semantic test variation",
+      "source_text": "키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+      "basis": "request_context",
+      "resolution": "For this arm, independently test a supported perch on a furniture edge, ankles crossing low into a narrow physically plausible floor base, and one loose wrist visibly offset from the forearm line. This selection is an agent-authored test variation rather than a requester-supplied definition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로",
+        "dimension": "concept",
+        "prompt_evidence": "an independently invented 1930s luxury-train marquetry atelier concept"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One clearly adult woman"
+      },
+      {
+        "anchor_id": "core_appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "facial appearance is guided by the attached portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "she pauses mid-restoration to inspect a burnished sunburst veneer panel"
+      },
+      {
+        "anchor_id": "core_pose_test",
+        "source_text": "키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "pose",
+        "prompt_evidence": "a perched edge-sit with grounded support, crossed ankles forming a narrow believable base, and a relaxed wrist offset"
+      },
+      {
+        "anchor_id": "core_output",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "format",
+        "prompt_evidence": "a single full-body editorial photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "reference_use",
+      "event",
+      "pose",
+      "format"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "luxury craft editorial photography",
+    "family": "cinematic documentary atelier portrait",
+    "evidence": [
+      "warm task-lamp pools against cool dawn window light",
+      "crisp walnut, brass, veneer, leather, shellac, wool, and cotton textures"
+    ]
+  },
+  "variation_key": "arm-04-agent-selected-supported-edge-perch-crossed-ankles-relaxed-wrist-offset"
+}

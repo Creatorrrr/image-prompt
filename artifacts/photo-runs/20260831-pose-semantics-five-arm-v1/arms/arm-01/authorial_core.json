@@ -1,0 +1,123 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester wants independent, randomly selected complex photographic concepts that can visibly test whether pose-semantics keywords survive candidate-pack composition and image rendering, using the attached portrait as an appearance reference. Arm-01 independently selects a polar planetary-analogue field-science event and an agent-selected pose interpretation, not a requester-supplied definition.",
+  "subject": "One clearly adult woman planetary field scientist whose facial appearance is guided only by the attached portrait reference.",
+  "setting": "An Antarctic blue-ice meteorite survey field at polar twilight, with a numbered survey flag, foam-lined sample tray, and tripod spectrometer.",
+  "event": "A katabatic gust exposes a dark meteorite while the scientist lowers it with sampling tongs toward the tray amid curling spindrift.",
+  "visual_priorities": [
+    "A continuous full-body serpentine pose with clearly opposed pelvis and thorax directions",
+    "A visibly relaxed offset wrist plus fully readable feet, opaque polar clothing, and field-science action"
+  ],
+  "baseline_prompt_en": "Documentary expedition photograph at polar twilight on an Antarctic blue-ice field. One clearly adult woman planetary field scientist, her facial appearance guided by the attached portrait, wears a fully opaque expedition-red insulated parka zipped to the chin, black bib trousers, thick gloves, gaiters, and polar boots. A katabatic gust exposes a charcoal meteorite beside a numbered flag while she lowers it with long sampling tongs toward a blue foam-lined tray; airborne spindrift ribbons across the ice. Her full-body stance traces a continuous figura serpentinata: weight settles over a bent left leg, the right foot sets diagonally back, her pelvis turns toward the tray, her thorax and shoulders rotate in the opposite direction toward a tripod spectrometer, and her head returns toward the sample. Her free gloved hand hangs beside her hip with a gentle outward relaxed wrist offset. Photograph her full-body, from head to both fully visible boots, with all limbs readable. Low polar sun and faint aurora reflections delineate the twist, fabric volume, ice striations, and flying snow.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex concept and visible keyword validation",
+      "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Create one independent polar planetary-analogue field-science photograph whose pose keywords can be judged directly in the rendered pixels.",
+      "sources": []
+    },
+    {
+      "term": "figura serpentinata",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "agent_general_knowledge",
+      "resolution": "Agent-selected test variation: a continuous counter-turning, S-like full-body spiral led from the weight-bearing leg through pelvis, torso, shoulders, and head.",
+      "sources": []
+    },
+    {
+      "term": "thorax-pelvis opposed rotation",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "agent_general_knowledge",
+      "resolution": "Agent-selected test variation: the pelvis visibly faces the sample tray while the ribcage and shoulder line turn the other way toward the spectrometer.",
+      "sources": []
+    },
+    {
+      "term": "relaxed wrist offset",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "agent_general_knowledge",
+      "resolution": "Agent-selected test variation: the free hand hangs with low muscular tension and a gentle outward wrist deviation from the forearm axis.",
+      "sources": []
+    },
+    {
+      "term": "attached-image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait only as a facial-appearance reference; it does not define personality, identity, or pose.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "an Antarctic blue-ice field"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One clearly adult woman planetary field scientist, her facial appearance guided by the attached portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "event",
+        "prompt_evidence": "A katabatic gust exposes a charcoal meteorite beside a numbered flag while she lowers it with long sampling tongs toward a blue foam-lined tray"
+      },
+      {
+        "anchor_id": "pose_semantics",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "pose",
+        "prompt_evidence": "her pelvis turns toward the tray, her thorax and shoulders rotate in the opposite direction toward a tripod spectrometer"
+      },
+      {
+        "anchor_id": "full_body_readability",
+        "source_text": "잘 반영되었는지 테스트해줘",
+        "dimension": "framing",
+        "prompt_evidence": "Photograph her full-body, from head to both fully visible boots, with all limbs readable"
+      },
+      {
+        "anchor_id": "opaque_field_clothing",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "appearance",
+        "prompt_evidence": "a fully opaque expedition-red insulated parka zipped to the chin, black bib trousers, thick gloves, gaiters, and polar boots"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "pose",
+      "framing",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic polar expedition documentary",
+    "family": "environmental field-science editorial",
+    "evidence": [
+      "wind-carved blue ice and airborne spindrift",
+      "opaque technical polar clothing and active sample-transfer equipment"
+    ]
+  },
+  "variation_key": "arm-01-polar-blue-ice-meteorite-serpentine-pose-v1"
+}

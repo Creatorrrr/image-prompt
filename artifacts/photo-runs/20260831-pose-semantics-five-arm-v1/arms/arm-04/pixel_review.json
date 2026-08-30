@@ -1,0 +1,65 @@
+{
+  "contract_version": "photo-pose-pixel-review/v1",
+  "fixture_schema_version": "photo-pose-semantic-pixel-case/v1",
+  "arm_id": "arm-04",
+  "test_case_id": "pose-arm-04-perched-crossed-support",
+  "verdict_unit": "one_saved_image",
+  "selected_attempt": 2,
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-04/images/attempt-02.png",
+  "image_sha256": "8ff512be2dbf35a07bff01492f74cf705df6178c6491aa7828cc943cf0eea808",
+  "dimensions": {
+    "width": 972,
+    "height": 1619
+  },
+  "inspection": {
+    "tool": "view_image",
+    "detail": "original",
+    "basis": "saved_native_pixels",
+    "prompt_presence_used_as_pixel_proof": false
+  },
+  "registry_gate_ids": [],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm04_perched_support",
+      "fixture_description": "pelvis contacts the front seat edge and a planted foot plus hand or second foot create a readable support path",
+      "status": "pass",
+      "evidence": "The pelvis visibly bears on the front edge of the wooden drawer/tool chest. The palm beside her hip presses the top and both oxford shoes contact the parquet, producing a readable edge-to-hand-and-feet support path.",
+      "reject_substitute_checked": "floating seat contact is absent"
+    },
+    {
+      "id": "pose_arm04_crossed_ankles",
+      "fixture_description": "ankles visibly cross while both feet remain separate and at least one foot is planted",
+      "status": "fail",
+      "evidence": "Both shoes are separate and planted, but their visible ankle openings remain side by side. The trousered lower legs intersect higher at the lower-calf region, so there is no ankle-joint X immediately above the shoes.",
+      "reject_substitute_checked": "crossed calves with uncrossed ankles is present; merged feet are absent"
+    },
+    {
+      "id": "pose_arm04_relaxed_wrist",
+      "fixture_description": "supporting or free wrist stays softly offset with intact joint continuity",
+      "status": "pass",
+      "evidence": "The supporting wrist beside her hip is gently extended from the sleeve into the palm with smooth joint continuity; it reads as a soft offset rather than an extreme broken-wrist kink.",
+      "reject_substitute_checked": "extreme broken-wrist kink is absent"
+    }
+  ],
+  "passed_gate_ids": [
+    "pose_arm04_perched_support",
+    "pose_arm04_relaxed_wrist"
+  ],
+  "failed_gate_ids": [
+    "pose_arm04_crossed_ankles"
+  ],
+  "verdict_rule_applied": "all_registry_and_atomic_gates_pass",
+  "overall_status": "fail",
+  "technical_qualification": "failed_one_atomic_pixel_gate_after_maximum_two_image_calls",
+  "reference_control": {
+    "source_image_role": "facial_appearance_only",
+    "identity_control": false,
+    "same_person_or_biometric_claim": false,
+    "reference_resemblance_status": "pending_requesting_user_judgment"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "preference_status": "pending_requesting_user_judgment",
+    "resemblance_status": "pending_requesting_user_judgment"
+  }
+}

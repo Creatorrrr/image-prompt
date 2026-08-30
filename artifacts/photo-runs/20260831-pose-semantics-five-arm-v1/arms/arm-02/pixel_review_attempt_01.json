@@ -1,0 +1,58 @@
+{
+  "schema_version": "photo-pose-semantic-pixel-review/v1",
+  "case_id": "pose-arm-02-tribhanga-three-bend",
+  "arm_id": "arm-02",
+  "image_path": "image-attempt-01.png",
+  "image_sha256": "45262642c75ae555ac4edeaadb6769fdb4975a3834e6507c1fd4c1a90ce05e2e",
+  "dimensions": {
+    "width": 1024,
+    "height": 1536
+  },
+  "registry_gates": [
+    {
+      "id": "vo_tribhanga_inclined_head",
+      "status": "pass",
+      "visible_evidence": "The crown-to-chin and neck line visibly tilts toward image left instead of continuing vertically above the sternum."
+    },
+    {
+      "id": "vo_tribhanga_opposing_middle_bend",
+      "status": "pass",
+      "visible_evidence": "The reaching upper torso arcs toward the lamp on image right while the waist and hip mass displace toward image left, producing a clear counter-bend across the vertical axis."
+    },
+    {
+      "id": "vo_tribhanga_bent_knee_return",
+      "status": "fail",
+      "visible_evidence": "Both feet are visible, but the opaque central sari pleats conceal the supporting knee joint; foot placement alone cannot prove a visibly flexed knee returning the lower line."
+    },
+    {
+      "id": "vo_tribhanga_full_body_three_bend_read",
+      "status": "fail",
+      "visible_evidence": "The upper and middle bends read together, but the hidden flexed-knee hinge prevents all three alternating bends from being verified in one uninterrupted head-to-feet chain."
+    }
+  ],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm02_axial_elongation",
+      "status": "pass",
+      "visible_evidence": "The crown, sternum, waist, and pelvis retain a long continuous torso axis while the neck remains extended and both shoulder tops sit low rather than shrugged."
+    },
+    {
+      "id": "pose_arm02_plantarflexed_line",
+      "status": "pass",
+      "visible_evidence": "The extended leg on image left ends in a clearly visible ankle and pointed foot whose instep continues the lower-leg direction, with the heel lifted and toes reaching toward the wet floor."
+    }
+  ],
+  "overall_status": "fail",
+  "failed_gate_ids": [
+    "vo_tribhanga_bent_knee_return",
+    "vo_tribhanga_full_body_three_bend_read"
+  ],
+  "retry_authorized": true,
+  "retry_scope": "composition and framing only, to expose the flexed-knee lower return while preserving every passed gate and all locked scene meaning",
+  "prompt_presence_used_as_pixel_proof": false,
+  "user_judgment": {
+    "preference": "pending",
+    "reference_resemblance": "pending",
+    "source": "not_yet_received"
+  }
+}

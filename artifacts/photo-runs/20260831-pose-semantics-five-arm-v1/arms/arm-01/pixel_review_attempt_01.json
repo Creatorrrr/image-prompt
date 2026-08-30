@@ -1,0 +1,69 @@
+{
+  "schema_version": "photo-pose-semantic-pixel-review/v1",
+  "fixture_schema_version": "photo-pose-semantic-pixel-case/v1",
+  "case_id": "pose-arm-01-serpentinata-spiral",
+  "arm_id": "arm-01",
+  "attempt": 1,
+  "pack_id": "d9b29084206c0888",
+  "effective_visual_contract_sha256": "f9bb750710c887053fd4e250a171793a21d05b2bfd691630119e93100e23fccd",
+  "review_source": "independent_coordinator_cross_review",
+  "supersedes_initial_agent_review_sha256": "f5905a7f1e5c345a49f5c1b32920d9f6dcf6a13a2acf6707d1596a7d8d07d457",
+  "evidence_basis": "saved_rendered_pixels",
+  "prompt_presence_alone_accepted": false,
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-01.png",
+    "sha256": "d748140fb0dbefb91ebe8fe82c107456d2dc0b2f06d3ab60707121756bce321c",
+    "width": 1096,
+    "height": 1435,
+    "format": "png"
+  },
+  "registry_gates": [
+    {
+      "id": "vo_serpentinata_support_initiator",
+      "status": "pass",
+      "evidence": "One boot is planted under the body and the opposite boot is visibly lifted and displaced with a flexed knee."
+    },
+    {
+      "id": "vo_serpentinata_segment_opposition",
+      "status": "fail",
+      "evidence": "The bulky parka and near-frontal torso keep the pelvis and ribcage depth azimuths insufficiently separable; the waist does not expose two unambiguous opposing planes."
+    },
+    {
+      "id": "vo_serpentinata_head_arm_counterturn",
+      "status": "pass",
+      "evidence": "The free arm extends toward viewer-right while the head and nose turn toward viewer-left in a coherent counterturn."
+    },
+    {
+      "id": "vo_serpentinata_three_dimensional_read",
+      "status": "fail",
+      "evidence": "At thumbnail scale the figure reads mainly as a planar side lean; limb overlap and foreshortening are not strong enough to establish one unmistakable depth spiral."
+    }
+  ],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm01_thorax_pelvis_azimuth",
+      "description": "ribcage and pelvic planes visibly face different depth directions",
+      "status": "fail",
+      "evidence": "The belt, hips, chest, and shoulders remain close to one frontal plane under the parka, so their different azimuths cannot be confirmed from pixels."
+    },
+    {
+      "id": "pose_arm01_relaxed_wrist",
+      "description": "one wrist makes a small coherent offset from the forearm while fingers remain natural",
+      "status": "pass",
+      "evidence": "The free wrist on viewer-right makes a modest downward-outward offset and the gloved fingers retain a loose natural curve."
+    }
+  ],
+  "technical_verdict": "fail",
+  "failed_gate_ids": [
+    "vo_serpentinata_segment_opposition",
+    "vo_serpentinata_three_dimensional_read",
+    "pose_arm01_thorax_pelvis_azimuth"
+  ],
+  "image_call_count_at_review": 1,
+  "retry_authorized": true,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "preference": "pending_requesting_user",
+    "facial_resemblance": "pending_requesting_user"
+  }
+}

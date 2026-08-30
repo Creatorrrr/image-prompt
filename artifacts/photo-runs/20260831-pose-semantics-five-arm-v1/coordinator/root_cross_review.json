@@ -1,0 +1,126 @@
+{
+  "schema_version": "photo-pose-five-arm-cross-review/v1",
+  "reviewer": "root_coordinator",
+  "evidence_basis": "saved_rendered_pixels",
+  "prompt_presence_alone_accepted": false,
+  "qualification_unit": "one_saved_image_per_arm",
+  "arms": [
+    {
+      "arm_id": "arm-01",
+      "case_id": "pose-arm-01-serpentinata-spiral",
+      "selected_attempt": 2,
+      "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-02.png",
+      "image_sha256": "94ca5effd7c943a1cacde3ce98fcd10fdaccd8c1c8a3f4744e8b09012e54d53f",
+      "dimensions": [1122, 1402],
+      "agent_verdict": "pass",
+      "coordinator_verdict": "pass",
+      "passed_gate_ids": [
+        "vo_serpentinata_support_initiator",
+        "vo_serpentinata_segment_opposition",
+        "vo_serpentinata_head_arm_counterturn",
+        "vo_serpentinata_three_dimensional_read",
+        "pose_arm01_thorax_pelvis_azimuth",
+        "pose_arm01_relaxed_wrist"
+      ],
+      "failed_gate_ids": [],
+      "evidence": "The planted and free legs, counter-turned head and arms, and modest wrist offset are visible. The near hip and thigh occlude the far leg while the upper torso turns away, so the result reads as a depth spiral rather than a flat S silhouette.",
+      "agrees_with_agent_review": true
+    },
+    {
+      "arm_id": "arm-02",
+      "case_id": "pose-arm-02-tribhanga-three-bend",
+      "selected_attempt": 2,
+      "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-02/image-attempt-02.png",
+      "image_sha256": "5d95c7e2d67702ad3945b2b79ebf58d1601890b6d60e4f8cb871b5ac1372a4b9",
+      "dimensions": [934, 1683],
+      "agent_verdict": "pass",
+      "coordinator_verdict": "pass",
+      "passed_gate_ids": [
+        "vo_tribhanga_inclined_head",
+        "vo_tribhanga_opposing_middle_bend",
+        "vo_tribhanga_bent_knee_return",
+        "vo_tribhanga_full_body_three_bend_read",
+        "pose_arm02_axial_elongation",
+        "pose_arm02_plantarflexed_line"
+      ],
+      "failed_gate_ids": [],
+      "evidence": "The full-body silhouette exposes the inclined head, opposing torso and hip deflections, flexed supporting knee, and pointed free foot in one frame. The shoulders remain lowered and the body axis remains elongated.",
+      "agrees_with_agent_review": true
+    },
+    {
+      "arm_id": "arm-03",
+      "case_id": "pose-arm-03-pelvic-depth-counterdirection",
+      "selected_attempt": 1,
+      "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-03/image-attempt-01.png",
+      "image_sha256": "b3e30fd704f51b224823626df999a6861a4ac64a37da98f5437e6b7f0fdb467a",
+      "dimensions": [916, 1717],
+      "agent_verdict": "pass",
+      "coordinator_verdict": "pass",
+      "passed_gate_ids": [
+        "pose_arm03_frontal_pelvic_obliquity",
+        "pose_arm03_staggered_leg_depth",
+        "pose_arm03_head_shoulder_opposition"
+      ],
+      "failed_gate_ids": [],
+      "evidence": "The level station geometry rules out camera roll; the loaded leg produces a modest but visible hip-height asymmetry. The feet occupy distinct depth planes, and the face turns against the shoulder and arm direction with a coherent neck.",
+      "agrees_with_agent_review": true
+    },
+    {
+      "arm_id": "arm-04",
+      "case_id": "pose-arm-04-perched-crossed-support",
+      "selected_attempt": 2,
+      "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-04/images/attempt-02.png",
+      "image_sha256": "8ff512be2dbf35a07bff01492f74cf705df6178c6491aa7828cc943cf0eea808",
+      "dimensions": [972, 1619],
+      "agent_verdict": "fail",
+      "coordinator_verdict": "fail",
+      "passed_gate_ids": [
+        "pose_arm04_perched_support",
+        "pose_arm04_relaxed_wrist"
+      ],
+      "failed_gate_ids": [
+        "pose_arm04_crossed_ankles"
+      ],
+      "evidence": "The seat-edge contact and hand-and-feet support path are legible, and the supporting wrist is continuous. The calves cross above two side-by-side ankle openings, so the image does not satisfy the required ankle-joint crossing.",
+      "agrees_with_agent_review": true
+    },
+    {
+      "arm_id": "arm-05",
+      "case_id": "pose-arm-05-propped-c-curve-negative-space",
+      "selected_attempt": 2,
+      "image_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-05/image-attempt-02.png",
+      "image_sha256": "d88a962c80c44e5ea1d11b568716590fa216685c528073c16b1521b565f522dc",
+      "dimensions": [1448, 1086],
+      "agent_verdict": "fail",
+      "coordinator_verdict": "fail",
+      "passed_gate_ids": [
+        "vo_body_negative_space_region_specific",
+        "pose_arm05_elbow_load_path",
+        "pose_arm05_single_c_arc"
+      ],
+      "failed_gate_ids": [
+        "vo_body_negative_space_real_boundaries",
+        "vo_body_negative_space_continuous_background",
+        "vo_body_negative_space_shape_legible",
+        "pose_arm05_elbow_torso_void"
+      ],
+      "evidence": "The propped elbow carries visible load and the body forms one C arc. Blue sleeve fabric, shoulder, and hair fill the named elbow-to-torso region, so no continuous background opening is enclosed by real anatomical boundaries.",
+      "agrees_with_agent_review": true
+    }
+  ],
+  "summary": {
+    "arm_count": 5,
+    "strict_pass_count": 3,
+    "strict_fail_count": 2,
+    "total_gate_count": 25,
+    "passed_gate_count": 20,
+    "failed_gate_count": 5,
+    "coordinator_agent_disagreement_count": 0
+  },
+  "reference_boundary": {
+    "role": "facial_appearance_only",
+    "identity_control": false,
+    "same_person_or_biometric_claim": false,
+    "requesting_user_preference_and_resemblance_judgment": "pending"
+  }
+}

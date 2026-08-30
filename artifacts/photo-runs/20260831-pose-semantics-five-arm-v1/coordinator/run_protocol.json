@@ -1,0 +1,11 @@
+{
+  "schema_version": "photo-pose-five-arm-protocol/v1",
+  "arm_count": 5,
+  "independence": "Each arm independently chooses and freezes a different random complex concept before reading project-local candidate or profile data; no cross-arm prompts, packs, images, messages, or reviews are inputs.",
+  "subject_boundary": "One clearly adult woman, fully and opaquely clothed for the chosen scene, with the attached portrait used only for visible facial appearance reference.",
+  "generation_tool": "built_in_imagegen",
+  "max_image_calls_per_arm": 2,
+  "retry_rule": "At most one targeted retry, repairing only failed pose gates while preserving locked concept, subject, event, reference, and passed gates.",
+  "pixel_rule": "Prompt and runtime audits are preflight only; one saved image passes only when every assigned registry and atomic pixel gate passes in that same image.",
+  "terminal_judge": "Requesting-user preference and perceived resemblance remain pending."
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": "photo-pose-pixel-review/v1",
+  "arm_id": "arm-03",
+  "test_case_id": "pose-arm-03-pelvic-depth-counterdirection",
+  "fixture_schema_version": "photo-pose-semantic-pixel-case/v1",
+  "verdict_unit": "one_saved_image",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-03/image-attempt-01.png",
+    "repo_relative_path": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-03/image-attempt-01.png",
+    "sha256": "b3e30fd704f51b224823626df999a6861a4ac64a37da98f5437e6b7f0fdb467a",
+    "width_px": 916,
+    "height_px": 1717,
+    "attempt": 1
+  },
+  "inspection": {
+    "tool": "view_image",
+    "detail": "original",
+    "same_saved_image_for_every_gate": true,
+    "prompt_presence_used_as_pixel_evidence": false,
+    "review_scales": [
+      "thumbnail",
+      "native"
+    ]
+  },
+  "registry_gate_ids": [],
+  "hard_gates": [
+    {
+      "id": "pose_arm03_frontal_pelvic_obliquity",
+      "status": "pass",
+      "review_scale": "both",
+      "description": "single-leg load creates a visible higher and lower side of the pelvic line without camera roll",
+      "visible_evidence": "The boot on image-right is the clearly planted load-bearing foot while the opposite leg is lifted and crosses behind. The coverall waistband and two hip points form a visibly sloped pelvic line, with one hip higher than the other. Station columns and architectural horizontals remain level, so the asymmetry comes from the body rather than global camera roll."
+    },
+    {
+      "id": "pose_arm03_staggered_leg_depth",
+      "status": "pass",
+      "review_scale": "both",
+      "description": "front and rear feet separate both legs in depth while both knees and ankles remain readable",
+      "visible_evidence": "The planted boot occupies the nearer lower-right plane; the other boot is lifted farther back and to image-left. The stance knee stays straight and readable, while the rear knee is visibly flexed and crossed behind; both ankle-to-boot junctions remain fully visible."
+    },
+    {
+      "id": "pose_arm03_head_shoulder_opposition",
+      "status": "pass",
+      "review_scale": "both",
+      "description": "head direction visibly counters the shoulder line with a coherent neck",
+      "visible_evidence": "Both shoulders and extended arms organize toward the amber beacon on image-left, while the face, nose, and chin turn distinctly toward the arriving capsule on image-right. The neck connects these opposed directions coherently; the effect is a real head turn rather than gaze-only opposition."
+    }
+  ],
+  "reject_substitute_checks": [
+    {
+      "substitute": "sagittal anterior pelvic tilt",
+      "observed": false,
+      "evidence": "The diagnostic asymmetry is left-right hip height under one-leg loading, not only a forward-back pelvic pitch."
+    },
+    {
+      "substitute": "flat side-by-side legs",
+      "observed": false,
+      "evidence": "The feet occupy separate near and rear depth planes and the rear knee crosses behind."
+    },
+    {
+      "substitute": "group staggering",
+      "observed": false,
+      "evidence": "Exactly one adult woman is visible; the depth stagger belongs to her two legs."
+    },
+    {
+      "substitute": "gaze-only opposition",
+      "observed": false,
+      "evidence": "The complete face and chin rotate away from the shoulder/arm direction, not merely the irises."
+    }
+  ],
+  "scene_checks": {
+    "one_clearly_adult_woman": "pass",
+    "fully_opaque_scene_appropriate_clothing": "pass",
+    "concrete_future_civic_transit_setting": "pass",
+    "visible_calibration_event": "pass",
+    "full_body_and_both_feet_readable": "pass"
+  },
+  "reference_use": {
+    "role": "facial_appearance_only",
+    "identity_control": false,
+    "appearance_cues_visible": "long center-parted dark waves, an oval facial contour, almond-shaped brown eyes, dark brows, and natural rose lips",
+    "same_person_claim": false,
+    "biometric_verification_claim": false,
+    "user_resemblance_judgment": "pending"
+  },
+  "verdict": {
+    "rule": "all_registry_and_atomic_gates_pass",
+    "registry_gate_count": 0,
+    "atomic_gate_count": 3,
+    "passed_gate_count": 3,
+    "failed_gate_ids": [],
+    "technical_status": "pass",
+    "retry_eligible": false,
+    "retry_reason": "No smallest atomic pose gate failed on the first saved image.",
+    "image_call_count": 1
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending_requesting_user_judgment",
+    "preference": "pending",
+    "resemblance": "pending"
+  },
+  "cross_arm_inputs_used": false
+}

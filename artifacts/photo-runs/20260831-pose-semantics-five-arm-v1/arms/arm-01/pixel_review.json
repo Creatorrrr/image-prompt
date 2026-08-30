@@ -1,0 +1,135 @@
+{
+  "schema_version": "photo-pose-semantic-pixel-review/v1",
+  "fixture_schema_version": "photo-pose-semantic-pixel-case/v1",
+  "case_id": "pose-arm-01-serpentinata-spiral",
+  "arm_id": "arm-01",
+  "attempt": 2,
+  "retry_of_ledger_run_id": "b97625821873f5e3",
+  "pack_id": "d9b29084206c0888",
+  "effective_visual_contract_sha256": "f9bb750710c887053fd4e250a171793a21d05b2bfd691630119e93100e23fccd",
+  "reviewer": "arm-01-agent-native-pixel-review-after-coordinator-repair",
+  "evidence_basis": "saved_rendered_pixels",
+  "prompt_presence_alone_accepted": false,
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-02.png",
+    "sha256": "94ca5effd7c943a1cacde3ce98fcd10fdaccd8c1c8a3f4744e8b09012e54d53f",
+    "width": 1122,
+    "height": 1402,
+    "format": "png"
+  },
+  "review_scales": [
+    {
+      "scale": "native",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-02.png",
+      "sha256": "94ca5effd7c943a1cacde3ce98fcd10fdaccd8c1c8a3f4744e8b09012e54d53f",
+      "width": 1122,
+      "height": 1402,
+      "inspection": "view_image detail original"
+    },
+    {
+      "scale": "thumbnail",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-02-thumb.png",
+      "sha256": "6cfccf569032196c318645fb0e024be55339535fb651e07802b7fdc2d4fc0c93",
+      "width": 256,
+      "height": 320,
+      "inspection": "view_image detail original"
+    }
+  ],
+  "registry_profile_id": "figura_serpentinata_spiral_pose",
+  "registry_gates": [
+    {
+      "id": "vo_serpentinata_support_initiator",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "At both scales the front boot on viewer-right is planted as the load-bearing support while the opposite boot and flexed knee are displaced behind on viewer-left, producing an asymmetric support/free-leg base."
+    },
+    {
+      "id": "vo_serpentinata_segment_opposition",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The black-trouser pelvis and near hip project toward viewer-right and occlude the far thigh, while the red-jacket ribcage, zipper, and shoulder plane rotate back toward viewer-left; the opposed planes meet through a visibly twisted waist."
+    },
+    {
+      "id": "vo_serpentinata_head_arm_counterturn",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The tong-bearing forearms cross the front of the parka toward viewer-right, the free hand drops into a rear plane, and the head and nose counter-turn toward viewer-left beyond the shoulder line."
+    },
+    {
+      "id": "vo_serpentinata_three_dimensional_read",
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At 256 by 320 pixels the enlarged near boot, thigh, and hip overlap the receding far leg; crossed foreground tongs, rear free hand, opposed torso, and counter-turned head remain readable as successive near-to-far planes rather than a flat side lean."
+    }
+  ],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm01_thorax_pelvis_azimuth",
+      "description": "ribcage and pelvic planes visibly face different depth directions",
+      "status": "pass",
+      "evidence": "At native scale the pelvis is led by the foreground hip and thigh toward the tray on viewer-right, while the sternum, jacket zipper, and shoulder plane face back toward viewer-left; the waist seam and parka folds show a coherent change of azimuth."
+    },
+    {
+      "id": "pose_arm01_relaxed_wrist",
+      "description": "one wrist makes a small coherent offset from the forearm while fingers remain natural",
+      "status": "pass",
+      "evidence": "The free gloved hand below and behind the tong grip hangs with a small outward-downward wrist offset; its fingers remain loosely curved and separated, without a sharp kink."
+    }
+  ],
+  "reject_substitute_checks": [
+    {
+      "substitute": "flat S silhouette",
+      "present": false,
+      "evidence": "Foreground hip and thigh occlusion, far-leg recession, crossed arms, and near-to-far size change establish depth."
+    },
+    {
+      "substitute": "contrapposto without axial twist",
+      "present": false,
+      "evidence": "Pelvis, ribcage, forearms, free hand, and head change direction through one connected waist twist beyond the leg weight shift."
+    },
+    {
+      "substitute": "camera tilt only",
+      "present": false,
+      "evidence": "The horizon, tripod, flag, and tray remain upright while the body planes rotate relative to them."
+    },
+    {
+      "substitute": "extreme wrist kink",
+      "present": false,
+      "evidence": "The free wrist deviation is modest and continuous with relaxed, naturally curved fingers."
+    }
+  ],
+  "reference_boundary": {
+    "role": "facial_appearance_only",
+    "identity_control": false,
+    "source_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "visible_observation": "The result carries broad appearance cues such as long dark wavy hair, dark eyes, and an oval adult face; this is not biometric verification or a same-person finding."
+  },
+  "verdict_rule": {
+    "unit": "one_saved_image",
+    "pass": "all_registry_and_atomic_gates_pass",
+    "partial_or_missing": "fail",
+    "prompt_presence_only": "insufficient"
+  },
+  "technical_verdict": "pass",
+  "failed_gate_ids": [],
+  "comparison": {
+    "attempt_01_verdict": "fail",
+    "attempt_01_failed_gate_ids": [
+      "vo_serpentinata_segment_opposition",
+      "vo_serpentinata_three_dimensional_read",
+      "pose_arm01_thorax_pelvis_azimuth"
+    ],
+    "attempt_02_verdict": "pass",
+    "cross_attempt_component_averaging_used": false,
+    "qualification_unit": "attempt_02_saved_image_only"
+  },
+  "total_image_call_count": 2,
+  "retry_used": true,
+  "further_retry_available": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "preference": "pending_requesting_user",
+    "facial_resemblance": "pending_requesting_user",
+    "representative_acceptance": "pending_requesting_user"
+  }
+}

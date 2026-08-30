@@ -1,0 +1,36 @@
+{
+  "contract_version": "photo-pose-pixel-review/v1",
+  "arm_id": "arm-04",
+  "test_case_id": "pose-arm-04-perched-crossed-support",
+  "attempt": 1,
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-04/images/attempt-01.png",
+  "image_sha256": "c31443df52f74ebc37bf57010d22092201a62b307995c3475b8bd2030487706e",
+  "dimensions": {
+    "width": 887,
+    "height": 1774
+  },
+  "review_source": "native_saved_pixels_viewed_at_original_detail",
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm04_perched_support",
+      "status": "pass",
+      "evidence": "Her pelvis visibly bears on the front wooden tool-chest edge; the palm beside her hip and the dark oxford planted on the parquet form a readable support path."
+    },
+    {
+      "id": "pose_arm04_crossed_ankles",
+      "status": "fail",
+      "evidence": "The trousered legs overlap around the knee and lower calf, but the ankle joints stay apart; the raised forward shoe does not create a visible ankle-level X."
+    },
+    {
+      "id": "pose_arm04_relaxed_wrist",
+      "status": "pass",
+      "evidence": "The bracing wrist beside her hip is softly extended with a continuous forearm-to-hand line and no extreme kink."
+    }
+  ],
+  "smallest_failed_gate_ids": [
+    "pose_arm04_crossed_ankles"
+  ],
+  "retry_authorized_by_brief": true,
+  "retry_scope": "Adjust only lower-leg and foot staging while preserving the passed support and wrist gates plus every locked semantic anchor.",
+  "overall_status": "fail"
+}
