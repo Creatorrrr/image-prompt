@@ -1,0 +1,122 @@
+{
+  "schema_version": "photo-pose-five-arm-aggregate/v1",
+  "run_id": "20260831-pose-semantics-five-arm-v1",
+  "arm_count": 5,
+  "independent_subagent_count": 5,
+  "cross_arm_inputs_used": false,
+  "generation_tool": "built_in_imagegen",
+  "reference_image": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "facial_appearance_only",
+    "identity_control": false
+  },
+  "image_call_count": 9,
+  "preflight": {
+    "candidate_pack_audit_pass_count": 5,
+    "composed_prompt_audit_pass_count": 5,
+    "runtime_request_audit_pass_count": 5
+  },
+  "pixel_qualification": {
+    "strict_pass_arms": ["arm-01", "arm-02", "arm-03"],
+    "strict_fail_arms": ["arm-04", "arm-05"],
+    "strict_pass_count": 3,
+    "strict_fail_count": 2,
+    "total_gate_count": 25,
+    "passed_gate_count": 20,
+    "failed_gate_count": 5,
+    "rule": "Every registry and atomic gate must pass in one selected saved image; prompt text is not pixel evidence."
+  },
+  "candidate_pack_actuation": {
+    "assigned_hard_profile_count": 3,
+    "surfaced_hard_profile_count": 3,
+    "selected_hard_profile_count": 3,
+    "strict_profile_pixel_pass_count": 2,
+    "assigned_candidate_id_count": 15,
+    "surfaced_assigned_candidate_id_count": 1,
+    "surfaced_assigned_candidate_ids": ["head_shoulder_opposition"],
+    "interpretation": "Exact hard-profile triggers actuated reliably. Newly added assigned candidate IDs had low public-pack exposure; when absent, matching pixels prove frozen-core wording, not candidate-pack selection."
+  },
+  "integrated_validation": {
+    "visual_profile_count": 50,
+    "visual_profile_exact_term_count": 302,
+    "semantic_index_entry_count": 6716,
+    "semantic_embedding_dimensions": 768,
+    "semantic_shard_count": 16,
+    "focused_test_count": 53,
+    "focused_test_fail_count": 0,
+    "scene_expression_route_count": 112,
+    "scene_expression_fail_count": 0,
+    "dictionary_metadata_status": "pass",
+    "git_diff_check_status": "pass",
+    "full_unittest_discovery_claimed": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01",
+      "concept": "Antarctic meteorite transfer during a katabatic gust and aurora",
+      "pack_id": "d9b29084206c0888",
+      "image_call_count": 2,
+      "selected_image": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-01/render-attempt-02.png",
+      "technical_verdict": "pass",
+      "failed_gate_ids": [],
+      "hard_profile_surfaced": true,
+      "assigned_candidate_ids_surfaced": []
+    },
+    {
+      "arm_id": "arm-02",
+      "concept": "Rain-damp temple heritage reenactment while lighting a lamp",
+      "pack_id": "3142162c2f822e07",
+      "image_call_count": 2,
+      "selected_image": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-02/image-attempt-02.png",
+      "technical_verdict": "pass",
+      "failed_gate_ids": [],
+      "hard_profile_surfaced": true,
+      "assigned_candidate_ids_surfaced": []
+    },
+    {
+      "arm_id": "arm-03",
+      "concept": "Rain-soaked future civic maglev emergency calibration drill",
+      "pack_id": "0bcf2e715e23d6e7",
+      "image_call_count": 1,
+      "selected_image": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-03/image-attempt-01.png",
+      "technical_verdict": "pass",
+      "failed_gate_ids": [],
+      "hard_profile_surfaced": null,
+      "assigned_candidate_ids_surfaced": ["head_shoulder_opposition"]
+    },
+    {
+      "arm_id": "arm-04",
+      "concept": "Luxury analog railway marquetry atelier inspection",
+      "pack_id": "f383e0d9d4910d53",
+      "image_call_count": 2,
+      "selected_image": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-04/images/attempt-02.png",
+      "technical_verdict": "fail",
+      "failed_gate_ids": ["pose_arm04_crossed_ankles"],
+      "hard_profile_surfaced": null,
+      "assigned_candidate_ids_surfaced": []
+    },
+    {
+      "arm_id": "arm-05",
+      "concept": "Surreal coastal ecology and astronomical tide-pool observatory",
+      "pack_id": "04cf124135c1a79d",
+      "image_call_count": 2,
+      "selected_image": "artifacts/photo-runs/20260831-pose-semantics-five-arm-v1/arms/arm-05/image-attempt-02.png",
+      "technical_verdict": "fail",
+      "failed_gate_ids": [
+        "vo_body_negative_space_real_boundaries",
+        "vo_body_negative_space_continuous_background",
+        "vo_body_negative_space_shape_legible",
+        "pose_arm05_elbow_torso_void"
+      ],
+      "hard_profile_surfaced": true,
+      "assigned_candidate_ids_surfaced": []
+    }
+  ],
+  "terminal_judgment": {
+    "technical_pixel_verdict": "complete",
+    "requesting_user_preference": "pending",
+    "requesting_user_reference_resemblance": "pending",
+    "identity_or_biometric_verification": "not_performed"
+  }
+}

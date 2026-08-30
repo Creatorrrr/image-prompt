@@ -1,0 +1,24 @@
+{
+  "schema_version": "photo-image-render-request/v2",
+  "pack_id": "d9b29084206c0888",
+  "source_intent_lock_sha256": "f204ce84b673de78a8fe1ae74f3931033aa9ba4c4389d15a53a7f95c547bb632",
+  "effective_visual_contract_sha256": "f9bb750710c887053fd4e250a171793a21d05b2bfd691630119e93100e23fccd",
+  "runtime_prompt_en": "Use case: photorealistic-natural\nAsset type: independent pose-semantics qualification photograph\nInput images: Image 1 is a facial-appearance reference only for an original adult woman; identity control is false and likeness is not guaranteed.\n\nDocumentary expedition photograph on an Antarctic blue-ice field. One clearly adult woman planetary field scientist, her facial appearance guided by the attached portrait, wears a fully opaque expedition-red insulated parka zipped to the chin, black bib trousers, thick gloves, gaiters, and polar boots. A katabatic gust exposes a charcoal meteorite beside a numbered flag while she lowers it with long sampling tongs toward a blue foam-lined tray. Her three-quarter figura serpentinata begins with one planted support foot with an offset or lifted free foot. Meanwhile, her pelvis turns toward the tray, her thorax and shoulders rotate in the opposite direction toward a tripod spectrometer; pelvis and ribcage rotate toward different azimuths. Her free arm crosses around the torso twist while her head turns against the shoulder direction; the other gloved hand hangs with a gentle outward relaxed wrist offset and naturally curved fingers. Keep the full-body spiral readable through foreshortening and overlap. Photograph her full-body, from head to both fully visible boots, with all limbs readable. Low polar side light and aurora edge reflection separate body planes and flying snow.\n\nAvoid: unrealistic hands, plastic-looking skin, illustration look, excessive HDR, over-processed retouching, 3D render look, distorted fingers, fake-looking background, body distortion",
+  "runtime_negative_en": "unrealistic hands, plastic-looking skin, illustration look, excessive HDR, over-processed retouching, 3D render look, distorted fingers, fake-looking background, body distortion",
+  "audit_boundary": {
+    "composed_prompt_audit_status": "pass",
+    "runtime_prompt_audit_status": "not_run",
+    "inherits_composed_prompt_pass": false
+  },
+  "reference_identity_control_enabled": false,
+  "references": [
+    {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "facial_appearance_only"
+    }
+  ],
+  "tool": "built_in_imagegen",
+  "image_call_limit": 2,
+  "retry_policy": "one retry only for the smallest failed pose gate while preserving locked meaning and passed gates"
+}

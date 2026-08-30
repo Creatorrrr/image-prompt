@@ -1,0 +1,92 @@
+{
+  "schema_version": "photo-pose-semantic-pixel-review/v1",
+  "case_id": "pose-arm-02-tribhanga-three-bend",
+  "arm_id": "arm-02",
+  "registry_profile_id": "tribhanga_three_bend_pose",
+  "reviewed_image": {
+    "path": "image-attempt-02.png",
+    "sha256": "5d95c7e2d67702ad3945b2b79ebf58d1601890b6d60e4f8cb871b5ac1372a4b9",
+    "width": 934,
+    "height": 1683,
+    "format": "png",
+    "review_scale": "native"
+  },
+  "registry_gates": [
+    {
+      "id": "vo_tribhanga_inclined_head",
+      "status": "pass",
+      "visible_evidence": "The crown-to-chin line and neck visibly incline toward image left while the upper sternum remains nearer vertical, creating a distinct upper bend."
+    },
+    {
+      "id": "vo_tribhanga_opposing_middle_bend",
+      "status": "pass",
+      "visible_evidence": "The ribcage and reaching shoulders travel toward the lamp on image right while the waist narrows and the hip mass juts toward image left, making an opposing middle deflection across the central axis."
+    },
+    {
+      "id": "vo_tribhanga_bent_knee_return",
+      "status": "pass",
+      "visible_evidence": "The planted leg on image right has a visibly flexed knee under the fitted opaque underlayer, and that lower-leg direction returns inward while the other leg extends diagonally outward."
+    },
+    {
+      "id": "vo_tribhanga_full_body_three_bend_read",
+      "status": "pass",
+      "visible_evidence": "In the uncropped head-to-feet silhouette, the inclined head, counter-deflected torso and jutting hip, and asymmetric flexed-knee lower return form one alternating three-bend chain with both feet visible."
+    }
+  ],
+  "atomic_pixel_gates": [
+    {
+      "id": "pose_arm02_axial_elongation",
+      "status": "pass",
+      "visible_evidence": "Despite the lateral bends, the crown, sternum, waist, and pelvis retain a long continuous axial reach; the neck is extended and both shoulder tops sit low without a shrug."
+    },
+    {
+      "id": "pose_arm02_plantarflexed_line",
+      "status": "pass",
+      "visible_evidence": "The fully visible leg on image left continues through an extended ankle into a strongly pointed foot, with the heel lifted and the toes contacting the wet flagstone along the same lower-limb line."
+    }
+  ],
+  "all_registry_gates_pass": true,
+  "all_atomic_pixel_gates_pass": true,
+  "same_image_gate_conjunction": true,
+  "prompt_presence_used_as_pixel_proof": false,
+  "reject_substitute_checks": [
+    {
+      "substitute": "costume or hand gesture only",
+      "status": "not_observed",
+      "visible_evidence": "The required read is carried by head, ribcage, hip, knee, ankle, and foot geometry rather than the sari or lamp-lighting hand gesture alone."
+    },
+    {
+      "substitute": "generic contrapposto",
+      "status": "not_observed",
+      "visible_evidence": "The head inclination and bent-knee lower return add two visible directional changes beyond a single pelvis-shoulder weight shift."
+    },
+    {
+      "substitute": "flat cropped S pose",
+      "status": "not_observed",
+      "visible_evidence": "The complete body and both feet are inside frame, with distinct upper, middle, and lower deflections rather than a cropped torso curve."
+    },
+    {
+      "substitute": "curled toes with hidden ankle",
+      "status": "not_observed",
+      "visible_evidence": "The image-left ankle, heel, instep, and toes are all exposed, so the plantar-flexed continuation is directly visible."
+    }
+  ],
+  "overall_status": "pass",
+  "failed_gate_ids": [],
+  "verdict_rule_applied": "all_registry_and_atomic_gates_pass_on_one_saved_image",
+  "image_call_count": 2,
+  "selected_attempt": 2,
+  "selection_reason": "The retry preserved attempt-01 passed gates and exposed the previously hidden flexed-knee lower return.",
+  "reference_boundary": {
+    "reference_role": "facial_appearance_only",
+    "identity_control": false,
+    "same_person_claim": false,
+    "biometric_verification_claim": false
+  },
+  "user_judgment": {
+    "preference": "pending",
+    "reference_resemblance": "pending",
+    "source": "not_yet_received"
+  },
+  "cross_arm_inputs_used": false
+}
