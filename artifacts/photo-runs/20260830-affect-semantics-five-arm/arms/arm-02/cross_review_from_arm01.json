@@ -1,0 +1,68 @@
+{
+  "contract_version": "photo-cross-blind-visual-obligation-review/v1",
+  "reviewer_arm": "arm-01",
+  "target_arm": "arm-02",
+  "profile_id": "affiliative_reassurance_smile",
+  "review_protocol": {
+    "image_pixels_viewed_before_gate_text": true,
+    "thumbnail_viewed": true,
+    "native_viewed": true,
+    "prompt_read": false,
+    "prior_pixel_review_read": false,
+    "prior_self_review_read": false,
+    "gate_source_after_blind_observation": "candidate_pack.json visual_obligations.affiliative_reassurance_smile.render_gates only",
+    "hidden_psychology_inference_allowed": false
+  },
+  "images": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-02/affiliative-reassurance-smile.png",
+      "sha256": "749631e82e280d20ee6001d554fdbfbe43c29953df7f1f11ab03984e26f945c2",
+      "pixel_width": 1536,
+      "pixel_height": 1024
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-02/affiliative-reassurance-smile-thumbnail.png",
+      "sha256": "c2231157e65f8cfe0d8b4dedf3bef1cab3c11251a5bfd957049aad7a8a290c16",
+      "pixel_width": 320,
+      "pixel_height": 213
+    }
+  },
+  "hard_gates": {
+    "vo_affiliative_reassurance_dyad": {
+      "status": "pass",
+      "required_scale": "thumbnail",
+      "gate_description": "Both adult participants and their mutual or shared-target orientation remain legible in the same frame.",
+      "pixel_evidence": "At 320x213, both visibly adult participants remain clear. The yellow-jacketed adult faces the peer, while both participants' arms and hands converge on the same handheld radio, making their shared-target orientation legible."
+    },
+    "vo_affiliative_reassurance_restrained_face": {
+      "status": "pass",
+      "required_scale": "native",
+      "gate_description": "The main adult shows a small bilateral closed or lip-pressed smile rather than a broad victory grin or smirk.",
+      "pixel_evidence": "At 1536x1024, the yellow-jacketed main adult's lips remain closed with a small lift at both corners. No teeth are exposed, the amplitude is restrained, and the mouth does not form a broad grin or one-sided smirk."
+    },
+    "vo_affiliative_reassurance_support_action": {
+      "status": "pass",
+      "required_scale": "both",
+      "gate_description": "A concrete repair, return, steadying, or handoff action visibly explains the relationship-directed display.",
+      "thumbnail_evidence": "At thumbnail scale, a handheld radio is visibly positioned between the adults with both sets of hands attached to it, reading as an active handoff.",
+      "native_evidence": "At native scale, the yellow-jacketed adult supports the radio from the left while the dark-jacketed adult closes both hands around its body from the right; the transfer geometry is concrete and unambiguous."
+    },
+    "vo_affiliative_reassurance_peer_response": {
+      "status": "pass",
+      "required_scale": "both",
+      "gate_description": "The adult peer visibly accepts, eases, or reciprocally orients so the interaction has an observable consequence.",
+      "thumbnail_evidence": "At thumbnail scale, the dark-jacketed peer turns toward the shared device and visibly receives it with both hands.",
+      "native_evidence": "At native scale, the peer's fingers wrap around the radio, her forearms take its weight, and her gaze is directed to the received device. This directly satisfies visible acceptance without inferring reassurance, trust, or any hidden feeling."
+    }
+  },
+  "gate_counts": {
+    "pass": 4,
+    "fail": 0,
+    "total": 4
+  },
+  "failed_gate_ids": [],
+  "final_qualification": "pass_all_hard_gates",
+  "representative_eligibility_from_these_gates": true,
+  "claim_boundary": "This review establishes only observable gate satisfaction in the saved pixels. It does not establish sincerity, consent, trustworthiness, personality, hidden psychology, or requesting-user preference.",
+  "user_judgment": "not_part_of_cross_blind_gate_review"
+}

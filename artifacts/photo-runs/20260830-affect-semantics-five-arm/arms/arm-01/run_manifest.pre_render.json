@@ -1,0 +1,68 @@
+{
+  "contract_version": "photo-independent-run-manifest/pre-render-v1",
+  "arm_id": "arm-01",
+  "worktree_id": "/Users/chasoik/Projects/image-prompt",
+  "source_snapshot": {
+    "git_head": "c8cf6a25b1c2adb7170000121b0633b8c1867bec",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6"
+  },
+  "request_envelope": {
+    "path": "../../request_envelopes/arm-01.json",
+    "request_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c"
+  },
+  "authorial_core": {
+    "path": "authorial_core.json",
+    "canonical_sha256": "0a0eb586028529adebdffc5fc7720867da567fb3360039d0d057df327c354595",
+    "intent_lock_sha256": "14e785c31b363c50328de00d2456d5d4a46672aa835686c2c5c7bfd6bcf34777",
+    "schema_repair_record": "core_schema_repair.json"
+  },
+  "candidate_pack": {
+    "version": "v6",
+    "pack_id": "8f73992ae62946ab",
+    "path": "candidate_pack.json",
+    "sha256": "cb3fc47ad1791666d197706d897fa4b43ef46bf2d443aeadc15526a6d0be349d",
+    "emitted_pack_count": 1,
+    "pre_emission_schema_rejection_count": 1
+  },
+  "composed": {
+    "path": "composed_prompt.json",
+    "sha256": "e23ec12d9884dec8ec928eafc0a9384dfb987020c393b023e4a25413da48376b",
+    "audit_path": "composed_audit.json",
+    "audit_status": "pass",
+    "quality_status": "warn"
+  },
+  "runtime": {
+    "request_path": "runtime_request.json",
+    "request_sha256": "635e83fd8a8eac6b1737dc27502434d56a4ba0fe7c88e27126d0fa6901ea0767",
+    "audit_path": "runtime_request_audit.json",
+    "audit_sha256": "134fb16e0eff7c87bc971871c139e32dae4a3f40d9c239b639a285bdbbf23ecc",
+    "audit_status": "pass",
+    "tool": "built_in_imagegen",
+    "image_call_count": 1,
+    "successful_image_call_count": 0,
+    "generated_bytes": false,
+    "output_image_path": null,
+    "transport_failure_path": "imagegen_transport_failure.json",
+    "transport_failure_sha256": "569f6ca3d43cd8854ee4272ff9a511a3e39540bb00db7e892d445b1bc60fdfd4"
+  },
+  "reference": {
+    "requested_mechanism": "num_last_images_to_include=1",
+    "role": "sole appearance and identity reference for the main adult subject",
+    "available_in_child_conversation": false,
+    "local_path": null,
+    "sha256": null,
+    "user_reattachment_required": true
+  },
+  "independence": {
+    "independent_no_cross_arm_inputs": true,
+    "other_arm_prompts_read": false,
+    "other_arm_packs_read": false,
+    "other_arm_images_read": false
+  },
+  "qualification": {
+    "structure": "pass",
+    "runtime_preflight": "pass",
+    "pixels": "not_run",
+    "user_judgment": "pending_requesting_user_judgment"
+  }
+}

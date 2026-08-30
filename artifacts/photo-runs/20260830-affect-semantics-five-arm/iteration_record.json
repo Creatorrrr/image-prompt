@@ -1,0 +1,236 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "c8cf6a25b1c2adb7170000121b0633b8c1867bec",
+    "candidate_revision": "working-tree-20260830-affect-semantics-five-arm"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Research context-bound facial-affect semantics, add them to visual-obligation candidate packs, and test five independently randomized complex reference-informed renders for actual pixel expression."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Fifteen source-bound records across five topics distinguish context, action, target, facial display, and inference boundaries instead of treating a face label as hidden psychological truth.",
+      "artifact": "docs/research-evidence/photo-prompt/affect_display/manifest.json and evidence.jsonl sha256 79d2a36a6602146a98f755b16a787e5229fd4f4132737073a1f2dfbc9c37ec3e"
+    },
+    {
+      "id": "e-registry",
+      "kind": "source-observation",
+      "claim": "Five narrow exact composite profiles are represented as context-bound multi-channel visual obligations; broad emotion words do not hard-activate them.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json and photo_prompt_visual_profile_index.json"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The rebuilt index reports 35 profiles and 215 exact terms, dictionary metadata validates, the focused visual-obligation suite passes 29 tests and 140 subtests, and the broader prompt-contract and authorial-core suite passes 84 tests and 28 subtests.",
+      "artifact": "build_visual_profile_index.py --check; validate_photo_prompt_dictionary.py; pytest tests/test_photo_affect_visual_semantics.py tests/test_photo_visual_obligations.py; pytest tests/test_photo_prompt_contract_v2.py tests/test_photo_authorial_core_v6.py"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five independent v6 packs activate their assigned exact hard profile and their composed and reference-bound runtime audits pass without changing the frozen random concept after generation.",
+      "artifact": "artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/*/candidate_pack.json, composed_audit*.json, and runtime*_audit*.json"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "All five reference-bound images were generated and inspected at native and thumbnail scale; strict self/blind intersection passes 15 of 21 gates and only 2 of 5 complete cases.",
+      "artifact": "artifacts/photo-runs/20260830-affect-semantics-five-arm/aggregate_pixel_review.json"
+    },
+    {
+      "id": "e-reference",
+      "kind": "generation-outcome",
+      "claim": "The reattached 1086x1448 JPEG was hash-bound as the sole appearance reference and each arm made one successful local referenced-image generation call; appearance continuity was reviewed without biometric identity claims.",
+      "artifact": "artifacts/photo-runs/20260830-affect-semantics-five-arm/reference_image_binding.json and arms/*/run_manifest.json"
+    },
+    {
+      "id": "e-fixture",
+      "kind": "measurement",
+      "claim": "Five seeded cases persist exact terms, pack IDs, expected gate sets, image hashes, self judgments, blind judgments, and strict consensus outcomes.",
+      "artifact": "tests/fixtures/photo_prompt/affect_semantics_pixel_test_cases_v1.jsonl"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For each exact context-bound affect term, the triggering event, target or result, facial action, gaze or attention, action consequence, and every profile hard gate must coexist in one saved image at the declared native or thumbnail scale.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "exact-composite-boundary",
+        "statement": "Only an exact composite affect term creates the hard profile; broad smile, relief, confusion, or embarrassment words do not.",
+        "evidence_ids": ["e-registry", "e-package"],
+        "causal_controls": ["exact activation terms", "component-semantic optional lane", "broad-word negative tests"]
+      },
+      {
+        "id": "context-not-face-alone",
+        "statement": "A face action cannot substitute for the visible event, social target, gaze or action relation, and consequence that define the display.",
+        "evidence_ids": ["e-research", "e-render"],
+        "causal_controls": ["multi-channel evidence fields", "hard render gates", "reject substitutes"]
+      },
+      {
+        "id": "single-image-strict-consensus",
+        "statement": "Every hard gate must pass in one image under both the generating-arm review and a different blind-arm review; disagreement fails closed.",
+        "evidence_ids": ["e-render", "e-fixture"],
+        "causal_controls": ["native review", "thumbnail review", "blind reviewer intersection"]
+      },
+      {
+        "id": "appearance-only-reference",
+        "statement": "The supplied portrait guides visible adult appearance only and cannot establish personality, psychology, relationship, or biometric identity.",
+        "evidence_ids": ["e-reference"],
+        "causal_controls": ["hash-bound sole reference", "non-biometric claim boundary"]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult occupation",
+      "setting",
+      "props",
+      "camera",
+      "lighting",
+      "wardrobe",
+      "supporting adult"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-achievement-attention-and-aftermath",
+      "scale": "global",
+      "axis": "result-directed attention and post-success temporal relation",
+      "source_state": "The adult looks at the completed result or collaborator after verification and visibly releases the completed control.",
+      "render_state": "The adult looks toward the camera and both adults continue operating controls, so the scene reads as smiling during work rather than immediately after success.",
+      "evidence_ids": ["e-render"]
+    },
+    {
+      "id": "m-uncertainty-still-frame-comparison",
+      "scale": "regional",
+      "axis": "comparison eyeline and unresolved whole-frame meaning",
+      "source_state": "One physically plausible still-frame eyeline and the head or paused-tool axis keep both visible alternatives in active unresolved comparison.",
+      "render_state": "The self reviewer accepted all gates, but the blind reviewer found the gaze fixed toward one side and the thumbnail more like ordinary equipment inspection than an unresolved choice.",
+      "evidence_ids": ["e-render"]
+    },
+    {
+      "id": "m-relief-main-subject-sequence",
+      "scale": "global",
+      "axis": "main-subject verification followed by coordinated release",
+      "source_state": "The main adult directly checks the safe evidence and then shows coordinated release across at least two visible body or face channels.",
+      "render_state": "The colleague points at status lights while the main adult looks at a clipboard; the pose reads as calm checklist work without a visible check-to-release transition.",
+      "evidence_ids": ["e-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-salient-camera-gaze-overrides-result-gaze",
+      "stage": "generator-response",
+      "statement": "A face-forward reference and portrait salience can override a lower-priority result eyeline unless camera-facing gaze is explicitly rejected and the result lies on a strong visible eyeline.",
+      "evidence_ids": ["e-reference", "e-render"],
+      "falsifier": "A held-out achievement scene with explicit off-camera iris direction and a visible open hand still produces camera gaze or continued control operation."
+    },
+    {
+      "id": "h-split-gaze-is-an-impossible-still-contract",
+      "stage": "representation",
+      "statement": "Wording that asks eyes to divide between two targets is under-specified or physically implausible in one still and encourages reviewer disagreement; a single eyeline plus head or tool comparison geometry is more testable.",
+      "evidence_ids": ["e-research", "e-render"],
+      "falsifier": "Independent reviewers consistently pass held-out images generated from the old split-gaze wording while failing the still-frame geometry wording."
+    },
+    {
+      "id": "h-colleague-cue-substitutes-for-main-check",
+      "stage": "prompt-interaction",
+      "statement": "When colleague confirmation, gauge, checklist, and relief cues compete, the generator can assign verification to the colleague and generic work to the main subject unless the main-subject eyeline is separately bound.",
+      "evidence_ids": ["e-render"],
+      "falsifier": "A held-out relief scene with an explicit main-subject eyeline field still places the main subject on unrelated paperwork while assigning the check to a colleague."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Represent affect as exact, context-bound, observable multi-channel profiles; after render testing, encode common visual substitutes as explicit rejection controls and make still-frame gaze or main-subject verification physically testable.",
+    "generalization_basis": "Five distinct affect functions, fifteen source records, five independently seeded occupational scenes, twenty-one hard gates, and a different blind reviewer per image expose both stable successes and repeated action-attention failure modes.",
+    "hypothesis_ids": [
+      "h-salient-camera-gaze-overrides-result-gaze",
+      "h-split-gaze-is-an-impossible-still-contract",
+      "h-colleague-cue-substitutes-for-main-check"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "docs/research-evidence/photo-prompt/affect_display/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/affect_display/manifest.json",
+      "tests/test_photo_affect_visual_semantics.py",
+      "tests/fixtures/photo_prompt/affect_semantics_pixel_test_cases_v1.jsonl"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt"]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": ["e-render"]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "achievement-polar-borehole",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": ["visible success", "facial action", "result eyeline", "post-success timing"],
+        "evidence_ids": ["e-render"]
+      },
+      {
+        "id": "affiliative-flood-radio",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["adult dyad", "restrained smile", "support handoff", "peer acceptance"],
+        "evidence_ids": ["e-render"]
+      },
+      {
+        "id": "uncertainty-observatory-filters",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["two options", "comparison eyeline", "paused tool", "unresolved choice"],
+        "evidence_ids": ["e-render"]
+      },
+      {
+        "id": "embarrassment-museum-cards",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["minor mishap", "face-touch sequence", "restitution", "peer help"],
+        "evidence_ids": ["e-render"]
+      },
+      {
+        "id": "relief-ferry-bilge",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["prior risk", "main-subject check", "coordinated release", "resumed task"],
+        "evidence_ids": ["e-render"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The research, data, routing, candidate packs, audits, and five reference-bound renders are complete, but strict independent pixel review passes only 2 of 5 full cases. The profiles are implemented and strengthened from the observed failures, yet render-fidelity promotion remains withheld until new held-out renders validate the post-test controls.",
+    "evidence_ids": [
+      "e-research",
+      "e-registry",
+      "e-package",
+      "e-prompt",
+      "e-render",
+      "e-fixture"
+    ]
+  }
+}

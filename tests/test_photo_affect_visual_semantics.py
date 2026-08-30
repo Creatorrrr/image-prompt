@@ -12,6 +12,13 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
 RESEARCH_DIR = ROOT / "docs" / "research-evidence" / "photo-prompt" / "affect_display"
+PIXEL_CASES_PATH = (
+    ROOT
+    / "tests"
+    / "fixtures"
+    / "photo_prompt"
+    / "affect_semantics_pixel_test_cases_v1.jsonl"
+)
 
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
@@ -94,6 +101,7 @@ PROFILE_CONTRACTS = {
         "required_fields": {
             "prior_risk_phrase",
             "safety_verification_phrase",
+            "main_subject_check_eyeline_phrase",
             "tension_release_phrase",
             "post_verification_phrase",
         },
@@ -232,6 +240,44 @@ class PhotoAffectVisualSemanticsTests(unittest.TestCase):
                 )
                 self.assertTrue(affect_ids.isdisjoint(hard))
 
+    def test_observed_render_substitutes_are_encoded_for_future_packs(self) -> None:
+        achievement = self.profiles["achievement_reward_smile"]
+        self.assertIn(
+            "camera_facing_gaze_at_viewer",
+            achievement["reject_substitutes"],
+        )
+        self.assertIn(
+            "still_gripping_or_operating_control",
+            achievement["reject_substitutes"],
+        )
+        self.assertIn("not at the viewer", achievement["composition_instruction"])
+
+        uncertainty = self.profiles["decision_uncertainty_display"]
+        self.assertIn(
+            "impossible_simultaneous_split_gaze",
+            uncertainty["reject_substitutes"],
+        )
+        self.assertIn(
+            "cannot show eyes looking in two directions at once",
+            uncertainty["composition_instruction"],
+        )
+
+        relief = self.profiles["verified_safety_relief"]
+        self.assertIn(
+            "main_subject_check_eyeline_phrase",
+            relief["required_evidence_fields"],
+        )
+        self.assertIn(
+            "colleague_only_verification",
+            relief["reject_substitutes"],
+        )
+        self.assertIn(
+            "main adult looks directly at the colleague being checked",
+            relief["evidence_requirements"][
+                "main_subject_check_eyeline_phrase"
+            ]["must_mention_any"],
+        )
+
     def test_exact_terms_materialize_candidate_pack_render_gates(self) -> None:
         data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry}
         moe_response = {
@@ -333,6 +379,60 @@ class PhotoAffectVisualSemanticsTests(unittest.TestCase):
                             for evidence_id in provenance["evidence_ids"]
                         )
                     )
+
+    def test_five_arm_pixel_cases_are_seeded_gate_complete_and_consensus_bound(
+        self,
+    ) -> None:
+        rows = [
+            json.loads(line)
+            for line in PIXEL_CASES_PATH.read_text(encoding="utf-8").splitlines()
+            if line
+        ]
+        self.assertEqual(len(rows), 5)
+        self.assertEqual({row["arm_id"] for row in rows}, {f"arm-0{i}" for i in range(1, 6)})
+        self.assertEqual({row["profile_id"] for row in rows}, set(PROFILE_CONTRACTS))
+        self.assertEqual(len({row["seed"] for row in rows}), 5)
+        self.assertEqual(len({row["case_id"] for row in rows}), 5)
+        self.assertEqual(len({row["concept"] for row in rows}), 5)
+
+        for row in rows:
+            with self.subTest(case_id=row["case_id"]):
+                self.assertEqual(
+                    row["schema_version"],
+                    "photo-affect-pixel-test-case/v1",
+                )
+                profile = self.profiles[row["profile_id"]]
+                expected_gate_ids = {
+                    gate["id"] for gate in profile["render_gates"]
+                }
+                self.assertEqual(
+                    set(row["expected_hard_gate_ids"]),
+                    expected_gate_ids,
+                )
+                self.assertIn(
+                    row["exact_activation_term"].casefold(),
+                    {
+                        term.casefold()
+                        for term in profile["activation"]["exact_terms"]
+                    },
+                )
+
+                self_passed = set(row["self_passed_gate_ids"])
+                blind_passed = set(row["blind_passed_gate_ids"])
+                self.assertLessEqual(self_passed, expected_gate_ids)
+                self.assertLessEqual(blind_passed, expected_gate_ids)
+                strict_failed = expected_gate_ids - (self_passed & blind_passed)
+                self.assertEqual(
+                    set(row["strict_consensus_failed_gate_ids"]),
+                    strict_failed,
+                )
+                self.assertEqual(
+                    row["strict_pixel_status"],
+                    "pass" if not strict_failed else "fail",
+                )
+                self.assertRegex(row["result_sha256"], r"^[0-9a-f]{64}$")
+                self.assertTrue(row["prompt_path"].startswith("artifacts/"))
+                self.assertTrue(row["result_image_path"].startswith("artifacts/"))
 
 
 if __name__ == "__main__":

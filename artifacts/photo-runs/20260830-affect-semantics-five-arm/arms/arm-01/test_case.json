@@ -1,0 +1,42 @@
+{
+  "contract_version": "photo-affect-pixel-test-case/v1",
+  "test_case_id": "affect-arm-01-seed-913701",
+  "arm_id": "arm-01",
+  "seed": 913701,
+  "profile_id": "achievement_reward_smile",
+  "activation_term": "achievement reward smile",
+  "selected_concept_id": "polar_borehole_sensor_restart",
+  "scenario": "An adult polar field glaciologist in a blue-ice tunnel has just restarted a compact borehole sensor; green status lamps and a stable waveform show success while an adult teammate lowers the emergency crank and seals the recovered ice-core sample.",
+  "reference_role": "sole appearance and identity reference for the main adult subject; no personality, psychology, relationship, or event inference",
+  "hard_prompt_evidence": {
+    "successful_result_phrase": "the restored signal is visibly active",
+    "symmetric_smile_action_phrase": "mostly symmetric smile with raised cheeks",
+    "result_attention_phrase": "eyes remain on the successful result",
+    "post_success_consequence_phrase": "collaborator responds to the restored outcome"
+  },
+  "expected_pixel_gates": [
+    {
+      "id": "vo_achievement_reward_visible_success",
+      "review_scale": "both",
+      "expected_observation": "Working sensor feedback is legible as the same adult's completed result without relying on a caption."
+    },
+    {
+      "id": "vo_achievement_reward_face_action",
+      "review_scale": "native",
+      "expected_observation": "Both lip corners and cheeks form a mostly symmetric positive action rather than a one-sided smirk."
+    },
+    {
+      "id": "vo_achievement_reward_result_attention",
+      "review_scale": "both",
+      "expected_observation": "Eye direction and body orientation stay tied to the successful device or the collaborator sharing it."
+    },
+    {
+      "id": "vo_achievement_reward_temporal_relation",
+      "review_scale": "thumbnail",
+      "expected_observation": "Result feedback, release gesture, and teammate response read as immediately after success rather than a posed smile."
+    }
+  ],
+  "structural_preflight": "pass",
+  "pixel_execution": "not_run_transport_precondition_failure",
+  "user_reattachment_required": true
+}

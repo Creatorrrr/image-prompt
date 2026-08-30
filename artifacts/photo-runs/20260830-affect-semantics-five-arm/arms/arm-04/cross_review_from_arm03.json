@@ -1,0 +1,90 @@
+{
+  "schema_version": "photo-affect-cross-blind-pixel-review/v1",
+  "review_id": "arm-03-reviews-arm-04-embarrassment-repair-display",
+  "reviewer_arm_id": "arm-03",
+  "reviewed_arm_id": "arm-04",
+  "profile_id": "embarrassment_repair_display",
+  "reviewed_at": "2026-08-30T11:04:09Z",
+  "blind_protocol": {
+    "sequence": [
+      "Viewed only the specified native image and thumbnail before reading any gate text.",
+      "Locked pre-contract visual observations.",
+      "Read only candidate_pack.json visual_obligations.obligations[id=embarrassment_repair_display].render_gates.",
+      "Rechecked the same native and thumbnail pixels at each gate's declared review scale."
+    ],
+    "prompt_read": false,
+    "existing_pixel_review_read": false,
+    "existing_self_review_read": false,
+    "hidden_psychology_inferred": false,
+    "cross_review_output_used_as_generation_input": false
+  },
+  "images": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-04/generated_embarrassment_repair_display.png",
+      "sha256": "7e32f0f92962cab23eaaf3a3199a705f3b1f7087a2528460b2416a377578ea97",
+      "width": 1086,
+      "height": 1448
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260830-affect-semantics-five-arm/arms/arm-04/generated_embarrassment_repair_display_thumbnail.png",
+      "sha256": "a9fb12200d78426346c31492d016ef761ba808a7fa1477024d742c0ea60a4c62",
+      "width": 240,
+      "height": 320
+    }
+  },
+  "pre_contract_visual_observations": [
+    "A box of upright catalog cards sits at the center while many matching cards are scattered broadly across the worktable.",
+    "The main adult has one hand among the upright cards and touches her cheek with the other while looking sideways toward another adult.",
+    "The second adult faces the main adult and holds a catalog card forward over the work area.",
+    "The main adult's lips form a small restrained closed smile; no cartoon marks or symbolic emotion graphics appear."
+  ],
+  "gate_reviews": [
+    {
+      "gate_id": "vo_embarrassment_repair_minor_mishap",
+      "required_review_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "evidence": "At both scales, dozens of catalog cards are visibly scattered outside their labeled storage box across the table, while the matching upright cards and box remain identifiable; the disruption is minor and no injury or hazardous damage is visible."
+    },
+    {
+      "gate_id": "vo_embarrassment_repair_face_sequence",
+      "required_review_scale": "native",
+      "reviewed_scales": [
+        "native"
+      ],
+      "status": "pass",
+      "evidence": "Native pixels clearly show the main adult breaking gaze sideways toward the peer, touching one fingertip to her cheek, and holding a restrained closed smile; the cues are photographic and contain no exaggerated cartoon symbols."
+    },
+    {
+      "gate_id": "vo_embarrassment_repair_restitution",
+      "required_review_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "evidence": "At native and thumbnail scale, the main adult's hand is visibly inserted among the upright cards in the labeled catalog box as a sorting/reordering action, while displaced cards remain visible around that same box."
+    },
+    {
+      "gate_id": "vo_embarrassment_repair_peer_response",
+      "required_review_scale": "thumbnail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "status": "pass",
+      "evidence": "In the thumbnail, a second adult is clearly visible facing the main adult and presenting a loose catalog card back over the work area, a readable helping/returning action linked to the scattered-card cleanup."
+    }
+  ],
+  "summary": {
+    "required_hard_gate_count": 4,
+    "passed_hard_gate_count": 4,
+    "failed_hard_gate_ids": [],
+    "technical_pixel_result": "pass",
+    "all_required_hard_gates_pass": true,
+    "user_acceptance": "pending_not_assessed_by_cross_reviewer"
+  },
+  "boundary": "The review reports only visible pixels at the declared scales. It does not infer a hidden mental state, verify identity, consult the prompt, or override requesting-user judgment."
+}
