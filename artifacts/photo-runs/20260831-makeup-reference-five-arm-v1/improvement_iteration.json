@@ -1,0 +1,152 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "1e589e8a95574918a5c4fd7c02051ebeeede7423",
+    "candidate_revision": "working-tree:photo_prompt_tags-v1.30+restrained_polished_natural_makeup_balance"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Generalize the attached portrait's observable makeup into visual-semantics and candidate-pack data, then test it in five independent random complex scenes with actual image generation."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The source shows a texture-preserving satin complexion, low-arch hair-readable brows, neutral taupe eye diffusion, micro outer liner taper, separated lashes, muted rose cheeks, centered rosy-coral soft-edge lips, and complexion-led hierarchy.",
+      "artifact": "artifacts/photo-runs/20260831-makeup-reference-five-arm-v1/shared/source_observation.json sha256(source)=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The final registry and dictionary validate, the visual index is registry-bound at 82 profiles and 483 exact terms, and the semantic index contains 6910 entries.",
+      "artifact": "validate_photo_prompt_dictionary.py PASS; build_visual_profile_index.py --check PASS; focused makeup suite 22/22 PASS"
+    },
+    {
+      "id": "e-preflight",
+      "kind": "prompt-evaluation",
+      "claim": "The first formal evidence thresholds rejected the frozen lash and cheek bindings before rendering; only those two word-count thresholds were corrected and every invalid pack was preserved unused.",
+      "artifact": "arms/arm-{a,b,c,d,e}/candidate_pack.preflight-invalid.json; no image call preceded correction"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five corrected v6 packs materialized the same eight-gate profile and all five composed/runtime audits passed.",
+      "artifact": "coordinator/final_results.json composed_audits_passed=5 runtime_audits_passed=5"
+    },
+    {
+      "id": "e-render-a",
+      "kind": "render-observation",
+      "claim": "Orbital botany arm passed all eight makeup gates and its scene gate.",
+      "artifact": "arms/arm-a/pixel_review.json image_sha256=2f481e37ef3bcf61ce8391d2673ecb03d7c28ebb4ac248b4c833579b25dd3076"
+    },
+    {
+      "id": "e-render-b",
+      "kind": "render-observation",
+      "claim": "Desert solar arm passed seven makeup gates but failed cheek pigment separation from amber reflected light.",
+      "artifact": "arms/arm-b/pixel_review.json image_sha256=22e5c53ab05ad17f3e9823b0a5596dc923538a58cdecb44a6f1d8f2853b4986e"
+    },
+    {
+      "id": "e-render-c",
+      "kind": "render-observation",
+      "claim": "Flooded library arm passed all eight makeup gates and its scene gate.",
+      "artifact": "arms/arm-c/pixel_review.json image_sha256=9add68795c08db6e09cdbe595d4fa5535c25b7b6bdd4d4b019ccbfbb832c3f3c"
+    },
+    {
+      "id": "e-render-d",
+      "kind": "render-observation",
+      "claim": "Nocturnal pollination arm passed all eight makeup gates and its scene gate.",
+      "artifact": "arms/arm-d/pixel_review.json image_sha256=f5f553d6c90ba71991c692875106359e73a5b8e284b94d39ab06a7175771e901"
+    },
+    {
+      "id": "e-render-e",
+      "kind": "render-observation",
+      "claim": "Ceramic acoustics arm passed all eight makeup gates but its separate chalk-mark scene gate failed.",
+      "artifact": "arms/arm-e/pixel_review.json image_sha256=2ed3798431d1f4882fc4e2ef3dd9664d0d787884b7c9f865b631ad9e283e712d"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A visibly applied but complexion-led polished natural makeup system survives in one saved image without environmental light or digital smoothing substituting for cosmetic placement.",
+    "user_appeal": null,
+    "invariants": [
+      {"id": "skin", "statement": "Thin satin correction preserves fine skin texture and tonal variation.", "evidence_ids": ["e-source"], "causal_controls": ["coverage opacity", "surface reflectance", "retouch strength"]},
+      {"id": "brows", "statement": "Soft low-arch brows retain individual hairs.", "evidence_ids": ["e-source"], "causal_controls": ["brow geometry", "hair-strand legibility"]},
+      {"id": "eyes", "statement": "Neutral taupe is deepest near upper lash roots and diffuses through the crease.", "evidence_ids": ["e-source"], "causal_controls": ["pigment density gradient", "crease diffusion"]},
+      {"id": "liner", "statement": "Slim interlash definition ends in a micro tapered outer extension.", "evidence_ids": ["e-source"], "causal_controls": ["line thickness", "outer extension length"]},
+      {"id": "lashes", "statement": "Upper lashes remain cleanly separated with restrained volume.", "evidence_ids": ["e-source"], "causal_controls": ["strand separation", "volume"]},
+      {"id": "cheeks", "statement": "Muted bilateral rose pigment has soft edges and remains distinct from environmental color.", "evidence_ids": ["e-source"], "causal_controls": ["pigment saturation", "bilateral placement", "facial key neutrality"]},
+      {"id": "lips", "statement": "Rosy-coral color peaks at the inner center, softens toward the edge, and retains low satin-balm sheen.", "evidence_ids": ["e-source"], "causal_controls": ["radial color distribution", "edge softness", "surface sheen"]},
+      {"id": "hierarchy", "statement": "The complexion leads while eye cheek and lip contrast remain mutually restrained.", "evidence_ids": ["e-source"], "causal_controls": ["cross-feature contrast", "face-light separation"]}
+    ],
+    "flexible_dimensions": ["adult original subject identity", "role", "setting", "event", "wardrobe", "camera angle", "environmental accent palette"]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-b-cheek-light",
+      "scale": "regional",
+      "axis": "cheek pigment versus environmental illumination",
+      "source_state": "Muted bilateral rose cheek pigment remains distinguishable under neutral face light.",
+      "render_state": "Strong amber heliostat reflection makes the cheek tint inseparable from environmental color.",
+      "evidence_ids": ["e-render-b"]
+    },
+    {
+      "id": "mismatch-e-scene-mark",
+      "scale": "local",
+      "axis": "supplemental scene evidence",
+      "source_state": "Not part of the makeup source contract.",
+      "render_state": "Chalk vibration marks are not distinguishable from tile grout or scratches, while the makeup profile itself passes.",
+      "evidence_ids": ["e-render-e"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-face-key-separation",
+      "stage": "prompt-interaction",
+      "statement": "A neutral facial key spatially separated from colored environmental accents is necessary for low-saturation cheek pigment to remain attributable to makeup.",
+      "evidence_ids": ["e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"],
+      "falsifier": "Repeated amber or similarly colored environmental-light scenes pass the cheek confound gate without stronger face-key isolation."
+    },
+    {
+      "id": "h-complex-scene-transfer",
+      "stage": "generator-response",
+      "statement": "Face-large framing plus eight literal layer bindings can preserve the makeup system across unrelated complex roles and actions.",
+      "evidence_ids": ["e-render-a", "e-render-c", "e-render-d", "e-render-e"],
+      "falsifier": "New unrelated face-large scenes repeatedly lose two or more component gates despite neutral facial lighting."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "test"],
+    "general_rule": "Represent the appearance as an eight-component definition-only visual obligation and a narrow preset assembled from independent complexion, brow, eye, lash, cheek, lip-placement, lip-finish, and wear-state slots; keep environmental-light separation as a hard confound gate.",
+    "generalization_basis": "The contract expresses observable relations rather than identity, demographic, product, or attractiveness labels and was exercised in five unrelated scenes.",
+    "hypothesis_ids": ["h-face-key-separation", "h-complex-scene-transfer"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "tests/test_photo_makeup_reference_balance.py",
+      "tests/fixtures/photo_prompt/makeup_reference_balance_cases_v1.jsonl"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-preflight", "e-prompt"]},
+    "render": {"status": "fail", "evidence_ids": ["e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {"id": "arm-a", "case_role": "motivating", "status": "pass", "covered_axes": ["cold orbital rim light", "small inspection prop", "face-large action portrait"], "evidence_ids": ["e-render-a"]},
+      {"id": "arm-b", "case_role": "held-out", "status": "fail", "covered_axes": ["amber reflection confound", "cobalt blue hour", "technical hand action"], "evidence_ids": ["e-render-b"]},
+      {"id": "arm-c", "case_role": "held-out", "status": "pass", "covered_axes": ["broad window light", "water reflection", "downward gaze"], "evidence_ids": ["e-render-c"]},
+      {"id": "arm-d", "case_role": "held-out", "status": "pass", "covered_axes": ["localized teal glow", "humid dark greenhouse", "microbrush action"], "evidence_ids": ["e-render-d"]},
+      {"id": "arm-e", "case_role": "held-out", "status": "pass", "covered_axes": ["amber corridor light", "cool tile reflection", "profile makeup isolated from scene-gate failure"], "evidence_ids": ["e-render-e"]}
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The implementation is structurally and prompt-valid and the target makeup profile passed four of five independent renders, but the amber-light cheek confound prevents universal render-fidelity promotion. User aesthetic acceptance was not received.",
+    "evidence_ids": ["e-package", "e-prompt", "e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"]
+  }
+}

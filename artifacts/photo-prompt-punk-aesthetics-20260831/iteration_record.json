@@ -3,7 +3,7 @@
   "target": {
     "skill_path": "skills/photo-prompt-image-generator",
     "baseline_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 with pre-existing face-shape and makeup worktree changes preserved",
-    "candidate_revision": "working tree with photo-punk-visual-semantics/v1 and semantic index db5fc1508c0e65a0559c2771ee5782776171b48fc103d41690deed88d20c37a6"
+    "candidate_revision": "1e589e8a95574918a5c4fd7c02051ebeeede7423 plus working-tree semantic cleanup and semantic index 5f5693ee803252d645854351303f67ee0a695af8f558dabf16ec6c0d830e017a"
   },
   "goal": {
     "claim_scope": "prompt-behavior",
@@ -25,7 +25,7 @@
     {
       "id": "e-package",
       "kind": "package-check",
-      "claim": "The dictionary validator, 6,909-entry semantic index, 81-profile visual index, 7 focused punk tests, 72-case existing worldbuilding holdout, and 39 BM25F and visual-profile regressions pass.",
+      "claim": "The dictionary validator, 6,910-entry semantic index, 82-profile visual index, 7 focused punk tests, 72-case existing worldbuilding holdout, and 40 BM25F and visual-profile regressions pass.",
       "artifact": "commands: validate_photo_prompt_dictionary.py; eval_semantic.py --check-index; build_visual_profile_index.py --check; python -m unittest tests.test_photo_punk_aesthetic_semantics; test_worldbuilding_extension_routes_holdout_and_evidence_are_deep_and_scoped; tests.test_photo_bm25f_retrieval tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval"
     },
     {
@@ -49,8 +49,8 @@
     {
       "id": "e-regression-boundary",
       "kind": "package-check",
-      "claim": "The broad research-evidence contract still fails on pre-existing pose, makeup, and hair evidence rows whose reuse notes lack legacy no/copied wording; the new punk evidence rows pass the same constraints and the failure does not name a punk row.",
-      "artifact": "tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_retrieval_holdout_and_research_evidence_contracts_are_versioned"
+      "claim": "The 756-test full discovery reported 31 failures and 4 errors dominated by a concurrently stale visual-profile index, pre-existing golden and illustration byte drift, and legacy evidence-note wording. Both indexes were subsequently refreshed by the active workspace tasks; the new punk rows, focused tests, existing worldbuilding holdout, and related retrieval regressions pass.",
+      "artifact": "command: python -m unittest discover -s tests -q; focused regression commands listed in e-package"
     }
   ],
   "perceptual_contract": {
@@ -201,10 +201,11 @@
       "skills/photo-prompt-image-generator/assets/photo_prompt_punk_aesthetics_extension.json",
       "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
       "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
-      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/db5fc1508c0e65a0",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5f5693ee803252d6",
       "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
       "tests/test_photo_punk_aesthetic_semantics.py",
       "tests/test_photo_prompt_contract_v2.py",
+      "tests/test_prompt_generator.py",
       "artifacts/photo-prompt-punk-aesthetics-20260831/iteration_record.json"
     ],
     "case_specific_runtime_defaults": []
