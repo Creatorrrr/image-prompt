@@ -1,0 +1,66 @@
+{
+  "schema_version": "photo-womens-casualwear-five-arm-protocol/v1",
+  "request_envelope_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/shared/request_envelope.json",
+  "request_envelope_sha256": "57e473d8e5ee4628ed9efda40d2a75248d394506181bf02be014d2a05d3ca655",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "boundary": "Facial and general appearance continuity only; no biometric identity verification claim. The source is a head-and-shoulders portrait, so garment topology must be judged only from the newly generated full-body pixels."
+  },
+  "isolation": {
+    "fork_turns": "none",
+    "pre_core_allowed_sources": [
+      "request envelope",
+      "attached reference image",
+      "assigned domain lane and random seed",
+      "agent general knowledge",
+      "photo-prompt-image-generator SKILL.md"
+    ],
+    "pre_core_forbidden_sources": [
+      "candidate packs",
+      "skill assets",
+      "skill references",
+      "skill scripts",
+      "tests and fixtures",
+      "other arms",
+      "target garment profile assignment"
+    ],
+    "target_profile_reveal": "only after each authorial core is frozen and hashed"
+  },
+  "arms": [
+    {
+      "arm_id": "casualwear-arm-a",
+      "random_seed": 1270214661,
+      "domain_lane": "pre-dawn tidal observatory instrument calibration in sea mist"
+    },
+    {
+      "arm_id": "casualwear-arm-b",
+      "random_seed": 620747397,
+      "domain_lane": "sunlit brutalist seed-bank accession audit with floating dust"
+    },
+    {
+      "arm_id": "casualwear-arm-c",
+      "random_seed": 1667872007,
+      "domain_lane": "rainy restored art-deco ferry terminal parcel handoff"
+    },
+    {
+      "arm_id": "casualwear-arm-d",
+      "random_seed": 2187035945,
+      "domain_lane": "glasshouse kinetic-sculpture maintenance under colored caustics"
+    },
+    {
+      "arm_id": "casualwear-arm-e",
+      "random_seed": 2067824148,
+      "domain_lane": "underground book-conservation lab after a sprinkler alarm"
+    }
+  ],
+  "verdict_policy": {
+    "one_saved_image_per_arm": true,
+    "all_target_gates_required": true,
+    "partial_or_missing_gate": "fail",
+    "blocked_or_missing_image": "unscored",
+    "prompt_audit_is_pixel_proof": false,
+    "user_judgment": "pending"
+  }
+}

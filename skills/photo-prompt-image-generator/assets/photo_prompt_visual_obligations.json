@@ -8520,6 +8520,1252 @@
         {"id": "vo_biohybrid_not_biomimetic_cyborg_or_animal_sensor", "review_scale": "both", "description": "Animal-inspired shape, organic paint, a fully synthetic biomimetic robot, human cyborg implant, or sensor-equipped animal does not substitute for living-synthetic integration."}
       ],
       "reject_substitutes": ["fully_synthetic_biomimetic_robot", "animal_shape_only", "organic_paint_or_texture", "human_cyborg_implant", "sensor_backpack_on_living_animal", "living_tissue_and_synthetic_parts_without_functional_interface"]
+    },
+    {
+      "id": "low_brand_prominence_material_luxury",
+      "category": "luxury_visual_grammar",
+      "activation": {
+        "exact_terms": ["quiet luxury", "discreet luxury", "understated luxury", "콰이어트 럭셔리", "절제된 럭셔리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Quiet luxury is a low-brand-prominence visual grammar in which natural material variation, precise cut or fit, exact junctions, and restrained hardware do the visible work. Beige minimalism, plain basics, an empty room, or a wealthy-looking person alone cannot establish it, and pixels do not prove actual wealth, price, rarity, provenance, or authenticity.",
+        "paraphrase_examples": ["low brand prominence with matte fine wool, exact tailoring and restrained hardware", "로고 과시 없이 재료 표면과 재단, 접합부 정밀도가 함께 보이는 스타일"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["low_brand_prominence", "material_specificity", "fit_or_form_control", "junction_or_hardware_precision"],
+          "groups": [
+            {"id": "low_brand_prominence", "any_terms": ["low brand prominence", "no readable logo", "restrained original mark", "낮은 브랜드 표식", "읽을 수 있는 로고 없음"]},
+            {"id": "material_specificity", "any_terms": ["natural leather variation", "fine wool matte pile", "stone wood or metal material plane", "천연 가죽 변화", "미세한 울 파일"]},
+            {"id": "fit_or_form_control", "any_terms": ["precise tailoring", "controlled drape", "balanced silhouette", "정밀 재단", "제어된 드레이프"]},
+            {"id": "junction_or_hardware_precision", "any_terms": ["clean junction", "shadow gap", "restrained hardware", "painted edge", "정밀 접합", "절제된 하드웨어"]}
+          ]
+        },
+        "contrast_examples": ["generic beige outfit", "empty white room", "plain inexpensive basics", "wealth price rarity or authenticity inferred from appearance"]
+      },
+      "concept_candidate": {"concept_terms": ["low brand prominence", "natural material variation", "precise tailoring or controlled form", "clean material junction", "restrained hardware", "material-detail macro plus full silhouette"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["quiet luxury"], "forbidden_prompt_terms": ["verified wealthy", "guaranteed expensive", "authentic brand proof"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Pair a readable whole-form view of cut or proportion with a close material or junction view. Keep marks absent or restrained and original. Require material specificity plus fit or form plus junction or hardware evidence; do not use beige color, an empty space, or a status-bearing person as the whole meaning.",
+      "required_evidence_fields": ["brand_prominence_phrase", "material_phrase", "fit_form_phrase", "junction_hardware_phrase"],
+      "evidence_requirements": {
+        "brand_prominence_phrase": {"min_content_words": 3, "must_mention_any": ["low brand prominence", "no readable logo", "restrained original mark"]},
+        "material_phrase": {"min_content_words": 3, "must_mention_any": ["natural material variation", "fine wool matte pile", "full-grain leather"]},
+        "fit_form_phrase": {"min_content_words": 3, "must_mention_any": ["precise tailoring", "controlled drape", "balanced silhouette"]},
+        "junction_hardware_phrase": {"min_content_words": 3, "must_mention_any": ["clean material junction", "restrained hardware", "painted leather edge", "shadow gap"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_quiet_low_prominence", "review_scale": "both", "description": "Readable logos and copied house marks do not dominate; any code is restrained and original."},
+        {"id": "vo_luxury_quiet_material_specificity", "review_scale": "native", "description": "At least one material shows specific grain, pile, weave, or mineral character rather than a flat beige fill."},
+        {"id": "vo_luxury_quiet_fit_or_form", "review_scale": "thumbnail", "description": "Precise fit, drape, proportion, or plane control remains legible in the whole form."},
+        {"id": "vo_luxury_quiet_junction_precision", "review_scale": "native", "description": "A clean seam, edge, shadow gap, restrained fastener, or material junction remains visible."},
+        {"id": "vo_luxury_quiet_not_status_inference", "review_scale": "both", "description": "Beige minimalism, a plain room, a person who appears wealthy, or a price/authenticity claim does not substitute for the component system."}
+      ],
+      "reject_substitutes": ["beige_minimalism_only", "empty_white_room", "plain_basics_without_construction", "wealth_or_price_inference", "copied_brand_logo"]
+    },
+    {
+      "id": "conspicuous_original_house_code_display",
+      "category": "luxury_visual_grammar",
+      "activation": {
+        "exact_terms": ["conspicuous luxury", "loud luxury", "logomania styling", "컨스피큐어스 럭셔리", "로고마니아 스타일"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Conspicuous luxury uses high visual prominence of an original fictional non-letter emblem, repeated geometric motif, and distinctive hardware across a coherent constructed object or display. It must not copy a real trademark, readable brand name, monogram, or product design; random text, generic gold-and-black clutter, and counterfeiting are different concepts.",
+        "paraphrase_examples": ["a large original emblem and repeated geometric code integrated into leather and hardware", "실제 로고가 아닌 오리지널 비문자 표식과 반복 모티프가 물성과 구조에 통합된 과시적 스타일"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["original_nonletter_code", "high_prominence", "coherent_repetition", "material_object_integration"],
+          "groups": [
+            {"id": "original_nonletter_code", "any_terms": ["original fictional non-letter emblem", "new geometric house motif", "오리지널 비문자 엠블럼", "새 기하 모티프"]},
+            {"id": "high_prominence", "any_terms": ["large central emblem", "prominent repeated code", "큰 중앙 표식", "전면 반복 코드"]},
+            {"id": "coherent_repetition", "any_terms": ["same motif repeats across surface and hardware", "coordinated motif scale", "같은 모티프 반복", "표면과 하드웨어의 통일 코드"]},
+            {"id": "material_object_integration", "any_terms": ["emblem integrated into construction", "motif aligned with seams and fasteners", "표식이 구조에 통합", "심과 체결부에 정렬"]}
+          ]
+        },
+        "contrast_examples": ["copied real logo or monogram", "readable brand text", "random decorative pattern", "gold-and-black clutter without coherent object construction"]
+      },
+      "concept_candidate": {"concept_terms": ["original fictional non-letter emblem", "high visual prominence", "repeated geometric house code", "signature original hardware", "materially coherent object", "no readable brand text"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["conspicuous luxury", "loud luxury", "logomania", "copy a real logo", "replicate a branded monogram", "counterfeit"], "runtime_forbidden_labels": ["conspicuous luxury", "loud luxury", "logomania"]},
+      "composition_instruction": "Create a new non-letter emblem and geometric motif, then repeat them coherently across surface, fastening, and display scale. Keep the object construction and material visible. Do not reproduce a real logo, brand name, signature monogram, or recognizable product design.",
+      "required_evidence_fields": ["original_code_phrase", "prominence_phrase", "repetition_phrase", "object_integration_phrase"],
+      "evidence_requirements": {
+        "original_code_phrase": {"min_content_words": 4, "must_mention_any": ["original fictional non-letter emblem", "new geometric house motif"]},
+        "prominence_phrase": {"min_content_words": 3, "must_mention_any": ["large central emblem", "high visual prominence", "prominent repeated code"]},
+        "repetition_phrase": {"min_content_words": 4, "must_mention_any": ["same motif repeats across surface and hardware", "coordinated motif scale"]},
+        "object_integration_phrase": {"min_content_words": 4, "must_mention_any": ["emblem integrated into construction", "motif aligned with seams and fasteners"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_loud_original_code", "review_scale": "native", "description": "The emblem and motif are visibly original, non-letter, and not copied from a real trademark or product."},
+        {"id": "vo_luxury_loud_prominence", "review_scale": "thumbnail", "description": "The original code is intentionally prominent at first look."},
+        {"id": "vo_luxury_loud_coherent_repetition", "review_scale": "both", "description": "One motif repeats with controlled scale and alignment rather than as random pattern noise."},
+        {"id": "vo_luxury_loud_material_integration", "review_scale": "native", "description": "The code aligns with seams, hardware, relief, or other construction details of a coherent object."},
+        {"id": "vo_luxury_loud_not_logo_or_clutter", "review_scale": "both", "description": "Readable brand text, copied monograms, counterfeit styling, and generic gold clutter do not substitute."}
+      ],
+      "reject_substitutes": ["copied_real_logo", "readable_brand_name", "counterfeit_monogram", "random_text_pattern", "generic_gold_black_clutter"]
+    },
+    {
+      "id": "couture_atelier_individual_construction",
+      "category": "luxury_craft_process",
+      "activation": {
+        "exact_terms": ["haute couture", "couture atelier", "metiers d'art couture", "오트 쿠튀르", "쿠튀르 아틀리에"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Couture atelier craft is individualized garment construction evidenced by a basted toile or client-specific form, live fitting or draping corrections, layered internal support, and hand attachment or finishing. A finished gown, runway show, red-carpet glamour, or ready-to-wear rack is insufficient, and pixels cannot prove legal Haute Couture accreditation.",
+        "paraphrase_examples": ["a basted toile is corrected on the client while internal support and hand embroidery remain visible", "개별 토일 피팅과 내부 지지층, 손자수 부착 공정이 한 장면에 연결됨"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["individual_toile_or_form", "live_fitting_or_draping", "internal_construction", "hand_attachment_or_finish"],
+          "groups": [
+            {"id": "individual_toile_or_form", "any_terms": ["basted toile for one client", "client-specific dress form", "개별 고객 토일", "고객별 드레스폼"]},
+            {"id": "live_fitting_or_draping", "any_terms": ["fit correction pins and balance lines", "hand draping on the form", "피팅 수정 핀", "드레이핑 조정"]},
+            {"id": "internal_construction", "any_terms": ["visible internal support layers", "boning canvas or understructure", "내부 지지층", "보닝과 캔버스"]},
+            {"id": "hand_attachment_or_finish", "any_terms": ["hand-attached embroidery", "hand-finished hem or seam", "손자수 부착", "손마감 솔기"]}
+          ]
+        },
+        "contrast_examples": ["finished evening gown portrait", "runway glamour", "ready-to-wear rack", "legal accreditation inferred from appearance"]
+      },
+      "concept_candidate": {"concept_terms": ["basted toile", "individual fitting", "balance correction lines", "hand draping", "internal support layers", "hand embroidery attachment", "atelier process"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["couture atelier craft"], "forbidden_prompt_terms": ["legally accredited from appearance"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the individual toile or client-specific form, live correction or draping, internal construction, and one hand attachment point together. Favor a process view over a glamour portrait; do not infer accreditation from pixels.",
+      "required_evidence_fields": ["toile_phrase", "fitting_draping_phrase", "internal_support_phrase", "hand_finish_phrase"],
+      "evidence_requirements": {
+        "toile_phrase": {"min_content_words": 3, "must_mention_any": ["basted toile for one client", "client-specific dress form"]},
+        "fitting_draping_phrase": {"min_content_words": 4, "must_mention_any": ["fit correction pins and balance lines", "hand draping on the form"]},
+        "internal_support_phrase": {"min_content_words": 3, "must_mention_any": ["visible internal support layers", "boning canvas or understructure"]},
+        "hand_finish_phrase": {"min_content_words": 3, "must_mention_any": ["hand-attached embroidery", "hand-finished hem or seam"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_couture_individual_toile", "review_scale": "both", "description": "A basted toile or client-specific form remains clearly visible."},
+        {"id": "vo_luxury_couture_live_correction", "review_scale": "native", "description": "Pins, balance marks, draping, or fitting corrections show an active individual construction step."},
+        {"id": "vo_luxury_couture_internal_layers", "review_scale": "native", "description": "Internal support, canvas, boning, lining, or layered construction is readable."},
+        {"id": "vo_luxury_couture_hand_finish", "review_scale": "native", "description": "A hand embroidery, seam, hem, or attachment point is visibly being completed."},
+        {"id": "vo_luxury_couture_not_gown_only", "review_scale": "thumbnail", "description": "A finished gown, runway, or red-carpet pose does not substitute for the atelier process."}
+      ],
+      "reject_substitutes": ["finished_gown_only", "runway_glamour", "red_carpet_portrait", "ready_to_wear_rack", "accreditation_inferred_from_pixels"]
+    },
+    {
+      "id": "bespoke_tailoring_individual_pattern",
+      "category": "luxury_craft_process",
+      "activation": {
+        "exact_terms": ["bespoke tailoring", "bespoke suit craft", "비스포크 테일러링", "맞춤 재단 수트"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Bespoke tailoring is one-client pattern ownership and iterative construction: an individually drafted paper pattern, a basted fitting with visible balance corrections, hand-canvassed or hand-worked internal structure, and retained records or aftercare. Made-to-measure stock-pattern adjustment, simple alterations, and a well-fitted finished suit portrait are different concepts.",
+        "paraphrase_examples": ["a master cutter adjusts one client's paper pattern beside the same client's basted fitting", "개인별 종이 패턴과 베이스팅 피팅 수정, 손캔버스 내부가 같은 고객의 공정으로 연결됨"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["individual_paper_pattern", "basted_fitting_correction", "hand_internal_construction", "record_or_aftercare"],
+          "groups": [
+            {"id": "individual_paper_pattern", "any_terms": ["individually drafted paper pattern", "one-client pattern pieces", "개인별 종이 패턴", "고객 전용 패턴"]},
+            {"id": "basted_fitting_correction", "any_terms": ["basted fitting with balance corrections", "chalk and pin adjustment on the same client", "베이스팅 피팅 수정", "같은 고객의 초크 조정"]},
+            {"id": "hand_internal_construction", "any_terms": ["hand-canvassed interior", "hand-padded lapel or internal stitch", "손캔버스 내부", "손바느질 라펠"]},
+            {"id": "record_or_aftercare", "any_terms": ["retained pattern record", "repair or aftercare folder", "보관된 패턴 기록", "수선 애프터케어 기록"]}
+          ]
+        },
+        "contrast_examples": ["made-to-measure stock pattern", "simple sleeve alteration", "off-the-rack suit fitting", "finished suit portrait without construction evidence"]
+      },
+      "concept_candidate": {"concept_terms": ["individual paper pattern", "master cutter", "basted fitting", "balance corrections", "hand-canvassed interior", "retained pattern record", "aftercare continuity"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["bespoke tailoring"], "forbidden_prompt_terms": ["stock-pattern made-to-measure"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep one client's marked paper pattern and that same client's basted fitting in a readable relation. Expose a hand-canvassed internal section and a retained record or aftercare cue. A polished suit portrait alone cannot substitute.",
+      "required_evidence_fields": ["individual_pattern_phrase", "basted_fitting_phrase", "hand_canvas_phrase", "record_aftercare_phrase"],
+      "evidence_requirements": {
+        "individual_pattern_phrase": {"min_content_words": 3, "must_mention_any": ["individually drafted paper pattern", "one-client pattern pieces"]},
+        "basted_fitting_phrase": {"min_content_words": 4, "must_mention_any": ["basted fitting with balance corrections", "chalk and pin adjustment on the same client"]},
+        "hand_canvas_phrase": {"min_content_words": 3, "must_mention_any": ["hand-canvassed interior", "hand-padded lapel"]},
+        "record_aftercare_phrase": {"min_content_words": 3, "must_mention_any": ["retained pattern record", "repair or aftercare folder"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_bespoke_individual_pattern", "review_scale": "both", "description": "An individually drafted paper pattern tied to one client is clearly visible."},
+        {"id": "vo_luxury_bespoke_basted_correction", "review_scale": "native", "description": "A basted fitting shows active chalk, pin, balance, or posture correction on the same client."},
+        {"id": "vo_luxury_bespoke_hand_canvas", "review_scale": "native", "description": "Hand-canvassed or hand-worked internal construction is exposed and legible."},
+        {"id": "vo_luxury_bespoke_record_continuity", "review_scale": "native", "description": "A retained individual pattern, measurement record, repair, or aftercare cue establishes continuity."},
+        {"id": "vo_luxury_bespoke_not_mtm_or_portrait", "review_scale": "thumbnail", "description": "Stock-pattern made-to-measure, simple alteration, or a finished suit portrait does not substitute."}
+      ],
+      "reject_substitutes": ["made_to_measure_stock_pattern", "simple_alteration", "off_the_rack_fit", "finished_suit_portrait_only"]
+    },
+    {
+      "id": "heritage_travel_object_construction",
+      "category": "luxury_object_construction",
+      "activation": {
+        "exact_terms": ["heritage travel luxury", "trunk-maker aesthetic", "heritage trunk luxury", "트렁크 메이커 럭셔리", "헤리티지 트래블 럭셔리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Heritage travel-object craft is a brand-neutral protective construction system: a balanced rigid frame, fitted canvas or leather covering, reinforced corners and attached working hardware, plus compartments or other travel-protection function. A suitcase silhouette, decorative luggage prop, patina, or monogram surface alone is insufficient and does not prove provenance.",
+        "paraphrase_examples": ["a rigid wood frame receives fitted covering before reinforced corners and locks are attached", "목재 프레임과 피복, 코너 보강, 잠금장치가 여행 보호 기능으로 연결된 트래블 오브제"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["rigid_protective_frame", "fitted_covering", "reinforced_hardware", "travel_protection_function"],
+          "groups": [
+            {"id": "rigid_protective_frame", "any_terms": ["balanced wood-panel frame", "rigid protective case structure", "균형 잡힌 목재 프레임", "단단한 보호 구조"]},
+            {"id": "fitted_covering", "any_terms": ["canvas or leather fitted over the frame", "wrapped and tensioned covering", "프레임에 맞춘 캔버스나 가죽", "장력 있는 피복"]},
+            {"id": "reinforced_hardware", "any_terms": ["attached metal corners and working lock", "reinforced edge and hinge", "부착된 금속 코너와 잠금장치", "보강 모서리와 경첩"]},
+            {"id": "travel_protection_function", "any_terms": ["protective compartment logic", "secure travel storage", "보호 수납 구조", "여행용 안전 보관"]}
+          ]
+        },
+        "contrast_examples": ["suitcase silhouette only", "decorative old trunk", "monogram surface", "patina presented as proof of history"]
+      },
+      "concept_candidate": {"concept_terms": ["rigid protective frame", "fitted canvas or leather covering", "reinforced corners", "working lock and hinges", "protective compartments", "brand-neutral travel use"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["heritage travel luxury", "trunk-maker aesthetic", "heritage trunk luxury", "copied branded trunk", "verified historical provenance"], "runtime_forbidden_labels": ["heritage travel luxury", "trunk-maker aesthetic", "heritage trunk luxury"]},
+      "composition_instruction": "Expose enough of the assembly to read the rigid frame beneath its fitted covering, then keep a reinforced corner, hinge or lock, and protective storage function visible. Do not use a recognizable branded trunk or monogram.",
+      "required_evidence_fields": ["frame_phrase", "covering_phrase", "hardware_phrase", "travel_function_phrase"],
+      "evidence_requirements": {
+        "frame_phrase": {"min_content_words": 3, "must_mention_any": ["balanced wood-panel frame", "rigid protective case structure"]},
+        "covering_phrase": {"min_content_words": 4, "must_mention_any": ["canvas or leather fitted over the frame", "wrapped and tensioned covering"]},
+        "hardware_phrase": {"min_content_words": 4, "must_mention_any": ["attached metal corners and working lock", "reinforced edge and hinge"]},
+        "travel_function_phrase": {"min_content_words": 3, "must_mention_any": ["protective compartment logic", "secure travel storage"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_travel_rigid_frame", "review_scale": "both", "description": "The case has a readable rigid protective frame rather than a soft luggage silhouette."},
+        {"id": "vo_luxury_travel_fitted_covering", "review_scale": "native", "description": "Canvas or leather is visibly fitted and tensioned over the structural frame."},
+        {"id": "vo_luxury_travel_reinforced_hardware", "review_scale": "native", "description": "Corners, hinges, locks, or edges are attached as functional reinforcements."},
+        {"id": "vo_luxury_travel_protective_function", "review_scale": "thumbnail", "description": "Compartments, closure, or storage use makes the travel-protection function legible."},
+        {"id": "vo_luxury_travel_not_shape_or_monogram", "review_scale": "both", "description": "A suitcase outline, decorative patina, or monogram surface does not substitute for construction."}
+      ],
+      "reject_substitutes": ["suitcase_silhouette_only", "decorative_old_trunk", "monogram_surface_only", "patina_as_provenance", "copied_branded_trunk"]
+    },
+    {
+      "id": "high_jewelry_setting_integration",
+      "category": "luxury_object_construction",
+      "activation": {
+        "exact_terms": ["high jewelry", "high jewellery", "haute joaillerie", "하이 주얼리", "오트 조아이예리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "High-jewelry craft is a mechanically legible integration of matched gemstones and an original supporting metal design. Stone size or color matching, prong, bezel, pavé, or another setting contact, supporting gallery or structure, and bench placement or inspection must work together. Loose gems, generic sparkle, costume jewelry, and price or rarity claims are insufficient.",
+        "paraphrase_examples": ["matched stones are secured by visible prongs into one original metal gallery", "크기와 색이 맞춰진 보석이 프롱·베젤 접점과 금속 지지구조에 통합됨"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["matched_stones", "setting_contact", "supporting_metal_structure", "integrated_original_design"],
+          "groups": [
+            {"id": "matched_stones", "any_terms": ["stones matched by size and color", "graduated gemstone layout", "크기와 색이 맞는 보석", "그라데이션 보석 배열"]},
+            {"id": "setting_contact", "any_terms": ["prongs visibly hold each stone", "bezel or pavé contact", "프롱이 보석을 고정", "베젤 또는 파베 접점"]},
+            {"id": "supporting_metal_structure", "any_terms": ["metal gallery supports the stones", "load-bearing setting frame", "금속 갤러리 지지", "하중을 받는 세팅 프레임"]},
+            {"id": "integrated_original_design", "any_terms": ["stones and metal share one original composition", "setting follows the same original geometry", "보석과 금속의 오리지널 통합 구성", "같은 기하를 따르는 세팅"]}
+          ]
+        },
+        "contrast_examples": ["loose gemstones on velvet", "glitter or bokeh", "costume jewelry", "price or carat value used as visual proof"]
+      },
+      "concept_candidate": {"concept_terms": ["matched gemstone layout", "prong bezel or pavé contact", "supporting metal gallery", "original integrated jewelry design", "setting under magnification", "controlled specular light"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["high-jewelry setting craft"], "forbidden_prompt_terms": ["verified expensive", "guaranteed rare"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep matched stones, their holding contacts, the supporting metal gallery, and the setter's work point in one readable view. Control highlights so sparkle does not hide the mechanical setting. Use an original brand-neutral design.",
+      "required_evidence_fields": ["matched_stones_phrase", "setting_contact_phrase", "metal_support_phrase", "integrated_design_phrase"],
+      "evidence_requirements": {
+        "matched_stones_phrase": {"min_content_words": 3, "must_mention_any": ["stones matched by size and color", "graduated gemstone layout"]},
+        "setting_contact_phrase": {"min_content_words": 3, "must_mention_any": ["prongs visibly hold each stone", "bezel or pavé contact"]},
+        "metal_support_phrase": {"min_content_words": 3, "must_mention_any": ["metal gallery supports the stones", "load-bearing setting frame"]},
+        "integrated_design_phrase": {"min_content_words": 4, "must_mention_any": ["stones and metal share one original composition", "setting follows the same original geometry"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_jewelry_matched_stones", "review_scale": "both", "description": "Gemstones show intentional size, color, or gradient matching within one design."},
+        {"id": "vo_luxury_jewelry_setting_contact", "review_scale": "native", "description": "Prongs, bezel walls, pavé beads, or another setting contact visibly secures the stones."},
+        {"id": "vo_luxury_jewelry_metal_support", "review_scale": "native", "description": "A coherent metal gallery or frame supports the stone layout."},
+        {"id": "vo_luxury_jewelry_integrated_design", "review_scale": "thumbnail", "description": "Stones and metal read as one original composition rather than loose materials."},
+        {"id": "vo_luxury_jewelry_not_sparkle_or_price", "review_scale": "both", "description": "Loose gems, glitter, costume sparkle, price, and rarity claims do not substitute for setting structure."}
+      ],
+      "reject_substitutes": ["loose_gemstones", "generic_glitter", "costume_jewelry", "price_or_carat_claim", "copied_branded_design"]
+    },
+    {
+      "id": "fine_watchmaking_mechanical_finishing",
+      "category": "luxury_object_construction",
+      "activation": {
+        "exact_terms": ["fine watchmaking", "haute horlogerie", "파인 워치메이킹", "오트 오를로제리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Fine-watchmaking craft joins a coherent mechanical movement and connected timekeeping function with differentiated finishing such as chamfering, polishing, brushing, engraving, or hand decoration, plus an assembly or adjustment context. Loose gears, a printed skeleton motif, a smartwatch display, or a status portrait cannot establish it.",
+        "paraphrase_examples": ["connected bridges and gear train show brushed planes, polished chamfers and active adjustment", "연결된 기계식 무브먼트에 브러싱·폴리시·앵글라주 차등 마감과 조립 맥락이 함께 보임"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["coherent_mechanical_movement", "connected_time_function", "differentiated_finishing", "assembly_or_adjustment"],
+          "groups": [
+            {"id": "coherent_mechanical_movement", "any_terms": ["connected bridges gear train and escapement", "coherent mechanical movement", "연결된 브리지 기어트레인 이스케이프먼트", "일관된 기계식 무브먼트"]},
+            {"id": "connected_time_function", "any_terms": ["movement connects to a legible time display", "winding or regulation function remains readable", "무브먼트와 시간 표시 연결", "와인딩 또는 조정 기능"]},
+            {"id": "differentiated_finishing", "any_terms": ["brushed planes and polished chamfers", "anglage polishing and engraving", "브러시 면과 폴리시 모서리", "앵글라주와 인그레이빙"]},
+            {"id": "assembly_or_adjustment", "any_terms": ["watchmaker adjusts the bridge or regulator", "assembly at the movement work point", "브리지 또는 레귤레이터 조정", "무브먼트 조립 작업점"]}
+          ]
+        },
+        "contrast_examples": ["scattered decorative gears", "printed skeleton dial", "smartwatch screen", "luxury watch worn as a status symbol"]
+      },
+      "concept_candidate": {"concept_terms": ["coherent mechanical movement", "connected gear train and escapement", "legible time function", "brushed planes", "polished chamfers or anglage", "assembly or regulation under a loupe"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["fine-watchmaking craft"], "forbidden_prompt_terms": ["scattered decorative gears", "smartwatch"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show enough of the movement to read connected bridges, gear train, and timekeeping or regulation function. Use grazing light to separate brushed planes from polished chamfers, and keep an assembly or adjustment point visible. Loose gears and printed motifs are not substitutes.",
+      "required_evidence_fields": ["movement_phrase", "function_phrase", "finishing_phrase", "assembly_phrase"],
+      "evidence_requirements": {
+        "movement_phrase": {"min_content_words": 4, "must_mention_any": ["connected bridges gear train and escapement", "coherent mechanical movement"]},
+        "function_phrase": {"min_content_words": 4, "must_mention_any": ["movement connects to a legible time display", "winding or regulation function remains readable"]},
+        "finishing_phrase": {"min_content_words": 4, "must_mention_any": ["brushed planes and polished chamfers", "anglage polishing and engraving"]},
+        "assembly_phrase": {"min_content_words": 4, "must_mention_any": ["watchmaker adjusts the bridge or regulator", "assembly at the movement work point"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_watch_coherent_movement", "review_scale": "both", "description": "Bridges, gear train, escapement, or regulator form one plausible connected movement."},
+        {"id": "vo_luxury_watch_time_function", "review_scale": "thumbnail", "description": "Time display, winding, or regulation remains connected to the movement rather than decorative."},
+        {"id": "vo_luxury_watch_differentiated_finish", "review_scale": "native", "description": "Brushed, polished, chamfered, engraved, or decorated surfaces remain visibly differentiated."},
+        {"id": "vo_luxury_watch_assembly_context", "review_scale": "native", "description": "A watchmaker's tool contact, assembly, adjustment, or inspection point is visible."},
+        {"id": "vo_luxury_watch_not_gears_or_smartwatch", "review_scale": "both", "description": "Loose gears, a printed skeleton pattern, smartwatch UI, or a status portrait does not substitute."}
+      ],
+      "reject_substitutes": ["loose_decorative_gears", "printed_skeleton_motif", "smartwatch_display", "status_watch_portrait", "disconnected_impossible_movement"]
+    },
+    {
+      "id": "private_client_service_interaction",
+      "category": "luxury_service_interaction",
+      "activation": {
+        "exact_terms": ["private client luxury", "private appointment luxury", "white-glove luxury service", "프라이빗 클라이언트 럭셔리", "화이트 글러브 서비스"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Private-client luxury is a responsive one-to-one service interaction: one advisor attends to one client's stated material, fit, function, or care need; presents a curated few; handles or fits them carefully; and leaves an aftercare, repair, or restoration continuation. An empty marble lobby, champagne, velvet rope, private room, or salesperson pose alone is insufficient.",
+        "paraphrase_examples": ["one advisor compares a curated few materials against the client's fit need and records the chosen aftercare", "한 명의 상담자가 고객 요구에 맞춰 소수 선택지를 다루고 피팅·애프터케어까지 연결함"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["advisor_client_response", "curated_few", "careful_handling_or_fit", "aftercare_continuity"],
+          "groups": [
+            {"id": "advisor_client_response", "any_terms": ["one advisor responds to one client's stated need", "advisor points to the requested material or fit difference", "한 상담자가 한 고객 요구에 반응", "요청한 재료나 핏 차이에 응답"]},
+            {"id": "curated_few", "any_terms": ["two or three relevant options", "limited curated selection", "관련된 두세 선택지", "소수 큐레이션"]},
+            {"id": "careful_handling_or_fit", "any_terms": ["careful gloved handling at the object", "live fit or function check", "오브제의 신중한 취급", "실제 핏 또는 기능 확인"]},
+            {"id": "aftercare_continuity", "any_terms": ["repair restoration or aftercare record", "follow-up care plan", "수리 복원 애프터케어 기록", "후속 관리 계획"]}
+          ]
+        },
+        "contrast_examples": ["empty marble lobby", "champagne tray", "velvet rope", "generic salesperson pose with many products"]
+      },
+      "concept_candidate": {"concept_terms": ["one advisor and one client", "response to a stated need", "curated few options", "careful handling", "live fitting or function check", "repair restoration or aftercare continuity"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["private client luxury", "private appointment luxury", "white-glove luxury service", "wealthy VIP by appearance"], "runtime_forbidden_labels": ["private client luxury", "private appointment luxury", "white-glove luxury service"]},
+      "composition_instruction": "Keep the advisor's response, the client's need, a curated few options, and a handling, fit, or care action in one causal frame. Include a blank aftercare, repair, or restoration record without personal data. The room's opulence must remain secondary.",
+      "required_evidence_fields": ["response_phrase", "curated_few_phrase", "handling_fit_phrase", "aftercare_phrase"],
+      "evidence_requirements": {
+        "response_phrase": {"min_content_words": 5, "must_mention_any": ["one advisor responds to one client's stated need", "advisor points to the requested material or fit difference"]},
+        "curated_few_phrase": {"min_content_words": 3, "must_mention_any": ["two or three relevant options", "limited curated selection"]},
+        "handling_fit_phrase": {"min_content_words": 4, "must_mention_any": ["careful gloved handling at the object", "live fit or function check"]},
+        "aftercare_phrase": {"min_content_words": 4, "must_mention_any": ["repair restoration or aftercare record", "follow-up care plan"]}
+      },
+      "render_gates": [
+        {"id": "vo_luxury_service_response", "review_scale": "both", "description": "One advisor visibly responds to one client's material, fit, function, or care need."},
+        {"id": "vo_luxury_service_curated_few", "review_scale": "thumbnail", "description": "A limited relevant selection remains distinguishable from a crowded retail display."},
+        {"id": "vo_luxury_service_careful_handling", "review_scale": "native", "description": "Handling, fitting, inspection, or explanation occurs at the object or garment rather than as an empty pose."},
+        {"id": "vo_luxury_service_aftercare", "review_scale": "native", "description": "A repair, restoration, maintenance, or aftercare continuation is visible without personal data."},
+        {"id": "vo_luxury_service_not_room_or_champagne", "review_scale": "both", "description": "Marble, champagne, velvet rope, or privacy alone does not substitute for the service relationship."}
+      ],
+      "reject_substitutes": ["empty_marble_lobby", "champagne_service_only", "velvet_rope", "private_room_only", "generic_salesperson_pose", "wealthy_client_inference"]
+    },
+    {
+      "id": "button_down_collar_fastening",
+      "category": "garment_collar_closure_topology",
+      "activation": {
+        "exact_terms": [
+          "button-down shirt",
+          "button down shirt",
+          "button-down collar shirt",
+          "button down collar shirt",
+          "버튼다운 셔츠",
+          "버튼 다운 셔츠",
+          "버튼다운 칼라 셔츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A shirt topology with a complete center-front button placket and a point collar whose left and right collar tips are each visibly fastened to the shirt body by their own small buttons. The collar-point fastening, not the generic front opening, distinguishes it from an ordinary button-up shirt.",
+        "paraphrase_examples": [
+          "앞 플래킷과 별도로 좌우 칼라 끝이 작은 단추로 몸판에 고정된 셔츠",
+          "both pointed collar tips are separately buttoned down above a complete front placket",
+          "the collar remains readable as a point collar rather than a printed or button-like decoration"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "complete_front_placket",
+            "paired_point_collar",
+            "two_collar_point_buttons",
+            "collar_body_attachment",
+            "button_up_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "complete_front_placket",
+              "any_terms": [
+                "a complete center-front button placket remains visible",
+                "repeated front buttons define the shirt opening",
+                "중앙 앞여밈 단추 플래킷이 완전하게 보임"
+              ]
+            },
+            {
+              "id": "paired_point_collar",
+              "any_terms": [
+                "two pointed collar tips remain separately readable",
+                "a conventional point collar frames the neck",
+                "좌우 포인트 칼라 끝이 각각 보임"
+              ]
+            },
+            {
+              "id": "two_collar_point_buttons",
+              "any_terms": [
+                "one small button fastens each collar point",
+                "two distinct collar-point buttons are visible",
+                "각 칼라 끝을 고정하는 두 개의 작은 단추"
+              ]
+            },
+            {
+              "id": "collar_body_attachment",
+              "any_terms": [
+                "both collar tips visibly attach to the shirt body",
+                "the point buttons pass through collar-tip buttonholes",
+                "칼라 끝과 셔츠 몸판의 실제 체결 관계"
+              ]
+            },
+            {
+              "id": "button_up_confound_control",
+              "any_terms": [
+                "a generic button-up placket does not substitute for collar fastening",
+                "decorative studs or hidden collar tips cannot carry the distinction",
+                "일반 버튼업 앞여밈만으로 버튼다운을 판정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a generic button-up shirt whose collar points are loose",
+          "a polo collar with buttons only at the neck opening",
+          "decorative studs placed near but not through the collar tips",
+          "a crop or scarf hiding one or both collar points"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "complete center-front button placket",
+          "paired point-collar tips",
+          "two small collar-point buttons",
+          "visible collar-tip buttonholes",
+          "collar points attached to shirt body",
+          "distinct from generic button-up shirt"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["button-down collar shirt"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the neck, complete point collar, both collar tips, both small collar-point buttons, and enough of the front placket readable together. The attachment through each collar tip must carry the distinction from an ordinary button-up shirt.",
+      "required_evidence_fields": [
+        "front_placket_phrase",
+        "point_collar_phrase",
+        "collar_buttons_phrase",
+        "collar_attachment_phrase",
+        "button_up_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "front_placket_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "a complete center-front button placket remains visible",
+            "repeated front buttons define the shirt opening"
+          ]
+        },
+        "point_collar_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "two pointed collar tips remain separately readable",
+            "a conventional point collar frames the neck"
+          ]
+        },
+        "collar_buttons_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "one small button fastens each collar point",
+            "two distinct collar-point buttons are visible"
+          ]
+        },
+        "collar_attachment_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "both collar tips visibly attach to the shirt body",
+            "the point buttons pass through collar-tip buttonholes"
+          ]
+        },
+        "button_up_confound_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a generic button-up placket does not substitute for collar fastening",
+            "decorative studs or hidden collar tips cannot carry the distinction"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_garment_button_down_front_placket",
+          "review_scale": "thumbnail",
+          "description": "A complete center-front button placket makes the garment read as a shirt."
+        },
+        {
+          "id": "vo_garment_button_down_point_collar",
+          "review_scale": "both",
+          "description": "Two pointed collar tips remain separately readable around the neck."
+        },
+        {
+          "id": "vo_garment_button_down_two_point_buttons",
+          "review_scale": "native",
+          "description": "One distinct small button is visible at each collar point."
+        },
+        {
+          "id": "vo_garment_button_down_attachment",
+          "review_scale": "native",
+          "description": "Both collar tips visibly fasten through their buttonholes to the shirt body."
+        },
+        {
+          "id": "vo_garment_button_down_not_button_up_only",
+          "review_scale": "both",
+          "description": "A generic button-up opening, polo placket, decorative studs, or hidden collar tips do not substitute."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_button_up_shirt",
+        "polo_neck_placket",
+        "decorative_collar_studs",
+        "one_hidden_collar_point",
+        "collar_like_print_or_trim"
+      ]
+    },
+    {
+      "id": "cold_shoulder_cutout_topology",
+      "category": "garment_shoulder_sleeve_topology",
+      "activation": {
+        "exact_terms": [
+          "cold-shoulder top",
+          "cold shoulder top",
+          "cold-shoulder blouse",
+          "cold shoulder blouse",
+          "cold-shoulder knit top",
+          "콜드숄더 탑",
+          "콜드 숄더 탑",
+          "콜드숄더 블라우스",
+          "어깨 컷아웃 탑"
+        ],
+        "exclude_if_any_terms": [
+          "give the cold shoulder",
+          "gave the cold shoulder",
+          "cold shoulder treatment",
+          "냉대하다",
+          "외면하다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A top whose neckline or upper bodice remains continuous while one bounded opening exposes each shoulder top and the sleeve continues below each opening. Finished edges and fabric bridges preserve the garment route around the cutouts, distinguishing it from an off-shoulder neckline, a sleeveless top, or torn fabric.",
+        "paraphrase_examples": [
+          "네크라인과 양쪽 소매가 유지된 채 어깨 윗부분에만 경계 있는 창이 열린 탑",
+          "paired shoulder windows sit between a continuous neckline and attached sleeves",
+          "finished cutout seams and fabric bridges keep each sleeve connected"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "continuous_neckline",
+            "paired_shoulder_windows",
+            "attached_sleeves_below",
+            "finished_bridge_edges",
+            "off_shoulder_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "continuous_neckline",
+              "any_terms": [
+                "the neckline remains continuous across the upper torso",
+                "fabric still crosses above both shoulder openings",
+                "양쪽 어깨 구멍 위로 네크라인이 이어짐"
+              ]
+            },
+            {
+              "id": "paired_shoulder_windows",
+              "any_terms": [
+                "two bounded shoulder-top cutouts are visible",
+                "one deliberate opening exposes each shoulder top",
+                "좌우 어깨 윗부분의 두 개 경계 있는 컷아웃"
+              ]
+            },
+            {
+              "id": "attached_sleeves_below",
+              "any_terms": [
+                "both sleeves remain attached below the cutouts",
+                "the sleeve route continues around the upper arms",
+                "컷아웃 아래로 양쪽 소매가 계속 연결됨"
+              ]
+            },
+            {
+              "id": "finished_bridge_edges",
+              "any_terms": [
+                "finished seams bound every cutout edge",
+                "fabric bridges connect neckline bodice and sleeves",
+                "마감 봉제선과 원단 브리지가 컷아웃을 둘러쌈"
+              ]
+            },
+            {
+              "id": "off_shoulder_confound_control",
+              "any_terms": [
+                "an off-shoulder neckline does not substitute for bounded windows",
+                "sleeveless armholes or torn openings cannot carry the topology",
+                "오프숄더나 민소매 구조와 구분됨"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "one continuous neckline dropped below both shoulders",
+          "a sleeveless top with ordinary armholes",
+          "a one-shoulder top with only one supported side",
+          "randomly torn or frayed shoulder holes"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "continuous neckline above cutouts",
+          "paired bounded shoulder windows",
+          "sleeves attached below openings",
+          "finished cutout seams",
+          "fabric bridges around shoulders",
+          "distinct from off-shoulder and sleeveless"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["cold-shoulder top"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a front or limited three-quarter upper-body view that preserves the complete neckline, both shoulder windows, both fabric bridges, and both attached sleeves. The two bounded openings must stay distinct from a neckline dropped below the shoulders.",
+      "required_evidence_fields": [
+        "continuous_neckline_phrase",
+        "paired_cutouts_phrase",
+        "attached_sleeves_phrase",
+        "finished_edges_phrase",
+        "off_shoulder_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "continuous_neckline_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "the neckline remains continuous across the upper torso",
+            "fabric still crosses above both shoulder openings"
+          ]
+        },
+        "paired_cutouts_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "two bounded shoulder-top cutouts are visible",
+            "one deliberate opening exposes each shoulder top"
+          ]
+        },
+        "attached_sleeves_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "both sleeves remain attached below the cutouts",
+            "the sleeve route continues around the upper arms"
+          ]
+        },
+        "finished_edges_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "finished seams bound every cutout edge",
+            "fabric bridges connect neckline bodice and sleeves"
+          ]
+        },
+        "off_shoulder_confound_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "an off-shoulder neckline does not substitute for bounded windows",
+            "sleeveless armholes or torn openings cannot carry the topology"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_garment_cold_shoulder_continuous_neckline",
+          "review_scale": "thumbnail",
+          "description": "The neckline or upper bodice visibly continues above both shoulder openings."
+        },
+        {
+          "id": "vo_garment_cold_shoulder_paired_cutouts",
+          "review_scale": "both",
+          "description": "Two bounded openings expose the left and right shoulder tops."
+        },
+        {
+          "id": "vo_garment_cold_shoulder_attached_sleeves",
+          "review_scale": "both",
+          "description": "Both sleeves remain structurally attached and continue below the cutouts."
+        },
+        {
+          "id": "vo_garment_cold_shoulder_finished_edges",
+          "review_scale": "native",
+          "description": "Finished seams or fabric bridges coherently bound all cutout edges."
+        },
+        {
+          "id": "vo_garment_cold_shoulder_not_off_shoulder",
+          "review_scale": "native",
+          "description": "An off-shoulder neckline, sleeveless armhole, one-shoulder top, or torn hole does not substitute."
+        }
+      ],
+      "reject_substitutes": [
+        "off_shoulder_neckline",
+        "sleeveless_armholes",
+        "one_shoulder_top",
+        "torn_shoulder_holes",
+        "one_occluded_cutout"
+      ]
+    },
+    {
+      "id": "wrap_front_overlap_closure",
+      "category": "garment_front_closure_topology",
+      "activation": {
+        "exact_terms": [
+          "wrap-front blouse",
+          "wrap front blouse",
+          "wrap blouse",
+          "surplice blouse",
+          "wrap-front top",
+          "wrap top garment",
+          "랩 블라우스",
+          "랩 프런트 블라우스",
+          "랩 탑",
+          "서플리스 블라우스"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A functional wrap-front upper garment formed by two separately traceable front panels crossing diagonally, with one panel continuing beneath the other and a side tie, button, or fixed seam holding the overlap. The crossing creates a coherent wrap V neckline and edge path rather than a decorative diagonal print, faux seam, or loose scarf.",
+        "paraphrase_examples": [
+          "두 앞판이 사선으로 실제 겹치고 한쪽이 아래로 이어져 옆에서 고정되는 블라우스",
+          "two traceable front edges cross into a functional side fastening and wrap V neckline",
+          "the lower panel remains visible beneath the upper panel through fold depth and edge continuity"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_traceable_front_panels",
+            "diagonal_overlap_depth",
+            "wrap_v_neckline",
+            "functional_side_fastening",
+            "false_wrap_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "two_traceable_front_panels",
+              "any_terms": [
+                "two separate front-panel edges remain traceable",
+                "left and right fronts cross as distinct fabric panels",
+                "좌우 두 앞판 가장자리가 각각 추적 가능함"
+              ]
+            },
+            {
+              "id": "diagonal_overlap_depth",
+              "any_terms": [
+                "one panel visibly continues beneath the other",
+                "fold depth proves a real diagonal overlap",
+                "한 앞판이 다른 앞판 아래로 이어지는 겹침 깊이"
+              ]
+            },
+            {
+              "id": "wrap_v_neckline",
+              "any_terms": [
+                "the crossing edges form a coherent wrap V neckline",
+                "neckline and diagonal overlap share the same edge path",
+                "교차 가장자리가 하나의 랩 V 네크라인을 형성"
+              ]
+            },
+            {
+              "id": "functional_side_fastening",
+              "any_terms": [
+                "a side tie button or fixed seam holds the overlap",
+                "the fastening connects both wrap panels under tension",
+                "옆 묶음 단추 또는 고정선이 겹침을 유지"
+              ]
+            },
+            {
+              "id": "false_wrap_confound_control",
+              "any_terms": [
+                "a printed diagonal line does not substitute for panel overlap",
+                "a decorative waist tie or loose scarf cannot carry the closure",
+                "사선 프린트와 장식용 끈으로 랩 구조를 대체하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a blouse printed with diagonal stripes",
+          "a fixed V-neck top with one decorative side bow",
+          "a scarf draped across a normal shirt front",
+          "a faux-wrap seam with no lower panel or fastening relation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two traceable front panels",
+          "real diagonal overlap depth",
+          "lower panel beneath upper panel",
+          "coherent wrap V neckline",
+          "functional side tie button or seam",
+          "distinct from faux-wrap decoration"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["functional wrap-front blouse"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame the torso and fastening side so both front-panel edges, their diagonal overlap depth, the wrap V neckline, and the functional tie, button, or seam remain readable together. Keep material folds coherent enough to disprove a printed or decorative false wrap.",
+      "required_evidence_fields": [
+        "front_panels_phrase",
+        "overlap_depth_phrase",
+        "wrap_neckline_phrase",
+        "side_fastening_phrase",
+        "false_wrap_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "front_panels_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "two separate front-panel edges remain traceable",
+            "left and right fronts cross as distinct fabric panels"
+          ]
+        },
+        "overlap_depth_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "one panel visibly continues beneath the other",
+            "fold depth proves a real diagonal overlap"
+          ]
+        },
+        "wrap_neckline_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the crossing edges form a coherent wrap V neckline",
+            "neckline and diagonal overlap share the same edge path"
+          ]
+        },
+        "side_fastening_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a side tie button or fixed seam holds the overlap",
+            "the fastening connects both wrap panels under tension"
+          ]
+        },
+        "false_wrap_confound_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a printed diagonal line does not substitute for panel overlap",
+            "a decorative waist tie or loose scarf cannot carry the closure"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_garment_wrap_two_front_panels",
+          "review_scale": "thumbnail",
+          "description": "Two separate crossing front panels remain readable as the garment's primary structure."
+        },
+        {
+          "id": "vo_garment_wrap_overlap_depth",
+          "review_scale": "both",
+          "description": "One panel visibly continues beneath the other with coherent fold depth."
+        },
+        {
+          "id": "vo_garment_wrap_v_neckline",
+          "review_scale": "both",
+          "description": "The same crossing edges form a coherent wrap V neckline."
+        },
+        {
+          "id": "vo_garment_wrap_functional_fastening",
+          "review_scale": "native",
+          "description": "A side tie, button, or fixed seam visibly holds the overlapping panels."
+        },
+        {
+          "id": "vo_garment_wrap_not_faux_diagonal",
+          "review_scale": "native",
+          "description": "Printed diagonals, a decorative bow, loose scarf, or faux seam do not substitute for functional overlap."
+        }
+      ],
+      "reject_substitutes": [
+        "diagonal_print_only",
+        "fixed_v_neck_with_bow",
+        "loose_scarf_drape",
+        "faux_wrap_seam",
+        "occluded_fastening_side"
+      ]
+    },
+    {
+      "id": "bifurcated_one_piece_jumpsuit",
+      "category": "garment_one_piece_bifurcated_topology",
+      "activation": {
+        "exact_terms": [
+          "fashion jumpsuit",
+          "tailored jumpsuit",
+          "jumpsuit garment",
+          "full-length jumpsuit",
+          "점프수트",
+          "테일러드 점프수트",
+          "패션 점프수트",
+          "romper garment",
+          "fashion romper",
+          "롬퍼",
+          "playsuit garment",
+          "플레이수트"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One garment whose upper section continues through the waist into a real crotch and then bifurcates into two separate leg openings. A selected jumpsuit variant normally carries longer trouser legs, while a romper or playsuit carries short legs; the upper-to-crotch continuity, inseam, and two-leg topology distinguish every variant from a dress or coordinated separates.",
+        "paraphrase_examples": [
+          "상체에서 허리와 가랑이까지 한 벌로 이어진 뒤 두 바지통으로 갈라지는 의복",
+          "one upper garment continues through a real crotch before separating into two leg openings",
+          "the selected long or short leg variant remains legible without turning into a dress or two-piece set"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "upper_to_waist_continuity",
+            "waist_to_crotch_continuity",
+            "two_leg_bifurcation",
+            "selected_variant_length",
+            "dress_separates_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "upper_to_waist_continuity",
+              "any_terms": [
+                "the upper garment and waist remain one continuous unit",
+                "bodice seams continue into the lower garment",
+                "상체와 허리선이 하나의 의복으로 연결됨"
+              ]
+            },
+            {
+              "id": "waist_to_crotch_continuity",
+              "any_terms": [
+                "the same garment continues through a visible crotch",
+                "waist shaping flows into the central rise",
+                "같은 의복이 허리에서 실제 가랑이까지 이어짐"
+              ]
+            },
+            {
+              "id": "two_leg_bifurcation",
+              "any_terms": [
+                "a visible inseam separates two independent legs",
+                "two leg openings move separately during the stance",
+                "인심과 두 개의 독립 바지통이 보임"
+              ]
+            },
+            {
+              "id": "selected_variant_length",
+              "any_terms": [
+                "full-length trouser legs define the selected jumpsuit",
+                "short leg openings define the selected romper or playsuit",
+                "선택한 점프수트 또는 롬퍼 길이가 일관됨"
+              ]
+            },
+            {
+              "id": "dress_separates_confound_control",
+              "any_terms": [
+                "a dress hem cannot substitute for the two-leg split",
+                "a matching top and trousers remain two garments and do not substitute",
+                "드레스나 상하의 세트와 구분됨"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a dress whose folds only resemble two legs",
+          "a matching top and trousers separated at the waist",
+          "a bodysuit worn above unrelated trousers",
+          "cropped framing that hides the crotch and leg division"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "continuous upper garment and waist",
+          "waist-to-crotch continuity",
+          "visible central rise and inseam",
+          "two separate leg openings",
+          "long jumpsuit or short romper variant",
+          "distinct from dress and matching separates"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["one-piece bifurcated jumpsuit"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a full-length or nearly full-length stance that preserves the upper garment, waist, crotch, inseam, both leg openings, and selected leg length. A slight stride or separated feet should reveal bifurcation without hiding the garment's upper-to-lower continuity.",
+      "required_evidence_fields": [
+        "upper_waist_continuity_phrase",
+        "crotch_continuity_phrase",
+        "two_leg_phrase",
+        "variant_length_phrase",
+        "dress_separates_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "upper_waist_continuity_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the upper garment and waist remain one continuous unit",
+            "bodice seams continue into the lower garment"
+          ]
+        },
+        "crotch_continuity_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the same garment continues through a visible crotch",
+            "waist shaping flows into the central rise"
+          ]
+        },
+        "two_leg_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a visible inseam separates two independent legs",
+            "two leg openings move separately during the stance"
+          ]
+        },
+        "variant_length_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "full-length trouser legs define the selected jumpsuit",
+            "short leg openings define the selected romper or playsuit"
+          ]
+        },
+        "dress_separates_confound_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "a dress hem cannot substitute for the two-leg split",
+            "a matching top and trousers remain two garments and do not substitute"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_garment_jumpsuit_upper_waist_continuity",
+          "review_scale": "thumbnail",
+          "description": "The upper garment and waist first read as one continuous garment unit."
+        },
+        {
+          "id": "vo_garment_jumpsuit_crotch_continuity",
+          "review_scale": "both",
+          "description": "The same garment continues visibly from the waist through a real crotch or central rise."
+        },
+        {
+          "id": "vo_garment_jumpsuit_two_leg_bifurcation",
+          "review_scale": "both",
+          "description": "A central inseam and two independent leg openings prove bifurcation."
+        },
+        {
+          "id": "vo_garment_jumpsuit_variant_length",
+          "review_scale": "native",
+          "description": "The selected full-length jumpsuit or short romper leg length remains coherent on both sides."
+        },
+        {
+          "id": "vo_garment_jumpsuit_not_dress_or_separates",
+          "review_scale": "native",
+          "description": "Dress folds, coordinated separates, a bodysuit-plus-trousers combination, or hidden crotch framing do not substitute."
+        }
+      ],
+      "reject_substitutes": [
+        "dress_with_leg_like_folds",
+        "matching_top_and_trousers",
+        "bodysuit_plus_separate_pants",
+        "hidden_crotch_crop",
+        "single_skirt_like_lower_panel"
+      ]
+    },
+    {
+      "id": "culotte_cropped_wide_leg_topology",
+      "category": "garment_trouser_leg_topology",
+      "activation": {
+        "exact_terms": [
+          "culotte pants",
+          "culotte trousers",
+          "culottes",
+          "wide-leg culottes",
+          "gaucho pants",
+          "gaucho trousers",
+          "큐롯 팬츠",
+          "큐롯",
+          "와이드 큐롯",
+          "가우초 팬츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A cropped trouser topology with one waistband and a real crotch or center rise that separates into two independently moving, wide leg volumes ending around the calf. The inseam, separate hem openings, and stride evidence distinguish culottes or gaucho trousers from a midi skirt, while the cropped length distinguishes them from full-length palazzo trousers.",
+        "paraphrase_examples": [
+          "허리밴드 아래 실제 가랑이와 인심이 있고 두 넓은 바지통이 종아리에서 따로 끝나는 하의",
+          "two calf-length wide legs separate clearly during a natural stride",
+          "the center rise and two hem openings remain readable despite a skirt-like standing silhouette"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "shared_waistband_and_rise",
+            "visible_crotch_or_inseam",
+            "two_wide_leg_volumes",
+            "cropped_calf_hems",
+            "skirt_palazzo_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "shared_waistband_and_rise",
+              "any_terms": [
+                "one waistband feeds a central trouser rise",
+                "the waist construction continues into a crotch seam",
+                "하나의 허리밴드에서 중앙 바지 밑위가 이어짐"
+              ]
+            },
+            {
+              "id": "visible_crotch_or_inseam",
+              "any_terms": [
+                "a visible crotch or inseam divides the lower garment",
+                "center separation remains traceable between the legs",
+                "가랑이 또는 인심이 두 바지통을 분리함"
+              ]
+            },
+            {
+              "id": "two_wide_leg_volumes",
+              "any_terms": [
+                "two wide legs move independently in the stride",
+                "left and right leg volumes have separate outer and inner edges",
+                "좌우 넓은 바지통이 독립적으로 움직임"
+              ]
+            },
+            {
+              "id": "cropped_calf_hems",
+              "any_terms": [
+                "two separate hems end around the calves",
+                "the wide legs stop clearly above the ankles",
+                "두 개의 별도 밑단이 종아리 부근에서 끝남"
+              ]
+            },
+            {
+              "id": "skirt_palazzo_confound_control",
+              "any_terms": [
+                "a continuous midi-skirt panel does not substitute for two legs",
+                "full-length palazzo hems cannot substitute for the cropped variant",
+                "미디 스커트와 풀렝스 팔라초를 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "one continuous midi-skirt panel",
+          "a pleated skirt whose folds resemble an inseam",
+          "full-length palazzo trousers touching the shoes",
+          "a frontal closed stance hiding all center separation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "shared waistband and central rise",
+          "visible crotch or inseam",
+          "two independently moving wide legs",
+          "two calf-length hem openings",
+          "natural stride separation",
+          "distinct from midi skirt and palazzo trousers"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["cropped wide-leg culottes"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the waistband, center rise, crotch or inseam, both wide leg volumes, and both calf-length hems visible in a full-body or lower-body-readable frame. Use a natural stride, step, or slight leg separation to reveal trouser bifurcation without turning the pose into the concept.",
+      "required_evidence_fields": [
+        "waistband_rise_phrase",
+        "crotch_inseam_phrase",
+        "two_wide_legs_phrase",
+        "calf_hems_phrase",
+        "skirt_palazzo_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "waistband_rise_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "one waistband feeds a central trouser rise",
+            "the waist construction continues into a crotch seam"
+          ]
+        },
+        "crotch_inseam_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a visible crotch or inseam divides the lower garment",
+            "center separation remains traceable between the legs"
+          ]
+        },
+        "two_wide_legs_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "two wide legs move independently in the stride",
+            "left and right leg volumes have separate outer and inner edges"
+          ]
+        },
+        "calf_hems_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "two separate hems end around the calves",
+            "the wide legs stop clearly above the ankles"
+          ]
+        },
+        "skirt_palazzo_confound_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "a continuous midi-skirt panel does not substitute for two legs",
+            "full-length palazzo hems cannot substitute for the cropped variant"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_garment_culotte_waistband_rise",
+          "review_scale": "thumbnail",
+          "description": "One waistband and a central trouser rise establish a lower-garment waist structure."
+        },
+        {
+          "id": "vo_garment_culotte_crotch_inseam",
+          "review_scale": "both",
+          "description": "A visible crotch, center separation, or inseam divides the garment into two legs."
+        },
+        {
+          "id": "vo_garment_culotte_two_wide_legs",
+          "review_scale": "both",
+          "description": "Two wide leg volumes have separately traceable inner and outer edges and move independently."
+        },
+        {
+          "id": "vo_garment_culotte_two_calf_hems",
+          "review_scale": "native",
+          "description": "Two separate wide hems end around the calves or clearly above the ankles."
+        },
+        {
+          "id": "vo_garment_culotte_not_skirt_or_palazzo",
+          "review_scale": "native",
+          "description": "A midi skirt, pleat-shadow pseudo-inseam, full-length palazzo trousers, or closed stance hiding division does not substitute."
+        }
+      ],
+      "reject_substitutes": [
+        "midi_skirt_panel",
+        "pleat_shadow_pseudo_inseam",
+        "full_length_palazzo_trousers",
+        "closed_stance_hiding_bifurcation",
+        "one_continuous_lower_volume"
+      ]
     }
   ]
 }

@@ -1,0 +1,66 @@
+{
+  "contract_version": "photo-target-assignment/v1",
+  "arm_id": "casualwear-arm-b",
+  "assignment_phase": "post_core_reveal",
+  "profile_id": "cold_shoulder_cutout_topology",
+  "keyword_ko": "콜드숄더 탑",
+  "fixture_keyword_ko": "콜드숄더 톱",
+  "activation_text": "cold-shoulder top",
+  "core_binding": {
+    "source_core": {
+      "path": "authorial_core.json",
+      "sha256": "788a63ec2dd71d0186e79e0fdc7985eada4aa2a2d2cb1db7a730c9e1851e6ee3"
+    },
+    "pack_core": {
+      "path": "authorial_core_v6.json",
+      "sha256": "ae9538a78015c4ec24d8607d4c2e4791ff0e799220686b6ca9022e502102afe1",
+      "canonical_sorted_json_sha256": "8c8ae5a51cdbc3c5a0663d7df63fe1bf12295a0a43ad9f4254e19d21dd0481a9"
+    },
+    "normalization_record": "core_schema_normalization.json"
+  },
+  "fixture_source": {
+    "path": "/Users/chasoik/Projects/image-prompt/tests/fixtures/photo_prompt/womens_casualwear_pixel_test_cases_v1.jsonl",
+    "line": 2,
+    "schema_version": "photo-womens-casualwear-semantic-pixel-case/v1"
+  },
+  "profile_source": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "production_index_check": "pass",
+    "production_index_check_evidence": "visual profile index ok: 110 profiles, 654 exact terms"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "boundary": "Facial and general appearance continuity only; no biometric identity verification claim; the source garment is not test evidence."
+  },
+  "required_evidence_fields": [
+    "continuous_neckline_phrase",
+    "paired_cutouts_phrase",
+    "attached_sleeves_phrase",
+    "finished_edges_phrase",
+    "off_shoulder_confound_phrase"
+  ],
+  "required_gate_ids": [
+    "vo_garment_cold_shoulder_continuous_neckline",
+    "vo_garment_cold_shoulder_paired_cutouts",
+    "vo_garment_cold_shoulder_attached_sleeves",
+    "vo_garment_cold_shoulder_finished_edges",
+    "vo_garment_cold_shoulder_not_off_shoulder"
+  ],
+  "forced_candidates": {
+    "wardrobe_style": "cold_shoulder_knit_top_midi_skirt",
+    "garment_detail": "cold_shoulder_cutout_sleeve_bridge",
+    "surface_material": "rib_knit_stretch_recovery_surface"
+  },
+  "candidate_pack_controls": {
+    "candidate_pack_version": "v6",
+    "mode": "rule",
+    "semantic_axis": "off",
+    "sensual_editorial_intensity": 0,
+    "fetish_fashion_intensity": 0,
+    "include_negative": true,
+    "random_seed": 620747397
+  },
+  "status": "target_assignment_frozen"
+}

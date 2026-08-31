@@ -1,0 +1,47 @@
+{
+  "schema_version": "photo-womens-casualwear-semantic-pixel-case/v1",
+  "arm_id": "casualwear-arm-c",
+  "keyword_ko": "랩 블라우스",
+  "profile_id": "wrap_front_overlap_closure",
+  "activation_text": "wrap-front blouse",
+  "visual_scale": "front_panel_overlap_and_complete_outfit",
+  "target_region": "full_body_neckline_front_panels_waist_and_side_fastening",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "boundary": "facial and general appearance continuity only; not biometric identity verification; source garment is not test evidence"
+  },
+  "randomized_complex_concept_required": true,
+  "required_review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "required_gate_ids": [
+    "vo_garment_wrap_two_front_panels",
+    "vo_garment_wrap_overlap_depth",
+    "vo_garment_wrap_v_neckline",
+    "vo_garment_wrap_functional_fastening",
+    "vo_garment_wrap_not_faux_diagonal"
+  ],
+  "observable_success_signals": [
+    "two separately traceable diagonal front-panel edges",
+    "one panel visibly continues beneath the other",
+    "coherent wrap V neckline",
+    "functional side tie or fastening holds the overlap"
+  ],
+  "reject_substitutes": [
+    "printed_diagonal_stripe",
+    "faux_wrap_seam",
+    "decorative_bow_without_closure",
+    "scarf_over_plain_blouse",
+    "hidden_panel_overlap"
+  ],
+  "verdict_rule": {
+    "unit": "one_saved_image",
+    "pass": "all_required_gates_pass",
+    "partial_or_missing": "fail",
+    "prompt_presence_only": "insufficient",
+    "missing_or_blocked_render": "unscored"
+  }
+}

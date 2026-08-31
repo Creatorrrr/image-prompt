@@ -1,0 +1,86 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "2a963a3d926be5eb",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "agent:casualwear-arm-a",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/generated_images/casualwear-arm-a-button-down-observatory-seed-1270214661.png",
+  "result_sha256": "e43698628a5f1545faebc2a3680f93f05ffde7f7e65c745ab78df2859173a189",
+  "review_scales": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/generated_images/casualwear-arm-a-button-down-observatory-seed-1270214661.png",
+      "sha256": "e43698628a5f1545faebc2a3680f93f05ffde7f7e65c745ab78df2859173a189",
+      "width": 1086,
+      "height": 1448
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/generated_images/casualwear-arm-a-button-down-observatory-seed-1270214661-thumbnail-512.png",
+      "sha256": "486768c8f26dc2cda3bba7f930d2ac41775a29606ac1ebae07409cd78bceb6a0",
+      "width": 384,
+      "height": 512,
+      "method": "mechanical longest-edge downscale with sips -Z 512"
+    }
+  },
+  "supplemental_crops": [
+    {
+      "source_scale": "native",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/generated_images/casualwear-arm-a-button-down-observatory-native-collar-crop.png",
+      "purpose": "inspect paired collar points, small point buttons, and attachment"
+    },
+    {
+      "source_scale": "thumbnail",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/generated_images/casualwear-arm-a-button-down-observatory-thumbnail-collar-crop.png",
+      "purpose": "inspect survival of collar topology in the 512px thumbnail"
+    }
+  ],
+  "hard_gates": {
+    "vo_garment_button_down_front_placket": {
+      "status": "pass",
+      "evidence": "Thumbnail 384x512 shows an uninterrupted center-front placket from collar stand to tucked waistband with repeated front buttons visible."
+    },
+    "vo_garment_button_down_point_collar": {
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show two separately outlined triangular collar tips around the neck, with the hair held behind them."
+    },
+    "vo_garment_button_down_two_point_buttons": {
+      "status": "pass",
+      "evidence": "Native 1086x1448 pixels show one distinct small pale-gold round button positioned on each collar point."
+    },
+    "vo_garment_button_down_attachment": {
+      "status": "pass",
+      "evidence": "Native pixels show each point button seated through the tip fabric and pinning its corresponding collar point flat to the shirt body."
+    },
+    "vo_garment_button_down_not_button_up_only": {
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels jointly retain the complete placket, two exposed point tips, and paired point fasteners; no polo, loose-tip, or decorative-stud substitute carries the result."
+    }
+  },
+  "supplemental_observations": {
+    "calibration_markings_non_legible": {
+      "status": "fail",
+      "evidence": "The native image contains a readable red instrument value '2.142' and readable numeral markings on the vertical reference staff."
+    },
+    "collar_and_placket_unobstructed_by_props": {
+      "status": "pass",
+      "evidence": "The instrument and both hands remain beside the torso; neither crosses the point collar or center-front placket."
+    },
+    "vertical_complete_outfit_visibility": {
+      "status": "pass",
+      "evidence": "The vertical frame contains the full shirt, both sleeves, waistband and front closure, trouser legs, hems, and both shoes."
+    },
+    "appearance_reference_boundary": {
+      "status": "pass",
+      "evidence": "The result presents an unmistakably adult woman with general facial and hair continuity from the reference; this is a visual continuity observation, not a biometric identity claim."
+    }
+  },
+  "overall_strict_verdict": "pass",
+  "overall_strict_verdict_scope": "five required button_down_collar_fastening profile gates",
+  "full_render_constraint_verdict": "fail",
+  "partial_counts_as_failure": true,
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

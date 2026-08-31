@@ -1,0 +1,59 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "c2f8166365aef902",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex casualwear-arm-b pixel reviewer",
+  "result_image": "render_native.png",
+  "result_sha256": "88b7c5c73c7ab1cc691d0b0c0ae7cb890693280582de05fb61e2a156c241734b",
+  "review_scales": {
+    "native": {
+      "path": "render_native.png",
+      "sha256": "88b7c5c73c7ab1cc691d0b0c0ae7cb890693280582de05fb61e2a156c241734b",
+      "pixel_width": 1024,
+      "pixel_height": 1536
+    },
+    "thumbnail": {
+      "path": "render_thumbnail_512.png",
+      "sha256": "84ccf4f96f34225bac1c0bc12b987fb453cc82a8a9ee623f9cf03bbf2a4ecdf6",
+      "pixel_width": 341,
+      "pixel_height": 512
+    }
+  },
+  "hard_gates": {
+    "vo_garment_cold_shoulder_continuous_neckline": {
+      "status": "fail",
+      "evidence": "Thumbnail and native pixels show a high round neckline, but hair fully covers the viewer-right shoulder, so continuation above both openings cannot be verified."
+    },
+    "vo_garment_cold_shoulder_paired_cutouts": {
+      "status": "fail",
+      "evidence": "Only the viewer-left bounded shoulder opening is readable at thumbnail and native scales; the viewer-right window is entirely hidden by hair."
+    },
+    "vo_garment_cold_shoulder_attached_sleeves": {
+      "status": "fail",
+      "evidence": "Both long sleeves are present, but only the viewer-left sleeve is visibly attached below a readable cutout; the second cutout-to-sleeve relation is uninspectable."
+    },
+    "vo_garment_cold_shoulder_finished_edges": {
+      "status": "fail",
+      "evidence": "Native pixels show a clean finished seam around the viewer-left cutout, while the viewer-right cutout edge and fabric bridge are hidden by hair."
+    },
+    "vo_garment_cold_shoulder_not_off_shoulder": {
+      "status": "pass",
+      "evidence": "Native pixels show a high continuous round neckline, long sleeves on both arms, and a clean finished cutout rather than a dropped neckline, sleeveless armholes, one-shoulder neckline, or torn hole."
+    }
+  },
+  "supplemental_observations": {
+    "domain_lane": "The brutalist seed-bank shelves, metal canisters, clerestory sunlight, and floating dust are visibly present.",
+    "full_body": "The subject is visible head-to-foot with the skirt hem, legs, and shoes in frame.",
+    "prop_occlusion": "The accession packet is below the shoulders but overlaps the front waistband and torso instead of staying fully lateral.",
+    "reference_boundary": "The portrait was used as an appearance reference only; no biometric identity claim is made."
+  },
+  "partial_is_fail": true,
+  "overall_strict_verdict": "fail",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "Awaiting direct requesting-user judgment."
+  }
+}

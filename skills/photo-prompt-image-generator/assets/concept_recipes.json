@@ -40023,9 +40023,456 @@
       "safety_requirements": ["keep the symbolic branch non-graphic and avoid real-person death claims"],
       "salience_cues": ["at least two mutually reinforcing mortality or impermanence cues must remain readable"],
       "mixin_cue_budget": 3
+    },
+    "콰이어트 럭셔리": {
+      "set": {
+        "aesthetic_trend": "quiet_luxury_aesthetic",
+        "surface_material": [
+          "full_grain_leather_natural_variation_surface",
+          "fine_wool_cashmere_matte_pile_surface",
+          "stone_wood_brass_precision_junction_surface"
+        ],
+        "color": "greige_camel_cream_quiet_palette",
+        "lighting": "quiet_diffuse_material_gallery_lighting",
+        "capture_context": "material_finish_macro_editorial"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "surface_material", "color", "lighting", "capture_context"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "aesthetic_trend": ["low brand prominence", "restrained original house code"],
+        "surface_material": ["natural material variation", "precise junction", "restrained hardware"],
+        "capture_context": ["material and fit evidence before status display"]
+      },
+      "anchor_pool": {
+        "surface_material": ["full_grain_leather_natural_variation_surface", "fine_wool_cashmere_matte_pile_surface", "stone_wood_brass_precision_junction_surface", "hand_burnished_painted_leather_edge_surface"],
+        "color": ["greige_camel_cream_quiet_palette"],
+        "lighting": ["quiet_diffuse_material_gallery_lighting", "grazing_material_reveal_lighting"],
+        "capture_context": ["material_finish_macro_editorial"]
+      },
+      "additional": ["Make low brand prominence, material quality cues, cut or fit, and exact junctions work together. Beige, emptiness, plain basics, or a wealthy-looking person alone are insufficient."],
+      "intent_axis": ["understatement through observable material, fit, junction, and restrained hardware rather than a claim about wealth, price, rarity, or authenticity"],
+      "guide": {
+        "definition_ko": "콰이어트 럭셔리는 로고를 지운 베이지 룩이 아니라, 낮은 브랜드 표식과 재료 표면·재단·접합부·절제된 하드웨어가 함께 읽히는 시각 문법이다.",
+        "dominant_axes": ["low_brand_prominence", "material_finish", "fit_and_cut", "precision_junction"],
+        "anchor_guidance": "근접 재료 증거와 전체 실루엣의 재단 증거를 함께 둔다. 픽셀만으로 실제 부·가격·희소성·브랜드 진위를 주장하지 않는다.",
+        "anti_patterns": ["generic beige minimalism", "empty white room", "plain basics without construction evidence", "wealth or price inference"]
+      },
+      "review_gates": [{"id": "quiet_luxury_components_not_beige_only", "check": "낮은 표식과 재료·재단·접합 증거가 함께 보이고 베이지 색감만으로 판정하지 않는가", "machine_checkable": false}],
+      "mixin_cue_budget": 3
+    },
+    "컨스피큐어스 럭셔리": {
+      "set": {
+        "aesthetic_trend": "conspicuous_original_code_luxury_aesthetic",
+        "capture_context": "brand_neutral_house_code_editorial",
+        "surface_material": ["full_grain_leather_natural_variation_surface", "precision_brushed_polished_metal_junction_surface"],
+        "color": "obsidian_antique_gold_oxblood_palette",
+        "lighting": "grazing_material_reveal_lighting"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "capture_context", "surface_material", "color", "lighting"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "aesthetic_trend": ["prominent original non-letter emblem", "repeated original geometric motif", "signature hardware"],
+        "capture_context": ["coherent brand-neutral house-code editorial"],
+        "surface_material": ["constructed object with readable material and hardware"]
+      },
+      "anchor_pool": {
+        "capture_context": ["brand_neutral_house_code_editorial"],
+        "surface_material": ["full_grain_leather_natural_variation_surface", "precision_brushed_polished_metal_junction_surface", "hand_burnished_painted_leather_edge_surface"],
+        "color": ["obsidian_antique_gold_oxblood_palette", "midnight_sapphire_platinum_palette"],
+        "lighting": ["grazing_material_reveal_lighting"]
+      },
+      "additional": ["Use only original fictional non-letter emblems and motifs. Prominence must be supported by coherent repetition, object construction, and distinctive hardware rather than copied logos, random text, or generic gold clutter."],
+      "intent_axis": ["high visual prominence of original house codes on a materially coherent object without trademark imitation"],
+      "guide": {
+        "definition_ko": "컨스피큐어스 럭셔리는 큰 표식과 반복 코드가 전면에 보이는 축이지만, 실제 상표를 복제하지 않고 오리지널 비문자 엠블럼과 기하 모티프로 구성한다.",
+        "dominant_axes": ["high_code_prominence", "coherent_repetition", "signature_hardware", "material_construction"],
+        "anchor_guidance": "큰 오리지널 엠블럼, 반복 모티프, 하드웨어 중 둘 이상을 같은 조형 언어로 묶는다.",
+        "anti_patterns": ["copied real logo", "readable brand name", "counterfeit styling", "random gold and black clutter"]
+      },
+      "review_gates": [{"id": "conspicuous_luxury_original_code_only", "check": "표식은 오리지널 비문자 코드이고 실제 로고·브랜드명·임의 텍스트를 복제하지 않는가", "machine_checkable": false}],
+      "mixin_cue_budget": 3
+    },
+    "장인 공정 럭셔리": {
+      "set": {
+        "aesthetic_trend": "craftsmanship_process_luxury_aesthetic",
+        "action": ["hand_saddle_stitching_full_grain_leather", "weaving_leather_strips_by_hand", "inspecting_material_junction_and_finish"],
+        "narrative_phase": ["luxury_raw_material_selection_phase", "hand_assembly_craft_phase", "surface_finishing_inspection_phase"],
+        "capture_context": "luxury_atelier_process_documentary",
+        "lighting": "grazing_material_reveal_lighting"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "narrative_phase", "capture_context", "lighting"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "action": ["specific tool in contact with material", "hand assembly changing an unfinished structure"],
+        "narrative_phase": ["raw material to assembly to finish inspection"],
+        "capture_context": ["process evidence rather than finished-object glamour"]
+      },
+      "anchor_pool": {
+        "action": ["hand_saddle_stitching_full_grain_leather", "weaving_leather_strips_by_hand", "hand_cutting_individual_paper_pattern", "draping_and_hand_finishing_couture_layers", "inspecting_material_junction_and_finish"],
+        "narrative_phase": ["luxury_raw_material_selection_phase", "hand_assembly_craft_phase", "surface_finishing_inspection_phase"],
+        "capture_context": ["luxury_atelier_process_documentary", "material_finish_macro_editorial"]
+      },
+      "additional": ["Keep a visible causal chain from selected material through specific hand-tool contact to structural change and inspection. A finished expensive-looking object or an artisan posing beside tools is not enough."],
+      "intent_axis": ["observable skilled transformation and finish verification, not an untestable claim of mastery or value"],
+      "guide": {
+        "definition_ko": "장인 공정은 재료, 특정 도구의 접촉, 미완성에서 완성으로의 구조 변화, 마감 검사를 한 장면의 인과로 보여준다.",
+        "dominant_axes": ["material_selection", "tool_contact", "structural_change", "finish_inspection"],
+        "anchor_guidance": "손과 도구가 실제 작업점에 닿고 그 앞뒤 차이가 보이도록 한다.",
+        "anti_patterns": ["artisan portrait without work", "decorative tools", "finished object only", "price or authenticity claim"]
+      },
+      "review_gates": [{"id": "craftsmanship_causal_process_visible", "check": "재료-도구 접촉-구조 변화-검사 중 최소 세 단계가 인과적으로 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "헤리티지 재해석 럭셔리": {
+      "set": {
+        "aesthetic_trend": "heritage_reinterpretation_luxury_aesthetic",
+        "action": "comparing_archive_sample_with_new_iteration",
+        "prop": "archive_sample_new_iteration_pair",
+        "capture_context": "archive_reinterpretation_material_study",
+        "narrative_phase": "surface_finishing_inspection_phase"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "capture_context", "narrative_phase"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["compare an unbranded archive sample with one new original iteration"],
+        "prop": ["paired old and new objects share one structural relation and change another"],
+        "capture_context": ["material lineage study without copied marks"]
+      },
+      "anchor_pool": {
+        "action": ["comparing_archive_sample_with_new_iteration"],
+        "prop": ["archive_sample_new_iteration_pair"],
+        "capture_context": ["archive_reinterpretation_material_study"],
+        "narrative_phase": ["luxury_raw_material_selection_phase", "surface_finishing_inspection_phase"]
+      },
+      "additional": ["Heritage must be a declared fictional lineage supported by an archive-new pair. Patina, antique décor, vintage grading, or an old date alone cannot prove provenance or continuity."],
+      "intent_axis": ["one visible design relation retained and another deliberately transformed across an unbranded archive-new pair"],
+      "guide": {
+        "definition_ko": "헤리티지 재해석은 낡아 보이는 스타일이 아니라 아카이브 샘플과 새 오리지널 버전 사이의 유지 요소와 변경 요소가 동시에 읽히는 비교 구조다.",
+        "dominant_axes": ["archive_new_pair", "retained_relation", "deliberate_change", "brand_neutral_lineage"],
+        "anchor_guidance": "같은 체결 논리·모티프·재료 관계 하나와 달라진 실루엣·기능·표면 하나를 대응시킨다.",
+        "anti_patterns": ["patina alone", "vintage color grade", "antique room", "unverified historical provenance"]
+      },
+      "review_gates": [{"id": "heritage_retention_and_change_pair", "check": "구형-신형 쌍에서 유지된 관계 하나와 변경된 요소 하나가 모두 보이는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "헤리티지 트래블 럭셔리": {
+      "set": {
+        "aesthetic_trend": "heritage_travel_object_luxury_aesthetic",
+        "action": "building_reinforced_travel_case_frame",
+        "prop": "reinforced_travel_case_corner_sample",
+        "location": "heritage_travel_case_workshop",
+        "surface_material": "wood_canvas_leather_brass_travel_structure_surface",
+        "narrative_phase": "hand_assembly_craft_phase"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "location", "surface_material", "narrative_phase"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["build a balanced protective frame and fit its covering"],
+        "prop": ["reinforced corner and working lock sample"],
+        "surface_material": ["wood frame, fitted canvas or leather, and attached brass hardware"]
+      },
+      "anchor_pool": {
+        "action": ["building_reinforced_travel_case_frame", "inspecting_material_junction_and_finish"],
+        "prop": ["reinforced_travel_case_corner_sample"],
+        "location": ["heritage_travel_case_workshop"],
+        "surface_material": ["wood_canvas_leather_brass_travel_structure_surface"]
+      },
+      "additional": ["Show protective travel function, frame, fitted covering, reinforced corners, and usable hardware. A suitcase silhouette or monogram surface alone is insufficient."],
+      "intent_axis": ["brand-neutral travel-object construction whose protection and hardware functions are visible"],
+      "guide": {
+        "definition_ko": "헤리티지 트래블 오브제는 트렁크 모양이 아니라 목재 프레임, 맞춤 피복, 코너 보강, 잠금장치, 수납 기능이 연결된 보호 구조다.",
+        "dominant_axes": ["protective_frame", "fitted_covering", "reinforced_corner", "functional_hardware"],
+        "anchor_guidance": "외형과 함께 열린 단면이나 공정 샘플로 내부 프레임과 하드웨어 체결을 보여준다.",
+        "anti_patterns": ["monogram-only suitcase", "decorative luggage prop", "nonfunctional hardware", "copied trunk design"]
+      },
+      "review_gates": [{"id": "travel_object_structure_and_function", "check": "프레임·피복·보강·작동 하드웨어와 여행 보호 기능이 함께 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "쿠튀르 아틀리에": {
+      "set": {
+        "aesthetic_trend": "couture_atelier_craft_aesthetic",
+        "action": ["fitting_basted_toile_on_client", "draping_and_hand_finishing_couture_layers"],
+        "prop": "basted_toile_dress_form_prop",
+        "garment_detail": ["couture_internal_support_and_drape_layers", "metiers_art_embroidery_attachment_detail"],
+        "location": "couture_atelier_fitting_room",
+        "narrative_phase": "pattern_toile_development_phase"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "garment_detail", "location", "narrative_phase"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["individual fitting of a basted toile", "hand draping or finishing on the client-specific form"],
+        "garment_detail": ["layered internal support and attached handwork"],
+        "narrative_phase": ["toile development before singular finished garment"]
+      },
+      "anchor_pool": {
+        "action": ["fitting_basted_toile_on_client", "draping_and_hand_finishing_couture_layers"],
+        "prop": ["basted_toile_dress_form_prop"],
+        "garment_detail": ["basted_toile_balance_and_fit_lines", "couture_internal_support_and_drape_layers", "metiers_art_embroidery_attachment_detail"],
+        "location": ["couture_atelier_fitting_room"],
+        "narrative_phase": ["pattern_toile_development_phase", "hand_assembly_craft_phase", "final_fitting_function_check_phase"]
+      },
+      "additional": ["Accreditation and historical status are contextual claims. Pixels may show individualized fitting and atelier construction, but not prove legal Haute Couture status."],
+      "intent_axis": ["individualized toile fitting plus layered hand construction in an atelier, distinct from runway glamour or ready-to-wear styling"],
+      "guide": {
+        "definition_ko": "쿠튀르 아틀리에는 토일 피팅, 드레이핑, 내부 지지층, 손자수 부착, 최종 피팅이 연결되는 개별 제작 공정이다.",
+        "dominant_axes": ["individual_fitting", "toile", "layered_construction", "hand_attachment"],
+        "anchor_guidance": "드레스 자체보다 토일의 베이스팅·피팅 수정선과 내부 제작 증거를 우선한다.",
+        "anti_patterns": ["runway gown only", "red carpet glamour", "ready-to-wear rack", "legal accreditation inferred from pixels"]
+      },
+      "review_gates": [{"id": "couture_individual_construction_not_gown_only", "check": "개별 토일 피팅과 내부 손작업이 보이며 완성 드레스만으로 대체되지 않는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "비스포크 테일러링": {
+      "set": {
+        "aesthetic_trend": "bespoke_tailoring_craft_aesthetic",
+        "action": ["hand_cutting_individual_paper_pattern", "fitting_basted_toile_on_client"],
+        "prop": "individual_paper_pattern_chalk_set",
+        "garment_detail": ["basted_toile_balance_and_fit_lines", "hand_canvassed_tailoring_interior"],
+        "location": "bespoke_tailoring_cutting_room",
+        "narrative_phase": "final_fitting_function_check_phase"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "garment_detail", "location", "narrative_phase"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["master cutter drafts and cuts an individual paper pattern", "basted fitting produces visible balance corrections"],
+        "garment_detail": ["hand-canvassed interior and handwork"],
+        "prop": ["one client's individually marked paper pattern"]
+      },
+      "anchor_pool": {
+        "action": ["hand_cutting_individual_paper_pattern", "fitting_basted_toile_on_client"],
+        "prop": ["individual_paper_pattern_chalk_set", "blank_aftercare_restoration_folder"],
+        "garment_detail": ["basted_toile_balance_and_fit_lines", "hand_canvassed_tailoring_interior"],
+        "location": ["bespoke_tailoring_cutting_room"],
+        "narrative_phase": ["pattern_toile_development_phase", "final_fitting_function_check_phase", "private_presentation_aftercare_phase"]
+      },
+      "additional": ["Keep bespoke separate from made-to-measure, alterations, and a stock-pattern suit. The individual pattern, basted correction, hand canvas, and aftercare continuity carry the distinction."],
+      "intent_axis": ["one-client pattern ownership and iterative fitting supported by internal hand construction and aftercare"],
+      "guide": {
+        "definition_ko": "비스포크는 완성 수트의 핏이 아니라 개인별 종이 패턴, 베이스팅 피팅 수정, 손캔버스 내부, 기록·애프터케어의 연속성으로 구분한다.",
+        "dominant_axes": ["individual_pattern", "basted_fitting", "hand_canvas", "aftercare_record"],
+        "anchor_guidance": "종이 패턴과 착용자의 수정선이 같은 고객에 대응함을 보여준다.",
+        "anti_patterns": ["stock pattern", "made-to-measure selection", "simple alteration", "finished suit portrait only"]
+      },
+      "review_gates": [{"id": "bespoke_individual_pattern_and_fitting", "check": "개인별 패턴과 베이스팅 피팅 수정이 같은 고객의 공정으로 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "건축적 소재 럭셔리": {
+      "set": {
+        "aesthetic_trend": "architectural_material_luxury_aesthetic",
+        "location": "architectural_material_gallery_salon",
+        "surface_material": "stone_wood_brass_precision_junction_surface",
+        "lighting": "quiet_diffuse_material_gallery_lighting",
+        "color": "greige_camel_cream_quiet_palette"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "location", "surface_material", "lighting", "color"],
+      "soft_min_anchors": 3,
+      "anchor_terms": {
+        "location": ["few large material planes and sculptural volume"],
+        "surface_material": ["exact stone wood and brass junctions with shadow gaps"],
+        "lighting": ["controlled reflection and grazing reveal"]
+      },
+      "anchor_pool": {
+        "location": ["architectural_material_gallery_salon"],
+        "surface_material": ["stone_wood_brass_precision_junction_surface", "precision_brushed_polished_metal_junction_surface"],
+        "lighting": ["quiet_diffuse_material_gallery_lighting", "grazing_material_reveal_lighting"],
+        "color": ["greige_camel_cream_quiet_palette", "midnight_sapphire_platinum_palette"]
+      },
+      "additional": ["Use large planes, precise junctions, shadow gaps, sculptural volume, and controlled reflection. A white cube or expensive furniture label alone does not establish the grammar."],
+      "intent_axis": ["material-led architectural hierarchy through plane, joint, volume, and light"],
+      "guide": {
+        "definition_ko": "건축적 소재 럭셔리는 장식을 비운 방이 아니라 큰 재료 면, 정밀 접합, 섀도 갭, 조각적 볼륨과 반사 제어의 관계다.",
+        "dominant_axes": ["large_material_planes", "precision_junction", "sculptural_volume", "controlled_reflection"],
+        "anchor_guidance": "전체 공간의 면 위계와 접합부 근접 증거를 함께 둔다.",
+        "anti_patterns": ["generic white cube", "empty minimal room", "furniture price cue", "materials without junction detail"]
+      },
+      "review_gates": [{"id": "architectural_material_plane_and_joint", "check": "큰 재료 면의 위계와 정밀 접합부가 한 장면에서 함께 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 3
+    },
+    "바로크 오퓰런트 럭셔리": {
+      "set": {
+        "aesthetic_trend": "baroque_opulent_luxury_aesthetic",
+        "location": "grand_gilded_mirror_salon",
+        "surface_material": "gilded_marble_velvet_opulence_surface",
+        "lighting": "baroque_gilded_chiaroscuro_lighting",
+        "color": "obsidian_antique_gold_oxblood_palette"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "location", "surface_material", "lighting", "color"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "location": ["architecture furniture and object ornament share one theatrical hierarchy"],
+        "surface_material": ["colored marble gilt metal mirror and velvet"],
+        "lighting": ["chiaroscuro animates gilding and layered depth"]
+      },
+      "anchor_pool": {
+        "location": ["grand_gilded_mirror_salon"],
+        "surface_material": ["gilded_marble_velvet_opulence_surface"],
+        "lighting": ["baroque_gilded_chiaroscuro_lighting"],
+        "color": ["obsidian_antique_gold_oxblood_palette", "pearl_ivory_champagne_gold_palette"]
+      },
+      "additional": ["Coordinate ornament across scales so movement and hierarchy remain legible. Random gold clutter, an ordinary hotel lobby, or a crown prop alone are not baroque opulence."],
+      "intent_axis": ["integrated theatrical movement and material hierarchy across architecture, furniture, and objects"],
+      "guide": {
+        "definition_ko": "바로크 오퓰런스는 금색의 양이 아니라 대리석·금박·거울·벨벳·곡선 장식과 빛이 여러 스케일에서 같은 움직임과 위계를 만드는 시스템이다.",
+        "dominant_axes": ["integrated_ornament", "material_layering", "mirror_depth", "theatrical_light"],
+        "anchor_guidance": "천장·벽·가구·오브제 중 세 스케일 이상에서 곡선과 반사 리듬을 반복한다.",
+        "anti_patterns": ["random gold clutter", "generic luxury hotel lobby", "crown-only regal cue", "flat maximalist collage"]
+      },
+      "review_gates": [{"id": "baroque_integrated_hierarchy_not_gold_clutter", "check": "장식과 재료가 여러 스케일에서 통합된 위계를 만들며 금색 잡동사니로 붕괴하지 않는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "하이 주얼리 크래프트": {
+      "set": {
+        "aesthetic_trend": "high_jewelry_craft_aesthetic",
+        "action": "setting_matched_gemstones_under_magnification",
+        "prop": "matched_gemstone_setting_layout_tray",
+        "location": "high_jewelry_setting_bench",
+        "surface_material": "gemstone_metal_setting_structure_surface",
+        "lighting": "controlled_gemstone_specular_lighting"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "location", "surface_material", "lighting"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["set matched stones under magnification"],
+        "prop": ["ordered matched-stone layout tied to the same design"],
+        "surface_material": ["prong bezel or pavé contact secures stones to a supporting metal gallery"]
+      },
+      "anchor_pool": {
+        "action": ["setting_matched_gemstones_under_magnification", "inspecting_material_junction_and_finish"],
+        "prop": ["matched_gemstone_setting_layout_tray"],
+        "location": ["high_jewelry_setting_bench"],
+        "surface_material": ["gemstone_metal_setting_structure_surface"],
+        "lighting": ["controlled_gemstone_specular_lighting"]
+      },
+      "additional": ["Show how stones are selected, supported, and mechanically secured within an original metal design. Loose gems, generic sparkle, costume jewelry, or a price claim are insufficient."],
+      "intent_axis": ["matched stones integrated through a legible setting structure and careful bench process"],
+      "guide": {
+        "definition_ko": "하이 주얼리의 시각 계약은 보석의 크기·색 매칭, 프롱·베젤·파베 접점, 금속 갤러리 지지구조, 세팅 공정의 결합이다.",
+        "dominant_axes": ["stone_matching", "setting_contact", "metal_support", "integrated_design"],
+        "anchor_guidance": "반짝임과 함께 보석을 실제로 잡는 금속 접점과 하부 구조를 보여준다.",
+        "anti_patterns": ["loose gemstones", "glitter", "costume jewelry", "price or rarity inference"]
+      },
+      "review_gates": [{"id": "high_jewelry_setting_structure_visible", "check": "매칭된 보석과 이를 고정하는 접점·금속 지지구조가 통합된 설계로 보이는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "파인 워치메이킹": {
+      "set": {
+        "aesthetic_trend": "fine_watchmaking_craft_aesthetic",
+        "action": "hand_finishing_mechanical_watch_bridges",
+        "prop": "open_mechanical_movement_loupe_prop",
+        "location": "fine_watchmaking_finishing_bench",
+        "surface_material": "precision_brushed_polished_metal_junction_surface",
+        "lighting": "grazing_material_reveal_lighting"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "location", "surface_material", "lighting"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["chamfer polish or brush a mechanical bridge at the work point"],
+        "prop": ["coherent open movement with connected components and loupe"],
+        "surface_material": ["differentiated brushed polished and chamfered finishes"]
+      },
+      "anchor_pool": {
+        "action": ["hand_finishing_mechanical_watch_bridges", "inspecting_material_junction_and_finish"],
+        "prop": ["open_mechanical_movement_loupe_prop"],
+        "location": ["fine_watchmaking_finishing_bench"],
+        "surface_material": ["precision_brushed_polished_metal_junction_surface"],
+        "lighting": ["grazing_material_reveal_lighting"]
+      },
+      "additional": ["Keep movement parts mechanically connected and preserve a legible time function or assembly context. Scattered gears, a printed skeleton motif, smartwatch UI, or status symbolism alone are insufficient."],
+      "intent_axis": ["coherent mechanical function plus differentiated hand finishing and assembly evidence"],
+      "guide": {
+        "definition_ko": "파인 워치메이킹은 연결된 기계식 무브먼트, 브리지·모서리의 차등 마감, 조립·조정, 읽을 수 있는 시간 기능으로 표현한다.",
+        "dominant_axes": ["coherent_movement", "connected_function", "differentiated_finish", "assembly_and_time"],
+        "anchor_guidance": "기어를 흩뿌리지 말고 브리지와 기어트레인이 실제 작동 구조로 연결되도록 한다.",
+        "anti_patterns": ["loose gears", "printed skeleton graphic", "smartwatch", "watch status portrait only"]
+      },
+      "review_gates": [{"id": "watchmaking_movement_function_and_finish", "check": "연결된 무브먼트 기능과 차등 마감·조립 증거가 함께 보이는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "프라이빗 클라이언트 럭셔리": {
+      "set": {
+        "aesthetic_trend": "private_client_service_luxury_aesthetic",
+        "action": "private_advisor_curating_small_selection",
+        "prop": ["curated_private_viewing_tray", "blank_aftercare_restoration_folder"],
+        "location": "private_client_material_salon",
+        "capture_context": "private_appointment_service_capture",
+        "narrative_phase": "private_presentation_aftercare_phase"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "action", "prop", "location", "capture_context", "narrative_phase"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "action": ["one advisor responds to one client's material fit or care need"],
+        "prop": ["a curated few objects and an unbranded aftercare record"],
+        "capture_context": ["careful handling, deliberate pacing, privacy, and follow-through"]
+      },
+      "anchor_pool": {
+        "action": ["private_advisor_curating_small_selection", "inspecting_material_junction_and_finish"],
+        "prop": ["curated_private_viewing_tray", "blank_aftercare_restoration_folder"],
+        "location": ["private_client_material_salon"],
+        "capture_context": ["private_appointment_service_capture"],
+        "narrative_phase": ["final_fitting_function_check_phase", "private_presentation_aftercare_phase"]
+      },
+      "additional": ["Service quality must be visible as a responsive advisor-client interaction and aftercare continuity. An empty marble lobby, champagne, velvet rope, or a solitary salesperson pose is insufficient."],
+      "intent_axis": ["responsive one-to-one curation, careful handling, fitting or care, and aftercare continuity"],
+      "guide": {
+        "definition_ko": "프라이빗 클라이언트 서비스는 공간의 화려함이 아니라 상담자의 반응, 소수 큐레이션, 신중한 취급, 피팅·관리, 애프터케어의 연속성이다.",
+        "dominant_axes": ["advisor_client_response", "curated_few", "careful_handling", "aftercare_continuity"],
+        "anchor_guidance": "상담자가 고객의 재료·핏·관리 요구에 대응하는 손동작과 선택 결과를 함께 보여준다.",
+        "anti_patterns": ["empty marble lobby", "champagne service only", "velvet rope", "generic luxury retail pose"]
+      },
+      "review_gates": [{"id": "private_client_response_and_aftercare", "check": "상담자-고객의 반응 관계와 소수 큐레이션·관리 후속이 함께 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
     }
   },
   "aliases": {
+    "quiet luxury": "콰이어트 럭셔리",
+    "discreet luxury": "콰이어트 럭셔리",
+    "understated luxury": "콰이어트 럭셔리",
+    "stealth wealth styling": "콰이어트 럭셔리",
+    "절제된 럭셔리": "콰이어트 럭셔리",
+    "conspicuous luxury": "컨스피큐어스 럭셔리",
+    "loud luxury": "컨스피큐어스 럭셔리",
+    "logomania styling": "컨스피큐어스 럭셔리",
+    "로고마니아 스타일": "컨스피큐어스 럭셔리",
+    "luxury craftsmanship": "장인 공정 럭셔리",
+    "artisanal luxury": "장인 공정 럭셔리",
+    "savoir-faire aesthetic": "장인 공정 럭셔리",
+    "장인정신 럭셔리": "장인 공정 럭셔리",
+    "사부아페르": "장인 공정 럭셔리",
+    "heritage luxury": "헤리티지 재해석 럭셔리",
+    "reinterpreted heritage": "헤리티지 재해석 럭셔리",
+    "living heritage luxury": "헤리티지 재해석 럭셔리",
+    "재해석된 헤리티지": "헤리티지 재해석 럭셔리",
+    "heritage travel luxury": "헤리티지 트래블 럭셔리",
+    "trunk-maker aesthetic": "헤리티지 트래블 럭셔리",
+    "heritage trunk luxury": "헤리티지 트래블 럭셔리",
+    "트렁크 메이커 럭셔리": "헤리티지 트래블 럭셔리",
+    "haute couture": "쿠튀르 아틀리에",
+    "couture atelier": "쿠튀르 아틀리에",
+    "metiers d'art couture": "쿠튀르 아틀리에",
+    "오트 쿠튀르": "쿠튀르 아틀리에",
+    "bespoke tailoring": "비스포크 테일러링",
+    "bespoke suit craft": "비스포크 테일러링",
+    "맞춤 재단 수트": "비스포크 테일러링",
+    "architectural luxury": "건축적 소재 럭셔리",
+    "contemporary material luxury": "건축적 소재 럭셔리",
+    "sculptural luxury": "건축적 소재 럭셔리",
+    "건축적 럭셔리": "건축적 소재 럭셔리",
+    "baroque luxury": "바로크 오퓰런트 럭셔리",
+    "opulent luxury": "바로크 오퓰런트 럭셔리",
+    "regal luxury": "바로크 오퓰런트 럭셔리",
+    "maximalist opulence": "바로크 오퓰런트 럭셔리",
+    "바로크 럭셔리": "바로크 오퓰런트 럭셔리",
+    "high jewelry": "하이 주얼리 크래프트",
+    "high jewellery": "하이 주얼리 크래프트",
+    "haute joaillerie": "하이 주얼리 크래프트",
+    "하이 주얼리": "하이 주얼리 크래프트",
+    "fine watchmaking": "파인 워치메이킹",
+    "haute horlogerie": "파인 워치메이킹",
+    "오트 오를로제리": "파인 워치메이킹",
+    "private client luxury": "프라이빗 클라이언트 럭셔리",
+    "private appointment luxury": "프라이빗 클라이언트 럭셔리",
+    "white-glove luxury service": "프라이빗 클라이언트 럭셔리",
+    "화이트 글러브 서비스": "프라이빗 클라이언트 럭셔리",
     "팜프파탈": "팜므파탈",
     "succubus": "서큐버스",
     "Succubus": "서큐버스",

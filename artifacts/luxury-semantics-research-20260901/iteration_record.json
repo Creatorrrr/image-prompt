@@ -1,0 +1,194 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "a495aaad2f4c85d1ed101949a806ef510b07726c plus pre-existing uncommitted dictionary and profile work",
+    "candidate_revision": "working-tree-2026-09-01-luxury-visual-semantics"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Use the luxury keywords and brand-characteristic research from the referenced conversation to strengthen detailed visual-semantic data and photo candidate-pack data without copying real brand marks or claiming nonvisual luxury facts from pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-source-vocabulary",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies seventeen luxury vocabulary groups and twenty-five brand-characteristic summaries spanning heritage, craft, scarcity, couture, house codes, materials, quiet and conspicuous signaling, architecture, jewelry, watchmaking, travel objects, and private service.",
+      "artifact": "chatgpt-conversation://6a952f29-02b4-83ee-8659-247860af8354"
+    },
+    {
+      "id": "e-external-research",
+      "kind": "external-research",
+      "claim": "Thirteen primary, official, museum, trade-association, peer-reviewed, or industry sources were abstracted into observable component relations and explicit limitations for brand prominence, couture, bespoke, leather craft, woven leather, fine wool, travel cases, gemstone setting, watch finishing, clienteling, baroque integration, modern material planes, and craft transmission.",
+      "artifact": "docs/research-evidence/photo-prompt/luxury_visual_semantics_20260901.md and docs/research-evidence/photo-prompt/research_evidence.jsonl#luxury_*"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The current combined working tree validates with 7,120 Gemini semantic entries, a 110-profile and 654-exact-term visual index, valid dictionary metadata, and 55 related regression tests with 328 subtests passing.",
+      "artifact": "commands: build_visual_profile_index.py --check; eval_semantic.py --check-index; validate_photo_prompt_dictionary.py; pytest tests/test_photo_luxury_semantics.py tests/test_photo_visual_obligations.py tests/test_photo_visual_profile_retrieval.py tests/test_photo_bm25f_retrieval.py tests/test_photo_concept_candidate_expansion.py"
+    },
+    {
+      "id": "e-prompt-routing",
+      "kind": "prompt-evaluation",
+      "claim": "Twelve precise concept terms route to exactly one intended luxury mixin with at least three forced candidate slots, eight exact terms hard-activate exactly one intended visual profile, four broad luxury terms remain unforced, and eight paired confounders remain non-hard.",
+      "artifact": "tests/test_photo_luxury_semantics.py"
+    },
+    {
+      "id": "e-brand-boundary",
+      "kind": "prompt-inspection",
+      "claim": "Runtime mixins contain no researched real-brand names, conspicuous-code prompts require original fictional non-letter marks, and the research report separates observable material and process from price, wealth, rarity, authenticity, provenance, accreditation, and user judgment.",
+      "artifact": "skills/photo-prompt-image-generator/assets/concept_recipes.json and docs/research-evidence/photo-prompt/luxury_visual_semantics_20260901.md"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A precise luxury term selects a brand-neutral cluster of observable materials, construction, service relations, and confusion negatives, while a broad luxury label remains fail-closed and no prompt claims that pixels prove price, wealth, rarity, authenticity, provenance, accreditation, or brand identity.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "component-contract",
+        "statement": "Each hard luxury profile requires at least four connected component groups, literal prompt-evidence fields, five unique render gates, and explicit substitutes rather than a color, room, prop, or label shortcut.",
+        "evidence_ids": ["e-external-research", "e-package", "e-prompt-routing"],
+        "causal_controls": ["material specificity", "construction relation", "process or service interaction", "whole-form legibility", "confounder rejection"]
+      },
+      {
+        "id": "narrow-routing-boundary",
+        "statement": "Exact terms such as bespoke tailoring or high jewelry may bind a hard profile, while luxury, 럭셔리, 명품, luxury brand, BM25F neighbors, and embedding neighbors remain non-hard.",
+        "evidence_ids": ["e-package", "e-prompt-routing"],
+        "causal_controls": ["exact term", "component-complete semantics", "optional semantic retrieval", "negation", "generic-label exclusion"]
+      },
+      {
+        "id": "brand-and-noninference-boundary",
+        "statement": "Brand examples are research inputs only; runtime data uses original marks and generic construction, and visible appearance does not establish brand, value, provenance, social status, or user preference.",
+        "evidence_ids": ["e-source-vocabulary", "e-external-research", "e-brand-boundary"],
+        "causal_controls": ["original fictional non-letter code", "brand-neutral object", "declared fictional archive pair", "contextual fact boundary", "user judgment separation"]
+      }
+    ],
+    "flexible_dimensions": [
+      "subject identity and appearance",
+      "adult or object-only scene",
+      "brand-neutral silhouette",
+      "material color within the grammar",
+      "setting and camera",
+      "historical or contemporary staging when no provenance claim is made"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-brand-list-to-neutral-grammar",
+      "scale": "global",
+      "axis": "brand-specific source vocabulary versus reusable prompt data",
+      "source_state": "The source conversation organizes many findings through named luxury houses, signature products, marks, and house codes.",
+      "render_state": "The implementation removes real-brand ownership and maps recurring relations into twelve original brand-neutral visual grammars.",
+      "evidence_ids": ["e-source-vocabulary", "e-external-research", "e-brand-boundary"]
+    },
+    {
+      "id": "mismatch-luxury-label-collapse",
+      "scale": "global",
+      "axis": "broad value label versus observable visual owners",
+      "source_state": "Luxury and 명품 can refer to price, social value, authenticity, rarity, service, materials, craft, historical status, or visual style without specifying which owner is intended.",
+      "render_state": "Broad labels remain unforced; only twelve narrow terms select candidate clusters and only eight component-complete terms bind hard visual profiles.",
+      "evidence_ids": ["e-external-research", "e-prompt-routing"]
+    },
+    {
+      "id": "mismatch-no-pixel-evaluation",
+      "scale": "global",
+      "axis": "prompt contract versus saved-pixel fidelity",
+      "source_state": "The user requested detailed research and candidate data strengthening rather than image generation.",
+      "render_state": "Data, routing, indexes, and prompt contracts were validated, but no saved luxury images were generated or reviewed at native and thumbnail scale.",
+      "evidence_ids": ["e-source-vocabulary", "e-package", "e-prompt-routing"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-component-decomposition",
+      "stage": "representation",
+      "statement": "Decomposing luxury language into brand prominence, materials, construction, process, function, and service relations will prevent beige, gold, sparkle, old luggage, or status-bearing people from satisfying unrelated luxury requests.",
+      "evidence_ids": ["e-external-research", "e-prompt-routing"],
+      "falsifier": "A paired confounder hard-activates or passes a luxury profile without the required connected components."
+    },
+    {
+      "id": "hypothesis-exact-fail-closed-routing",
+      "stage": "user-contract",
+      "statement": "Restricting automatic hard activation to narrow exact terms will preserve user intent while leaving broad luxury language available for nonbinding exploration.",
+      "evidence_ids": ["e-package", "e-prompt-routing"],
+      "falsifier": "A broad luxury term forces a mixin or hard profile, or a precise tested term fails to reach its intended cluster."
+    },
+    {
+      "id": "hypothesis-brand-neutral-transfer",
+      "stage": "prompt-interaction",
+      "statement": "Original non-letter codes and generic process relations can preserve researched visual distinctions across new scenes without copying a real house mark, product, or brand name.",
+      "evidence_ids": ["e-external-research", "e-brand-boundary", "e-prompt-routing"],
+      "falsifier": "Generated prompts require a real brand name or copied signature design to keep the intended component relation coherent."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "policy", "test"],
+    "general_rule": "Translate luxury vocabulary into brand-neutral observable component systems, route only narrow exact terms, keep broad value labels fail-closed, separate pixel-visible relations from contextual claims, and bind each hard concept to evidence fields, pixel gates, and confusion negatives.",
+    "generalization_basis": "The implementation covers twelve independent grammars spanning fashion, leather, travel objects, interiors, jewelry, watchmaking, and service rather than tuning one brand, product, reference image, or aesthetic palette.",
+    "hypothesis_ids": ["hypothesis-component-decomposition", "hypothesis-exact-fail-closed-routing", "hypothesis-brand-neutral-transfer"],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/luxury_visual_semantics_20260901.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/concept_recipes.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c9876d402991549d",
+      "tests/test_photo_luxury_semantics.py",
+      "artifacts/luxury-semantics-research-20260901/iteration_record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt-routing", "e-brand-boundary"]},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "motivating-quiet-luxury",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["low brand prominence", "material specificity", "fit or form", "junction precision"],
+        "evidence_ids": ["e-prompt-routing"]
+      },
+      {
+        "id": "heldout-bespoke-tailoring",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["individual paper pattern", "basted fitting", "hand canvas", "aftercare"],
+        "evidence_ids": ["e-prompt-routing"]
+      },
+      {
+        "id": "heldout-high-jewelry",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["matched stones", "setting contact", "metal support", "integrated design"],
+        "evidence_ids": ["e-prompt-routing"]
+      },
+      {
+        "id": "heldout-private-client-service",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["advisor response", "curated few", "careful handling", "aftercare continuity"],
+        "evidence_ids": ["e-prompt-routing"]
+      },
+      {
+        "id": "heldout-broad-luxury-labels",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["luxury", "럭셔리", "명품", "luxury brand remain unforced"],
+        "evidence_ids": ["e-prompt-routing"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The research-backed candidates, twelve exact mixin routes, eight hard visual contracts, broad-label fail-closed boundary, paired confounders, generated indexes, and related regression suite all pass. Promotion is limited to prompt behavior: no luxury images were generated, no pixel gates were scored, and requesting-user aesthetic judgment remains unscored.",
+    "evidence_ids": ["e-external-research", "e-package", "e-prompt-routing", "e-brand-boundary"]
+  }
+}
