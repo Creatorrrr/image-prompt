@@ -1,0 +1,229 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "7502c53b272e75995e3a7399052906d6a5bb849e",
+    "candidate_revision": "working-tree-2026-08-31-traditional-clothing"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen the visual-semantic registry and candidate pack with researched traditional-clothing keywords, then test five independently generated random complex concepts against actual saved pixels using the supplied adult-subject appearance reference."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The user requested candidate-pack integration, five independent concept arms, reference-guided prompt generation, image generation, and saved-pixel verification.",
+      "artifact": "current user request plus chatgpt-conversation://6a9526d5-9a84-83e8-a5fc-080b8c7b0725"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Garment topology, wearing mechanism, qualified regional or period context, textile construction, and confusion boundaries were separated across 28 garment families and six textile techniques without inferring wearer identity.",
+      "artifact": "docs/research-evidence/photo-prompt/traditional-clothing-20260831/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary 1.31, 7025 semantic entries, 92 visual profiles, generated indexes, five frozen prepack contracts, eight focused tests, and 40 shared visual-retrieval regressions validate on the working tree.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/coordination/static_validation.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five final v6 packs activate exactly their intended hard garment profile and all five composed-prompt and render-request audits pass; semantic paraphrases remain optional rather than hard.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/coordination/five_arm_results.json and per-arm composed/render-request audits"
+    },
+    {
+      "id": "e-kebaya-render",
+      "kind": "render-observation",
+      "claim": "The saved kebaya image passes all five target gates; the textile-swatch slipping motion remains weak and appearance continuity is non-biometric and partial.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/pixel_review.json"
+    },
+    {
+      "id": "e-qipao-render",
+      "kind": "render-observation",
+      "claim": "The saved qipao image passes all five target gates with standing collar, diagonal opening, five frog fastenings, continuous body, and coherent slit construction connected in one image.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-02-qipao/pixel_review.json"
+    },
+    {
+      "id": "e-poncho-render",
+      "kind": "render-observation",
+      "claim": "The saved Andean poncho image passes four of five gates but fails strict proof of a separate broad rear panel because frontal overlap makes the wind-blown cloth topologically ambiguous.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-03-andean-poncho/review/pixel_review.json"
+    },
+    {
+      "id": "e-sari-render",
+      "kind": "render-observation",
+      "claim": "The saved Nivi sari image passes four of five gates but fails the support-layer gate because the blouse is visible while the underskirt or petticoat boundary is fully concealed.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-04-sari-nivi/evaluation/pixel_review.json"
+    },
+    {
+      "id": "e-boubou-render",
+      "kind": "render-observation",
+      "claim": "The saved grand boubou image passes all five target gates; the paper-model catch event and reference appearance continuity remain partial outside the target profile.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-05-west-african-boubou/pixel_review.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Five isolated agents each made one successful built-in image-generation call with no retry or fallback and recorded a separate v2 run manifest and ledger.",
+      "artifact": "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/coordination/five_arm_results.json and per-arm run_manifest.json"
+    },
+    {
+      "id": "e-preflight-boundary",
+      "kind": "prompt-inspection",
+      "claim": "Core-only preflight packs did not silently promote agent-selected post-core garment concepts; source-grounded photo-visual-intent/v1 assertions were required before final hard obligations were composed.",
+      "artifact": "per-arm preserved pre-intent packs; arm-05 provenance records that its first bytes were overwritten and the retained reproduction is non-byte-identical"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A named garment survives in the saved image as its connected topology, fastening or drape mechanism, layer order, and material evidence rather than as a label, color, prop, setting, or single familiar cue.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "connected-garment-system",
+        "statement": "Each hard garment profile exposes at least four connected component groups, five prompt evidence fields, five render gates, and explicit substitute rejection.",
+        "evidence_ids": ["e-research", "e-package", "e-prompt"],
+        "causal_controls": ["opening and overlap", "fastening or tuck route", "upper-lower or outer-inner boundary", "front-back or sleeve topology", "textile construction"]
+      },
+      {
+        "id": "routing-boundary",
+        "statement": "Exact source-grounded terms may become hard obligations, while generic traditional-clothing labels, BM25F hits, embedding hits, colors, motifs, and places remain non-hard.",
+        "evidence_ids": ["e-research", "e-package", "e-preflight-boundary"],
+        "causal_controls": ["exact term", "source binding", "required context", "semantic candidate lane", "negation and exclusions"]
+      },
+      {
+        "id": "identity-boundary",
+        "statement": "Clothing and the supplied portrait guide visible garment and adult-subject appearance only; they do not establish ethnicity, nationality, authenticity, or biometric identity.",
+        "evidence_ids": ["e-request", "e-research", "e-kebaya-render", "e-qipao-render", "e-poncho-render", "e-sari-render", "e-boubou-render"],
+        "causal_controls": ["garment morphology", "adult presentation", "hair and broad facial cues", "non-biometric comparison", "user acceptance"]
+      }
+    ],
+    "flexible_dimensions": [
+      "scene and event",
+      "camera viewpoint",
+      "lighting and weather",
+      "fabric color within the documented construction",
+      "ornament within the qualified garment form",
+      "adult-subject styling that does not alter the frozen appearance reference role"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-postcore-routing",
+      "scale": "global",
+      "axis": "agent-selected post-core hard obligation provenance",
+      "source_state": "Each frozen interpreted intent names one selected garment and its judgeable topology.",
+      "render_state": "The core-only preflight pack contained no target hard profile; a separate source-grounded visual-intent contract was required before rendering.",
+      "evidence_ids": ["e-preflight-boundary", "e-prompt"]
+    },
+    {
+      "id": "mismatch-poncho-rear-panel",
+      "scale": "regional",
+      "axis": "front-and-back panel topology",
+      "source_state": "A broad rear panel must be separately judgeable behind the central-opening front panel.",
+      "render_state": "Frontal overlap leaves the wind-blown left cloth ambiguous between rear panel, side wing, and blanket-like tail.",
+      "evidence_ids": ["e-poncho-render"]
+    },
+    {
+      "id": "mismatch-sari-support-layer",
+      "scale": "local",
+      "axis": "support-layer boundary",
+      "source_state": "A separate blouse and underskirt or petticoat boundary must remain legible beneath the continuous Nivi drape.",
+      "render_state": "The blouse is visible, but the underskirt or petticoat boundary is fully occluded.",
+      "evidence_ids": ["e-sari-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-componentized-garment-profiles",
+      "stage": "representation",
+      "statement": "Representing garments as connected topology, wearing mechanism, layer boundaries, and confounder gates will transfer across complex scenes better than labels, palettes, motifs, or props.",
+      "evidence_ids": ["e-research", "e-kebaya-render", "e-qipao-render", "e-boubou-render"],
+      "falsifier": "Held-out garments repeatedly pass prompt audit but render only generic costume cues despite all connected components remaining visible and unobstructed."
+    },
+    {
+      "id": "hypothesis-composition-visibility",
+      "stage": "prompt-interaction",
+      "statement": "Complex actions and frontal overlap can conceal a secondary layer or rear panel even when the prompt contains the correct garment definition.",
+      "evidence_ids": ["e-poncho-render", "e-sari-render"],
+      "falsifier": "Rear-panel and underskirt gates fail equally often in unobstructed side or three-quarter views with deliberate layer separation."
+    },
+    {
+      "id": "hypothesis-explicit-postcore-binding",
+      "stage": "user-contract",
+      "statement": "An explicit source-grounded visual-intent contract is necessary to turn an agent-selected post-core test concept into a hard obligation without allowing semantic retrieval to invent user requirements.",
+      "evidence_ids": ["e-preflight-boundary", "e-prompt"],
+      "falsifier": "The final generator can prove the same hard obligation came directly from the active user request or a frozen pre-core assertion without the visual-intent record."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "policy", "test"],
+    "general_rule": "Encode traditional garments as observable connected systems; require source-grounded exact activation for hard duties; keep generic and semantic neighbors optional; bind each accepted system to prompt evidence, native and thumbnail render gates, substitute rejection, and identity-safety boundaries.",
+    "generalization_basis": "The data covers 28 garment families and six textile techniques from multiple regions, while the five hard profiles exercise distinct sewn, fastened, wrapped, panelled, and voluminous garment systems in unrelated complex scenes.",
+    "hypothesis_ids": ["hypothesis-componentized-garment-profiles", "hypothesis-composition-visibility", "hypothesis-explicit-postcore-binding"],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/traditional-clothing-20260831",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/a14025a8d756f137",
+      "tests/fixtures/photo_prompt/traditional_clothing_visual_routing_v1.jsonl",
+      "tests/test_photo_traditional_clothing_semantics.py",
+      "artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt", "e-preflight-boundary"]},
+    "render": {"status": "fail", "evidence_ids": ["e-kebaya-render", "e-qipao-render", "e-poncho-render", "e-sari-render", "e-boubou-render"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "motivating-kebaya",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["front-opening upper", "center fastening", "embroidered edge", "separate wrapped lower layer"],
+        "evidence_ids": ["e-kebaya-render"]
+      },
+      {
+        "id": "heldout-qipao",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["standing collar", "diagonal opening", "frog fastening", "continuous sewn body", "side slit"],
+        "evidence_ids": ["e-qipao-render"]
+      },
+      {
+        "id": "heldout-poncho",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["central opening", "front-back panels", "open sides", "woven edges"],
+        "evidence_ids": ["e-poncho-render"]
+      },
+      {
+        "id": "heldout-nivi-sari",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["continuous cloth", "waist pleats", "torso crossing", "left pallu", "support layers"],
+        "evidence_ids": ["e-sari-render"]
+      },
+      {
+        "id": "heldout-grand-boubou",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["expansive outer body", "broad sleeve openings", "center embroidery", "coordinated inner layer"],
+        "evidence_ids": ["e-boubou-render"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The candidate data, generated indexes, routing boundary, and all five prompt/runtime audits pass, and three unrelated garment systems pass every saved-pixel gate. However, the Andean poncho rear-panel gate and Nivi sari support-layer gate fail in actual pixels, so render-fidelity promotion is not justified. User aesthetic acceptance also remains unscored.",
+    "evidence_ids": ["e-package", "e-prompt", "e-poncho-render", "e-sari-render", "e-generation"]
+  }
+}

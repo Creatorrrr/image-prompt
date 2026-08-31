@@ -1,0 +1,50 @@
+{
+  "schema_version": "traditional-clothing-five-arm-integrity/v1",
+  "validated_on": "2026-08-31",
+  "status": "ok",
+  "checks": [
+    "Every saved primary image is a PNG whose byte SHA-256 and header dimensions match five_arm_results.json.",
+    "Every arm has one photo-independent-run-manifest/v2 with status success, candidate-pack version v6, one image call, no cross-arm inputs, and the supplied reference SHA-256.",
+    "Every arm ledger contains exactly one run whose run ID matches its manifest and whose cross_arm_inputs_used value is false.",
+    "Every final candidate pack contains exactly one hard visual obligation and it is the arm's assigned target garment profile.",
+    "Every pixel-review audit has no schema failures, matches the final pack ID, and agrees with the aggregate technical-qualified status."
+  ],
+  "arms": [
+    {
+      "arm_id": "arm-01-kebaya",
+      "image_sha256_prefix": "b8412ae09df2",
+      "dimensions": "941x1672",
+      "target_gates": "5/5",
+      "qualification_status": "visual_technical_qualified_user_judgment_pending"
+    },
+    {
+      "arm_id": "arm-02-qipao",
+      "image_sha256_prefix": "38e839c55cad",
+      "dimensions": "1024x1536",
+      "target_gates": "5/5",
+      "qualification_status": "visual_technical_qualified_user_judgment_pending"
+    },
+    {
+      "arm_id": "arm-03-andean-poncho",
+      "image_sha256_prefix": "f1322d222fa6",
+      "dimensions": "1003x1568",
+      "target_gates": "4/5",
+      "qualification_status": "failed_technical_hard_gates"
+    },
+    {
+      "arm_id": "arm-04-sari-nivi",
+      "image_sha256_prefix": "6dc3e1880b82",
+      "dimensions": "941x1672",
+      "target_gates": "4/5",
+      "qualification_status": "failed_technical_hard_gates"
+    },
+    {
+      "arm_id": "arm-05-west-african-boubou",
+      "image_sha256_prefix": "5eb7d10958a6",
+      "dimensions": "1024x1536",
+      "target_gates": "5/5",
+      "qualification_status": "visual_technical_qualified_user_judgment_pending"
+    }
+  ],
+  "result": "ALL_FIVE_ARMS_INTEGRITY_OK"
+}

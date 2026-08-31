@@ -1,0 +1,46 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent reference-guided photographic stress test in which the selected random complex concept makes the continuous cloth, waist wrap, front pleats, and shoulder pallu of a Nivi-draped sari visibly judgeable.",
+  "subject": "The same unmistakably adult woman shown in the supplied portrait reference, wearing a Nivi-draped sari.",
+  "setting": "A sandstone stepwell at the first edge of a monsoon shower.",
+  "event": "She lifts a brass rain gauge from a stone step while the damp pallu draws outward in the new wind.",
+  "visual_priorities": [
+    "Simultaneously legible continuous sari cloth, waist wrap, tucked front pleats, blouse boundary, and pallu route over the left shoulder",
+    "Reference-guided preservation of the adult subject's facial structure and long dark hair",
+    "Full-body monsoon motion that keeps the drape path readable from waist to shoulder"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic monsoon textile editorial: a sandstone-stepwell scene built around a Nivi-draped sari at the first edge of rain. The subject is the same adult woman shown in the supplied portrait reference. Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference. She wears one continuous sari wrapped at the waist, with multiple front pleats tucked above the petticoat and the pallu crossing the torso to fall from the left shoulder over a fitted blouse. She lifts a brass rain gauge from a stone step while the damp pallu draws outward in the new wind, exposing the route of the cloth without breaking its continuity. Show the waist wrap, aligned front pleats, blouse boundary, diagonal torso crossing, shoulder turn, and free pallu end together. Use full-body stair geometry, wet sandstone reflections, fine rain, natural skin texture, and warm storm-filtered light.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "The recorded random selection assigns this arm a complex Nivi sari scene combining monsoon movement, architectural depth, continuous drape evidence, and identity-reference control.", "sources": []},
+    {"term": "첨부한 이미지를 활용하여", "source_text": "첨부한 이미지를 활용하여", "basis": "request_context", "resolution": "Use the supplied portrait as the sole visual reference for the same clearly adult subject's face and hair while changing outfit, pose, framing, and setting.", "sources": []},
+    {"term": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "basis": "request_context", "resolution": "Produce one auditable prompt and render, then judge the saved pixels against explicit garment-component gates rather than prompt wording alone.", "sources": []}
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "a sandstone-stepwell scene built around a Nivi-draped sari at the first edge of rain"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "the same adult woman shown in the supplied portrait reference"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "She lifts a brass rain gauge from a stone step while the damp pallu draws outward in the new wind"},
+      {"anchor_id": "core_identity", "source_text": "첨부한 이미지를 활용하여", "dimension": "identity", "prompt_evidence": "Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference."},
+      {"anchor_id": "core_wardrobe", "source_text": "랜덤한 복잡한 컨셉", "dimension": "appearance", "prompt_evidence": "one continuous sari wrapped at the waist, with multiple front pleats tucked above the petticoat and the pallu crossing the torso to fall from the left shoulder"
+      }
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "identity", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic monsoon textile editorial",
+    "family": "architectural weather-driven drape portraiture",
+    "evidence": ["wet sandstone reflections", "warm storm-filtered light"]
+  },
+  "variation_key": "arm-04-sari-nivi"
+}

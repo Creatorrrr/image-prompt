@@ -1,0 +1,45 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent reference-guided photographic stress test in which the selected random complex concept makes qipao collar, opening, fastening, and side construction visibly judgeable.",
+  "subject": "The same unmistakably adult woman shown in the supplied portrait reference, wearing a qipao.",
+  "setting": "A rain-bright Art Deco ferry terminal with brass timetable cards and geometric glass.",
+  "event": "She steps across a wet threshold while rotating one brass timetable card with her fingertips.",
+  "visual_priorities": [
+    "Simultaneously legible standing collar, diagonal opening, frog closures, fitted body line, and controlled side slit",
+    "Reference-guided preservation of the adult subject's facial structure and long dark hair",
+    "Full-length motion that exposes garment construction without hiding it behind props"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic historical-fashion editorial: a rain-bright Art Deco ferry-terminal scene built around a qipao silhouette. The subject is the same adult woman shown in the supplied portrait reference. Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference. She wears a silk qipao with a high standing collar, a diagonal right-front opening secured by handmade frog closures, a fitted calf-length body, and controlled side slits that reveal construction while she walks. She steps across a wet geometric-glass threshold while rotating one brass timetable card with her fingertips, freezing the fabric between stillness and stride. Keep collar, diagonal fastening line, waist shaping, hem, and one slit simultaneously readable. Use full-body three-quarter framing, rain reflections, period brass and glass details, natural skin texture, and crisp side light softened by mist.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "The recorded random selection assigns this arm a complex qipao scene combining historical architecture, motion, fastening evidence, and identity-reference control.", "sources": []},
+    {"term": "첨부한 이미지를 활용하여", "source_text": "첨부한 이미지를 활용하여", "basis": "request_context", "resolution": "Use the supplied portrait as the sole visual reference for the same clearly adult subject's face and hair while changing outfit, pose, framing, and setting.", "sources": []},
+    {"term": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "basis": "request_context", "resolution": "Produce one auditable prompt and render, then judge the saved pixels against explicit garment-component gates rather than prompt wording alone.", "sources": []}
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "a rain-bright Art Deco ferry-terminal scene built around a qipao silhouette"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "the same adult woman shown in the supplied portrait reference"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "She steps across a wet geometric-glass threshold while rotating one brass timetable card with her fingertips"},
+      {"anchor_id": "core_identity", "source_text": "첨부한 이미지를 활용하여", "dimension": "identity", "prompt_evidence": "Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference."},
+      {"anchor_id": "core_wardrobe", "source_text": "랜덤한 복잡한 컨셉", "dimension": "appearance", "prompt_evidence": "a high standing collar, a diagonal right-front opening secured by handmade frog closures, a fitted calf-length body, and controlled side slits"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "identity", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic historical-fashion editorial",
+    "family": "mist-softened Art Deco travel portraiture",
+    "evidence": ["rain reflections", "crisp side light softened by mist"]
+  },
+  "variation_key": "arm-02-qipao"
+}

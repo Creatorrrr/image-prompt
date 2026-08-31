@@ -1,0 +1,103 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent reference-guided photographic stress test in which the selected random complex concept makes kebaya garment topology and fastening visibly judgeable in the final pixels.",
+  "subject": "The same unmistakably adult woman shown in the supplied portrait reference, wearing a kebaya ensemble.",
+  "setting": "A rain-damp veranda of a shuttered Peranakan townhouse at blue hour.",
+  "event": "A cross-breeze pushes a carved shutter open as she catches its brass handle and an archival textile swatch slips from a folio.",
+  "visual_priorities": [
+    "Simultaneously legible kebaya front opening, brooch linkage, fitted blouse, and sarong boundary",
+    "Reference-guided preservation of the adult subject's facial structure and long dark hair",
+    "Full-body garment coverage with tactile embroidery and humid architectural reflections"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic heritage-fashion editorial: a rain-damp Peranakan-townhouse heritage-fashion scene built around a kebaya silhouette at blue hour. The subject is the same adult woman shown in the supplied portrait reference. Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference. She wears a fitted, front-opening kebaya blouse of fine embroidered voile over an opaque inner layer, fastened at the center with a three-piece brooch chain; its scalloped hem lies over a wrapped batik sarong. A sudden cross-breeze pushes one carved shutter open, and she catches its brass handle while an archival textile swatch slips halfway from a folio. Show the blouse opening, brooch linkage, waist-to-sarong boundary, wrapped lower silhouette, and embroidery together as readable garment evidence. Use controlled full-body framing, natural skin texture, humid reflections, and directional window light.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "The recorded random selection assigns this arm a complex kebaya heritage-fashion scene with multiple simultaneous garment and event demands.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as the sole visual reference for the same clearly adult subject's face and hair while changing outfit, pose, framing, and setting.",
+      "sources": []
+    },
+    {
+      "term": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+      "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+      "basis": "request_context",
+      "resolution": "Produce one auditable prompt and render, then judge the saved pixels against explicit garment-component gates rather than prompt wording alone.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a rain-damp Peranakan-townhouse heritage-fashion scene built around a kebaya silhouette"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "the same adult woman shown in the supplied portrait reference"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "she catches its brass handle while an archival textile swatch slips halfway from a folio"
+      },
+      {
+        "anchor_id": "core_identity",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "identity",
+        "prompt_evidence": "Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference."
+      },
+      {
+        "anchor_id": "core_wardrobe",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "appearance",
+        "prompt_evidence": "a fitted, front-opening kebaya blouse of fine embroidered voile over an opaque inner layer"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "identity",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic heritage-fashion editorial",
+    "family": "humid architectural textile portraiture",
+    "evidence": [
+      "humid reflections",
+      "directional window light"
+    ]
+  },
+  "variation_key": "arm-01-kebaya"
+}

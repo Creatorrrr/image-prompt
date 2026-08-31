@@ -1,0 +1,152 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "ffbce8c490df0f72",
+  "contract_version": "photo-visual-obligations/v1",
+  "profile_id": "kebaya_front_open_blouse_sarong_system",
+  "reviewer": "arm-01-kebaya agent native-and-thumbnail pixel review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/rendered_image.png",
+  "result_sha256": "b8412ae09df210b9f76136d411ddf912c239d4b19cb68f417f0a10994a1c70e8",
+  "result_dimensions": {
+    "width": 941,
+    "height": 1672
+  },
+  "review_scales": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/rendered_image.png",
+      "sha256": "b8412ae09df210b9f76136d411ddf912c239d4b19cb68f417f0a10994a1c70e8",
+      "dimensions": "941x1672"
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/rendered_image.thumbnail.png",
+      "sha256": "729522047280aecea7852889b6551e93c099051d07b50119c28cbd1006537652",
+      "dimensions": "180x320"
+    },
+    "supplemental_crops": [
+      {
+        "purpose": "garment topology",
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/garment_native_crop.png",
+        "sha256": "b2a6a6e472c13dbcfbcd518cacbc6ab697bf00170aa10d8f52b42221ed1c26d2"
+      },
+      {
+        "purpose": "center fastening",
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/fastening_native_crop.png",
+        "sha256": "0300b6cd7ad92bab2e19f86d9c238a9405ccd90727636574f7971138841dd662"
+      },
+      {
+        "purpose": "appearance-only reference comparison",
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-01-kebaya/face_native_crop.png",
+        "sha256": "6cc4a1cc4793b1f4440d6a56ebfb8857900255251cfdc5beab4481474537a1b0"
+      }
+    ]
+  },
+  "hard_gates": {
+    "vo_kebaya_shaped_front_open_upper": {
+      "status": "pass",
+      "evidence": "At thumbnail scale the fitted long upper garment has a centered open-front read; native pixels show two scalloped front edges over an opaque blue inner layer rather than a closed blouse or one-piece dress."
+    },
+    "vo_kebaya_textile_edge_finish": {
+      "status": "pass",
+      "evidence": "Native pixels and the garment crop clearly resolve dense floral embroidery, fine translucent voile sleeves, and continuous scalloped finishing along the neckline, center edges, cuffs, and hem."
+    },
+    "vo_kebaya_center_fastening": {
+      "status": "pass",
+      "evidence": "The native fastening crop shows an aligned set of ornate gold floral kerongsang-like clasps spanning the center opening between the two scalloped front edges; the set reads as functional center fastening, although individual fine connector links are not crisply resolved."
+    },
+    "vo_kebaya_sarong_layer_boundary": {
+      "status": "pass",
+      "evidence": "Both thumbnail and native pixels show the blouse ending over a separately patterned wrapped lower garment; the scalloped blouse hem, waist junction, front overlap, and long sarong folds remain distinct."
+    },
+    "vo_kebaya_not_lace_top_or_sarong_only": {
+      "status": "pass",
+      "evidence": "The 180x320 thumbnail still reads as one connected ensemble: shaped open-front embroidered blouse, centered fastening, finished long panels, and a separate wrapped sarong. Jewelry, lace, the veranda, or the lower wrap alone does not carry the recognition."
+    }
+  },
+  "reject_substitute_checks": [
+    {
+      "substitute": "generic_lace_blouse",
+      "status": "rejected",
+      "evidence": "The shaped long front panels, center fasteners, scalloped edges, and lower-wrap boundary exceed a generic lace-top read."
+    },
+    {
+      "substitute": "sheer_top_and_jewelry_only",
+      "status": "rejected",
+      "evidence": "An opaque inner layer, two explicit front edges, center clasps, and a separate sarong make the garment system readable beyond sheerness and jewelry."
+    },
+    {
+      "substitute": "sarong_only",
+      "status": "rejected",
+      "evidence": "The fitted embroidered upper garment and its fastening are visually dominant and structurally connected to the lower layer."
+    },
+    {
+      "substitute": "qipao_or_one_piece_dress",
+      "status": "rejected",
+      "evidence": "There is no standing-collar diagonal one-piece construction; a blouse hem and separate wrapped lower garment are visible."
+    },
+    {
+      "substitute": "tropical_setting_only",
+      "status": "rejected",
+      "evidence": "Recognition survives in the garment crop without relying on the townhouse veranda."
+    },
+    {
+      "substitute": "kebaya_label_without_front_fastening_and_lower_layer",
+      "status": "rejected",
+      "evidence": "The pixels independently show both center fastening and the distinct lower-wrap boundary."
+    }
+  ],
+  "confound_checks": [
+    {
+      "confound": "long_hair_occludes_right_upper_front_edge",
+      "impact": "nonblocking",
+      "evidence": "Hair covers part of the subject's right upper chest, but the opposite edge, lower right edge, center gap, and fastening set remain legible."
+    },
+    {
+      "confound": "folio_occludes_left_waist_and_lower_panel",
+      "impact": "nonblocking",
+      "evidence": "The folio covers a local patch at the left waist, while the center and right blouse hem plus the wrapped lower layer remain readable at both scales."
+    },
+    {
+      "confound": "blue_hour_low_light",
+      "impact": "nonblocking",
+      "evidence": "Directional warm window light preserves embroidery relief and gold fastener contrast despite the dark wet background."
+    },
+    {
+      "confound": "ornament_could_read_as_jewelry",
+      "impact": "minor_nonblocking",
+      "evidence": "Fine chain detail is soft, but the repeated gold pieces span and align with the two garment edges at the center opening, supporting a fastening-system read rather than free-standing jewelry."
+    }
+  ],
+  "supplemental_scene_review": {
+    "full_body_and_garment_coverage": "pass",
+    "shutter_handle_action": "pass",
+    "folio_and_textile_swatch": "partial",
+    "folio_and_textile_swatch_evidence": "A dark folio and patterned textile sheet are clearly held together, but the frozen instant does not strongly prove that the swatch is actively slipping rather than being carried.",
+    "anatomy_and_contact": "pass_with_minor_uncertainty",
+    "anatomy_and_contact_evidence": "Both hands are present and plausibly assigned to handle and folio; small right-hand latch contact is readable but fine finger separation is limited by scale."
+  },
+  "reference_appearance_review": {
+    "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "sole adult subject appearance reference",
+    "adult_impression": "pass",
+    "long_dark_hair_continuity": "pass",
+    "broad_face_feature_continuity": "partial",
+    "evidence": "The render preserves an adult impression, long dark hair, broadly similar eye spacing, nose, lips, and oval face cues. The full-body generation is less detailed than the source portrait and the rendered lower face appears somewhat narrower, so exact same-person correspondence is not technically established.",
+    "biometric_identity_verification": "not_performed",
+    "user_perceived_resemblance": "pending"
+  },
+  "overall_verdict": {
+    "scope": "kebaya_front_open_blouse_sarong_system five-gate pixel contract",
+    "status": "PASS",
+    "passed_hard_gates": 5,
+    "failed_hard_gates": 0,
+    "qualification": "target_profile_technical_pixel_pass_user_acceptance_pending",
+    "full_prompt_note": "Non-profile scene fidelity is PARTIAL because the textile swatch is visible but its active slipping motion is weak. Appearance continuity is visual-only and does not establish biometric identity."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}
