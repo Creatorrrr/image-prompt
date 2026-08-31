@@ -1,0 +1,110 @@
+{
+  "contract_version": "photo-arm-command-continuation/v1",
+  "arm_id": "arm-02",
+  "coordinator_correction": "coordinator_correction.json",
+  "commands_and_calls": [
+    {
+      "id": "candidate_pack_attempt_03",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3377211778 --emit-candidate-pack --n 1 --json-output --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json",
+      "exit_code": 0,
+      "result": "candidate_pack_created",
+      "pack_id": "8a7403a87bcbc516",
+      "candidate_pack_sha256": "84aa2c86faa54cfe14204f842a70f4144a286d5253fe2e74505ae80ae9730fe1"
+    },
+    {
+      "id": "composed_prompt_audit_final",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/composed_prompt.json",
+      "exit_code": 0,
+      "status": "pass",
+      "prompt_words": 190,
+      "effective_visual_contract_sha256": "11a35c6d409883259c7242cfd88fda394fb79c024a043b7faaca1f5f1d209de4"
+    },
+    {
+      "id": "runtime_request_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/composed_prompt.json --request artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/runtime_request.json",
+      "exit_code": 0,
+      "status": "pass",
+      "runtime_prompt_id": "3432dc24aae359ac",
+      "byte_bound_reference_count": 0
+    },
+    {
+      "id": "built_in_image_gen_attempt_01",
+      "tool": "built-in image_gen",
+      "num_last_images_to_include": 1,
+      "status": "failed_before_render",
+      "error": "requested the last 1 conversation images, but only 0 were available"
+    },
+    {
+      "id": "source_thread_reference_check",
+      "tool": "read_thread",
+      "thread_id": "6a9402cc-816c-83e8-a31a-53ff8a2119c8",
+      "status": "completed",
+      "attachment_count": 0
+    },
+    {
+      "id": "runtime_request_audit_attempt_02",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/composed_prompt.json --request artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/runtime_request_attempt_02.json --output artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/runtime_request_audit_attempt_02.json",
+      "exit_code": 0,
+      "status": "pass",
+      "runtime_prompt_id": "5ab25c75fd2a6e21",
+      "byte_bound_reference_count": 1
+    },
+    {
+      "id": "built_in_image_gen_attempt_02",
+      "tool": "built-in image_gen",
+      "referenced_image_paths": [
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg"
+      ],
+      "status": "rendered",
+      "local_output_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_02_native.png",
+      "output_sha256": "df9f9e615ed02bb443dce7b139054f9fac8b41f8f661a3e3e12334373a753167"
+    },
+    {
+      "id": "direct_pixel_review_attempt_02",
+      "method": "thumbnail_and_native_direct_pixel_inspection",
+      "status": "one_hard_gate_failed",
+      "failed_gate_ids": [
+        "vo_target_seduction_coordinated_orientation"
+      ],
+      "review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/pixel_review_attempt_02.json"
+    },
+    {
+      "id": "runtime_request_audit_attempt_03_repair",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/composed_prompt.json --request artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/runtime_request_attempt_03_repair.json --output artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/runtime_request_audit_attempt_03_repair.json",
+      "exit_code": 0,
+      "status": "pass",
+      "runtime_prompt_id": "fb3c3549b69ef923",
+      "byte_bound_reference_count": 2
+    },
+    {
+      "id": "built_in_image_gen_attempt_03_repair",
+      "tool": "built-in image_gen",
+      "referenced_image_paths": [
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_02_native.png",
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg"
+      ],
+      "status": "rendered",
+      "local_output_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_03_repair_native.png",
+      "output_sha256": "0c38705da2a70ef18a7bee72ae35da3e21a723df54e93fee9ad7acea1c59f6a3",
+      "repair_attempt_count": 1
+    },
+    {
+      "id": "direct_pixel_review_attempt_03_repair",
+      "method": "thumbnail_and_native_direct_pixel_inspection",
+      "status": "all_four_hard_gates_pass",
+      "failed_gate_ids": [],
+      "review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/pixel_review_attempt_03_repair.json"
+    },
+    {
+      "id": "iteration_record_validation",
+      "command": ".venv/bin/python .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/iteration_record.json",
+      "exit_code": 0,
+      "status": "ok"
+    }
+  ],
+  "not_run": [
+    "audit_image_render_review.py"
+  ],
+  "not_run_reason": "The repository review auditor requires a v2 lineage render_repair contract, while the frozen v3 authorial core has no such contract; direct four-gate pixel reviews were recorded instead.",
+  "terminal_state": "all_four_hard_visual_gates_pass_after_single_repair"
+}

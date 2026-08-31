@@ -1,0 +1,113 @@
+{
+  "schema_version": "photo-body-shape-render-self-review/v1",
+  "arm_id": "arm-04",
+  "attempt": 2,
+  "profile_id": "spoon_high_hip_silhouette_relation",
+  "pack_id": "4c93848b05502c55",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-04/render-attempt-02.png",
+  "image_sha256": "c06139dbf4c6222703ada1d512cd965032f2b8d052f41f9153c8fa3f44d43114",
+  "dimensions": {
+    "width": 1023,
+    "height": 1537
+  },
+  "reference": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "facial_appearance_only",
+    "claim_boundary": "visual appearance comparison only; no biometric identity verification"
+  },
+  "inspection": {
+    "reference_original": "completed",
+    "render_original": "completed",
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-04/render-attempt-02-thumbnail.png",
+    "thumbnail_sha256": "58ca33e2c97135712ec45bda5391305df1c43298a0d7d40f8d43af1d62e727b5",
+    "render_thumbnail": "completed"
+  },
+  "target_gates": [
+    {
+      "gate_id": "vo_spoon_bilateral_high_hip",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 213x320, the near-frontal full-length view keeps both waist-to-upper-thigh outer contours visible; both high-hip regions expand beneath the belt-marked natural-waist level."
+    },
+    {
+      "gate_id": "vo_spoon_rapid_transition",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show an abrupt lateral expansion immediately below the waist/high-hip line, rather than an expansion beginning only at the lower outer thighs."
+    },
+    {
+      "gate_id": "vo_spoon_lower_continuity",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "On both sides, the high-hip projection continues coherently through broad outer hips into substantial upper thighs before tapering toward the boots."
+    },
+    {
+      "gate_id": "vo_spoon_not_pear_or_hipdip",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "The native image has a tightly cinched double-buckle belt, gathered glossy coverall fabric, a forward lean, and a wide working stance. These materially amplify the shelf-like transition, so waistband pressure and pose substitution cannot be ruled out even though the lower contour is continuous and not an isolated hip dip."
+    }
+  ],
+  "common_gates": [
+    {
+      "gate_id": "adult_age",
+      "status": "pass",
+      "evidence": "The sole subject has clearly adult facial morphology, body scale, and professional presentation consistent with a woman in her mid-twenties or older."
+    },
+    {
+      "gate_id": "face_legibility",
+      "status": "pass",
+      "evidence": "One unobstructed adult face is sharp at native scale with coherent eyes, nose, lips, jaw, hairline, and natural asymmetry; no competing face appears."
+    },
+    {
+      "gate_id": "anatomical_coherence",
+      "status": "pass",
+      "evidence": "Both gloved hands plausibly grip the metal wand, the arms align with the forward working posture, and both legs and booted feet remain proportional without visible fusion or extra limbs."
+    },
+    {
+      "gate_id": "professional_action",
+      "status": "pass",
+      "evidence": "Both hands direct a floor-contact suction wand over displaced tesserae; the corrugated hose, wet mosaic, shallow floodwater, and condition markers make active mosaic-conservation suction legible."
+    },
+    {
+      "gate_id": "reference_appearance_continuity",
+      "status": "pass",
+      "evidence": "Compared visually with the reference, the generated face retains a similar long oval outline, almond eye aperture and spacing, narrow lower face, nose and lip proportions, pale-neutral skin tone, center-parted dark wavy hair, and overall adult appearance. This is appearance continuity, not an identity claim."
+    },
+    {
+      "gate_id": "fully_clothed",
+      "status": "pass",
+      "evidence": "The subject is fully covered by a long-sleeved black work coverall, gloves, utility belt, and knee-high waterproof boots throughout the full-body frame."
+    },
+    {
+      "gate_id": "reference_body_geometry_exclusion",
+      "status": "pass",
+      "evidence": "The reference is a head-and-shoulders portrait without waist-to-thigh geometry; the generated full-body relation is therefore evaluated from the frozen written body-shape contract, not from visible reference-body evidence."
+    }
+  ],
+  "supplemental_observations": [
+    {
+      "status": "fail",
+      "check": "garment_confounded_target_read",
+      "evidence": "The coverall reads glossy and the belt visibly cinches the waist, conflicting with the intended smooth matte non-cinching control."
+    },
+    {
+      "status": "fail",
+      "check": "unlettered_condition_markers",
+      "evidence": "Several small condition markers contain number-like or symbol-like dark marks at native scale rather than remaining purely abstract and unlettered."
+    }
+  ],
+  "target_gate_summary": {
+    "pass": 3,
+    "fail": 1
+  },
+  "technical_verdict": "fail",
+  "pixel_verdict": "target_relation_visible_but_not_technically_qualified_due_to_waistband_and_pose_confound",
+  "reference_appearance_verdict": "pass_visual_appearance_continuity_non_biometric",
+  "prompt_presence_is_pixel_proof": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

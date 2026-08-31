@@ -1,0 +1,84 @@
+{
+  "chosen_candidate_count": 2,
+  "chosen_visual_concept_ids": [],
+  "effective_visual_contract_sha256": "7de77002d0259fa6ba2e5dd2bf657f3bb79a077bf5e338e5d1a46af828d429ec",
+  "failures": [
+    {
+      "accepted_anchors": [
+        "start position and unfinished destination remain visible",
+        "mid-turn transition has not yet settled",
+        "mid-step path remains visibly unfinished"
+      ],
+      "check": "visual_obligation_semantic_evidence",
+      "field": "unfinished_motion_phrase",
+      "profile_id": "controlled_languid_movement_display",
+      "reason": "visual evidence phrase lacks a profile-declared component anchor"
+    },
+    {
+      "accepted_anchors": [
+        "fabric trails the same movement direction",
+        "hair and carried object show coherent directional lag",
+        "hand and fabric lag make the low tempo visible"
+      ],
+      "check": "visual_obligation_semantic_evidence",
+      "field": "motion_lag_phrase",
+      "profile_id": "controlled_languid_movement_display",
+      "reason": "visual evidence phrase lacks a profile-declared component anchor"
+    },
+    {
+      "absolute_maximum_words": 320,
+      "actual_words": 377,
+      "check": "authorial_core_prompt_budget",
+      "minimum_words": 24,
+      "reason": "v5/v6 prompt_en exceeds the absolute photographic prompt bounds",
+      "recommended_maximum_words": 180
+    },
+    {
+      "actual": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "check": "semantic_clarification_decisions",
+      "expected": [
+        "clarification:authorial-core:interpreted-intent",
+        "clarification:visual-profile:controlled_languid_movement_display",
+        "clarification:visual-profile:diegetic_reality_invariant_failure",
+        "clarification:visual-profile:medium_native_glitch"
+      ],
+      "reason": "every clarification candidate requires exactly one typed decision"
+    }
+  ],
+  "pack_id": "12bac455a7f11a24",
+  "quality_status": "warn",
+  "render_repair_contract_sha256": null,
+  "status": "fail",
+  "warnings": [
+    {
+      "absolute_maximum_words": 320,
+      "actual_words": 186,
+      "check": "authorial_core_baseline_recommended_budget",
+      "effective_recommended_maximum_words": 180,
+      "optional_prose_words": 147,
+      "reason": "baseline_prompt_en exceeds the default concise target but remains within the absolute bound",
+      "recommended_maximum_words": 180,
+      "required_evidence_words": 39
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "caught midway through a measured clockwise pivot from an open specimen drawer toward a slowly swinging brass tide-gauge ribbon",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "A clearly adult 34-year-old woman, a textile conservator",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    },
+    {
+      "check": "uncovered_intent",
+      "intent": "her reaching right hand remains a handspan short of the ribbon knot",
+      "reason": "uncovered candidate-pack intent was preserved by free description/assertion"
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "1540888a47b1629e04239c34404d4bf8bff214c7",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the frozen self_possessed_sensual_presence visual obligations survive reference-conditioned image generation in independent arm-01, including one bounded pixel repair when eligible."
+  },
+  "evidence": [
+    {
+      "id": "e-frozen-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The official candidate pack, composed prompt, and final prompt remained frozen, and the exact final prompt bytes were embedded contiguously in both audited runtime requests.",
+      "artifact": "candidate_pack.json sha256 54de99cb954ba97b18a3d32039edef93bc5b769a1c1bcfe99977ef1a449ff684; composed_prompt.json sha256 170201d98076ac64455659740349424e70f8fc76b439da69063a1b86b047733a; final_prompt.txt sha256 a60edecbc0d52ce61c42bc14c7494bd249a46e3156f3299dc1a184e7f54056b4"
+    },
+    {
+      "id": "e-runtime-02",
+      "kind": "package-check",
+      "claim": "Attempt-02 exact-input runtime audit passed with one concrete reference and no failures.",
+      "artifact": "attempt_02/runtime_audit.json sha256 fa8e309dcafcbc64bdbdd681c4e9cc2565dfc542e5cebc1ce2e92da867bc6ad8"
+    },
+    {
+      "id": "e-prompt-02",
+      "kind": "prompt-evaluation",
+      "claim": "Attempt-02 retained all four literal obligation phrases and bound the concrete reference as adult facial appearance and dark wavy hairstyle only.",
+      "artifact": "attempt_02/runtime_request.json sha256 4cd392d7c4863484f77858995fae729b49d670f5f5eed3431c2cbe3f5b297805"
+    },
+    {
+      "id": "e-render-02",
+      "kind": "render-observation",
+      "claim": "Attempt-02 visibly passed agency, controlled-face, and material-relation gates, but failed grounded-posture at thumbnail scale because both feet and the load path were occluded.",
+      "artifact": "attempt_02/native.png sha256 5cdc73837bcdaa391efe8ff8cf39b556f07ef34ac7dee57012668c2cfe50162a; attempt_02/pixel_review.json"
+    },
+    {
+      "id": "e-runtime-03",
+      "kind": "package-check",
+      "claim": "The single targeted repair runtime audit passed with the attempt-02 edit target and the unchanged facial-appearance reference bound by exact hashes.",
+      "artifact": "attempt_03/runtime_audit.json sha256 018cc7042fbdce9322734651af8181ea7af9e58e598be52e9a53754e460756ee"
+    },
+    {
+      "id": "e-prompt-03",
+      "kind": "prompt-evaluation",
+      "claim": "The repair changed only open framing and composition instructions for the failed support-path gate while preserving the frozen prompt bytes and the other three passing gates.",
+      "artifact": "attempt_03/runtime_request.json sha256 7f19f5a04e923330a204f7639c6fd25d84aae7fd79b4d0b02a064bec28da9260"
+    },
+    {
+      "id": "e-render-03",
+      "kind": "render-observation",
+      "claim": "The repaired native and thumbnail pixels show active two-hand machine operation, a complete planted support stance, alert restrained facial action, and directional opaque dress drape in the same image.",
+      "artifact": "attempt_03/native.png sha256 7aff2ef9e7dac9b0a53d9b0ae301f2ee3f1881e87fb9c0540b97f6ba371d9fdb; attempt_03/pixel_review.json"
+    },
+    {
+      "id": "e-ledger",
+      "kind": "package-check",
+      "claim": "The arm-local ledger preserves the missing-reference error, initial delivered render, and single repair as three linked attempts.",
+      "artifact": "runs/image_runs.ndjson sha256 c4b52b043a1b940f0ff43979ca94e8a701e5cf88b58bf9abc99dc80a6f54cd70; run_manifest.json sha256 35886d1cbf2a188a920a9dfe47988c22a3122486b340c14e523fe8aef5a5af66"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One unmistakably adult subject must visibly cause her own action while remaining grounded and composed, keeping an alert restrained face, and wearing opaque material whose drape or highlights visibly react to posture or motion in the same frame.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "agency",
+        "statement": "The adult subject's own hand-to-machine operation is the visible causal center.",
+        "evidence_ids": [
+          "e-frozen-prompt"
+        ],
+        "causal_controls": [
+          "two distinct hand-to-control contacts",
+          "readable crank and tension operation"
+        ]
+      },
+      {
+        "id": "grounded-posture",
+        "statement": "A stable weight-bearing path and composed open posture remain legible at thumbnail scale.",
+        "evidence_ids": [
+          "e-frozen-prompt"
+        ],
+        "causal_controls": [
+          "visible planted foot contacts",
+          "upright torso and composed shoulders"
+        ]
+      },
+      {
+        "id": "controlled-face",
+        "statement": "Alert eyes and restrained mouth action remain visible at native scale and connected to the task.",
+        "evidence_ids": [
+          "e-frozen-prompt"
+        ],
+        "causal_controls": [
+          "open focused eyes",
+          "low-amplitude mouth action",
+          "task-side gaze linkage"
+        ]
+      },
+      {
+        "id": "material-relation",
+        "statement": "Opaque dress drape, edges, or highlights visibly respond to posture or airflow at both scales.",
+        "evidence_ids": [
+          "e-frozen-prompt"
+        ],
+        "causal_controls": [
+          "directional hem displacement",
+          "tensioned folds and moving specular highlight"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "small framing extent",
+      "foreground table overlap",
+      "exact ribbon spacing",
+      "minor fabric microfolds"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-support-occlusion",
+      "scale": "global",
+      "axis": "support-path legibility",
+      "source_state": "The strict contract requires a stable support path to remain visible at thumbnail scale.",
+      "render_state": "Attempt-02 concealed both feet and the rear-foot load point behind the long dress and crop.",
+      "evidence_ids": [
+        "e-render-02"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-framing-occlusion",
+      "stage": "generator-response",
+      "statement": "The initial generator response honored the upright posture phrase but composed the lower crop and foreground occlusion so the required support path was not directly visible.",
+      "evidence_ids": [
+        "e-frozen-prompt",
+        "e-render-02"
+      ],
+      "falsifier": "A single lower and slightly wider reframing that preserves the scene would still fail to reveal planted contacts or would destroy one of the three already-passing gates."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No target skill source or reusable policy was changed; the authorized one-off repair altered only open framing and composition for the single failed gate.",
+    "generalization_basis": "This one arm is motivating-case evidence only and does not justify a runtime default or universal skill rule.",
+    "hypothesis_ids": [
+      "h-framing-occlusion"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-runtime-02",
+        "e-runtime-03",
+        "e-ledger"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-frozen-prompt",
+        "e-prompt-02",
+        "e-prompt-03"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render-02",
+        "e-render-03"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-motivating-case",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "adult agency",
+          "grounded posture",
+          "controlled face",
+          "material relation"
+        ],
+        "evidence_ids": [
+          "e-render-03"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "blocked",
+    "claim_scope": "render-fidelity",
+    "rationale": "The chosen arm-01 render passes all four pixel gates under the recorded conditions, but general skill-level render-fidelity promotion is blocked because this isolated arm supplies no unrelated held-out render and user judgment remains pending.",
+    "evidence_ids": [
+      "e-render-03",
+      "e-ledger"
+    ]
+  }
+}

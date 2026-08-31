@@ -1,0 +1,39 @@
+{
+  "contract_version": "photo-coordinator-correction/v1",
+  "arm_id": "arm-01",
+  "provenance": "coordinator_correction",
+  "correction_text": "조정자 정정: interpreted_intent를 exact activation term 하나와 완전히 같게 만들라는 이전 제약은 철회한다. v6 계약을 만족하도록 최소 4개 content word의 자연스러운 문장으로 확장해도 된다. 단, 당신에게 배정된 exact activation term을 문장 안에 문자 그대로 한 번 포함하고, 원래 랜덤 콘셉트/게이트/seed는 바꾸지 말며, visual_intent.source_text는 수정된 authorial_core.interpreted_intent와 바이트 단위로 동일하게 하라. 최초 동결본은 별도 initial 파일/해시로 보존하고 coordinator_correction.json에 이 정정과 전후 SHA를 기록하라. 다른 arm은 여전히 읽지 말고, 후보팩·프롬프트 감사·첨부 얼굴 참조 기반 image_gen·픽셀 검증까지 계속하라.",
+  "withdrawn_constraint": "authorial_core.interpreted_intent must equal only the exact activation term",
+  "authorized_change": "Expand interpreted_intent into a natural sentence with at least four content words while containing the assigned exact activation term exactly once; byte-bind visual_intent source_text to it.",
+  "assigned_exact_activation_term": "자기주도적 관능미",
+  "updated_interpreted_intent": "자기주도적 관능미 — 성인 여성의 능동적 선택과 안정된 자세, 절제된 얼굴 행동, 반응하는 직물의 물성을 함께 시각화한다.",
+  "exact_activation_term_occurrences": 1,
+  "initial_frozen_core": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/authorial_core.initial.json",
+    "sha256": "8c475b57eaf9d354267ebbf88f3157d27f39a536ff3b370959b9fb66a6820198"
+  },
+  "before_correction": {
+    "authorial_core_sha256": "28621b2bec4dcc9be0979eac2b8023ed7567314cf904556dd4c7aff4714ea006",
+    "visual_intent_sha256": "3829f8f64b15b3ceb9645411cf3eee155ac24c7752bc6fb968e1b7d16b0b8ce1"
+  },
+  "after_correction": {
+    "authorial_core_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/authorial_core.json",
+    "authorial_core_sha256": "b903c1614a5001e3d8edd3a2a314c97c7a257095d3b5fe1f924cd59701506fbd",
+    "visual_intent_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/visual_intent.json",
+    "visual_intent_sha256": "aa62747d170e3a07e6a2898427763caff62e2ae821b97c4324fac5acbed0d7fb"
+  },
+  "unchanged_contract": {
+    "deterministic_seed": 2872768713,
+    "concept_selection_sha256": "c295ca6b3765a9068ce8b35195878d7f7c3de037aad75396e43a1cf0f094affe",
+    "baseline_prompt_sha256": "7ecde1bf5bbba7c2f8f689e5b140038aa83076d29d69afd8a03b8bcd44907f0a",
+    "profile_id": "self_possessed_sensual_presence",
+    "render_gate_ids": [
+      "vo_self_possessed_adult_agency",
+      "vo_self_possessed_grounded_posture",
+      "vo_self_possessed_controlled_face",
+      "vo_self_possessed_material_relation"
+    ]
+  },
+  "visual_intent_source_text_byte_equal": true,
+  "other_arm_data_accessed": false
+}

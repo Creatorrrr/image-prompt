@@ -1,0 +1,1399 @@
+{
+  "schema_version": 2,
+  "quality_profiles": {
+    "general": {"prompt_focus": ["subject clarity", "coherent scene", "believable light"]},
+    "documentary": {"prompt_focus": ["decisive moment", "available-light logic", "environmental consequence"]},
+    "portrait_editorial": {"prompt_focus": ["pose readability", "material styling", "controlled light"]},
+    "product": {"prompt_focus": ["surface accuracy", "weight and contact", "commercial hierarchy"]},
+    "food": {"prompt_focus": ["edible texture", "freshness cues", "plating hierarchy"]},
+    "architecture": {"prompt_focus": ["spatial scale", "vertical and depth cues", "material light"]},
+    "nature": {"prompt_focus": ["habitat context", "natural behavior", "weather and depth"]},
+    "science_inspection": {"prompt_focus": ["measurement legibility", "scale and calibration evidence", "controlled material state"]},
+    "mobility_logistics": {"prompt_focus": ["flow direction", "handoff and staging evidence", "machine-to-environment scale"]},
+    "climate_adaptation": {"prompt_focus": ["environmental consequence", "intervention evidence", "weather-driven material response"]},
+    "biodiversity_monitoring": {"prompt_focus": ["habitat legibility", "repeatable observation protocol", "species-to-environment scale"]},
+    "agriculture_food_systems": {"prompt_focus": ["material-state progression", "batch traceability", "farm-to-process continuity"]},
+    "circular_materials": {"prompt_focus": ["component or fraction state", "repair and separation evidence", "material-flow legibility"]},
+    "heritage_documentation": {"prompt_focus": ["material condition legibility", "repeatable capture and scale reference", "intervention-stage and object-history continuity"]},
+    "health_access": {"prompt_focus": ["person-led function and participation", "support product and accessible-environment evidence", "privacy-safe non-graphic workflow"]},
+    "sports_motion": {"prompt_focus": ["movement phase legibility", "force and contact evidence", "equipment or surface response", "venue and weather coupling"]},
+    "education_training": {"prompt_focus": ["task and learning-stage legibility", "mentor-learner coordination", "tool, procedure, and result evidence"]},
+    "disaster_risk_operations": {"prompt_focus": ["time-bounded physical evidence", "safety and condition triage", "access flow or restoration state"]},
+    "natural_process": {"prompt_focus": ["state boundary or coexisting stages", "scale and reference evidence", "material trace without invented elapsed time"]},
+    "longitudinal_place_state": {"prompt_focus": ["stable spatial anchor", "operational or seasonal state evidence", "repeatable viewpoint continuity"]},
+    "visual_structure": {"prompt_focus": ["one dominant visual order", "physically consistent boundary or occlusion", "material, contact, rhythm, or scale evidence"]},
+    "cjk_narrative_world": {"prompt_focus": ["coherent fictional institutions", "observable world-system evidence", "distinct cultural-context boundaries", "original non-franchise design"]},
+    "character_moe_grammar": {"prompt_focus": ["one observable character action", "legible relationship or state evidence", "sparse primary and support cues", "explicit adult original-character continuity"]}
+  },
+  "hybrid_augmentation": {
+    "schema_version": 1,
+    "enabled": true,
+    "route_count": 3,
+    "route_candidate_limit": 4,
+    "accepted_detail_min": 2,
+    "accepted_detail_max": 5,
+    "decision_states": ["accepted", "modified", "rejected"],
+    "detail_functions": ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
+    "routes": [
+      {
+        "id": "material_world",
+        "label": "material and world specificity",
+        "slots": ["surface_material", "wardrobe_style", "costume_style", "fetish_styling", "garment_detail", "texture", "color", "prop"],
+        "functions": ["concept_bridge", "material_detail"]
+      },
+      {
+        "id": "action_camera",
+        "label": "action and camera consequence",
+        "slots": ["action", "body_pose", "hand_pose", "gaze_engagement", "body_framing", "camera_direction", "composition", "shot_scale", "lens"],
+        "functions": ["pose_camera", "viewer_hook"]
+      },
+      {
+        "id": "light_second_reading",
+        "label": "light and second-reading evidence",
+        "slots": ["lighting", "light_type", "light_direction", "light_shape", "focus", "mood", "aftermath_trace", "ambient_particle", "prop"],
+        "functions": ["viewer_hook", "second_reading"]
+      }
+    ],
+    "adult_appeal": {
+      "inventory_preset_id": "adult_fetish_fashion_editorial",
+      "intensity_min": 0,
+      "intensity_max": 3,
+      "default_intensities": {
+        "sensual_editorial": 1,
+        "fetish_fashion": 0
+      },
+      "default_emphasis": "sensual_led",
+      "default_eligibility": {
+        "subject_categories": ["human"],
+        "block_no_people": true
+      },
+      "entry_min_intensity": {
+        "black_leather_harness_style": 1,
+        "choker_gloves_high_heels": 1,
+        "corset_bustier_layered": 1,
+        "glossy_latex_look": 2,
+        "lace_satin_lingerie_inspired": 2,
+        "fishnet_thigh_high_boots": 2,
+        "mesh_sheer_layering": 2,
+        "wet_look_bodycon": 2
+      },
+      "emphases": ["sensual_led", "balanced", "fetish_led"],
+      "candidate_limit_per_axis": 12,
+      "candidate_limit_per_carrier": 3,
+      "axes": {
+        "sensual_editorial": {
+          "carriers": [
+            {"id": "gaze_pose", "slots": ["action"], "required_tags_any": ["portrait", "suggestive", "pose", "motion"]},
+            {"id": "framing", "slots": ["body_framing"]},
+            {"id": "lighting_optics", "slots": ["lighting", "light_direction", "light_type", "focus"]},
+            {"id": "mood_palette", "slots": ["mood", "color"]}
+          ]
+        },
+        "fetish_fashion": {
+          "carriers": [
+            {"id": "material_layering", "slots": ["fetish_styling"], "candidate_limit": 8},
+            {"id": "accessory_gesture", "slots": ["action"], "required_tags_any": ["fetish"]},
+            {"id": "accessory_prop", "slots": ["prop"], "required_tags_any": ["adult", "fashion"]}
+          ]
+        }
+      },
+      "risk_groups": {
+        "sheer_or_lingerie": {
+          "entry_ids": ["ethereal_sheer_layering", "mesh_sheer_layering", "lace_satin_lingerie_inspired"],
+          "prompt_terms": ["sheer layering", "sheer layers", "lingerie-inspired"]
+        },
+        "extreme_low_angle": {
+          "entry_ids": ["extreme_low_hero_angle", "low_ground_angle"],
+          "prompt_terms": ["extreme low angle", "ground-level low angle"]
+        },
+        "low_angle": {
+          "entry_ids": ["extreme_low_hero_angle", "low_ground_angle", "low_angle"],
+          "prompt_terms": ["extreme low angle", "ground-level low angle", "low-angle framing"]
+        },
+        "body_emphasis": {
+          "entry_ids": ["clothed_bodyline_emphasis", "legs_heels_framing", "collarbone_lips_focus", "over_shoulder_hip_line", "wet_look_bodycon"],
+          "prompt_terms": ["bodyline emphasis", "hip-line emphasis", "legs and heels emphasized", "collarbone and lips emphasized"]
+        }
+      },
+      "hard_combinations": [
+        {
+          "id": "sheer_extreme_low_angle",
+          "all_of": ["sheer_or_lingerie", "extreme_low_angle"],
+          "reason": "Sheer or lingerie-coded styling combined with an extreme low angle can overwhelm the intended editorial concept; modify the camera or styling before generation."
+        }
+      ],
+      "warning_combinations": [
+        {
+          "id": "stacked_body_emphasis",
+          "all_of": ["body_emphasis", "low_angle"],
+          "reason": "Body-emphasis framing and a low angle are stacked; confirm that this is intentional and subordinate to the concept core."
+        }
+      ]
+    }
+  },
+  "intent_routing": {
+    "literal_subject_stop_terms": ["is", "are", "be", "role", "model", "subject", "context", "identity", "through", "only"],
+    "subject_routes": [
+      {
+        "entry_id": "stray_cat",
+        "category": "animal",
+        "aliases": ["cat", "cats", "stray cat", "고양이", "길고양이"]
+      }
+    ],
+    "subject_categories": [
+      {
+        "category": "human",
+        "aliases": ["person", "people", "portrait", "human subject", "worker", "family", "group portrait", "사람", "인물", "인물 사진", "작업자", "가족", "단체"]
+      },
+      {
+        "category": "animal",
+        "aliases": ["animal", "wildlife", "cat", "bird", "insect", "aquatic animal", "marine animal", "동물", "야생동물", "고양이", "조류", "새", "곤충", "수중 생물", "해양 생물"]
+      },
+      {
+        "category": "food",
+        "aliases": ["food", "meal", "dish", "breakfast", "cuisine", "food photograph", "음식", "요리", "식사", "아침 식사", "푸드 사진"]
+      },
+      {
+        "category": "object",
+        "aliases": ["product", "object", "vehicle", "machine", "machinery", "industrial machine", "robot", "drone", "machine vision", "equipment", "technical equipment", "semiconductor", "automation", "제품", "사물", "차량", "기계", "로봇", "드론", "장비", "반도체", "자동화"]
+      },
+      {
+        "category": "plant",
+        "aliases": ["plant", "botanical", "flower", "fungi", "mushroom", "식물", "보태니컬", "꽃", "균류", "버섯"]
+      },
+      {
+        "category": "environment",
+        "aliases": ["architecture", "building", "building as the primary subject", "landscape", "interior space", "reading room", "infrastructure", "habitat", "건축", "건물", "건축물", "풍경", "실내 공간", "열람실", "기반 시설", "서식지"]
+      }
+    ],
+    "domains": [
+      {"domain": "architecture", "aliases": ["architecture", "building", "interior architecture", "infrastructure", "건축", "건축물", "실내 건축", "기반 시설"]},
+      {"domain": "food", "aliases": ["food", "meal", "dish", "cuisine", "food photograph", "음식", "요리", "푸드 사진"]},
+      {"domain": "wildlife", "aliases": ["wildlife", "habitat", "animal behavior", "야생동물", "서식지", "동물 행동"]},
+      {"domain": "product", "aliases": ["product", "packshot", "catalog object", "제품", "팩샷", "카탈로그"]},
+      {"domain": "documentary", "aliases": ["documentary", "reportage", "observational", "다큐멘터리", "기록 사진", "관찰 사진"]},
+      {"domain": "craft", "aliases": ["craft", "workshop process", "making process", "공예", "작업 과정", "제작 과정"]},
+      {"domain": "urban", "aliases": ["urban", "city", "도시", "도심"]},
+      {"domain": "street", "aliases": ["street", "거리", "노상"]},
+      {"domain": "science_inspection", "aliases": ["scientific inspection", "inspection photography", "laboratory workflow", "field sampling", "scientific monitoring", "technical measurement", "과학 점검", "검사 기록", "실험실 작업", "현장 샘플링", "과학 모니터링", "기술 계측"]},
+      {"domain": "mobility_logistics", "aliases": ["mobility logistics", "transit operations", "warehouse logistics", "freight operations", "fleet maintenance", "대중교통 운영", "모빌리티 물류", "창고 물류", "화물 운영", "차량 정비"]},
+      {"domain": "climate_adaptation", "aliases": ["climate adaptation", "environmental monitoring", "flood resilience", "coastal erosion monitoring", "heatwave response", "기후 적응", "환경 모니터링", "침수 대응", "해안 침식 모니터링", "폭염 대응"]},
+      {"domain": "biodiversity_monitoring", "aliases": ["biodiversity", "biodiversity monitoring", "species monitoring", "camera trap survey", "quadrat survey", "ecological quadrat", "benthic survey", "생물다양성", "생물다양성 모니터링", "종 모니터링", "카메라 트랩 조사", "생태 방형구", "저서생물 조사"]},
+      {"domain": "agriculture_food_systems", "aliases": ["agriculture food systems", "harvest grading", "post-harvest traceability", "fermentation batch", "food batch monitoring", "농업 식품 시스템", "수확물 등급 선별", "수확 후 추적성", "발효 배치", "식품 배치 모니터링"]},
+      {"domain": "circular_materials", "aliases": ["circular materials", "repair diagnosis", "electronics repair", "materials recovery", "material sorting", "direct reuse inspection", "remanufacturing requalification", "material lifecycle record", "순환 재료", "수리 진단", "전자제품 수리", "자원 회수", "재료 선별", "직접 재사용 점검", "재제조 재검증", "재료 생애 기록"]},
+      {"domain": "heritage_documentation", "aliases": ["cultural heritage documentation", "conservation photography", "condition assessment record", "museum digitization", "collection storage inspection", "photogrammetry capture", "문화유산 기록", "보존처리 기록", "상태 조사 기록", "박물관 디지털화", "소장품 수장고 점검", "포토그래메트리 촬영"]},
+      {"domain": "health_access", "aliases": ["person-centered rehabilitation", "assistive technology fitting", "assistive product fitting", "accessible route record", "community health access", "home care support", "사람 중심 재활", "보조기기 피팅", "보조공학", "무장애 동선", "접근 가능한 환경", "지역사회 보건", "재가 돌봄"]},
+      {"domain": "sports_motion", "aliases": ["sports biomechanics", "pre-contact anticipation", "impact material response", "post-exertion recovery", "운동 역학", "접촉 전 예측", "충돌 물성 반응", "운동 후 회복"]},
+      {"domain": "education_training", "aliases": ["guided skill learning", "supervised practice", "task demonstration", "competency assessment", "workplace learning", "apprenticeship training", "지도 실습", "감독하 실습", "작업 시범", "역량 평가", "직무 교육", "도제 훈련"]},
+      {"domain": "disaster_risk_operations", "aliases": ["post-disaster safety record", "post disaster safety record", "evacuation flow monitoring", "wildfire mitigation audit", "post-flood evidence survey", "post flood evidence survey", "재난 후 안전 점검", "대피 흐름 모니터링", "산불 완화 점검", "홍수 후 흔적 조사"]},
+      {"domain": "human_interaction", "aliases": ["shared task interaction", "two people coordinating", "joint gaze shared workpiece", "small group interaction", "shared workpiece", "공유 작업 상호작용", "두 사람이 협력", "공동 작업물", "공유 대상 시선"]},
+      {"domain": "natural_process", "aliases": ["natural process trace", "biological soil crust", "erosion deposition balance", "condensation boundary", "radicle germination", "freeze-thaw soil", "자연 과정 흔적", "생물 토양 피각", "침식 퇴적 균형", "결로 경계", "유근 발아", "토양 동결 융해"]},
+      {"domain": "longitudinal_place_state", "aliases": ["longitudinal place state", "repeat photography", "same viewpoint record", "temporary closure record", "reopening readiness", "seasonal place change", "장소 시간 변화", "반복 촬영", "같은 시점 기록", "임시 폐쇄 기록", "재개장 준비", "계절 장소 변화"]},
+      {"domain": "visual_structure", "aliases": ["visual structure study", "figure-ground boundary", "occlusion continuity", "repeated rhythm", "contact residue", "material-state boundary", "canonical size anchor", "시각 구조 연구", "도형 배경 경계", "가림 연속성", "반복 리듬", "접촉 흔적", "물성 경계", "크기 기준"]},
+      {"domain":"character_moe_grammar","standalone_aliases":["character mechanism grammar","original character behavior grammar","창작 캐릭터 행동 문법","모에 캐릭터 행동 문법","オリジナルキャラクター行動文法","原创角色行为语法"],"aliases":["character mechanism grammar","original character behavior grammar","창작 캐릭터 행동 문법","모에 캐릭터 행동 문법","オリジナルキャラクター行動文法","原创角色行为语法","모에 속성 조합","moe attribute composition graph","萌え属性の組み合わせ","萌属性组合图","갭모에 대비 구조","gap moe contrast scene","ギャップ萌えの構造","反差萌结构","관찰 가능한 행동으로","personality through observable behavior","観察可能な行動で示す","可观察行为表现","데레 행동 스펙트럼","dere behavior spectrum","保護行動、距離の変化","保护行动、距离变化","관계성 케미스트리","relationship chemistry between","共通の対象、補完し合う手の動き","共同目标、互补手部动作","유능함과 취약성이 함께","combining competence and vulnerability","有能さと脆弱さを両立","同时展现能力与脆弱","미세 표정 변화와 머리 방향","face and gaze character-impression","微細な表情変化、頭部方向","细微表情、头部方向","헤어 실루엣과 상태 변화","hair silhouette and state change","髪型を性格記号にせず事件の痕跡","发型轮廓和状态变化","포즈와 인물 간 거리","pose and proxemics","重心、作業距離、身体方向","重心、工作距离、身体朝向","만화 감정 기호를 실사로 번역","photographic translation of a manga emotion symbol","漫画の感情記号を文字や身体変形なしで実写翻訳","漫画情绪符号翻译成摄影","의상과 직업과 현재 상태를 분리","separate wardrobe, role, and current state","衣装・職業・現在状態を分離","区分服装、职业和当前状态","시그니처 소품이 장식이 아니라","signature object bond shown through use and care","象徴的な小物を装飾ではなく使用と手入れ","标志性物件通过使用与维护关系","치유계 일상 모에","iyashikei everyday moe","日常系の癒やし","治愈系日常萌","케모노미미 인외 캐릭터","kemonomimi or nonhuman character","ケモノミミ・人外表現","兽耳或非人角色","치비 SD 마스코트로 번역","chibi SD mascot","ちびSDマスコット","实体Q版SD木偶","아이돌 유닛의 개성","original adult idol unit","成人三人の回転する焦点","原创成年偶像组合","VTuber 아바타 이중 정체성","VTuber avatar dual-identity scene","成人演者・オリジナルアバター・ペルソナ","成年表演者、原创虚拟形象与人格","성인 변신 히로인의 이중생활","adult transformation heroine's double life","成人変身ヒロインの二重生活","成年变身女主的双重生活","성장과 진화 변형","character growth and evolution variants","成長・進化バリエーション","角色成长与进化变体","컴패니언 사역마 관계","companion or familiar relationship","完全創作の相棒","同伴或使魔关系","크리피 큐트 몬스터","creepy-cute monster moe","不気味かわいい怪物","怪诞可爱怪物萌","성인 남성적 또는 중성적 캐릭터의 모에","adult masculine or androgynous moe","成人の男性的・中性的キャラクターの萌え","成年男性化或中性角色萌","한중일 모에 캐릭터 용어 비교","CJK character-term comparison scene","韓中日のキャラクター用語比較","中日韩角色术语比较","서브컬처 친숙도가 낮은 대중","mainstream and subculture-familiar audiences","サブカルチャーに不慣れな観客","主流观众与熟悉亚文化的观众"]},
+      {"domain": "subculture_practice", "aliases": ["cosplay fabrication", "costume maker", "코스튬 제작", "코스프레 제작", "artist alley", "self-published booklet", "독립 출판 부스", "자주출판", "독립 창작자", "zine", "risograph", "진 제본", "리소그래프", "virtual creator", "avatar rigging", "버추얼 크리에이터", "아바타 리깅", "2d 아바타", "scale model", "kitbash", "garage kit", "모형 제작", "키트배싱", "diorama", "miniature maker", "scale vignette", "디오라마", "미니어처 제작", "doll customization", "collectible doll", "수집 인형", "인형의 가발", "plush repair", "plush toy", "인형 커스터마이징", "봉제 인형", "봉제 인형 수선", "fursuit", "foam head", "폼 헤드", "mascot suit", "mascot performer", "mascot caretaker", "퍼수트", "마스코트 수트", "마스코트 퍼포머", "lolita fashion", "lolita coordinate", "로리타 패션", "decora", "데코라", "gyaru", "갸루", "heisei y2k", "y2k editorial", "헤이세이 y2k", "visual kei", "비주얼계", "goth scene", "고스 커뮤니티", "cybergoth", "사이버고스", "new romantic club", "뉴로맨틱", "community rave", "warehouse rave", "레이브", "레이버", "diy punk", "punk band", "펑크 공연", "펑크 밴드", "noise performer", "노이즈 아티스트", "shoegaze", "슈게이즈", "retro arcade", "arcade cabinet", "아케이드 보존", "아케이드 기기", "byoc lan", "랜 파티", "각자 가져온 컴퓨터", "speedrun", "leaderboard verifier", "스피드런", "스피드러너", "tabletop roleplaying", "trpg", "dice resolution", "테이블 롤플레잉", "주사위 판정", "miniature wargaming", "miniature wargame table", "미니어처 워게임", "모형 지형", "custom pc build", "first boot", "assembled desktop computer", "커스텀 pc 조립", "열린 데스크톱 케이스", "mechanical keyboard build", "mechanical keyboard", "기계식 키보드 제작", "cyberdeck", "3d printed enclosure", "사이버덱", "3d 프린트 외장", "lowrider", "로우라이더", "tuner car", "tuner enthusiast", "튜너 차량", "튜너", "itasha", "display car wrapped", "이타샤", "일러스트 랩핑 차량", "fan light", "light stick", "photocard trade", "응원 조명", "응원 소품", "포토카드 교환", "anime fandom collection", "animation fan", "character goods", "애니메이션 팬 수집", "애니메이션 팬", "캐릭터 상품"]},
+      {"domain": "worldbuilding_system", "aliases": ["LARP", "다이제틱 역할극", "diegetic roleplay", "구성 언어", "콘랭", "constructed-language", "conculture", "가상 세계의 지도", "상상 지리", "conworld", "imaginary port authority", "사변 진화", "가상 생물 진화", "speculative-evolution", "imagined evolutionary archive", "이상 현상 아카이브", "언픽션", "anomalous archive", "unfiction field survey", "텍스트 기반 영속 세계", "MUD와 BBS", "text-based persistent world", "MUD and BBS", "시민 제도 중심 솔라펑크", "기후 적응 도시", "civic solarpunk", "climate-adapted city", "데모씬", "사이즈코딩", "demoscene", "sizecoders", "오리지널 종족 아트 RPG", "창작 생물 종족의 공동 세계", "original-species art RPG", "original creature world", "허구의 비의학 기록관", "가상 오컬트 출판", "fictional esoteric archive", "invented occult publishing world", "디지털 폐허", "가상의 오래된 온라인 도시", "digital ruins", "abandoned fictional online city", "레트로퓨처", "미래 고고학", "retrofuture", "future-archaeology", "다종 공존 도시", "more-than-human", "multispecies city", "more-than-human watershed", "창작 크립티드", "지역 설화 기반", "fictional small-town cryptid", "local-legend night survey", "가상 우편 국가", "메일 아트", "invented postal state", "mail-art", "던전 신스", "판타지 신스", "dungeon-synth", "fantasy-synth", "아프로퓨처리즘", "흑인 미래 세계", "Afrofuturist", "Black future civic archive", "Indigenous Futurisms", "원주민 미래 세계", "Indigenous future repository", "community-controlled Indigenous future"]},
+      {"domain": "cjk_narrative_world", "aliases": ["한국형 헌터 사회", "헌터 협회", "게이트물", "던전 브레이크", "헌터물", "Korean hunter-gate society", "hunter-gate", "dungeon-breach staging area", "licensed adult raiders", "면허를 가진 헌터", "탑등반물", "성좌물", "성좌 후원형 탑", "탑의 새로운 층", "tower climbers", "constellation sponsorship", "sponsor-driven tower", "floor trial", "선협 종문", "수선 세계", "xianxia cultivation sect", "仙侠宗门", "修仙宗门", "修仙世界", "秘境", "도겁", "고무(高武)", "고무 문명", "현환 고무", "gaowu high-martial", "gaowu", "高武城市", "玄幻高武世界", "灵气复苏后的高武", "무한류", "제천무한", "infinite-flow mission hub", "infinite-flow", "无限流", "诸天无限", "跨界任务中枢", "부본 세계", "이세계로 전이", "이세계 전생자", "일본식 이세계", "Japanese-style isekai", "異世界転生者", "異世界転移後", "冒険者ギルド", "スローライフ", "던전 방송", "탐색자 방송팀", "dungeon-streaming economy", "modern dungeon-streaming", "現代ダンジョン", "ダンジョン配信", "探索者からなる配信班", "ダンジョン配信者", "규칙괴담 이상구역", "괴이부활 이후", "rule-horror anomaly zone", "fictional rule-horror", "规则怪谈异常区域", "诡异复苏后的封锁设施", "异常区域", "퇴마 조직", "도시전기 세계", "urban-occult bureau", "exorcist investigators", "现代都市怪异调查机构", "現代伝奇の退魔組織", "怪異対応機関", "회귀로 갈라진", "책빙의", "transmigration registry", "regression archive", "穿越世界", "重生世界", "憑依が起きた", "タイムリープ", "이능 아카데미", "마술학원", "ability academy", "超能力学院", "異能学園", "魔術学院", "명문가 후원 학원", "로맨스판타지 귀족사회", "악녀물 궁정", "otome-villainess court", "romantasy aristocratic society", "古代言情世界", "悪役令嬢ものの架空宮廷", "乙女ゲームの貴族社会", "무림 강호", "무협 세계", "wuxia murim economy", "武侠江湖", "镖局", "武侠の江湖", "문파 경제", "한국 저승 설화의 인도자", "민속의 관할 개념", "afterlife-jurisdiction office", "spirit-underworld bureaucracy", "地方守护与辖区概念", "日本各地の怪異研究", "黄泉の記録所", "상태창과 시스템", "시스템물 도시", "status-system quest world", "系统流世界", "ステータスとスキル", "직업 등록", "quest issuance", "VRMMO 길드", "카드 배틀과 가챠", "VRMMO live-service", "虚构卡牌与抽取运营", "架空VRMMO", "虚拟网游", "card-game live operations", "메카 격납고", "특촬형 괴수 재난국가", "giant-mecha disaster state", "mecha-kaiju disaster", "怪獣警報下のメカ格納庫", "特撮的な怪獣災害国家", "巨大ロボット災害", "아포칼립스 기지", "재난 이후 이동요새", "apocalypse base", "末世基地", "終末後の移動拠点", "비축 식량", "stock rotation", "영지 경영 세계", "던전운영물", "territory-management world", "领主种田与基建", "架空ダンジョンの運営", "領地経営", "dungeon management", "창작 마법소녀 세계", "버추얼 크리에이터 미디어믹스", "adult idol-production studio", "magical-idol media world", "原创虚拟主播制作室", "オリジナル魔法少女世界", "アイドル制作"]}
+    ],
+    "scoped_routes": [
+      {"domain":"character_moe_grammar","preset_id":"character_attribute_composition_scene","aliases":["모에 속성 조합","moe attribute composition graph","萌え属性の組み合わせ","萌属性组合图"]},
+      {"domain":"character_moe_grammar","preset_id":"character_gap_contrast_scene","aliases":["갭모에 대비 구조","gap moe contrast scene","ギャップ萌えの構造","反差萌结构"]},
+      {"domain":"character_moe_grammar","preset_id":"character_observable_personality_scene","aliases":["관찰 가능한 행동으로","personality through observable behavior","観察可能な行動で示す","可观察行为表现"]},
+      {"domain":"character_moe_grammar","preset_id":"character_affection_distance_spectrum_scene","aliases":["데레 행동 스펙트럼","dere behavior spectrum","保護行動、距離の変化","保护行动、距离变化"]},
+      {"domain":"character_moe_grammar","preset_id":"character_relationship_chemistry_scene","aliases":["관계성 케미스트리","relationship chemistry between","共通の対象、補完し合う手の動き","共同目标、互补手部动作"],"requires_any_context_aliases":["공유 대상","상호 보완 손동작","응답 시선","shared physical target","complementary hand paths","reciprocal gaze","共通の対象","補完し合う手の動き","応答する視線","共同目标","互补手部动作","相互回应"]},
+      {"domain":"character_moe_grammar","preset_id":"character_competence_vulnerability_scene","aliases":["유능함과 취약성이 함께","combining competence and vulnerability","有能さと脆弱さを両立","同时展现能力与脆弱"]},
+      {"domain":"character_moe_grammar","preset_id":"character_face_gaze_impression_scene","aliases":["미세 표정 변화와 머리 방향","face and gaze character-impression","微細な表情変化、頭部方向","细微表情、头部方向"]},
+      {"domain":"character_moe_grammar","preset_id":"character_hair_state_continuity_scene","aliases":["헤어 실루엣과 상태 변화","hair silhouette and state change","髪型を性格記号にせず事件の痕跡","发型轮廓和状态变化"],"requires_any_context_aliases":["성인","캐릭터","사건 흔적","동일 인물","adult","character","event evidence","identity continuity","成人","キャラクター","事件の痕跡","同一人物性","成年","角色","事件痕迹","身份连续性"]},
+      {"domain":"character_moe_grammar","preset_id":"character_pose_proxemics_scene","aliases":["포즈와 인물 간 거리","pose and proxemics","重心、作業距離、身体方向","重心、工作距离、身体朝向"],"requires_any_context_aliases":["성인","캐릭터","작업 거리","공유 작업물","adult","character","working distance","shared workpiece","成人","キャラクター","作業距離","共通の制作物","成年","角色","工作距离","共同作品"]},
+      {"domain":"character_moe_grammar","preset_id":"character_emotion_symbol_translation_scene","aliases":["만화 감정 기호를 실사로 번역","photographic translation of a manga emotion symbol","漫画の感情記号を文字や身体変形なしで実写翻訳","漫画情绪符号翻译成摄影"]},
+      {"domain":"character_moe_grammar","preset_id":"character_role_state_scene","aliases":["의상과 직업과 현재 상태를 분리","separate wardrobe, role, and current state","衣装・職業・現在状態を分離","区分服装、职业和当前状态"]},
+      {"domain":"character_moe_grammar","preset_id":"character_signature_object_scene","aliases":["시그니처 소품이 장식이 아니라","signature object bond shown through use and care","象徴的な小物を装飾ではなく使用と手入れ","标志性物件通过使用与维护关系"],"requires_any_context_aliases":["성인","캐릭터","adult","character","成人","キャラクター","成年","角色"]},
+      {"domain":"character_moe_grammar","preset_id":"character_quiet_care_daily_scene","aliases":["치유계 일상 모에","iyashikei everyday moe","日常系の癒やし","治愈系日常萌"]},
+      {"domain":"character_moe_grammar","preset_id":"character_nonhuman_expression_scene","aliases":["케모노미미 인외 캐릭터","kemonomimi or nonhuman character","ケモノミミ・人外表現","兽耳或非人角色"]},
+      {"domain":"character_moe_grammar","preset_id":"character_chibi_identity_translation_scene","aliases":["치비 SD 마스코트로 번역","chibi SD mascot","ちびSDマスコット","实体Q版SD木偶"]},
+      {"domain":"character_moe_grammar","preset_id":"character_idol_unit_ensemble_scene","aliases":["아이돌 유닛의 개성","original adult idol unit","成人三人の回転する焦点","原创成年偶像组合"]},
+      {"domain":"character_moe_grammar","preset_id":"character_avatar_dual_identity_scene","aliases":["VTuber 아바타 이중 정체성","VTuber avatar dual-identity scene","成人演者・オリジナルアバター・ペルソナ","成年表演者、原创虚拟形象与人格"]},
+      {"domain":"character_moe_grammar","preset_id":"character_transformation_dual_life_scene","aliases":["성인 변신 히로인의 이중생활","adult transformation heroine's double life","成人変身ヒロインの二重生活","成年变身女主的双重生活"]},
+      {"domain":"character_moe_grammar","preset_id":"character_growth_variant_continuity_scene","aliases":["성장과 진화 변형","character growth and evolution variants","成長・進化バリエーション","角色成长与进化变体"]},
+      {"domain":"character_moe_grammar","preset_id":"character_companion_reciprocity_scene","aliases":["컴패니언 사역마 관계","companion or familiar relationship","完全創作の相棒","同伴或使魔关系"]},
+      {"domain":"character_moe_grammar","preset_id":"character_creepy_cute_scene","aliases":["크리피 큐트 몬스터","creepy-cute monster moe","不気味かわいい怪物","怪诞可爱怪物萌"]},
+      {"domain":"character_moe_grammar","preset_id":"character_adult_inclusive_moe_scene","aliases":["성인 남성적 또는 중성적 캐릭터의 모에","adult masculine or androgynous moe","成人の男性的・中性的キャラクターの萌え","成年男性化或中性角色萌"]},
+      {"domain":"character_moe_grammar","preset_id":"character_cjk_term_normalization_scene","aliases":["한중일 모에 캐릭터 용어 비교","CJK character-term comparison scene","韓中日のキャラクター用語比較","中日韩角色术语比较"]},
+      {"domain":"character_moe_grammar","preset_id":"character_audience_context_scene","aliases":["서브컬처 친숙도가 낮은 대중","mainstream and subculture-familiar audiences","サブカルチャーに不慣れな観客","主流观众与熟悉亚文化的观众"]},
+      {"domain": "subculture_practice", "preset_id": "cosplay_fabrication_event_practice", "aliases": ["cosplay fabrication", "costume maker", "convention outfit", "코스프레 제작", "코스튬 제작", "폼 갑옷"]},
+      {"domain": "subculture_practice", "preset_id": "artist_alley_fan_publishing_exchange", "aliases": ["artist alley", "self published booklet", "independent fan artist", "독립 창작자", "행사 테이블에서 독자"]},
+      {"domain": "subculture_practice", "preset_id": "diy_zine_print_workshop", "aliases": ["zine", "risograph", "리소그래프", "진을 손으로 제본"]},
+      {"domain": "subculture_practice", "preset_id": "virtual_creator_production_session", "aliases": ["virtual creator", "avatar rigging", "face tracking", "2d 아바타", "아바타 표정"]},
+      {"domain": "subculture_practice", "preset_id": "scale_model_kitbash_workbench", "aliases": ["scale model", "kitbash", "garage kit", "scratch built conversion", "모형 제작대", "키트 조각"]},
+      {"domain": "subculture_practice", "preset_id": "miniature_diorama_build_workbench", "aliases": ["diorama", "scale vignette", "miniature artist", "디오라마", "작은 건물과 지형"]},
+      {"domain": "subculture_practice", "preset_id": "doll_toy_customization_workshop", "aliases": ["doll customization", "collectible doll", "수집 인형", "인형의 가발"]},
+      {"domain": "subculture_practice", "preset_id": "plush_toy_repair_customization", "aliases": ["plush toy", "plush repair", "replacement stuffing", "봉제 인형", "충전재"]},
+      {"domain": "subculture_practice", "preset_id": "fursuit_fabrication_care", "aliases": ["fursuit", "foam head", "synthetic fur", "퍼수트", "폼 헤드", "합성 퍼"]},
+      {"domain": "subculture_practice", "preset_id": "mascot_suit_performance_care", "aliases": ["mascot suit", "mascot performer", "mascot caretaker", "spotter", "마스코트", "스포터"]},
+      {"domain": "subculture_practice", "preset_id": "lolita_coordinate_culture", "aliases": ["lolita fashion", "lolita coordinate", "로리타 패션", "로리타 코디네이트"]},
+      {"domain": "subculture_practice", "preset_id": "decora_diy_maximalism", "aliases": ["decora", "handmade bead accessories", "데코라", "비즈 팔찌"]},
+      {"domain": "subculture_practice", "preset_id": "gyaru_shibuya_glam", "aliases": ["gyaru", "voluminous hair", "갸루", "볼륨 있는 헤어"]},
+      {"domain": "subculture_practice", "preset_id": "heisei_y2k_revival", "aliases": ["heisei y2k", "y2k editorial", "헤이세이 y2k", "플랫폼 부츠와 데님"]},
+      {"domain": "subculture_practice", "preset_id": "visual_kei_live_house", "aliases": ["visual kei", "live house", "비주얼계", "라이브하우스"]},
+      {"domain": "subculture_practice", "preset_id": "goth_scene_style_documentary", "aliases": ["goth scene", "goth participant", "고스 커뮤니티", "성인 고스"]},
+      {"domain": "subculture_practice", "preset_id": "cybergoth_club_style_documentary", "aliases": ["cybergoth", "cybergoth clubwear", "사이버고스", "형광 액세서리"]},
+      {"domain": "subculture_practice", "preset_id": "new_romantic_club_style_documentary", "aliases": ["new romantic", "theatrical makeup", "뉴로맨틱", "재구성한 빈티지 의상"]},
+      {"domain": "subculture_practice", "preset_id": "warehouse_rave_uv", "aliases": ["community rave", "warehouse rave", "raver", "레이브", "레이버"]},
+      {"domain": "subculture_practice", "preset_id": "punk_basement_show", "aliases": ["diy punk", "punk band", "basement venue", "펑크 밴드", "지하 공연장"]},
+      {"domain": "subculture_practice", "preset_id": "noise_performance_space_documentary", "aliases": ["noise performer", "contact microphone", "노이즈 아티스트", "개조 악기"]},
+      {"domain": "subculture_practice", "preset_id": "shoegaze_small_venue_documentary", "aliases": ["shoegaze", "layered guitar pedals", "슈게이즈", "이펙터 페달"]},
+      {"domain": "subculture_practice", "preset_id": "retro_arcade_community_practice", "aliases": ["retro arcade", "arcade cabinet", "아케이드 기기", "조작부 상태"]},
+      {"domain": "subculture_practice", "preset_id": "retro_lan_byoc_session", "aliases": ["byoc lan", "ethernet cables", "랜 파티", "각자 가져온 컴퓨터"]},
+      {"domain": "subculture_practice", "preset_id": "retro_speedrun_event_practice", "aliases": ["speedrun", "leaderboard verifier", "스피드러너", "타이밍 화면"]},
+      {"domain": "subculture_practice", "preset_id": "ttrpg_collaborative_session", "aliases": ["tabletop roleplaying", "character sheets", "dice resolution", "trpg", "주사위 판정", "함께 이야기를"]},
+      {"domain": "subculture_practice", "preset_id": "miniature_wargaming_social_practice", "aliases": ["miniature wargame", "wargame table", "미니어처 워게임", "모형 지형", "줄자로 이동"]},
+      {"domain": "subculture_practice", "preset_id": "custom_pc_build_workbench", "aliases": ["custom pc build", "first boot", "assembled desktop computer", "열린 데스크톱 케이스", "부품을 장착"]},
+      {"domain": "subculture_practice", "preset_id": "mechanical_keyboard_build_workbench", "aliases": ["mechanical keyboard", "keymap", "keyboard pcb", "기계식 키보드", "키캡"]},
+      {"domain": "subculture_practice", "preset_id": "cyberdeck_enclosure_prototyping", "aliases": ["cyberdeck", "portable cyberdeck", "3d printed enclosure", "사이버덱", "휴대형 단말기"]},
+      {"domain": "subculture_practice", "preset_id": "lowrider_community_craft", "aliases": ["lowrider", "hydraulic stance", "로우라이더", "유압 자세"]},
+      {"domain": "subculture_practice", "preset_id": "tuner_car_workshop_documentary", "aliases": ["tuner car", "tuner enthusiast", "engine bay modifications", "튜너", "냉각과 흡기"]},
+      {"domain": "subculture_practice", "preset_id": "itasha_display_culture_documentary", "aliases": ["itasha", "display car wrapped", "fictional artwork", "이타샤", "일러스트 랩핑 차량"]},
+      {"domain": "subculture_practice", "preset_id": "idol_fandom_material_culture", "aliases": ["fan light", "light stick", "music fans", "응원 소품", "공연 전 비상표"]},
+      {"domain": "subculture_practice", "preset_id": "anime_fandom_collection_exchange", "aliases": ["anime fandom", "animation fans", "character goods", "애니메이션 팬", "캐릭터 상품"]},
+      {"domain": "worldbuilding_system", "preset_id": "diegetic_larp_world_system", "aliases": ["디제틱 LARP 세계", "몰입형 LARP", "몰입형 실사 역할극", "다이제틱 역할극 도시", "공동 세계 실연 문화", "diegetic LARP world", "immersive LARP", "immersive live roleplay culture", "diegetic roleplay city", "embodied shared-world play"]},
+      {"domain": "worldbuilding_system", "preset_id": "conlang_conculture_world_system", "aliases": ["구성 언어", "콘랭", "콘컬처", "창작 문자 사회", "constructed language", "constructed-language archive", "conculture market", "conlang society"]},
+      {"domain": "worldbuilding_system", "preset_id": "conworld_cartography_world_system", "aliases": ["콘월드 지도제작", "상상 지리", "가상 세계의 지도", "허구 세계 측량", "conworld cartography", "conworld survey room", "imaginary geography", "imaginary port authority", "fictional-world mapmaking"]},
+      {"domain": "worldbuilding_system", "preset_id": "speculative_evolution_field_archive", "aliases": ["사변 진화", "가상 생물 진화 기록관", "외계 생태계 공동창작", "제노생물학", "speculative evolution", "speculative-evolution field team", "imagined evolutionary archive", "alien biosphere worldbuilding"]},
+      {"domain": "worldbuilding_system", "preset_id": "anomalous_archive_unfiction_world_system", "aliases": ["이상 현상 아카이브", "언픽션 세계", "협업형 이상현상 기록물", "아카이브 호러 기록", "anomalous archive", "unfiction field survey", "collaborative anomalous archive", "unfiction evidence archive"]},
+      {"domain": "worldbuilding_system", "preset_id": "text_persistent_mud_world_system", "aliases": ["텍스트 기반 영속 세계", "MUD와 BBS", "MUD·BBS 서버 고고학", "터미널 가상세계", "text-based persistent world", "MUD and BBS", "MUD and BBS community", "programmable terminal world"]},
+      {"domain": "worldbuilding_system", "preset_id": "civic_solarpunk_institutional_world", "aliases": ["시민 제도 중심 솔라펑크", "시민 시스템 솔라펑크", "기후 적응 도시", "공공 인프라 중심 솔라펑크", "civic solarpunk", "civic-systems solarpunk", "climate-adapted city", "infrastructure-first solarpunk"]},
+      {"domain": "worldbuilding_system", "preset_id": "demoscene_procedural_world_system", "aliases": ["데모씬", "사이즈코딩", "데모씬 절차적 세계", "바이트 제한 실시간 우주", "demoscene", "sizecoders", "demoscene procedural worldbuilding", "sizecoded executable worlds"]},
+      {"domain": "worldbuilding_system", "preset_id": "original_species_art_rpg_world", "aliases": ["오리지널 종족 아트 RPG", "창작 생물 종족의 공동 세계", "창작 종족 공동 세계", "공동 창작 종족 등록부", "original-species art RPG", "original creature world", "original species art RPG", "original-character community registry"]},
+      {"domain": "worldbuilding_system", "preset_id": "fictional_esoteric_archive_world", "aliases": ["허구의 비의학 기록관", "가상 오컬트 출판", "허구 오컬트 소규모 출판", "의례 매체 아카이브", "fictional esoteric archive", "invented occult publishing world", "fictional occult small press", "ritual media archive"]},
+      {"domain": "worldbuilding_system", "preset_id": "digital_ruins_net_art_world", "aliases": ["디지털 폐허", "가상의 오래된 온라인 도시", "초기 웹 아카이브 복원", "넷아트 보존", "digital ruins", "abandoned fictional online city", "early web archive reconstruction", "net art preservation lab"]},
+      {"domain": "worldbuilding_system", "preset_id": "retrofuture_infrastructure_bureaucracy", "aliases": ["레트로퓨처", "미래 고고학", "레트로퓨처 인프라", "노후 미래 시스템", "retrofuture", "future-archaeology", "retrofuture infrastructure archaeology", "obsolete future systems"]},
+      {"domain": "worldbuilding_system", "preset_id": "multispecies_more_than_human_world", "aliases": ["다종 공존 도시", "인간 너머의 시민 세계", "다종 공동체 세계관", "more-than-human", "multispecies city", "more-than-human watershed", "multispecies governance", "more-than-human civic world"]},
+      {"domain": "worldbuilding_system", "preset_id": "cryptid_local_folklore_world", "aliases": ["창작 크립티드", "지역 설화 기반", "크립티드 마을 민속", "가상 지역 괴생명체 기록관", "fictional small-town cryptid", "local-legend night survey", "cryptid town folklore ecosystem", "fictional local creature archive"]},
+      {"domain": "worldbuilding_system", "preset_id": "fictional_postal_state_mail_art", "aliases": ["가상 우편 국가", "메일 아트", "메일 아트 비밀 통신망", "회람형 예술 우편망", "invented postal state", "mail-art", "mail art correspondence network", "fictional postal state"]},
+      {"domain": "worldbuilding_system", "preset_id": "dungeon_synth_microcanon_world", "aliases": ["던전 신스", "판타지 신스", "던전 신스 마이크로캐논", "가상 사운드트랙 진 세계", "dungeon-synth", "fantasy-synth", "dungeon synth microcanon", "fantasy synth cassette worldbuilding"]},
+      {"domain": "worldbuilding_system", "preset_id": "afrofuturist_worldmaking_curated", "aliases": ["아프로퓨처리즘", "흑인 미래 세계", "아프로퓨처리즘 전시 연구실", "흑인 미래 시민 기록관", "Afrofuturist", "Afrofuturist worldmaking", "Black future civic archive", "African diasporic future"]},
+      {"domain": "worldbuilding_system", "preset_id": "indigenous_futurisms_curated", "aliases": ["Indigenous Futurisms", "원주민 미래 세계", "Indigenous Futurisms 기반", "원주민 미래 공동 보관소", "Indigenous future repository", "Indigenous Futurisms world", "Indigenous future community", "community-controlled Indigenous future"]},
+      {"domain": "cjk_narrative_world", "preset_id": "kr_hunter_gate_raid_society", "aliases": ["한국형 헌터 사회", "헌터 협회", "게이트물", "던전 브레이크", "헌터물", "Korean hunter-gate society", "hunter-gate", "dungeon-breach staging area", "licensed adult raiders", "면허를 가진 헌터"]},
+      {"domain": "cjk_narrative_world", "preset_id": "kr_tower_constellation_sponsor_ecology", "aliases": ["탑등반물", "성좌물", "성좌 후원형 탑", "탑의 새로운 층", "tower climbers", "constellation sponsorship", "sponsor-driven tower", "floor trial"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cn_xianxia_cultivation_sect_world", "aliases": ["선협 종문", "수선 세계", "xianxia cultivation sect", "仙侠宗门", "修仙宗门", "修仙世界", "秘境", "도겁"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cn_xuanhuan_gaowu_world", "aliases": ["고무(高武)", "고무 문명", "현환 고무", "gaowu high-martial", "gaowu", "高武城市", "玄幻高武世界", "灵气复苏后的高武"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cn_infinite_flow_instance_world", "aliases": ["무한류", "제천무한", "infinite-flow mission hub", "infinite-flow", "无限流", "诸天无限", "跨界任务中枢", "부본 세계"]},
+      {"domain": "cjk_narrative_world", "preset_id": "jp_isekai_guild_frontier_world", "aliases": ["이세계로 전이", "이세계 전생자", "일본식 이세계", "Japanese-style isekai", "異世界転生者", "異世界転移後", "冒険者ギルド", "スローライフ"]},
+      {"domain": "cjk_narrative_world", "preset_id": "jp_modern_dungeon_streaming_economy", "aliases": ["던전 방송", "탐색자 방송팀", "dungeon-streaming economy", "modern dungeon-streaming", "現代ダンジョン", "ダンジョン配信", "探索者からなる配信班", "ダンジョン配信者"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cn_rule_horror_anomaly_zone_world", "aliases": ["규칙괴담 이상구역", "괴이부활 이후", "rule-horror anomaly zone", "fictional rule-horror", "规则怪谈异常区域", "诡异复苏后的封锁设施", "异常区域"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_urban_occult_exorcist_institutions", "aliases": ["퇴마 조직", "도시전기 세계", "urban-occult bureau", "exorcist investigators", "现代都市怪异调查机构", "現代伝奇の退魔組織", "怪異対応機関"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_regression_transmigration_timeline_world", "aliases": ["회귀로 갈라진", "책빙의", "transmigration registry", "regression archive", "穿越世界", "重生世界", "憑依が起きた", "タイムリープ"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_ability_academy_lineage_system", "aliases": ["이능 아카데미", "마술학원", "ability academy", "超能力学院", "異能学園", "魔術学院", "명문가 후원 학원"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_villainess_otome_aristocratic_world", "aliases": ["로맨스판타지 귀족사회", "악녀물 궁정", "otome-villainess court", "romantasy aristocratic society", "古代言情世界", "悪役令嬢ものの架空宮廷", "乙女ゲームの貴族社会"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_wuxia_murim_jianghu_economy", "aliases": ["무림 강호", "무협 세계", "wuxia murim economy", "武侠江湖", "镖局", "武侠の江湖", "문파 경제"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_spirit_underworld_bureaucracy", "aliases": ["한국 저승 설화의 인도자", "민속의 관할 개념", "afterlife-jurisdiction office", "spirit-underworld bureaucracy", "地方守护与辖区概念", "日本各地の怪異研究", "黄泉の記録所"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_status_system_quest_world", "aliases": ["상태창과 시스템", "시스템물 도시", "status-system quest world", "系统流世界", "ステータスとスキル", "직업 등록", "quest issuance"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_vrmmo_card_liveops_world", "aliases": ["VRMMO 길드", "카드 배틀과 가챠", "VRMMO live-service", "虚构卡牌与抽取运营", "架空VRMMO", "虚拟网游", "card-game live operations"]},
+      {"domain": "cjk_narrative_world", "preset_id": "jp_mecha_kaiju_tokusatsu_disaster_state", "aliases": ["메카 격납고", "특촬형 괴수 재난국가", "giant-mecha disaster state", "mecha-kaiju disaster", "怪獣警報下のメカ格納庫", "特撮的な怪獣災害国家", "巨大ロボット災害"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_apocalypse_stockpile_base_world", "aliases": ["아포칼립스 기지", "재난 이후 이동요새", "apocalypse base", "末世基地", "終末後の移動拠点", "비축 식량", "stock rotation"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_territory_dungeon_management_world", "aliases": ["영지 경영 세계", "던전운영물", "territory-management world", "领主种田与基建", "架空ダンジョンの運営", "領地経営", "dungeon management"]},
+      {"domain": "cjk_narrative_world", "preset_id": "cjk_magical_idol_virtual_media_world", "aliases": ["창작 마법소녀 세계", "버추얼 크리에이터 미디어믹스", "adult idol-production studio", "magical-idol media world", "原创虚拟主播制作室", "オリジナル魔法少女世界", "アイドル制作"]}
+    ]
+  },
+  "applicability_guards": [
+    {
+      "id": "robot_modifier_requires_primary_context",
+      "match_any_tags": ["robot"],
+      "match_any_terms": ["robot concept proof or scene anchor"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["robot", "android", "cyborg", "automaton", "technology", "machine", "industrial", "automation", "sci_fi", "cyberpunk"]
+    },
+    {
+      "id": "glitch_modifier_requires_primary_context",
+      "match_any_tags": ["glitch"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["digital", "technology", "sci_fi", "cyberpunk", "experimental", "glitch"]
+    },
+    {
+      "id": "cosplay_modifier_requires_primary_context",
+      "match_any_tags": ["cosplay"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["cosplay", "costume", "maid", "fantasy", "character"]
+    },
+    {
+      "id": "beastkin_modifier_requires_primary_context",
+      "match_any_tags": ["beastkin"],
+      "exclude_slots": ["medium", "genre", "subject"],
+      "requires_primary_any_tags": ["beastkin", "avian", "reptile", "feline", "canine", "animal", "fantasy"]
+    },
+    {
+      "id": "underwater_modifier_requires_primary_context",
+      "match_any_tags": ["underwater"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["underwater", "aquatic", "ocean", "marine", "swimming", "water"]
+    },
+    {
+      "id": "holographic_modifier_requires_primary_context",
+      "match_any_tags": ["holographic"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["holographic", "digital", "technology", "sci_fi", "cyberpunk", "futuristic", "nightlife", "stage", "performance", "kpop"]
+    },
+    {
+      "id": "horror_modifier_requires_primary_context",
+      "match_any_tags": ["horror"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["horror", "gothic", "haunted", "thriller", "noir", "supernatural", "dark_fantasy"]
+    },
+    {
+      "id": "surveillance_modifier_requires_primary_context",
+      "match_any_tags": ["surveillance"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["surveillance", "security", "cctv", "spy", "bodycam", "dashcam", "forensic"]
+    },
+    {
+      "id": "field_modifier_requires_primary_context",
+      "match_any_tags": ["field"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["field", "nature", "landscape", "botanical", "wildlife", "plant", "garden", "agricultural", "outdoor"]
+    },
+    {
+      "id": "biodiversity_support_requires_primary_context",
+      "match_any_tags": ["biodiversity", "camera_trap", "quadrat"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["biodiversity", "ecology", "wildlife", "marine", "camera_trap", "quadrat"]
+    },
+    {
+      "id": "agriculture_food_system_support_requires_primary_context",
+      "match_any_tags": ["agriculture_food_systems", "grading", "fermentation"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["agriculture_food_systems", "agriculture", "food", "harvest", "grading", "fermentation"]
+    },
+    {
+      "id": "circular_material_support_requires_primary_context",
+      "match_any_tags": ["circular_materials"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["circular_materials", "electronics_repair", "material_recovery", "reuse_assessment", "remanufacture"]
+    },
+    {
+      "id": "heritage_documentation_support_requires_primary_context",
+      "match_any_tags": ["heritage_documentation", "conservation_capture", "photogrammetry_capture"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["heritage_documentation", "collection_object", "conservation_lab", "museum_digitization"]
+    },
+    {
+      "id": "health_access_support_requires_primary_context",
+      "match_any_tags": ["health_access", "assistive_real_world", "accessibility"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation", "accessible_environment"]
+    },
+    {
+      "id": "sports_motion_support_requires_primary_context",
+      "match_any_tags": ["sports_motion", "sports_contact", "sports_recovery"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["sports_motion", "athlete", "sports_venue", "competitive_motion"]
+    },
+    {
+      "id": "education_training_support_requires_primary_context",
+      "match_any_tags": ["education_training", "guided_learning", "instructional_task"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]
+    },
+    {
+      "id": "disaster_risk_support_requires_primary_context",
+      "match_any_tags": ["disaster_risk_operations", "post_disaster_survey"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]
+    },
+    {
+      "id": "atmospheric_observation_support_requires_primary_context",
+      "match_any_tags": ["atmospheric_observation", "ground_truth_weather"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather", "meteorological_observation"]
+    },
+    {
+      "id": "natural_process_support_requires_primary_context",
+      "match_any_tags": ["natural_process"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["natural_process", "biocrust", "germination", "geomorphology", "freeze_thaw", "condensation_process"]
+    },
+    {
+      "id": "longitudinal_place_support_requires_primary_context",
+      "match_any_tags": ["longitudinal_place_state", "repeat_viewpoint"],
+      "exclude_slots": ["medium", "genre", "subject", "location"],
+      "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]
+    }
+  ],
+  "selection_balance": {
+    "implicit_theme_multiplier": 0.35,
+    "request_relevance": {
+      "enabled": true,
+      "per_term_multiplier": 2.0,
+      "max_multiplier": 12.0,
+      "minimum_term_length": 3,
+      "deterministic_minimum_matches": 2,
+      "deterministic_minimum_lead": 2
+    },
+    "themes": {
+      "k_style": ["k-pop", "kpop", "idol-like", "idol style", "k-beauty", "kbeauty", "아이돌", "케이팝", "K-뷰티"],
+      "fantasy": ["fantasy", "fairy", "vampire", "princess", "succubus", "beastkin", "elf", "판타지", "요정", "흡혈귀", "공주", "서큐버스", "수인"],
+      "robot": ["robot", "android", "cyborg", "automaton", "mecha", "로봇", "안드로이드", "사이보그", "메카"],
+      "underwater": ["underwater", "submerged", "aquatic", "diver", "수중", "물속", "잠수"],
+      "cosplay": ["cosplay", "costume character", "코스프레"],
+      "horror": ["horror", "haunted", "gore", "호러", "공포", "귀신"]
+    }
+  },
+  "photographic_integration": {
+    "baseline": {
+      "profile_id": "axis_composite_photo_integration",
+      "required_categories": ["environment_binding", "optical_depth"],
+      "minimum_category_hits": 2,
+      "principles": [
+        "Bind the subject and setting with shared light, reflected color, contact shadow, moisture, haze, or material behavior.",
+        "Use a photographic point of view with foreground depth, asymmetry, focus falloff, grain, or lens artifacts instead of a clean pasted-on portrait.",
+        "Keep one small human, animal, object, or material imperfection so the image reads as a captured moment rather than a beauty composite."
+      ],
+      "suggested_phrases": {
+        "environment_binding": [
+          "ambient light spills across the subject, nearby surfaces, and props",
+          "reflected color catches on the main subject and the surrounding materials"
+        ],
+        "optical_depth": [
+          "off-axis composition with foreground occlusion and gentle focus falloff",
+          "subtle lens grain and imperfect depth cues from a real camera position"
+        ],
+        "human_trace": [
+          "a small unguarded expression, loose hair, creased fabric, handling mark, or material imperfection breaks the polished pose"
+        ]
+      },
+      "anti_patterns": [
+        "centered beauty headshot pasted over a scenic background",
+        "separate studio face light that ignores the location's light direction",
+        "props listed as labels without contact shadow, reflection, weight, or physical interaction",
+        "a visible effect shell or flat image-plane slice that ignores local material identity, depth, and occlusion"
+      ]
+    },
+    "categories": {
+      "environment_binding": [
+        "binds",
+        "bounce",
+        "bounced",
+        "cast",
+        "catchlight",
+        "color spill",
+        "contaminate",
+        "contaminated",
+        "contact shadow",
+        "dust",
+        "fiber",
+        "grazes",
+        "haze",
+        "reflection",
+        "reflected",
+        "rim light",
+        "shadow",
+        "spill",
+        "wraps",
+        "shared light",
+        "same light",
+        "공유된 빛",
+        "반사광",
+        "그림자",
+        "색 번짐",
+        "먼지",
+        "안개"
+      ],
+      "optical_depth": [
+        "asymmetrical",
+        "falloff",
+        "foreground",
+        "grain",
+        "high ISO",
+        "lens",
+        "macro",
+        "motion blur",
+        "off-axis",
+        "occlusion",
+        "micro-occlusion",
+        "parallax",
+        "refraction",
+        "depth-aware",
+        "depth-dependent scale",
+        "curved depth boundary",
+        "shallow depth",
+        "soft blur",
+        "telephoto",
+        "foreground blur",
+        "초점 이탈",
+        "전경",
+        "렌즈",
+        "입자감",
+        "모션 블러"
+      ],
+      "physical_contact": [
+        "contact shadow",
+        "compress",
+        "compressed",
+        "weight",
+        "pressure",
+        "pressed",
+        "touches",
+        "rests on",
+        "leans into",
+        "손 압력",
+        "눌림",
+        "무게",
+        "접촉 그림자"
+      ],
+      "material_trace": [
+        "creased",
+        "damp",
+        "dust",
+        "fiber",
+        "fingerprint",
+        "fur",
+        "handling mark",
+        "local texture",
+        "material-specific continuity",
+        "moisture",
+        "native material identity",
+        "rain",
+        "scratch",
+        "steam",
+        "sweat",
+        "wet hair",
+        "worn edge",
+        "surface topology",
+        "구겨진",
+        "젖은",
+        "습기",
+        "땀",
+        "털",
+        "섬유",
+        "흠집",
+        "고유 재질 정체성",
+        "표면 굴곡",
+        "재질별 연속성"
+      ],
+      "human_trace": [
+        "breathless",
+        "creased",
+        "flushed",
+        "half-smile",
+        "loose hair",
+        "loose strand",
+        "slouched",
+        "stray hair",
+        "sweat",
+        "unguarded",
+        "손",
+        "시선",
+        "흐트러진 머리",
+        "구겨진 옷",
+        "땀",
+        "무방비한 표정"
+      ],
+      "event_timing": [
+        "after",
+        "before",
+        "mid-gesture",
+        "mid-motion",
+        "just stepped",
+        "caught",
+        "breathless",
+        "unguarded",
+        "찰나",
+        "방금",
+        "움직임",
+        "순간"
+      ],
+      "operational_evidence": [
+        "calibration target",
+        "measurement scale",
+        "sample contact",
+        "inspection marker",
+        "condition trace",
+        "flow path",
+        "handoff point",
+        "reference surface",
+        "교정 표적",
+        "측정 눈금",
+        "검사 표식",
+        "상태 흔적",
+        "이송 경로"
+      ],
+      "traceability_evidence": [
+        "incoming batch",
+        "sampling boundary",
+        "reference position",
+        "test point",
+        "condition criterion",
+        "separated fraction",
+        "input stream",
+        "output stream",
+        "repeatable frame",
+        "배치 유입",
+        "표본 경계",
+        "기준 위치",
+        "검사 접점",
+        "상태 기준",
+        "분리 분획",
+        "입력 흐름",
+        "출력 흐름"
+      ]
+    },
+    "axes": [
+      {
+        "id": "person_presence",
+        "facet_match": {"subject_kind": ["human"]},
+        "terms": ["adult", "person", "portrait", "human", "model", "performer", "worker", "idol", "사람", "인물", "아이돌"],
+        "required_categories": ["human_trace"],
+        "principles": ["Let one small bodily or behavioral trace interrupt pure polish: loose hair, breath, fabric creasing, sweat, handling, or an unguarded expression."],
+        "suggested_phrases": {
+          "human_trace": ["loose hair, creased fabric, breath, or an unguarded expression keeps the subject photographic"]
+        }
+      },
+      {
+        "id": "animal_presence",
+        "facet_match": {"subject_kind": ["animal"]},
+        "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
+        "required_categories": ["physical_contact", "material_trace"],
+        "principles": ["Make animal presence physical through fur, weight, pressure, contact shadows, shared light, or small behavioral timing."],
+        "suggested_phrases": {
+          "physical_contact": ["the animal's weight or posture creates pressure, contact shadow, and shared light on nearby surfaces"],
+          "material_trace": ["fur, whiskers, or small handling traces catch the same light as the surrounding scene"]
+        }
+      },
+      {
+        "id": "object_or_product_presence",
+        "facet_match": {"subject_kind": ["object", "food", "plant", "sign"]},
+        "terms": ["product", "object", "flatlay", "still life", "food", "jewelry", "perfume", "packaging", "제품", "정물", "음식", "소품", "오브젝트"],
+        "required_categories": ["physical_contact", "material_trace"],
+        "principles": ["Let objects show weight, surface finish, handling marks, cast shadows, reflection, condensation, crumbs, scratches, or use traces instead of floating as labels."],
+        "suggested_phrases": {
+          "physical_contact": ["object placement creates believable weight, contact shadows, and surface pressure"],
+          "material_trace": ["surface finish, handling marks, condensation, crumbs, scratches, or dust reveal the material"]
+        }
+      },
+      {
+        "id": "interior_environment",
+        "facet_match": {"place_type": ["interior", "home", "domestic", "studio", "commercial"]},
+        "terms": ["interior", "room", "living room", "bedroom", "kitchen", "studio", "home", "indoor", "실내", "방", "거실", "집", "스튜디오"],
+        "required_categories": ["environment_binding"],
+        "principles": ["Use window light, practical lamps, room color bounce, dust, and foreground domestic objects to make the subject belong to the room."],
+        "suggested_phrases": {
+          "environment_binding": ["room light and color bounce touch the subject, nearby surfaces, and small foreground objects"]
+        }
+      },
+      {
+        "id": "sacred_or_monumental_interior",
+        "facet_match": {"place_type": ["temple"], "mood_family": ["sacred", "awe"]},
+        "terms": ["cathedral", "chapel", "church", "temple", "nave", "altar", "stained glass", "votive", "대성당", "성당", "사원", "사찰"],
+        "required_categories": ["environment_binding", "optical_depth"],
+        "principles": ["Use scale, vertical architecture, colored window light, candle warmth, dust, foreground occlusion, and floor reflection to bind a small figure to a large interior."],
+        "suggested_phrases": {
+          "environment_binding": ["colored window light, candle warmth, dust, or floor reflection touch both the subject and the monumental interior"],
+          "optical_depth": ["foreground candles, columns, arches, or floor reflections create deep environmental perspective"]
+        }
+      },
+      {
+        "id": "performance_stage_environment",
+        "facet_match": {"place_type": ["stage"], "lighting_family": ["colored_light", "projection_light", "artificial_light"]},
+        "terms": ["stage", "performance", "concert", "broadcast", "music show", "microphone", "LED", "무대", "스테이지", "공연", "전광판", "마이크"],
+        "required_categories": ["environment_binding", "event_timing"],
+        "principles": ["Make performance light physical through color spill, haze, sweat, microphone metal, hair movement, and one captured choreographic instant."],
+        "suggested_phrases": {
+          "environment_binding": ["stage color spill, haze, and reflected highlights touch hair, skin, costume, and equipment"],
+          "event_timing": ["motion blur, breath, sweat, or a caught gesture makes the frame feel like a live instant"]
+        }
+      },
+      {
+        "id": "handmade_or_miniature_set",
+        "profile_match": ["general", "portrait_editorial", "product", "documentary", "character_moe_grammar"],
+        "facet_match": {"camera_register": ["macro"], "subject_kind": ["object", "plant"]},
+        "terms": ["felt", "wool", "handmade", "miniature", "storybook", "fairy", "craft", "펠트", "양모", "수제", "동화", "미니어처"],
+        "required_categories": ["environment_binding", "material_trace"],
+        "principles": ["Treat constructed worlds as photographed sets: fibers, seams, scale cues, color bounce, and foreground blur should affect the subject or object."],
+        "suggested_phrases": {
+          "environment_binding": ["set color bounce and nearby handmade materials affect the subject and central prop"],
+          "material_trace": ["visible fibers, seams, edges, or handmade irregularities reveal the photographed set"]
+        }
+      },
+      {
+        "id": "wet_or_weather_trace",
+        "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
+        "terms": ["rain", "wet", "damp", "moisture", "mist", "storm", "비", "젖은", "비에", "습기", "안개"],
+        "required_categories": ["material_trace", "environment_binding"],
+        "principles": ["Let moisture change surfaces through darkened fabric, wet hair, floor reflection, beads, haze, or softened light."],
+        "suggested_phrases": {
+          "material_trace": ["moisture darkens fabric, gathers on hair or surfaces, and catches the same light as the environment"],
+          "environment_binding": ["wet surfaces and reflections share the scene's light and color"]
+        }
+      },
+      {
+        "id": "relational_coordination",
+        "facet_match": {"relation_type": ["cooperative", "caregiving", "instructional", "transactional", "handoff", "team", "crowd", "competitive"]},
+        "terms": ["handoff", "team", "shared task", "care", "queue", "briefing", "인계", "협업", "공동 작업", "돌봄", "대기열"],
+        "required_categories": ["physical_contact", "event_timing"],
+        "principles": ["Make a relationship visible through gaze direction, hand position, spacing, and one shared task or object rather than by merely placing multiple people in frame."],
+        "suggested_phrases": {
+          "physical_contact": ["hands, spacing, and one shared object make the coordination physically legible"],
+          "event_timing": ["capture the exchange during a handoff, adjustment, briefing, or shared task"]
+        }
+      },
+      {
+        "id": "process_stage_evidence",
+        "facet_match": {"process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"], "event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance", "dormancy", "reactivation"]},
+        "terms": ["calibration", "sampling", "measurement", "inspection", "sorting", "loading", "maintenance", "교정", "샘플링", "측정", "점검", "분류", "정비"],
+        "required_categories": ["event_timing", "operational_evidence"],
+        "principles": ["Show the process at a specific stage and include the visible reference, contact point, or condition trace that explains what is being done."],
+        "suggested_phrases": {
+          "event_timing": ["the frame catches one specific stage before the task advances to the next"],
+          "operational_evidence": ["a calibration target, sample contact, inspection marker, or condition trace makes the operation verifiable"]
+        }
+      },
+      {
+        "id": "instrument_capture_modality",
+        "facet_match": {"capture_modality": ["macro", "microscopy", "thermal", "ultraviolet", "aerial", "underwater", "surveillance", "machine_vision", "inspection", "fluorescence", "dic", "polarized_light", "light_sheet", "photogrammetry"]},
+        "terms": ["microscope", "thermal", "ultraviolet", "machine vision", "inspection camera", "sensor capture", "현미경", "열화상", "머신비전", "검사 카메라"],
+        "required_categories": ["optical_depth", "operational_evidence"],
+        "principles": ["Let the selected capture modality determine scale, depth, noise, field of view, and reference evidence instead of adding a generic technical overlay."],
+        "suggested_phrases": {
+          "optical_depth": ["scale, field of view, focus falloff, and sensor noise follow the selected capture modality"],
+          "operational_evidence": ["a physical reference surface or calibration target grounds the instrument view without relying on readable UI"]
+        }
+      },
+      {
+        "id": "mobility_flow",
+        "facet_match": {"movement_type": ["mechanical_cycle", "vehicle_flow", "crowd_flow"], "place_type": ["transport", "warehouse"]},
+        "terms": ["transit", "warehouse", "freight", "depot", "rail yard", "loading", "sorting line", "교통", "창고", "화물", "차고지", "철도", "적재"],
+        "required_categories": ["environment_binding", "event_timing", "operational_evidence"],
+        "principles": ["Make routes, staging zones, queues, and transfer points readable so vehicles, cargo, workers, and infrastructure form one operational flow."],
+        "suggested_phrases": {
+          "environment_binding": ["route markings, staging space, shared light, and contact shadows bind vehicles or cargo to the facility"],
+          "event_timing": ["capture one transfer, queue release, loading cycle, or maintenance pause"],
+          "operational_evidence": ["a visible flow path or handoff point explains how the system moves"]
+        }
+      },
+      {
+        "id": "climate_material_consequence",
+        "profile_match": ["climate_adaptation"],
+        "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
+        "terms": ["heatwave", "air quality", "flood", "coastal erosion", "storm", "dust haze", "폭염", "대기질", "침수", "해안 침식", "폭풍", "황사"],
+        "required_categories": ["environment_binding", "material_trace", "operational_evidence"],
+        "principles": ["Show climate conditions through changed visibility, bent vegetation, water lines, heat shimmer, deposited particles, or damaged surfaces, together with one visible monitoring or adaptation intervention."],
+        "suggested_phrases": {
+          "environment_binding": ["the same weather condition changes foreground, subject, and distance rather than sitting as a background effect"],
+          "material_trace": ["water lines, deposited dust, wind-bent material, frost, or heat shimmer leave a physical trace"],
+          "operational_evidence": ["a monitoring reference or adaptation structure makes the environmental response legible"]
+        }
+      },
+      {
+        "id": "biodiversity_observation_protocol",
+        "profile_match": ["biodiversity_monitoring"],
+        "facet_match": {"place_type": ["nature"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["underwater", "surveillance", "visible_light"]},
+        "terms": ["biodiversity", "species monitoring", "camera trap", "quadrat", "benthic", "생물다양성", "종 모니터링", "카메라 트랩", "방형구", "저서생물"],
+        "required_categories": ["environment_binding", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep habitat, the repeatable observation boundary, scale reference and detected organism in one legible ecological relationship."],
+        "suggested_phrases": {
+          "environment_binding": ["habitat structure, substrate and water or vegetation conditions remain connected to the observed organism"],
+          "operational_evidence": ["the camera field, quadrat edge or physical marker makes the observation protocol visible"],
+          "traceability_evidence": ["a repeatable frame, sampling boundary or reference position makes later comparison possible"]
+        }
+      },
+      {
+        "id": "agriculture_batch_traceability",
+        "profile_match": ["agriculture_food_systems"],
+        "facet_match": {"place_type": ["agricultural"], "process_stage": ["sampling", "measurement", "inspection", "transfer", "monitoring"]},
+        "terms": ["harvest grading", "post-harvest", "fermentation batch", "food traceability", "수확물 선별", "수확 후", "발효 배치", "식품 추적성"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Show the material state before, during and after one grading or monitoring decision so the batch remains photographically traceable."],
+        "suggested_phrases": {
+          "material_trace": ["natural bloom, surface activity, handling marks or condition variation reveal the batch state"],
+          "operational_evidence": ["a sample contact, visible grading criterion or physical handoff explains the current process decision"],
+          "traceability_evidence": ["incoming batch, decision point and separated or continuing output remain spatially connected"]
+        }
+      },
+      {
+        "id": "circular_repair_material_flow",
+        "profile_match": ["circular_materials"],
+        "facet_match": {"place_type": ["repair", "waste", "industrial"], "process_stage": ["inspection", "measurement", "transfer", "intervention", "cleanup"]},
+        "terms": ["repair diagnosis", "reuse", "materials recovery", "material sorting", "수리 진단", "재사용", "자원 회수", "재료 선별"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Make the repair or separation decision visible through condition evidence, a physical test or contamination point, and a legible next destination."],
+        "suggested_phrases": {
+          "material_trace": ["wear, solder condition, residue, contamination or fraction texture records the material's current state"],
+          "operational_evidence": ["a probe contact, rejected contaminant or separation mechanism makes the intervention verifiable"],
+          "traceability_evidence": ["the tested component or input stream remains connected to its repair, reject or recovered destination"]
+        }
+      },
+      {
+        "id": "registered_acquisition_structure",
+        "profile_match": ["science_inspection"],
+        "facet_match": {"acquisition_structure": ["fixed_roi", "time_series", "multichannel", "z_stack", "multiview"]},
+        "terms": ["fixed ROI", "time series", "multichannel", "z stack", "multiview", "고정 ROI", "시계열", "다채널", "광학 절편"],
+        "required_categories": ["optical_depth", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep viewpoint, landmark, focus, exposure, and a physical reference stable across the selected channel, time, depth, or view structure."],
+        "suggested_phrases": {
+          "optical_depth": ["focus, section depth, and field of view follow one registered acquisition geometry"],
+          "operational_evidence": ["a physical reference slide or fixed landmark grounds the acquisition without readable overlays"],
+          "traceability_evidence": ["the same ROI and reference relationship persist across the selected acquisition structure"]
+        }
+      },
+      {
+        "id": "heritage_documentation_continuity",
+        "profile_match": ["heritage_documentation"],
+        "facet_match": {"capture_modality": ["macro", "ultraviolet", "photogrammetry", "inspection"], "process_stage": ["inspection", "measurement", "intervention", "monitoring"]},
+        "terms": ["heritage documentation", "condition assessment", "conservation photography", "photogrammetry", "문화유산 기록", "보존처리 기록", "상태 조사", "포토그래메트리"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Connect physical condition, a repeatable reference, and the intervention or derived-record stage without inventing readable accession data."],
+        "suggested_phrases": {
+          "material_trace": ["surface wear, lifting, corrosion, or support pressure remains physically legible"],
+          "operational_evidence": ["stable support, raking light, scale reference, or camera orbit explains the documentation method"],
+          "traceability_evidence": ["the collection object, capture event, and treatment stage remain continuous without readable labels"]
+        }
+      },
+      {
+        "id": "health_access_functional_participation",
+        "profile_match": ["health_access"],
+        "facet_match": {"relation_type": ["caregiving", "instructional", "cooperative"], "process_stage": ["setup", "inspection", "intervention", "monitoring"]},
+        "terms": ["rehabilitation", "assistive product", "accessible route", "community health", "재활", "보조기기", "무장애 동선", "지역사회 보건"],
+        "required_categories": ["physical_contact", "operational_evidence", "environment_binding"],
+        "principles": ["Show the adult participant leading a functional task while support products, helpers, and accessible space remain practical, dignified, and non-graphic."],
+        "suggested_phrases": {
+          "physical_contact": ["hands meet the support product or route feature at a clear functional contact point"],
+          "operational_evidence": ["fit, use, follow-up, or clear-route evidence explains the current access task"],
+          "environment_binding": ["eye level, working distance, and usable circulation keep the participant and support environment equally legible"]
+        }
+      },
+      {
+        "id": "sports_phase_contact_response",
+        "profile_match": ["sports_motion"],
+        "facet_match": {"movement_phase": ["readiness", "initiation", "loading_braking", "propulsion_release", "flight_transfer", "impact_absorption", "deceleration_stabilization", "recovery"], "contact_state": ["clearance_no_contact", "surface_or_medium_contact", "equipment_contact", "opponent_contact", "flight_or_separation", "post_contact_release"]},
+        "terms": ["sports biomechanics", "pre-contact", "impact", "recovery", "운동 역학", "접촉 전", "충돌", "회복"],
+        "required_categories": ["event_timing", "physical_contact", "material_trace"],
+        "principles": ["Make one movement phase, its contact state, and any equipment or surface response legible without replacing mechanics with generic sweat or blur."],
+        "suggested_phrases": {
+          "event_timing": ["the frame isolates one readable readiness, loading, release, impact, deceleration, or recovery phase"],
+          "physical_contact": ["the body, ground, opponent, or equipment meet at one physically plausible contact state"],
+          "material_trace": ["compression, rebound, surface shear, droplets, or particles respond to the same force event"]
+        }
+      },
+      {
+        "id": "education_activity_evidence",
+        "profile_match": ["education_training"],
+        "facet_match": {"learning_stage": ["orientation", "demonstration", "guided_practice", "collaborative_problem_solving", "performance_assessment"], "relation_type": ["instructional", "cooperative"]},
+        "terms": ["guided practice", "task demonstration", "competency assessment", "workplace learning", "지도 실습", "작업 시범", "역량 평가", "직무 교육"],
+        "required_categories": ["event_timing", "physical_contact", "operational_evidence"],
+        "principles": ["Show one observable learning stage through mentor-learner attention, tool contact, procedure, and result evidence rather than through classroom symbolism alone."],
+        "suggested_phrases": {
+          "event_timing": ["the frame catches demonstration, supervised practice, joint diagnosis, or assessment at one specific step"],
+          "physical_contact": ["hands, gaze, and the workpiece meet at the same task contact point"],
+          "operational_evidence": ["tool, procedure, practice result, and non-readable assessment reference form one complete activity frame"]
+        }
+      },
+      {
+        "id": "disaster_risk_evidence",
+        "profile_match": ["disaster_risk_operations"],
+        "facet_match": {"event_phase": ["preparation", "aftermath", "recovery"], "process_stage": ["inspection", "measurement", "monitoring", "intervention"]},
+        "terms": ["post-disaster", "building safety", "evacuation flow", "post-flood evidence", "재난 후", "건물 안전", "대피 흐름", "홍수 흔적"],
+        "required_categories": ["material_trace", "operational_evidence", "traceability_evidence"],
+        "principles": ["Prioritize time-sensitive physical evidence, a safe observation boundary, and the next condition decision without turning affected people into spectacle."],
+        "suggested_phrases": {
+          "material_trace": ["water, wind, debris, deformation, or access traces remain specific to the observed hazard"],
+          "operational_evidence": ["a control line, reference marker, or triage contact point explains the safety decision"],
+          "traceability_evidence": ["the observed condition remains connected to its restricted, repaired, or re-opened state"]
+        }
+      },
+      {
+        "id": "natural_process_state_trace",
+        "profile_match": ["natural_process"],
+        "facet_match": {"weather_effect": ["surface_wetness", "frost_accumulation", "erosion_deposition"], "observation_interval": ["repeat_interval", "seasonal_cycle"]},
+        "terms": ["biocrust", "erosion deposition", "condensation boundary", "germination", "freeze thaw", "생물 토양 피각", "침식 퇴적", "결로 경계", "발아", "동결 융해"],
+        "required_categories": ["event_timing", "material_trace", "environment_binding"],
+        "principles": ["Use a state boundary, coexisting stages, layer thickness, partial burial, fixed reference, or directional arrangement that a single photograph can actually support."],
+        "suggested_phrases": {
+          "event_timing": ["coexisting stages or a persistent boundary imply process without claiming an unseen time-lapse"],
+          "material_trace": ["layers, gradients, cracks, residue, or partial burial preserve the physical process trace"],
+          "environment_binding": ["the trace remains tied to its substrate, habitat, moisture, and scale reference"]
+        }
+      },
+      {
+        "id": "longitudinal_place_evidence",
+        "profile_match": ["longitudinal_place_state"],
+        "facet_match": {"observation_interval": ["repeat_interval", "seasonal_cycle"], "event_phase": ["preparation", "active_process", "aftermath", "maintenance", "dormancy", "reactivation"]},
+        "terms": ["repeat photography", "same viewpoint", "temporary closure", "reopening readiness", "seasonal place change", "반복 촬영", "같은 시점", "임시 폐쇄", "재개장", "계절 변화"],
+        "required_categories": ["environment_binding", "operational_evidence", "traceability_evidence"],
+        "principles": ["Keep one stable spatial anchor and one changed physical or operational trace visible from a repeatable viewpoint, without inventing a split-screen comparison."],
+        "suggested_phrases": {
+          "environment_binding": ["the same doorway, edge, fixture, or horizon anchors the place state"],
+          "operational_evidence": ["setup, shutdown, maintenance, closure protection, or recommissioning leaves one observable state cue"],
+          "traceability_evidence": ["viewpoint, scope, and reference relationship remain suitable for later comparison"]
+        }
+      },
+      {
+        "id": "visual_operator_evidence",
+        "profile_match": ["visual_structure"],
+        "terms": ["figure-ground boundary", "occlusion continuity", "repeated rhythm", "contact residue", "material transition", "scale anchor", "broken symmetry", "도형 배경 경계", "가림 연속성", "반복 리듬", "접촉 흔적", "물성 전환", "크기 기준", "대칭 파괴"],
+        "required_categories": ["environment_binding", "material_trace", "optical_depth"],
+        "principles": ["Use one dominant visual order and one physically verifiable cue; reflection, occlusion, scale, and transition must remain consistent with medium, depth, and contact."],
+        "suggested_phrases": {
+          "environment_binding": ["one clear boundary, rhythm, or localized break controls salience while staying physically tied to the surrounding surface or space"],
+          "material_trace": ["residue, compression, displacement, or a continuous state boundary points to a real prior or active process"],
+          "optical_depth": ["occluding edges, reflective curvature, shared shadows, and same-plane scale anchors preserve spatial logic"]
+        }
+      },
+      {
+        "id": "colored_or_mixed_light",
+        "facet_match": {"lighting_family": ["colored_light", "projection_light", "machine_light", "hazard_light"]},
+        "terms": ["colored light", "neon", "LED", "stained glass", "screen glow", "gel", "magenta", "cyan", "네온", "전광판", "스테인드글라스", "색조명"],
+        "required_categories": ["environment_binding"],
+        "principles": ["Colored or mixed light should spill consistently across subject, wardrobe, props, and nearby surfaces instead of sitting only in the background."],
+        "suggested_phrases": {
+          "environment_binding": ["colored light spill touches the subject, wardrobe, props, and nearby surfaces in the same direction"]
+        }
+      },
+      {
+        "id": "close_camera_depth",
+        "facet_match": {"camera_register": ["macro", "professional"], "shot_scale": ["medium_close", "close_up", "extreme_close"], "placement": ["layered_depth", "foreground_frame"]},
+        "terms": ["close-up", "medium close", "macro", "35mm", "50mm", "shallow depth", "foreground", "보케", "근접", "클로즈업"],
+        "required_categories": ["optical_depth"],
+        "principles": ["Close camera positions need visible focus falloff, foreground occlusion, lens perspective, or grain so the image does not flatten into a composite."],
+        "suggested_phrases": {
+          "optical_depth": ["foreground occlusion, focus falloff, lens perspective, or grain reveals a real camera position"]
+        }
+      }
+    ]
+  },
+  "visual_proposition": {
+    "slots": ["narrative_core", "concept_tension"],
+    "candidate_limit": 3,
+    "subject_classes": [
+      {
+        "id": "person",
+        "facet_match": {"subject_kind": ["human"]},
+        "terms": ["adult", "idol", "model", "person", "portrait", "human", "woman", "man", "worker", "performer", "dancer", "사람", "인물", "아이돌"],
+        "core_policy": "allow"
+      },
+      {
+        "id": "animal",
+        "facet_match": {"subject_kind": ["animal"]},
+        "terms": ["animal", "cat", "dog", "bird", "pet", "feline", "canine", "동물", "고양이", "강아지", "반려동물"],
+        "core_policy": "contextual"
+      },
+      {
+        "id": "object_scene",
+        "facet_match": {"subject_kind": ["object", "food", "environment", "plant", "sign"]},
+        "terms": ["product", "object", "food", "flatlay", "still life", "jewelry", "perfume", "catalog", "packaging", "architecture", "landscape", "interior", "제품", "정물", "음식", "건축", "풍경"],
+        "core_policy": "contextual"
+      }
+    ],
+    "registers": {
+      "observational": {
+        "facet_match": {"subject_kind": ["animal", "object", "food", "environment", "plant", "sign"], "mood_family": ["documentary", "commercial", "clinical", "calm"]},
+        "terms": ["product", "flatlay", "still life", "food", "object", "catalog", "architecture", "landscape", "documentary", "study", "animal", "제품", "정물", "음식", "풍경", "동물"],
+        "minimum_hits": 1,
+        "principles": [
+          "Keep the proposition observational: use placement, material contrast, timing, or use trace without forcing drama.",
+          "Make one small visual relationship legible through contact, light, arrangement, or surface behavior."
+        ]
+      },
+      "understated": {
+        "facet_match": {"mood_family": ["calm", "intimate", "nostalgic", "romantic", "melancholic", "documentary"]},
+        "terms": [],
+        "minimum_hits": 1,
+        "principles": [
+          "Give the frame one quiet reason to exist beyond beauty: a private routine, contradiction, threshold, or unresolved relationship.",
+          "Show the proposition through behavior, object placement, light, or framing rather than abstract mood words."
+        ]
+      },
+      "charged": {
+        "facet_match": {"place_type": ["stage", "temple"], "mood_family": ["tense", "surreal", "uncanny", "sacred", "awe", "anxious"], "lighting_family": ["colored_light", "low_light", "projection_light", "hazard_light"]},
+        "terms": ["charged", "cinematic", "dramatic", "editorial", "performance", "ritual", "stage", "noir", "decay", "rebellion", "threshold", "강렬", "극적", "무대", "스테이지", "역동", "장엄"],
+        "minimum_hits": 1,
+        "principles": [
+          "Let one clear visual argument organize the image, but keep it grounded in the requested scene instead of turning it into generic melodrama.",
+          "Use tension, threshold, or public/private pressure as composition logic rather than caption-like explanation."
+        ]
+      }
+    },
+    "fallback": {
+      "narrative_core": ["private_ritual_core", "ordinary_magic_core", "fragile_intimacy_core", "public_private_self_core"],
+      "concept_tension": ["documentary_vs_staged_tension", "polished_vs_imperfect_tension", "public_vs_private_tension", "organic_vs_synthetic_tension"]
+    },
+    "evidence_terms": [
+      "gesture",
+      "hand",
+      "placement",
+      "contact",
+      "pressure",
+      "threshold",
+      "reflection",
+      "shared light",
+      "contrast",
+      "contradiction",
+      "routine",
+      "trace",
+      "caught",
+      "mid-gesture",
+      "배치",
+      "손",
+      "접촉",
+      "압력",
+      "반사",
+      "대비",
+      "흔적",
+      "찰나"
+    ],
+    "anti_patterns": [
+      "beautiful subject in a detailed environment with no stake, contradiction, or visual relationship",
+      "manufactured sadness, rain-window melancholy, or generic longing used as a substitute for a specific visual proposition",
+      "symbolic props listed as labels without changing behavior, light, framing, or object relationships",
+      "metacritical labels such as visual argument or unresolved tension used instead of visible action, placement, light, or material evidence"
+    ]
+  },
+  "photographic_craft": {
+    "enabled": true,
+    "prompt_dimension_limit": 2,
+    "refinement_limit_per_dimension": 2,
+    "default_strategy": "structure_led",
+    "dimensions": [
+      {
+        "id": "shot_intent",
+        "label": "shot intent",
+        "baseline_principle": "Decide what the frame is about before adding surface style, so the image has a visible reason for its distance, angle, and timing.",
+        "guidance": {
+          "en": "make the frame's photographic intent legible before surface styling",
+          "ko": "표면적인 스타일보다 먼저 프레임의 촬영 의도가 읽히게 한다"
+        },
+        "audit_terms": ["photographic intent", "frame intent", "visible reason", "deliberate distance"],
+        "refinements": [
+          {
+            "id": "intimate_observation",
+            "facet_match": {"subject_kind": ["human", "animal"], "shot_scale": ["medium_close", "close_up", "extreme_close"], "mood_family": ["calm", "intimate", "documentary"]},
+            "principle": "For close or intimate subjects, make the chosen distance feel observed rather than displayed.",
+            "guidance": {
+              "en": "let the close distance feel observed rather than displayed",
+              "ko": "가까운 거리가 과시가 아니라 관찰처럼 느껴지게 한다"
+            },
+            "audit_terms": ["observed", "close distance", "intimate distance"]
+          },
+          {
+            "id": "material_study",
+            "facet_match": {"subject_kind": ["object", "food", "plant", "sign"], "camera_register": ["professional", "studio", "macro"]},
+            "principle": "For non-human subjects, make the frame's reason come from surface, weight, use, or arrangement rather than a label-like display.",
+            "guidance": {
+              "en": "let surface, weight, use, or arrangement explain why this frame exists",
+              "ko": "표면, 무게, 사용감, 배치가 이 프레임의 이유를 설명하게 한다"
+            },
+            "audit_terms": ["surface", "weight", "use trace", "arrangement"]
+          },
+          {
+            "id": "spatial_relation",
+            "facet_match": {"subject_kind": ["environment"], "shot_scale": ["extreme_wide", "wide", "full_length"], "placement": ["negative_space", "layered_depth", "rule_of_thirds"]},
+            "principle": "For environment-led frames, make scale, distance, and spatial relation carry the photographic purpose.",
+            "guidance": {
+              "en": "let scale, distance, and spatial relation carry the frame's purpose",
+              "ko": "스케일, 거리, 공간 관계가 프레임의 목적을 이끌게 한다"
+            },
+            "audit_terms": ["scale", "distance", "spatial relation"]
+          },
+          {
+            "id": "measurement_record",
+            "facet_match": {"process_stage": ["calibration", "sampling", "measurement", "inspection", "monitoring"], "capture_modality": ["microscopy", "thermal", "ultraviolet", "machine_vision", "inspection"]},
+            "principle": "For measurement and inspection frames, let scale, reference evidence, and the contact point explain why the photograph exists.",
+            "guidance": {
+              "en": "let scale, a physical reference, and the measurement contact point explain the frame",
+              "ko": "스케일, 물리적 기준물, 측정 접점이 프레임의 이유를 설명하게 한다"
+            },
+            "audit_terms": ["scale", "physical reference", "measurement contact"]
+          },
+          {
+            "id": "field_observation_record",
+            "profile_match": ["biodiversity_monitoring"],
+            "facet_match": {"place_type": ["nature"], "process_stage": ["sampling", "measurement", "monitoring"], "capture_modality": ["underwater", "surveillance", "visible_light"]},
+            "principle": "For field observations, let habitat, a repeatable boundary and scale evidence explain both what was observed and how.",
+            "guidance": {
+              "en": "connect habitat, a repeatable observation boundary, and scale evidence in the same field record",
+              "ko": "서식 환경, 반복 가능한 관찰 경계, 스케일 증거를 한 현장 기록 안에서 연결한다"
+            },
+            "audit_terms": ["habitat", "observation boundary", "scale evidence", "field record"]
+          }
+        ]
+      },
+      {
+        "id": "light_provenance",
+        "label": "light-source continuity",
+        "baseline_principle": "Light should appear to come from a believable source, with direction, falloff, bounce, and exposure behavior affecting both subject and setting.",
+        "guidance": {
+          "en": "give the light a believable source with direction, falloff, and bounce",
+          "ko": "빛이 방향, 감쇠, 반사광을 가진 설득력 있는 출처에서 오게 한다"
+        },
+        "audit_terms": ["light source", "direction", "falloff", "bounce"],
+        "refinements": [
+          {
+            "id": "available_light_logic",
+            "facet_match": {"lighting_family": ["natural_light", "low_light"], "time_of_day": ["day", "night", "dawn", "dusk", "indoor_unspecified"]},
+            "principle": "Available or low light should carry a traceable direction and exposure logic.",
+            "guidance": {
+              "en": "keep available light directional enough to reveal exposure and bounce",
+              "ko": "현장광의 방향, 노출, 반사광이 추적될 만큼 분명하게 남게 한다"
+            },
+            "audit_terms": ["available light", "exposure", "bounce"]
+          },
+          {
+            "id": "artificial_light_logic",
+            "facet_match": {"lighting_family": ["artificial_light", "colored_light", "projection_light", "machine_light", "hazard_light", "studio_light", "flash"]},
+            "principle": "Artificial light should leave consistent color, shadow, specular edge, or exposure evidence across the frame.",
+            "guidance": {
+              "en": "let artificial light leave consistent color, shadow, specular edges, or exposure evidence",
+              "ko": "인공광이 색, 그림자, 반짝이는 경계, 노출 흔적을 일관되게 남기게 한다"
+            },
+            "audit_terms": ["artificial light", "color", "shadow", "specular", "exposure"]
+          },
+          {
+            "id": "atmospheric_diffusion",
+            "facet_match": {"weather": ["rain", "snow", "fog", "underwater", "storm", "heat", "haze", "dust"], "weather_effect": ["visibility_loss", "airborne_particles", "heat_distortion"]},
+            "principle": "Atmosphere should change the light through diffusion, reflection, softened contrast, or suspended particles.",
+            "guidance": {
+              "en": "let atmosphere alter the light through diffusion, reflection, or softened contrast",
+              "ko": "대기가 확산, 반사, 부드러운 대비로 빛을 바꾸게 한다"
+            },
+            "audit_terms": ["diffusion", "reflection", "softened contrast", "particles"]
+          },
+          {
+            "id": "instrument_light_logic",
+            "facet_match": {"capture_modality": ["microscopy", "thermal", "ultraviolet", "machine_vision", "inspection"], "lighting_family": ["diagnostic_light", "machine_light"]},
+            "principle": "Instrument-led imagery should keep illumination, sensor response, reference surface, and noise behavior consistent with the selected modality.",
+            "guidance": {
+              "en": "keep illumination, sensor response, reference surface, and noise consistent with the instrument",
+              "ko": "조명, 센서 반응, 기준 표면, 노이즈가 계측 장비와 일치하게 한다"
+            },
+            "audit_terms": ["sensor response", "reference surface", "instrument noise"]
+          }
+        ]
+      },
+      {
+        "id": "frame_hierarchy",
+        "label": "frame hierarchy",
+        "baseline_principle": "Organize the viewer's reading order across foreground, subject plane, and background instead of letting every detail compete equally.",
+        "guidance": {
+          "en": "organize foreground, subject plane, and background into a clear reading order",
+          "ko": "전경, 피사체면, 배경이 분명한 읽는 순서로 정리되게 한다"
+        },
+        "audit_terms": ["foreground", "subject plane", "background", "reading order"],
+        "refinements": [
+          {
+            "id": "layered_depth_order",
+            "facet_match": {"placement": ["layered_depth", "foreground_frame", "negative_space", "edge_tension"]},
+            "principle": "Layered frames need a deliberate foreground interruption, subject plane, and background falloff.",
+            "guidance": {
+              "en": "use foreground interruption, a clear subject plane, and background falloff",
+              "ko": "전경의 가림, 선명한 피사체면, 배경의 초점 이탈을 함께 사용한다"
+            },
+            "audit_terms": ["foreground interruption", "subject plane", "background falloff"]
+          },
+          {
+            "id": "close_focus_priority",
+            "facet_match": {"shot_scale": ["medium_close", "close_up", "extreme_close"], "camera_register": ["professional", "macro"]},
+            "principle": "Close frames should make focus priority and edge behavior unmistakable.",
+            "guidance": {
+              "en": "make focus priority and frame-edge behavior unmistakable",
+              "ko": "초점 우선순위와 프레임 가장자리의 처리가 분명하게 보이게 한다"
+            },
+            "audit_terms": ["focus priority", "frame edge", "edge behavior"]
+          },
+          {
+            "id": "wide_scale_order",
+            "facet_match": {"shot_scale": ["extreme_wide", "wide", "full_length"], "placement": ["rule_of_thirds", "negative_space", "symmetry"]},
+            "principle": "Wide frames should use negative space, scale, or symmetry as a reading path rather than empty scenery.",
+            "guidance": {
+              "en": "use negative space, scale, or symmetry as a reading path rather than empty scenery",
+              "ko": "여백, 스케일, 대칭이 빈 배경이 아니라 시선의 경로가 되게 한다"
+            },
+            "audit_terms": ["negative space", "scale", "symmetry", "reading path"]
+          },
+          {
+            "id": "operational_flow_order",
+            "facet_match": {"movement_type": ["mechanical_cycle", "vehicle_flow", "crowd_flow"], "place_type": ["transport", "warehouse", "industrial", "infrastructure"]},
+            "principle": "Operational scenes should reveal origin, route, transfer point, and destination through a clear spatial reading order.",
+            "guidance": {
+              "en": "organize origin, route, transfer point, and destination into a legible flow",
+              "ko": "출발점, 경로, 이송 지점, 도착점이 읽히는 흐름으로 구성한다"
+            },
+            "audit_terms": ["origin", "route", "transfer point", "destination"]
+          },
+          {
+            "id": "batch_traceability_order",
+            "profile_match": ["agriculture_food_systems", "circular_materials"],
+            "facet_match": {"place_type": ["agricultural", "repair", "waste"], "process_stage": ["sampling", "inspection", "transfer", "intervention", "cleanup"]},
+            "principle": "Traceability frames should order the incoming batch or object, decision point, and continuing destination without relying on readable labels.",
+            "guidance": {
+              "en": "organize input, physical decision evidence, and the next destination into one traceable reading order",
+              "ko": "입력물, 물리적 판단 근거, 다음 목적지가 한 번에 추적되는 순서로 구성한다"
+            },
+            "audit_terms": ["input", "decision evidence", "destination", "traceable order"]
+          }
+        ]
+      },
+      {
+        "id": "decisive_moment",
+        "label": "decisive moment",
+        "baseline_principle": "Give the frame a captured instant: a transition, hesitation, aftermath, or micro-event that could only exist at this moment.",
+        "guidance": {
+          "en": "give the frame a captured instant rather than a finished pose",
+          "ko": "완성된 포즈보다 포착된 찰나가 프레임에 남게 한다"
+        },
+        "audit_terms": ["captured instant", "transition", "hesitation", "aftermath", "micro-event"],
+        "refinements": [
+          {
+            "id": "human_or_animal_transition",
+            "facet_match": {"subject_kind": ["human", "animal"], "placement": ["entering_frame", "exiting_frame", "edge_tension", "layered_depth"]},
+            "principle": "Living subjects should feel caught in a transition rather than frozen at a perfect endpoint.",
+            "guidance": {
+              "en": "catch a transition before it settles into a perfect endpoint",
+              "ko": "동작이 완벽한 끝점으로 굳기 전의 전환을 포착한다"
+            },
+            "audit_terms": ["transition", "caught", "before it settles"]
+          },
+          {
+            "id": "observer_timing",
+            "facet_match": {"camera_angle": ["pov", "over_shoulder", "hidden_observer", "reflection"], "camera_register": ["phone", "surveillance", "vintage", "professional"]},
+            "principle": "Observer-like camera positions should imply timing: the photographer arrived just before, during, or just after something small happened.",
+            "guidance": {
+              "en": "make the camera feel timed to just before, during, or just after a small event",
+              "ko": "카메라가 작은 사건의 직전, 도중, 직후에 맞춰진 것처럼 보이게 한다"
+            },
+            "audit_terms": ["just before", "during", "just after", "small event"]
+          },
+          {
+            "id": "still_life_aftertouch",
+            "facet_match": {"subject_kind": ["object", "food", "plant", "sign"]},
+            "principle": "Still subjects can still carry time through an after-touch, slight displacement, use mark, or settling detail.",
+            "guidance": {
+              "en": "show time through after-touch, slight displacement, use mark, or a settling detail",
+              "ko": "손길 뒤의 흔적, 살짝 어긋난 배치, 사용감, 가라앉는 디테일로 시간을 보이게 한다"
+            },
+            "audit_terms": ["after-touch", "displacement", "use mark", "settling detail"]
+          },
+          {
+            "id": "process_phase_transition",
+            "facet_match": {"event_phase": ["preparation", "active_process", "handoff", "aftermath", "maintenance", "recovery"], "process_stage": ["setup", "calibration", "sampling", "measurement", "inspection", "transfer", "intervention", "monitoring", "cleanup"]},
+            "principle": "Process photographs should catch the visible handoff between workflow phases rather than a generic machine or worker pose.",
+            "guidance": {
+              "en": "catch the handoff between workflow phases rather than a generic operational pose",
+              "ko": "일반적인 작업 포즈보다 공정 단계가 바뀌는 순간을 포착한다"
+            },
+            "audit_terms": ["workflow phase", "transition", "operational instant"]
+          }
+        ]
+      },
+      {
+        "id": "environment_consequence",
+        "label": "environment consequence",
+        "baseline_principle": "Let the setting affect the subject or let the subject disturb the setting, so place is a photographic cause rather than a decorative backdrop.",
+        "guidance": {
+          "en": "let the setting affect the subject or the subject disturb the setting",
+          "ko": "장소가 피사체에 영향을 주거나 피사체가 장소를 흐트러뜨리게 한다"
+        },
+        "audit_terms": ["setting affects", "disturb the setting", "consequence", "place"],
+        "refinements": [
+          {
+            "id": "weather_surface_consequence",
+            "facet_match": {"weather": ["rain", "snow", "fog", "underwater"]},
+            "principle": "Weather or atmosphere should visibly change surfaces, edges, contrast, or movement.",
+            "guidance": {
+              "en": "make weather or atmosphere visibly change surfaces, edges, contrast, or movement",
+              "ko": "날씨나 대기가 표면, 경계, 대비, 움직임을 눈에 보이게 바꾸게 한다"
+            },
+            "audit_terms": ["weather", "atmosphere", "surfaces", "movement"]
+          },
+          {
+            "id": "contact_with_place",
+            "facet_match": {"subject_kind": ["human", "animal", "object", "food", "plant"], "placement": ["layered_depth", "foreground_frame", "edge_tension"]},
+            "principle": "Contact with place should create pressure, occlusion, reflection, dust, surface change, or spatial interruption.",
+            "guidance": {
+              "en": "show contact with place through pressure, occlusion, reflection, dust, or surface change",
+              "ko": "압력, 가림, 반사, 먼지, 표면 변화로 장소와의 접촉을 보인다"
+            },
+            "audit_terms": ["pressure", "occlusion", "reflection", "dust", "surface change"]
+          },
+          {
+            "id": "public_space_pressure",
+            "facet_match": {"place_type": ["urban", "street", "transport", "commercial"], "mood_family": ["documentary", "tense", "calm"]},
+            "principle": "Shared spaces should affect spacing, paths, interruptions, or posture instead of acting as neutral scenery.",
+            "guidance": {
+              "en": "let shared space affect spacing, paths, interruptions, or posture",
+              "ko": "공유된 공간이 거리감, 동선, 가림, 자세에 영향을 주게 한다"
+            },
+            "audit_terms": ["spacing", "paths", "interruptions", "posture"]
+          },
+          {
+            "id": "climate_material_response",
+            "profile_match": ["climate_adaptation"],
+            "facet_match": {"weather_effect": ["visibility_loss", "surface_wetness", "airborne_particles", "wind_deformation", "heat_distortion", "frost_accumulation", "flooding"]},
+            "principle": "Climate conditions should produce a visible material consequence and one monitoring or adaptation response in the same frame.",
+            "guidance": {
+              "en": "show a weather-driven material consequence together with a monitoring or adaptation response",
+              "ko": "날씨가 만든 물성 변화와 모니터링 또는 적응 대응을 한 프레임에 보인다"
+            },
+            "audit_terms": ["material consequence", "monitoring", "adaptation response"]
+          },
+          {
+            "id": "repair_or_recovery_state_change",
+            "profile_match": ["circular_materials"],
+            "facet_match": {"place_type": ["repair", "waste", "industrial"], "process_stage": ["inspection", "transfer", "intervention", "cleanup"]},
+            "principle": "Repair and recovery scenes should show how diagnosis, contamination removal or separation changes the material's next state.",
+            "guidance": {
+              "en": "show the condition evidence, intervention point, and changed material destination in the same frame",
+              "ko": "상태 증거, 개입 지점, 달라진 재료의 목적지를 같은 프레임에 보인다"
+            },
+            "audit_terms": ["condition evidence", "intervention point", "material destination", "state change"]
+          }
+        ]
+      }
+    ],
+    "strategies": [
+      {
+        "id": "light_led",
+        "label": "light-led craft",
+        "emphasize": ["light_provenance", "environment_consequence"]
+      },
+      {
+        "id": "moment_led",
+        "label": "moment-led craft",
+        "emphasize": ["decisive_moment", "shot_intent"]
+      },
+      {
+        "id": "structure_led",
+        "label": "structure-led craft",
+        "emphasize": ["frame_hierarchy", "shot_intent"]
+      },
+      {
+        "id": "evidence_led",
+        "label": "evidence-led craft",
+        "profile_match": ["biodiversity_monitoring", "agriculture_food_systems", "circular_materials", "heritage_documentation", "health_access", "sports_motion", "education_training", "disaster_risk_operations", "natural_process", "longitudinal_place_state", "visual_structure"],
+        "emphasize": ["shot_intent", "frame_hierarchy", "environment_consequence"]
+      }
+    ]
+  },
+  "artistic_final_touch": {
+    "enabled": true,
+    "default_enabled": false,
+    "enabled_profiles": ["documentary"],
+    "sentences": {
+      "en": {
+        "default": "Let the final frame keep one quiet imperfection, shared light across subject and setting, and a small material trace, so it feels discovered by a real photographer rather than assembled as a clean concept image.",
+        "compact": "Let one quiet imperfection, shared light, and a small material trace make the frame feel discovered rather than assembled."
+      },
+      "ko": {
+        "default": "마지막 사진적 터치는 작은 불완전함 하나, 피사체와 장소를 함께 건드리는 빛, 손에 잡히는 물성의 흔적을 남겨 실제 사진가가 발견한 장면처럼 보이게 한다.",
+        "compact": "작은 불완전함 하나, 공유된 빛, 물성의 흔적이 프레임을 조립된 이미지가 아니라 발견된 사진처럼 보이게 한다."
+      }
+    },
+    "audit_terms": [
+      "quiet imperfection",
+      "shared light",
+      "material trace",
+      "real photographer",
+      "discovered",
+      "작은 불완전함",
+      "공유된 빛",
+      "물성의 흔적"
+    ]
+  }
+}

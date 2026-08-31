@@ -1,0 +1,91 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-03",
+  "pack_id": "e8e8e6fcd30ac1ac",
+  "review_status": "pass_all_hard_gates_after_one_targeted_repair",
+  "selected_attempt": 3,
+  "selected_image_path": "attempt_03_repair/output.png",
+  "selected_image_sha256": "9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50",
+  "selected_thumbnail_path": "attempt_03_repair/thumbnail.png",
+  "selected_thumbnail_sha256": "dc19b95159aba8ed7c15d581de4a71b1c92e0242f726f143b3a7a308cc184578",
+  "review_scales_completed": [
+    "native_1448x1086",
+    "thumbnail_512x384"
+  ],
+  "attempt_history": [
+    {
+      "attempt": 1,
+      "status": "failed_before_generation_reference_unavailable",
+      "image_path": null,
+      "pixel_review": "No pixels existed; missing-reference evidence remains in imagegen_attempt_01.json."
+    },
+    {
+      "attempt": 2,
+      "status": "failed_one_hard_gate",
+      "image_path": "attempt_02/output.png",
+      "image_sha256": "261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e",
+      "pixel_review": "pixel_review_attempt_02.json",
+      "failed_gate_ids": [
+        "vo_playful_flirt_face_action"
+      ]
+    },
+    {
+      "attempt": 3,
+      "status": "pass_all_hard_gates",
+      "image_path": "attempt_03_repair/output.png",
+      "image_sha256": "9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50",
+      "pixel_review": "pixel_review_attempt_03_repair.json",
+      "failed_gate_ids": []
+    }
+  ],
+  "hard_gates": [
+    {
+      "id": "vo_playful_flirt_adult_pair",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "Two fully dressed adults remain clear at both scales, and the same right-hand adult owns the reach toward the initiator's key.",
+      "substitute_confusion": "No recipient swap, crowd ambiguity, or camera-address substitute is visible."
+    },
+    {
+      "id": "vo_playful_flirt_approach_withdrawal",
+      "required_scale": "thumbnail",
+      "status": "pass",
+      "visible_evidence": "The initiator holds the taut ribbon back near her torso while the key hangs short of the recipient's reaching fingertips, leaving a readable non-contact gap.",
+      "substitute_confusion": "The key is neither grasped nor settled into the recipient's palm; opposing pull and reach distinguish the frame from a completed handoff."
+    },
+    {
+      "id": "vo_playful_flirt_face_action",
+      "required_scale": "native",
+      "status": "pass",
+      "visible_evidence": "The initiator has fully closed lips, a fractional one-corner lift, open alert eyes, and a gaze aimed at the recipient.",
+      "substitute_confusion": "No teeth, broad grin, camera gaze, or sleepy eye line substitutes for the restrained face action."
+    },
+    {
+      "id": "vo_playful_flirt_recipient_response",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "The recipient's open palm reaches toward the same dangling key and visibly stops before contact at both scales.",
+      "substitute_confusion": "The aligned hand-key geometry and stopped gap rule out solo posing and a completed routine transfer."
+    }
+  ],
+  "repair_delta": {
+    "attempt": 3,
+    "targeted_gate": "vo_playful_flirt_face_action",
+    "changed": "parted neutral mouth to fully closed lips with a subtle one-corner lift",
+    "preserved_gate_ids": [
+      "vo_playful_flirt_adult_pair",
+      "vo_playful_flirt_approach_withdrawal",
+      "vo_playful_flirt_recipient_response"
+    ],
+    "new_failures_observed": []
+  },
+  "identity": {
+    "status": "not_evaluated",
+    "reason": "No biometric identity evaluation was performed; the reference role was limited to adult facial appearance and dark wavy hairstyle."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "boundary": "Prompt and runtime audits are separate from this rendered-pixel qualification; user aesthetic approval remains pending."
+}

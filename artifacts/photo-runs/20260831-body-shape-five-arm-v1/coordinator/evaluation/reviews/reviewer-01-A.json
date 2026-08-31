@@ -1,0 +1,77 @@
+{
+  "schema_version": "photo-body-shape-blind-review/v1",
+  "reviewer_id": "reviewer-01",
+  "specimen_id": "A",
+  "source_arm": "withheld",
+  "blind_mapping_accessed": false,
+  "review_method": "direct_pixel_inspection",
+  "partial_policy": "partial_is_fail",
+  "inputs": {
+    "packet_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/evaluation/blind/reviewer-packet-A.json",
+    "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/evaluation/blind/specimen-A.png",
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/evaluation/blind/specimen-A-thumb.png",
+    "image_sha256": "cb29fde3da312b7ecf9be22f86dace03505bce9d22f491581c5ac29f214035b1",
+    "facial_reference_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg"
+  },
+  "target_keyword": "top hourglass silhouette",
+  "target_gates": [
+    {
+      "id": "vo_top_hourglass_bilateral",
+      "reviewed_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "At thumbnail scale, the forward-reaching sleeves and map table interrupt the torso-to-hip outline, so both outer contours cannot be followed continuously through the natural waist."
+    },
+    {
+      "id": "vo_top_hourglass_waist",
+      "reviewed_scale": "both",
+      "status": "pass",
+      "evidence": "In both views, the fitted coverall shows a clearly narrower waist between the broader upper torso and the widening hip and upper-thigh region."
+    },
+    {
+      "id": "vo_top_hourglass_two_expansions",
+      "reviewed_scale": "both",
+      "status": "pass",
+      "evidence": "Both views retain a shoulder-and-upper-torso expansion above the waist and a separate hip expansion below it rather than one uninterrupted triangular taper."
+    },
+    {
+      "id": "vo_top_hourglass_upper_dominance",
+      "reviewed_scale": "native",
+      "status": "fail",
+      "evidence": "At native scale, the forward lean brings the shoulders toward the camera while the table and arms obscure the hips, so upper dominance does not remain independently established after pose, crop, and perspective are discounted."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "adult",
+      "status": "pass",
+      "evidence": "The subject has an unmistakably adult facial and bodily presentation and performs a professional observatory task."
+    },
+    {
+      "id": "fully_clothed",
+      "status": "pass",
+      "evidence": "She wears a long-sleeved work coverall that covers the torso and legs, with only the face, neck, and hands naturally exposed."
+    },
+    {
+      "id": "anatomy",
+      "status": "pass",
+      "evidence": "One head, two coherent arms, and two plausible hands are visible with no extra, fused, or clearly broken anatomy."
+    },
+    {
+      "id": "professional_action",
+      "status": "pass",
+      "evidence": "One hand visibly draws an evacuation boundary on a large terrain map while the other braces the sheet, making the cartographic action concrete and readable."
+    },
+    {
+      "id": "facial_appearance_continuity",
+      "status": "pass",
+      "evidence": "Non-biometric visual comparison shows continuity in the long dark wavy hair, long oval face, almond-shaped eyes, narrow jaw, straight nose, and defined fuller lower lip."
+    }
+  ],
+  "failed_target_gate_ids": [
+    "vo_top_hourglass_bilateral",
+    "vo_top_hourglass_upper_dominance"
+  ],
+  "technical_pass": false,
+  "technical_pass_rule": "technical_pass is true only when every target gate passes",
+  "summary": "The narrower waist and two-stage upper-and-hip expansion are visible, but occlusion prevents a bilateral contour read and camera-facing pose confounds upper dominance; therefore the target does not technically pass."
+}

@@ -1,0 +1,112 @@
+{
+  "contract_version": "photo-candidate-pack/v6-manual-fallback",
+  "candidate_pack_version": "v6",
+  "pack_id": "e65d3c929866d13",
+  "pack_id_basis": "first 16 hex characters of the canonical authorial-core SHA-256; this is not an official generator-computed pack ID",
+  "arm_id": "arm-04",
+  "seed": 2286608887,
+  "generator_status": "blocked_before_pack_generation",
+  "generator_error": "authorial core interpreted_intent needs at least 4 concrete content words",
+  "fallback_scope": "manual projection of the frozen core, one explicit visual obligation, and four inspected candidate records; it must not be represented as output from generate_photo_prompt.py",
+  "request_binding": {
+    "request_text_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+    "request_envelope_file_sha256": "87934221cc6f2fa896ced782d7d3e8785e2000e8a1e70d08e38456ecefd5c953"
+  },
+  "authorial_core": {
+    "canonical_sha256": "e65d3c929866d13e6b27b49e5080730145a0240e19c8d7a24f739990691f88dc",
+    "file_sha256": "80cc73600e6446f4e044f6f8cb1d89241bdef41db3a4d262f989061c32b6a2b4",
+    "intent_lock_canonical_sha256": "bd096754c1b562c5b29ed698493e1a9732f4bc3bc4cceca04fbc785a2d35bfcd"
+  },
+  "visual_intent": {
+    "canonical_sha256": "2f6fd08f4bece5693c5366263cc2d9b8b38e74725fd18d418a4cf1259702984a",
+    "file_sha256": "379237796dd079a981203a8075eb396da29a9bf3adbc7bb0b9a8921e2d194155"
+  },
+  "negative_en": null,
+  "visual_obligations": {
+    "enabled": true,
+    "profiles": [
+      {
+        "profile_id": "controlled_languid_movement_display",
+        "source": "agent_postcore_interpretation",
+        "source_text": "통제된 나른한 움직임",
+        "runtime_expression_mode": "definition_only",
+        "runtime_forbidden_labels": [
+          "controlled languid movement display",
+          "controlled languid movement",
+          "통제된 나른한 움직임",
+          "느리고 통제된 움직임 표현"
+        ],
+        "required_evidence_fields": [
+          "unfinished_motion_phrase",
+          "stable_support_phrase",
+          "alert_attention_phrase",
+          "motion_lag_phrase"
+        ],
+        "bindings": {
+          "unfinished_motion_phrase": "The start position at the open specimen drawer and the unfinished destination at the ribbon knot remain visible in the same frame.",
+          "stable_support_phrase": "One planted foot preserves controlled balance, with coherent hip, knee, and ankle joint continuity.",
+          "alert_attention_phrase": "Awake eyes remain tied to the chosen destination at the ribbon knot and follow the controlled hand trajectory.",
+          "motion_lag_phrase": "The satin fabric, loose hair strand, reaching hand, and calibration ribbon trail the same clockwise movement direction."
+        },
+        "render_gates": [
+          {
+            "id": "vo_languid_motion_unfinished_phase",
+            "review_scale": "thumbnail",
+            "description": "The start and unfinished destination remain spatially legible in one unsettled action phase."
+          },
+          {
+            "id": "vo_languid_motion_stable_support",
+            "review_scale": "both",
+            "description": "The planted support path and coherent joints visibly control the transition."
+          },
+          {
+            "id": "vo_languid_motion_alert_attention",
+            "review_scale": "native",
+            "description": "Awake eyes and head or hand direction remain linked to the chosen task destination."
+          },
+          {
+            "id": "vo_languid_motion_directional_lag",
+            "review_scale": "both",
+            "description": "Fabric, hair, hand, or object lag follows the same movement direction."
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_inventory": [
+    {
+      "id": "slow_controlled_transition_phase",
+      "decision": "applied_as_postcore_clarification",
+      "reason": "Directly reinforces the already-frozen unfinished destination, planted support, task attention, and directional lag without revising the core."
+    },
+    {
+      "id": "controlled_three_quarter_weight_shift",
+      "decision": "transformed",
+      "affected_dimensions": [
+        "composition"
+      ],
+      "new_prompt_evidence": "A diagonal full-body composition lets the planted foot, turning pelvis, and reaching hand form one continuous arc."
+    },
+    {
+      "id": "opaque_satin_specular_flow_surface",
+      "decision": "transformed",
+      "affected_dimensions": [
+        "lighting"
+      ],
+      "new_prompt_evidence": "Narrow lighthouse reflections stretch along the opaque satin folds in the direction of travel."
+    },
+    {
+      "id": "engaged_lowered_lid_target_gaze",
+      "decision": "rejected",
+      "reason": "Lowered lids risk the profile's sleepy or intoxicated confusion boundary; the frozen alert task gaze remains primary."
+    }
+  ],
+  "source_registry": {
+    "visual_obligations_sha256": "5e2a5e8829bf8a25d4edff4febd74f2341e1b05a6f4ad5818f175597bfc97f0b",
+    "candidate_tags_sha256": "4bbbd97e00feaa29086ee2e010f295fd36c2634aef8f3fd5f90c3935dbcc57ba"
+  },
+  "independence": {
+    "other_arm_inputs_used": false,
+    "reference_used_during_pack_authoring": false
+  }
+}

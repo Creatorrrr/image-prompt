@@ -1,0 +1,325 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "ae84f15022d07211d583ca917952bc8dc9cff11b plus preserved pre-existing dirty workspace",
+    "candidate_revision": "working-tree on 1540888a47b1629e04239c34404d4bf8bff214c7 after unrelated pose commit"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Convert researched adult female sexual-appeal vocabulary into observable visual semantics and candidate data, then test five independent complex concepts with a supplied facial reference through prompt, generation, and pixel gates."
+  },
+  "evidence": [
+    {
+      "id": "e-source-keywords",
+      "kind": "source-observation",
+      "claim": "The referenced research conversation decomposed adult appeal across gaze, expression, posture, slow movement, self-possession, teasing interaction, garment material, and decadent context.",
+      "artifact": "chatgpt conversation 6a9402cc-816c-83e8-a31a-53ff8a2119c8; the facial attachment was delivered later and is bound separately"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Nine bounded research records support relation-aware gaze and expression, flirtation ambiguity, open posture, static-motion limits, smile morphology, material drape, and the luxury-decline boundary without treating them as consent or hidden-intent proof.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl adult_appeal_semantics_* and docs/analysis/2026-08-31-adult-appeal-visual-semantics.md"
+    },
+    {
+      "id": "e-package-focused",
+      "kind": "package-check",
+      "claim": "The five profiles, fifteen candidate atoms, exact-versus-broad routing, evidence bindings, index, dictionary, and unrelated affect, pose, body-shape, retrieval, and visual-obligation regressions passed focused checks.",
+      "artifact": "focused unittest set, validate_photo_prompt_dictionary.py, build_visual_profile_index.py --check, and git diff --check"
+    },
+    {
+      "id": "e-prompt-five-arm",
+      "kind": "prompt-evaluation",
+      "claim": "Five isolated seeded arms produced official v6 packs containing the assigned strict four-gate profile and all five composed-prompt audits passed with runtime labels absent.",
+      "artifact": "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/run_summary.json and tests/fixtures/photo_prompt/adult_appeal_semantics_five_arm_cases_v1.jsonl"
+    },
+    {
+      "id": "e-generation-reference-missing",
+      "kind": "generation-outcome",
+      "claim": "The first five arm calls and one parent probe failed before pixels because the originally referenced conversation exposed no image; these records are retained as transport history.",
+      "artifact": "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/parent_reference_probe.json and arm attempt-01 records"
+    },
+    {
+      "id": "e-reference-delivered",
+      "kind": "generation-outcome",
+      "claim": "The later attachment was copied into the run with SHA-256 e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3, bound only as adult facial appearance, and accepted by every final render-request audit.",
+      "artifact": "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/reference_binding.json and arm attempt-02 or attempt-03 runtime audits"
+    },
+    {
+      "id": "e-render-five-arm",
+      "kind": "render-observation",
+      "claim": "Five final images were inspected at thumbnail and native scale. All 20 required gates passed in both the isolated arm reviews and the parent pixel review; arm-01 through arm-04 each needed one allowed single-gate repair, while arm-05 passed on its first reference-qualified render.",
+      "artifact": "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/blind/phase_b_gate_decode.json and arms/arm-*/pixel_review.json"
+    },
+    {
+      "id": "e-parent-masking-boundary",
+      "kind": "render-observation",
+      "claim": "The parent review used anonymous file aliases and did not reopen prompts during observation, but the coordinator had seen the mapping and concepts earlier; it is an independent second pixel inspection with partial masking, not a strict blind human study.",
+      "artifact": "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/blind/phase_a_observations.json"
+    },
+    {
+      "id": "e-repository-head-shift",
+      "kind": "repository-history",
+      "claim": "While the work was running, HEAD advanced from ae84f15 to the unrelated pose-semantics commit 1540888; the adult-appeal work remained uncommitted and preserved that change.",
+      "artifact": "git log and reflog: 1540888 Add pose visual semantics and five-arm validation"
+    },
+    {
+      "id": "e-full-suite-unrelated-failure",
+      "kind": "package-check",
+      "claim": "The earlier complete photo suite passed 205 of 206 tests; the only failure was the committed pose_semantics_nga_figura_serpentinata reuse_note missing the literal no phrase, while all adult_appeal_semantics rows passed.",
+      "artifact": "python -m unittest discover -s tests -p test_photo_*.py; failure at tests/test_photo_prompt_contract_v2.py:4633 against research_evidence.jsonl:218"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each narrow profile must survive as its complete observable four-gate relation in a generated still while the reference contributes facial appearance only.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-not-hidden-intent",
+        "statement": "Gaze, posture, clothing, or one facial cue cannot prove consent, availability, personality, or hidden sexual intention.",
+        "evidence_ids": [
+          "e-source-keywords",
+          "e-research",
+          "e-render-five-arm"
+        ],
+        "causal_controls": [
+          "same-target action and response",
+          "support path",
+          "face-action morphology",
+          "material response"
+        ]
+      },
+      {
+        "id": "definition-not-label",
+        "statement": "Exact composite terms may activate a hard contract but must be replaced by literal visual components in the runtime prompt.",
+        "evidence_ids": [
+          "e-package-focused",
+          "e-prompt-five-arm"
+        ],
+        "causal_controls": [
+          "runtime forbidden-label audit",
+          "four distinct evidence fields",
+          "strict render gates"
+        ]
+      },
+      {
+        "id": "reference-face-only",
+        "statement": "The requested image may control facial appearance but cannot activate an archetype, profession, attitude, sexual intent, or an identity-verification claim.",
+        "evidence_ids": [
+          "e-source-keywords",
+          "e-reference-delivered"
+        ],
+        "causal_controls": [
+          "facial_appearance_only reference role",
+          "identity not_evaluated",
+          "no fallback face"
+        ]
+      },
+      {
+        "id": "pixels-separate-from-prompt",
+        "statement": "A passing candidate pack or prompt audit is insufficient to claim a visual gate passed.",
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm",
+          "e-parent-masking-boundary"
+        ],
+        "causal_controls": [
+          "thumbnail review",
+          "native review",
+          "all-gates strict verdict"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "background",
+      "adult profession",
+      "safe prop",
+      "time",
+      "weather",
+      "camera",
+      "lighting",
+      "opaque wardrobe material"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "reviewer-masking-integrity",
+      "scale": "global",
+      "axis": "strict blind-review claim",
+      "source_state": "The frozen protocol requested label-blind and prompt-blind observations.",
+      "render_state": "Aliases and prompt suppression were used, but the coordinator had prior exposure to the alias mapping and concepts; the second review is only partially masked.",
+      "evidence_ids": [
+        "e-parent-masking-boundary"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "narrow-relational-semantics-transfer",
+      "stage": "representation",
+      "statement": "Narrow exact composites with four observable components and explicit confusion substitutes will transfer more reliably than broad allure labels or isolated gaze and clothing cues.",
+      "evidence_ids": [
+        "e-research",
+        "e-package-focused",
+        "e-prompt-five-arm",
+        "e-render-five-arm"
+      ],
+      "falsifier": "Independent renders consistently omit or substitute the required relations even when prompt audits pass and the reference is available."
+    },
+    {
+      "id": "reference-transport-blocks-render",
+      "stage": "external",
+      "statement": "The earlier render block was caused by missing attachment transport rather than candidate-pack or composed-prompt failure.",
+      "evidence_ids": [
+        "e-generation-reference-missing",
+        "e-reference-delivered",
+        "e-render-five-arm"
+      ],
+      "falsifier": "A concrete attachment reaches the same audited calls and generation still fails before returning pixels for another reason."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Represent adult appeal only through narrow, adult-scoped, componentized visual relations with literal prompt evidence, fail-closed broad labels, explicit confusion boundaries, and strict pixel gates.",
+    "generalization_basis": "The contract separates reusable gaze, action, support, motion, material, and aftermath observations from culture-bound labels and from non-visible intent claims.",
+    "hypothesis_ids": [
+      "narrow-relational-semantics-transfer",
+      "reference-transport-blocks-render"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/fed27c0baa8ea9f4",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "docs/analysis/2026-08-31-adult-appeal-visual-semantics.md",
+      "tests/test_photo_adult_appeal_visual_semantics.py",
+      "tests/fixtures/photo_prompt/adult_appeal_semantics_five_arm_cases_v1.jsonl",
+      "artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package-focused"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-five-arm"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render-five-arm",
+        "e-parent-masking-boundary"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-self-possessed",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "agency",
+          "grounded posture",
+          "controlled face",
+          "material response"
+        ],
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm"
+        ]
+      },
+      {
+        "id": "arm-02-target-directed",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "same adult target",
+          "coordinated orientation",
+          "invitation action",
+          "target consequence"
+        ],
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm"
+        ]
+      },
+      {
+        "id": "arm-03-playful-interaction",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "adult pair",
+          "approach-withdrawal",
+          "restrained face action",
+          "recipient response"
+        ],
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm"
+        ]
+      },
+      {
+        "id": "arm-04-controlled-motion",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "unfinished phase",
+          "stable support",
+          "alert attention",
+          "directional lag"
+        ],
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm"
+        ]
+      },
+      {
+        "id": "arm-05-decadent-environment",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "former luxury",
+          "material decline",
+          "after-event residue",
+          "alert unfinished action"
+        ],
+        "evidence_ids": [
+          "e-prompt-five-arm",
+          "e-render-five-arm"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "render-fidelity",
+    "rationale": "The reusable data and prompt contracts passed package and prompt checks, and five final reference-qualified renders passed all 20 required gates in both arm self-review and parent pixel review, including four unrelated held-out concepts. Promotion is limited to observed render fidelity for these contracts; user aesthetics, universal attractiveness, hidden intent, consent, and identity remain outside the claim, and the parent review was only partially masked.",
+    "evidence_ids": [
+      "e-package-focused",
+      "e-prompt-five-arm",
+      "e-reference-delivered",
+      "e-render-five-arm",
+      "e-parent-masking-boundary",
+      "e-repository-head-shift",
+      "e-full-suite-unrelated-failure"
+    ]
+  }
+}

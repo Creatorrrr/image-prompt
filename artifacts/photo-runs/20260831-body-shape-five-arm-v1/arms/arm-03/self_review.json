@@ -1,0 +1,132 @@
+{
+  "schema_version": "photo-body-shape-self-review/v1",
+  "arm_id": "arm-03",
+  "profile_id": "top_hourglass_silhouette_relation",
+  "process_status": "render_success_review_complete",
+  "preflight": {
+    "candidate_pack_id": "bb9f7533cce4eb52",
+    "candidate_pack_source": "coordinator/runtime_snapshot",
+    "composed_prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "hard_gate_set_bound": true,
+    "prompt_or_audit_presence_is_pixel_proof": false
+  },
+  "reference": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "facial_appearance_only",
+    "native_inspection": "complete_original_detail",
+    "scope_boundary": "The reference was assessed only for non-biometric facial-appearance continuity. No body-geometry inference or identity-verification claim is made."
+  },
+  "render": {
+    "imagegen_invoked": true,
+    "actual_image_call_count": 1,
+    "retry_count": 0,
+    "source_path": "/Users/chasoik/.codex/generated_images/01a0538e-936e-78d2-8cc7-29fd8c147e8f/exec-354a5995-d8e6-4723-bf97-46a2d81e7ca0.png",
+    "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-03/render-attempt-01.png",
+    "image_sha256": "cb29fde3da312b7ecf9be22f86dace03505bce9d22f491581c5ac29f214035b1",
+    "image_dimensions": {
+      "width": 1086,
+      "height": 1448
+    },
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-03/render-attempt-01-thumb.png",
+    "thumbnail_sha256": "ad1bbf1f53fdb89e35990cd7129d5b8a787ee728491b78e1d769e6a5270f057f",
+    "thumbnail_dimensions": {
+      "width": 288,
+      "height": 384
+    },
+    "thumbnail_inspection": "complete_288x384",
+    "native_inspection": "complete_original_detail"
+  },
+  "target_gates": [
+    {
+      "id": "vo_top_hourglass_bilateral",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 288x384, both outer torso contours remain separately readable from the shoulder region, inward through the waist, and outward to the hips. Hair and arms overlap locally but do not erase either bilateral contour."
+    },
+    {
+      "id": "vo_top_hourglass_waist",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Both native and thumbnail views show a clearly narrower natural-waist region with inward transitions on the viewer-left and viewer-right sides."
+    },
+    {
+      "id": "vo_top_hourglass_two_expansions",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The silhouette expands above the waist through the shoulders and upper torso and re-expands below the waist through the hips and upper thighs, so it does not collapse to a single inverted-triangle taper."
+    },
+    {
+      "id": "vo_top_hourglass_upper_dominance",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "The hip and upper-thigh envelope appears at least comparable to, and in places wider than, the visible upper-torso envelope. The fitted waist, three-quarter lean, arm placement, and foreground table further confound attribution; the pixels do not establish that natural shoulder-ribcage-bust expansion visibly exceeds lower expansion."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "adult_age",
+      "status": "pass",
+      "evidence": "The subject has an unmistakably adult facial structure, proportions, and professional presentation consistent with the requested late-twenties age impression, without childlike morphology."
+    },
+    {
+      "id": "fully_clothed",
+      "status": "pass",
+      "evidence": "The subject wears opaque long-sleeved technical fieldwear covering the torso, arms, and visible lower body."
+    },
+    {
+      "id": "face_appearance_reference",
+      "status": "pass",
+      "evidence": "Non-biometric visual comparison shows recognizable continuity in long dark wavy hair, warm-light skin, elongated oval face, adult almond-shaped eyes, cheekbone impression, straight nose, and natural full lips. This is an appearance-fidelity observation, not identity verification."
+    },
+    {
+      "id": "anatomical_coherence",
+      "status": "pass",
+      "evidence": "At original detail, the visible arms and both hands attach coherently; the resting hand and pencil-holding hand show plausible finger grouping with no obvious extra limb, missing limb, or gross joint defect."
+    },
+    {
+      "id": "professional_action",
+      "status": "pass",
+      "evidence": "The red grease-pencil tip visibly contacts the clear map overlay and a red evacuation contour is already drawn, making active observatory cartography concrete rather than merely posed."
+    },
+    {
+      "id": "reference_appearance_scope",
+      "status": "pass",
+      "evidence": "The generated observatory, fieldwear, pose, body geometry, and cartography action are newly constructed while only facial-appearance anchors show continuity with Image 1. Pixel review cannot prove model internals, so this gate is limited to observable scope separation."
+    }
+  ],
+  "supplemental_deviations": [
+    {
+      "id": "garment_confound",
+      "status": "present",
+      "evidence": "The fieldwear appears fitted and visibly waist-shaped, so clothing construction contributes to the silhouette despite the requested non-cinching control."
+    },
+    {
+      "id": "framing_shortfall",
+      "status": "present",
+      "evidence": "The foreground table hides the knee region; the frame does not provide an unobstructed head-to-below-knees view."
+    },
+    {
+      "id": "readable_text",
+      "status": "present",
+      "evidence": "The render includes legible ash-alert and evacuation-zone interface text plus a sleeve label."
+    }
+  ],
+  "gate_summary": {
+    "target_passed": 3,
+    "target_total": 4,
+    "common_passed": 6,
+    "common_total": 6,
+    "decisive_failed_gate": "vo_top_hourglass_upper_dominance"
+  },
+  "technical_verdict": "fail_target_gate",
+  "pixel_verdict": "fail_target_upper_dominance",
+  "technical_pass": false,
+  "failure_is_target_pixel_failure": true,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "claim_boundary": "Preflight PASS establishes prompt and runtime-input integrity, and render success establishes that one image was produced. The pixel verdict is independently FAIL because one mandatory target gate is not visually established. Facial similarity is described only as non-biometric appearance continuity; user acceptance remains pending."
+}

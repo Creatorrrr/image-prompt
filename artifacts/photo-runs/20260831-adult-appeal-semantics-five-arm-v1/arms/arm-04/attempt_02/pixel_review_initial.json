@@ -1,0 +1,54 @@
+{
+  "schema_version": "photo-pixel-review/v1",
+  "arm_id": "arm-04",
+  "attempt": 2,
+  "review_target_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/output.png",
+  "review_target_sha256": "6849c1fe094dfc7494ffefc76b375012466049c686226a3eebb2b13776e1c8d7",
+  "review_scales": {
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/thumbnail.png",
+    "native": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/output.png"
+  },
+  "prompt_presence_used_as_pixel_evidence": false,
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": "pending",
+  "gates": [
+    {
+      "id": "vo_languid_motion_unfinished_phase",
+      "required_review_scale": "thumbnail",
+      "status": "pass",
+      "visible_observation": "At thumbnail scale the open drawer remains visible beside and behind the subject while her extended right fingertips stop visibly short of the separate brass ribbon knot. Her torso and feet sit between those two spatial endpoints, so the reach reads as unresolved rather than completed.",
+      "confusion_boundary_check": "The image is crisp and editorially posed, but the fingertip-to-knot gap and still-open drawer keep it from collapsing into a finished hand-on-ribbon pose."
+    },
+    {
+      "id": "vo_languid_motion_stable_support",
+      "required_review_scale": "both",
+      "status": "pass",
+      "visible_observation": "Both full legs and shoes are visible. The forward shoe supplies a grounded heel-and-forefoot path while the rear leg extends coherently behind it; knees, hips, and ankles align continuously under the forward-leaning torso without a broken joint or collapse cue.",
+      "confusion_boundary_check": "The narrow heels could suggest instability in isolation, but the complete leg geometry and separated support points visibly carry the lean rather than showing sway, illness, or a fall."
+    },
+    {
+      "id": "vo_languid_motion_alert_attention",
+      "required_review_scale": "native",
+      "status": "fail",
+      "visible_observation": "At native scale the eyes are open and alert, but the pupils and head turn face toward the camera/viewer instead of the brass knot beside the extended fingertips.",
+      "confusion_boundary_check": "Wakefulness alone is insufficient for this gate: the visible gaze reads as an editorial camera gaze, not attention linked to the hand's destination."
+    },
+    {
+      "id": "vo_languid_motion_directional_lag",
+      "required_review_scale": "both",
+      "status": "pass",
+      "visible_observation": "At both scales the reaching arm leads toward frame-right while the broad satin hem and loose wavy hair remain displaced behind the torso toward frame-left at different distances. Their crisp staggered arcs provide a shared trailing phase rather than undirected blur.",
+      "confusion_boundary_check": "The vertical ribbon itself shows little swing, but the gate permits fabric or hair as the lag carrier; here two separate flexible materials visibly trail the same rightward body transition."
+    }
+  ],
+  "summary": {
+    "pass": 3,
+    "fail": 1,
+    "uncertain": 0,
+    "all_required_gates_pass": false,
+    "failed_gate_ids": [
+      "vo_languid_motion_alert_attention"
+    ],
+    "repair_eligibility": "eligible_single_targeted_repair"
+  }
+}

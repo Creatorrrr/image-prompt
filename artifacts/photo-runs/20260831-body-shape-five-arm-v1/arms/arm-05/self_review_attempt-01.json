@@ -1,0 +1,76 @@
+{
+  "schema_version": "photo-body-shape-render-self-review/v1",
+  "arm_id": "arm-05",
+  "profile_id": "diamond_central_torso_silhouette_relation",
+  "pack_id": "acb22eac333800fb",
+  "runtime_prompt_id": "877fc8373313af4f",
+  "image_path": null,
+  "image_sha256": null,
+  "pixel_evidence_available": false,
+  "inspection": {
+    "original_detail": {
+      "status": "not_run",
+      "reason": "The single imagegen call returned no image."
+    },
+    "thumbnail": {
+      "status": "not_run",
+      "reason": "The single imagegen call returned no image."
+    }
+  },
+  "target_gates": [
+    {
+      "id": "vo_diamond_bilateral_oblique",
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "No rendered pixels exist, so adult upper torso, central waist-abdomen, pelvis, width, and depth cannot be observed."
+    },
+    {
+      "id": "vo_diamond_central_maximum",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "No rendered pixels exist, so a central waist-abdomen torso maximum cannot be distinguished from garment shape."
+    },
+    {
+      "id": "vo_diamond_two_direction_taper",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "No rendered pixels exist, so coherent taper toward both upper torso and pelvis cannot be verified."
+    },
+    {
+      "id": "vo_diamond_not_oval_or_pattern",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "No rendered pixels exist, so oval volume, garment pattern, posture, and lens substitutes cannot be ruled out."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "adult_age_read",
+      "status": "fail",
+      "evidence": "No subject pixels exist to verify an unmistakably adult age impression."
+    },
+    {
+      "id": "face_appearance_reference",
+      "status": "fail",
+      "evidence": "The conversation reference was unavailable to the tool and no generated face exists for non-biometric visual comparison."
+    },
+    {
+      "id": "anatomical_coherence",
+      "status": "fail",
+      "evidence": "No rendered anatomy, hands, torso, or limbs exist to inspect."
+    },
+    {
+      "id": "professional_action_read",
+      "status": "fail",
+      "evidence": "No rendered hand-to-dial contact, spectrum analyzer, or calibration action exists to inspect."
+    }
+  ],
+  "technical_pass": false,
+  "pixel_verdict": "unscored_no_image",
+  "process_outcome": "single_call_failed_before_generation",
+  "prompt_presence_is_pixel_proof": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

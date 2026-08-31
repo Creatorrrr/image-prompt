@@ -1,0 +1,133 @@
+{
+  "contract_version": "photo-arm-command-hash-record/v2",
+  "run_id": "20260831-adult-appeal-semantics-five-arm-v1",
+  "arm_id": "arm-04",
+  "profile_id": "controlled_languid_movement_display",
+  "seed": 2286608887,
+  "prior_missing_reference_ledger": {
+    "path": "commands_and_hashes.missing_reference.json",
+    "sha256": "c043fba847efdd9f3b5b2c7b8bca0f1b6f8d3c33f7aaee8d412679e87e6e91eb",
+    "preserved": true
+  },
+  "scope": {
+    "other_arm_directories_read": false,
+    "other_arm_artifacts_used": false,
+    "writes_outside_arm_directory": false,
+    "shared_root_artifacts_modified": false,
+    "renderer_substitution": false
+  },
+  "frozen_bindings": {
+    "candidate_pack_path": "candidate_pack.json",
+    "candidate_pack_sha256": "d81c90cb2a446215b9959b98ce33c92f12cf30c04b09d10fab397252dd1cba3e",
+    "composed_prompt_path": "composed_prompt.json",
+    "composed_prompt_sha256": "c42ab64d3dc8f7db60003eeeb39fae0baf6d110e93522b407aefc95a50099f16",
+    "final_prompt_path": "final_prompt.txt",
+    "final_prompt_file_sha256": "3d30c88f454cb82f83489f05b8183e555d8ac83f7aec9a87fed6cff3949e6406",
+    "final_prompt_content_sha256": "27d7abed97d57705ffa5de58df5d1bdd579b42c5ff60df426d4121e9f2402303",
+    "prompt_audit_path": "prompt_audit.json",
+    "prompt_audit_sha256": "09a857011e771f03cf0ee4329cddb2a8160fcb2e8fb8a3c51b49bb32789fbaef",
+    "prompt_audit_status": "pass",
+    "source_intent_lock_sha256": "d25b9eeb6ca84f502d723398d1137ceba1a470f1dda5fdce0669d8443999e3c3",
+    "effective_visual_contract_sha256": "dc5d9337f3d9cb5a8cf16b7e20f9d5c5ba62ab6e76858b2e4b797e0cd43fbd1f"
+  },
+  "reference_binding": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "adult_facial_appearance_and_dark_wavy_hairstyle_only",
+    "identity_evaluation": "not_evaluated",
+    "user_judgment": "pending"
+  },
+  "operations": [
+    {
+      "stage": "reference_and_frozen_hash_verification",
+      "mechanism": "shasum -a 256",
+      "result": "pass",
+      "notes": "Reference, candidate pack, composed prompt, and final prompt hashes matched their frozen values."
+    },
+    {
+      "stage": "attempt_02_pre_negative_runtime_audit",
+      "command": "audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request attempt_02/runtime_request.pre_negative_binding.json",
+      "result": "fail",
+      "notes": "Only failure was the repository requirement that the exact pack negative follow an Avoid: prefix. The failed request and audit are preserved."
+    },
+    {
+      "stage": "attempt_02_runtime_audit",
+      "command": "audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request attempt_02/runtime_request.json --output attempt_02/runtime_audit.json",
+      "result": "pass",
+      "runtime_prompt_sha256": "0972a310c9ca4ce10aa0f13b4f1666212c31fe7319733c2d93588650eed6c737",
+      "notes": "The exact final_prompt.txt bytes are the runtime prompt prefix; only the required candidate-pack negative appendix follows."
+    },
+    {
+      "stage": "attempt_02_builtin_image_generation",
+      "mechanism": "builtin imagegen",
+      "prompt_source": "attempt_02/runtime_request.json#runtime_prompt_en",
+      "referenced_image_paths": [
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg"
+      ],
+      "result": "succeeded",
+      "output_sha256": "6849c1fe094dfc7494ffefc76b375012466049c686226a3eebb2b13776e1c8d7"
+    },
+    {
+      "stage": "attempt_02_pixel_review",
+      "mechanism": "direct view_image inspection at thumbnail and native scale",
+      "result": "three_pass_one_fail",
+      "failed_gate_ids": [
+        "vo_languid_motion_alert_attention"
+      ]
+    },
+    {
+      "stage": "attempt_03_repair_runtime_audit",
+      "command": "audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request attempt_03/runtime_request.json --output attempt_03/runtime_audit.json",
+      "result": "pass",
+      "runtime_prompt_sha256": "ef30c4c4508e57c1def714e49f47cef12b70482090428368213616c1c410f222",
+      "repair_delta": "Redirect the awake gaze from the camera to the ribbon knot while preserving all already-passing gates."
+    },
+    {
+      "stage": "attempt_03_builtin_image_generation",
+      "mechanism": "builtin imagegen",
+      "prompt_source": "attempt_03/runtime_request.json#runtime_prompt_en",
+      "referenced_image_paths": [
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+        "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/output.png"
+      ],
+      "result": "succeeded",
+      "output_sha256": "52c0c328669970c5232a8f743702ad92ca1b25c7d60252284ba0b2a2de183be5"
+    },
+    {
+      "stage": "attempt_03_pixel_review",
+      "mechanism": "direct view_image inspection at thumbnail and native scale",
+      "result": "all_four_required_gates_pass",
+      "notes": "Prompt presence was not treated as pixel evidence."
+    },
+    {
+      "stage": "iteration_record_validation",
+      "command": "validate_iteration_record.py iteration_record.json",
+      "result": "pass",
+      "validator_output": {
+        "status": "ok",
+        "errors": []
+      }
+    }
+  ],
+  "outputs": {
+    "attempt_02": {
+      "runtime_request_sha256": "bb89fb8718d8c22b2ed561874829f18a5b82100f290f40cc54d496495e56127c",
+      "runtime_audit_sha256": "0a55cc11965c699025c0343806844a2b5ae46b3a6d2be19b6eff2cc9b6eede7f",
+      "generation_attempt_sha256": "2af43d856ba4bd2d6ac78b9d39025298766363e509ea1ac9aba5020ed90c88cc",
+      "output_sha256": "6849c1fe094dfc7494ffefc76b375012466049c686226a3eebb2b13776e1c8d7",
+      "thumbnail_sha256": "5e522c9c1b92bea07240faa9267c843f6822f2ffb957106d12bc0e612ef06981",
+      "pixel_review_sha256": "f8ffd433ce84526ba6aca54bed1b9e5a8602b09932952e47b9f62262eb9c23dd"
+    },
+    "attempt_03": {
+      "runtime_request_sha256": "e53163ee0f8a05f82e6fb2117c85fd1ef8a5c9544e803732f113b7f960cbed8a",
+      "runtime_audit_sha256": "cf56cb930ba37c85870a162722c2f5bb64f3a7c99bdef1c1ee63dc43230b10e9",
+      "generation_attempt_sha256": "922040192c59f04885fb0911c56bc12c53de9ad5ccb51a5bb3bddb10f169409d",
+      "output_sha256": "52c0c328669970c5232a8f743702ad92ca1b25c7d60252284ba0b2a2de183be5",
+      "thumbnail_sha256": "aadbce7a4656f95f45e4fd0cda23f850fefc3db0a3b8845ec71b593139f72575",
+      "pixel_review_sha256": "6e0803e47e657b4fbef38c71c3e71c45091f7041429667004bdd0078c334ccb4"
+    },
+    "chosen_pixel_review_sha256": "642f7fc9fa864557461b5f7872126c5be828edcbdd020004ec991ad1d2e1e570",
+    "iteration_record_sha256": "55330b91dadc111c7c091430548d753f08d53d54723dd2b4a3aa7fddf42c1e06",
+    "iteration_record_validation_sha256": "25206e2e0651ab5fdd3e6d8075ef440230ba8df17190c4de5d3d9fba110d8af0"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "contract_version": "photo-coordinator-correction/v1",
+  "arm_id": "arm-02",
+  "source": "coordinator_correction",
+  "correction_text": "조정자 정정: interpreted_intent를 exact activation term 하나와 완전히 같게 만들라는 이전 제약은 철회한다. v6 계약을 만족하도록 최소 4개 content word의 자연스러운 문장으로 확장해도 된다. 단, 당신에게 배정된 exact activation term을 문장 안에 문자 그대로 한 번 포함하고, 원래 랜덤 콘셉트/게이트/seed는 바꾸지 말며, visual_intent.source_text는 수정된 authorial_core.interpreted_intent와 바이트 단위로 동일하게 하라. 최초 동결본은 별도 initial 파일/해시로 보존하고 coordinator_correction.json에 이 정정과 전후 SHA를 기록하라. 다른 arm은 여전히 읽지 말고, 후보팩·프롬프트 감사·첨부 얼굴 참조 기반 image_gen·픽셀 검증까지 계속하라.",
+  "withdrawn_constraint": "authorial_core.interpreted_intent must byte-equal only the exact activation term",
+  "authorized_change": {
+    "field": "authorial_core.interpreted_intent",
+    "before": "상대지향적 유혹 표현",
+    "after": "상대지향적 유혹 표현을 검증하는 성인 상호작용의 단일 프레임 시각 시험",
+    "minimum_content_words": 4,
+    "actual_content_words": 10,
+    "exact_activation_term": "상대지향적 유혹 표현",
+    "exact_activation_term_occurrences": 1
+  },
+  "visual_intent_change": {
+    "field": "obligations[0].source_text",
+    "byte_equal_to_corrected_interpreted_intent": true
+  },
+  "hashes": {
+    "initial_authorial_core_path": "authorial_core_initial.json",
+    "initial_authorial_core_sha256": "a4f68360905d2c6791ea46337edca16bbf4f09b1d17ae1e3e42bc1a19cd747fb",
+    "corrected_authorial_core_path": "authorial_core.json",
+    "corrected_authorial_core_sha256": "a9769b6e53092d0b59e85860fa4c35d2b1c370f8a091f184eeae71bd2306a6fe",
+    "initial_visual_intent_path": "visual_intent_initial.json",
+    "initial_visual_intent_sha256": "1e4a66117ab8edfc0f990b2506d8accbc2cb689190e4603c34d7f44dbe105559",
+    "corrected_visual_intent_path": "visual_intent.json",
+    "corrected_visual_intent_sha256": "8510d078b9a6a1887f1fc3a557672ad6bb07c6682166f0fa595113d2d6ace6c1"
+  },
+  "preserved_invariants": {
+    "baseline_prompt_byte_equal": true,
+    "random_concept_unchanged": true,
+    "seed": 3377211778,
+    "profile_id": "target_directed_seductive_display",
+    "visual_bindings_unchanged": true,
+    "render_gates_unchanged": true,
+    "other_arm_inputs_read": false
+  }
+}

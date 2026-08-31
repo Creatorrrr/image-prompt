@@ -1,0 +1,84 @@
+{
+  "schema_version": "photo-body-shape-blind-review/v1",
+  "reviewer_id": "reviewer-03",
+  "specimen_id": "C",
+  "blind_review": true,
+  "source_arm": "withheld",
+  "target_keyword": "diamond-shaped figure",
+  "image_sha256": "83bb0a718aad408951469dd17d7ebcf42b4cca0a6ecdf1f355c65cd7072454f4",
+  "inspection": {
+    "native_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/evaluation/blind/specimen-C.png",
+    "native_scale": "original_detail",
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/evaluation/blind/specimen-C-thumb.png",
+    "thumbnail_scale": "provided_thumbnail",
+    "reference_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "reference_role": "facial_appearance_only"
+  },
+  "target_gates": [
+    {
+      "id": "vo_diamond_bilateral_oblique",
+      "scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At thumbnail scale, the three-quarter full-body framing keeps the upper torso, central waist-abdomen, and pelvis simultaneously legible in lateral width and front-to-back depth."
+    },
+    {
+      "id": "vo_diamond_central_maximum",
+      "scale": "both",
+      "status": "fail",
+      "evidence": "At both scales, the waist-abdomen is the narrowest torso region while the hips and pelvis are visibly wider, so the central zone does not form the torso maximum."
+    },
+    {
+      "id": "vo_diamond_two_direction_taper",
+      "scale": "both",
+      "status": "fail",
+      "evidence": "At both scales, the contours taper inward from the upper torso to the waist and then expand toward the pelvis, which is the reverse of tapering away from a central maximum in both directions."
+    },
+    {
+      "id": "vo_diamond_not_oval_or_pattern",
+      "scale": "native",
+      "status": "fail",
+      "evidence": "At native scale, the silhouette reads as a cinched hourglass-or-pear relation shaped by the coverall waist and three-quarter stance rather than an independently visible diamond contour."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "adult",
+      "status": "pass",
+      "evidence": "The subject has unmistakably adult facial structure, body proportions, and professional presentation without childlike morphology."
+    },
+    {
+      "id": "fully_clothed",
+      "status": "pass",
+      "evidence": "Opaque long-sleeved coveralls, gloves, and boots fully cover the visible body."
+    },
+    {
+      "id": "anatomy",
+      "status": "pass",
+      "evidence": "The visible head, torso, limbs, gloved hands, joints, and feet are coherently connected with no obvious extra or missing anatomy."
+    },
+    {
+      "id": "professional_action",
+      "status": "pass",
+      "evidence": "One gloved hand visibly operates a cabinet control while the other supports an active diagnostic display, making equipment servicing concrete and task-directed."
+    },
+    {
+      "id": "facial_appearance_continuity",
+      "status": "pass",
+      "evidence": "Non-biometric comparison shows clear continuity in long dark wavy hair, warm-light skin, elongated oval face, adult almond-shaped eyes, straight nose, cheekbone impression, and natural full lips."
+    }
+  ],
+  "target_gate_summary": {
+    "passed": 1,
+    "failed": 3,
+    "total": 4,
+    "failed_gate_ids": [
+      "vo_diamond_central_maximum",
+      "vo_diamond_two_direction_taper",
+      "vo_diamond_not_oval_or_pattern"
+    ]
+  },
+  "partial_policy": "partial_is_fail",
+  "technical_pass": false,
+  "technical_verdict": "fail_target_gates",
+  "facial_comparison_boundary": "Facial assessment is limited to observable appearance continuity and is not biometric identity verification."
+}

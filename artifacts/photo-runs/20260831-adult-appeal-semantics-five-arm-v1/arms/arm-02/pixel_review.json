@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-02",
+  "pack_id": "8a7403a87bcbc516",
+  "profile_id": "target_directed_seductive_display",
+  "status": "all_hard_gates_pass",
+  "chosen_attempt": 3,
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_03_repair_native.png",
+  "image_sha256": "0c38705da2a70ef18a7bee72ae35da3e21a723df54e93fee9ad7acea1c59f6a3",
+  "image_dimensions_px": [
+    1024,
+    1536
+  ],
+  "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_03_repair_thumbnail.png",
+  "thumbnail_sha256": "fb02a386d3241df442548ed5cdcca708bb6012cc0af00191f275265f79046c50",
+  "thumbnail_dimensions_px": [
+    341,
+    512
+  ],
+  "review_method": "direct pixel inspection",
+  "review_scales_completed": [
+    "thumbnail",
+    "native"
+  ],
+  "gates": [
+    {
+      "id": "vo_target_seduction_same_adult_target",
+      "review_scale": "both",
+      "status": "pass",
+      "visible_evidence": "One woman and one clearly adult man occupy the interaction. Her rightward gaze, turned face, angled upper body, extended arm, and canister all address that same man.",
+      "substitute_confusion": "Her pupils avoid the camera and no second target competes for gaze, body direction, action, or response."
+    },
+    {
+      "id": "vo_target_seduction_coordinated_orientation",
+      "review_scale": "native",
+      "status": "pass",
+      "visible_evidence": "Both alert pupils and her chin point toward the man's face; native pixels also show the right shoulder advanced, left shoulder receded, and chest-and-torso plane turned three-quarter toward him.",
+      "substitute_confusion": "The torso plane and shoulder depth turn with the head, so this is not merely an outstretched-arm substitute."
+    },
+    {
+      "id": "vo_target_seduction_invitation_action",
+      "review_scale": "both",
+      "status": "pass",
+      "visible_evidence": "At the open brass booth threshold she extends a silver film canister in midair across the deliberately clear upper span of the luggage trolley toward the man.",
+      "substitute_confusion": "The supported midair canister crosses their shared gap and is not a passive prop resting on the trolley."
+    },
+    {
+      "id": "vo_target_seduction_visible_consequence",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "visible_evidence": "At thumbnail scale the man is visibly stopped opposite her and reaches an open right hand directly under and toward the offered canister.",
+      "substitute_confusion": "The receiving hand is readable without facial detail, ruling out a static two-person portrait or direct-gaze-only substitute."
+    }
+  ],
+  "failed_or_uncertain_gate_ids": [],
+  "attempt_history": [
+    {
+      "attempt": 1,
+      "status": "not_run_missing_required_reference",
+      "pixel_review": "uncertain_all_four_no_pixels"
+    },
+    {
+      "attempt": 2,
+      "status": "one_hard_gate_failed",
+      "pixel_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/pixel_review_attempt_02.json",
+      "failed_gate_ids": [
+        "vo_target_seduction_coordinated_orientation"
+      ]
+    },
+    {
+      "attempt": 3,
+      "status": "all_hard_gates_pass",
+      "pixel_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/pixel_review_attempt_03_repair.json",
+      "failed_gate_ids": []
+    }
+  ],
+  "repair_delta": "The single repair rotated the woman's shoulders, chest, and upper torso toward the same man while preserving the same-target canister transfer, threshold, clear trolley span, and the man's reaching hand.",
+  "repository_render_review_audit": {
+    "status": "not_run_inapplicable",
+    "reason": "audit_image_render_review.py requires a v2 lineage render_repair contract; this frozen v3 core has no such contract. Direct visual-obligation pixel review remains recorded separately."
+  },
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "pixel_pass_claimed": true,
+  "audit_boundary": "Prompt and request-audit presence was not treated as pixel evidence."
+}

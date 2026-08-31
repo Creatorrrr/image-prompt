@@ -1,0 +1,33 @@
+{
+  "contract_version": "photo-visual-intent-binding-correction/v1",
+  "arm_id": "arm-04",
+  "reason": "The first official composed audit showed that two bound phrases did not contain a registry-declared component anchor verbatim.",
+  "before": {
+    "file_sha256": "10f2d440d94f16cb9f1ea7a9f97ff5df198dd68a48553c363a04a63049eb0cf4",
+    "canonical_sha256": "7c8e6395cec50d2d88c8fc356637c23211454706e28d247314318fd9a53fbd8c"
+  },
+  "after": {
+    "file_sha256": "70100cd168026473d8eba8d8da32e0e2ef3f6cf7e2c6bd862e914cbcaadd7201",
+    "canonical_sha256": "31fc9b1bf04f3ea3582c8307e72a054a543c87bb123a40b514c6174a23e08b47"
+  },
+  "changed_bindings": {
+    "unfinished_motion_phrase": {
+      "before": "The start position at the open specimen drawer and the unfinished destination at the ribbon knot remain visible in the same frame.",
+      "after": "The start position and unfinished destination remain visible between the open specimen drawer and the ribbon knot in the same frame.",
+      "required_anchor": "start position and unfinished destination remain visible"
+    },
+    "motion_lag_phrase": {
+      "before": "The satin fabric, loose hair strand, reaching hand, and calibration ribbon trail the same clockwise movement direction.",
+      "after": "The satin fabric trails the same movement direction as the loose hair strand, reaching hand, and calibration ribbon along the clockwise arc.",
+      "required_anchor": "fabric trails the same movement direction"
+    }
+  },
+  "preserved": {
+    "source_text_byte_equal_to_corrected_interpreted_intent": true,
+    "profile_id": "controlled_languid_movement_display",
+    "seed": 2286608887,
+    "concept_unchanged": true,
+    "render_gate_ids_unchanged": true,
+    "other_arm_inputs_used": false
+  }
+}

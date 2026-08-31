@@ -1,0 +1,138 @@
+{
+  "schema_version": "photo-arm-command-log/v1",
+  "arm_id": "arm-05",
+  "write_scope": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/",
+  "other_arm_inputs_read": false,
+  "other_arm_outputs_used": false,
+  "explicit_user_reference_read": true,
+  "commands": [
+    {
+      "stage": "candidate_pack_preflight_1",
+      "status": "blocked",
+      "exit_code": 1,
+      "summary": "runtime_forbidden_labels was not grounded in the requester envelope"
+    },
+    {
+      "stage": "candidate_pack_preflight_2",
+      "status": "blocked",
+      "exit_code": 1,
+      "summary": "interpreted_intent had fewer than four concrete content words"
+    },
+    {
+      "stage": "candidate_pack_pre_correction",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json request_envelope.json --authorial-core-json authorial_core.json --visual-intent-json visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3073829215 --emit-candidate-pack --n 1 --output-file candidate_pack.json",
+      "status": "superseded_by_coordinator_correction"
+    },
+    {
+      "stage": "candidate_pack_final",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json request_envelope.json --authorial-core-json authorial_core.json --visual-intent-json visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3073829215 --emit-candidate-pack --n 1 --output-file candidate_pack.json",
+      "status": "success",
+      "pack_id": "39693b5bd194f153"
+    },
+    {
+      "stage": "composed_prompt_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack candidate_pack.json --composed composed_prompt.json",
+      "status": "pass",
+      "quality_status": "warn"
+    },
+    {
+      "stage": "attempt_01_runtime_request_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request runtime_request.json --output runtime_audit.json",
+      "status": "pass",
+      "runtime_prompt_id": "215056b3536ab6fc",
+      "reference_count": 0
+    },
+    {
+      "stage": "attempt_01_built_in_image_generation",
+      "command": "imagegen(prompt=runtime_request.runtime_prompt_en, num_last_images_to_include=1)",
+      "status": "error_reference_unavailable",
+      "error": "requested the last 1 conversation images, but only 0 were available"
+    },
+    {
+      "stage": "attempt_02_reference_verification",
+      "command": "shasum -a 256 and sips metadata on the explicit face-reference.jpg path",
+      "status": "pass",
+      "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+      "dimensions": "960x1280",
+      "reference_role": "adult_facial_appearance_and_dark_wavy_hairstyle_only"
+    },
+    {
+      "stage": "attempt_02_frozen_byte_verification",
+      "command": "Verify final_prompt.txt SHA, byte length, and contiguous byte occurrence in attempt_02/runtime_request.json",
+      "status": "pass",
+      "final_prompt_sha256": "46c29c0b6bd4202fdf1ba31d850fb5f8e580aaf40f4507b6309f4c547c4fc5fa",
+      "final_prompt_bytes": 1472,
+      "exact_final_bytes_contiguous": true
+    },
+    {
+      "stage": "attempt_02_runtime_request_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request attempt_02/runtime_request.json --output attempt_02/runtime_audit.json",
+      "status": "pass",
+      "runtime_prompt_id": "64cb6d5c0bfe269e",
+      "reference_count": 1,
+      "failure_count": 0
+    },
+    {
+      "stage": "attempt_02_built_in_image_generation",
+      "command": "imagegen(prompt=attempt_02/runtime_request.runtime_prompt_en, referenced_image_paths=[explicit face-reference.jpg path])",
+      "status": "success",
+      "cli_fallback_used": false,
+      "alternate_renderer_used": false
+    },
+    {
+      "stage": "attempt_02_native_output_binding",
+      "command": "Copy the exact built-in native PNG to attempt_02/output.png, preserve the original, hash both, and create attempt_02/thumbnail.png with sips",
+      "status": "success",
+      "native_copy_sha256_match": true,
+      "output_sha256": "db6c9540fa66290f2d03c3da3ff3147d32ee5f809d6d45696aee4bd4e1494941",
+      "output_dimensions": "1448x1086",
+      "thumbnail_sha256": "8a8088fe657b55b995f3f3362b49552e3a34e727eee51ddaf1cade5b7ce8801c",
+      "thumbnail_dimensions": "512x384"
+    },
+    {
+      "stage": "attempt_02_pixel_review",
+      "command": "Directly inspect attempt_02/thumbnail.png and attempt_02/output.png and score only the four candidate-pack render gates",
+      "status": "pass_all_four_hard_gates",
+      "repair_attempted": false
+    },
+    {
+      "stage": "attempt_02_run_recording",
+      "command": "record_image_run.py with the exact runtime prompt, reference SHA, image path, seed, isolation provenance, arm-local ledger, and recorder manifest",
+      "status": "success",
+      "ledger_run_id": "fd4d62b7fa5db555"
+    },
+    {
+      "stage": "attempt_02_iteration_record_validation",
+      "command": ".venv/bin/python skills/image-prompt-skill-improver/scripts/validate_iteration_record.py iteration_record_attempt_02.json",
+      "status": "pass"
+    }
+  ],
+  "key_hashes": {
+    "request_envelope.json": "95e7a2d6ff8667512e952424e5e7ce0d33cd000f451a86ac892055fe6c093cff",
+    "authorial_core.initial.json": "006a88a694550fe03ae6e3ec7b41c68fe7bd1089421332c1b23c023d09b28200",
+    "authorial_core.json": "264ab37ac850ac68483c3edd134a0c5ac6025c648d899e887b8c8640d91aa93c",
+    "baseline_prompt.txt": "7270654be74f9f4a80b8387234320c274d190b5afc73f425c5f9164aa99e5954",
+    "concept_selection.json": "78a316e7776c44a30e99181416206b81f0c3832430cfef6b579115577d5dc0d4",
+    "visual_intent.json": "41770f149c94281202547a27f268e49deddcad4e7dffb3732b8cab4fda57669c",
+    "candidate_pack.json": "f2b7e1ac2aa1a3c24423ecb937dbaaa75633a2b48086abee43bfd8d1ee5b23c7",
+    "composed_prompt.json": "e24608905e2470bb6c91a3326d4174003ded32a5ba1bcd534c5a642449bb5016",
+    "final_prompt.txt": "46c29c0b6bd4202fdf1ba31d850fb5f8e580aaf40f4507b6309f4c547c4fc5fa",
+    "prompt_audit.json": "921dd497949dfea40089209153836a442fb8e0cefb30dc0151858d1a078f6850",
+    "runtime_request.json": "dba176a11c4d05600562e722a17452a6b8a761a9717bd820d6c1adf1fee1be22",
+    "runtime_audit.json": "169611d7d1c2f5c96fb83cf8f24921ee59aa4e8856e7bb77554ef92562af13e7",
+    "generation_attempt_01.json": "9193ec1ad30b13ffdc58e76e7fd6ceedde533b91eaeb441328221a440001325c",
+    "pixel_review_attempt_01.json": "25a39643b58b612bf8ab6514d400f57b58b814e3a34780cd8e34f52749cfc5a9",
+    "arm_manifest_attempt_01.json": "11fb8f2b71d19bf98c6e3cc0d4a3dd071eecd89cee90c9e96fb3e5319a281e1e",
+    "test_case_attempt_01.json": "009902a20fbf968f5e7aeecf9ad468e95efb64d6da7d9b80ba84135cfcb7eada",
+    "attempt_02/runtime_request.json": "4e9948fafb80ff83d7a591ead5033edda441efef54e4b6e2db8f1ea3e1706f58",
+    "attempt_02/runtime_audit.json": "737b095666d2c7883e58669420d4748b63898c4475d7d04241d7dcd0fa3df7b2",
+    "attempt_02/output.png": "db6c9540fa66290f2d03c3da3ff3147d32ee5f809d6d45696aee4bd4e1494941",
+    "attempt_02/thumbnail.png": "8a8088fe657b55b995f3f3362b49552e3a34e727eee51ddaf1cade5b7ce8801c",
+    "attempt_02/recorder_manifest.json": "cc48d9c0546261d585f07304c752af00d961a842b8986d228a9fabe14ed946dd",
+    "generation_attempt_02.json": "3f46e2a6f7f747535b62cb526002489623e00696d024ca08d7b3d1a11589e34b",
+    "pixel_review.json": "c54a45bdcf941c542570ab84ba224044043db7667805f8b26ef2e028c20f6c90",
+    "test_case.json": "b338154df3dae233e554a039a01d9ddb745af8a825498c8e396f5fdb7fffa4e3",
+    "iteration_record_attempt_02.json": "bb147b7c021f6fa7d9001fddc9a44f9f4f8ed59c9bfec8c9e058c367a1029f78",
+    "image_runs.ndjson": "6a1b181b060f04bfaaf74a96b933a2ee0bd3c2d02922a172fc593b424dacf037"
+  }
+}

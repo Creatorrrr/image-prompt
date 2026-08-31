@@ -1,0 +1,39 @@
+{
+  "schema_version": "photo-image-render-request-audit/v1",
+  "pack_id": "e65d3c929866d13",
+  "status": "fail",
+  "runtime_prompt_id": "a29bac072a49b32b",
+  "source_intent_lock_sha256": null,
+  "render_repair_contract_sha256": null,
+  "negative_matches_pack": true,
+  "effective_visual_contract_sha256": null,
+  "selected_visual_concept_ids": [],
+  "reference_count": 1,
+  "failures": [
+    {
+      "check": "schema_version",
+      "reason": "render request must use photo-image-render-request/v2"
+    },
+    {
+      "check": "audit_boundary",
+      "reason": "render request requires an explicit audit_boundary object"
+    },
+    {
+      "check": "composed_prompt_audit_status",
+      "reason": "render request requires a passing or warning composed preflight"
+    },
+    {
+      "check": "runtime_prompt_audit_status",
+      "reason": "runtime string must remain not_run until this exact-input audit succeeds"
+    },
+    {
+      "check": "audit_inheritance",
+      "reason": "runtime request must explicitly refuse inheritance of composed preflight PASS"
+    },
+    {
+      "check": "references[0].path",
+      "reason": "reference path is required"
+    }
+  ],
+  "boundary": "This audit verifies exact text and reference bytes before generation. It does not inspect rendered pixels or establish user-perceived quality."
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "photo-image-generation-attempt/v1",
+  "arm_id": "arm-05",
+  "attempt": 1,
+  "attempted_at_utc": "2026-08-30T17:06:54Z",
+  "tool": "built-in image_gen",
+  "tool_input": {
+    "runtime_prompt_id": "215056b3536ab6fc",
+    "num_last_images_to_include": 1,
+    "reference_role": "adult_facial_appearance_only"
+  },
+  "preflight": {
+    "composed_prompt_status": "pass",
+    "composed_prompt_quality_status": "warn",
+    "runtime_request_status": "pass",
+    "runtime_audit_reference_count": 0,
+    "local_reference_bytes_bound": false
+  },
+  "status": "error_reference_unavailable",
+  "error": "requested the last 1 conversation images, but only 0 were available",
+  "reference_transport": {
+    "requested_conversation_images": 1,
+    "available_conversation_images": 0,
+    "concrete_local_reference_path": null,
+    "reference_sha256": null,
+    "path_invented": false
+  },
+  "result": {
+    "image_path": null,
+    "image_sha256": null,
+    "thumbnail_path": null,
+    "repo_local_copy_created": false
+  },
+  "repair": {
+    "eligible": false,
+    "attempted": false,
+    "reason": "No rendered image exists, so no single failed pixel gate can be isolated for a bounded repair."
+  },
+  "fallback": {
+    "cli_or_api_used": false,
+    "reason": "The imagegen skill forbids silent fallback; the requester did not explicitly choose the API/CLI path."
+  }
+}

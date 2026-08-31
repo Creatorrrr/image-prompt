@@ -1,0 +1,60 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-03",
+  "pack_id": "e8e8e6fcd30ac1ac",
+  "attempt": 3,
+  "repair": true,
+  "image_path": "attempt_03_repair/output.png",
+  "image_sha256": "9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50",
+  "thumbnail_path": "attempt_03_repair/thumbnail.png",
+  "thumbnail_sha256": "dc19b95159aba8ed7c15d581de4a71b1c92e0242f726f143b3a7a308cc184578",
+  "review_status": "pass_all_hard_gates",
+  "review_scales_completed": [
+    "native_1448x1086",
+    "thumbnail_512x384"
+  ],
+  "hard_gates": [
+    {
+      "id": "vo_playful_flirt_adult_pair",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "At native and thumbnail scale, two fully dressed adults remain in one uninterrupted two-shot. The right-hand adult is the single identifiable recipient facing the initiator, key, and reaching hand.",
+      "substitute_confusion": "Not a crowd, recipient swap, or camera-address scene: the same right-hand adult visibly owns the response. Apparent age is used only for the requested adult-scene gate, not biometric identity."
+    },
+    {
+      "id": "vo_playful_flirt_approach_withdrawal",
+      "required_scale": "thumbnail",
+      "status": "pass",
+      "visible_evidence": "At thumbnail scale, the initiator holds both pinching hands back near her torso, the burnt-orange ribbon remains taut, and the brass key hangs in the gap short of the recipient's extended fingertips. The opposed held-back object and forward reach keep the exchange visibly unfinished.",
+      "substitute_confusion": "Not a settled transfer: no recipient finger touches or encloses the key. A routine offer is a possible surface reading, but the taut ribbon pulled back to the initiator while the recipient arrests before contact makes the offer-withdraw geometry spatially readable."
+    },
+    {
+      "id": "vo_playful_flirt_face_action",
+      "required_scale": "native",
+      "status": "pass",
+      "visible_evidence": "At native scale, the initiator's lips are fully closed and one mouth corner is fractionally higher than the other, forming a small restrained asymmetric smile. Her eyes are open, alert, and directed at the right-hand recipient rather than the camera.",
+      "substitute_confusion": "Not a broad generic grin, camera gaze, or sleepy look: teeth are not shown, the lift is localized to one corner, and the eye line terminates on the recipient."
+    },
+    {
+      "id": "vo_playful_flirt_recipient_response",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "At native and thumbnail scale, the recipient extends an open hand directly toward the same dangling brass key and stops before contact while looking toward the initiator/key area.",
+      "substitute_confusion": "Not solo posing or an unrelated hand gesture: the palm and fingertips align with the same key. The visible non-contact gap and opposing ribbon tension distinguish the response from a completed service handoff."
+    }
+  ],
+  "repair_delta": {
+    "changed": "The initiator's previously parted neutral mouth is now fully closed with a subtle one-corner lift.",
+    "preserved": "The two-adult composition, same recipient, suspended key, taut ribbon, recipient reach, target-directed gaze, camera, rain/tungsten lighting, clothing, and atomizer setting remain visibly stable.",
+    "new_failures_observed": []
+  },
+  "identity": {
+    "status": "not_evaluated",
+    "reason": "The reference was used only for adult facial appearance and dark wavy hairstyle; this arm does not perform biometric identity comparison."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "boundary": "The runtime audit passed, but every gate decision above is based on direct inspection of the generated native and thumbnail pixels."
+}

@@ -1,0 +1,54 @@
+{
+  "contract_version": "photo-prepack-validation-attempts/v1",
+  "arm_id": "arm-02",
+  "attempts": [
+    {
+      "attempt": 1,
+      "stage": "candidate_pack_generation",
+      "candidate_pack_created": false,
+      "exit_code": 1,
+      "error": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+      "input_authorial_core_file_sha256": "5c4a6c876ed70a2ed72fe88087c11668289f0abca879c7dc8ca4d875135a4bac",
+      "normalization": {
+        "changed_field": "runtime_forbidden_labels",
+        "before": [
+          "상대지향적 유혹 표현"
+        ],
+        "after": [],
+        "reason": "The coordinator-assigned label is not byte-grounded in the requesting-user envelope; the post-core visual profile independently forbids the label at runtime.",
+        "baseline_prompt_changed": false,
+        "interpreted_intent_changed": false,
+        "subject_setting_event_changed": false,
+        "profile_data_added_to_core": false
+      }
+    },
+    {
+      "attempt": 2,
+      "stage": "candidate_pack_generation",
+      "candidate_pack_created": false,
+      "exit_code": 1,
+      "error": "authorial core interpreted_intent needs at least 4 concrete content words",
+      "input_authorial_core_file_sha256": "a4f68360905d2c6791ea46337edca16bbf4f09b1d17ae1e3e42bc1a19cd747fb",
+      "blocking_constraint": {
+        "assigned_exact_value": "상대지향적 유혹 표현",
+        "content_word_count_under_generator": 3,
+        "required_content_word_count": 4,
+        "exact_value_must_remain_byte_unchanged": true,
+        "workaround_attempted": false,
+        "reason": "Adding, repeating, splitting with invisible characters, or translating words would violate the coordinator's exact-value requirement."
+      }
+    },
+    {
+      "attempt": 3,
+      "stage": "candidate_pack_generation",
+      "candidate_pack_created": true,
+      "exit_code": 0,
+      "error": null,
+      "input_authorial_core_file_sha256": "a9769b6e53092d0b59e85860fa4c35d2b1c370f8a091f184eeae71bd2306a6fe",
+      "coordinator_correction_path": "coordinator_correction.json",
+      "candidate_pack_path": "candidate_pack.json",
+      "candidate_pack_sha256": "84aa2c86faa54cfe14204f842a70f4144a286d5253fe2e74505ae80ae9730fe1",
+      "pack_id": "8a7403a87bcbc516"
+    }
+  ]
+}

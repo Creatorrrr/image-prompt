@@ -1,0 +1,88 @@
+{
+  "schema_version": "photo-arm-runtime-snapshot-provenance/v1",
+  "arm_id": "arm-02",
+  "seed": 734894,
+  "candidate_pack_version": "v6",
+  "source_ref": "coordinator/runtime_snapshot",
+  "snapshot_inputs": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/runtime_snapshot/photo_prompt_tags.json",
+      "sha256": "4bbbd97e00feaa29086ee2e010f295fd36c2634aef8f3fd5f90c3935dbcc57ba"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/runtime_snapshot/photo_prompt_semantic_index.json",
+      "sha256": "5e9ae7a77ab7938178825f7de046f647b8346b38a200c143a82b7abde0c1c3da"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/runtime_snapshot/photo_prompt_visual_obligations.json",
+      "sha256": "5e2a5e8829bf8a25d4edff4febd74f2341e1b05a6f4ad5818f175597bfc97f0b"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/runtime_snapshot/photo_prompt_visual_profile_index.json",
+      "sha256": "f65ee0f154cb52895cae62265703332220abc8baa776793df02f878c37bca650"
+    }
+  ],
+  "retained_contracts": {
+    "authorial_core_file_sha256": "e2d1852cea8da8c40f767b38a33eb9e8e67ed44ea4294ec6e42e2bcc913a5afb",
+    "authorial_core_canonical_sha256": "42f9c606902e58b3706d1e034696b3fdc3b1e1576ff39db9224212ecb0ae769f",
+    "intent_lock_sha256": "706919299063daa107b1b5d973b425330678ae057e81d5985f0a49f220491914",
+    "visual_intent_file_sha256": "1db3cc76c09168389df0c73fc2e8c58f66de09e7a5f53a21982be4f25489a9e4",
+    "visual_intent_canonical_sha256": "c1ffc9bd5d1d37bf9f3808e50b7ff571238935d1bcfe41827d9d57704e7f1559",
+    "pack_id": "27e90e590819fbbf",
+    "candidate_pack_sha256": "e04c5e84cfaae48d0e8c2783687e0d2a632f466861126d814507facfcafa4d12",
+    "composed_prompt_sha256": "174cc2a01d07fc6e1b64f1a33542082169703c440adc4dadad030ea5c608318c",
+    "composed_audit_sha256": "3a7594b349db3bf77be5f0416a5d6db3a93cb922d27f610d3169c20429831d7a",
+    "composed_audit_status": "pass",
+    "runtime_prompt_id": "ba70bf8d9233f697",
+    "render_request_sha256": "55124a2ea145be0852a79862fb34ef1613c72f9a72a0a538008565bfa863f416",
+    "render_request_audit_sha256": "873f9a81f0f54d2d390bcc2b5230df557f110d6e95b2e7937da264ea8e389f5c",
+    "render_request_audit_status": "pass"
+  },
+  "effective_visual_contract_sha256": "0aed48679b6496ba253cfcf4d1c10d81ad6ce04c1b390a9566d78e1837497abd",
+  "required_hard_gates": [
+    "vo_bust_adult_bilateral_read",
+    "vo_bust_ribcage_reference",
+    "vo_bust_projection_coherence",
+    "vo_bust_not_whole_body_or_value"
+  ],
+  "native_reference_transport": {
+    "mechanism": "built_in_image_gen_referenced_image_paths",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "facial_appearance_only",
+    "local_path_unavailable": false,
+    "strict_file_hash_binding": "available"
+  },
+  "discarded_inputs": {
+    "path": "discarded_pre_snapshot/",
+    "status": "discarded",
+    "reason": "Concurrent shared-asset drift; never used for the retained runtime request or image call."
+  },
+  "ledger_and_manifest": {
+    "ledger_record_created": true,
+    "canonical_run_manifest_created": true,
+    "ledger_run_id": "329bc1acbaa5ad27",
+    "status": "safety_block",
+    "image_paths": [],
+    "reason": "Attempt 2 used the hash-bound local reference and was blocked by output-stage moderation before any accessible image path was returned."
+  },
+  "attempt_2_outcome": {
+    "status": "moderation_blocked_output",
+    "request_id": "d6bc33a9-bc50-4c3d-9558-4b266e9117d0",
+    "moderation_categories": [
+      "sexual"
+    ],
+    "rendered_image": null,
+    "pixel_verdict": "unscored_no_image",
+    "retry_performed": false
+  },
+  "discarded_recorder_artifacts": {
+    "ledger_path": "image_runs.discarded-empty-prompt.ndjson",
+    "manifest_path": "run_manifest.discarded-empty-prompt.json",
+    "run_id": "22f84273ab1afb86",
+    "prompt_id": "e3b0c44298fc1c14",
+    "reason": "A recorder-only shell variable expansion error serialized an empty prompt; this row never represented an additional image call and was excluded from the retained ledger."
+  },
+  "cross_arm_inputs_used": false,
+  "shared_assets_modified": false
+}

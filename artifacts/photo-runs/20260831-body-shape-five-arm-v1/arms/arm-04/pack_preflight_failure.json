@@ -1,0 +1,13 @@
+{
+  "stage": "candidate_pack_preflight",
+  "candidate_pack_created": false,
+  "command_exit_code": 2,
+  "errors": [
+    "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+    "authorial core intent_lock contains unknown dimensions: facial_appearance_reference",
+    "visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py",
+    "arm-local visual index refresh initially lacked GEMINI_API_KEY or GOOGLE_API_KEY",
+    "semantic index dictionary_hash does not match the tag dictionary; regenerate it with build_semantic_index.py"
+  ],
+  "correction_scope": "Removed only the ungrounded arm-local runtime label and normalized the attachment anchor dimension name to identity. Copied local index-refresh outputs were later marked discarded after coordinator drift detection. The active pack and audits use coordinator/runtime_snapshot only; baseline prompt, interpreted meaning, anchor evidence, visual intent, and all shared skill files remained unchanged."
+}

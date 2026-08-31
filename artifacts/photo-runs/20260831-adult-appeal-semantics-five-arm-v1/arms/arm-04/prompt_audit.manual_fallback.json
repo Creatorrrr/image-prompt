@@ -1,0 +1,43 @@
+{
+  "contract_version": "photo-prompt-audit/manual-fallback-v1",
+  "arm_id": "arm-04",
+  "pack_id": "e65d3c929866d13",
+  "status": "manual_literal_pass_official_contract_fail",
+  "official_audit": {
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/composed_prompt.json",
+    "exit_code": 1,
+    "status": "fail",
+    "primary_reason": "The official auditor rejects the explicitly manual fallback candidate-pack contract; the official v6 generator could not create a pack because it requires four content words in interpreted_intent while the requester mandated an exact three-token Korean value.",
+    "failures": [
+      "unsupported candidate-pack contract",
+      "manual pack_id is not an official pack-integrity hash",
+      "manual visual-obligation projection is not recognized",
+      "manual pack has no official generated safety contract",
+      "manual candidate IDs are not exposed through an official generated candidate inventory"
+    ]
+  },
+  "manual_literal_audit": {
+    "status": "pass",
+    "prompt_word_count": 261,
+    "absolute_word_bounds": {
+      "minimum": 24,
+      "maximum": 320,
+      "pass": true
+    },
+    "required_evidence_fields_literal": true,
+    "core_anchor_evidence_literal": true,
+    "runtime_forbidden_labels_absent": true,
+    "transformed_candidate_evidence_literal": true,
+    "negative_en_preserved": true,
+    "composer_is_agent": true,
+    "final_prompt_matches_composed_prompt": true,
+    "prompt_content_sha256": "a29bac072a49b32b8012c77bfffe1b4ea03c9a9ffab3738cc60aa5581b2a252d"
+  },
+  "evidence_boundary": {
+    "project_audit_pass": false,
+    "manual_prompt_literal_pass": true,
+    "pixel_pass": false,
+    "pixel_status": "not_run_generation_failed_missing_reference",
+    "user_judgment": "pending"
+  }
+}

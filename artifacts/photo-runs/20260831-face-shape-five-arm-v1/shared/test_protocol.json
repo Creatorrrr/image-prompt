@@ -1,0 +1,33 @@
+{
+  "contract_version": "photo-face-shape-independent-test-protocol/v1",
+  "request_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+  "candidate_pack_version": "v6",
+  "frozen_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+  "visual_registry_sha256": "08de189e158b8a9c7f361802adb57b2bab14fe5cf748853a68b5162214c96381",
+  "candidate_dictionary_sha256": "93e722ed5350d86b7288c680ba9c0a75941f778bc75a99f67fc6bfcfbe4cced0",
+  "visual_profile_index_sha256": "78bf0e3bf7488f38ed0282901d3af7a4e62713a2987215cce3c3c0e83635c457",
+  "semantic_index_sha256": "314699ea5aed4a6575713e27a8dcd704188f4243f94a42c8a5859ef6da902bc2",
+  "reference": {
+    "path": "artifacts/photo-prompt-face-shape-semantics-20260831/reference/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "appearance_reference"
+  },
+  "shared_attempt_policy": {
+    "native_tool": "built_in_image_gen",
+    "maximum_image_calls_per_arm": 1,
+    "prompt_frozen_before_image_call": true,
+    "one_saved_image_per_arm": true,
+    "missing_or_blocked_image": "unscored_generation_outcome",
+    "partial_gate": "fail",
+    "user_judgment": "not_yet_received"
+  },
+  "independence_rule": "Each arm may use only its coordinator-frozen request envelope, assigned target and concept domain, the shared frozen skill snapshot, and the common appearance reference. No arm may read another arm's prompt, pack, image, manifest, review, or final message.",
+  "cases_fixture": "tests/fixtures/photo_prompt/face_shape_five_arm_cases_v1.jsonl",
+  "arms": [
+    {"arm_id": "face-arm-a", "request_envelope_file_sha256": "72074a9efa7928c547daa4df2c55815758c9288429bbf49cc81f909c611cea77", "target_profile_id": "oval_face_contour_relation", "concept_domain": "nocturnal_botanical_forensics", "concept_seed": 824173},
+    {"arm_id": "face-arm-b", "request_envelope_file_sha256": "75adb33d48773587807c445448728455e05f42cd17f63ae809a2707796eb71f7", "target_profile_id": "round_compact_face_relation", "concept_domain": "polar_radio_observatory_maintenance", "concept_seed": 194608},
+    {"arm_id": "face-arm-c", "request_envelope_file_sha256": "d4bd1b7f043998b5c18a7190b538677aeeee81c1f0a8fba3d72b6c5609b6b24f", "target_profile_id": "diamond_zygomatic_dominant_relation", "concept_domain": "flooded_baroque_archive_conservation", "concept_seed": 731552},
+    {"arm_id": "face-arm-d", "request_envelope_file_sha256": "ffd3a232b254c1a135cd8d1bef5cda4fb81ec706be5a75fa0ce0a6af7d7f51df", "target_profile_id": "upper_face_to_chin_taper_relation", "concept_domain": "volcanic_glass_kinetic_couture_atelier", "concept_seed": 468029},
+    {"arm_id": "face-arm-e", "request_envelope_file_sha256": "50ed50233e93f43c8ad308235a70afbb091b383531d7553e05af78f84370e3c0", "target_profile_id": "cjk_seed_face_relation", "concept_domain": "dawn_rooftop_analog_astronomy_cartography", "concept_seed": 950317}
+  ]
+}

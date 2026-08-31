@@ -1,0 +1,86 @@
+{
+  "schema_version": "photo-body-shape-root-pixel-review/v1",
+  "reviewer": "root-coordinator",
+  "method": "direct inspection of every saved native image and standardized thumbnail",
+  "reference_claim_boundary": "observable facial-appearance continuity only; no biometric identity verification",
+  "partial_policy": "partial_is_fail",
+  "results": [
+    {
+      "arm": "arm-01",
+      "target_keyword": "slender build",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-01/render-attempt-02.png",
+      "image_sha256": "34f4b7e8ef491fe4a5962d0711d997f0f6f3b91473c77ecff133417e706b93a9",
+      "target_gates": {
+        "vo_slender_full_body_read": "pass",
+        "vo_slender_narrow_torso": "pass",
+        "vo_slender_narrow_limbs": "pass",
+        "vo_slender_not_stature_or_lens_only": "pass"
+      },
+      "target_keyword_verdict": "pass",
+      "common_adult_fully_clothed_anatomy_reference_appearance": "pass",
+      "scene_control_verdict": "fail",
+      "scene_control_evidence": "Seed-vault inventory work is legible, but the exact capsule-into-rack contact phase is ambiguous and readable signage, labels, and a fictional brand mark violate the no-readable-text control."
+    },
+    {
+      "arm": "arm-02",
+      "target_keyword": "busty figure",
+      "image_path": null,
+      "target_keyword_verdict": "unscored",
+      "process_outcome": "native image generation output blocked by sexual moderation"
+    },
+    {
+      "arm": "arm-03",
+      "target_keyword": "top hourglass silhouette",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-03/render-attempt-01.png",
+      "image_sha256": "cb29fde3da312b7ecf9be22f86dace03505bce9d22f491581c5ac29f214035b1",
+      "target_gates": {
+        "vo_top_hourglass_bilateral": "fail",
+        "vo_top_hourglass_waist": "pass",
+        "vo_top_hourglass_two_expansions": "pass",
+        "vo_top_hourglass_upper_dominance": "fail"
+      },
+      "target_keyword_verdict": "fail",
+      "common_adult_fully_clothed_anatomy_reference_appearance_action": "pass",
+      "evidence": "The table, arms, and forward lean interrupt the torso-to-hip contours, and upper dominance does not survive discounting pose, crop, and perspective. Readable alert signage also violates the scene text control."
+    },
+    {
+      "arm": "arm-04",
+      "target_keyword": "spoon-shaped figure",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-04/render-attempt-02.png",
+      "image_sha256": "c06139dbf4c6222703ada1d512cd965032f2b8d052f41f9153c8fa3f44d43114",
+      "target_gates": {
+        "vo_spoon_bilateral_high_hip": "pass",
+        "vo_spoon_rapid_transition": "pass",
+        "vo_spoon_lower_continuity": "pass",
+        "vo_spoon_not_pear_or_hipdip": "fail"
+      },
+      "target_keyword_verdict": "fail",
+      "common_adult_fully_clothed_anatomy_reference_appearance_action": "pass",
+      "evidence": "The lower relation is visible, but the tight belt, gathered glossy coverall, forward lean, and wide stance materially create or amplify the high-hip shelf, so garment and pose substitution cannot be ruled out."
+    },
+    {
+      "arm": "arm-05",
+      "target_keyword": "diamond-shaped figure",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-05/render-attempt-02.png",
+      "image_sha256": "83bb0a718aad408951469dd17d7ebcf42b4cca0a6ecdf1f355c65cd7072454f4",
+      "target_gates": {
+        "vo_diamond_bilateral_oblique": "pass",
+        "vo_diamond_central_maximum": "fail",
+        "vo_diamond_two_direction_taper": "fail",
+        "vo_diamond_not_oval_or_pattern": "fail"
+      },
+      "target_keyword_verdict": "fail",
+      "common_adult_fully_clothed_anatomy_reference_appearance_action": "pass",
+      "evidence": "The central waist-abdomen is the narrowest region rather than the maximum; the silhouette widens toward the hips and reads as cinched hourglass or pear rather than diamond."
+    }
+  ],
+  "summary": {
+    "preflight_pass": 5,
+    "rendered_images": 4,
+    "target_keyword_pass": 1,
+    "target_keyword_fail": 3,
+    "target_keyword_unscored": 1,
+    "saved_reference_appearance_pass": 4,
+    "user_judgment": "pending"
+  }
+}

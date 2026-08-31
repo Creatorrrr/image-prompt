@@ -1,0 +1,78 @@
+{
+  "contract_version": "photo-arm-command-hash-record/v1",
+  "arm_id": "arm-04",
+  "source_snapshot": {
+    "git_head": "1540888a47b1629e04239c34404d4bf8bff214c7",
+    "branch": "main",
+    "photo_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "imagegen_skill_sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba"
+  },
+  "commands": [
+    {
+      "stage": "candidate_pack_pre_correction_attempt_1",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/photo_visual_intent.json --candidate-pack-version v6 --creativity 0.8 --seed 2286608887 --emit-candidate-pack --n 1 --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json",
+      "exit_code": 1,
+      "result": "runtime_forbidden_labels not grounded in an active requester span"
+    },
+    {
+      "stage": "candidate_pack_pre_correction_attempt_2",
+      "command": "same v6 command after removing only the redundant core runtime_forbidden_labels entry",
+      "exit_code": 1,
+      "result": "interpreted_intent needs at least 4 concrete content words"
+    },
+    {
+      "stage": "candidate_pack_after_coordinator_correction",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/photo_visual_intent.json --candidate-pack-version v6 --creativity 0.8 --seed 2286608887 --emit-candidate-pack --n 1 --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json",
+      "exit_code": 0,
+      "result": "generated official v6 pack; first binding version preserved separately"
+    },
+    {
+      "stage": "candidate_pack_after_binding_correction",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/photo_visual_intent.json --candidate-pack-version v6 --creativity 0.8 --seed 2286608887 --emit-candidate-pack --n 1 --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json",
+      "exit_code": 0,
+      "result": "generated final official v6 pack c3bda106a683ffcc"
+    },
+    {
+      "stage": "composed_prompt_audit_attempt_1",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.invalid_binding_attempt.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/composed_prompt.attempt_01.json",
+      "exit_code": 1,
+      "result": "two component-anchor failures, 377-word budget failure, and wrong clarification decision key"
+    },
+    {
+      "stage": "composed_prompt_audit_final",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/composed_prompt.json",
+      "exit_code": 0,
+      "result": "status pass, quality_status warn, 308 audit-counted words, no blocking failures"
+    },
+    {
+      "stage": "runtime_request_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json --composed artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/composed_prompt.json --request artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/runtime_request.json --output artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/runtime_audit.json",
+      "exit_code": 1,
+      "result": "only blocking failure: references[0].path is required"
+    },
+    {
+      "stage": "builtin_image_generation_pre_correction",
+      "command": "image_gen(prompt=<manual-fallback prompt>, num_last_images_to_include=1)",
+      "exit_code": 1,
+      "result": "requested the last 1 conversation images, but only 0 were available"
+    },
+    {
+      "stage": "builtin_image_generation_final",
+      "command": "image_gen(prompt=<exact runtime_prompt_en>, num_last_images_to_include=1)",
+      "exit_code": 1,
+      "result": "requested the last 1 conversation images, but only 0 were available"
+    }
+  ],
+  "canonical_bindings": {
+    "request_text_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+    "initial_authorial_core_file_sha256": "4be72583e23da8e80009c627fdc4681c72fb1cc5a0ebcf452f13a03e1b88c12c",
+    "corrected_authorial_core_file_sha256": "0f201ef27039925ff88609299470053fc68a577de15370027c7a05aacd2551a7",
+    "generated_authorial_core_canonical_sha256": "4e9eb0f9b77e1d7bec0e2cfd2f4f1c2ef9e2174f3ad8aa4cf2d884d2b8353b20",
+    "generated_intent_lock_canonical_sha256": "d25b9eeb6ca84f502d723398d1137ceba1a470f1dda5fdce0669d8443999e3c3",
+    "final_visual_intent_canonical_sha256": "31fc9b1bf04f3ea3582c8307e72a054a543c87bb123a40b514c6174a23e08b47",
+    "candidate_pack_file_sha256": "d81c90cb2a446215b9959b98ce33c92f12cf30c04b09d10fab397252dd1cba3e",
+    "composed_prompt_file_sha256": "c42ab64d3dc8f7db60003eeeb39fae0baf6d110e93522b407aefc95a50099f16",
+    "final_prompt_content_sha256": "27d7abed97d57705ffa5de58df5d1bdd579b42c5ff60df426d4121e9f2402303",
+    "effective_visual_contract_sha256": "dc5d9337f3d9cb5a8cf16b7e20f9d5c5ba62ab6e76858b2e4b797e0cd43fbd1f"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "1540888a47b1629e04239c34404d4bf8bff214c7",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Resume the frozen arm-05 test with the newly available concrete facial-appearance reference, audit exact runtime inputs, render once, and independently score the four required visual gates."
+  },
+  "evidence": [
+    {
+      "id": "e-frozen-inputs",
+      "kind": "prompt-inspection",
+      "claim": "The official candidate pack, composed prompt, final prompt, profile, and seed remained frozen; final_prompt.txt has SHA-256 46c29c0b6bd4202fdf1ba31d850fb5f8e580aaf40f4507b6309f4c547c4fc5fa.",
+      "artifact": "candidate_pack.json; composed_prompt.json; final_prompt.txt; attempt_02/runtime_request.json"
+    },
+    {
+      "id": "e-reference-bytes",
+      "kind": "measurement",
+      "claim": "The concrete 960 by 1280 JPEG reference matched the supplied SHA-256 and was bound only for adult facial appearance and dark wavy hairstyle.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg sha256=e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3"
+    },
+    {
+      "id": "e-runtime-audit",
+      "kind": "package-check",
+      "claim": "The repository exact-input audit passed with one verified reference, byte-matched negative text, and the frozen final prompt bytes embedded contiguously.",
+      "artifact": "attempt_02/runtime_audit.json sha256=737b095666d2c7883e58669420d4748b63898c4475d7d04241d7dcd0fa3df7b2"
+    },
+    {
+      "id": "e-prompt-evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "All four visual-obligation evidence phrases are present in the frozen composed prompt; the prior composed audit passed with only a length advisory.",
+      "artifact": "prompt_audit.json; composed_prompt.json"
+    },
+    {
+      "id": "e-attempt-01-block",
+      "kind": "generation-outcome",
+      "claim": "Attempt 01 produced no pixels because the requested conversation image transport exposed zero images.",
+      "artifact": "generation_attempt_01.json"
+    },
+    {
+      "id": "e-attempt-02-delivery",
+      "kind": "generation-outcome",
+      "claim": "Built-in imagegen delivered a native 1448 by 1086 PNG using the audited runtime prompt and concrete local reference; no alternate renderer was used.",
+      "artifact": "generation_attempt_02.json; attempt_02/output.png sha256=db6c9540fa66290f2d03c3da3ff3147d32ee5f809d6d45696aee4bd4e1494941"
+    },
+    {
+      "id": "e-pixel-review",
+      "kind": "render-observation",
+      "claim": "Thumbnail and native-scale inspection found identifiable former-luxury materials, wear on those same luxury surfaces, readable after-event residue, and an alert adult visibly engaged in unfinished inventory work.",
+      "artifact": "pixel_review.json; attempt_02/thumbnail.png; attempt_02/output.png"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Former luxury and present material decline coexist on the same surfaces in a readable event aftermath while an awake adult performs a self-directed unfinished action connected to the residue.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "former-luxury",
+        "statement": "At least one identifiable former-luxury material anchors the environment at thumbnail scale.",
+        "evidence_ids": ["e-frozen-inputs"],
+        "causal_controls": ["velvet, marble, gilding, satin, or crystal remains materially identifiable"]
+      },
+      {
+        "id": "same-surface-decline",
+        "statement": "Wear, tarnish, cracking, dust, or peeling affects the same luxury surfaces rather than a separate generic ruin.",
+        "evidence_ids": ["e-frozen-inputs"],
+        "causal_controls": ["surface-localized abrasion, peeling, tarnish, staining, or cracking"]
+      },
+      {
+        "id": "after-event-residue",
+        "statement": "Displaced glassware, spent wax, wilted flowers, ribbons, or comparable residue establishes a recent aftermath.",
+        "evidence_ids": ["e-frozen-inputs"],
+        "causal_controls": ["multiple displaced or spent event objects share the work surface"]
+      },
+      {
+        "id": "alert-unfinished-action",
+        "statement": "The adult is awake, self-directed, and visibly mid-action with residue or worn material rather than merely posed.",
+        "evidence_ids": ["e-frozen-inputs"],
+        "causal_controls": ["open eyes, upright posture, both hands engaged with an inventory object and ledger"]
+      }
+    ],
+    "flexible_dimensions": [
+      "minor prop placement",
+      "exact pattern of surface wear",
+      "small variations in dawn-to-tungsten balance"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-reference-transport",
+      "scale": "global",
+      "axis": "generation delivery",
+      "source_state": "A concrete user-authorized reference exists.",
+      "render_state": "Attempt 01 was unavailable because no conversation image reached the tool; attempt 02 delivered pixels after concrete path binding.",
+      "evidence_ids": ["e-attempt-01-block", "e-reference-bytes", "e-attempt-02-delivery"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-concrete-reference-binding",
+      "stage": "external",
+      "statement": "The earlier block was a reference-transport failure rather than prompt or pixel failure; binding the supplied concrete path and digest should allow the same frozen prompt to render.",
+      "evidence_ids": ["e-attempt-01-block", "e-reference-bytes"],
+      "falsifier": "The exact-input audit rejects the concrete reference or built-in imagegen again returns no image while using the verified local path."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": ["test"],
+    "general_rule": "No prompt-skill source change was made; only the reference transport was resumed with concrete bytes while all authored inputs remained frozen.",
+    "generalization_basis": "The motivating failure was external transport, so altering prompt semantics would not address the earliest supported divergence.",
+    "hypothesis_ids": ["hypothesis-concrete-reference-binding"],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-runtime-audit"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt-evaluation", "e-frozen-inputs"]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": ["e-attempt-02-delivery", "e-pixel-review"]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-05-motivating-case",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["former luxury", "same-surface decline", "after-event residue", "alert unfinished action"],
+        "evidence_ids": ["e-pixel-review"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "diagnosed",
+    "claim_scope": "render-fidelity",
+    "rationale": "This frozen arm produced one all-four-gates pixel pass after concrete reference binding. The conclusion is limited to this motivating case; no unrelated holdout or user aesthetic judgment supports promotion.",
+    "evidence_ids": ["e-runtime-audit", "e-attempt-02-delivery", "e-pixel-review"]
+  }
+}

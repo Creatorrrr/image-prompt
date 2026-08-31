@@ -1,0 +1,72 @@
+{
+  "contract_version": "photo-arm-pixel-review/v1",
+  "arm_id": "arm-01",
+  "attempt": 2,
+  "status": "failed_one_hard_gate",
+  "reviewer": "Codex agent direct pixel inspection",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_02/native.png",
+  "image_sha256": "5cdc73837bcdaa391efe8ff8cf39b556f07ef34ac7dee57012668c2cfe50162a",
+  "review_scales": [
+    {
+      "scale": "native",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_02/native.png",
+      "sha256": "5cdc73837bcdaa391efe8ff8cf39b556f07ef34ac7dee57012668c2cfe50162a",
+      "dimensions": "1023x1537"
+    },
+    {
+      "scale": "thumbnail",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_02/thumbnail.png",
+      "sha256": "7e4e0448995fb5c096854b26db37b84ce4183cfd2a7d9a6549e07644fa6fdf2b",
+      "dimensions": "426x640"
+    }
+  ],
+  "hard_gates": [
+    {
+      "gate_id": "vo_self_possessed_adult_agency",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "At both scales the adult subject grips and turns the low crank with one hand while the other hand manipulates the resonator's upper control beside the hanging ribbons; she is visibly operating the apparatus rather than merely standing beside it.",
+      "substitute_confusion": "This is not credited from wardrobe or gaze: the two distinct hand-to-machine contacts and the crank geometry make the self-directed action readable."
+    },
+    {
+      "gate_id": "vo_self_possessed_grounded_posture",
+      "required_scale": "thumbnail",
+      "status": "fail",
+      "visible_evidence": "At 426x640 the torso is upright and the shoulders are composed, but the column dress and lower crop conceal both feet and the rear-foot load point, so a stable support path cannot be directly verified.",
+      "substitute_confusion": "An elegant upright silhouette can be a generic fashion pose; it does not substitute for a visibly grounded weight-bearing path."
+    },
+    {
+      "gate_id": "vo_self_possessed_controlled_face",
+      "required_scale": "native",
+      "status": "pass",
+      "visible_evidence": "At native scale the eyes are open, focused toward the apparatus side, and clearly alert; the mouth movement is small and restrained while the hands remain engaged in the task.",
+      "substitute_confusion": "The face does not read as asleep, intoxicated, frightened, or carried only by direct camera gaze; the off-axis task-side focus and ongoing hand action distinguish it from a face-only pose."
+    },
+    {
+      "gate_id": "vo_self_possessed_material_relation",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "Both scales show the opaque copper-brown dress hem pulled into a broad leftward sweep, with directional folds, crisp lower edges, and changing warm highlights around the turned waist and moving hem.",
+      "substitute_confusion": "The result is not credited from satin shine alone: the asymmetric hem displacement and fold direction visibly relate the material to airflow and body position."
+    }
+  ],
+  "failed_gate_ids": [
+    "vo_self_possessed_grounded_posture"
+  ],
+  "repair_scope": {
+    "eligible": true,
+    "allowed_change": "Expose an unmistakable planted support path at thumbnail scale by a small downward/wider reframing only.",
+    "must_preserve_gate_ids": [
+      "vo_self_possessed_adult_agency",
+      "vo_self_possessed_controlled_face",
+      "vo_self_possessed_material_relation"
+    ],
+    "must_preserve_scene": "Keep the same adult subject appearance role, resonator operation, ferry textile-lab setting, copper-brown opaque dress, airflow-driven hem, camera family, and light system."
+  },
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "boundary": "This review scores delivered pixels only. Prompt and runtime audit presence were not treated as pixel evidence."
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "photo-prepack-validation-failures/v1",
+  "arm_id": "arm-03",
+  "failures": [
+    {
+      "stage": "candidate_pack_generation_preflight",
+      "command_exit_code": 1,
+      "error": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+      "failed_authorial_core_file_sha256": "5b5a4b28c346b1c72c66b38a5275d78a14ca75e0e712d46beaf77a098cdf954f",
+      "correction_scope": "non-semantic schema correction only",
+      "correction": "Removed the ungrounded runtime_forbidden_labels entry from the core. The interpreted intent, baseline prompt, subject, setting, event, anchors, and all visible evidence remain byte-identical. Active-profile runtime labels remain prohibited by the post-core visual-obligation contract."
+    },
+    {
+      "stage": "candidate_pack_generation_preflight_after_schema_correction",
+      "command_exit_code": 1,
+      "error": "authorial core interpreted_intent needs at least 4 concrete content words",
+      "authorial_core_file_sha256": "6d424d4e4f08e926747832544d85a500b08a7b7c8b99c0149ed6163bbe6e4d58",
+      "constraint_conflict": "The arm contract requires interpreted_intent to byte-equal the three-token Korean label 장난스러운 플러팅 상호작용, while the current v6 generator requires at least four concrete content words.",
+      "resolution": "Initially preserved the arm contract without padding or bypass. A later explicit coordinator correction authorized a natural four-plus-content-word interpreted_intent while preserving the exact activation term once, the seed, random concept, baseline, and gates; the official v6 path was then resumed.",
+      "superseded_by": "coordinator_correction.json"
+    }
+  ]
+}
