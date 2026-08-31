@@ -1,0 +1,131 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "e6c37131cd6d6755",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex arm-04 native-and-thumbnail pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-04-sari-nivi/generation/attempt-01/render.png",
+  "result_sha256": "6dc3e1880b8251ff7633022ba284ddf9305c5d02e32a048a127d8f1ded6dd730",
+  "scales_reviewed": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-04-sari-nivi/generation/attempt-01/render.png",
+      "width": 941,
+      "height": 1672,
+      "detail": "full frame plus native-pixel torso, waist-route, and lower-drape crops"
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-04-sari-nivi/generation/attempt-01/thumbnail-320.png",
+      "sha256": "5953b77b01ddbaf75493f1fc2acb6fdbe57b2e46341291185b24bef246fb6aab",
+      "width": 180,
+      "height": 320
+    }
+  },
+  "hard_gates": {
+    "vo_nivi_continuous_sari_cloth": {
+      "status": "pass",
+      "evidence": "At thumbnail scale the brown waist drape, front pleat fan, diagonal torso panel, left-shoulder turn, and long free end read as one garment system; native crops retain a matching border and fabric texture along that route despite partial hair overlap at the shoulder."
+    },
+    "vo_nivi_waist_wrap_front_pleats": {
+      "status": "pass",
+      "evidence": "The thumbnail shows a centered fan of several parallel front pleats rather than random dress folds; the native waist and lower-drape crops show those pleats converging into the wrapped waist beneath the resting hand."
+    },
+    "vo_nivi_torso_crossing_left_pallu": {
+      "status": "pass",
+      "evidence": "Both scales clearly show the sari crossing the torso diagonally to the subject's left shoulder, with a large matching pallu continuing outward on image-right in the same saved frame."
+    },
+    "vo_nivi_support_layers": {
+      "status": "fail",
+      "evidence": "Native inspection clearly reveals a separate fitted black blouse, but the sari fully hides the petticoat or underskirt waist and no second support-layer boundary is legible beneath the drape; blouse visibility alone cannot satisfy this conjunctive gate."
+    },
+    "vo_nivi_not_gown_and_scarf": {
+      "status": "pass",
+      "evidence": "At 180x320 the image reads as a wrapped sari with unified brown fabric, border, center-front pleats, diagonal torso crossing, and shoulder pallu, not as a stitched gown carrying an unrelated detached scarf."
+    }
+  },
+  "reject_substitute_checks": {
+    "stitched_sari_gown": {
+      "status": "pass",
+      "evidence": "No stitched bodice-to-skirt dress construction carries the silhouette; visible front tucks and the diagonal drape carry it."
+    },
+    "detached_shoulder_scarf": {
+      "status": "pass",
+      "evidence": "The shoulder end shares the same brown textile and border system as the torso drape and front garment route."
+    },
+    "random_dress_pleats": {
+      "status": "pass",
+      "evidence": "The pleats are repeated, aligned, centered, and visibly converge toward a waist insertion region."
+    },
+    "regional_sari_drape_unspecified": {
+      "status": "pass",
+      "evidence": "The observed center-front tucked pleats, diagonal torso crossing, and subject-left shoulder pallu form the requested Nivi topology rather than an indeterminate drape."
+    },
+    "pattern_or_jewelry_only": {
+      "status": "pass",
+      "evidence": "Garment topology remains legible without relying on border pattern or jewelry."
+    },
+    "nivi_label_without_continuous_cloth_route": {
+      "status": "pass",
+      "evidence": "The pixels show the route components directly; the verdict does not rely on prompt metadata or the Nivi label."
+    }
+  },
+  "confound_checks": {
+    "hair_over_left_shoulder": {
+      "status": "pass",
+      "evidence": "Long hair overlaps part of the shoulder junction, but the bordered diagonal cloth remains visible before the overlap and the matching pallu emerges beyond it."
+    },
+    "hand_over_waist_tuck": {
+      "status": "pass",
+      "evidence": "The resting hand occludes a small central area, while enough converging pleat insertion and surrounding waist wrap remain visible in the native crop."
+    },
+    "rain_cling_or_pattern_as_structure": {
+      "status": "pass",
+      "evidence": "Wet texture and border ornament support material realism but do not create the required pleat and pallu topology by themselves."
+    },
+    "support_layer_occlusion": {
+      "status": "fail",
+      "evidence": "The petticoat or underskirt support boundary is fully concealed, causing the corresponding target hard gate to fail."
+    }
+  },
+  "supplemental_observations": {
+    "reference_appearance_continuity": {
+      "status": "pass",
+      "boundary": "non-biometric visible-appearance comparison only",
+      "evidence": "The render preserves an adult presentation with long center-parted dark hair and broadly consistent visible eye spacing, face length, nose, lips, and jaw proportions from the sole portrait reference; this is not identity verification."
+    },
+    "adult_age_continuity": {
+      "status": "pass",
+      "evidence": "The subject remains visibly adult at both review scales."
+    },
+    "locked_event_mid_lift": {
+      "status": "fail",
+      "evidence": "The brass gauge remains fully supported upright on the stone ledge and the fingertips rest on its top, so the action reads as touch or preparation rather than an object already being lifted."
+    },
+    "full_body_both_feet_visibility": {
+      "status": "fail",
+      "evidence": "The full body is framed, but only one bare foot is clearly visible while the other is covered by the sari hem."
+    }
+  },
+  "overall": {
+    "generation_status": "success",
+    "target_profile": "nivi_sari_continuous_pleat_pallu_system",
+    "target_gate_pass_count": 4,
+    "target_gate_fail_count": 1,
+    "failed_target_gates": [
+      "vo_nivi_support_layers"
+    ],
+    "partial_is_fail": true,
+    "pixel_verdict": "FAIL",
+    "technical_qualified": false,
+    "reason": "One of five strict target profile gates failed at native scale; the separately locked mid-lift event also did not survive the render."
+  },
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "Requesting-user acceptance for this arm has not yet been received."
+  }
+}

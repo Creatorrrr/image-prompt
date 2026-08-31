@@ -1,0 +1,45 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent reference-guided photographic stress test in which the selected random complex concept makes Andean poncho topology, panel drape, neck opening, and woven structure visibly judgeable.",
+  "subject": "The same unmistakably adult woman shown in the supplied portrait reference, wearing an Andean poncho.",
+  "setting": "A pre-dawn high-altitude radio astronomy station above a cloud inversion.",
+  "event": "She braces a wind-loosened field notebook against a telescope case as the poncho spreads in a crosswind.",
+  "visual_priorities": [
+    "Simultaneously legible central neck slit, rectangular front and back panels, shoulder drape, woven bands, and hand-finished edges",
+    "Reference-guided preservation of the adult subject's facial structure and long dark hair",
+    "Wind-driven full-body silhouette with high-altitude scale and technical field detail"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic field-fashion documentary: a pre-dawn high-altitude astronomy scene built around an Andean poncho silhouette above a cloud inversion. The subject is the same adult woman shown in the supplied portrait reference. Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference. She wears a handwoven rectangular poncho with a central neck slit, broad front and back panels dropping from both shoulders, disciplined warp-colored bands, and hand-finished lower edges over practical field layers. She braces a wind-loosened field notebook against a telescope case as the poncho spreads in the crosswind, making its uninterrupted shoulder-to-panel geometry visible. Show the neck opening, front panel, rear edge, stripe continuity, thickness, and free side drape together. Use a low full-body viewpoint, cold dawn rim light, realistic woven fibers, airborne dust, and precise observatory hardware.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "The recorded random selection assigns this arm a complex Andean poncho scene combining wind, scientific fieldwork, panel geometry, and identity-reference control.", "sources": []},
+    {"term": "첨부한 이미지를 활용하여", "source_text": "첨부한 이미지를 활용하여", "basis": "request_context", "resolution": "Use the supplied portrait as the sole visual reference for the same clearly adult subject's face and hair while changing outfit, pose, framing, and setting.", "sources": []},
+    {"term": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "basis": "request_context", "resolution": "Produce one auditable prompt and render, then judge the saved pixels against explicit garment-component gates rather than prompt wording alone.", "sources": []}
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "a pre-dawn high-altitude astronomy scene built around an Andean poncho silhouette"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "the same adult woman shown in the supplied portrait reference"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "She braces a wind-loosened field notebook against a telescope case as the poncho spreads in the crosswind"},
+      {"anchor_id": "core_identity", "source_text": "첨부한 이미지를 활용하여", "dimension": "identity", "prompt_evidence": "Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference."},
+      {"anchor_id": "core_wardrobe", "source_text": "랜덤한 복잡한 컨셉", "dimension": "appearance", "prompt_evidence": "a handwoven rectangular poncho with a central neck slit, broad front and back panels dropping from both shoulders"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "identity", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic field-fashion documentary",
+    "family": "high-altitude technical textile portraiture",
+    "evidence": ["cold dawn rim light", "precise observatory hardware"]
+  },
+  "variation_key": "arm-03-andean-poncho"
+}

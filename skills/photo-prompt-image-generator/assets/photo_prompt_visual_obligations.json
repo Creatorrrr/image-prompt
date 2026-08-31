@@ -7920,6 +7920,336 @@
         {"id": "vo_remains_not_sleep_manikin_undead", "review_scale": "native", "description": "Sleep, unconsciousness, mannequin display, empty shroud, zombie, and revenant do not substitute."}
       ],
       "reject_substitutes": ["sleeping_or_unconscious_person", "mannequin_or_wax_figure", "empty_shroud_or_body_bag", "standing_zombie_or_revenant", "skull_only", "medical_death_diagnosis_from_pixels"]
+    },
+    {
+      "id": "qipao_standing_collar_diagonal_closure_system",
+      "category": "culture_bounded_garment_system",
+      "activation": {
+        "exact_terms": ["qipao", "cheongsam", "旗袍", "치파오"],
+        "exclude_if_any_terms": ["qipao-inspired top", "mandarin-collar blouse", "kimono", "hanfu", "기모노", "한푸", "generic Asian robe", "Asian robe"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["standing collar", "diagonal opening", "frog closure", "frog fastening", "continuous dress body", "side slit", "입깃", "사선 여밈", "개구리 단추", "옆트임"],
+          "exclude_if_any_terms": ["collar only", "blouse only", "costume mashup", "robe only", "깃만", "블라우스만", "혼합 코스튬"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A qipao or cheongsam is a continuous dress system whose high standing collar connects to a curved or diagonal upper-front opening secured by knotted frog fastenings, with the fitted or straight body and coherent side construction remaining visible. Length, fit, sleeve, fabric, and slit height vary by period and design; a standing collar alone is never sufficient.",
+        "paraphrase_examples": [
+          "입깃에서 오른쪽 앞섶의 사선 여밈과 개구리 단추가 이어지고 한 벌의 긴 몸판과 옆선 구조가 함께 보이는 치파오",
+          "a continuous calf-length dress whose standing collar flows into a diagonal frog-fastened front line",
+          "a straight or fitted qipao body with controlled side slits that belong to the sewn garment rather than a torn opening"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["standing_collar", "diagonal_front_opening", "frog_fastening", "continuous_body_and_side_construction"],
+          "groups": [
+            {"id": "standing_collar", "any_terms": ["high standing collar", "structured upright collar", "upright standing collar", "높은 입깃", "세운 깃"]},
+            {"id": "diagonal_front_opening", "any_terms": ["curved or diagonal right-front opening", "opening line travels from collar across the upper front", "curved diagonal upper-front opening", "깃에서 이어지는 사선 오른쪽 앞여밈"]},
+            {"id": "frog_fastening", "any_terms": ["multiple knotted frog closures", "pankou fastenings along the opening", "knotted frog loops", "개구리 단추가 여밈선을 따라 배치"]},
+            {"id": "continuous_body_and_side_construction", "any_terms": ["one continuous dress body with coherent side seams or slits", "fitted or straight calf-to-ankle body", "continuous calf-length dress", "연속된 드레스 몸판과 구조적인 옆선 또는 옆트임"]},
+            {"id": "period_and_material_variation", "any_terms": ["period-qualified length sleeve and fit", "silk cotton wool or modern fabric remains subordinate to construction", "시대에 맞는 길이 소매 맞음새"]}
+          ]
+        },
+        "contrast_examples": [
+          "a generic bodycon dress with a Mandarin collar but no diagonal opening",
+          "a blouse with frog buttons and a separate skirt",
+          "a kimono wrap or hanfu cross-collar robe",
+          "a slit skirt or standing-collar fashion top used without the continuous qipao system"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["standing collar", "diagonal front opening", "knotted frog fastenings", "continuous dress body", "coherent side seams and slits", "period-qualified length and fit"]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["qipao", "cheongsam"],
+        "forbidden_prompt_terms": ["generic Asian robe", "kimono", "hanfu"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep collar, diagonal opening, frog fastenings, continuous dress body, and one readable side seam or slit in the same garment view. Let period and material vary only after that construction is secured; a collar, isolated knot buttons, bodycon fit, side slit, color, hairstyle, or location alone cannot carry the meaning.",
+      "required_evidence_fields": ["standing_collar_phrase", "diagonal_opening_phrase", "frog_fastening_phrase", "continuous_body_phrase", "side_construction_phrase"],
+      "evidence_requirements": {
+        "standing_collar_phrase": {"min_content_words": 3, "must_mention_any": ["a high standing collar", "a structured upright collar"]},
+        "diagonal_opening_phrase": {"min_content_words": 4, "must_mention_any": ["a diagonal right-front opening", "a curved opening running from collar across the upper front"]},
+        "frog_fastening_phrase": {"min_content_words": 3, "must_mention_any": ["multiple knotted frog closures", "handmade frog closures secure the opening"]},
+        "continuous_body_phrase": {"min_content_words": 4, "must_mention_any": ["one continuous fitted qipao body", "a straight calf-length cheongsam body"]},
+        "side_construction_phrase": {"min_content_words": 4, "must_mention_any": ["controlled side slits remain structurally readable", "coherent side seams continue into the hem openings"]}
+      },
+      "render_gates": [
+        {"id": "vo_qipao_standing_collar", "review_scale": "both", "description": "A structured standing collar is visibly integrated with the garment rather than added as an isolated fashion cue."},
+        {"id": "vo_qipao_diagonal_opening", "review_scale": "both", "description": "The upper-front opening travels diagonally or in a readable curve from the collar toward one side."},
+        {"id": "vo_qipao_frog_fastening", "review_scale": "native", "description": "Multiple knotted frog fastenings visibly secure the diagonal opening instead of appearing as unrelated ornaments."},
+        {"id": "vo_qipao_continuous_body_side_construction", "review_scale": "both", "description": "A continuous dress body and coherent side seams or slits remain visible from torso toward the hem."},
+        {"id": "vo_qipao_not_collar_or_slit_substitute", "review_scale": "thumbnail", "description": "A Mandarin collar, bodycon fit, isolated frog buttons, side slit, or generic East Asian styling alone does not substitute for the system."}
+      ],
+      "reject_substitutes": ["mandarin_collar_only", "frog_button_blouse_and_separate_skirt", "bodycon_dress_with_slit_only", "kimono_or_hanfu_wrap", "generic_asian_styling", "qipao_label_without_connected_construction"]
+    },
+    {
+      "id": "kebaya_front_open_blouse_sarong_system",
+      "category": "culture_bounded_garment_system",
+      "activation": {
+        "exact_terms": ["kebaya", "케바야"],
+        "exclude_if_any_terms": ["kebaya-inspired lace top", "generic lace blouse", "qipao", "kimono", "사리", "치파오", "generic Southeast Asian costume"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["front-opening blouse", "embroidered voile", "lace blouse", "center brooch", "kerongsang", "sarong", "앞여밈 블라우스", "자수 보일", "중앙 브로치", "사롱"],
+          "exclude_if_any_terms": ["blouse only", "lace top only", "bodycon dress", "costume mashup", "블라우스만", "레이스 톱만", "혼합 코스튬"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A kebaya system pairs a shaped front-opening upper garment, commonly made from fine embroidered, lace, or lightweight cloth, with a visible center fastening such as buttons or a kerongsang brooch set and a distinct wrapped lower garment such as a sarong. Regional forms vary in length, opacity, fit, material, and fastening, so translucency or lace is supportive rather than mandatory by itself.",
+        "paraphrase_examples": [
+          "맞음새 있는 앞여밈 자수 블라우스의 중앙을 케롱상 브로치가 잇고 아래에 별도 사롱이 감긴 케바야",
+          "a fitted embroidered voile kebaya blouse whose linked center brooches bridge the front edges above a wrapped sarong",
+          "a long or short kebaya upper garment with visible front fastening and a clearly separate patterned lower wrap"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["shaped_front_open_upper", "surface_and_edge_finish", "center_fastening", "separate_wrapped_lower_layer"],
+          "groups": [
+            {"id": "shaped_front_open_upper", "any_terms": ["fitted or shaped front-opening blouse", "shaped front-opening blouse", "shaped front-opening", "two front edges remain visible", "맞음새 있는 앞여밈 상의", "두 앞단이 분리되어 보임"]},
+            {"id": "surface_and_edge_finish", "any_terms": ["embroidered voile lace or fine lightweight cloth", "embroidered voile", "scalloped embroidered hem or edge", "자수 보일 레이스 또는 가벼운 천", "스캘럽 자수 밑단"]},
+            {"id": "center_fastening", "any_terms": ["buttons or linked kerongsang brooches bridge the center", "linked brooches", "readable center-front fastening", "단추 또는 연결 브로치가 중앙 앞단을 고정"]},
+            {"id": "separate_wrapped_lower_layer", "any_terms": ["distinct wrapped sarong beneath the blouse", "separate wrapped lower cloth", "blouse hem and lower wrap boundary", "블라우스 아래 별도 사롱", "상의 밑단과 하의 랩 경계"]},
+            {"id": "regional_variation_boundary", "any_terms": ["regional form controls length opacity and fit", "material does not imply wearer ethnicity", "지역 형식에 따른 길이 투명도 맞음새"]}
+          ]
+        },
+        "contrast_examples": [
+          "a generic lace blouse over jeans",
+          "a fitted sheer top with decorative jewelry but no front-opening logic",
+          "a qipao or one-piece dress",
+          "a sarong used alone without the kebaya upper garment"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["shaped front-opening blouse", "embroidered voile or lace surface", "finished front edges", "buttons or linked kerongsang brooches", "separate wrapped sarong", "regional length and opacity variation"]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["kebaya"],
+        "forbidden_prompt_terms": ["generic Southeast Asian costume", "qipao", "kimono"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the shaped front-opening upper garment, its textile and finished edges, one functional center-fastening method, and the boundary to a distinct wrapped lower garment in one frame. Keep regional length, opacity, and ornament variable; lace, translucency, a brooch, a sarong, tropical architecture, or styling alone cannot substitute for the connected system.",
+      "required_evidence_fields": ["front_open_upper_phrase", "embroidered_surface_phrase", "center_fastening_phrase", "sarong_layer_phrase", "layer_boundary_phrase"],
+      "evidence_requirements": {
+        "front_open_upper_phrase": {"min_content_words": 4, "must_mention_any": ["a fitted front-opening kebaya blouse", "a shaped kebaya upper garment with two visible front edges"]},
+        "embroidered_surface_phrase": {"min_content_words": 4, "must_mention_any": ["fine embroidered voile with finished scalloped edges", "lightweight lace or embroidered cloth retains visible weave"]},
+        "center_fastening_phrase": {"min_content_words": 4, "must_mention_any": ["a linked kerongsang brooch set fastens the center", "buttons visibly bridge the two front edges"]},
+        "sarong_layer_phrase": {"min_content_words": 4, "must_mention_any": ["a distinct wrapped sarong forms the lower garment", "a patterned lower wrap remains separate beneath the blouse"]},
+        "layer_boundary_phrase": {"min_content_words": 4, "must_mention_any": ["the blouse hem and sarong boundary remain visible", "upper and wrapped lower layers stay distinctly readable"]}
+      },
+      "render_gates": [
+        {"id": "vo_kebaya_shaped_front_open_upper", "review_scale": "both", "description": "The upper garment reads as a shaped front-opening kebaya rather than a closed generic blouse or one-piece dress."},
+        {"id": "vo_kebaya_textile_edge_finish", "review_scale": "native", "description": "Embroidery, lace, fine cloth weave, scalloping, or another finished edge treatment is visibly integrated with the blouse."},
+        {"id": "vo_kebaya_center_fastening", "review_scale": "native", "description": "Buttons or a linked brooch set visibly connects the two center-front edges as a fastening system."},
+        {"id": "vo_kebaya_sarong_layer_boundary", "review_scale": "both", "description": "A separate wrapped sarong or equivalent lower wrap and its boundary beneath the blouse remain clearly visible."},
+        {"id": "vo_kebaya_not_lace_top_or_sarong_only", "review_scale": "thumbnail", "description": "A lace top, jewelry, sarong, tropical setting, or generalized regional styling alone does not substitute for the connected ensemble."}
+      ],
+      "reject_substitutes": ["generic_lace_blouse", "sheer_top_and_jewelry_only", "sarong_only", "qipao_or_one_piece_dress", "tropical_setting_only", "kebaya_label_without_front_fastening_and_lower_layer"]
+    },
+    {
+      "id": "nivi_sari_continuous_pleat_pallu_system",
+      "category": "culture_bounded_garment_system",
+      "activation": {
+        "exact_terms": ["Nivi sari", "Nivi drape", "Nivi-style sari", "니비 사리", "니비 드레이프"],
+        "exclude_if_any_terms": ["sari-inspired gown", "sari gown", "detached scarf", "generic Indian costume", "사리풍 드레스", "분리된 스카프"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["front pleats", "waist tuck", "pallu", "left shoulder", "continuous cloth", "앞주름", "허리 턱", "팔루", "왼쪽 어깨", "한 장의 천"],
+          "exclude_if_any_terms": ["regional drape unspecified", "gown and scarf", "fabric print only", "드레이프 방식 미지정", "드레스와 스카프"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The Nivi sari is one specific sari-draping system in which a continuous length of cloth wraps the waist, forms aligned front pleats tucked into an underskirt, crosses the torso, and sends the free pallu over the left shoulder, commonly over a separate blouse. This topology must not be projected onto every regional sari drape.",
+        "paraphrase_examples": [
+          "한 장의 사리 천이 허리를 감고 앞쪽 여러 주름으로 턱인 뒤 몸통을 가로질러 왼쪽 어깨 팔루로 이어지는 니비식 드레이프",
+          "one continuous sari cloth forms tucked front pleats before crossing diagonally to a left-shoulder pallu",
+          "the blouse and underskirt remain separate support layers while the sari cloth route stays uninterrupted"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["continuous_sari_cloth", "waist_wrap_and_front_pleats", "torso_crossing_and_left_pallu", "supporting_blouse_and_underskirt"],
+          "groups": [
+            {"id": "continuous_sari_cloth", "any_terms": ["one continuous unstitched cloth", "one continuous cloth", "same fabric continues from waist to pallu", "한 장의 이어진 사리 천", "허리에서 팔루까지 같은 천"]},
+            {"id": "waist_wrap_and_front_pleats", "any_terms": ["multiple aligned front pleats tucked at the waist", "aligned front pleats at the waist", "waist wrap remains visible around the pleat insertion", "앞쪽 여러 주름을 허리에 턱인 구조"]},
+            {"id": "torso_crossing_and_left_pallu", "any_terms": ["cloth crosses the torso diagonally and falls from the left shoulder", "crosses the torso and falls from the left shoulder", "free pallu end remains visible", "몸통을 가로질러 왼쪽 어깨에서 팔루가 내려옴"]},
+            {"id": "supporting_blouse_and_underskirt", "any_terms": ["separate fitted blouse and underskirt support the drape", "separate blouse and underskirt", "blouse boundary and petticoat waist remain readable", "별도 블라우스와 언더스커트 층"]},
+            {"id": "regional_specificity", "any_terms": ["Nivi route is named rather than generalized to every sari", "니비 방식으로 한정하고 다른 지역 드레이프와 구분"]}
+          ]
+        },
+        "contrast_examples": [
+          "a stitched sari-inspired gown with a detached shoulder scarf",
+          "a generic draped dress with random front folds",
+          "a sari whose regional drape is not identified as Nivi",
+          "a fabric print or blouse used without the continuous cloth route"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["one continuous sari cloth", "waist wrap", "aligned tucked front pleats", "diagonal torso crossing", "left-shoulder pallu", "separate blouse and underskirt"]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["Nivi-draped sari"],
+        "forbidden_prompt_terms": ["generic Indian costume", "sari-inspired gown"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Make one continuous cloth route traceable from waist wrap through aligned tucked front pleats, across the torso, and over the left shoulder into a free pallu end. Keep blouse and underskirt boundaries legible as support layers. A stitched gown, detached scarf, random folds, jewelry, setting, or printed motif cannot substitute for the Nivi topology.",
+      "required_evidence_fields": ["continuous_cloth_phrase", "waist_pleat_phrase", "torso_crossing_phrase", "left_pallu_phrase", "support_layer_phrase"],
+      "evidence_requirements": {
+        "continuous_cloth_phrase": {"min_content_words": 4, "must_mention_any": ["one continuous sari cloth remains traceable", "the same unstitched cloth continues from waist to pallu"]},
+        "waist_pleat_phrase": {"min_content_words": 5, "must_mention_any": ["multiple aligned front pleats are tucked at the waist", "the waist wrap visibly holds the front pleats"]},
+        "torso_crossing_phrase": {"min_content_words": 4, "must_mention_any": ["the cloth crosses the torso diagonally", "the sari route continues across the torso"]},
+        "left_pallu_phrase": {"min_content_words": 4, "must_mention_any": ["the pallu falls from the left shoulder", "a free pallu end extends over the left shoulder"]},
+        "support_layer_phrase": {"min_content_words": 4, "must_mention_any": ["a separate blouse and underskirt support the drape", "the blouse boundary and petticoat waist remain visible"]}
+      },
+      "render_gates": [
+        {"id": "vo_nivi_continuous_sari_cloth", "review_scale": "both", "description": "One continuous cloth route is traceable from the waist through the torso to the shoulder end."},
+        {"id": "vo_nivi_waist_wrap_front_pleats", "review_scale": "both", "description": "Several aligned front pleats are visibly tucked into a coherent waist wrap rather than appearing as random gown folds."},
+        {"id": "vo_nivi_torso_crossing_left_pallu", "review_scale": "both", "description": "The cloth crosses the torso and produces a visible pallu over the left shoulder in the same saved image."},
+        {"id": "vo_nivi_support_layers", "review_scale": "native", "description": "A separate blouse and underskirt or equivalent support-layer boundaries remain legible beneath the sari cloth."},
+        {"id": "vo_nivi_not_gown_and_scarf", "review_scale": "thumbnail", "description": "A stitched gown, detached scarf, random folds, fabric print, or generalized regional styling does not replace the Nivi drape system."}
+      ],
+      "reject_substitutes": ["stitched_sari_gown", "detached_shoulder_scarf", "random_dress_pleats", "regional_sari_drape_unspecified", "pattern_or_jewelry_only", "nivi_label_without_continuous_cloth_route"]
+    },
+    {
+      "id": "andean_poncho_central_opening_panel_system",
+      "category": "culture_bounded_garment_system",
+      "activation": {
+        "exact_terms": ["Andean poncho", "Andes poncho", "안데스 판초", "안데스식 판초"],
+        "exclude_if_any_terms": ["plastic rain poncho", "emergency poncho", "poncho cape", "poncho scarf", "rain shell", "비닐 우의", "비상 판초", "판초 케이프"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["central neck opening", "front panel", "back panel", "open sides", "woven bands", "중앙 목구멍", "앞 패널", "뒤 패널", "열린 옆면", "직조 띠"],
+          "exclude_if_any_terms": ["hooded rain shell", "waterproof plastic", "cape closure", "blanket scarf", "후드 우의", "방수 비닐", "케이프 여밈", "담요 스카프"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An Andean poncho is a rectangular or near-rectangular woven outer garment organized around a central head opening, with broad uninterrupted panels falling down the front and back and the sides remaining open enough to drape around the arms. Weave, color, motif, fiber, finishing, and dimensions vary by place and period; stripes or highland scenery alone are not proof.",
+        "paraphrase_examples": [
+          "중앙 목구멍을 기준으로 넓은 직조 앞뒤 패널이 어깨에서 내려오고 옆면은 팔 주위로 열린 안데스 판초",
+          "a woven rectangular outer cloth whose central neck opening feeds broad front and back panels",
+          "the open side drape and hand-finished panel edges remain visible while the textile spreads in wind"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["central_head_opening", "front_and_back_panels", "open_side_drape", "woven_panel_material"],
+          "groups": [
+            {"id": "central_head_opening", "any_terms": ["one central neck or head opening", "central neck opening", "cloth radiates from the neck opening", "하나의 중앙 목구멍"]},
+            {"id": "front_and_back_panels", "any_terms": ["broad uninterrupted panel falls down the front and back", "uninterrupted woven front and back panels", "rectangular shoulder-to-hem geometry", "넓은 앞뒤 패널", "어깨에서 밑단까지 직사각 기하"]},
+            {"id": "open_side_drape", "any_terms": ["sides remain open around the arms", "free side edges drape around both arms", "free side edges and drape remain visible", "팔 주위로 열린 옆면과 자유 가장자리"]},
+            {"id": "woven_panel_material", "any_terms": ["woven bands or yarn structure continues across the panel", "woven front and back panels", "hand-finished lower edges", "패널을 가로지르는 직조 조직", "손마감 밑단"]},
+            {"id": "regional_variation_boundary", "any_terms": ["place and period qualify motif color and fiber", "지역과 시대가 무늬 색 섬유를 한정"]}
+          ]
+        },
+        "contrast_examples": [
+          "a hooded plastic rain poncho",
+          "a tailored cape fastened at the neck",
+          "a blanket or oversized scarf draped over the shoulders",
+          "striped fabric or mountain scenery without central-opening panel geometry"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["central neck opening", "rectangular woven outer cloth", "broad front panel", "broad back panel", "open side drape", "continuous woven bands and finished edges"]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["Andean poncho"],
+        "forbidden_prompt_terms": ["plastic rain poncho", "generic tribal costume"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame the central head opening, broad front and back panels, free side edges, and woven material organization together. Let color, motif, fiber, and finishing follow a qualified place or period rather than acting as universal markers. A hood, waterproof plastic, cape closure, blanket wrap, stripe pattern, landscape, or prop cannot replace the central-opening panel system.",
+      "required_evidence_fields": ["central_opening_phrase", "front_back_panel_phrase", "open_side_phrase", "woven_structure_phrase", "edge_finish_phrase"],
+      "evidence_requirements": {
+        "central_opening_phrase": {"min_content_words": 4, "must_mention_any": ["one central neck opening anchors the poncho", "the woven cloth radiates from a central head opening"]},
+        "front_back_panel_phrase": {"min_content_words": 5, "must_mention_any": ["broad front and back panels drop from both shoulders", "rectangular panels fall uninterrupted down the front and back"]},
+        "open_side_phrase": {"min_content_words": 4, "must_mention_any": ["the sides remain open around the arms", "free side edges preserve the poncho drape"]},
+        "woven_structure_phrase": {"min_content_words": 4, "must_mention_any": ["woven bands continue coherently across the panels", "yarn structure remains visible through the panel cloth"]},
+        "edge_finish_phrase": {"min_content_words": 4, "must_mention_any": ["hand-finished lower edges remain visible", "the lower panel edges show coherent woven finishing"]}
+      },
+      "render_gates": [
+        {"id": "vo_andean_poncho_central_opening", "review_scale": "both", "description": "One central head opening visibly organizes the garment instead of a cape collar, hood, or shoulder-thrown blanket."},
+        {"id": "vo_andean_poncho_front_back_panels", "review_scale": "thumbnail", "description": "Broad uninterrupted front and back panels fall from the shoulders with a rectangular or near-rectangular silhouette."},
+        {"id": "vo_andean_poncho_open_sides", "review_scale": "both", "description": "Free side edges remain open and drape around the arms rather than becoming sewn sleeves or a closed rain shell."},
+        {"id": "vo_andean_poncho_woven_structure_edges", "review_scale": "native", "description": "Yarn structure, woven organization, and finished panel edges are visibly textile rather than plastic or a flat digital print."},
+        {"id": "vo_andean_poncho_not_cape_blanket_rain_shell", "review_scale": "thumbnail", "description": "A cape, blanket scarf, hooded plastic rain shell, stripe pattern, or mountain setting alone does not substitute for the panel system."}
+      ],
+      "reject_substitutes": ["hooded_plastic_rain_poncho", "tailored_cape", "blanket_or_scarf_wrap", "striped_fabric_only", "highland_scenery_only", "poncho_label_without_central_opening_and_front_back_panels"]
+    },
+    {
+      "id": "west_african_grand_boubou_volume_system",
+      "category": "culture_bounded_garment_system",
+      "activation": {
+        "exact_terms": ["West African grand boubou", "grand boubou", "West African boubou", "그랑 부부", "서아프리카 부부"],
+        "exclude_if_any_terms": ["dashiki shirt", "agbada", "kaftan", "caftan", "generic African robe", "generic African costume", "다시키 셔츠", "아그바다", "카프탄"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["expansive robe body", "broad sleeve openings", "embroidered neckline", "center panel", "inner wrapper", "넓은 몸판", "큰 소매구멍", "자수 목선", "안쪽 랩"],
+          "exclude_if_any_terms": ["shirt only", "narrow sleeves", "single caftan body", "costume mashup", "셔츠만", "좁은 소매", "혼합 코스튬"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A West African grand boubou is an expansive outer garment whose near-rectangular cloth body produces very broad sleeve openings and a continuous shoulder-to-body volume, often focused by embroidery around the neck or center front and worn with a coordinated inner garment or wrapper. Regional and gendered forms vary; volume, embroidery, color, or a generic robe alone is not sufficient, and agbada remains a related but separately named ensemble.",
+        "paraphrase_examples": [
+          "어깨에서 몸판과 넓은 소매구멍이 하나의 큰 직사각 볼륨으로 이어지고 목선 자수와 안쪽 랩이 함께 보이는 그랑 부부",
+          "an expansive grand-boubou outer body whose broad sleeve apertures and embroidered neckline remain legible over a coordinated inner layer",
+          "one arm movement opens the cloth volume while the opposite side still shows the continuous center-front axis"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["expansive_outer_body", "broad_sleeve_openings", "neck_or_center_focus", "coordinated_inner_layer"],
+          "groups": [
+            {"id": "expansive_outer_body", "any_terms": ["near-rectangular shoulder-to-body expanse", "near-rectangular floor-length outer cloth", "floor-length voluminous outer garment", "어깨에서 몸판으로 이어지는 넓은 직사각 외의"]},
+            {"id": "broad_sleeve_openings", "any_terms": ["two very broad sleeve apertures", "two very broad sleeve openings", "arms emerge through wide open side sleeves", "두 개의 큰 소매구멍", "넓게 열린 옆소매"]},
+            {"id": "neck_or_center_focus", "any_terms": ["embroidery frames the neckline or center-front panel", "embroidered neckline", "vertical decorative axis remains visible", "목선 또는 중앙 앞판을 감싸는 자수"]},
+            {"id": "coordinated_inner_layer", "any_terms": ["inner wrapper tunic or undergarment appears beneath the outer volume", "visible inner wrapper", "readable outer-inner layer boundary", "외의 아래 안쪽 랩 또는 속옷 층"]},
+            {"id": "variation_boundary", "any_terms": ["regional form controls cut material and ornament", "boubou is not automatically agbada dashiki or caftan", "지역 형식에 따른 재단 재료 장식"]}
+          ]
+        },
+        "contrast_examples": [
+          "a narrow dashiki-style shirt",
+          "a caftan with ordinary set-in sleeves",
+          "an agbada ensemble named or constructed as a different layered form",
+          "an oversized generic robe whose sleeve openings, center axis, and inner layer are hidden"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["expansive near-rectangular outer body", "broad sleeve openings", "continuous shoulder-to-body volume", "embroidered neckline or center panel", "coordinated inner wrapper", "regional material and ornament variation"]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["West African grand boubou", "grand boubou"],
+        "forbidden_prompt_terms": ["generic African costume", "dashiki shirt", "agbada", "caftan"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the expansive outer body, both broad sleeve openings, the neckline or center-front decorative axis, and a visible inner-layer boundary in one frame. Let regional cut, material, color, embroidery, and wearer-specific styling vary without turning them into identity claims. A dashiki shirt, caftan, agbada label, generic oversized robe, color, or pattern alone cannot substitute.",
+      "required_evidence_fields": ["expansive_body_phrase", "broad_sleeve_phrase", "center_axis_phrase", "inner_layer_phrase", "volume_legibility_phrase"],
+      "evidence_requirements": {
+        "expansive_body_phrase": {"min_content_words": 4, "must_mention_any": ["an expansive near-rectangular boubou body", "the floor-length outer garment forms one broad cloth expanse"]},
+        "broad_sleeve_phrase": {"min_content_words": 4, "must_mention_any": ["both broad sleeve openings remain visible", "wide open sleeves extend from the outer body"]},
+        "center_axis_phrase": {"min_content_words": 4, "must_mention_any": ["dense embroidery frames the neckline and center front", "a vertical embroidered neckline axis remains readable"]},
+        "inner_layer_phrase": {"min_content_words": 4, "must_mention_any": ["a coordinated inner wrapper remains visible beneath the outer robe", "the outer and inner garment boundary stays readable"]},
+        "volume_legibility_phrase": {"min_content_words": 5, "must_mention_any": ["the continuous shoulder-to-body volume remains legible", "one moving sleeve reveals the full rectangular drape without hiding the opposite side"]}
+      },
+      "render_gates": [
+        {"id": "vo_boubou_expansive_outer_body", "review_scale": "thumbnail", "description": "The garment first reads as an expansive near-rectangular outer body rather than a narrow shirt or ordinary fitted robe."},
+        {"id": "vo_boubou_broad_sleeve_openings", "review_scale": "both", "description": "Both broad sleeve openings and their continuity with the outer body remain visible."},
+        {"id": "vo_boubou_neck_center_focus", "review_scale": "native", "description": "Embroidery or another deliberate decorative structure frames the neckline or center-front axis instead of floating as generic pattern."},
+        {"id": "vo_boubou_coordinated_inner_layer", "review_scale": "native", "description": "A coordinated inner wrapper, tunic, or underlayer and its boundary beneath the outer volume remain legible."},
+        {"id": "vo_boubou_not_dashiki_caftan_generic_robe", "review_scale": "thumbnail", "description": "A dashiki shirt, caftan, separately named agbada ensemble, oversized robe, color, or pattern alone does not substitute for the grand-boubou system."}
+      ],
+      "reject_substitutes": ["dashiki_shirt", "caftan_with_narrow_sleeves", "agbada_substitution", "generic_oversized_robe", "pattern_or_color_only", "boubou_label_without_expansive_body_sleeves_and_inner_layer"]
     }
   ]
 }

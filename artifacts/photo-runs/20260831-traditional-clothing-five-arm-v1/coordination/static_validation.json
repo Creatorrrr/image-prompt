@@ -1,0 +1,67 @@
+{
+  "schema_version": "traditional-clothing-static-validation/v1",
+  "validated_on": "2026-08-31",
+  "source_snapshot_git_sha": "7502c53b272e75995e3a7399052906d6a5bb849e",
+  "candidate_dictionary": {
+    "version": "1.31",
+    "dictionary_hash": "a14025a8d756f137469c843de6450062ae1bbc7fa2ed7675a3beef99aa72eae0",
+    "semantic_index_file_sha256": "6805d02035f4f804f2b902a56db46baa66423c6c31fc4d1eff602d2ea39165d2",
+    "semantic_entry_count": 7025,
+    "embedding_model": "gemini-embedding-2",
+    "embedding_dimensions": 768,
+    "shard_count": 16
+  },
+  "visual_profile_index": {
+    "file_sha256": "1ff81b039a10624062b0025378de93a9ef2cf0c99c49d6d9d6decd0aa617e05d",
+    "profile_count": 92,
+    "exact_term_count": 533,
+    "new_profile_count": 5
+  },
+  "prepack_contracts": [
+    {"arm_id": "arm-01-kebaya", "status": "pass", "baseline_words": 143},
+    {"arm_id": "arm-02-qipao", "status": "pass", "baseline_words": 142},
+    {"arm_id": "arm-03-andean-poncho", "status": "pass", "baseline_words": 144},
+    {"arm_id": "arm-04-sari-nivi", "status": "pass", "baseline_words": 154},
+    {"arm_id": "arm-05-west-african-boubou", "status": "pass", "baseline_words": 151}
+  ],
+  "checks": [
+    {
+      "id": "dictionary-metadata",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass",
+      "result": "photo prompt dictionary metadata is valid"
+    },
+    {
+      "id": "visual-profile-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass",
+      "result": "visual profile index ok: 92 profiles, 533 exact terms"
+    },
+    {
+      "id": "semantic-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "status": "pass",
+      "result": "7025 entries; dictionary, policy, recipe, model, and dimensions match"
+    },
+    {
+      "id": "traditional-clothing-focused-tests",
+      "command": ".venv/bin/python -m unittest tests.test_photo_traditional_clothing_semantics -v",
+      "status": "pass",
+      "tests_run": 8,
+      "duration_seconds": 70.998
+    },
+    {
+      "id": "shared-visual-retrieval-regressions",
+      "command": ".venv/bin/python -m unittest tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval -v",
+      "status": "pass",
+      "tests_run": 40,
+      "duration_seconds": 498.2
+    },
+    {
+      "id": "diff-whitespace",
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "claim_boundary": "These checks establish data, index, routing, and pre-render contract validity. They do not establish rendered-pixel fidelity or user aesthetic acceptance."
+}

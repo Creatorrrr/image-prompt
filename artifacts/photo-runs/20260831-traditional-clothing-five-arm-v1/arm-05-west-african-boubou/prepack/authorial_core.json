@@ -1,0 +1,46 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent reference-guided photographic stress test in which the selected random complex concept makes the ample body, broad sleeves, layered structure, and embroidered neckline of a West African grand boubou visibly judgeable.",
+  "subject": "The same unmistakably adult woman shown in the supplied portrait reference, wearing a West African grand boubou ensemble.",
+  "setting": "A nighttime concrete civic atrium during an architecture biennale installation.",
+  "event": "She catches a falling paper architecture model against one forearm while the opposite sleeve opens into a full drape.",
+  "visual_priorities": [
+    "Simultaneously legible ample rectangular robe body, broad open sleeves, embroidered neckline and center front, and coordinated inner layer",
+    "Reference-guided preservation of the adult subject's facial structure and long dark hair",
+    "Dynamic full-body volume against precise contemporary architectural geometry"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic civic-fashion editorial: a nighttime concrete-atrium scene built around a West African grand boubou silhouette during an architecture biennale installation. The subject is the same adult woman shown in the supplied portrait reference. Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference. She wears a floor-length grand boubou with an ample rectangular body, broad open sleeves, and dense embroidery framing the neck and center front over a coordinated inner wrapper. She catches a falling paper architecture model against one forearm while the opposite sleeve opens into a full drape, making the robe's volume and layered construction readable. Show both sleeve apertures, the continuous shoulder-to-body expanse, embroidered neckline, center-front panel, inner-layer glimpse, and lower hem together. Use full-body architectural framing, luminous concrete, warm installation light, cool skylight spill, natural skin texture, and sharply resolved textile weight.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "The recorded random selection assigns this arm a complex grand-boubou scene combining installation motion, architectural geometry, robe volume, and identity-reference control.", "sources": []},
+    {"term": "첨부한 이미지를 활용하여", "source_text": "첨부한 이미지를 활용하여", "basis": "request_context", "resolution": "Use the supplied portrait as the sole visual reference for the same clearly adult subject's face and hair while changing outfit, pose, framing, and setting.", "sources": []},
+    {"term": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "basis": "request_context", "resolution": "Produce one auditable prompt and render, then judge the saved pixels against explicit garment-component gates rather than prompt wording alone.", "sources": []}
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "a nighttime concrete-atrium scene built around a West African grand boubou silhouette"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "the same adult woman shown in the supplied portrait reference"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "She catches a falling paper architecture model against one forearm while the opposite sleeve opens into a full drape"},
+      {"anchor_id": "core_identity", "source_text": "첨부한 이미지를 활용하여", "dimension": "identity", "prompt_evidence": "Her facial structure, eye aperture and spacing, nose, lips, jawline, adult age, and long dark hair remain faithfully matched to that reference."},
+      {"anchor_id": "core_wardrobe", "source_text": "랜덤한 복잡한 컨셉", "dimension": "appearance", "prompt_evidence": "a floor-length grand boubou with an ample rectangular body, broad open sleeves, and dense embroidery framing the neck and center front over a coordinated inner wrapper"
+      }
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "identity", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic civic-fashion editorial",
+    "family": "architectural volume and textile portraiture",
+    "evidence": ["luminous concrete", "warm installation light"]
+  },
+  "variation_key": "arm-05-west-african-boubou"
+}

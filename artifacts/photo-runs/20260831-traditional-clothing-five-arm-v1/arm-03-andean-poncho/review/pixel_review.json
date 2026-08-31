@@ -1,0 +1,127 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "contract_version": "photo-visual-obligations/v1",
+  "pack_id": "4f66c5ca0aca0689",
+  "effective_visual_contract_sha256": "ac898687bef06bbbb1648be7e48d282ab468742d1ce11d0604e0f51f41fbfc0a",
+  "reviewer": "Codex agent visual inspection at native and thumbnail scales",
+  "review_method": {
+    "blind_to_prompt": false,
+    "independent_no_cross_arm_inputs": true,
+    "native_scale": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-03-andean-poncho/generated/andean-poncho-primary.png",
+      "width": 1003,
+      "height": 1568
+    },
+    "thumbnail_scale": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-03-andean-poncho/review/andean-poncho-primary-thumbnail-320.png",
+      "width": 204,
+      "height": 320,
+      "sha256": "d1b8d8349de8f8f2681bede7ffb9babd61a735c12447ba8b3984e8119d2eefe8"
+    }
+  },
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-traditional-clothing-five-arm-v1/arm-03-andean-poncho/generated/andean-poncho-primary.png",
+  "result_sha256": "f1322d222fa680df519ac95fd8f4427e1e7f8a720596c32dd7fd8c951cf0bd0d",
+  "hard_gates": {
+    "vo_andean_poncho_central_opening": {
+      "status": "pass",
+      "evidence": "At thumbnail scale a single dark central slit is visible at the base of the neck and organizes woven cloth falling from both shoulders; native pixels confirm one continuous neck opening with no hood."
+    },
+    "vo_andean_poncho_front_back_panels": {
+      "status": "fail",
+      "evidence": "The broad front panel is clear at thumbnail scale, but the wind-blown cloth at viewer-left is not unambiguously readable as a separate broad rear panel rather than a side wing or blanket tail; the frontal overlap prevents strict proof of both panels."
+    },
+    "vo_andean_poncho_open_sides": {
+      "status": "pass",
+      "evidence": "At both scales the arms emerge beneath free triangular cloth edges; the viewer-left edge blows outward with fringe and the viewer-right edge hangs independently, without a stitched sleeve seam or closed-shell silhouette."
+    },
+    "vo_andean_poncho_woven_structure_edges": {
+      "status": "pass",
+      "evidence": "Native pixels show yarn-level texture, woven bands integrated into the cloth, material thickness, irregular fringe, and hand-finished lower edges rather than plastic sheen or flat printed decoration."
+    },
+    "vo_andean_poncho_not_cape_blanket_rain_shell": {
+      "status": "pass",
+      "evidence": "The thumbnail combines a central head opening, broad front cloth, free open sides, and woven finished edges; there is no hood, waterproof sheen, neck fastening, or evidence that stripes and the mountain setting alone carry the reading."
+    }
+  },
+  "profile_gate_summary": {
+    "profile_id": "andean_poncho_central_opening_panel_system",
+    "pass_count": 4,
+    "fail_count": 1,
+    "failed_gate_ids": [
+      "vo_andean_poncho_front_back_panels"
+    ],
+    "status": "PARTIAL",
+    "reason": "Four of five strict gates are visible, but the rear panel is not independently judgeable at thumbnail scale in the frontal wind-blown view."
+  },
+  "reject_substitute_checks": {
+    "hooded_plastic_rain_poncho": {
+      "status": "absent",
+      "evidence": "No hood, plastic translucency, waterproof shell seam, or rainwear sheen is visible."
+    },
+    "tailored_cape": {
+      "status": "absent",
+      "evidence": "No neck clasp, tailored shoulder seam, fitted sleeve, or cape closure carries the garment."
+    },
+    "blanket_or_scarf_wrap": {
+      "status": "not_primary_read",
+      "evidence": "The central head opening and broad frontal fall support poncho construction, although the ambiguous wind-blown rear/side cloth is the main residual blanket-wrap confound."
+    },
+    "striped_fabric_only": {
+      "status": "absent",
+      "evidence": "Pattern is supported by an actual central opening, broad front panel, open side edges, thickness, and fringe."
+    },
+    "highland_scenery_only": {
+      "status": "absent",
+      "evidence": "The cloud inversion and mountain station support the scene but do not replace garment geometry."
+    },
+    "poncho_label_without_central_opening_and_front_back_panels": {
+      "status": "partial_confound",
+      "evidence": "The central opening and front panel survive, but the rear panel remains visually ambiguous, so the full front-and-back topology is not proven by pixels."
+    }
+  },
+  "confound_checks": {
+    "frontal_overlap": {
+      "severity": "major",
+      "effect": "The front panel hides most of the rear panel and causes the one failed profile gate."
+    },
+    "wind_blown_left_cloth": {
+      "severity": "major",
+      "effect": "The lifted cloth could be a rear panel, open side wing, or blanket-like tail, so metadata cannot decide its topology."
+    },
+    "notebook_occlusion": {
+      "severity": "minor",
+      "effect": "The notebook covers part of the upper front panel but leaves the neck opening and most woven structure readable."
+    },
+    "long_hair_occlusion": {
+      "severity": "minor",
+      "effect": "Hair covers parts of both shoulders, but the central opening remains visible."
+    },
+    "dark_inner_layers": {
+      "severity": "minor",
+      "effect": "Black inner sleeves could weaken the open-side read locally, but the free poncho edges remain separate at both scales."
+    }
+  },
+  "scene_observations": {
+    "adult_subject": "pass; one clearly adult woman is visible in a full-length frame.",
+    "reference_appearance_continuity": "broadly present in long dark hair, adult facial proportions, eye spacing, nose, lips, and jaw shape; this is visible-appearance continuity only, never biometric identity verification.",
+    "astronomy_station": "pass; a telescope and its cylindrical case are visible above a cloud inversion.",
+    "crosswind": "pass; hair, fringe, and viewer-left cloth move laterally.",
+    "framing_aspect_ratio": "fail; the saved image is 1003 by 1568 pixels (about 0.64 width-to-height), closer to a 2:3 portrait than the authored 4:5 frame, although the full figure and complete hem remain visible.",
+    "notebook_case_interaction": "fail; the notebook is held against the torso while the opposite hand rests on the telescope case, so the notebook is not visibly braced against the case."
+  },
+  "overall_status": "PARTIAL",
+  "generation_status": "delivered_primary_attempt",
+  "promotion_status": "not_technically_qualified",
+  "user_acceptance": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  },
+  "audit_boundary": "Prompt and runtime audits prove exact bindings only. This record reflects visual inspection of the saved pixels, does not infer hidden garment topology, does not perform biometric identity verification, and leaves requesting-user acceptance pending."
+}
