@@ -7545,6 +7545,131 @@
         {"id": "vo_hair_wet_not_dry_gloss", "review_scale": "native", "description": "Dry gloss rim light oily roots and gel styling do not substitute."}
       ],
       "reject_substitutes": ["dry_specular_gloss_only", "sleek_gel_styling_only", "oily_roots_only", "rim_light_highlights_only", "wind_separated_dry_strands"]
+    },
+    {
+      "id": "restrained_polished_natural_makeup_balance",
+      "category": "makeup_layer_balance",
+      "activation": {
+        "exact_terms": [
+          "restrained polished natural makeup",
+          "soft polished natural makeup",
+          "balanced polished natural makeup",
+          "절제된 폴리시드 내추럴 메이크업",
+          "정돈된 소프트 내추럴 메이크업",
+          "피부 중심 절제 메이크업"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A coherent applied makeup system whose readable sheer-to-light satin complexion leads the hierarchy while low-contrast brow, neutral eye, muted cheek, and centered soft lip treatments remain individually visible and mutually restrained.",
+        "paraphrase_examples": [
+          "피부 결이 남는 얇은 새틴 베이스 위에 눈썹 눈 볼 입술의 대비가 서로 절제된 정돈형 내추럴 메이크업",
+          "a polished cosmetic layer remains visibly applied while no eye cheek or lip region overpowers the complexion",
+          "neutral taupe eye definition muted rose cheeks and a softly centered rosy-coral lip coexist under a texture-preserving complexion"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 8,
+          "required_group_ids": [
+            "complexion_transparency",
+            "brow_hair_structure",
+            "neutral_eye_gradient",
+            "micro_outer_liner",
+            "separated_lashes",
+            "muted_cheek_distribution",
+            "centered_soft_lip",
+            "cross_feature_hierarchy"
+          ],
+          "groups": [
+            {"id": "complexion_transparency", "any_terms": ["sheer-to-light satin complexion correction leaves fine skin texture and natural tonal variation readable", "thin satin correction preserves pores and ordinary complexion variation", "얇은 새틴 보정 아래 피부 결과 자연스러운 색 변화가 남음"]},
+            {"id": "brow_hair_structure", "any_terms": ["softly groomed low-arch brows retain individual hairs", "low-arch brow grooming keeps separate natural hair strands", "낮은 아치의 정돈된 눈썹에 개별 털 결이 남음"]},
+            {"id": "neutral_eye_gradient", "any_terms": ["a neutral taupe wash is deepest at the upper lash line and diffuses through the crease", "neutral taupe-brown pigment decreases softly from lash roots through the crease", "뉴트럴 타우프 브라운이 위 속눈썹선에서 가장 진하고 크리즈로 퍼짐"]},
+            {"id": "micro_outer_liner", "any_terms": ["a slim interlash line ends in a very short tapered outer extension", "fine upper interlash definition finishes in a micro outer taper", "얇은 인터래시 라인이 아주 짧은 바깥 꼬리로 가늘어짐"]},
+            {"id": "separated_lashes", "any_terms": ["lashes are clean and separated", "individual upper lashes stay separated with restrained volume", "윗속눈썹 가닥이 뭉치지 않고 절제된 볼륨으로 분리됨"]},
+            {"id": "muted_cheek_distribution", "any_terms": ["a muted rose flush stays soft on the cheeks", "low-saturation rose pigment remains bilateral with diffused cheek edges", "저채도 로즈 색이 양 볼에 부드러운 경계로 남음"]},
+            {"id": "centered_soft_lip", "any_terms": ["muted rosy-coral lip color is strongest near the inner center, fades toward a softly diffused vermilion edge, and carries a low satin-balm sheen", "rosy-coral pigment peaks at the inner lip and fades to a soft edge under restrained satin sheen", "로지 코랄 색이 입술 안쪽에서 가장 진하고 부드러운 경계와 낮은 새틴 광택으로 이어짐"]},
+            {"id": "cross_feature_hierarchy", "any_terms": ["Eye, cheek, and lip contrast remain mutually restrained so the complexion leads the hierarchy", "applied brow eye cheek and lip treatments remain readable without any region dominating the complexion", "눈 볼 입술의 대비가 서로 절제되어 피부 표현이 시각적 위계를 주도함"]}
+          ]
+        },
+        "contrast_examples": [
+          "a genuinely bare face with no readable cosmetic placement",
+          "opaque full-glam coverage with one high-contrast eye or lip feature",
+          "digital skin smoothing that erases the texture beneath makeup",
+          "colored environmental light creating apparent cheek or lip pigment",
+          "a glossy lip or winged liner alone without the cross-feature balance"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "texture-preserving satin complexion",
+          "low-arch hair-readable brows",
+          "neutral taupe lashline-to-crease diffusion",
+          "micro tapered outer liner",
+          "clean separated lashes",
+          "muted bilateral rose cheeks",
+          "centered rosy-coral soft-edge lip",
+          "complexion-led low-contrast hierarchy"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "restrained polished natural makeup",
+          "soft polished natural makeup",
+          "balanced polished natural makeup",
+          "절제된 폴리시드 내추럴 메이크업",
+          "정돈된 소프트 내추럴 메이크업",
+          "피부 중심 절제 메이크업"
+        ],
+        "runtime_forbidden_labels": [
+          "restrained polished natural makeup",
+          "soft polished natural makeup",
+          "balanced polished natural makeup",
+          "절제된 폴리시드 내추럴 메이크업",
+          "정돈된 소프트 내추럴 메이크업",
+          "피부 중심 절제 메이크업"
+        ]
+      },
+      "composition_instruction": "Use a face-large head-and-shoulders or chest-up frame with a neutral facial key separated from environmental accent light. Keep thin satin correction, brow hairs, neutral lashline-to-crease diffusion, a micro outer liner taper, separated lashes, muted bilateral cheek color, and the centered soft-edge satin lip simultaneously readable. Bare skin, opaque glam, digital smoothing, colored light, or one dominant feature cannot substitute for the balanced applied system.",
+      "required_evidence_fields": [
+        "complexion_phrase",
+        "brow_phrase",
+        "eye_gradient_phrase",
+        "liner_phrase",
+        "lash_phrase",
+        "cheek_phrase",
+        "lip_phrase",
+        "hierarchy_phrase"
+      ],
+      "evidence_requirements": {
+        "complexion_phrase": {"min_content_words": 9, "must_mention_any": ["sheer-to-light satin complexion correction leaves fine skin texture and natural tonal variation readable", "thin satin correction preserves pores and ordinary complexion variation"]},
+        "brow_phrase": {"min_content_words": 6, "must_mention_any": ["softly groomed low-arch brows retain individual hairs", "low-arch brow grooming keeps separate natural hair strands"]},
+        "eye_gradient_phrase": {"min_content_words": 10, "must_mention_any": ["a neutral taupe wash is deepest at the upper lash line and diffuses through the crease", "neutral taupe-brown pigment decreases softly from lash roots through the crease"]},
+        "liner_phrase": {"min_content_words": 9, "must_mention_any": ["a slim interlash line ends in a very short tapered outer extension", "fine upper interlash definition finishes in a micro outer taper"]},
+        "lash_phrase": {"min_content_words": 4, "must_mention_any": ["lashes are clean and separated", "individual upper lashes stay separated with restrained volume"]},
+        "cheek_phrase": {"min_content_words": 6, "must_mention_any": ["a muted rose flush stays soft on the cheeks", "low-saturation rose pigment remains bilateral with diffused cheek edges"]},
+        "lip_phrase": {"min_content_words": 16, "must_mention_any": ["muted rosy-coral lip color is strongest near the inner center, fades toward a softly diffused vermilion edge, and carries a low satin-balm sheen", "rosy-coral pigment peaks at the inner lip and fades to a soft edge under restrained satin sheen"]},
+        "hierarchy_phrase": {"min_content_words": 10, "must_mention_any": ["Eye, cheek, and lip contrast remain mutually restrained so the complexion leads the hierarchy", "applied brow eye cheek and lip treatments remain readable without any region dominating the complexion"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_polished_balance_complexion", "review_scale": "both", "description": "Sheer-to-light satin correction remains applied while fine skin texture and natural tonal variation stay visible."},
+        {"id": "vo_makeup_polished_balance_brows", "review_scale": "native", "description": "Soft low-arch brow structure and individual brow hairs remain readable."},
+        {"id": "vo_makeup_polished_balance_eye_gradient", "review_scale": "both", "description": "Neutral taupe-brown pigment is deepest near the upper lash roots and diffuses softly through the crease."},
+        {"id": "vo_makeup_polished_balance_liner", "review_scale": "native", "description": "Slim interlash definition ends in a very short tapered outer extension rather than a broad wing."},
+        {"id": "vo_makeup_polished_balance_lashes", "review_scale": "native", "description": "Upper lashes remain cleanly separated with restrained volume."},
+        {"id": "vo_makeup_polished_balance_cheeks", "review_scale": "both", "description": "Muted rose pigment remains softly bilateral on the cheeks and separate from environmental color cast."},
+        {"id": "vo_makeup_polished_balance_lips", "review_scale": "both", "description": "Rosy-coral lip color peaks near the inner center, fades to a softened edge, and retains low satin-balm sheen."},
+        {"id": "vo_makeup_polished_balance_hierarchy", "review_scale": "thumbnail", "description": "The complexion leads while eye cheek and lip treatments remain mutually restrained; bare face opaque glam smoothing and colored light do not substitute."}
+      ],
+      "reject_substitutes": [
+        "bare_face_without_cosmetic_layer",
+        "opaque_full_glam",
+        "single_dominant_feature",
+        "digital_skin_smoothing",
+        "colored_environmental_light_only",
+        "gloss_or_liner_only"
+      ]
     }
   ]
 }

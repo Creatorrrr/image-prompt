@@ -1,0 +1,130 @@
+{
+  "schema_version": "photo-makeup-reference-five-arm-results/v1",
+  "run_id": "20260831-makeup-reference-five-arm-v1",
+  "source": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "makeup placement color-distribution and surface-finish reference only",
+    "identity_matching_performed": false
+  },
+  "implementation": {
+    "visual_profile_id": "restrained_polished_natural_makeup_balance",
+    "candidate_preset_id": "restrained_polished_natural_makeup_closeup",
+    "profile_component_count": 8,
+    "profile_gate_count": 8,
+    "runtime_mode": "definition_only",
+    "dictionary_version": "1.30",
+    "visual_index": {"profiles": 82, "exact_terms": 483},
+    "semantic_index": {"entries": 6910, "model": "gemini-embedding-2", "dimensions": 768}
+  },
+  "preflight_correction": {
+    "status": "corrected_before_any_image_call",
+    "issue": "The first registry revision set two formal minimum-content-word thresholds one word above the frozen lash and cheek binding phrases.",
+    "change": "Only lash_phrase min_content_words changed from 5 to 4 and cheek_phrase from 7 to 6; visual meaning, prompt wording, and pixel gates did not change.",
+    "preservation": "Each arm retains candidate_pack.preflight-invalid.json as unused evidence."
+  },
+  "protocol": {
+    "independent_agents": 5,
+    "cross_arm_inputs_allowed": false,
+    "built_in_image_calls_per_arm": 1,
+    "retries_per_arm": 0,
+    "partial_is_fail": true,
+    "target_gate_rule": "All eight makeup gates must pass in one saved image for profile technical PASS.",
+    "strict_arm_rule": "All eight makeup gates and the separate complex-concept gate must pass for strict overall PASS.",
+    "user_judgment_rule": "Only a direct requesting-user judgment can promote a technically qualified image."
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "concept": "orbital botanical quarantine officer examining a frost-grown seed capsule",
+      "pack_id": "5ac97566abb5790d",
+      "image_path": "../arms/arm-a/result.png",
+      "image_sha256": "2f481e37ef3bcf61ce8391d2673ecb03d7c28ebb4ac248b4c833579b25dd3076",
+      "dimensions_px": [1086, 1448],
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "makeup_gates": {"passed": 8, "total": 8, "status": "pass"},
+      "concept_gate": "pass",
+      "strict_overall": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-b",
+      "concept": "desert solar observatory restorer aligning a cracked heliostat at blue hour",
+      "pack_id": "6e663c7ffcc484bb",
+      "image_path": "../arms/arm-b/result.png",
+      "image_sha256": "22e5c53ab05ad17f3e9823b0a5596dc923538a58cdecb44a6f1d8f2853b4986e",
+      "dimensions_px": [1086, 1448],
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "makeup_gates": {"passed": 7, "total": 8, "status": "fail", "failed_ids": ["vo_makeup_polished_balance_cheeks"]},
+      "concept_gate": "pass",
+      "strict_overall": "fail",
+      "failure": "The muted bilateral rose cheek tint cannot be separated confidently from strong amber heliostat reflection.",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-c",
+      "concept": "flooded library paper conservator lifting a water-damaged star atlas",
+      "pack_id": "514fd28d376634ad",
+      "image_path": "../arms/arm-c/result.png",
+      "image_sha256": "9add68795c08db6e09cdbe595d4fa5535c25b7b6bdd4d4b019ccbfbb832c3f3c",
+      "dimensions_px": [1023, 1537],
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "makeup_gates": {"passed": 8, "total": 8, "status": "pass"},
+      "concept_gate": "pass",
+      "strict_overall": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-d",
+      "concept": "nocturnal greenhouse pollination archivist cataloging bioluminescent moth dust",
+      "pack_id": "3b97fb0d413464a6",
+      "image_path": "../arms/arm-d/result.png",
+      "image_sha256": "f5f553d6c90ba71991c692875106359e73a5b8e284b94d39ab06a7175771e901",
+      "dimensions_px": [1087, 1447],
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "makeup_gates": {"passed": 8, "total": 8, "status": "pass"},
+      "concept_gate": "pass",
+      "strict_overall": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-e",
+      "concept": "underground ceramic acoustics researcher mapping resonant subway tiles",
+      "pack_id": "caea3b86501de9a6",
+      "image_path": "../arms/arm-e/result.png",
+      "image_sha256": "2ed3798431d1f4882fc4e2ef3dd9664d0d787884b7c9f865b631ad9e283e712d",
+      "dimensions_px": [1122, 1402],
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "makeup_gates": {"passed": 8, "total": 8, "status": "pass"},
+      "concept_gate": "fail",
+      "strict_overall": "fail",
+      "failure": "The pale wall lines cannot be distinguished confidently as chalk vibration marks rather than grout or scratches.",
+      "user_judgment": "pending"
+    }
+  ],
+  "aggregate": {
+    "images_saved": 5,
+    "image_calls": 5,
+    "retries": 0,
+    "composed_audits_passed": 5,
+    "runtime_audits_passed": 5,
+    "makeup_profile_passed_arms": 4,
+    "makeup_profile_total_arms": 5,
+    "makeup_target_gates_passed": 39,
+    "makeup_target_gates_total": 40,
+    "strict_overall_passed_arms": 3,
+    "strict_overall_total_arms": 5,
+    "user_judgments_received": 0
+  },
+  "coordinator_spot_check": {
+    "images_inspected": 5,
+    "agreement_with_arm_verdicts": true,
+    "scope": "visual consistency check only; arm-local audited pixel reviews remain the formal gate records"
+  },
+  "bounded_conclusion": "The new makeup contract transferred across four of five unrelated complex scenes. It is not promoted as universally render-faithful because the desert amber-light holdout failed the cheek-versus-light confound gate. Complex-scene success is separately three of five. User preference remains pending for every image."
+}
