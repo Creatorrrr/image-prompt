@@ -1,0 +1,45 @@
+{
+  "schema_version": "photo-hair-five-arm-protocol/v1",
+  "request_envelope_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/shared/request_envelope.json",
+  "request_envelope_sha256": "c5d81acfb47fc65d242464c271d6cb6b46681481f5c4c3e2b5a0e824ffb8f459",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "boundary": "Facial and general appearance continuity only; no biometric identity verification claim."
+  },
+  "isolation": {
+    "fork_turns": "none",
+    "pre_core_allowed_sources": [
+      "request envelope",
+      "attached reference image",
+      "agent general knowledge",
+      "photo-prompt-image-generator SKILL.md"
+    ],
+    "pre_core_forbidden_sources": [
+      "candidate packs",
+      "skill assets",
+      "skill references",
+      "skill scripts",
+      "tests and fixtures",
+      "other arms",
+      "target hair profile assignment"
+    ],
+    "target_profile_reveal": "only after each authorial core is frozen and hashed"
+  },
+  "arms": [
+    {"arm_id": "hair-arm-a", "random_seed": "5d23588216ebbb96", "domain_lane": "orbital greenhouse pollination emergency"},
+    {"arm_id": "hair-arm-b", "random_seed": "5b00b6749217da72", "domain_lane": "bioluminescent aquarium coral-health survey"},
+    {"arm_id": "hair-arm-c", "random_seed": "6612d97be71943c0", "domain_lane": "nocturnal desert radio-telescope calibration"},
+    {"arm_id": "hair-arm-d", "random_seed": "7408e27265095240", "domain_lane": "flooded baroque library manuscript rescue"},
+    {"arm_id": "hair-arm-e", "random_seed": "d1a4bc4cadbe69ee", "domain_lane": "volcanic-glass workshop furnace observation"}
+  ],
+  "verdict_policy": {
+    "one_saved_image_per_arm": true,
+    "all_target_gates_required": true,
+    "partial_or_missing_gate": "fail",
+    "blocked_or_missing_image": "unscored",
+    "prompt_audit_is_pixel_proof": false,
+    "user_judgment": "pending"
+  }
+}

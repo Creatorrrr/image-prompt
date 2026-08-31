@@ -1,0 +1,53 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "57183a2bd4e7af33",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex no-reference arm-d native-pixel reviewer",
+  "result_image": "result.png",
+  "result_sha256": "94e146ceb8f6020c7cbafb38580743fadc2ccf778fdc7d706f07341ee093a880",
+  "hard_gates": {
+    "vo_face_upper_taper_full_perimeter": {
+      "status": "fail",
+      "evidence": "At thumbnail scale, dark side hair crosses both upper-temple boundaries and merges into the cheek contour, masking the complete width transition."
+    },
+    "vo_face_upper_taper_vertical_relation": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, the center hairline-to-chin span and exposed upper-face breadth remain readable together in the frontal view."
+    },
+    "vo_face_upper_taper_width_hierarchy": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, the exposed forehead and upper-temple skin span is visibly broader than the mandibular angle span."
+    },
+    "vo_face_upper_taper_continuous_chin": {
+      "status": "fail",
+      "evidence": "The native crop shows only modest lower-cheek narrowing into a broad rounded chin, so the required continuous taper to a narrow chin is absent."
+    },
+    "vo_face_upper_taper_confound_control": {
+      "status": "pass",
+      "evidence": "The native crop retains exposed anatomical skin boundaries under even frontal light; iconography, makeup, shadow, and lens effects do not carry the visible width hierarchy."
+    }
+  },
+  "review_assets": {
+    "native": "result.png",
+    "thumbnail": "result-thumbnail.png",
+    "native_face_crop": "result-face-native-crop.png"
+  },
+  "technical_verdict": {
+    "status": "fail",
+    "passed_gate_count": 3,
+    "failed_gate_count": 2,
+    "partial_is_fail": true,
+    "failed_gate_ids": [
+      "vo_face_upper_taper_full_perimeter",
+      "vo_face_upper_taper_continuous_chin"
+    ],
+    "reason": "The strict five-gate set is not fully satisfied in the same saved image."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

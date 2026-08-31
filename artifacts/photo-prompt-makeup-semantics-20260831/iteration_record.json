@@ -1,0 +1,275 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 with pre-existing working-tree changes preserved",
+    "candidate_revision": "working-tree makeup-visual-semantics-20260831"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Research the makeup vocabulary requested in the referenced conversation and strengthen the visual-semantics registry and candidate-pack data with observable, source-backed controls."
+  },
+  "evidence": [
+    {
+      "id": "e-conversation-boundary",
+      "kind": "source-observation",
+      "claim": "The referenced conversation cache contains the user's broad request to survey diverse words and elements for expressing women's makeup, but no retained assistant answer or attachment; the keyword inventory was therefore reconstructed and the missing-answer boundary was recorded.",
+      "artifact": "chatgpt-conversation://6a94de9e-d9fc-83ee-affe-2479696247f3 and docs/research-evidence/photo-prompt/makeup-visual-semantics-20260831/source-research.md"
+    },
+    {
+      "id": "e-external-research",
+      "kind": "external-research",
+      "claim": "Regulatory categories, professional technique material, optical studies, and makeup-transfer research support separating facial region, coverage, color placement, geometry, surface finish, decoration, and wear state while keeping marketing labels and optical claims bounded.",
+      "artifact": "docs/research-evidence/photo-prompt/makeup-visual-semantics-20260831/source-research.md and docs/research-evidence/photo-prompt/research_evidence.jsonl#makeup_visual_semantics"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "In the latest combined working tree, dictionary metadata, the 81-profile and 477-exact-term visual index, and the 6,909-entry semantic index are hash-consistent; all 15 makeup-focused tests pass after unrelated concurrent extensions finish.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index; python -m unittest tests.test_makeup_layer_dictionary tests.test_photo_makeup_visual_semantics -v"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Eleven independently owned makeup layers can be forced exactly once at every prompt detail level, while sixteen multilingual profile terms route and bare-face, environment, object, lighting, real-injury, and negated confusers fail closed.",
+      "artifact": "tests/test_makeup_layer_dictionary.py; tests/test_photo_makeup_visual_semantics.py; tests/fixtures/photo_prompt/makeup_semantics_routing_cases_v1.jsonl"
+    },
+    {
+      "id": "e-global-holdouts",
+      "kind": "prompt-evaluation",
+      "claim": "The broader semantic checks pass with 79 of 79 generalization cases, 24 of 24 general holdouts, 6 of 6 domain-v2 holdouts, 22 of 22 retrieval holdouts, and zero conflicts across 2,013 generated preset combinations.",
+      "artifact": "commands: eval_semantic.py --generalization-check; --holdout-check; --domain-holdout-v2-check; --retrieval-holdout-check; --contradiction-check"
+    },
+    {
+      "id": "e-render-boundary",
+      "kind": "generation-outcome",
+      "claim": "No image generation was requested or performed in this iteration, so component gates describe future pixel review obligations but do not prove rendered makeup fidelity.",
+      "artifact": "no render artifact; evaluation.render remains unscored"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A requested makeup expression resolves to the correct facial region and independent control axis, carries literal observable evidence into the prompt, and cannot be satisfied by a similarly named object, environment, lighting effect, untreated skin state, or real injury.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "axis-ownership",
+        "statement": "Coverage, skin finish, eyeshadow, eyeliner, lashes, brows, cheek placement, sculpting, decoration, lip-color placement, lip surface finish, and wear state remain independently owned rather than collapsed into one style label.",
+        "evidence_ids": [
+          "e-external-research",
+          "e-package",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "facial region",
+          "coverage amount",
+          "color distribution",
+          "line geometry",
+          "strand treatment",
+          "surface reflectance",
+          "wear integrity"
+        ]
+      },
+      {
+        "id": "component-gated-hard-meaning",
+        "statement": "Composite hard terms require multiple visible components and distinct prompt-evidence fields and pixel gates; embedding or BM25F similarity remains advisory and cannot create a hard obligation.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-global-holdouts"
+        ],
+        "causal_controls": [
+          "exact contextual term",
+          "component groups",
+          "confuser rejection",
+          "negation precedence",
+          "thumbnail and native review gates"
+        ]
+      },
+      {
+        "id": "neutral-visible-description",
+        "statement": "Runtime semantics describe visible cosmetic distribution and optics without demographic assignment, attractiveness judgment, health inference, or gender-essential styling.",
+        "evidence_ids": [
+          "e-external-research",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "human-only applicability",
+          "neutral wording",
+          "definition-only ambiguous labels",
+          "untreated skin kept separate from no-makeup makeup"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "cosmetic hue",
+      "adult subject identity",
+      "skin tone",
+      "wardrobe",
+      "background",
+      "camera system",
+      "editorial theme",
+      "application intensity within the selected candidate contract"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-missing-prior-answer",
+      "scale": "global",
+      "axis": "source keyword inventory",
+      "source_state": "The referenced thread exposes the survey question but not the prior assistant's researched keyword list.",
+      "render_state": "The implementation uses an explicitly reconstructed, source-backed inventory and records that boundary instead of presenting it as a verbatim recovery.",
+      "evidence_ids": [
+        "e-conversation-boundary",
+        "e-external-research"
+      ]
+    },
+    {
+      "id": "mismatch-pixel-evidence-unavailable",
+      "scale": "global",
+      "axis": "render fidelity",
+      "source_state": "Eight new hard profiles declare component-level review gates for future image outputs.",
+      "render_state": "No pixels were produced in this research-and-data task, so prompt behavior passes while rendered fidelity remains unscored.",
+      "evidence_ids": [
+        "e-render-boundary"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-modular-ownership",
+      "stage": "representation",
+      "statement": "Separating makeup into region-specific placement, geometry, optical finish, and wear axes will prevent one candidate from silently owning several independently requested visual properties.",
+      "evidence_ids": [
+        "e-external-research"
+      ],
+      "falsifier": "A candidate must encode two independently selectable axes, or forcing all layers causes duplication, omission, or coherence failure."
+    },
+    {
+      "id": "hypothesis-component-routing",
+      "stage": "prompt-interaction",
+      "statement": "Exact contextual activation plus component contracts and fail-closed confusers will make composite makeup terms hard only when their visible meaning is requested, while related paraphrases remain optional.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-global-holdouts"
+      ],
+      "falsifier": "A bare face, smoky room, paper crease, glass object, oily highlight, actual sunburn, topographic contour, or negated phrase activates a hard makeup profile."
+    },
+    {
+      "id": "hypothesis-definition-only-boundary",
+      "stage": "prompt-priority",
+      "statement": "Definition-only runtime expression for ambiguous marketing labels can preserve observable components without exporting the label as a universal optical or beauty standard.",
+      "evidence_ids": [
+        "e-external-research",
+        "e-prompt"
+      ],
+      "falsifier": "The runtime prompt emits a blocked ambiguous label, or its observable component definition cannot be composed without it."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent makeup as request-scoped observable axes with single slot ownership, source-bounded definitions, exact contextual hard activation, component evidence, explicit confusers, and separate future pixel gates.",
+    "generalization_basis": "The candidates are organized by reusable anatomical region and optical or geometric owner across complexion, eyes, brows, cheeks, facial planes, decoration, lips, and wear rather than by one model, one face, or one trend label.",
+    "hypothesis_ids": [
+      "hypothesis-modular-ownership",
+      "hypothesis-component-routing",
+      "hypothesis-definition-only-boundary"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/makeup-visual-semantics-20260831/source-research.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards",
+      "skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "skills/photo-prompt-image-generator/scripts/eval_semantic.py",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_makeup_layer_dictionary.py",
+      "tests/test_photo_makeup_visual_semantics.py",
+      "tests/fixtures/photo_prompt/makeup_semantics_routing_cases_v1.jsonl",
+      "artifacts/photo-prompt-makeup-semantics-20260831/iteration_record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt",
+        "e-global-holdouts"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "makeup-multilingual-exact-routing",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "eight composite makeup profiles",
+          "English and Korean exact routing"
+        ],
+        "evidence_ids": [
+          "e-prompt"
+        ]
+      },
+      {
+        "id": "makeup-cross-domain-confusers",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "object and environment homonyms",
+          "untreated skin and real injury",
+          "negation precedence"
+        ],
+        "evidence_ids": [
+          "e-prompt"
+        ]
+      },
+      {
+        "id": "repository-semantic-regression",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "unrelated domains",
+          "preset coherence",
+          "semantic retrieval"
+        ],
+        "evidence_ids": [
+          "e-global-holdouts"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The source-backed representation, exact routing, fail-closed boundaries, candidate-pack composition, and unrelated semantic holdouts pass. The decision stops at implemented because no image pixels or user aesthetic judgment were collected in this task.",
+    "evidence_ids": [
+      "e-external-research",
+      "e-package",
+      "e-prompt",
+      "e-global-holdouts",
+      "e-render-boundary"
+    ]
+  }
+}

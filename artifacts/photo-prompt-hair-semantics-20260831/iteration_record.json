@@ -1,0 +1,244 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 plus unrelated pre-existing worktree changes",
+    "candidate_revision": "working tree with hair visual-semantics data, visual-only render-review support, tests, and five-arm artifacts"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply researched hairstyle vocabulary to the visual-semantic candidate pack and independently test five different complex reference-informed image concepts against saved-pixel gates."
+  },
+  "evidence": [
+    {
+      "id": "e-conversation-boundary",
+      "kind": "source-observation",
+      "claim": "The referenced ChatGPT conversation retained the user's hairstyle-research question but no assistant answer, so absent prior keyword output was not invented.",
+      "artifact": "chatgpt-conversation://6a94edde-a71c-83ee-8f38-e828c75cb0e7"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Nine approved source records support factorized hair axes, cut structure and disconnection, braid and loc topology, cultural non-inference, balayage placement, optical highlight confounds, and wet-bundle mechanics.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl#hair_semantics_khairstyle_factorized_axes"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The dictionary, 81-profile and 477-term visual index, 6,909-entry semantic index, 49 focused tests, 2,070 contradiction samples, 24 holdouts, and 112 scene-expression routes pass.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/run_summary.md#validation"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five independently frozen v6 packs contain exactly one assigned hard hair profile, preserve five distinct profile-owned evidence fields, attach the exact reference bytes, and pass composed and runtime audits.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms"
+    },
+    {
+      "id": "e-render-a",
+      "kind": "render-observation",
+      "claim": "The hime-cut render passes long rear mass, visible step, and bilateral context but fails blunt-panel and generic-layer confound gates.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-a/render_review.json"
+    },
+    {
+      "id": "e-render-b",
+      "kind": "render-observation",
+      "claim": "The cornrow render passes all five scalp-row topology gates.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-b/render_review.json"
+    },
+    {
+      "id": "e-render-c",
+      "kind": "render-observation",
+      "claim": "The twin-tail render fails all five strict gates because only one genuine tie point and gathered bundle are visible.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-c/render_review.json"
+    },
+    {
+      "id": "e-render-d",
+      "kind": "render-observation",
+      "claim": "The balayage render passes all five distributed-ribbon placement gates.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-d/render_review.json"
+    },
+    {
+      "id": "e-render-e",
+      "kind": "render-observation",
+      "claim": "The wet/damp render passes all five volume, bundling, adherence, coherence, and gloss-confound gates.",
+      "artifact": "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-e/render_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A requested hair term is represented by its complete observable structure, placement, or temporary state in one saved image, while declared substitute appearances fail.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five-component-contract",
+        "statement": "Every hard hair profile owns five observable component groups, five distinct prompt-evidence fields, five exact saved-pixel gates, and explicit confound substitutes.",
+        "evidence_ids": ["e-research", "e-package", "e-prompt"],
+        "causal_controls": [
+          "global silhouette or arrangement",
+          "regional attachment or transition",
+          "continuity and endpoint geometry",
+          "thumbnail and native readability",
+          "substitute rejection"
+        ]
+      },
+      {
+        "id": "axis-ownership",
+        "statement": "Cut structure, gathered arrangement, braid topology, color placement, and wet finish remain separate candidate owners and cannot substitute for one another.",
+        "evidence_ids": ["e-research", "e-package"],
+        "causal_controls": [
+          "hair_style slot",
+          "hair_color slot",
+          "visual profile category",
+          "component semantics",
+          "confound gates"
+        ]
+      },
+      {
+        "id": "neutral-noninference-boundary",
+        "statement": "Hair labels describe visible hair only and do not infer nationality, ethnicity, personality, value, or biometric identity; locs use a neutral runtime label.",
+        "evidence_ids": ["e-research", "e-package", "e-prompt"],
+        "causal_controls": [
+          "contextual exact activation",
+          "embedding-only optionality",
+          "runtime-forbidden legacy label",
+          "appearance-reference boundary",
+          "user judgment separation"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult facial appearance",
+      "wardrobe",
+      "occupation",
+      "setting",
+      "lighting within readability limits",
+      "camera and composition",
+      "hair length or texture only where the profile permits variation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-hime-bluntness",
+      "scale": "regional",
+      "axis": "paired side-panel endpoints and disconnection",
+      "source_state": "The prompt requires two dense blunt cheek-to-jaw panels plus a long rear mass and disconnected step.",
+      "render_state": "The shorter sections curve and taper, leaving a rounded bob-over-long-hair interpretation available.",
+      "evidence_ids": ["e-render-a"]
+    },
+    {
+      "id": "mismatch-twin-tail-bilateral-topology",
+      "scale": "global",
+      "axis": "two tie points and two gathered bundles",
+      "source_state": "The prompt requires visible left and right tie points, two trailing bundles, and root-to-tie convergence on both sides.",
+      "render_state": "Only one side forms a definite tie point and bundle; the opposite side remains loose hair.",
+      "evidence_ids": ["e-render-c"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-factorized-hair-semantics",
+      "stage": "representation",
+      "statement": "Separating cut, topology, arrangement, color placement, and temporary finish into five-component contracts prevents label-only or single-cue false passes.",
+      "evidence_ids": ["e-research", "e-package", "e-prompt"],
+      "falsifier": "A declared substitute such as loose tendrils, one ponytail, dry gloss, an ombre field, or free braids passes the complete hard profile."
+    },
+    {
+      "id": "hypothesis-hime-endpoint-emphasis",
+      "stage": "generator-response",
+      "statement": "Repeating the dense horizontal endpoint geometry at face-side panel tips and using a slightly more frontal hair-readable crop will reduce bob-over-long-hair substitutions.",
+      "evidence_ids": ["e-render-a"],
+      "falsifier": "Unrelated hime renders keep tapered or curved panel endpoints despite strengthened endpoint geometry."
+    },
+    {
+      "id": "hypothesis-twin-tail-symmetric-attachment",
+      "stage": "generator-response",
+      "statement": "A more frontal or rear-biased head view with both tie points placed outside the face silhouette will improve bilateral gathered-topology survival.",
+      "evidence_ids": ["e-render-c"],
+      "falsifier": "Unrelated twin-tail renders still collapse to one ponytail or loose side hair while both attachments are explicitly staged."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "policy", "runtime", "test"],
+    "general_rule": "Represent hair requests as axis-owned observable component contracts with exact/contextual hard activation, optional embedding discovery, distinct evidence phrases, thumbnail/native pixel gates, and explicit substitute failures.",
+    "generalization_basis": "The seven profiles span cut structure, braid and cord topology, gathered arrangement, color placement, and moisture state rather than being tuned to one portrait or one scene.",
+    "hypothesis_ids": ["hypothesis-factorized-hair-semantics"],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/db5fc1508c0e65a0",
+      "skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py",
+      "tests/test_photo_hair_visual_semantics.py",
+      "tests/test_photo_visual_obligations.py",
+      "tests/fixtures/photo_prompt/hair_semantics_pixel_test_cases_v1.jsonl",
+      "artifacts/photo-runs/20260831-hair-semantics-five-arm-v1",
+      "artifacts/photo-prompt-hair-semantics-20260831/iteration_record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt"]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": ["e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "hair-arm-a-hime-orbital-greenhouse",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["long rear mass", "paired side panels", "disconnected step", "bob confound"],
+        "evidence_ids": ["e-render-a"]
+      },
+      {
+        "id": "hair-arm-b-cornrow-aquarium",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["scalp attachment", "narrow rows", "parting lanes", "continuous paths"],
+        "evidence_ids": ["e-render-b"]
+      },
+      {
+        "id": "hair-arm-c-twin-tail-radio-array",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["two tie points", "two bundles", "root convergence", "loose-hair confound"],
+        "evidence_ids": ["e-render-c"]
+      },
+      {
+        "id": "hair-arm-d-balayage-library",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["irregular ribbons", "soft roots", "mid-end distribution", "base continuity"],
+        "evidence_ids": ["e-render-d"]
+      },
+      {
+        "id": "hair-arm-e-wet-hair-glass-workshop",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["volume collapse", "damp bundles", "weighted adherence", "gloss confound"],
+        "evidence_ids": ["e-render-e"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The research ledger, data contracts, indexes, routing tests, candidate packs, composed prompts, runtime requests, provenance, and three unrelated complex renders pass. Broad render-fidelity promotion is blocked because the hime-cut side-panel endpoints remain substitutable by a rounded bob layer and the twin-tail topology collapses to one definite tied side. User aesthetic acceptance is not yet available.",
+    "evidence_ids": ["e-package", "e-prompt", "e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"]
+  },
+  "follow_up": null
+}

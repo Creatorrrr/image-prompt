@@ -1,0 +1,58 @@
+{
+  "contract_version": "photo-five-arm-no-reference-ablation/v1",
+  "request_text": "이번에는 참고 이미지 없이 테스트해줘.",
+  "request_sha256": "09fbe9d7e40dd0536714d16c4b635703172d7a449a952e9b5be9e5c8802af920",
+  "comparison_baseline": "artifacts/photo-runs/20260831-face-shape-five-arm-v1",
+  "controlled_variables": [
+    "subagent identity",
+    "face-shape profile",
+    "random domain",
+    "seed",
+    "selected complex concept",
+    "one-shot image attempt policy",
+    "five hard face-shape gates",
+    "thumbnail plus native review scales"
+  ],
+  "changed_variable": "generation receives no image input and runtime prose contains no supplied, attached, reference-image, likeness, or appearance-continuity instruction",
+  "independence": {
+    "allowed_inputs": [
+      "this shared protocol",
+      "the arm-local assignment and request envelope",
+      "the arm's own prior request envelope, authorial core, candidate pack, composed prompt, and visual intent only as parent lineage evidence",
+      "the current photo-prompt-image-generator and imagegen skill instructions"
+    ],
+    "forbidden_inputs": [
+      "another arm's prompt, pack, message, image, review, or summary",
+      "the prior arm's result image, pixel review, arm summary, or coordinator review",
+      "the originally attached portrait or any derivative, crop, hash, or path",
+      "any recent conversation image passed through num_last_images_to_include"
+    ],
+    "cross_arm_inputs_used": false
+  },
+  "generation": {
+    "mode": "native_image_gen_generate",
+    "image_calls_per_arm": 1,
+    "referenced_image_paths": "omit",
+    "num_last_images_to_include": "omit",
+    "retry_on_no_pixels": false,
+    "missing_pixels_outcome": "unscored_generation_outcome"
+  },
+  "hard_gate_policy": {
+    "source": "active candidate pack visual obligations",
+    "expected_gate_count_per_evaluable_arm": 5,
+    "allowed_statuses": ["pass", "fail"],
+    "partial_is_fail": true,
+    "all_gates_same_saved_image": true,
+    "user_judgment": "pending"
+  },
+  "runtime_proof": {
+    "reference_sha256": [],
+    "references": [],
+    "required_audits": [
+      "candidate pack generated from a new no-reference lineage-bound core",
+      "composed prompt audit PASS",
+      "exact runtime request audit PASS",
+      "post-generation pixel review audit PASS when pixels exist"
+    ]
+  }
+}

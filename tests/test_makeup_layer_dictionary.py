@@ -12,18 +12,42 @@ WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
 
 NEW_LAYER_SLOTS = {
     "brow_style",
+    "cheek_makeup",
+    "complexion_coverage",
+    "eyeshadow_style",
     "lip_finish",
+    "lip_color_placement",
     "eye_makeup_line",
+    "face_sculpting",
+    "lash_style",
+    "makeup_decoration",
+    "makeup_wear_state",
 }
 FORCED_LAYER_IDS = {
     "brow_style": "soft_brushed_up_brow",
-    "lip_finish": "blurred_edge_lip_tint",
+    "cheek_makeup": "across_nose_sunburn_blush",
+    "complexion_coverage": "sheer_translucent_complexion_coverage",
+    "eyeshadow_style": "cut_crease_lid_separation",
+    "face_sculpting": "balanced_contour_highlight_dimension",
+    "lash_style": "clean_separated_defined_lashes",
+    "lip_color_placement": "center_saturated_gradient_lip",
+    "lip_finish": "soft_blur_matte_lip_finish",
     "eye_makeup_line": "graphic_floating_eyeliner",
+    "makeup_decoration": "micro_crystal_face_gem_constellation",
+    "makeup_wear_state": "fresh_precise_makeup_application",
 }
 EXPECTED_RENDER_TERMS = {
     "brow_style": "soft brushed-up natural brows",
-    "lip_finish": "muted blurred-edge lip tint with a soft diffused outline",
+    "cheek_makeup": "warm sunburn-style blush distributed continuously across high cheeks and the nose bridge",
+    "complexion_coverage": "sheer translucent complexion coverage preserving pores and natural color variation",
+    "eyeshadow_style": "cut-crease eyeshadow with a clean boundary separating the mobile lid from deeper color above the crease",
+    "face_sculpting": "balanced cosmetic contour and highlight placed on opposing facial planes",
+    "lash_style": "clean separated lashes with individually readable strands",
+    "lip_color_placement": "lip color most saturated at the inner center and fading softly toward the vermilion edge",
+    "lip_finish": "soft-blur matte lip surface with restrained specular reflection",
     "eye_makeup_line": "graphic floating eyeliner with clean negative space",
+    "makeup_decoration": "small crystal face gems arranged as a deliberate localized constellation",
+    "makeup_wear_state": "fresh precise makeup application with intact edges and even local distribution",
 }
 
 
@@ -51,6 +75,25 @@ class MakeupLayerDictionaryTests(unittest.TestCase):
                     )
                 )
                 self.assertTrue(all(entry.get("for_any") == ["human"] for entry in entries))
+
+    def test_makeup_axes_keep_line_lash_lip_finish_and_lip_placement_ownership_separate(self):
+        eye_line_ids = {entry["id"] for entry in self.tags["slots"]["eye_makeup_line"]}
+        lash_ids = {entry["id"] for entry in self.tags["slots"]["lash_style"]}
+        lip_finish_ids = {entry["id"] for entry in self.tags["slots"]["lip_finish"]}
+        lip_placement_ids = {
+            entry["id"] for entry in self.tags["slots"]["lip_color_placement"]
+        }
+
+        self.assertTrue(eye_line_ids.isdisjoint(lash_ids))
+        self.assertTrue(lip_finish_ids.isdisjoint(lip_placement_ids))
+        self.assertIn("colored_mascara_accent", lash_ids)
+        self.assertIn("lower_lash_statement_detail", lash_ids)
+        self.assertNotIn("colored_mascara_accent", eye_line_ids)
+        self.assertNotIn("lower_lash_statement_detail", eye_line_ids)
+        for entry in self.tags["slots"]["lip_finish"]:
+            rendered = entry["en"].casefold()
+            self.assertNotIn("vermilion boundary", rendered)
+            self.assertNotIn("lip line", rendered)
 
     def test_new_makeup_layer_render_terms_are_not_demographic_shortcuts(self):
         forbidden = (

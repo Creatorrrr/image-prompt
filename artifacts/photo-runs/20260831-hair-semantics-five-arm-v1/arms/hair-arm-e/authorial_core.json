@@ -1,0 +1,77 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently varied, complex photorealistic test scene that uses the attached appearance reference while keeping the face unobscured and the complete hair arrangement assessable, so a later-selected visual keyword can be judged against the rendered pixels.",
+  "subject": "One unmistakably adult woman visually informed by the supplied appearance reference, with her face unobscured and her complete hair arrangement readable.",
+  "setting": "A shielded control gallery overlooking a basalt-lined volcanic-glass workshop, glowing furnace mouth, firebrick cradle, pyrometer, and obsidian cooling trays.",
+  "event": "She watches a newly drawn ribbon of molten obsidian settle onto a firebrick cradle while its cooling curve appears on a pyrometer display.",
+  "visual_priorities": [
+    "unobscured facial-reference continuity and complete crown-to-ends hair readability",
+    "credible contrast among glassy black obsidian, translucent orange-hot material, and precise furnace reflections"
+  ],
+  "baseline_prompt_en": "Create a photorealistic environmental portrait centered on a furnace observation inside a basalt-lined volcanic-glass workshop. It features one unmistakably adult woman visually informed by the supplied appearance reference, standing in a shielded control gallery as she watches a newly drawn ribbon of molten obsidian settle onto a firebrick cradle beyond the heatproof window. The furnace mouth glows behind the ribbon while a pyrometer display traces its cooling curve and polished obsidian samples catch layered reflections. Her face is fully unobscured, and the entire arrangement of her hair is clearly readable from crown to ends. Prioritize unobscured facial-reference continuity and complete crown-to-ends hair readability; also prioritize credible contrast among glassy black obsidian, translucent orange-hot material, and precise furnace reflections. Subtle heat shimmer, mineral-dusted tools, labeled cooling trays, and restrained sparks make the technical event tangible while keeping her presence visually dominant.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent rendered visual-semantics test arm",
+      "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Produce one independent, randomly varied, complex photorealistic concept using the supplied appearance reference, with the face unobscured and the complete hair arrangement readable for later rendered-pixel assessment.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "a furnace observation inside a basalt-lined volcanic-glass workshop"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult woman visually informed by the supplied appearance reference"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "she watches a newly drawn ribbon of molten obsidian settle onto a firebrick cradle"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "style",
+      "expression"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic industrial process photography",
+    "family": "cinematic scientific-workshop environmental portrait",
+    "evidence": [
+      "photorealistic environmental portrait",
+      "polished obsidian samples catch layered reflections"
+    ]
+  },
+  "variation_key": "d1a4bc4cadbe69ee"
+}

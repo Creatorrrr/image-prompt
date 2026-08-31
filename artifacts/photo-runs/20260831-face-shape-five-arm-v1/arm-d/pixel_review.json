@@ -1,0 +1,49 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "c178379a01736073",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex arm-d native-pixel reviewer",
+  "result_image": "result.png",
+  "result_sha256": "a4b8d73ff6489f77d633f0d9a0b43d7ac68548a7f42ef2f865a91bfb45fc89ce",
+  "hard_gates": {
+    "vo_face_upper_taper_full_perimeter": {
+      "status": "fail",
+      "evidence": "At thumbnail scale, long side locks cross both temple-to-cheek boundaries, so the full upper-width transition is not unobscured."
+    },
+    "vo_face_upper_taper_vertical_relation": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, the central hairline-to-chin span and upper-face breadth remain readable together in the frontal view."
+    },
+    "vo_face_upper_taper_width_hierarchy": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, the exposed forehead and upper-temple skin span is visibly broader than the mandibular angle span."
+    },
+    "vo_face_upper_taper_continuous_chin": {
+      "status": "pass",
+      "evidence": "The native crop shows both lower cheeks narrowing smoothly through a smaller jaw into a compact narrow chin, rather than only an isolated pointed tip."
+    },
+    "vo_face_upper_taper_confound_control": {
+      "status": "pass",
+      "evidence": "The native crop shows anatomical skin boundaries under even frontal light; iconography, makeup, shadow, and lens distortion do not carry the width hierarchy, while hair occlusion is separately failed above."
+    }
+  },
+  "review_assets": {
+    "native": "result.png",
+    "thumbnail": "result-thumbnail.png",
+    "native_face_crop": "result-face-native-crop.png"
+  },
+  "technical_verdict": {
+    "status": "fail",
+    "passed_gate_count": 4,
+    "failed_gate_count": 1,
+    "partial_is_fail": true,
+    "reason": "The strict five-gate set is not fully satisfied because hair masks the upper perimeter transition."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

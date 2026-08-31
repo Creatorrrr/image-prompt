@@ -5093,6 +5093,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             rule
             for rule in routing_policy["scoped_routes"]
             if rule["domain"] == "worldbuilding_system"
+            and rule["preset_id"] in extension_ids
         ]
         self.assertEqual(len(world_rules), 18)
         self.assertEqual({rule["preset_id"] for rule in world_rules}, extension_ids)

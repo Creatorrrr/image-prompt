@@ -1,0 +1,49 @@
+{
+  "schema_version": "photo-face-shape-no-reference-verification/v1",
+  "source_ref": "81eabea05c3b1238bec467bda21ccd8a494fe202",
+  "checks": [
+    {
+      "id": "json-validity",
+      "status": "pass",
+      "result": "Every JSON file under the no-reference run parses successfully."
+    },
+    {
+      "id": "lineage-profile-runtime-binding",
+      "status": "pass",
+      "result": "Five of five packs are v6, preserve reference_use as the only lineage change, bind the assigned profile, expose exactly five required gates, and use zero runtime references."
+    },
+    {
+      "id": "live-composed-audit",
+      "status": "pass",
+      "result": "Five of five audit_composed_prompt.py runs returned status pass with zero failures; advisory uncovered-intent warnings remain non-blocking."
+    },
+    {
+      "id": "live-runtime-audit",
+      "status": "pass",
+      "result": "Five of five audit_image_render_request.py runs returned status pass, reference_count zero, and zero failures."
+    },
+    {
+      "id": "manifest-runtime-image-hash",
+      "status": "pass",
+      "result": "Five of five v2 manifests record one call, no cross-arm input, an empty reference SHA list, and an image hash equal to the saved result."
+    },
+    {
+      "id": "focused-regression-tests",
+      "status": "pass",
+      "command": ".venv/bin/python -m unittest tests.test_photo_face_shape_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval -v",
+      "result": "Ran 50 tests in 325.873s; OK."
+    },
+    {
+      "id": "iteration-record",
+      "status": "pass",
+      "command": ".venv/bin/python .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/photo-prompt-face-shape-semantics-20260831/no_reference_ablation_iteration_record.json",
+      "result": "status ok; errors empty."
+    }
+  ],
+  "evidence_boundaries": {
+    "prompt_and_runtime": "preflight only",
+    "generation_delivery": "five saved images",
+    "pixel_fidelity": "root reviewed 25 exact gates",
+    "user_aesthetic_judgment": "pending"
+  }
+}

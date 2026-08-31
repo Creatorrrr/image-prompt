@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent, reproducibly selected complex photographic test case in which an adult performs legible analog astronomy-cartography work on a rooftop at dawn, while making a seed-like facial-outline interpretation directly inspectable. The supplied photograph is only an appearance reference for broadly visible adult traits; no biometric or same-person conclusion is intended, and the experimental facial-outline target takes priority over the reference silhouette.",
+  "subject": "an unmistakably adult woman working as a survey astronomer",
+  "setting": "a municipal observatory rooftop at dawn with analog astronomical and cartographic instruments",
+  "event": "she draws an azimuth line from a brass transit telescope across a transparent city-map overlay",
+  "visual_priorities": [
+    "seed-shaped face",
+    "legible analog celestial-cartography action",
+    "complete distortion-controlled facial-outline evidence"
+  ],
+  "baseline_prompt_en": "Create a cinematic documentary photograph of an unmistakably adult woman working as a survey astronomer on a municipal observatory rooftop at dawn. She steadies a transparent city-map overlay across a weathered atlas and draws an azimuth line from a brass transit telescope toward the bright morning star, while a mechanical chronometer, compass, penciled coordinate grid, and wind-lifted survey sheets make the cartographic task legible. Frame her chest-up, nearly frontal with only a restrained three-quarter turn and a calm neutral expression. Pin every strand away from both temples, cheekbones, jaw corners, and chin so the full bilateral facial outline is visible. Shape the contour widest high across the temples and upper cheekbones, then narrow it continuously through the lower cheeks into a compact softly rounded chin; keep the temple-to-cheek arcs smooth and the jaw corners gentle but readable. Use distortion-controlled portrait perspective and soft side-to-front dawn light that models the outline without deep shadow. The supplied image guides only broadly visible adult appearance; this specified facial geometry takes precedence over its silhouette.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A seeded choice among independently authored, nonsexual adult scenes in the assigned dawn-rooftop analog astronomy and cartography domain, resolved here as a municipal celestial survey.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as an appearance reference for broadly visible adult traits only, without making a biometric identity claim; the facial-outline test target remains controlling.",
+      "sources": []
+    },
+    {
+      "term": "reflected keyword",
+      "source_text": "반영한 키워드",
+      "basis": "request_context",
+      "resolution": "For this arm, the coordinator-assigned agent request-context variation is seed-shaped face, interpreted through independently described, observable outline geometry rather than treated as a requester-supplied definition.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a survey astronomer on a municipal observatory rooftop at dawn"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "draws an azimuth line from a brass transit telescope toward the bright morning star"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic documentary photography",
+    "family": "dawn rooftop field-survey portrait",
+    "evidence": [
+      "soft side-to-front dawn light",
+      "wind-lifted survey sheets",
+      "brass analog instruments"
+    ]
+  },
+  "variation_key": "arm-e-seed-950317"
+}

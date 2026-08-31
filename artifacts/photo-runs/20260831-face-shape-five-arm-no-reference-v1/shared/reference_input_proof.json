@@ -1,0 +1,88 @@
+{
+  "schema_version": "photo-no-reference-input-proof/v1",
+  "request": "이번에는 참고 이미지 없이 테스트해줘.",
+  "verification_scope": "Exact serialized render requests, their audits, arm-local generation outcome records, manifests, and saved-image hashes. This does not infer hidden service internals.",
+  "aggregate": {
+    "arms": 5,
+    "runtime_requests_with_zero_references": 5,
+    "runtime_audits_with_reference_count_zero": 5,
+    "manifests_with_empty_reference_sha256": 5,
+    "image_calls": 5,
+    "saved_images": 5,
+    "cross_arm_inputs_used": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "render_request": "arm-a/render_request.json",
+      "runtime_prompt_id": "996df003a65b3ed4",
+      "references": [],
+      "reference_sha256": [],
+      "runtime_audit_reference_count": 0,
+      "referenced_image_paths_omitted": true,
+      "num_last_images_to_include_omitted": true,
+      "image_call_count": 1,
+      "result_sha256": "51628194370924dc7ec29f3221dd16e653dea7d908261a44500e66de910ca80b"
+    },
+    {
+      "arm_id": "arm-b",
+      "render_request": "arm-b/render_request.json",
+      "runtime_prompt_id": "18fcd4879a593c97",
+      "references": [],
+      "reference_sha256": [],
+      "runtime_audit_reference_count": 0,
+      "referenced_image_paths_omitted": true,
+      "num_last_images_to_include_omitted": true,
+      "image_call_count": 1,
+      "result_sha256": "c3640af90e86ab07770a763abb5ffac5f1c0c69176bcbf9f4359375dd0a30685"
+    },
+    {
+      "arm_id": "arm-c",
+      "render_request": "arm-c/render_request.json",
+      "runtime_prompt_id": "b392cb77042ae8e0",
+      "references": [],
+      "reference_sha256": [],
+      "runtime_audit_reference_count": 0,
+      "referenced_image_paths_omitted": true,
+      "num_last_images_to_include_omitted": true,
+      "image_call_count": 1,
+      "result_sha256": "cffcc6ae99c7760b4ca6b0feedfdcb6b040e07a5e7d3d861a95be940804d0bd9"
+    },
+    {
+      "arm_id": "arm-d",
+      "render_request": "arm-d/render_request.json",
+      "runtime_prompt_id": "f3b7502654951dad",
+      "references": [],
+      "reference_sha256": [],
+      "runtime_audit_reference_count": 0,
+      "referenced_image_paths_omitted": true,
+      "num_last_images_to_include_omitted": true,
+      "image_call_count": 1,
+      "result_sha256": "94e146ceb8f6020c7cbafb38580743fadc2ccf778fdc7d706f07341ee093a880"
+    },
+    {
+      "arm_id": "arm-e",
+      "render_request": "arm-e/render_request.json",
+      "runtime_prompt_id": "0f7e419696915264",
+      "references": [],
+      "reference_sha256": [],
+      "runtime_audit_reference_count": 0,
+      "referenced_image_paths_omitted": true,
+      "num_last_images_to_include_omitted": true,
+      "image_call_count": 1,
+      "result_sha256": "504709778dc3c352c7c3b477035478524d1e2d711e473dda88a11c3d5aa88273"
+    }
+  ],
+  "negative_runtime_dependency_scan": {
+    "patterns": [
+      "attached",
+      "supplied",
+      "reference image",
+      "appearance reference",
+      "likeness",
+      "source portrait",
+      "input image"
+    ],
+    "hits": []
+  }
+}

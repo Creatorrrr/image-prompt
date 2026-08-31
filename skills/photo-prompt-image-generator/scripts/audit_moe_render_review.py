@@ -76,23 +76,22 @@ def audit_moe_render_review(
     schema_failures: list[dict[str, Any]] = []
     failed_hard_gates: list[dict[str, Any]] = []
 
-    contract = pack.get("moe_response")
-    if not isinstance(contract, dict) or contract.get("enabled") is not True:
-        schema_failures.append(
-            {
-                "check": "moe_response",
-                "reason": "candidate pack does not contain an enabled moe_response contract",
-            }
-        )
-        contract = {}
+    raw_contract = pack.get("moe_response")
+    has_moe_contract = (
+        isinstance(raw_contract, dict) and raw_contract.get("enabled") is True
+    )
+    contract = raw_contract if has_moe_contract else {}
     qualification = contract.get("render_qualification")
-    if not isinstance(qualification, dict) or qualification.get("required") is not True:
-        schema_failures.append(
-            {
-                "check": "render_qualification",
-                "reason": "moe_response contract does not require render qualification",
-            }
-        )
+    if has_moe_contract:
+        if not isinstance(qualification, dict) or qualification.get("required") is not True:
+            schema_failures.append(
+                {
+                    "check": "render_qualification",
+                    "reason": "moe_response contract does not require render qualification",
+                }
+            )
+            qualification = {}
+    else:
         qualification = {}
 
     base_required_gates = [
@@ -123,6 +122,17 @@ def audit_moe_render_review(
         for value in (effective_visual_contract or {}).get("required_hard_gates") or []
         if isinstance(value, str) and value.strip()
     ]
+    has_visual_contract = bool(effective_visual_gates)
+    if not has_moe_contract and not has_visual_contract:
+        schema_failures.append(
+            {
+                "check": "render_qualification_contract",
+                "reason": (
+                    "candidate pack contains neither an enabled moe_response contract "
+                    "nor an effective visual-obligations gate set"
+                ),
+            }
+        )
     required_gates = list(dict.fromkeys(base_required_gates + effective_visual_gates))
     if not required_gates:
         schema_failures.append(
@@ -146,11 +156,19 @@ def audit_moe_render_review(
                 "reason": "render review pack_id differs from candidate pack",
             }
         )
-    if str(review.get("contract_version") or "") != str(contract.get("contract_version") or ""):
+    expected_review_contract_version = (
+        str(contract.get("contract_version") or "")
+        if has_moe_contract
+        else str((effective_visual_contract or {}).get("contract_version") or "")
+    )
+    if str(review.get("contract_version") or "") != expected_review_contract_version:
         schema_failures.append(
             {
                 "check": "contract_version",
-                "reason": "render review contract_version differs from moe_response contract",
+                "reason": (
+                    "render review contract_version differs from the active moe-response "
+                    "or visual-obligations qualification contract"
+                ),
             }
         )
     if not isinstance(review.get("reviewer"), str) or not str(review.get("reviewer") or "").strip():
@@ -216,7 +234,7 @@ def audit_moe_render_review(
         missing_from_qualification = sorted(
             set(visual_required_gates) - set(base_required_gates)
         )
-        if missing_from_qualification:
+        if has_moe_contract and missing_from_qualification:
             schema_failures.append(
                 {
                     "check": "visual_obligations.required_hard_gates",
@@ -325,7 +343,7 @@ def audit_moe_render_review(
                 "reason": "fully pending judgment must be recorded as not_yet_received",
             }
         )
-    if genuinely_moe == "not_applicable":
+    if has_moe_contract and genuinely_moe == "not_applicable":
         schema_failures.append(
             {
                 "check": "user_judgment.genuinely_moe",
@@ -354,7 +372,10 @@ def audit_moe_render_review(
         else better_than_baseline == "not_applicable"
     )
     representative_eligible = (
-        technical_qualified and genuinely_moe == "accepted" and comparison_accepted
+        technical_qualified
+        and has_moe_contract
+        and genuinely_moe == "accepted"
+        and comparison_accepted
     )
     if not technical_qualified:
         qualification_status = "failed_technical_hard_gates"
@@ -362,13 +383,15 @@ def audit_moe_render_review(
         qualification_status = "rejected_by_requesting_user"
     elif representative_eligible:
         qualification_status = "representative_eligible"
+    elif not has_moe_contract:
+        qualification_status = "visual_technical_qualified_user_judgment_pending"
     else:
         qualification_status = "pending_requesting_user_judgment"
 
     return {
         "schema_version": REVIEW_SCHEMA_VERSION,
         "pack_id": str(pack.get("pack_id") or ""),
-        "contract_version": str(contract.get("contract_version") or ""),
+        "contract_version": expected_review_contract_version,
         "qualification_status": qualification_status,
         "technical_qualified": technical_qualified,
         "representative_eligible": representative_eligible,
@@ -396,7 +419,7 @@ def audit_moe_render_review(
             "evidence": user_judgment_evidence,
         },
         "boundary": (
-            "This audit validates recorded pixel-review evidence and user acceptance; "
+            "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; "
             "it does not infer visual truth from metadata, authenticate who authored a review, "
             "or declare moe on the user's behalf."
         ),

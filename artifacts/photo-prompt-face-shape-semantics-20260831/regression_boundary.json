@@ -1,0 +1,117 @@
+{
+  "contract_version": "photo-face-shape-regression-boundary/v1",
+  "candidate_source_ref": "81eabea05c3b1238bec467bda21ccd8a494fe202",
+  "focused_face_scope": {
+    "command": ".venv/bin/python -m unittest tests.test_photo_face_shape_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval",
+    "tests_run": 50,
+    "status": "pass"
+  },
+  "data_checks": [
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass"
+    },
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass",
+      "profiles": 66,
+      "exact_terms": 398
+    },
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "status": "pass",
+      "entries": 6764,
+      "embedding_model": "gemini-embedding-2",
+      "embedding_dimensions": 768
+    },
+    {
+      "command": ".venv/bin/python .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/photo-prompt-face-shape-semantics-20260831/iteration_record.json",
+      "status": "pass"
+    },
+    {
+      "command": "uv run --with jsonschema python <five-ledger validation>",
+      "status": "pass",
+      "ledger_files": 5,
+      "records_validated": 5
+    },
+    {
+      "command": "python <five-manifest invariant validation>",
+      "status": "pass",
+      "manifest_count": 5,
+      "invariants": [
+        "photo-independent-run-manifest/v2",
+        "candidate_pack_version=v6",
+        "image_call_count=1",
+        "cross_arm_inputs_used=false",
+        "reference_sha256 matches"
+      ]
+    }
+  ],
+  "golden_snapshot_boundary": {
+    "current_candidate_result": {
+      "command": ".venv/bin/python -m unittest tests.test_golden_snapshots -v",
+      "tests_run": 3,
+      "failure_count": 6,
+      "failing_cases": [
+        "concept_company_worker",
+        "concept_maid_vampire",
+        "concept_princess_femmefatale",
+        "preset_magazine_fashion_seed42",
+        "preset_wedding_candid_documentary_seed42",
+        "preset_wedding_candid_documentary_seed1337"
+      ]
+    },
+    "pre_face_reproduction": {
+      "tags_path": "artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/runtime_snapshot/photo_prompt_tags.json",
+      "tags_sha256": "4bbbd97e00feaa29086ee2e010f295fd36c2634aef8f3fd5f90c3935dbcc57ba",
+      "relationship_to_face_change": "This is the photo_prompt_tags snapshot captured before the face-shape edit, as recorded in baseline.json.",
+      "result": "All six current golden mismatches remain when each failing wrapper case is explicitly run with this pre-face tags file.",
+      "causal_boundary": "The six golden mismatches are reproducible without the face-shape tag changes and are therefore not attributed to this face-shape iteration. Golden fixtures were not rewritten."
+    }
+  },
+  "full_unittest_discovery": {
+    "command": "python -m unittest discover -s tests",
+    "tests_run": 730,
+    "duration_seconds": 2340.896,
+    "initial_result": {
+      "status": "fail",
+      "failures": 9,
+      "errors": 3
+    },
+    "face_change_causal_failure": {
+      "test": "test_all_semantic_inputs_exclude_control_and_process_metadata",
+      "cause": "The intentional semantic expansion raised the entry count from the stale hard-coded 6638 expectation to 6764.",
+      "fix": "Updated the expected count to 6764.",
+      "focused_retest": "pass"
+    },
+    "remaining_reproduced_boundary": {
+      "expected_after_face_count_fix": {
+        "failures": 8,
+        "errors": 3
+      },
+      "full_suite_rerun": "not_run_after_the_single_count_fix_due_to_the_39_minute_suite_cost",
+      "focused_reproductions": [
+        {
+          "category": "golden_snapshot_drift",
+          "failures": 6,
+          "face_change_attribution": "excluded",
+          "evidence": "All six mismatches reproduce with the captured pre-face tags file."
+        },
+        {
+          "category": "subculture_illustration_photo_baseline_drift",
+          "failures": 1,
+          "errors": 3,
+          "face_change_attribution": "excluded",
+          "evidence": "The frozen v4 command produces SHA-256 d7d8cd1a66fec9a919fe492fada7866bfbf9652dddfbac70d1258177c62a0354 with both current and captured pre-face tags, versus the older pinned 2cab95b6eddfa0eae75cbe4477253f0a01f1d921e837c2cd7eca10f57efdf4ce."
+        },
+        {
+          "category": "pose_research_reuse_note_contract",
+          "failures": 1,
+          "face_change_attribution": "outside_face_scope",
+          "evidence": "The offending row is pose_semantics_nga_figura_serpentinata at research_evidence.jsonl line 218; no face_shape_semantics row is named in the assertion."
+        }
+      ],
+      "boundary_action": "No unrelated golden, subculture-illustration baseline, or pose-research data was rewritten."
+    }
+  }
+}

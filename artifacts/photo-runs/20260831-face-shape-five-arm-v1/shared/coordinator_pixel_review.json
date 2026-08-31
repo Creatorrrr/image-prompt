@@ -1,0 +1,301 @@
+{
+  "schema_version": "photo-face-shape-coordinator-review/v1",
+  "review_date": "2026-08-31",
+  "reviewer": "root-coordinator",
+  "scope": "Direct rendered-pixel review of the exact five hard gates bound by each arm's immutable v6 candidate pack. Prompt text and scene metadata are not accepted as pixel proof.",
+  "strict_rule": "Every required hard gate must pass. Partial visibility is fail. A generation transport error is unscored rather than a pixel failure.",
+  "reference": {
+    "path": "artifacts/photo-prompt-face-shape-semantics-20260831/reference/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "appearance_reference",
+    "boundary": "Used only for broadly visible adult appearance. This review makes no biometric identity or same-person determination, and each experimental contour target has priority over the reference outline."
+  },
+  "protocol": {
+    "arm_count": 5,
+    "independent_subagents": 5,
+    "different_randomization_domains": true,
+    "different_seeds": true,
+    "candidate_pack_count_per_arm": 1,
+    "candidate_pack_version": "v6",
+    "image_call_limit_per_arm": 1,
+    "cross_arm_inputs_allowed": false,
+    "review_scales": [
+      "thumbnail",
+      "native"
+    ]
+  },
+  "aggregate": {
+    "candidate_pack_audits_passed": 5,
+    "composed_prompt_audits_passed": 5,
+    "runtime_request_audits_passed": 5,
+    "image_calls_consumed": 5,
+    "images_returned": 4,
+    "generation_transport_errors": 1,
+    "pixel_evaluable_arms": 4,
+    "fully_passing_pixel_arms": 2,
+    "strictly_failing_pixel_arms": 2,
+    "unscored_pixel_arms": 1,
+    "evaluated_hard_gates": 20,
+    "passed_hard_gates": 17,
+    "failed_hard_gates": 3,
+    "overall_render_fidelity": "revise",
+    "reason": "The semantic and prompt contracts are consistently expressed, but render compliance is not yet reliable when long hair competes with the requested full facial perimeter."
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "profile_id": "oval_face_contour_relation",
+      "target": "oval face contour",
+      "randomization_domain": "nocturnal_botanical_forensics",
+      "seed": 824173,
+      "concept": "Moonlit orchid-house pollen trajectory reconstruction",
+      "pack_id": "d1fb8bde8b47796c",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "image_generation": {
+        "status": "success",
+        "tool": "built-in_imagegen",
+        "call_count": 1,
+        "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/result.png",
+        "sha256": "84be7025e5fa890b8f6cfd43a58d6944314a086e4cc9db71f70b70a9da1079ff",
+        "width": 1086,
+        "height": 1448
+      },
+      "coordinator_gates": [
+        {
+          "id": "vo_face_oval_full_perimeter",
+          "status": "fail",
+          "evidence": "Loose hair overlaps both temple boundaries and parts of the lateral jawlines, so the complete bilateral skin perimeter is not cleanly readable at thumbnail scale."
+        },
+        {
+          "id": "vo_face_oval_vertical_relation",
+          "status": "pass",
+          "evidence": "The visible face is moderately longer than wide without reading compact-round or distinctly oblong."
+        },
+        {
+          "id": "vo_face_oval_width_hierarchy",
+          "status": "pass",
+          "evidence": "The cheekbone region is subtly widest while the visible forehead and jaw are somewhat narrower."
+        },
+        {
+          "id": "vo_face_oval_lower_taper",
+          "status": "pass",
+          "evidence": "The lower cheeks narrow smoothly into a small rounded chin without a broad angular corner or isolated point."
+        },
+        {
+          "id": "vo_face_oval_confound_control",
+          "status": "fail",
+          "evidence": "Hair conceals enough of the temporal and lateral-jaw boundaries that hairstyle contribution cannot be separated from the apparent oval."
+        }
+      ],
+      "passed_gate_count": 3,
+      "failed_gate_count": 2,
+      "technical_status": "fail",
+      "self_review_alignment": "agree"
+    },
+    {
+      "arm_id": "arm-b",
+      "profile_id": "round_compact_face_relation",
+      "target": "round compact face contour",
+      "randomization_domain": "polar_radio_observatory_maintenance",
+      "seed": 194608,
+      "concept": "Low-noise receiver calibration at a polar radio observatory",
+      "pack_id": "5f1f47e1dcf2c6e7",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "image_generation": {
+        "status": "success",
+        "tool": "built_in_imagegen",
+        "call_count": 1,
+        "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-b/result.png",
+        "sha256": "7d4485ed4c9c233b288922b4b61ddb3988f76cabc9c90991fa129e8c12e3e745",
+        "width": 1086,
+        "height": 1448
+      },
+      "coordinator_gates": [
+        {
+          "id": "vo_face_round_full_perimeter",
+          "status": "pass",
+          "evidence": "Pulled-back hair leaves both temple, cheek, jaw, and chin boundaries readable as one complete perimeter."
+        },
+        {
+          "id": "vo_face_round_vertical_relation",
+          "status": "pass",
+          "evidence": "The hairline-to-chin span stays close to the cheek-to-cheek span and reads compact rather than oval or oblong."
+        },
+        {
+          "id": "vo_face_round_cheek_width",
+          "status": "pass",
+          "evidence": "Broad lateral cheek presence materially owns the global mid-face contour."
+        },
+        {
+          "id": "vo_face_round_lower_curve",
+          "status": "pass",
+          "evidence": "Both mandibular sides curve continuously into a short rounded chin without broad corners or an isolated point."
+        },
+        {
+          "id": "vo_face_round_confound_control",
+          "status": "pass",
+          "evidence": "Neutral expression, cleared hair, restrained makeup, and controlled perspective leave the anatomical outline rather than styling or near-lens enlargement carrying the result."
+        }
+      ],
+      "passed_gate_count": 5,
+      "failed_gate_count": 0,
+      "technical_status": "pass_pending_user_judgment",
+      "self_review_alignment": "agree"
+    },
+    {
+      "arm_id": "arm-c",
+      "profile_id": "diamond_zygomatic_dominant_relation",
+      "target": "diamond zygomatic-dominant face contour",
+      "randomization_domain": "flooded_baroque_archive_conservation",
+      "seed": 731552,
+      "concept": "Chandelier-pulley vellum drying in a partially flooded Baroque archive",
+      "pack_id": "818607e0cea2e523",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "image_generation": {
+        "status": "error_no_output",
+        "tool": "built_in_imagegen",
+        "call_count": 1,
+        "failure_class": "transport_connection_error",
+        "failure_reason": "error sending request",
+        "image_path": null
+      },
+      "coordinator_gates": [
+        {
+          "id": "vo_face_diamond_full_perimeter",
+          "status": "not_evaluated_no_image"
+        },
+        {
+          "id": "vo_face_diamond_vertical_relation",
+          "status": "not_evaluated_no_image"
+        },
+        {
+          "id": "vo_face_diamond_zygomatic_width",
+          "status": "not_evaluated_no_image"
+        },
+        {
+          "id": "vo_face_diamond_two_direction_taper",
+          "status": "not_evaluated_no_image"
+        },
+        {
+          "id": "vo_face_diamond_confound_control",
+          "status": "not_evaluated_no_image"
+        }
+      ],
+      "passed_gate_count": 0,
+      "failed_gate_count": 0,
+      "technical_status": "inconclusive_no_rendered_pixels",
+      "self_review_alignment": "not_applicable_no_pixels"
+    },
+    {
+      "arm_id": "arm-d",
+      "profile_id": "upper_face_to_chin_taper_relation",
+      "target": "upper-face-to-chin taper",
+      "randomization_domain": "volcanic_glass_kinetic_couture_atelier",
+      "seed": 468029,
+      "concept": "Obsidian-petal resonance fitting in a volcanic-glass kinetic couture atelier",
+      "pack_id": "c178379a01736073",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "image_generation": {
+        "status": "success",
+        "tool": "image_gen",
+        "call_count": 1,
+        "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-d/result.png",
+        "sha256": "a4b8d73ff6489f77d633f0d9a0b43d7ac68548a7f42ef2f865a91bfb45fc89ce",
+        "width": 1122,
+        "height": 1402
+      },
+      "coordinator_gates": [
+        {
+          "id": "vo_face_upper_taper_full_perimeter",
+          "status": "fail",
+          "evidence": "Long side locks cross both temple-to-cheek boundaries, so the upper-width transition is not fully unobscured at thumbnail scale."
+        },
+        {
+          "id": "vo_face_upper_taper_vertical_relation",
+          "status": "pass",
+          "evidence": "The central hairline-to-chin span remains readable beside the upper-face breadth."
+        },
+        {
+          "id": "vo_face_upper_taper_width_hierarchy",
+          "status": "pass",
+          "evidence": "The exposed forehead and upper-temple span is visibly broader than the mandibular-angle span."
+        },
+        {
+          "id": "vo_face_upper_taper_continuous_chin",
+          "status": "pass",
+          "evidence": "Both lower cheeks narrow continuously through a smaller jaw into a compact narrow chin rather than relying on a pointed tip alone."
+        },
+        {
+          "id": "vo_face_upper_taper_confound_control",
+          "status": "pass",
+          "evidence": "Even frontal light and restrained perspective leave the anatomical width hierarchy readable; the separate perimeter gate records the remaining hair occlusion."
+        }
+      ],
+      "passed_gate_count": 4,
+      "failed_gate_count": 1,
+      "technical_status": "fail",
+      "self_review_alignment": "agree"
+    },
+    {
+      "arm_id": "arm-e",
+      "profile_id": "cjk_seed_face_relation",
+      "target": "definition-only CJK seed-face contour relation",
+      "randomization_domain": "dawn_rooftop_analog_astronomy_cartography",
+      "seed": 950317,
+      "concept": "Municipal celestial survey on an observatory rooftop at dawn",
+      "pack_id": "172b9cdfbb378489",
+      "composed_audit": "pass",
+      "runtime_audit": "pass",
+      "image_generation": {
+        "status": "success",
+        "tool": "built_in_imagegen",
+        "call_count": 1,
+        "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-e/result.png",
+        "sha256": "22b979d0cdd86c48c2bf4624862561c5b786328439f5dc70b9cac3dc5d78dcb3",
+        "width": 1086,
+        "height": 1448
+      },
+      "coordinator_gates": [
+        {
+          "id": "vo_face_seed_full_perimeter",
+          "status": "pass",
+          "evidence": "Pinned hair leaves the complete hairline, temple, cheek, jaw, and chin perimeter readable at thumbnail scale."
+        },
+        {
+          "id": "vo_face_seed_vertical_relation",
+          "status": "pass",
+          "evidence": "The upper and middle face read moderately longer than wide rather than compact-round."
+        },
+        {
+          "id": "vo_face_seed_cheek_width",
+          "status": "pass",
+          "evidence": "The lateral cheek region is visibly wider than the jaw and anchors the contour on both sides."
+        },
+        {
+          "id": "vo_face_seed_strong_lower_taper",
+          "status": "pass",
+          "evidence": "The lower face narrows strongly and smoothly into a small softly rounded, slightly pointed chin."
+        },
+        {
+          "id": "vo_face_seed_confound_control",
+          "status": "pass",
+          "evidence": "The elongated upper-middle oval, cheek-owned width, strong continuous lower taper, and small chin are simultaneously visible without a label, surgery cue, isolated V, or styling effect substituting for them."
+        }
+      ],
+      "passed_gate_count": 5,
+      "failed_gate_count": 0,
+      "technical_status": "pass_pending_user_judgment",
+      "self_review_alignment": "agree"
+    }
+  ],
+  "audit_boundary": {
+    "moe_render_review_auditor": "structurally_inapplicable_to_non_moe_profile_packs",
+    "explanation": "Each face-shape pack contains strict visual_obligations but no moe_response or moe render_qualification object. The moe-specific auditor therefore reports schema failures; these are kept separate from the exact face-profile pixel gates above.",
+    "requesting_user_judgment": "not_yet_received"
+  },
+  "next_revision_hypothesis": "For face-contour obligations, move bilateral temple and jaw clearance from a descriptive styling clause into a repeated high-priority capture invariant and explicitly reject loose side locks in the runtime negative prompt. Re-test on unrelated long-hair concepts before claiming render-fidelity promotion."
+}

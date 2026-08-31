@@ -1,0 +1,359 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "1540888a47b1629e04239c34404d4bf8bff214c7 plus the pre-change hashes captured in baseline.json",
+    "candidate_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 plus five-arm coordinator artifacts"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply the researched female face-shape vocabulary to visual-semantic data and the candidate pack, then use five independent complex reference-informed image cases to test whether the requested contour relations survive into rendered pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-prior-vocabulary",
+      "kind": "source-observation",
+      "claim": "The referenced conversation organizes face language across global silhouettes, length-to-width relation, forehead, temples, cheek width versus projection, cheek soft tissue, jaw width and angle, chin shape, facial thirds, profile depth, soft-tissue versus bony form, and natural asymmetry.",
+      "artifact": "chatgpt-conversation://6a944a7b-afc0-83e8-8f37-10e994d0dd72"
+    },
+    {
+      "id": "e-research-anatomy",
+      "kind": "external-research",
+      "claim": "Morphology and 3D-landmark sources support representing a face label through named regional landmarks, transverse widths, vertical spans, lower-contour termination, and separate sagittal projection rather than a beauty adjective or fixed ideal ratio.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl#face_shape_semantics_standard_landmark_nomenclature"
+    },
+    {
+      "id": "e-research-confounds",
+      "kind": "external-research",
+      "claim": "Photographic perspective, expression, natural asymmetry, continuous population variation, and culture-scoped labels require explicit confound controls and prohibit ethnicity, attractiveness, surgery, or value inference.",
+      "artifact": "docs/analysis/2026-08-31-female-face-shape-visual-semantics.md"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary metadata, the 66-profile and 398-exact-term visual index, the 6,764-entry semantic index, and 50 focused face-shape, visual-obligation, profile-retrieval, and BM25F tests pass on the candidate state.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index; python -m unittest tests.test_photo_face_shape_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval"
+    },
+    {
+      "id": "e-regression-boundary",
+      "kind": "package-check",
+      "claim": "The 730-test full discovery exposed one stale semantic-entry count caused by this expansion; that expectation was updated to 6,764 and its focused retest passes. The remaining golden, illustration-baseline, and pose-evidence failures reproduce without the face-tag change or name a non-face row and remain outside this iteration.",
+      "artifact": "artifacts/photo-prompt-face-shape-semantics-20260831/regression_boundary.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five independent v6 packs contain exactly one intended face profile, preserve five literal evidence fields, and pass composed-prompt and runtime-reference audits; multilingual exact terms route while object, body-region, expression, isolated-feature, and embedding-only confusers remain non-hard.",
+      "artifact": "tests/test_photo_face_shape_semantics.py and artifacts/photo-runs/20260831-face-shape-five-arm-v1"
+    },
+    {
+      "id": "e-render-a",
+      "kind": "render-observation",
+      "claim": "The oval botanical-forensics render passes vertical relation, width hierarchy, and lower taper but fails full perimeter and confound control because hair masks both temples and portions of the lateral jaw.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/result.png and shared/coordinator_pixel_review.json#arm-a"
+    },
+    {
+      "id": "e-render-b",
+      "kind": "render-observation",
+      "claim": "The round-compact polar-observatory render passes all five hard gates with a complete cleared perimeter, near-equal length-width read, broad cheek ownership, short rounded lower curve, and controlled confounds.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-b/result.png and shared/coordinator_pixel_review.json#arm-b"
+    },
+    {
+      "id": "e-generation-c",
+      "kind": "generation-outcome",
+      "claim": "The diamond archive-conservation arm consumed its single built-in image call but returned no pixels because of a transport connection error; it is unscored rather than counted as a visual-profile failure.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-c/generation_outcome.json"
+    },
+    {
+      "id": "e-render-d",
+      "kind": "render-observation",
+      "claim": "The upper-face-to-chin-taper couture render passes four gates but fails the full-perimeter gate because long side locks cross both temple-to-cheek boundaries.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-d/result.png and shared/coordinator_pixel_review.json#arm-d"
+    },
+    {
+      "id": "e-render-e",
+      "kind": "render-observation",
+      "claim": "The definition-only seed-contour observatory render passes all five gates without emitting a culture-scoped runtime label: the oval upper-middle relation, cheek-owned width, stronger lower taper, and small chin remain jointly visible.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-e/result.png and shared/coordinator_pixel_review.json#arm-e"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A requested face-shape term becomes a complete and observable hairline-to-chin relation whose vertical span, transverse-width owner, lower-contour termination, and confound controls remain simultaneously visible in a complex rendered photograph.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five-component-contract",
+        "statement": "Every hard face profile requires a full perimeter, declared vertical relation, declared width hierarchy, continuous lower contour, and confound control, each with a distinct prompt evidence phrase and pixel gate.",
+        "evidence_ids": [
+          "e-prior-vocabulary",
+          "e-research-anatomy",
+          "e-package"
+        ],
+        "causal_controls": [
+          "hairline and temples",
+          "face length versus width",
+          "forehead zygomatic and bigonial widths",
+          "jaw-to-chin continuity",
+          "hair expression makeup light crop and perspective"
+        ]
+      },
+      {
+        "id": "width-depth-separation",
+        "statement": "Front-view lateral width and three-quarter or profile projection are separate candidate axes; projection, highlight, or isolated cheek fullness cannot substitute for contour width ownership.",
+        "evidence_ids": [
+          "e-research-anatomy",
+          "e-research-confounds",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "zygomatic lateral width",
+          "malar forward projection",
+          "chin width",
+          "chin sagittal projection",
+          "declared viewpoint"
+        ]
+      },
+      {
+        "id": "neutral-noninference-boundary",
+        "statement": "The registry expresses visible relations without fixed ideals or inference about identity, ethnicity, age beyond explicit adulthood, attractiveness, personality, health, or surgery.",
+        "evidence_ids": [
+          "e-research-confounds",
+          "e-package",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "definition-only runtime expression",
+          "contextual exact activation",
+          "natural asymmetry allowance",
+          "appearance-reference boundary",
+          "user judgment kept separate"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "identity",
+      "ethnicity",
+      "adult age",
+      "hair color and style when the perimeter remains clear",
+      "wardrobe",
+      "occupation",
+      "setting",
+      "lighting style within confound limits",
+      "camera system within distortion limits"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-label-collapse",
+      "scale": "global",
+      "axis": "face-shape representation",
+      "source_state": "The source vocabulary mixes global contour classes, regional features, depth cues, culture-scoped shorthand, and aesthetic impressions.",
+      "render_state": "The implemented registry separates these owners and the five prompts carry them literally; targeted routing and audit evidence pass.",
+      "evidence_ids": [
+        "e-prior-vocabulary",
+        "e-research-anatomy",
+        "e-prompt"
+      ]
+    },
+    {
+      "id": "mismatch-hair-occlusion",
+      "scale": "local",
+      "axis": "temple and lateral-jaw perimeter visibility",
+      "source_state": "The oval and upper-taper prompts explicitly instruct hair to clear both temples and the jaw contour.",
+      "render_state": "The A and D generators retain long side locks across required contour boundaries, producing strict failures despite otherwise correct width and taper relations.",
+      "evidence_ids": [
+        "e-render-a",
+        "e-render-d"
+      ]
+    },
+    {
+      "id": "mismatch-transport",
+      "scale": "global",
+      "axis": "image availability",
+      "source_state": "The diamond arm passes pack, prompt, and runtime request audits and consumes its one permitted image call.",
+      "render_state": "No pixels return because the image service connection fails, so diamond fidelity cannot be scored.",
+      "evidence_ids": [
+        "e-generation-c"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-component-decomposition",
+      "stage": "representation",
+      "statement": "Decomposing each composite face label into perimeter, vertical relation, transverse owner, lower termination, and confound controls will prevent isolated features or visual puns from satisfying a face-shape request.",
+      "evidence_ids": [
+        "e-prior-vocabulary",
+        "e-research-anatomy",
+        "e-research-confounds"
+      ],
+      "falsifier": "A hard negative such as a diamond necklace, V-neck, round mirror, pointed chin alone, or high cheek projection alone activates or passes a hard face profile."
+    },
+    {
+      "id": "hypothesis-definition-only-cultural-labels",
+      "stage": "prompt-interaction",
+      "statement": "Replacing V-line, U-line, and seed-face labels with literal contour components at runtime will preserve their scoped visible meaning without exporting medical, ethnic, or beauty-value implications.",
+      "evidence_ids": [
+        "e-research-confounds",
+        "e-prompt",
+        "e-render-e"
+      ],
+      "falsifier": "The runtime prompt emits a forbidden culture-scoped label, or a rendered result cannot show the component relation without that label."
+    },
+    {
+      "id": "hypothesis-hair-clearance-priority",
+      "stage": "generator-response",
+      "statement": "Promoting bilateral temple and jaw clearance to a repeated high-priority capture invariant and adding loose side locks as a runtime negative should improve full-perimeter compliance for long-haired subjects.",
+      "evidence_ids": [
+        "e-render-a",
+        "e-render-d",
+        "e-render-b",
+        "e-render-e"
+      ],
+      "falsifier": "Unrelated long-hair renders continue to mask required contour boundaries despite the strengthened invariant, or the change damages passing width and taper relations."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Treat face labels as request-scoped observable relations with exact contextual activation, five-component evidence and pixel gates, explicit width-versus-depth ownership, and fail-closed culture or homonym boundaries; do not insert face shape into default presets.",
+    "generalization_basis": "The data model is organized by anatomical and photographic owners shared across eleven contour families rather than tuned to one reference portrait or one label.",
+    "hypothesis_ids": [
+      "hypothesis-component-decomposition",
+      "hypothesis-definition-only-cultural-labels"
+    ],
+    "changed_paths": [
+      "docs/analysis/2026-08-31-female-face-shape-visual-semantics.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/fed27c0baa8ea9f4",
+      "tests/test_photo_face_shape_semantics.py",
+      "tests/test_prompt_generator.py",
+      "tests/fixtures/photo_prompt/face_shape_five_arm_cases_v1.jsonl",
+      "artifacts/photo-runs/20260831-face-shape-five-arm-v1",
+      "artifacts/photo-prompt-face-shape-semantics-20260831/iteration_record.json",
+      "artifacts/photo-prompt-face-shape-semantics-20260831/regression_boundary.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-regression-boundary"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-a",
+        "e-render-b",
+        "e-render-d",
+        "e-render-e"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-a-oval-botanical-forensics",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "moderate vertical relation",
+          "subtle zygomatic width",
+          "smooth lower taper",
+          "hair confound"
+        ],
+        "evidence_ids": [
+          "e-render-a"
+        ]
+      },
+      {
+        "id": "arm-b-round-polar-observatory",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "compact vertical relation",
+          "broad cheek width",
+          "short rounded chin",
+          "cleared hair"
+        ],
+        "evidence_ids": [
+          "e-render-b"
+        ]
+      },
+      {
+        "id": "arm-c-diamond-flooded-archive",
+        "case_role": "held-out",
+        "status": "blocked",
+        "covered_axes": [
+          "zygomatic width dominance",
+          "two-direction taper",
+          "transport availability"
+        ],
+        "evidence_ids": [
+          "e-generation-c"
+        ]
+      },
+      {
+        "id": "arm-d-upper-taper-couture",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "upper-face width dominance",
+          "continuous lower taper",
+          "temple hair occlusion"
+        ],
+        "evidence_ids": [
+          "e-render-d"
+        ]
+      },
+      {
+        "id": "arm-e-seed-rooftop-astronomy",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "definition-only runtime expression",
+          "oval upper-middle relation",
+          "cheek-owned width",
+          "strong smooth lower taper"
+        ],
+        "evidence_ids": [
+          "e-render-e"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The research-backed data model, indexes, routing tests, candidate packs, composed prompts, and runtime requests pass, and two unrelated rendered profiles pass all five pixel gates. Render fidelity is not promoted because two other evaluable profiles strictly fail hair-clearance gates and the diamond profile is unscored after a transport error. The next iteration must improve perimeter-clearance compliance and repeat unrelated long-hair renders; requesting-user aesthetic judgment remains unscored.",
+    "evidence_ids": [
+      "e-package",
+      "e-regression-boundary",
+      "e-prompt",
+      "e-render-a",
+      "e-render-b",
+      "e-generation-c",
+      "e-render-d",
+      "e-render-e"
+    ]
+  }
+}
