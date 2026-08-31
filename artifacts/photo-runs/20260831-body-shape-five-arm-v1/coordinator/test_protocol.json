@@ -1,0 +1,59 @@
+{
+  "schema_version": "photo-body-shape-five-arm-protocol/v1",
+  "reference_policy": {
+    "role": "facial_appearance_only",
+    "preserve": [
+      "adult age impression",
+      "eye aperture shape and spacing",
+      "face length",
+      "lower-face and jaw width",
+      "nose lips cheekbones skin tone hairline and natural asymmetry"
+    ],
+    "body_control": "reference body geometry is not evidence and must not determine the generated target body relation",
+    "claim_boundary": "visual resemblance only; no biometric identity verification"
+  },
+  "common_scene_controls": [
+    "one unmistakably adult woman",
+    "fully clothed participant-led professional action",
+    "natural body relation visible through smooth unpadded non-cinching matte clothing",
+    "front or restrained three-quarter geometry appropriate to the target profile",
+    "both required body contours visible without wide-angle stretching",
+    "one concrete action and one coherent complex environment",
+    "no readable text or brand marks"
+  ],
+  "common_review_layers": {
+    "preflight": ["frozen envelope and v3 core", "candidate-pack v6", "composed audit", "exact runtime-input record"],
+    "thumbnail": ["adult full-body or target-region readability", "one coherent action", "target relation salience", "no garment-only substitution"],
+    "native": ["anatomical coherence", "target relation components", "camera garment pose confounders", "face appearance continuity"],
+    "terminal": ["requesting-user judgment remains pending"]
+  },
+  "verdict_rule": {
+    "technical_pass": "all target vo gates and common adult reference geometry gates pass in the same saved image",
+    "partial_or_missing": "fail",
+    "moderation_or_no_image": "unscored process outcome",
+    "prompt_presence_only": "insufficient",
+    "user_acceptance": "pending until directly supplied"
+  },
+  "arms": {
+    "arm-01": {
+      "profile_id": "slender_linear_build",
+      "required_gate_ids": ["vo_slender_full_body_read", "vo_slender_narrow_torso", "vo_slender_narrow_limbs", "vo_slender_not_stature_or_lens_only"]
+    },
+    "arm-02": {
+      "profile_id": "bust_prominence_relation",
+      "required_gate_ids": ["vo_bust_adult_bilateral_read", "vo_bust_ribcage_reference", "vo_bust_projection_coherence", "vo_bust_not_whole_body_or_value"]
+    },
+    "arm-03": {
+      "profile_id": "top_hourglass_silhouette_relation",
+      "required_gate_ids": ["vo_top_hourglass_bilateral", "vo_top_hourglass_waist", "vo_top_hourglass_two_expansions", "vo_top_hourglass_upper_dominance"]
+    },
+    "arm-04": {
+      "profile_id": "spoon_high_hip_silhouette_relation",
+      "required_gate_ids": ["vo_spoon_bilateral_high_hip", "vo_spoon_rapid_transition", "vo_spoon_lower_continuity", "vo_spoon_not_pear_or_hipdip"]
+    },
+    "arm-05": {
+      "profile_id": "diamond_central_torso_silhouette_relation",
+      "required_gate_ids": ["vo_diamond_bilateral_oblique", "vo_diamond_central_maximum", "vo_diamond_two_direction_taper", "vo_diamond_not_oval_or_pattern"]
+    }
+  }
+}

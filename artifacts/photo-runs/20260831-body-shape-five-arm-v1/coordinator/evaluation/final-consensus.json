@@ -1,0 +1,59 @@
+{
+  "schema_version": "photo-body-shape-five-arm-consensus/v1",
+  "decision_rule": "A target keyword passes only when every target vo gate passes and the self review, blind cross-review, and coordinator review do not contain a target-gate failure. A moderation block is unscored.",
+  "reference_binding_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+  "results": [
+    {
+      "arm": "arm-01",
+      "keyword": "slender build",
+      "self_target": "pass_4_of_4",
+      "blind_target": "pass_4_of_4",
+      "coordinator_target": "pass_4_of_4",
+      "keyword_verdict": "pass",
+      "whole_scene_verdict": "fail_exact_action_and_text_controls"
+    },
+    {
+      "arm": "arm-02",
+      "keyword": "busty figure",
+      "self_target": "unscored_no_image",
+      "blind_process": "unscored_process_outcome",
+      "coordinator_target": "unscored_no_image",
+      "keyword_verdict": "unscored_moderation_block"
+    },
+    {
+      "arm": "arm-03",
+      "keyword": "top hourglass silhouette",
+      "self_target": "fail_3_of_4",
+      "blind_target": "fail_2_of_4",
+      "coordinator_target": "fail_2_of_4",
+      "keyword_verdict": "fail",
+      "dominant_failure": "upper dominance and continuous bilateral silhouette are not independently readable after occlusion and perspective are discounted"
+    },
+    {
+      "arm": "arm-04",
+      "keyword": "spoon-shaped figure",
+      "self_target": "fail_3_of_4",
+      "blind_target": "pass_4_of_4",
+      "coordinator_target": "fail_3_of_4",
+      "keyword_verdict": "fail_strict_confound_gate",
+      "reviewer_disagreement": "The blind reviewer accepted the profile, while the self and coordinator reviews found belt, fabric, lean, and stance substitution unresolved."
+    },
+    {
+      "arm": "arm-05",
+      "keyword": "diamond-shaped figure",
+      "self_target": "fail_1_of_4",
+      "blind_target": "fail_1_of_4",
+      "coordinator_target": "fail_1_of_4",
+      "keyword_verdict": "fail",
+      "dominant_failure": "the waist-abdomen is narrow rather than the maximum and the silhouette reads hourglass or pear"
+    }
+  ],
+  "aggregate": {
+    "candidate_pack_and_runtime_preflight_pass": "5/5",
+    "native_image_outcomes": "4 rendered, 1 moderation-blocked",
+    "scoreable_keyword_pass_rate": "1/4",
+    "all_requested_keyword_outcomes": "1 pass, 3 fail, 1 unscored",
+    "reference_appearance_continuity": "4/4 rendered images pass non-biometric visual comparison",
+    "user_acceptance": "pending"
+  }
+}

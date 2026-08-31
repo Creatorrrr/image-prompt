@@ -1,0 +1,108 @@
+{
+  "schema_version": "photo-body-shape-render-self-review/v1",
+  "arm_id": "arm-05",
+  "attempt": 2,
+  "profile_id": "diamond_central_torso_silhouette_relation",
+  "pack_id": "acb22eac333800fb",
+  "runtime_prompt_id": "877fc8373313af4f",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-05/render-attempt-02.png",
+  "image_sha256": "83bb0a718aad408951469dd17d7ebcf42b4cca0a6ecdf1f355c65cd7072454f4",
+  "image_dimensions": {
+    "width": 1023,
+    "height": 1537
+  },
+  "pixel_evidence_available": true,
+  "inspection": {
+    "original_detail": {
+      "status": "completed",
+      "path": "render-attempt-02.png"
+    },
+    "thumbnail": {
+      "status": "completed",
+      "path": "render-attempt-02-thumbnail.png",
+      "dimensions": "170x256"
+    }
+  },
+  "target_gates": [
+    {
+      "id": "vo_diamond_bilateral_oblique",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail shows one adult from head to boots in a restrained three-quarter view; both outer torso contours, upper torso, waist-abdomen, and pelvis remain readable in the same frame."
+    },
+    {
+      "id": "vo_diamond_central_maximum",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "At thumbnail and native scale, the zipped and seamed coverall is visibly narrowest at the waist; the upper torso and hip region extend farther outward, so the waist-abdomen is not the torso maximum."
+    },
+    {
+      "id": "vo_diamond_two_direction_taper",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The silhouette narrows inward from the upper torso to the waist and then widens toward the hips, the inverse of tapering upward and downward away from a central maximum."
+    },
+    {
+      "id": "vo_diamond_not_oval_or_pattern",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "There is no literal diamond motif, but garment waist shaping and an hourglass-like upper-torso/waist/hip sequence carry the silhouette; the requested diamond relation is not independently visible."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "adult_age_read",
+      "status": "pass",
+      "evidence": "Facial maturity, professional field role, protective workwear, and body proportions read as one unmistakably adult woman."
+    },
+    {
+      "id": "single_fully_clothed_subject",
+      "status": "pass",
+      "evidence": "Exactly one woman is visible, fully clothed from neck to boots in a technical coverall and gloves."
+    },
+    {
+      "id": "face_appearance_readability",
+      "status": "pass",
+      "evidence": "The generated face is unobstructed and sufficiently sharp at native scale for adult-age and facial-appearance comparison."
+    },
+    {
+      "id": "reference_appearance_continuity",
+      "status": "pass",
+      "evidence": "Non-biometric visual comparison shows similar medium-aperture almond eyes and spacing, elongated face, restrained lower-face and jaw width, nose and lip proportions, cheekbone contour, light warm skin tone, central hairline, and long dark wavy hair."
+    },
+    {
+      "id": "anatomical_coherence",
+      "status": "pass",
+      "evidence": "Head, shoulders, torso, legs, boots, and both gloved hands have coherent joint alignment; the dial hand and analyzer-supporting hand remain distinguishable."
+    },
+    {
+      "id": "professional_action_read",
+      "status": "pass",
+      "evidence": "One gloved hand visibly contacts a round cabinet calibration control while the other supports a live-waveform analyzer; the open receiver cabinet and radio dishes make calibration immediately legible."
+    }
+  ],
+  "reference_comparison": {
+    "reference_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "facial_appearance_only",
+    "body_geometry_used_as_reference_evidence": false,
+    "claim_boundary": "Visual appearance comparison only; no biometric identity verification."
+  },
+  "passed_target_gate_ids": [
+    "vo_diamond_bilateral_oblique"
+  ],
+  "failed_target_gate_ids": [
+    "vo_diamond_central_maximum",
+    "vo_diamond_two_direction_taper",
+    "vo_diamond_not_oval_or_pattern"
+  ],
+  "technical_pass": false,
+  "pixel_verdict": "fail_target_body_shape",
+  "representative_eligible": false,
+  "prompt_presence_is_pixel_proof": false,
+  "retry_performed": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

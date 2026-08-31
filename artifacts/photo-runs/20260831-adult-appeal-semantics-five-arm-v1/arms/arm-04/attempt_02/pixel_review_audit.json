@@ -1,0 +1,56 @@
+{
+  "schema_version": "photo-image-render-review-audit/v1",
+  "pack_id": "c3bda106a683ffcc",
+  "status": "fail",
+  "qualification_status": "fail",
+  "technical_qualified": false,
+  "source_render_repair_contract_sha256": null,
+  "reviewed_result_path": null,
+  "reviewed_result_sha256": null,
+  "failed_gate_ids": [],
+  "failures": [
+    {
+      "check": "schema_version",
+      "reason": "render review must use photo-image-render-review/v1"
+    },
+    {
+      "check": "pack_id",
+      "reason": "pack, composed prompt, and render review must share one exact pack_id"
+    },
+    {
+      "check": "render_repair_contract",
+      "reason": "pixel repair review requires a v2 lineage repair target"
+    },
+    {
+      "check": "source_render_repair_contract_sha256",
+      "reason": "review must bind the exact frozen render-repair contract",
+      "expected": null,
+      "actual": null
+    },
+    {
+      "check": "reviewer",
+      "reason": "review requires a named reviewer using direct_pixel_inspection"
+    },
+    {
+      "check": "result",
+      "reason": "review result must contain exactly path and sha256"
+    },
+    {
+      "check": "gates[0]",
+      "reason": "each gate must contain exactly gate_id, status, reviewed_scales, and evidence"
+    },
+    {
+      "check": "gates[1]",
+      "reason": "each gate must contain exactly gate_id, status, reviewed_scales, and evidence"
+    },
+    {
+      "check": "gates[2]",
+      "reason": "each gate must contain exactly gate_id, status, reviewed_scales, and evidence"
+    },
+    {
+      "check": "gates[3]",
+      "reason": "each gate must contain exactly gate_id, status, reviewed_scales, and evidence"
+    }
+  ],
+  "boundary": "This audit validates a named review record and its exact generic hard-gate set. The reviewer supplies pixel judgments; the audit does not infer pixels or user preference."
+}

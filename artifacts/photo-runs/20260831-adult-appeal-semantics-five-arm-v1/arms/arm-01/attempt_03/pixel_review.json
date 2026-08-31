@@ -1,0 +1,72 @@
+{
+  "contract_version": "photo-arm-pixel-review/v1",
+  "arm_id": "arm-01",
+  "attempt": 3,
+  "status": "all_four_hard_gates_pass",
+  "reviewer": "Codex agent direct pixel inspection",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_03/native.png",
+  "image_sha256": "7aff2ef9e7dac9b0a53d9b0ae301f2ee3f1881e87fb9c0540b97f6ba371d9fdb",
+  "review_scales": [
+    {
+      "scale": "native",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_03/native.png",
+      "sha256": "7aff2ef9e7dac9b0a53d9b0ae301f2ee3f1881e87fb9c0540b97f6ba371d9fdb",
+      "dimensions": "1024x1536"
+    },
+    {
+      "scale": "thumbnail",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-01/attempt_03/thumbnail.png",
+      "sha256": "bcdc3903c2733138e0d25acc3b24bd30cbb1669d359ba9fe9f19fb9fc18d4bf4",
+      "dimensions": "426x640"
+    }
+  ],
+  "hard_gates": [
+    {
+      "gate_id": "vo_self_possessed_adult_agency",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "At native and thumbnail scales the adult subject maintains two distinct operating contacts: one hand grips the projecting crank handle while the other adjusts the upper resonator control beside the threaded ribbons.",
+      "substitute_confusion": "The pass is carried by readable hand-to-machine operation, not by the dress, body line, or camera gaze."
+    },
+    {
+      "gate_id": "vo_self_possessed_grounded_posture",
+      "required_scale": "thumbnail",
+      "status": "pass",
+      "visible_evidence": "The 426x640 thumbnail now includes the complete head-to-foot figure; both dark shoes are visibly planted on the deck beneath the foreground table while the torso stays upright and the shoulders remain open and level.",
+      "substitute_confusion": "The visible foot contacts and full support silhouette distinguish the stance from an unsupported body-first fashion crop, even though the table partially crosses the lower legs."
+    },
+    {
+      "gate_id": "vo_self_possessed_controlled_face",
+      "required_scale": "native",
+      "status": "pass",
+      "visible_evidence": "At native scale the eyes remain open and alert with an off-axis task-side focus, the brows are composed, and the mouth action is small and restrained while both hands continue operating the device.",
+      "substitute_confusion": "The face is neither sleepy, intoxicated, fearful, nor supported only by direct-lens posing; its restrained action remains coupled to the ongoing task."
+    },
+    {
+      "gate_id": "vo_self_possessed_material_relation",
+      "required_scale": "both",
+      "status": "pass",
+      "visible_evidence": "Both scales retain the opaque copper-brown dress's broad leftward hem sweep, tensioned diagonal folds, crisp weighted edge, and warm highlights that change across the turned waist and displaced fabric.",
+      "substitute_confusion": "The pass relies on directional displacement and fold/highlight response, not on a shiny material label or fitted silhouette alone."
+    }
+  ],
+  "failed_gate_ids": [],
+  "repair_delta": {
+    "source_attempt": 2,
+    "targeted_gate_id": "vo_self_possessed_grounded_posture",
+    "visible_change": "The frame extends lower and slightly wider, adding both planted shoes and their deck contact at thumbnail scale.",
+    "preserved_passes": [
+      "vo_self_possessed_adult_agency",
+      "vo_self_possessed_controlled_face",
+      "vo_self_possessed_material_relation"
+    ],
+    "unrelated_scene_change_detected": false,
+    "further_repair_attempted": false
+  },
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "boundary": "This review scores delivered pixels only. Prompt and runtime audit presence were not treated as pixel evidence, and no biometric identity claim or aesthetic approval is made."
+}

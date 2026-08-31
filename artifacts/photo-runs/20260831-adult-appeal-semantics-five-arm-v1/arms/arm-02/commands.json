@@ -1,0 +1,41 @@
+{
+  "contract_version": "photo-arm-command-record/v1",
+  "arm_id": "arm-02",
+  "workdir": "/Users/chasoik/Projects/image-prompt",
+  "source_git_head": "1540888a47b1629e04239c34404d4bf8bff214c7",
+  "inputs": {
+    "photo_prompt_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "imagegen_skill_sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba",
+    "composition_contract_sha256": "0e1bf3e37bbc7980eb3c9f4992131ab6e5f1a80dd3224f7f680454da4511d816",
+    "image_runtime_contract_sha256": "829a80f4f8a8927be865cc56d312e1b2012fda53d7c8c15d795fcc830d4cd7a3",
+    "visual_profile_registry_sha256": "5e2a5e8829bf8a25d4edff4febd74f2341e1b05a6f4ad5818f175597bfc97f0b",
+    "generator_script_sha256": "cd48b935c907fd802823bc327a84513e80009cbf6c56a13d6c44dfe49c4e1c06",
+    "composed_auditor_sha256": "174f5f4486171747d5088416164d3a761d9596a5f3059366f6a0761b65667d41",
+    "runtime_auditor_sha256": "a0f2cc3858d3a85901037316af94ebd40ea634957471cc005c17da5c85e093f8",
+    "pixel_review_auditor_sha256": "7bca0b39904b2662ce5c32512ce7d586a974409af8158c29191768a04bed5c65"
+  },
+  "commands": [
+    {
+      "id": "candidate_pack_attempt_01",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3377211778 --emit-candidate-pack --n 1 --json-output --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json",
+      "exit_code": 1,
+      "stderr_or_output": "Error: authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+      "candidate_pack_created": false
+    },
+    {
+      "id": "candidate_pack_attempt_02",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3377211778 --emit-candidate-pack --n 1 --json-output --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/candidate_pack.json",
+      "exit_code": 1,
+      "stderr_or_output": "Error: authorial core interpreted_intent needs at least 4 concrete content words",
+      "candidate_pack_created": false
+    }
+  ],
+  "initial_phase_not_run_at_time": [
+    "audit_composed_prompt.py",
+    "audit_image_render_request.py",
+    "built-in image_gen",
+    "audit_image_render_review.py"
+  ],
+  "continuation_record": "continuation_commands.json",
+  "initial_blocked_state_superseded_by_coordinator_correction": true
+}

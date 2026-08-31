@@ -1,0 +1,82 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-02",
+  "attempt": 2,
+  "pack_id": "8a7403a87bcbc516",
+  "profile_id": "target_directed_seductive_display",
+  "status": "one_hard_gate_failed",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_02_native.png",
+    "sha256": "df9f9e615ed02bb443dce7b139054f9fac8b41f8f661a3e3e12334373a753167",
+    "width_px": 1024,
+    "height_px": 1536,
+    "format": "png"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-02/attempt_02_thumbnail.png",
+    "sha256": "1d0563c26dcf0dc4a84b5ee72c87fdd8b3fc468ca90c42ec2d9ea67833bf209d",
+    "width_px": 341,
+    "height_px": 512,
+    "format": "png"
+  },
+  "review_method": "direct pixel inspection at thumbnail and native scale",
+  "review_scales_completed": [
+    "thumbnail",
+    "native"
+  ],
+  "gates": [
+    {
+      "id": "vo_target_seduction_same_adult_target",
+      "required_review_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "visible_evidence": "Only two foreground adults are present. The woman's rightward eye line, turned face, extended right arm, and film-canister transfer all terminate at the single adult man on frame right.",
+      "substitute_confusion": "This is not an ambiguous camera stare: her pupils and face point away from the lens toward the visible man's face, while the canister-and-hand axis joins the same pair."
+    },
+    {
+      "id": "vo_target_seduction_coordinated_orientation",
+      "required_review_scale": "native",
+      "reviewed_scales": [
+        "native"
+      ],
+      "status": "fail",
+      "visible_evidence": "At native scale the woman's alert pupils and head turn toward the man, but both blazer lapels and the broad chest-and-shoulder plane remain substantially frontal to the camera.",
+      "substitute_confusion": "The extended arm supplies a strong directional gesture, but an arm direction cannot substitute for the required visible convergence of irises, head, and torso on the same target."
+    },
+    {
+      "id": "vo_target_seduction_invitation_action",
+      "required_review_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "visible_evidence": "The woman stands at an open booth threshold and visibly extends a silver film canister over the deliberately unoccupied trolley surface toward the man.",
+      "substitute_confusion": "The canister is not decorative or resting on the trolley: her hand supports it in midair across the gap and presents it directly to the visible counterpart."
+    },
+    {
+      "id": "vo_target_seduction_visible_consequence",
+      "required_review_scale": "thumbnail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "status": "pass",
+      "visible_evidence": "At thumbnail scale the man has stopped opposite her and extends an open hand into the space immediately below and toward the offered canister.",
+      "substitute_confusion": "This is not a static two-person portrait or direct-gaze-only substitute: the open receiving hand makes his response legible without facial-detail inspection."
+    }
+  ],
+  "failed_gate_ids": [
+    "vo_target_seduction_coordinated_orientation"
+  ],
+  "repair_eligibility": {
+    "eligible": true,
+    "reason": "Exactly one localized gate fails while the same-target, invitation-action, and visible-consequence gates pass.",
+    "maximum_additional_calls": 1
+  },
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": "pending",
+  "pixel_pass_claimed": false
+}

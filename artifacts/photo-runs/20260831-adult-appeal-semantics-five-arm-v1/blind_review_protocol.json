@@ -1,0 +1,34 @@
+{
+  "schema_version": "photo-blind-pixel-review-protocol/v1",
+  "frozen_before_any_generated_pixel_review": true,
+  "shuffle_seed": 918273645,
+  "phase_a": {
+    "label_blind": true,
+    "prompt_blind": true,
+    "review_order": [
+      "blind-01",
+      "blind-02",
+      "blind-03",
+      "blind-04",
+      "blind-05"
+    ],
+    "required_neutral_observations": [
+      "adult_subject_count_and_apparent_adult_status",
+      "visible_action_and_unfinished_spatial_relation",
+      "iris_head_torso_orientation",
+      "support_path_and_joint_continuity",
+      "mouth_action_and_eye_alertness",
+      "garment_edges_drape_and_directional_lag",
+      "material_condition_and_after_event_traces",
+      "possible_confusion_substitutes"
+    ]
+  },
+  "phase_b": {
+    "decode_after_phase_a_observations_are_frozen": true,
+    "allowed_gate_statuses": ["pass", "fail", "uncertain"],
+    "prompt_audit_cannot_substitute_for_pixels": true,
+    "all_required_gates_must_pass_for_profile_pixel_pass": true,
+    "identity_evaluation": "not_evaluated",
+    "user_judgment": "pending"
+  }
+}

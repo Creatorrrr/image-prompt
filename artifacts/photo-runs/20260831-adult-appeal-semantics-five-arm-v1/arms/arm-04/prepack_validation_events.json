@@ -1,0 +1,20 @@
+{
+  "contract_version": "photo-prepack-validation-events/v1",
+  "arm_id": "arm-04",
+  "events": [
+    {
+      "attempt": 1,
+      "status": "failed_before_pack_generation",
+      "authorial_core_file_sha256": "4be72583e23da8e80009c627fdc4681c72fb1cc5a0ebcf452f13a03e1b88c12c",
+      "error": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+      "normalization": "Removed only the redundant ungrounded runtime_forbidden_labels entry; source_request, interpreted_intent, subject, setting, event, visual priorities, baseline_prompt_en, anchors, style, and variation key remained byte-identical. Active-profile runtime_expression still forbids the activation label at composition and runtime."
+    },
+    {
+      "attempt": 2,
+      "status": "failed_before_pack_generation",
+      "authorial_core_file_sha256": "80cc73600e6446f4e044f6f8cb1d89241bdef41db3a4d262f989061c32b6a2b4",
+      "error": "authorial core interpreted_intent needs at least 4 concrete content words",
+      "resolution": "The requester explicitly restricted interpreted_intent to the exact three-token Korean string. The core remains unchanged; no token-padding or semantic expansion was used. Official v6 pack generation is therefore blocked and downstream composition uses an explicitly labeled manual fallback rather than claiming a generated pack."
+    }
+  ]
+}

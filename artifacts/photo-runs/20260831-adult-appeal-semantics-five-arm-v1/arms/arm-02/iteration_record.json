@@ -1,0 +1,158 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "git:1540888a47b1629e04239c34404d4bf8bff214c7",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the frozen target-directed adult interaction visual obligations survive prompt composition and built-in image generation with a facial-appearance reference."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The frozen v6 candidate pack, composed prompt, and both concrete-reference runtime requests passed repository contract audits without changing the official pack or composed prompt.",
+      "artifact": "candidate_pack.json sha256 84aa2c86faa54cfe14204f842a70f4144a286d5253fe2e74505ae80ae9730fe1; runtime_request_audit_attempt_02.json sha256 95932a1390e07fe67a366e53571b99a195d5545404887c6c3c2966fb445c9b0a; runtime_request_audit_attempt_03_repair.json sha256 33b7e71430df29ad1a199d8f7ec4aa4e3dda3c076536d3858e5464cdf62a114e"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The frozen final prompt passed its composed-prompt audit and literally binds the four required interaction evidence phrases.",
+      "artifact": "prompt_audit.json sha256 e9fc41e2fab14d52f759a9fa71f9e98b54b9fee0d0ec8d581e28c47278c306d3; final_prompt.txt sha256 95316885b2a208b96bf2a3ff7ed5774666f57424957988db7cd005902c44cc81"
+    },
+    {
+      "id": "e-render-initial",
+      "kind": "render-observation",
+      "claim": "Attempt 02 visibly passed same-target, invitation-action, and target-consequence gates but failed coordinated orientation because the torso remained substantially camera-frontal.",
+      "artifact": "pixel_review_attempt_02.json sha256 a13031fdb49624da5c7763f0d826f6f42c4247f55eddcc301fb8626e8569fbdf; attempt_02_native.png sha256 df9f9e615ed02bb443dce7b139054f9fac8b41f8f661a3e3e12334373a753167"
+    },
+    {
+      "id": "e-render-final",
+      "kind": "render-observation",
+      "claim": "The single targeted repair visibly rotated the woman's shoulder and torso plane toward the same man while preserving the other three passing gates; all four frozen hard gates pass in attempt 03.",
+      "artifact": "pixel_review_attempt_03_repair.json sha256 e12300b3f5e35e131aada6eebf5b94521d9daaebd80580da88a30177558a42df; attempt_03_repair_native.png sha256 0c38705da2a70ef18a7bee72ae35da3e21a723df54e93fee9ad7acea1c59f6a3"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One visible adult man must receive the woman's gaze, head, torso, and concrete threshold-or-object invitation, and his visible pause-or-reach response must remain readable.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "same-target-causality",
+        "statement": "The gaze, body direction, offered canister, and responding hand must form one unambiguous two-adult causal interaction.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render-final"
+        ],
+        "causal_controls": [
+          "visible adult target count",
+          "iris-head-torso convergence",
+          "canister transfer axis",
+          "receiving-hand response"
+        ]
+      },
+      {
+        "id": "reference-role-boundary",
+        "statement": "The supplied portrait controls only adult facial appearance and dark wavy hairstyle; identity and user aesthetic approval remain outside the evaluation.",
+        "evidence_ids": [
+          "e-package"
+        ],
+        "causal_controls": [
+          "concrete reference hash",
+          "reference role metadata",
+          "identity not evaluated",
+          "user judgment pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "minor prop micro-placement",
+      "rain reflection texture",
+      "background station detail"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-initial-torso",
+      "scale": "regional",
+      "axis": "woman's torso orientation",
+      "source_state": "Irises, head, and torso converge on the same visible adult man.",
+      "render_state": "In attempt 02 the irises and head turned toward him, but the broad chest-and-shoulder plane remained substantially frontal to the camera.",
+      "evidence_ids": [
+        "e-render-initial"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-arm-dominates-torso",
+      "stage": "generator-response",
+      "statement": "The initial generation treated the extended canister arm as sufficient directional evidence and under-expressed the separately required torso rotation.",
+      "evidence_ids": [
+        "e-render-initial"
+      ],
+      "falsifier": "A repeat using the same frozen prompt consistently shows an unmistakably target-turned torso without a targeted repair."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill revision is claimed; retain exact-input auditing and direct per-gate pixel review for this bounded evaluation.",
+    "generalization_basis": "One motivating render and one repair cannot establish a transferable source-level correction without an independent held-out case.",
+    "hypothesis_ids": [],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render-final"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-02-motivating-case",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "same adult target",
+          "coordinated orientation",
+          "concrete invitation action",
+          "visible target consequence"
+        ],
+        "evidence_ids": [
+          "e-render-final"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "diagnosed",
+    "claim_scope": "render-fidelity",
+    "rationale": "The motivating case passes all four visual gates after one bounded torso-orientation repair. No source change, cross-arm holdout, identity claim, or user-aesthetic claim is made.",
+    "evidence_ids": [
+      "e-prompt",
+      "e-render-initial",
+      "e-render-final"
+    ]
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "schema_version": "photo-arm-command-hash-record/v2",
+  "arm_id": "arm-03",
+  "source_snapshot": {
+    "git_head": "1540888a47b1629e04239c34404d4bf8bff214c7",
+    "photo_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "imagegen_skill_sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba"
+  },
+  "commands": [
+    {
+      "stage": "candidate_pack_preflight_initial",
+      "exit_code": 1,
+      "result": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span"
+    },
+    {
+      "stage": "candidate_pack_preflight_exact_label_core",
+      "exit_code": 1,
+      "result": "authorial core interpreted_intent needs at least 4 concrete content words"
+    },
+    {
+      "stage": "candidate_pack_v6_after_coordinator_correction",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/visual_intent.json --candidate-pack-version v6 --creativity 0.65 --seed 3592144823 --emit-candidate-pack --n 1 --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/candidate_pack.json",
+      "exit_code": 0,
+      "pack_id": "e8e8e6fcd30ac1ac"
+    },
+    {
+      "stage": "composed_prompt_audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack candidate_pack.json --composed composed_prompt.json",
+      "exit_code": 0,
+      "status": "pass",
+      "quality_status": "warn"
+    },
+    {
+      "stage": "runtime_request_audit_attempt_01_without_reference_bytes",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request runtime_request.json --output runtime_audit.json",
+      "exit_code": 0,
+      "status": "pass",
+      "reference_count": 0
+    },
+    {
+      "stage": "built_in_image_generation_attempt_01",
+      "tool": "image_gen",
+      "arguments": {
+        "num_last_images_to_include": 1,
+        "runtime_prompt_sha256": "54a77b28814cc07ec5170c6635c605d84ae92b93bbcd791f186f39ac7660081d"
+      },
+      "status": "failed_before_generation",
+      "error": "requested the last 1 conversation images, but only 0 were available"
+    },
+    {
+      "stage": "runtime_request_audit_attempt_02",
+      "command": ".venv/bin/python .agents/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request runtime_request_attempt_02.json --output runtime_audit_attempt_02.json",
+      "exit_code": 0,
+      "status": "pass",
+      "runtime_prompt_id": "54a77b28814cc07e",
+      "reference_count": 1,
+      "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3"
+    },
+    {
+      "stage": "built_in_image_generation_attempt_02",
+      "tool": "image_gen",
+      "arguments": {
+        "referenced_image_paths": [
+          "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg"
+        ],
+        "runtime_prompt_sha256": "54a77b28814cc07ec5170c6635c605d84ae92b93bbcd791f186f39ac7660081d"
+      },
+      "status": "generated",
+      "output_path": "attempt_02/output.png",
+      "output_sha256": "261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e"
+    },
+    {
+      "stage": "pixel_review_attempt_02",
+      "status": "failed_one_hard_gate",
+      "failed_gate_ids": [
+        "vo_playful_flirt_face_action"
+      ],
+      "review_scales": [
+        "native_1448x1086",
+        "thumbnail_512x384"
+      ]
+    },
+    {
+      "stage": "runtime_request_audit_attempt_03_repair",
+      "command": ".venv/bin/python .agents/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack candidate_pack.json --composed composed_prompt.json --request runtime_request_attempt_03_repair.json --output runtime_audit_attempt_03_repair.json",
+      "exit_code": 0,
+      "status": "pass",
+      "runtime_prompt_id": "2928ee0c940f8a6d",
+      "reference_count": 2,
+      "failures": []
+    },
+    {
+      "stage": "built_in_image_generation_attempt_03_repair",
+      "tool": "image_gen",
+      "arguments": {
+        "referenced_image_paths": [
+          "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+          "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/attempt_02/output.png"
+        ],
+        "runtime_prompt_sha256": "2928ee0c940f8a6d909ff2dc7cbb470ba0b952ac80b229ec450c444d0fa61c9c",
+        "repair_only_gate_id": "vo_playful_flirt_face_action"
+      },
+      "status": "generated",
+      "output_path": "attempt_03_repair/output.png",
+      "output_sha256": "9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50"
+    },
+    {
+      "stage": "pixel_review_attempt_03_repair",
+      "status": "pass_all_hard_gates",
+      "failed_gate_ids": [],
+      "review_scales": [
+        "native_1448x1086",
+        "thumbnail_512x384"
+      ]
+    },
+    {
+      "stage": "iteration_record_validation",
+      "command": ".venv/bin/python skills/image-prompt-skill-improver/scripts/validate_iteration_record.py iteration_record.json",
+      "exit_code": 0,
+      "status": "ok"
+    }
+  ],
+  "canonical_contract_hashes": {
+    "request_text_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+    "authorial_core_sha256": "f47340b1254692c6afc8080f60d59bc3b1ce3d9310ffc75ee3aa54e925ac422a",
+    "intent_lock_sha256": "449fc4d8821e461bf5731bf22169873bd53e3e1dd4693df45fa7ee28f43bef8f",
+    "visual_intent_sha256": "d3450475fcf2b0e9543b44fecc5fc7392373fb388232de48bafdc10c21fa9ff7",
+    "effective_visual_contract_sha256": "ef2d20858e3820b533a21d0478d252d8157453ed12c59d8c2f4e9ee941703a9e",
+    "composed_prompt_text_sha256": "0c7e28cd68ef557413a3e0b45f3f9fa503eb72a841e2a110c023309c949f9d39",
+    "attempt_02_runtime_prompt_text_sha256": "54a77b28814cc07ec5170c6635c605d84ae92b93bbcd791f186f39ac7660081d",
+    "attempt_03_repair_runtime_prompt_text_sha256": "2928ee0c940f8a6d909ff2dc7cbb470ba0b952ac80b229ec450c444d0fa61c9c"
+  },
+  "frozen_files_unchanged": {
+    "candidate_pack.json": "e0bc142a67fe74cbe6ca34b4494e546233b14e211301c2218891ae0f7a6294a3",
+    "composed_prompt.json": "c2d0d57ddbcec469bee57c914a012bc4f901dadd0c5f1ad208e0dabf63f8fd2e",
+    "final_prompt.txt": "710ee025a78403ec56c6b8768122f73ca33e698b5ea6110416484f20774c6571"
+  },
+  "file_hashes": {
+    "request_envelope.json": "3849a4984129a261831d38e9a5ec57cfd16f00f4a2a364342464273dd7c0baa1",
+    "concept_selection.json": "de281c73ea86b469760b6ca6f03a279db02debb836ad087edacea9504d1aa96a",
+    "baseline_prompt.txt": "f30332c206988044aee4922dbc91567f323cd736047e8b1459666af6c3e76d32",
+    "authorial_core.initial.json": "6d424d4e4f08e926747832544d85a500b08a7b7c8b99c0149ed6163bbe6e4d58",
+    "authorial_core.json": "718804b3e51979cca3ec094309fc87f563fe9e889ac7e5b619d686d293f8f995",
+    "visual_intent.initial.json": "2a4dd3fd5319274bdb9824a1aa43023a43566da05b5e49eb837dbe8a6623a5ae",
+    "visual_intent.json": "58e5251fbd3e10a19b545ee50c001bfc01c3cd19e58b0ad064b0fa7c9ac13b10",
+    "coordinator_correction.json": "baa25f0b96fcba3f0eddc9256fae4dafa2c03d07009443e61d6cc945104c3d6b",
+    "candidate_pack.json": "e0bc142a67fe74cbe6ca34b4494e546233b14e211301c2218891ae0f7a6294a3",
+    "composed_prompt.json": "c2d0d57ddbcec469bee57c914a012bc4f901dadd0c5f1ad208e0dabf63f8fd2e",
+    "final_prompt.txt": "710ee025a78403ec56c6b8768122f73ca33e698b5ea6110416484f20774c6571",
+    "prompt_audit.json": "8b80651dae75b7b36a31ba66b06cf53699354e538aa76427a0038096d416f0a7",
+    "runtime_request.json": "7a18e221a3830b608eacd344b899696ef0c8b0460cc08e3b6b870002e9a4b28f",
+    "runtime_audit.json": "8cf5161d587e0431f3d89232e64e519227add7afbd6b9ecf31b7d3b0e9354863",
+    "imagegen_attempt_01.json": "1084846c04566552e49bdda4df8bd28a88217ea9e32e9ca2fc46daed6d4deb03",
+    "runtime_request_attempt_02.json": "cdcc772901aad58aac433d2aa0b6209734851cba2a6fcfe72b7588574b8d82cf",
+    "runtime_audit_attempt_02.json": "65b921a15821fa3a6a4ae95956f0588edc075706aed44c55e86edcaed94b2ad5",
+    "imagegen_attempt_02.json": "98d6bce03b06303cfb8b6f5c0bbb82532af520bcc6d876d9e779d38f53f50c5f",
+    "pixel_review_attempt_02.json": "a3ec4f0073b355e7c7b47c0ac5c143c462a0b9f0b69f963ffa1227ae9fdd598a",
+    "attempt_02/output.png": "261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e",
+    "attempt_02/thumbnail.png": "756f46c23c787ca50f34a04491c929cc44e2f417ebc3f3970c794aa171c07f71",
+    "runtime_request_attempt_03_repair.json": "615c3d8ecbbf083fe0808ff64a8631e79e77c7957ae763d2de6c463a4153df91",
+    "runtime_audit_attempt_03_repair.json": "dd9d05b8cbcb8ff401b39409eba464f7e82c358150ebf9e3d79660f7f48ceb94",
+    "imagegen_attempt_03_repair.json": "e0470e399d90c26d0472188184357a41e612d72040d3b0262a6c0f8b05613724",
+    "pixel_review_attempt_03_repair.json": "c08bf46199bcd561180c264dc8cfe2c0b93c2601fe662cb6179a0aacbc2e0fcd",
+    "pixel_review.json": "669888e64ae3c68ce6f69bdbee70bdd29d96d7eaa19db9eab3f3522d8f26a420",
+    "attempt_03_repair/output.png": "9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50",
+    "attempt_03_repair/thumbnail.png": "dc19b95159aba8ed7c15d581de4a71b1c92e0242f726f143b3a7a308cc184578",
+    "iteration_record.json": "df5f1eedf8b47f9735a256e5659e28ca4f468a361fe3d4c2a9e3ae789c0632cf",
+    "arm_ledger.ndjson": "ded9d4b067e82cda33cf7fe2c3ee6200f2b401c4b2854becdfb3b20a12ba8a66"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "adult_facial_appearance_and_dark_wavy_hairstyle_only",
+    "identity_evaluation": "not_evaluated",
+    "user_judgment": "pending"
+  }
+}

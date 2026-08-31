@@ -1,0 +1,118 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently authored, difficult rendered-image test in which the attached image guides facial appearance only, while a newly generated unmistakably adult woman's fully clothed top-hourglass body relation must remain visibly testable inside a credible geothermal-observatory cartography action during an ash alert.",
+  "subject": "One unmistakably adult 29-year-old woman geothermal cartographer, with facial appearance guided only by the attached reference and newly generated body geometry.",
+  "setting": "A glass-walled geothermal observatory mapping station overlooking a steaming caldera during an active volcanic-ash alert.",
+  "event": "She draws a red evacuation contour with a grease pencil onto a clear acetate overlay covering a geothermal hazard map.",
+  "visual_priorities": [
+    "Her clothed upper torso is visibly broader than her hips, with a full bust and strong shoulder line flowing into a sharply indented narrow waist before the silhouette opens modestly toward slightly narrower hips.",
+    "The transparent map overlay, red evacuation contour, ash-warning beacon, drifting ash beyond the glass, and her precise hand contact make the professional cartography action immediately legible.",
+    "The attached image governs facial appearance only; the photographed body's geometry, pose, clothing, and scene are newly constructed for this test."
+  ],
+  "baseline_prompt_en": "Create a photorealistic documentary photograph of a layered geothermal observatory cartography scene during an active ash alert. One unmistakably adult 29-year-old woman geothermal cartographer stands at a tilted illuminated map table and draws a red evacuation contour with a grease pencil onto a clear acetate overlay. The attached reference guides only her facial appearance; her body geometry, pose, clothing, and environment are newly generated. She wears a fully zipped ash-gray technical jacket, visibly tailored at the waist, full-length utility trousers, and protective boots. Through the fitted clothing, her upper torso reads visibly broader than her hips: a full bust and strong shoulder line flow into a sharply defined narrow waist, then open modestly toward slightly narrower hips as one continuous silhouette. Frame her from head to below the knees at a three-quarter angle so the shoulder-to-waist-to-hip relation and pencil-to-overlay contact remain readable. Behind her, amber warning lights reflect on glass while dark ash crosses the steaming caldera; contour instruments, pinned thermal charts, and a radio reinforce authentic emergency mapping work.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent keyword-to-pixel test",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "request_context",
+      "resolution": "Treat this arm as an independent visible-factor test whose assigned body-shape relation must be judged in rendered pixels rather than by prompt presence alone.",
+      "sources": []
+    },
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "agent_general_knowledge",
+      "resolution": "Use a geothermal-observatory cartography station during an ash alert, with layered but visually separable professional details and one concrete action.",
+      "sources": []
+    },
+    {
+      "term": "attached-image use",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+      "basis": "request_context",
+      "resolution": "Use the attached image only as a facial-appearance reference, without inferring or copying its body geometry, pose, wardrobe, or background.",
+      "sources": []
+    },
+    {
+      "term": "top hourglass silhouette",
+      "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "agent_general_knowledge",
+      "resolution": "Operationalize the assigned factor as a fully clothed continuous silhouette whose shoulders and bust make the upper torso visibly broader than the hips, with a pronounced inward waist and a modest reopening toward hips that remain slightly narrower than the upper torso.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a layered geothermal observatory cartography scene during an active ash alert"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+        "dimension": "subject",
+        "prompt_evidence": "One unmistakably adult 29-year-old woman geothermal cartographer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "draws a red evacuation contour with a grease pencil onto a clear acetate overlay"
+      },
+      {
+        "anchor_id": "core_body_shape",
+        "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "body_geometry",
+        "prompt_evidence": "her upper torso reads visibly broader than her hips"
+      },
+      {
+        "anchor_id": "core_face_reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "The attached reference guides only her facial appearance"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "setting",
+        "prompt_evidence": "dark ash crosses the steaming caldera"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "body_geometry",
+      "reference_use",
+      "setting"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic emergency-science documentary photography",
+    "family": "observational technical field portrait",
+    "evidence": [
+      "clear pencil contact with a transparent map overlay",
+      "ash-warning reflections and a steaming caldera visible through observatory glass"
+    ]
+  },
+  "variation_key": "arm-03-seed-371067"
+}

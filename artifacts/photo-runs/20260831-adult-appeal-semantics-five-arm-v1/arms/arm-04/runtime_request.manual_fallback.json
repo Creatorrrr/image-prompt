@@ -1,0 +1,44 @@
+{
+  "contract_version": "photo-image-render-request/v2-manual-fallback",
+  "arm_id": "arm-04",
+  "attempt": 1,
+  "pack_id": "e65d3c929866d13",
+  "runtime_prompt_en": "Create a photorealistic, full-length fashion editorial inside a decommissioned coastal hydrographic observatory at 04:40 before dawn. Image 1 supplies only the adult subject's facial appearance. All occupation, action, wardrobe, lighting, and setting are authored by this prompt. A clearly adult 34-year-old woman, a textile conservator, is caught midway through a measured clockwise pivot from an open specimen drawer toward a slowly swinging brass tide-gauge ribbon. The start position at the open specimen drawer and the unfinished destination at the ribbon knot remain visible in the same frame. One planted foot preserves controlled balance, with coherent hip, knee, and ankle joint continuity. Her left foot is flat on a dry brass-grate strip; her lifted right heel and bent knee continue toward the instrument. Awake eyes remain tied to the chosen destination at the ribbon knot and follow the controlled hand trajectory. Her torso still opens back toward the drawer while her reaching right hand remains a handspan short of the ribbon knot. The satin fabric, loose hair strand, reaching hand, and calibration ribbon trail the same clockwise movement direction. She wears an opaque garnet bias-cut satin coatdress over a high-neck shell and carries a rolled hydrographic chart under her left arm. A diagonal full-body composition lets the planted foot, turning pelvis, and reaching hand form one continuous arc. Use a low three-quarter 50 mm viewpoint, crisp high-shutter timing, cool lighthouse slats, and a warm tungsten archive lamp. Narrow lighthouse reflections stretch along the opaque satin folds in the direction of travel. Preserve realistic adult skin texture, plausible hand anatomy, and documentary-fashion detail.",
+  "runtime_prompt_sha256": "a29bac072a49b32b8012c77bfffe1b4ea03c9a9ffab3738cc60aa5581b2a252d",
+  "runtime_negative_en": null,
+  "source_authorial_core_sha256": "e65d3c929866d13e6b27b49e5080730145a0240e19c8d7a24f739990691f88dc",
+  "source_intent_lock_sha256": "bd096754c1b562c5b29ed698493e1a9732f4bc3bc4cceca04fbc785a2d35bfcd",
+  "composed_prompt_file_sha256": "447a2bf4239f3800b78708778bfce31a616f2a76a9c765b746770936401e18c2",
+  "prompt_audit_status": "manual_literal_pass_official_contract_fail",
+  "references": [
+    {
+      "input": "Image 1",
+      "source": "conversation_attachment",
+      "role": "adult_facial_appearance_only",
+      "local_path": null,
+      "sha256": null,
+      "local_integrity_status": "unavailable_before_builtin_call",
+      "tool_attachment_method": "num_last_images_to_include=1",
+      "identity_evaluation": "not_evaluated",
+      "non_face_attributes_inferred": false
+    }
+  ],
+  "tool": "builtin_image_gen",
+  "tool_arguments": {
+    "num_last_images_to_include": 1
+  },
+  "generation_status": "failed_before_generation",
+  "tool_result": {
+    "status": "error",
+    "image_created": false,
+    "reference_delivered": false,
+    "error": "requested the last 1 conversation images, but only 0 were available"
+  },
+  "reference_resolution": {
+    "current_conversation_image_count": 0,
+    "referenced_source_conversation_id": "6a9402cc-816c-83e8-a31a-53ff8a2119c8",
+    "referenced_source_conversation_attachment_count": 0,
+    "local_path_invented": false
+  },
+  "official_runtime_audit_eligibility": "blocked_by_manual_pack_and_missing_concrete_local_reference_path"
+}

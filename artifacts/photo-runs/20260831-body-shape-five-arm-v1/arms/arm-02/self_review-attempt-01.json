@@ -1,0 +1,79 @@
+{
+  "schema_version": "photo-body-shape-self-review/v1",
+  "arm_id": "arm-02",
+  "pack_id": "27e90e590819fbbf",
+  "profile_id": "bust_prominence_relation",
+  "image_path": null,
+  "image_sha256": null,
+  "image_dimensions": null,
+  "image_saved": false,
+  "view_image_calls": {
+    "original_detail": 0,
+    "thumbnail": 0,
+    "reason": "The single built-in image generation call was blocked before generation because the subagent conversation contained zero accessible images."
+  },
+  "review_boundary": {
+    "prompt_and_audit_presence_is_pixel_proof": false,
+    "rendered_pixels_available": false,
+    "partial_or_metadata_only_observation_counts_as_pass": false
+  },
+  "gate_reviews": [
+    {
+      "gate_id": "vo_bust_adult_bilateral_read",
+      "required_scale": "thumbnail",
+      "status": "not_evaluated_no_image",
+      "evidence": "No thumbnail pixels exist; the adult bilateral upper torso, ribcage, and natural waist cannot be judged."
+    },
+    {
+      "gate_id": "vo_bust_ribcage_reference",
+      "required_scale": "both",
+      "status": "not_evaluated_no_image",
+      "evidence": "No rendered pixels exist; ribcage breadth and depth cannot be compared with the regional bust volume."
+    },
+    {
+      "gate_id": "vo_bust_projection_coherence",
+      "required_scale": "native",
+      "status": "not_evaluated_no_image",
+      "evidence": "No native image exists; bilateral front/side projection, anatomy, and garment support cannot be inspected."
+    },
+    {
+      "gate_id": "vo_bust_not_whole_body_or_value",
+      "required_scale": "both",
+      "status": "not_evaluated_no_image",
+      "evidence": "No image exists to test whether regional geometry remained distinct from whole-body silhouette, clothing size, or value judgments."
+    },
+    {
+      "gate_id": "adult_age_gate",
+      "required_scale": "both",
+      "status": "not_evaluated_no_image",
+      "evidence": "The unmistakably adult age impression cannot be verified without pixels."
+    },
+    {
+      "gate_id": "face_appearance_gate",
+      "required_scale": "native",
+      "status": "not_evaluated_no_image",
+      "evidence": "There is no generated face to compare with Image 1 for non-biometric facial-appearance continuity."
+    },
+    {
+      "gate_id": "anatomy_gate",
+      "required_scale": "native",
+      "status": "not_evaluated_no_image",
+      "evidence": "Hands, upper torso, body geometry, and lens contact anatomy cannot be inspected without a saved image."
+    },
+    {
+      "gate_id": "professional_action_gate",
+      "required_scale": "both",
+      "status": "not_evaluated_no_image",
+      "evidence": "The specified Fresnel-lens cleaning action cannot be established from prompt text alone."
+    }
+  ],
+  "technical_verdict": "unscored_process_outcome_no_image",
+  "representative_eligible": false,
+  "user_acceptance_status": "pending_no_candidate",
+  "failure_provenance": {
+    "image_call_count": 1,
+    "imagegen_status": "blocked_pre_generation",
+    "error": "requested the last 1 conversation images, but only 0 were available",
+    "retry_performed": false
+  }
+}

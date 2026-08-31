@@ -1,0 +1,100 @@
+{
+  "schema_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-05",
+  "pack_id": "39693b5bd194f153",
+  "profile_id": "decadent_languor_environment",
+  "seed_uint32": 3073829215,
+  "review_status": "complete",
+  "reviewed_attempt": 2,
+  "reviewed_at": "2026-08-31T08:41:50+09:00",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/attempt_02/output.png",
+    "sha256": "db6c9540fa66290f2d03c3da3ff3147d32ee5f809d6d45696aee4bd4e1494941",
+    "width_px": 1448,
+    "height_px": 1086,
+    "format": "png"
+  },
+  "thumbnail_review": {
+    "status": "completed",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/attempt_02/thumbnail.png",
+    "sha256": "8a8088fe657b55b995f3f3362b49552e3a34e727eee51ddaf1cade5b7ce8801c",
+    "width_px": 512,
+    "height_px": 384,
+    "method": "Direct visual inspection of the delivered thumbnail pixels."
+  },
+  "native_review": {
+    "status": "completed",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/attempt_02/output.png",
+    "method": "Direct visual inspection of the delivered native-resolution pixels."
+  },
+  "hard_gates": [
+    {
+      "id": "vo_decadent_languor_former_luxury",
+      "review_scale": "thumbnail",
+      "candidate_pack_requirement": "At least one identifiable velvet, marble, gilded, satin, crystal, or comparable former-luxury material anchors the setting.",
+      "status": "pass",
+      "visible_evidence": [
+        "At thumbnail scale, a large burgundy velvet settee anchors the left side of the ballroom.",
+        "The veined marble foreground work surface, broad gilded mirror and panel frames, and dense crystal chandelier remain immediately identifiable as former-luxury materials."
+      ],
+      "substitute_confusion": "This is not satisfied by dark lighting or generic gothic styling alone: velvet pile, marble veining, reflective crystal drops, and gilded architectural trim are independently legible material cues."
+    },
+    {
+      "id": "vo_decadent_languor_material_decline",
+      "review_scale": "both",
+      "candidate_pack_requirement": "Wear, tarnish, cracking, dust, or peeling visibly affects those same luxury surfaces rather than a separate generic ruin.",
+      "status": "pass",
+      "visible_evidence": [
+        "The same gilded mirror and wall-panel surrounds that signal luxury show dark tarnish, rubbed-through finish, flaking edges, and broken or abraded ornament across the right and rear walls.",
+        "At native scale, the marble work surface is visibly mottled and stained, while the gilded trim carries localized peeling and darkened wear rather than appearing pristine."
+      ],
+      "substitute_confusion": "The deterioration is not confined to an unrelated ruined wall: it lies directly on the visible gilded ornament and marble surface that provide the luxury read."
+    },
+    {
+      "id": "vo_decadent_languor_after_event",
+      "review_scale": "both",
+      "candidate_pack_requirement": "Spent wax, displaced glassware, wilted flowers, compressed seating, or comparable residue makes the recent event aftermath readable.",
+      "status": "pass",
+      "visible_evidence": [
+        "The foreground contains clustered coupe glasses, a toppled crystal bottle or stopper, loose petals, and a discarded burgundy ribbon across the marble.",
+        "Wilted or dried bouquets appear at right and rear, with an unlit used taper and scattered floral debris extending the residue through the scene."
+      ],
+      "substitute_confusion": "The objects do not read as one orderly decorative still life: glassware is displaced, a crystal vessel lies on its side, petals and ribbon are scattered, and the flowers are visibly spent."
+    },
+    {
+      "id": "vo_decadent_languor_alert_action",
+      "review_scale": "native",
+      "candidate_pack_requirement": "The adult remains awake, self-directed, and visibly mid-action with the residue or worn material rather than intoxicated, unconscious, or merely posed.",
+      "status": "pass",
+      "visible_evidence": [
+        "The clearly adult subject is standing upright with eyes open and an alert head position.",
+        "Her right hand is actively holding a crystal sample or stopper with an inventory tag hanging from it while her left hand supports an open ledger, visibly connecting both working hands to unfinished cataloguing."
+      ],
+      "substitute_confusion": "This is not reclining, intoxication, unconsciousness, or an empty fashion pose: both hands are engaged in one coherent inventory task with the event residue and the ledger remains open."
+    }
+  ],
+  "overall_visual_qualification": "pass_all_four_hard_gates",
+  "all_required_gates_pass": true,
+  "chosen_final_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/attempt_02/output.png",
+  "repair": {
+    "attempted": false,
+    "repair_delta": null,
+    "stop_reason": "The initial delivered render passed all four required gates; the one-repair allowance was not used."
+  },
+  "identity": {
+    "status": "not_evaluated",
+    "reason": "The reference was used only for adult facial appearance and dark wavy hairstyle; biometric identity equivalence is outside this test."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "history": {
+    "prior_missing_reference_review_path": "pixel_review_attempt_01.json",
+    "prior_missing_reference_review_sha256": "25a39643b58b612bf8ab6514d400f57b58b814e3a34780cd8e34f52749cfc5a9",
+    "prior_generation_attempt_path": "generation_attempt_01.json",
+    "prior_generation_outcome": "error_reference_unavailable",
+    "preserved": true
+  },
+  "audit_boundary": "The runtime request audit passed separately. Every gate decision above is based on direct inspection of delivered pixels, not prompt presence or audit status."
+}

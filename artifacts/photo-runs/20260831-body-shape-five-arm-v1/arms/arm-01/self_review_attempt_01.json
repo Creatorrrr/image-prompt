@@ -1,0 +1,72 @@
+{
+  "schema_version": "photo-body-shape-self-review/v1",
+  "arm_id": "arm-01",
+  "attempt": 1,
+  "pack_id": "e0d0837c0c603bd1",
+  "profile_id": "slender_linear_build",
+  "target_keyword": "slender build",
+  "result_path": null,
+  "result_sha256": null,
+  "dimensions": null,
+  "thumbnail_path": null,
+  "native_review_performed": false,
+  "thumbnail_review_performed": false,
+  "outcome": "unscored_process_outcome",
+  "technical_verdict": "unscored_no_rendered_pixels",
+  "pass_fail_applicable": false,
+  "process_evidence": "The built-in image_gen attempt failed before rendering because num_last_images_to_include requested one conversation image while the conversation exposed zero images.",
+  "gates": [
+    {
+      "id": "vo_slender_full_body_read",
+      "review_scale": "thumbnail",
+      "status": "not_scored",
+      "evidence": "No thumbnail or rendered pixels existed, so the adult torso-and-limbs global read could not be observed."
+    },
+    {
+      "id": "vo_slender_narrow_torso",
+      "review_scale": "both",
+      "status": "not_scored",
+      "evidence": "No rendered pixels existed, so ribcage, waist, and pelvic breadth could not be compared."
+    },
+    {
+      "id": "vo_slender_narrow_limbs",
+      "review_scale": "both",
+      "status": "not_scored",
+      "evidence": "No rendered pixels existed, so arm and leg volume or joint coherence could not be inspected."
+    },
+    {
+      "id": "vo_slender_not_stature_or_lens_only",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "No native image existed, so lens, pose, clothing, crop, and stature confounders could not be evaluated."
+    },
+    {
+      "id": "common_adult_age",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "No face or body pixels existed from which to judge an unmistakably adult age impression."
+    },
+    {
+      "id": "common_face_appearance",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "The facial-appearance reference was unavailable to native transport and no result face was rendered for comparison."
+    },
+    {
+      "id": "common_anatomy",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "No body, hands, or contact pixels existed for anatomical-coherence review."
+    },
+    {
+      "id": "common_professional_action",
+      "review_scale": "both",
+      "status": "not_scored",
+      "evidence": "No rendered frame existed to verify capsule insertion, scanner aim, or one coherent professional action."
+    }
+  ],
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

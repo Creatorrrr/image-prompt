@@ -1,0 +1,60 @@
+{
+  "schema_version": "photo-image-render-request/v2",
+  "arm_id": "arm-04",
+  "attempt": 3,
+  "attempt_scope": "single_targeted_pixel_gate_repair",
+  "pack_id": "c3bda106a683ffcc",
+  "profile_id": "controlled_languid_movement_display",
+  "seed": 2286608887,
+  "runtime_prompt_en": "Photorealistic full-length fashion editorial in a decommissioned coastal hydrographic observatory at 04:40 before dawn. Use Image 1 only for adult facial appearance. A clearly adult 34-year-old woman, a textile conservator, is caught midway through a measured clockwise pivot from an open specimen drawer toward a slowly swinging brass tide-gauge ribbon. The start position and unfinished destination remain visible between the open specimen drawer and the ribbon knot in the same frame. One planted foot preserves controlled balance, with coherent hip, knee, and ankle joint continuity. Her left shoe stays flat as her right heel lifts. Awake eyes remain tied to the chosen destination at the ribbon knot and follow the controlled hand trajectory. Still facing the drawer, her reaching right hand remains a handspan short of the ribbon knot. The satin fabric trails the same movement direction as the loose hair strand, reaching hand, and calibration ribbon along the clockwise arc.\n\nThe familiar tide-gauge ribbon becomes a phase ruler for the turning body: her fingertips stop before one numbered knot, and the dress hem, loose hair, and chart edge repeat its clockwise arc at staggered distances. First read the adult conservator in motion; then notice the measured hand-to-knot gap; finally recognize one calibrated sequence across body and materials. The far ribbon anchor stays beyond the upper frame; every flexible material bends along one clockwise arc at a different lag distance.\n\nOpaque garnet satin shapes a high-neck coatdress; a rolled chart rests under her left arm. Use a low three-quarter 50 mm viewpoint at the instant after heel lift but before fingertip contact. A cool lighthouse backlight rims the trailing satin while a warm tungsten archive lamp defines the planted foot. A tall 4:5 frame preserves the full support path from both shoes to the raised ribbon knot. Realistic adult skin, plausible hands, and crisp high-shutter detail.\n\nTargeted repair: Treat Image 2 as the sole edit target. Preserve its exact composition, crop, observatory, open drawer, brass ribbon knot, fingertip gap, body pose, both-shoe support geometry, garnet satin silhouette and trailing hem, loose dark wavy hair, rolled chart, lighting, camera perspective, and every unrelated scene detail. Change only the awake gaze alignment: redirect both pupils, with only the smallest necessary head-angle adjustment, so they visibly track the brass ribbon knot immediately beyond the reaching fingertips rather than the camera. Preserve the existing alert eyelid opening and neutral facial expression. Use Image 1 only for adult facial appearance and dark wavy hairstyle; infer no personality, occupation, attitude, sexual intent, consent, biography, or biometric identity from it.\n\nAvoid: cartoon style, warped walls, fake-looking background, 3D render look, illustration look, low resolution, over-processed retouching, broken window geometry, inaccurate reflections, impossible perspective, warped product geometry",
+  "runtime_negative_en": "cartoon style, warped walls, fake-looking background, 3D render look, illustration look, low resolution, over-processed retouching, broken window geometry, inaccurate reflections, impossible perspective, warped product geometry",
+  "source_intent_lock_sha256": "d25b9eeb6ca84f502d723398d1137ceba1a470f1dda5fdce0669d8443999e3c3",
+  "effective_visual_contract_sha256": "dc5d9337f3d9cb5a8cf16b7e20f9d5c5ba62ab6e76858b2e4b797e0cd43fbd1f",
+  "frozen_inputs": {
+    "candidate_pack_sha256": "d81c90cb2a446215b9959b98ce33c92f12cf30c04b09d10fab397252dd1cba3e",
+    "composed_prompt_sha256": "c42ab64d3dc8f7db60003eeeb39fae0baf6d110e93522b407aefc95a50099f16",
+    "final_prompt_file_sha256": "3d30c88f454cb82f83489f05b8183e555d8ac83f7aec9a87fed6cff3949e6406",
+    "runtime_prompt_contains_exact_final_prompt_file_bytes_as_prefix": true,
+    "runtime_appendix_kind": "targeted_repair_then_candidate_pack_negative"
+  },
+  "repair_contract": {
+    "mode": "single_targeted_pixel_gate_repair",
+    "base_attempt": 2,
+    "base_image_sha256": "6849c1fe094dfc7494ffefc76b375012466049c686226a3eebb2b13776e1c8d7",
+    "failed_gate_ids": [
+      "vo_languid_motion_alert_attention"
+    ],
+    "preserve_passed_gate_ids": [
+      "vo_languid_motion_unfinished_phase",
+      "vo_languid_motion_stable_support",
+      "vo_languid_motion_directional_lag"
+    ],
+    "repair_delta": "Redirect the awake gaze from the camera to the brass ribbon knot with the smallest necessary pupil and head-angle change.",
+    "meaning_broadened": false,
+    "unrelated_scene_changes_allowed": false
+  },
+  "references": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+      "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+      "role": "adult_facial_appearance_and_dark_wavy_hairstyle_only",
+      "source": "user_supplied_local_reference",
+      "identity_evaluation": "not_evaluated",
+      "user_judgment": "pending"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/output.png",
+      "sha256": "6849c1fe094dfc7494ffefc76b375012466049c686226a3eebb2b13776e1c8d7",
+      "role": "sole_edit_target_and_passed_gate_preservation_source",
+      "source": "arm_04_attempt_02"
+    }
+  ],
+  "audit_boundary": {
+    "composed_prompt_audit_status": "pass",
+    "runtime_prompt_audit_status": "not_run",
+    "inherits_composed_prompt_pass": false,
+    "prompt_presence_is_not_pixel_evidence": true
+  },
+  "tool": "builtin_image_gen",
+  "generation_status": "pending_runtime_audit"
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "photo-image-render-request/v2",
+  "attempt": 3,
+  "retry_of": "imagegen_attempt_02.json",
+  "repair_of_image_sha256": "261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e",
+  "pack_id": "e8e8e6fcd30ac1ac",
+  "runtime_prompt_en": "Photorealistic non-explicit editorial; closed rooftop winter garden, pre-dawn after summer rain. Two unmistakably adult fragrance archivists, ages 29 and 34, stand by restored 1930s atomizers. Image 1: adult facial-appearance reference only for the initiator's facial features. Black hammered satin versus pearl-gray brushed mohair. Throughout the frame, the same adult recipient remains identifiable throughout the exchange. The initiator half-offers a small brass catalog key on a burnt-orange silk ribbon toward that same recipient, then draws it back one inch. In one beat, the initiator moves the offered object toward then slightly away from the same target, with the brass catalog key still visibly suspended between them. Tension is clear because the key remains visibly suspended between them and its silk ribbon is taut. Her face shows a small asymmetric closed-lip smile with engaged eyes fixed on the same adult recipient. At once, the adult recipient pauses and reaches toward that same brass catalog key, stopped mid-step. Eye-level 50 mm two-shot; both adults and hands clear. Cyan rain light and one tungsten lamp; natural skin, crisp hands, tactile fabrics and brass.\nTargeted repair for Image 2: preserve its two-adult winter-garden composition, both bodies, both hands, suspended brass key, taut burnt-orange ribbon, recipient reach, gaze direction, camera, lighting, wardrobe, materials, and facial appearance. Change only the initiator's mouth action: close her lips fully and lift one mouth corner fractionally into a small asymmetric closed-lip smile while her awake eyes remain fixed on the recipient. Image 1 remains the adult facial-appearance and dark-wavy-hairstyle reference only.\nAvoid: body distortion, illustration look, 3D render look, cartoon style, low resolution, broken facial features, unrealistic hands, distorted fingers, plastic-looking skin",
+  "runtime_negative_en": "body distortion, illustration look, 3D render look, cartoon style, low resolution, broken facial features, unrealistic hands, distorted fingers, plastic-looking skin",
+  "source_intent_lock_sha256": "449fc4d8821e461bf5731bf22169873bd53e3e1dd4693df45fa7ee28f43bef8f",
+  "effective_visual_contract_sha256": "ef2d20858e3820b533a21d0478d252d8157453ed12c59d8c2f4e9ee941703a9e",
+  "frozen_inputs": {
+    "candidate_pack_file_sha256": "e0bc142a67fe74cbe6ca34b4494e546233b14e211301c2218891ae0f7a6294a3",
+    "composed_prompt_file_sha256": "c2d0d57ddbcec469bee57c914a012bc4f901dadd0c5f1ad208e0dabf63f8fd2e",
+    "final_prompt_file_sha256": "710ee025a78403ec56c6b8768122f73ca33e698b5ea6110416484f20774c6571",
+    "seed": 3592144823,
+    "profile_id": "playful_flirtation_interaction"
+  },
+  "repair_scope": {
+    "failed_gate_ids": [
+      "vo_playful_flirt_face_action"
+    ],
+    "preserve_gate_ids": [
+      "vo_playful_flirt_adult_pair",
+      "vo_playful_flirt_approach_withdrawal",
+      "vo_playful_flirt_recipient_response"
+    ],
+    "change_only": "initiator mouth closure and fractional one-corner lift",
+    "unrelated_scene_change_allowed": false
+  },
+  "references": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/reference/face-reference.jpg",
+      "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+      "role": "adult_facial_appearance_and_dark_wavy_hairstyle_only"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-03/attempt_02/output.png",
+      "sha256": "261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e",
+      "role": "repair_edit_target_preserve_passing_gates_and_scene"
+    }
+  ],
+  "reference_boundary": {
+    "identity_evaluation": "not_evaluated",
+    "user_judgment": "pending",
+    "forbidden_inferences": [
+      "personality",
+      "archetype",
+      "sexual intent",
+      "consent",
+      "occupation",
+      "biography",
+      "biometric identity"
+    ]
+  },
+  "audit_boundary": {
+    "composed_prompt_audit_status": "pass",
+    "runtime_prompt_audit_status": "not_run",
+    "inherits_composed_prompt_pass": false
+  }
+}

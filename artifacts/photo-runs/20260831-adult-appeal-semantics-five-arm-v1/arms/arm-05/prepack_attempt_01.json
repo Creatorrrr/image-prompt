@@ -1,0 +1,20 @@
+{
+  "contract_version": "photo-prepack-attempt/v1",
+  "arm_id": "arm-05",
+  "attempt": 1,
+  "status": "blocked_before_pack_creation",
+  "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --request-envelope-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/request_envelope.json --authorial-core-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/authorial_core.json --visual-intent-json artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/visual_intent.json --candidate-pack-version v6 --creativity 0.5 --seed 3073829215 --emit-candidate-pack --n 1 --output-file artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-05/candidate_pack.json",
+  "exit_code": 1,
+  "error": "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span",
+  "authorial_core_sha256_file_bytes_before_contract_normalization": "006a88a694550fe03ae6e3ec7b41c68fe7bd1089421332c1b23c023d09b28200",
+  "normalization": {
+    "field": "runtime_forbidden_labels",
+    "before": [
+      "퇴폐적 나른함 환경"
+    ],
+    "after": [],
+    "semantic_fields_changed": false,
+    "baseline_changed": false,
+    "reason": "The assigned post-core label is not requester-span text. The active visual profile supplies its own runtime forbidden labels after profile binding."
+  }
+}

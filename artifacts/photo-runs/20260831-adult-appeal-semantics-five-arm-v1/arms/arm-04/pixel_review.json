@@ -1,0 +1,81 @@
+{
+  "schema_version": "photo-pixel-review/v1",
+  "arm_id": "arm-04",
+  "profile_id": "controlled_languid_movement_display",
+  "seed": 2286608887,
+  "chosen_attempt": 3,
+  "chosen_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/output.png",
+  "chosen_result_sha256": "52c0c328669970c5232a8f743702ad92ca1b25c7d60252284ba0b2a2de183be5",
+  "review_scales": {
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/thumbnail.png",
+    "native": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/output.png"
+  },
+  "reviewer": {
+    "name": "arm-04-independent-agent",
+    "method": "direct_pixel_inspection"
+  },
+  "prompt_presence_used_as_pixel_evidence": false,
+  "identity_evaluation": "not_evaluated",
+  "user_judgment": "pending",
+  "gates": [
+    {
+      "id": "vo_languid_motion_unfinished_phase",
+      "required_review_scale": "thumbnail",
+      "status": "pass",
+      "visible_observation": "At thumbnail scale the open drawer is still extended beside the subject while her outstretched fingertips remain separated from the brass ribbon knot. The body occupies the path between the drawer and knot, leaving the reach visibly unfinished.",
+      "confusion_boundary_check": "The crisp styling could resemble a static pose, but the simultaneous open source drawer, forward body transition, and remaining fingertip-to-knot gap make both endpoints legible and prevent a completed-contact reading."
+    },
+    {
+      "id": "vo_languid_motion_stable_support",
+      "required_review_scale": "both",
+      "status": "pass",
+      "visible_observation": "The entire support chain remains visible at both scales: the forward high-heeled shoe is grounded, the rear foot is offset behind it, and ankle, knee, hip, and torso geometry form a continuous controlled lean toward the task.",
+      "confusion_boundary_check": "The narrow heels and forward lean do not show collapse or sway because one full support path is visibly load-bearing and neither leg has a discontinuous or impossible joint."
+    },
+    {
+      "id": "vo_languid_motion_alert_attention",
+      "required_review_scale": "native",
+      "status": "pass",
+      "visible_observation": "At native scale both eyes are fully open and their pupils, together with the head angle, point toward frame-right at the brass knot immediately beyond the extended fingertips. They no longer address the camera.",
+      "confusion_boundary_check": "The gaze is not merely awake or generally rightward: its line converges on the hand's visible destination, and there are no sleepy, ill, intoxicated, or unfocused eye cues."
+    },
+    {
+      "id": "vo_languid_motion_directional_lag",
+      "required_review_scale": "both",
+      "status": "pass",
+      "visible_observation": "The right arm leads toward frame-right while the loose wavy hair and broad satin hem remain displaced behind the torso toward frame-left at distinct lag distances. Their edges are crisp, so the shared trailing phase is visible without relying on blur.",
+      "confusion_boundary_check": "The hanging ribbon itself remains mostly vertical, but two permitted flexible carriers—hair and satin—independently preserve the same coherent trailing relationship behind the rightward reach."
+    }
+  ],
+  "summary": {
+    "pass": 4,
+    "fail": 0,
+    "uncertain": 0,
+    "all_required_gates_pass": true,
+    "failed_gate_ids": [],
+    "stop_reason": "first_all_four_gate_pass_after_single_allowed_repair"
+  },
+  "repair_comparison": {
+    "base_attempt": 2,
+    "initial_gate_counts": {
+      "pass": 3,
+      "fail": 1,
+      "uncertain": 0
+    },
+    "repaired_gate_ids": [
+      "vo_languid_motion_alert_attention"
+    ],
+    "preserved_gate_ids": [
+      "vo_languid_motion_unfinished_phase",
+      "vo_languid_motion_stable_support",
+      "vo_languid_motion_directional_lag"
+    ],
+    "collateral_pixel_change_observed": true,
+    "collateral_change_note": "The repair changed canvas ratio from 1122x1402 to 1003x1568 and slightly regenerated framing/fine pose details; those changes did not invalidate any required gate."
+  },
+  "history": {
+    "missing_reference_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/pixel_review.missing_reference.json",
+    "initial_reference_qualified_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/pixel_review_initial.json",
+    "repair_review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/pixel_review.json"
+  }
+}

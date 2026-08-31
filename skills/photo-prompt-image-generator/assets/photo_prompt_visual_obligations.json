@@ -5181,6 +5181,86 @@
       "reject_substitutes": ["generic_weight_shift", "symmetrical_bent_knee_pose", "feet_cropped_out", "editorial_s_curve_without_support_leg"]
     },
     {
+      "id": "figura_serpentinata_spiral_pose",
+      "category": "classical_pose_geometry",
+      "activation": {
+        "exact_terms": ["figura serpentinata", "figura serpentinata pose", "serpentinata pose", "피구라 세르펜티나타", "세르펜티나타 자세"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A full-body spiral pose in which an offset support or lifted free foot initiates a three-dimensional chain of opposed pelvis, ribcage, shoulder, arm, and head directions that remains legible through depth rather than as a flat S silhouette.",
+        "paraphrase_examples": ["한쪽 발의 지지와 굽힌 반대 무릎에서 시작해 골반·흉곽·어깨·머리가 깊이 방향으로 반대 회전하는 나선형 전신 자세", "a raised or offset foot and flexed knee initiating opposed pelvis and shoulder rotation", "the arm crosses or extends around the twist while the head counter-turns and the full figure reads from several directions"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["support_initiator", "segment_opposition", "arm_head_counterturn", "three_dimensional_read"],
+          "groups": [
+            {"id": "support_initiator", "any_terms": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral", "지지 발과 들리거나 비껴난 반대 발"]},
+            {"id": "segment_opposition", "any_terms": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions", "골반과 흉곽 또는 어깨의 반대 회전"]},
+            {"id": "arm_head_counterturn", "any_terms": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction", "팔과 머리가 몸통 비틀림에 대응해 반대 방향을 만듦"]},
+            {"id": "three_dimensional_read", "any_terms": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes", "단축과 겹침으로 읽히는 입체 나선"]}
+          ]
+        },
+        "contrast_examples": ["a flat editorial S-curve with no axial rotation", "contrapposto with counter-tilt but no spiral through depth", "a camera tilt or winding drapery creating the curve while the body stays frontal"]
+      },
+      "concept_candidate": {"concept_terms": ["offset support and free foot", "flexed free knee", "opposed pelvis and ribcage azimuth", "arm around the twist", "head counter-turn", "full-body foreshortened spiral", "depth overlap"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["figura serpentinata"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the full body and both feet readable while one support-to-free-leg offset initiates opposed pelvis, ribcage, shoulder, arm, and head directions; use three-quarter depth, foreshortening, and overlap to make one continuous anatomical spiral rather than a flat S outline.",
+      "required_evidence_fields": ["support_initiator_phrase", "segment_opposition_phrase", "arm_head_counterturn_phrase", "three_dimensional_read_phrase"],
+      "evidence_requirements": {
+        "support_initiator_phrase": {"min_content_words": 5, "must_mention_any": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral"]},
+        "segment_opposition_phrase": {"min_content_words": 5, "must_mention_any": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions"]},
+        "arm_head_counterturn_phrase": {"min_content_words": 5, "must_mention_any": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction"]},
+        "three_dimensional_read_phrase": {"min_content_words": 5, "must_mention_any": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes"]}
+      },
+      "render_gates": [
+        {"id": "vo_serpentinata_support_initiator", "review_scale": "both", "description": "A planted support foot and visibly offset, lifted, or flexed free leg initiate the spiral instead of a symmetrical base."},
+        {"id": "vo_serpentinata_segment_opposition", "review_scale": "both", "description": "Pelvis and ribcage or shoulder planes visibly face different depth directions in one coherent anatomical chain."},
+        {"id": "vo_serpentinata_head_arm_counterturn", "review_scale": "native", "description": "At least one arm carries the torso twist while the head counter-turn remains anatomically coherent and visible."},
+        {"id": "vo_serpentinata_three_dimensional_read", "review_scale": "thumbnail", "description": "The complete figure reads as a three-dimensional spiral through overlap and foreshortening, not merely a flat S contour."}
+      ],
+      "reject_substitutes": ["flat_editorial_s_curve", "contrapposto_without_axial_twist", "hogarth_serpentine_composition_only", "camera_tilt_only", "winding_drapery_only"]
+    },
+    {
+      "id": "tribhanga_three_bend_pose",
+      "category": "classical_pose_geometry",
+      "activation": {
+        "exact_terms": ["tribhanga", "tribhaṅga", "tribhanga pose", "three-bend tribhanga pose", "트리방가", "트리방가 자세"],
+        "requires_adult_character": false
+      },
+      "semantics": {
+        "definition": "A full-body three-bend stance organized by an inclined head, a middle torso-and-hip deflection, and a bent-knee lower return whose alternating directions create one rhythmic vertical chain; it is pose geometry rather than a costume, ethnicity, deity, or hand-gesture label.",
+        "paraphrase_examples": ["기울어진 머리, 반대 방향으로 돌출된 골반과 몸통, 굽힌 무릎의 하부 복귀가 교대로 이어지는 삼중 굴곡", "inclined head, jutting hip, and bent knee creating an alternating three-bend rhythm", "head and lower limbs echo one direction while the torso and hip deflect across the vertical axis"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["inclined_head", "opposing_middle_bend", "bent_knee_return", "alternating_three_bend_rhythm"],
+          "groups": [
+            {"id": "inclined_head", "any_terms": ["head inclines away from the vertical axis", "neck and head create the upper bend", "머리와 목의 상부 기울기"]},
+            {"id": "opposing_middle_bend", "any_terms": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend", "몸통과 골반이 중심축을 가로질러 만드는 중간 굴곡"]},
+            {"id": "bent_knee_return", "any_terms": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee", "굽힌 무릎이 하부 선을 되돌림"]},
+            {"id": "alternating_three_bend_rhythm", "any_terms": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain", "머리부터 발끝까지 교대하는 세 굴곡"]}
+          ]
+        },
+        "contrast_examples": ["generic contrapposto with no inclined-head upper bend", "a costume or mudra presented without the three-bend body chain", "a flat S crop that hides the bent knee and feet"]
+      },
+      "concept_candidate": {"concept_terms": ["inclined head", "opposing torso and hip bend", "jutting hip", "one flexed knee", "lower-line return", "alternating three-bend rhythm", "head-to-feet framing"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["tribhanga"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the complete pose from head to feet so the inclined head, opposing middle torso-and-hip bend, and flexed-knee lower return form one alternating three-bend rhythm. Treat the term as body geometry independent of wardrobe, ethnicity, iconography, or hand gesture.",
+      "required_evidence_fields": ["inclined_head_phrase", "opposing_middle_bend_phrase", "bent_knee_return_phrase", "alternating_three_bend_phrase"],
+      "evidence_requirements": {
+        "inclined_head_phrase": {"min_content_words": 4, "must_mention_any": ["head inclines away from the vertical axis", "neck and head create the upper bend"]},
+        "opposing_middle_bend_phrase": {"min_content_words": 5, "must_mention_any": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend"]},
+        "bent_knee_return_phrase": {"min_content_words": 5, "must_mention_any": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee"]},
+        "alternating_three_bend_phrase": {"min_content_words": 5, "must_mention_any": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain"]}
+      },
+      "render_gates": [
+        {"id": "vo_tribhanga_inclined_head", "review_scale": "both", "description": "The head and neck create a visible upper bend rather than remaining vertically neutral."},
+        {"id": "vo_tribhanga_opposing_middle_bend", "review_scale": "thumbnail", "description": "Torso and jutting hip deflect across the vertical axis to form a distinct middle bend."},
+        {"id": "vo_tribhanga_bent_knee_return", "review_scale": "both", "description": "One flexed knee and the lower limbs visibly return the line instead of forming a symmetric stance."},
+        {"id": "vo_tribhanga_full_body_three_bend_read", "review_scale": "thumbnail", "description": "All three alternating bends remain legible together from head through hips to both feet."}
+      ],
+      "reject_substitutes": ["generic_contrapposto", "costume_or_mudra_only", "flat_s_curve_without_three_bends", "symmetrical_bent_knee_pose", "cropped_lower_body"]
+    },
+    {
       "id": "body_bounded_negative_space",
       "category": "body_composition_geometry",
       "activation": {
@@ -5305,6 +5385,7 @@
       "category": "adult_silhouette_relation",
       "activation": {
         "exact_terms": ["hourglass silhouette", "hourglass figure", "hourglass body relation", "모래시계 실루엣", "아워글래스 실루엣", "아워글래스 체형 관계"],
+        "exclude_if_any_terms": ["top hourglass", "upper hourglass", "bottom hourglass", "lower hourglass", "상부 우세 모래시계", "하부 우세 모래시계"],
         "requires_adult_character": true
       },
       "semantics": {
@@ -5342,6 +5423,539 @@
         {"id": "vo_hourglass_not_value_claim", "review_scale": "thumbnail", "description": "The silhouette is shown as neutral visual geometry without beauty, health, fertility, or value inference."}
       ],
       "reject_substitutes": ["belt_or_corset_only", "one_sided_crop", "pose_or_lens_distortion_only", "fixed_numeric_ratio", "beauty_health_fertility_or_value_inference"]
+    },
+    {
+      "id": "slender_linear_build",
+      "category": "adult_body_build_relation",
+      "activation": {
+        "exact_terms": ["slender build", "slender figure", "slender linear body", "슬렌더 체형", "가늘고 선형적인 체형"],
+        "exclude_if_any_terms": ["slender column", "slender vase", "slender font", "slender man"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult body-build relation with consistently narrow transverse volume through torso and limbs, shown independently of height, bust prominence, hip dominance, muscle definition, health, or attractiveness.",
+        "paraphrase_examples": ["성인 몸통과 팔다리의 가로 볼륨이 전반적으로 가늘게 이어지는 선형 체형", "narrow transverse torso and limb volume with coherent joint transitions", "slenderness separated from stature and muscular definition"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_full_body_read", "narrow_torso_volume", "narrow_limb_volume", "owner_separation"],
+          "groups": [
+            {"id": "adult_full_body_read", "any_terms": ["adult head-to-feet body read", "torso and both limbs remain comparable", "성인 전신의 몸통과 팔다리가 함께 보임"]},
+            {"id": "narrow_torso_volume", "any_terms": ["consistently narrow transverse torso volume", "restrained ribcage waist and pelvic breadth", "몸통의 가로 볼륨이 일관되게 좁음"]},
+            {"id": "narrow_limb_volume", "any_terms": ["slender arm and leg volumes", "longitudinal limb axes dominate transverse thickness", "팔다리의 세로축이 가로 두께보다 우세"]},
+            {"id": "owner_separation", "any_terms": ["height muscle bust and hips declared separately", "no health weight or attractiveness inference", "신장 근육 가슴 골반 가치판단과 분리"]}
+          ]
+        },
+        "contrast_examples": ["a tall person whose transverse build is broad", "a lean athletic body defined only by muscle grooves", "wide-angle stretching or dark clothing that only makes the body appear narrower"]
+      },
+      "concept_candidate": {"concept_terms": ["adult full-body relation", "narrow transverse torso volume", "narrow limb volume", "coherent joint transitions", "height owned separately", "muscle definition owned separately", "neutral geometry"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["slender linear adult build"], "forbidden_prompt_terms": ["underweight", "healthy weight", "ideal body"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a neutral adult head-to-feet view with the torso and limbs readable at one scale, preserving consistently narrow transverse volumes while separating stature, muscle definition, garment compression, pose, and lens effects.",
+      "required_evidence_fields": ["adult_full_body_phrase", "narrow_torso_phrase", "narrow_limb_phrase", "owner_separation_phrase"],
+      "evidence_requirements": {
+        "adult_full_body_phrase": {"min_content_words": 4, "must_mention_any": ["adult head-to-feet body read", "torso and both limbs remain comparable"]},
+        "narrow_torso_phrase": {"min_content_words": 3, "must_mention_any": ["consistently narrow transverse torso volume", "restrained ribcage waist and pelvic breadth"]},
+        "narrow_limb_phrase": {"min_content_words": 3, "must_mention_any": ["slender arm and leg volumes", "longitudinal limb axes dominate transverse thickness"]},
+        "owner_separation_phrase": {"min_content_words": 5, "must_mention_any": ["height muscle bust and hips declared separately", "no health weight or attractiveness inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_slender_full_body_read", "review_scale": "thumbnail", "description": "The adult torso and limbs are visible together at a scale that permits a global build reading."},
+        {"id": "vo_slender_narrow_torso", "review_scale": "both", "description": "Ribcage, waist, and pelvic breadth form a consistently narrow transverse torso volume."},
+        {"id": "vo_slender_narrow_limbs", "review_scale": "both", "description": "Arms and legs retain coherent slender volumes without stretched joints or collapsed anatomy."},
+        {"id": "vo_slender_not_stature_or_lens_only", "review_scale": "native", "description": "Height, clothing, pose, cropping, and lens stretch alone do not substitute for the body-build relation."}
+      ],
+      "reject_substitutes": ["tall_stature_only", "dark_clothing_only", "wide_angle_stretch_only", "muscle_definition_only", "health_weight_or_value_inference"]
+    },
+    {
+      "id": "soft_full_figure_volume",
+      "category": "adult_body_build_relation",
+      "activation": {
+        "exact_terms": ["full-figured body", "soft full figure", "voluptuous figure", "풍만한 체형", "육덕진 체형"],
+        "exclude_if_any_terms": ["full figure drawing", "voluptuous typography", "풍만한 풍경"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult soft-tissue build relation with substantial continuous volume across multiple torso and limb regions, without assuming a particular waist shape, clothing size, body weight, health state, attractiveness, or sexual availability.",
+        "paraphrase_examples": ["성인 몸통과 팔다리 여러 구간에 부드러운 볼륨이 연속되는 풍부한 체형", "substantial soft volume distributed across torso hips upper arms and thighs", "fullness shown without forcing an hourglass silhouette"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_multiregion_read", "torso_soft_volume", "limb_soft_volume", "neutral_separation"],
+          "groups": [
+            {"id": "adult_multiregion_read", "any_terms": ["adult torso arms hips and thighs remain readable", "multiple body regions share the build relation", "성인 몸통 팔 골반 허벅지가 함께 보임"]},
+            {"id": "torso_soft_volume", "any_terms": ["substantial continuous soft torso volume", "ribcage waist abdomen and hip transitions remain smooth", "몸통의 부드러운 볼륨 전환"]},
+            {"id": "limb_soft_volume", "any_terms": ["full upper-arm and thigh volume", "soft tissue continues through limb transitions", "위팔과 허벅지의 풍부한 볼륨"]},
+            {"id": "neutral_separation", "any_terms": ["waist shape clothing size and weight declared separately", "no health attractiveness or sexual inference", "허리형 크기 건강 매력 판단과 분리"]}
+          ]
+        },
+        "contrast_examples": ["a padded coat creating volume without readable body contours", "large bust alone with otherwise unrelated body volumes", "a body-size or beauty judgment replacing observable geometry"]
+      },
+      "concept_candidate": {"concept_terms": ["adult multiregion body read", "substantial soft torso volume", "full upper arms", "full thighs", "smooth transitions", "waist shape separate", "neutral non-valuative description"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["육덕", "voluptuous", "sexually attractive", "ideal full figure"], "runtime_forbidden_labels": ["육덕", "voluptuous"]},
+      "composition_instruction": "Show the adult torso, upper arms, hips, and thighs together under neutral form light so substantial soft volume and smooth transitions remain visible, while keeping clothing size, weight, waist shape, health, and attractiveness outside the visual claim.",
+      "required_evidence_fields": ["adult_multiregion_phrase", "torso_soft_volume_phrase", "limb_soft_volume_phrase", "neutral_separation_phrase"],
+      "evidence_requirements": {
+        "adult_multiregion_phrase": {"min_content_words": 4, "must_mention_any": ["adult torso arms hips and thighs remain readable", "multiple body regions share the build relation"]},
+        "torso_soft_volume_phrase": {"min_content_words": 3, "must_mention_any": ["substantial continuous soft torso volume", "ribcage waist abdomen and hip transitions remain smooth"]},
+        "limb_soft_volume_phrase": {"min_content_words": 3, "must_mention_any": ["full upper-arm and thigh volume", "soft tissue continues through limb transitions"]},
+        "neutral_separation_phrase": {"min_content_words": 5, "must_mention_any": ["waist shape clothing size and weight declared separately", "no health attractiveness or sexual inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_soft_full_multiregion", "review_scale": "thumbnail", "description": "Several adult body regions visibly participate in one coherent soft-volume build rather than one isolated feature."},
+        {"id": "vo_soft_full_torso_volume", "review_scale": "both", "description": "Torso volume remains substantial and smoothly connected across ribcage, waist, abdomen, and hips."},
+        {"id": "vo_soft_full_limb_volume", "review_scale": "both", "description": "Upper arms and thighs retain full coherent volume with anatomically continuous joints and transitions."},
+        {"id": "vo_soft_full_not_padding_or_value", "review_scale": "native", "description": "Garment padding, one enlarged feature, or a size, health, beauty, or sexual-value claim does not substitute."}
+      ],
+      "reject_substitutes": ["padded_garment_only", "bust_only", "hourglass_shape_assumption", "clothing_size_or_weight_inference", "health_attractiveness_or_sexual_inference"]
+    },
+    {
+      "id": "curvilinear_figure_relation",
+      "category": "adult_body_build_relation",
+      "activation": {
+        "exact_terms": ["curvy figure", "curvaceous figure", "curvilinear body relation", "곡선형 체형", "글래머 체형", "글래머러스한 체형"],
+        "exclude_if_any_terms": ["glamour photography", "glamour makeup", "curvy road", "curved furniture"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult whole-body relation with multiple visible outward and inward contour transitions across upper torso, natural waist, hips, and thighs, without requiring an hourglass balance, large bust, high body weight, or attractiveness judgment.",
+        "paraphrase_examples": ["성인 상체 자연 허리 골반 허벅지 사이에 여러 안팎 곡선 전환이 이어지는 체형", "multiple coherent convex and concave contour transitions across the body", "curvilinear geometry independent of one fixed silhouette class"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_contour", "upper_waist_transition", "waist_hip_transition", "class_separation"],
+          "groups": [
+            {"id": "adult_bilateral_contour", "any_terms": ["adult bilateral torso and hip contours remain visible", "both outer body edges support the reading", "성인 몸통과 골반의 양측 외곽선"]},
+            {"id": "upper_waist_transition", "any_terms": ["upper torso curves inward toward the natural waist", "readable convex-to-concave upper transition", "상체에서 자연 허리로 이어지는 곡선"]},
+            {"id": "waist_hip_transition", "any_terms": ["waist curves outward through hip and upper thigh", "readable concave-to-convex lower transition", "허리에서 골반과 허벅지로 이어지는 곡선"]},
+            {"id": "class_separation", "any_terms": ["bust size waist class and body weight declared separately", "no attractiveness or glamour-style inference", "가슴 크기 체중 모래시계 매력과 분리"]}
+          ]
+        },
+        "contrast_examples": ["a large bust without lower-body contour evidence", "an hourglass label inferred from a belt", "glamour lighting or makeup with no visible body relation"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral contours", "upper-torso inward transition", "waist outward transition", "hip and thigh continuity", "multiple convex and concave changes", "silhouette class separate", "glamour style separate"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["curvilinear adult figure relation"], "forbidden_prompt_terms": ["sexually attractive curves", "ideal curves"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter body view that preserves both outer contours from upper torso through natural waist to hips and upper thighs, with garment shaping, bust size, silhouette class, and camera perspective separately controlled.",
+      "required_evidence_fields": ["adult_bilateral_contour_phrase", "upper_waist_transition_phrase", "waist_hip_transition_phrase", "class_separation_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_contour_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral torso and hip contours remain visible", "both outer body edges support the reading"]},
+        "upper_waist_transition_phrase": {"min_content_words": 3, "must_mention_any": ["upper torso curves inward toward the natural waist", "readable convex-to-concave upper transition"]},
+        "waist_hip_transition_phrase": {"min_content_words": 3, "must_mention_any": ["waist curves outward through hip and upper thigh", "readable concave-to-convex lower transition"]},
+        "class_separation_phrase": {"min_content_words": 5, "must_mention_any": ["bust size waist class and body weight declared separately", "no attractiveness or glamour-style inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_curvilinear_bilateral_read", "review_scale": "thumbnail", "description": "Both adult outer contours remain sufficiently visible to support one whole-body curvilinear relation."},
+        {"id": "vo_curvilinear_upper_transition", "review_scale": "both", "description": "The upper torso visibly transitions inward toward the natural waist without garment pinching or warping."},
+        {"id": "vo_curvilinear_lower_transition", "review_scale": "both", "description": "The waist visibly transitions outward through hips and upper thighs with coherent anatomy."},
+        {"id": "vo_curvilinear_not_bust_or_glamour", "review_scale": "native", "description": "Bust prominence, glamour styling, a belt, or an attractiveness claim alone does not carry the relation."}
+      ],
+      "reject_substitutes": ["bust_prominence_only", "glamour_style_only", "belt_or_corset_only", "single_side_crop", "hourglass_or_weight_assumption"]
+    },
+    {
+      "id": "toned_muscular_build",
+      "category": "adult_body_build_relation",
+      "activation": {
+        "exact_terms": ["toned physique", "toned muscular body", "athletic body build", "탄탄한 체형", "근육이 선명한 체형", "운동형 체격"],
+        "exclude_if_any_terms": ["athletic competition", "athletic club", "toned color", "toned photograph"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult body-build relation with readable but non-exaggerated muscle planes and tendon transitions across several regions, separated from sports skill, leanness, body-fat estimates, health, strength, or performance claims.",
+        "paraphrase_examples": ["성인 어깨 팔 몸통 허벅지에서 절제된 근육 면과 힘줄 전환이 이어지는 체형", "restrained muscular definition visible across several body regions", "athletic-looking geometry without a performance or health claim"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_multiregion_read", "upper_muscle_planes", "lower_muscle_planes", "performance_separation"],
+          "groups": [
+            {"id": "adult_multiregion_read", "any_terms": ["adult shoulders arms torso and thighs remain visible", "several regions share the muscular build", "성인 상하체 여러 구간이 함께 보임"]},
+            {"id": "upper_muscle_planes", "any_terms": ["restrained shoulder arm and torso muscle planes", "form light reveals coherent upper-body definition", "어깨 팔 몸통의 절제된 근육 면"]},
+            {"id": "lower_muscle_planes", "any_terms": ["coherent thigh and calf muscle transitions", "lower-limb definition follows anatomy", "허벅지와 종아리의 해부학적 근육 전환"]},
+            {"id": "performance_separation", "any_terms": ["sport skill strength health and body fat declared separately", "definition is not painted contrast or dehydration", "경기력 건강 체지방과 분리"]}
+          ]
+        },
+        "contrast_examples": ["sports equipment or uniform without visible muscle structure", "extreme painted shadows imitating definition", "a slender build with no readable muscle planes"]
+      },
+      "concept_candidate": {"concept_terms": ["adult multiregion physique", "restrained shoulder muscle planes", "arm tendon transitions", "torso form light", "defined thighs and calves", "performance separate", "health and body fat separate"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["toned muscular adult build"], "forbidden_prompt_terms": ["healthy body fat", "elite athlete", "physically strong"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the adult shoulders, arms, torso, thighs, and calves under restrained form light so muscle and tendon planes read across multiple regions, while sports props, painted contrast, strength, performance, health, and body-fat claims remain separate.",
+      "required_evidence_fields": ["adult_multiregion_phrase", "upper_muscle_phrase", "lower_muscle_phrase", "performance_separation_phrase"],
+      "evidence_requirements": {
+        "adult_multiregion_phrase": {"min_content_words": 4, "must_mention_any": ["adult shoulders arms torso and thighs remain visible", "several regions share the muscular build"]},
+        "upper_muscle_phrase": {"min_content_words": 3, "must_mention_any": ["restrained shoulder arm and torso muscle planes", "form light reveals coherent upper-body definition"]},
+        "lower_muscle_phrase": {"min_content_words": 3, "must_mention_any": ["coherent thigh and calf muscle transitions", "lower-limb definition follows anatomy"]},
+        "performance_separation_phrase": {"min_content_words": 5, "must_mention_any": ["sport skill strength health and body fat declared separately", "definition is not painted contrast or dehydration"]}
+      },
+      "render_gates": [
+        {"id": "vo_toned_multiregion_read", "review_scale": "thumbnail", "description": "Multiple adult upper- and lower-body regions visibly participate in one coherent muscular build."},
+        {"id": "vo_toned_upper_planes", "review_scale": "native", "description": "Shoulder, arm, and torso muscle planes remain anatomically connected and restrained rather than painted."},
+        {"id": "vo_toned_lower_planes", "review_scale": "native", "description": "Thigh and calf definition follows coherent joints, tendons, and lower-limb form transitions."},
+        {"id": "vo_toned_not_sport_or_health", "review_scale": "both", "description": "Sports styling, extreme contrast, leanness, or strength and health claims alone do not substitute."}
+      ],
+      "reject_substitutes": ["sports_prop_or_uniform_only", "painted_shadow_definition", "slenderness_only", "strength_or_performance_inference", "health_or_body_fat_inference"]
+    },
+    {
+      "id": "bust_prominence_relation",
+      "category": "adult_regional_body_relation",
+      "activation": {
+        "exact_terms": ["busty figure", "large-busted figure", "full bust body relation", "prominent bust relation", "거유 체형", "풍만한 가슴 체형", "가슴 볼륨이 큰 체형"],
+        "exclude_if_any_terms": ["portrait bust sculpture", "classical bust sculpture", "bust measurement chart", "bra size chart"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult regional relation in which bilateral breast volume projects visibly from the ribcage and reads relative to the natural waist, without defining the whole-body silhouette, clothing size, attractiveness, fertility, or sexual availability.",
+        "paraphrase_examples": ["성인 양측 가슴 볼륨이 흉곽 기준으로 앞과 옆으로 돌출되고 자연 허리와 비교되는 관계", "bilateral bust projection anchored to the ribcage rather than a generic upper-torso crop", "regional bust prominence kept separate from curvy or hourglass labels"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_upper_torso", "ribcage_reference", "bust_projection", "whole_body_separation"],
+          "groups": [
+            {"id": "adult_bilateral_upper_torso", "any_terms": ["adult bilateral upper torso remains visible", "both bust contours and the natural waist remain readable", "성인 상체 양측과 자연 허리가 함께 보임"]},
+            {"id": "ribcage_reference", "any_terms": ["ribcage breadth and depth remain the reference", "shoulders and thorax anchor the regional volume", "흉곽의 폭과 깊이가 기준으로 보임"]},
+            {"id": "bust_projection", "any_terms": ["bilateral bust volume projects from the ribcage", "front and side projection remain coherent", "양측 가슴 볼륨의 앞옆 돌출"]},
+            {"id": "whole_body_separation", "any_terms": ["waist hips size and attractiveness declared separately", "no fertility or sexual-availability inference", "허리 골반 크기 매력 성적 판단과 분리"]}
+          ]
+        },
+        "contrast_examples": ["a sculpture or head-and-shoulders portrait bust", "padded clothing with no readable ribcage relation", "automatic inference of curvy or hourglass whole-body shape"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral upper torso", "ribcage reference", "bilateral breast volume", "front and side projection", "natural waist relation", "whole-body silhouette separate", "neutral regional geometry"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["거유", "busty", "sexually available", "fertile figure"], "runtime_forbidden_labels": ["거유", "busty"]},
+      "composition_instruction": "Use an adult front or restrained three-quarter upper-torso view with both bust contours, ribcage, shoulders, and natural waist readable, while garment support, padding, whole-body shape, attractiveness, fertility, and sexual implications remain separate.",
+      "required_evidence_fields": ["adult_upper_torso_phrase", "ribcage_reference_phrase", "bust_projection_phrase", "whole_body_separation_phrase"],
+      "evidence_requirements": {
+        "adult_upper_torso_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral upper torso remains visible", "both bust contours and the natural waist remain readable"]},
+        "ribcage_reference_phrase": {"min_content_words": 3, "must_mention_any": ["ribcage breadth and depth remain the reference", "shoulders and thorax anchor the regional volume"]},
+        "bust_projection_phrase": {"min_content_words": 3, "must_mention_any": ["bilateral bust volume projects from the ribcage", "front and side projection remain coherent"]},
+        "whole_body_separation_phrase": {"min_content_words": 5, "must_mention_any": ["waist hips size and attractiveness declared separately", "no fertility or sexual-availability inference"]}
+      },
+      "render_gates": [
+        {"id": "vo_bust_adult_bilateral_read", "review_scale": "thumbnail", "description": "The adult bilateral upper torso, ribcage, and natural waist remain visible enough for a regional relation."},
+        {"id": "vo_bust_ribcage_reference", "review_scale": "both", "description": "Ribcage breadth and depth visibly anchor the bust volume instead of an isolated padded contour."},
+        {"id": "vo_bust_projection_coherence", "review_scale": "native", "description": "Bilateral front and side projection remains anatomically coherent with garment support separately readable."},
+        {"id": "vo_bust_not_whole_body_or_value", "review_scale": "both", "description": "Curvy, hourglass, clothing-size, attractiveness, fertility, or sexual claims do not replace the regional evidence."}
+      ],
+      "reject_substitutes": ["sculpture_or_portrait_bust", "padding_or_pushup_only", "cleavage_only", "curvy_or_hourglass_assumption", "attractiveness_fertility_or_sexual_inference"]
+    },
+    {
+      "id": "top_hourglass_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["top hourglass body shape", "top hourglass silhouette", "upper hourglass figure", "상부 우세 모래시계 체형", "상부 우세 아워글래스 체형"],
+        "exclude_if_any_terms": ["hourglass top garment", "hourglass top design", "bottom hourglass", "lower hourglass"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult hourglass-family silhouette with visible upper-torso and hip expansion around a narrower natural waist, where the upper expansion is directionally more dominant than the lower expansion without becoming a waistless inverted triangle.",
+        "paraphrase_examples": ["성인 상체와 골반이 좁은 자연 허리 양쪽으로 확장되되 상부 폭과 볼륨이 더 우세한 관계", "hourglass waist evidence plus an upper-dominant bilateral balance", "upper dominance retained without erasing the waist or lower expansion"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "narrow_waist", "two_sided_expansion", "upper_dominance"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult front or restrained three-quarter bilateral silhouette", "both outer torso contours remain visible", "성인 몸통의 양측 외곽선이 함께 보임"]},
+            {"id": "narrow_waist", "any_terms": ["comparatively narrower natural waist", "bilateral inward waist transition", "상대적으로 좁은 자연 허리"]},
+            {"id": "two_sided_expansion", "any_terms": ["upper torso and hips both expand away from the waist", "hourglass-family upper and lower masses", "허리 위아래가 모두 확장됨"]},
+            {"id": "upper_dominance", "any_terms": ["upper expansion visibly exceeds lower expansion", "shoulder ribcage or bust owns the upper dominance", "상부 확장이 하부보다 우세"]}
+          ]
+        },
+        "contrast_examples": ["balanced hourglass with no directional dominance", "inverted triangle with little natural-waist indentation", "shoulder pads or low-angle perspective creating upper width alone"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral silhouette", "narrow natural waist", "upper and lower expansion", "upper-dominant balance", "shoulder ribcage or bust owner", "not inverted triangle", "no numeric ratio"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["top-hourglass silhouette relation"], "forbidden_prompt_terms": ["ideal top hourglass"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep both adult outer contours visible from shoulders through natural waist to hips, showing upper and lower expansion plus clear upper dominance, while separating shoulder pads, bust support, pose, and lens perspective from the body relation.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "narrow_waist_phrase", "two_sided_expansion_phrase", "upper_dominance_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult front or restrained three-quarter bilateral silhouette", "both outer torso contours remain visible"]},
+        "narrow_waist_phrase": {"min_content_words": 3, "must_mention_any": ["comparatively narrower natural waist", "bilateral inward waist transition"]},
+        "two_sided_expansion_phrase": {"min_content_words": 4, "must_mention_any": ["upper torso and hips both expand away from the waist", "hourglass-family upper and lower masses"]},
+        "upper_dominance_phrase": {"min_content_words": 4, "must_mention_any": ["upper expansion visibly exceeds lower expansion", "shoulder ribcage or bust owns the upper dominance"]}
+      },
+      "render_gates": [
+        {"id": "vo_top_hourglass_bilateral", "review_scale": "thumbnail", "description": "Both adult outer contours remain visible from upper torso through natural waist to hips."},
+        {"id": "vo_top_hourglass_waist", "review_scale": "both", "description": "A comparatively narrower natural waist remains readable between upper and lower expansion."},
+        {"id": "vo_top_hourglass_two_expansions", "review_scale": "both", "description": "Upper torso and hips both expand rather than collapsing into a single tapered triangle."},
+        {"id": "vo_top_hourglass_upper_dominance", "review_scale": "native", "description": "Upper dominance survives review after garment padding, pose, and camera perspective are discounted."}
+      ],
+      "reject_substitutes": ["balanced_hourglass_only", "inverted_triangle_without_waist", "shoulder_padding_only", "low_angle_or_pose_only", "fixed_numeric_ratio"]
+    },
+    {
+      "id": "bottom_hourglass_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["bottom hourglass body shape", "bottom hourglass silhouette", "lower hourglass figure", "하부 우세 모래시계 체형", "하부 우세 아워글래스 체형"],
+        "exclude_if_any_terms": ["hourglass bottom garment", "hourglass bottom design", "top hourglass", "upper hourglass"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult hourglass-family silhouette with visible upper-torso and hip expansion around a narrower natural waist, where the lower hip and upper-thigh expansion is directionally more dominant than the upper expansion without becoming a waistless triangle.",
+        "paraphrase_examples": ["성인 상체와 골반이 좁은 자연 허리 양쪽으로 확장되되 골반과 상부 허벅지가 더 우세한 관계", "hourglass waist evidence plus a lower-dominant bilateral balance", "lower dominance retained without erasing the upper expansion"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "narrow_waist", "two_sided_expansion", "lower_dominance"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult front or restrained three-quarter bilateral silhouette", "both outer torso contours remain visible", "성인 몸통의 양측 외곽선이 함께 보임"]},
+            {"id": "narrow_waist", "any_terms": ["comparatively narrower natural waist", "bilateral inward waist transition", "상대적으로 좁은 자연 허리"]},
+            {"id": "two_sided_expansion", "any_terms": ["upper torso and hips both expand away from the waist", "hourglass-family upper and lower masses", "허리 위아래가 모두 확장됨"]},
+            {"id": "lower_dominance", "any_terms": ["hip and upper-thigh expansion visibly exceeds upper expansion", "pelvis outer hip or thigh owns the lower dominance", "하부 확장이 상부보다 우세"]}
+          ]
+        },
+        "contrast_examples": ["balanced hourglass with no directional dominance", "triangle shape with little upper expansion", "stance, hip padding, or high-angle perspective creating lower width alone"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral silhouette", "narrow natural waist", "upper and lower expansion", "lower-dominant balance", "pelvis hip or thigh owner", "not plain triangle", "no numeric ratio"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["bottom-hourglass silhouette relation"], "forbidden_prompt_terms": ["ideal bottom hourglass"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep both adult outer contours visible from shoulders through natural waist to upper thighs, showing upper and lower expansion plus clear lower dominance, while separating stance, hip padding, garment compression, and camera perspective from the body relation.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "narrow_waist_phrase", "two_sided_expansion_phrase", "lower_dominance_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult front or restrained three-quarter bilateral silhouette", "both outer torso contours remain visible"]},
+        "narrow_waist_phrase": {"min_content_words": 3, "must_mention_any": ["comparatively narrower natural waist", "bilateral inward waist transition"]},
+        "two_sided_expansion_phrase": {"min_content_words": 4, "must_mention_any": ["upper torso and hips both expand away from the waist", "hourglass-family upper and lower masses"]},
+        "lower_dominance_phrase": {"min_content_words": 4, "must_mention_any": ["hip and upper-thigh expansion visibly exceeds upper expansion", "pelvis outer hip or thigh owns the lower dominance"]}
+      },
+      "render_gates": [
+        {"id": "vo_bottom_hourglass_bilateral", "review_scale": "thumbnail", "description": "Both adult outer contours remain visible from upper torso through natural waist to upper thighs."},
+        {"id": "vo_bottom_hourglass_waist", "review_scale": "both", "description": "A comparatively narrower natural waist remains readable between upper and lower expansion."},
+        {"id": "vo_bottom_hourglass_two_expansions", "review_scale": "both", "description": "Upper torso and hips both expand rather than collapsing into a single lower triangle."},
+        {"id": "vo_bottom_hourglass_lower_dominance", "review_scale": "native", "description": "Lower dominance survives review after stance, padding, garment pressure, and camera perspective are discounted."}
+      ],
+      "reject_substitutes": ["balanced_hourglass_only", "triangle_without_upper_expansion", "hip_padding_only", "stance_or_camera_only", "fixed_numeric_ratio"]
+    },
+    {
+      "id": "triangle_lower_body_dominant_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["triangle body shape", "pear body shape", "pear-shaped figure", "lower-body dominant triangle figure", "삼각형 체형", "배 체형", "하체 우세 체형"],
+        "exclude_if_any_terms": ["inverted triangle", "triangle geometry", "triangle table", "pear fruit", "pear still life"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult bilateral silhouette in which pelvic, outer-hip, and upper-thigh breadth visibly exceeds the upper torso, with the waist transition readable but no mandatory high-hip shelf, fixed ratio, or implication about weight or attractiveness.",
+        "paraphrase_examples": ["성인 골반 바깥 엉덩이 상부 허벅지의 폭이 상체보다 우세한 양측 실루엣", "lower-body breadth dominates the shoulder and ribcage region", "pear-family relation without requiring a spoon-like high-hip shelf"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "upper_reference", "lower_expansion", "lower_dominance"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult bilateral torso-to-thigh silhouette", "both outer edges remain visible", "성인 상체부터 허벅지까지 양측 윤곽"]},
+            {"id": "upper_reference", "any_terms": ["shoulder and ribcage breadth remain the upper reference", "upper torso is visibly narrower than the lower region", "어깨와 흉곽 폭이 상부 기준"]},
+            {"id": "lower_expansion", "any_terms": ["pelvis outer hips and upper thighs expand coherently", "waist-to-hip flare continues into thighs", "골반 엉덩이 상부 허벅지의 연속 확장"]},
+            {"id": "lower_dominance", "any_terms": ["lower breadth visibly exceeds upper breadth", "dominance persists without stance or padding", "하체 폭이 상체보다 우세"]}
+          ]
+        },
+        "contrast_examples": ["a spoon shape whose defining evidence is rapid high-hip projection", "bottom hourglass with substantial upper expansion and a narrow waist", "wide stance or gathered skirt creating lower width"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral silhouette", "shoulder ribcage reference", "pelvic and outer-hip expansion", "upper-thigh continuity", "lower-body dominance", "high-hip shelf optional", "no fixed ratio"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["lower-body-dominant triangle silhouette relation"], "forbidden_prompt_terms": ["ideal pear body"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter view from shoulders through upper thighs, preserving both contours and comparing shoulder-ribcage breadth against pelvic, outer-hip, and thigh breadth while separating stance, skirt volume, padding, and perspective.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "upper_reference_phrase", "lower_expansion_phrase", "lower_dominance_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral torso-to-thigh silhouette", "both outer edges remain visible"]},
+        "upper_reference_phrase": {"min_content_words": 4, "must_mention_any": ["shoulder and ribcage breadth remain the upper reference", "upper torso is visibly narrower than the lower region"]},
+        "lower_expansion_phrase": {"min_content_words": 4, "must_mention_any": ["pelvis outer hips and upper thighs expand coherently", "waist-to-hip flare continues into thighs"]},
+        "lower_dominance_phrase": {"min_content_words": 4, "must_mention_any": ["lower breadth visibly exceeds upper breadth", "dominance persists without stance or padding"]}
+      },
+      "render_gates": [
+        {"id": "vo_triangle_bilateral_read", "review_scale": "thumbnail", "description": "Both adult outer contours remain visible from shoulders through the upper thighs for direct comparison."},
+        {"id": "vo_triangle_upper_reference", "review_scale": "both", "description": "Shoulder and ribcage breadth provide a stable upper reference unaffected by pose or crop."},
+        {"id": "vo_triangle_lower_expansion", "review_scale": "both", "description": "Pelvic, outer-hip, and upper-thigh expansion remains coherent across both sides of the body."},
+        {"id": "vo_triangle_not_spoon_or_garment", "review_scale": "native", "description": "A high-hip shelf, wide stance, skirt flare, padding, or camera angle alone does not substitute."}
+      ],
+      "reject_substitutes": ["spoon_high_hip_shelf_only", "bottom_hourglass_assumption", "wide_stance_only", "skirt_or_padding_only", "fixed_numeric_ratio_or_value_inference"]
+    },
+    {
+      "id": "spoon_high_hip_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["spoon body shape", "spoon-shaped figure", "high-hip spoon silhouette", "스푼 체형", "숟가락형 체형", "하이힙 스푼 체형"],
+        "exclude_if_any_terms": ["spoon utensil", "spoon still life", "spoon dress", "spoon carving"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult lower-body-dominant silhouette whose defining regional evidence is a rapid outward transition at the high-hip area below the natural waist, continuing into broader hips and upper thighs without treating a lateral depression alone as sufficient.",
+        "paraphrase_examples": ["성인 자연 허리 바로 아래 하이힙에서 빠르게 바깥으로 전환되어 골반과 허벅지로 이어지는 체형", "lower dominance plus a readable high-hip shelf-like transition", "spoon relation distinguished from a gradual pear transition and from a hip dip alone"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "natural_waist_anchor", "rapid_high_hip_transition", "lower_continuity"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult bilateral waist-to-thigh silhouette", "both high-hip regions remain visible", "성인 허리부터 허벅지까지 양측 윤곽"]},
+            {"id": "natural_waist_anchor", "any_terms": ["natural waist is visibly located above the transition", "waist anchor remains distinct from a belt", "하이힙 전환 위 자연 허리 기준"]},
+            {"id": "rapid_high_hip_transition", "any_terms": ["rapid outward projection at the high hip", "shelf-like upper-hip transition below the waist", "자연 허리 아래 하이힙의 빠른 바깥 전환"]},
+            {"id": "lower_continuity", "any_terms": ["high-hip projection continues into broad hips and thighs", "lower volume remains continuous rather than a local dent", "하이힙에서 골반과 허벅지로 이어지는 연속성"]}
+          ]
+        },
+        "contrast_examples": ["gradual triangle or pear expansion without a rapid high-hip transition", "a hip dip depression with no broader lower-body relation", "waistband pressure or padding creating a local shelf"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral waist-to-thigh read", "natural waist anchor", "rapid high-hip outward transition", "shelf-like upper-hip relation", "broad hip continuation", "upper-thigh continuity", "not hip dip alone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["spoon high-hip silhouette relation"], "forbidden_prompt_terms": ["ideal spoon figure"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter waist-to-thigh view with both high-hip regions visible, locating the natural waist and showing a rapid outward high-hip transition that continues into hips and thighs while separating waistband pressure and padding.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "natural_waist_anchor_phrase", "rapid_high_hip_phrase", "lower_continuity_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral waist-to-thigh silhouette", "both high-hip regions remain visible"]},
+        "natural_waist_anchor_phrase": {"min_content_words": 4, "must_mention_any": ["natural waist is visibly located above the transition", "waist anchor remains distinct from a belt"]},
+        "rapid_high_hip_phrase": {"min_content_words": 4, "must_mention_any": ["rapid outward projection at the high hip", "shelf-like upper-hip transition below the waist"]},
+        "lower_continuity_phrase": {"min_content_words": 4, "must_mention_any": ["high-hip projection continues into broad hips and thighs", "lower volume remains continuous rather than a local dent"]}
+      },
+      "render_gates": [
+        {"id": "vo_spoon_bilateral_high_hip", "review_scale": "thumbnail", "description": "Both adult high-hip regions remain visible beneath a clearly located natural waist anchor."},
+        {"id": "vo_spoon_rapid_transition", "review_scale": "both", "description": "A rapid outward transition begins at the high hip rather than only at the lower outer thigh."},
+        {"id": "vo_spoon_lower_continuity", "review_scale": "both", "description": "The high-hip projection continues coherently through hips and upper thighs on both sides."},
+        {"id": "vo_spoon_not_pear_or_hipdip", "review_scale": "native", "description": "A gradual pear flare, isolated hip dip, waistband pressure, or padding alone does not carry the profile."}
+      ],
+      "reject_substitutes": ["gradual_triangle_transition_only", "hip_dip_only", "waistband_pressure_only", "padding_only", "fixed_numeric_ratio_or_value_inference"]
+    },
+    {
+      "id": "rectangle_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["rectangle body shape", "rectangular body silhouette", "straight body silhouette", "직사각형 체형", "사각형 실루엣 체형", "일자형 체형"],
+        "exclude_if_any_terms": ["rectangle geometry", "rectangle table", "rectangular room", "rectangular frame", "straight dress silhouette"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult bilateral silhouette with relatively small width change among upper torso, natural waist, and hips, producing low waist indentation while preserving anatomical transitions and avoiding any claim of exact equality or a literal geometric outline.",
+        "paraphrase_examples": ["성인 상체 자연 허리 골반 사이의 폭 변화가 비교적 작고 허리 함몰이 약한 양측 실루엣", "low waist definition across a coherent torso-to-hip contour", "straight silhouette relation without literal box geometry or fixed equality"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "upper_reference", "low_waist_indentation", "hip_continuity"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult front or restrained three-quarter bilateral silhouette", "both torso edges remain visible", "성인 몸통의 양측 외곽선이 함께 보임"]},
+            {"id": "upper_reference", "any_terms": ["upper torso breadth anchors the width comparison", "shoulder and ribcage remain readable", "어깨와 흉곽 폭이 기준으로 보임"]},
+            {"id": "low_waist_indentation", "any_terms": ["small inward change at the natural waist", "low bilateral waist indentation", "자연 허리의 양측 함몰이 약함"]},
+            {"id": "hip_continuity", "any_terms": ["hips continue with relatively small width change", "torso waist and hips form a coherent near-straight relation", "몸통 허리 골반의 폭 변화가 작게 이어짐"]}
+          ]
+        },
+        "contrast_examples": ["an oversized straight dress hiding the body", "a crop that omits either waist or hips", "a literal rectangle or perfectly equal numerical widths"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral silhouette", "upper torso reference", "small width change", "low natural-waist indentation", "hip continuity", "anatomical transitions", "no exact equality"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["rectangle silhouette relation"], "forbidden_prompt_terms": ["box-shaped body", "perfect rectangle"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter view with both contours visible from upper torso through hips, showing relatively small width change and low natural-waist indentation while separating oversized clothing, posture, crop, and lens effects.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "upper_reference_phrase", "low_waist_indentation_phrase", "hip_continuity_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult front or restrained three-quarter bilateral silhouette", "both torso edges remain visible"]},
+        "upper_reference_phrase": {"min_content_words": 3, "must_mention_any": ["upper torso breadth anchors the width comparison", "shoulder and ribcage remain readable"]},
+        "low_waist_indentation_phrase": {"min_content_words": 3, "must_mention_any": ["small inward change at the natural waist", "low bilateral waist indentation"]},
+        "hip_continuity_phrase": {"min_content_words": 4, "must_mention_any": ["hips continue with relatively small width change", "torso waist and hips form a coherent near-straight relation"]}
+      },
+      "render_gates": [
+        {"id": "vo_rectangle_bilateral_read", "review_scale": "thumbnail", "description": "Both adult outer contours remain visible from upper torso through natural waist to hips."},
+        {"id": "vo_rectangle_low_waist_change", "review_scale": "both", "description": "The natural waist shows comparatively low indentation without disappearing behind clothing or crop."},
+        {"id": "vo_rectangle_width_continuity", "review_scale": "both", "description": "Upper torso, waist, and hip widths change modestly while anatomical transitions remain coherent."},
+        {"id": "vo_rectangle_not_clothing_or_geometry", "review_scale": "native", "description": "A straight garment, rigid posture, crop, lens effect, or literal rectangle alone does not substitute."}
+      ],
+      "reject_substitutes": ["straight_garment_only", "rigid_posture_only", "missing_waist_or_hips_crop", "literal_geometry_or_exact_equality", "camera_flattening_only"]
+    },
+    {
+      "id": "inverted_triangle_upper_body_dominant_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["inverted triangle body shape", "inverted triangle figure", "upper-body dominant triangle figure", "역삼각형 체형", "상체 우세 역삼각형 체형"],
+        "exclude_if_any_terms": ["inverted triangle geometry", "inverted triangle logo", "triangle body shape", "pear body shape"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult bilateral silhouette in which declared shoulder, ribcage, or combined upper-torso breadth visibly exceeds pelvic and outer-hip breadth, with no requirement for a deeply indented waist and no substitution by bust prominence alone.",
+        "paraphrase_examples": ["성인 어깨 흉곽 또는 상부 몸통 폭이 골반과 바깥 엉덩이 폭보다 우세한 양측 실루엣", "upper-body breadth tapers toward a comparatively narrower pelvis", "upper dominance separated from bust-only prominence and top hourglass"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_view", "upper_owner", "narrower_lower_reference", "upper_dominance"],
+          "groups": [
+            {"id": "adult_bilateral_view", "any_terms": ["adult bilateral shoulder-to-hip silhouette", "both upper and lower outer contours remain visible", "성인 어깨부터 골반까지 양측 윤곽"]},
+            {"id": "upper_owner", "any_terms": ["shoulder ribcage or combined upper-torso breadth is declared", "upper owner is visible beyond bust projection alone", "어깨 흉곽 등 상부 폭의 소유자가 명시됨"]},
+            {"id": "narrower_lower_reference", "any_terms": ["pelvis and outer hips form a comparatively narrower reference", "upper torso tapers toward the lower body", "골반과 바깥 엉덩이가 상대적으로 좁음"]},
+            {"id": "upper_dominance", "any_terms": ["upper breadth visibly exceeds lower breadth", "dominance persists without pads pose or low angle", "상체 폭의 우세가 의복과 시점 없이 유지"]}
+          ]
+        },
+        "contrast_examples": ["bust prominence with otherwise balanced shoulders and hips", "top hourglass with strong waist indentation and substantial hip expansion", "shoulder pads or a low camera angle creating upper width"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral shoulder-to-hip read", "declared shoulder or ribcage owner", "upper-torso breadth", "narrower pelvis and outer hips", "upper-body dominance", "bust prominence separate", "waist class optional"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["upper-body-dominant inverted-triangle relation"], "forbidden_prompt_terms": ["masculine shoulders", "ideal inverted triangle"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front or restrained three-quarter shoulder-to-hip view with both contours visible, name whether shoulders, ribcage, or combined upper torso owns the breadth, and separate bust projection, padding, pose, and low-angle perspective.",
+      "required_evidence_fields": ["adult_bilateral_view_phrase", "upper_owner_phrase", "narrower_lower_reference_phrase", "upper_dominance_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral shoulder-to-hip silhouette", "both upper and lower outer contours remain visible"]},
+        "upper_owner_phrase": {"min_content_words": 4, "must_mention_any": ["shoulder ribcage or combined upper-torso breadth is declared", "upper owner is visible beyond bust projection alone"]},
+        "narrower_lower_reference_phrase": {"min_content_words": 4, "must_mention_any": ["pelvis and outer hips form a comparatively narrower reference", "upper torso tapers toward the lower body"]},
+        "upper_dominance_phrase": {"min_content_words": 4, "must_mention_any": ["upper breadth visibly exceeds lower breadth", "dominance persists without pads pose or low angle"]}
+      },
+      "render_gates": [
+        {"id": "vo_inverted_triangle_bilateral", "review_scale": "thumbnail", "description": "Both adult shoulder-to-hip contours remain visible and comparable in the same view."},
+        {"id": "vo_inverted_triangle_upper_owner", "review_scale": "both", "description": "Shoulders, ribcage, or combined upper torso visibly owns the breadth beyond bust projection alone."},
+        {"id": "vo_inverted_triangle_lower_reference", "review_scale": "both", "description": "Pelvic and outer-hip breadth forms a coherent comparatively narrower lower reference."},
+        {"id": "vo_inverted_triangle_not_bust_or_padding", "review_scale": "native", "description": "Bust prominence, shoulder pads, pose, or low-angle perspective alone does not carry upper dominance."}
+      ],
+      "reject_substitutes": ["bust_prominence_only", "top_hourglass_assumption", "shoulder_padding_only", "low_angle_or_pose_only", "gender_or_value_inference"]
+    },
+    {
+      "id": "oval_central_torso_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["oval body shape", "apple body shape", "oval central torso figure", "apple-shaped figure", "타원형 체형", "사과형 체형", "오벌 체형"],
+        "exclude_if_any_terms": ["oval face shape", "oval mirror", "oval frame", "apple fruit", "apple still life", "pregnant belly", "pregnancy"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult torso relation in which central abdominal and waist width or sagittal depth forms a broad rounded volume between upper torso and pelvis, with weak waist indentation and no inference about pregnancy, pathology, weight, health, or attractiveness.",
+        "paraphrase_examples": ["성인 흉곽과 골반 사이 중앙 복부와 허리의 폭 또는 깊이가 둥글게 넓어지고 허리 함몰이 약한 관계", "broad rounded central-torso volume visible in both frontal width and oblique depth", "oval relation separated from pregnancy or health interpretation"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_oblique_torso_view", "upper_lower_anchors", "rounded_central_volume", "weak_waist_indentation"],
+          "groups": [
+            {"id": "adult_oblique_torso_view", "any_terms": ["adult front and restrained oblique torso evidence", "central width and sagittal depth remain readable", "성인 중앙 몸통의 정면 폭과 사선 깊이가 함께 보임"]},
+            {"id": "upper_lower_anchors", "any_terms": ["ribcage and pelvis anchor the central comparison", "upper and lower torso landmarks remain visible", "흉곽과 골반이 중앙 볼륨의 기준"]},
+            {"id": "rounded_central_volume", "any_terms": ["broad rounded abdominal and waist volume", "central torso expands in width or sagittal depth", "중앙 복부와 허리의 둥근 폭 또는 깊이"]},
+            {"id": "weak_waist_indentation", "any_terms": ["natural waist indentation remains weak", "central contour changes gradually rather than pinching inward", "자연 허리 함몰이 약하고 완만함"]}
+          ]
+        },
+        "contrast_examples": ["pregnancy or a medical condition inferred from abdominal projection", "a frontal garment bulge with no side-depth evidence", "diamond shape whose central maximum clearly tapers both upward and downward"]
+      },
+      "concept_candidate": {"concept_terms": ["adult front-oblique torso read", "ribcage and pelvis anchors", "rounded central abdominal volume", "central width and sagittal depth", "weak natural-waist indentation", "gradual transitions", "no medical inference"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["oval central-torso silhouette relation"], "forbidden_prompt_terms": ["unhealthy apple shape", "pregnant-looking", "obese body"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult restrained three-quarter torso view that preserves ribcage, natural waist, abdomen, and pelvis, showing central frontal width and sagittal depth plus weak waist indentation while explicitly excluding pregnancy, pathology, weight, and health inference.",
+      "required_evidence_fields": ["adult_oblique_view_phrase", "upper_lower_anchor_phrase", "rounded_central_volume_phrase", "weak_waist_indentation_phrase"],
+      "evidence_requirements": {
+        "adult_oblique_view_phrase": {"min_content_words": 4, "must_mention_any": ["adult front and restrained oblique torso evidence", "central width and sagittal depth remain readable"]},
+        "upper_lower_anchor_phrase": {"min_content_words": 4, "must_mention_any": ["ribcage and pelvis anchor the central comparison", "upper and lower torso landmarks remain visible"]},
+        "rounded_central_volume_phrase": {"min_content_words": 4, "must_mention_any": ["broad rounded abdominal and waist volume", "central torso expands in width or sagittal depth"]},
+        "weak_waist_indentation_phrase": {"min_content_words": 4, "must_mention_any": ["natural waist indentation remains weak", "central contour changes gradually rather than pinching inward"]}
+      },
+      "render_gates": [
+        {"id": "vo_oval_oblique_torso_read", "review_scale": "thumbnail", "description": "The adult ribcage, central torso, and pelvis remain visible in a view that preserves width and depth."},
+        {"id": "vo_oval_rounded_central_volume", "review_scale": "both", "description": "Central abdominal and waist volume reads as broad and rounded between stable upper and lower anchors."},
+        {"id": "vo_oval_weak_waist", "review_scale": "both", "description": "Natural-waist indentation remains comparatively weak with gradual anatomically coherent transitions."},
+        {"id": "vo_oval_not_medical_or_garment", "review_scale": "native", "description": "Garment bulge, posture, pregnancy, pathology, weight, health, or attractiveness inference does not substitute."}
+      ],
+      "reject_substitutes": ["pregnancy_or_pathology_inference", "garment_bulge_only", "posture_or_camera_only", "frontal_width_without_depth", "weight_health_or_value_inference"]
+    },
+    {
+      "id": "diamond_central_torso_silhouette_relation",
+      "category": "adult_silhouette_relation",
+      "activation": {
+        "exact_terms": ["diamond body shape", "diamond-shaped figure", "diamond central torso figure", "다이아몬드 체형", "마름모형 체형", "중앙 우세 다이아몬드 체형"],
+        "exclude_if_any_terms": ["diamond jewelry", "diamond necklace", "diamond geometry", "diamond pattern", "baseball diamond"],
+        "requires_adult_character": true
+      },
+      "semantics": {
+        "definition": "An adult bilateral and oblique torso relation in which the central waist-abdomen region forms the widest or deepest torso zone and visibly tapers toward both the upper torso and pelvis, without literal geometry, fixed thresholds, or health and value inference.",
+        "paraphrase_examples": ["성인 중앙 허리와 복부가 몸통에서 가장 넓거나 깊게 보이고 상체와 골반 양쪽으로 가늘어지는 관계", "central-torso maximum with visible upward and downward taper", "diamond relation distinguished from the more rounded gradual oval transition"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_bilateral_oblique_view", "central_maximum", "upward_taper", "downward_taper"],
+          "groups": [
+            {"id": "adult_bilateral_oblique_view", "any_terms": ["adult bilateral and restrained oblique torso evidence", "central width and depth remain comparable", "성인 몸통 양측 폭과 사선 깊이가 함께 보임"]},
+            {"id": "central_maximum", "any_terms": ["waist-abdomen region forms the central maximum", "central torso is widest or deepest", "허리 복부가 중앙 최대 폭 또는 깊이"]},
+            {"id": "upward_taper", "any_terms": ["central volume tapers toward upper torso and shoulders", "upper contour narrows away from the central maximum", "중앙에서 상체 방향으로 가늘어짐"]},
+            {"id": "downward_taper", "any_terms": ["central volume tapers toward pelvis and outer hips", "lower contour narrows away from the central maximum", "중앙에서 골반 방향으로 가늘어짐"]}
+          ]
+        },
+        "contrast_examples": ["oval shape with broad rounded volume but no clear two-direction taper", "a diamond-pattern garment or jewelry motif", "one-sided abdominal projection caused only by pose or lens distortion"]
+      },
+      "concept_candidate": {"concept_terms": ["adult bilateral-oblique torso read", "central waist-abdomen maximum", "frontal width and sagittal depth", "upward taper", "downward taper", "oval boundary", "no literal geometry"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["diamond central-torso silhouette relation"], "forbidden_prompt_terms": ["unhealthy diamond body", "perfect diamond outline"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an adult front-to-restrained-oblique torso view with both contours, ribcage, central waist-abdomen, and pelvis readable, showing a central maximum plus upward and downward taper while separating clothing patterns, posture, lens effects, and health inference.",
+      "required_evidence_fields": ["adult_bilateral_oblique_phrase", "central_maximum_phrase", "upward_taper_phrase", "downward_taper_phrase"],
+      "evidence_requirements": {
+        "adult_bilateral_oblique_phrase": {"min_content_words": 4, "must_mention_any": ["adult bilateral and restrained oblique torso evidence", "central width and depth remain comparable"]},
+        "central_maximum_phrase": {"min_content_words": 4, "must_mention_any": ["waist-abdomen region forms the central maximum", "central torso is widest or deepest"]},
+        "upward_taper_phrase": {"min_content_words": 4, "must_mention_any": ["central volume tapers toward upper torso and shoulders", "upper contour narrows away from the central maximum"]},
+        "downward_taper_phrase": {"min_content_words": 4, "must_mention_any": ["central volume tapers toward pelvis and outer hips", "lower contour narrows away from the central maximum"]}
+      },
+      "render_gates": [
+        {"id": "vo_diamond_bilateral_oblique", "review_scale": "thumbnail", "description": "The adult upper torso, central waist-abdomen, and pelvis remain readable in width and depth."},
+        {"id": "vo_diamond_central_maximum", "review_scale": "both", "description": "The central waist-abdomen zone visibly forms the torso maximum rather than a local garment bulge."},
+        {"id": "vo_diamond_two_direction_taper", "review_scale": "both", "description": "Contours taper coherently both upward toward the upper torso and downward toward the pelvis."},
+        {"id": "vo_diamond_not_oval_or_pattern", "review_scale": "native", "description": "Rounded oval volume, a diamond motif, posture, lens distortion, or health inference alone does not substitute."}
+      ],
+      "reject_substitutes": ["oval_without_two_direction_taper", "diamond_pattern_or_jewelry", "garment_bulge_only", "pose_or_lens_distortion_only", "health_weight_or_value_inference"]
     },
     {
       "id": "achievement_reward_smile",
@@ -5553,84 +6167,733 @@
       "reject_substitutes": ["fatigue_without_safety_check", "sadness_or_pain_slump", "generic_calm_beside_alarm", "colleague_only_verification", "checklist_focus_without_visible_check", "neutral_work_posture_without_coordinated_release", "smile_before_status_known", "hidden_state_or_trauma_diagnosis"]
     },
     {
-      "id": "figura_serpentinata_spiral_pose",
-      "category": "classical_pose_geometry",
+      "id": "self_possessed_sensual_presence",
+      "category": "adult_appeal_relational_display",
       "activation": {
-        "exact_terms": ["figura serpentinata", "figura serpentinata pose", "serpentinata pose", "피구라 세르펜티나타", "세르펜티나타 자세"],
-        "requires_adult_character": false
+        "exact_terms": ["self-possessed sensual presence", "self possessed sensual presence", "자기주도적 관능적 존재감", "자기주도적 관능미"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A full-body spiral pose in which an offset support or lifted free foot initiates a three-dimensional chain of opposed pelvis, ribcage, shoulder, arm, and head directions that remains legible through depth rather than as a flat S silhouette.",
-        "paraphrase_examples": ["한쪽 발의 지지와 굽힌 반대 무릎에서 시작해 골반·흉곽·어깨·머리가 깊이 방향으로 반대 회전하는 나선형 전신 자세", "a raised or offset foot and flexed knee initiating opposed pelvis and shoulder rotation", "the arm crosses or extends around the twist while the head counter-turns and the full figure reads from several directions"],
+        "definition": "An unmistakably adult subject creates a self-directed sensual presence through visible agency, a grounded composed posture, controlled face and gaze actions, and a readable garment-material relationship; the display does not require invitation toward a viewer or partner and does not establish availability, consent, personality, or hidden desire.",
+        "paraphrase_examples": ["성인 인물이 자신의 작업과 선택을 계속 주도하면서 안정된 자세와 절제된 시선, 몸을 따라 흐르는 직물의 물성을 함께 보여주는 장면", "an adult remains occupied with a self-directed decision while a grounded stance, controlled expression, and tactile drape create sensory presence", "the visual appeal survives removal of camera-directed invitation because agency posture and material response remain visible"],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["support_initiator", "segment_opposition", "arm_head_counterturn", "three_dimensional_read"],
+          "required_group_ids": ["adult_self_directed_agency", "grounded_composed_posture", "controlled_face_gaze", "material_body_relation"],
           "groups": [
-            {"id": "support_initiator", "any_terms": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral", "지지 발과 들리거나 비껴난 반대 발"]},
-            {"id": "segment_opposition", "any_terms": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions", "골반과 흉곽 또는 어깨의 반대 회전"]},
-            {"id": "arm_head_counterturn", "any_terms": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction", "팔과 머리가 몸통 비틀림에 대응해 반대 방향을 만듦"]},
-            {"id": "three_dimensional_read", "any_terms": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes", "단축과 겹침으로 읽히는 입체 나선"]}
+            {"id": "adult_self_directed_agency", "any_terms": ["unmistakably adult subject makes or completes her own visible choice", "self-directed action remains the scene's causal center", "성인 인물이 자신의 선택과 행동을 직접 주도함"]},
+            {"id": "grounded_composed_posture", "any_terms": ["stable support path with open but controlled posture", "weight remains grounded while shoulders and neck stay composed", "지지 경로가 보이는 안정되고 침착한 자세"]},
+            {"id": "controlled_face_gaze", "any_terms": ["alert engaged eyes and a restrained mouth action", "gaze belongs to the subject's task or chosen focal point rather than proving invitation", "깨어 있는 시선과 절제된 입매가 자기 행동에 연결됨"]},
+            {"id": "material_body_relation", "any_terms": ["fabric drape specular flow or garment edge responds to posture and movement", "selective coverage and material behavior remain physically readable", "직물의 드레이프와 반사가 자세 및 움직임에 따라 읽힘"]}
           ]
         },
-        "contrast_examples": ["a flat editorial S-curve with no axial rotation", "contrapposto with counter-tilt but no spiral through depth", "a camera tilt or winding drapery creating the curve while the body stays frontal"]
+        "contrast_examples": ["a body-first glamour crop with no self-directed action", "direct camera gaze or parted lips used as the whole meaning", "exposed skin or a fitted garment without grounded agency", "a passive availability pose inferred from clothing alone"]
       },
-      "concept_candidate": {"concept_terms": ["offset support and free foot", "flexed free knee", "opposed pelvis and ribcage azimuth", "arm around the twist", "head counter-turn", "full-body foreshortened spiral", "depth overlap"]},
-      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["figura serpentinata"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
-      "composition_instruction": "Keep the full body and both feet readable while one support-to-free-leg offset initiates opposed pelvis, ribcage, shoulder, arm, and head directions; use three-quarter depth, foreshortening, and overlap to make one continuous anatomical spiral rather than a flat S outline.",
-      "required_evidence_fields": ["support_initiator_phrase", "segment_opposition_phrase", "arm_head_counterturn_phrase", "three_dimensional_read_phrase"],
+      "concept_candidate": {"concept_terms": ["unmistakably adult self-directed subject", "visible choice or authored task", "grounded open posture", "alert controlled gaze", "restrained mouth action", "bias-cut or body-skimming drape", "opaque satin specular flow", "selective coverage with readable garment edges", "sensory material response without viewer invitation", "no consent or availability inference"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["self-possessed sensual presence", "self possessed sensual presence", "자기주도적 관능적 존재감", "자기주도적 관능미", "consent proved by appearance", "sexual availability proved"],
+        "runtime_forbidden_labels": ["self-possessed sensual presence", "self possessed sensual presence", "자기주도적 관능적 존재감", "자기주도적 관능미"]
+      },
+      "composition_instruction": "Keep one unmistakably adult subject's self-directed action, grounded support, controlled alert face, and physically readable garment-material response in the same frame. Let posture and material flow create the sensory emphasis while the subject continues her chosen task or decision; camera gaze, exposed skin, parted lips, or a fitted silhouette alone cannot substitute, and the image must not imply consent or availability.",
+      "required_evidence_fields": ["adult_agency_phrase", "grounded_posture_phrase", "controlled_face_phrase", "material_relation_phrase"],
       "evidence_requirements": {
-        "support_initiator_phrase": {"min_content_words": 5, "must_mention_any": ["one planted support foot with an offset or lifted free foot", "flexed free knee initiates the spiral"]},
-        "segment_opposition_phrase": {"min_content_words": 5, "must_mention_any": ["pelvis and ribcage rotate toward different azimuths", "hips and shoulders turn in opposed depth directions"]},
-        "arm_head_counterturn_phrase": {"min_content_words": 5, "must_mention_any": ["arm crosses or extends around the torso twist", "head turns against the shoulder direction"]},
-        "three_dimensional_read_phrase": {"min_content_words": 5, "must_mention_any": ["full-body spiral readable through foreshortening and overlap", "depth and occlusion reveal successive body planes"]}
+        "adult_agency_phrase": {"min_content_words": 5, "must_mention_any": ["unmistakably adult subject makes her own visible choice", "unmistakably adult subject continues a self-directed action", "adult subject remains the causal author of the action"]},
+        "grounded_posture_phrase": {"min_content_words": 5, "must_mention_any": ["stable support path with open controlled posture", "weight stays grounded while shoulders remain composed", "grounded stance with a composed neck and shoulders"]},
+        "controlled_face_phrase": {"min_content_words": 5, "must_mention_any": ["alert engaged eyes with a restrained mouth action", "controlled gaze remains tied to her chosen focal point", "awake steady eyes and a restrained closed mouth"]},
+        "material_relation_phrase": {"min_content_words": 6, "must_mention_any": ["fabric drape responds visibly to her posture", "opaque satin specular flow follows the body and movement", "garment edges and drape remain physically readable"]}
       },
       "render_gates": [
-        {"id": "vo_serpentinata_support_initiator", "review_scale": "both", "description": "A planted support foot and visibly offset, lifted, or flexed free leg initiate the spiral instead of a symmetrical base."},
-        {"id": "vo_serpentinata_segment_opposition", "review_scale": "both", "description": "Pelvis and ribcage or shoulder planes visibly face different depth directions in one coherent anatomical chain."},
-        {"id": "vo_serpentinata_head_arm_counterturn", "review_scale": "native", "description": "At least one arm carries the torso twist while the head counter-turn remains anatomically coherent and visible."},
-        {"id": "vo_serpentinata_three_dimensional_read", "review_scale": "thumbnail", "description": "The complete figure reads as a three-dimensional spiral through overlap and foreshortening, not merely a flat S contour."}
+        {"id": "vo_self_possessed_adult_agency", "review_scale": "both", "description": "The unmistakably adult subject visibly authors or continues a self-directed action rather than serving as a passive display."},
+        {"id": "vo_self_possessed_grounded_posture", "review_scale": "thumbnail", "description": "A stable support path and composed open posture remain legible without relying on a body-first crop."},
+        {"id": "vo_self_possessed_controlled_face", "review_scale": "native", "description": "Alert engaged eyes and a restrained mouth action read as controlled presence rather than sleep, intoxication, fear, or generic camera posing."},
+        {"id": "vo_self_possessed_material_relation", "review_scale": "both", "description": "Drape, garment edges, or opaque specular material visibly respond to the subject's posture or movement instead of acting as a label-only sensual cue."}
       ],
-      "reject_substitutes": ["flat_editorial_s_curve", "contrapposto_without_axial_twist", "hogarth_serpentine_composition_only", "camera_tilt_only", "winding_drapery_only"]
+      "reject_substitutes": ["body_first_crop_without_agency", "direct_gaze_only", "parted_lips_only", "exposure_or_fitted_clothing_only", "passive_availability_inference", "consent_or_hidden_desire_claim"]
     },
     {
-      "id": "tribhanga_three_bend_pose",
-      "category": "classical_pose_geometry",
+      "id": "target_directed_seductive_display",
+      "category": "adult_appeal_relational_display",
       "activation": {
-        "exact_terms": ["tribhanga", "tribhaṅga", "tribhanga pose", "three-bend tribhanga pose", "트리방가", "트리방가 자세"],
-        "requires_adult_character": false
+        "exact_terms": ["target-directed seductive display", "target directed seductive display", "상대지향적 유혹 표현", "상대 지향적 유혹 장면"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A full-body three-bend stance organized by an inclined head, a middle torso-and-hip deflection, and a bent-knee lower return whose alternating directions create one rhythmic vertical chain; it is pose geometry rather than a costume, ethnicity, deity, or hand-gesture label.",
-        "paraphrase_examples": ["기울어진 머리, 반대 방향으로 돌출된 골반과 몸통, 굽힌 무릎의 하부 복귀가 교대로 이어지는 삼중 굴곡", "inclined head, jutting hip, and bent knee creating an alternating three-bend rhythm", "head and lower limbs echo one direction while the torso and hip deflect across the vertical axis"],
+        "definition": "An unmistakably adult subject directs a coordinated gaze, face action, body orientation, and concrete invitation or lure action toward one identifiable adult target or explicitly defined viewer role, with a visible target-side consequence when a partner is in frame; this is depicted behavior and never proof of consent, availability, or private intention.",
+        "paraphrase_examples": ["한 명의 성인 상대에게 시선과 몸 방향을 맞추고 반쯤 열린 문이나 내민 물건으로 다가오라는 행동을 하며 상대의 멈춤이나 접근 반응이 보이는 장면", "an adult aligns eyes face and torso toward the same adult target while a threshold or offered object makes the invitation concrete", "viewer-directed address is explicit in the camera role and supported by an invitation action rather than direct gaze alone"],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["inclined_head", "opposing_middle_bend", "bent_knee_return", "alternating_three_bend_rhythm"],
+          "required_group_ids": ["same_adult_target", "coordinated_target_orientation", "concrete_invitation_action", "visible_target_consequence"],
           "groups": [
-            {"id": "inclined_head", "any_terms": ["head inclines away from the vertical axis", "neck and head create the upper bend", "머리와 목의 상부 기울기"]},
-            {"id": "opposing_middle_bend", "any_terms": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend", "몸통과 골반이 중심축을 가로질러 만드는 중간 굴곡"]},
-            {"id": "bent_knee_return", "any_terms": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee", "굽힌 무릎이 하부 선을 되돌림"]},
-            {"id": "alternating_three_bend_rhythm", "any_terms": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain", "머리부터 발끝까지 교대하는 세 굴곡"]}
+            {"id": "same_adult_target", "any_terms": ["one identifiable adult target or explicitly defined adult viewer role", "eyes face action and body address the same adult counterpart", "한 명의 동일한 성인 상대를 향함"]},
+            {"id": "coordinated_target_orientation", "any_terms": ["irises head and torso converge toward the same target", "engaged lowered lids remain awake and target-locked", "눈과 머리와 몸 방향이 같은 상대에게 수렴함"]},
+            {"id": "concrete_invitation_action", "any_terms": ["holds a threshold open extends an object or clears a place for the target", "a visible approach or invitation action changes the space between them", "문턱 물건 또는 자리를 이용한 구체적 초대 행동"]},
+            {"id": "visible_target_consequence", "any_terms": ["the adult target pauses steps closer or reaches toward the offered action", "viewer role is named by the camera position and invitation geometry", "상대가 멈추거나 다가오거나 손을 내미는 반응"]}
           ]
         },
-        "contrast_examples": ["generic contrapposto with no inclined-head upper bend", "a costume or mudra presented without the three-bend body chain", "a flat S crop that hides the bent knee and feet"]
+        "contrast_examples": ["direct eye contact in an ordinary portrait", "an over-the-shoulder pose with no target or invitation action", "parted lips or a knowing smile without a spatial consequence", "clothing or camera angle used to infer consent"]
       },
-      "concept_candidate": {"concept_terms": ["inclined head", "opposing torso and hip bend", "jutting hip", "one flexed knee", "lower-line return", "alternating three-bend rhythm", "head-to-feet framing"]},
-      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["tribhanga"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
-      "composition_instruction": "Show the complete pose from head to feet so the inclined head, opposing middle torso-and-hip bend, and flexed-knee lower return form one alternating three-bend rhythm. Treat the term as body geometry independent of wardrobe, ethnicity, iconography, or hand gesture.",
-      "required_evidence_fields": ["inclined_head_phrase", "opposing_middle_bend_phrase", "bent_knee_return_phrase", "alternating_three_bend_phrase"],
+      "concept_candidate": {"concept_terms": ["one identifiable adult target", "same-target iris head torso alignment", "awake lowered-lid engagement", "small controlled mouth action", "threshold invitation", "offered object or cleared place", "target pause reach or approach response", "viewer role defined by camera geometry", "depicted behavior not hidden intent", "no consent inference"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["target-directed seductive display", "target directed seductive display", "상대지향적 유혹 표현", "상대 지향적 유혹 장면", "consent shown by gaze", "available to the viewer"],
+        "runtime_forbidden_labels": ["target-directed seductive display", "target directed seductive display", "상대지향적 유혹 표현", "상대 지향적 유혹 장면"]
+      },
+      "composition_instruction": "In one frame, bind one unmistakably adult subject's irises, head, torso, and concrete invitation action to the same identifiable adult target or explicit adult viewer role. Use a threshold, offered object, cleared place, or comparable visible action to alter the target's options, and when a partner is visible show that adult pausing, approaching, or reaching. Direct gaze, an over-shoulder pose, parted lips, styling, or camera angle alone is insufficient and cannot establish consent or availability.",
+      "required_evidence_fields": ["same_adult_target_phrase", "target_orientation_phrase", "invitation_action_phrase", "target_consequence_phrase"],
       "evidence_requirements": {
-        "inclined_head_phrase": {"min_content_words": 4, "must_mention_any": ["head inclines away from the vertical axis", "neck and head create the upper bend"]},
-        "opposing_middle_bend_phrase": {"min_content_words": 5, "must_mention_any": ["torso and hip deflect across the central axis", "jutting hip forms the opposing middle bend"]},
-        "bent_knee_return_phrase": {"min_content_words": 5, "must_mention_any": ["one bent knee returns the lower line", "lower limbs echo the head direction through a flexed knee"]},
-        "alternating_three_bend_phrase": {"min_content_words": 5, "must_mention_any": ["three alternating bends remain readable from head to feet", "upper middle and lower deflections form one rhythmic chain"]}
+        "same_adult_target_phrase": {"min_content_words": 5, "must_mention_any": ["one identifiable adult target remains in frame", "one explicitly defined adult viewer role", "the same adult counterpart receives every cue"]},
+        "target_orientation_phrase": {"min_content_words": 6, "must_mention_any": ["irises head and torso converge toward the same target", "awake lowered lids remain fixed on the same adult", "eyes face and body address the same adult counterpart"]},
+        "invitation_action_phrase": {"min_content_words": 6, "must_mention_any": ["holds the threshold open for the same target", "extends an object toward the same adult target", "clears a visible place for the same target to approach"]},
+        "target_consequence_phrase": {"min_content_words": 5, "must_mention_any": ["the adult target pauses and reaches toward the invitation", "the same adult target steps closer", "the viewer role is fixed by invitation geometry and camera position"]}
       },
       "render_gates": [
-        {"id": "vo_tribhanga_inclined_head", "review_scale": "both", "description": "The head and neck create a visible upper bend rather than remaining vertically neutral."},
-        {"id": "vo_tribhanga_opposing_middle_bend", "review_scale": "thumbnail", "description": "Torso and jutting hip deflect across the vertical axis to form a distinct middle bend."},
-        {"id": "vo_tribhanga_bent_knee_return", "review_scale": "both", "description": "One flexed knee and the lower limbs visibly return the line instead of forming a symmetric stance."},
-        {"id": "vo_tribhanga_full_body_three_bend_read", "review_scale": "thumbnail", "description": "All three alternating bends remain legible together from head through hips to both feet."}
+        {"id": "vo_target_seduction_same_adult_target", "review_scale": "both", "description": "One adult target or explicit adult viewer role owns the gaze, orientation, and action rather than an ambiguous camera stare."},
+        {"id": "vo_target_seduction_coordinated_orientation", "review_scale": "native", "description": "Irises, head, and torso visibly converge on the same target while the eyes remain alert rather than sleepy or unfocused."},
+        {"id": "vo_target_seduction_invitation_action", "review_scale": "both", "description": "A threshold, offered object, cleared place, or comparable action creates a concrete target-directed invitation or lure."},
+        {"id": "vo_target_seduction_visible_consequence", "review_scale": "thumbnail", "description": "The target visibly pauses, approaches, or reaches, or the explicit viewer-role geometry makes the invitation consequence unmistakable; direct gaze alone fails."}
       ],
-      "reject_substitutes": ["generic_contrapposto", "costume_or_mudra_only", "flat_s_curve_without_three_bends", "symmetrical_bent_knee_pose", "cropped_lower_body"]
+      "reject_substitutes": ["direct_eye_contact_only", "over_shoulder_pose_only", "parted_lips_only", "knowing_smile_only", "clothing_or_camera_only", "consent_availability_or_hidden_intent_claim"]
+    },
+    {
+      "id": "playful_flirtation_interaction",
+      "category": "adult_appeal_relational_display",
+      "activation": {
+        "exact_terms": ["playful flirtation interaction", "playful flirting interaction", "장난스러운 플러팅 상호작용", "장난스러운 유혹 상호작용"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bounded interaction between unmistakably adult participants in which one adult performs a playful approach-withdrawal or offer-withdraw action toward the same adult target, a restrained playful face action accompanies that event, and the target visibly notices or responds; friendliness, service behavior, or a solo playful portrait is insufficient.",
+        "paraphrase_examples": ["성인 상대에게 물건을 건네려다 살짝 거두며 곁눈질하고 상대가 웃거나 손을 멈추는 장면", "an adult half-offers then lightly withdraws an object while returning a side glance to the same adult partner", "the target's visible reach or amused pause distinguishes the teasing exchange from ordinary friendliness"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["adult_interaction_pair", "approach_withdrawal_event", "restrained_playful_face_action", "same_target_response"],
+          "groups": [
+            {"id": "adult_interaction_pair", "any_terms": ["two unmistakably adult participants or one adult plus an explicit adult viewer-recipient role", "same adult target remains identifiable across the exchange", "성인 참여자와 동일한 성인 상대가 분명함"]},
+            {"id": "approach_withdrawal_event", "any_terms": ["half-offers then lightly withdraws an object", "starts to leave then returns a glance and leaves the threshold open", "다가감과 물러남이 하나의 미완 행동으로 보임"]},
+            {"id": "restrained_playful_face_action", "any_terms": ["small asymmetric closed-lip smile with engaged eyes", "one mouth corner lifts while the gaze returns to the same target", "깨어 있는 눈과 작은 비대칭 닫힌 미소"]},
+            {"id": "same_target_response", "any_terms": ["the adult target pauses reaches or answers with a restrained amused reaction", "recipient response stays tied to the same object or threshold", "상대가 같은 물건이나 문턱 행동에 반응함"]}
+          ]
+        },
+        "contrast_examples": ["a customer-service smile during routine handoff", "friends laughing with no approach-withdrawal event", "a solo playful smirk at the camera", "a coquette ribbon outfit without interpersonal behavior"]
+      },
+      "concept_candidate": {"concept_terms": ["two unmistakably adult participants", "same adult recipient", "half-offer then light withdrawal", "departure then returned glance", "small asymmetric closed-lip smile", "engaged target-directed eyes", "recipient reach pause or restrained amusement", "single unfinished teasing beat", "not customer service", "fashion coquette kept separate"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["playful flirtation interaction", "playful flirting interaction", "장난스러운 플러팅 상호작용", "장난스러운 유혹 상호작용", "flirting proved by a smile", "romantic consent proved"],
+        "runtime_forbidden_labels": ["playful flirtation interaction", "playful flirting interaction", "장난스러운 플러팅 상호작용", "장난스러운 유혹 상호작용"]
+      },
+      "composition_instruction": "Show a single unfinished approach-withdrawal exchange between unmistakably adult participants. Bind the half-offered and lightly withdrawn object, returned glance or threshold movement, a small restrained playful face action, and the same adult recipient's reach, pause, or amused response in one frame. Routine service, generic friendship, a solo smirk, ribbon styling, or camera eye contact cannot substitute for the reciprocal event.",
+      "required_evidence_fields": ["adult_pair_phrase", "approach_withdrawal_phrase", "playful_face_phrase", "recipient_response_phrase"],
+      "evidence_requirements": {
+        "adult_pair_phrase": {"min_content_words": 5, "must_mention_any": ["two unmistakably adult participants share the frame", "one adult addresses an explicit adult viewer-recipient", "the same adult recipient remains identifiable"]},
+        "approach_withdrawal_phrase": {"min_content_words": 6, "must_mention_any": ["half-offers then lightly withdraws the object", "starts to leave then returns a glance", "moves the offered object toward then slightly away from the same target"]},
+        "playful_face_phrase": {"min_content_words": 6, "must_mention_any": ["small asymmetric closed-lip smile with engaged eyes", "one mouth corner lifts while the gaze returns", "restrained playful mouth action and awake target-directed eyes"]},
+        "recipient_response_phrase": {"min_content_words": 5, "must_mention_any": ["the adult recipient pauses and reaches", "the same adult target answers with restrained amusement", "the recipient's hand stops at the withdrawn object"]}
+      },
+      "render_gates": [
+        {"id": "vo_playful_flirt_adult_pair", "review_scale": "both", "description": "The same adult recipient or explicit adult viewer-recipient remains identifiable as the owner of the exchange."},
+        {"id": "vo_playful_flirt_approach_withdrawal", "review_scale": "thumbnail", "description": "One unfinished approach-withdrawal, offer-withdraw, or departure-return event is spatially readable rather than a settled handoff."},
+        {"id": "vo_playful_flirt_face_action", "review_scale": "native", "description": "A restrained asymmetric closed-lip smile and awake target-directed eyes coexist without becoming a generic grin or sleepy gaze."},
+        {"id": "vo_playful_flirt_recipient_response", "review_scale": "both", "description": "The adult recipient visibly reaches, pauses, or answers the same action, distinguishing the event from service or solo posing."}
+      ],
+      "reject_substitutes": ["customer_service_smile", "routine_handoff", "generic_friendliness", "solo_playful_portrait", "direct_gaze_only", "coquette_fashion_only", "hidden_romantic_intent_or_consent_claim"]
+    },
+    {
+      "id": "controlled_languid_movement_display",
+      "category": "adult_motion_display",
+      "activation": {
+        "exact_terms": ["controlled languid movement display", "controlled languid movement", "통제된 나른한 움직임", "느리고 통제된 움직임 표현"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult subject is captured in one deliberate low-tempo transition whose start and destination remain spatially readable, while stable support, alert task-linked attention, and coherent fabric, hair, hand, or object lag distinguish controlled pacing from sleep, intoxication, illness, collapse, or a settled static pose; the movement is not sexual by default.",
+        "paraphrase_examples": ["성인 인물이 회전이나 걸음을 천천히 이어가는 중간 단계에서 지지 발과 도착 방향, 뒤따르는 직물의 지연이 함께 보이는 장면", "an adult pauses mid-turn with one planted support path, an unfinished destination, and fabric lag showing deliberate low tempo", "alert eyes and a controlled hand trajectory keep the slow movement distinct from fatigue or intoxication"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["unfinished_motion_phase", "stable_support_control", "alert_task_attention", "coherent_motion_lag"],
+          "groups": [
+            {"id": "unfinished_motion_phase", "any_terms": ["start position and unfinished destination remain visible", "mid-turn mid-step or mid-reach transition has not settled", "시작점과 도착점 사이의 미완 동작 단계"]},
+            {"id": "stable_support_control", "any_terms": ["one planted support path carries the body through the transition", "balance and joint continuity remain controlled", "지지 발과 관절 연속성이 안정적으로 보임"]},
+            {"id": "alert_task_attention", "any_terms": ["awake eyes remain tied to the chosen destination or task", "head and hand trajectory show deliberate control", "깨어 있는 시선이 동작의 목표와 연결됨"]},
+            {"id": "coherent_motion_lag", "any_terms": ["fabric hair hand or carried object trails the same movement direction", "small directional lag makes low tempo visible", "직물 머리카락 손 또는 물건의 지연이 같은 동작 방향을 따름"]}
+          ]
+        },
+        "contrast_examples": ["sleepy half-lidded eyes with no movement phase", "intoxicated sway or collapse", "a generic over-shoulder pose after the turn has finished", "motion blur without a readable support path or destination"]
+      },
+      "concept_candidate": {"concept_terms": ["unmistakably adult moving subject", "unfinished turn step or reach", "visible start and destination", "one planted support path", "awake task-linked gaze", "controlled hand trajectory", "fabric or hair directional lag", "low-tempo transition", "joint continuity", "not sexual by default"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["controlled languid movement display", "controlled languid movement", "통제된 나른한 움직임", "느리고 통제된 움직임 표현", "drugged sensuality", "intoxicated allure"],
+        "runtime_forbidden_labels": ["controlled languid movement display", "controlled languid movement", "통제된 나른한 움직임", "느리고 통제된 움직임 표현"]
+      },
+      "composition_instruction": "Freeze one unmistakably adult subject between a readable start and unfinished destination. Keep one planted support path, awake task-linked eyes, coherent joint and hand trajectory, and fabric, hair, or object lag moving in the same direction. A finished pose, generic blur, sleepy lids, sway, intoxication, illness, or collapse cannot stand in for deliberate low-tempo control, and the profile alone adds no sexual meaning.",
+      "required_evidence_fields": ["unfinished_motion_phrase", "stable_support_phrase", "alert_attention_phrase", "motion_lag_phrase"],
+      "evidence_requirements": {
+        "unfinished_motion_phrase": {"min_content_words": 6, "must_mention_any": ["start position and unfinished destination remain visible", "mid-turn transition has not yet settled", "mid-step path remains visibly unfinished"]},
+        "stable_support_phrase": {"min_content_words": 5, "must_mention_any": ["one planted support path carries the body", "one planted foot preserves controlled balance", "stable support and joint continuity remain visible"]},
+        "alert_attention_phrase": {"min_content_words": 5, "must_mention_any": ["awake eyes remain tied to the chosen destination", "alert gaze follows the controlled hand trajectory", "awake task-linked attention remains visible"]},
+        "motion_lag_phrase": {"min_content_words": 6, "must_mention_any": ["fabric trails the same movement direction", "hair and carried object show coherent directional lag", "hand and fabric lag make the low tempo visible"]}
+      },
+      "render_gates": [
+        {"id": "vo_languid_motion_unfinished_phase", "review_scale": "thumbnail", "description": "The start and unfinished destination of one turn, step, or reach remain spatially legible rather than settling into a static pose."},
+        {"id": "vo_languid_motion_stable_support", "review_scale": "both", "description": "A planted support path and coherent joints visibly control the transition without sway or collapse."},
+        {"id": "vo_languid_motion_alert_attention", "review_scale": "native", "description": "Awake eyes and head or hand direction remain linked to the chosen task or destination rather than sleep, illness, or intoxication."},
+        {"id": "vo_languid_motion_directional_lag", "review_scale": "both", "description": "Fabric, hair, hand, or a carried object trails the same movement direction and provides a coherent low-tempo cue instead of generic blur."}
+      ],
+      "reject_substitutes": ["sleepy_half_lidded_eyes_only", "intoxicated_sway", "illness_or_collapse", "finished_over_shoulder_pose", "generic_motion_blur", "movement_without_support_or_destination", "automatic_sexual_meaning"]
+    },
+    {
+      "id": "decadent_languor_environment",
+      "category": "adult_environmental_appeal_display",
+      "activation": {
+        "exact_terms": ["decadent languor environment", "decadent languor scene", "퇴폐적 나른함 환경", "퇴폐미가 있는 나른한 장면"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult subject remains alert and self-directed inside an environment that visibly carries both former luxury and material after-event decline, with an unfinished slow action linking the adult to the residue; dark color, red light, gothic styling, or a reclining pose alone does not establish decadence or sensuality.",
+        "paraphrase_examples": ["성인 인물이 행사가 끝난 낡은 호화 호텔에서 꺼진 촛농과 눌린 벨벳, 넘어진 잔을 정리하며 천천히 다음 행동으로 옮겨가는 장면", "an alert adult crosses a faded hotel salon after an event, touching worn velvet while wax and displaced objects show excess and aftermath", "former luxury, physical decay, after-event residue, and one controlled unfinished action coexist"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["former_luxury_material", "visible_decline_or_wear", "after_event_residue", "alert_adult_unfinished_action"],
+          "groups": [
+            {"id": "former_luxury_material", "any_terms": ["velvet marble gilding satin or crystal retains signs of former luxury", "ornate material remains physically identifiable", "과거의 호화를 보여주는 벨벳 대리석 금박 또는 크리스털"]},
+            {"id": "visible_decline_or_wear", "any_terms": ["worn nap cracked finish tarnish dust or peeling edge interrupts the luxury", "material decline belongs to the same surfaces", "같은 호화 표면에 마모 균열 변색 또는 먼지가 보임"]},
+            {"id": "after_event_residue", "any_terms": ["spent wax displaced glassware wilted flowers or compressed seating shows a recent event has ended", "residue creates a before-now temporal relation", "꺼진 촛농 흐트러진 잔 시든 꽃 등 사건 이후의 흔적"]},
+            {"id": "alert_adult_unfinished_action", "any_terms": ["awake adult slowly gathers crosses adjusts or closes something without settling", "self-directed action links the adult to the residue", "깨어 있는 성인이 잔해와 연결된 미완 행동을 주도함"]}
+          ]
+        },
+        "contrast_examples": ["a clean luxury room under red light", "generic gothic fashion in a dark corridor", "an intoxicated or unconscious reclining adult", "peeling walls without any former luxury or after-event relation"]
+      },
+      "concept_candidate": {"concept_terms": ["unmistakably adult alert subject", "former luxury material", "worn velvet or cracked finish", "tarnish dust or peeling edge", "spent wax or displaced glassware", "wilted flowers or compressed seating", "after-event temporal residue", "slow unfinished self-directed action", "material contact", "dark color kept optional"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["decadent languor environment", "decadent languor scene", "퇴폐적 나른함 환경", "퇴폐미가 있는 나른한 장면", "intoxicated erotic decay", "unconscious allure"],
+        "runtime_forbidden_labels": ["decadent languor environment", "decadent languor scene", "퇴폐적 나른함 환경", "퇴폐미가 있는 나른한 장면"]
+      },
+      "composition_instruction": "Show former luxury, physical wear on those same materials, and specific after-event residue in the same setting. Keep one unmistakably adult subject awake and self-directed in an unfinished slow action that touches, gathers, crosses, adjusts, or closes something connected to that residue. Red light, black clothing, gothic makeup, a clean hotel, reclining, intoxication, or unconsciousness cannot substitute for the material-temporal relation.",
+      "required_evidence_fields": ["former_luxury_phrase", "material_decline_phrase", "after_event_residue_phrase", "alert_unfinished_action_phrase"],
+      "evidence_requirements": {
+        "former_luxury_phrase": {"min_content_words": 5, "must_mention_any": ["velvet and marble retain former luxury", "gilding and crystal remain physically identifiable", "ornate satin and carved wood show former luxury"]},
+        "material_decline_phrase": {"min_content_words": 6, "must_mention_any": ["worn nap and tarnish interrupt the same luxury surfaces", "cracked finish and dust mark the ornate material", "peeling edges and faded sheen belong to the same furnishings"]},
+        "after_event_residue_phrase": {"min_content_words": 6, "must_mention_any": ["spent wax and displaced glassware show the event has ended", "wilted flowers and compressed seating remain after the event", "displaced objects create a visible after-event residue"]},
+        "alert_unfinished_action_phrase": {"min_content_words": 6, "must_mention_any": ["awake adult slowly gathers the residue without settling", "alert adult crosses the room in an unfinished action", "self-directed adult adjusts the worn material mid-transition"]}
+      },
+      "render_gates": [
+        {"id": "vo_decadent_languor_former_luxury", "review_scale": "thumbnail", "description": "At least one identifiable velvet, marble, gilded, satin, crystal, or comparable former-luxury material anchors the setting."},
+        {"id": "vo_decadent_languor_material_decline", "review_scale": "both", "description": "Wear, tarnish, cracking, dust, or peeling visibly affects those same luxury surfaces rather than a separate generic ruin."},
+        {"id": "vo_decadent_languor_after_event", "review_scale": "both", "description": "Spent wax, displaced glassware, wilted flowers, compressed seating, or comparable residue makes the recent event aftermath readable."},
+        {"id": "vo_decadent_languor_alert_action", "review_scale": "native", "description": "The adult remains awake, self-directed, and visibly mid-action with the residue or worn material rather than intoxicated, unconscious, or merely posed."}
+      ],
+      "reject_substitutes": ["dark_or_red_lighting_only", "generic_gothic_styling", "clean_luxury_room", "reclining_pose_only", "intoxication_or_unconsciousness", "generic_ruin_without_former_luxury", "decay_without_after_event_relation"]
+    },
+    {
+      "id": "oval_face_contour_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["oval face shape", "oval-shaped face", "egg-shaped face", "달걀형 얼굴", "계란형 얼굴", "타원형 얼굴", "鹅蛋脸", "卵型の顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter that is moderately longer than wide, with the lateral zygomatic region subtly widest, a smooth transition toward a somewhat narrower forehead and jaw, and a continuous soft taper into a narrow rounded chin.",
+        "paraphrase_examples": ["정면에서 얼굴 세로가 폭보다 적당히 길고 광대 부근이 살짝 가장 넓으며 턱끝으로 부드럽게 좁아지는 얼굴", "a moderately elongated face whose widest cheek region flows smoothly toward a narrower rounded chin", "an egg-like full facial contour without a broad jaw corner or a sharply pointed lower face"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "moderate_vertical_relation", "subtle_zygomatic_width_owner", "smooth_lower_taper", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["hairline temples cheek edges jawlines and chin remain visible", "complete bilateral face contour", "헤어라인부터 턱끝까지 양쪽 외곽이 보임"]},
+            {"id": "moderate_vertical_relation", "any_terms": ["face is moderately longer than wide", "vertical span exceeds width without elongation", "세로 길이가 가로 폭보다 적당히 김"]},
+            {"id": "subtle_zygomatic_width_owner", "any_terms": ["zygomatic region is subtly widest", "cheek width slightly exceeds forehead and jaw", "광대 부근이 이마와 하악보다 약간 넓음"]},
+            {"id": "smooth_lower_taper", "any_terms": ["jaw narrows smoothly into a rounded chin", "no abrupt gonial corner interrupts the taper", "턱선이 둥근 턱끝으로 매끄럽게 좁아짐"]},
+            {"id": "confound_control", "any_terms": ["hair lens expression light and makeup do not substitute for contour", "neutral distortion-controlled face-shape read", "머리카락 표정 조명과 원근 효과를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a round face whose length stays close to its width", "an oblong face with visibly parallel elongated sides", "a pointed chin attached to an otherwise broad angular jaw", "an oval mirror or body silhouette"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "moderately longer than wide", "subtly widest zygomatic region", "somewhat narrower forehead", "somewhat narrower jaw", "smooth temple-to-cheek transition", "continuous lower-face taper", "narrow rounded chin", "neutral expression", "distortion-controlled portrait perspective"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["oval face contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the full hairline-to-chin perimeter visible in a neutral front or restrained three-quarter portrait. Show a face moderately longer than wide, with the zygomatic region subtly widest and smooth narrowing through the jaw into a narrow rounded chin. Hair, smile, contour makeup, hard shadow, crop, or near-lens distortion cannot do the shape work.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["hairline temples cheek edges jawlines and chin remain visible", "complete bilateral face perimeter remains unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face is moderately longer than wide", "moderately elongated facial perimeter"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["zygomatic region is subtly widest", "cheek width slightly exceeds forehead and jaw"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["jaw narrows smoothly into a rounded chin", "continuous soft taper reaches a narrow rounded chin"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["hair expression makeup light and perspective remain separate from the contour", "neutral expression and controlled perspective preserve the actual contour"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_oval_full_perimeter", "review_scale": "thumbnail", "description": "The full bilateral hairline-to-chin perimeter is readable without hair, crop, hand, or prop occlusion."},
+        {"id": "vo_face_oval_vertical_relation", "review_scale": "both", "description": "The face reads moderately longer than wide rather than compact-round or distinctly oblong."},
+        {"id": "vo_face_oval_width_hierarchy", "review_scale": "both", "description": "The zygomatic region is subtly widest while forehead and jaw are somewhat narrower."},
+        {"id": "vo_face_oval_lower_taper", "review_scale": "native", "description": "A smooth jaw taper terminates in a narrow rounded chin without a broad angular corner or isolated point."},
+        {"id": "vo_face_oval_confound_control", "review_scale": "native", "description": "Hair, expression, contour makeup, shadow, and perspective do not create or conceal the apparent shape."}
+      ],
+      "reject_substitutes": ["oval_body_or_object", "hairstyle_created_oval", "cheek_fullness_only", "rounded_chin_only", "lens_stretch_only", "value_or_attractiveness_inference"]
+    },
+    {
+      "id": "round_compact_face_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["round face shape", "rounded face shape", "둥근 얼굴형", "동그란 얼굴", "圆脸", "丸顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete compact face perimeter whose vertical length stays close to its transverse width, with broad cheek-to-cheek presence and a continuously curved jaw that ends in a short rounded chin.",
+        "paraphrase_examples": ["얼굴 세로와 가로가 비슷하고 볼 부근이 넓게 이어지며 턱선이 짧고 둥근 얼굴", "a compact face with near-equal length and width and no abrupt angular jaw corner", "broad cheek width continuing through a curved lower contour into a short rounded chin"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "compact_vertical_relation", "broad_cheek_width", "curved_short_lower_contour", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral face contour remains visible", "hairline cheek edges jawlines and chin are unobscured", "얼굴 양쪽 외곽 전체가 보임"]},
+            {"id": "compact_vertical_relation", "any_terms": ["facial length stays close to width", "compact vertical-to-transverse relation", "세로 길이와 가로 폭이 비슷함"]},
+            {"id": "broad_cheek_width", "any_terms": ["cheek-to-cheek region carries broad width", "rounded lateral cheek presence", "볼 부근의 가로 폭이 넓게 이어짐"]},
+            {"id": "curved_short_lower_contour", "any_terms": ["soft curved jaw ends in a short rounded chin", "no broad angular corner or pointed tip", "둥근 턱선이 짧은 둥근 턱끝으로 이어짐"]},
+            {"id": "confound_control", "any_terms": ["cheek fullness smile lens and hair do not substitute for the whole shape", "neutral distortion-controlled contour read", "볼살 미소 원근과 헤어 효과를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["full cheeks on a visibly elongated face", "a wide-angle close-up that enlarges the center of the face", "an oval face with a longer vertical span", "a round mirror or circular frame"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "length close to width", "compact facial span", "broad cheek-to-cheek region", "soft continuous side contour", "curved lower jaw", "short rounded chin", "no isolated cheek-fullness substitute", "neutral expression", "controlled portrait perspective"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["round compact face contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the full face perimeter under a neutral expression and controlled portrait perspective. Keep facial length close to width, let broad cheek-to-cheek presence continue into a soft curved jaw and short rounded chin, and prevent hair, smile compression, isolated cheek fullness, or a close wide lens from substituting for the global relation.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral face perimeter remains unobscured", "hairline cheek edges jawlines and chin remain visible"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["facial length stays close to width", "compact vertical-to-transverse facial relation"]},
+        "width_hierarchy_phrase": {"min_content_words": 5, "must_mention_any": ["cheek-to-cheek region carries broad width", "broad lateral cheek presence remains visible"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["soft curved jaw ends in a short rounded chin", "continuous rounded lower contour reaches a short chin"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["cheek fullness smile lens and hair do not substitute for the whole shape", "neutral expression and controlled perspective preserve the global contour"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_round_full_perimeter", "review_scale": "thumbnail", "description": "The complete bilateral face perimeter is readable rather than inferred from cheeks alone."},
+        {"id": "vo_face_round_vertical_relation", "review_scale": "both", "description": "Facial length stays close to width and reads compact rather than oval or oblong."},
+        {"id": "vo_face_round_cheek_width", "review_scale": "both", "description": "Broad cheek-to-cheek presence participates in the global contour."},
+        {"id": "vo_face_round_lower_curve", "review_scale": "native", "description": "A soft curved jaw terminates in a short rounded chin without angular corners or an isolated point."},
+        {"id": "vo_face_round_confound_control", "review_scale": "native", "description": "Cheek fullness, smile, hairstyle, contour makeup, and near-lens distortion do not create the result alone."}
+      ],
+      "reject_substitutes": ["full_cheeks_only", "smile_compression_only", "round_object_or_frame", "wide_angle_face_enlargement", "short_chin_only", "value_or_weight_inference"]
+    },
+    {
+      "id": "oblong_elongated_face_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["oblong face shape", "elongated face shape", "long narrow face shape", "긴 얼굴형", "세로로 긴 얼굴형", "长形脸", "面長の顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter visibly longer than wide, with forehead, zygomatic, and bigonial widths remaining comparatively parallel and an elongated lower contour that ends softly rather than in a broad angular jaw.",
+        "paraphrase_examples": ["이마·광대·턱 폭이 크게 벌어지지 않은 채 얼굴 세로가 뚜렷이 긴 얼굴", "an elongated face with relatively parallel side widths and a softly ended lower contour", "more vertical extension than an oval face without the broad jaw corners of a rectangle"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "elongated_vertical_relation", "parallel_width_relation", "soft_elongated_lower_contour", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral hairline-to-chin contour", "both sides of the facial perimeter stay visible", "얼굴 세로 외곽 전체가 보임"]},
+            {"id": "elongated_vertical_relation", "any_terms": ["face is visibly longer than wide", "vertical facial span is clearly dominant", "얼굴 세로 길이가 가로 폭보다 뚜렷이 김"]},
+            {"id": "parallel_width_relation", "any_terms": ["forehead cheek and jaw widths remain comparatively parallel", "no single transverse region dominates strongly", "이마 광대 하악 폭이 비교적 평행함"]},
+            {"id": "soft_elongated_lower_contour", "any_terms": ["elongated lower face ends softly", "jaw lacks a broad square corner", "길어진 하안면이 넓은 각진 턱 없이 부드럽게 끝남"]},
+            {"id": "confound_control", "any_terms": ["crop head pitch hairstyle and lens stretch remain separate", "neutral distortion-controlled vertical read", "크롭 고개 각도 헤어와 렌즈 늘림을 분리함"]}
+          ]
+        },
+        "contrast_examples": ["the idiom long face meaning sadness", "a wide-angle stretch from a near camera", "a rectangular face with broad angular jaw corners", "a long oval mirror"]
+      },
+      "concept_candidate": {"concept_terms": ["complete hairline-to-chin perimeter", "visibly longer than wide", "vertical span dominant", "comparatively parallel forehead width", "comparatively parallel cheek width", "comparatively parallel jaw width", "elongated lower face", "soft chin termination", "neutral head pitch", "distortion-controlled perspective"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["oblong elongated face contour"], "forbidden_prompt_terms": ["long face after bad news"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the entire hairline-to-chin contour visible with neutral head pitch. Make the vertical facial span clearly exceed width while forehead, cheek, and jaw widths remain comparatively parallel; let the elongated lower face end softly rather than with a broad angular jaw. Crop, hairstyle, tilt, and wide-angle stretch cannot supply the elongation.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral hairline-to-chin contour remains visible", "both sides of the facial perimeter stay unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face is visibly longer than wide", "vertical facial span is clearly dominant"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["forehead cheek and jaw widths remain comparatively parallel", "no transverse facial region dominates strongly"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["elongated lower face ends softly", "long lower contour lacks broad angular jaw corners"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["crop head pitch hairstyle and lens stretch remain separate", "neutral head pitch and controlled perspective preserve true elongation"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_oblong_full_perimeter", "review_scale": "thumbnail", "description": "The full hairline-to-chin perimeter and both side contours remain readable."},
+        {"id": "vo_face_oblong_vertical_relation", "review_scale": "both", "description": "The face reads visibly longer than wide without relying on crop or pitch."},
+        {"id": "vo_face_oblong_parallel_widths", "review_scale": "both", "description": "Forehead, cheek, and jaw widths remain comparatively parallel rather than showing one dominant width."},
+        {"id": "vo_face_oblong_soft_lower_end", "review_scale": "native", "description": "The elongated lower contour ends softly without the broad angular jaw of a rectangle."},
+        {"id": "vo_face_oblong_confound_control", "review_scale": "native", "description": "Head pitch, hairstyle, crop, shadow, and lens stretch do not create the elongated reading."}
+      ],
+      "reject_substitutes": ["sad_long_face_idiom", "vertical_crop_only", "head_pitch_only", "lens_stretch_only", "rectangular_broad_jaw", "value_or_ethnicity_inference"]
+    },
+    {
+      "id": "square_face_contour_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["square face shape", "square-shaped face", "사각형 얼굴형", "각진 사각 얼굴", "方形脸", "四角い顔型"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter with length close to width, relatively comparable forehead, zygomatic, and bigonial breadths, and broad readable jaw corners continuing into a broad chin.",
+        "paraphrase_examples": ["얼굴 길이와 폭이 비슷하고 이마·광대·하악 폭이 크게 좁아지지 않으며 턱 모서리가 넓고 각진 얼굴", "a near-equal length-width face with relatively straight sides and broad jaw corners", "a broad chin and gonial region completing the same square perimeter"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "near_equal_vertical_relation", "comparable_widths", "broad_angular_lower_contour", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral face contour remains visible", "hairline through both jaw corners to chin is readable", "양쪽 얼굴 외곽과 턱 모서리가 보임"]},
+            {"id": "near_equal_vertical_relation", "any_terms": ["face length remains close to width", "compact but not round vertical relation", "얼굴 길이와 폭이 비슷함"]},
+            {"id": "comparable_widths", "any_terms": ["forehead cheek and bigonial widths are relatively comparable", "side contours remain broad through the jaw", "이마 광대 하악 폭이 비교적 비슷함"]},
+            {"id": "broad_angular_lower_contour", "any_terms": ["broad gonial corners continue into a broad chin", "angular jaw belongs to the full lower contour", "넓은 하악각이 넓은 턱끝으로 이어짐"]},
+            {"id": "confound_control", "any_terms": ["hard shadow square crop hairstyle and clenching do not substitute", "neutral distortion-controlled jaw read", "강한 그림자 프레임과 악물기를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a square picture frame around an oval face", "hard contour makeup drawing jaw corners", "a rectangular face with clear vertical elongation", "a round face with broad cheeks but no angular jaw"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "length close to width", "comparable forehead width", "comparable zygomatic width", "comparable bigonial width", "broad side contours", "readable gonial corners", "broad chin", "neutral expression", "soft form light"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["square face contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the full face and both jaw corners visible under soft form light. Hold face length close to width, keep forehead, zygomatic, and bigonial breadths relatively comparable, and connect broad angular jaw corners to a broad chin. A square crop, hard shadow, hairstyle, jaw clenching, or contour makeup cannot substitute.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral face contour remains visible", "hairline through both jaw corners to chin remains readable"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face length remains close to width", "compact near-equal length-width relation"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["forehead cheek and bigonial widths are relatively comparable", "broad side contours continue through the jaw"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["broad gonial corners continue into a broad chin", "angular jaw corners belong to a broad lower contour"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["hard shadow square crop hairstyle and clenching do not substitute", "soft form light and controlled perspective preserve the actual jaw contour"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_square_full_perimeter", "review_scale": "thumbnail", "description": "The full bilateral perimeter and both jaw corners remain visible."},
+        {"id": "vo_face_square_vertical_relation", "review_scale": "both", "description": "Face length remains close to width rather than distinctly elongated."},
+        {"id": "vo_face_square_comparable_widths", "review_scale": "both", "description": "Forehead, cheek, and bigonial widths remain relatively comparable."},
+        {"id": "vo_face_square_broad_jaw", "review_scale": "native", "description": "Broad angular jaw corners continue into a broad chin as one anatomical contour."},
+        {"id": "vo_face_square_confound_control", "review_scale": "native", "description": "Crop, shadow, hairstyle, clenching, makeup, and lens effects do not manufacture the square reading."}
+      ],
+      "reject_substitutes": ["square_frame_or_room", "hard_shadow_only", "contour_makeup_only", "jaw_clench_only", "round_broad_cheeks_only", "value_or_gender_inference"]
+    },
+    {
+      "id": "rectangular_face_contour_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["rectangular face shape", "rectangle-shaped face", "long square face shape", "직사각형 얼굴형", "긴 사각 얼굴형", "长方形脸", "長方形の顔型"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter clearly longer than wide while forehead, zygomatic, and bigonial breadths remain comparatively parallel, with broad angular jaw corners and a broad chin preserving the square-like lower structure through the elongation.",
+        "paraphrase_examples": ["사각형 얼굴의 넓고 각진 턱과 비교적 평행한 옆선을 유지하면서 세로가 더 긴 얼굴", "an elongated face with broad jaw corners rather than a softly narrowed oblong lower end", "parallel upper-to-lower widths and a broad chin surviving the greater vertical span"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "elongated_vertical_relation", "parallel_width_relation", "broad_angular_lower_contour", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["full bilateral hairline-to-chin perimeter", "both elongated side contours and jaw corners stay visible", "세로로 긴 양쪽 외곽과 턱 모서리가 보임"]},
+            {"id": "elongated_vertical_relation", "any_terms": ["face is clearly longer than wide", "vertical span exceeds the square relation", "세로 길이가 가로 폭보다 뚜렷이 김"]},
+            {"id": "parallel_width_relation", "any_terms": ["forehead cheek and bigonial widths remain comparatively parallel", "broad side contours persist downward", "이마 광대 하악 폭이 비교적 평행함"]},
+            {"id": "broad_angular_lower_contour", "any_terms": ["broad gonial corners connect to a broad chin", "angular lower-face structure survives elongation", "넓고 각진 턱 모서리와 넓은 턱끝이 유지됨"]},
+            {"id": "confound_control", "any_terms": ["crop head pitch shadow and lens stretch do not substitute", "neutral distortion-controlled rectangular read", "크롭 고개 각도 그림자와 원근을 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a softly ended oblong face without broad jaw corners", "a square face whose length stays close to width", "a rectangular picture frame", "wide-angle vertical stretch"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral perimeter", "clearly longer than wide", "parallel forehead width", "parallel cheek width", "parallel bigonial width", "broad side contours", "broad gonial corners", "broad chin", "neutral head pitch", "controlled portrait perspective"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["rectangular face contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the full elongated facial perimeter and both jaw corners. Make the face clearly longer than wide while forehead, cheek, and bigonial breadths remain comparatively parallel, and retain broad angular jaw corners through a broad chin. Do not let a vertical crop, head pitch, shadow, or lens stretch replace the anatomical relation.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["full bilateral hairline-to-chin perimeter remains visible", "both elongated side contours and jaw corners stay unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face is clearly longer than wide", "vertical facial span clearly exceeds width"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["forehead cheek and bigonial widths remain comparatively parallel", "broad side contours persist through the jaw"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["broad gonial corners connect to a broad chin", "angular lower-face structure remains broad through elongation"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["crop head pitch shadow and lens stretch do not substitute", "neutral head pitch and controlled perspective preserve the rectangular contour"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_rectangular_full_perimeter", "review_scale": "thumbnail", "description": "The full elongated perimeter and both jaw corners are simultaneously readable."},
+        {"id": "vo_face_rectangular_vertical_relation", "review_scale": "both", "description": "The face is clearly longer than wide rather than compact-square."},
+        {"id": "vo_face_rectangular_parallel_widths", "review_scale": "both", "description": "Forehead, cheek, and bigonial widths remain comparatively parallel."},
+        {"id": "vo_face_rectangular_broad_jaw", "review_scale": "native", "description": "Broad angular jaw corners connect to a broad chin rather than ending softly like an oblong face."},
+        {"id": "vo_face_rectangular_confound_control", "review_scale": "native", "description": "Crop, pitch, shadow, hairstyle, and lens stretch do not manufacture the rectangular reading."}
+      ],
+      "reject_substitutes": ["rectangular_frame_or_object", "vertical_crop_only", "head_pitch_only", "lens_stretch_only", "oblong_soft_lower_end", "value_or_personality_inference"]
+    },
+    {
+      "id": "triangle_lower_face_dominant_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["triangle face shape", "triangular face shape", "pear-shaped face", "삼각형 얼굴형", "배형 얼굴형", "正三角形脸", "三角形の顔型"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter whose forehead and temples are narrower than the lower cheek and bigonial region, creating an outward upper-to-lower transition toward a broad jaw before the chin.",
+        "paraphrase_examples": ["이마와 관자 폭보다 아래 볼과 하악 폭이 넓어 아래 얼굴이 지배적으로 보이는 얼굴", "a face that widens from the upper temples toward broad jaw corners", "lower-face breadth owns the triangle rather than one large chin or full cheek"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "declared_vertical_relation", "lower_width_dominance", "broad_lower_contour", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral forehead-to-chin contour", "both temple and jaw widths remain visible", "이마부터 하악까지 양쪽 폭이 보임"]},
+            {"id": "declared_vertical_relation", "any_terms": ["face length-to-width relation remains explicitly visible", "vertical span is neither hidden nor inferred", "얼굴 세로와 가로 관계가 전체 외곽에서 보임"]},
+            {"id": "lower_width_dominance", "any_terms": ["bigonial region is wider than forehead and temples", "contour expands toward the lower face", "하악 폭이 이마와 관자 폭보다 넓음"]},
+            {"id": "broad_lower_contour", "any_terms": ["broad jaw corners carry the lower-face width", "chin terminates the broad lower contour without owning it alone", "넓은 하악각이 하안면 폭을 형성함"]},
+            {"id": "confound_control", "any_terms": ["pear fruit body silhouette hair and pose do not substitute", "neutral front contour with controlled perspective", "배 모양 물체 몸매 헤어와 원근을 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a pear fruit still life", "a pear-shaped body silhouette", "full cheeks on a narrow jaw", "an inverted-triangle face whose forehead is widest"]
+      },
+      "concept_candidate": {"concept_terms": ["complete forehead-to-chin perimeter", "visible vertical relation", "narrower forehead", "narrower temples", "outward temple-to-jaw transition", "lower cheek breadth", "dominant bigonial width", "broad jaw corners", "chin not sufficient alone", "controlled front perspective"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["lower-face-dominant triangle contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep forehead, temples, lower cheeks, both jaw corners, and chin in one neutral front or restrained three-quarter read. Make the contour expand toward a bigonial region wider than the upper face, with broad jaw corners carrying the lower-face dominance. A pear object, body silhouette, full cheeks, hairstyle, or a single broad chin cannot substitute.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral forehead-to-chin contour remains visible", "both temple and jaw widths remain unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face length-to-width relation remains explicitly visible", "vertical and transverse spans remain jointly readable"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["bigonial region is wider than forehead and temples", "contour expands from narrower temples toward the lower face"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["broad jaw corners carry the lower-face width", "chin terminates but does not alone create the broad lower contour"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["pear fruit body silhouette hair and pose do not substitute", "neutral front contour and controlled perspective preserve lower-width ownership"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_triangle_full_perimeter", "review_scale": "thumbnail", "description": "Upper and lower bilateral face widths remain visible in one complete perimeter."},
+        {"id": "vo_face_triangle_vertical_relation", "review_scale": "both", "description": "The global face length-width relation is visible rather than inferred from a cropped jaw."},
+        {"id": "vo_face_triangle_lower_width", "review_scale": "both", "description": "The bigonial and lower-cheek region is visibly wider than forehead and temples."},
+        {"id": "vo_face_triangle_broad_lower_contour", "review_scale": "native", "description": "Broad jaw corners carry lower-face dominance; one chin or cheek cue is insufficient."},
+        {"id": "vo_face_triangle_confound_control", "review_scale": "native", "description": "Objects, body silhouette, hair, pose, shadow, and lens effects do not supply the triangle relation."}
+      ],
+      "reject_substitutes": ["pear_fruit_or_logo", "triangle_body_silhouette", "full_cheeks_only", "broad_chin_only", "hairstyle_created_lower_width", "value_or_weight_inference"]
+    },
+    {
+      "id": "diamond_zygomatic_dominant_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["diamond face shape", "diamond-shaped face", "다이아몬드형 얼굴", "마름모형 얼굴", "菱形脸", "ひし形の顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete face perimeter whose lateral zygomatic region is clearly widest, with two-direction narrowing toward both the forehead-temple region and the jaw-chin region, ending in a small chin.",
+        "paraphrase_examples": ["광대 폭이 가장 넓고 이마·관자와 하악·턱끝으로 양쪽 방향에서 좁아지는 얼굴", "a face widest at the lateral zygomatic region and narrower above and below", "high cheekbone projection does not count unless lateral width owns the full diamond perimeter"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "declared_vertical_relation", "zygomatic_width_dominance", "two_direction_taper", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["full hairline temple cheek jaw and chin perimeter", "both upper and lower tapers remain visible", "이마 광대 하악 턱끝의 전체 외곽이 보임"]},
+            {"id": "declared_vertical_relation", "any_terms": ["face length-to-width relation remains readable", "vertical span stays explicit beside the widest cheek region", "세로 길이와 최대 광대 폭 관계가 보임"]},
+            {"id": "zygomatic_width_dominance", "any_terms": ["lateral zygomatic region is clearly widest", "cheekbone width exceeds forehead and jaw widths", "양쪽 광대 폭이 가장 넓음"]},
+            {"id": "two_direction_taper", "any_terms": ["contour narrows toward both forehead and small chin", "two-direction taper forms the full perimeter", "광대에서 이마와 작은 턱끝 양방향으로 좁아짐"]},
+            {"id": "confound_control", "any_terms": ["cheekbone projection highlight jewelry and hair do not substitute", "front-view width stays separate from depth and styling", "광대 전방 돌출 하이라이트 보석과 헤어를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a diamond necklace beside an oval face", "forward-projecting high cheekbones without dominant lateral width", "an upper-face-dominant heart contour", "contour makeup creating cheek shadows"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "declared length-width relation", "lateral zygomatic width clearly widest", "narrower temples", "narrower forehead", "narrower jaw", "small chin", "two-direction taper", "width separate from projection", "hair-cleared front view"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["diamond zygomatic-dominant face contour"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the full hairline-to-chin perimeter with hair clear of the temples and cheek edges. Make lateral zygomatic width clearly greatest, then narrow the contour toward both the forehead-temple region and a small chin. Forward cheek projection, highlight, jewelry, contour makeup, or a single pointed chin cannot substitute for two-direction width hierarchy.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["full hairline temple cheek jaw and chin perimeter remains visible", "both upper and lower facial tapers remain unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face length-to-width relation remains readable", "vertical span stays explicit beside the widest cheek region"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["lateral zygomatic region is clearly widest", "cheekbone width exceeds forehead and jaw widths"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["contour narrows toward both forehead and small chin", "two-direction taper reaches a small chin"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["cheekbone projection highlight jewelry and hair do not substitute", "front-view width remains separate from depth lighting and styling"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_diamond_full_perimeter", "review_scale": "thumbnail", "description": "The complete upper and lower perimeter is readable without hair or crop occlusion."},
+        {"id": "vo_face_diamond_vertical_relation", "review_scale": "both", "description": "The facial vertical span remains visible beside the maximum cheek width."},
+        {"id": "vo_face_diamond_zygomatic_width", "review_scale": "both", "description": "Lateral zygomatic width is clearly greater than forehead and bigonial widths."},
+        {"id": "vo_face_diamond_two_direction_taper", "review_scale": "native", "description": "The contour narrows both upward toward temples and downward toward a small chin."},
+        {"id": "vo_face_diamond_confound_control", "review_scale": "native", "description": "Projection, highlight, jewelry, hair, makeup, and lens effects do not replace lateral-width ownership."}
+      ],
+      "reject_substitutes": ["diamond_jewelry_or_object", "high_cheekbone_projection_only", "highlight_or_makeup_only", "pointed_chin_only", "upper_face_taper_without_zygomatic_dominance", "value_or_ethnicity_inference"]
+    },
+    {
+      "id": "upper_face_to_chin_taper_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["heart-shaped face", "heart face shape", "inverted triangle face shape", "하트형 얼굴", "역삼각형 얼굴형", "心形脸", "逆三角形の顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete upper-face-dominant perimeter in which forehead and upper-temple breadth exceed jaw width and the contour narrows continuously through the lower cheeks toward a narrow chin; a central widow's peak may support the heart variant but is optional.",
+        "paraphrase_examples": ["넓은 이마와 상부 얼굴에서 하악 폭이 줄고 좁은 턱끝으로 계속 좁아지는 얼굴", "a wider forehead tapering continuously through the lower face toward a narrow chin", "heart and inverted-triangle labels overlap in the upper-to-lower width relation while the hairline cue remains optional"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "declared_vertical_relation", "upper_width_dominance", "continuous_chin_taper", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete forehead temple cheek jaw and chin perimeter", "both upper breadth and lower taper remain visible", "넓은 상부와 좁아지는 하부 외곽 전체가 보임"]},
+            {"id": "declared_vertical_relation", "any_terms": ["face length-to-width relation remains visible", "vertical span is stated beside the upper breadth", "얼굴 세로와 상부 폭 관계가 보임"]},
+            {"id": "upper_width_dominance", "any_terms": ["forehead and upper temples are wider than the jaw", "upper-face breadth owns the hierarchy", "이마와 상부 관자가 하악보다 넓음"]},
+            {"id": "continuous_chin_taper", "any_terms": ["lower cheeks and jaw narrow continuously toward a narrow chin", "widow's peak remains optional", "하안면이 좁은 턱끝까지 계속 좁아짐"]},
+            {"id": "confound_control", "any_terms": ["heart icon hairstyle pointed chin and contour makeup do not substitute", "upper-to-lower widths stay anatomically readable", "하트 아이콘 헤어와 뾰족한 턱 하나를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a heart icon or heart-shaped frame", "a pointed chin on a wide lower jaw", "a diamond face whose zygomatic width is greatest", "a widow's peak above a round face"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "declared vertical relation", "wider forehead", "wider upper temples", "narrower lower cheeks", "narrower bigonial width", "continuous upper-to-lower taper", "narrow chin", "optional widow's peak", "controlled front perspective"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["upper-face-to-chin taper"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the full upper and lower facial perimeter visible. Make forehead and upper-temple breadth exceed jaw width, then continue the narrowing through the lower cheeks to a narrow chin; a widow's peak may appear but is never required. A heart icon, hairstyle, contour makeup, or pointed chin alone cannot establish the relation.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete forehead temple cheek jaw and chin perimeter remains visible", "both upper breadth and lower taper stay unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["face length-to-width relation remains visible", "vertical span remains explicit beside upper-face breadth"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["forehead and upper temples are wider than the jaw", "upper-face breadth clearly exceeds bigonial width"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["lower cheeks and jaw narrow continuously toward a narrow chin", "continuous upper-to-lower taper reaches the narrow chin"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["heart icon hairstyle pointed chin and contour makeup do not substitute", "a widow's peak remains optional while anatomical widths stay readable"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_upper_taper_full_perimeter", "review_scale": "thumbnail", "description": "The full upper-to-lower perimeter is visible without hair or crop masking the width transition."},
+        {"id": "vo_face_upper_taper_vertical_relation", "review_scale": "both", "description": "The global vertical span stays readable beside the upper-face breadth."},
+        {"id": "vo_face_upper_taper_width_hierarchy", "review_scale": "both", "description": "Forehead and upper temples are visibly wider than the jaw."},
+        {"id": "vo_face_upper_taper_continuous_chin", "review_scale": "native", "description": "Lower cheeks and jaw taper continuously to a narrow chin; a pointed tip alone is insufficient."},
+        {"id": "vo_face_upper_taper_confound_control", "review_scale": "native", "description": "Heart iconography, hairstyle, widow's peak, makeup, shadow, and lens effects do not replace anatomical width hierarchy."}
+      ],
+      "reject_substitutes": ["heart_icon_or_frame", "widows_peak_only", "pointed_chin_only", "hairstyle_created_upper_width", "diamond_zygomatic_dominance", "value_or_femininity_inference"]
+    },
+    {
+      "id": "v_tapered_lower_face_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["V-shaped face", "V-shaped face contour", "V-line face", "V-line facial contour", "V라인 얼굴", "V자 얼굴형", "V型脸", "Vラインの顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete facial perimeter in which the lower face narrows coherently from the cheek region through distinctly reduced bigonial width into a compact narrow chin, producing a readable V-like lower contour rather than an isolated pointed tip.",
+        "paraphrase_examples": ["광대 아래에서 하악 폭이 분명히 줄고 좁은 턱끝까지 연속적으로 모이는 하안면", "a coherent cheek-to-jaw-to-chin narrowing across the entire lower face", "a pointed chin is insufficient unless both jaw sides participate in the taper"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "declared_vertical_relation", "cheek_to_jaw_narrowing", "compact_chin_termination", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral face perimeter remains visible", "both cheek-to-jaw contours and chin are unobscured", "양쪽 광대에서 턱끝까지 외곽이 보임"]},
+            {"id": "declared_vertical_relation", "any_terms": ["global face length-to-width relation remains visible", "upper and lower facial spans stay jointly readable", "전체 얼굴의 세로와 가로 관계가 보임"]},
+            {"id": "cheek_to_jaw_narrowing", "any_terms": ["both jaw sides narrow distinctly below the cheeks", "bigonial width is clearly reduced from cheek width", "광대 아래 양쪽 하악 폭이 뚜렷이 줄어듦"]},
+            {"id": "compact_chin_termination", "any_terms": ["continuous lower taper terminates in a compact narrow chin", "chin belongs to the full bilateral taper", "연속된 하안면 수렴이 작고 좁은 턱끝으로 끝남"]},
+            {"id": "confound_control", "any_terms": ["V neckline inguinal line pointed chin makeup and shadow do not substitute", "lower-face anatomy stays separate from fashion and body geometry", "브이넥 사타구니 선 뾰족한 턱 하나와 메이크업을 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a V-neckline beneath an unrelated face", "an inguinal V-line body request", "a pointed chin on broad jaw corners", "contour makeup drawing a false V"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral facial perimeter", "declared global length-width relation", "cheek region as upper lower-face reference", "distinctly reduced bigonial width", "both jaw sides participate", "continuous bilateral taper", "compact narrow chin", "neutral expression", "hair cleared from jaw", "controlled portrait perspective"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["V-shaped face", "V-shaped face contour", "V-line face", "V-line facial contour", "V라인 얼굴", "V자 얼굴형", "V型脸", "Vラインの顔"],
+        "runtime_forbidden_labels": ["V-shaped face", "V-shaped face contour", "V-line face", "V-line facial contour", "V라인 얼굴", "V자 얼굴형", "V型脸", "Vラインの顔"]
+      },
+      "composition_instruction": "Keep the full face and both lower contours visible. State the global length-width relation, then make both jaw sides narrow distinctly below the cheeks and continue into a compact narrow chin. Express only those literal components at runtime; a V-neckline, body V-line, pointed chin, contour makeup, shadow, or hair-created taper cannot substitute.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral face perimeter remains visible", "both cheek-to-jaw contours and chin remain unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["global face length-to-width relation remains visible", "upper and lower facial spans remain jointly readable"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["both jaw sides narrow distinctly below the cheeks", "bigonial width is clearly reduced from cheek width"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["continuous lower taper terminates in a compact narrow chin", "compact chin belongs to the full bilateral taper"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["V neckline inguinal line pointed chin makeup and shadow do not substitute", "lower-face anatomy remains separate from fashion body geometry and styling"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_v_taper_full_perimeter", "review_scale": "thumbnail", "description": "Both cheek-to-jaw contours and the chin are visible as one complete lower-face relation."},
+        {"id": "vo_face_v_taper_vertical_relation", "review_scale": "both", "description": "The global face length-width relation remains readable rather than a cropped chin study."},
+        {"id": "vo_face_v_taper_jaw_narrowing", "review_scale": "both", "description": "Both jaw sides narrow distinctly below the cheeks and bigonial width is reduced."},
+        {"id": "vo_face_v_taper_compact_chin", "review_scale": "native", "description": "The bilateral taper terminates in a compact narrow chin; a pointed tip alone is insufficient."},
+        {"id": "vo_face_v_taper_confound_control", "review_scale": "native", "description": "Neckline, body geometry, makeup, shadow, hair, and lens effects do not supply the taper."}
+      ],
+      "reject_substitutes": ["v_neckline_or_graphic", "inguinal_or_body_v_line", "pointed_chin_only", "contour_makeup_only", "hairstyle_created_taper", "value_or_surgery_inference"]
+    },
+    {
+      "id": "u_rounded_lower_face_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["U-shaped face", "U-shaped face contour", "U-line face", "U-line facial contour", "U라인 얼굴", "U자 얼굴형", "U型脸", "Uラインの顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete facial perimeter whose lower jaw retains appreciable lateral width below the cheeks before turning through a broad rounded mandibular arc into the chin, creating a U-like lower contour without requiring the whole face to be round.",
+        "paraphrase_examples": ["광대 아래에서도 하악 폭이 어느 정도 유지되다가 넓고 둥근 호로 턱끝에 연결되는 하안면", "a lower jaw that stays laterally broad before rounding into the chin", "whole-face roundness is not required when the U-shaped relation belongs specifically to the lower contour"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "declared_vertical_relation", "retained_jaw_width", "broad_rounded_lower_arc", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete bilateral face perimeter remains visible", "both jaw sides and chin arc are unobscured", "양쪽 하악과 턱끝의 전체 외곽이 보임"]},
+            {"id": "declared_vertical_relation", "any_terms": ["global face length-to-width relation remains visible", "whole-face span remains separate from lower-contour shape", "전체 얼굴 비례와 하안면 모양을 분리해 보임"]},
+            {"id": "retained_jaw_width", "any_terms": ["jaw retains lateral breadth below the cheeks", "bigonial width does not collapse abruptly", "광대 아래에서도 하악 폭이 유지됨"]},
+            {"id": "broad_rounded_lower_arc", "any_terms": ["broad rounded mandibular arc joins the chin", "lower contour curves widely rather than converging to a point", "넓고 둥근 하악 호가 턱끝으로 이어짐"]},
+            {"id": "confound_control", "any_terms": ["U graphic broad chin cheek fullness and shadow do not substitute", "lower jaw anatomy stays separate from whole-face roundness and styling", "U자 그래픽 넓은 턱 하나 볼살과 그림자를 분리함"]}
+          ]
+        },
+        "contrast_examples": ["a U-shaped graphic or object", "a broad chin attached to sharply tapered jaw sides", "a whole round face with no retained jaw-width arc", "shadow softening an angular jaw"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral facial perimeter", "declared global length-width relation", "appreciable lateral jaw width", "bigonial width retained below cheeks", "broad mandibular arc", "rounded jaw-to-chin transition", "chin integrated into the arc", "not whole-face roundness by default", "neutral expression", "soft form light"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["U-shaped face", "U-shaped face contour", "U-line face", "U-line facial contour", "U라인 얼굴", "U자 얼굴형", "U型脸", "Uラインの顔"],
+        "runtime_forbidden_labels": ["U-shaped face", "U-shaped face contour", "U-line face", "U-line facial contour", "U라인 얼굴", "U자 얼굴형", "U型脸", "Uラインの顔"]
+      },
+      "composition_instruction": "Keep the full face, both jaw sides, and chin arc visible. State the global facial proportion, retain appreciable lateral jaw width below the cheeks, then turn the lower contour through a broad rounded mandibular arc into the chin. Use only literal components at runtime; a U graphic, broad chin alone, cheek fullness, shadow, or generic round face cannot substitute.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete bilateral face perimeter remains visible", "both jaw sides and chin arc remain unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 5, "must_mention_any": ["global face length-to-width relation remains visible", "whole-face span remains separate from lower-contour shape"]},
+        "width_hierarchy_phrase": {"min_content_words": 6, "must_mention_any": ["jaw retains lateral breadth below the cheeks", "bigonial width does not collapse abruptly"]},
+        "lower_contour_phrase": {"min_content_words": 6, "must_mention_any": ["broad rounded mandibular arc joins the chin", "lower contour curves widely rather than converging to a point"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["U graphic broad chin cheek fullness and shadow do not substitute", "lower jaw anatomy remains separate from whole-face roundness and styling"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_u_round_full_perimeter", "review_scale": "thumbnail", "description": "Both jaw sides and the chin arc are visible within the complete face perimeter."},
+        {"id": "vo_face_u_round_vertical_relation", "review_scale": "both", "description": "The global facial proportion remains readable separately from the lower-contour shape."},
+        {"id": "vo_face_u_round_retained_width", "review_scale": "both", "description": "The lower jaw retains appreciable lateral breadth below the cheeks."},
+        {"id": "vo_face_u_round_lower_arc", "review_scale": "native", "description": "A broad rounded mandibular arc joins the chin without converging sharply."},
+        {"id": "vo_face_u_round_confound_control", "review_scale": "native", "description": "Graphics, broad chin alone, cheek fullness, makeup, shadow, hair, and lens effects do not create the U relation."}
+      ],
+      "reject_substitutes": ["u_graphic_or_object", "broad_chin_only", "whole_round_face_only", "cheek_fullness_only", "shadow_softened_jaw", "value_or_weight_inference"]
+    },
+    {
+      "id": "cjk_seed_face_relation",
+      "category": "facial_shape_relation",
+      "activation": {
+        "exact_terms": ["seed-shaped face", "melon-seed face", "melon seed face shape", "씨앗형 얼굴", "瓜子脸", "瓜子顔"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A culture-scoped composite in which a moderately elongated oval upper and middle facial perimeter reaches its wider region around the cheeks, then narrows more strongly and smoothly through the jaw into a small rounded or softly pointed chin; no fixed ratio, ethnicity, attractiveness, or personality is implied.",
+        "paraphrase_examples": ["상·중안면은 길이가 적당한 타원형이고 광대 아래에서 턱끝까지 더 강하게 매끄럽게 좁아지는 씨앗형 얼굴", "a moderately elongated oval upper-mid face with stronger lower-face taper than an egg-shaped oval", "a small softly pointed or rounded chin completes the smooth lower taper without becoming a surgery or beauty-value claim"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["full_face_perimeter", "moderate_oval_vertical_relation", "cheek_width_reference", "strong_smooth_lower_taper", "confound_control"],
+          "groups": [
+            {"id": "full_face_perimeter", "any_terms": ["complete hairline temple cheek jaw and chin perimeter", "both oval upper and tapered lower contours remain visible", "타원형 상부와 좁아지는 하부 외곽 전체가 보임"]},
+            {"id": "moderate_oval_vertical_relation", "any_terms": ["upper and middle face are moderately longer than wide", "oval upper-mid vertical relation", "상중안면이 가로보다 적당히 긴 타원 관계"]},
+            {"id": "cheek_width_reference", "any_terms": ["cheek region is wider than the jaw", "widest region sits around the lateral cheeks", "광대 부근이 하악보다 넓음"]},
+            {"id": "strong_smooth_lower_taper", "any_terms": ["jaw narrows more strongly and smoothly into a small chin", "small rounded or softly pointed chin completes the taper", "하악이 더 강하게 좁아져 작고 둥글거나 부드럽게 뾰족한 턱으로 끝남"]},
+            {"id": "confound_control", "any_terms": ["egg oval V-line surgery ethnicity and beauty value do not substitute", "culture-scoped label is replaced by literal contour evidence at runtime", "계란형 브이라인 수술 민족성과 미적 가치 추론을 분리함"]}
+          ]
+        },
+        "contrast_examples": ["an egg-shaped oval with only mild lower taper", "a pointed chin without an oval upper-mid face", "a cosmetic-surgery diagram", "using the label to infer ethnicity beauty or personality"]
+      },
+      "concept_candidate": {"concept_terms": ["complete bilateral face perimeter", "moderately elongated oval upper-mid face", "cheek region wider than jaw", "smooth side contour", "stronger lower-face taper", "narrow bigonial region", "small rounded or softly pointed chin", "no fixed ratio", "neutral expression", "controlled portrait perspective"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["seed-shaped face", "melon-seed face", "melon seed face shape", "씨앗형 얼굴", "瓜子脸", "瓜子顔"],
+        "runtime_forbidden_labels": ["seed-shaped face", "melon-seed face", "melon seed face shape", "씨앗형 얼굴", "瓜子脸", "瓜子顔"]
+      },
+      "composition_instruction": "Use only literal contour components at runtime. Keep the full face visible; make the upper and middle face moderately longer than wide and oval, keep cheek width greater than jaw width, then narrow the lower face more strongly and smoothly into a small rounded or softly pointed chin. Do not infer fixed ratios, ethnicity, attractiveness, personality, surgery, or generic V-line meaning.",
+      "required_evidence_fields": ["face_perimeter_phrase", "vertical_relation_phrase", "width_hierarchy_phrase", "lower_contour_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "face_perimeter_phrase": {"min_content_words": 6, "must_mention_any": ["complete hairline temple cheek jaw and chin perimeter remains visible", "both oval upper and tapered lower contours remain unobscured"]},
+        "vertical_relation_phrase": {"min_content_words": 6, "must_mention_any": ["upper and middle face are moderately longer than wide", "moderately elongated oval upper-mid facial relation"]},
+        "width_hierarchy_phrase": {"min_content_words": 5, "must_mention_any": ["cheek region is wider than the jaw", "widest facial region sits around the lateral cheeks"]},
+        "lower_contour_phrase": {"min_content_words": 7, "must_mention_any": ["jaw narrows more strongly and smoothly into a small chin", "small rounded or softly pointed chin completes the stronger lower taper"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["egg oval V-line surgery ethnicity and beauty value do not substitute", "literal contour evidence replaces the culture-scoped label at runtime"]}
+      },
+      "render_gates": [
+        {"id": "vo_face_seed_full_perimeter", "review_scale": "thumbnail", "description": "The oval upper-mid and stronger tapered lower contours are both visible in one complete perimeter."},
+        {"id": "vo_face_seed_vertical_relation", "review_scale": "both", "description": "The upper and middle face read moderately longer than wide rather than compact-round."},
+        {"id": "vo_face_seed_cheek_width", "review_scale": "both", "description": "The cheek region remains wider than the jaw and anchors the contour."},
+        {"id": "vo_face_seed_strong_lower_taper", "review_scale": "native", "description": "The lower face narrows more strongly and smoothly into a small rounded or softly pointed chin."},
+        {"id": "vo_face_seed_confound_control", "review_scale": "native", "description": "Egg-oval shorthand, isolated V taper, surgery, styling, ethnicity, and beauty-value inference do not replace the literal contour evidence."}
+      ],
+      "reject_substitutes": ["egg_oval_without_stronger_lower_taper", "pointed_chin_only", "generic_v_taper_only", "surgery_diagram_or_claim", "ethnicity_or_beauty_inference", "fixed_ratio_claim"]
     }
   ]
 }

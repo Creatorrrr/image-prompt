@@ -1,0 +1,74 @@
+{
+  "schema_version": "photo-body-shape-render-self-review/v1",
+  "arm_id": "arm-04",
+  "profile_id": "spoon_high_hip_silhouette_relation",
+  "pack_id": "4c93848b05502c55",
+  "image_path": null,
+  "image_sha256": null,
+  "dimensions": null,
+  "render_available": false,
+  "inspection": {
+    "original_detail": "not_run_no_image",
+    "thumbnail": "not_run_no_image"
+  },
+  "target_gates": [
+    {
+      "gate_id": "vo_spoon_bilateral_high_hip",
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "No rendered pixels were returned, so bilateral adult high-hip contours and the natural-waist anchor cannot be observed."
+    },
+    {
+      "gate_id": "vo_spoon_rapid_transition",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "No rendered pixels were returned, so a rapid outward transition beginning at the high hip cannot be established."
+    },
+    {
+      "gate_id": "vo_spoon_lower_continuity",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "No rendered pixels were returned, so continuity from high hip through hips and upper thighs cannot be inspected."
+    },
+    {
+      "gate_id": "vo_spoon_not_pear_or_hipdip",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "No native pixels exist to rule out gradual pear flare, isolated hip dip, waistband pressure, or padding-only substitution."
+    }
+  ],
+  "common_gates": [
+    {
+      "gate_id": "adult_age",
+      "status": "fail",
+      "evidence": "No generated subject exists, so an unmistakably adult late-twenties-or-older appearance cannot be verified."
+    },
+    {
+      "gate_id": "face_appearance_reference",
+      "status": "fail",
+      "evidence": "The native tool reported zero conversation images available and returned no generated face; facial-appearance continuity cannot be compared."
+    },
+    {
+      "gate_id": "anatomical_coherence",
+      "status": "fail",
+      "evidence": "No rendered body, hands, or tool contact exists for anatomical inspection."
+    },
+    {
+      "gate_id": "professional_action",
+      "status": "fail",
+      "evidence": "No rendered frame exists to verify the concrete suction-wand mosaic-conservation action."
+    },
+    {
+      "gate_id": "fully_clothed_unconfounded_silhouette",
+      "status": "fail",
+      "evidence": "No rendered clothing or body contours exist to verify a smooth unpadded non-cinching matte garment read."
+    }
+  ],
+  "technical_verdict": "unscored_no_image_process_outcome",
+  "pixel_verdict": "no_image_no_pixel_proof",
+  "prompt_presence_is_pixel_proof": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

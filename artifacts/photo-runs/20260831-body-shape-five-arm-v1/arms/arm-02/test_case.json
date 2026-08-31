@@ -1,0 +1,47 @@
+{
+  "schema_version": "photo-body-shape-test-case/v1",
+  "test_case_id": "body-shape-five-arm-20260831-arm-02",
+  "arm_id": "arm-02",
+  "seed": 734894,
+  "target_term": "busty figure",
+  "target_profile_id": "bust_prominence_relation",
+  "scene_domain": "storm-battered maritime signal-lens archive restoration",
+  "subject_control": "one unmistakably adult twenty-eight-year-old woman, fully clothed",
+  "professional_action": "stabilize a brass Fresnel-lens segment on a conservation cradle while cleaning one prism with a microfiber swab under a raking lamp",
+  "reference_control": {
+    "image_index": 1,
+    "role": "facial_appearance_only",
+    "body_geometry_source": "independently_authored_prompt",
+    "claim_boundary": "visual resemblance only, not biometric identity verification"
+  },
+  "camera_and_garment_controls": [
+    "restrained three-quarter head-to-mid-thigh normal perspective",
+    "both torso contours, ribcage, natural waist, hands, and action contact readable together",
+    "smooth opaque unpadded non-cinching matte workwear",
+    "one coherent storm-lit archive environment"
+  ],
+  "confusion_boundary": "Regional bust prominence must not be inferred only from padding, cleavage, curvy or hourglass whole-body shape, clothing size, attractiveness, fertility, sexual framing, or lens distortion.",
+  "required_target_gates": [
+    "vo_bust_adult_bilateral_read",
+    "vo_bust_ribcage_reference",
+    "vo_bust_projection_coherence",
+    "vo_bust_not_whole_body_or_value"
+  ],
+  "required_common_gates": [
+    "adult_age_gate",
+    "face_appearance_gate",
+    "anatomy_gate",
+    "professional_action_gate"
+  ],
+  "technical_pass_rule": "Every target and common gate must pass in the same saved image at its declared scale.",
+  "prompt_presence_only_is_sufficient": false,
+  "actual_outcome": {
+    "preflight": "pass",
+    "image_call_count": 2,
+    "attempt_1": "blocked_pre_generation_missing_conversation_image",
+    "attempt_2": "moderation_blocked_output",
+    "attempt_2_request_id": "d6bc33a9-bc50-4c3d-9558-4b266e9117d0",
+    "pixel_verdict": "unscored_no_image",
+    "user_acceptance": "pending_no_candidate"
+  }
+}

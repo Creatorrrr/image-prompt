@@ -1,0 +1,176 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:1540888a47b1629e04239c34404d4bf8bff214c7",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the frozen v6 playful_flirtation_interaction candidate pack produces all four required pixel gates with the supplied facial-appearance reference, permitting one localized repair."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The frozen candidate pack, composed prompt, and final prompt retained their assigned hashes and the repository render-request audits passed.",
+      "artifact": "candidate_pack.json sha256 e0bc142a67fe74cbe6ca34b4494e546233b14e211301c2218891ae0f7a6294a3; runtime_audit_attempt_02.json; runtime_audit_attempt_03_repair.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The initial runtime bound the frozen prompt and the repair runtime preserved it while adding only a failed-face-gate edit instruction; both audits report PASS.",
+      "artifact": "runtime_request_attempt_02.json; runtime_request_attempt_03_repair.json; runtime_audit_attempt_02.json; runtime_audit_attempt_03_repair.json"
+    },
+    {
+      "id": "e-render-initial",
+      "kind": "render-observation",
+      "claim": "Attempt 2 passed the adult-pair, unfinished exchange, and recipient-response gates but failed the face-action gate because the initiator's lips were parted and neutral.",
+      "artifact": "pixel_review_attempt_02.json; attempt_02/output.png sha256 261aa1357e036d7fcc4a47c7a36689bda36709b7e423d09ad6dc5cfb9f438f6e"
+    },
+    {
+      "id": "e-render-repair",
+      "kind": "render-observation",
+      "claim": "Attempt 3 visibly closed the initiator's lips and added a fractional one-corner lift while retaining the other three gates; all four gates passed at their required scales.",
+      "artifact": "pixel_review_attempt_03_repair.json; attempt_03_repair/output.png sha256 9a6b771550560fd60eb7c32f1d5ca812b978c75877c490a0cfdd107590aa3c50"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The missing-reference attempt remains recorded, followed by one initial successful generation and one permitted repair generation using built-in image generation only.",
+      "artifact": "imagegen_attempt_01.json; imagegen_attempt_02.json; imagegen_attempt_03_repair.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "The rendered frame must simultaneously show the same adult recipient, an unfinished offer-withdraw geometry, a restrained asymmetric closed-lip smile with awake recipient-directed eyes, and that recipient's visible response to the same key.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-four-gates",
+        "statement": "All four candidate-pack hard gates must pass from rendered pixels, not prompt presence.",
+        "evidence_ids": [
+          "e-package",
+          "e-render-initial",
+          "e-render-repair"
+        ],
+        "causal_controls": [
+          "same-recipient continuity",
+          "key-ribbon non-contact geometry",
+          "mouth closure and asymmetry",
+          "recipient hand-to-key alignment"
+        ]
+      },
+      {
+        "id": "inv-reference-boundary",
+        "statement": "The supplied image controls only adult facial appearance and dark wavy hairstyle; identity and user approval remain outside evaluation.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render-repair"
+        ],
+        "causal_controls": [
+          "reference role text",
+          "identity_evaluation not_evaluated",
+          "user_judgment pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "minor pixel-level reconstruction outside gate semantics",
+      "subtle facial shading"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-face-action",
+      "scale": "local",
+      "axis": "initiator mouth action",
+      "source_state": "small asymmetric closed-lip smile coexisting with awake recipient-directed eyes",
+      "render_state": "attempt 2 showed recipient-directed eyes but slightly parted neutral lips",
+      "evidence_ids": [
+        "e-render-initial"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-face-underweighted",
+      "stage": "generator-response",
+      "statement": "The initial generator response retained the relational staging but under-realized the low-amplitude mouth geometry, so a local edit could correct it without restaging the scene.",
+      "evidence_ids": [
+        "e-render-initial"
+      ],
+      "falsifier": "A targeted mouth-only repair would fail to close and asymmetrically lift the lips, or would destroy any previously passing relational gate."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "tool",
+      "test"
+    ],
+    "general_rule": "When direct pixel review isolates a single local face-action failure, edit the actual rendered target with a narrowly specified positive mouth geometry while explicitly preserving every passed gate and unrelated scene axis.",
+    "generalization_basis": "The intervention is phrased in observable gate geometry and preservation constraints rather than this scene's occupation or prop vocabulary.",
+    "hypothesis_ids": [
+      "h-face-underweighted"
+    ],
+    "changed_paths": [
+      "runtime_request_attempt_03_repair.json",
+      "runtime_audit_attempt_03_repair.json",
+      "attempt_03_repair/output.png",
+      "pixel_review_attempt_03_repair.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render-repair"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-03-motivating-case",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "same-recipient continuity",
+          "unfinished offer-withdraw geometry",
+          "restrained target-directed face action",
+          "recipient response"
+        ],
+        "evidence_ids": [
+          "e-render-repair"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "render-fidelity",
+    "rationale": "The one permitted targeted repair made this motivating render pass all four hard gates without an observed regression. No unrelated held-out render or direct user aesthetic judgment exists, so this record does not claim general promotion or user approval.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-render-initial",
+      "e-render-repair",
+      "e-generation"
+    ]
+  }
+}

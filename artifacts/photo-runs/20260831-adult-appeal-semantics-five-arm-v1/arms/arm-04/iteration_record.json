@@ -1,0 +1,192 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "candidate-pack-d81c90cb2a446215b9959b98ce33c92f12cf30c04b09d10fab397252dd1cba3e",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the frozen controlled_languid_movement_display visual obligations survive one reference-qualified render and at most one targeted repair without modifying the official candidate pack or prompt."
+  },
+  "evidence": [
+    {
+      "id": "e-source-contract",
+      "kind": "source-observation",
+      "claim": "The frozen candidate pack defines exactly four hard pixel gates: unfinished phase, stable support, alert task attention, and coherent directional lag.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/candidate_pack.json sha256:d81c90cb2a446215b9959b98ce33c92f12cf30c04b09d10fab397252dd1cba3e"
+    },
+    {
+      "id": "e-package-audits",
+      "kind": "package-check",
+      "claim": "Both reference-qualified runtime requests passed the repository byte-binding audit before generation.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/runtime_audit.json and /Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/runtime_audit.json"
+    },
+    {
+      "id": "e-prompt-audit",
+      "kind": "prompt-evaluation",
+      "claim": "The frozen composed prompt passed its prompt audit and binds one literal runtime sentence to each of the four visual obligations.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/prompt_audit.json"
+    },
+    {
+      "id": "e-initial-render",
+      "kind": "render-observation",
+      "claim": "Direct thumbnail and native inspection of the initial reference-qualified render passed three gates but failed alert task attention because the eyes addressed the camera instead of the ribbon knot.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_02/pixel_review_initial.json"
+    },
+    {
+      "id": "e-repair-generation",
+      "kind": "generation-outcome",
+      "claim": "One audited targeted repair render completed with no renderer substitution.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/generation_attempt.json"
+    },
+    {
+      "id": "e-final-render",
+      "kind": "render-observation",
+      "claim": "Direct thumbnail and native inspection of the repaired render passed all four hard gates; the repair also changed canvas ratio and some fine framing details.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-adult-appeal-semantics-five-arm-v1/arms/arm-04/attempt_03/pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One adult fashion frame must visibly connect an unfinished drawer-to-knot transition, a coherent planted support chain, awake gaze aimed at the knot, and hair or satin trailing the same movement phase.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-unfinished-phase",
+        "statement": "The open start and uncontacted destination remain simultaneously legible.",
+        "evidence_ids": [
+          "e-source-contract"
+        ],
+        "causal_controls": [
+          "drawer visibility",
+          "fingertip-to-knot gap"
+        ]
+      },
+      {
+        "id": "inv-stable-support",
+        "statement": "At least one planted shoe and an uninterrupted ankle-knee-hip path visibly carry the transition.",
+        "evidence_ids": [
+          "e-source-contract"
+        ],
+        "causal_controls": [
+          "full-body crop",
+          "load-bearing foot geometry",
+          "joint continuity"
+        ]
+      },
+      {
+        "id": "inv-alert-attention",
+        "statement": "Open eyes and head direction converge on the visible hand destination rather than the camera.",
+        "evidence_ids": [
+          "e-source-contract"
+        ],
+        "causal_controls": [
+          "pupil direction",
+          "head angle",
+          "hand-to-target line"
+        ]
+      },
+      {
+        "id": "inv-directional-lag",
+        "statement": "At least one permitted flexible material trails the leading motion at a distinct phase without generic blur.",
+        "evidence_ids": [
+          "e-source-contract"
+        ],
+        "causal_controls": [
+          "leading arm direction",
+          "hair displacement",
+          "satin hem displacement"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "minor framing",
+      "fine fabric folds",
+      "unrelated archive dressing details"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-initial-camera-gaze",
+      "scale": "local",
+      "axis": "task-linked eye direction",
+      "source_state": "Eyes should converge on the ribbon knot immediately beyond the reaching fingertips.",
+      "render_state": "Initial eyes were awake but converged toward the camera/viewer.",
+      "evidence_ids": [
+        "e-initial-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-generator-camera-gaze-prior",
+      "stage": "generator-response",
+      "statement": "The generator's fashion-editorial camera-gaze prior overrode the prompt's task-linked gaze clause in the initial render.",
+      "evidence_ids": [
+        "e-prompt-audit",
+        "e-initial-render"
+      ],
+      "falsifier": "A repeated frozen-prompt sample consistently aims the eyes at the knot without repair, or a gaze-only repair leaves the eyes on the camera."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill, profile, candidate-pack, or prompt change is authorized from this isolated frozen-arm motivating case.",
+    "generalization_basis": "A single motivating render followed by one case-scoped repair cannot establish a transferable rule.",
+    "hypothesis_ids": [
+      "h-generator-camera-gaze-prior"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package-audits"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-audit"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-final-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-arm04-motivating-render",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "unfinished motion phase",
+          "stable support",
+          "task-linked gaze",
+          "directional material lag"
+        ],
+        "evidence_ids": [
+          "e-final-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "diagnosed",
+    "claim_scope": "render-fidelity",
+    "rationale": "The repaired motivating render passes all four required pixel gates, but the initial task-gaze failure, repair collateral changes, absence of an unrelated held-out render, and pending user judgment do not support profile or candidate-pack promotion.",
+    "evidence_ids": [
+      "e-initial-render",
+      "e-final-render"
+    ]
+  }
+}

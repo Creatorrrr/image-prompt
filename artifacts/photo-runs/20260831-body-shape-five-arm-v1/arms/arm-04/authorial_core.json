@@ -1,0 +1,95 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "A photorealistic rendered-pixel test of a spoon-shaped figure in a flooded art-deco transit mosaic conservation scene, using the attached image only for the adult woman's facial appearance.",
+  "subject": "One unmistakably adult woman in her late twenties or older, fully clothed as a transit-mosaic conservator, with facial appearance guided only by the attached image and newly authored body proportions",
+  "setting": "A shallowly flooded art-deco underground transit concourse where a geometric wall-and-floor mosaic is undergoing emergency conservation",
+  "event": "The conservator draws a low-pressure suction wand along one loosened tessera seam to remove flood silt",
+  "visual_priorities": [
+    "A legible full-length silhouette with a visibly narrower upper torso, sharply defined waist, pronounced high-hip shelf, broad rounded hips, and fuller upper thighs",
+    "A concrete professional mosaic-conservation action with credible tools, water, tesserae, and transit architecture",
+    "Facial appearance cues from the attached image while the written prompt independently determines the body geometry"
+  ],
+  "baseline_prompt_en": "Create a full-length photorealistic editorial conservation photograph of one unmistakably adult woman in her late twenties or older inside a shallowly flooded art-deco underground transit concourse. She is fully clothed in a fitted charcoal waterproof conservation coverall, sealed work boots, nitrile gloves, and a narrow utility belt. Her upper torso and shoulders are visibly narrower than her lower body; a sharply defined waist flows into a pronounced high-hip shelf, broad rounded hips, and visibly fuller upper thighs, with the widest contour concentrated below the waist. Her body proportions are newly authored from this written geometry. Her facial appearance—face shape, features, complexion, hairline, and hairstyle—takes its cue only from the attached image. In a clear three-quarter full-body view, the conservator draws a low-pressure suction wand along one loosened tessera seam to remove flood silt. An illuminated geometric mosaic, brass transit trim, numbered condition tags, rippling reflections, and exposed colored tesserae establish the emergency conservation site. Cool work lights rake across wet tile while warm restored fixtures glow beyond, keeping her waist-to-hip silhouette and precise professional action immediately readable.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept and rendered keyword test",
+      "source_text": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Instantiate this arm as an independently authored photorealistic test of a lower-body-dominant silhouette during flooded art-deco transit mosaic conservation, with the attachment used only for facial appearance.",
+      "sources": []
+    },
+    {
+      "term": "spoon-shaped figure",
+      "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A lower-body-dominant adult silhouette: upper torso and shoulders narrower than the lower body, a clearly defined waist, a pronounced high-hip shelf, broad rounded hips, and fuller upper thighs.",
+      "sources": []
+    },
+    {
+      "term": "attached image role",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attachment as facial-appearance guidance for the new adult subject; independently author the body geometry and scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a sharply defined waist flows into a pronounced high-hip shelf, broad rounded hips, and visibly fuller upper thighs"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult woman in her late twenties or older"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "the conservator draws a low-pressure suction wand along one loosened tessera seam to remove flood silt"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "identity",
+        "prompt_evidence": "Her facial appearance—face shape, features, complexion, hairline, and hairstyle—takes its cue only from the attached image"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "identity"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic conservation editorial",
+    "family": "flood-recovery documentary with art-deco geometry",
+    "evidence": [
+      "raking conservation work lights across wet tile",
+      "brass transit trim and geometric tessera patterns reflected in shallow water"
+    ]
+  },
+  "variation_key": "spoon-shaped figure"
+}

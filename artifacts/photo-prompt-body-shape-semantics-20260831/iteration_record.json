@@ -1,0 +1,163 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "ae84f15",
+    "candidate_revision": "working-tree-2026-08-31"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Strengthen the photo prompt generator's visual-semantic registry and candidate pack using the researched adult female body-build and body-shape keywords."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The referenced research vocabulary spans global build, bust, frame, vertical proportion, regional hip-glute-thigh cues, nine apparel shape families, and ambiguous Korean colloquialisms.",
+      "artifact": "chatgpt-conversation://6a9406a5-a25c-83ee-b550-752c1aeb7204"
+    },
+    {
+      "id": "e-ffit",
+      "kind": "external-research",
+      "claim": "The apparel literature supplies nine named shape families that can be decomposed into upper, waist, high-hip, hip, abdomen, and central-torso relations.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl#body_shape_semantics_ffit_original"
+    },
+    {
+      "id": "e-reliability",
+      "kind": "external-research",
+      "claim": "Measurement placement changed FFIT classifications by as much as 40 percent and shoulder ownership is underrepresented, so fixed universal thresholds are not suitable visual obligations.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl#body_shape_semantics_ffit_reliability"
+    },
+    {
+      "id": "e-population",
+      "kind": "external-research",
+      "claim": "Current Korean 3D morphology work and cross-population apparel research support multidimensional width-depth axes and scoped population limits rather than ethnicity-to-shape defaults.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl#body_shape_semantics_korean_3d_morphology"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary metadata, registry binding, semantic manifest, visual-profile index, and 61 targeted regression tests pass on the candidate working tree.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index; python -m unittest tests.test_photo_body_shape_semantics tests.test_photo_body_aesthetic_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_pose_visual_semantics tests.test_photo_bm25f_retrieval"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Exact adult body terms route to their sole hard profile, top and bottom hourglass exclude the base profile, ambiguous bare slang fails closed, and BM25F or embedding discovery remains optional rather than hard.",
+      "artifact": "tests/test_photo_body_shape_semantics.py and tests/test_photo_visual_profile_retrieval.py"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A requested adult body-build or silhouette term becomes a componentized observable relation with region ownership, capture requirements, confounder rejection, and no unsupported health, size, attractiveness, fertility, ethnicity, or value inference.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-relations",
+        "statement": "Every hard profile exposes at least four observable component groups, prompt evidence fields, and render gates.",
+        "evidence_ids": ["e-request", "e-ffit", "e-package"],
+        "causal_controls": ["bilateral contour", "regional width and depth", "natural waist", "high hip", "upper and lower dominance"]
+      },
+      {
+        "id": "uncertainty-boundary",
+        "statement": "No profile encodes a universal numeric body threshold or population default.",
+        "evidence_ids": ["e-reliability", "e-population", "e-package"],
+        "causal_controls": ["measurement landmark", "shoulder owner", "camera viewpoint", "garment shaping", "population scope"]
+      },
+      {
+        "id": "routing-boundary",
+        "statement": "Exact contextual terms may create hard obligations while bare ambiguous labels and semantic retrieval remain non-hard.",
+        "evidence_ids": ["e-request", "e-prompt"],
+        "causal_controls": ["exact term", "adult context", "exclusion term", "BM25F lane", "embedding lane"]
+      }
+    ],
+    "flexible_dimensions": [
+      "identity",
+      "ethnicity",
+      "age within explicit adulthood",
+      "wardrobe",
+      "setting",
+      "lighting style",
+      "camera system",
+      "body attributes not explicitly requested"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-label-collapse",
+      "scale": "global",
+      "axis": "body-build and silhouette representation",
+      "source_state": "The source vocabulary contains overlapping labels whose visible owners and confusers differ.",
+      "render_state": "unavailable; this iteration evaluates registry and prompt routing rather than delivered pixels",
+      "evidence_ids": ["e-request", "e-ffit", "e-reliability"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-axis-decomposition",
+      "stage": "representation",
+      "statement": "Decomposing labels into frame, regional volume, waist transition, dominance, depth, and observability axes will reduce false synonymy and produce transferable prompt obligations.",
+      "evidence_ids": ["e-request", "e-ffit", "e-population"],
+      "falsifier": "Held-out labels still route to the same unrelated hard profile or cannot be expressed without case-specific ratios."
+    },
+    {
+      "id": "hypothesis-fail-closed-routing",
+      "stage": "prompt-interaction",
+      "statement": "Contextual exact terms plus explicit exclusions can preserve requested semantics while bare slang, homonyms, and embedding neighbors remain optional or inactive.",
+      "evidence_ids": ["e-request", "e-reliability"],
+      "falsifier": "A non-body homonym or bare ambiguous label creates a hard obligation, or an exact requested term fails to route."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "policy", "test"],
+    "general_rule": "Represent adult body labels as observable multi-axis relations, require contextual exact activation for hard obligations, keep lexical and retrieval ambiguity optional, and bind each accepted relation to capture evidence and render confounder gates.",
+    "generalization_basis": "The rule is organized by anatomical and photographic owners shared across build, regional, vertical-proportion, and nine silhouette families rather than by one motivating label.",
+    "hypothesis_ids": ["hypothesis-axis-decomposition", "hypothesis-fail-closed-routing"],
+    "changed_paths": [
+      "docs/analysis/2026-08-31-female-body-shape-visual-semantics.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/87063cb35b9135f8",
+      "tests/test_photo_body_shape_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt"]},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "holdout-bust-vs-curvy",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["regional bust projection", "whole-body curvilinear relation", "false synonym boundary"],
+        "evidence_ids": ["e-prompt"]
+      },
+      {
+        "id": "holdout-pear-vs-spoon",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["lower-body dominance", "rapid high-hip transition", "hip-dip confounder"],
+        "evidence_ids": ["e-prompt"]
+      },
+      {
+        "id": "holdout-oval-vs-diamond",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["central torso width and depth", "weak waist indentation", "two-direction taper"],
+        "evidence_ids": ["e-prompt"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The data and generated indexes are structurally valid, exact and ambiguous routing boundaries pass across unrelated build, regional, and silhouette holdouts, and semantic retrieval remains optional. Render fidelity and user aesthetic acceptance remain explicitly unscored.",
+    "evidence_ids": ["e-package", "e-prompt", "e-reliability"]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": "photo-body-shape-self-review/v1",
+  "arm_id": "arm-01",
+  "attempt": 2,
+  "pack_id": "e0d0837c0c603bd1",
+  "profile_id": "slender_linear_build",
+  "target_keyword": "slender build",
+  "reviewer": {
+    "reviewer_id": "arm-01-agent",
+    "method": "direct_pixel_inspection"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/coordinator/reference/reference-01.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "dimensions": {
+      "width": 960,
+      "height": 1280
+    },
+    "role": "facial_appearance_only"
+  },
+  "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-01/render-attempt-02.png",
+  "result_sha256": "34f4b7e8ef491fe4a5962d0711d997f0f6f3b91473c77ecff133417e706b93a9",
+  "dimensions": {
+    "width": 1023,
+    "height": 1537
+  },
+  "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-body-shape-five-arm-v1/arms/arm-01/render-attempt-02-thumb.png",
+  "thumbnail_sha256": "429dc41a97280a418a6d4db9975bef816cbe3a266f2aa49798fe5520d40904a3",
+  "thumbnail_dimensions": {
+    "width": 255,
+    "height": 384
+  },
+  "native_review_performed": true,
+  "thumbnail_review_performed": true,
+  "outcome": "rendered_and_scored",
+  "pass_fail_applicable": true,
+  "target_profile_verdict": "pass",
+  "common_gate_verdict": "fail",
+  "scene_control_verdict": "fail",
+  "technical_verdict": "fail_common_professional_action",
+  "keyword_reflection_verdict": "pass_with_clothing_confounds",
+  "gates": [
+    {
+      "id": "vo_slender_full_body_read",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail contains the adult head, torso, both arms, both legs, and both boots together with clear margins, allowing one global body-build read."
+    },
+    {
+      "id": "vo_slender_narrow_torso",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Across native and thumbnail views, the shoulders, ribcage, waist, and pelvis form a consistently narrow transverse silhouette relative to body length; the utility belt and insulated coverall add a visible but non-reversing garment confound."
+    },
+    {
+      "id": "vo_slender_narrow_limbs",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Both arms and both legs read as long, narrow volumes with coherent elbows, knees, wrists, and ankles; loose trouser folds soften the leg boundary but do not make the limbs broad or anatomically collapsed."
+    },
+    {
+      "id": "vo_slender_not_stature_or_lens_only",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The native image uses a normal-looking eye-height perspective without obvious wide-angle stretch, and the narrow read persists across torso and limb breadth rather than being supplied only by height, crop, dark clothing, or pose."
+    },
+    {
+      "id": "common_adult_age",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The face, body proportions, workwear, and professional context jointly read as an unmistakably adult woman in approximately her mid-to-late twenties."
+    },
+    {
+      "id": "common_face_appearance",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The face is unobstructed and has coherent adult eyes, nose, lips, jaw, skin texture, and hair framing, with no broken or fused facial anatomy."
+    },
+    {
+      "id": "common_anatomy",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "One head, two arms, two legs, and two gloved hands are present with plausible joint continuity; the partially occluded fingers remain compatible with the capsule and scanner contacts and no extra or fused limb is visible."
+    },
+    {
+      "id": "common_professional_action",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The scanner is aimed toward the capsule and an open frosted drawer, but the right hand rests on a bottle-like capsule standing outside the rack slot; the requested act of pressing the capsule into the storage rack is not unmistakably shown."
+    },
+    {
+      "id": "common_reference_appearance",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Direct comparison shows continuity in long dark near-center-parted wavy hair, a long oval face, almond eye shape and spacing, narrow natural jaw, straight slender nose, fuller lower lip, and light neutral skin; the render slightly enlarges the eyes and narrows the chin. This is a visual-appearance comparison only, not biometric identity verification."
+    }
+  ],
+  "supplemental_observations": [
+    {
+      "id": "common_no_readable_text_or_brand_marks",
+      "status": "fail",
+      "evidence": "The image contains readable vault signage, capsule lettering, screen text, drawer labels, and a pseudo-branded sleeve patch, contrary to the no-readable-text and no-brand-mark scene control."
+    },
+    {
+      "id": "scene_domain_coherence",
+      "status": "pass",
+      "evidence": "Cold glass walls, condensation, seed drawers, blue-green plant cultures, amber task lighting, and snowy alpine peaks form a coherent seed-bank greenhouse scene."
+    }
+  ],
+  "verdict_boundary": "All four slender-build vo_* gates pass on rendered pixels. The overall technical result fails because the exact capsule-insertion action is ambiguous; the keyword result remains a pass with insulated-clothing and belt confounds. Prompt and audit presence were not treated as pixel evidence, and user preference remains pending.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}
