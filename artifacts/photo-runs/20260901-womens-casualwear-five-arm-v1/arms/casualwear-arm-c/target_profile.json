@@ -1,0 +1,183 @@
+{
+  "id": "wrap_front_overlap_closure",
+  "category": "garment_front_closure_topology",
+  "activation": {
+    "exact_terms": [
+      "wrap-front blouse",
+      "wrap front blouse",
+      "wrap blouse",
+      "surplice blouse",
+      "wrap-front top",
+      "wrap top garment",
+      "랩 블라우스",
+      "랩 프런트 블라우스",
+      "랩 탑",
+      "서플리스 블라우스"
+    ],
+    "requires_adult_character": false,
+    "semantic_discovery_requires_component_evidence": true
+  },
+  "semantics": {
+    "definition": "A functional wrap-front upper garment formed by two separately traceable front panels crossing diagonally, with one panel continuing beneath the other and a side tie, button, or fixed seam holding the overlap. The crossing creates a coherent wrap V neckline and edge path rather than a decorative diagonal print, faux seam, or loose scarf.",
+    "paraphrase_examples": [
+      "두 앞판이 사선으로 실제 겹치고 한쪽이 아래로 이어져 옆에서 고정되는 블라우스",
+      "two traceable front edges cross into a functional side fastening and wrap V neckline",
+      "the lower panel remains visible beneath the upper panel through fold depth and edge continuity"
+    ],
+    "component_semantics": {
+      "minimum_component_groups": 5,
+      "required_group_ids": [
+        "two_traceable_front_panels",
+        "diagonal_overlap_depth",
+        "wrap_v_neckline",
+        "functional_side_fastening",
+        "false_wrap_confound_control"
+      ],
+      "groups": [
+        {
+          "id": "two_traceable_front_panels",
+          "any_terms": [
+            "two separate front-panel edges remain traceable",
+            "left and right fronts cross as distinct fabric panels",
+            "좌우 두 앞판 가장자리가 각각 추적 가능함"
+          ]
+        },
+        {
+          "id": "diagonal_overlap_depth",
+          "any_terms": [
+            "one panel visibly continues beneath the other",
+            "fold depth proves a real diagonal overlap",
+            "한 앞판이 다른 앞판 아래로 이어지는 겹침 깊이"
+          ]
+        },
+        {
+          "id": "wrap_v_neckline",
+          "any_terms": [
+            "the crossing edges form a coherent wrap V neckline",
+            "neckline and diagonal overlap share the same edge path",
+            "교차 가장자리가 하나의 랩 V 네크라인을 형성"
+          ]
+        },
+        {
+          "id": "functional_side_fastening",
+          "any_terms": [
+            "a side tie button or fixed seam holds the overlap",
+            "the fastening connects both wrap panels under tension",
+            "옆 묶음 단추 또는 고정선이 겹침을 유지"
+          ]
+        },
+        {
+          "id": "false_wrap_confound_control",
+          "any_terms": [
+            "a printed diagonal line does not substitute for panel overlap",
+            "a decorative waist tie or loose scarf cannot carry the closure",
+            "사선 프린트와 장식용 끈으로 랩 구조를 대체하지 않음"
+          ]
+        }
+      ]
+    },
+    "contrast_examples": [
+      "a blouse printed with diagonal stripes",
+      "a fixed V-neck top with one decorative side bow",
+      "a scarf draped across a normal shirt front",
+      "a faux-wrap seam with no lower panel or fastening relation"
+    ]
+  },
+  "concept_candidate": {
+    "concept_terms": [
+      "two traceable front panels",
+      "real diagonal overlap depth",
+      "lower panel beneath upper panel",
+      "coherent wrap V neckline",
+      "functional side tie button or seam",
+      "distinct from faux-wrap decoration"
+    ]
+  },
+  "runtime_expression": {
+    "default_mode": "label_plus_definition",
+    "prompt_label_terms": [
+      "functional wrap-front blouse"
+    ],
+    "forbidden_prompt_terms": [],
+    "runtime_forbidden_labels": []
+  },
+  "composition_instruction": "Frame the torso and fastening side so both front-panel edges, their diagonal overlap depth, the wrap V neckline, and the functional tie, button, or seam remain readable together. Keep material folds coherent enough to disprove a printed or decorative false wrap.",
+  "required_evidence_fields": [
+    "front_panels_phrase",
+    "overlap_depth_phrase",
+    "wrap_neckline_phrase",
+    "side_fastening_phrase",
+    "false_wrap_confound_phrase"
+  ],
+  "evidence_requirements": {
+    "front_panels_phrase": {
+      "min_content_words": 7,
+      "must_mention_any": [
+        "two separate front-panel edges remain traceable",
+        "left and right fronts cross as distinct fabric panels"
+      ]
+    },
+    "overlap_depth_phrase": {
+      "min_content_words": 7,
+      "must_mention_any": [
+        "one panel visibly continues beneath the other",
+        "fold depth proves a real diagonal overlap"
+      ]
+    },
+    "wrap_neckline_phrase": {
+      "min_content_words": 8,
+      "must_mention_any": [
+        "the crossing edges form a coherent wrap V neckline",
+        "neckline and diagonal overlap share the same edge path"
+      ]
+    },
+    "side_fastening_phrase": {
+      "min_content_words": 8,
+      "must_mention_any": [
+        "a side tie button or fixed seam holds the overlap",
+        "the fastening connects both wrap panels under tension"
+      ]
+    },
+    "false_wrap_confound_phrase": {
+      "min_content_words": 9,
+      "must_mention_any": [
+        "a printed diagonal line does not substitute for panel overlap",
+        "a decorative waist tie or loose scarf cannot carry the closure"
+      ]
+    }
+  },
+  "render_gates": [
+    {
+      "id": "vo_garment_wrap_two_front_panels",
+      "review_scale": "thumbnail",
+      "description": "Two separate crossing front panels remain readable as the garment's primary structure."
+    },
+    {
+      "id": "vo_garment_wrap_overlap_depth",
+      "review_scale": "both",
+      "description": "One panel visibly continues beneath the other with coherent fold depth."
+    },
+    {
+      "id": "vo_garment_wrap_v_neckline",
+      "review_scale": "both",
+      "description": "The same crossing edges form a coherent wrap V neckline."
+    },
+    {
+      "id": "vo_garment_wrap_functional_fastening",
+      "review_scale": "native",
+      "description": "A side tie, button, or fixed seam visibly holds the overlapping panels."
+    },
+    {
+      "id": "vo_garment_wrap_not_faux_diagonal",
+      "review_scale": "native",
+      "description": "Printed diagonals, a decorative bow, loose scarf, or faux seam do not substitute for functional overlap."
+    }
+  ],
+  "reject_substitutes": [
+    "diagonal_print_only",
+    "fixed_v_neck_with_bow",
+    "loose_scarf_drape",
+    "faux_wrap_seam",
+    "occluded_fastening_side"
+  ]
+}

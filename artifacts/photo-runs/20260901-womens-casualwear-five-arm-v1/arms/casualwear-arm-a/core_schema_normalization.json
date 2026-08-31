@@ -1,0 +1,39 @@
+{
+  "contract_version": "photo-core-schema-normalization/v1",
+  "reason": "v3_allowed_dimension_name_compatibility",
+  "semantic_change": false,
+  "source": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/authorial_core.json",
+    "file_sha256": "a6b2215f3cdbcc7fbc53f6f5f342e4c76c5a9cde259dba372704a765589f8c75",
+    "canonical_sorted_json_sha256": "785896d0a41faf9d04f94adf84551bc6a39b152418db928465c87922f3da269b"
+  },
+  "normalized": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/authorial_core_v6.json",
+    "file_sha256": "365367c6721cbff803026dd07c0832a6530dc9e9cba6109b1bfe3020972ca302",
+    "canonical_sorted_json_sha256": "b34ce782c97783525957d9a5d707127f92ec892063cb92a13f5cd40add676eb9"
+  },
+  "exact_mapping": [
+    {
+      "source_dimension": "wardrobe",
+      "normalized_dimension": "style"
+    },
+    {
+      "source_dimension": "styling_details",
+      "normalized_dimension": "style"
+    },
+    {
+      "source_dimension": "color_palette",
+      "normalized_dimension": "color"
+    }
+  ],
+  "deduplication": {
+    "dimension": "style",
+    "source_occurrences": 2,
+    "normalized_occurrences": 1
+  },
+  "verification": {
+    "all_non_open_dimension_fields_byte_semantically_identical": true,
+    "source_core_preserved_byte_for_byte": true,
+    "target_terms_added": false
+  }
+}

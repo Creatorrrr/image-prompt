@@ -1,0 +1,356 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "a495aaad2f4c85d1ed101949a806ef510b07726c",
+    "candidate_revision": "working-tree-2026-09-01-womens-casualwear"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply researched women's casualwear keywords to the visual-semantic data and candidate pack, then have five independent subagents choose distinct random complex concepts, use the supplied adult portrait as an appearance reference, generate one image each, and verify actual saved pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The user requested data and candidate-pack integration followed by five independent prompt, generation, and pixel-verification arms using the supplied image.",
+      "artifact": "current user request, chatgpt-conversation://6a953c3f-b024-83ee-b30f-e29a25c32baf, and artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/shared/request_envelope.json"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "The research converts casualwear names into category, localized part, connected topology, fastening or opening, garment-to-body landmark relation, visible surface behavior, and explicit confusion boundaries without inferring wearer traits.",
+      "artifact": "artifacts/photo-prompt-womens-casualwear-20260901/research_summary.md and four casualwear_semantics rows in docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The working tree adds 21 casualwear candidates and five hard visual profiles; dictionary metadata, generated visual and semantic indexes, eight focused tests, and 23 shared visual-obligation tests validate.",
+      "artifact": "skills/photo-prompt-image-generator/assets, tests/test_photo_womens_casualwear_visual_semantics.py, and validation output recorded in the task"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five v6 candidate packs contain their assigned candidates, activate exactly one assigned hard profile, and pass composed-prompt and runtime-request audits.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/*/candidate_pack.json and per-arm composed and runtime audits"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Five isolated subagents each made exactly one successful native image-generation call using the supplied reference, with zero retries and no paid API fallback.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/*/arm_summary.json and run_manifest.json"
+    },
+    {
+      "id": "e-button-down-render",
+      "kind": "render-observation",
+      "claim": "The saved button-down image passes all five target gates, while readable calibration numerals separately fail a non-target full-scene constraint.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/arm_summary.json"
+    },
+    {
+      "id": "e-cold-shoulder-render",
+      "kind": "render-observation",
+      "claim": "The saved cold-shoulder image passes only the substitute-rejection gate because hair hides the viewer-right cutout, bridge, edge, and sleeve attachment, leaving the paired topology unproved.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-b/arm_summary.json"
+    },
+    {
+      "id": "e-wrap-render",
+      "kind": "render-observation",
+      "claim": "The saved wrap-blouse image passes all five target gates, while the forearm and parcel separately violate an unobscured-outfit scene constraint.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-c/arm_summary.json"
+    },
+    {
+      "id": "e-jumpsuit-render",
+      "kind": "render-observation",
+      "claim": "The saved jumpsuit image passes all five connected one-piece and two-leg topology gates.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-d/arm_summary.json"
+    },
+    {
+      "id": "e-culotte-render",
+      "kind": "render-observation",
+      "claim": "The saved culotte image passes all five shared-rise, inseam, two-wide-leg, calf-hem, and substitute-rejection gates.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-e/arm_summary.json"
+    },
+    {
+      "id": "e-coordinator-review",
+      "kind": "render-observation",
+      "claim": "Independent coordinator inspection confirms four of five profiles and 21 of 25 target gates pass; user judgment remains pending.",
+      "artifact": "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/shared/coordinator_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A casualwear keyword survives in a complex saved image as a jointly visible category, local parts, connected topology, fastening or opening mechanism, landmark relation, and substitute boundary rather than as a label or isolated familiar cue.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "connected-casualwear-system",
+        "statement": "Each hard profile exposes five component groups, five prompt evidence fields, five render gates, and explicit substitute rejection.",
+        "evidence_ids": [
+          "e-research",
+          "e-package",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "category",
+          "localized garment parts",
+          "part-to-part connection",
+          "fastening or bifurcation",
+          "negative substitute"
+        ]
+      },
+      {
+        "id": "pixel-visibility-boundary",
+        "statement": "Every required gate must be jointly judgeable in the same saved image; prompt presence, hidden parts, and one-sided evidence cannot pass.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-cold-shoulder-render",
+          "e-coordinator-review"
+        ],
+        "causal_controls": [
+          "native-scale inspection",
+          "thumbnail inspection",
+          "occlusion",
+          "bilateral visibility",
+          "strict all-gates rule"
+        ]
+      },
+      {
+        "id": "reference-safety-boundary",
+        "statement": "The supplied adult portrait guides facial and general appearance continuity only and does not prove biometric identity, source clothing, body traits, health, or value.",
+        "evidence_ids": [
+          "e-request",
+          "e-button-down-render",
+          "e-cold-shoulder-render",
+          "e-wrap-render",
+          "e-jumpsuit-render",
+          "e-culotte-render"
+        ],
+        "causal_controls": [
+          "adult presentation",
+          "general appearance continuity",
+          "garment morphology",
+          "non-biometric comparison",
+          "user acceptance"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "random complex scene and event",
+      "camera viewpoint and crop",
+      "lighting and weather",
+      "fabric color consistent with the assigned construction",
+      "non-conflicting props",
+      "adult-subject styling that preserves target-garment visibility"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-core-schema-names",
+      "scale": "global",
+      "axis": "authorial-core open-dimension schema",
+      "source_state": "Five frozen Phase A cores used wardrobe, styling_details, or color_palette as open-dimension names.",
+      "render_state": "The v6 generator accepts style and color, so byte-preserved originals required documented compatibility copies with only those names mapped and no semantic change.",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    {
+      "id": "mismatch-cold-shoulder-occlusion",
+      "scale": "regional",
+      "axis": "bilateral shoulder-window topology",
+      "source_state": "Both bounded shoulder cutouts, both upper bridges, both finished edges, and both below-cutout sleeve attachments must remain visible together.",
+      "render_state": "Long hair completely hides the viewer-right shoulder structure, so four of five gates fail despite a valid viewer-left cutout.",
+      "evidence_ids": [
+        "e-cold-shoulder-render",
+        "e-coordinator-review"
+      ]
+    },
+    {
+      "id": "mismatch-secondary-scene-constraints",
+      "scale": "local",
+      "axis": "non-target scene fidelity",
+      "source_state": "Arm A requested non-legible calibration marks and arm C requested an unobscured blouse front.",
+      "render_state": "Arm A contains readable numerals and arm C places the forearm and parcel over part of the blouse, although both target garment profiles pass.",
+      "evidence_ids": [
+        "e-button-down-render",
+        "e-wrap-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-componentized-casualwear-profiles",
+      "stage": "representation",
+      "statement": "Encoding casualwear as localized parts plus connected topology and explicit substitutes transfers across unrelated complex scenes better than a garment label alone.",
+      "evidence_ids": [
+        "e-research",
+        "e-button-down-render",
+        "e-wrap-render",
+        "e-jumpsuit-render",
+        "e-culotte-render"
+      ],
+      "falsifier": "Held-out casualwear images repeatedly retain the label cue but lose connected parts even when every required region is deliberately visible and unobstructed."
+    },
+    {
+      "id": "hypothesis-visibility-dominates-bilateral-gates",
+      "stage": "prompt-interaction",
+      "statement": "Hair, props, and action can erase proof of bilateral garment topology even when the composed prompt contains the correct definition.",
+      "evidence_ids": [
+        "e-cold-shoulder-render",
+        "e-wrap-render"
+      ],
+      "falsifier": "Cold-shoulder gates fail equally often after hair is explicitly routed behind both shoulders and props are kept outside the garment silhouette."
+    },
+    {
+      "id": "hypothesis-target-and-scene-gates-must-stay-separate",
+      "stage": "observation",
+      "statement": "A garment profile can be technically readable while an unrelated scene constraint fails, so target fidelity and full-render fidelity require separate verdicts.",
+      "evidence_ids": [
+        "e-button-down-render",
+        "e-wrap-render",
+        "e-coordinator-review"
+      ],
+      "falsifier": "Across future runs, every target-garment pass always coincides with every secondary scene constraint pass."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent women's casualwear with observable category, local parts, part connections, fastening or bifurcation, body-landmark relation, visible material behavior, and explicit confounders; activate hard duties only from exact source-grounded terms and require all saved-pixel gates to pass together.",
+    "generalization_basis": "The 21 candidates span wardrobe combinations, garment details, silhouette and proportion, and surface materials; the five hard profiles exercise collar fastening, bilateral cutouts, wrap overlap, one-piece leg bifurcation, and cropped wide-leg topology in unrelated scenes.",
+    "hypothesis_ids": [
+      "hypothesis-componentized-casualwear-profiles",
+      "hypothesis-visibility-dominates-bilateral-gates",
+      "hypothesis-target-and-scene-gates-must-stay-separate"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/c9876d402991549d",
+      "tests/fixtures/photo_prompt/womens_casualwear_pixel_test_cases_v1.jsonl",
+      "tests/test_photo_womens_casualwear_visual_semantics.py",
+      "artifacts/photo-prompt-womens-casualwear-20260901",
+      "artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-button-down-render",
+        "e-cold-shoulder-render",
+        "e-wrap-render",
+        "e-jumpsuit-render",
+        "e-culotte-render",
+        "e-coordinator-review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-button-down",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "front placket",
+          "point collar",
+          "two collar-point fastenings",
+          "button-down versus button-up boundary"
+        ],
+        "evidence_ids": [
+          "e-button-down-render"
+        ]
+      },
+      {
+        "id": "heldout-cold-shoulder",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "continuous neckline",
+          "paired bounded cutouts",
+          "below-cutout sleeve attachment",
+          "finished bridges"
+        ],
+        "evidence_ids": [
+          "e-cold-shoulder-render"
+        ]
+      },
+      {
+        "id": "heldout-wrap-blouse",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "two front panels",
+          "overlap depth",
+          "wrap V-neckline",
+          "functional side fastening"
+        ],
+        "evidence_ids": [
+          "e-wrap-render"
+        ]
+      },
+      {
+        "id": "heldout-jumpsuit",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "upper-to-waist continuity",
+          "waist-to-crotch continuity",
+          "two-leg bifurcation",
+          "full-length separate hems"
+        ],
+        "evidence_ids": [
+          "e-jumpsuit-render"
+        ]
+      },
+      {
+        "id": "heldout-culotte",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "shared waistband and rise",
+          "crotch and inseam",
+          "two wide legs",
+          "two calf-level hems"
+        ],
+        "evidence_ids": [
+          "e-culotte-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The researched data, five hard profiles, candidate packs, indexes, tests, and all five prompt and runtime audits pass. Four profiles and 21 of 25 gates also pass in saved pixels. However, the cold-shoulder image leaves one complete shoulder topology hidden by hair, so strict render-fidelity promotion is not justified; two passing target profiles also expose secondary scene-constraint failures. User aesthetic acceptance remains unscored.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-cold-shoulder-render",
+      "e-coordinator-review"
+    ]
+  }
+}

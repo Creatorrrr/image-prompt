@@ -1,0 +1,82 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Build one independently randomized, complex photorealistic test concept for a later image render, using the attached portrait only for facial and general appearance continuity while reserving wardrobe specifics for the post-core test.",
+  "subject": "One unmistakably adult woman with long dark softly waved hair, warm brown eyes, and calm poised facial cues carried from the supplied portrait as general appearance reference only, without a biometric identity claim.",
+  "setting": "The rain-slick concourse of a restored art-deco ferry terminal at night, beneath a luminous brass departure clock and beside a geometric glass parcel window.",
+  "event": "She extends a rain-speckled, wax-sealed archival parcel low and outward toward a dispatch clerk's gloved hand entering from a side parcel window while a delayed-ferry notice glows behind her.",
+  "visual_priorities": [
+    "The complete outfit topology, neckline, both shoulders and sleeves, waist and closure or crotch and inseam region, legs, and hems must remain fully visible and readable in one vertical full-body frame.",
+    "The parcel handoff must read clearly at the woman's side, spatially separated from her torso, waist, legs, and hems, while the rainy restored art-deco terminal remains unmistakable.",
+    "Use the supplied portrait only for facial and general appearance continuity, without making a biometric identity claim."
+  ],
+  "baseline_prompt_en": "Create a vertical photorealistic full-body editorial photograph inside a restored art-deco ferry terminal just after a hard rain. One unmistakably adult woman, carrying only facial and general appearance continuity from the supplied portrait—long dark softly waved hair, warm brown eyes, and a calm composed presence—stands beneath an illuminated brass departure clock. She is caught mid-handoff, extending a rain-speckled, wax-sealed archival parcel low and outward toward a dispatch clerk's gloved hand entering from a side parcel window; the exchange remains clearly visible without crossing her body. A delayed-ferry notice, wet terrazzo reflections, geometric glass, and an opened manifest on a narrow brass shelf make the moment feel urgent yet plausible. Frame her head to toe, upright and large in the vertical frame, with natural anatomy and grounded feet. The complete outfit topology, neckline, both shoulders and sleeves, waist and closure or crotch and inseam region, legs, and hems must remain fully visible and readable in one vertical full-body frame. Keep the parcel and architecture spatially separated from those outfit regions.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex image test concept using the attached image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "An independently authored, complex photorealistic render-test scene that uses the supplied portrait only for facial and general appearance continuity; the assigned lane is a rainy restored art-deco ferry terminal parcel handoff.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a restored art-deco ferry terminal just after a hard rain"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One unmistakably adult woman, carrying only facial and general appearance continuity from the supplied portrait"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "extending a rain-speckled, wax-sealed archival parcel low and outward toward a dispatch clerk's gloved hand"
+      },
+      {
+        "anchor_id": "full_body_readability",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "framing",
+        "prompt_evidence": "Frame her head to toe, upright and large in the vertical frame"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "framing"
+    ],
+    "open_dimensions": [
+      "style",
+      "lighting",
+      "camera",
+      "color"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic narrative fashion test",
+    "family": "rainy art-deco transit noir with documentary garment clarity",
+    "evidence": [
+      "wet terrazzo reflections beneath restored brass geometry",
+      "a luminous departure clock and geometric glass parcel window",
+      "a spatially clear low side handoff in a vertical full-body frame"
+    ]
+  },
+  "variation_key": "casualwear-arm-c-seed-1667872007"
+}

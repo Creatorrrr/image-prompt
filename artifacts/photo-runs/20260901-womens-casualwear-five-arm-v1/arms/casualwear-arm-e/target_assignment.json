@@ -1,0 +1,261 @@
+{
+  "contract_version": "photo-five-arm-target-assignment/v1",
+  "arm_id": "casualwear-arm-e",
+  "source_authorial_core_sha256": "38f663a58453e401d664e6e1ddaaa514d7234c9b3611929ca373ba41d6625449",
+  "normalized_authorial_core_sha256": "d114f45234fe26d0772e91fbb5f90aca386ffbdc4ccd65cbf6a7e5e29c5056ed",
+  "pack_authorial_core_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-e/authorial_core_v6.json",
+  "keyword_ko": "큐롯 팬츠",
+  "profile_id": "culotte_cropped_wide_leg_topology",
+  "fixture_source": {
+    "path": "/Users/chasoik/Projects/image-prompt/tests/fixtures/photo_prompt/womens_casualwear_pixel_test_cases_v1.jsonl",
+    "file_sha256": "d43998f6b5deeb81c08913dd5a6bc33e342e744e78d2a7d740422e796b9af56f",
+    "row_number": 5,
+    "row_raw_sha256": "c2c3b905b5592ec07982fe3774582e6d0a5f10aa6a0677f324b69b0e87732235",
+    "row_canonical_sha256": "0a0050b49c14718f012fae056021e23efee69faf89d950de233debfc512ffdc2"
+  },
+  "fixture_row": {
+    "schema_version": "photo-womens-casualwear-semantic-pixel-case/v1",
+    "arm_id": "casualwear-arm-e",
+    "keyword_ko": "큐롯 팬츠",
+    "profile_id": "culotte_cropped_wide_leg_topology",
+    "activation_text": "calf-length culotte pants",
+    "visual_scale": "cropped_wide_leg_trouser_topology_and_complete_outfit",
+    "target_region": "full_body_waist_rise_crotch_inseam_and_two_calf_hems",
+    "reference": {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "appearance_reference",
+      "boundary": "facial and general appearance continuity only; not biometric identity verification; source garment is not test evidence"
+    },
+    "randomized_complex_concept_required": true,
+    "required_review_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "required_gate_ids": [
+      "vo_garment_culotte_waistband_rise",
+      "vo_garment_culotte_crotch_inseam",
+      "vo_garment_culotte_two_wide_legs",
+      "vo_garment_culotte_two_calf_hems",
+      "vo_garment_culotte_not_skirt_or_palazzo"
+    ],
+    "observable_success_signals": [
+      "shared waistband and trouser rise",
+      "visible crotch or inseam",
+      "two independently readable wide trouser legs",
+      "two separate hems end around the calves"
+    ],
+    "reject_substitutes": [
+      "midi_skirt_panel",
+      "pleat_shadow_as_inseam",
+      "full_length_palazzo",
+      "closed_pose_hiding_leg_split",
+      "skort_without_culotte_legs"
+    ],
+    "verdict_rule": {
+      "unit": "one_saved_image",
+      "pass": "all_required_gates_pass",
+      "partial_or_missing": "fail",
+      "prompt_presence_only": "insufficient",
+      "missing_or_blocked_render": "unscored"
+    }
+  },
+  "profile_source": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "registry_file_sha256": "8d2f84911cda79d2e0fc8985ab75c229338f23842d4796d1c3e28ce13338bc0e",
+    "profile_canonical_sha256": "1afa40b0c7c748ab30e3093644251cc54c6a4df83dddc42d267dc6ef942dc16c"
+  },
+  "profile": {
+    "id": "culotte_cropped_wide_leg_topology",
+    "category": "garment_trouser_leg_topology",
+    "activation": {
+      "exact_terms": [
+        "culotte pants",
+        "culotte trousers",
+        "culottes",
+        "wide-leg culottes",
+        "gaucho pants",
+        "gaucho trousers",
+        "큐롯 팬츠",
+        "큐롯",
+        "와이드 큐롯",
+        "가우초 팬츠"
+      ],
+      "requires_adult_character": false,
+      "semantic_discovery_requires_component_evidence": true
+    },
+    "semantics": {
+      "definition": "A cropped trouser topology with one waistband and a real crotch or center rise that separates into two independently moving, wide leg volumes ending around the calf. The inseam, separate hem openings, and stride evidence distinguish culottes or gaucho trousers from a midi skirt, while the cropped length distinguishes them from full-length palazzo trousers.",
+      "paraphrase_examples": [
+        "허리밴드 아래 실제 가랑이와 인심이 있고 두 넓은 바지통이 종아리에서 따로 끝나는 하의",
+        "two calf-length wide legs separate clearly during a natural stride",
+        "the center rise and two hem openings remain readable despite a skirt-like standing silhouette"
+      ],
+      "component_semantics": {
+        "minimum_component_groups": 5,
+        "required_group_ids": [
+          "shared_waistband_and_rise",
+          "visible_crotch_or_inseam",
+          "two_wide_leg_volumes",
+          "cropped_calf_hems",
+          "skirt_palazzo_confound_control"
+        ],
+        "groups": [
+          {
+            "id": "shared_waistband_and_rise",
+            "any_terms": [
+              "one waistband feeds a central trouser rise",
+              "the waist construction continues into a crotch seam",
+              "하나의 허리밴드에서 중앙 바지 밑위가 이어짐"
+            ]
+          },
+          {
+            "id": "visible_crotch_or_inseam",
+            "any_terms": [
+              "a visible crotch or inseam divides the lower garment",
+              "center separation remains traceable between the legs",
+              "가랑이 또는 인심이 두 바지통을 분리함"
+            ]
+          },
+          {
+            "id": "two_wide_leg_volumes",
+            "any_terms": [
+              "two wide legs move independently in the stride",
+              "left and right leg volumes have separate outer and inner edges",
+              "좌우 넓은 바지통이 독립적으로 움직임"
+            ]
+          },
+          {
+            "id": "cropped_calf_hems",
+            "any_terms": [
+              "two separate hems end around the calves",
+              "the wide legs stop clearly above the ankles",
+              "두 개의 별도 밑단이 종아리 부근에서 끝남"
+            ]
+          },
+          {
+            "id": "skirt_palazzo_confound_control",
+            "any_terms": [
+              "a continuous midi-skirt panel does not substitute for two legs",
+              "full-length palazzo hems cannot substitute for the cropped variant",
+              "미디 스커트와 풀렝스 팔라초를 대체물로 인정하지 않음"
+            ]
+          }
+        ]
+      },
+      "contrast_examples": [
+        "one continuous midi-skirt panel",
+        "a pleated skirt whose folds resemble an inseam",
+        "full-length palazzo trousers touching the shoes",
+        "a frontal closed stance hiding all center separation"
+      ]
+    },
+    "concept_candidate": {
+      "concept_terms": [
+        "shared waistband and central rise",
+        "visible crotch or inseam",
+        "two independently moving wide legs",
+        "two calf-length hem openings",
+        "natural stride separation",
+        "distinct from midi skirt and palazzo trousers"
+      ]
+    },
+    "runtime_expression": {
+      "default_mode": "label_plus_definition",
+      "prompt_label_terms": [
+        "cropped wide-leg culottes"
+      ],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "composition_instruction": "Keep the waistband, center rise, crotch or inseam, both wide leg volumes, and both calf-length hems visible in a full-body or lower-body-readable frame. Use a natural stride, step, or slight leg separation to reveal trouser bifurcation without turning the pose into the concept.",
+    "required_evidence_fields": [
+      "waistband_rise_phrase",
+      "crotch_inseam_phrase",
+      "two_wide_legs_phrase",
+      "calf_hems_phrase",
+      "skirt_palazzo_confound_phrase"
+    ],
+    "evidence_requirements": {
+      "waistband_rise_phrase": {
+        "min_content_words": 7,
+        "must_mention_any": [
+          "one waistband feeds a central trouser rise",
+          "the waist construction continues into a crotch seam"
+        ]
+      },
+      "crotch_inseam_phrase": {
+        "min_content_words": 8,
+        "must_mention_any": [
+          "a visible crotch or inseam divides the lower garment",
+          "center separation remains traceable between the legs"
+        ]
+      },
+      "two_wide_legs_phrase": {
+        "min_content_words": 8,
+        "must_mention_any": [
+          "two wide legs move independently in the stride",
+          "left and right leg volumes have separate outer and inner edges"
+        ]
+      },
+      "calf_hems_phrase": {
+        "min_content_words": 7,
+        "must_mention_any": [
+          "two separate hems end around the calves",
+          "the wide legs stop clearly above the ankles"
+        ]
+      },
+      "skirt_palazzo_confound_phrase": {
+        "min_content_words": 10,
+        "must_mention_any": [
+          "a continuous midi-skirt panel does not substitute for two legs",
+          "full-length palazzo hems cannot substitute for the cropped variant"
+        ]
+      }
+    },
+    "render_gates": [
+      {
+        "id": "vo_garment_culotte_waistband_rise",
+        "review_scale": "thumbnail",
+        "description": "One waistband and a central trouser rise establish a lower-garment waist structure."
+      },
+      {
+        "id": "vo_garment_culotte_crotch_inseam",
+        "review_scale": "both",
+        "description": "A visible crotch, center separation, or inseam divides the garment into two legs."
+      },
+      {
+        "id": "vo_garment_culotte_two_wide_legs",
+        "review_scale": "both",
+        "description": "Two wide leg volumes have separately traceable inner and outer edges and move independently."
+      },
+      {
+        "id": "vo_garment_culotte_two_calf_hems",
+        "review_scale": "native",
+        "description": "Two separate wide hems end around the calves or clearly above the ankles."
+      },
+      {
+        "id": "vo_garment_culotte_not_skirt_or_palazzo",
+        "review_scale": "native",
+        "description": "A midi skirt, pleat-shadow pseudo-inseam, full-length palazzo trousers, or closed stance hiding division does not substitute."
+      }
+    ],
+    "reject_substitutes": [
+      "midi_skirt_panel",
+      "pleat_shadow_pseudo_inseam",
+      "full_length_palazzo_trousers",
+      "closed_stance_hiding_bifurcation",
+      "one_continuous_lower_volume"
+    ]
+  },
+  "index_verification": {
+    "visual_profile_index": "ok",
+    "semantic_index": "ok",
+    "semantic_dictionary_hash": "c9876d402991549daa9af26af05e407f205be71457b74428a7b29812dd2a116f",
+    "semantic_policy_hash": "e875c52bb3ad35e7",
+    "semantic_text_recipe": "semantic-text-v4",
+    "embedding_model": "gemini-embedding-2",
+    "embedding_dimensions": 768
+  },
+  "status": "target_assignment_frozen"
+}

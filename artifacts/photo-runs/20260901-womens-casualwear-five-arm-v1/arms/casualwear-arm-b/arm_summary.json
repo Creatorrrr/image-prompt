@@ -1,0 +1,75 @@
+{
+  "schema_version": "photo-five-arm-summary/v1",
+  "arm_id": "casualwear-arm-b",
+  "profile_id": "cold_shoulder_cutout_topology",
+  "keyword_ko": "콜드숄더 탑",
+  "random_seed": 620747397,
+  "concept": "A solitary adult seed-bank auditor catches a serial mismatch by aligning a translucent accession packet with a clerestory sunbeam inside a dust-filled brutalist vault.",
+  "pack": {
+    "path": "candidate_pack.json",
+    "sha256": "bee675257aece2be09520ed6bd0953bc09c13d530c078a5103f288a9d6df87c7",
+    "pack_id": "c2f8166365aef902",
+    "version": "v6"
+  },
+  "prompt": {
+    "path": "composed_prompt.json",
+    "sha256": "46fba75c050a8b77b0eab8d279bc4480da41af1d88fbf49ee9d872a51d53baa4",
+    "word_count": 303,
+    "audit_status": "pass",
+    "runtime_prompt_id": "ef79bfdfca41fc95"
+  },
+  "render": {
+    "tool": "image_gen",
+    "native_call_count": 1,
+    "retry_count": 0,
+    "native_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-b/render_native.png",
+    "native_sha256": "88b7c5c73c7ab1cc691d0b0c0ae7cb890693280582de05fb61e2a156c241734b",
+    "native_dimensions": [
+      1024,
+      1536
+    ],
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-b/render_thumbnail_512.png",
+    "thumbnail_sha256": "84ccf4f96f34225bac1c0bc12b987fb453cc82a8a9ee623f9cf03bbf2a4ecdf6",
+    "thumbnail_dimensions": [
+      341,
+      512
+    ],
+    "reference_role": "appearance_reference",
+    "reference_boundary": "Facial and general appearance continuity only; no biometric identity verification claim."
+  },
+  "gate_verdicts": [
+    {
+      "gate_id": "vo_garment_cold_shoulder_continuous_neckline",
+      "status": "fail",
+      "reason": "Hair hides the viewer-right shoulder window, so neckline continuation above both openings is not jointly inspectable."
+    },
+    {
+      "gate_id": "vo_garment_cold_shoulder_paired_cutouts",
+      "status": "fail",
+      "reason": "Only the viewer-left bounded shoulder opening is visible at thumbnail and native scales."
+    },
+    {
+      "gate_id": "vo_garment_cold_shoulder_attached_sleeves",
+      "status": "fail",
+      "reason": "Only one visible cutout-to-sleeve attachment can be verified; the second relation is hidden by hair."
+    },
+    {
+      "gate_id": "vo_garment_cold_shoulder_finished_edges",
+      "status": "fail",
+      "reason": "The viewer-left cutout seam is finished, but the second cutout edge and bridge are not visible."
+    },
+    {
+      "gate_id": "vo_garment_cold_shoulder_not_off_shoulder",
+      "status": "pass",
+      "reason": "The high round neckline, two long sleeves, and clean visible cutout avoid the listed off-shoulder, sleeveless, one-shoulder-neckline, and torn-hole substitutes."
+    }
+  ],
+  "additional_render_issues": [
+    "The accession packet overlaps the front torso and waistband rather than remaining fully lateral."
+  ],
+  "strict_verdict": "fail",
+  "technical_qualified": false,
+  "user_judgment": "pending",
+  "ledger_run_id": "89a4efa6032f1385",
+  "status": "complete_strict_fail_user_judgment_pending"
+}

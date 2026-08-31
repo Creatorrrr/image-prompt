@@ -1,0 +1,73 @@
+{
+  "schema_version": "photo-five-arm-target-assignment/v1",
+  "status": "target_assignment_frozen",
+  "arm_id": "casualwear-arm-a",
+  "frozen_authorial_core": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/authorial_core.json",
+    "file_sha256": "a6b2215f3cdbcc7fbc53f6f5f342e4c76c5a9cde259dba372704a765589f8c75",
+    "mutation_allowed": false
+  },
+  "normalized_authorial_core": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/authorial_core_v6.json",
+    "file_sha256": "365367c6721cbff803026dd07c0832a6530dc9e9cba6109b1bfe3020972ca302",
+    "canonical_sorted_json_sha256": "b34ce782c97783525957d9a5d707127f92ec892063cb92a13f5cd40add676eb9",
+    "pack_binding": true,
+    "semantic_change": false,
+    "normalization_record": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-womens-casualwear-five-arm-v1/arms/casualwear-arm-a/core_schema_normalization.json"
+  },
+  "target": {
+    "profile_id": "button_down_collar_fastening",
+    "keyword_ko": "버튼다운 셔츠",
+    "activation_text": "button-down collar shirt",
+    "visual_scale": "collar_closure_and_complete_outfit",
+    "target_region": "full_body_neck_point_collar_and_front_placket"
+  },
+  "source_fixture": {
+    "path": "/Users/chasoik/Projects/image-prompt/tests/fixtures/photo_prompt/womens_casualwear_pixel_test_cases_v1.jsonl",
+    "file_sha256": "d43998f6b5deeb81c08913dd5a6bc33e342e744e78d2a7d740422e796b9af56f",
+    "assigned_row_canonical_sha256": "4b655901b0fc7f3fd2055c943ae1b70530546d8ee7cc8f03b20b06588bce057f"
+  },
+  "source_profile": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "registry_file_sha256": "8d2f84911cda79d2e0fc8985ab75c229338f23842d4796d1c3e28ce13338bc0e",
+    "assigned_profile_canonical_sha256": "fa181c95b3de7281f986788aa69bd595e550154917bb0c5c78fa4bb3b934e5d0"
+  },
+  "production_visual_index": {
+    "path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+    "file_sha256": "5e4eac68cab3130488bc4ca62fc07d6176060bab319f5c77f2e0a78aa3e2d56f",
+    "verification": "pass",
+    "verification_detail": "visual profile index ok: 110 profiles, 654 exact terms"
+  },
+  "required_evidence_fields": [
+    "front_placket_phrase",
+    "point_collar_phrase",
+    "collar_buttons_phrase",
+    "collar_attachment_phrase",
+    "button_up_confound_phrase"
+  ],
+  "required_gate_ids": [
+    "vo_garment_button_down_front_placket",
+    "vo_garment_button_down_point_collar",
+    "vo_garment_button_down_two_point_buttons",
+    "vo_garment_button_down_attachment",
+    "vo_garment_button_down_not_button_up_only"
+  ],
+  "required_review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "reject_substitutes": [
+    "generic_button_up_shirt",
+    "polo_neck_placket",
+    "decorative_collar_studs",
+    "one_hidden_collar_point",
+    "collar_like_print_or_trim"
+  ],
+  "verdict_rule": {
+    "unit": "one_saved_image",
+    "pass": "all_required_gates_pass",
+    "partial_or_missing": "fail",
+    "prompt_presence_only": "insufficient",
+    "missing_or_blocked_render": "unscored"
+  }
+}
