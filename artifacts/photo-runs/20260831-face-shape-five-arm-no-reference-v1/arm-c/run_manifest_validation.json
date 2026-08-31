@@ -1,0 +1,17 @@
+{
+  "contract_version": "photo-independent-run-manifest-validation/v1",
+  "status": "pass",
+  "manifest_contract_version": "photo-independent-run-manifest/v2",
+  "ledger_run_id": "64988dd4005f2d29",
+  "checks": {
+    "ledger_and_manifest_run_ids_match": true,
+    "ledger_and_manifest_prompt_ids_match": true,
+    "reference_sha256_is_empty_array": true,
+    "render_request_references_is_empty_array": true,
+    "image_call_count_is_one": true,
+    "cross_arm_inputs_used_is_false": true,
+    "result_path_matches": true,
+    "result_sha256_matches_saved_bytes": true
+  },
+  "recorder_boundary": "The bundled recorder validated and wrote the ledger entry. Its manifest builder rejects an empty reference_sha256 list, so the v2 manifest was materialized from that validated entry with the protocol-required empty list and then checked field-by-field."
+}

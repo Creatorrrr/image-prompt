@@ -1,0 +1,110 @@
+{
+  "schema_version": "photo-reference-ablation-comparison/v1",
+  "prior_run": "artifacts/photo-runs/20260831-face-shape-five-arm-v1",
+  "no_reference_run": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1",
+  "controlled": [
+    "same five subagents",
+    "same face-shape profile per arm",
+    "same domain, candidate-selection seed, and complex scene concept",
+    "candidate-pack v6",
+    "one native image call per arm",
+    "same five-gate strict review rule"
+  ],
+  "changed": [
+    "no image supplied to native generation",
+    "runtime reference arrays and hashes are empty",
+    "appearance-continuity clauses are absent from the composed and runtime prompts",
+    "new lineage-bound cores and packs were generated to prevent reference semantics remaining inside the pack"
+  ],
+  "aggregate": {
+    "prior_reference_run": {
+      "images_returned": 4,
+      "pixel_evaluable_arms": 4,
+      "fully_passing_pixel_arms": 2,
+      "strictly_failing_pixel_arms": 2,
+      "unscored_pixel_arms": 1,
+      "passed_hard_gates": 17,
+      "evaluated_hard_gates": 20
+    },
+    "no_reference_run": {
+      "images_returned": 5,
+      "pixel_evaluable_arms": 5,
+      "fully_passing_pixel_arms": 4,
+      "strictly_failing_pixel_arms": 1,
+      "unscored_pixel_arms": 0,
+      "passed_hard_gates": 23,
+      "evaluated_hard_gates": 25
+    },
+    "common_evaluable_arms_a_b_d_e": {
+      "prior_fully_passing_arms": 2,
+      "no_reference_fully_passing_arms": 3,
+      "prior_passed_gates": 17,
+      "no_reference_passed_gates": 18,
+      "evaluated_gates_each_condition": 20
+    }
+  },
+  "arm_deltas": [
+    {
+      "arm_id": "arm-a",
+      "profile_id": "oval_face_contour_relation",
+      "prior": "3/5 fail",
+      "no_reference": "5/5 pass",
+      "delta": "+2 gates and strict status changes to pass",
+      "observed_change": "The new render pulls hair completely away from the face, resolving perimeter and confound failures."
+    },
+    {
+      "arm_id": "arm-b",
+      "profile_id": "round_compact_face_relation",
+      "prior": "5/5 pass",
+      "no_reference": "5/5 pass",
+      "delta": "stable pass",
+      "observed_change": "Compact near-equal length-width, broad cheeks, and curved short lower contour survive without image conditioning."
+    },
+    {
+      "arm_id": "arm-c",
+      "profile_id": "diamond_zygomatic_dominant_relation",
+      "prior": "unscored transport error",
+      "no_reference": "5/5 pass",
+      "delta": "newly evaluable, not a matched pixel delta",
+      "observed_change": "The delivered no-reference render shows clear zygomatic width ownership and two-direction taper."
+    },
+    {
+      "arm_id": "arm-d",
+      "profile_id": "upper_face_to_chin_taper_relation",
+      "prior": "4/5 fail",
+      "no_reference": "3/5 fail",
+      "delta": "-1 gate while strict failure persists",
+      "observed_change": "Temple hair occlusion persists, and the new lower face ends in a broad rounded chin instead of a narrow continuous taper."
+    },
+    {
+      "arm_id": "arm-e",
+      "profile_id": "cjk_seed_face_relation",
+      "prior": "5/5 pass",
+      "no_reference": "5/5 pass",
+      "delta": "stable pass",
+      "observed_change": "The definition-only elongated upper-middle, cheek width, and stronger lower taper remain legible without the culture-scoped runtime label or image conditioning."
+    }
+  ],
+  "bounded_conclusion": {
+    "supported": [
+      "All five new packs and runtime requests expressed the target face-shape contracts without an image input.",
+      "Four of five one-shot images passed every target gate; the tested keywords therefore can actuate visibly without reference conditioning under these conditions.",
+      "Round-compact and definition-only seed-face relations remained full passes in both conditions.",
+      "The remaining upper-face-to-chin failure is a render-compliance issue, not a missing prompt/runtime contract."
+    ],
+    "not_supported": [
+      "Removing the reference caused the aggregate improvement.",
+      "No-reference generation is universally better than reference-informed generation.",
+      "Any same-person, identity, resemblance, or biometric conclusion.",
+      "User aesthetic acceptance, which remains pending."
+    ],
+    "confounders": [
+      "one native render per arm",
+      "no exposed matched render seed",
+      "lineage-equivalent rather than byte-identical prompts",
+      "output aspect ratio and face occupancy were not fixed; A, B, and D changed from portrait to landscape",
+      "subject appearance intentionally became unconstrained",
+      "the prior arm-c transport error was a process outcome rather than pixel evidence"
+    ]
+  }
+}

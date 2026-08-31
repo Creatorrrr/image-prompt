@@ -1,0 +1,144 @@
+{
+  "contract_version": "photo-arm-summary/v1",
+  "arm_id": "arm-e",
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "other_arm_outputs_read": false,
+    "worktree_id": "image-prompt-main-worktree",
+    "source_ref": "81eabea05c3b1238bec467bda21ccd8a494fe202"
+  },
+  "frozen_inputs": {
+    "request_envelope_path": "request_envelope.json",
+    "request_envelope_sha256": "50ed50233e93f43c8ad308235a70afbb091b383531d7553e05af78f84370e3c0",
+    "request_envelope_hash_verified": true,
+    "reference_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-face-shape-semantics-20260831/reference/1-사진-1.jpg",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "reference_hash_verified": true,
+    "reference_role": "appearance_reference",
+    "reference_boundary": "Broadly visible adult appearance only; no biometric or same-person conclusion. The experimental facial-outline target takes precedence over the reference silhouette.",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "skill_hash_verified": true,
+    "seed": 950317,
+    "randomization_domain": "dawn_rooftop_analog_astronomy_cartography",
+    "profile_id": "cjk_seed_face_relation",
+    "candidate_pack_version": "v6"
+  },
+  "concept_selection": {
+    "candidate_count": 4,
+    "rule": "selected_index_zero_based = seed % candidate_count",
+    "calculation": "950317 % 4 = 1",
+    "selected_candidate_id": "e-02",
+    "selected_title": "Municipal celestial survey",
+    "selected_concept": "An adult survey astronomer on a municipal observatory rooftop at dawn draws an azimuth line from an analog transit telescope across a transparent city-map overlay."
+  },
+  "authorial_core": {
+    "file_sha256": "458e18c67fd3551da3ef3bf39b26f796738f8f28afd8a2d508b28c36467ebce9",
+    "canonical_sha256": "aacc97199a25d5782ee8bb349d0457d7862c6d60d0f0e5ad65f5025b6a54d605",
+    "intent_lock_sha256": "e5c21468fc71fb5ea7645ee85c11c5e7199e93bb247287e7be52a04c9d7b0678",
+    "source_request_byte_equal_envelope_request_text": true,
+    "baseline_word_count": 171,
+    "final_validation": "pass",
+    "fail_closed_correction": "Before any pack was emitted, an ungrounded core runtime_forbidden_labels value was removed after v6 validation rejected it; the definition-only profile remains the runtime-label authority."
+  },
+  "prompt": {
+    "pack_id": "172b9cdfbb378489",
+    "prompt_id": "d50589ddf7e21e7d",
+    "runtime_prompt_id": "fb948d489da47965",
+    "word_count": 179,
+    "prompt_en": "Create a documentary photograph of an unmistakably adult woman, a survey astronomer on a municipal observatory rooftop at dawn. In a chest-up, nearly frontal portrait, she draws an azimuth line from a brass transit telescope toward the bright morning star while steadying a transparent city-map overlay across a weathered atlas; a mechanical chronometer, compass, penciled coordinate grid, and wind-lifted survey sheets keep the task readable. Her expression is calm and neutral, all hair is pinned away from both temples, cheekbones, jaw corners, and chin, and the complete hairline temple cheek jaw and chin perimeter remains visible. Across that outline, the upper and middle face are moderately longer than wide; the cheek region is wider than the jaw; the jaw narrows more strongly and smoothly into a small chin with a softly rounded tip. Here literal contour evidence replaces the culture-scoped label at runtime. Use distortion-controlled portrait perspective, balanced bilateral outline visibility, and soft side-to-front dawn light that models every facial landmark. The supplied image guides only broadly visible adult appearance; this specified facial geometry takes precedence over its silhouette.",
+    "negative_en": "body distortion, low resolution, fake-looking background, illustration look, over-processed retouching, broken facial features, distorted fingers, cartoon style, plastic-looking skin, 3D render look",
+    "runtime_forbidden_label_hits": [],
+    "chosen_candidate_ids": [],
+    "chosen_visual_concept_ids": []
+  },
+  "audits": {
+    "candidate_pack_generation": {
+      "status": "pass",
+      "exact_pack_count": 1,
+      "contract_version": "photo-candidate-pack/v6",
+      "pack_integrity_validated_by_composed_audit": true
+    },
+    "composed_prompt": {
+      "status": "pass",
+      "quality_status": "warn",
+      "blocking_failure_count": 0,
+      "warning_count": 3,
+      "warning_boundary": "All three warnings report candidate-pack intents marked uncovered but preserved literally in the final prompt."
+    },
+    "runtime_request": {
+      "status": "pass",
+      "reference_count": 1,
+      "negative_matches_pack": true,
+      "effective_visual_contract_sha256": "95234f5bae4b7aaeeb6a0157d4524b97ffbace714cd54cea905f5fd8489400ba"
+    },
+    "pixel_review": {
+      "profile_gate_status": "pass",
+      "all_five_required_gates_present": true,
+      "partial_treated_as_fail": true,
+      "moe_review_auditor_status": "structurally_inapplicable_fail",
+      "moe_review_auditor_boundary": "The pack has no moe_response or render_qualification contract, so audit_moe_render_review.py reports schema failures even though failed_hard_gates is empty and all five visual-profile gates are recorded as pass."
+    },
+    "ledger": {
+      "status": "pass",
+      "schema": "run_ledger.schema.json",
+      "validator": "jsonschema CLI",
+      "ledger_run_id": "1b7af23dce7fbeb9"
+    },
+    "run_manifest": {
+      "status": "pass",
+      "contract_version": "photo-independent-run-manifest/v2",
+      "recorder_validation": true,
+      "invariant_validation": true
+    }
+  },
+  "image_generation": {
+    "tool": "built_in_imagegen",
+    "image_call_limit": 1,
+    "image_call_count": 1,
+    "second_call_or_cli_api_fallback_used": false,
+    "outcome": "saved_local",
+    "image_path": "result.png",
+    "image_sha256": "22b979d0cdd86c48c2bf4624862561c5b786328439f5dc70b9cac3dc5d78dcb3",
+    "pixel_width": 1086,
+    "pixel_height": 1448,
+    "thumbnail_path": "result-thumbnail.png",
+    "thumbnail_sha256": "ae358a1d895c7fad29e0a1ca942f74937a745797649ab032dac7746cbad9ad93",
+    "thumbnail_pixel_width": 192,
+    "thumbnail_pixel_height": 256
+  },
+  "gate_results": {
+    "vo_face_seed_full_perimeter": "pass",
+    "vo_face_seed_vertical_relation": "pass",
+    "vo_face_seed_cheek_width": "pass",
+    "vo_face_seed_strong_lower_taper": "pass",
+    "vo_face_seed_confound_control": "pass"
+  },
+  "overall_technical_verdict": {
+    "status": "pass",
+    "label": "profile_technical_pass_pending_user_judgment",
+    "basis": "Composed and runtime audits passed, the reference was attached through the native mechanism, and all five profile gates passed direct native-plus-thumbnail pixel review.",
+    "representative_eligible": false,
+    "user_judgment": "not_yet_received",
+    "limitations": [
+      "Pixel review is an agent visual assessment rather than requesting-user acceptance.",
+      "The moe-specific review auditor is not applicable because this non-moe candidate pack contains no moe_response contract.",
+      "No biometric identity or same-person determination is made."
+    ]
+  },
+  "artifacts": {
+    "concept_selection": "concept_selection.json",
+    "authorial_core": "authorial_core.json",
+    "visual_intent": "visual_intent.json",
+    "candidate_pack": "candidate_pack.json",
+    "composed_prompt": "composed_prompt.json",
+    "composed_audit": "composed_audit.json",
+    "render_request": "render_request.json",
+    "render_request_audit": "render_request_audit.json",
+    "result": "result.png",
+    "thumbnail": "result-thumbnail.png",
+    "pixel_review": "pixel_review.json",
+    "pixel_review_audit": "pixel_review_audit.json",
+    "image_runs": "image_runs.ndjson",
+    "run_manifest": "run_manifest.json"
+  }
+}

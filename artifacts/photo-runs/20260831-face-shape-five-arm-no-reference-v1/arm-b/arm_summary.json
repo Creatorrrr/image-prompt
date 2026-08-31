@@ -1,0 +1,190 @@
+{
+  "contract_version": "photo-independent-arm-summary/v2",
+  "arm_id": "arm-b",
+  "agent": "Kant",
+  "experiment": "five-arm face-shape no-reference ablation",
+  "controlled_assignment": {
+    "profile_id": "round_compact_face_relation",
+    "domain": "polar_radio_observatory_maintenance",
+    "seed": 194608,
+    "concept": "Low-noise receiver calibration at a polar radio observatory",
+    "variation_key": "arm-b|round_compact_face_relation|194608|polar_radio_observatory_maintenance"
+  },
+  "lineage": {
+    "parent_request_id": "20260831-face-shape-arm-b",
+    "parent_core_sha256": "76498de4772b681c10fae0779bd9503269f58e48b4932dabbc7e5f61c3e8daa4",
+    "parent_pack_id": "5f1f47e1dcf2c6e7",
+    "preserved_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "allowed_changes": [
+      "reference_use"
+    ],
+    "new_authorial_core_sha256": "164c5f4fedf01fc2b01728d389bec23652ce3ce6b797079c153afac0edb3f722",
+    "new_intent_lock_sha256": "29e2fca832da263f20f302b0bff6186acbe6a2345a46849046db281e332df5d2"
+  },
+  "candidate_pack": {
+    "contract_version": "photo-candidate-pack/v6",
+    "version": "v6",
+    "count": 1,
+    "pack_id": "214c6ae5705ca369",
+    "creativity": 0.5,
+    "seed": 194608,
+    "profile_ids": [
+      "round_compact_face_relation"
+    ],
+    "hard_gate_count": 5,
+    "generation_status": "pass",
+    "integrity_status": "pass_via_composed_audit"
+  },
+  "prompt": {
+    "baseline_word_count": 118,
+    "composed_word_count": 164,
+    "prompt_en": "Create a photorealistic documentary portrait of an adult polar radio-observatory maintenance engineer at an ice-rimed steerable dish during cobalt polar twilight. She calibrates a frost-coated low-noise receiver module with a handheld spectrum analyzer beside an open waveguide cabinet; tagged fiber lines, instrument readouts, snow fencing, and distant antenna structures establish the operational setting. Frame her chest-up in a restrained three-quarter view while her hands and analyzer remain legible. Hair is swept behind both ears, clear of the temples, cheek edges, jaw corners, and chin; the complete bilateral face perimeter remains unobscured. Give her a round compact face contour and a compact near-equal width-to-length silhouette: her facial length stays close to width, the cheek-to-cheek region carries broad width, and a soft curved jaw ends in a short rounded chin. A neutral expression and controlled perspective preserve the global contour. Use a distortion-controlled portrait lens and soft frontal shape light with cold ambient reflection from the snow. Realize the adult subject directly from this photographic specification.",
+    "composed_audit_status": "pass",
+    "composed_quality_status": "warn",
+    "composed_failure_count": 0,
+    "dependency_phrase_hits": []
+  },
+  "runtime": {
+    "runtime_prompt_en": "Create a photorealistic documentary portrait of an adult polar radio-observatory maintenance engineer at an ice-rimed steerable dish during cobalt polar twilight. She calibrates a frost-coated low-noise receiver module with a handheld spectrum analyzer beside an open waveguide cabinet; tagged fiber lines, instrument readouts, snow fencing, and distant antenna structures establish the operational setting. Frame her chest-up in a restrained three-quarter view while her hands and analyzer remain legible. Hair is swept behind both ears, clear of the temples, cheek edges, jaw corners, and chin; the complete bilateral face perimeter remains unobscured. Give her a round compact face contour and a compact near-equal width-to-length silhouette: her facial length stays close to width, the cheek-to-cheek region carries broad width, and a soft curved jaw ends in a short rounded chin. A neutral expression and controlled perspective preserve the global contour. Use a distortion-controlled portrait lens and soft frontal shape light with cold ambient reflection from the snow. Realize the adult subject directly from this photographic specification. Avoid: 3D render look, illustration look, cartoon style, over-processed retouching, fake-looking background, low resolution, unrealistic steam, excessive HDR, plastic-looking food texture",
+    "runtime_prompt_id": "18fcd4879a593c97",
+    "audit_status": "pass",
+    "failure_count": 0,
+    "references": [],
+    "reference_sha256": [],
+    "referenced_image_paths_parameter": "omitted",
+    "num_last_images_to_include_parameter": "omitted",
+    "dependency_phrase_hits": []
+  },
+  "generation": {
+    "status": "success",
+    "mode": "new_image_generation",
+    "tool": "built_in_imagegen",
+    "image_call_count": 1,
+    "retry_count": 0,
+    "saved_path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/result.png",
+    "sha256": "c3640af90e86ab07770a763abb5ffac5f1c0c69176bcbf9f4359375dd0a30685",
+    "pixel_width": 1537,
+    "pixel_height": 1023
+  },
+  "pixels": {
+    "review_source": "direct_thumbnail_and_native_pixel_inspection",
+    "profile_id": "round_compact_face_relation",
+    "partial_is_fail": true,
+    "gate_results": {
+      "vo_face_round_full_perimeter": "pass",
+      "vo_face_round_vertical_relation": "pass",
+      "vo_face_round_cheek_width": "pass",
+      "vo_face_round_lower_curve": "pass",
+      "vo_face_round_confound_control": "pass"
+    },
+    "passed_gate_count": 5,
+    "failed_gate_count": 0,
+    "overall_profile_status": "pass",
+    "schema_audit_separation": {
+      "moe_adapter_exit_code": 1,
+      "failed_hard_gate_count": 0,
+      "schema_failure_count": 3,
+      "applicability": "not_applicable_to_profile_only_pack",
+      "reason": "The pack has strict visual_obligations but no enabled moe_response or render_qualification contract. The actual five-gate pixel judgment is recorded independently in pixel_review.json."
+    }
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "independence_proof": {
+    "cross_arm_inputs_used": false,
+    "reference_sha256": [],
+    "image_call_count": 1,
+    "no_retry": true,
+    "ledger_run_id": "22e9f1efccedb65c",
+    "prompt_id": "d15a1a5066258983",
+    "manifest_contract_version": "photo-independent-run-manifest/v2",
+    "recorder_manifest_limitation": "record_image_run.py treats an empty reference_sha256 list as a missing manifest prerequisite; the recorder-validated ledger was retained and the protocol-required empty-list v2 manifest was materialized arm-locally."
+  },
+  "overall_technical_judgment": {
+    "status": "pass",
+    "basis": "The no-image-input runtime audit passed and all five exact round_compact_face_relation gates passed on the same saved image at their required scales.",
+    "representative_promotion": "pending_requesting_user_judgment"
+  },
+  "files": [
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/assignment.json",
+      "sha256": "3e38febd56941c0203c52c8bf3e99aa09264e0c8cb3454018976c12170e98af2"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/request_envelope.json",
+      "sha256": "22b9f0f9c200951bece18b9fe82f7db3871c14d1791065b42c87baa4f18b9328"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/authorial_core.json",
+      "sha256": "aad00500a749d0b6b0de85ca51ae1cecfc720ea91dca4876e16c2a3d2590f73e"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/visual_intent.json",
+      "sha256": "e36172969155669d6c117a8ef51dacc26d046a49b825b4d23aefcd063e656d34"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/candidate_pack.json",
+      "sha256": "8450ac9ae370084fae2e9079da60bb0d849daf51533452fd916cb4e3b9e3f583"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/composed_prompt.json",
+      "sha256": "1535ec657804a9f24853037e8e34dea1843ec6354750b7cd9aeb8e04a9c9d33d"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/composed_audit.json",
+      "sha256": "95a7beaa870963e96096adc1b43db86b625201189472155126787851399f86d9"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/render_request.json",
+      "sha256": "cfe0d942477660cf6c998c7f94a0c443051983b34b318d6d95e06df556da551c"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/render_request_audit.json",
+      "sha256": "34926de36459177cd8c5e201322d01abedff98387d63b9e9efc4acd0dcb9457d"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/generation_outcome.json",
+      "sha256": "6f2133e519fa7f08b0511153d90169bba83a51d5c5d0def46b8b134c6e73ac20"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/result.png",
+      "sha256": "c3640af90e86ab07770a763abb5ffac5f1c0c69176bcbf9f4359375dd0a30685"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/pixel_review.json",
+      "sha256": "feadbeaea71184ec24e0f8e277c106778c47e6263e1b7ee006cd4058db49f9ee"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/moe_review_adapter.json",
+      "sha256": "0d91516769360b3a472ada3a6fdf0af8c993515bb077a8ee44f7bc1f5d6525c3"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/pixel_review_schema_audit.json",
+      "sha256": "c9ca00610ec8d2ff854c503c135e898cde4240dd64d9ced838696593f588030e"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/image_runs.ndjson",
+      "sha256": "9e48050bc05ee787944250b73fc4bf937c84bfbf6be5398c4dc0bd015e084eb1"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/run_manifest.json",
+      "sha256": "f8c130475ac68572abbf582b309c4918ae627b772148ec5f2c8aa897ae02f2d9"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/runtime_ablation_proof.json",
+      "sha256": "b973be427239d47f9d92d9ad433aa66d70991f595d767e70d5022eebdc33cc7b"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/arm_summary.json",
+      "sha256": null,
+      "hash_note": "Self-referential file hash is intentionally not embedded in its own bytes."
+    }
+  ]
+}

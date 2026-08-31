@@ -1,0 +1,228 @@
+{
+  "contract_version": "photo-arm-summary/v1",
+  "run_contract": "photo-five-arm-no-reference-ablation/v1",
+  "arm_id": "arm-e",
+  "agent": "Noether",
+  "overall_technical_verdict": "pass",
+  "verdict_label": "five_profile_gates_pass_user_judgment_pending",
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "other_arm_files_or_messages_read": false,
+    "prior_result_or_review_inputs_used": false,
+    "original_portrait_or_derivative_used": false,
+    "worktree_id": "image-prompt-main-worktree",
+    "source_ref": "81eabea05c3b1238bec467bda21ccd8a494fe202"
+  },
+  "controlled_variables": {
+    "profile_id": "cjk_seed_face_relation",
+    "domain": "dawn_rooftop_analog_astronomy_cartography",
+    "seed": 950317,
+    "concept": "Municipal celestial survey on an observatory rooftop at dawn",
+    "variation_key": "arm-e-seed-950317",
+    "candidate_pack_version": "v6",
+    "creativity": 0.5,
+    "image_call_limit": 1
+  },
+  "lineage": {
+    "parent_request_id": "20260831-face-shape-arm-e",
+    "parent_core_sha256": "aacc97199a25d5782ee8bb349d0457d7862c6d60d0f0e5ad65f5025b6a54d605",
+    "parent_pack_id": "172b9cdfbb378489",
+    "preserved_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "allowed_changes": [
+      "reference_use"
+    ],
+    "new_core_canonical_sha256": "30c609a0f354ff10b3783688c383df7e1383cefb516b410138e5069b340a8d75",
+    "new_intent_lock_sha256": "81f91fbac8a67eb19d172ebc4961ab0670e3525c2b42c7059d8e7d3adfddd6af",
+    "source_request_byte_equal_envelope_request_text": true
+  },
+  "prompt": {
+    "pack_id": "6a3d9938d48fe39d",
+    "exact_pack_count": 1,
+    "prompt_id": "5489398799ad0b27",
+    "prompt_sha256": "5489398799ad0b27b66194703057c11f43cb98fa65515e368890ff467502e567",
+    "word_count": 176,
+    "prompt_en": "Create a documentary photograph of an unmistakably adult woman, a survey astronomer on a municipal observatory rooftop at dawn. Treat her as an original adult subject created directly from the written scene. Frame a chest-up, nearly frontal portrait with her face centered and the brass telescope, transparent city-map overlay, weathered atlas, mechanical chronometer, compass, coordinate grid, and wind-lifted sheets forming a restrained working arc. She draws an azimuth line from a brass transit telescope toward the bright morning star. Her expression is calm and neutral; all hair is pinned away from both temples, cheekbones, jaw corners, and chin, and the complete hairline temple cheek jaw and chin perimeter remains visible. Across that outline, the upper and middle face are moderately longer than wide; the cheek region is wider than the jaw; the jaw narrows more strongly and smoothly into a small chin with a softly rounded tip. Here literal contour evidence replaces the culture-scoped label at runtime. Use distortion-controlled portrait perspective and soft side-to-front dawn light that models every facial landmark while preserving the rooftop work.",
+    "negative_en": "body distortion, low resolution, fake-looking background, illustration look, over-processed retouching, broken facial features, distorted fingers, cartoon style, plastic-looking skin, 3D render look",
+    "reference_dependency_terms_absent": true,
+    "runtime_forbidden_label_hits": [],
+    "composed_audit_status": "pass",
+    "composed_quality_status": "warn",
+    "composed_blocking_failures": [],
+    "composed_warning_count": 5,
+    "composed_warning_boundary": "The five warnings mark lineage anchors as uncovered candidate material, but each anchor is present literally in prompt_en."
+  },
+  "runtime": {
+    "schema_version": "photo-image-render-request/v2",
+    "runtime_prompt_id": "0f7e419696915264",
+    "runtime_prompt_sha256": "0f7e419696915264ec93abba13f2d26d0582905dbd7d6dbe1e21490b80408ad2",
+    "generation_mode": "new_image",
+    "references": [],
+    "reference_sha256": [],
+    "reference_count": 0,
+    "referenced_image_paths_passed": false,
+    "num_last_images_to_include_passed": false,
+    "reference_dependency_terms_absent": true,
+    "audit_status": "pass",
+    "audit_failures": [],
+    "negative_matches_pack": true,
+    "effective_visual_contract_sha256": "95234f5bae4b7aaeeb6a0157d4524b97ffbace714cd54cea905f5fd8489400ba"
+  },
+  "generation": {
+    "tool": "built_in_imagegen",
+    "image_call_count": 1,
+    "retry_count": 0,
+    "cli_or_api_fallback_used": false,
+    "outcome": "saved_local",
+    "image_path": "result.png",
+    "image_sha256": "504709778dc3c352c7c3b477035478524d1e2d711e473dda88a11c3d5aa88273",
+    "pixel_width": 1122,
+    "pixel_height": 1402,
+    "thumbnail_path": "result-thumbnail.png",
+    "thumbnail_sha256": "2a159f27cba1928bcec843efb3965a742785f21afbda4eab3d07ecd6733e3243",
+    "thumbnail_pixel_width": 205,
+    "thumbnail_pixel_height": 256,
+    "ledger_run_id": "e06300370a77d159"
+  },
+  "pixels": {
+    "inspection_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "partial_is_fail": true,
+    "all_gates_same_saved_image": true,
+    "exact_gate_count": 5,
+    "gate_results": {
+      "vo_face_seed_full_perimeter": "pass",
+      "vo_face_seed_vertical_relation": "pass",
+      "vo_face_seed_cheek_width": "pass",
+      "vo_face_seed_strong_lower_taper": "pass",
+      "vo_face_seed_confound_control": "pass"
+    },
+    "failed_hard_gates": [],
+    "profile_assessment_status": "pass",
+    "profile_assessment_audit_status": "pass",
+    "moe_schema_audit_status": "structurally_inapplicable_fail",
+    "moe_schema_audit_failed_hard_gates": [],
+    "moe_schema_boundary": "audit_moe_render_review.py requires moe_response and render_qualification, which this profile-only pack does not contain; schema failures are separated from the five-gate pixel assessment."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "representative_eligible": false,
+    "evidence": ""
+  },
+  "provenance_validation": {
+    "ledger_schema_status": "pass",
+    "ledger_schema": "skills/photo-prompt-image-generator/assets/run_ledger.schema.json",
+    "manifest_contract_version": "photo-independent-run-manifest/v2",
+    "manifest_invariants_status": "pass",
+    "reference_sha256": [],
+    "references": [],
+    "image_call_count": 1,
+    "cross_arm_inputs_used": false,
+    "manifest_creation_boundary": "The recorder validated and wrote the ledger entry. Its manifest builder rejects an empty reference_sha256 list, so the arm-local v2 manifest was materialized with the same validated fields and then checked by exact jq invariants and image SHA-256."
+  },
+  "parent_lineage_evidence": {
+    "request_envelope": {
+      "path": "../../20260831-face-shape-five-arm-v1/arm-e/request_envelope.json",
+      "sha256": "50ed50233e93f43c8ad308235a70afbb091b383531d7553e05af78f84370e3c0"
+    },
+    "authorial_core": {
+      "path": "../../20260831-face-shape-five-arm-v1/arm-e/authorial_core.json",
+      "file_sha256": "458e18c67fd3551da3ef3bf39b26f796738f8f28afd8a2d508b28c36467ebce9",
+      "canonical_sha256": "aacc97199a25d5782ee8bb349d0457d7862c6d60d0f0e5ad65f5025b6a54d605"
+    },
+    "candidate_pack": {
+      "path": "../../20260831-face-shape-five-arm-v1/arm-e/candidate_pack.json",
+      "sha256": "3c0e4c1415f1c597c1100837cbc4c62e19e4d42dffa460e50181847b0ff5d386"
+    },
+    "composed_prompt": {
+      "path": "../../20260831-face-shape-five-arm-v1/arm-e/composed_prompt.json",
+      "sha256": "2b35cfecf84050eb65297214374c1d7581b822ac930d2a6a96806061b8e4ad6e"
+    },
+    "visual_intent": {
+      "path": "../../20260831-face-shape-five-arm-v1/arm-e/visual_intent.json",
+      "sha256": "e6a2adce521c0bc6ba28592f10217d531e7a598399058a07a45f3c13f19c9040"
+    }
+  },
+  "artifact_files": {
+    "test_protocol": {
+      "path": "../shared/test_protocol.json",
+      "sha256": "b015b9ab8a3270b8ebb9c1a0f032208c81d2444e0703c47fcb82834466f074ea"
+    },
+    "assignment": {
+      "path": "assignment.json",
+      "sha256": "e8118d181fe94e62b9f5468fb053558eec37ea2cd8760b58f4f0d05b21fe071b"
+    },
+    "request_envelope": {
+      "path": "request_envelope.json",
+      "sha256": "39c6a169307676e0b276efd763b9d4f8766ccfbabd8232ed2278f8fd16047441"
+    },
+    "authorial_core": {
+      "path": "authorial_core.json",
+      "sha256": "f2c86b0ff50f79bb9689c2d50d62e1334a2a99a3e4d437670d47e729e0ef6468"
+    },
+    "visual_intent": {
+      "path": "visual_intent.json",
+      "sha256": "e6a2adce521c0bc6ba28592f10217d531e7a598399058a07a45f3c13f19c9040"
+    },
+    "candidate_pack": {
+      "path": "candidate_pack.json",
+      "sha256": "c6ee841ad157f633695416c1b47f0f747edbc91bdaf9ad6e3355afc6d2a3ca6d"
+    },
+    "composed_prompt": {
+      "path": "composed_prompt.json",
+      "sha256": "ff68a84617f76a0661ec78e413c90400ef5064fc0997f1f79d0df43ae8e75245"
+    },
+    "composed_audit": {
+      "path": "composed_audit.json",
+      "sha256": "3e86b00d9a573cca41a6f6e237bf0e03dfaf6755e4e885bb76dfa2549707afed"
+    },
+    "render_request": {
+      "path": "render_request.json",
+      "sha256": "ebd83761edb74bfac908b1c33a17b63d7f5c82f9dd560e007d38d43786e6d098"
+    },
+    "render_request_audit": {
+      "path": "render_request_audit.json",
+      "sha256": "5f646d875372cddc8bd85c39e1290b011fd9059d0eced6ed9f0927c79e39e002"
+    },
+    "result": {
+      "path": "result.png",
+      "sha256": "504709778dc3c352c7c3b477035478524d1e2d711e473dda88a11c3d5aa88273"
+    },
+    "thumbnail": {
+      "path": "result-thumbnail.png",
+      "sha256": "2a159f27cba1928bcec843efb3965a742785f21afbda4eab3d07ecd6733e3243"
+    },
+    "pixel_review": {
+      "path": "pixel_review.json",
+      "sha256": "eee235d775c63cf9387a7f11e96f04ae8572b636c4b407ac0d89b4651f539bdd"
+    },
+    "pixel_review_profile_audit": {
+      "path": "pixel_review_profile_audit.json",
+      "sha256": "905c10570dcb45a77c4722d7bb0f2e99c5dd5c5ddcb5461d3cbc873fbc739957"
+    },
+    "moe_review_adapter": {
+      "path": "moe_review_adapter.json",
+      "sha256": "5ffad0433c5839d4b56bd0cb65d6dfc56f104f169c59e58bdafc13fb6656bf7c"
+    },
+    "moe_review_schema_audit": {
+      "path": "moe_review_schema_audit.json",
+      "sha256": "e8ef7012f61872bb60c7da89cc89c18ab0c22d9e8f58a682b5a78de9707e74bf"
+    },
+    "image_runs": {
+      "path": "image_runs.ndjson",
+      "sha256": "92075f09513005c5d5059b8dc6604d6a10165c870856fa30aa5343041a266330"
+    },
+    "run_manifest": {
+      "path": "run_manifest.json",
+      "sha256": "c928c4fa5fce339336900614acc7fa5675372a2b2d9fb6a62b1928dcdce51b10"
+    }
+  },
+  "hash_boundary": "arm_summary.json cannot embed its own final SHA-256 without recursion; all other listed files are hash-bound above."
+}

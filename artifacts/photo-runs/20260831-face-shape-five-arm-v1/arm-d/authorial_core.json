@@ -1,0 +1,87 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent test photograph in a randomized, complex volcanic-glass kinetic-couture atelier concept, using the attached image only as a general adult appearance reference while making a heart-shaped facial outline the arm-specific test target and giving that target priority over the reference contour.",
+  "subject": "An unmistakably adult woman with long dark wavy hair, informed only in general appearance by the attached reference",
+  "setting": "A working volcanic-glass kinetic couture atelier with glassworking benches, articulated obsidian petals, and visible brass mechanisms",
+  "event": "The adult model tests the opening cycle of an articulated obsidian-petal cape while a technician tunes its brass linkages",
+  "visual_priorities": [
+    "heart-shaped face",
+    "unobstructed facial-contour evidence during kinetic garment calibration"
+  ],
+  "baseline_prompt_en": "Create a photographic portrait of an unmistakably adult woman with long dark wavy hair in a volcanic-glass kinetic couture atelier. She tests the opening cycle of an articulated obsidian-petal cape while an adult technician tunes visible brass linkages beside glassworking benches. Her fully visible heart-shaped face has a broad upper contour across the temples, cheekbones forming the widest transition, continuous jaw lines narrowing symmetrically through the lower third, and a small pointed chin. Keep her hair swept behind both sides of the face as the cape petals open behind her shoulders. Use soft frontal shaping light and restrained portrait perspective so the entire left and right facial outline remains legible. The attached image guides general adult appearance only, without biometric identity claims; this specified facial geometry takes priority over its reference contour.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "heart-shaped face",
+      "source_text": "반영한 키워드",
+      "basis": "request_context",
+      "resolution": "For this independent arm, the agent selected heart-shaped face as the request-context variation keyword to test, realized through a broad temple-level upper contour, widest cheekbone transition, symmetric lower-face taper, and small pointed chin.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A seed-selected volcanic-glass kinetic-couture atelier scene in which articulated obsidian petals and brass linkages visibly move during a fitting test.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attachment as an appearance reference for generally visible adult traits only, without claiming identity; the arm-specific face-shape goal overrides its facial contour.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "volcanic-glass kinetic couture atelier"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman with long dark wavy hair"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "event",
+        "prompt_evidence": "tests the opening cycle of an articulated obsidian-petal cape"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial atelier portrait photography",
+    "family": "precision kinetic-couture documentation",
+    "evidence": [
+      "articulated obsidian petals opening behind the shoulders",
+      "visible brass linkages on active glassworking benches"
+    ]
+  },
+  "variation_key": "arm-d-heart-shape-seed-468029"
+}

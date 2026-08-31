@@ -1,0 +1,56 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "57183a2bd4e7af33",
+  "contract_version": "",
+  "qualification_status": "failed_technical_hard_gates",
+  "technical_qualified": false,
+  "representative_eligible": false,
+  "required_hard_gate_count": 5,
+  "effective_visual_contract_sha256": "b736a68e9d2f616821643e0a8b95cc26a5112590da4edecec7e121b6974f04d9",
+  "selected_visual_concept_ids": [],
+  "failed_hard_gates": [
+    {
+      "gate": "vo_face_upper_taper_full_perimeter",
+      "status": "fail",
+      "evidence": "At thumbnail scale, dark side hair crosses both upper-temple boundaries and merges into the cheek contour, masking the complete width transition."
+    },
+    {
+      "gate": "vo_face_upper_taper_continuous_chin",
+      "status": "fail",
+      "evidence": "The native crop shows only modest lower-cheek narrowing into a broad rounded chin, so the required continuous taper to a narrow chin is absent."
+    }
+  ],
+  "schema_failures": [
+    {
+      "check": "moe_response",
+      "reason": "candidate pack does not contain an enabled moe_response contract"
+    },
+    {
+      "check": "render_qualification",
+      "reason": "moe_response contract does not require render qualification"
+    },
+    {
+      "check": "contract_version",
+      "reason": "render review contract_version differs from moe_response contract"
+    },
+    {
+      "check": "visual_obligations.required_hard_gates",
+      "reason": "visual hard gates were not merged into moe render qualification",
+      "missing": [
+        "vo_face_upper_taper_confound_control",
+        "vo_face_upper_taper_continuous_chin",
+        "vo_face_upper_taper_full_perimeter",
+        "vo_face_upper_taper_vertical_relation",
+        "vo_face_upper_taper_width_hierarchy"
+      ]
+    }
+  ],
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  },
+  "boundary": "This audit validates recorded pixel-review evidence and user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+}

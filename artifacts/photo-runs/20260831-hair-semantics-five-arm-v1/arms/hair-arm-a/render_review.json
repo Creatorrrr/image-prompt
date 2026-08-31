@@ -1,0 +1,49 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "3fa76f041cfb9e2a",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex hair-arm-a pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-a/generated_image.png",
+  "result_sha256": "22e327e8759bd821acd9b2379d3bccc428e7c41c589865bbe4fdcaa471eb69a2",
+  "review_scales": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-a/generated_image.thumbnail.png",
+      "dimensions": "256x384",
+      "observation": "The long rear mass and two shorter face-side sections are visible together around one unobscured face."
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-a/generated_image.png",
+      "dimensions": "1024x1536",
+      "observation": "The short-to-long separation is visible, but the side ends curve and blend into a rounded bob-over-long-hair silhouette rather than forming two unambiguous dense horizontal edges."
+    }
+  },
+  "hard_gates": {
+    "vo_hair_hime_long_rear_mass": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, a continuous rear hair mass extends far below both jaw-length front sections and remains visible past the shoulders toward the waist."
+    },
+    "vo_hair_hime_paired_blunt_panels": {
+      "status": "fail",
+      "evidence": "At thumbnail and native scale, short sections appear on both face sides, but their curved and tapered lower contours do not establish two unmistakably blunt dense cheek-to-jaw edges."
+    },
+    "vo_hair_hime_disconnected_step": {
+      "status": "pass",
+      "evidence": "At native scale, the jaw-length front sections stop well above the long strands continuing past the shoulders, leaving a plainly visible short-to-long length step."
+    },
+    "vo_hair_hime_bilateral_context": {
+      "status": "pass",
+      "evidence": "Both shorter face-side sections and the substantially longer rear mass are simultaneously readable around the same unobscured face at both inspection scales."
+    },
+    "vo_hair_hime_not_generic_layers": {
+      "status": "fail",
+      "evidence": "At native scale, the shorter perimeter reads as a rounded chin-length bob layered over long hair, matching a declared substitute instead of an unmistakable disconnected structural hime cut."
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "arm_id": "hair-arm-e",
+  "concept": "volcanic-glass workshop furnace observation",
+  "keyword_ko": "젖은 다발 헤어",
+  "profile_id": "wet_damp_clumped_hair_state",
+  "fixture_contract": "photo-hair-semantic-pixel-case/v1",
+  "pack_id": "c8e1b54fb48a5c2d",
+  "prompt_id": "a289a14a5b3b812f",
+  "run_id": "208d313c5b0e0128",
+  "generation": {
+    "tool": "image_gen",
+    "mode": "built_in_native",
+    "image_call_count": 1,
+    "independent_no_cross_arm_inputs": true,
+    "reference_role": "appearance_reference",
+    "reference_boundary": "facial and general appearance continuity only; not biometric identity verification"
+  },
+  "output": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-e/generated_image.png",
+    "sha256": "695550c0a17ee5022429211d1759e0e29d00b7f6702a966b344fa8f2bca7160c",
+    "dimensions": [1402, 1122],
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-e/generated_image-thumbnail.png",
+    "thumbnail_sha256": "bc245be628afe0863db4edd2258c025609cf99b70fb431c169a80463cf857465",
+    "thumbnail_dimensions": [320, 256]
+  },
+  "hashes": {
+    "request_envelope_file_sha256": "c5d81acfb47fc65d242464c271d6cb6b46681481f5c4c3e2b5a0e824ffb8f459",
+    "request_text_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+    "authorial_core_file_sha256": "1f461c7cd23e951096c7116d95e50c00e5e0353d29612b350feb98d6c2968d6b",
+    "authorial_core_input_canonical_sha256": "920bf7c3fee4b8fa65fd7ee895cc9b16f7000862ca83703f4a4437b88d736f15",
+    "authorial_core_bound_canonical_sha256": "f134f22e6e12065ad8919a6d3fcdf62e1a5d8fe036082ba6eeb69718a9bfaff1",
+    "intent_lock_input_canonical_sha256": "3aa0e26e912de7328832f5c88473c1c824ebfed6daac4146f48192936783781d",
+    "intent_lock_bound_canonical_sha256": "9826cf1c22f6c66d55214df831a3c64d9f1417e005ce9fab72714c7e00f73f9c",
+    "visual_intent_file_sha256": "59fea9b4b65d5fee721e08da72bcd9ea382c7062f9820199fff9e05f63e8bc71",
+    "visual_intent_canonical_sha256": "f1ad2187886b551cfaa392a2e7483bdecc017fafe0eddca621902b0e3c786a94",
+    "candidate_pack_file_sha256": "e3983c6f33f787e0f3104d47e7ab772beb9b3cd1697686cad2107af93c892bcd",
+    "composed_prompt_file_sha256": "cbfec7422fe6008f65da04799625fa7e9965b504e82e28a0e48a66a23116b277",
+    "runtime_prompt_sha256_prefix": "d5f2f3a7cb5a75cd",
+    "effective_visual_contract_sha256": "4a24ff7af3d8a1c0ca5bbf300b429f9a0cdc667571bc61d055df4dbe5f517982",
+    "appearance_reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6"
+  },
+  "audit_outcomes": {
+    "composed_prompt": {
+      "status": "pass",
+      "quality_status": "warn",
+      "failures": 0,
+      "warnings": [
+        "Three locked intents were preserved by literal free description and therefore remain reported as uncovered-intent warnings."
+      ]
+    },
+    "runtime_request": {
+      "status": "pass",
+      "failures": 0,
+      "negative_matches_pack": true,
+      "reference_count": 1
+    },
+    "render_review": {
+      "qualification_status": "visual_technical_qualified_user_judgment_pending",
+      "technical_qualified": true,
+      "representative_eligible": false,
+      "required_hard_gate_count": 5,
+      "failed_hard_gates": [],
+      "schema_failures": [],
+      "audit_process_exit_code": 1,
+      "audit_process_exit_note": "Expected nonzero terminal status because requesting-user judgment is still pending despite technical qualification."
+    }
+  },
+  "gates": {
+    "vo_hair_wet_reduced_volume": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At 320x256 the hair silhouette stays close to the scalp and hangs downward with collapsed airy volume."
+    },
+    "vo_hair_wet_strand_bundling": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Multiple damp lock bundles remain separately readable around the forehead, cheeks, shoulder, and long back section at both scales."
+    },
+    "vo_hair_wet_weighted_adherence": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native pixels show narrow weighted sections lying against the forehead, cheek margins, neck, and garment."
+    },
+    "vo_hair_wet_moisture_coherence": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Reduced volume, bundling, downward weight, adherence, and sheen form one continuous moisture state from crown to ends."
+    },
+    "vo_hair_wet_not_dry_gloss": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native structure includes bundling, volume collapse, and local contact in addition to sheen, so dry highlight or gel gloss alone does not explain the result."
+    }
+  },
+  "strict_aggregate_verdict": {
+    "rule": "all_required_gates_pass_in_one_saved_image; partial_or_missing_is_fail",
+    "status": "pass",
+    "all_required_gates_pass": true,
+    "technical_qualified": true,
+    "requesting_user_judgment": "not_yet_received",
+    "representative_eligible": false
+  },
+  "evidence_limitations": [
+    "The hard-gate judgments are agent visual observations of one saved native image and its derived thumbnail; the auditor validates the record and hashes but does not infer pixels independently.",
+    "Only one native image call was made, so no retry or cross-attempt averaging supports the verdict.",
+    "Appearance continuity is descriptive and reference-informed only; no biometric identity verification is claimed.",
+    "Technical gate qualification is separate from requesting-user acceptance, which has not yet been received."
+  ],
+  "provenance": {
+    "manifest_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-e/run_manifest.json",
+    "manifest_sha256": "5bf27c8867353abb2ab04085827ac532d93567b8c8c568e85ac79d2fd145eb4b",
+    "ledger_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260831-hair-semantics-five-arm-v1/arms/hair-arm-e/image_runs.ndjson",
+    "ledger_sha256": "d6e139662de54127379ae84d9baf560fddd5946bd699c11dc149d3229a99e9d1"
+  }
+}

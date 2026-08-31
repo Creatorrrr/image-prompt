@@ -1,0 +1,63 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "172b9cdfbb378489",
+  "contract_version": "photo-visual-obligations/v1",
+  "review_scope": "cjk_seed_face_relation visual obligation only; this pack has no moe_response contract",
+  "profile_id": "cjk_seed_face_relation",
+  "reviewer": "codex_arm_e_pixel_reviewer",
+  "inspection_method": {
+    "native": "view_image original on result.png at 1086x1448 source resolution",
+    "thumbnail": "view_image original on result-thumbnail.png at 192x256",
+    "partial_is_fail": true,
+    "prompt_or_metadata_not_used_as_pixel_evidence": true
+  },
+  "result_image": "result.png",
+  "result_sha256": "22b979d0cdd86c48c2bf4624862561c5b786328439f5dc70b9cac3dc5d78dcb3",
+  "thumbnail_image": "result-thumbnail.png",
+  "thumbnail_sha256": "ae358a1d895c7fad29e0a1ca942f74937a745797649ab032dac7746cbad9ad93",
+  "hard_gate_order": [
+    "vo_face_seed_full_perimeter",
+    "vo_face_seed_vertical_relation",
+    "vo_face_seed_cheek_width",
+    "vo_face_seed_strong_lower_taper",
+    "vo_face_seed_confound_control"
+  ],
+  "hard_gates": {
+    "vo_face_seed_full_perimeter": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At 192x256, both hairline-to-temple sides, both cheek edges, both jaw edges, and the chin form one readable perimeter; the upper oval and tapered lower outline coexist despite a few fine flyaway hairs."
+    },
+    "vo_face_seed_vertical_relation": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "At thumbnail and native scales, the visible hairline-to-chin span reads moderately longer than the lateral facial width, producing an elongated oval upper and middle face rather than a compact round face."
+    },
+    "vo_face_seed_cheek_width": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "At both scales, the lateral cheek region is the broad facial anchor; the jaw corners and lower jaw sit distinctly inward from the cheek edges on both sides."
+    },
+    "vo_face_seed_strong_lower_taper": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native pixels show a continuous pronounced narrowing from the cheek region through both lower-jaw contours into a small chin with a softly rounded, slightly pointed tip."
+    },
+    "vo_face_seed_confound_control": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native pixels show the elongated upper-middle oval, cheek-led width, stronger smooth lower taper, and small rounded tip together; the result is not merely an isolated pointed chin or styling effect, and no surgical diagram or fixed-ratio overlay substitutes for the observed contour."
+    }
+  },
+  "overall_technical_status": "pass",
+  "all_profile_hard_gates_pass": true,
+  "representative_eligible": false,
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  },
+  "boundary": "These are agent pixel observations, not biometric identity verification, cultural identity inference, attractiveness scoring, or requesting-user acceptance."
+}

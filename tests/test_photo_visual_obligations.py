@@ -1378,6 +1378,88 @@ class PhotoVisualObligationTests(unittest.TestCase):
         empty_entry = record_image_run.build_entry(empty_args)
         self.assertEqual(empty_entry["chosen_visual_concept_ids"], [])
 
+    def test_visual_only_render_review_uses_effective_visual_gate_contract(self):
+        data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry}
+        result = {
+            "provenance": {
+                "concept_lock": ["adult portrait with a twin-tail hairstyle"]
+            }
+        }
+        visual_contract = prompt_generator.candidate_pack_visual_obligations(
+            data,
+            result,
+            {},
+            None,
+        )
+        self.assertIsNotNone(visual_contract)
+        pack = {
+            "pack_id": "visual-only-render-pack",
+            "visual_obligations": visual_contract,
+        }
+        required_gates = visual_contract["required_hard_gates"]
+        with tempfile.TemporaryDirectory() as tmp:
+            image_path = Path(tmp) / "candidate.png"
+            image_path.write_bytes(b"visual-only-render-review-image")
+            review = {
+                "schema_version": "moe-render-review/v1",
+                "pack_id": pack["pack_id"],
+                "contract_version": visual_contract["contract_version"],
+                "reviewer": "visual-only pixel reviewer",
+                "result_image": str(image_path),
+                "result_sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
+                "hard_gates": {
+                    gate: {
+                        "status": "pass",
+                        "evidence": f"Thumbnail and native pixels visibly pass {gate}.",
+                    }
+                    for gate in required_gates
+                },
+                "user_judgment": {
+                    "baseline_available": False,
+                    "genuinely_moe": "pending",
+                    "better_than_baseline": "not_applicable",
+                    "source": "not_yet_received",
+                    "evidence": "",
+                },
+            }
+            audited = audit_moe_render_review.audit_moe_render_review(pack, review)
+            self.assertTrue(audited["technical_qualified"], audited)
+            self.assertFalse(audited["representative_eligible"])
+            self.assertEqual(audited["schema_failures"], [])
+            self.assertEqual(
+                audited["qualification_status"],
+                "visual_technical_qualified_user_judgment_pending",
+            )
+            self.assertEqual(
+                audited["contract_version"],
+                "photo-visual-obligations/v1",
+            )
+
+        unqualified = audit_moe_render_review.audit_moe_render_review(
+            {"pack_id": "no-render-contract"},
+            {
+                "schema_version": "moe-render-review/v1",
+                "pack_id": "no-render-contract",
+                "contract_version": "",
+                "reviewer": "fail-closed reviewer",
+                "result_image": "missing.png",
+                "result_sha256": "0" * 64,
+                "hard_gates": {},
+                "user_judgment": {
+                    "baseline_available": False,
+                    "genuinely_moe": "pending",
+                    "better_than_baseline": "not_applicable",
+                    "source": "not_yet_received",
+                    "evidence": "",
+                },
+            },
+        )
+        self.assertFalse(unqualified["technical_qualified"])
+        self.assertIn(
+            "render_qualification_contract",
+            {failure["check"] for failure in unqualified["schema_failures"]},
+        )
+
     def test_visual_render_gate_failure_and_uncontracted_gate_fail_closed(self):
         pack = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "

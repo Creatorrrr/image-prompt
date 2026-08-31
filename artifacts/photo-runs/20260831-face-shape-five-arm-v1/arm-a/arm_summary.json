@@ -1,0 +1,191 @@
+{
+  "contract_version": "photo-arm-summary/v1",
+  "arm_id": "arm-a",
+  "independence": {
+    "no_cross_arm_inputs_used": true,
+    "other_arm_comparison_performed": false,
+    "image_call_limit": 1,
+    "actual_image_call_count": 1
+  },
+  "frozen_inputs": {
+    "request_envelope_path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/request_envelope.json",
+    "request_envelope_file_sha256": "72074a9efa7928c547daa4df2c55815758c9288429bbf49cc81f909c611cea77",
+    "request_text_sha256": "c63f586dc12b8e08e292bca34f6fd9f4a6251e38f3b9aca645ce96060bd9277c",
+    "reference_path": "artifacts/photo-prompt-face-shape-semantics-20260831/reference/1-사진-1.jpg",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "reference_role": "appearance_reference",
+    "reference_boundary": "General visible adult appearance only; no same-person or biometric identity claim. The oval contour target takes priority over the reference contour.",
+    "target_natural_language": "oval face shape",
+    "profile_id": "oval_face_contour_relation",
+    "randomization_domain": "nocturnal_botanical_forensics",
+    "seed": 824173,
+    "frozen_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "candidate_pack_version": "v6"
+  },
+  "concept_selection": {
+    "candidate_count": 4,
+    "selection_rule": "Sort candidate_id ascending and choose zero-based index 824173 mod 4 = 1.",
+    "selected_candidate_id": "nbf-01",
+    "selected_title": "Moonlit orchid-house pollen trajectory reconstruction"
+  },
+  "prompt": {
+    "word_count": 177,
+    "prompt_en": "Create a complex nocturnal botanical-forensics scene in a moonlit orchid conservatory. An unmistakably adult forensic botanist reconstructs a luminous pollen-transfer path, aligning clear measurement panels between rare blooms while numbered evidence dishes and a macro camera document the trace. Frame a waist-up environmental portrait, frontal with only a slight turn, so hairline temples cheek edges jawlines and chin remain visible. Her oval face contour is clear: the face is moderately longer than wide; the zygomatic region is subtly widest while the forehead and jaw are somewhat narrower; the jaw narrows smoothly into a rounded chin without an abrupt angular corner. A neutral expression and controlled perspective preserve the actual contour while soft light and restrained makeup clarify it. She sweeps her hair behind both temples as one hand places a panel. Greenhouse moonlight and a diffused field lamp share one gentle facial modeling direction. Render photorealistically, with orchid glass reflections, fine pollen glow, accurate botanical textures, and dimensional background depth. Use the supplied portrait as an appearance reference for general adult appearance; the specified oval contour governs.",
+    "runtime_prompt_id": "36fd53fe6d3a25d0",
+    "runtime_negative_en": "over-processed retouching, illustration look, inaccurate reflections, excessive HDR, cartoon style, 3D render look, warped product geometry, fake-looking background, low resolution"
+  },
+  "contracts": {
+    "authorial_core_file_sha256": "2f2b7d8622e59be8e20859e05f53a3984d43640c12d1079c7eb13f9f94679c1f",
+    "authorial_core_canonical_sha256": "51d63c767a92be8206c379185db48458e10e9694a48c293cc50e0ae3e1c00b69",
+    "intent_lock_sha256": "eb695f4475be31bcd1622a3fff0a927cb29b55355e935b6a6c51cd82c0ca7250",
+    "visual_intent_sha256": "de972a8f5b6f1925f34392536891ed934901cbd7a9064f3a9f77348c08a96a60",
+    "effective_visual_contract_sha256": "72e6713e72ad323af7fdc12ea9f0da87da62ebdfecd2a23fd27f6b4aede96e4d",
+    "pack_id": "d1fb8bde8b47796c"
+  },
+  "audits": {
+    "candidate_pack": {
+      "status": "pass",
+      "evidence": "audit_composed_prompt.py recomputed pack integrity with zero failures"
+    },
+    "composed_prompt": {
+      "status": "pass",
+      "quality_status": "warn",
+      "failure_count": 0,
+      "warning_count": 3,
+      "warning_boundary": "The three warnings say the literal core anchors were preserved by free description; they are not blocking failures."
+    },
+    "runtime_request": {
+      "status": "pass",
+      "runtime_prompt_id": "36fd53fe6d3a25d0",
+      "reference_count": 1,
+      "negative_matches_pack": true
+    },
+    "moe_render_review": {
+      "status": "fail",
+      "qualification_status": "failed_technical_hard_gates",
+      "structural_applicability": "not_applicable_to_profile_only_pack",
+      "schema_failure_count": 3,
+      "schema_failure_boundary": "The immutable pack has visual_obligations but no moe_response or moe render_qualification. These structural failures are recorded separately and do not create or alter any pixel gate result.",
+      "pixel_failures_from_review": 2
+    }
+  },
+  "image_generation": {
+    "tool": "built-in_imagegen",
+    "reference_mechanism": "referenced_image_paths",
+    "referenced_image_paths_count": 1,
+    "num_last_images_to_include_used": false,
+    "image_call_count": 1,
+    "outcome": "saved_local_result",
+    "preview_only": false,
+    "result_path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/result.png",
+    "result_sha256": "84be7025e5fa890b8f6cfd43a58d6944314a086e4cc9db71f70b70a9da1079ff",
+    "pixel_dimensions": {
+      "width": 1086,
+      "height": 1448
+    },
+    "repo_local_copy_created": true
+  },
+  "pixel_gates": {
+    "vo_face_oval_full_perimeter": {
+      "status": "fail",
+      "review_scale": "thumbnail",
+      "reason": "Hair overlaps both temples and parts of the lateral jawlines, so the complete skin perimeter is not cleanly readable."
+    },
+    "vo_face_oval_vertical_relation": {
+      "status": "pass",
+      "review_scale": "both",
+      "reason": "The visible skin face is moderately longer than wide, neither compact-round nor distinctly oblong."
+    },
+    "vo_face_oval_width_hierarchy": {
+      "status": "pass",
+      "review_scale": "both",
+      "reason": "The cheekbone line is subtly widest while forehead and jaw narrow modestly."
+    },
+    "vo_face_oval_lower_taper": {
+      "status": "pass",
+      "review_scale": "native",
+      "reason": "The jaw tapers smoothly to a narrow softly rounded chin without a broad corner or isolated point."
+    },
+    "vo_face_oval_confound_control": {
+      "status": "fail",
+      "review_scale": "native",
+      "reason": "Loose hair conceals temporal and lateral jaw boundaries and can contribute to the apparent oval."
+    }
+  },
+  "overall_technical_verdict": {
+    "status": "fail",
+    "rule": "Every one of the exact five hard gates must pass; partial is fail.",
+    "passed_gate_count": 3,
+    "failed_gate_count": 2,
+    "failed_gate_ids": [
+      "vo_face_oval_full_perimeter",
+      "vo_face_oval_confound_control"
+    ],
+    "user_judgment": {
+      "source": "not_yet_received",
+      "status": "pending"
+    }
+  },
+  "files": [
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/request_envelope.json",
+      "sha256": "72074a9efa7928c547daa4df2c55815758c9288429bbf49cc81f909c611cea77"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/concept_selection.json",
+      "sha256": "3e528faea559f6788efaa8b254e1fbce9512bd9bb55a8a260de4b879fb94c681"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/authorial_core.json",
+      "sha256": "2f2b7d8622e59be8e20859e05f53a3984d43640c12d1079c7eb13f9f94679c1f"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/visual_intent.json",
+      "sha256": "0856212e1ff97ee1f366ad93cfcbecf1f73b72d72d9e768e713a77cc3d132632"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/candidate_pack.json",
+      "sha256": "28a03adc3bc2098cc4843fc686c09b5c6f873d55c85899c5460bb9069277dcbe"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/composed_prompt.json",
+      "sha256": "52feb28d9d4d84e37028de47a39df50711c7bedd8dc620e19e14733e210ea4dd"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/composed_prompt_audit.json",
+      "sha256": "7571d56d6b2f0c588c1f6757199e978acfbd3523584e35ef3b656dbf0ec6cf02"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/render_request.json",
+      "sha256": "3b4c93f5d7dae621e7c8e21848656962fa24bfa62734d837fedf9f58ff058967"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/render_request_audit.json",
+      "sha256": "5f4ed79848eb542fb36dc03602534e29fc0209a20fad9f5290f1d9bbb1743dea"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/result.png",
+      "sha256": "84be7025e5fa890b8f6cfd43a58d6944314a086e4cc9db71f70b70a9da1079ff"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/pixel_review.json",
+      "sha256": "fc65b5d4724ba91c4f4425e2146a7b0374691233c99029126953738f42a6ac51"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/pixel_review_audit.json",
+      "sha256": "6890ec2490eb9221cabb67118ce5110d9c52e6cd5aa0a87f51de1dfc8d70a3b1"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/image_runs.ndjson",
+      "sha256": "fc19d13a144c23709dee108d0cb7510d149be4db3c2d6849eb776a07802146f8"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/run_manifest.json",
+      "sha256": "b6ada04bf7a8562970d3e106815806c8b263c436b66afaef71e96876802480bf"
+    },
+    {
+      "path": "artifacts/photo-runs/20260831-face-shape-five-arm-v1/arm-a/arm_summary.json",
+      "sha256": null
+    }
+  ]
+}

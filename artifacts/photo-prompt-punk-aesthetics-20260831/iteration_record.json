@@ -1,0 +1,296 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 with pre-existing face-shape and makeup worktree changes preserved",
+    "candidate_revision": "working tree with photo-punk-visual-semantics/v1 and semantic index db5fc1508c0e65a0559c2771ee5782776171b48fc103d41690deed88d20c37a6"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Use the twenty punk-aesthetic keywords from the referenced conversation to strengthen observable visual-semantic data and candidate-pack data through detailed source research."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies twenty target names but also warns that the names are not equally established and initially describes them mostly through compact visual tags.",
+      "artifact": "chatgpt-conversation://6a94f921-7f78-83e8-9229-0e19f3451d57"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Scholarly references, museum histories, official engineering sources, and bounded community or product-specific usages support a four-tier status model, mechanism-first observable components, and explicit limitations for weakly established suffixes.",
+      "artifact": "docs/research-evidence/photo-prompt/punk-aesthetics-20260831/source-research.md and docs/research-evidence/photo-prompt/research_evidence.jsonl#punk_aesthetic_*"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The dictionary validator, 6,909-entry semantic index, 81-profile visual index, 7 focused punk tests, 72-case existing worldbuilding holdout, and 39 BM25F and visual-profile regressions pass.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; eval_semantic.py --check-index; build_visual_profile_index.py --check; python -m unittest tests.test_photo_punk_aesthetic_semantics; test_worldbuilding_extension_routes_holdout_and_evidence_are_deep_and_scoped; tests.test_photo_bm25f_retrieval tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval"
+    },
+    {
+      "id": "e-routing",
+      "kind": "prompt-evaluation",
+      "claim": "All exact English and Korean contract terms route to one intended preset, while cybergoth, DIY punk music, generic green architecture, decorative gears, neon future cities, ordinary ocean research, and ordinary desert infrastructure do not activate a punk preset.",
+      "artifact": "tests/test_photo_punk_aesthetic_semantics.py"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Rule-mode generation for cyberpunk, decopunk, lunarpunk, and crystalpunk keeps the selected world mechanism and one connected material carrier together in the composed prompt.",
+      "artifact": "tests/test_photo_punk_aesthetic_semantics.py#test_rule_generation_keeps_world_mechanism_and_carrier_together"
+    },
+    {
+      "id": "e-candidate-pack",
+      "kind": "prompt-evaluation",
+      "claim": "The semantic candidate pack for exact cyberpunk routes to punk_cyberpunk_world and exposes three prop candidates covering core apparatus, diagnosis, and maintenance handoff instead of converting a singleton prop into an authorial opening.",
+      "artifact": "command: generate_photo_prompt.py --intent cyberpunk --selection-mode semantic --seed 831 --emit-candidate-pack"
+    },
+    {
+      "id": "e-regression-boundary",
+      "kind": "package-check",
+      "claim": "The broad research-evidence contract still fails on pre-existing pose, makeup, and hair evidence rows whose reuse notes lack legacy no/copied wording; the new punk evidence rows pass the same constraints and the failure does not name a punk row.",
+      "artifact": "tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_retrieval_holdout_and_research_evidence_contracts_are_versioned"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "An exact requested punk aesthetic resolves to a world whose operating mechanism, material carrier, and social or environmental consequence can be read together without substituting palette, costume, or a lone motif.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "mechanism-material-consequence",
+        "statement": "Every contract declares at least three component groups and three confusion boundaries, and each non-solarpunk preset binds one world candidate to three mechanism-bearing prop alternatives.",
+        "evidence_ids": [
+          "e-research",
+          "e-package",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "operating input and conversion stage",
+          "material proof object",
+          "visible use diagnosis or handoff",
+          "social or environmental consequence"
+        ]
+      },
+      {
+        "id": "establishment-tier-boundary",
+        "statement": "Established genres, derivatives, an emerging community genre, and design shorthands retain different activation policies; exact-only constructions do not claim a universal canon.",
+        "evidence_ids": [
+          "e-request",
+          "e-research",
+          "e-routing"
+        ],
+        "causal_controls": [
+          "source type",
+          "independent genre evidence",
+          "exact request term",
+          "documented limitations"
+        ]
+      },
+      {
+        "id": "identity-and-ip-open",
+        "statement": "World semantics do not prescribe face, body, ethnicity, fixed wardrobe, or named franchise imagery; the adult resident or worker remains an open authorial dimension.",
+        "evidence_ids": [
+          "e-research",
+          "e-package"
+        ],
+        "causal_controls": [
+          "generic adult role",
+          "original fictional infrastructure",
+          "no fixed appearance",
+          "no protected-reference candidate text"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult resident identity",
+      "ethnicity",
+      "face and body",
+      "wardrobe",
+      "occupation within the operating system",
+      "camera and lighting",
+      "specific settlement layout",
+      "authorial story beyond the required mechanism"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-tag-only-baseline",
+      "scale": "global",
+      "axis": "visual-semantic representation",
+      "source_state": "The base dictionary has only brief atmosphere or mood entries for cyberpunk, steampunk, dieselpunk, and solarpunk, while the source list includes twenty terms.",
+      "render_state": "The candidate state contains twenty versioned contracts with component groups, boundaries, tiered activation, and runnable world-system presets.",
+      "evidence_ids": [
+        "e-request",
+        "e-research",
+        "e-package"
+      ]
+    },
+    {
+      "id": "mismatch-equal-canon",
+      "scale": "global",
+      "axis": "genre establishment",
+      "source_state": "A flat suffix list can imply that raypunk, magipunk, aetherpunk, or crystalpunk are as independently established as cyberpunk or steampunk.",
+      "render_state": "The candidate state makes ten terms exact-only design shorthands, one an exact-only emerging community genre, and records source limitations rather than inventing canon.",
+      "evidence_ids": [
+        "e-research",
+        "e-routing"
+      ]
+    },
+    {
+      "id": "mismatch-singleton-prop",
+      "scale": "local",
+      "axis": "candidate-pack prop diversity",
+      "source_state": "One mechanism prop per new preset is converted by the candidate-pack contract into an authorial opening to avoid fixed prompt influence.",
+      "render_state": "Three genre-specific prop alternatives now survive candidate-pack exposure as core apparatus, diagnosis, and maintenance handoff candidates.",
+      "evidence_ids": [
+        "e-candidate-pack"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-observable-contracts",
+      "stage": "representation",
+      "statement": "Mechanism, material carrier, and consequence components will prevent palette or costume substitutes from satisfying a requested punk aesthetic.",
+      "evidence_ids": [
+        "e-research",
+        "e-routing",
+        "e-prompt"
+      ],
+      "falsifier": "A confounder without the exact term routes to the preset, or a direct preset prompt omits either the world mechanism or its material carrier."
+    },
+    {
+      "id": "hypothesis-tiered-activation",
+      "stage": "prompt-interaction",
+      "statement": "Exact-only activation for emerging and shorthand terms will preserve useful constructions without overclaiming genre consensus or contaminating neighboring intents.",
+      "evidence_ids": [
+        "e-research",
+        "e-routing"
+      ],
+      "falsifier": "A generic neighboring scene activates a shorthand route, or an exact supported term fails to resolve to one preset."
+    },
+    {
+      "id": "hypothesis-three-prop-diversity",
+      "stage": "prompt-interaction",
+      "statement": "Three causally distinct prop alternatives per preset will survive singleton suppression and give the composing agent useful choice without changing the world contract.",
+      "evidence_ids": [
+        "e-candidate-pack",
+        "e-package"
+      ],
+      "falsifier": "An exact semantic pack still converts prop to an authorial opening, exposes an unrelated prop, or loses the scoped world preset."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent a punk-derived aesthetic through observable operating systems and bounded source status, bind each routed world to multiple material-evidence alternatives, and fail closed on neighboring subcultures, generic motifs, and weakly established suffixes.",
+    "generalization_basis": "The contracts share a mechanism-material-consequence grammar while preserving independent period, resource, environmental, and social owners for all twenty terms.",
+    "hypothesis_ids": [
+      "hypothesis-observable-contracts",
+      "hypothesis-tiered-activation",
+      "hypothesis-three-prop-diversity"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/punk-aesthetics-20260831/source-research.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_punk_aesthetics_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/db5fc1508c0e65a0",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_punk_aesthetic_semantics.py",
+      "tests/test_photo_prompt_contract_v2.py",
+      "artifacts/photo-prompt-punk-aesthetics-20260831/iteration_record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-regression-boundary"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-routing",
+        "e-prompt",
+        "e-candidate-pack"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "punk-exact-routing-en-ko",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "twenty contracts",
+          "English terms",
+          "Korean terms",
+          "one scoped preset per term"
+        ],
+        "evidence_ids": [
+          "e-routing"
+        ]
+      },
+      {
+        "id": "punk-neighbor-confounders",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "cybergoth",
+          "DIY punk music",
+          "green architecture",
+          "decorative gears",
+          "generic neon future",
+          "ordinary environment engineering"
+        ],
+        "evidence_ids": [
+          "e-routing"
+        ]
+      },
+      {
+        "id": "punk-semantic-candidate-pack",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "scoped preset",
+          "world mechanism candidate",
+          "three prop alternatives",
+          "no singleton authorial opening"
+        ],
+        "evidence_ids": [
+          "e-candidate-pack"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The source-tiered data model, exact routing, candidate references, semantic index, direct prompt composition, semantic candidate-pack diversity, existing worldbuilding holdout, and related BM25F and visual-profile regressions pass. Promotion is limited to package and prompt behavior: no images were generated, rendered-pixel fidelity and requesting-user aesthetic judgment remain unscored, and weakly sourced design shorthands remain exact-only.",
+    "evidence_ids": [
+      "e-research",
+      "e-package",
+      "e-routing",
+      "e-prompt",
+      "e-candidate-pack",
+      "e-regression-boundary"
+    ]
+  }
+}

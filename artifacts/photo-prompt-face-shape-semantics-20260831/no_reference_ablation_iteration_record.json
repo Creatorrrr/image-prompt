@@ -1,0 +1,162 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 plus the prior reference-informed five-arm artifacts",
+    "candidate_revision": "81eabea05c3b1238bec467bda21ccd8a494fe202 plus the no-reference five-arm evaluation artifacts"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Repeat the same five independent face-shape tests without using the supplied reference image and verify whether the candidate-pack keywords remain visible in generated pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The focused face-shape, visual-obligation, profile-retrieval, and BM25F test modules remain passing on the unchanged face-semantics candidate state.",
+      "artifact": "command: .venv/bin/python -m unittest tests.test_photo_face_shape_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval -v"
+    },
+    {
+      "id": "e-no-reference-input",
+      "kind": "generation-outcome",
+      "claim": "All five exact runtime requests contain zero references, every runtime audit reports reference_count zero, every manifest preserves an empty reference SHA list, and all five built-in calls returned a saved image without retry.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/shared/reference_input_proof.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five new lineage-bound candidate-pack v6 compositions and exact runtime requests pass live re-audit with their original face profile, domain, seed, and complex concept preserved and no image-dependency clause in runtime prose.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-{a,b,c,d,e}/{candidate_pack.json,composed_prompt.json,render_request.json}"
+    },
+    {
+      "id": "e-render-a",
+      "kind": "render-observation",
+      "claim": "The no-reference oval botanical-forensics render passes all five gates with a fully cleared perimeter, moderate vertical relation, subtle zygomatic width ownership, smooth rounded lower taper, and controlled confounds.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-a/result.png and shared/coordinator_pixel_review.json#arm-a"
+    },
+    {
+      "id": "e-render-b",
+      "kind": "render-observation",
+      "claim": "The no-reference round-compact polar-observatory render passes all five gates.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-b/result.png and shared/coordinator_pixel_review.json#arm-b"
+    },
+    {
+      "id": "e-render-c",
+      "kind": "render-observation",
+      "claim": "The no-reference diamond archive-conservation render passes all five gates with clear zygomatic width dominance and two-direction taper.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-c/result.png and shared/coordinator_pixel_review.json#arm-c"
+    },
+    {
+      "id": "e-render-d",
+      "kind": "render-observation",
+      "claim": "The no-reference upper-face-to-chin couture render passes three gates but fails complete perimeter visibility because of temple hair and fails continuous lower taper because the chin remains broad and rounded.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-d/result.png and shared/coordinator_pixel_review.json#arm-d"
+    },
+    {
+      "id": "e-render-e",
+      "kind": "render-observation",
+      "claim": "The no-reference definition-only seed-contour rooftop render passes all five gates without emitting a culture-scoped runtime label.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/arm-e/result.png and shared/coordinator_pixel_review.json#arm-e"
+    },
+    {
+      "id": "e-comparison",
+      "kind": "measurement",
+      "claim": "On common evaluable arms A, B, D, and E, passed gates move from 17 of 20 to 18 of 20 and complete passes from two of four to three of four; the one-shot unmatched render sampling prevents causal attribution to reference removal.",
+      "artifact": "artifacts/photo-runs/20260831-face-shape-five-arm-no-reference-v1/shared/reference_ablation_comparison.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Without image conditioning, each face-shape term must still become one complete observable hairline-to-chin relation whose vertical span, transverse-width owner, lower-contour termination, and confound control all survive in the same complex rendered photograph.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five-component-contract",
+        "statement": "Every tested profile requires the exact pack-derived perimeter, vertical, width-hierarchy, lower-contour, and confound gates, with partial treated as fail.",
+        "evidence_ids": ["e-prompt", "e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"],
+        "causal_controls": ["hairline and temples", "face length versus width", "forehead zygomatic and jaw widths", "jaw-to-chin continuity", "hair expression makeup light crop and perspective"]
+      },
+      {
+        "id": "zero-image-input",
+        "statement": "The generated photograph receives no reference path, recent conversation image, likeness instruction, or reference hash.",
+        "evidence_ids": ["e-no-reference-input", "e-prompt"],
+        "causal_controls": ["empty runtime references", "empty reference SHA list", "omitted native image arguments", "runtime dependency phrase scan"]
+      },
+      {
+        "id": "nonidentity-boundary",
+        "statement": "Subject appearance may vary freely; this evaluation makes no same-person, resemblance, identity, ethnicity, attractiveness, or biometric judgment.",
+        "evidence_ids": ["e-no-reference-input", "e-comparison"],
+        "causal_controls": ["original adult subject", "face-shape geometry only", "user judgment separate"]
+      }
+    ],
+    "flexible_dimensions": ["adult subject appearance", "identity", "ethnicity", "hair color", "wardrobe", "minor prop arrangement", "native render sampling", "output aspect ratio and face occupancy"]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-upper-taper-perimeter",
+      "scale": "regional",
+      "axis": "upper-temple perimeter visibility",
+      "source_state": "The no-reference D prompt requires hair swept away from both temples and the complete upper-to-lower perimeter.",
+      "render_state": "Dark side hair crosses both upper-temple boundaries and masks the complete width transition.",
+      "evidence_ids": ["e-render-d"]
+    },
+    {
+      "id": "mismatch-upper-taper-chin",
+      "scale": "regional",
+      "axis": "continuous lower-face taper",
+      "source_state": "The no-reference D prompt requires lower cheeks and jaw to narrow continuously toward a narrow chin.",
+      "render_state": "The lower cheeks narrow only modestly and terminate in a broad rounded chin.",
+      "evidence_ids": ["e-render-d"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-reference-not-required",
+      "stage": "generator-response",
+      "statement": "The five-component face contracts can actuate without appearance-reference conditioning because the literal relational controls rather than the reference own the requested geometry.",
+      "evidence_ids": ["e-no-reference-input", "e-render-a", "e-render-b", "e-render-c", "e-render-e"],
+      "falsifier": "Repeated no-reference renders with audited literal contracts systematically lose the specified relations while matched reference-conditioned renders retain them."
+    },
+    {
+      "id": "hypothesis-hair-and-chin-variance",
+      "stage": "generator-response",
+      "statement": "Long side hair and lower-contour sampling remain independent compliance risks for upper-face-to-chin taper even when prompt and runtime contracts pass.",
+      "evidence_ids": ["e-render-d", "e-comparison"],
+      "falsifier": "Repeated matched renders show stable full temple clearance and narrow continuous chin taper without changing the contract."
+    },
+    {
+      "id": "hypothesis-causal-ablation-limit",
+      "stage": "sampling",
+      "statement": "The small aggregate gain cannot be attributed to reference removal because each condition contains only one unmatched native sample per arm, the native tool exposes no matched render seed, and A, B, and D changed output aspect ratio between conditions.",
+      "evidence_ids": ["e-comparison", "e-render-a", "e-render-d"],
+      "falsifier": "A repeated matched-seed or adequately replicated factorial test isolates reference conditioning as the only variable and reproduces the gain."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No new shared runtime rule is installed from this one-shot ablation; preserve the existing face-shape contracts and retain the D failures as evaluation evidence.",
+    "generalization_basis": "The test supports bounded no-reference actuation but not a causal or universal policy change.",
+    "hypothesis_ids": ["hypothesis-reference-not-required", "hypothesis-hair-and-chin-variance", "hypothesis-causal-ablation-limit"],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt", "e-no-reference-input"]},
+    "render": {"status": "fail", "evidence_ids": ["e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {"id": "arm-a-oval-no-reference", "case_role": "motivating", "status": "pass", "covered_axes": ["full perimeter", "moderate vertical relation", "subtle zygomatic width", "smooth rounded taper"], "evidence_ids": ["e-render-a"]},
+      {"id": "arm-b-round-no-reference", "case_role": "held-out", "status": "pass", "covered_axes": ["compact vertical relation", "broad cheek width", "short rounded lower curve"], "evidence_ids": ["e-render-b"]},
+      {"id": "arm-c-diamond-no-reference", "case_role": "held-out", "status": "pass", "covered_axes": ["zygomatic width dominance", "two-direction taper"], "evidence_ids": ["e-render-c"]},
+      {"id": "arm-d-upper-taper-no-reference", "case_role": "held-out", "status": "fail", "covered_axes": ["upper-width dominance", "temple clearance", "continuous chin taper"], "evidence_ids": ["e-render-d"]},
+      {"id": "arm-e-seed-no-reference", "case_role": "held-out", "status": "pass", "covered_axes": ["definition-only runtime", "oval upper-middle relation", "cheek-owned width", "strong lower taper"], "evidence_ids": ["e-render-e"]}
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "All five no-reference prompt/runtime contracts pass and four unrelated images pass every pixel gate, so reference conditioning is not required for visible actuation in these tested conditions. Render-fidelity promotion remains blocked by the D perimeter and chin-taper failures, one-shot unmatched sampling, and pending requesting-user aesthetic judgment.",
+    "evidence_ids": ["e-package", "e-no-reference-input", "e-prompt", "e-render-a", "e-render-b", "e-render-c", "e-render-d", "e-render-e", "e-comparison"]
+  }
+}

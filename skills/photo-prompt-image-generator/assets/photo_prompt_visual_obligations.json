@@ -6894,6 +6894,657 @@
         {"id": "vo_face_seed_confound_control", "review_scale": "native", "description": "Egg-oval shorthand, isolated V taper, surgery, styling, ethnicity, and beauty-value inference do not replace the literal contour evidence."}
       ],
       "reject_substitutes": ["egg_oval_without_stronger_lower_taper", "pointed_chin_only", "generic_v_taper_only", "surgery_diagram_or_claim", "ethnicity_or_beauty_inference", "fixed_ratio_claim"]
+    },
+    {
+      "id": "no_makeup_makeup_layering",
+      "category": "makeup_layer_balance",
+      "activation": {
+        "exact_terms": ["no-makeup makeup", "no makeup makeup", "makeup-no-makeup look", "노메이크업 메이크업", "노 메이크업 메이크업", "노메이크업 룩"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A deliberately applied cosmetic look with sheer or localized complexion correction, retained pores and natural color variation, restrained brow lash cheek and lip definition, and no single high-contrast region dominating the face.",
+        "paraphrase_examples": ["얇은 톤 보정 아래 실제 피부 변화가 남고 눈썹 속눈썹 볼 입술은 절제된 메이크업", "cosmetics are present but each layer remains low contrast and subordinate to readable skin", "targeted correction and grooming without turning the face into bare skin or full glam"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["sheer_or_selective_coverage", "retained_skin_variation", "restrained_feature_balance", "confound_control"],
+          "groups": [
+            {"id": "sheer_or_selective_coverage", "any_terms": ["sheer or selectively corrected complexion coverage", "thin localized base application rather than opaque full coverage", "얇거나 필요한 부위만 보정한 베이스"]},
+            {"id": "retained_skin_variation", "any_terms": ["pores freckles and natural color variation remain readable", "real skin texture survives beneath the cosmetic layer", "모공과 자연스러운 피부색 변화가 남음"]},
+            {"id": "restrained_feature_balance", "any_terms": ["brow lash cheek and lip definition all remain restrained", "no facial makeup region dominates in contrast", "눈썹 속눈썹 볼 입술이 모두 절제됨"]},
+            {"id": "confound_control", "any_terms": ["bare face full glam and digital smoothing do not substitute", "cosmetic evidence stays separate from retouching and exposure", "맨얼굴 풀 글램 디지털 보정을 구분함"]}
+          ]
+        },
+        "contrast_examples": ["a completely bare face with no cosmetic evidence", "opaque full-glam coverage with dominant eye or lip contrast", "a skin-smoothing filter mistaken for sheer base", "flat lighting that merely hides pigment boundaries"]
+      },
+      "concept_candidate": {"concept_terms": ["sheer complexion correction", "localized base coverage", "retained pores", "natural color variation", "restrained brows", "subtle lash definition", "low-contrast cheek color", "natural lip treatment", "balanced cosmetic layers", "no digital smoothing"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["no-makeup makeup", "no makeup makeup", "makeup-no-makeup look", "노메이크업 메이크업", "노 메이크업 메이크업", "노메이크업 룩"],
+        "runtime_forbidden_labels": ["no-makeup makeup", "no makeup makeup", "makeup-no-makeup look", "노메이크업 메이크업", "노 메이크업 메이크업", "노메이크업 룩"]
+      },
+      "composition_instruction": "Keep the face close enough to resolve the applied cosmetic layer. Use sheer or selective complexion correction, retain pores and natural color variation, and keep brow, lash, cheek, and lip definition mutually restrained. Express literal components instead of the trend label; bare skin, full glam, smoothing, and flat exposure cannot substitute.",
+      "required_evidence_fields": ["coverage_layer_phrase", "skin_variation_phrase", "feature_balance_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "coverage_layer_phrase": {"min_content_words": 6, "must_mention_any": ["sheer or selectively corrected complexion coverage remains visible", "thin localized base application remains visibly cosmetic"]},
+        "skin_variation_phrase": {"min_content_words": 6, "must_mention_any": ["pores freckles and natural color variation remain readable", "real skin texture remains visible beneath the cosmetic layer"]},
+        "feature_balance_phrase": {"min_content_words": 7, "must_mention_any": ["brow lash cheek and lip definition all remain restrained", "no single facial makeup region dominates in contrast"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["bare face full glam and digital smoothing do not substitute", "cosmetic evidence remains separate from retouching and exposure"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_nomakeup_layer_presence", "review_scale": "thumbnail", "description": "A coherent applied cosmetic layer remains visible without one high-contrast feature dominating."},
+        {"id": "vo_makeup_nomakeup_skin_variation", "review_scale": "both", "description": "Pores and natural complexion variation remain readable beneath sheer or selective correction."},
+        {"id": "vo_makeup_nomakeup_feature_restraint", "review_scale": "native", "description": "Brow, lash, cheek, and lip treatments are all present but mutually restrained."},
+        {"id": "vo_makeup_nomakeup_confound_control", "review_scale": "native", "description": "Bare skin, opaque glam, digital smoothing, and flat exposure do not create the result."}
+      ],
+      "reject_substitutes": ["bare_face_without_cosmetic_evidence", "opaque_full_glam", "digital_skin_smoothing", "flat_exposure_hiding_makeup", "single_dominant_feature"]
+    },
+    {
+      "id": "smoky_eye_diffused_gradient",
+      "category": "eye_makeup_geometry",
+      "activation": {
+        "exact_terms": ["smoky eye makeup", "smoky-eye makeup", "smokey eye makeup", "smoky eye", "스모키 아이 메이크업", "스모키 아이"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An eyeshadow structure whose darkest cosmetic density is anchored at the upper lash line and often the outer lid, then diffuses through a continuous decreasing gradient across the mobile lid and crease without becoming a hard rectangular block.",
+        "paraphrase_examples": ["속눈썹선이 가장 짙고 눈꺼풀과 크리즈 위로 갈수록 부드럽게 옅어지는 아이섀도", "dark pigment begins at the lash roots and loses density smoothly upward and outward", "optional lower-lid support remains connected to the eye design rather than resembling a bruise"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["lashline_density_anchor", "continuous_diffusion", "eye_region_coherence", "confound_control"],
+          "groups": [
+            {"id": "lashline_density_anchor", "any_terms": ["darkest eyeshadow density is anchored at the lash line", "pigment begins at the upper lash roots and outer lid", "속눈썹선과 바깥 눈꺼풀이 가장 짙음"]},
+            {"id": "continuous_diffusion", "any_terms": ["shadow density decreases continuously across lid and crease", "soft upward and outward gradient has no hard block edge", "눈꺼풀에서 크리즈로 연속적으로 번짐"]},
+            {"id": "eye_region_coherence", "any_terms": ["upper and optional lower shadow read as one cosmetic eye design", "both visible eyes follow the declared smoky placement", "위아래 음영이 하나의 아이 메이크업으로 연결됨"]},
+            {"id": "confound_control", "any_terms": ["bruise dark circle fatigue and eyeliner alone do not substitute", "cosmetic pigment remains separable from eye-socket lighting", "멍 다크서클 피로와 조명 그림자를 구분함"]}
+          ]
+        },
+        "contrast_examples": ["a thick eyeliner band with no lid gradient", "uniform black paint covering the entire eyelid", "natural eye-socket shadow or dark circles", "purple bruising or fatigue cues below the eyes"]
+      },
+      "concept_candidate": {"concept_terms": ["lash-line density anchor", "dark outer lid", "mobile-lid gradient", "crease diffusion", "soft upper edge", "optional lower-lid support", "cosmetic pigment", "bilateral eye coherence", "no rectangular block", "no injury cue"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["smoky eye makeup"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame both eyes clearly. Anchor the darkest cosmetic pigment at the lash line and outer lid, then decrease density continuously across the mobile lid and crease with a soft upper edge. Keep any lower-lid support connected to the same design and separate the makeup from bruising, fatigue, dark circles, eyeliner alone, and cast shadow.",
+      "required_evidence_fields": ["lashline_anchor_phrase", "gradient_diffusion_phrase", "eye_coherence_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "lashline_anchor_phrase": {"min_content_words": 6, "must_mention_any": ["darkest eyeshadow density remains anchored at the lash line", "pigment begins at the upper lash roots and outer lid"]},
+        "gradient_diffusion_phrase": {"min_content_words": 7, "must_mention_any": ["shadow density decreases continuously across the lid and crease", "soft upward and outward gradient has no hard block edge"]},
+        "eye_coherence_phrase": {"min_content_words": 6, "must_mention_any": ["upper and optional lower shadow read as one cosmetic eye design", "both visible eyes follow the declared smoky placement"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["bruise dark circle fatigue and eyeliner alone do not substitute", "cosmetic pigment remains separate from eye-socket lighting and injury"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_smoky_lashline_anchor", "review_scale": "thumbnail", "description": "The darkest eye pigment is visibly anchored at the lash line and outer lid."},
+        {"id": "vo_makeup_smoky_continuous_gradient", "review_scale": "both", "description": "Pigment density decreases continuously through lid and crease without a hard block."},
+        {"id": "vo_makeup_smoky_eye_coherence", "review_scale": "native", "description": "Upper and optional lower shadow form one coherent cosmetic design around the eyes."},
+        {"id": "vo_makeup_smoky_confound_control", "review_scale": "native", "description": "Bruising, dark circles, fatigue, cast shadow, and eyeliner alone do not supply the effect."}
+      ],
+      "reject_substitutes": ["eyeliner_only", "uniform_black_lid_block", "eye_socket_shadow_only", "dark_circles_or_fatigue", "bruise_or_injury_color"]
+    },
+    {
+      "id": "cut_crease_lid_separation",
+      "category": "eye_makeup_geometry",
+      "activation": {
+        "exact_terms": ["cut crease makeup", "cut-crease makeup", "cut crease eyeshadow", "컷 크리즈 메이크업", "컷 크리즈"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An eyeshadow construction with a deliberate clean boundary near the crease that separates a lighter or distinct mobile-lid plane from deeper color above it, maintaining contrast and a continuous designed edge across the visible lid.",
+        "paraphrase_examples": ["움직이는 눈꺼풀의 밝은 면과 크리즈 위 짙은 색이 깨끗한 경계로 나뉜 아이섀도", "a cleaned mobile lid remains distinct from the deeper transition shade above the crease", "the crease edge is a cosmetic boundary rather than the natural fold shadow itself"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["crease_boundary", "lid_plane_contrast", "designed_edge_continuity", "confound_control"],
+          "groups": [
+            {"id": "crease_boundary", "any_terms": ["clean cosmetic boundary follows or sits near the crease", "crease separation remains sharply readable", "크리즈 부근의 화장 경계가 선명함"]},
+            {"id": "lid_plane_contrast", "any_terms": ["mobile lid is lighter or distinctly different from color above", "two eyeshadow planes retain visible contrast", "움직이는 눈꺼풀과 위쪽 색면이 대비됨"]},
+            {"id": "designed_edge_continuity", "any_terms": ["the cut edge continues coherently across the visible lid", "both selected eyes preserve the intended crease geometry", "컷 경계가 눈꺼풀을 따라 끊기지 않음"]},
+            {"id": "confound_control", "any_terms": ["natural fold shadow floating liner and halo eye do not substitute", "eyeliner remains separate from the crease boundary", "자연 주름 그림자 플로팅 라인 헤일로 아이를 구분함"]}
+          ]
+        },
+        "contrast_examples": ["a normal eyelid fold visible under plain makeup", "floating eyeliner above an otherwise uniform lid", "a halo eye with bright center and dark sides", "soft smoky blending that erases the crease boundary"]
+      },
+      "concept_candidate": {"concept_terms": ["clean crease boundary", "lighter mobile lid", "deeper above-crease color", "contrasting lid planes", "continuous cut edge", "angled brush precision", "bilateral crease geometry", "separate eyeliner", "no smoky blur", "no natural-fold substitute"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["cut-crease eyeshadow"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the mobile lids and crease region clearly. Maintain one clean cosmetic boundary near each selected crease, keep the mobile lid lighter or distinctly different from the deeper above-crease color, and preserve the designed edge across the lid. Natural fold shadow, floating liner, halo placement, or smoky blur cannot substitute.",
+      "required_evidence_fields": ["crease_boundary_phrase", "lid_plane_contrast_phrase", "edge_continuity_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "crease_boundary_phrase": {"min_content_words": 6, "must_mention_any": ["clean cosmetic boundary follows or sits near the crease", "crease separation remains sharply readable"]},
+        "lid_plane_contrast_phrase": {"min_content_words": 7, "must_mention_any": ["mobile lid remains lighter or distinctly different from color above", "two eyeshadow planes retain visible contrast"]},
+        "edge_continuity_phrase": {"min_content_words": 6, "must_mention_any": ["cut edge continues coherently across the visible lid", "both selected eyes preserve the intended crease geometry"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["natural fold shadow floating liner and halo eye do not substitute", "eyeliner remains separate from the cosmetic crease boundary"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_cut_crease_boundary", "review_scale": "thumbnail", "description": "A clean deliberate boundary remains visible near the crease of each selected eye."},
+        {"id": "vo_makeup_cut_crease_lid_contrast", "review_scale": "both", "description": "The mobile lid and above-crease color remain visibly distinct cosmetic planes."},
+        {"id": "vo_makeup_cut_crease_edge_continuity", "review_scale": "native", "description": "The cut edge continues coherently across the visible lid without accidental gaps."},
+        {"id": "vo_makeup_cut_crease_confound_control", "review_scale": "native", "description": "Natural fold shadow, floating liner, halo placement, and smoky blending do not replace the cut."}
+      ],
+      "reject_substitutes": ["natural_eyelid_fold_only", "floating_eyeliner_only", "halo_eye_center_focus", "smoky_blended_crease", "concealer_without_color_separation"]
+    },
+    {
+      "id": "graphic_negative_space_eyeliner",
+      "category": "eye_makeup_geometry",
+      "activation": {
+        "exact_terms": ["negative-space eyeliner", "negative space eyeliner", "floating eyeliner", "플로팅 아이라이너", "네거티브 스페이스 아이라이너"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A deliberate eyeliner stroke or closed graphic segment positioned partly away from the natural lash line so that a clean band of unpainted skin remains visibly bounded between the cosmetic line and the eye or lid structure.",
+        "paraphrase_examples": ["속눈썹선과 떨어진 그래픽 라인 사이에 깨끗한 피부 여백이 남는 아이라이너", "a precise floating stroke has coherent endpoints and a readable unpainted gap beneath it", "negative space belongs to the line geometry rather than an accidental missing segment"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["floating_line_geometry", "bounded_skin_gap", "endpoint_coherence", "confound_control"],
+          "groups": [
+            {"id": "floating_line_geometry", "any_terms": ["deliberate eyeliner stroke sits away from the natural lash line", "graphic line follows a coherent designed path", "그래픽 라인이 속눈썹선과 떨어져 있음"]},
+            {"id": "bounded_skin_gap", "any_terms": ["clean unpainted skin remains visible between line and lid", "negative-space band is continuous and intentionally bounded", "라인과 눈꺼풀 사이 피부 여백이 이어짐"]},
+            {"id": "endpoint_coherence", "any_terms": ["line thickness and endpoints remain precise and intentional", "both ends of the graphic stroke resolve cleanly", "라인 굵기와 양 끝이 의도적으로 정리됨"]},
+            {"id": "confound_control", "any_terms": ["accidental gaps crease shadow and eyeshadow shape do not substitute", "negative space remains separate from missing eyeliner or image defects", "끊긴 아이라인 주름 그림자 아이섀도를 구분함"]}
+          ]
+        },
+        "contrast_examples": ["ordinary winged liner attached to the lash line", "a broken eyeliner stroke with accidental missing pigment", "dark crease shadow above a bare lid", "an eyeshadow cutout without a precise liner stroke"]
+      },
+      "concept_candidate": {"concept_terms": ["floating eyeliner stroke", "clean skin gap", "bounded negative space", "precise line thickness", "coherent endpoints", "graphic eye geometry", "separate lash line", "unpainted lid band", "no accidental break", "no crease-shadow substitute"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["graphic negative-space eyeliner"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the eyelid surface and lash line legible. Place a precise graphic liner stroke partly away from the natural lash line, preserve a continuous unpainted skin gap between them, and resolve both line endpoints cleanly. Accidental missing pigment, crease shadow, eyeshadow shape, or ordinary attached winged liner cannot substitute.",
+      "required_evidence_fields": ["floating_line_phrase", "negative_space_phrase", "endpoint_coherence_phrase", "confound_control_phrase"],
+      "evidence_requirements": {
+        "floating_line_phrase": {"min_content_words": 7, "must_mention_any": ["deliberate eyeliner stroke sits away from the natural lash line", "graphic line follows a coherent designed path above the lid"]},
+        "negative_space_phrase": {"min_content_words": 7, "must_mention_any": ["clean unpainted skin remains visible between line and lid", "negative-space band remains continuous and intentionally bounded"]},
+        "endpoint_coherence_phrase": {"min_content_words": 6, "must_mention_any": ["line thickness and endpoints remain precise and intentional", "both ends of the graphic stroke resolve cleanly"]},
+        "confound_control_phrase": {"min_content_words": 7, "must_mention_any": ["accidental gaps crease shadow and eyeshadow shape do not substitute", "negative space remains separate from missing eyeliner and image defects"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_graphic_liner_floating_path", "review_scale": "thumbnail", "description": "A deliberate graphic liner path is visibly separated from the natural lash line."},
+        {"id": "vo_makeup_graphic_liner_skin_gap", "review_scale": "both", "description": "A continuous clean band of unpainted skin remains bounded beneath the floating stroke."},
+        {"id": "vo_makeup_graphic_liner_endpoints", "review_scale": "native", "description": "Line thickness and both endpoints remain precise, coherent, and intentionally resolved."},
+        {"id": "vo_makeup_graphic_liner_confound_control", "review_scale": "native", "description": "Broken pigment, crease shadow, eyeshadow cutouts, and ordinary attached wings do not substitute."}
+      ],
+      "reject_substitutes": ["ordinary_attached_wing", "accidental_missing_pigment", "crease_shadow_only", "eyeshadow_cutout_only", "image_defect_gap"]
+    },
+    {
+      "id": "glass_skin_specular_diffuse_balance",
+      "category": "complexion_optics",
+      "activation": {
+        "exact_terms": ["glass skin makeup", "glass-skin makeup", "glass skin complexion", "글래스 스킨 메이크업", "유리알 피부 메이크업"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complexion finish combining broad low-contrast diffuse radiance with controlled face-plane-following specular highlights while pores and natural microtexture remain visible, so luminosity reads as a cosmetic optical layer rather than oil, plastic retouching, or overexposure.",
+        "paraphrase_examples": ["얼굴 전반의 부드러운 광과 높은 면의 제한된 반사광이 함께 보이면서 모공은 남는 피부 표현", "diffuse radiance spans the complexion while sharper highlights stay localized to coherent facial planes", "luminous cosmetics remain distinct from greasy hotspots and a poreless smoothing filter"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["broad_diffuse_radiance", "controlled_specular_pattern", "retained_microtexture", "optical_confound_control"],
+          "groups": [
+            {"id": "broad_diffuse_radiance", "any_terms": ["broad low-contrast diffuse radiance covers the complexion", "soft luminous base remains visible outside highlight zones", "얼굴 전반에 부드러운 확산광이 남음"]},
+            {"id": "controlled_specular_pattern", "any_terms": ["localized specular highlights follow coherent high facial planes", "highlight shapes agree with the visible light direction", "제한된 반사광이 얼굴 높은 면과 조명 방향을 따름"]},
+            {"id": "retained_microtexture", "any_terms": ["pores and natural skin microtexture remain visible", "luminous finish does not erase surface detail", "광택 아래 모공과 피부 미세결이 보임"]},
+            {"id": "optical_confound_control", "any_terms": ["oily hotspots plastic smoothing and overexposure do not substitute", "surface finish remains separate from global lighting and filter effects", "유분 핫스팟 플라스틱 보정 과노출을 구분함"]}
+          ]
+        },
+        "contrast_examples": ["isolated greasy forehead or nose hotspots", "poreless plastic skin created by digital smoothing", "global overexposure washing out complexion detail", "a ring-light reflection with otherwise matte flat skin"]
+      },
+      "concept_candidate": {"concept_terms": ["broad diffuse skin radiance", "localized specular highlights", "face-plane highlight coherence", "visible pores", "natural microtexture", "luminous cosmetic base", "controlled highlight contrast", "consistent light direction", "no oily hotspots", "no plastic retouching"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["glass skin makeup", "glass-skin makeup", "glass skin complexion", "글래스 스킨 메이크업", "유리알 피부 메이크업"],
+        "runtime_forbidden_labels": ["glass skin makeup", "glass-skin makeup", "glass skin complexion", "글래스 스킨 메이크업", "유리알 피부 메이크업"]
+      },
+      "composition_instruction": "Show enough facial surface to compare diffuse and specular regions. Build broad low-contrast complexion radiance, place controlled highlights on coherent high facial planes under one light direction, and retain pores and microtexture. Express these optics instead of the trend label; oil hotspots, plastic smoothing, overexposure, and ring-light glare alone cannot substitute.",
+      "required_evidence_fields": ["diffuse_radiance_phrase", "specular_pattern_phrase", "microtexture_phrase", "optical_confound_phrase"],
+      "evidence_requirements": {
+        "diffuse_radiance_phrase": {"min_content_words": 7, "must_mention_any": ["broad low-contrast diffuse radiance covers the complexion", "soft luminous base remains visible outside highlight zones"]},
+        "specular_pattern_phrase": {"min_content_words": 7, "must_mention_any": ["localized specular highlights follow coherent high facial planes", "highlight shapes agree with the visible light direction"]},
+        "microtexture_phrase": {"min_content_words": 6, "must_mention_any": ["pores and natural skin microtexture remain visible", "luminous finish does not erase surface detail"]},
+        "optical_confound_phrase": {"min_content_words": 7, "must_mention_any": ["oily hotspots plastic smoothing and overexposure do not substitute", "surface finish remains separate from global lighting and filter effects"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_glass_skin_diffuse_radiance", "review_scale": "thumbnail", "description": "Broad low-contrast radiance remains visible across the complexion beyond isolated highlights."},
+        {"id": "vo_makeup_glass_skin_specular_pattern", "review_scale": "both", "description": "Controlled specular highlights follow coherent high facial planes and the visible light direction."},
+        {"id": "vo_makeup_glass_skin_microtexture", "review_scale": "native", "description": "Pores and natural skin microtexture remain legible beneath the luminous cosmetic finish."},
+        {"id": "vo_makeup_glass_skin_confound_control", "review_scale": "native", "description": "Oil hotspots, smoothing, overexposure, and ring-light glare alone do not create the finish."}
+      ],
+      "reject_substitutes": ["oily_hotspots_only", "plastic_skin_smoothing", "global_overexposure", "ring_light_glare_only", "poreless_filter_effect"]
+    },
+    {
+      "id": "gradient_lip_center_distribution",
+      "category": "lip_color_distribution",
+      "activation": {
+        "exact_terms": ["gradient lip makeup", "gradient lips", "center-gradient lip", "그라데이션 립 메이크업", "그라데이션 립"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A one-color lip pigment distribution with the highest saturation at the inner center of both lips, a continuous decrease toward the outer vermilion, and a deliberately softened final edge while lip anatomy and surface finish remain separately readable.",
+        "paraphrase_examples": ["윗입술과 아랫입술 안쪽이 가장 진하고 바깥 경계로 갈수록 한 색이 연속적으로 옅어지는 립", "one cosmetic hue fades from a saturated inner center to a softer outer lip boundary", "matte satin or gloss may vary without replacing the required center-to-edge color gradient"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["inner_center_saturation", "continuous_outward_fade", "soft_outer_edge", "distribution_confound_control"],
+          "groups": [
+            {"id": "inner_center_saturation", "any_terms": ["inner center of both lips carries the highest pigment saturation", "central oral-facing lip area is visibly deepest in color", "윗입술과 아랫입술 안쪽 중심이 가장 진함"]},
+            {"id": "continuous_outward_fade", "any_terms": ["one hue decreases continuously from center toward the vermilion edge", "mid-lip transition remains smooth and readable", "한 색이 안쪽에서 바깥쪽으로 연속적으로 옅어짐"]},
+            {"id": "soft_outer_edge", "any_terms": ["outer vermilion boundary remains deliberately softened", "lip outline is diffused without disappearing", "바깥 입술 경계가 의도적으로 부드러움"]},
+            {"id": "distribution_confound_control", "any_terms": ["uniform full coverage two-tone ombre and lighting do not substitute", "lip anatomy and surface finish remain separate from color placement", "풀 커버 투톤 옴브레 조명 효과를 구분함"]}
+          ]
+        },
+        "contrast_examples": ["uniform lipstick saturation from center to edge", "two different colors creating an ombre transition", "dark center caused only by mouth shadow", "soft-focus photography that blurs the whole lip"]
+      },
+      "concept_candidate": {"concept_terms": ["inner-center lip saturation", "one-color distribution", "continuous outward fade", "soft vermilion edge", "visible mid-lip transition", "upper and lower lip coherence", "independent lip finish", "readable lip anatomy", "no uniform full coverage", "no lighting-only gradient"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["center-gradient lip makeup"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep both lips and their vermilion boundaries in focus. Put the highest saturation at the inner center of the upper and lower lips, reduce the same hue continuously toward the outside, and finish with a deliberate soft edge. Preserve lip anatomy and independently chosen finish; uniform coverage, two-tone ombre, mouth shadow, and global blur cannot substitute.",
+      "required_evidence_fields": ["center_saturation_phrase", "outward_fade_phrase", "outer_edge_phrase", "distribution_confound_phrase"],
+      "evidence_requirements": {
+        "center_saturation_phrase": {"min_content_words": 7, "must_mention_any": ["inner center of both lips carries the highest pigment saturation", "central oral-facing lip area remains visibly deepest in color"]},
+        "outward_fade_phrase": {"min_content_words": 7, "must_mention_any": ["one hue decreases continuously from center toward the vermilion edge", "mid-lip color transition remains smooth and readable"]},
+        "outer_edge_phrase": {"min_content_words": 6, "must_mention_any": ["outer vermilion boundary remains deliberately softened", "lip outline remains diffused without disappearing"]},
+        "distribution_confound_phrase": {"min_content_words": 7, "must_mention_any": ["uniform full coverage two-tone ombre and lighting do not substitute", "lip anatomy and surface finish remain separate from color placement"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_gradient_lip_center_saturation", "review_scale": "thumbnail", "description": "The inner center of both lips is visibly the most saturated pigment region."},
+        {"id": "vo_makeup_gradient_lip_outward_fade", "review_scale": "both", "description": "One hue decreases continuously through a readable mid-lip transition toward the edge."},
+        {"id": "vo_makeup_gradient_lip_soft_edge", "review_scale": "native", "description": "The outer vermilion boundary remains deliberately softened without losing lip anatomy."},
+        {"id": "vo_makeup_gradient_lip_confound_control", "review_scale": "native", "description": "Uniform fill, two-tone ombre, mouth shadow, and global blur do not supply the gradient."}
+      ],
+      "reject_substitutes": ["uniform_full_lip_coverage", "two_tone_ombre_only", "mouth_shadow_only", "global_soft_focus_blur", "missing_lip_boundary"]
+    },
+    {
+      "id": "sunburn_blush_cross_face_distribution",
+      "category": "cheek_color_distribution",
+      "activation": {
+        "exact_terms": ["sunburn blush makeup", "sunburn blush", "sunburn-style blush", "선번 블러시 메이크업", "선번 블러시"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A warm cosmetic pigment distribution spanning both high cheeks and crossing the nose bridge as one coordinated band with soft controlled edges, explicitly separated from actual ultraviolet injury, inflammation, fever, white-balance shifts, and colored illumination.",
+        "paraphrase_examples": ["양쪽 높은 볼의 따뜻한 블러셔가 콧등을 지나 하나의 부드러운 가로 분포로 이어지는 화장", "warm blush remains bilaterally coordinated across high cheeks and nose rather than isolated red spots", "the cross-face pigment is cosmetic and must not resemble peeling painful or inflamed skin"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["bilateral_high_cheeks", "nose_bridge_connection", "soft_cosmetic_edges", "medical_light_confound_control"],
+          "groups": [
+            {"id": "bilateral_high_cheeks", "any_terms": ["warm pigment occupies both high cheek regions", "left and right cheek color remains coordinated", "양쪽 높은 볼에 따뜻한 색이 함께 놓임"]},
+            {"id": "nose_bridge_connection", "any_terms": ["pigment crosses the nose bridge between both cheeks", "one continuous cross-face blush distribution remains visible", "블러셔가 콧등을 지나 양 볼을 연결함"]},
+            {"id": "soft_cosmetic_edges", "any_terms": ["blush boundaries remain softly blended and cosmetically controlled", "warm pigment sits above readable normal skin texture", "부드러운 경계 아래 정상 피부 결이 남음"]},
+            {"id": "medical_light_confound_control", "any_terms": ["actual sunburn rash fever injury and colored light do not substitute", "no peeling swelling pain cue or global red cast supplies the effect", "실제 화상 발진 열감 부상 붉은 조명을 구분함"]}
+          ]
+        },
+        "contrast_examples": ["actual sunburn with peeling or inflamed skin", "fever or rash redness concentrated irregularly", "red studio light tinting the whole face", "blush only on the cheek apples with no nose bridge connection"]
+      },
+      "concept_candidate": {"concept_terms": ["bilateral high-cheek blush", "nose-bridge connection", "warm cross-face pigment", "soft blended edges", "normal skin texture", "coordinated left-right placement", "cosmetic layer evidence", "no peeling", "no inflammation", "no global red light cast"]},
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["sunburn blush makeup", "sunburn blush", "sunburn-style blush", "선번 블러시 메이크업", "선번 블러시"],
+        "runtime_forbidden_labels": ["sunburn blush makeup", "sunburn blush", "sunburn-style blush", "선번 블러시 메이크업", "선번 블러시"]
+      },
+      "composition_instruction": "Keep both high cheeks and the nose bridge visible in one frame. Place coordinated warm cosmetic pigment on both high cheeks, connect it across the bridge of the nose, and preserve soft controlled edges over normal skin texture. Use literal cosmetic components instead of the trend label; actual burn, rash, fever, injury, peeling, swelling, or red lighting cannot substitute.",
+      "required_evidence_fields": ["bilateral_cheek_phrase", "nose_bridge_phrase", "cosmetic_edge_phrase", "medical_light_confound_phrase"],
+      "evidence_requirements": {
+        "bilateral_cheek_phrase": {"min_content_words": 6, "must_mention_any": ["warm pigment occupies both high cheek regions", "left and right cheek color remains visibly coordinated"]},
+        "nose_bridge_phrase": {"min_content_words": 7, "must_mention_any": ["pigment crosses the nose bridge between both cheeks", "one continuous cross-face blush distribution remains visible"]},
+        "cosmetic_edge_phrase": {"min_content_words": 7, "must_mention_any": ["blush boundaries remain softly blended and cosmetically controlled", "warm pigment sits above readable normal skin texture"]},
+        "medical_light_confound_phrase": {"min_content_words": 8, "must_mention_any": ["actual sunburn rash fever injury and colored light do not substitute", "no peeling swelling pain cue or global red cast supplies the effect"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_sunburn_blush_bilateral_cheeks", "review_scale": "thumbnail", "description": "Warm cosmetic pigment remains visible and coordinated on both high cheek regions."},
+        {"id": "vo_makeup_sunburn_blush_nose_bridge", "review_scale": "both", "description": "The cheek pigment visibly connects across the nose bridge as one distribution."},
+        {"id": "vo_makeup_sunburn_blush_soft_edges", "review_scale": "native", "description": "Soft cosmetic boundaries sit over readable normal skin texture without inflamed edges."},
+        {"id": "vo_makeup_sunburn_blush_confound_control", "review_scale": "native", "description": "Burn, rash, fever, injury, peeling, swelling, and red lighting do not substitute."}
+      ],
+      "reject_substitutes": ["actual_uv_burn", "rash_or_fever_redness", "injury_or_inflammation", "global_red_light_cast", "cheek_only_without_nose_bridge"]
+    },
+    {
+      "id": "contour_highlight_cosmetic_sculpting",
+      "category": "cosmetic_plane_sculpting",
+      "activation": {
+        "exact_terms": ["contour and highlight makeup", "contour-highlight makeup", "face contour and highlight", "컨투어 하이라이트 메이크업", "컨투어 앤 하이라이트"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A cosmetic plane treatment combining localized matte darker pigment on selected receding facial regions with localized lighter or reflective product on selected high planes, joined by blended transitions and remaining distinguishable from anatomy, global dodge-and-burn, and cast lighting.",
+        "paraphrase_examples": ["얼굴의 들어간 면에는 국소적인 매트 음영 색을, 높은 면에는 밝은 제품을 배치하고 경계를 블렌딩한 메이크업", "dark cosmetic placement and light cosmetic placement occupy opposing but coherent facial planes", "one consistent illumination field proves that the dimension comes from product placement rather than moving shadows"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["localized_dark_product", "localized_light_product", "plane_alignment_and_blend", "lighting_anatomy_confound_control"],
+          "groups": [
+            {"id": "localized_dark_product", "any_terms": ["matte darker cosmetic pigment occupies selected receding face planes", "contour product remains localized rather than globally darkening skin", "들어간 얼굴 면에 국소적 매트 컨투어가 놓임"]},
+            {"id": "localized_light_product", "any_terms": ["lighter or reflective cosmetic product occupies selected high planes", "highlight remains locally placed and distinct from overall exposure", "높은 얼굴 면에 국소적 하이라이트가 놓임"]},
+            {"id": "plane_alignment_and_blend", "any_terms": ["dark and light placements align with opposing facial planes and blend at transitions", "both product regions remain coherent under one light field", "어두운 면과 밝은 면의 경계가 블렌딩됨"]},
+            {"id": "lighting_anatomy_confound_control", "any_terms": ["cast shadow anatomy surgery and global dodge burn do not substitute", "cosmetic placement stays visible independently of face shape and lighting", "조명 그림자 타고난 골격 수술 전역 보정을 구분함"]}
+          ]
+        },
+        "contrast_examples": ["hard directional light making one side of the face dark", "naturally prominent cheekbones with no product evidence", "global post-processing dodge and burn", "two unblended stripes unrelated to facial planes"]
+      },
+      "concept_candidate": {"concept_terms": ["localized matte contour pigment", "localized cosmetic highlight", "opposing facial planes", "blended transitions", "consistent light field", "readable product placement", "independent face anatomy", "no cast-shadow substitute", "no global dodge burn", "no surgery inference"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["cosmetic contour-and-highlight placement"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a consistent visible light direction and keep the treated face planes legible. Place localized matte darker pigment on selected receding regions, lighter or reflective product on selected high planes, and blend their transitions while retaining product evidence. Cast shadow, natural anatomy, surgery implication, global dodge-and-burn, and unrelated stripes cannot substitute.",
+      "required_evidence_fields": ["dark_product_phrase", "light_product_phrase", "plane_blend_phrase", "lighting_anatomy_confound_phrase"],
+      "evidence_requirements": {
+        "dark_product_phrase": {"min_content_words": 7, "must_mention_any": ["matte darker cosmetic pigment occupies selected receding face planes", "contour product remains localized rather than globally darkening skin"]},
+        "light_product_phrase": {"min_content_words": 7, "must_mention_any": ["lighter or reflective cosmetic product occupies selected high planes", "highlight remains locally placed and distinct from overall exposure"]},
+        "plane_blend_phrase": {"min_content_words": 8, "must_mention_any": ["dark and light placements align with opposing facial planes and blend at transitions", "both product regions remain coherent under one light field"]},
+        "lighting_anatomy_confound_phrase": {"min_content_words": 8, "must_mention_any": ["cast shadow anatomy surgery and global dodge burn do not substitute", "cosmetic placement stays visible independently of face shape and lighting"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_contour_localized_dark_product", "review_scale": "thumbnail", "description": "Localized matte darker cosmetic pigment remains visible on selected receding facial planes."},
+        {"id": "vo_makeup_contour_localized_highlight", "review_scale": "both", "description": "Localized lighter or reflective product remains visible on selected high facial planes."},
+        {"id": "vo_makeup_contour_plane_blend", "review_scale": "native", "description": "Dark and light placements align coherently and transition through controlled blending."},
+        {"id": "vo_makeup_contour_confound_control", "review_scale": "native", "description": "Cast lighting, anatomy, surgery implication, global dodge-and-burn, and stripes do not substitute."}
+      ],
+      "reject_substitutes": ["cast_shadow_only", "natural_anatomy_only", "surgery_or_treatment_inference", "global_dodge_and_burn", "unblended_unaligned_stripes"]
+    },
+    {
+      "id": "two_block_disconnected_cut",
+      "category": "hair_cut_structure",
+      "activation": {
+        "exact_terms": ["two-block haircut", "two block haircut", "two-block cut", "투블럭 헤어컷", "투 블록 헤어컷"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A disconnected haircut containing a visibly longer upper section and distinctly shorter side and back sections, separated by an abrupt readable boundary rather than a continuously blended fade.",
+        "paraphrase_examples": ["윗부분은 길게 남고 옆과 뒤는 짧으며 두 길이 영역 사이의 단절선이 보이는 헤어컷", "the top mass remains longer while the sides and nape form a separate short block", "weight and volume change abruptly at the boundary between the upper and lower sections"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["longer_upper_section", "short_side_back_section", "visible_disconnection", "weight_volume_relation", "blend_confound_control"],
+          "groups": [
+            {"id": "longer_upper_section", "any_terms": ["the upper hair section remains visibly longer", "a distinct longer top mass is readable", "윗부분의 긴 모발 영역이 분명함"]},
+            {"id": "short_side_back_section", "any_terms": ["the side and back sections are distinctly shorter", "short lower blocks follow the side and nape", "옆과 뒤의 짧은 영역이 별도로 보임"]},
+            {"id": "visible_disconnection", "any_terms": ["an abrupt length boundary separates the two sections", "the upper and lower blocks do not blend continuously", "두 길이 영역 사이 단절선이 보임"]},
+            {"id": "weight_volume_relation", "any_terms": ["the longer top carries visibly different weight and volume", "upper volume remains legible above the short lower section", "상부 볼륨과 하부 밀착감의 차이가 읽힘"]},
+            {"id": "blend_confound_control", "any_terms": ["a gradual fade taper or bowl outline does not substitute", "the structure remains readable independently of styling product", "페이드 테이퍼 단순 보울 실루엣과 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["a smooth skin fade with no abrupt length boundary", "a uniformly short buzz cut", "a round bowl silhouette with continuously blended sides", "long top hair hiding every side and back transition"]
+      },
+      "concept_candidate": {"concept_terms": ["longer upper hair block", "short side and back block", "abrupt length disconnection", "readable top weight", "visible nape transition", "two-section haircut geometry", "non-gradual boundary", "profile or three-quarter readability"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["two-block disconnected haircut"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the longer upper hair block, distinctly shorter side and back block, and their abrupt disconnection in a three-quarter or side-readable view. Preserve the different top weight and lower contour so a fade, taper, bowl outline, or styling product cannot carry the meaning alone.",
+      "required_evidence_fields": ["longer_top_phrase", "short_side_back_phrase", "disconnection_phrase", "weight_volume_phrase", "fade_confound_phrase"],
+      "evidence_requirements": {
+        "longer_top_phrase": {"min_content_words": 6, "must_mention_any": ["the upper hair section remains visibly longer", "a distinct longer top mass is readable"]},
+        "short_side_back_phrase": {"min_content_words": 7, "must_mention_any": ["the side and back sections are distinctly shorter", "short lower blocks follow the side and nape"]},
+        "disconnection_phrase": {"min_content_words": 7, "must_mention_any": ["an abrupt length boundary separates the two sections", "the upper and lower blocks do not blend continuously"]},
+        "weight_volume_phrase": {"min_content_words": 8, "must_mention_any": ["the longer top carries visibly different weight and volume", "upper volume remains legible above the short lower section"]},
+        "fade_confound_phrase": {"min_content_words": 8, "must_mention_any": ["a gradual fade taper or bowl outline does not substitute", "the structure remains readable independently of styling product"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_two_block_longer_top", "review_scale": "thumbnail", "description": "A distinct longer upper hair mass remains immediately readable."},
+        {"id": "vo_hair_two_block_short_sides_back", "review_scale": "both", "description": "The side and back hair form visibly shorter lower sections."},
+        {"id": "vo_hair_two_block_disconnection", "review_scale": "native", "description": "An abrupt length boundary separates upper and lower hair blocks."},
+        {"id": "vo_hair_two_block_weight_volume", "review_scale": "both", "description": "Upper weight and volume remain distinct from the lower contour."},
+        {"id": "vo_hair_two_block_not_fade", "review_scale": "native", "description": "A gradual fade taper bowl outline or styling product does not substitute."}
+      ],
+      "reject_substitutes": ["gradual_fade_or_taper", "uniform_buzz_cut", "bowl_silhouette_only", "styling_product_only", "occluded_side_back_boundary"]
+    },
+    {
+      "id": "hime_cut_structural",
+      "category": "hair_cut_structure",
+      "activation": {
+        "exact_terms": ["hime cut hairstyle", "hime cut", "히메컷 헤어스타일", "히메컷", "姫カット"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A long-hair cut structure with a retained rear length and paired blunt face-side panels ending around the cheek or jaw, joined by a clearly readable disconnected length step rather than ordinary blended framing layers.",
+        "paraphrase_examples": ["긴 뒷머리 위에 좌우 얼굴 옆의 뭉툭한 짧은 패널과 길이 단차가 보이는 스타일", "paired cheek-to-jaw side panels end bluntly in front of a longer rear mass", "a full fringe may support the look but cannot replace the paired side panels and disconnection"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["long_rear_mass", "paired_blunt_side_panels", "visible_length_step", "bilateral_face_context", "layer_confound_control"],
+          "groups": [
+            {"id": "long_rear_mass", "any_terms": ["a long rear hair mass continues below the side panels", "the back length remains substantially longer", "옆 패널 뒤로 긴 뒷머리가 이어짐"]},
+            {"id": "paired_blunt_side_panels", "any_terms": ["paired blunt cheek-to-jaw side panels frame the face", "both face-side sections end in dense horizontal edges", "좌우 얼굴 옆 패널이 뭉툭한 끝선으로 종료됨"]},
+            {"id": "visible_length_step", "any_terms": ["a visible disconnected length step separates panels from rear hair", "the short side sections meet the long rear mass without blending", "짧은 옆 패널과 긴 뒷머리 사이 단차가 분명함"]},
+            {"id": "bilateral_face_context", "any_terms": ["both side panels remain readable beside one face", "bilateral panel placement is visible in the portrait", "한 얼굴 양쪽의 패널이 함께 보임"]},
+            {"id": "layer_confound_control", "any_terms": ["ordinary feathered face-framing layers do not substitute", "a bob over hidden extensions or two loose tendrils cannot carry the structure", "일반 레이어 잔머리 보브 겹침과 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["softly blended face-framing layers", "a chin bob placed in front of hidden long extensions", "two loose tendrils beside otherwise uniform long hair", "long hair with blunt bangs but no side panels"]
+      },
+      "concept_candidate": {"concept_terms": ["long rear hair mass", "paired blunt side panels", "cheek-to-jaw panel endpoints", "disconnected length step", "bilateral face framing", "dense horizontal side edges", "full fringe optional", "three-quarter structural readability"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["structural hime cut"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the long rear hair mass and both blunt cheek-to-jaw side panels visible together, with the disconnected length step readable at thumbnail and native scale. A fringe may vary, while blended face-framing layers, a bob-over-long-hair illusion, or loose tendrils cannot substitute.",
+      "required_evidence_fields": ["rear_length_phrase", "side_panels_phrase", "length_step_phrase", "bilateral_context_phrase", "layer_confound_phrase"],
+      "evidence_requirements": {
+        "rear_length_phrase": {"min_content_words": 8, "must_mention_any": ["a long rear hair mass continues below the side panels", "the back length remains substantially longer"]},
+        "side_panels_phrase": {"min_content_words": 8, "must_mention_any": ["paired blunt cheek-to-jaw side panels frame the face", "both face-side sections end in dense horizontal edges"]},
+        "length_step_phrase": {"min_content_words": 9, "must_mention_any": ["a visible disconnected length step separates panels from rear hair", "the short side sections meet the long rear mass without blending"]},
+        "bilateral_context_phrase": {"min_content_words": 7, "must_mention_any": ["both side panels remain readable beside one face", "bilateral panel placement is visible in the portrait"]},
+        "layer_confound_phrase": {"min_content_words": 8, "must_mention_any": ["ordinary feathered face-framing layers do not substitute", "a bob over hidden extensions or two loose tendrils cannot carry the structure"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_hime_long_rear_mass", "review_scale": "thumbnail", "description": "The rear hair remains substantially longer than both side panels."},
+        {"id": "vo_hair_hime_paired_blunt_panels", "review_scale": "both", "description": "Two blunt cheek-to-jaw side panels remain visible beside the face."},
+        {"id": "vo_hair_hime_disconnected_step", "review_scale": "native", "description": "A clear disconnected length step separates panels from rear hair."},
+        {"id": "vo_hair_hime_bilateral_context", "review_scale": "both", "description": "Both side panels and the long rear mass are readable together."},
+        {"id": "vo_hair_hime_not_generic_layers", "review_scale": "native", "description": "Blended layers bob overlap and loose tendrils do not substitute."}
+      ],
+      "reject_substitutes": ["generic_face_framing_layers", "bob_over_long_extensions", "single_or_loose_tendrils", "bangs_without_side_panels", "occluded_length_step"]
+    },
+    {
+      "id": "cornrow_scalp_row_topology",
+      "category": "hair_braid_topology",
+      "activation": {
+        "exact_terms": ["cornrow braids", "cornrows hairstyle", "cornrows", "콘로우 브레이드", "콘로우"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A scalp-braided topology made of multiple narrow continuous braided rows attached closely along the scalp, separated by readable parting lanes and remaining distinct from large raised braids or free-hanging individual braids.",
+        "paraphrase_examples": ["두피에 밀착되어 경로를 따라 이어지는 여러 개의 좁은 브레이드와 가르마 통로", "many narrow braided ridges remain anchored to the scalp along repeated row paths", "the row layout may be straight or patterned while scalp attachment and parting lanes remain invariant"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["multiple_narrow_braids", "scalp_attachment", "parting_lanes", "continuous_row_paths", "braid_confound_control"],
+          "groups": [
+            {"id": "multiple_narrow_braids", "any_terms": ["multiple narrow braided ridges cover the scalp", "many small braids remain separately readable", "여러 개의 좁은 브레이드 융기가 보임"]},
+            {"id": "scalp_attachment", "any_terms": ["each row remains attached closely along the scalp", "the braids originate and travel against the scalp", "브레이드가 두피 경로에 밀착됨"]},
+            {"id": "parting_lanes", "any_terms": ["clean scalp parting lanes separate adjacent rows", "readable exposed divisions organize the braid paths", "행 사이의 두피 가르마 통로가 보임"]},
+            {"id": "continuous_row_paths", "any_terms": ["the braided ridges follow continuous deliberate row paths", "row direction remains traceable from front toward back or side", "각 브레이드 행의 연속 경로가 추적됨"]},
+            {"id": "braid_confound_control", "any_terms": ["two large Dutch braids and free box braids do not substitute", "decorative scalp lines without woven ridges cannot carry the topology", "큰 두 갈래 브레이드와 자유 낙하 브레이드와 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["two large raised Dutch braids", "free-hanging box braids with no scalp row path", "painted or shaved scalp lines without woven ridges", "a single French braid"]
+      },
+      "concept_candidate": {"concept_terms": ["multiple narrow scalp braids", "close scalp attachment", "readable parting lanes", "continuous row paths", "traceable braid direction", "patterned scalp topology", "visible woven ridges", "not free-hanging braids"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["cornrow scalp braids"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame enough of the crown and sides to show multiple narrow woven ridges attached along the scalp, their exposed parting lanes, and continuous row paths. Keep the topology distinct from two large raised braids, free box braids, shaved lines, or decorative markings.",
+      "required_evidence_fields": ["narrow_braids_phrase", "scalp_attachment_phrase", "parting_lanes_phrase", "row_paths_phrase", "braid_confound_phrase"],
+      "evidence_requirements": {
+        "narrow_braids_phrase": {"min_content_words": 7, "must_mention_any": ["multiple narrow braided ridges cover the scalp", "many small braids remain separately readable"]},
+        "scalp_attachment_phrase": {"min_content_words": 8, "must_mention_any": ["each row remains attached closely along the scalp", "the braids originate and travel against the scalp"]},
+        "parting_lanes_phrase": {"min_content_words": 8, "must_mention_any": ["clean scalp parting lanes separate adjacent rows", "readable exposed divisions organize the braid paths"]},
+        "row_paths_phrase": {"min_content_words": 8, "must_mention_any": ["the braided ridges follow continuous deliberate row paths", "row direction remains traceable from front toward back or side"]},
+        "braid_confound_phrase": {"min_content_words": 9, "must_mention_any": ["two large Dutch braids and free box braids do not substitute", "decorative scalp lines without woven ridges cannot carry the topology"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_cornrow_multiple_narrow_rows", "review_scale": "thumbnail", "description": "Multiple narrow braided rows remain visible across the scalp."},
+        {"id": "vo_hair_cornrow_scalp_attachment", "review_scale": "both", "description": "The braided ridges visibly remain attached along the scalp."},
+        {"id": "vo_hair_cornrow_parting_lanes", "review_scale": "native", "description": "Readable scalp parting lanes separate the adjacent braided rows."},
+        {"id": "vo_hair_cornrow_continuous_paths", "review_scale": "both", "description": "Each braided ridge follows a continuous traceable row path."},
+        {"id": "vo_hair_cornrow_not_large_or_free_braids", "review_scale": "native", "description": "Large Dutch braids free box braids and scalp markings do not substitute."}
+      ],
+      "reject_substitutes": ["two_large_dutch_braids", "free_hanging_box_braids", "single_french_braid", "shaved_or_painted_scalp_lines", "unreadable_parting_topology"]
+    },
+    {
+      "id": "locs_cord_structure",
+      "category": "hair_lock_topology",
+      "activation": {
+        "exact_terms": ["locs hairstyle", "hair locs", "dreadlocks hairstyle", "dreadlocks", "로크 헤어", "드레드락 헤어"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A hairstyle composed of multiple persistent cordlike locked sections that remain continuous from near the roots toward the ends, without the periodic strand crossings of braids and without the temporary adhesion pattern of wet clumps.",
+        "paraphrase_examples": ["뿌리 부근부터 끝까지 이어지는 여러 개의 지속적인 코드형 잠김 다발", "many rope-like hair cords remain individually continuous without repeating three-strand crossings", "cord diameter and length may vary while persistent locked continuity remains visible"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["multiple_hair_cords", "root_end_continuity", "locked_surface_structure", "no_periodic_crossings", "temporary_clump_confound_control"],
+          "groups": [
+            {"id": "multiple_hair_cords", "any_terms": ["multiple separately readable cordlike hair sections", "many rope-like hair cords form the style", "여러 개의 코드형 모발 다발이 구분됨"]},
+            {"id": "root_end_continuity", "any_terms": ["the cords continue from near the roots toward the ends", "each locked section follows a persistent root-to-end path", "각 잠김 다발이 뿌리부터 끝 방향으로 이어짐"]},
+            {"id": "locked_surface_structure", "any_terms": ["each cord has a compact interlocked hair surface", "the sections read as persistent locked fibers rather than loose strands", "다발 표면이 지속적으로 얽혀 잠긴 구조로 보임"]},
+            {"id": "no_periodic_crossings", "any_terms": ["the cords show no repeating three-strand braid crossings", "braided over-under periodicity is absent from the locked sections", "반복적인 삼가닥 교차 패턴이 없음"]},
+            {"id": "temporary_clump_confound_control", "any_terms": ["wet clumps two-strand twists and rope extensions do not substitute", "temporary strand adhesion cannot carry the locked structure", "젖은 뭉침 트위스트 장식 연장과 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["box braids with repeating crossings", "fresh two-strand twists", "wet hair separated into temporary clumps", "rope extensions attached without visible hair continuity"]
+      },
+      "concept_candidate": {"concept_terms": ["multiple cordlike loc sections", "persistent root-to-end continuity", "compact interlocked fibers", "separately readable hair cords", "no braid crossing periodicity", "natural cord variation", "locked hair topology", "culturally neutral person casting"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["locs hairstyle"], "forbidden_prompt_terms": ["dreadlocks", "dreadlocks hairstyle", "드레드락 헤어"], "runtime_forbidden_labels": ["dreadlocks", "dreadlocks hairstyle", "드레드락 헤어"]},
+      "composition_instruction": "Keep multiple cordlike locked sections visible from near the roots toward their ends, with compact interlocked surfaces and no repeating braid crossings. Preserve the hairstyle without inferring ethnicity or identity, and distinguish it from wet clumps, twists, box braids, and rope extensions.",
+      "required_evidence_fields": ["multiple_cords_phrase", "root_end_phrase", "locked_surface_phrase", "crossing_absence_phrase", "clump_confound_phrase"],
+      "evidence_requirements": {
+        "multiple_cords_phrase": {"min_content_words": 7, "must_mention_any": ["multiple separately readable cordlike hair sections", "many rope-like hair cords form the style"]},
+        "root_end_phrase": {"min_content_words": 8, "must_mention_any": ["the cords continue from near the roots toward the ends", "each locked section follows a persistent root-to-end path"]},
+        "locked_surface_phrase": {"min_content_words": 8, "must_mention_any": ["each cord has a compact interlocked hair surface", "the sections read as persistent locked fibers rather than loose strands"]},
+        "crossing_absence_phrase": {"min_content_words": 8, "must_mention_any": ["the cords show no repeating three-strand braid crossings", "braided over-under periodicity is absent from the locked sections"]},
+        "clump_confound_phrase": {"min_content_words": 8, "must_mention_any": ["wet clumps two-strand twists and rope extensions do not substitute", "temporary strand adhesion cannot carry the locked structure"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_locs_multiple_cords", "review_scale": "thumbnail", "description": "Multiple separately readable cordlike hair sections form the hairstyle."},
+        {"id": "vo_hair_locs_root_end_continuity", "review_scale": "both", "description": "Locked cords remain continuous from near roots toward their ends."},
+        {"id": "vo_hair_locs_interlocked_surface", "review_scale": "native", "description": "Each cord shows compact interlocked fiber structure rather than loose strands."},
+        {"id": "vo_hair_locs_no_braid_crossings", "review_scale": "native", "description": "Repeating three-strand braid crossings are absent from the cords."},
+        {"id": "vo_hair_locs_not_temporary_clumps", "review_scale": "both", "description": "Wet clumps twists box braids and rope extensions do not substitute."}
+      ],
+      "reject_substitutes": ["box_braids", "two_strand_twists", "wet_temporary_clumps", "rope_extensions_only", "loose_unlocked_strands"]
+    },
+    {
+      "id": "bilateral_twin_tail_gather",
+      "category": "hair_arrangement_topology",
+      "activation": {
+        "exact_terms": ["twin-tail hairstyle", "twin tails hairstyle", "twin-tail hair", "트윈테일 헤어", "양갈래 머리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bilateral gathered hairstyle with two visible left and right scalp tie points, each feeding a separately trailing hair bundle, while root-to-tie continuity distinguishes the arrangement from loose side locks or face-framing strands.",
+        "paraphrase_examples": ["좌우 두피의 묶임점 두 개에서 각각 별도 머리 다발이 이어지는 양갈래 배열", "two independently gathered bundles descend from two bilateral attachment points", "height length and curl may vary while two tie points and two trailing bundles remain invariant"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["two_tie_points", "two_trailing_bundles", "bilateral_separation", "root_tie_continuity", "sidelock_confound_control"],
+          "groups": [
+            {"id": "two_tie_points", "any_terms": ["two visible left and right scalp tie points", "a separate tie point anchors each side", "좌우 두 개의 묶임점이 보임"]},
+            {"id": "two_trailing_bundles", "any_terms": ["two separately trailing gathered hair bundles", "each tie point feeds one distinct descending bundle", "각 묶임점에서 별도 다발이 이어짐"]},
+            {"id": "bilateral_separation", "any_terms": ["the two gathered sides remain spatially distinct", "left and right bundles are both readable around one head", "한 머리의 좌우 다발이 분리되어 보임"]},
+            {"id": "root_tie_continuity", "any_terms": ["scalp hair visibly converges into each tie point", "root-to-tie continuity confirms actual gathering", "두피 모발이 각 묶임점으로 수렴함"]},
+            {"id": "sidelock_confound_control", "any_terms": ["loose side locks and face-framing tendrils do not substitute", "two accessories without gathered hair cannot carry the topology", "옆머리 잔머리 장식 두 개와 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["two long loose side locks with no tie points", "two ribbons placed on otherwise loose hair", "one ponytail split into two ends", "paired face-framing strands"]
+      },
+      "concept_candidate": {"concept_terms": ["two bilateral tie points", "two trailing gathered bundles", "left-right separation", "root-to-tie convergence", "paired hair topology", "readable scalp attachments", "variable tail height", "not loose side locks"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["bilateral twin-tail hairstyle"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep both left and right scalp tie points, their root-to-tie convergence, and two separately trailing bundles visible in one frame. Tail height and texture may vary, while loose side locks, face-framing tendrils, paired accessories, or a split single ponytail cannot substitute.",
+      "required_evidence_fields": ["tie_points_phrase", "trailing_bundles_phrase", "bilateral_phrase", "root_tie_phrase", "sidelock_confound_phrase"],
+      "evidence_requirements": {
+        "tie_points_phrase": {"min_content_words": 8, "must_mention_any": ["two visible left and right scalp tie points", "a separate tie point anchors each side"]},
+        "trailing_bundles_phrase": {"min_content_words": 7, "must_mention_any": ["two separately trailing gathered hair bundles", "each tie point feeds one distinct descending bundle"]},
+        "bilateral_phrase": {"min_content_words": 7, "must_mention_any": ["the two gathered sides remain spatially distinct", "left and right bundles are both readable around one head"]},
+        "root_tie_phrase": {"min_content_words": 7, "must_mention_any": ["scalp hair visibly converges into each tie point", "root-to-tie continuity confirms actual gathering"]},
+        "sidelock_confound_phrase": {"min_content_words": 8, "must_mention_any": ["loose side locks and face-framing tendrils do not substitute", "two accessories without gathered hair cannot carry the topology"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_twin_tail_two_tie_points", "review_scale": "thumbnail", "description": "Two separate left and right scalp tie points remain visible."},
+        {"id": "vo_hair_twin_tail_two_bundles", "review_scale": "thumbnail", "description": "Two separately trailing gathered hair bundles remain immediately readable."},
+        {"id": "vo_hair_twin_tail_bilateral_separation", "review_scale": "both", "description": "Left and right gathered sides remain spatially distinct around one head."},
+        {"id": "vo_hair_twin_tail_root_continuity", "review_scale": "native", "description": "Scalp hair visibly converges into both genuine tie points."},
+        {"id": "vo_hair_twin_tail_not_sidelocks", "review_scale": "native", "description": "Loose side locks tendrils accessories and a split ponytail do not substitute."}
+      ],
+      "reject_substitutes": ["loose_side_locks", "paired_face_framing_tendrils", "two_accessories_without_gathering", "single_split_ponytail", "occluded_tie_points"]
+    },
+    {
+      "id": "balayage_ribbon_color_placement",
+      "category": "hair_color_placement",
+      "activation": {
+        "exact_terms": ["balayage hair", "brown balayage hair", "balayage highlights", "발레아쥬 헤어", "발레아쥬"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A distributed hair-color placement built from irregular freehand lighter ribbons through the mid-lengths and ends, retaining a darker base and soft root transitions rather than forming one full-width root-to-end gradient.",
+        "paraphrase_examples": ["어두운 뿌리에서 부드럽게 이어지며 중간과 끝에 불규칙한 밝은 리본이 분산된 염색", "lighter ribbons appear at varied positions and widths across the hair surface", "the base color remains visible between ribbons instead of becoming one continuous ombre field"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["irregular_light_ribbons", "soft_root_transition", "mid_end_distribution", "base_color_continuity", "gradient_foil_confound_control"],
+          "groups": [
+            {"id": "irregular_light_ribbons", "any_terms": ["irregular freehand lighter ribbons cross the hair surface", "lightened sections vary in width and placement", "밝은 리본의 폭과 위치가 불규칙함"]},
+            {"id": "soft_root_transition", "any_terms": ["the darker roots transition softly into lighter sections", "no hard universal root line separates the colors", "어두운 뿌리에서 밝은 부분으로 부드럽게 전이됨"]},
+            {"id": "mid_end_distribution", "any_terms": ["lighter color concentrates through varied mid-lengths and ends", "the distributed ribbons become more visible away from the roots", "중간 길이와 끝에 밝은 배치가 분산됨"]},
+            {"id": "base_color_continuity", "any_terms": ["the darker base remains visible between lighter ribbons", "base color threads continuously through the placement", "밝은 리본 사이로 기본색이 계속 보임"]},
+            {"id": "gradient_foil_confound_control", "any_terms": ["a full-width ombre gradient and regular foil stripes do not substitute", "dip-dye boundaries and uniform root-to-tip streaks cannot carry the placement", "옴브레 딥다이 규칙적 포일 줄무늬와 구분됨"]}
+          ]
+        },
+        "contrast_examples": ["one broad full-width root-to-end ombre gradient", "regular evenly spaced foil highlights", "a hard horizontal dip-dye boundary", "uniformly lightened hair with no darker base continuity"]
+      },
+      "concept_candidate": {"concept_terms": ["irregular freehand light ribbons", "soft darker-root transition", "varied mid-length placement", "lighter ends", "visible base color between ribbons", "distributed surface highlights", "nonuniform ribbon widths", "not full-width ombre"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["balayage ribbon color placement"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use enough visible hair surface under neutral readable light to show irregular lighter ribbons, soft transitions from darker roots, varied mid-length and end placement, and darker base color between ribbons. A full-width ombre field, dip-dye line, regular foil stripes, or lighting highlights cannot substitute.",
+      "required_evidence_fields": ["ribbons_phrase", "root_transition_phrase", "mid_end_phrase", "base_continuity_phrase", "color_confound_phrase"],
+      "evidence_requirements": {
+        "ribbons_phrase": {"min_content_words": 7, "must_mention_any": ["irregular freehand lighter ribbons cross the hair surface", "lightened sections vary in width and placement"]},
+        "root_transition_phrase": {"min_content_words": 8, "must_mention_any": ["the darker roots transition softly into lighter sections", "no hard universal root line separates the colors"]},
+        "mid_end_phrase": {"min_content_words": 8, "must_mention_any": ["lighter color concentrates through varied mid-lengths and ends", "the distributed ribbons become more visible away from the roots"]},
+        "base_continuity_phrase": {"min_content_words": 8, "must_mention_any": ["the darker base remains visible between lighter ribbons", "base color threads continuously through the placement"]},
+        "color_confound_phrase": {"min_content_words": 9, "must_mention_any": ["a full-width ombre gradient and regular foil stripes do not substitute", "dip-dye boundaries and uniform root-to-tip streaks cannot carry the placement"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_balayage_irregular_ribbons", "review_scale": "thumbnail", "description": "Irregular lighter ribbons remain distributed across the visible hair surface."},
+        {"id": "vo_hair_balayage_soft_root_transition", "review_scale": "both", "description": "Darker roots transition softly into the varied lighter sections."},
+        {"id": "vo_hair_balayage_mid_end_distribution", "review_scale": "both", "description": "Lighter placement varies through the mid-lengths and ends."},
+        {"id": "vo_hair_balayage_base_continuity", "review_scale": "native", "description": "Darker base color remains visibly continuous between lighter ribbons."},
+        {"id": "vo_hair_balayage_not_ombre_or_foil", "review_scale": "native", "description": "Ombre dip-dye regular foil stripes and lighting highlights do not substitute."}
+      ],
+      "reject_substitutes": ["full_width_ombre_gradient", "hard_dip_dye_boundary", "regular_foil_highlights", "uniform_lightening", "lighting_specular_only"]
+    },
+    {
+      "id": "wet_damp_clumped_hair_state",
+      "category": "hair_finish_state",
+      "activation": {
+        "exact_terms": ["wet-look hair", "wet look hair", "rain-damp hair", "damp clumped hair", "젖은 헤어", "비에 젖은 머리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A visibly wet or damp temporary hair state combining reduced dry-hair volume, strand bundling and clumping, directional weight or local adherence, and coherent moisture evidence rather than relying on specular shine or sleek styling alone.",
+        "paraphrase_examples": ["마른 머리보다 부피가 줄고 여러 가닥이 젖은 다발로 뭉쳐 얼굴이나 목에 일부 붙은 상태", "moist strands group into weighted bundles and lose airy separation", "shine may support the state but clumping volume collapse and local adhesion establish it"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["reduced_dry_volume", "strand_bundling", "weighted_adherence", "coherent_moisture_cues", "gloss_gel_confound_control"],
+          "groups": [
+            {"id": "reduced_dry_volume", "any_terms": ["the wet hair carries less airy dry volume", "the silhouette collapses relative to fluffy dry hair", "마른 머리보다 공기감과 부피가 줄어듦"]},
+            {"id": "strand_bundling", "any_terms": ["individual strands gather into visible damp bundles", "multiple clumped strand groups remain separately readable", "가닥들이 여러 젖은 다발로 뭉침"]},
+            {"id": "weighted_adherence", "any_terms": ["weighted damp sections adhere locally to the face neck or garment", "moisture pulls selected bundles downward against nearby surfaces", "젖은 다발이 얼굴 목 의복에 국소적으로 붙음"]},
+            {"id": "coherent_moisture_cues", "any_terms": ["clumping reduced volume and local adherence agree as one moisture state", "the moisture evidence remains spatially coherent across the hair", "뭉침 부피 감소 부착이 하나의 젖은 상태로 일치함"]},
+            {"id": "gloss_gel_confound_control", "any_terms": ["dry specular shine and sleek gel styling alone do not substitute", "bright highlights without bundling cannot establish wet hair", "광택 젤 스타일링 조명 하이라이트만으로 대체되지 않음"]}
+          ]
+        },
+        "contrast_examples": ["dry glossy hair under a strong rim light", "sleek gelled-back hair with no damp bundling", "oily roots while the lengths remain fully dry and fluffy", "wind-separated dry strands"]
+      },
+      "concept_candidate": {"concept_terms": ["reduced airy hair volume", "visible damp strand bundles", "weighted downward sections", "localized face or neck adherence", "spatially coherent moisture", "supporting wet sheen", "temporary finish state", "not dry gloss alone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["wet damp clumped hair state"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show reduced airy volume, several visible damp strand bundles, weighted downward behavior, and localized adherence to nearby surfaces as one coherent moisture state. Specular shine may support the result, but dry gloss, rim light, oily roots, or sleek gel styling alone cannot substitute.",
+      "required_evidence_fields": ["reduced_volume_phrase", "strand_bundling_phrase", "weighted_adherence_phrase", "moisture_coherence_phrase", "gloss_confound_phrase"],
+      "evidence_requirements": {
+        "reduced_volume_phrase": {"min_content_words": 8, "must_mention_any": ["the wet hair carries less airy dry volume", "the silhouette collapses relative to fluffy dry hair"]},
+        "strand_bundling_phrase": {"min_content_words": 8, "must_mention_any": ["individual strands gather into visible damp bundles", "multiple clumped strand groups remain separately readable"]},
+        "weighted_adherence_phrase": {"min_content_words": 9, "must_mention_any": ["weighted damp sections adhere locally to the face neck or garment", "moisture pulls selected bundles downward against nearby surfaces"]},
+        "moisture_coherence_phrase": {"min_content_words": 9, "must_mention_any": ["clumping reduced volume and local adherence agree as one moisture state", "the moisture evidence remains spatially coherent across the hair"]},
+        "gloss_confound_phrase": {"min_content_words": 9, "must_mention_any": ["dry specular shine and sleek gel styling alone do not substitute", "bright highlights without bundling cannot establish wet hair"]}
+      },
+      "render_gates": [
+        {"id": "vo_hair_wet_reduced_volume", "review_scale": "thumbnail", "description": "The hair loses airy dry volume and reads as moisture weighted."},
+        {"id": "vo_hair_wet_strand_bundling", "review_scale": "both", "description": "Several separately readable damp strand bundles remain visible."},
+        {"id": "vo_hair_wet_weighted_adherence", "review_scale": "native", "description": "Weighted damp sections adhere locally to the face neck or garment."},
+        {"id": "vo_hair_wet_moisture_coherence", "review_scale": "both", "description": "Clumping volume reduction and adherence agree spatially as one moisture state."},
+        {"id": "vo_hair_wet_not_dry_gloss", "review_scale": "native", "description": "Dry gloss rim light oily roots and gel styling do not substitute."}
+      ],
+      "reject_substitutes": ["dry_specular_gloss_only", "sleek_gel_styling_only", "oily_roots_only", "rim_light_highlights_only", "wind_separated_dry_strands"]
     }
   ]
 }
