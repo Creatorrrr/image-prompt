@@ -1,0 +1,124 @@
+{
+  "contract_version": "rendered-pixel-gate-review/v1",
+  "arm_id": "arm-02-clockpunk",
+  "attempt": 2,
+  "classification": "targeted_candidate_pack_evidence",
+  "candidate_pack_proof": false,
+  "pack_id": "fe60c4342a7241c9",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-02-clockpunk/targeted_attempt-02.png",
+  "image_sha256": "00504b30a4c624381b929e4df985bf5b35bcf04e8b3d49ebb7aa15feedfb1e42",
+  "pixel_dimensions": {
+    "width": 1023,
+    "height": 1537
+  },
+  "inspection": {
+    "native_pixels_viewed": true,
+    "inspection_scale": "original_and_high_with_native_pixel_crops",
+    "policy": "Only exact pass or fail; partial and ambiguous evidence is fail. Prompt wording is not evidence."
+  },
+  "target_gates": [
+    {
+      "gate_id": "CLK-T1",
+      "status": "pass",
+      "evidence": "The upper-right centerpiece is a large glass-front astronomical clock with multiple concentric numbered rings and a distinct crescent moon-phase disk visible together."
+    },
+    {
+      "gate_id": "CLK-T2",
+      "status": "pass",
+      "evidence": "Inside the central glass cutaway, a dark coiled mainspring, several visibly meshing brass gears, and a prominent pivoted horizontal rocker/balance assembly occupy one continuous mechanism chassis."
+    },
+    {
+      "gate_id": "CLK-T3",
+      "status": "pass",
+      "evidence": "The woman visibly wraps her hand around the oversized brass key; its long shaft continues into the exposed clock mechanism, making grip, insertion, and physical contact unambiguous."
+    },
+    {
+      "gate_id": "CLK-T4",
+      "status": "fail",
+      "evidence": "The enamel bird is fully outside and perched with spread wings in front of exposed gears. No opened hinged escapement cage or halfway-emerging state is visible, so the required release consequence remains incomplete."
+    },
+    {
+      "gate_id": "CLK-T5",
+      "status": "pass",
+      "evidence": "A wall-scale network of gears fills the tower, several small clock or pocket-watch faces hang from visible chain-like links, and the beat scale, plumb weight, winding apparatus, and service tray provide clearly horological calibration and maintenance tools."
+    }
+  ],
+  "nearest_neighbor_rejection_gates": [
+    {
+      "gate_id": "CLK-N1",
+      "status": "pass",
+      "evidence": "Clock faces, mainspring, exposed gearing, balance mechanism, winding key, and time calibration dominate; boilers, steam plumes, and pipework do not."
+    },
+    {
+      "gate_id": "CLK-N2",
+      "status": "pass",
+      "evidence": "The inserted winding key, exposed moving mechanism, and released mechanical bird create an active horological event rather than a passive clock-shop or luxury-watch portrait."
+    }
+  ],
+  "common_photo_reference_gates": [
+    {
+      "gate_id": "COMMON-P1",
+      "status": "pass",
+      "evidence": "Exactly one clearly adult woman is present, with an unobscured face and unmistakably adult proportions."
+    },
+    {
+      "gate_id": "COMMON-R1",
+      "status": "pass",
+      "evidence": "At broad visible-trait level, the subject has long near-black wavy hair, warm brown eyes, softly arched brows, an oval face, and natural rose lips. Biometric identity is not evaluated."
+    },
+    {
+      "gate_id": "COMMON-P2",
+      "status": "pass",
+      "evidence": "The face, gripping hand, inserted key, glass case, foreground gearing, gauge, and tray remain photographically coherent in one perspective without a duplicated limb, fused grip, or contradictory foreground intersection."
+    }
+  ],
+  "candidate_actuation_gates": [
+    {
+      "gate_id": "CAND-WORLD-01",
+      "candidate_id": "slot:world:punk_clockpunk_world_core",
+      "status": "pass",
+      "evidence": "The astronomical dial above, the glass-front bird and spring mechanism below, and the surrounding wall gear network are spatially separate but visibly joined through the same tall chassis, continuous shafts, rods, and toothed gear paths, reading as one tower infrastructure."
+    },
+    {
+      "gate_id": "CAND-MECH-01",
+      "candidate_id": "slot:prop:punk_clockpunk_mechanism_prop",
+      "status": "fail",
+      "evidence": "The cutaway shows a coil, gears, and a rocker/balance assembly, but it does not make a separate wound barrel or a continuous linkage reaching an identifiable mechanical-bird cage independently recognizable. The cage itself is absent, so the all-component causal chain fails."
+    },
+    {
+      "gate_id": "CAND-DIAG-01",
+      "candidate_id": "slot:prop:punk_clockpunk_system_diagnostic_prop",
+      "status": "pass",
+      "evidence": "A distinct framed vertical instrument beside the mechanism visibly reads BEAT SECONDS, carries a marked minus-to-plus timing scale, and aligns with a descending brass plumb weight in the same frame."
+    },
+    {
+      "gate_id": "CAND-HANDOFF-01",
+      "candidate_id": "slot:prop:punk_clockpunk_maintenance_handoff_prop",
+      "status": "pass",
+      "evidence": "The separate lower tray visibly contains a dark worn cam plate, a brighter polished replacement plate, and a separate round CHECKED OUTPUT token, with the three-item repair-verification relationship unambiguous."
+    }
+  ],
+  "frozen_gate_summary": {
+    "passed": 9,
+    "failed": 1,
+    "total": 10,
+    "status": "fail"
+  },
+  "candidate_actuation_summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "status": "fail"
+  },
+  "failed_hard_gate_ids": [
+    "CLK-T4",
+    "CAND-MECH-01"
+  ],
+  "candidate_pack_verdict": "fail",
+  "overall_status": "fail",
+  "retry_policy": "No further generation: this was image-tool call 2 of the arm-wide maximum of 2.",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

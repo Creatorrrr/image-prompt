@@ -1,0 +1,92 @@
+{
+  "contract_version": "photo-render-test-case-draft/v1",
+  "phase": "pre_generation",
+  "arm_id": "arm-05-stonepunk",
+  "assigned_keyword": "Stonepunk",
+  "keyword_provenance": {
+    "role": "agent_interpretation",
+    "requester_supplied_definition": false,
+    "interpretation": "A speculative technological culture visibly expressed through functional carved-stone machinery, fitted megalithic architecture, mineral instrumentation, and engineered stone wearables. The label alone is never sufficient pixel evidence."
+  },
+  "concept_summary": "An adult stone-mechanism tide keeper activates a quartz-driven basalt astrolabe inside a working megalithic observatory as an outer ring aligns with a breaking wave.",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "role": "appearance_only",
+    "allowed_use": "Visible adult facial and hair appearance cues only; the generated wardrobe, pose, action, setting, and story are newly authored.",
+    "evaluation_boundary": "Biometric identity and identity verification are not evaluated or claimed. Review is limited to visible appearance-cue continuity."
+  },
+  "scoring_policy": {
+    "target_gates_are_hard": true,
+    "confound_rejection_gates_are_hard": true,
+    "common_photo_reference_gates_are_hard": true,
+    "partial_result": "fail",
+    "ambiguity_result": "fail",
+    "pass_rule": "Every listed observable in every gate must be clearly visible in the rendered pixels. A partly shown, hidden, ambiguous, merely implied, or label-dependent feature fails its gate."
+  },
+  "stonepunk_target_gates": [
+    {
+      "gate_id": "SP-T1-functional-stone-transmission",
+      "hard": true,
+      "criterion": "The central machine visibly contains at least three mechanically connected stone components: interlocking basalt gears, a grooved circular stone track, and a counterweighted monolith arm. Their contact or linkage makes motion transmission readable in one frame.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "SP-T2-engineered-megalithic-observatory",
+      "hard": true,
+      "criterion": "The surrounding structure reads as an engineered observatory made from multiple fitted concentric basalt rings with carved channels and raised measurement marks, visibly assembled and aligned rather than a natural cave or loose ruin.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "SP-T3-integrated-quartz-instrumentation",
+      "hard": true,
+      "criterion": "A fist-sized quartz chronometer is visibly seated in a shaped socket, and luminous quartz veins continue from that socket through the stone mechanism into readable tide-line carvings. The crystal must function as an integrated instrument, not a detached ornament.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "SP-T4-engineered-stone-wearable",
+      "hard": true,
+      "criterion": "The woman's black woven-flax mantle visibly carries several overlapping polished-shale armor plates secured by stone fasteners, so the wearable material culture is legible at normal viewing size.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "SP-T5-activation-and-consequence",
+      "hard": true,
+      "criterion": "Both hands participate in one readable activation: the left braces the quartz socket and the right grips and turns a carved granite crank. In the same frame, an outer basalt ring is visibly displaced into alignment and a breaking wave or salt spray passes through the newly opened aperture.",
+      "partial": "fail"
+    }
+  ],
+  "nearest_neighbor_confound_rejection_gates": [
+    {
+      "gate_id": "SP-C1-reject-steampunk-dominance",
+      "hard": true,
+      "criterion": "Basalt, granite, shale, and quartz visibly dominate the engineered objects. The image fails if its technological identity is carried chiefly by brass or copper machinery, boilers, steam pipes, Victorian goggles, top hats, or other metal-industrial steampunk cues.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "SP-C2-reject-generic-primitive-or-fantasy-scenery",
+      "hard": true,
+      "criterion": "The stone setting must show a coherent functioning system through connected mechanisms, integrated quartz readings, human operation, and an architectural consequence. A cave person, static ancient ruin, generic temple, magical crystal tableau, or medieval-fantasy scene without that functional chain fails.",
+      "partial": "fail"
+    }
+  ],
+  "common_photo_reference_gates": [
+    {
+      "gate_id": "COMMON-P1-adult-single-subject-and-contact",
+      "hard": true,
+      "criterion": "Exactly one clearly adult woman is visible. Her face, both arms, both hands, the quartz socket, and the crank contact are readable, anatomically plausible, and spatially consistent.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "COMMON-P2-appearance-only-cue-continuity",
+      "hard": true,
+      "criterion": "Compared with the supplied portrait, the generated subject visibly carries long near-black wavy hair, warm brown almond-shaped eyes, softly arched brows, a slim oval face, and natural rose lips while appearing in the newly authored stone wearable and observatory scene. This checks visible appearance cues only; biometric identity is outside scope.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "COMMON-P3-photographic-coherence",
+      "hard": true,
+      "criterion": "The result reads as one physically photographed scene with consistent perspective, blue-hour illumination, mineral reflections, wet-stone texture, and salt spray. Face, hands, and the key mechanism remain inspectable without duplicated anatomy, broken joints, floating contact, collage seams, or illegible text-like artifacts.",
+      "partial": "fail"
+    }
+  ]
+}

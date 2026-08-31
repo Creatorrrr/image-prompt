@@ -1,0 +1,51 @@
+{
+  "contract_version": "photo-candidate-actuation-gates/v1",
+  "phase": "pre_targeted_render",
+  "pack_id": "970f992e4d542514",
+  "chosen_candidate_ids": [
+    "slot:world:punk_raypunk_world_core",
+    "slot:prop:punk_raypunk_mechanism_prop",
+    "slot:prop:punk_raypunk_system_diagnostic_prop",
+    "slot:prop:punk_raypunk_maintenance_handoff_prop"
+  ],
+  "evaluation_scope": "Rendered pixels in one targeted image, judged without prompt text.",
+  "scoring_policy": {
+    "every_gate_is_hard": true,
+    "partial_or_ambiguous_counts_as_fail": true,
+    "overall_pass_rule": "Every candidate gate must pass in the same saved image."
+  },
+  "gates": [
+    {
+      "gate_id": "ca_world_punk_raypunk_world_core",
+      "candidate_id": "slot:world:punk_raypunk_world_core",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "The single photographed world visibly combines an airborne oversized swept-fin bubble-window rocket, alien or otherworldly desert terrain, and a station built from ribbed retrofuture housings plus exposed analog controls; all four cues form one coherent operating environment.",
+      "fail_criteria": "Any one of the four cues is absent or unclear, or the cues read as disconnected decorations rather than a shared world system."
+    },
+    {
+      "gate_id": "ca_prop_punk_raypunk_mechanism_prop",
+      "candidate_id": "slot:prop:punk_raypunk_mechanism_prop",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "One main finned and ribbed navigator is visibly operated by the woman's crystal key and second-hand lens; its integrated prisms, glowing vacuum tubes, and analog knobs visibly emit three outgoing colored rays.",
+      "fail_criteria": "The device lacks any listed mechanism component, the hands do not visibly operate it, or the three rays cannot be traced to that same device."
+    },
+    {
+      "gate_id": "ca_prop_punk_raypunk_system_diagnostic_prop",
+      "candidate_id": "slot:prop:punk_raypunk_system_diagnostic_prop",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "A second, spatially distinct diagnostic console is visible with both analog calibration dials and one luminous waveform tube, and its display or optical alignment visibly corresponds to the main device's three ray outputs.",
+      "fail_criteria": "The diagnostic console is fused with or indistinguishable from the main navigator, lacks either dials or waveform tube, or has no visible relationship to the three ray outputs."
+    },
+    {
+      "gate_id": "ca_prop_punk_raypunk_maintenance_handoff_prop",
+      "candidate_id": "slot:prop:punk_raypunk_maintenance_handoff_prop",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "A third, spatially distinct finned and ribbed transmitter power cell rests on a nearby workbench and is visibly connected to the beacon by one luminous conduit, making it read as a separate maintenance module handed off for service.",
+      "fail_criteria": "The workbench module is absent, not visibly finned and ribbed, fused with another device, or lacks a traceable luminous connection to the beacon."
+    }
+  ]
+}

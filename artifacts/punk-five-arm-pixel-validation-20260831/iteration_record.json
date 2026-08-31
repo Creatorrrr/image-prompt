@@ -1,0 +1,304 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "04c23c1c2f66f5014847c9d95f41d689b315e404",
+    "candidate_revision": "working-tree/artifact-evaluation-only"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate five independently authored punk concepts with the supplied appearance reference, exact-preset candidate packs, generated images, and fail-closed rendered-pixel gates."
+  },
+  "evidence": [
+    {
+      "id": "e-source-contracts",
+      "kind": "source-observation",
+      "claim": "Each selected exact preset exposes one world candidate and three functional prop candidates, and each arm froze ten request gates plus four candidate-actuation gates before targeted rendering.",
+      "artifact": "experiment_manifest.json and arm-*/{test_case_draft.json,candidate_pack.json,candidate_actuation_gates.json}"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Focused punk tests, dictionary validation, visual-profile index validation, semantic-index validation, and git diff check passed.",
+      "artifact": "review/validation_summary.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five selected composed prompts and all five bound render requests pass their exact pack and reference audits.",
+      "artifact": "review/validation_summary.json"
+    },
+    {
+      "id": "e-lunarpunk-render",
+      "kind": "render-observation",
+      "claim": "The selected Lunarpunk image passes 10/10 frozen gates and 2/4 candidate gates, failing two same-object or localized-diagnostic details.",
+      "artifact": "arm-01-lunarpunk/pixel_review_targeted_attempt_02.json sha256=03d7946be0c0b6a6aa1cabb7925d5e9a23f52c6101741621ce095c0a0a7e3259"
+    },
+    {
+      "id": "e-clockpunk-render",
+      "kind": "render-observation",
+      "claim": "The selected Clockpunk image passes 9/10 frozen gates and 3/4 candidate gates, but the bird-cage state and full mechanical linkage remain incomplete.",
+      "artifact": "arm-02-clockpunk/pixel_review_targeted_attempt_02.json sha256=c6c0e7a670dad04d4b40dd2c4071fb141e31d134b547799376f6884124e6288d"
+    },
+    {
+      "id": "e-atompunk-render",
+      "kind": "render-observation",
+      "claim": "The selected Atompunk image passes 10/10 frozen gates and 3/4 candidate gates, with gantry-integrated meters remaining ambiguous.",
+      "artifact": "arm-03-atompunk/pixel_review_targeted_attempt_02.json sha256=ce0f7f5ac3b7618f24010e9f2dd220475f8b6ce947790e2fe25fea4e7cf50937"
+    },
+    {
+      "id": "e-raypunk-render",
+      "kind": "render-observation",
+      "claim": "The selected Raypunk image passes 9/10 frozen gates and all 4 candidate gates, but the rocket trajectory never visibly joins the restored ray lanes.",
+      "artifact": "arm-04-raypunk/pixel_review_targeted_attempt_01.json sha256=1734a53f3f47238c4b2cd70ec6cb257ae5a34b10716e04ff637ef43b44cd20af"
+    },
+    {
+      "id": "e-stonepunk-render",
+      "kind": "render-observation",
+      "claim": "The selected Stonepunk image passes 10/10 frozen gates and 2/4 candidate gates, with material separability and maintenance load support still ambiguous.",
+      "artifact": "arm-05-stonepunk/pixel_review_targeted_attempt_02.json sha256=c96f1d219ac6d15816fa11f9445203b0fa1b94e23fb22db5bd11df4a19d5092c"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every pre-frozen keyword, confound-rejection, common-reference, and selected candidate-actuation gate must be visibly satisfied in one saved image per arm.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "fail-closed-one-image",
+        "statement": "Partial, ambiguous, prompt-only, or cross-attempt evidence cannot satisfy a rendered-pixel gate.",
+        "evidence_ids": [
+          "e-source-contracts",
+          "e-lunarpunk-render",
+          "e-clockpunk-render",
+          "e-atompunk-render",
+          "e-raypunk-render",
+          "e-stonepunk-render"
+        ],
+        "causal_controls": [
+          "same-object membership",
+          "continuous physical linkage",
+          "contact geometry",
+          "spatial trajectory",
+          "material separability"
+        ]
+      },
+      {
+        "id": "reference-boundary",
+        "statement": "The supplied portrait controls broad visible adult appearance cues only; biometric identity and protected-trait inference are outside evaluation.",
+        "evidence_ids": [
+          "e-source-contracts"
+        ],
+        "causal_controls": [
+          "reference role",
+          "face visibility",
+          "hair visibility"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "camera angle",
+      "wardrobe details outside frozen gates",
+      "secondary palette",
+      "nonessential background decoration"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-lunarpunk",
+      "scale": "local",
+      "axis": "same-object history marks and localized diagnostic scale",
+      "source_state": "The active vessel itself has two refill marks and a brass repair seam; thumb-sized tiles isolate one damp interruption.",
+      "render_state": "Marks and repair evidence moved to separate objects, while oversized tiles and uniformly wet ground obscure the localized failure.",
+      "evidence_ids": [
+        "e-lunarpunk-render"
+      ]
+    },
+    {
+      "id": "m-clockpunk",
+      "scale": "regional",
+      "axis": "mechanical release state and linkage continuity",
+      "source_state": "A bird is halfway emerging from a hinged cage through a visibly continuous wound-barrel linkage.",
+      "render_state": "The bird is already fully outside and the cage/linkage chain is not independently legible.",
+      "evidence_ids": [
+        "e-clockpunk-render"
+      ]
+    },
+    {
+      "id": "m-atompunk",
+      "scale": "regional",
+      "axis": "infrastructure integration",
+      "source_state": "Analog meters are visibly mounted into and operate as part of the civilian rocket gantry.",
+      "render_state": "The meters are present on adjacent equipment but are not clearly integrated into the gantry structure.",
+      "evidence_ids": [
+        "e-atompunk-render"
+      ]
+    },
+    {
+      "id": "m-raypunk",
+      "scale": "global",
+      "axis": "vehicle-to-ray trajectory",
+      "source_state": "The mail rocket approaches along or intersects the reconnected ray lanes.",
+      "render_state": "The rocket's exhaust corridor and the ray lanes are visually separate and travel in different regions.",
+      "evidence_ids": [
+        "e-raypunk-render"
+      ]
+    },
+    {
+      "id": "m-stonepunk",
+      "scale": "local",
+      "axis": "material separability and temporary load support",
+      "source_state": "Bone, rawhide, and plant fiber are distinct, while a small counterweight visibly carries load during a replacement-lashing handoff.",
+      "render_state": "The secondary organic materials merge visually and the counterweight is not visibly supporting the active mechanism.",
+      "evidence_ids": [
+        "e-stonepunk-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-relational-atom",
+      "stage": "representation",
+      "statement": "Candidate atoms encode many nouns but do not always foreground same-object membership, connection endpoints, and active contact as separate machine-checkable visual relations.",
+      "evidence_ids": [
+        "e-lunarpunk-render",
+        "e-clockpunk-render",
+        "e-atompunk-render",
+        "e-raypunk-render",
+        "e-stonepunk-render"
+      ],
+      "falsifier": "A new held-out set that preserves the current atom wording and consistently renders every required same-object and linkage relation would weaken this hypothesis."
+    },
+    {
+      "id": "h-priority-contention",
+      "stage": "prompt-interaction",
+      "statement": "Dense scenes preserve broad genre semantics while dropping small conjunctive details or moving them onto neighboring objects when multiple functional candidates compete for limited visual area.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-lunarpunk-render",
+        "e-clockpunk-render",
+        "e-atompunk-render",
+        "e-stonepunk-render"
+      ],
+      "falsifier": "A controlled generation that keeps scene density constant but renders all small conjunctive requirements without prioritization changes would weaken this hypothesis."
+    }
+  ],
+  "intervention": {
+    "status": "proposed",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent each candidate with explicit visible components plus one primary relational proposition, including same-object constraints, named connection endpoints, minimum readable scale, and an anti-substitution clause; compile those relations into held-out pixel gates without weakening the current frozen gates after generation.",
+    "generalization_basis": "All five unrelated genres preserve broad style cues more reliably than exact object membership, continuous linkage, or causal spatial relations, indicating a cross-genre representation and priority problem rather than one isolated aesthetic miss.",
+    "hypothesis_ids": [
+      "h-relational-atom",
+      "h-priority-contention"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-lunarpunk-render",
+        "e-clockpunk-render",
+        "e-atompunk-render",
+        "e-raypunk-render",
+        "e-stonepunk-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "lunarpunk-motivating",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "same-object attributes",
+          "localized diagnostic state"
+        ],
+        "evidence_ids": [
+          "e-lunarpunk-render"
+        ]
+      },
+      {
+        "id": "clockpunk-held-out",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "release state",
+          "mechanical linkage"
+        ],
+        "evidence_ids": [
+          "e-clockpunk-render"
+        ]
+      },
+      {
+        "id": "atompunk-held-out",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "infrastructure integration"
+        ],
+        "evidence_ids": [
+          "e-atompunk-render"
+        ]
+      },
+      {
+        "id": "raypunk-held-out",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "vehicle trajectory",
+          "optical connection"
+        ],
+        "evidence_ids": [
+          "e-raypunk-render"
+        ]
+      },
+      {
+        "id": "stonepunk-held-out",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "material separability",
+          "load-bearing maintenance relation"
+        ],
+        "evidence_ids": [
+          "e-stonepunk-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Package and prompt transmission are healthy, but every arm has at least one failed rendered-pixel gate and no held-out arm passes. Candidate-pack promotion would therefore overstate fidelity; the candidate representation should be revised and rerun against unchanged gates.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-lunarpunk-render",
+      "e-clockpunk-render",
+      "e-atompunk-render",
+      "e-raypunk-render",
+      "e-stonepunk-render"
+    ]
+  }
+}

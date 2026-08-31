@@ -1,0 +1,133 @@
+{
+  "contract_version": "photo-render-pixel-review/v1",
+  "case_id": "punk-five-arm-20260831-arm-01-lunarpunk-targeted",
+  "attempt": 2,
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-01-lunarpunk/targeted_attempt-02.png",
+    "sha256": "7fca093df4581fb3cfde15037e5e7e5e17dcc25cda93391c466322113d30d421",
+    "width": 1536,
+    "height": 1024
+  },
+  "source_contracts": {
+    "test_case_draft": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-01-lunarpunk/test_case_draft.json",
+    "candidate_actuation_gates": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-01-lunarpunk/candidate_actuation_gates.json",
+    "pack_id": "03964953cedcd6d4"
+  },
+  "review_method": {
+    "surface": "saved_native_pixels",
+    "partial_is_fail": true,
+    "prompt_used_as_pixel_evidence": false,
+    "all_components_required_in_this_one_image": true,
+    "biometric_identity_evaluated": false
+  },
+  "target_gates": [
+    {
+      "gate_id": "lunarpunk_target_01_lunar_cycle",
+      "status": "pass",
+      "evidence": "A huge crescent moon dominates the upper-left sky; a separate crescent-and-phases banner and several circular lunar gauges are readable on the station."
+    },
+    {
+      "gate_id": "lunarpunk_target_02_regenerative_wetland_system",
+      "status": "pass",
+      "evidence": "Reeds, lily pads, wetland water, glowing root-like conduits, mossy pipes, diagnostic tiles, and the reactor form one visibly integrated ecological system."
+    },
+    {
+      "gate_id": "lunarpunk_target_03_causal_algae_activation",
+      "status": "pass",
+      "evidence": "The woman visibly pours a continuous luminous blue-green stream from a held glass vessel into the crescent-shaped transparent reactor, whose connected root network is illuminated."
+    },
+    {
+      "gate_id": "lunarpunk_target_04_bioluminescent_night_ecology",
+      "status": "pass",
+      "evidence": "Glowing algae, violet-blue fungi or diagnostic growths, and pearlescent mycelial lines create multiple organic light sources with cool reflections on water."
+    },
+    {
+      "gate_id": "lunarpunk_target_05_handcrafted_living_technology",
+      "status": "pass",
+      "evidence": "Glass vessels and reactor, moss-covered ceramic and brass instruments, collector bottles, weathered wood, and living vine or root piping are all materially legible and functional."
+    }
+  ],
+  "confound_rejection_gates": [
+    {
+      "gate_id": "confound_01_solarpunk_daylight_substitution",
+      "status": "pass",
+      "evidence": "The sky is dark and moon-led; blue-green biological light powers the visual system, with no daylight or dominant solar-panel cue."
+    },
+    {
+      "gate_id": "confound_02_generic_cyberpunk_or_fantasy_substitution",
+      "status": "pass",
+      "evidence": "The futuristic elements operate through algae, roots, fungi, wetland water, repair tools, and refill supplies rather than neon signage, holograms, or unexplained magic."
+    }
+  ],
+  "common_photo_reference_gates": [
+    {
+      "gate_id": "common_01_appearance_only_reference",
+      "status": "pass",
+      "evidence": "The subject is visibly adult with a clear softly oval face, dark eyes, and long voluminous wavy near-black hair matching broad visible appearance cues from the reference. Biometric identity was not evaluated."
+    },
+    {
+      "gate_id": "common_02_anatomy_and_action_coherence",
+      "status": "pass",
+      "evidence": "The upper hand plausibly grips and tilts the vessel, the lower hand remains anatomically coherent near the receiver, and the liquid stream aligns continuously with the crescent reactor."
+    },
+    {
+      "gate_id": "common_03_photographic_legibility",
+      "status": "pass",
+      "evidence": "Native pixels retain coherent skin, hair, glass, liquid, moss, wood, metal, ceramic, and plant textures with consistent light. The small diegetic rack label is nonintrusive and no watermark obstructs review."
+    }
+  ],
+  "candidate_actuation_gates": [
+    {
+      "gate_id": "candidate_world_core_actuation",
+      "candidate_id": "slot:world:punk_lunarpunk_world_core",
+      "status": "pass",
+      "evidence": "A blue-green root-light network connects the crescent reactor, foreground tile chain, pipe junctions, and surrounding wetland. Separate mismatched clamp-and-hose splices at the reactor and patched mixed-metal fittings on the left gauge assembly provide at least two repair traces."
+    },
+    {
+      "gate_id": "candidate_mechanism_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_mechanism_prop",
+      "status": "fail",
+      "evidence": "The active round glass pouring vessel contains luminous culture, but it has neither two clearly readable etched refill or level-history marks nor a conspicuous brass repair seam or clasp. The prominent REFILL label and metal closures belong to the separate rack, so they cannot satisfy this same-vessel gate."
+    },
+    {
+      "gate_id": "candidate_system_diagnostic_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_system_diagnostic_prop",
+      "status": "fail",
+      "evidence": "Several violet and dark square tiles follow the wet foreground network, but they are roughly palm-sized rather than thumb-sized, and no single black tile is clearly located at a localized damp conduit interruption. The entire foreground is wet, leaving the required failure point ambiguous."
+    },
+    {
+      "gate_id": "candidate_maintenance_handoff_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_maintenance_handoff_prop",
+      "status": "pass",
+      "evidence": "A separate weathered wooden rack at right holds exactly three sealed luminous culture capsules, each paired with a distinct circular brass marker bearing a crescent symbol."
+    }
+  ],
+  "totals": {
+    "frozen_hard_gate_count": 10,
+    "frozen_passed": 10,
+    "frozen_failed": 0,
+    "candidate_hard_gate_count": 4,
+    "candidate_passed": 2,
+    "candidate_failed": 2,
+    "all_hard_gate_count": 14,
+    "all_passed": 12,
+    "all_failed": 2
+  },
+  "failed_gate_ids": [
+    "candidate_mechanism_prop_actuation",
+    "candidate_system_diagnostic_prop_actuation"
+  ],
+  "verdicts": {
+    "frozen_request_gates": "pass",
+    "candidate_pack_actuation": "fail",
+    "overall_one_image_strict_verdict": "fail"
+  },
+  "retry": {
+    "performed": false,
+    "reason": "The arm-wide maximum of two built-in image calls was reached."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

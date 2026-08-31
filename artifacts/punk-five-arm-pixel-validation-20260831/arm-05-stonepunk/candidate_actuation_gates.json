@@ -1,0 +1,59 @@
+{
+  "contract_version": "photo-candidate-actuation-gates/v1",
+  "phase": "pre_render_frozen",
+  "arm_id": "arm-05-stonepunk",
+  "pack_id": "6291b3bb61cf26a6",
+  "candidate_pack_sha256": "001f7792d2c1479fbd3c10fd658d5e85c42d1708590662af4e8240b02add4f4e",
+  "composed_prompt_sha256": "28bf97394469489c3db681a696ba582cbd8d8d8a1188dcf67553ea9bed269e51",
+  "chosen_candidate_ids": [
+    "slot:world:punk_stonepunk_world_core",
+    "slot:prop:punk_stonepunk_mechanism_prop",
+    "slot:prop:punk_stonepunk_system_diagnostic_prop",
+    "slot:prop:punk_stonepunk_maintenance_handoff_prop"
+  ],
+  "freeze_state": {
+    "created_before_any_targeted_render_inspection": true,
+    "image_call_count_at_freeze": 0
+  },
+  "scoring_policy": {
+    "all_gates_hard": true,
+    "partial_result": "fail",
+    "ambiguous_result": "fail",
+    "single_image_requirement": true,
+    "pass_rule": "Every listed observable must be clearly visible in the same saved image at native inspection scale; labels, prompt text, partial hints, or evidence split across attempts do not pass."
+  },
+  "gates": [
+    {
+      "gate_id": "CAND-WORLD-stone-organic-system",
+      "candidate_id": "slot:world:punk_stonepunk_world_core",
+      "hard": true,
+      "review_scale": "both",
+      "criterion": "The observatory visibly operates as one load-bearing fitted-stone system, with dominant basalt plus at least three clearly functional secondary elements among a dark wood axle, pale bone lever tips, taut rawhide lashings, and braided plant-fiber tension lines. The secondary materials must visibly connect forces rather than appear as loose decoration.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "CAND-MECH-causal-worn-transmission",
+      "candidate_id": "slot:prop:punk_stonepunk_mechanism_prop",
+      "hard": true,
+      "review_scale": "native",
+      "criterion": "Interlocking basalt gears, a grooved circular stone track, and a dark wooden axle inside visibly worn stone bearings form one readable contacting transmission path driven by the operator's crank.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "CAND-DIAG-live-state-board",
+      "candidate_id": "slot:prop:punk_stonepunk_system_diagnostic_prop",
+      "hard": true,
+      "review_scale": "native",
+      "criterion": "A distinct carved slate diagnostic board is visible beside the quartz socket with four mineral pegs and separate fiber gauge lines that visibly reach measured mechanism parts, making axle position, lashing tension, bearing wear, and ring travel readable as live comparisons rather than decorative glyphs.",
+      "partial": "fail"
+    },
+    {
+      "gate_id": "CAND-HANDOFF-supported-maintenance",
+      "candidate_id": "slot:prop:punk_stonepunk_maintenance_handoff_prop",
+      "hard": true,
+      "review_scale": "both",
+      "criterion": "A replacement rawhide lashing is clearly staged in a distinct grooved shale handoff cradle, while a separate small stone counterweight visibly supports the active load during maintenance. All three elements and their maintenance relation must be readable.",
+      "partial": "fail"
+    }
+  ]
+}

@@ -7670,6 +7670,256 @@
         "colored_environmental_light_only",
         "gloss_or_liner_only"
       ]
+    },
+    {
+      "id": "necromancer_dead_causality",
+      "category": "supernatural_dead_relation",
+      "activation": {
+        "exact_terms": ["necromancer", "necromancy practitioner", "네크로맨서", "네크로멘서", "사령술사", "강령술사"],
+        "exclude_if_any_terms": ["game build", "class build", "skill tree", "card list", "dictionary definition", "단어 뜻", "게임 빌드", "스킬 트리"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["character", "photograph", "photo prompt", "fictional scene", "dead person", "apparition", "remains", "summon", "consult", "command", "캐릭터", "사진", "망자", "유해", "소환", "문의", "명령"],
+          "exclude_if_any_terms": ["explain the word", "etymology", "game statistics", "단어를 설명", "어원", "게임 능력치"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A living operator deliberately establishes a causal relation to one specific dead person or their remains and receives a localized answer, manifestation, release, binding result, or commanded bodily response. Historical consultation and modern-fantasy reanimation are separate scene variants inside the same operator-to-dead causal contract.",
+        "paraphrase_examples": [
+          "살아 있는 술자가 특정 망자의 유품을 통해 질문하고 그 망자만의 응답을 받는 장면",
+          "a living practitioner questions one identified dead person through a memorial anchor and the scene visibly changes in reply",
+          "one inert fictional body changes into a commanded state only after the operator's deliberate act"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["living_operator_action", "specific_dead_anchor", "localized_dead_response", "causal_result"],
+          "groups": [
+            {"id": "living_operator_action", "any_terms": ["a living operator deliberately questions summons binds releases or commands", "living operator questions one specifically identified dead person", "살아 있는 술자의 의도적 질문 소환 결박 해방 명령"]},
+            {"id": "specific_dead_anchor", "any_terms": ["one named dead person portrait remains memorial or former-life object", "one specifically identified dead person through a memorial anchor", "특정 망자의 초상 유해 기념물 유품"]},
+            {"id": "bounded_medium", "any_terms": ["an original non-instructional boundary memorial ledger instrument or reflection links the two", "비지시적 경계 기념 기록물 도구 반사가 연결 매개가 됨"]},
+            {"id": "localized_dead_response", "any_terms": ["the linked apparition remains or instrument changes locally in response", "the linked apparition responds locally", "연결된 현현 유해 도구가 국소적으로 응답"]},
+            {"id": "causal_result", "any_terms": ["an answer command consequence release or binding result becomes visible", "a brass instrument visibly changes", "답 명령 결과 해방 결박의 결과가 보임"]}
+          ]
+        },
+        "contrast_examples": ["a dark-robed wizard merely holding a skull", "a passive spirit medium hearing a voice", "an exorcist repelling a spirit", "a mortician or grave robber without supernatural response", "a generic magic circle with no dead-linked target"]
+      },
+      "concept_candidate": {"concept_terms": ["living necromancer operator", "named-dead consultation", "memorial anchor", "apparition response", "commanded reanimation", "binding or release", "changed instrument trace", "operator-target-result composition"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["necromancer"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the living operator, one specific dead-linked anchor, the localized dead response, and its visible result in one causally readable frame. Use an original abstract medium rather than copying a real ritual or invocation; costume, skulls, colored glow, or a circle cannot substitute for the operator-to-dead-to-response chain.",
+      "required_evidence_fields": ["living_operator_phrase", "specific_dead_anchor_phrase", "bounded_medium_phrase", "dead_response_phrase", "causal_result_phrase"],
+      "evidence_requirements": {
+        "living_operator_phrase": {"min_content_words": 5, "must_mention_any": ["a living operator deliberately questions the dead", "a living necromancer deliberately commands the linked remains"]},
+        "specific_dead_anchor_phrase": {"min_content_words": 6, "must_mention_any": ["one specific dead person is identified by a memorial anchor", "one named dead person is linked through portrait or remains"]},
+        "bounded_medium_phrase": {"min_content_words": 5, "must_mention_any": ["an original non-instructional boundary connects operator and dead", "a memorial instrument visibly links the living operator and the dead"]},
+        "dead_response_phrase": {"min_content_words": 5, "must_mention_any": ["the linked apparition changes locally in response", "the linked inert remains visibly enter a commanded state"]},
+        "causal_result_phrase": {"min_content_words": 5, "must_mention_any": ["the answer changes one physical instrument", "the command produces one visible localized consequence"]}
+      },
+      "render_gates": [
+        {"id": "vo_necromancer_living_operator", "review_scale": "both", "description": "A living operator performs a deliberate dead-directed action rather than merely wearing a fantasy costume."},
+        {"id": "vo_necromancer_specific_dead_anchor", "review_scale": "native", "description": "One specific dead person or set of remains is linked by a recognizable memorial or former-life anchor."},
+        {"id": "vo_necromancer_localized_response", "review_scale": "native", "description": "The linked apparition, remains, or instrument visibly responds at the declared contact or boundary."},
+        {"id": "vo_necromancer_causal_chain", "review_scale": "thumbnail", "description": "Operator, dead-linked target, response, and consequence read as one causal chain at thumbnail scale."},
+        {"id": "vo_necromancer_not_costume_only", "review_scale": "both", "description": "Skulls, robes, colored glow, or geometric markings do not carry the concept without dead-linked action and response."}
+      ],
+      "reject_substitutes": ["dark_robed_generic_wizard", "skull_prop_only", "passive_spirit_medium", "exorcist_repulsion", "mortician_without_supernatural_relation", "generic_circle_without_dead_response"]
+    },
+    {
+      "id": "human_ghost_identity_breach",
+      "category": "disembodied_dead_presence",
+      "activation": {
+        "exact_terms": ["human ghost", "ghost apparition", "former-person ghost", "유령", "인간 유령", "망자의 유령"],
+        "exclude_if_any_terms": ["ghostwriter", "ghost writing", "ghosting", "ghost kitchen", "ghost job", "data ghost", "digital ghost", "디지털 유령", "데이터망령", "홀로그램"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["human", "person", "former identity", "apparition", "memorial", "haunting", "mirror", "photograph", "사람", "인물", "생전", "망자", "현현", "기념물", "거울", "사진"],
+          "exclude_if_any_terms": ["software", "employment", "restaurant", "message reply", "writer", "데이터", "채용", "식당", "연락", "작가"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A disembodied presence continuous with one formerly living person, made legible by a former-identity anchor plus one coherent impossible presence or agency relation. Translucency, blur, fog, or double exposure alone is a capture convention rather than proof of a ghost.",
+        "paraphrase_examples": ["생전 초상과 같은 인물이 현실에는 없고 거울에만 나타나 이전 습관을 반복한다", "a former person appears only in a reflection while a memorial object confirms who they were", "an identifiable dead person crosses one closed threshold and leaves one localized consequence"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["former_identity_continuity", "coherent_ontological_breach", "localized_agency_or_consequence"],
+          "groups": [
+            {"id": "former_identity_continuity", "any_terms": ["same face clothing memorial object portrait or former routine", "one former person's portrait matches an apparition", "같은 얼굴 복장 유품 초상 생전 습관"]},
+            {"id": "coherent_ontological_breach", "any_terms": ["reflection-only presence threshold crossing occlusion mismatch or coherent translucency", "apparition visible only in an aligned reflection", "거울에만 존재 문턱 통과 가림 순서 불일치 일관된 반투명"]},
+            {"id": "localized_agency_or_consequence", "any_terms": ["one repeated action recognition gesture moved object depressed key or footprint", "one key remains depressed", "반복 동작 인지 제스처 움직인 사물 눌린 건반 발자국"]},
+            {"id": "capture_confound_control", "any_terms": ["physical scene geometry stays coherent and the breach is not generic blur fog hologram or exposure artifact", "장면 기하가 유지되고 단순 블러 안개 홀로그램 노출 효과가 아님"]}
+          ]
+        },
+        "contrast_examples": ["a long-exposure dancer", "a translucent hologram", "ordinary mirror reflection", "fog shaped like a person", "a data afterimage", "a solid decaying revenant"]
+      },
+      "concept_candidate": {"concept_terms": ["former-person identity anchor", "reflection-only apparition", "former routine repetition", "closed-threshold crossing", "localized haunting consequence", "coherent translucency", "recognition of former identity"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["human ghost"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Bind the apparition to one formerly living identity through a portrait, personal object, clothing, face, or repeated routine, then show exactly one coherent impossible-presence rule and one localized action or consequence. Keep anatomy and scene light coherent so blur, fog, reflection, holography, or capture effects cannot substitute.",
+      "required_evidence_fields": ["former_identity_phrase", "ontological_breach_phrase", "agency_or_consequence_phrase", "capture_confound_phrase"],
+      "evidence_requirements": {
+        "former_identity_phrase": {"min_content_words": 6, "must_mention_any": ["a memorial portrait establishes the ghost's former identity", "the same former-life object and face identify the dead person"]},
+        "ontological_breach_phrase": {"min_content_words": 6, "must_mention_any": ["the human ghost exists only inside the mirror", "the identifiable ghost crosses one closed physical threshold"]},
+        "agency_or_consequence_phrase": {"min_content_words": 5, "must_mention_any": ["the ghost repeats one former-life action", "the ghost leaves one localized physical consequence"]},
+        "capture_confound_phrase": {"min_content_words": 7, "must_mention_any": ["scene geometry remains coherent beyond any capture artifact", "the impossible presence remains distinct from blur fog or holography"]}
+      },
+      "render_gates": [
+        {"id": "vo_ghost_former_identity", "review_scale": "both", "description": "A former-life portrait, object, face, clothing, or routine identifies one specific formerly living person."},
+        {"id": "vo_ghost_single_breach", "review_scale": "both", "description": "One coherent impossible-presence rule remains visually readable without unrelated supernatural effects."},
+        {"id": "vo_ghost_agency_or_consequence", "review_scale": "native", "description": "The ghost performs one relation-bearing action or leaves one localized consequence."},
+        {"id": "vo_ghost_not_capture_artifact", "review_scale": "native", "description": "Blur, fog, double exposure, ordinary reflection, holography, or transparent fabric does not carry the result alone."},
+        {"id": "vo_ghost_thumbnail_legibility", "review_scale": "thumbnail", "description": "Former identity and the impossible-presence relation survive thumbnail review."}
+      ],
+      "reject_substitutes": ["long_exposure_blur", "ordinary_reflection", "fog_or_smoke_person", "hologram_or_data_ghost", "transparent_fabric", "solid_corporeal_revenant"]
+    },
+    {
+      "id": "korean_afterlife_guide_escort",
+      "category": "culture_bounded_afterlife_role",
+      "activation": {
+        "exact_terms": ["Korean afterlife guide", "Korean psychopomp", "저승사자", "저승 차사", "저승 인도자"],
+        "exclude_if_any_terms": ["grim reaper", "Western Death", "게임 캐릭터 빌드", "단어 뜻"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["deceased traveler", "escort", "threshold", "handoff", "afterlife", "guide", "망자", "인도", "문턱", "인계", "저승"],
+          "exclude_if_any_terms": ["scythe costume only", "grim reaper cosplay", "낫 코스튬", "서구 사신 코스프레"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A Korean afterlife mediator whose role is visible through a deceased traveler, an escort or handoff action, and a passage boundary. Popular dark clothing or a gat may support a variant but cannot replace the guide-to-traveler relationship, and the role is not automatically the Western skeletal personification of Death.",
+        "paraphrase_examples": ["저승사자가 한 망자와 나란히 걸으며 문턱을 열어 다음 영역으로 인도한다", "a Korean afterlife guide checks a closed destination ledger and personally escorts one deceased traveler", "the handoff becomes visible at a gate river crossing or transit threshold"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["guide_role", "deceased_traveler", "escort_action", "threshold_handoff"],
+          "groups": [
+            {"id": "guide_role", "any_terms": ["a Korean afterlife mediator carries procedural responsibility", "one afterlife mediator carries a closed destination ledger", "절차적 책임을 가진 한국 저승 인도자"]},
+            {"id": "deceased_traveler", "any_terms": ["one identifiable deceased traveler accompanies the guide", "the deceased traveler", "한 명의 식별 가능한 망자가 동행"]},
+            {"id": "escort_action", "any_terms": ["walking beside leading opening checking or handing over for the same traveler", "walks beside the deceased traveler", "같은 망자를 향한 동행 인도 개문 확인 인계"]},
+            {"id": "threshold_handoff", "any_terms": ["a gate river bridge station doorway or changed footprint marks passage", "the same traveler's footprint changes across the boundary", "문 강 다리 역 출입구 변화한 발자국이 통과를 표시"]},
+            {"id": "culture_boundary", "any_terms": ["original contemporary Korean visual translation without copied ritual text", "살아 있는 의식 문구를 복제하지 않은 독창적 한국 시각화"]}
+          ]
+        },
+        "contrast_examples": ["a solitary person in black clothing and gat", "a Western skeleton with scythe", "a funeral director", "a generic gatekeeper with no deceased traveler", "Death itself acting on mortality"]
+      },
+      "concept_candidate": {"concept_terms": ["Korean afterlife mediator", "deceased traveler", "side-by-side escort", "closed destination ledger", "threshold handoff", "gate or river passage", "transformed footprint", "culture-bounded original mechanism"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["Korean afterlife guide"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show one guide and one deceased traveler in a direct escort, opening, verification, or handoff relation at a visible passage boundary. Clothing and headwear remain supporting cues; the guide-traveler-threshold action must carry the role. Use original abstract mechanisms and do not copy living ritual instructions or sacred text.",
+      "required_evidence_fields": ["guide_role_phrase", "deceased_traveler_phrase", "escort_action_phrase", "threshold_handoff_phrase", "culture_boundary_phrase"],
+      "evidence_requirements": {
+        "guide_role_phrase": {"min_content_words": 5, "must_mention_any": ["an adult serves as a Korean afterlife guide", "a Korean afterlife mediator carries the destination ledger"]},
+        "deceased_traveler_phrase": {"min_content_words": 5, "must_mention_any": ["one deceased traveler accompanies the guide", "one translucent deceased traveler remains beside the guide"]},
+        "escort_action_phrase": {"min_content_words": 7, "must_mention_any": ["the guide leads the same traveler across the passage", "the guide opens the threshold and the traveler follows"]},
+        "threshold_handoff_phrase": {"min_content_words": 6, "must_mention_any": ["a visible threshold marks the traveler's handoff", "a transformed footprint marks passage across the boundary"]},
+        "culture_boundary_phrase": {"min_content_words": 7, "must_mention_any": ["an original contemporary Korean visual mechanism carries the role", "the culturally bounded scene uses original non-instructional symbols"]}
+      },
+      "render_gates": [
+        {"id": "vo_kr_afterlife_guide_and_traveler", "review_scale": "both", "description": "One guide and one deceased traveler are separately legible and linked by the same action."},
+        {"id": "vo_kr_afterlife_escort_action", "review_scale": "both", "description": "The guide visibly leads, opens, checks, or hands over for that traveler rather than merely posing."},
+        {"id": "vo_kr_afterlife_threshold", "review_scale": "native", "description": "A gate, river, bridge, station, doorway, footprint, or equivalent marks the passage boundary."},
+        {"id": "vo_kr_afterlife_not_western_death", "review_scale": "thumbnail", "description": "The first read is a Korean escort relationship, not a solitary Western skeletal Death or scythe costume."},
+        {"id": "vo_kr_afterlife_original_culture_boundary", "review_scale": "native", "description": "The scene uses an original bounded translation without readable sacred text or copied living ritual instructions."}
+      ],
+      "reject_substitutes": ["black_clothing_or_gat_only", "western_skeletal_grim_reaper", "scythe_costume_only", "funeral_director", "generic_gatekeeper_without_deceased", "copied_ritual_text"]
+    },
+    {
+      "id": "western_death_personification",
+      "category": "mortality_personification",
+      "activation": {
+        "exact_terms": ["Western personification of Death", "personified Death", "grim reaper", "그림 리퍼", "서구 죽음의 의인화", "죽음의 의인화"],
+        "exclude_if_any_terms": ["저승사자", "Korean afterlife guide", "death metal", "death statistics", "사망 통계", "단어 뜻"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["skeletal agent", "mortality action", "hourglass", "scythe", "terminal clock", "vanitas", "해골 행위자", "죽음의 행위", "모래시계", "낫", "마지막 시계"],
+          "exclude_if_any_terms": ["symbol only", "logo", "band name", "통계", "밴드", "로고"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An anthropomorphic Western Death agent performing a mortality or terminal-transition action on a visible target. Skeleton, scythe, hourglass, wilted flowers, or extinguished flame are supporting iconography; at least the embodied agent, decisive action, and affected target or state change must be visible.",
+        "paraphrase_examples": ["해골 형상의 죽음이 마지막 모래시계를 뒤집자 시계의 최종 숫자가 꺼진다", "an embodied Death figure performs the terminal action while vanitas objects reinforce rather than replace it", "the mortal witness and affected clock make the personification an active agent"],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": ["embodied_death_agent", "mortality_action", "affected_target_or_transition"],
+          "groups": [
+            {"id": "embodied_death_agent", "any_terms": ["anthropomorphic skeletal or death-coded agent", "an anthropomorphic skeletal agent", "의인화된 해골 또는 죽음 표지 행위자"]},
+            {"id": "mortality_action", "any_terms": ["turns final hourglass extinguishes terminal light severs final connection or closes passage", "performs a mortality action", "마지막 모래시계를 뒤집고 종말 빛을 끄거나 최종 연결을 닫음"]},
+            {"id": "affected_target_or_transition", "any_terms": ["a mortal figure clock flame flower or passage visibly changes", "one mortal-linked clock changes", "필멸자 시계 불꽃 꽃 통로가 가시적으로 변화"]},
+            {"id": "supporting_vanitas", "any_terms": ["scythe skull hourglass wilted flower or extinguished candle supports the action", "낫 해골 모래시계 시든 꽃 꺼진 촛불이 행동을 보강"]}
+          ]
+        },
+        "contrast_examples": ["a decorative skeleton", "an hourglass beside a skull with no agent", "Time personified without mortality action", "a Korean afterlife escort", "a funeral or mourner", "a death-metal fashion portrait"]
+      },
+      "concept_candidate": {"concept_terms": ["embodied Western Death", "skeletal mortality agent", "final hourglass action", "terminal clock extinguishing", "mortal witness", "vanitas support", "agent-target-state change"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["personification of Death"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Place the embodied Death agent, its decisive mortality action, and the affected target or terminal state change in one frame. Use scythe, skull, hourglass, wilted flower, or extinguished flame only as reinforcing symbols; a costume or still-life inventory cannot substitute for agency.",
+      "required_evidence_fields": ["embodied_agent_phrase", "mortality_action_phrase", "affected_target_phrase", "symbol_support_phrase"],
+      "evidence_requirements": {
+        "embodied_agent_phrase": {"min_content_words": 6, "must_mention_any": ["an embodied skeletal personification of Death acts as an agent", "a personified Death figure stands as the active agent"]},
+        "mortality_action_phrase": {"min_content_words": 6, "must_mention_any": ["Death deliberately turns the final hourglass", "Death extinguishes the last terminal light"]},
+        "affected_target_phrase": {"min_content_words": 6, "must_mention_any": ["the affected terminal clock visibly goes dark", "one mortal-linked state visibly changes beneath Death's action"]},
+        "symbol_support_phrase": {"min_content_words": 7, "must_mention_any": ["vanitas objects support rather than replace the active agent", "the hourglass flower or scythe remains supporting iconography"]}
+      },
+      "render_gates": [
+        {"id": "vo_western_death_embodied_agent", "review_scale": "both", "description": "An anthropomorphic Death figure is visibly present as the active agent."},
+        {"id": "vo_western_death_mortality_action", "review_scale": "both", "description": "Death performs a decisive mortality or terminal-transition action."},
+        {"id": "vo_western_death_affected_target", "review_scale": "native", "description": "A target, clock, flame, connection, or passage visibly changes because of that action."},
+        {"id": "vo_western_death_symbols_secondary", "review_scale": "thumbnail", "description": "Scythe, skull, hourglass, or flower supports the reading without becoming a still-life substitute."},
+        {"id": "vo_western_death_not_afterlife_guide", "review_scale": "both", "description": "The result reads as Western personified Death rather than a Korean escort relationship or ordinary mourner."}
+      ],
+      "reject_substitutes": ["decorative_skeleton", "skull_or_hourglass_still_life_only", "time_personification_without_mortality", "korean_afterlife_escort", "funeral_or_mourner", "death_metal_fashion"]
+    },
+    {
+      "id": "fictional_human_remains_inert_dignity",
+      "category": "fictional_human_remains",
+      "activation": {
+        "exact_terms": ["fictional human remains", "shrouded fictional corpse", "human corpse", "허구의 시신", "인간 시신", "시신", "시체"],
+        "exclude_if_any_terms": ["animal carcass", "animal remains", "zombie", "revenant", "mannequin", "sleeping person", "동물 사체", "좀비", "레버넌트", "마네킹", "잠든 사람"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["fictional", "mortuary", "shroud", "gurney", "transfer", "documentation", "remains", "허구", "영안실", "시신보", "운반대", "이송", "기록", "유해"],
+          "exclude_if_any_terms": ["medical diagnosis from image", "real death confirmation", "실제 사망 판정", "사진으로 사망 진단"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A declared fictional human-remains state represented through complete external support, absence of self-support or agency, a readable human contour or mortuary context, and dignified non-graphic handling. A still image cannot medically confirm real death, infer cause, or establish identity; sleep, unconsciousness, mannequins, empty shrouds, and reanimated bodies remain separate.",
+        "paraphrase_examples": ["불투명한 깨끗한 시신보 아래 인체 윤곽이 운반대에 완전히 지지되고 기록 담당자가 존엄하게 이송을 문서화한다", "anonymous fictional human remains lie fully supported on a rigid gurney under an opaque shroud", "a transfer tag and two-person dignified handling establish mortuary context without exposed injury"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["complete_external_support", "inert_non_agent_state", "human_remains_context", "dignified_non_graphic_handling"],
+          "groups": [
+            {"id": "complete_external_support", "any_terms": ["ground bier gurney stretcher or coffin supports the full body", "the full covered inert body is externally supported", "바닥 관 운반대 들것이 신체 전체를 지지"]},
+            {"id": "inert_non_agent_state", "any_terms": ["no self-support active gaze voluntary posture or commanded movement", "the full covered inert body", "자립 시선 능동 자세 명령 동작이 없는 비활성 상태"]},
+            {"id": "human_remains_context", "any_terms": ["opaque shroud with human contour mortuary transfer tag or declared fictional remains context", "an opaque clean shroud retains a human contour", "인체 윤곽의 불투명 시신보 이송 태그 허구 유해 맥락"]},
+            {"id": "dignified_non_graphic_handling", "any_terms": ["covered respectful transfer documentation or recovery procedure", "two responders document the non-graphic transfer with dignity", "가려진 존엄한 이송 기록 수습 절차"]},
+            {"id": "uncertainty_boundary", "any_terms": ["fictional declared state rather than medical diagnosis identity or cause inference", "의학적 진단 신원 사인 추론이 아닌 선언된 허구 상태"]}
+          ]
+        },
+        "contrast_examples": ["a pale sleeping person", "an unconscious injured person", "a mannequin or wax figure", "an empty shroud or body bag", "a standing zombie or revenant", "a skull-only memento mori"]
+      },
+      "concept_candidate": {"concept_terms": ["shrouded fictional human remains", "fully supported inert body", "rigid gurney", "human contour", "fictional recovery tag", "two-person dignified transfer", "respectful documentary distance", "non-graphic mortuary context"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["fictional human remains"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare the state as fictional, support the entire covered body on a ground plane or transfer structure, retain a readable human contour and mortuary context, and show respectful documentation or handling. Keep the scene non-graphic and do not infer real medical death, cause, identity, or personal characteristics from pixels.",
+      "required_evidence_fields": ["fictional_state_phrase", "full_support_phrase", "inert_state_phrase", "human_context_phrase", "dignified_handling_phrase"],
+      "evidence_requirements": {
+        "fictional_state_phrase": {"min_content_words": 5, "must_mention_any": ["anonymous fictional human remains are declared in the scene", "the scene depicts declared fictional human remains"]},
+        "full_support_phrase": {"min_content_words": 7, "must_mention_any": ["the full body is externally supported on a rigid gurney", "the covered body lies fully supported by the transfer structure"]},
+        "inert_state_phrase": {"min_content_words": 6, "must_mention_any": ["the body shows no self-support or voluntary action", "the covered remains stay inert without active posture"]},
+        "human_context_phrase": {"min_content_words": 7, "must_mention_any": ["an opaque clean shroud retains a readable human contour", "a mortuary transfer tag and human contour establish the context"]},
+        "dignified_handling_phrase": {"min_content_words": 7, "must_mention_any": ["two responders perform a dignified non-graphic transfer", "respectful documentation distance and covered handling remain visible"]}
+      },
+      "render_gates": [
+        {"id": "vo_remains_full_external_support", "review_scale": "both", "description": "The entire covered body is supported by the ground, bier, gurney, stretcher, or coffin rather than holding itself up."},
+        {"id": "vo_remains_inert_non_agent", "review_scale": "both", "description": "The body has no active gaze, self-support, voluntary pose, or commanded movement."},
+        {"id": "vo_remains_human_context", "review_scale": "native", "description": "Human contour plus shroud, mortuary setting, transfer tag, or handling context distinguishes remains from an empty covering."},
+        {"id": "vo_remains_dignified_non_graphic", "review_scale": "thumbnail", "description": "Covered, respectful, non-graphic handling defines the scene without exposed injury or spectacle."},
+        {"id": "vo_remains_not_sleep_manikin_undead", "review_scale": "native", "description": "Sleep, unconsciousness, mannequin display, empty shroud, zombie, and revenant do not substitute."}
+      ],
+      "reject_substitutes": ["sleeping_or_unconscious_person", "mannequin_or_wax_figure", "empty_shroud_or_body_bag", "standing_zombie_or_revenant", "skull_only", "medical_death_diagnosis_from_pixels"]
     }
   ]
 }

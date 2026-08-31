@@ -8241,13 +8241,23 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "드래곤족",
                 "유령신부",
                 "회사원",
+                "네크로맨서",
+                "유령",
+                "한국 저승사자",
+                "시신",
+                "죽음의 상징",
             }.issubset(recipes["mixins"])
         )
         self.assertEqual(recipes["aliases"]["사서"], "도서관 사서")
         self.assertEqual(recipes["aliases"]["글리치"], "데이터망령")
         self.assertEqual(recipes["aliases"]["늑대인간"], "늑대인간")
         self.assertEqual(recipes["aliases"]["걸크"], "걸크러시")
-        self.assertEqual(recipes["aliases"]["저승사자"], "사신")
+        self.assertEqual(recipes["aliases"]["저승사자"], "한국 저승사자")
+        self.assertEqual(recipes["aliases"]["necromancer"], "네크로맨서")
+        self.assertEqual(recipes["aliases"]["human ghost"], "유령")
+        self.assertEqual(recipes["aliases"]["human corpse"], "시신")
+        self.assertEqual(recipes["aliases"]["memento mori"], "죽음의 상징")
+        self.assertNotIn("사체", recipes["aliases"])
         self.assertEqual(recipes["aliases"]["쿠데레"], "쿨데레")
         self.assertEqual(recipes["aliases"]["クーデレ"], "쿨데레")
         self.assertEqual(recipes["aliases"]["kuudere"], "쿨데레")

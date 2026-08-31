@@ -1,0 +1,44 @@
+{
+  "contract_version": "photo-candidate-actuation-gates/v1",
+  "arm_id": "arm-02-clockpunk",
+  "pack_id": "fe60c4342a7241c9",
+  "phase": "pre_targeted_generation",
+  "evaluation_surface": "rendered_pixels",
+  "chosen_candidate_ids": [
+    "slot:world:punk_clockpunk_world_core",
+    "slot:prop:punk_clockpunk_mechanism_prop",
+    "slot:prop:punk_clockpunk_system_diagnostic_prop",
+    "slot:prop:punk_clockpunk_maintenance_handoff_prop"
+  ],
+  "scoring_policy": "Every gate is hard. Partial, ambiguous, hidden, decorative-only, or prompt-inferred evidence is fail.",
+  "gates": [
+    {
+      "gate_id": "CAND-WORLD-01",
+      "candidate_id": "slot:world:punk_clockpunk_world_core",
+      "hard": true,
+      "partial_counts_as_fail": true,
+      "observable_pass_condition": "The main astronomical clock, a wall gear train, and at least one secondary tower subsystem are spatially distinct yet visibly connected by continuous shafts, cam rods, toothed gearing, or mainspring power paths, so the room reads as one clockwork infrastructure rather than gear decoration."
+    },
+    {
+      "gate_id": "CAND-MECH-01",
+      "candidate_id": "slot:prop:punk_clockpunk_mechanism_prop",
+      "hard": true,
+      "partial_counts_as_fail": true,
+      "observable_pass_condition": "One transparent cutaway visibly connects a wound barrel, a distinct coiled mainspring, an intermeshing gear train, an anchor-shaped escapement fork or balance assembly, and a linkage reaching the mechanical-bird cage; every component must be independently recognizable in the same image."
+    },
+    {
+      "gate_id": "CAND-DIAG-01",
+      "candidate_id": "slot:prop:punk_clockpunk_system_diagnostic_prop",
+      "hard": true,
+      "partial_counts_as_fail": true,
+      "observable_pass_condition": "A separate clear diagnostic frame beside the main clock visibly aligns an escapement-beat indicator with a descending brass plumb weight against a marked timing scale, making the comparison function readable rather than resembling a generic gauge."
+    },
+    {
+      "gate_id": "CAND-HANDOFF-01",
+      "candidate_id": "slot:prop:punk_clockpunk_maintenance_handoff_prop",
+      "hard": true,
+      "partial_counts_as_fail": true,
+      "observable_pass_condition": "A distinct maintenance handoff tray visibly holds one worn removed cam plate, one polished replacement cam plate, and a separate checked-output token together; all three items must be recognizable and read as a repair-verification set."
+    }
+  ]
+}
