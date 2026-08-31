@@ -1,0 +1,32 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create a randomized, complex, reference-informed photographic test of respectfully handled, non-graphic fictional human remains, while the reference-informed adult remains visibly alive as the documentation specialist.",
+  "subject": "An adult mortuary documentation specialist and anonymous fully shrouded fictional human remains",
+  "setting": "A temporary mortuary transfer bay inside an Arctic weather station after a blizzard",
+  "event": "The living specialist records a recovery code while a second responder stabilizes the fully supported remains",
+  "visual_priorities": ["Unambiguous external support and dignified handling of fictional remains", "Clear separation between the living reference-informed specialist and the inert shrouded body"],
+  "baseline_prompt_en": "Create a restrained photorealistic documentary photograph inside a temporary mortuary transfer bay at an Arctic weather station after a blizzard. An unmistakably adult woman works as the living mortuary documentation specialist. Her visible facial proportions, long dark wavy hair, and natural styling follow the reference portrait. Anonymous fictional human remains lie fully supported on a rigid gurney beneath an opaque clean shroud with a readable human contour. The living specialist holds a fictional recovery-code slate beside the gurney while a second responder steadies the frame with both gloved hands. Only the clean shroud, contour, transfer tag, and dignified handling are visible, making the scene non-graphic. Use an observational medium-wide frame, practical fluorescent light, frost on the windows, and accurate documentary materials.",
+  "user_definitions": [],
+  "interpretation_provenance": [{"term": "random complex concept", "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.", "basis": "request_context", "resolution": "An Arctic mortuary-transfer scene testing dignified non-graphic fictional human remains.", "sources": []}],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "Anonymous fictional human remains lie fully supported on a rigid gurney beneath an opaque clean shroud with a readable human contour"},
+      {"anchor_id": "core_subject", "source_text": "서로 다른 컨셉", "dimension": "subject", "prompt_evidence": "An unmistakably adult woman works as the living mortuary documentation specialist"},
+      {"anchor_id": "core_event", "source_text": "잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "The living specialist holds a fictional recovery-code slate beside the gurney while a second responder steadies the frame with both gloved hands"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "Her visible facial proportions, long dark wavy hair, and natural styling follow the reference portrait"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {"domain": "restrained documentary photography", "family": "cold-weather mortuary documentation realism", "evidence": ["practical fluorescent light", "accurate documentary materials"]},
+  "variation_key": "arm5-human-remains-arctic-transfer"
+}

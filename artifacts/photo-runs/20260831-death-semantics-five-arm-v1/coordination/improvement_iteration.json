@@ -1,0 +1,333 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "04c23c1c2f66f5014847c9d95f41d689b315e404",
+    "candidate_revision": "working-tree-20260831-death-semantics-v1"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Add research-backed necromancer, human ghost, Korean afterlife guide, Western Death, and fictional human-remains visual semantics to the candidate pack, then test each meaning in an independent reference-informed complex render."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Nine approved source rows support relation-first meanings, culture boundaries, mortality iconography, death-confirmation limits, and dignified remains handling.",
+      "artifact": "docs/research-evidence/photo-prompt/research_evidence.jsonl death_semantics_* rows"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary validation, visual-profile index check, semantic-index check, 23 existing visual-obligation tests, and 7 new death-semantics tests pass.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check --batch-size 1; eval_semantic.py --check-index; python -m unittest tests.test_photo_visual_obligations tests.test_photo_death_afterlife_semantics"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five independent composed-prompt and exact render-request audits pass before generation.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm*/composed*_audit*.json and render_request*_audit*.json"
+    },
+    {
+      "id": "e-arm1",
+      "kind": "render-observation",
+      "claim": "Necromancer operator, named dead anchor, and apparition survive, but the changed-instrument consequence does not close the thumbnail causal chain.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm1-necromancer/pixel_review.json"
+    },
+    {
+      "id": "e-arm2",
+      "kind": "render-observation",
+      "claim": "All human-ghost profile gates pass, while reference facial comparison and the depressed-key detail remain unqualified.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm2-ghost/pixel_review.json"
+    },
+    {
+      "id": "e-arm3",
+      "kind": "render-observation",
+      "claim": "All Korean afterlife-guide profile and reference-appearance gates pass, while the transformed-footprint consequence is not visible.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm3-afterlife-guide/pixel_review.json"
+    },
+    {
+      "id": "e-arm4",
+      "kind": "render-observation",
+      "claim": "Embodied Western Death and mortality action survive, but the affected clock remains illuminated and several reference features cannot be conservatively confirmed.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm4-death/pixel_review.json"
+    },
+    {
+      "id": "e-arm5",
+      "kind": "render-observation",
+      "claim": "All fictional-remains and reference-appearance gates pass, but one extra responder and gurney occlusion violate supplemental frozen details.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm5-remains/pixel_review.json"
+    },
+    {
+      "id": "e-independence",
+      "kind": "measurement",
+      "claim": "Five isolated arms each made one built-in image call with no retries and no cross-arm inputs.",
+      "artifact": "artifacts/photo-runs/20260831-death-semantics-five-arm-v1/arm*/run_manifest.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each requested death-related meaning must be readable through its actor-target-relation-state-change topology at thumbnail and native scales, not through costume, props, blur, or dark styling alone.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "relation-first",
+        "statement": "Necromancer, ghost, guide, and personified Death require their specific causal or relational action and consequence.",
+        "evidence_ids": [
+          "e-research",
+          "e-arm1",
+          "e-arm2",
+          "e-arm3",
+          "e-arm4"
+        ],
+        "causal_controls": [
+          "actor",
+          "specific target",
+          "interaction",
+          "localized consequence"
+        ]
+      },
+      {
+        "id": "culture-boundary",
+        "statement": "A Korean afterlife escort remains distinct from Western skeletal Death through guide-traveler-threshold versus agent-mortality-target relations.",
+        "evidence_ids": [
+          "e-research",
+          "e-arm3",
+          "e-arm4"
+        ],
+        "causal_controls": [
+          "escort relationship",
+          "mortality action",
+          "passage threshold"
+        ]
+      },
+      {
+        "id": "remains-boundary",
+        "statement": "Fictional human remains require full external support, inertness, human mortuary context, and dignified non-graphic handling without a real medical or identity inference.",
+        "evidence_ids": [
+          "e-research",
+          "e-arm5"
+        ],
+        "causal_controls": [
+          "full support",
+          "absence of agency",
+          "shroud and transfer context",
+          "non-graphic handling"
+        ]
+      },
+      {
+        "id": "reference-boundary",
+        "statement": "The supplied portrait is an attached appearance control, not biometric identity proof; unverifiable facial geometry fails conservatively.",
+        "evidence_ids": [
+          "e-arm2",
+          "e-arm4"
+        ],
+        "causal_controls": [
+          "face size",
+          "view angle",
+          "eye visibility",
+          "adult-age continuity"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "camera",
+      "lighting",
+      "framing",
+      "surface styling"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-small-consequence",
+      "scale": "regional",
+      "axis": "causal consequence legibility",
+      "source_state": "A changed instrument, extinguished clock, transformed footprint, or depressed key visibly closes the event.",
+      "render_state": "Several renders preserved the main character relation but lost or contradicted the small state-change consequence.",
+      "evidence_ids": [
+        "e-arm1",
+        "e-arm2",
+        "e-arm3",
+        "e-arm4"
+      ]
+    },
+    {
+      "id": "m-wide-reference",
+      "scale": "regional",
+      "axis": "reference appearance observability",
+      "source_state": "The adult reference face remains large and sufficiently frontal for structural feature comparison.",
+      "render_state": "Two wide complex scenes rendered the face too small or oblique to confirm eye and lower-face continuity.",
+      "evidence_ids": [
+        "e-arm2",
+        "e-arm4"
+      ]
+    },
+    {
+      "id": "m-scene-count",
+      "scale": "global",
+      "axis": "frozen scene cardinality and occlusion",
+      "source_state": "One specialist and one second responder keep the supported gurney fully legible.",
+      "render_state": "The remains render added a third living responder and occluded the gurney foot.",
+      "evidence_ids": [
+        "e-arm5"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-small-state",
+      "stage": "generator-response",
+      "statement": "In a visually dense frame, the generator preserves the dominant supernatural actor and drops a small before-to-after consequence unless that consequence receives stronger scale, contrast, and contact alignment.",
+      "evidence_ids": [
+        "e-arm1",
+        "e-arm3",
+        "e-arm4"
+      ],
+      "falsifier": "Unchanged dense compositions repeatedly preserve a clearly aligned local state change across unrelated held-out concepts."
+    },
+    {
+      "id": "h-reference-scale",
+      "stage": "prompt-interaction",
+      "statement": "Wide causal compositions can satisfy the semantic profile while making the reference face too small or oblique for strict appearance-control review.",
+      "evidence_ids": [
+        "e-arm2",
+        "e-arm4"
+      ],
+      "falsifier": "Held-out wide scenes preserve both complete semantic topology and a sufficiently large, comparable reference face without crowding."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Represent death-related concepts as observable component groups, causal relations, culture and uncertainty boundaries, rejected substitutes, literal evidence fields, and strict pixel gates; retain retrieval-only similarity as advisory.",
+    "generalization_basis": "The five profiles share a reusable actor-target-relation-consequence method while preserving distinct confounds and culturally bounded roles, and 49 candidates span subject, action, mechanism, prop, trace, capture, and safety slots.",
+    "hypothesis_ids": [
+      "h-small-state",
+      "h-reference-scale"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/concept_recipes.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl",
+      "tests/test_prompt_generator.py",
+      "tests/test_photo_death_afterlife_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-arm1",
+        "e-arm2",
+        "e-arm3",
+        "e-arm4",
+        "e-arm5"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm1-necromancer-motivating",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "operator-dead causality",
+          "localized consequence"
+        ],
+        "evidence_ids": [
+          "e-arm1"
+        ]
+      },
+      {
+        "id": "arm2-ghost-heldout",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "former identity",
+          "reflection-only breach",
+          "localized consequence"
+        ],
+        "evidence_ids": [
+          "e-arm2"
+        ]
+      },
+      {
+        "id": "arm3-afterlife-guide-heldout",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "guide-traveler escort",
+          "culture boundary",
+          "threshold"
+        ],
+        "evidence_ids": [
+          "e-arm3"
+        ]
+      },
+      {
+        "id": "arm4-western-death-heldout",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "embodied agent",
+          "mortality action",
+          "affected target"
+        ],
+        "evidence_ids": [
+          "e-arm4"
+        ]
+      },
+      {
+        "id": "arm5-remains-heldout",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "full support",
+          "inertness",
+          "dignified handling"
+        ],
+        "evidence_ids": [
+          "e-arm5"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The package and all pre-render audits pass, and three of five target semantic profiles pass all pixel gates. Two non-averageable target hard gates fail, every complex arm retains at least one target, reference, or supplemental scene defect, and requesting-user judgment is pending; therefore the data is implemented but not promoted as render-fidelity complete.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-arm1",
+      "e-arm2",
+      "e-arm3",
+      "e-arm4",
+      "e-arm5",
+      "e-independence"
+    ]
+  }
+}

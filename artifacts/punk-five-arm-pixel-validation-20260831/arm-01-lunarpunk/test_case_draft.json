@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-render-test-case-draft/v1",
+  "case_id": "punk-five-arm-20260831-arm-01-lunarpunk",
+  "phase": "pre_generation",
+  "keyword": {
+    "value": "Lunarpunk",
+    "origin": "agent_interpretation",
+    "requester_definition_supplied": false
+  },
+  "concept_summary": "An adult lunar-tide ecologist activates a living wetland observatory by pouring luminous algae into a crescent bioreactor beneath a visible crescent moon.",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "role": "appearance_only",
+    "identity_claim": false,
+    "biometric_identity_evaluation": false,
+    "evaluation_note": "Judge only visible appearance cues suitable for ordinary visual comparison; do not infer, verify, or score whether the rendered person is the same real individual."
+  },
+  "review_protocol": {
+    "review_surface": "rendered_pixels_only",
+    "prompt_available_to_reviewer": false,
+    "target_gate_policy": "Every target gate is hard; partial satisfaction counts as failure.",
+    "overall_pass_condition": "All five target gates, both confound-rejection gates, and all three common photo/reference gates pass from visible pixels alone."
+  },
+  "target_gates": [
+    {
+      "gate_id": "lunarpunk_target_01_lunar_cycle",
+      "hard": true,
+      "observable_gate": "The night sky contains one clearly recognizable large crescent moon, while a separate readable moon-phase motif or gauge is visible on the station or clothing.",
+      "pass_condition": "Both the celestial crescent and a distinct human-made lunar-cycle marker are plainly visible.",
+      "fail_condition": "Either element is absent, ambiguous, hidden, or only implied by color; partial counts as fail."
+    },
+    {
+      "gate_id": "lunarpunk_target_02_regenerative_wetland_system",
+      "hard": true,
+      "observable_gate": "A thriving wetland of reeds and lily pools is physically integrated into the working station through visible living vine or mycelium conduits.",
+      "pass_condition": "Wetland plants, water, and at least one organic conduit visibly form parts of one functional ecological system.",
+      "fail_condition": "Plants are merely potted decoration, the habitat looks dead, or the ecology and apparatus are visually disconnected; partial counts as fail."
+    },
+    {
+      "gate_id": "lunarpunk_target_03_causal_algae_activation",
+      "hard": true,
+      "observable_gate": "The adult woman is visibly pouring luminous blue-green algae from a glass vessel into a crescent-shaped translucent bioreactor, and connected pearlescent conduits visibly glow as the consequence.",
+      "pass_condition": "Actor, held source vessel, visible transfer, crescent reactor, and illuminated connected network are all legible in the same frame.",
+      "fail_condition": "Any link in the action-and-consequence chain is missing, unclear, or merely adjacent; partial counts as fail."
+    },
+    {
+      "gate_id": "lunarpunk_target_04_bioluminescent_night_ecology",
+      "hard": true,
+      "observable_gate": "Cool moonlight and blue-green or pearlescent biological light from algae, fungi, or mycelium illuminate the subject and reflect in the dark marsh water.",
+      "pass_condition": "At least two clearly organic light sources are visible and their cool reflections or light falloff affect the surrounding water or materials.",
+      "fail_condition": "The scene relies only on ordinary electric lamps, generic colored neon, or daylight; partial counts as fail."
+    },
+    {
+      "gate_id": "lunarpunk_target_05_handcrafted_living_technology",
+      "hard": true,
+      "observable_gate": "The observatory visibly combines handblown glass, moss-covered ceramic instruments, silver dew collectors, and living vine piping into credible working equipment.",
+      "pass_condition": "At least three named material or device families are recognizable, including one living component, and their placement suggests practical use.",
+      "fail_condition": "Fewer than three are visible, they read as loose fantasy ornaments, or no living component participates in the machinery; partial counts as fail."
+    }
+  ],
+  "confound_rejection_gates": [
+    {
+      "gate_id": "confound_01_solarpunk_daylight_substitution",
+      "hard": true,
+      "observable_gate": "Reject a daylight eco-utopia substitution: direct sun, a bright daytime sky, or conventional solar-panel arrays must not dominate the rendered scene over the visible moon and biological night lighting.",
+      "pass_condition": "The image is unambiguously nocturnal and moon-led, with biological light central to the working ecology.",
+      "fail_condition": "Daylight, sun imagery, or solar panels become the dominant energy-and-style signal."
+    },
+    {
+      "gate_id": "confound_02_generic_cyberpunk_or_fantasy_substitution",
+      "hard": true,
+      "observable_gate": "Reject generic neon cyberpunk or ungrounded moon fantasy: dense city signage, chrome machinery, holographic clutter, or magical glow must not replace the visibly functional wetland-biotechnology relationship.",
+      "pass_condition": "The advanced qualities remain materially tied to living marsh organisms, ecological work, and handcrafted apparatus.",
+      "fail_condition": "Urban neon spectacle or unexplained magic dominates while functional ecology is absent or incidental."
+    }
+  ],
+  "common_photo_reference_gates": [
+    {
+      "gate_id": "common_01_appearance_only_reference",
+      "hard": true,
+      "observable_gate": "The main subject is unmistakably adult and visibly carries the reference portrait's long, voluminous, wavy near-black hair, dark eyes, softly oval face, and natural facial proportions.",
+      "pass_condition": "The face and hair are sufficiently unobscured to compare these ordinary visible appearance cues.",
+      "fail_condition": "The subject appears underage, the face is unreadable, or the major visible appearance cues diverge substantially. Biometric identity is never evaluated."
+    },
+    {
+      "gate_id": "common_02_anatomy_and_action_coherence",
+      "hard": true,
+      "observable_gate": "The adult subject has coherent anatomy and plausible hand contact with the glass vessel while the pour direction, liquid path, and receiving bioreactor align physically.",
+      "pass_condition": "Hands, fingers, vessel, stream, and receiver form one plausible continuous action without duplicated or fused anatomy.",
+      "fail_condition": "Anatomy is malformed or the physical action cannot be followed from visible pixels."
+    },
+    {
+      "gate_id": "common_03_photographic_legibility",
+      "hard": true,
+      "observable_gate": "The image reads as a coherent photograph with natural skin detail, consistent light interaction, distinguishable glass, ceramic, plant, water, and fabric textures, and no intrusive generated text or watermark.",
+      "pass_condition": "The main subject, ecological action, and key materials remain clearly legible at normal viewing size.",
+      "fail_condition": "Severe blur, contradictory illumination, painterly collapse, illegible key objects, or intrusive text prevents reliable pixel judgment."
+    }
+  ]
+}

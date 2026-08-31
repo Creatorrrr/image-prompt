@@ -1,0 +1,115 @@
+{
+  "contract_version": "photo-rendered-pixel-review/v1",
+  "arm_id": "arm-03-atompunk",
+  "attempt": 1,
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-03-atompunk/targeted_attempt-01.png",
+  "image_sha256": "333f811c9079d4d1776a8d8f03aed72034eafc1190f659057f85103e51922eba",
+  "image_dimensions": {
+    "width": 1448,
+    "height": 1086
+  },
+  "inspection": {
+    "scale": "native_pixels",
+    "source_test_case_sha256": "2a79a3b2fe4973ce65a0b662c36578f6a4d29312e0054a9f7809006448f86010",
+    "source_candidate_actuation_gates_sha256": "e8f2bbe97bd696764e1f404856211711968969ea4d342ac80c80cc34ad232a15",
+    "policy": "Every hard gate is scored pass or fail from this image alone; partial or ambiguous evidence is fail."
+  },
+  "frozen_gate_results": [
+    {
+      "gate_id": "ATOMPUNK-T1",
+      "status": "pass",
+      "image_grounded_evidence": "The frame visibly combines cream machinery and a worn turquoise cart, black molded analog knobs, chrome-rimmed hardware and a ribbed metal robot, multiple radiation/load gauges, and orbiting-electron emblems on the machine, sleeve, and wall."
+    },
+    {
+      "gate_id": "ATOMPUNK-T2",
+      "status": "fail",
+      "image_grounded_evidence": "A glass-roof greenhouse, cobalt fruit vines, and reactor instrumentation are visible, but condensation-beaded growing tubes or a clearly readable glass-tube hydroponic system are not present; ordinary orchard branches dominate that part of the frame."
+    },
+    {
+      "gate_id": "ATOMPUNK-T3",
+      "status": "pass",
+      "image_grounded_evidence": "The adult worker's right fingers visibly turn a control on the labeled seed-vault while her other hand rests at its diagnostic drawer; the analog robot simultaneously holds one glowing cobalt fruit in articulated tongs."
+    },
+    {
+      "gate_id": "ATOMPUNK-T4",
+      "status": "pass",
+      "image_grounded_evidence": "The woman wears a practical silver lamé coverall and a clear-front dosimeter; a transparent bubble helmet is visibly stored on the service cart at lower right."
+    },
+    {
+      "gate_id": "ATOMPUNK-T5",
+      "status": "pass",
+      "image_grounded_evidence": "Atomic-age cues occupy the arched greenhouse architecture, the large analog seed-vault and robot machinery, and the subject's silver work gear, dosimeter, and bubble helmet rather than appearing as one isolated emblem."
+    },
+    {
+      "gate_id": "ATOMPUNK-C1",
+      "status": "pass",
+      "image_grounded_evidence": "Physical analog meters, knobs, cables, enamel equipment, greenhouse structure, and atomic service signage dominate; neon megacity, holographic, and circuit-armor cyberpunk cues do not dominate."
+    },
+    {
+      "gate_id": "ATOMPUNK-C2",
+      "status": "pass",
+      "image_grounded_evidence": "The technology reads as enamel-and-chrome atomic science with molded controls and radiation meters, not Victorian boilers, exposed clockwork, steam machinery, soot, or interwar war engines."
+    },
+    {
+      "gate_id": "COMMON-P1",
+      "status": "pass",
+      "image_grounded_evidence": "Exactly one primary adult woman is visible; her face, two arms, two hands, and all visible fingers are coherent at the control and drawer contact points, without duplicated or fused anatomy."
+    },
+    {
+      "gate_id": "COMMON-P2",
+      "status": "pass",
+      "image_grounded_evidence": "Her unobscured face visibly carries long dark wavy hair, a gently oval face, brown eyes, natural straight-to-softly-arched brows, and softly defined coral lips. This is a visible-trait comparison only; biometric identity is not evaluated."
+    },
+    {
+      "gate_id": "COMMON-P3",
+      "status": "pass",
+      "image_grounded_evidence": "The result reads as one coherent photograph with plausible glasshouse depth, metal wear, cable weight, fabric folds, chrome reflections, warm/cobalt light interaction, and contact shadows."
+    }
+  ],
+  "candidate_gate_results": [
+    {
+      "gate_id": "CAND-WORLD-01",
+      "candidate_id": "slot:world:punk_atompunk_world_core",
+      "status": "fail",
+      "image_grounded_evidence": "A curved greenhouse roof and an ATOMIC SERVICE / CIVILIAN ROCKET SUPPORT sign are visible, but an actual civilian rocket-service gantry with clearly integrated operating meters is not visually present; the candidate survives mainly as signage."
+    },
+    {
+      "gate_id": "CAND-MECHANISM-01",
+      "candidate_id": "slot:prop:punk_atompunk_mechanism_prop",
+      "status": "fail",
+      "image_grounded_evidence": "Thick corrugated cables and analog gauges exist, but no uninterrupted shielded umbilical visibly links the seed-vault to a distinct finned floor socket, and a connector bank plus two load gauges plus a clear dosimetry window are not separately legible as one mechanism."
+    },
+    {
+      "gate_id": "CAND-DIAGNOSTIC-01",
+      "candidate_id": "slot:prop:punk_atompunk_system_diagnostic_prop",
+      "status": "pass",
+      "image_grounded_evidence": "The lower seed-vault drawer is visibly open with a glowing cobalt sample under a small probe/detector and two adjacent needle gauges directly beneath it, reading as a shielded dose/load diagnostic assembly."
+    },
+    {
+      "gate_id": "CAND-HANDOFF-01",
+      "candidate_id": "slot:prop:punk_atompunk_maintenance_handoff_prop",
+      "status": "pass",
+      "image_grounded_evidence": "A worn turquoise cart beside the robot visibly holds a coiled replacement sensor/cable and scuffed circular shield collar on top, while a lower return tray contains a separate spent umbilical with a physical warning tag."
+    }
+  ],
+  "failed_gate_ids": [
+    "ATOMPUNK-T2",
+    "CAND-WORLD-01",
+    "CAND-MECHANISM-01"
+  ],
+  "overall_status": "fail",
+  "candidate_pack_verdict": "fail",
+  "repair_assessment": {
+    "eligible": true,
+    "reason": "The failures are visibility and separation failures that can be addressed by one wider, lower, open-dimension framing/composition/camera repair without changing the locked subject, event, concept, or appearance-reference use.",
+    "allowed_dimensions": [
+      "framing",
+      "composition",
+      "camera"
+    ]
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "contract_version": "photo-candidate-actuation-gates/v1",
+  "phase": "pre_render",
+  "arm_id": "arm-03-atompunk",
+  "pack_id": "6e44d69d8af8e59e",
+  "chosen_candidate_ids": [
+    "slot:world:punk_atompunk_world_core",
+    "slot:prop:punk_atompunk_mechanism_prop",
+    "slot:prop:punk_atompunk_system_diagnostic_prop",
+    "slot:prop:punk_atompunk_maintenance_handoff_prop"
+  ],
+  "evaluation_policy": {
+    "inspection_basis": "rendered_pixels_without_prompt_access",
+    "hardness": "all_hard",
+    "partial_or_ambiguous": "fail",
+    "single_image_rule": "Every chosen-candidate gate must pass in the same saved image; evidence cannot be combined across attempts."
+  },
+  "gates": [
+    {
+      "gate_id": "CAND-WORLD-01",
+      "candidate_id": "slot:world:punk_atompunk_world_core",
+      "hardness": "hard",
+      "partial_result": "fail",
+      "observable_requirement": "The same frame clearly shows a civilian 1960s rocket-service gantry with bold rounded or streamlined curves and operating power or radiation meters integrated into its structure; cheerful space-age architecture and hazardous reactor instrumentation must both be unmistakable."
+    },
+    {
+      "gate_id": "CAND-MECHANISM-01",
+      "candidate_id": "slot:prop:punk_atompunk_mechanism_prop",
+      "hardness": "hard",
+      "partial_result": "fail",
+      "observable_requirement": "One thick shielded power umbilical visibly connects the chrome seed-vault to a finned floor socket, with its exposed connector bank, two analog load gauges, and clear dosimetry window each separately legible."
+    },
+    {
+      "gate_id": "CAND-DIAGNOSTIC-01",
+      "candidate_id": "slot:prop:punk_atompunk_system_diagnostic_prop",
+      "hardness": "hard",
+      "partial_result": "fail",
+      "observable_requirement": "One open shielded diagnostic drawer visibly presents a cobalt sample beneath a needle-style detector and a side-by-side pair of analog dials that read as dose-versus-power comparison hardware; drawer, sample, detector, and both dials must all be readable."
+    },
+    {
+      "gate_id": "CAND-HANDOFF-01",
+      "candidate_id": "slot:prop:punk_atompunk_maintenance_handoff_prop",
+      "hardness": "hard",
+      "partial_result": "fail",
+      "observable_requirement": "A worn turquoise service cart beside the robot visibly separates replacement and returned hardware: a coiled replacement sensor and scuffed shield collar sit on the work surface, while a physically tagged spent umbilical rests in a distinct return tray."
+    }
+  ]
+}

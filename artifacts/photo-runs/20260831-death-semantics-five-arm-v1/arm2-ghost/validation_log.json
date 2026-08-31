@@ -1,0 +1,100 @@
+{
+  "schema_version": "photo-arm-validation-log/v1",
+  "arm_id": "arm2-ghost",
+  "checks": [
+    {
+      "name": "frozen_input_hashes",
+      "status": "pass",
+      "details": {
+        "authorial_core_file_sha256": "5b5f11dad41e9a077bfaed0c22ddfc5c65ee14236bfad178ef9d9c1c35351f96",
+        "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+        "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+        "source_head": "04c23c1c2f66f5014847c9d95f41d689b315e404"
+      }
+    },
+    {
+      "name": "visual_intent_source_binding",
+      "status": "pass",
+      "details": "agent_postcore_interpretation source_text is byte-identical to baseline_prompt_en"
+    },
+    {
+      "name": "candidate_pack_generation",
+      "status": "pass",
+      "details": {
+        "pack_count": 1,
+        "candidate_pack_version": "v6",
+        "selection_mode": "semantic",
+        "creativity": 0.5,
+        "reference_edit_mode": "identity",
+        "seed": 1241331392,
+        "pack_id": "4f5008d78cf2055b"
+      }
+    },
+    {
+      "name": "audit_composed_prompt.py",
+      "status": "pass",
+      "exit_code": 0,
+      "details": {
+        "quality_status": "warn",
+        "blocking_failures": 0,
+        "warning_boundary": "Four pack-marked uncovered intent anchors were preserved literally in the final prompt"
+      }
+    },
+    {
+      "name": "audit_image_render_request.py",
+      "status": "pass",
+      "exit_code": 0,
+      "details": {
+        "runtime_prompt_id": "2541b93889bcb630",
+        "reference_count": 1,
+        "negative_matches_pack": true
+      }
+    },
+    {
+      "name": "builtin_image_gen",
+      "status": "pass",
+      "details": {
+        "image_call_count": 1,
+        "transmission_retry_count": 0,
+        "concrete_local_path_returned": true,
+        "repo_local_copy_created": true
+      }
+    },
+    {
+      "name": "audit_moe_render_review.py",
+      "status": "pass",
+      "exit_code": 1,
+      "details": {
+        "exit_code_boundary": "Nonzero is expected because representative eligibility requires user judgment; schema_failures and failed profile hard gates are both empty",
+        "technical_qualified": true,
+        "representative_eligible": false,
+        "qualification_status": "visual_technical_qualified_user_judgment_pending"
+      }
+    },
+    {
+      "name": "record_image_run.py",
+      "status": "pass",
+      "exit_code": 0,
+      "details": {
+        "run_id": "d5287848b0e1ff6f",
+        "prompt_id": "7f65d6d97310bce2",
+        "manifest_contract_version": "photo-independent-run-manifest/v2",
+        "ledger_rows": 1
+      }
+    },
+    {
+      "name": "final_artifact_integrity",
+      "status": "pass",
+      "details": {
+        "all_json_parse": true,
+        "prompt_txt_matches_composed": true,
+        "runtime_contains_composed_contiguously": true,
+        "reference_sha_matches": true,
+        "image_sha_matches": true,
+        "ledger_prompt_matches": true,
+        "manifest_call_count_one": true,
+        "manifest_no_cross_arm_inputs": true
+      }
+    }
+  ]
+}

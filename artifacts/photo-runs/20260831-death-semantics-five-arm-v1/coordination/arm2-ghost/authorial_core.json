@@ -1,0 +1,32 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create a randomized, complex, reference-informed photographic test of a specific human ghost whose former identity remains recognizable and whose impossible presence occurs only in a mirror.",
+  "subject": "A fictional former concert pianist appearing as an adult human ghost",
+  "setting": "A closed 1970s seaside hotel rehearsal lounge before dawn",
+  "event": "The former pianist repeats one precise gesture only in a wall mirror while the physical room remains empty",
+  "visual_priorities": ["Former-person identity continuity", "One coherent reflection-only ontological breach"],
+  "baseline_prompt_en": "Create a photorealistic cinematic photograph inside a closed 1970s seaside hotel rehearsal lounge before dawn. A fictional former concert pianist appears as an unmistakably adult woman. Her facial proportions, long dark wavy hair, and natural makeup follow the reference portrait. Her human ghost exists only inside the large tarnished wall mirror. The physical space before the glass is empty, yet the reflection shows her seated at the dusty piano repeating one precise final chord gesture. A framed memorial portrait on the piano shows the same face and hair, establishing her former identity. One depressed piano key and a fresh circular mark in the dust provide a localized consequence. Compose the mirror, empty room, memorial portrait, and changed key in one readable frame with dim coastal window light and credible aged surfaces.",
+  "user_definitions": [],
+  "interpretation_provenance": [{"term": "random complex concept", "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.", "basis": "request_context", "resolution": "A reflection-only former-pianist ghost scene chosen as one independent complex arm.", "sources": []}],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "Her human ghost exists only inside the large tarnished wall mirror"},
+      {"anchor_id": "core_subject", "source_text": "서로 다른 컨셉", "dimension": "subject", "prompt_evidence": "A fictional former concert pianist appears as an unmistakably adult woman"},
+      {"anchor_id": "core_event", "source_text": "잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "the reflection shows her seated at the dusty piano repeating one precise final chord gesture"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "Her facial proportions, long dark wavy hair, and natural makeup follow the reference portrait"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {"domain": "photorealistic cinematic editorial", "family": "aged coastal mirror haunting", "evidence": ["tarnished wall mirror", "dim coastal window light"]},
+  "variation_key": "arm2-ghost-reflection-pianist"
+}

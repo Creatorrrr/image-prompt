@@ -1,0 +1,32 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create a randomized, complex, reference-informed photographic test of a Western personification of Death performing a visible mortality action, while vanitas objects remain supporting symbols rather than substitutes for the agent.",
+  "subject": "An adult clock conservator witnessing an embodied skeletal personification of Death",
+  "setting": "A vast closed clock museum during a lunar eclipse",
+  "event": "Death turns the final hourglass and extinguishes the last illuminated numeral on a terminal clock",
+  "visual_priorities": ["Anthropomorphic Death acting on mortality", "Separation between active agent and supporting vanitas symbols"],
+  "baseline_prompt_en": "Create a photorealistic cinematic photograph in a vast closed clock museum during a lunar eclipse. An unmistakably adult woman works as the living clock conservator. Her visible facial proportions, long dark wavy hair, and natural styling follow the reference portrait. Across from her stands an embodied skeletal personification of Death in a weathered ceremonial mantle. Death deliberately turns the final hourglass and the last illuminated numeral on a terminal clock goes dark beneath its bony hand. A wilted cut flower releases one final petal beside the clock, supporting the mortality theme while the skeletal agent performs the decisive action. Compose the woman, active Death figure, hourglass, extinguished numeral, and falling petal in one readable wide frame with cold eclipse light and warm dying clock lamps.",
+  "user_definitions": [],
+  "interpretation_provenance": [{"term": "random complex concept", "source_text": "시각 의미 데이터화 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.", "basis": "request_context", "resolution": "A lunar-eclipse clock-museum scene testing an active Western personification of Death.", "sources": []}],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "an embodied skeletal personification of Death in a weathered ceremonial mantle"},
+      {"anchor_id": "core_subject", "source_text": "서로 다른 컨셉", "dimension": "subject", "prompt_evidence": "An unmistakably adult woman works as the living clock conservator"},
+      {"anchor_id": "core_event", "source_text": "잘 반영되었는지 테스트해줘", "dimension": "event", "prompt_evidence": "Death deliberately turns the final hourglass and the last illuminated numeral on a terminal clock goes dark beneath its bony hand"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "Her visible facial proportions, long dark wavy hair, and natural styling follow the reference portrait"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {"domain": "photorealistic cinematic editorial", "family": "eclipse-lit monumental clock realism", "evidence": ["cold eclipse light", "warm dying clock lamps"]},
+  "variation_key": "arm4-western-death-clock-museum"
+}

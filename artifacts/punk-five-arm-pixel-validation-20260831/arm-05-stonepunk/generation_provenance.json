@@ -1,0 +1,170 @@
+{
+  "contract_version": "photo-generation-provenance/v1",
+  "arm_id": "arm-05-stonepunk",
+  "independence": {
+    "mode": "independent-no-cross-arm-inputs",
+    "cross_arm_inputs_used": false,
+    "scope_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-05-stonepunk"
+  },
+  "source": {
+    "source_revision": "04c23c1c2f66f5014847c9d95f41d689b315e404",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "exact_request_text_sha256": "30b52cba545bd9c56bef712aba617aa1250aeecc0c7262745d29dc8d78a42bf5",
+    "request_envelope_file_sha256": "780d75dd4f9a9316e77f34bdb084b86cc26518679087f13b197efa4e36aa2040",
+    "request_envelope_canonical_sha256": "851f64d6385a3e6ef306766f02f3fb79a0246e3726389f5d69d7798980238061",
+    "authorial_core_file_sha256": "61f263472c65052e435a756e7be34000024610ecb6f21f0e4bbb1efa33ba194f",
+    "authorial_core_canonical_sha256": "53ceb64e619f4ba49f2ba35f6e34e8ee75f323e2127f4bc676fe1c16619e8c2d",
+    "source_intent_lock_sha256": "49ff539a2d7b519b64c88c330dd9395c622e5775253395c4ffce24d74145c7ad",
+    "pre_pack_normalization": "The locked dimension and matching anchor dimension were normalized from unsupported appearance_reference to supported reference_use before the targeted pack. Request, baseline evidence, reference semantics, and test gates were otherwise preserved."
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "use_boundary": "Appearance-only guidance for broad visible adult facial and hair traits. Biometric identity is not evaluated or claimed."
+  },
+  "generic_preflight": {
+    "render_calls": 0,
+    "status": "preserved_non_proof",
+    "limitation": "The generic pack exposed only a scoped Stonepunk route and did not expose the required punk world/prop candidates, so it is not candidate-pack proof.",
+    "artifacts": [
+      {
+        "path": "generic_preflight_candidate_pack.json",
+        "sha256": "83b7328781f30da54106d940049dfbe4d22076984ce69aed7b4b35d08156e0fb"
+      },
+      {
+        "path": "generic_preflight_composed_prompt.json",
+        "sha256": "00a0f276092bc9c31bb84dd82672d33e3eba53a89f71fa545275d02ac42af855"
+      },
+      {
+        "path": "generic_preflight_composed_audit.json",
+        "sha256": "f1ec4cd67e806abcb00e9f6fe70f85bbd616a2e891e355afcd8e228b620693b3"
+      },
+      {
+        "path": "generic_preflight_render_request.json",
+        "sha256": "f4f49a7074250de40ace507f386926055ade301d2a13f85266d858d531330bb6"
+      },
+      {
+        "path": "generic_preflight_render_request_audit.json",
+        "sha256": "e805ac0e382b98bdbcfa041173dc3a5786a22125fa764c6bd56bad19602d7ffa"
+      }
+    ]
+  },
+  "candidate_pack": {
+    "contract_version": "photo-candidate-pack/v6",
+    "candidate_pack_version": "v6",
+    "pack_id": "6291b3bb61cf26a6",
+    "path": "candidate_pack.json",
+    "sha256": "001f7792d2c1479fbd3c10fd658d5e85c42d1708590662af4e8240b02add4f4e",
+    "preset": "punk_stonepunk_world",
+    "seed": 3105,
+    "creativity": 0.5,
+    "sensual_editorial_intensity": 0,
+    "chosen_candidate_ids": [
+      "slot:world:punk_stonepunk_world_core",
+      "slot:prop:punk_stonepunk_mechanism_prop",
+      "slot:prop:punk_stonepunk_system_diagnostic_prop",
+      "slot:prop:punk_stonepunk_maintenance_handoff_prop"
+    ],
+    "candidate_actuation_gates_path": "candidate_actuation_gates.json",
+    "candidate_actuation_gates_sha256": "954df95f34ae206fac0f58631310aa90b75291079d98d9d9f8fe946ed518afe5"
+  },
+  "generation": {
+    "tool": "built-in image_gen",
+    "mode": "reference-guided generation",
+    "actual_image_call_count": 2,
+    "maximum_image_call_count": 2,
+    "attempts": [
+      {
+        "attempt": 1,
+        "timestamp_utc": "2026-08-31T06:53:38Z",
+        "runtime_prompt_id": "0ac32a816801656c",
+        "composed_prompt_path": "composed_prompt_attempt_01.json",
+        "composed_prompt_sha256": "28bf97394469489c3db681a696ba582cbd8d8d8a1188dcf67553ea9bed269e51",
+        "composed_audit_path": "composed_audit_attempt_01.json",
+        "composed_audit_sha256": "e4fe7bdf772f81da607443ead1a74173ffd91840b1510dcc1d3938dc175c369d",
+        "composed_audit_status": "pass",
+        "composed_quality_status": "warn",
+        "render_request_path": "render_request_attempt_01.json",
+        "render_request_sha256": "32dc1970e804dd5ea5a7ad081f2a0e465d2ce28e1bf5d31e2c6d78b821abfa57",
+        "render_request_audit_path": "render_request_audit_attempt_01.json",
+        "render_request_audit_sha256": "d0a0ca2e169ce5d871f22f676bbe43488a1f0367c24960f7afdb35e74fac8157",
+        "render_request_audit_status": "pass",
+        "native_result_source_path": "/Users/chasoik/.codex/generated_images/01a05678-fa25-7780-a23e-6bcb1cd85f2f/exec-c7665c11-8d2d-45eb-ab4a-3bc46bfe35be.png",
+        "saved_image_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-05-stonepunk/targeted_attempt-01.png",
+        "saved_image_sha256": "f4ff09af95ff0cf4e5b6c2c68ccbf1073f84cada57d07a3dae918a2fd4667fb4",
+        "pixel_dimensions": [
+          1448,
+          1086
+        ],
+        "pixel_review_path": "pixel_review_targeted_attempt_01.json",
+        "pixel_review_sha256": "1213c4b074b4876ccb72408403d3900029eddb968f60cca5d52cc6bffa2b8e32",
+        "pixel_verdict": "fail",
+        "all_gate_pass_count": 8,
+        "all_gate_fail_count": 6,
+        "ledger_run_id": "353a61b934a1699c"
+      },
+      {
+        "attempt": 2,
+        "timestamp_utc": "2026-08-31T07:01:18Z",
+        "runtime_prompt_id": "ce2df8cecf2c43fd",
+        "repair_scope": [
+          "framing",
+          "composition",
+          "lighting",
+          "camera"
+        ],
+        "composed_prompt_path": "composed_prompt_attempt_02.json",
+        "composed_prompt_sha256": "0eb47d456157ad78483b32a988eb92b75aa8d4616dc6ea0a184a20e6c07966d5",
+        "composed_audit_path": "composed_audit_attempt_02.json",
+        "composed_audit_sha256": "a97b04c2dcff5d02c8dbabec2f9098a5b9922a65895a96dbbb68912a3a70a5bd",
+        "composed_audit_status": "pass",
+        "composed_quality_status": "warn",
+        "render_request_path": "render_request_attempt_02.json",
+        "render_request_sha256": "27de212abdf6be509009c8aba851ba1f5a6febec73908ce2f6b76859cd9ea19a",
+        "render_request_audit_path": "render_request_audit_attempt_02.json",
+        "render_request_audit_sha256": "c052fbfbf60668547e1c633151d4383bdcd7e3a6b94d6877ff485304e4dabf7d",
+        "render_request_audit_status": "pass",
+        "native_result_source_path": "/Users/chasoik/.codex/generated_images/01a05678-fa25-7780-a23e-6bcb1cd85f2f/exec-37297532-cc5e-4633-8732-0c54ec4322f2.png",
+        "saved_image_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-05-stonepunk/targeted_attempt-02.png",
+        "saved_image_sha256": "f9d213472634935f0a74573e7c1e59ac540c4b7451ab97bc19bddf14989d53b3",
+        "pixel_dimensions": [
+          1448,
+          1086
+        ],
+        "pixel_review_path": "pixel_review_targeted_attempt_02.json",
+        "pixel_review_sha256": "c96f1d219ac6d15816fa11f9445203b0fa1b94e23fb22db5bd11df4a19d5092c",
+        "pixel_verdict": "fail",
+        "all_gate_pass_count": 12,
+        "all_gate_fail_count": 2,
+        "ledger_run_id": "eecb11e1e0aa5622",
+        "retry_of_ledger_run_id": "353a61b934a1699c"
+      }
+    ]
+  },
+  "selection": {
+    "selected_attempt": 2,
+    "final_selection_path": "final_selection.json",
+    "final_selection_sha256": "7471fadeb05cd8d64dad14f9be9e242e9fe6e79958eba874f05a695b8221f9eb",
+    "technical_verdict": "fail",
+    "candidate_pack_pixel_verdict": "fail",
+    "failed_gate_ids": [
+      "CAND-WORLD-stone-organic-system",
+      "CAND-HANDOFF-supported-maintenance"
+    ],
+    "user_judgment": "pending"
+  },
+  "ledger": {
+    "path": "runs/image_runs.ndjson",
+    "sha256": "296adb3c58721c8961ee936ff0d065844c4bcfb02bb57ead7e994c26edd8252a",
+    "entry_count": 2,
+    "manifest_path": "run_manifest.json",
+    "manifest_sha256": "60ea26d9f3ed9f60ea741b8d491b967ca9a26a1657d44fc51286bd3293bd8c41"
+  },
+  "audit_boundary": "Prompt and render-request audits validate text, hashes, and reference binding only. Pixel reviews separately assess observable gates; neither layer establishes biometric identity or user acceptance.",
+  "limitations": [
+    "No image passed all 14 hard gates in one frame.",
+    "Attempt 02 leaves material-category differentiation and temporary counterweight support ambiguous.",
+    "User judgment has not been received."
+  ]
+}

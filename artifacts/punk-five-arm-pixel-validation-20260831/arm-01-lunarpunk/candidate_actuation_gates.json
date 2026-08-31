@@ -1,0 +1,49 @@
+{
+  "contract_version": "photo-candidate-actuation-gates/v1",
+  "case_id": "punk-five-arm-20260831-arm-01-lunarpunk-targeted",
+  "pack_id": "03964953cedcd6d4",
+  "candidate_pack_sha256": "6c22a0757603169a82201565db55f6019f3a52066e1e9ccaa9c039d91ca57fd0",
+  "created_stage": "before_targeted_generation_and_pixel_view",
+  "review_surface": "rendered_pixels_only_without_prompt",
+  "policy": "Every selected candidate has one hard gate. Partial, ambiguous, metadata-only, or cross-image satisfaction is failure.",
+  "chosen_candidate_ids": [
+    "slot:world:punk_lunarpunk_world_core",
+    "slot:prop:punk_lunarpunk_mechanism_prop",
+    "slot:prop:punk_lunarpunk_system_diagnostic_prop",
+    "slot:prop:punk_lunarpunk_maintenance_handoff_prop"
+  ],
+  "gates": [
+    {
+      "gate_id": "candidate_world_core_actuation",
+      "candidate_id": "slot:world:punk_lunarpunk_world_core",
+      "hard": true,
+      "observable_gate": "One low-energy blue-green biological repair network visibly connects at least three separated wetland or station elements, while at least two fittings show visibly mismatched hand repairs, patches, or reused parts.",
+      "pass_condition": "Both the distributed connected light network and two distinct communal repair traces are plainly visible in the same image.",
+      "fail_condition": "A decorative glow without connected infrastructure, or pristine infrastructure without repeated repair traces, fails."
+    },
+    {
+      "gate_id": "candidate_mechanism_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_mechanism_prop",
+      "hard": true,
+      "observable_gate": "The luminous glass culture vessel actively used in the pour shows at least two clearly visible etched refill or level-history marks and one conspicuous brass-colored repair seam or clasp.",
+      "pass_condition": "Luminous contents, active use, repeated refill history, and a physical repair feature coexist on the same vessel.",
+      "fail_condition": "A plain decorative beaker, marks on a different object, or an ambiguous seam fails."
+    },
+    {
+      "gate_id": "candidate_system_diagnostic_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_system_diagnostic_prop",
+      "hard": true,
+      "observable_gate": "At least three thumb-sized ceramic diagnostic tiles are visibly mounted along one mycelial conduit path, including luminous violet tiles and one distinctly black tile at a visibly damp interruption point.",
+      "pass_condition": "Tile count, shared conduit placement, contrasting diagnostic state, and wet failure location are all readable from pixels.",
+      "fail_condition": "Loose ornaments, fewer than three tiles, uniform colors, or no localized damp interruption fails."
+    },
+    {
+      "gate_id": "candidate_maintenance_handoff_prop_actuation",
+      "candidate_id": "slot:prop:punk_lunarpunk_maintenance_handoff_prop",
+      "hard": true,
+      "observable_gate": "A dedicated handoff rack, separate from the active pour, visibly holds at least three sealed luminous culture refill capsules with attached crescent-shaped shift tokens or maintenance tags.",
+      "pass_condition": "Separate rack, three sealed supplies, luminous culture, and attached transfer markers are all plainly recognizable.",
+      "fail_condition": "Generic background bottles, unsealed containers, fewer than three capsules, or absent transfer markers fails."
+    }
+  ]
+}

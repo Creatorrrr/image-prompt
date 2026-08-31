@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-render-test-case-draft/v1",
+  "phase": "pre_generation",
+  "arm_id": "arm-04-raypunk",
+  "assigned_keyword": "Raypunk",
+  "concept_title": "Photon Semaphore at the Desert Sky-Relay",
+  "concept_summary": "An adult solar-weather mechanic reconnects airborne light lanes through a crystal-key photon semaphore as a retrofuturist mail rocket approaches an elevated atomic-age relay station.",
+  "evaluation_scope": "Rendered pixels only. Reviewers judge visible evidence in the image without consulting the prompt.",
+  "scoring_policy": {
+    "target_gate_count": 5,
+    "all_target_gates_are_hard": true,
+    "partial_credit": false,
+    "partial_counts_as_fail": true,
+    "overall_target_pass_rule": "Every target gate must pass independently; one failed or partial target gate makes Raypunk target fidelity fail."
+  },
+  "reference_use": {
+    "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "role": "appearance-only",
+    "expected_visible_traits": [
+      "long, center-parted, softly wavy near-black hair",
+      "warm brown almond-shaped eyes",
+      "oval face with softly arched brows and natural full lips"
+    ],
+    "biometric_identity_evaluated": false,
+    "identity_statement": "The review checks broad visible appearance correspondence only. It does not decide or imply that the generated subject is the same person as the reference."
+  },
+  "target_gates": [
+    {
+      "gate_id": "raypunk_t1_atomic_streamlining",
+      "category": "target",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "The station visibly combines at least three coherent mid-century atomic-future cues: polished chrome structure, rounded pastel-enamel housings, sweeping aerodynamic fins, bubble windows, or an atomic sunburst emblem. The cues must belong to the same built environment rather than appear as isolated decorations.",
+      "fail_criteria": "Fewer than three cues are clearly visible, the cues are disconnected ornaments, or the environment reads as an ordinary modern facility."
+    },
+    {
+      "gate_id": "raypunk_t2_ray_technology",
+      "category": "target",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "A substantial machine visibly manipulates light through glass optics: rotating or aligned prisms and lenses produce three distinct saturated ray lanes that continue away from the apparatus into the sky.",
+      "fail_criteria": "The image contains only generic glow, neon strips, a small laser dot, or colored light with no visible optical machine and no three outgoing ray lanes."
+    },
+    {
+      "gate_id": "raypunk_t3_analog_ray_age_interface",
+      "category": "target",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "The relay equipment visibly includes both glowing vacuum tubes and readable analog dial or gauge forms integrated into the operating console.",
+      "fail_criteria": "Only flat digital screens, holographic UI, decorative tubes without an instrument panel, or analog dials without visible vacuum tubes are shown."
+    },
+    {
+      "gate_id": "raypunk_t4_mechanical_cause_and_effect",
+      "category": "target",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "The adult mechanic's hand visibly inserts a triangular transparent crystal key into an open semaphore socket while the other hand steadies a separate brass-edged glass lens; the energized ray lanes visibly originate from that same apparatus.",
+      "fail_criteria": "Either hand interaction is missing or ambiguous, the key is opaque or not triangular, the lens is absent, contact is unclear, or the rays do not visibly connect to the operated machine."
+    },
+    {
+      "gate_id": "raypunk_t5_bubble_mail_rocket_connection",
+      "category": "target",
+      "hard": true,
+      "partial_is_fail": true,
+      "pass_criteria": "A clearly airborne mail rocket with a rounded transparent bubble window and swept tail fins is visible approaching along or intersecting the restored colored ray lanes above the desert station.",
+      "fail_criteria": "The vehicle is absent, grounded, shaped like a present-day aircraft or car, lacks both the bubble window and swept fins, or has no visible spatial relationship to the ray lanes."
+    }
+  ],
+  "confound_rejection_gates": [
+    {
+      "gate_id": "raypunk_c1_not_cyberpunk_synthwave",
+      "category": "nearest_neighbor_rejection",
+      "hard": true,
+      "pass_criteria": "The dominant design reads as bright atomic-age ray technology with curved chrome, pastel enamel, analog optics, and bubble transport rather than a dense contemporary neon city.",
+      "reject_if": "The image is dominated by dark rain, urban billboards, LED signage, high-rise alleys, black tactical clothing, or magenta-cyan neon while the atomic-age forms and optical ray machinery are absent or minor."
+    },
+    {
+      "gate_id": "raypunk_c2_not_steampunk_dieselpunk",
+      "category": "nearest_neighbor_rejection",
+      "hard": true,
+      "pass_criteria": "The machinery is primarily smooth, clean, electrically luminous, and optically driven, with only restrained structural metal trim.",
+      "reject_if": "Exposed gears, boilers, steam pipes, soot, piston engines, militarized diesel machinery, or brown Victorian industrial textures dominate the visible technology."
+    }
+  ],
+  "common_photo_reference_gates": [
+    {
+      "gate_id": "common_p1_photographic_realism",
+      "category": "common_photo",
+      "hard": true,
+      "pass_criteria": "The result reads as a plausible staged photograph with coherent perspective, material texture, reflections, shadows, and depth.",
+      "fail_criteria": "It reads primarily as illustration, anime, painterly art, a game render, or visibly synthetic collage."
+    },
+    {
+      "gate_id": "common_p2_adult_reference_appearance",
+      "category": "common_reference",
+      "hard": true,
+      "pass_criteria": "One clearly adult woman has a sufficiently visible, unobstructed face and visibly carries all three broad appearance groups listed in reference_use.expected_visible_traits.",
+      "fail_criteria": "The subject appears underage, the face is obscured or too small to judge, or any listed broad appearance group is absent. Biometric identity similarity is outside scope."
+    },
+    {
+      "gate_id": "common_p3_anatomy_and_contact",
+      "category": "common_photo",
+      "hard": true,
+      "pass_criteria": "The subject has one coherent body, two anatomically plausible hands, stable facial features, and physically credible contact with both the crystal key and lens.",
+      "fail_criteria": "There are duplicated or missing limbs, fused or malformed fingers, a distorted face, an extra principal person, or floating/interpenetrating tools."
+    }
+  ]
+}

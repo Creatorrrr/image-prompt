@@ -1,0 +1,44 @@
+{
+  "contract_version": "photo-render-final-selection/v1",
+  "created_at": "2026-08-31T06:59:19Z",
+  "arm_id": "arm-04-raypunk",
+  "selection_status": "best_available_nonpassing_targeted_evidence",
+  "selected_attempt": "targeted_attempt-01",
+  "selected_image_path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-04-raypunk/targeted_attempt-01.png",
+  "selected_image_sha256": "80680d862dda3ee54a2d194e9018732cd13d789f78509c7a1993371f29f591e2",
+  "pack_id": "970f992e4d542514",
+  "selected_candidate_ids": [
+    "slot:world:punk_raypunk_world_core",
+    "slot:prop:punk_raypunk_mechanism_prop",
+    "slot:prop:punk_raypunk_system_diagnostic_prop",
+    "slot:prop:punk_raypunk_maintenance_handoff_prop"
+  ],
+  "selection_reason": "This is the only exact-preset targeted render and it visibly actuates all four selected candidate components. It is retained as the strongest targeted evidence, but it is not labeled a complete pass because one frozen Raypunk gate fails.",
+  "technical_verdict": {
+    "candidate_actuation_status": "pass",
+    "candidate_actuation_score": "4/4",
+    "frozen_gate_score": "9/10",
+    "combined_gate_score": "13/14",
+    "candidate_pack_qualification": "fail",
+    "failed_gate_ids": [
+      "raypunk_t5_bubble_mail_rocket_connection"
+    ],
+    "failure_detail": "The mail rocket is airborne and has a bubble window and swept fins, but its high red/blue exhaust corridor remains spatially separate from the three lower green/orange/blue lanes emitted by the navigator; it neither approaches along nor intersects those restored lanes."
+  },
+  "generic_baseline": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/punk-five-arm-pixel-validation-20260831/arm-04-raypunk/generic_baseline_attempt-01.png",
+    "sha256": "422c22b9434ea987f6718558af27d4db055f25e0a5d132162f84ed1d3b9c9374",
+    "qualification_role": "preserved baseline only; excluded from targeted candidate-pack qualification",
+    "comparison_is_causal": false
+  },
+  "retry": {
+    "performed": false,
+    "reason": "The maximum of two image-generation calls was consumed by one generic baseline and one exact-preset targeted call."
+  },
+  "reference_role": "appearance-only",
+  "biometric_identity_evaluated": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

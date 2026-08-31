@@ -1,0 +1,54 @@
+{
+  "schema_version": "punk-five-arm-validation-summary/v1",
+  "validated_on": "2026-08-31",
+  "source_revision": "04c23c1c2f66f5014847c9d95f41d689b315e404",
+  "selected_composed_prompt_audits": {
+    "status": "pass",
+    "passed": 5,
+    "total": 5,
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py --pack <arm>/candidate_pack.json --composed <arm>/<selected-composed>.json --plain"
+  },
+  "selected_render_request_audits": {
+    "status": "pass",
+    "passed": 5,
+    "total": 5,
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_image_render_request.py --pack <arm>/candidate_pack.json --composed <arm>/<selected-composed>.json --request <arm>/<selected-request>.json"
+  },
+  "focused_punk_semantics_tests": {
+    "status": "pass",
+    "passed": 7,
+    "total": 7,
+    "command": ".venv/bin/python -m unittest tests.test_photo_punk_aesthetic_semantics -v"
+  },
+  "dictionary_validation": {
+    "status": "pass",
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+    "result": "photo prompt dictionary metadata is valid"
+  },
+  "visual_profile_index": {
+    "status": "pass",
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+    "result": "82 profiles, 483 exact terms"
+  },
+  "semantic_index": {
+    "status": "pass",
+    "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+    "entry_count": 6910,
+    "dictionary_hash": "5f5693ee803252d645854351303f67ee0a695af8f558dabf16ec6c0d830e017a",
+    "semantic_policy_hash": "e875c52bb3ad35e7"
+  },
+  "iteration_record_validation": {
+    "status": "pass",
+    "command": ".venv/bin/python .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/punk-five-arm-pixel-validation-20260831/iteration_record.json",
+    "result": "ok"
+  },
+  "git_diff_check": {
+    "status": "pass",
+    "command": "git diff --check"
+  },
+  "full_suite": {
+    "status": "not_run",
+    "reason": "This artifact-only evaluation reran the focused punk semantics suite and relevant package/index validators; it does not claim a full repository suite pass."
+  },
+  "evidence_boundary": "Package and runtime audits establish contract transmission, while the coordinator pixel review separately scores visible outcomes. User aesthetic judgment remains pending."
+}
