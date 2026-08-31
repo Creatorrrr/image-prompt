@@ -1,0 +1,47 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Test a biological human-clone origin as contextual evidence rather than an android or a compulsory perfect visual duplicate.",
+  "subject": "Two adult biological women derived from the supplied portrait reference, presented as an original-and-clone pair with related facial structure and individually developed details.",
+  "setting": "A flooded botanical genetics archive at blue hour, with glass growth cradles, genomic projections, and living plants reclaiming the laboratory.",
+  "event": "The two women compare palm scans across a transparent tissue-culture console while a paired DNA lineage visualization links their separate bioreactor records.",
+  "visual_priorities": [
+    "A clearly biological original-and-clone relationship communicated by laboratory lineage context",
+    "Related reference-informed appearance with plausible phenotype variation rather than mechanical duplication"
+  ],
+  "baseline_prompt_en": "Create a cinematic editorial photograph inside a flooded botanical genetics archive at blue hour. Two unmistakably adult biological women, both visually derived from the supplied portrait’s oval face, warm brown eyes, and long dark wavy hair, stand across a transparent tissue-culture console. They share closely related facial structure while retaining individual freckles, hair arrangement, and expression. One has just stepped from a condensation-covered growth cradle as the other aligns her palm on a scanner; paired DNA lineage projections and matched bioreactor records visibly connect them. Living skin, damp hair, breath on glass, and natural hands establish organic humanity. Reeds and laboratory vines cut through shallow reflective water, while cool archival light and a narrow amber emergency beam shape the scene. Use a medium-wide eye-level composition with both faces readable and the original-and-clone relationship carried by biological provenance, not by machine parts.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Selected a complex biological human-clone archive scene as one independent test arm.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "paired DNA lineage projections and matched bioreactor records visibly connect them"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "Two unmistakably adult biological women, both visually derived from the supplied portrait’s oval face, warm brown eyes, and long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "이미지에 실제로 반영되는지까지 테스트", "dimension": "event", "prompt_evidence": "the other aligns her palm on a scanner"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "oval face, warm brown eyes, and long dark wavy hair"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic science editorial photography",
+    "family": "flooded biolab archive",
+    "evidence": ["condensation-covered glass", "cool archival light with amber emergency light"]
+  },
+  "variation_key": "clone-flooded-genetics-archive"
+}

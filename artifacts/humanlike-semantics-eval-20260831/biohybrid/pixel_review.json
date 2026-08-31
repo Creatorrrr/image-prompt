@@ -1,0 +1,62 @@
+{
+  "schema_version": "humanlike-semantics-pixel-review/v1",
+  "arm_id": "biohybrid",
+  "pack_id": "8acac34a9fc365ed",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/biohybrid/biohybrid-tidal-greenhouse.png",
+  "result_sha256": "fb39ea745eee7f80e789602a600265d2d49870be427667e9ddcb2612527c097e",
+  "thumbnail_image": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/biohybrid/biohybrid-tidal-greenhouse-thumb.png",
+  "thumbnail_sha256": "107f71cfb3599363e114bfe8a6401a087fcfe4e3856c5baaebae52bb734a676c",
+  "inspected_scales": [
+    {
+      "name": "native",
+      "dimensions": "1536x1024",
+      "method": "view_image original"
+    },
+    {
+      "name": "thumbnail",
+      "dimensions": "480x320",
+      "method": "view_image original"
+    }
+  ],
+  "partial_is_fail": true,
+  "hard_gates": {
+    "vo_biohybrid_living_tissue": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native pixels show wet pink folded and striated tissue masses inside the transparent central body, visibly distinct from the clear shell and pale ribs."
+    },
+    "vo_biohybrid_engineered_structure": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Both scales retain a transparent polymer mantle and fins, repeated engineered rib members, a central lattice, and multiple cable or connector assemblies around the tissue."
+    },
+    "vo_biohybrid_functional_interface": {
+      "status": "fail",
+      "review_scale": "native",
+      "evidence": "Tissue and ribs are co-located, but native pixels do not unambiguously show electrode-to-tissue contacts, a load-bearing attachment path, or a contracted region visibly deforming one fin; propulsion causality is only implied."
+    },
+    "vo_biohybrid_independent_robot_body": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At thumbnail scale the complete manta-shaped machine is a single foreground body with a closed silhouette, fully separate from the kneeling human operator."
+    },
+    "vo_biohybrid_not_biomimetic_cyborg_or_animal_sensor": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The visible manufactured shell, repeating scaffold ribs, connectors, and cables integrated around distinct flesh make this more than animal-shaped styling; it is neither a human implant nor a sensor backpack on an intact animal."
+    }
+  },
+  "overall_status": "fail",
+  "failed_gate_ids": [
+    "vo_biohybrid_functional_interface"
+  ],
+  "reference_observation": {
+    "role": "facial_appearance_inspiration_only",
+    "result": "The new fictional operator visibly carries the requested oval-face, brown-eye, and long dark wavy hair cues. No biometric identity or same-person conclusion is made."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "boundary": "Prompt and runtime audits do not prove pixel fidelity. One failed hard gate makes the rendered qualification fail even though four other gates pass."
+}

@@ -1,0 +1,62 @@
+{
+  "contract_version": "photo-independent-run-provenance-audit/v1",
+  "arm_id": "chimera",
+  "status": "pass",
+  "independence": {
+    "dedicated_directory": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera",
+    "other_arm_outputs_used": false,
+    "manifest_cross_arm_inputs_used": false,
+    "image_call_count": 1,
+    "image_tool": "builtin_image_gen"
+  },
+  "bindings": {
+    "pack_id": "2621d1aa9044ee83",
+    "candidate_pack_file_sha256": "a12898425345b8154ecf7aebd49f67a9834e895ec7bfb114010c3a9c22189927",
+    "prompt_id": "c35ca49624caed4e",
+    "ledger_run_id": "9682ac6511005d7e",
+    "authorial_core_sha256": "c2b9f117eae14d50fda1349c6e7f1df330a62b66d34f1d3dc68d0953ec9dbed6",
+    "intent_lock_sha256": "70a1caab2881081f408428103f1bc9a2d69d1f9a769170cc811c595e82cb2d2e",
+    "effective_visual_contract_sha256": "fd748f4c13d66121a27451d239cce7d5f802b22f79690734eea4cdfe06a2ae9e",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "result_sha256": "f184564ec8b7f92777931b5c34bbe4567f3181a7c869855cde628c8060842cc6"
+  },
+  "checks": [
+    {
+      "check": "composed_prompt_audit",
+      "status": "pass",
+      "evidence_path": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/composed_audit.json"
+    },
+    {
+      "check": "exact_runtime_request_audit",
+      "status": "pass",
+      "evidence_path": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/render_request_audit.json"
+    },
+    {
+      "check": "native_and_thumbnail_pixel_review",
+      "status": "pass",
+      "evidence_path": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/pixel_review.json"
+    },
+    {
+      "check": "formal_render_review_schema_and_hard_gates",
+      "status": "pass",
+      "note": "technical_qualified=true, schema_failures=[], failed_hard_gates=[]; representative promotion remains pending requesting-user judgment",
+      "evidence_path": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/pixel_review_audit.json"
+    },
+    {
+      "check": "recorder_manifest_creation",
+      "status": "pass",
+      "evidence_path": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/run_manifest.json"
+    },
+    {
+      "check": "manifest_exact_field_and_image_hash_reaudit",
+      "status": "pass",
+      "method": "jq -e exact contract, lineage, reference, image-call, independence, and result-hash assertions"
+    },
+    {
+      "check": "ledger_single_row_and_lineage_reaudit",
+      "status": "pass",
+      "method": "jq -e -s exact one-row, run, prompt, pack, image, reference, audit, and independence assertions"
+    }
+  ],
+  "user_judgment": "pending"
+}

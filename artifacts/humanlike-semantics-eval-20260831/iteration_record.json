@@ -1,0 +1,331 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "9e7cbbb418c268ce4c4e0cdd7d3c08b7bd2c318f",
+    "candidate_revision": "working-tree-20260831-humanlike-semantics-v1"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen visual-semantic data and candidate packs for five distinct humanlike-entity terms, then test prompt and pixel realization through five independent single-render arms using the supplied portrait as appearance inspiration."
+  },
+  "evidence": [
+    {
+      "id": "e-source-research",
+      "kind": "external-research",
+      "claim": "The five terms describe different origin, cellular-composition, scale-and-motility, synchronization, or living-synthetic relations, and several of those relations are not directly provable from appearance alone.",
+      "artifact": "docs/research-evidence/photo-prompt/humanlike-entities-20260831/source-research.md"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied image provides a frontal adult portrait with long dark wavy hair and was authorized only as general facial-appearance inspiration for the generated scenes.",
+      "artifact": "sha256:e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The five profiles, exact/advisory routing cases, gate ownership, indexes, dictionary metadata, and pre-pack contracts pass their focused validation suites.",
+      "artifact": "python -m unittest tests.test_photo_humanlike_semantics tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval tests.test_photo_authorial_core_v5 tests.test_photo_authorial_core_v6 tests.test_photo_prepack_isolation_v5; visual-profile-index --check; dictionary validator"
+    },
+    {
+      "id": "e-full-suite-baseline",
+      "kind": "package-check",
+      "claim": "Full discovery ran 782 tests and ended with 10 failures and 3 errors; every failing name reproduced on a clean archive of the starting revision, so no new full-suite failing name was introduced.",
+      "artifact": "python -m unittest discover -s tests; clean git-archive baseline reruns recorded in coordinator-review.md"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five independently composed prompts and all five exact runtime render requests passed fail-closed audits before generation, each with exactly one reference image.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/*/*prompt*audit.json and artifacts/humanlike-semantics-eval-20260831/*/*request*audit.json"
+    },
+    {
+      "id": "e-render-clone",
+      "kind": "render-observation",
+      "claim": "Clone passed three of five hard gates; source-to-copy direction and exclusion of an ordinary-twin substitute remained ambiguous at thumbnail scale.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/clone/pixel_review.json; image sha256:6109a29aa9a4b3f9f29a81d0045a7912c0fbbdcc428bdd9f35e697513bbc152b"
+    },
+    {
+      "id": "e-render-chimera",
+      "kind": "render-observation",
+      "claim": "Chimera passed all five hard gates with coherent human anatomy and two scientifically labeled lineages integrated across the same projected organs.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/chimera/pixel_review.json; image sha256:f184564ec8b7f92777931b5c34bbe4567f3181a7c869855cde628c8060842cc6"
+    },
+    {
+      "id": "e-render-anthrobot",
+      "kind": "render-observation",
+      "claim": "Anthrobot passed all five hard gates with a physical-to-magnified scale bridge, multicellular texture, cilia, and experimental motility.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/anthrobot/pixel_review.json; image sha256:21814e016909d4ad80e03d61da6743de16f84a4d2149192f5763033d709d4273"
+    },
+    {
+      "id": "e-render-digital-twin",
+      "kind": "render-observation",
+      "claim": "Human digital twin passed all five hard gates with distinct outbound live sensing and returned predictive updates linked to one physical referent.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/digital-twin/pixel_review.json; image sha256:f32163db1a790838a1bb86cba8222a2ec3aacce54b0c6d5566427ad030750cb7"
+    },
+    {
+      "id": "e-render-biohybrid",
+      "kind": "render-observation",
+      "claim": "Biohybrid robot passed four of five hard gates; living and synthetic materials coexist, but an unambiguous tissue-to-electrode force path or contraction-driven deformation is missing.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/biohybrid/pixel_review.json; image sha256:fb39ea745eee7f80e789602a600265d2d49870be427667e9ddcb2612527c097e"
+    },
+    {
+      "id": "e-measurement",
+      "kind": "measurement",
+      "claim": "Across five one-call arms, prompt and runtime audits were 5/5 PASS, pixel gates were 22/25 PASS, and complete arm-level technical qualification was 3/5.",
+      "artifact": "artifacts/humanlike-semantics-eval-20260831/coordinator-review.md"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each exact humanlike-entity term must produce its own observable component relation and confusion boundary at both native and thumbnail scales; a label or partial component set is insufficient.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-distinct-profile-ownership",
+        "statement": "Clone, cellular chimera, Anthrobot, human digital twin, and biohybrid robot retain separate profiles and disjoint hard-gate ownership rather than collapsing into one generic near-human class.",
+        "evidence_ids": [
+          "e-source-research",
+          "e-package"
+        ],
+        "causal_controls": [
+          "profile identity",
+          "required evidence-field identity",
+          "render-gate identity"
+        ]
+      },
+      {
+        "id": "inv-context-for-nonvisual-relations",
+        "statement": "Biological origin, cellular lineage, synchronization, and functional integration require contextual visual evidence and cannot pass from resemblance alone.",
+        "evidence_ids": [
+          "e-source-research",
+          "e-render-clone",
+          "e-render-biohybrid"
+        ],
+        "causal_controls": [
+          "lineage provenance",
+          "same-tissue integration",
+          "outbound and return paths",
+          "functional force transmission"
+        ]
+      },
+      {
+        "id": "inv-reference-boundary",
+        "statement": "The supplied portrait controls only general facial-appearance inspiration and never establishes identity or biological sameness.",
+        "evidence_ids": [
+          "e-reference"
+        ],
+        "causal_controls": [
+          "reference role",
+          "identity-claim exclusion"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "scene and location",
+      "camera and composition",
+      "lighting and weather",
+      "wardrobe and props",
+      "phenotype variation that preserves the requested relation",
+      "scientific visualization style when all hard gates remain observable"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-clone-direction",
+      "scale": "global",
+      "axis": "source-to-copy provenance direction",
+      "source_state": "A biological clone needs one visually attributable source lineage and evidence that excludes ordinary twins or merely similar subjects.",
+      "render_state": "Two organic related-looking adults and genomic records are visible, but the source-versus-copy direction is not readable at thumbnail scale.",
+      "evidence_ids": [
+        "e-render-clone"
+      ]
+    },
+    {
+      "id": "mismatch-biohybrid-interface",
+      "scale": "local",
+      "axis": "functional living-to-synthetic force path",
+      "source_state": "The living tissue must visibly actuate or sense through a synthetic interface rather than merely sharing a shell.",
+      "render_state": "Tissue, ribs, shell, and cables coexist, but no electrode contact or contraction-driven fin deformation is unambiguous.",
+      "evidence_ids": [
+        "e-render-biohybrid"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hyp-component-contracts",
+      "stage": "representation",
+      "statement": "Independent profiles with component evidence and false-substitute gates will route the five labels without ontology collapse or android-clone collision.",
+      "evidence_ids": [
+        "e-source-research",
+        "e-package"
+      ],
+      "falsifier": "An exact or component routing case activates the wrong profile, or two profiles share a hard-gate identifier."
+    },
+    {
+      "id": "hyp-relational-compression",
+      "stage": "generator-response",
+      "statement": "A single still-image generation more reliably renders static co-presence than directional provenance or causal material interfaces, even when the audited prompt contains the required relation.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render-clone",
+        "e-render-biohybrid"
+      ],
+      "falsifier": "Independent one-call renders consistently show readable source-to-copy direction and visible tissue-driven deformation at thumbnail scale."
+    },
+    {
+      "id": "hyp-one-sample-limit",
+      "stage": "sampling",
+      "statement": "One render per profile establishes case-level feasibility but cannot establish a robust per-profile success rate.",
+      "evidence_ids": [
+        "e-render-clone",
+        "e-render-chimera",
+        "e-render-anthrobot",
+        "e-render-digital-twin",
+        "e-render-biohybrid"
+      ],
+      "falsifier": "A pre-registered repeated-sample evaluation provides stable confidence intervals for every profile."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Represent each exact humanlike-entity term as a separate component-based visual obligation with contextual provenance, an explicit observability limit, and hard false-substitute gates; exact labels hard-activate while component-only descriptions remain advisory.",
+    "generalization_basis": "The rule is derived from five terms spanning biological origin, cellular composition, microscopic living systems, bidirectional models, and living-synthetic machines, with multilingual positive, component, and negative routing cases.",
+    "hypothesis_ids": [
+      "hyp-component-contracts",
+      "hyp-relational-compression",
+      "hyp-one-sample-limit"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e491064759693a2e",
+      "tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl",
+      "tests/fixtures/photo_prompt/humanlike_semantics_five_arm_cases_v1.jsonl",
+      "tests/test_photo_humanlike_semantics.py",
+      "docs/research-evidence/photo-prompt/humanlike-entities-20260831/source-research.md"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-full-suite-baseline"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-clone",
+        "e-render-chimera",
+        "e-render-anthrobot",
+        "e-render-digital-twin",
+        "e-render-biohybrid",
+        "e-measurement"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "case-clone",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "biological source provenance",
+          "phenotype variation",
+          "twin substitution boundary"
+        ],
+        "evidence_ids": [
+          "e-render-clone"
+        ]
+      },
+      {
+        "id": "case-chimera",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "dual cellular lineage",
+          "same-tissue integration",
+          "fantasy-patchwork boundary"
+        ],
+        "evidence_ids": [
+          "e-render-chimera"
+        ]
+      },
+      {
+        "id": "case-anthrobot",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "microscopic scale bridge",
+          "surface cilia",
+          "motility"
+        ],
+        "evidence_ids": [
+          "e-render-anthrobot"
+        ]
+      },
+      {
+        "id": "case-digital-twin",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "physical referent correspondence",
+          "outbound sensing",
+          "returned operational update"
+        ],
+        "evidence_ids": [
+          "e-render-digital-twin"
+        ]
+      },
+      {
+        "id": "case-biohybrid",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "living tissue",
+          "engineered structure",
+          "functional interface"
+        ],
+        "evidence_ids": [
+          "e-render-biohybrid"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The structural and prompt layers are implemented and audited, but only three of five one-call arms passed every pixel gate. Clone provenance direction and biohybrid force transmission need stronger visual controls before any broad render-fidelity promotion; user aesthetic judgment is also still pending.",
+    "evidence_ids": [
+      "e-package",
+      "e-full-suite-baseline",
+      "e-prompt",
+      "e-render-clone",
+      "e-render-chimera",
+      "e-render-anthrobot",
+      "e-render-digital-twin",
+      "e-render-biohybrid",
+      "e-measurement"
+    ]
+  }
+}

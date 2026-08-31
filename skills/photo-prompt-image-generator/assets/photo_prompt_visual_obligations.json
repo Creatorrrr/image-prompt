@@ -8250,6 +8250,276 @@
         {"id": "vo_boubou_not_dashiki_caftan_generic_robe", "review_scale": "thumbnail", "description": "A dashiki shirt, caftan, separately named agbada ensemble, oversized robe, color, or pattern alone does not substitute for the grand-boubou system."}
       ],
       "reject_substitutes": ["dashiki_shirt", "caftan_with_narrow_sleeves", "agbada_substitution", "generic_oversized_robe", "pattern_or_color_only", "boubou_label_without_expansive_body_sleeves_and_inner_layer"]
+    },
+    {
+      "id": "biological_human_clone_provenance",
+      "category": "biological_origin_relation",
+      "activation": {
+        "exact_terms": ["human clone", "biological human clone", "cloned human", "human cloning subject", "인간 복제체", "인간 클론", "복제 인간", "복제인간"],
+        "exclude_if_any_terms": ["git clone", "repository clone", "database clone", "virtual machine clone", "disk clone", "android clone unit", "mass-production android", "clone trooper", "저장소 복제", "가상 머신 복제", "안드로이드 복제 유닛"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["biological human", "DNA lineage", "genomic lineage", "growth cradle", "tissue culture", "living organic body", "bioreactor record", "생물학적 인간", "DNA 계통", "유전체 계통", "조직 배양"],
+          "exclude_if_any_terms": ["serial plate", "endoskeleton", "source code", "filesystem", "virtual machine", "robot factory", "시리얼 플레이트", "내골격", "소스 코드", "로봇 공장"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A biological human clone is defined by copied genetic origin and a source-lineage relation, not by machine manufacture or a compulsory pixel-identical appearance. Shared heredity may support related features, while development and environment may produce visible phenotype variation.",
+        "paraphrase_examples": ["two living human bodies linked by one documented genomic lineage while retaining individual developmental details", "an original and a cloned person connected through tissue-culture and DNA provenance", "기계 복제가 아니라 생물학적 계통 기록으로 연결된 원본 인간과 복제 인간", "유전적 기원은 공유하지만 주근깨와 머리 모양과 표정은 개별적으로 발달한 두 사람"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["biological_body", "clone_lineage_provenance", "source_copy_relation", "phenotype_variation_boundary"],
+          "groups": [
+            {"id": "biological_body", "any_terms": ["living organic human bodies", "adult biological women", "natural skin breath and hands", "생물학적으로 살아 있는 인간 신체", "자연스러운 피부 호흡 손"]},
+            {"id": "clone_lineage_provenance", "any_terms": ["paired DNA lineage records", "genomic lineage visualization", "matched tissue-culture records", "DNA 계통 기록", "유전체 계통 시각화"]},
+            {"id": "source_copy_relation", "any_terms": ["original-and-clone relationship", "source person and biological clone", "one documented source lineage connects them", "원본과 복제체 관계", "하나의 원천 계통으로 연결"]},
+            {"id": "phenotype_variation_boundary", "any_terms": ["related facial structure with individual details", "shared heredity with phenotype variation", "different freckles hair arrangement and expression", "관련된 얼굴 구조와 개별 디테일", "공유 유전과 표현형 차이"]},
+            {"id": "organic_machine_separation", "any_terms": ["biological provenance carries the relationship", "all visible body surfaces remain organic", "living tissue rather than manufactured casing", "생물학적 기원이 관계를 설명", "보이는 신체 표면은 유기적"]}
+          ]
+        },
+        "contrast_examples": ["identical android units on a factory line", "ordinary identical twins with no clone provenance", "one actor duplicated by a split-screen effect", "a mask impostor or doppelganger with no biological source relation"]
+      },
+      "concept_candidate": {"concept_terms": ["biological original-and-clone relation", "paired genomic lineage records", "tissue-culture provenance", "living organic human bodies", "related inherited features", "individual phenotype variation", "source and copy documented in one scene"]},
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["biological human clone", "human clone"],
+        "forbidden_prompt_terms": ["android clone unit", "mass-production android", "clone trooper"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the source person, biological clone, and one readable lineage record in the same frame. Establish living organic bodies, make shared heredity compatible with individual developmental variation, and let biological provenance carry the relation. Factory repetition, serial plates, split-screen duplication, ordinary twins, or perfect facial identity alone cannot substitute.",
+      "required_evidence_fields": ["biological_body_phrase", "lineage_provenance_phrase", "source_clone_relation_phrase", "phenotype_variation_phrase", "organic_integrity_phrase"],
+      "evidence_requirements": {
+        "biological_body_phrase": {"min_content_words": 3, "must_mention_any": ["adult biological women", "living organic human bodies", "natural skin breath and hands"]},
+        "lineage_provenance_phrase": {"min_content_words": 4, "must_mention_any": ["paired DNA lineage projections", "paired DNA lineage records", "genomic lineage visualization", "matched tissue-culture records"]},
+        "source_clone_relation_phrase": {"min_content_words": 4, "must_mention_any": ["original-and-clone relationship", "source person and biological clone", "one documented source lineage connects them"]},
+        "phenotype_variation_phrase": {"min_content_words": 4, "must_mention_any": ["closely related facial structure while retaining individual", "related facial structure with individual details", "shared heredity with phenotype variation"]},
+        "organic_integrity_phrase": {"min_content_words": 4, "must_mention_any": ["living skin damp hair breath on glass and natural hands", "all visible body surfaces remain organic", "biological provenance carries the relationship"]}
+      },
+      "render_gates": [
+        {"id": "vo_clone_living_biological_bodies", "review_scale": "both", "description": "Every cloned or source person reads as a living biological human with coherent skin, anatomy, hands, and material response."},
+        {"id": "vo_clone_lineage_provenance", "review_scale": "native", "description": "A readable DNA, genomic, tissue-culture, or bioreactor lineage relation connects the source person and clone in the same scene."},
+        {"id": "vo_clone_source_copy_relation", "review_scale": "thumbnail", "description": "The composition makes one source-and-biological-copy relationship legible rather than showing unrelated lookalikes."},
+        {"id": "vo_clone_variation_allowed", "review_scale": "native", "description": "Related inherited features coexist with plausible individual phenotype details; exact facial pixel identity is not required."},
+        {"id": "vo_clone_not_android_twins_or_split_screen", "review_scale": "both", "description": "Factory android repetition, serial plates, ordinary twins, split-screen duplication, masks, or doppelgangers do not substitute for biological clone provenance."}
+      ],
+      "reject_substitutes": ["mass_produced_android_units", "serial_plate_factory_repetition", "ordinary_twins_without_clone_provenance", "split_screen_duplicate_actor", "mask_impostor_or_doppelganger", "perfect_facial_identity_without_biological_lineage"]
+    },
+    {
+      "id": "human_cellular_chimera_lineage",
+      "category": "cellular_origin_composition",
+      "activation": {
+        "exact_terms": ["human chimera", "human cellular chimera", "cellular chimera person", "human-animal chimera", "인간 키메라", "인체 키메라", "세포 키메라"],
+        "exclude_if_any_terms": ["mythological chimera", "fantasy chimera", "chimera monster", "Chimera Ant", "신화 속 키메라", "판타지 키메라", "키메라 괴물"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["two cell lineages", "dual-origin cells", "cell-line distribution", "tissue genotype", "multispectral tissue", "different zygotes", "두 세포 계통", "서로 다른 세포 계통", "조직 유전자형"],
+          "exclude_if_any_terms": ["lion goat serpent", "animal head", "patchwork creature", "monster anatomy", "사자 염소 뱀", "동물 머리", "괴물 해부학"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A human cellular chimera contains integrated cell populations derived from genetically distinct origins. The scientific condition is a cellular-lineage property and does not inherently create visible animal-part patchwork, split skin, monster anatomy, or a fantasy hybrid silhouette.",
+        "paraphrase_examples": ["one coherent human body whose tissue map reveals two genetically distinct cell populations", "dual-origin cell-line distributions integrated across ordinary human organs", "정상적인 인간 신체 안에 서로 다른 두 세포 계통이 통합되어 있음을 조직 영상으로 보여 준다", "동물 부위가 아니라 세포 계통의 차이를 과학적 영상으로 드러낸 인간"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["coherent_human_anatomy", "distinct_cell_lineages", "within_tissue_integration", "scientific_lineage_evidence"],
+          "groups": [
+            {"id": "coherent_human_anatomy", "any_terms": ["anatomically coherent human body", "complete human silhouette", "normal human hands and organs", "해부학적으로 일관된 인간 신체", "완전한 인간 실루엣"]},
+            {"id": "distinct_cell_lineages", "any_terms": ["two interwoven cell-line distributions", "two genetically distinct cell populations", "dual-origin cellular lineages", "두 개의 세포 계통", "유전적으로 다른 세포 집단"]},
+            {"id": "within_tissue_integration", "any_terms": ["integrated across the same organs", "intermixed within ordinary tissues", "same organ contains both lineages", "같은 장기 안에 두 계통이 통합", "정상 조직 안에 혼재"]},
+            {"id": "scientific_lineage_evidence", "any_terms": ["multispectral tissue scan", "paired microscope slides", "lineage diagram", "genotype map", "다중분광 조직 스캔", "현미경 슬라이드와 계통도"]},
+            {"id": "morphology_boundary", "any_terms": ["ordinary integrated human morphology", "cell lineage is shown by imaging", "complete human silhouette remains readable", "일반적인 인간 형태 유지", "세포 계통은 영상으로 표시"]}
+          ]
+        },
+        "contrast_examples": ["a lion-goat-serpent mythological creature", "a person assembled from visible animal body parts", "split-color skin used as the only clue", "generic genetic mutation or fantasy hybrid costume"]
+      },
+      "concept_candidate": {"concept_terms": ["coherent human anatomy", "two genetically distinct cell lineages", "interwoven tissue distribution", "multispectral lineage map", "paired microscope samples", "dual-origin cells within the same organs", "scientific rather than mythological context"]},
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["human cellular chimera", "human chimera"],
+        "forbidden_prompt_terms": ["mythological chimera", "fantasy chimera", "animal-part patchwork"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep one coherent human body and one scientific visualization of two integrated cell lineages visible together. Show the distinction inside tissue maps, samples, or genotype readouts while preserving ordinary human anatomy. Animal heads, patchwork limbs, split-color skin, monster silhouettes, or a chimera label alone cannot substitute.",
+      "required_evidence_fields": ["integrated_human_body_phrase", "dual_lineage_phrase", "tissue_integration_phrase", "scientific_readout_phrase", "human_morphology_phrase"],
+      "evidence_requirements": {
+        "integrated_human_body_phrase": {"min_content_words": 4, "must_mention_any": ["body is anatomically coherent and naturally human", "anatomically coherent human body", "complete human silhouette"]},
+        "dual_lineage_phrase": {"min_content_words": 4, "must_mention_any": ["two interwoven fluorescent cell-line distributions", "two genetically distinct cell populations", "dual-origin cellular lineages"]},
+        "tissue_integration_phrase": {"min_content_words": 4, "must_mention_any": ["across the same organs", "integrated across the same organs", "intermixed within ordinary tissues"]},
+        "scientific_readout_phrase": {"min_content_words": 4, "must_mention_any": ["multispectral tissue scanner", "paired microscope slides and a dual-origin cell lineage diagram", "genotype map and tissue samples"]},
+        "human_morphology_phrase": {"min_content_words": 4, "must_mention_any": ["complete human silhouette remains clearly readable", "ordinary integrated human morphology", "normal human hands and organs"]}
+      },
+      "render_gates": [
+        {"id": "vo_chimera_coherent_human_anatomy", "review_scale": "both", "description": "The subject retains one coherent ordinary human body, face, hands, and silhouette in the saved image."},
+        {"id": "vo_chimera_two_cell_lineages", "review_scale": "native", "description": "A scientific visualization clearly distinguishes two cell populations or lineages rather than one generic glow."},
+        {"id": "vo_chimera_integrated_same_tissue", "review_scale": "native", "description": "Both lineage patterns are shown integrated within the same tissue or organ system rather than separated into two creatures."},
+        {"id": "vo_chimera_scientific_context", "review_scale": "thumbnail", "description": "Microscopy, tissue scanning, genotype mapping, or paired samples make the cellular-lineage interpretation legible."},
+        {"id": "vo_chimera_not_fantasy_patchwork", "review_scale": "both", "description": "Animal heads, patchwork limbs, split-color skin, monster anatomy, or fantasy costume do not substitute for cellular chimerism."}
+      ],
+      "reject_substitutes": ["mythological_lion_goat_serpent", "animal_part_patchwork_person", "split_color_skin_only", "fantasy_hybrid_costume", "generic_mutation_glow", "chimera_label_without_dual_cell_lineage_evidence"]
+    },
+    {
+      "id": "anthrobot_microscopic_ciliated_biobot",
+      "category": "microscopic_living_biorobot",
+      "activation": {
+        "exact_terms": ["Anthrobot", "Anthrobots", "anthrobot biobot", "human-cell Anthrobot", "앤스로봇", "안스로봇"],
+        "exclude_if_any_terms": ["anthropomorphic robot", "anthropomorphic android", "humanoid android", "의인화 로봇", "휴머노이드 안드로이드"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An Anthrobot is a microscopic motile living biobot that self-assembles from adult human tracheal epithelial cells into an irregular multicellular body whose outward cilia drive movement. Human cellular origin does not imply a human face, limbs, humanoid silhouette, metal chassis, or android scale.",
+        "paraphrase_examples": ["microscopic irregular spheroids assembled from living adult human airway cells and propelled by surface cilia", "a microfluidic culture shows ciliated multicellular biobots moving across damaged tissue", "성인 인간 기관지 세포가 자가조립한 현미경 크기의 불규칙한 섬모 생체로봇", "사람 모양이 아니라 표면 섬모로 움직이는 세포 응집체"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["human_tracheal_cell_origin", "self_assembled_multicellular_body", "surface_cilia", "microscopic_scale"],
+          "groups": [
+            {"id": "human_tracheal_cell_origin", "any_terms": ["adult human tracheal cells", "living human airway tissue", "human airway epithelial cells", "성인 인간 기관지 세포", "인간 기도 상피세포"]},
+            {"id": "self_assembled_multicellular_body", "any_terms": ["self-assembled multicellular spheroids", "irregular multicellular cell aggregates", "asymmetric rounded living bodies", "자가조립 다세포 구체", "불규칙한 세포 응집체"]},
+            {"id": "surface_cilia", "any_terms": ["fine motile cilia", "ciliated outer surface", "cilia drive movement", "미세한 운동 섬모", "섬모가 이동을 구동"]},
+            {"id": "microscopic_scale", "any_terms": ["microscopic scale bridge", "petri-scale chamber and magnified monitor", "microfluidic chamber under a microscope", "현미경적 크기", "배양 챔버와 확대 모니터"]},
+            {"id": "living_motility_or_repair", "any_terms": ["moving across a scratched tissue culture", "motile path through a microfluidic channel", "tissue repair experiment", "손상 조직 배양을 가로질러 이동", "미세유체 채널의 이동 경로"]}
+          ]
+        },
+        "contrast_examples": ["a tiny humanoid robot with a human face", "a metal nanobot with gears or a chassis", "an anthropomorphic android grown in a vat", "generic round cells with no cilia, scale bridge, or motility evidence"]
+      },
+      "concept_candidate": {"concept_terms": ["adult human tracheal cell origin", "self-assembled multicellular spheroid", "fine motile surface cilia", "microscopic non-humanoid body", "microfluidic culture chamber", "magnified live microscope view", "motile tissue-repair experiment"]},
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["Anthrobot"],
+        "forbidden_prompt_terms": ["tiny humanoid robot", "human-faced nanobot", "metal android"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Provide a credible scale bridge from a physical culture chamber and microscope to a magnified view of irregular multicellular bodies. Keep human-airway-cell texture, outward cilia, microscopic scale, and motile behavior readable together. A human face, limbs, metal chassis, android silhouette, or generic cells without cilia cannot substitute.",
+      "required_evidence_fields": ["human_cell_origin_phrase", "multicellular_body_phrase", "surface_cilia_phrase", "microscopic_scale_phrase", "motile_experiment_phrase"],
+      "evidence_requirements": {
+        "human_cell_origin_phrase": {"min_content_words": 4, "must_mention_any": ["made of living human airway tissue", "adult human tracheal cells", "human airway epithelial cells"]},
+        "multicellular_body_phrase": {"min_content_words": 4, "must_mention_any": ["microscopic irregular multicellular spheroids", "self-assembled multicellular spheroids", "irregular multicellular cell aggregates"]},
+        "surface_cilia_phrase": {"min_content_words": 3, "must_mention_any": ["fringed with fine motile cilia", "ciliated outer surface", "cilia drive movement"]},
+        "microscopic_scale_phrase": {"min_content_words": 4, "must_mention_any": ["physical petri-scale chamber microscope optics and magnified monitor", "microfluidic chamber under a microscope", "credible microscopic scale bridge"]},
+        "motile_experiment_phrase": {"min_content_words": 4, "must_mention_any": ["traveling across a scratched neural-tissue culture", "moving across a scratched tissue culture", "motile path through a microfluidic channel"]}
+      },
+      "render_gates": [
+        {"id": "vo_anthrobot_microscopic_scale", "review_scale": "both", "description": "The culture vessel, microscope, and magnified view establish a microscopic rather than human-sized subject."},
+        {"id": "vo_anthrobot_multicellular_living_body", "review_scale": "native", "description": "The biobots read as irregular multicellular living aggregates with tissue texture rather than manufactured metal devices."},
+        {"id": "vo_anthrobot_surface_cilia", "review_scale": "native", "description": "Fine outward cilia remain visible on the Anthrobot surface and plausibly support motility."},
+        {"id": "vo_anthrobot_motile_experiment", "review_scale": "thumbnail", "description": "A microfluidic path, tissue-culture crossing, or repair experiment makes the organisms' movement function legible."},
+        {"id": "vo_anthrobot_not_humanoid_or_metal", "review_scale": "both", "description": "Human faces, limbs, humanoid silhouettes, gears, metal chassis, or android scale do not substitute for the ciliated living biobot."}
+      ],
+      "reject_substitutes": ["tiny_humanoid_robot", "human_faced_nanobot", "metal_geared_microbot", "vat_grown_android", "generic_cells_without_cilia", "human_cell_origin_used_as_humanoid_shape"]
+    },
+    {
+      "id": "human_digital_twin_bidirectional_sync",
+      "category": "referent_synchronization_relation",
+      "activation": {
+        "exact_terms": ["human digital twin", "human body digital twin", "HDT human digital twin", "bidirectional human digital twin", "인간 디지털 트윈", "휴먼 디지털 트윈", "인체 디지털 트윈"],
+        "exclude_if_any_terms": ["static digital double", "static avatar", "digital portrait only", "one-way digital shadow", "정적 디지털 더블", "정적 아바타", "단방향 디지털 섀도"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["bidirectional synchronization", "live sensor data", "real-time physiological state", "state update", "physical person and digital counterpart", "return simulation", "양방향 동기화", "실시간 센서 데이터", "상태 갱신", "물리적 인간과 디지털 대응체"],
+          "exclude_if_any_terms": ["render-only character", "static scan", "one-way dashboard", "game avatar only", "렌더 전용 캐릭터", "정적 스캔", "단방향 대시보드"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A human digital twin is an operational digital counterpart tied to a specific physical person through continuing state exchange. A still image must show the physical referent, live sensing into the model, and a visible returned update or prediction; a photoreal avatar, static scan, digital double, or one-way dashboard alone is insufficient.",
+        "paraphrase_examples": ["a physical person sends current sensor state into a digital counterpart and receives a changed prediction back", "the same person's pose and physiology update a full-scale model that returns a new route or intervention", "실제 인간의 센서 상태가 디지털 대응체로 들어가고 예측 결과가 다시 실제 환경으로 돌아오는 양방향 관계", "정적인 닮은꼴 아바타가 아니라 지속적으로 갱신되는 운용 모델"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["specific_physical_referent", "live_sensing_path", "digital_state_counterpart", "return_update_path", "changed_operational_consequence"],
+          "groups": [
+            {"id": "specific_physical_referent", "any_terms": ["physical person and digital counterpart", "same adult and full-scale counterpart", "specific human referent", "실제 인간과 디지털 대응체", "특정 인간 원본"]},
+            {"id": "live_sensing_path", "any_terms": ["wearable biosensors send live data", "sensor path from body into model", "real-time physiological state enters the twin", "웨어러블 센서가 실시간 데이터를 전송", "신체에서 모델로 들어가는 상태 경로"]},
+            {"id": "digital_state_counterpart", "any_terms": ["full-scale counterpart mirrors current pose", "digital model visualizes internal state", "same appearance and current body state", "현재 자세를 반영한 전신 대응체", "내부 상태를 시각화한 디지털 모델"]},
+            {"id": "return_update_path", "any_terms": ["distinct return path carries an updated forecast", "simulation returns to a wrist display", "bidirectional state exchange", "갱신된 예측이 돌아오는 별도 경로", "양방향 상태 교환"]},
+            {"id": "changed_operational_consequence", "any_terms": ["rerouted simulation changes the physical decision", "updated physiological forecast", "returned intervention alters the live plan", "되돌아온 예측이 실제 계획을 변경", "갱신된 생리 예측"]}
+          ]
+        },
+        "contrast_examples": ["a photoreal digital human with no physical referent", "a static scanned avatar", "a digital double used only for visual effects", "a one-way dashboard that receives sensor data but returns no state change"]
+      },
+      "concept_candidate": {"concept_terms": ["specific physical human referent", "full-scale digital counterpart", "same current pose and appearance", "live wearable sensor path", "internal state visualization", "distinct return-update path", "changed physical decision or simulation", "bidirectional synchronization"]},
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["human digital twin"],
+        "forbidden_prompt_terms": ["static digital double", "static avatar", "one-way digital shadow"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the specific physical person, their current-state digital counterpart, an outbound live-sensor path, and a distinct returned update in one frame. Make the returned forecast or intervention visibly change the physical decision surface. A photoreal avatar, static double, scan, hologram, mirrored pose, or one-way dashboard alone cannot substitute.",
+      "required_evidence_fields": ["physical_referent_phrase", "digital_counterpart_phrase", "outbound_sensor_phrase", "return_update_phrase", "changed_state_phrase"],
+      "evidence_requirements": {
+        "physical_referent_phrase": {"min_content_words": 4, "must_mention_any": ["adult emergency planner", "specific physical person", "physical woman"]},
+        "digital_counterpart_phrase": {"min_content_words": 5, "must_mention_any": ["full-scale translucent digital counterpart with the same appearance and current pose", "full-scale counterpart mirrors current pose", "digital model visualizes internal state"]},
+        "outbound_sensor_phrase": {"min_content_words": 5, "must_mention_any": ["wearable biosensors send luminous data paths from her body into the counterpart", "wearable biosensors send live data", "sensor path from body into model"]},
+        "return_update_phrase": {"min_content_words": 5, "must_mention_any": ["a distinct return path carries an updated physiological forecast", "simulation returns to a wrist display", "bidirectional state exchange"]},
+        "changed_state_phrase": {"min_content_words": 4, "must_mention_any": ["rerouted flood simulation back to her wrist display", "returned intervention alters the live plan", "rerouted simulation changes the physical decision"]}
+      },
+      "render_gates": [
+        {"id": "vo_hdt_physical_referent", "review_scale": "both", "description": "A specific physical human referent is clearly present and distinct from the digital counterpart."},
+        {"id": "vo_hdt_corresponding_current_state", "review_scale": "both", "description": "The digital counterpart shares the referent's appearance and readable current pose or physiological state."},
+        {"id": "vo_hdt_outbound_live_sensing", "review_scale": "native", "description": "A live sensor or state path visibly travels from the physical person into the digital model."},
+        {"id": "vo_hdt_returned_update", "review_scale": "native", "description": "A distinct returned forecast, intervention, or updated state travels from the digital model back to the physical system."},
+        {"id": "vo_hdt_not_static_double_or_shadow", "review_scale": "thumbnail", "description": "A static avatar, digital double, mirrored hologram, scan, or one-way data dashboard does not substitute for bidirectional synchronization."}
+      ],
+      "reject_substitutes": ["photoreal_digital_human_without_referent", "static_scanned_avatar", "visual_effects_digital_double", "mirrored_hologram_only", "one_way_digital_shadow", "sensor_dashboard_without_return_update"]
+    },
+    {
+      "id": "biohybrid_robot_living_synthetic_integration",
+      "category": "living_synthetic_integration",
+      "activation": {
+        "exact_terms": ["biohybrid robot", "bio-hybrid robot", "living biohybrid robot", "biological hybrid robot", "바이오하이브리드 로봇", "생체하이브리드 로봇", "생체 혼성 로봇"],
+        "exclude_if_any_terms": ["bioinspired robot", "bio-inspired robot", "biomimetic robot", "생체모방 로봇", "바이오미메틱 로봇"],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": ["living muscle tissue", "living cells", "contractile tissue", "synthetic scaffold", "microelectrodes", "organic-synthetic interface", "살아 있는 근육 조직", "수축성 조직", "합성 스캐폴드", "유기-합성 경계"],
+          "exclude_if_any_terms": ["inspired by animal shape only", "fully synthetic biomimicry", "decorative organic pattern", "동물 형태 모방만", "완전 합성 생체모방", "장식적 유기 무늬"]
+        },
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A biohybrid robot functionally integrates living biological material such as cells or contractile muscle with engineered synthetic structures, electrodes, control components, or scaffolds. Its living and synthetic parts must jointly produce movement or sensing; animal-inspired shape alone and an organism merely wearing a device are different concepts.",
+        "paraphrase_examples": ["living muscle bands contract inside a transparent engineered scaffold and bend polymer fins", "an independent soft robot couples cultured tissue to electrodes and synthetic structure", "살아 있는 수축성 조직이 합성 골격과 전극에 연결되어 실제 움직임을 만드는 로봇", "동물 모양을 흉내 낸 완전 합성 로봇이 아니라 생체 조직과 공학 구조가 기능적으로 통합된 기계"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["living_biological_component", "engineered_synthetic_component", "functional_interface", "independent_robot_body"],
+          "groups": [
+            {"id": "living_biological_component", "any_terms": ["visible living muscle bands", "cultured contractile tissue", "living cell layer", "보이는 살아 있는 근육 띠", "배양된 수축성 조직"]},
+            {"id": "engineered_synthetic_component", "any_terms": ["translucent polymer ribs", "synthetic scaffold", "embedded microelectrodes", "engineered flexible fins", "투명 폴리머 골격", "합성 스캐폴드", "내장 미세전극"]},
+            {"id": "functional_interface", "any_terms": ["contracted tissue bends the scaffold", "electrodes stimulate living muscle", "organic-synthetic interface drives motion", "수축 조직이 골격을 굽힘", "전극이 살아 있는 근육을 구동"]},
+            {"id": "independent_robot_body", "any_terms": ["independent non-humanoid robot", "robot remains separate from the operator", "complete manta-shaped machine body", "독립된 비인간형 로봇", "조작자와 분리된 완전한 로봇 몸체"]},
+            {"id": "material_boundary_legibility", "any_terms": ["living and synthetic materials remain separately legible", "wet tissue meets dry polymer through visible anchors", "생체 조직과 합성 소재 경계가 읽힘", "젖은 조직과 폴리머 연결부"]}
+          ]
+        },
+        "contrast_examples": ["a fully synthetic robot shaped like an animal", "a cyborg whose machine parts are implanted in a human operator", "a living animal carrying an external sensor backpack", "organic-looking paint or texture on an ordinary robot"]
+      },
+      "concept_candidate": {"concept_terms": ["visible living contractile tissue", "transparent synthetic scaffold", "embedded microelectrodes", "functional organic-synthetic interface", "tissue contraction bends engineered structure", "independent non-humanoid robot", "separate human operator", "material boundary legibility"]},
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["biohybrid robot"],
+        "forbidden_prompt_terms": ["bioinspired robot", "fully synthetic biomimetic robot", "human cyborg implant"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the complete independent robot, its living tissue, its engineered scaffold, and the load-bearing interface visible together. Show a contraction or signal changing the synthetic structure so both material classes share one function. Animal-like silhouette, organic paint, an external sensor on an animal, or a human cyborg implant cannot substitute.",
+      "required_evidence_fields": ["independent_robot_phrase", "living_tissue_phrase", "synthetic_structure_phrase", "functional_interface_phrase", "operator_separation_phrase"],
+      "evidence_requirements": {
+        "independent_robot_phrase": {"min_content_words": 4, "must_mention_any": ["independent non-humanoid organism-machine", "independent non-humanoid robot", "complete manta-shaped biohybrid robot"]},
+        "living_tissue_phrase": {"min_content_words": 4, "must_mention_any": ["clearly visible pink living muscle bands", "visible living muscle bands", "cultured contractile tissue"]},
+        "synthetic_structure_phrase": {"min_content_words": 5, "must_mention_any": ["translucent polymer ribs embedded microelectrodes and flexible engineered fins", "transparent synthetic scaffold", "engineered polymer ribs and microelectrodes"]},
+        "functional_interface_phrase": {"min_content_words": 5, "must_mention_any": ["contracted and relaxed tissue regions visibly bends the synthetic scaffold", "contracted tissue bends the scaffold", "organic-synthetic interface drives motion"]},
+        "operator_separation_phrase": {"min_content_words": 4, "must_mention_any": ["cables end at the robot rather than entering the engineer's body", "robot remains separate from the operator", "separate human operator"]}
+      },
+      "render_gates": [
+        {"id": "vo_biohybrid_living_tissue", "review_scale": "native", "description": "Living cellular or contractile tissue remains visibly distinct and plausibly biological within the robot."},
+        {"id": "vo_biohybrid_engineered_structure", "review_scale": "both", "description": "Synthetic scaffold, electrodes, fins, or other engineered components remain structurally readable around the living material."},
+        {"id": "vo_biohybrid_functional_interface", "review_scale": "native", "description": "A visible interface links tissue contraction or sensing to deformation or control of the engineered structure."},
+        {"id": "vo_biohybrid_independent_robot_body", "review_scale": "thumbnail", "description": "The complete biohybrid reads as an independent robot body separate from any human operator."},
+        {"id": "vo_biohybrid_not_biomimetic_cyborg_or_animal_sensor", "review_scale": "both", "description": "Animal-inspired shape, organic paint, a fully synthetic biomimetic robot, human cyborg implant, or sensor-equipped animal does not substitute for living-synthetic integration."}
+      ],
+      "reject_substitutes": ["fully_synthetic_biomimetic_robot", "animal_shape_only", "organic_paint_or_texture", "human_cyborg_implant", "sensor_backpack_on_living_animal", "living_tissue_and_synthetic_parts_without_functional_interface"]
     }
   ]
 }
