@@ -1,0 +1,35 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Test Anthrobot as a microscopic motile biobot assembled from adult human tracheal cells, not as a miniature humanoid machine.",
+  "subject": "A portrait-reference-informed adult biologist observing microscopic ciliated Anthrobots in a microfluidic repair experiment.",
+  "setting": "A midnight orbital wet laboratory with a live microscope station, microfluidic chamber, and Earth glowing beyond the window.",
+  "event": "The biologist adjusts the microscope while its large monitor shows irregular multicellular ciliated spheroids moving across a scratched neural-tissue culture.",
+  "visual_priorities": [
+    "Microscopic non-humanoid living cell aggregates with visible cilia",
+    "A credible scale bridge from human researcher to microscope and magnified culture"
+  ],
+  "baseline_prompt_en": "Create a photorealistic science-feature photograph in a midnight orbital wet laboratory. An unmistakably adult biologist derived from the supplied portrait’s oval face, brown eyes, and long dark wavy hair leans toward a live microscope station, adjusting a fine-focus control. Beside her, a large calibrated monitor shows the magnified experiment: several microscopic, irregular multicellular spheroids made of living human airway tissue, each fringed with fine motile cilia, traveling across a scratched neural-tissue culture inside a microfluidic chamber. The organisms have cellular textures and asymmetric rounded forms. The physical petri-scale chamber, microscope optics, and magnified monitor establish the scale relationship. Cool instrument light brushes her face while Earthlight enters through the orbital window; floating droplets and tethered sample cartridges add depth. Use an environmental portrait with a clear inset-like monitor view, sharp scientific detail, restrained color, and believable laboratory optics.",
+  "user_definitions": [],
+  "interpretation_provenance": [{"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "Selected a microscopic Anthrobot orbital-lab experiment as one independent test arm.", "sources": []}],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "microscopic, irregular multicellular spheroids made of living human airway tissue, each fringed with fine motile cilia"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "An unmistakably adult biologist derived from the supplied portrait’s oval face, brown eyes, and long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "이미지에 실제로 반영되는지까지 테스트", "dimension": "event", "prompt_evidence": "adjusting a fine-focus control"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "oval face, brown eyes, and long dark wavy hair"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {"domain": "photorealistic science feature", "family": "orbital wet-lab documentary", "evidence": ["live microscope station", "Earthlight through an orbital window"]},
+  "variation_key": "anthrobot-orbital-wet-lab"
+}

@@ -1,0 +1,41 @@
+{
+  "contract_version": "photo-visual-semantics-test-case/v1",
+  "test_case_id": "humanlike-20260831-chimera-seed-1732",
+  "arm_id": "chimera",
+  "seed": 1732,
+  "keyword_under_test": "human cellular chimera",
+  "complex_concept": "A photorealistic scientific field portrait in a storm-lit mobile genomics clinic inside an alpine seed vault, where an adult field geneticist scans one ordinary hand while a single anatomical projection displays two genetically distinct cell lineages interwoven through the same organs.",
+  "semantic_boundary": "Cellular chimerism is evidenced by dual-origin scientific tissue visualization while the person retains coherent ordinary human anatomy; fantasy animal-part hybridity is not a substitute.",
+  "reference": {
+    "path": "/tmp/codex-remote-attachments/01a05652-c76c-72e2-983c-7a002ea21ab1/FB060572-5D90-4534-83A6-A8C43F622506/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "facial_appearance_inspiration",
+    "identity_claim": "none"
+  },
+  "oracle": {
+    "partial_is_fail": true,
+    "required_hard_gates": [
+      "vo_chimera_coherent_human_anatomy",
+      "vo_chimera_two_cell_lineages",
+      "vo_chimera_integrated_same_tissue",
+      "vo_chimera_scientific_context",
+      "vo_chimera_not_fantasy_patchwork"
+    ]
+  },
+  "execution": {
+    "pack_id": "2621d1aa9044ee83",
+    "prompt_id": "c35ca49624caed4e",
+    "tool": "builtin_image_gen",
+    "image_call_count": 1,
+    "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/humanlike-semantics-eval-20260831/chimera/generated.png",
+    "result_sha256": "f184564ec8b7f92777931b5c34bbe4567f3181a7c869855cde628c8060842cc6"
+  },
+  "result": {
+    "composed_audit": "pass",
+    "runtime_request_audit": "pass",
+    "hard_gate_pass_count": 5,
+    "hard_gate_fail_count": 0,
+    "technical_qualified": true,
+    "user_judgment": "pending"
+  }
+}

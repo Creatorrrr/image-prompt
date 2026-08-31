@@ -1,0 +1,35 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Test a scientific human cellular-chimera concept through dual cell-line evidence while preserving an ordinary integrated human body.",
+  "subject": "An adult woman derived from the supplied portrait reference, presented as a healthy human cellular chimera and field geneticist.",
+  "setting": "A storm-lit mobile genomics clinic inside a remote alpine seed vault, with microscopy instruments and translucent tissue maps.",
+  "event": "She places a normal hand beneath a multispectral scanner while two fluorescent cell-line patterns populate an anatomical projection beside her.",
+  "visual_priorities": [
+    "Two genetically distinct cellular lineages communicated through scientific imaging",
+    "A coherent ordinary human anatomy rather than fantasy animal-part hybridity"
+  ],
+  "baseline_prompt_en": "Create a photorealistic science-editorial scene inside a storm-lit mobile genomics clinic built into an alpine seed vault. An unmistakably adult woman derived from the supplied portrait’s oval face, brown eyes, and long dark wavy hair stands at a multispectral tissue scanner. Her body is anatomically coherent and naturally human. She places one normal hand beneath the scanner while an adjacent translucent anatomical projection reveals two interwoven fluorescent cell-line distributions in different colors across the same organs; paired microscope slides and a dual-origin cell lineage diagram reinforce the scientific human-chimera context. Her calm concentration, practical field coat, realistic skin, and complete human silhouette remain clearly readable. Seed drawers, wet rock, cable bundles, and lightning beyond a narrow window add complexity. Frame a three-quarter environmental portrait with the woman and the dual-lineage projection equally legible, using cool laboratory light, brief white storm flashes, and restrained documentary color.",
+  "user_definitions": [],
+  "interpretation_provenance": [{"term": "랜덤한 복잡한 컨셉", "source_text": "랜덤한 복잡한 컨셉", "basis": "request_context", "resolution": "Selected a scientific cellular-chimera field-clinic scene as one independent test arm.", "sources": []}],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "two interwoven fluorescent cell-line distributions in different colors across the same organs"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "An unmistakably adult woman derived from the supplied portrait’s oval face, brown eyes, and long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "이미지에 실제로 반영되는지까지 테스트", "dimension": "event", "prompt_evidence": "She places one normal hand beneath the scanner"},
+      {"anchor_id": "reference_appearance", "source_text": "첨부한 이미지를 활용하여", "dimension": "appearance", "prompt_evidence": "oval face, brown eyes, and long dark wavy hair"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "appearance"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {"domain": "photorealistic scientific documentary", "family": "storm-lit alpine field clinic", "evidence": ["multispectral scanner", "lightning through a narrow window"]},
+  "variation_key": "chimera-alpine-seed-vault"
+}
