@@ -1,0 +1,82 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent, deliberately complex photographic test in which a guarded hidden-treasure retrieval attempt is visibly failing, while using the supplied image only to guide the adult subject's observable facial, hair, and makeup appearance.",
+  "subject": "An unmistakably adult climber with long, softly waved near-black hair, brown eyes, softly defined brows, fine dark eyeliner, luminous natural makeup, and peach-pink lips.",
+  "setting": "A wet mineral cliff ledge containing a narrow carved niche at hard winter dawn.",
+  "event": "The climber reaches toward a fixed treasure cache while a stone guardian closes the niche access, leaving the reach visibly short of the cache.",
+  "visual_priorities": [
+    "Make the active guardian, blocked access path, failed reaching attempt, and unmoved treasure legible together in one frame.",
+    "Keep the adult subject's visible facial, hair, and makeup cues recognizable without implying identity.",
+    "Preserve tactile wet stone and hard winter dawn light in a layered documentary composition."
+  ],
+  "baseline_prompt_en": "A guarded treasure attempt visibly failing unfolds on a wet mineral cliff at hard winter dawn. In a layered medium-wide documentary frame, an unmistakably adult climber reaches one gloved hand into a cliff niche. A carved stone guardian swings a fitted slab across the only access path. The climber's fingertips stop short of the cache, and the treasure cache remains fixed inside the niche behind the descending slab. The failed reach and the guardian's blocking motion are visible in the same instant. The climber's visible face has long, softly waved near-black hair with a center part, almond-shaped brown eyes, softly defined brows, fine dark eyeliner, luminous natural makeup, and peach-pink lips. Cold directional light grazes wet mineral surfaces with restrained film grain, separating foreground climber, moving guardian, closing barrier, and recessed treasure.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "whole_request",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Build and render one independently chosen complex visual-semantic test concept, then judge whether its required visible relations appear in pixels while using the attachment only as an adult appearance reference.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a guarded treasure attempt visibly failing"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult climber"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "reaches one gloved hand into a cliff niche"
+      },
+      {
+        "anchor_id": "appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "long, softly waved near-black hair with a center part"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "material"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic documentary adventure photography",
+    "family": "tactile winter cliff realism",
+    "evidence": [
+      "hard winter dawn",
+      "wet mineral surfaces with restrained film grain"
+    ]
+  },
+  "variation_key": "arm-01-guarded-treasure-cliff"
+}

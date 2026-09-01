@@ -1,0 +1,85 @@
+{
+  "schema_version": "photo-independent-iteration-record/v1",
+  "arm_id": "arm-01",
+  "iteration": 1,
+  "attempt": 1,
+  "is_retry": false,
+  "retry_of": null,
+  "stages": [
+    {
+      "stage": "precore_randomization",
+      "status": "complete",
+      "evidence_path": "test_case_precommit.json"
+    },
+    {
+      "stage": "authorial_core_lock",
+      "status": "complete",
+      "evidence_path": "authorial_core.lock.json",
+      "pre_schema_file_sha256": "8ab9d0438c8b5a468718cc1394a376cac5264d735c4a0511c14bb1fc5b9437fa"
+    },
+    {
+      "stage": "schema_normalization",
+      "status": "complete",
+      "evidence_path": "schema_normalization_record.json",
+      "semantic_change": false,
+      "note": "Only reference_appearance was mapped to the copied generator's supported appearance dimension label."
+    },
+    {
+      "stage": "candidate_pack",
+      "status": "complete",
+      "pack_id": "1a923459d47d9098",
+      "file_sha256": "c3097d3b1f5d160a393317d47befa47396911672fbbe6416ef04227d2f86d8be"
+    },
+    {
+      "stage": "composed_prompt_audit",
+      "status": "pass",
+      "quality_status": "warn",
+      "audit_path": "composed_prompt.audit.json"
+    },
+    {
+      "stage": "runtime_request_audit",
+      "status": "pass",
+      "runtime_prompt_id": "7d595a8ac1f312ec",
+      "audit_path": "image_render_request.audit.json"
+    },
+    {
+      "stage": "image_generation",
+      "status": "success",
+      "tool": "native_image_gen",
+      "call_number": 1,
+      "output_path": "generated.png",
+      "output_sha256": "5ae8d1ebe062dff92e08074ee45185248792d2ec6bbcb0a49b2d1c0548fb3f16"
+    },
+    {
+      "stage": "pixel_review",
+      "status": "fail",
+      "passed_gate_count": 4,
+      "failed_gate_count": 1,
+      "failed_gate_ids": [
+        "vo_desire_covet_owner_response"
+      ],
+      "evidence_path": "pixel_review.json"
+    },
+    {
+      "stage": "user_judgment",
+      "status": "pending",
+      "source": "not_yet_received"
+    }
+  ],
+  "image_call_budget": {
+    "allowed": 1,
+    "used": 1,
+    "remaining": 0
+  },
+  "repair": {
+    "performed": false,
+    "eligible_failed_gate": "vo_desire_covet_owner_response",
+    "blocked_by_protocol": true,
+    "note": "No second generation or repair call was made."
+  },
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "shared_repo_source_modified": false
+  },
+  "final_arm_status": "rendered_pixel_fail_user_judgment_pending"
+}

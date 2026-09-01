@@ -1,0 +1,337 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "04215f52a38e1d2e211024f1d3faa53b40b58a54+pre-existing-working-tree",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen visual-semantics and candidate-pack data from the referenced legend-keyword research, then test three seeded complex concepts in independent single-generation arms using the supplied portrait only for observable adult appearance cues."
+  },
+  "evidence": [
+    {
+      "id": "legend_reference_conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies a broad legend taxonomy spanning transmission, local sites, evidence objects, origin landforms, guarded treasure, petrification, submerged settlements, ghost ships, prophecy, lineage, returning figures, contemporary circulation, memorates, variants, and cycles, but does not itself define which meanings are falsifiable in one image.",
+      "artifact": "ChatGPT conversation 6a96755d-4848-83e8-93f0-6a46a91107ec and docs/research-evidence/photo-prompt/legend-visual-semantics-20260901/source-research.md"
+    },
+    {
+      "id": "legend_external_research",
+      "kind": "external-research",
+      "claim": "AKS, Duchas, UNESCO, NOAA, Royal Museums Greenwich, and ISCLR sources support bounded visual relations for site-bound transmission, rock traces, landform causality, guarded treasure, stone transformation, in-situ submerged structures, same-vessel maritime continuity, ghost-vessel motifs, and active legend circulation while leaving historical truth and culture-specific ritual claims outside the runtime contract.",
+      "artifact": "docs/research-evidence/photo-prompt/legend-visual-semantics-20260901/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "legend_runtime_data",
+      "kind": "source-observation",
+      "claim": "Runtime data contains eight six-slot visual-semantic clusters and forty-eight complete candidates, six new five-component hard profiles, one reused metamorphosis profile, and one candidate-only prophecy-lineage-return cluster; broad legend, fate, lineage, memorate, variant, and cycle terms remain advisory.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_legend_extension.json and photo_prompt_visual_obligations.json"
+    },
+    {
+      "id": "legend_package_validation",
+      "kind": "package-check",
+      "claim": "Dictionary validation passes, the registry-bound visual index passes with 246 profiles and 1304 exact terms, and the sharded Gemini embedding-2 semantic index passes with 7812 entries and 768 dimensions.",
+      "artifact": "validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index"
+    },
+    {
+      "id": "legend_prompt_evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "The focused legend suite passes nine tests and 124 subtests covering exact routing, broad-term negative controls, six-profile structural completeness, eight clusters, forty-eight candidates, six-slot ownership, reused metamorphosis ownership, candidate-only prophecy boundaries, prompt composition, and advisory semantic retrieval.",
+      "artifact": ".venv/bin/python -m pytest -q tests/test_photo_legend_visual_semantics.py reported 9 passed and 124 subtests passed"
+    },
+    {
+      "id": "legend_regression_boundary",
+      "kind": "source-observation",
+      "claim": "The complete visual-obligation module ran 23 tests and retained six failures, all caused by the pre-existing clinical_nursing_duty_system exact term nurse activating in yandere fixtures; no legend profile appears in the failure set and the broad clinical profile already exists in HEAD.",
+      "artifact": "tests.test_photo_visual_obligations output and tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl cases positive_yandere_en, positive_yandere_ko, candidate_yandere_relation_components, negative_yandere_expression_only, and negative_yandere_role_prop_only"
+    },
+    {
+      "id": "legend_three_arm_prompt_artifacts",
+      "kind": "prompt-evaluation",
+      "claim": "All three arms produced v6 candidate packs, composed prompts with five literal hard-evidence fields, appearance-reference render requests, and passing composed and render-request audits; advisory prompt-length warnings did not block the calls.",
+      "artifact": "artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/arm-01-guarded-treasure-cliff, arm-02-submerged-settlement-lake, and arm-03-legendary-rock-moor candidate_pack.json, composed_prompt.json, composed_audit.json, render_request.json, and render_request_audit.json"
+    },
+    {
+      "id": "legend_root_render_observation",
+      "kind": "render-observation",
+      "claim": "Independent root inspection of the three saved images passes twelve of fifteen profile gates: submerged settlement and legendary rock pass five of five each, while guarded treasure passes two of five and fails fixed-cache legibility, visibly failed transfer, and both-scale cache retention. Under partial-is-fail, the aggregate render result is fail.",
+      "artifact": "artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/coordination/root_independent_pixel_review.json and aggregate_report.md"
+    },
+    {
+      "id": "legend_generation_outcome",
+      "kind": "generation-outcome",
+      "claim": "Seed 6d734369d813804f selected three distinct profiles without replacement. Three agents used no cross-arm inputs, made exactly one built-in image call each, performed no retry, preserved images and hashes, and used the portrait only for visible adult appearance cues; however all three visual_intent files contain empty pre-pack bindings and arm one additionally reports post-core schema-only renaming.",
+      "artifact": "artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/coordination/selection.json, source_snapshot.json, root_independent_pixel_review.json, and each arm run_manifest.json, ledger, visual_intent.json, and generated image"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A narrow legend request resolves into five independently visible, profile-owned relations joining a concrete site, object, structure, vessel, body, or actor to evidence, transmission, causal change, interruption, or continuity; generic folklore atmosphere and famous labels cannot substitute for those relations.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five_component_observability",
+        "statement": "Every new hard legend profile requires five independent component groups, five literal prompt evidence fields, and five pixel gates rather than a broad legend label, glow, costume, ruin, treasure prop, or fog effect.",
+        "evidence_ids": [
+          "legend_external_research",
+          "legend_runtime_data",
+          "legend_prompt_evaluation",
+          "legend_root_render_observation"
+        ],
+        "causal_controls": [
+          "a narrow exact phrase activates only its intended profile",
+          "a nearest visual substitute remains a negative control",
+          "any missing required relation fails the render"
+        ]
+      },
+      {
+        "id": "site_and_evidence_ownership",
+        "statement": "The trace, cache, architecture, vessel breach, transformation, or transmission gesture must remain owned by the same identifiable site or subject so detached props and atmospheric styling cannot carry the meaning.",
+        "evidence_ids": [
+          "legend_external_research",
+          "legend_runtime_data",
+          "legend_root_render_observation"
+        ],
+        "causal_controls": [
+          "rock traces remain continuous with one fixed rock",
+          "submerged walls remain joined to foundations and a settlement plan",
+          "guarded treasure remains fixed and untransferred at the attempted site"
+        ]
+      },
+      {
+        "id": "evidence_layer_separation",
+        "statement": "Source research, candidate loading, package audits, composed prompts, generated pixels, appearance-anchor comparison, and requesting-user judgment remain separate evidence layers.",
+        "evidence_ids": [
+          "legend_reference_conversation",
+          "legend_external_research",
+          "legend_package_validation",
+          "legend_three_arm_prompt_artifacts",
+          "legend_root_render_observation"
+        ],
+        "causal_controls": [
+          "package PASS cannot substitute for pixel PASS",
+          "appearance anchors cannot imply identity or same-person status",
+          "technical pixel status cannot declare user aesthetic approval"
+        ]
+      },
+      {
+        "id": "independent_single_generation_protocol",
+        "statement": "Each held-out concept must freeze its authorial core and literal pre-pack bindings before pack access, use no sibling-arm inputs, make one native generation with no semantic retry, and receive root review only after all arms complete.",
+        "evidence_ids": [
+          "legend_generation_outcome",
+          "legend_root_render_observation"
+        ],
+        "causal_controls": [
+          "no cross-arm inputs",
+          "one image call per arm",
+          "non-empty literal pre-pack bindings",
+          "root review after all generated images exist"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult fictional subject role and wardrobe",
+      "camera and lighting that preserve every required gate",
+      "fictional place details consistent with one source lineage",
+      "guardian form when the interruption and retained cache remain unambiguous",
+      "explicit requester definitions that override a registry default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "broad_taxonomy_vs_single_frame_contract",
+      "scale": "global",
+      "axis": "legend vocabulary breadth",
+      "source_state": "The referenced inventory mixes genre theory, transmission, named motifs, broad themes, modern circulation, lineage, fate, place evidence, and physical transformations.",
+      "render_state": "Only six new narrow meanings were promoted to hard profiles because they can be decomposed into five falsifiable same-image relations; metamorphosis reuses an existing contract and prophecy-lineage-return remains candidate-only.",
+      "evidence_ids": [
+        "legend_reference_conversation",
+        "legend_external_research",
+        "legend_runtime_data"
+      ]
+    },
+    {
+      "id": "guarded_treasure_relation_loss",
+      "scale": "regional",
+      "axis": "fixed cache and failed transfer",
+      "source_state": "The profile requires an identifiable fixed cache, an active adult attempt, guardian intervention on that same path, a visibly failed transfer, and cache retention at both required scales.",
+      "render_state": "The generated frame clearly shows the adult attempt and guardian block but reduces the cache to a small gold glint, leaving failed transfer and retained-site ownership ambiguous.",
+      "evidence_ids": [
+        "legend_runtime_data",
+        "legend_root_render_observation"
+      ]
+    },
+    {
+      "id": "prepack_binding_protocol_drift",
+      "scale": "local",
+      "axis": "independent attribution boundary",
+      "source_state": "The experiment requires a frozen authorial core and literal profile bindings before any candidate-pack access so later prompt success can be attributed cleanly.",
+      "render_state": "All three visual_intent files preserve the selected profile but contain empty bindings; later composed prompts recover the five fields, so the images are useful evidence but not clean protocol-qualified holdouts.",
+      "evidence_ids": [
+        "legend_three_arm_prompt_artifacts",
+        "legend_generation_outcome"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "relation_contracts_prevent_generic_legend_substitution",
+      "stage": "representation",
+      "statement": "Five profile-owned relations plus nearest-substitute rejects will prevent a generic fantasy portrait, ruin, foggy ship, boulder, or treasure prop from satisfying a narrow legend request.",
+      "evidence_ids": [
+        "legend_external_research",
+        "legend_runtime_data",
+        "legend_prompt_evaluation"
+      ],
+      "falsifier": "A broad legend term creates a hard duty, a nearest substitute passes, or one required relation can be omitted without failing."
+    },
+    {
+      "id": "six_slot_clusters_preserve_scene_coherence",
+      "stage": "prompt-priority",
+      "statement": "Eight coherent six-slot candidate clusters will offer subject, action, location, prop, composition, and treatment support without overriding the frozen hard relation.",
+      "evidence_ids": [
+        "legend_runtime_data",
+        "legend_prompt_evaluation",
+        "legend_three_arm_prompt_artifacts"
+      ],
+      "falsifier": "A cluster is incomplete, references a missing candidate, or optional candidate language displaces a required hard-evidence phrase."
+    },
+    {
+      "id": "cache_legibility_needs_dedicated_framing",
+      "stage": "generator-response",
+      "statement": "A guarded-treasure scene needs the fixed cache, access line, guardian block, and untransferred state at sufficient scale in one causal triangle; a tiny gold cue cannot preserve the relation through generation.",
+      "evidence_ids": [
+        "legend_root_render_observation"
+      ],
+      "falsifier": "A single-generation guarded-treasure holdout passes all five gates while the cache remains a small background glint or the transfer state stays ambiguous."
+    },
+    {
+      "id": "frozen_bindings_enable_independent_attribution",
+      "stage": "sampling",
+      "statement": "Non-empty pre-pack literal bindings are necessary to distinguish an independently frozen semantic test from a later schema repair that happened after pack access.",
+      "evidence_ids": [
+        "legend_generation_outcome",
+        "legend_root_render_observation"
+      ],
+      "falsifier": "An arm with empty pre-pack bindings can still prove that its exact five-field obligation was frozen before pack access from immutable artifacts alone."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test",
+      "tool"
+    ],
+    "general_rule": "Promote only narrow legend meanings with five falsifiable same-image relations owned by one site, subject, object, structure, or vessel; keep broad genre, fate, lineage, memorate, circulation, variant, and cycle labels advisory.",
+    "generalization_basis": "The site-evidence and relation-first method applies across oral transmission, legendary rocks, landform origins, guarded treasure, submerged settlements, ghost vessels, and stone transformation while keeping culture-specific narrative truth and user aesthetics outside the pixel contract.",
+    "hypothesis_ids": [
+      "relation_contracts_prevent_generic_legend_substitution",
+      "six_slot_clusters_preserve_scene_coherence",
+      "cache_legibility_needs_dedicated_framing",
+      "frozen_bindings_enable_independent_attribution"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/legend-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/legend-visual-semantics-20260901/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/legend-visual-semantics-20260901/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_legend_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d33b0fe3e393fd17/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_legend_visual_semantics.py",
+      "artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "legend_package_validation"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "legend_prompt_evaluation",
+        "legend_three_arm_prompt_artifacts"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "legend_root_render_observation"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout_guarded_treasure_cliff",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "adult recovery attempt",
+          "guardian interruption on the same access path",
+          "fixed cache thumbnail legibility",
+          "failed transfer before removal",
+          "both-scale cache retention"
+        ],
+        "evidence_ids": [
+          "legend_root_render_observation"
+        ]
+      },
+      {
+        "id": "heldout_submerged_settlement_lake",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "settlement-scale street plan",
+          "fixed foundations",
+          "joined architecture",
+          "submerged environmental occupation",
+          "adult and survey-light scale"
+        ],
+        "evidence_ids": [
+          "legend_root_render_observation"
+        ]
+      },
+      {
+        "id": "heldout_legendary_rock_moor",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "fixed terrain site",
+          "single five-finger anomalous trace",
+          "human and tool scale relation",
+          "stone-surface continuity",
+          "field evidence context"
+        ],
+        "evidence_ids": [
+          "legend_root_render_observation"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The source-backed data, six new hard profiles, forty-eight candidates, regenerated indexes, focused routing tests, and all three composed prompts pass at package and prompt layers. Render fidelity does not qualify because guarded treasure fails three of five gates and partial counts as failure. The three arms also have empty pre-pack binding maps, so even the two pixel-passing images are not clean independent qualification evidence. User aesthetic judgment is unscored, three hard profiles remain untested, and the unrelated clinical-nursing yandere regression remains visible. Revise the guarded-cache framing and pre-pack binding workflow before a new independent no-retry qualification run.",
+    "evidence_ids": [
+      "legend_external_research",
+      "legend_runtime_data",
+      "legend_package_validation",
+      "legend_prompt_evaluation",
+      "legend_regression_boundary",
+      "legend_three_arm_prompt_artifacts",
+      "legend_root_render_observation",
+      "legend_generation_outcome"
+    ]
+  }
+}

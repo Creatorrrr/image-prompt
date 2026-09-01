@@ -1,0 +1,144 @@
+{
+  "schema_version": "photo-independent-pixel-review/v1",
+  "arm_id": "arm-01",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-01/generated.png",
+    "sha256": "5ae8d1ebe062dff92e08074ee45185248792d2ec6bbcb0a49b2d1c0548fb3f16",
+    "native_dimensions": "1402x1122"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-01/generated.thumbnail.png",
+    "sha256": "5105a67727f76a5fb7703d92e02b3fe66ba55962408f60cafd40f984d7f7e581",
+    "dimensions": "512x409"
+  },
+  "review_policy": {
+    "partial_is_fail": true,
+    "all_components_must_coexist_in_one_image": true,
+    "prompt_or_runtime_pass_is_not_pixel_pass": true,
+    "user_judgment_is_separate": true
+  },
+  "hard_gates": [
+    {
+      "id": "vo_desire_covet_owner_object",
+      "required_review_scale": "thumbnail",
+      "status": "pass",
+      "scale_reviews": {
+        "thumbnail": {
+          "status": "pass",
+          "observable_pixel_evidence": "One brass circular instrument is plainly visible in the right-side adult's open hand, and a bright orange coiled tether visibly runs from the instrument area to that adult's chest harness."
+        }
+      }
+    },
+    {
+      "id": "vo_desire_covet_claim",
+      "required_review_scale": "both",
+      "status": "pass",
+      "scale_reviews": {
+        "thumbnail": {
+          "status": "pass",
+          "observable_pixel_evidence": "The left-side adult reaches to the same central instrument while the other hand presses or points toward their own chest, making a self-directed claim gesture legible at reduced scale."
+        },
+        "native": {
+          "status": "pass",
+          "observable_pixel_evidence": "At native scale, the left-side adult's extended fingers contact the instrument/palm area while the separate chest-directed hand remains visible; the action targets the same object held by the right-side adult."
+        }
+      }
+    },
+    {
+      "id": "vo_desire_covet_owner_response",
+      "required_review_scale": "both",
+      "status": "fail",
+      "scale_reviews": {
+        "thumbnail": {
+          "status": "fail",
+          "observable_pixel_evidence": "The right-side adult extends an open palm with the instrument toward the claimant; there is no unmistakable thumbnail-scale pullback, torso brace, protective enclosure, refusal, or withholding action."
+        },
+        "native": {
+          "status": "fail",
+          "observable_pixel_evidence": "The instrument rests on the owner's open, forward-extended palm and remains within the claimant's reach. The tether shows retention, but the owner's body and hand do not visibly pull or protect it; the pose can read as an offer, consideration, or handoff."
+        }
+      },
+      "failure_reason": "Owner-object continuity is present, but an owner-response action is only ambiguous. Under partial_is_fail, ambiguity fails."
+    },
+    {
+      "id": "vo_desire_covet_geometry",
+      "required_review_scale": "native",
+      "status": "pass",
+      "scale_reviews": {
+        "native": {
+          "status": "pass",
+          "observable_pixel_evidence": "The left claimant, central brass instrument and contacting hands, and right owner form one clear left-center-right relation; the orange tether terminates at the right adult's harness and reinforces the ownership boundary."
+        }
+      }
+    },
+    {
+      "id": "vo_desire_covet_continuity",
+      "required_review_scale": "both",
+      "status": "pass",
+      "scale_reviews": {
+        "thumbnail": {
+          "status": "pass",
+          "observable_pixel_evidence": "The bright orange coiled line visibly connects the central instrument/owner hand area to the right adult's harness at reduced scale."
+        },
+        "native": {
+          "status": "pass",
+          "observable_pixel_evidence": "The orange tether remains visibly connected from the instrument area, across the owner's hand, to hardware on the owner's chest harness throughout the single frame."
+        }
+      }
+    }
+  ],
+  "reject_substitute_review": [
+    {
+      "substitute": "envy_by_gaze_only",
+      "status": "not_substituted",
+      "observable_pixel_evidence": "The claimant performs physical reach/contact and a chest-directed claim gesture, so the event is not gaze alone."
+    },
+    {
+      "substitute": "gift_exchange_or_handoff",
+      "status": "ambiguous_substitute_not_excluded",
+      "observable_pixel_evidence": "The owner's open forward palm presents the object rather than unmistakably resisting, so an offer or handoff reading remains plausible."
+    },
+    {
+      "substitute": "ordinary_purchase",
+      "status": "not_substituted",
+      "observable_pixel_evidence": "No payment, sales counter, receipt, or ordinary purchase action is visible."
+    },
+    {
+      "substitute": "shared_use",
+      "status": "not_clearly_substituted",
+      "observable_pixel_evidence": "The chest-directed claim gesture and single owner tether support contested possession more than cooperative use, although the owner response remains ambiguous."
+    },
+    {
+      "substitute": "owner_admiring_own_object",
+      "status": "not_substituted",
+      "observable_pixel_evidence": "The other adult reaches toward the instrument, so the frame is not the owner alone admiring it."
+    }
+  ],
+  "reference_observable_appearance_review": {
+    "status": "pass",
+    "source_reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "observable_pixel_evidence": "The left adult is visibly adult and retains long very dark wavy hair, an oval facial outline, dark softly arched brows, almond-shaped brown eyes, a straight slender nose, softly full lips, and a light warm-toned complexion under mixed cold and amber light.",
+    "limitations": "Three-quarter side angle, hooded field clothing, snow, and low-key lighting reduce direct comparison of hair volume and complexion.",
+    "identity_or_same_person_claim": "not_performed"
+  },
+  "summary": {
+    "passed_gate_count": 4,
+    "failed_gate_count": 1,
+    "total_gate_count": 5,
+    "failed_gate_ids": [
+      "vo_desire_covet_owner_response"
+    ],
+    "overall_pixel_verdict": "fail",
+    "strict_reason": "All five gates are required and partial evidence fails."
+  },
+  "separate_verdicts": {
+    "prompt_audit": "pass",
+    "runtime_audit": "pass",
+    "rendered_pixels": "fail",
+    "user_judgment": "pending"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

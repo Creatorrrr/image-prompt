@@ -1,0 +1,79 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "b246874b8baa6cd5",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "agent:arm-01-guarded-treasure-cliff",
+  "result_image": "generated_image.png",
+  "result_sha256": "f90c9504db578c3b23283cdad4175b5852b7621680fb60755478890e5c02d36d",
+  "partial_is_fail": true,
+  "image_calls": 1,
+  "no_cross_arm_inputs": true,
+  "review_scales": {
+    "thumbnail": {
+      "path": "generated_image_thumbnail.png",
+      "sha256": "dffbcd724651506625b65bb229f0c97fe46c0ede8639bfd01e625bfe79baec57",
+      "pixel_width": 256,
+      "pixel_height": 320,
+      "inspected_with": "view_image"
+    },
+    "native": {
+      "path": "generated_image.png",
+      "sha256": "f90c9504db578c3b23283cdad4175b5852b7621680fb60755478890e5c02d36d",
+      "pixel_width": 1122,
+      "pixel_height": 1402,
+      "inspected_with": "view_image"
+    }
+  },
+  "hard_gates": {
+    "vo_legend_treasure_fixed_cache": {
+      "status": "fail",
+      "evidence": "At the 256x320 thumbnail, the tiny gold glint is not legible as one site-fixed hidden cache."
+    },
+    "vo_legend_treasure_adult_attempt": {
+      "status": "pass",
+      "evidence": "At thumbnail and 1122x1402 native views, a clearly adult climber visibly reaches into the cliff niche."
+    },
+    "vo_legend_treasure_guardian_interruption": {
+      "status": "pass",
+      "evidence": "At both scales, the carved guardian grips a stone slab directly across the climber's reach line."
+    },
+    "vo_legend_treasure_failed_transfer": {
+      "status": "fail",
+      "evidence": "At native scale, the glove appears to contact the gold object, so failure before transfer is not unambiguous."
+    },
+    "vo_legend_treasure_cache_retained": {
+      "status": "fail",
+      "evidence": "Native pixels suggest gold remains in the recess, but the thumbnail shows only a small glow; both-scale retention fails."
+    }
+  },
+  "reference_utilization": {
+    "scope": "observable adult facial hair and makeup appearance only",
+    "status": "pass",
+    "anchors": [
+      {
+        "anchor": "long softly waved near-black hair with a center part",
+        "status": "pass",
+        "evidence": "The rendered adult has long near-black hair, a center part, and visible soft wave."
+      },
+      {
+        "anchor": "almond-shaped brown eyes with softly defined brows and fine dark eyeliner",
+        "status": "pass",
+        "evidence": "The native view shows brown almond-shaped eyes, softly defined brows, and a fine dark eye line."
+      },
+      {
+        "anchor": "luminous natural makeup and peach-pink lips",
+        "status": "pass",
+        "evidence": "The native view shows luminous natural-looking face makeup and peach-pink lips."
+      }
+    ],
+    "identity_claim": false,
+    "same_person_claim": false
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

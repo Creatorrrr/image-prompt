@@ -1,0 +1,23 @@
+{
+  "schema_version": "photo-independent-arm-postcore-contract/v1",
+  "arm_id": "arm-02",
+  "profile_id": "resource_control_acquisition_event",
+  "exact_activation_phrase": "visible acquisition of resource-control authority",
+  "required_evidence": {
+    "resource_phrase": "one valued resource or access right is concrete and identifiable",
+    "control_phrase": "an existing controller or control system visibly owns current authority",
+    "claim_phrase": "another adult claims receives or reroutes that control",
+    "affected_phrase": "an identifiable affected person depends on the same resource path",
+    "result_phrase": "grant withholding blockage or rerouting visibly changes that access"
+  },
+  "render_gates": [
+    {"id": "vo_desire_power_resource", "review_scale": "thumbnail", "description": "One valued resource or access right is concrete and identifiable."},
+    {"id": "vo_desire_power_existing_control", "review_scale": "both", "description": "An existing controller or control system visibly owns current authority."},
+    {"id": "vo_desire_power_claim", "review_scale": "both", "description": "Another adult visibly claims, receives, or reroutes that control."},
+    {"id": "vo_desire_power_affected_party", "review_scale": "native", "description": "An identifiable affected person depends on the same resource path."},
+    {"id": "vo_desire_power_access_result", "review_scale": "both", "description": "Grant, withholding, blockage, or rerouting visibly changes the affected person's access."}
+  ],
+  "reject_substitutes": ["routine_security_work", "collaborative_handoff", "throne_pose", "uniform_only", "low_camera_angle"],
+  "index_policy": "The arm-local visual and semantic indexes are synthetic run-local fixtures for exact/BM25F routing only. Do not make embedding or RRF quality claims.",
+  "evaluation_policy": "All five render gates must pass at their stated scales; partial is fail. Prompt audit, runtime audit, rendered pixels, and user judgment are separate verdicts."
+}
