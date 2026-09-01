@@ -1,0 +1,21 @@
+{
+  "schema_version": "photo-pixel-rubric-precommit/v1",
+  "arm_id": "arm-02-phase-transition",
+  "profile_id": "phase_transition_nucleation_growth",
+  "decision_rule": "partial_is_fail",
+  "tool_block_rule": "A tool safety block is recorded as blocked_generation and receives no pixel score.",
+  "review_scales": ["thumbnail", "native"],
+  "hard_gates": [
+    {"gate_id":"vo_boundary_phase_bounded_specimen","scale":"thumbnail","pass_condition":"One complete specimen boundary owns every visible phase region."},
+    {"gate_id":"vo_boundary_phase_driving_gradient","scale":"both","pass_condition":"A coherent physical driving gradient is readable across that same specimen."},
+    {"gate_id":"vo_boundary_phase_parent_and_nuclei","scale":"native","pass_condition":"The parent phase remains visible around multiple distinct new-phase nuclei."},
+    {"gate_id":"vo_boundary_phase_growing_interface","scale":"both","pass_condition":"At least one continuous advancing interface separates coexisting parent and new phases."},
+    {"gate_id":"vo_boundary_phase_not_lighting","scale":"both","pass_condition":"The transition reads as material structure rather than only color, lighting, smoke, aura, or unrelated objects."},
+    {"gate_id":"C1_reference_appearance","scale":"native","pass_condition":"The reference-guided adult visibly retains long center-parted dark wavy hair, dark eyes, softly arched brows, adult impression, and broadly comparable face proportions."},
+    {"gate_id":"C2_event_hierarchy","scale":"thumbnail","pass_condition":"The appearance-guided subject remains visible without obscuring the specimen and phase-transition relation."},
+    {"gate_id":"C3_thumbnail_event_readability","scale":"thumbnail","pass_condition":"The bounded specimen, gradient direction, and broad coexistence interface remain readable together."},
+    {"gate_id":"C4_native_mechanism_detail","scale":"native","pass_condition":"Multiple nuclei, parent material, new phase, and interface topology remain separately inspectable."},
+    {"gate_id":"C5_clean_delivery","scale":"native","pass_condition":"No unintended watermark or scene-breaking accidental text is visible."}
+  ],
+  "overall_pass_condition": "Every hard gate passes. Any partial, ambiguous, or failed gate makes the arm fail."
+}

@@ -1,0 +1,286 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "git:327ce0c65ca87035111bc92042f95eacd70ca8b7:working-tree-snapshot",
+    "candidate_revision": "git:327ce0c65ca87035111bc92042f95eacd70ca8b7+boundary-transition-working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen visual-semantic and candidate-pack support for boundary, limit, breakthrough, release, overload, phase-transition, and irreversible-crossing concepts, then test three independently randomized complex reference-guided renders."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Dictionary, scientific, and safety sources distinguish threshold accumulation, physical breakthrough, limiter release, progressive overload, nucleation-growth phase transition, and irreversible crossing by observable relations rather than mood labels.",
+      "artifact": "docs/research-evidence/photo-prompt/boundary-transition-visual-semantics-20260901/source-research.md; evidence.jsonl"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied portrait supports bounded observable adult appearance cues only; identity and same-person status are outside the contract.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg; SHA-256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Six exact visual profiles, 36 profile-bound candidates, the real registry hook, rebuilt visual/semantic indexes, and focused regression checks passed.",
+      "artifact": "tests/test_photo_boundary_transition_visual_semantics.py: 9 passed, 112 subtests; visual profile index check: 231 profiles and 1244 exact terms; semantic index: 7710 entries; audit_scene_expression.py --current: 112/112 routes and 0 failures"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All three independently composed prompts and their actual render requests passed contract audits with the assigned exact profile active and no cross-arm inputs.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-*/composed*_audit.json; arm-*/render*_audit.json; coordination/random_assignment.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Each arm delivered one saved native render from exactly one built-in image generation call, with zero retries and cross_arm_inputs_used=false.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-*/run_manifest.json; arm-*/run_ledger.ndjson"
+    },
+    {
+      "id": "e-render-irreversible",
+      "kind": "render-observation",
+      "claim": "The irreversible-crossing render passes continuity, threshold, and direction but fails lost return and committed consequence; the open tunnel and sunrise-like horizon keep the event reversible or ambiguous.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-01-irreversible-crossing/render_native.png; SHA-256 f26165e014dc2260690dd3c2305083a9ca3aff5e55d49b573d029c2a7929440c; pixel_review.json"
+    },
+    {
+      "id": "e-render-phase",
+      "kind": "render-observation",
+      "claim": "The phase-transition render passes all five profile gates and all five common gates in one ampoule at thumbnail and native scales.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-02-phase-transition/render_native.png; SHA-256 9c5cb6422e087d999a16e9b01d7434ecf3d0456698d7ccd2f3abb36678c381a1; pixel_review.json"
+    },
+    {
+      "id": "e-render-breakthrough",
+      "kind": "render-observation",
+      "claim": "The barrier-breakthrough render passes all five profile gates and all five common gates with a localized causal chain from ram contact through rupture and aperture crossing.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-03-barrier-breakthrough/render_native.png; SHA-256 5e1d6c78c24b6eaf22822270d526fbf525961377a1c60c3137b2c40d58a61fd6; pixel_review.json"
+    },
+    {
+      "id": "e-root-review",
+      "kind": "measurement",
+      "claim": "Root independently inspected native and thumbnail pixels, agreed with all three arm verdicts, and recorded a run-level 2/3 technical pixel pass with user judgment pending.",
+      "artifact": "artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/coordination/root_independent_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For an exact activated concept, all profile-owned components and their causal or spatial relations must coexist visibly in one saved render; a partial relation, label, atmosphere, or plausible story is failure.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "relation-owned-semantics",
+        "statement": "Every exact profile is qualified by observable component relations, not by the abstract keyword alone.",
+        "evidence_ids": [
+          "e-research"
+        ],
+        "causal_controls": [
+          "component groups",
+          "required evidence fields",
+          "render gates",
+          "reject substitutes"
+        ]
+      },
+      {
+        "id": "partial-is-fail",
+        "statement": "All required profile and common gates must pass in the same render.",
+        "evidence_ids": [
+          "e-root-review"
+        ],
+        "causal_controls": [
+          "thumbnail review",
+          "native review",
+          "no compensation across gates"
+        ]
+      },
+      {
+        "id": "reference-bounded-appearance",
+        "statement": "The attached portrait controls only observable adult appearance cues and never establishes identity.",
+        "evidence_ids": [
+          "e-reference"
+        ],
+        "causal_controls": [
+          "appearance_reference role",
+          "reference SHA lineage",
+          "identity boundary"
+        ]
+      },
+      {
+        "id": "independent-one-call-arms",
+        "statement": "Each randomized arm uses a frozen pre-core, no sibling inputs, one generation call, and no retry.",
+        "evidence_ids": [
+          "e-generation"
+        ],
+        "causal_controls": [
+          "separate arm directories",
+          "manifest call counts",
+          "cross-arm input flags",
+          "immutable failed render"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "setting",
+      "wardrobe",
+      "camera geometry",
+      "incidental props",
+      "minor background layout"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-irreversible-return-path",
+      "scale": "regional",
+      "axis": "lost return relation",
+      "source_state": "The exact return path is visibly sealed, severed, collapsed, or otherwise physically unavailable after crossing.",
+      "render_state": "The damaged aft tunnel is burning but remains visibly open.",
+      "evidence_ids": [
+        "e-render-irreversible"
+      ]
+    },
+    {
+      "id": "m-irreversible-consequence",
+      "scale": "global",
+      "axis": "committed downstream result",
+      "source_state": "An irreversible consequence is already visibly underway after the threshold is crossed.",
+      "render_state": "The orange Earth horizon is compatible with ordinary orbital sunrise and does not prove re-entry.",
+      "evidence_ids": [
+        "e-render-irreversible"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-relational-profile-binding",
+      "stage": "representation",
+      "statement": "Exact terms bound to five observable component groups, evidence fields, gates, and reject substitutes will preserve more visual meaning than advisory abstract labels alone.",
+      "evidence_ids": [
+        "e-research",
+        "e-package"
+      ],
+      "falsifier": "Exact-profile prompts pass structurally but all independently generated renders lose the profile-owned relations."
+    },
+    {
+      "id": "h-irreversible-causality-too-implicit",
+      "stage": "generator-response",
+      "statement": "The current irreversible-crossing expression allows damage and downstream glow to remain merely suggestive instead of forcing an inspectable closed return path and unmistakable committed result.",
+      "evidence_ids": [
+        "e-render-irreversible",
+        "e-root-review"
+      ],
+      "falsifier": "A fresh isolated one-call test using the unchanged profile shows both a physically unavailable return path and an unambiguous committed consequence."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Route only narrow exact phrases into relation-complete visual obligations; keep broad limit, extreme, breakthrough, awakening, release, overload, transition, transcendence, and singularity terms advisory unless their required components are explicit.",
+    "generalization_basis": "The six profiles encode domain-independent observable systems: pretransition accumulation, barrier rupture, limiter release, rated-system overload, same-specimen phase growth, and no-return crossing consequence.",
+    "hypothesis_ids": [
+      "h-relational-profile-binding"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_boundary_transition_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/f68179ccb766bbe1",
+      "tests/test_photo_boundary_transition_visual_semantics.py",
+      "docs/research-evidence/photo-prompt/boundary-transition-visual-semantics-20260901"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-irreversible",
+        "e-render-phase",
+        "e-render-breakthrough",
+        "e-root-review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "random-arm-01-irreversible-crossing",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "subject continuity",
+          "defined threshold",
+          "directed crossing",
+          "lost return",
+          "committed result"
+        ],
+        "evidence_ids": [
+          "e-render-irreversible"
+        ]
+      },
+      {
+        "id": "random-arm-02-phase-transition",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "bounded specimen",
+          "driving gradient",
+          "parent phase",
+          "multiple nuclei",
+          "advancing interface"
+        ],
+        "evidence_ids": [
+          "e-render-phase"
+        ]
+      },
+      {
+        "id": "random-arm-03-barrier-breakthrough",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "resisting barrier",
+          "force contact",
+          "fresh rupture",
+          "aperture crossing",
+          "localized aftermath"
+        ],
+        "evidence_ids": [
+          "e-render-breakthrough"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Structural and prompt behavior pass, and two isolated randomized renders fully preserve their assigned relations. The run cannot be promoted because the irreversible-crossing arm loses two defining relations in pixels; user aesthetic judgment is also pending.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-render-irreversible",
+      "e-render-phase",
+      "e-render-breakthrough",
+      "e-root-review"
+    ]
+  }
+}

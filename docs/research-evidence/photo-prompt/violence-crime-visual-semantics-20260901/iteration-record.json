@@ -1,0 +1,373 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "2d13fb1",
+    "candidate_revision": "327ce0c65ca87035111bc92042f95eacd70ca8b7+working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply detailed source-backed violence and crime visual semantics and candidate-pack data, including torture, genocide, war crime, execution, sexual violence, crimes targeting minors, human trafficking, and terrorism, then test three random complex concepts in isolated single-generation appearance-reference arms."
+  },
+  "evidence": [
+    {
+      "id": "violence_reference_conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies broad violence, threat, assault, fatality, property crime, arson, organized crime, forensic, retaliation, conflict, and atrocity vocabulary, but does not by itself separate narrow single-frame evidence from genre, mood, legal conclusions, or investigative inference.",
+      "artifact": "ChatGPT conversation 6a967af3-f290-83e8-bcf8-84c08d948f4f and docs/research-evidence/photo-prompt/violence-crime-visual-semantics-20260901/source-research.md"
+    },
+    {
+      "id": "violence_external_research",
+      "kind": "external-research",
+      "claim": "Official WHO, UNODC, FBI, NIJ, NIST, OHCHR, United Nations, UNICEF, and ICC materials support bounded actor-target-mechanism-result distinctions for twenty profiles and legal-claim boundaries that prevent generic injury, fire, detention, crowds, uniforms, or fear from proving a specific crime by themselves.",
+      "artifact": "docs/research-evidence/photo-prompt/violence-crime-visual-semantics-20260901/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "violence_runtime_data",
+      "kind": "source-observation",
+      "claim": "Runtime data now contains twenty four-component visual profiles and sixty-six candidates arranged as eleven six-slot clusters. Broad mood and field vocabulary remains advisory, while narrow exact terms require local context and nearest-substitute rejection.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json and photo_prompt_violence_crime_extension.json"
+    },
+    {
+      "id": "violence_package_validation",
+      "kind": "package-check",
+      "claim": "Dictionary validation, a registry-bound visual index with 225 profiles and 1,220 exact terms, and a sharded Gemini embedding-2 semantic index with 7,674 entries all pass structural checks.",
+      "artifact": "validate_photo_prompt_dictionary.py reported valid; build_visual_profile_index.py --check reported 225 profiles and 1220 exact terms; eval_semantic.py --check-index reported status ok with dictionary hash 8220557065f7013645b4f3e50fb3903f46b28f467d8554f40f0e4c660591d83d and 7674 entries"
+    },
+    {
+      "id": "violence_focused_prompt_evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "Focused tests pass profile completeness, contextual exact routing, broad advisory controls, nearest-substitute controls, eleven-by-six candidate structure, profile-to-cluster binding, absence of new separate safety contracts, source-evidence coverage, generated-index ownership, and registry validation.",
+      "artifact": "uv run python -m pytest -q tests/test_photo_violence_crime_visual_semantics.py: 10 passed and 205 subtests passed"
+    },
+    {
+      "id": "violence_regression_boundary",
+      "kind": "source-observation",
+      "claim": "The broader visual-obligation and retrieval run passed 34 tests and 170 subtests but retained six yandere fixture failures caused by the pre-existing clinical_nursing_duty_system profile. The baseline HEAD already contains both that profile and the unchanged fixture expectations; none of the twenty new crime profiles appears in those failures.",
+      "artifact": "tests/test_photo_visual_obligations.py plus tests/test_photo_visual_profile_retrieval.py; git show HEAD comparison for clinical_nursing_duty_system and visual_obligation_routing_v1.jsonl"
+    },
+    {
+      "id": "violence_three_arm_prompt_artifacts",
+      "kind": "prompt-evaluation",
+      "claim": "Each isolated arm produced a v6 candidate pack with its randomly assigned hard profile, a literal prompt binding, a reference-bound render request, and a passing pre-render audit. Optional candidate inspiration remained advisory and no arm used sibling inputs.",
+      "artifact": "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery, arm-02-arson, and arm-03-minor-crime candidate_pack.json, composed_prompt.json, and render-request audit files"
+    },
+    {
+      "id": "violence_root_render_observation",
+      "kind": "render-observation",
+      "claim": "Independent root inspection found robbery partial at three of four profile gates because property transfer was absent, and arson complete at four of four profile gates but failing the full arm because the reference-guided investigator dominated the frame. Under partial-is-fail both rendered arms fail full qualification.",
+      "artifact": "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/coordination/root_independent_pixel_review.json and aggregate_report.md"
+    },
+    {
+      "id": "violence_minor_generation_block",
+      "kind": "generation-outcome",
+      "claim": "The declared-minor targeted-crime arm made exactly one native image call and received an input moderation block before pixels were produced, so nine pixel gates remain unscored and the arm is blocked rather than passed or failed.",
+      "artifact": "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-03-minor-crime/imagegen_result.json, run_manifest.json, run_ledger.ndjson, and pixel_review.json"
+    },
+    {
+      "id": "violence_generation_independence",
+      "kind": "measurement",
+      "claim": "Random seed 695725796 selected three different profile families. Three isolated agents used no cross-arm inputs and made exactly one native image call each with zero retries; two saved image hashes and dimensions match their manifests, while the blocked arm records no image path.",
+      "artifact": "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/coordination/random_assignment.json, source_snapshot.json, and each arm run_manifest.json"
+    },
+    {
+      "id": "violence_rubric_conformance_measurement",
+      "kind": "measurement",
+      "claim": "Arms one and three froze the full coordinator gate set. Arm two omitted the coordinator clean-delivery gate from its frozen rubric; root review scored the saved pixels for that gate without rewriting the frozen artifact and records the omission as a test-harness deviation.",
+      "artifact": "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/coordination/test_plan.md, arm-02-arson/pixel_rubric_precommit.json, and coordination/root_independent_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A narrow violence or crime request resolves into independently visible actor, target, mechanism, and result or status evidence in one frame; broad crime mood and legal labels remain insufficient, and the supplied portrait remains a visibly secondary adult supporting role.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "relation_first_crime_observability",
+        "statement": "Every promoted crime profile requires four independently observable groups, four literal evidence fields, and four pixel gates rather than a weapon, wound, flame, uniform, crowd, detention room, or fearful expression alone.",
+        "evidence_ids": [
+          "violence_external_research",
+          "violence_runtime_data",
+          "violence_focused_prompt_evaluation",
+          "violence_root_render_observation"
+        ],
+        "causal_controls": [
+          "narrow direct phrase activates only with its local context",
+          "the nearest generic or legally insufficient substitute remains rejected",
+          "one missing relation makes the pixel result fail"
+        ]
+      },
+      {
+        "id": "exact_advisory_and_legal_claim_separation",
+        "statement": "Narrow exact meanings create visual duties; broad violence, war, criminal, revenge, forensic, or terror mood remains advisory, and a rendered still supports only visible relations rather than legal adjudication, intent proof, group membership, consent inference from appearance, or investigative certainty.",
+        "evidence_ids": [
+          "violence_reference_conversation",
+          "violence_external_research",
+          "violence_runtime_data",
+          "violence_focused_prompt_evaluation"
+        ],
+        "causal_controls": [
+          "embedding-only discovery cannot create a hard profile",
+          "explicit requester context overrides a default interpretation",
+          "generic aftermath cannot substitute for the profile-owned causal chain"
+        ]
+      },
+      {
+        "id": "reference_and_role_boundary",
+        "statement": "The supplied portrait guides only observable adult appearance in a fictional supporting role and must remain secondary to the tested crime relation; it cannot establish identity, age, protected traits, victim or offender status, consent, personality, or criminal history.",
+        "evidence_ids": [
+          "violence_three_arm_prompt_artifacts",
+          "violence_root_render_observation",
+          "violence_minor_generation_block"
+        ],
+        "causal_controls": [
+          "reference maps only to an adult investigator or responder",
+          "the supporting role cannot obscure or dominate the assigned relation",
+          "declared minor status comes from text rather than appearance"
+        ]
+      },
+      {
+        "id": "independent_single_generation_and_external_safety",
+        "statement": "Each holdout is independently authored from the same frozen source and reference, receives one native generation with no retry, and treats an image-model safety block as an external generation outcome rather than a pixel score or a skill-owned semantic contract.",
+        "evidence_ids": [
+          "violence_generation_independence",
+          "violence_minor_generation_block",
+          "violence_rubric_conformance_measurement"
+        ],
+        "causal_controls": [
+          "no sibling-arm inputs",
+          "one native image call per arm",
+          "no violence-specific safety profile, moderation tier, or automatic safety negative was added"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "fictional adult roles and wardrobe",
+      "era, architecture, weather, crowd, and occupation",
+      "camera and lighting choices that preserve all relation gates",
+      "non-graphic evidence presentation",
+      "explicit requester definitions that override a registry default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "broad_taxonomy_vs_visual_contract",
+      "scale": "global",
+      "axis": "crime vocabulary breadth",
+      "source_state": "The referenced inventory mixes acts, legal categories, injuries, weapons, evidence processes, organizations, motives, conflict settings, and moods.",
+      "render_state": "Only twenty narrow meanings were promoted because each can be decomposed into four falsifiable same-image relations; broad vocabulary remains advisory candidate material.",
+      "evidence_ids": [
+        "violence_reference_conversation",
+        "violence_external_research",
+        "violence_runtime_data"
+      ]
+    },
+    {
+      "id": "robbery_contact_vs_transfer",
+      "scale": "local",
+      "axis": "property-control result",
+      "source_state": "The frozen robbery prompt required the same red case to move from courier control toward offender possession through a visible grip and pull.",
+      "render_state": "The offender points toward or lightly touches the case while the courier retains it, so contact and threat do not establish transfer.",
+      "evidence_ids": [
+        "violence_root_render_observation"
+      ]
+    },
+    {
+      "id": "supporting_reference_vs_visual_hierarchy",
+      "scale": "regional",
+      "axis": "composition hierarchy",
+      "source_state": "The supplied portrait was restricted to a secondary adult investigator who must not dominate or obscure the tested crime relation.",
+      "render_state": "The arson image preserves the full causal chain, but the investigator's large foreground face and torso dominate the thumbnail and fail the supporting-role gate.",
+      "evidence_ids": [
+        "violence_root_render_observation"
+      ]
+    },
+    {
+      "id": "audited_request_vs_absent_pixels",
+      "scale": "global",
+      "axis": "external generation availability",
+      "source_state": "The declared-minor v6 pack, composed prompt, and render request pass their audits and preserve the adult-reference boundary.",
+      "render_state": "The image model blocks the request before generation, leaving all pixel relations unobservable and unscored.",
+      "evidence_ids": [
+        "violence_three_arm_prompt_artifacts",
+        "violence_minor_generation_block"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "component_relations_reduce_generic_crime_substitution",
+      "stage": "representation",
+      "statement": "Four independent component groups plus nearest-substitute rejects will reduce generic crime mood, props, aftermath, and legal-label substitution.",
+      "evidence_ids": [
+        "violence_external_research",
+        "violence_runtime_data"
+      ],
+      "falsifier": "A broad label activates a hard profile, or a close substitute passes while one profile-owned relation is missing."
+    },
+    {
+      "id": "six_slot_clusters_preserve_relation_context",
+      "stage": "prompt-priority",
+      "statement": "Eleven coherent six-slot clusters will keep roles, actions, locations, props, compositions, and treatments aligned without forcing optional inspiration over the frozen authorial core.",
+      "evidence_ids": [
+        "violence_runtime_data",
+        "violence_focused_prompt_evaluation",
+        "violence_three_arm_prompt_artifacts"
+      ],
+      "falsifier": "A cluster references a missing candidate, loses its profile binding, or optional candidate data overrides literal hard evidence."
+    },
+    {
+      "id": "explicit_transfer_language_is_sufficient",
+      "stage": "generator-response",
+      "statement": "Explicit grip, counterforce, same-property continuity, and directional pull language will be sufficient for the generator to render forced property transfer in a complex scene.",
+      "evidence_ids": [
+        "violence_three_arm_prompt_artifacts",
+        "violence_root_render_observation"
+      ],
+      "falsifier": "The prompt passes while the image shows only reaching or touching and no transfer direction."
+    },
+    {
+      "id": "secondary_reference_instruction_controls_hierarchy",
+      "stage": "generator-response",
+      "statement": "Calling the reference-guided adult a secondary supporting investigator will be sufficient to keep that person subordinate to the crime relation.",
+      "evidence_ids": [
+        "violence_three_arm_prompt_artifacts",
+        "violence_root_render_observation"
+      ],
+      "falsifier": "The crime relation remains visible but the reference-guided adult dominates the frame."
+    },
+    {
+      "id": "external_model_safety_may_block_audited_semantics",
+      "stage": "external",
+      "statement": "Image-model safety may block an otherwise structurally valid and audited prompt, and such a block must remain separate from semantic or pixel qualification.",
+      "evidence_ids": [
+        "violence_minor_generation_block",
+        "violence_generation_independence"
+      ],
+      "falsifier": "A blocked request is incorrectly converted into a pixel pass or fail, or the skill adds a case-specific safety contract to simulate model policy."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test",
+      "tool"
+    ],
+    "general_rule": "Promote only narrow violence and crime meanings with four falsifiable same-image actor-target-mechanism-result or status relations; keep broad taxonomy, mood, genre, legal conclusions, and investigative inference advisory.",
+    "generalization_basis": "The relation-first method applies across interpersonal violence, coercive taking, capture, fatal causality, fire-setting, organized operations, forensic documentation, detention abuse, mass atrocity, sexual violence, minor-targeted crime, trafficking, and civilian coercion while retaining profile-specific confound controls.",
+    "hypothesis_ids": [
+      "component_relations_reduce_generic_crime_substitution",
+      "six_slot_clusters_preserve_relation_context",
+      "explicit_transfer_language_is_sufficient",
+      "secondary_reference_instruction_controls_hierarchy",
+      "external_model_safety_may_block_audited_semantics"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/violence-crime-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/violence-crime-visual-semantics-20260901/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/violence-crime-visual-semantics-20260901/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_violence_crime_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_violence_crime_visual_semantics.py",
+      "artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "violence_package_validation"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "violence_focused_prompt_evaluation",
+        "violence_three_arm_prompt_artifacts"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "violence_root_render_observation",
+        "violence_minor_generation_block",
+        "violence_rubric_conformance_measurement"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout_observatory_tram_robbery",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "distinct offender and courier",
+          "directed crowbar threat",
+          "victim initial property control",
+          "same-property transfer direction",
+          "reference-guided secondary investigator"
+        ],
+        "evidence_ids": [
+          "violence_root_render_observation"
+        ]
+      },
+      {
+        "id": "heldout_greenhouse_arson",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "fire-setter and selected property target",
+          "continuous ignition path",
+          "same-point fire origin",
+          "outward flame and scorch growth",
+          "reference-guided supporting hierarchy"
+        ],
+        "evidence_ids": [
+          "violence_root_render_observation",
+          "violence_rubric_conformance_measurement"
+        ]
+      },
+      {
+        "id": "heldout_ferry_concourse_minor_crime",
+        "case_role": "held-out",
+        "status": "blocked",
+        "covered_axes": [
+          "explicit textual under-eighteen declaration",
+          "adult offender targeting relation",
+          "concrete nonsexual unlawful-confinement attempt",
+          "protective intervention trace",
+          "adult reference-role boundary"
+        ],
+        "evidence_ids": [
+          "violence_minor_generation_block"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The source-backed profiles, candidate extension, regenerated indexes, focused routing and negative-control tests, and three independent v6 prompt audits establish the package and prompt layers. Render promotion is not justified: robbery lacks the defining transfer result, arson preserves all four profile relations but fails the required supporting-reference hierarchy, and the declared-minor arm is blocked before pixels. The implementation remains in the working tree, but the next bounded revision should strengthen visible same-property displacement and explicit supporting-role scale and placement, then requalify only those failed dimensions. The result does not claim all twenty profiles render successfully, legal conclusions from pixels, identity continuity, or user aesthetic approval.",
+    "evidence_ids": [
+      "violence_external_research",
+      "violence_runtime_data",
+      "violence_package_validation",
+      "violence_focused_prompt_evaluation",
+      "violence_regression_boundary",
+      "violence_three_arm_prompt_artifacts",
+      "violence_root_render_observation",
+      "violence_minor_generation_block",
+      "violence_generation_independence",
+      "violence_rubric_conformance_measurement"
+    ]
+  }
+}

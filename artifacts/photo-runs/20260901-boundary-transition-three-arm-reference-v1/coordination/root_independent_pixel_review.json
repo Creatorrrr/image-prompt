@@ -1,0 +1,161 @@
+{
+  "schema_version": "root-independent-pixel-review/v1",
+  "run_id": "20260901-boundary-transition-three-arm-reference-v1",
+  "reviewer": "root-independent",
+  "review_policy": {
+    "partial_is_fail": true,
+    "review_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "arm_pass_rule": "All five profile gates and all five common gates must pass in the same saved render.",
+    "run_pass_rule": "All three independent arms must pass; user judgment remains a separate layer.",
+    "reference_boundary": "The supplied portrait is used only for observable adult appearance. This review makes no identity, same-person, biometric, protected-trait, health, personality, or nationality claim."
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "observable_appearance_scope": [
+      "visible adult appearance",
+      "long center-parted dark wavy hair",
+      "dark eyes",
+      "softly arched brows",
+      "broadly comparable visible face proportions"
+    ]
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-irreversible-crossing",
+      "profile_id": "irreversible_threshold_crossing_consequence",
+      "exact_concept": "visible point-of-no-return crossing",
+      "pack_id": "8d23fad358dcdf73",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-01-irreversible-crossing/render_native.png",
+      "image_sha256": "f26165e014dc2260690dd3c2305083a9ca3aff5e55d49b573d029c2a7929440c",
+      "profile_gates": {
+        "vo_boundary_irreversible_subject_continuity": {
+          "status": "pass",
+          "evidence": "One continuous adult body spans the circular hatch, with torso forward and legs trailing through it."
+        },
+        "vo_boundary_irreversible_defined_threshold": {
+          "status": "pass",
+          "evidence": "The circular metal docking collar is a finite, inspectable physical boundary."
+        },
+        "vo_boundary_irreversible_directed_crossing": {
+          "status": "pass",
+          "evidence": "Body pose and bracing hand establish travel from the damaged tunnel into the capsule."
+        },
+        "vo_boundary_irreversible_lost_return": {
+          "status": "fail",
+          "evidence": "The damaged tunnel is burning but still visibly open; no sealed door, severed joint, or complete collapse makes return physically unavailable."
+        },
+        "vo_boundary_irreversible_committed_result": {
+          "status": "fail",
+          "evidence": "The orange Earth horizon can read as sunrise; it does not unambiguously prove that atmospheric re-entry or another committed consequence has begun."
+        }
+      },
+      "common_gates": {
+        "C1_reference_appearance": "pass",
+        "C2_event_hierarchy": "pass",
+        "C3_thumbnail_event_readability": "fail",
+        "C4_native_mechanism_detail": "fail",
+        "C5_clean_delivery": "pass"
+      },
+      "root_verdict": "fail",
+      "agent_verdict": "fail",
+      "agreement": true,
+      "reason": "The crossing itself is readable, but the two relations that make it irreversible are not visible."
+    },
+    {
+      "arm_id": "arm-02-phase-transition",
+      "profile_id": "phase_transition_nucleation_growth",
+      "exact_concept": "visible phase transition by nucleation and growth",
+      "pack_id": "552ad0172701ea2b",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-02-phase-transition/render_native.png",
+      "image_sha256": "9c5cb6422e087d999a16e9b01d7434ecf3d0456698d7ccd2f3abb36678c381a1",
+      "profile_gates": {
+        "vo_boundary_phase_bounded_specimen": {
+          "status": "pass",
+          "evidence": "One complete transparent ampoule owns the amber parent phase, nuclei, frosted phase, and interface."
+        },
+        "vo_boundary_phase_driving_gradient": {
+          "status": "pass",
+          "evidence": "Dense frost at the left fitting fades toward the clear warm-ring side of the same tube."
+        },
+        "vo_boundary_phase_parent_and_nuclei": {
+          "status": "pass",
+          "evidence": "Multiple separated pale crystalline nuclei remain surrounded by translucent amber parent fluid."
+        },
+        "vo_boundary_phase_growing_interface": {
+          "status": "pass",
+          "evidence": "The cold-to-warm gradient, already transformed frosted region, irregular continuous phase front, and downstream nuclei together give the still frame an advancing left-to-right growth relation."
+        },
+        "vo_boundary_phase_not_lighting": {
+          "status": "pass",
+          "evidence": "Frost, condensation, crystal bodies, and the physical phase front remain readable independently of warm lighting."
+        }
+      },
+      "common_gates": {
+        "C1_reference_appearance": "pass",
+        "C2_event_hierarchy": "pass",
+        "C3_thumbnail_event_readability": "pass",
+        "C4_native_mechanism_detail": "pass",
+        "C5_clean_delivery": "pass"
+      },
+      "root_verdict": "pass_for_this_single_render",
+      "agent_verdict": "pass_for_this_single_render",
+      "agreement": true,
+      "reason": "All required material regions and their directional spatial relation coexist in one specimen at both review scales."
+    },
+    {
+      "arm_id": "arm-03-barrier-breakthrough",
+      "profile_id": "barrier_breakthrough_causal_event",
+      "exact_concept": "visible physical barrier breakthrough",
+      "pack_id": "9c20a21d2b22ac74",
+      "image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-03-barrier-breakthrough/render_native.png",
+      "image_sha256": "5e1d6c78c24b6eaf22822270d526fbf525961377a1c60c3137b2c40d58a61fd6",
+      "profile_gates": {
+        "vo_boundary_breakthrough_resisting_barrier": {
+          "status": "pass",
+          "evidence": "A localized aperture is surrounded by a broad intact wall, so the former resisting boundary remains legible."
+        },
+        "vo_boundary_breakthrough_force_contact": {
+          "status": "pass",
+          "evidence": "The hydraulic ram axis terminates directly at the rupture center while the subject visibly controls it."
+        },
+        "vo_boundary_breakthrough_fresh_rupture": {
+          "status": "pass",
+          "evidence": "Radial cracks, curled layers, sharp edges, spray, and fragments show a fresh causal rupture."
+        },
+        "vo_boundary_breakthrough_aperture_crossing": {
+          "status": "pass",
+          "evidence": "The same ram visibly crosses through the newly opened wall aperture."
+        },
+        "vo_boundary_breakthrough_local_aftermath": {
+          "status": "pass",
+          "evidence": "Debris, deformation, and spray remain concentrated around the ram-to-aperture contact."
+        }
+      },
+      "common_gates": {
+        "C1_reference_appearance": "pass",
+        "C2_event_hierarchy": "pass",
+        "C3_thumbnail_event_readability": "pass",
+        "C4_native_mechanism_detail": "pass",
+        "C5_clean_delivery": "pass"
+      },
+      "root_verdict": "pass_for_this_single_render",
+      "agent_verdict": "pass_for_this_single_render",
+      "agreement": true,
+      "reason": "Barrier, aligned force, rupture, crossing, and localized aftermath form one readable causal chain."
+    }
+  ],
+  "summary": {
+    "arm_count": 3,
+    "technical_pixel_pass_count": 2,
+    "technical_pixel_fail_count": 1,
+    "root_agent_agreement_count": 3,
+    "run_verdict": "revise",
+    "promotion_allowed": false,
+    "user_judgment": "not_yet_received",
+    "bounded_conclusion": "The implemented semantics can survive complex reference-guided generation for phase transition and physical breakthrough in these single renders, but irreversible crossing still loses its no-return and committed-consequence relations."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "photo-pixel-rubric-precommit/v1",
+  "arm_id": "arm-01-irreversible-crossing",
+  "profile_id": "irreversible_threshold_crossing_consequence",
+  "decision_rule": "partial_is_fail",
+  "tool_block_rule": "A tool safety block is recorded as blocked_generation and receives no pixel score.",
+  "review_scales": ["thumbnail", "native"],
+  "hard_gates": [
+    {"gate_id":"vo_boundary_irreversible_subject_continuity","scale":"thumbnail","pass_condition":"One continuous subject remains readable across approach, threshold crossing, and downstream state."},
+    {"gate_id":"vo_boundary_irreversible_defined_threshold","scale":"both","pass_condition":"A concrete threshold, rather than a sign or decorative portal alone, owns the one-way transition."},
+    {"gate_id":"vo_boundary_irreversible_directed_crossing","scale":"both","pass_condition":"The subject intersects or has just cleared the threshold along a single readable travel direction."},
+    {"gate_id":"vo_boundary_irreversible_lost_return","scale":"native","pass_condition":"The route behind is visibly closing, collapsing, flooding, burning, severing, or being consumed."},
+    {"gate_id":"vo_boundary_irreversible_committed_result","scale":"both","pass_condition":"A concrete downstream condition has already begun beyond the threshold."},
+    {"gate_id":"C1_reference_appearance","scale":"native","pass_condition":"The reference-guided adult visibly retains long center-parted dark wavy hair, dark eyes, softly arched brows, adult impression, and broadly comparable face proportions."},
+    {"gate_id":"C2_event_hierarchy","scale":"thumbnail","pass_condition":"The appearance-guided subject remains visible without obscuring the irreversible crossing relation."},
+    {"gate_id":"C3_thumbnail_event_readability","scale":"thumbnail","pass_condition":"Threshold, crossing direction, lost return route, and downstream state remain readable together."},
+    {"gate_id":"C4_native_mechanism_detail","scale":"native","pass_condition":"The physical reason return is unavailable and its relation to the same crossing path remain inspectable."},
+    {"gate_id":"C5_clean_delivery","scale":"native","pass_condition":"No unintended watermark or scene-breaking accidental text is visible."}
+  ],
+  "overall_pass_condition": "Every hard gate passes. Any partial, ambiguous, or failed gate makes the arm fail."
+}

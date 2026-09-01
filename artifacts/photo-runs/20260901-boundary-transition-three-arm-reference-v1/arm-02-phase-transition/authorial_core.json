@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent, seed-selected, complex but single-frame photoreal test case that uses the attached portrait only as adult appearance guidance and makes a material phase transition by nucleation and growth directly judgeable in delivered pixels.",
+  "subject": "An adult materials scientist, appearance-guided by the supplied portrait, presenting one sealed phase-change specimen.",
+  "setting": "A storm-battered orbital greenhouse at night, arranged as a plausible experimental work area.",
+  "event": "Inside one transparent cylindrical quartz ampoule, a visible phase transition proceeds by nucleation and growth along a coherent temperature gradient.",
+  "visual_priorities": [
+    "Keep the complete specimen boundary, parent fluid, multiple nuclei, and advancing interface simultaneously readable.",
+    "Keep the reference-guided adult face visible while making the material mechanism the dominant event.",
+    "Render the transition as physical structure inside one specimen rather than as an illumination effect."
+  ],
+  "baseline_prompt_en": "Create a single-frame, photorealistic environmental portrait built as a random complex test concept. In a storm-battered orbital greenhouse at night, an adult materials scientist stands beside a sealed experiment cradle, her visible appearance guided only by the supplied portrait: long center-parted dark wavy hair, dark eyes, softly arched brows, and broadly comparable facial proportions. She presents a transparent cylindrical quartz ampoule large and sharp in the foreground. Inside that one complete ampoule, a visible phase transition proceeds by nucleation and growth: translucent amber parent fluid still surrounds many separate pale crystalline nuclei, while a continuous branching solidification front advances from a frosted copper cooling clamp toward a warm ceramic ring on the opposite edge. Condensation and frost intensify toward the cold edge, while the warm edge remains clear, making the physical temperature gradient unmistakable. Keep both her face and the entire specimen readable. The material interface is the dominant event; subdued neutral instrument lighting and clear air separate it from illumination effects. Crisp documentary optics, realistic glass refraction, clean unlabeled instrument surfaces.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "arm_02_render_test",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The requester wants this arm to independently choose a randomized complex concept, use the attached image as a reference, generate one image, and judge whether the assigned visual keyword is actually visible.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a random complex test concept"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an adult materials scientist"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "event",
+        "prompt_evidence": "a visible phase transition proceeds by nucleation and growth"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "long center-parted dark wavy hair, dark eyes, softly arched brows, and broadly comparable facial proportions"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "her visible appearance guided only by the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic-natural",
+    "family": "documentary science-fiction environmental portrait",
+    "evidence": [
+      "realistic glass refraction and practical instrument light",
+      "one-frame environmental portrait with inspectable material detail"
+    ]
+  },
+  "variation_key": "arm-02-seed-503493758-orbital-greenhouse-quartz-ampoule"
+}
