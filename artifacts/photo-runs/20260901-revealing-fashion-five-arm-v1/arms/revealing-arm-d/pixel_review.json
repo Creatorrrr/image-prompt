@@ -1,0 +1,79 @@
+{
+  "contract_version": "photo-run-local-pixel-review/v1",
+  "arm_id": "revealing-arm-d",
+  "test_case_id": "rf-d-thigh-high-side-slit",
+  "profile_id": "run_local_thigh_high_side_slit_dress",
+  "status": "blocked_unscored",
+  "scoring_status": "unscored",
+  "image": {
+    "native_path": null,
+    "native_sha256": null,
+    "native_available": false,
+    "thumbnail_512_path": null,
+    "thumbnail_512_sha256": null,
+    "thumbnail_512_available": false,
+    "absence_reason": "The single built-in image-generation call was rejected at output moderation and returned no image bytes."
+  },
+  "review_policy": {
+    "required_gate_count": 5,
+    "all_gates_must_pass_in_one_image": true,
+    "partial_is_fail": true,
+    "native_and_thumbnail_required_for_scoring": true,
+    "blocked_without_pixels_is_unscored": true
+  },
+  "gates": [
+    {
+      "id": "rl_high_slit_first_read",
+      "required_scale": "thumbnail",
+      "status": "not_evaluated_blocked",
+      "score": null,
+      "pixel_evidence": null
+    },
+    {
+      "id": "rl_high_slit_continuous_skirt",
+      "required_scale": "both",
+      "status": "not_evaluated_blocked",
+      "score": null,
+      "pixel_evidence": null
+    },
+    {
+      "id": "rl_high_slit_finished_topology",
+      "required_scale": "native",
+      "status": "not_evaluated_blocked",
+      "score": null,
+      "pixel_evidence": null
+    },
+    {
+      "id": "rl_high_slit_opaque_coverage",
+      "required_scale": "both",
+      "status": "not_evaluated_blocked",
+      "score": null,
+      "pixel_evidence": null
+    },
+    {
+      "id": "rl_high_slit_not_substitute",
+      "required_scale": "both",
+      "status": "not_evaluated_blocked",
+      "score": null,
+      "pixel_evidence": null
+    }
+  ],
+  "technical_qualification": {
+    "pass_count": 0,
+    "fail_count": 0,
+    "not_evaluated_count": 5,
+    "result": "blocked_unscored"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "score": null,
+    "qualification": "unscored"
+  },
+  "representative_promotion": {
+    "promoted": false,
+    "status": "forbidden",
+    "reason": "No pixel artifact exists and the strict five-gate checklist was not evaluable."
+  },
+  "boundary": "Prompt and runtime audits passed, but they cannot substitute for native and 512-pixel review."
+}

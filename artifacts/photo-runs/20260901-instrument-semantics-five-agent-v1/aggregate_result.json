@@ -1,0 +1,166 @@
+{
+  "contract_version": "instrument-semantics-five-agent-result/v1",
+  "run_id": "20260901-instrument-semantics-five-agent-v1",
+  "request_envelope_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/request_envelope.json",
+  "reference": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "scope": "visible adult facial appearance, hairstyle, makeup placement, and skin-surface finish only",
+    "excluded_claims": [
+      "same-person identity",
+      "biometric identity",
+      "ethnicity or nationality",
+      "health",
+      "attractiveness",
+      "personality"
+    ]
+  },
+  "implementation": {
+    "visual_profiles_added": 10,
+    "candidate_rows_added": 67,
+    "approved_research_evidence_rows_added": 10,
+    "candidate_dictionary_version": "1.33",
+    "visual_profile_total": 120,
+    "visual_profile_exact_term_total": 726,
+    "semantic_index_entry_total": 7187,
+    "semantic_index_shard_total": 16,
+    "embedding_model": "gemini-embedding-2",
+    "embedding_dimensions": 768
+  },
+  "validation": {
+    "focused_unittest_count": 24,
+    "focused_unittest_status": "pass",
+    "dictionary_validation": "pass",
+    "visual_profile_index_check": "pass",
+    "scene_expression_routes": 112,
+    "scene_expression_pass": 112,
+    "scene_expression_fail": 0,
+    "git_diff_check": "pass",
+    "root_reaudit_composed_pass": 5,
+    "root_reaudit_render_request_pass": 5
+  },
+  "generation_protocol": {
+    "independent_agent_count": 5,
+    "candidate_pack_version": "v6",
+    "core_first_freeze": true,
+    "one_native_call_per_arm": true,
+    "retry_count_total": 0,
+    "cross_arm_inputs_used": false,
+    "partial_is_fail": true
+  },
+  "summary": {
+    "generation_success_arms": 5,
+    "composed_audit_pass_arms": 5,
+    "render_request_audit_pass_arms": 5,
+    "technical_qualified_arms": 3,
+    "technical_failed_arms": 2,
+    "pixel_gate_pass_count": 23,
+    "pixel_gate_total": 25,
+    "reference_scope_pass_arms": 5,
+    "user_judgment": "pending"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-geomungo",
+      "profile_id": "geomungo_fretted_suldae_zither",
+      "confusion_target": "gayageum",
+      "seed": 322530066,
+      "pack_id": "619617f9572536a4",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/result.png",
+      "image_sha256": "ad18315a24b975bbb6c1f9958367597cea42e11ac6a202ed1b6d57c648919a80",
+      "image_call_count": 1,
+      "pixel_gate_pass_count": 4,
+      "pixel_gate_total": 5,
+      "technical_status": "fail",
+      "failed_gates": [
+        {
+          "id": "vo_instrument_geomungo_fixed_frets",
+          "reason": "fixed-looking bars are visible, but a second visually distinct set of movable bridges cannot be identified"
+        }
+      ],
+      "reference_scope_status": "pass",
+      "agent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/agent_result.json"
+    },
+    {
+      "arm_id": "arm-02-saxophone",
+      "profile_id": "alto_tenor_saxophone_reed_conical_body",
+      "confusion_target": "modern_piston_trumpet",
+      "seed": 940818821,
+      "pack_id": "7d68d3781f23c3d2",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/result.png",
+      "image_sha256": "6da25453c09aad56508c8b6bdaf9bf66566e3d14a61e1b0d923de2bac8b6a769",
+      "image_call_count": 1,
+      "pixel_gate_pass_count": 4,
+      "pixel_gate_total": 5,
+      "technical_status": "fail",
+      "failed_gates": [
+        {
+          "id": "vo_instrument_sax_single_reed",
+          "reason": "ligature hardware is visible, but a separately identifiable tan cane reed cannot be resolved"
+        }
+      ],
+      "reference_scope_status": "pass",
+      "agent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/agent_result.json"
+    },
+    {
+      "arm_id": "arm-03-double-bass",
+      "profile_id": "double_bass_human_scale_floor_supported",
+      "confusion_target": "cello",
+      "seed": 1711376315,
+      "pack_id": "d048a78f1c0121cd",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/result.png",
+      "image_sha256": "14e1ffab35d6a823033244e2a3fec3c483372553b270dcc3daf1d00039710724",
+      "image_call_count": 1,
+      "pixel_gate_pass_count": 5,
+      "pixel_gate_total": 5,
+      "technical_status": "pass",
+      "failed_gates": [],
+      "reference_scope_status": "pass",
+      "agent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/agent_result.json"
+    },
+    {
+      "arm_id": "arm-04-vibraphone",
+      "profile_id": "vibraphone_metal_bars_motor_pedal",
+      "confusion_target": "xylophone",
+      "seed": 2834404087,
+      "pack_id": "d4dfb14d53653495",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/result.png",
+      "image_sha256": "5facc9ff02f36e7849a72d8d5b8d9a6b3a9e0eac754988e4cc2ef055f86cc3a6",
+      "image_call_count": 1,
+      "pixel_gate_pass_count": 5,
+      "pixel_gate_total": 5,
+      "technical_status": "pass",
+      "failed_gates": [],
+      "reference_scope_status": "pass",
+      "agent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/agent_result.json"
+    },
+    {
+      "arm_id": "arm-05-theremin",
+      "profile_id": "theremin_dual_antenna_noncontact",
+      "confusion_target": "midi_controller",
+      "seed": 926806901,
+      "pack_id": "5448188d9b2753cc",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-05-theremin/result.png",
+      "image_sha256": "942beab10118aa9494f9c789e8ce8c8f6b8a6aaf35431e8c2c9049e93d6c8c2a",
+      "image_call_count": 1,
+      "pixel_gate_pass_count": 5,
+      "pixel_gate_total": 5,
+      "technical_status": "pass",
+      "failed_gates": [],
+      "reference_scope_status": "pass",
+      "agent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-05-theremin/agent_result.json"
+    }
+  ],
+  "promotion_decision": {
+    "promoted_arm_ids": [
+      "arm-03-double-bass",
+      "arm-04-vibraphone",
+      "arm-05-theremin"
+    ],
+    "non_promoted_arm_ids": [
+      "arm-01-geomungo",
+      "arm-02-saxophone"
+    ],
+    "reason": "all required pixel gates must pass; prompt and runtime audit pass do not substitute for pixel evidence"
+  }
+}

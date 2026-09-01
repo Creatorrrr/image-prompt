@@ -1,0 +1,145 @@
+{
+  "contract_version": "photo-agent-result/v1",
+  "completed_at": "2026-08-31T23:23:06Z",
+  "arm_id": "arm-04-vibraphone",
+  "status": "completed",
+  "outcome": "visual_technical_qualified_user_judgment_pending",
+  "profile_id": "vibraphone_metal_bars_motor_pedal",
+  "confusion_target": "xylophone",
+  "seed": 2834404087,
+  "concept": {
+    "setting": "empty planetarium circular stage during overnight projector calibration",
+    "event": "first motor-on downbeat combining metal-bar strikes, pedal depression, and visible resonator fan assemblies",
+    "lighting": "narrow amber follow spot intersecting cool constellation projections and dim red aisle lights",
+    "camera_composition": "low 35 mm audience-aisle three-quarter view with diagonal bar deck and an under-instrument sightline"
+  },
+  "independence": {
+    "mode": "independent-no-cross-arm-inputs",
+    "other_arm_inputs_used": false,
+    "previous_photo_runs_used": false,
+    "image_call_count": 1,
+    "retry_count": 0
+  },
+  "prompt": {
+    "pack_id": "d4dfb14d53653495",
+    "prompt_id": "9f323bf85033ff5c",
+    "runtime_prompt_id": "5c9aaa96cca734dc",
+    "exact_prompt_en": "Use case: photorealistic-natural. A photorealistic editorial photograph on an empty planetarium's circular stage during overnight projector calibration. Depict one newly invented adult performer at an unmistakable motor-equipped pedal vibraphone built around two rows of silvery metal bars. On the instrument, two rows of graduated metal bars form the keyboard, their silvery alloy surfaces catching clean highlights. Beneath them, vertical resonator tubes show fan or rotor assemblies beneath the bars, with circular disks visibly aligned inside multiple open tube mouths. At floor level, a damper pedal connects to the wheeled frame and sits visibly under the performer's pressing right foot. Freeze the first motor-on downbeat: her two yarn-wrapped mallets make real playing contact with separate metal bars while her right foot visibly depresses the full-width damper pedal; mallets contact the metal bars while one foot controls the pedal in a single physically playable downbeat. The positive construction stays unmistakable: wooden bars without motor fans and a pedal do not substitute; the pictured instrument reads through positive metal-bar, rotor, and damping-hardware evidence. Use Image 1 only for the original adult performer's visible facial appearance, long dark wavy hairstyle, restrained warm eye makeup, natural rose lips, and luminous skin-surface finish. Image 1 is a scoped visible-appearance reference for this original performer, with identity and personal-trait claims outside its role. A narrow amber follow spot intersects cool moving constellation projections and dim red aisle lights, while the projections stay off the reflective bar tops. A low 35 mm three-quarter view from the audience aisle keeps her face in the upper third and runs the bars diagonally through the frame; keep one unobstructed depth line from face to mallet contact, rotating fan disks, resonator ranks, connected pedal, and pressing foot. Preserve realistic adult anatomy, instrument scale, optical texture, and readable physical contact.",
+    "exact_negative_en": "body distortion, illustration look, plastic-looking skin, over-processed retouching, distorted fingers, 3D render look, broken window geometry, low resolution, excessive HDR",
+    "runtime_assembly": "exact_prompt_en + two newlines + 'Avoid: ' + exact_negative_en"
+  },
+  "audits": {
+    "candidate_and_composed": {
+      "status": "pass",
+      "quality_status": "warn",
+      "failure_count": 0,
+      "warning_count": 7,
+      "warning_boundary": "Only advisory prompt-length and uncovered-intent-preserved warnings; all required literal evidence and pack bindings passed.",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/composed_audit.json"
+    },
+    "render_request": {
+      "status": "pass",
+      "failure_count": 0,
+      "reference_count": 1,
+      "negative_matches_pack": true,
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/render_request_audit.json"
+    },
+    "pixel_review": {
+      "technical_qualified": true,
+      "failed_hard_gate_count": 0,
+      "schema_failure_count": 0,
+      "qualification_status": "visual_technical_qualified_user_judgment_pending",
+      "auditor_exit_code": 1,
+      "auditor_exit_boundary": "The nonzero exit is caused only by pending requesting-user judgment; all five technical gates and the review schema passed.",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/pixel_review_audit.json"
+    }
+  },
+  "generation": {
+    "tool": "built_in_image_gen",
+    "status": "saved_local_result",
+    "source_generated_path": "/Users/chasoik/.codex/generated_images/01a05a13-dd79-7953-b4f2-1bb802e1ef11/exec-5eb7ba62-a761-49c4-9ab4-9cda46de7a87.png",
+    "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/result.png",
+    "result_sha256": "5facc9ff02f36e7849a72d8d5b8d9a6b3a9e0eac754988e4cc2ef055f86cc3a6",
+    "pixel_width": 1023,
+    "pixel_height": 1537,
+    "preview_only": false,
+    "copy_policy": "non_destructive_copy_original_preserved"
+  },
+  "gate_results": [
+    {
+      "id": "vo_instrument_vibraphone_metal_bars",
+      "status": "pass",
+      "evidence": "Two staggered graduated rows of broad silver reflective metal bars form the keyboard at thumbnail and native scale."
+    },
+    {
+      "id": "vo_instrument_vibraphone_resonator_fans",
+      "status": "pass",
+      "evidence": "A continuous bank of vertical resonator tubes contains centered circular fan or rotor assemblies beneath the bars."
+    },
+    {
+      "id": "vo_instrument_vibraphone_damper_pedal",
+      "status": "pass",
+      "evidence": "The boot presses a broad pedal platform visibly connected to the wheeled frame by horizontal linkage rails."
+    },
+    {
+      "id": "vo_instrument_vibraphone_mallet_pedal_action",
+      "status": "pass",
+      "evidence": "Both yarn-wrapped mallet heads are tangent to separate bar tops while the right boot depresses the connected pedal in the same frame."
+    },
+    {
+      "id": "vo_instrument_vibraphone_not_xylophone",
+      "status": "pass",
+      "evidence": "Silver metal bars, rotor-equipped resonators, and a connected foot control establish a vibraphone rather than a wooden-bar xylophone."
+    }
+  ],
+  "reference_scope_review": {
+    "status": "pass",
+    "evidence": "Long center-parted dark waves, restrained warm eye makeup, natural rose lips, luminous skin finish, and overall visible face styling continue within the allowed appearance scope.",
+    "boundary": "Appearance continuity only for an original adult performer; no biometric verification, same-person claim, or inference about ethnicity, nationality, health, attractiveness, personality, or another protected trait.",
+    "user_judgment": "not_yet_received"
+  },
+  "provenance": {
+    "source_ref": "d462f0c4cde07e0a62750876f53b43e548c21e1d",
+    "worktree_id": "/Users/chasoik/Projects/image-prompt",
+    "candidate_pack_version": "v6",
+    "candidate_pack_sha256": "d1152a1e67b3e5670af0b372a93b2d2929114fbd6636c0cdb084f3539945d5dc",
+    "authorial_core_file_sha256": "292f0cfd3011f4917fd2c99479a4ff9893e6454cdae1231afe5c4fe7f71c162c",
+    "authorial_core_canonical_sha256": "24a0da1bda847ecf7a0687fea7afdc8eb919e92766e62034ef901090c3a167d5",
+    "intent_lock_sha256": "98bfbbf944f9d8e8e05d0244eb2684671344db11cc5f13cf4f665b50c91230d7",
+    "photo_prompt_skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "imagegen_skill_sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "ledger_run_id": "013028a31f7906e5"
+  },
+  "preflight_notes": [
+    "Before any pack was emitted, the generator rejected the unsupported intent-lock dimension token reference_scope; it was schema-only renamed to reference_use with baseline and meaning unchanged.",
+    "Before any pack was emitted, visual_intent.source_text was rebound from the frozen subject to the byte-exact frozen interpreted_intent field required by the v6 implementation; profile and five bindings were unchanged.",
+    "Both preflight corrections occurred at image_call_count=0 and are recorded in preflight_events.json."
+  ],
+  "artifacts": [
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/agent_result.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/authorial_core.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/candidate_pack.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/composed_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/composed_prompt.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-bars-mallets.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-face.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-mallet-left.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-mallet-right.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-pedal-foot.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/crop-resonators.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/generation_result.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/image_runs.ndjson",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/pixel_review.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/pixel_review_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/preflight_events.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/render_request.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/render_request_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/request_envelope.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/result.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/review-512.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/run_manifest.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/test_case.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-04-vibraphone/visual_intent.json"
+  ]
+}

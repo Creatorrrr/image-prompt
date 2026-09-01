@@ -1,0 +1,90 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "619617f9572536a4",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex agent arm-01-geomungo native-pixel reviewer",
+  "result_image": "result.png",
+  "result_sha256": "ad18315a24b975bbb6c1f9958367597cea42e11ac6a202ed1b6d57c648919a80",
+  "result_dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "review_policy": {
+    "partial_is_fail": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true,
+    "all_components_must_coexist_in_one_result": true,
+    "generation_call_count": 1,
+    "retry_permitted": false
+  },
+  "inspection_assets": [
+    {
+      "path": "result.png",
+      "role": "native full result",
+      "sha256": "ad18315a24b975bbb6c1f9958367597cea42e11ac6a202ed1b6d57c648919a80"
+    },
+    {
+      "path": "result-thumbnail.png",
+      "role": "thumbnail-scale full result",
+      "sha256": "20a447660631a554857344eb83e9bd99e6f8b3fa4e3813361f4f1f68131e84eb"
+    },
+    {
+      "path": "review-crops/instrument-surface-native.png",
+      "role": "native-scale instrument surface crop",
+      "sha256": "ee3304d56f9ee02f74953992f83961107381810e49f55c9ca21ed3f2939f5b01"
+    },
+    {
+      "path": "review-crops/suldae-contact-native.png",
+      "role": "native-scale suldae and hand-contact crop",
+      "sha256": "610a322f319668d3b1eb8e50e4eba73512caf0e4d6b89617745077036f979b32"
+    }
+  ],
+  "hard_gates": {
+    "vo_instrument_geomungo_horizontal_zither": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The thumbnail shows one long dark wooden Korean zither spanning nearly the entire lower frame as the dominant object being played."
+    },
+    "vo_instrument_geomungo_fixed_frets": {
+      "status": "fail",
+      "review_scale": "native",
+      "evidence": "The native surface crop clearly shows repeated raised fixed-looking bars, but a second, visually distinct set of separate movable bridges cannot be identified; coexistence is only partial and therefore fails."
+    },
+    "vo_instrument_geomungo_suldae_contact": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The performer's right hand visibly grips a short stick and its enlarged tip meets a string on the playing surface in both the full image and native contact crop."
+    },
+    "vo_instrument_geomungo_seated_support": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The performer is visibly cross-legged behind the full-size instrument, which rests horizontally on a low support at a plausible zither scale."
+    },
+    "vo_instrument_geomungo_not_gayageum": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The small string set, repeated full-width fret-like structures, and active right-hand stick contact do not read as many individual bridges with bare-finger-only gayageum technique."
+    }
+  },
+  "appearance_reference_continuity": {
+    "status": "pass",
+    "scope": "visible appearance only",
+    "evidence": "The generated original adult performer visibly retains long dark wavy center-parted hair, softly defined eye makeup, muted rose lips, and a natural luminous skin-surface finish consistent with the scoped Image 1 cues.",
+    "boundaries": [
+      "This is not biometric identity verification.",
+      "This is not a same-person claim.",
+      "No ethnicity, nationality, health, attractiveness, personality, or protected-trait inference was made."
+    ]
+  },
+  "supplemental_scene_observations": {
+    "concept": "The sea-fog lighthouse room, oil lamp, blue exterior, distant moving beacon, seated performer, and low horizontal instrument all coexist clearly in one frame.",
+    "pixel_gate_summary": "four_pass_one_fail",
+    "promotion_status": "failed_due_to_fixed_fret_and_movable_bridge_coexistence_gate"
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user visual judgment has been received for this instrument test."
+  }
+}

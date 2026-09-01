@@ -1,0 +1,96 @@
+{
+  "schema_version": "image-prompt-independent-arm-result/v1",
+  "arm_id": "arm-04-high-jewelry",
+  "status": "completed",
+  "target_profile": "high_jewelry_setting_integration",
+  "candidate_pack": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-04-high-jewelry/candidate_pack.json",
+    "sha256_before_and_after": "a8cd756791340544ca2738e2f5536692284b587cc4ec3fb63e73a2ee9ed4c171",
+    "modified": false
+  },
+  "evidence_layers": {
+    "composed_prompt_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "failure_count": 0,
+      "warning_boundary": "Five uncovered-intent warnings confirm literal free-description preservation; they are not blocking failures."
+    },
+    "runtime_request_audit": {
+      "status": "pass",
+      "failure_count": 0,
+      "runtime_prompt_id": "bd051dc6e58494ac",
+      "reference_count": 1
+    },
+    "generation_outcome": {
+      "status": "success",
+      "tool": "built_in_imagegen",
+      "actual_image_call_count": 1,
+      "default_result_path": "/Users/chasoik/.codex/generated_images/01a059ce-ac4e-7f03-abcd-da862be1d693/exec-7fe144c7-b832-4784-b3b9-3531bc26dc3f.png",
+      "persisted_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-04-high-jewelry/result.png",
+      "persisted_result_sha256": "85352f9cec712f6a935c481436519dd7c90314a83c7c5dd699cabeefda23cc80",
+      "dimensions": "1536x1024"
+    },
+    "rendered_pixel_review": {
+      "audit_status": "pass",
+      "technical_qualified": true,
+      "qualification_status": "visual_technical_qualified_user_judgment_pending",
+      "failed_hard_gate_count": 0,
+      "hard_gates": {
+        "vo_luxury_jewelry_matched_stones": "pass",
+        "vo_luxury_jewelry_setting_contact": "pass",
+        "vo_luxury_jewelry_metal_support": "pass",
+        "vo_luxury_jewelry_integrated_design": "pass",
+        "vo_luxury_jewelry_not_sparkle_or_price": "pass"
+      }
+    },
+    "requesting_user_judgment": {
+      "status": "not_yet_received",
+      "representative_eligible": false
+    }
+  },
+  "reference_scope": {
+    "source_path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "general_appearance_reference_only",
+    "used_cues": [
+      "long center-parted dark wavy hair",
+      "brown eyes",
+      "softly oval facial outline",
+      "natural brows"
+    ],
+    "prohibited_inferences_made": false
+  },
+  "skill_effects": [
+    {
+      "skill": "photo-prompt-image-generator",
+      "effect": "Required immutable v6 composition, fail-closed composed/runtime audits, exact reference attachment, strict post-render gate review, and an arm-local ledger/manifest."
+    },
+    {
+      "skill": "imagegen",
+      "effect": "Required one built-in image-generation call and a project-local persistent copy while retaining the default generated original."
+    },
+    {
+      "skill": "image-prompt-skill-improver",
+      "effect": "Kept structural audit, generation delivery, rendered-pixel evidence, and requesting-user judgment as separate evidence layers; no skill source was edited."
+    },
+    {
+      "skill": "imagegen iteration guidance overridden by arm contract",
+      "effect": "The independent-arm exact-one-call rule prevented any retry or post-generation prompt change."
+    }
+  ],
+  "ledger": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-04-high-jewelry/image_runs.ndjson",
+    "run_id": "f63554906be3046d",
+    "prompt_id": "b5e9a7bf2a54cf40"
+  },
+  "required_outputs": {
+    "composed_prompt": "composed_prompt.json",
+    "composed_audit": "composed_audit.txt",
+    "render_request": "render_request.json",
+    "render_audit": "render_audit.txt",
+    "generated_image": "result.png",
+    "pixel_review": "pixel_review.json",
+    "run_manifest": "run_manifest.json",
+    "agent_result": "agent_result.json"
+  }
+}

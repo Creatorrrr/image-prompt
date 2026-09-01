@@ -1,0 +1,23 @@
+{
+  "contract_version": "photo-arm-preflight-events/v1",
+  "events": [
+    {
+      "stage": "candidate_pack_generation",
+      "image_call_count": 0,
+      "status": "schema_rejected_before_pack_emission",
+      "message": "authorial core intent_lock contains unknown dimensions: reference_scope",
+      "correction": "Renamed only the unsupported intent-lock dimension token reference_scope to the allowed equivalent reference_use; baseline_prompt_en, semantic evidence, seed, concept, subject, setting, event, and open dimensions remained byte-identical.",
+      "meaning_changed": false,
+      "candidate_pack_emitted": false
+    },
+    {
+      "stage": "candidate_pack_generation",
+      "image_call_count": 0,
+      "status": "visual_intent_source_rejected_before_pack_emission",
+      "message": "visual intent profile 'vibraphone_metal_bars_motor_pedal' source_text must exactly match a requesting-user source or its governing frozen authorial field",
+      "correction": "Rebound visual_intent.source_text from the frozen subject field to the byte-exact frozen interpreted_intent field accepted by the v6 generator; profile ID and all five evidence bindings remained unchanged.",
+      "meaning_changed": false,
+      "candidate_pack_emitted": false
+    }
+  ]
+}

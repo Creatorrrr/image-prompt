@@ -1,0 +1,147 @@
+{
+  "contract_version": "instrument-semantic-test-case/v1",
+  "arm_id": "arm-01-geomungo",
+  "worktree_id": "main-workspace:/Users/chasoik/Projects/image-prompt",
+  "profile_id": "geomungo_fretted_suldae_zither",
+  "confusion_target": "gayageum",
+  "random_seed": 322530066,
+  "seed_generation": {
+    "domain": "unsigned 32-bit integer",
+    "source": "/dev/urandom",
+    "command": "od -An -tu4 -N4 /dev/urandom | tr -d ' '",
+    "result": 322530066
+  },
+  "selection_method": {
+    "engine": "Python random.Random(seed), MT19937",
+    "procedure": "Four independently authored, ordered eight-item option lists were prepared from general knowledge only; one randrange(8) draw selected setting, then event, then lighting, then camera/composition.",
+    "candidate_lists": {
+      "setting": [
+        "restored hanok music room opening onto a rain-darkened courtyard at blue hour",
+        "quiet contemporary museum conservation studio after closing",
+        "empty black-box theater during a technical rehearsal",
+        "riverside pavilion wrapped in pale winter dawn fog",
+        "circular stone observatory chamber during a distant summer storm",
+        "book-lined sound archive room during an after-hours recording session",
+        "old railway warehouse converted into an acoustic rehearsal hall",
+        "coastal lighthouse keeper room during dense sea fog"
+      ],
+      "event": [
+        "an opening accented phrase as a breeze lifts one corner of handwritten notation",
+        "a measured rehearsal passage just as a reel-to-reel recorder begins turning",
+        "a resonant downbeat while rain droplets continue falling from the eaves",
+        "a precise accented stroke as a nearby oil lamp flame bends in a draft",
+        "a sustained rhythmic phrase while the first thunder flash arrives outside",
+        "a concentrated take at the instant a paper timing strip drops from a shelf",
+        "a low-register passage as dust shakes loose from a roof beam",
+        "a deliberate opening cadence as the lighthouse beam sweeps through the room"
+      ],
+      "lighting": [
+        "cool blue ambient light with a narrow warm tungsten edge from floor lamps",
+        "diffuse skylight mixed with a single amber inspection lamp",
+        "deep theatrical indigo wash crossed by one hard white follow-spot",
+        "soft fog-filtered dawn with silver rim light and warm reflected floor fill",
+        "cold storm daylight punctuated by a brief white lightning edge",
+        "warm shaded reading lamps with a cool stripe from a high clerestory window",
+        "late-afternoon raking sun through dusty windows with soft bounce fill",
+        "rotating cool beam through fog balanced by a steady amber practical lamp"
+      ],
+      "camera_composition": [
+        "35 mm documentary frame from a slightly raised three-quarter angle, full instrument spanning the lower half, face and both hands readable",
+        "50 mm environmental portrait at seated eye level, diagonal instrument body leading from foreground to performer, both endpoints visible",
+        "40 mm wide three-quarter frame from stage-left, performer centered above the full horizontal instrument, hands separated clearly",
+        "55 mm low seated viewpoint, full zither in a strong horizontal band, face framed in the upper third and both hand contacts unobstructed",
+        "45 mm symmetrical medium-wide frame, circular architecture enclosing a complete view of performer and instrument",
+        "50 mm intimate documentary medium-wide, recorder shelves forming depth lines while the complete instrument and hand mechanics remain visible",
+        "35 mm oblique medium-wide with converging warehouse beams, entire instrument kept within frame and hands crisply separated",
+        "40 mm window-side environmental portrait, full instrument silhouetted low in frame with face and contact points exposed"
+      ]
+    },
+    "draws": [
+      {
+        "dimension": "setting",
+        "selected_index_zero_based": 7,
+        "selected_value": "coastal lighthouse keeper room during dense sea fog"
+      },
+      {
+        "dimension": "event",
+        "selected_index_zero_based": 3,
+        "selected_value": "a precise accented stroke as a nearby oil lamp flame bends in a draft"
+      },
+      {
+        "dimension": "lighting",
+        "selected_index_zero_based": 2,
+        "selected_value": "deep theatrical indigo wash crossed by one hard white follow-spot"
+      },
+      {
+        "dimension": "camera_composition",
+        "selected_index_zero_based": 3,
+        "selected_value": "55 mm low seated viewpoint, full zither in a strong horizontal band, face framed in the upper third and both hand contacts unobstructed"
+      }
+    ]
+  },
+  "frozen_concept": {
+    "setting": "A coastal lighthouse keeper room during dense sea fog, adapted for a solitary night performance.",
+    "event": "A precise accented geomungo stroke at the instant a draft bends an oil-lamp flame and the lighthouse optic sweeps through the room.",
+    "lighting": "Deep theatrical indigo room light crossed by one hard moving white beam, with the oil lamp as a warm practical.",
+    "camera_composition": "A low seated 55 mm environmental portrait; the full zither forms a strong horizontal band, the face sits in the upper third, and both hand-to-instrument contacts remain unobstructed."
+  },
+  "intent_lock": {
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "required_gates": [
+    "vo_instrument_geomungo_horizontal_zither",
+    "vo_instrument_geomungo_fixed_frets",
+    "vo_instrument_geomungo_suldae_contact",
+    "vo_instrument_geomungo_seated_support",
+    "vo_instrument_geomungo_not_gayageum"
+  ],
+  "reference_scope": {
+    "image": "../reference/appearance_reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "allowed": [
+      "visible adult facial appearance",
+      "visible hairstyle and hair color",
+      "visible makeup placement and skin-surface finish"
+    ],
+    "boundaries": [
+      "no biometric identity verification",
+      "no same-person claim",
+      "no ethnicity, nationality, health, attractiveness, personality, or protected-trait inference"
+    ]
+  },
+  "prepack_isolation": {
+    "status": "frozen_before_candidate_data",
+    "inputs_seen_before_freeze": [
+      ".agents/skills/photo-prompt-image-generator/SKILL.md",
+      "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md",
+      "../request_envelope.json",
+      "../reference/reference_manifest.json",
+      "../reference/appearance_reference.jpg",
+      "arm allocation message"
+    ],
+    "not_read_before_freeze": [
+      "candidate packs",
+      "visual-profile registry or index",
+      "research evidence",
+      "tests and fixtures",
+      "previous photo-runs",
+      "other arm directories or outputs"
+    ],
+    "cross_arm_inputs": false
+  },
+  "generation_policy": {
+    "built_in_image_gen_calls_allowed": 1,
+    "retry_allowed": false,
+    "partial_gate_result": "fail"
+  }
+}

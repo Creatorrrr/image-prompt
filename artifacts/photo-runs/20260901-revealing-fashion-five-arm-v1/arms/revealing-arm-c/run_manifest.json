@@ -1,0 +1,79 @@
+{
+  "contract_version": "photo-independent-multi-attempt-run-manifest/v1",
+  "arm_id": "revealing-arm-c",
+  "source_ref": "d462f0c4cde07e0a62750876f53b43e548c21e1d",
+  "worktree_id": "image-prompt-d462f0c4cde0",
+  "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+  "authorial_core_file_sha256": "abe4f3162c89b1234e062614a7958ebdb408e3685fb0123cabc00200f44e9b24",
+  "authorial_core_sha256": "018e190248a7a6bb335f6e8d79b654067da2ea4ebf57ec49c5d4710042ff9889",
+  "intent_lock_sha256": "111a92042ec680d6524414f946ac448b29eb4d837c8839f170139ac33fb050c8",
+  "candidate_pack_version": "v6",
+  "pack_id": "a7e986d2286c25c9",
+  "candidate_pack_file_sha256": "04a4ce3535e58ac03a6e81b13b44fa06eceae90cf85198a9a528a3dbef9602ed",
+  "chosen_visual_concept_ids": [],
+  "tool": "built_in_image_gen",
+  "status": "success",
+  "image_call_count": 2,
+  "initial_image_call_count": 1,
+  "authorized_repair_image_call_count": 1,
+  "third_attempt_performed": false,
+  "paid_fallback_used": false,
+  "cross_arm_inputs_used": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "ledger_run_id": "ca55d8879773bfe3",
+      "prompt_id": "07a76321e5fc376a",
+      "run_manifest_path": "run_manifest_attempt1.json",
+      "run_manifest_sha256": "326eb519d25c37ae3d56b6f9c29fbc175c7e48296a3e2b03f1bd63906359af23",
+      "image_path": "generated_native.png",
+      "image_sha256": "0e8ff67afb8b53e18e28fa065cf627d42895b1c6fdf33c0a3135c7245321fc55",
+      "reference_inputs": [
+        {
+          "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+          "role": "general_visible_appearance_guidance_only"
+        }
+      ],
+      "pixel_review_path": "pixel_review_attempt1.json",
+      "pixel_review_sha256": "b929307b10f1af540623736c0fd545ac444e0792f2f9a897797c68045c88dc2d",
+      "pixel_gate_status": "fail_4_of_5"
+    },
+    {
+      "attempt": 2,
+      "ledger_run_id": "c0888e111a50cdbd",
+      "retry_of_run_id": "ca55d8879773bfe3",
+      "prompt_id": "177631441a51971f",
+      "run_manifest_path": "run_manifest_attempt2.json",
+      "run_manifest_sha256": "9f998b1c6dd14073576fb647c8d00fe00d69d8162562ca9985b54c6e153a306c",
+      "image_path": "generated_native_attempt2.png",
+      "image_sha256": "8d5d60b25e74e8468d199cf2332ef438c78182fb61c66cfe1c0d9ed12562b7b0",
+      "reference_inputs": [
+        {
+          "sha256": "0e8ff67afb8b53e18e28fa065cf627d42895b1c6fdf33c0a3135c7245321fc55",
+          "role": "edit_target_attempt_1"
+        },
+        {
+          "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+          "role": "general_visible_appearance_guidance_only"
+        }
+      ],
+      "pixel_review_path": "pixel_review_attempt2.json",
+      "pixel_review_sha256": "ceabe82f22795407cc9240fcc33b8ed47029c33783ea71f10d3b5de8a3207f48",
+      "pixel_gate_status": "pass_5_of_5"
+    }
+  ],
+  "ledger": {
+    "path": "image_run_ledger.ndjson",
+    "sha256": "7b54b8f30d82d042fb60fc0964333d92919aa4a1b1c40cfbc27bd628d0918093",
+    "entry_count": 2
+  },
+  "combined_pixel_review": {
+    "path": "pixel_review_all_attempts.json",
+    "sha256": "d86b873cf52c3e8957ea2468a5662250849fd8fc1cafd432c04023275cb2cbef",
+    "evidence_combined_across_attempts": false,
+    "qualifying_attempt": 2,
+    "qualification": "technical-pass-unscored"
+  },
+  "user_judgment": "pending-unscored",
+  "representative_promoted": false
+}

@@ -1,0 +1,120 @@
+{
+  "contract_version": "instrument-semantic-test-case/v1",
+  "arm_id": "arm-02-saxophone",
+  "worktree_id": "/Users/chasoik/Projects/image-prompt",
+  "freeze_state": "frozen_prepack",
+  "profile_id": "alto_tenor_saxophone_reed_conical_body",
+  "confusion_target": "modern piston trumpet",
+  "randomization": {
+    "seed_type": "unsigned_32_bit",
+    "seed": 940818821,
+    "entropy_source": "/dev/urandom",
+    "draw_count": 1,
+    "selection_method": "Read one native unsigned 32-bit integer. In the fixed dimension order setting, event, lighting, camera, composition, select index seed modulo pool size, then replace seed with integer floor(seed divided by pool size) before selecting the next index.",
+    "fixed_dimension_order": [
+      "setting",
+      "event",
+      "lighting",
+      "camera",
+      "composition"
+    ],
+    "pools": {
+      "setting": [
+        "decommissioned indoor swimming pool during restoration",
+        "empty mid-century hotel ballroom before opening",
+        "rain-slick ferry terminal service bay at night",
+        "rooftop radio transmitter room during a storm",
+        "underground archive loading dock after hours",
+        "botanical research glasshouse at blue hour"
+      ],
+      "event": [
+        "a solo soundcheck as rolling shutters begin to rise",
+        "a sustained saxophone phrase while automated misting switches on",
+        "the final rehearsal phrase as utility power returns",
+        "an improvised cadenza while distant doors open for staff",
+        "a breath-held pause resolving into the first full note"
+      ],
+      "lighting": [
+        "cobalt dawn skylight with warm tungsten utility lamps",
+        "sodium-vapor rim light with cool control-panel fill",
+        "diffuse blue-hour skylight with narrow amber grow-lamp pools",
+        "hard lightning flare with dim practical work lights",
+        "warm chandelier light with cold doorway spill"
+      ],
+      "camera": [
+        "full-frame 50 mm at f/4 with natural perspective and crisp contact detail",
+        "medium-format 65 mm at f/5.6 with measured depth",
+        "full-frame 35 mm at f/5 from a restrained low angle",
+        "full-frame 70 mm at f/4 with compressed environmental layers",
+        "full-frame 45 mm at f/2.8 with close environmental presence"
+      ],
+      "composition": [
+        "vertical three-quarter mid-to-knee portrait with the complete instrument diagonal, face, both hands, curved neck, and bell visible",
+        "horizontal side-profile medium portrait with the instrument silhouette isolated",
+        "centered full-length portrait with architectural symmetry",
+        "off-center waist-up portrait with a strong foreground reflection",
+        "vertical low-angle three-quarter portrait framed between structural beams"
+      ]
+    },
+    "selected_indices": {
+      "setting": 5,
+      "event": 1,
+      "lighting": 2,
+      "camera": 0,
+      "composition": 0
+    },
+    "selected_result": {
+      "setting": "botanical research glasshouse at blue hour",
+      "event": "a sustained saxophone phrase while automated misting switches on",
+      "lighting": "diffuse blue-hour skylight with narrow amber grow-lamp pools",
+      "camera": "full-frame 50 mm at f/4 with natural perspective and crisp contact detail",
+      "composition": "vertical three-quarter mid-to-knee portrait with the complete instrument diagonal, face, both hands, curved neck, and bell visible"
+    }
+  },
+  "open_dimensions": [
+    "framing",
+    "composition",
+    "lighting",
+    "camera"
+  ],
+  "required_gates": [
+    "vo_instrument_sax_curved_conical_body",
+    "vo_instrument_sax_single_reed",
+    "vo_instrument_sax_dense_keywork",
+    "vo_instrument_sax_playing_contact",
+    "vo_instrument_sax_not_trumpet"
+  ],
+  "reference_scope": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "Image 1 scoped visible-appearance reference for an original adult performer",
+    "allowed": [
+      "visible adult facial appearance",
+      "visible hairstyle and hair color",
+      "visible makeup placement and skin-surface finish"
+    ],
+    "prohibited_claims": [
+      "biometric identity",
+      "same person",
+      "ethnicity or nationality",
+      "health",
+      "attractiveness",
+      "personality",
+      "protected traits"
+    ]
+  },
+  "prepack_input_boundary": {
+    "skill_files_read": [
+      "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator/SKILL.md",
+      "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md"
+    ],
+    "request_envelope_read": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/request_envelope.json",
+    "reference_manifest_read": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/reference_manifest.json",
+    "appearance_reference_inspected": true,
+    "candidate_pack_or_profile_read_before_freeze": false,
+    "research_or_tests_read_before_freeze": false,
+    "past_run_content_read_before_freeze": false,
+    "other_arm_content_read": false,
+    "independent_no_cross_arm_inputs": true
+  }
+}

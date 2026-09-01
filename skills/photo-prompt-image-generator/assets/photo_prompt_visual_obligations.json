@@ -9766,6 +9766,446 @@
         "closed_stance_hiding_bifurcation",
         "one_continuous_lower_volume"
       ]
+    },
+    {
+      "id": "gayageum_movable_bridge_pluck_press",
+      "category": "instrument_korean_bridge_zither",
+      "activation": {
+        "exact_terms": ["gayageum", "gayageum performance", "gayageum player", "가야금", "가야금 연주", "가야금 연주자"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A long Korean horizontal wooden zither whose multiple strings each pass over an individual movable anjok bridge. In active performance the right hand plucks on one side of the bridges while the left hand presses or bends strings on the other side; this bridge-and-finger system distinguishes it from a fretted geomungo played with a suldae.",
+        "paraphrase_examples": ["개별 안족 위의 여러 현을 오른손으로 뜯고 왼손으로 눌러 변음하는 가야금", "a seated performer plucking a long bridge zither while the other hand presses strings beyond the bridges"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["horizontal_zither_form", "individual_movable_bridges", "pluck_press_action", "seated_support_relation", "geomungo_confound_control"],
+          "groups": [
+            {"id": "horizontal_zither_form", "any_terms": ["long horizontal wooden zither with multiple strings", "장방형 목재 공명통과 여러 현"]},
+            {"id": "individual_movable_bridges", "any_terms": ["each string crosses its own movable anjok bridge", "각 현이 개별 이동식 안족을 지남"]},
+            {"id": "pluck_press_action", "any_terms": ["the right hand plucks while the left hand presses strings beyond the bridges", "오른손 뜯기와 왼손 눌러 변음"]},
+            {"id": "seated_support_relation", "any_terms": ["the instrument rests horizontally before the seated performer", "앉은 연주자 앞에 수평으로 놓임"]},
+            {"id": "geomungo_confound_control", "any_terms": ["fixed frets and a suldae do not substitute for this bridge-and-finger system", "거문고의 고정 괘와 술대가 없음"]}
+          ]
+        },
+        "contrast_examples": ["a geomungo with fixed frets and a suldae", "a generic East Asian zither whose bridge and hand relations are hidden", "a decorative instrument placed behind the performer", "a koto-like silhouette without diagnostic playing evidence"]
+      },
+      "concept_candidate": {"concept_terms": ["horizontal Korean bridge zither", "individual movable anjok bridges", "right-hand plucking", "left-hand string pressing", "seated support", "not fretted suldae playing"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["gayageum"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the long zither body, several individual bridges, both hand roles, and the seated horizontal support relation in one frame; use native-scale detail for the bridge-and-string geometry.",
+      "required_evidence_fields": ["zither_form_phrase", "movable_bridge_phrase", "pluck_press_phrase", "support_phrase", "geomungo_confound_phrase"],
+      "evidence_requirements": {
+        "zither_form_phrase": {"min_content_words": 7, "must_mention_any": ["long horizontal wooden zither with multiple strings"]},
+        "movable_bridge_phrase": {"min_content_words": 7, "must_mention_any": ["each string crosses its own movable anjok bridge"]},
+        "pluck_press_phrase": {"min_content_words": 11, "must_mention_any": ["the right hand plucks while the left hand presses strings beyond the bridges"]},
+        "support_phrase": {"min_content_words": 8, "must_mention_any": ["the instrument rests horizontally before the seated performer"]},
+        "geomungo_confound_phrase": {"min_content_words": 11, "must_mention_any": ["fixed frets and a suldae do not substitute for this bridge-and-finger system"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_gayageum_horizontal_zither", "review_scale": "thumbnail", "description": "A long horizontal wooden zither is the dominant playable object."},
+        {"id": "vo_instrument_gayageum_movable_bridges", "review_scale": "native", "description": "Multiple strings visibly cross separate movable anjok bridges."},
+        {"id": "vo_instrument_gayageum_pluck_press", "review_scale": "both", "description": "Right-hand plucking and left-hand pressing occur on opposite sides of the bridges."},
+        {"id": "vo_instrument_gayageum_seated_support", "review_scale": "thumbnail", "description": "The zither rests horizontally before a seated performer at a plausible scale."},
+        {"id": "vo_instrument_gayageum_not_geomungo", "review_scale": "native", "description": "Fixed frets, a suldae strike, or another generic zither do not replace the gayageum system."}
+      ],
+      "reject_substitutes": ["geomungo_fixed_frets_and_suldae", "generic_bridge_zither_without_hand_roles", "decorative_background_instrument", "hidden_bridge_geometry", "costume_only_korean_context"]
+    },
+    {
+      "id": "geomungo_fretted_suldae_zither",
+      "category": "instrument_korean_fretted_zither",
+      "activation": {
+        "exact_terms": ["geomungo", "geomungo performance", "geomungo player", "거문고", "거문고 연주", "거문고 연주자"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A long Korean horizontal zither with a small set of strings, prominent fixed frets called gwae plus movable bridges, and a short suldae stick used by the right hand to strike or pluck. The fretted playing surface and suldae action distinguish it from a gayageum's many individual bridges and bare-finger pluck-press relation.",
+        "paraphrase_examples": ["고정 괘와 안족이 함께 있고 오른손 술대로 현을 타는 거문고", "a seated performer striking a long fretted Korean zither with a short suldae"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["horizontal_zither_form", "fixed_frets_and_bridges", "suldae_action", "seated_support_relation", "gayageum_confound_control"],
+          "groups": [
+            {"id": "horizontal_zither_form", "any_terms": ["long horizontal wooden zither with a small set of strings", "긴 장방형 목재 현악기"]},
+            {"id": "fixed_frets_and_bridges", "any_terms": ["prominent fixed gwae frets coexist with movable bridges", "고정 괘와 이동식 안족이 함께 보임"]},
+            {"id": "suldae_action", "any_terms": ["the right hand uses a short suldae stick on the strings", "오른손 술대로 현을 타격하거나 뜯음"]},
+            {"id": "seated_support_relation", "any_terms": ["the fretted zither rests horizontally before the seated performer", "앉은 연주자 앞 수평 지지"]},
+            {"id": "gayageum_confound_control", "any_terms": ["bare-finger plucking across many individual bridges does not substitute", "가야금식 다수 안족과 맨손 뜯기로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a gayageum with many individual bridges and no suldae", "a generic board zither without fixed frets", "a stick held away from the strings", "Korean costume without diagnostic instrument structure"]
+      },
+      "concept_candidate": {"concept_terms": ["horizontal Korean fretted zither", "fixed gwae frets", "movable bridges", "right-hand suldae", "seated performance", "not gayageum finger plucking"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["geomungo"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the complete horizontal zither, fixed frets, movable bridges, suldae-to-string action, and seated support together; keep the right hand and playing surface large enough for native review.",
+      "required_evidence_fields": ["zither_form_phrase", "fret_bridge_phrase", "suldae_phrase", "support_phrase", "gayageum_confound_phrase"],
+      "evidence_requirements": {
+        "zither_form_phrase": {"min_content_words": 8, "must_mention_any": ["long horizontal wooden zither with a small set of strings"]},
+        "fret_bridge_phrase": {"min_content_words": 7, "must_mention_any": ["prominent fixed gwae frets coexist with movable bridges"]},
+        "suldae_phrase": {"min_content_words": 9, "must_mention_any": ["the right hand uses a short suldae stick on the strings"]},
+        "support_phrase": {"min_content_words": 9, "must_mention_any": ["the fretted zither rests horizontally before the seated performer"]},
+        "gayageum_confound_phrase": {"min_content_words": 9, "must_mention_any": ["bare-finger plucking across many individual bridges does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_geomungo_horizontal_zither", "review_scale": "thumbnail", "description": "A long horizontal Korean zither is the dominant playable object."},
+        {"id": "vo_instrument_geomungo_fixed_frets", "review_scale": "native", "description": "Prominent fixed gwae frets and separate movable bridges coexist on the playing surface."},
+        {"id": "vo_instrument_geomungo_suldae_contact", "review_scale": "both", "description": "A short suldae in the right hand visibly meets or is about to meet the strings."},
+        {"id": "vo_instrument_geomungo_seated_support", "review_scale": "thumbnail", "description": "The instrument rests horizontally before a seated performer at a plausible scale."},
+        {"id": "vo_instrument_geomungo_not_gayageum", "review_scale": "native", "description": "Many uniform movable bridges and bare-finger-only gayageum playing do not substitute."}
+      ],
+      "reject_substitutes": ["gayageum_many_anjok_bridges", "generic_zither_without_fixed_frets", "suldae_not_in_string_relation", "decorative_background_instrument", "costume_only_korean_context"]
+    },
+    {
+      "id": "alto_tenor_saxophone_reed_conical_body",
+      "category": "instrument_single_reed_keyed_wind",
+      "activation": {
+        "exact_terms": ["alto saxophone", "tenor saxophone", "alto sax", "tenor sax", "알토 색소폰", "테너 색소폰", "알토 색소폰 연주", "테너 색소폰 연주"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A curved alto or tenor saxophone with a single-reed mouthpiece and ligature, dense keyed metal body, conical tube, and flared bell. Lip contact at the reed mouthpiece and both hands on key clusters distinguish it from lip-reed brass instruments such as a trumpet.",
+        "paraphrase_examples": ["싱글 리드 마우스피스와 키가 달린 굽은 금속관 색소폰", "a curved keyed metal wind instrument played through a reed mouthpiece"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["curved_conical_body", "single_reed_mouthpiece", "dense_keywork", "embouchure_hand_relation", "trumpet_confound_control"],
+          "groups": [
+            {"id": "curved_conical_body", "any_terms": ["curved conical metal body ends in a flared bell", "굽은 원추형 금속관과 벌어진 벨"]},
+            {"id": "single_reed_mouthpiece", "any_terms": ["single reed and ligature sit on the mouthpiece", "마우스피스의 싱글 리드와 리가처"]},
+            {"id": "dense_keywork", "any_terms": ["dense keywork runs along the metal body", "금속 몸체를 따라 조밀한 키 장치"]},
+            {"id": "embouchure_hand_relation", "any_terms": ["the lips seal the reed mouthpiece while both hands operate keys", "입술은 리드 마우스피스에 닿고 양손은 키를 조작"]},
+            {"id": "trumpet_confound_control", "any_terms": ["a cup mouthpiece and three piston valves do not substitute", "컵 마우스피스와 세 피스톤 밸브로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a trumpet with cup mouthpiece and piston valves", "a brass-colored prop without reed or keywork", "a straight soprano saxophone outside this narrow profile", "a clarinet with a straight cylindrical body"]
+      },
+      "concept_candidate": {"concept_terms": ["curved alto or tenor saxophone", "single reed and ligature", "dense metal keywork", "conical body and flared bell", "reed embouchure", "not piston trumpet"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["alto or tenor saxophone"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the mouthpiece and reed, both hands on the keywork, curved body, and bell visible in one medium or three-quarter frame; control metal reflections so the key system remains legible.",
+      "required_evidence_fields": ["curved_body_phrase", "reed_phrase", "keywork_phrase", "embouchure_phrase", "trumpet_confound_phrase"],
+      "evidence_requirements": {
+        "curved_body_phrase": {"min_content_words": 8, "must_mention_any": ["curved conical metal body ends in a flared bell"]},
+        "reed_phrase": {"min_content_words": 8, "must_mention_any": ["single reed and ligature sit on the mouthpiece"]},
+        "keywork_phrase": {"min_content_words": 7, "must_mention_any": ["dense keywork runs along the metal body"]},
+        "embouchure_phrase": {"min_content_words": 10, "must_mention_any": ["the lips seal the reed mouthpiece while both hands operate keys"]},
+        "trumpet_confound_phrase": {"min_content_words": 9, "must_mention_any": ["a cup mouthpiece and three piston valves do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_sax_curved_conical_body", "review_scale": "thumbnail", "description": "The curved keyed body and flared bell read as an alto or tenor saxophone silhouette."},
+        {"id": "vo_instrument_sax_single_reed", "review_scale": "native", "description": "A single reed and ligature are visibly attached to the mouthpiece."},
+        {"id": "vo_instrument_sax_dense_keywork", "review_scale": "both", "description": "Dense linked keywork remains legible along the metal body."},
+        {"id": "vo_instrument_sax_playing_contact", "review_scale": "both", "description": "Lips meet the reed mouthpiece and both hands operate plausible key regions."},
+        {"id": "vo_instrument_sax_not_trumpet", "review_scale": "native", "description": "A cup mouthpiece, three piston valves, or a generic brass prop does not substitute."}
+      ],
+      "reject_substitutes": ["piston_valve_trumpet", "generic_brass_prop", "straight_soprano_saxophone", "clarinet_cylindrical_body", "hidden_reed_and_keywork"]
+    },
+    {
+      "id": "modern_piston_trumpet_three_valve",
+      "category": "instrument_lip_reed_valved_brass",
+      "activation": {
+        "exact_terms": ["trumpet", "modern trumpet", "piston trumpet", "three-valve trumpet", "trumpet performance", "트럼펫", "피스톤 트럼펫", "3밸브 트럼펫", "트럼펫 연주"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A modern piston trumpet with compact folded brass tubing, a cup mouthpiece, three aligned piston valves, tuning slides, and a forward flared bell. Lip buzz at the cup mouthpiece and valve-finger contact distinguish it from reed-driven keyed winds such as a saxophone.",
+        "paraphrase_examples": ["컵 마우스피스와 세 피스톤 밸브가 있는 현대 트럼펫", "a compact valved brass instrument played with lip buzz and three valve fingers"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["compact_tubing_bell", "cup_mouthpiece", "three_piston_valves", "lip_valve_relation", "saxophone_confound_control"],
+          "groups": [
+            {"id": "compact_tubing_bell", "any_terms": ["compact folded brass tubing leads to a forward flared bell", "접힌 황동관과 전방 플레어 벨"]},
+            {"id": "cup_mouthpiece", "any_terms": ["a cup mouthpiece meets the player's lips", "입술에 닿는 컵 마우스피스"]},
+            {"id": "three_piston_valves", "any_terms": ["three aligned piston valves sit beneath the right-hand fingers", "오른손 아래 나란한 세 피스톤 밸브"]},
+            {"id": "lip_valve_relation", "any_terms": ["lip buzz and valve presses visibly cooperate", "입술 버징과 밸브 누르기가 함께 보임"]},
+            {"id": "saxophone_confound_control", "any_terms": ["a reed mouthpiece and dense side keywork do not substitute", "리드 마우스피스와 색소폰 키워크로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a saxophone with reed and dense keywork", "a valveless bugle", "a rotary-valve historical trumpet outside this profile", "a generic gold tube held away from the lips"]
+      },
+      "concept_candidate": {"concept_terms": ["modern piston trumpet", "cup mouthpiece", "three aligned valves", "compact folded brass tubing", "forward bell", "not reed saxophone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["modern three-valve trumpet"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the cup mouthpiece at the lips, right-hand fingers on all three piston valves, supporting left hand, folded tube, and forward bell in one reflection-controlled frame.",
+      "required_evidence_fields": ["tubing_bell_phrase", "mouthpiece_phrase", "valve_phrase", "playing_relation_phrase", "saxophone_confound_phrase"],
+      "evidence_requirements": {
+        "tubing_bell_phrase": {"min_content_words": 9, "must_mention_any": ["compact folded brass tubing leads to a forward flared bell"]},
+        "mouthpiece_phrase": {"min_content_words": 7, "must_mention_any": ["a cup mouthpiece meets the player's lips"]},
+        "valve_phrase": {"min_content_words": 10, "must_mention_any": ["three aligned piston valves sit beneath the right-hand fingers"]},
+        "playing_relation_phrase": {"min_content_words": 7, "must_mention_any": ["lip buzz and valve presses visibly cooperate"]},
+        "saxophone_confound_phrase": {"min_content_words": 9, "must_mention_any": ["a reed mouthpiece and dense side keywork do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_trumpet_compact_tubing_bell", "review_scale": "thumbnail", "description": "Compact folded tubing and a forward flared bell establish a modern trumpet silhouette."},
+        {"id": "vo_instrument_trumpet_cup_mouthpiece", "review_scale": "native", "description": "A cup mouthpiece visibly meets the lips."},
+        {"id": "vo_instrument_trumpet_three_valves", "review_scale": "both", "description": "Three aligned piston valves remain visible under the right-hand fingers."},
+        {"id": "vo_instrument_trumpet_playing_contact", "review_scale": "both", "description": "Lip embouchure, right-hand valve contact, and left-hand support form a coherent playing relation."},
+        {"id": "vo_instrument_trumpet_not_sax", "review_scale": "native", "description": "A reed mouthpiece, dense saxophone keywork, or generic brass tube does not substitute."}
+      ],
+      "reject_substitutes": ["reed_saxophone", "valveless_bugle", "rotary_valve_historical_trumpet", "generic_brass_tube", "mouthpiece_away_from_lips"]
+    },
+    {
+      "id": "cello_endpin_seated_bowed",
+      "category": "instrument_bowed_string_floor_supported",
+      "activation": {
+        "exact_terms": ["cello", "violoncello", "cello performance", "cello player", "첼로", "첼로 연주", "첼리스트"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A cello-sized bowed string instrument held upright between a seated player's knees, supported by an endpin on the floor. The right hand bows the strings while the left hand fingers the neck; the seated between-knees relation and medium floor-supported scale distinguish it from violin-family shoulder support and the much larger double bass.",
+        "paraphrase_examples": ["앉은 연주자의 무릎 사이에서 엔드핀으로 바닥 지지되는 첼로", "an upright bowed string body between the knees with its endpin on the floor"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["cello_body_scale", "floor_endpin", "seated_between_knees", "bow_finger_relation", "double_bass_confound_control"],
+          "groups": [
+            {"id": "cello_body_scale", "any_terms": ["a cello-sized waisted wooden body stands upright", "중형의 잘록한 목재 공명통"]},
+            {"id": "floor_endpin", "any_terms": ["a visible endpin reaches from the body to the floor", "공명통 아래 엔드핀이 바닥에 닿음"]},
+            {"id": "seated_between_knees", "any_terms": ["the body rests upright between the seated player's knees", "앉은 연주자의 무릎 사이에 세움"]},
+            {"id": "bow_finger_relation", "any_terms": ["the right-hand bow crosses the strings while the left hand fingers the neck", "오른손 활과 왼손 지판 운지"]},
+            {"id": "double_bass_confound_control", "any_terms": ["human-height double-bass scale and standing support do not substitute", "사람 키의 더블베이스와 선 자세로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a human-height double bass beside a standing player", "a violin under the chin", "a cello body with no floor endpin", "a seated portrait with a decorative string instrument behind the knees"]
+      },
+      "concept_candidate": {"concept_terms": ["cello-sized upright body", "seated between knees", "floor endpin", "right-hand bow", "left-hand fingering", "not double bass scale"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["cello"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a seated three-quarter or full-body frame showing the complete cello body, both knees, endpin-to-floor contact, bow-to-string contact, and left-hand fingering together.",
+      "required_evidence_fields": ["body_scale_phrase", "endpin_phrase", "seated_support_phrase", "bow_finger_phrase", "double_bass_confound_phrase"],
+      "evidence_requirements": {
+        "body_scale_phrase": {"min_content_words": 8, "must_mention_any": ["a cello-sized waisted wooden body stands upright"]},
+        "endpin_phrase": {"min_content_words": 10, "must_mention_any": ["a visible endpin reaches from the body to the floor"]},
+        "seated_support_phrase": {"min_content_words": 10, "must_mention_any": ["the body rests upright between the seated player's knees"]},
+        "bow_finger_phrase": {"min_content_words": 12, "must_mention_any": ["the right-hand bow crosses the strings while the left hand fingers the neck"]},
+        "double_bass_confound_phrase": {"min_content_words": 9, "must_mention_any": ["human-height double-bass scale and standing support do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_cello_body_scale", "review_scale": "thumbnail", "description": "The upright waisted body reads at cello scale relative to the seated adult."},
+        {"id": "vo_instrument_cello_floor_endpin", "review_scale": "both", "description": "A coherent endpin connects the cello body to the floor."},
+        {"id": "vo_instrument_cello_between_knees", "review_scale": "thumbnail", "description": "The body sits between the player's knees in a stable seated pose."},
+        {"id": "vo_instrument_cello_bow_fingering", "review_scale": "both", "description": "The bow crosses the strings while the opposite hand fingers the neck."},
+        {"id": "vo_instrument_cello_not_double_bass", "review_scale": "native", "description": "Human-height double-bass scale, standing support, violin support, or a decorative prop does not substitute."}
+      ],
+      "reject_substitutes": ["human_height_double_bass", "shoulder_held_violin", "missing_endpin", "instrument_behind_knees", "bow_not_touching_strings"]
+    },
+    {
+      "id": "double_bass_human_scale_floor_supported",
+      "category": "instrument_bowed_string_human_scale",
+      "activation": {
+        "exact_terms": ["double bass", "upright bass instrument", "orchestral contrabass", "double bass performance", "더블베이스", "콘트라베이스", "더블베이스 연주", "콘트라베이스 연주"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A human-scale upright double bass with a large waisted body, long neck rising near or above the player's head, and an endpin bearing weight on the floor. The performer stands or uses a high stool while bowing or plucking; this scale and support relation distinguish it from a cello held between the knees of a conventionally seated player.",
+        "paraphrase_examples": ["연주자 키에 가까운 대형 공명통과 긴 넥을 바닥 엔드핀으로 세운 더블베이스", "a standing performer beside a human-scale upright bass, bowing or plucking its strings"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["human_scale_body", "long_neck", "floor_endpin", "standing_play_relation", "cello_confound_control"],
+          "groups": [
+            {"id": "human_scale_body", "any_terms": ["a human-scale waisted wooden body stands upright", "사람 키에 가까운 대형 목재 공명통"]},
+            {"id": "long_neck", "any_terms": ["the long neck rises near or above the player's head", "긴 넥이 연주자의 머리 높이까지 올라감"]},
+            {"id": "floor_endpin", "any_terms": ["a load-bearing endpin anchors the large body to the floor", "하중을 받는 엔드핀이 바닥에 닿음"]},
+            {"id": "standing_play_relation", "any_terms": ["the standing or high-stool performer bows or plucks the strings", "서거나 높은 의자에서 활 또는 손가락으로 연주"]},
+            {"id": "cello_confound_control", "any_terms": ["a medium cello held between conventionally seated knees does not substitute", "무릎 사이 중형 첼로로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a cello between the knees of a seated player", "a bass guitar on a strap", "a large decorative case", "perspective enlargement of a small string instrument"]
+      },
+      "concept_candidate": {"concept_terms": ["human-scale double bass", "large upright waisted body", "long neck above shoulder level", "floor endpin", "standing or high-stool playing", "not cello"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["double bass"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide vertical frame that preserves head-to-endpin scale, full body and neck, floor contact, and one coherent bowing or plucking action without perspective exaggeration.",
+      "required_evidence_fields": ["human_scale_phrase", "long_neck_phrase", "endpin_phrase", "play_relation_phrase", "cello_confound_phrase"],
+      "evidence_requirements": {
+        "human_scale_phrase": {"min_content_words": 8, "must_mention_any": ["a human-scale waisted wooden body stands upright"]},
+        "long_neck_phrase": {"min_content_words": 10, "must_mention_any": ["the long neck rises near or above the player's head"]},
+        "endpin_phrase": {"min_content_words": 10, "must_mention_any": ["a load-bearing endpin anchors the large body to the floor"]},
+        "play_relation_phrase": {"min_content_words": 10, "must_mention_any": ["the standing or high-stool performer bows or plucks the strings"]},
+        "cello_confound_phrase": {"min_content_words": 10, "must_mention_any": ["a medium cello held between conventionally seated knees does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_double_bass_human_scale", "review_scale": "thumbnail", "description": "The upright body reads near human scale rather than as a medium cello."},
+        {"id": "vo_instrument_double_bass_long_neck", "review_scale": "both", "description": "The long neck rises near or above the player's head at plausible perspective."},
+        {"id": "vo_instrument_double_bass_floor_endpin", "review_scale": "both", "description": "A coherent load-bearing endpin connects the large body to the floor."},
+        {"id": "vo_instrument_double_bass_play_relation", "review_scale": "thumbnail", "description": "A standing or high-stool performer visibly bows or plucks the strings."},
+        {"id": "vo_instrument_double_bass_not_cello", "review_scale": "native", "description": "A seated between-knees cello, bass guitar, case, or perspective-enlarged small instrument does not substitute."}
+      ],
+      "reject_substitutes": ["seated_between_knees_cello", "strap_bass_guitar", "large_instrument_case", "perspective_enlarged_small_string", "missing_floor_support"]
+    },
+    {
+      "id": "vibraphone_metal_bars_motor_pedal",
+      "category": "instrument_keyboard_percussion_metal",
+      "activation": {
+        "exact_terms": ["vibraphone", "vibes instrument", "vibraphone performance", "비브라폰", "비브라폰 연주", "비브라폰 연주자"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A vibraphone with two rows of graduated metal bars, vertical resonator tubes containing visible rotating-fan assemblies, a damper pedal and frame, and mallets striking the bars. Metal bars plus motor-fan and pedal evidence distinguish it from wooden-bar xylophones and marimbas.",
+        "paraphrase_examples": ["금속 건반 아래 공명관과 회전 팬, 댐퍼 페달이 있는 비브라폰", "a standing player using mallets and a pedal on a metal-bar keyboard percussion instrument"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["metal_bar_keyboard", "resonator_fans", "damper_pedal", "mallet_play_relation", "wood_bar_confound_control"],
+          "groups": [
+            {"id": "metal_bar_keyboard", "any_terms": ["two rows of graduated metal bars form the keyboard", "두 줄의 음정별 금속 바"]},
+            {"id": "resonator_fans", "any_terms": ["vertical resonator tubes show fan or rotor assemblies beneath the bars", "바 아래 공명관과 팬 또는 로터"]},
+            {"id": "damper_pedal", "any_terms": ["a damper pedal connects to the wheeled frame", "프레임 아래 댐퍼 페달"]},
+            {"id": "mallet_play_relation", "any_terms": ["mallets contact the metal bars while one foot controls the pedal", "말렛 타격과 발 페달 조작"]},
+            {"id": "wood_bar_confound_control", "any_terms": ["wooden bars without motor fans and a pedal do not substitute", "목재 바만 있는 실로폰이나 마림바로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a wooden xylophone with no pedal", "a marimba with deep resonators but no motor fans", "an electronic keyboard", "metal bars cropped away from pedal and resonators"]
+      },
+      "concept_candidate": {"concept_terms": ["vibraphone metal bars", "two-row keyboard layout", "resonator fan assemblies", "damper pedal", "mallet-and-foot action", "not wooden xylophone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["vibraphone"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a three-quarter standing frame showing both metal-bar rows, resonators and fan assemblies, pedal-to-foot relation, and mallet contact together; prevent reflections from erasing the bar material.",
+      "required_evidence_fields": ["metal_bar_phrase", "resonator_fan_phrase", "pedal_phrase", "mallet_pedal_phrase", "xylophone_confound_phrase"],
+      "evidence_requirements": {
+        "metal_bar_phrase": {"min_content_words": 9, "must_mention_any": ["two rows of graduated metal bars form the keyboard"]},
+        "resonator_fan_phrase": {"min_content_words": 10, "must_mention_any": ["vertical resonator tubes show fan or rotor assemblies beneath the bars"]},
+        "pedal_phrase": {"min_content_words": 8, "must_mention_any": ["a damper pedal connects to the wheeled frame"]},
+        "mallet_pedal_phrase": {"min_content_words": 11, "must_mention_any": ["mallets contact the metal bars while one foot controls the pedal"]},
+        "xylophone_confound_phrase": {"min_content_words": 10, "must_mention_any": ["wooden bars without motor fans and a pedal do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_vibraphone_metal_bars", "review_scale": "thumbnail", "description": "Two rows of graduated metal bars establish a vibraphone keyboard surface."},
+        {"id": "vo_instrument_vibraphone_resonator_fans", "review_scale": "native", "description": "Vertical resonators and fan or rotor assemblies are visibly coherent beneath the bars."},
+        {"id": "vo_instrument_vibraphone_damper_pedal", "review_scale": "both", "description": "A damper pedal is connected to the frame and available to the performer's foot."},
+        {"id": "vo_instrument_vibraphone_mallet_pedal_action", "review_scale": "both", "description": "Mallet-to-bar contact and pedal control occur as one playable action."},
+        {"id": "vo_instrument_vibraphone_not_xylophone", "review_scale": "native", "description": "Wooden bars, absent fans/pedal, a marimba, or an electronic keyboard do not substitute."}
+      ],
+      "reject_substitutes": ["wooden_bar_xylophone", "marimba_without_motor_fans", "electronic_keyboard", "cropped_pedal_and_resonators", "mallets_not_contacting_bars"]
+    },
+    {
+      "id": "xylophone_wooden_bar_resonator",
+      "category": "instrument_keyboard_percussion_wood",
+      "activation": {
+        "exact_terms": ["xylophone", "orchestral xylophone", "xylophone performance", "실로폰", "오케스트라 실로폰", "실로폰 연주"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An orchestral xylophone with two rows of graduated wooden bars on a frame, compact resonators beneath, and hard mallets striking the bars. Visible wood grain and the absence of a vibraphone's metal bars, motor fans, and damper pedal distinguish the instrument.",
+        "paraphrase_examples": ["두 줄의 목재 바를 단단한 말렛으로 치는 오케스트라 실로폰", "a wooden-bar keyboard percussion instrument with compact resonators"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["wooden_bar_keyboard", "graduated_layout", "compact_resonators", "mallet_contact", "vibraphone_confound_control"],
+          "groups": [
+            {"id": "wooden_bar_keyboard", "any_terms": ["two rows of wooden bars show visible grain", "나뭇결이 보이는 두 줄의 목재 바"]},
+            {"id": "graduated_layout", "any_terms": ["the bars graduate from longer low notes to shorter high notes", "길이가 단계적으로 변하는 음정 바"]},
+            {"id": "compact_resonators", "any_terms": ["compact resonators sit directly beneath the wooden bars", "목재 바 바로 아래의 비교적 짧은 공명관"]},
+            {"id": "mallet_contact", "any_terms": ["hard mallets visibly strike the wooden bars", "단단한 말렛이 목재 바에 닿음"]},
+            {"id": "vibraphone_confound_control", "any_terms": ["metal bars, motor fans, and a damper pedal do not substitute", "금속 바와 모터 팬 및 댐퍼 페달이 없음"]}
+          ]
+        },
+        "contrast_examples": ["a vibraphone with metal bars and pedal", "a marimba with much deeper resonators", "a toy rainbow glockenspiel", "wooden planks without a chromatic keyboard layout"]
+      },
+      "concept_candidate": {"concept_terms": ["orchestral xylophone", "two rows of wooden bars", "visible wood grain", "compact resonators", "hard mallet strike", "not vibraphone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["orchestral xylophone"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the complete two-row wooden keyboard, graduated bar lengths, compact resonators, and mallet contact in one reflection-free three-quarter frame.",
+      "required_evidence_fields": ["wood_bar_phrase", "graduated_phrase", "resonator_phrase", "mallet_phrase", "vibraphone_confound_phrase"],
+      "evidence_requirements": {
+        "wood_bar_phrase": {"min_content_words": 8, "must_mention_any": ["two rows of wooden bars show visible grain"]},
+        "graduated_phrase": {"min_content_words": 11, "must_mention_any": ["the bars graduate from longer low notes to shorter high notes"]},
+        "resonator_phrase": {"min_content_words": 9, "must_mention_any": ["compact resonators sit directly beneath the wooden bars"]},
+        "mallet_phrase": {"min_content_words": 8, "must_mention_any": ["hard mallets visibly strike the wooden bars"]},
+        "vibraphone_confound_phrase": {"min_content_words": 10, "must_mention_any": ["metal bars, motor fans, and a damper pedal do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_xylophone_wooden_bars", "review_scale": "thumbnail", "description": "Two rows of wooden bars with visible grain establish the xylophone surface."},
+        {"id": "vo_instrument_xylophone_graduated_layout", "review_scale": "both", "description": "Bar lengths form a plausible graduated chromatic keyboard layout."},
+        {"id": "vo_instrument_xylophone_compact_resonators", "review_scale": "native", "description": "Compact resonators sit coherently beneath the wooden bars."},
+        {"id": "vo_instrument_xylophone_mallet_contact", "review_scale": "both", "description": "Hard mallets visibly contact the wooden bars with plausible hand anatomy."},
+        {"id": "vo_instrument_xylophone_not_vibraphone", "review_scale": "native", "description": "Metal bars, motor fans, a damper pedal, deep marimba resonators, or a toy substitute do not pass."}
+      ],
+      "reject_substitutes": ["metal_bar_vibraphone", "deep_resonator_marimba", "toy_rainbow_glockenspiel", "wood_planks_without_keyboard_layout", "mallets_not_contacting_bars"]
+    },
+    {
+      "id": "theremin_dual_antenna_noncontact",
+      "category": "instrument_electronic_noncontact_control",
+      "activation": {
+        "exact_terms": ["theremin", "etherwave theremin", "theremin performance", "theremin player", "테레민", "테레민 연주", "테레민 연주자"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A powered theremin cabinet with one straight pitch antenna and one loop-shaped volume antenna. The performer keeps two separated hands suspended in the electromagnetic fields without touching the instrument, one hand controlling pitch distance and the other volume distance; this dual-antenna noncontact relation distinguishes it from a MIDI controller or generic gesture sensor.",
+        "paraphrase_examples": ["수직 피치 안테나와 루프형 볼륨 안테나 사이에서 두 손을 비접촉으로 움직이는 테레민", "two separated hands shape pitch and volume in air around distinct antennas"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["powered_cabinet", "two_antenna_shapes", "separated_hand_fields", "noncontact_relation", "controller_confound_control"],
+          "groups": [
+            {"id": "powered_cabinet", "any_terms": ["a powered theremin cabinet connects to an audible output system", "전원과 출력 장치에 연결된 테레민 본체"]},
+            {"id": "two_antenna_shapes", "any_terms": ["one straight pitch antenna and one loop-shaped volume antenna", "수직 피치 안테나 하나와 루프형 볼륨 안테나 하나"]},
+            {"id": "separated_hand_fields", "any_terms": ["the two hands occupy separate pitch and volume fields", "두 손이 서로 다른 피치와 볼륨 영역에 놓임"]},
+            {"id": "noncontact_relation", "any_terms": ["both hands remain visibly suspended without touching the antennas or cabinet", "손이 안테나와 본체에 닿지 않음"]},
+            {"id": "controller_confound_control", "any_terms": ["keys, pads, a single sensor, or touching gestures do not substitute", "건반 패드 단일 센서 접촉 제스처로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a MIDI keyboard controller touched by both hands", "a single antenna gesture sensor", "hands touching the theremin cabinet", "two antennas present while the performer plays an unrelated instrument"]
+      },
+      "concept_candidate": {"concept_terms": ["powered theremin cabinet", "straight pitch antenna", "loop volume antenna", "separate hand fields", "visible noncontact control", "not MIDI controller"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["theremin"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a medium or three-quarter frame that includes the cabinet, both differently shaped antennas, both separated hands and visible air gaps, plus a plausible power/output connection.",
+      "required_evidence_fields": ["powered_cabinet_phrase", "antenna_phrase", "separate_fields_phrase", "noncontact_phrase", "controller_confound_phrase"],
+      "evidence_requirements": {
+        "powered_cabinet_phrase": {"min_content_words": 9, "must_mention_any": ["a powered theremin cabinet connects to an audible output system"]},
+        "antenna_phrase": {"min_content_words": 10, "must_mention_any": ["one straight pitch antenna and one loop-shaped volume antenna"]},
+        "separate_fields_phrase": {"min_content_words": 9, "must_mention_any": ["the two hands occupy separate pitch and volume fields"]},
+        "noncontact_phrase": {"min_content_words": 11, "must_mention_any": ["both hands remain visibly suspended without touching the antennas or cabinet"]},
+        "controller_confound_phrase": {"min_content_words": 10, "must_mention_any": ["keys, pads, a single sensor, or touching gestures do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_theremin_powered_cabinet", "review_scale": "thumbnail", "description": "A distinct powered theremin cabinet and plausible output connection are visible."},
+        {"id": "vo_instrument_theremin_two_antennas", "review_scale": "both", "description": "One straight antenna and one loop-shaped antenna are both coherent and visible."},
+        {"id": "vo_instrument_theremin_separate_hand_fields", "review_scale": "thumbnail", "description": "The two hands occupy separate pitch and volume control regions."},
+        {"id": "vo_instrument_theremin_noncontact", "review_scale": "native", "description": "Clear air gaps separate both hands from antennas and cabinet."},
+        {"id": "vo_instrument_theremin_not_controller", "review_scale": "native", "description": "Keys, pads, touching gestures, a single sensor, or unrelated-instrument performance do not substitute."}
+      ],
+      "reject_substitutes": ["midi_keyboard_controller", "single_antenna_sensor", "hands_touching_cabinet", "unrelated_instrument_performance", "missing_power_or_output_relation"]
+    },
+    {
+      "id": "midi_controller_external_sound_source",
+      "category": "instrument_digital_control_interface",
+      "activation": {
+        "exact_terms": ["MIDI controller", "MIDI controller instrument", "MIDI keyboard controller", "pad MIDI controller", "MIDI controller performance", "미디 컨트롤러", "미디 키보드 컨트롤러", "패드 미디 컨트롤러", "미디 컨트롤러 연주"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A MIDI performance controller whose visible keys or pads, knobs and transport controls generate performance data for a separately visible computer, software instrument, or sound module. The performer touches the control surface and the connected external sound-producing destination remains legible; the controller is not represented as a self-contained acoustic or synthesizer sound source.",
+        "paraphrase_examples": ["건반이나 패드를 누르면 연결된 컴퓨터 소프트웨어 악기가 소리를 내는 MIDI 컨트롤러", "hands operating pads and knobs while a connected sound module is visibly active"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["control_surface", "data_controls", "external_destination", "touch_performance_relation", "theremin_confound_control"],
+          "groups": [
+            {"id": "control_surface", "any_terms": ["a keyboard or pad control surface is the primary interface", "건반 또는 패드형 제어면"]},
+            {"id": "data_controls", "any_terms": ["knobs, wheels, faders, or transport controls accompany the keys or pads", "노브 휠 페이더 트랜스포트 컨트롤"]},
+            {"id": "external_destination", "any_terms": ["a cable links the controller to a visible computer or sound module", "케이블이 컴퓨터나 외부 음원 모듈로 이어짐"]},
+            {"id": "touch_performance_relation", "any_terms": ["the performer's fingers press keys or pads while the external instrument responds", "손가락이 건반이나 패드를 누르고 외부 음원이 반응"]},
+            {"id": "theremin_confound_control", "any_terms": ["noncontact antenna fields and an autonomous synthesizer do not substitute", "테레민 비접촉 안테나나 독립 신시사이저로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a standalone synthesizer with no external destination", "a computer keyboard", "a theremin with noncontact antennas", "an unplugged controller photographed as a complete sound source"]
+      },
+      "concept_candidate": {"concept_terms": ["MIDI keyboard or pad controller", "performance controls", "visible data cable", "external computer or sound module", "finger contact", "not autonomous synthesizer"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["MIDI controller"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the touched keys or pads, secondary controls, complete cable path, and visible external computer or sound module together so the controller-to-sound-source relation is explicit.",
+      "required_evidence_fields": ["control_surface_phrase", "data_control_phrase", "external_destination_phrase", "touch_relation_phrase", "theremin_confound_phrase"],
+      "evidence_requirements": {
+        "control_surface_phrase": {"min_content_words": 10, "must_mention_any": ["a keyboard or pad control surface is the primary interface"]},
+        "data_control_phrase": {"min_content_words": 11, "must_mention_any": ["knobs, wheels, faders, or transport controls accompany the keys or pads"]},
+        "external_destination_phrase": {"min_content_words": 11, "must_mention_any": ["a cable links the controller to a visible computer or sound module"]},
+        "touch_relation_phrase": {"min_content_words": 12, "must_mention_any": ["the performer's fingers press keys or pads while the external instrument responds"]},
+        "theremin_confound_phrase": {"min_content_words": 9, "must_mention_any": ["noncontact antenna fields and an autonomous synthesizer do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_instrument_midi_control_surface", "review_scale": "thumbnail", "description": "A keyboard or pad controller is the primary interactive surface."},
+        {"id": "vo_instrument_midi_data_controls", "review_scale": "native", "description": "Plausible knobs, wheels, faders, or transport controls accompany the keys or pads."},
+        {"id": "vo_instrument_midi_external_destination", "review_scale": "both", "description": "A continuous cable path reaches a visible computer, software instrument, or sound module."},
+        {"id": "vo_instrument_midi_touch_action", "review_scale": "both", "description": "Fingers contact the controller while the external destination is visibly part of the performance."},
+        {"id": "vo_instrument_midi_not_theremin_or_synth", "review_scale": "native", "description": "A theremin, computer typing keyboard, unplugged controller, or autonomous synthesizer does not substitute."}
+      ],
+      "reject_substitutes": ["standalone_synthesizer", "computer_typing_keyboard", "theremin_noncontact_antennas", "unplugged_controller", "hidden_external_sound_destination"]
     }
   ]
 }

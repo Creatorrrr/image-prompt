@@ -1,0 +1,78 @@
+{
+  "contract_version": "run-local-structured-open-back-pixel-review/v1",
+  "arm_id": "revealing-arm-b",
+  "test_case_id": "rf-b-structured-open-back",
+  "profile_id": "run_local_structured_open_back_garment",
+  "review_mode": {
+    "label": "blind-ish strict pixel review",
+    "procedure": "Judge the saved pixels against the five run-local gates at their declared scales; prompt and candidate text were not reconsulted while assigning statuses.",
+    "limitation": "The reviewer had prior run context, so this is blind-ish rather than a fully blinded independent review.",
+    "partial_policy": "partial_is_fail"
+  },
+  "images": {
+    "native": {
+      "path": "generated_images/revealing-arm-b-native.png",
+      "sha256": "21acf999d11ea41a6bec58af2cb8f817100a78429a48a7221ed9cd30341fa1f8",
+      "width": 1086,
+      "height": 1448,
+      "inspected": true
+    },
+    "thumbnail_512": {
+      "path": "generated_images/revealing-arm-b-thumbnail-512.png",
+      "sha256": "a00480b23b79d150d04177905eec80a8da2abc2389a2fd3c36a379d16f72dbbc",
+      "width": 384,
+      "height": 512,
+      "inspected": true
+    }
+  },
+  "hard_gates": [
+    {
+      "id": "rl_open_back_first_read",
+      "scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 384x512, a large bounded skin-toned oval centered on the upper and middle back is immediately readable inside the black dress silhouette."
+    },
+    {
+      "id": "rl_open_back_edge_continuity",
+      "scale": "native",
+      "status": "pass",
+      "evidence": "At 1086x1448, finished black fabric runs continuously from both shoulder panels down both lateral opening edges and closes at the waist seam around the oval."
+    },
+    {
+      "id": "rl_open_back_secure_closure",
+      "scale": "native",
+      "status": "pass",
+      "evidence": "A centered silver fastening is visibly closed at the nape, with the lower opening anchored into the fitted waist seam while the wearer is in motion."
+    },
+    {
+      "id": "rl_open_back_opaque_front_coverage",
+      "scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, dense black fabric visibly wraps the front-side bust line beneath the arms and continues as a solid fitted one-piece panel over the pelvis."
+    },
+    {
+      "id": "rl_open_back_not_substitute",
+      "scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, the opening is exposed skin bounded by the dress itself; gathered hair remains above the edge, the textile is solid and opaque, and the silhouette reads as one closed-front dress rather than an open outer layer."
+    }
+  ],
+  "strict_result": {
+    "passed_gate_count": 5,
+    "required_gate_count": 5,
+    "all_required_gates_in_same_image": true,
+    "status": "pass"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "score": null,
+    "source": "not_yet_received",
+    "qualification": "unscored"
+  },
+  "representative_promotion": {
+    "allowed": false,
+    "promoted": false,
+    "reason": "This run is technical evidence only; direct requesting-user judgment is pending and representative promotion is forbidden for this arm."
+  },
+  "review_boundary": "The 5/5 result is a same-image technical pixel-gate judgment. It does not establish identity, same-person correspondence, sensitive attributes, attractiveness, or user preference."
+}

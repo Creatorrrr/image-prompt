@@ -1,0 +1,48 @@
+{
+  "contract_version": "photo-strict-pixel-review-set/v1",
+  "arm_id": "revealing-arm-e",
+  "test_case_id": "rf-e-sheer-optical-layering",
+  "profile_id": "sheer_garment_optical_layering",
+  "strict_policy": {
+    "partial_is_fail": true,
+    "all_five_gates_must_pass_in_one_saved_image": true,
+    "native_and_thumbnail_512_required": true,
+    "cross_attempt_gate_aggregation": false
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "safety_block",
+      "qualification": "blocked_unscored",
+      "image_path": null,
+      "image_sha256": null,
+      "hard_gates_scored": false,
+      "review_file": "pixel_review_attempt1.json"
+    },
+    {
+      "attempt": 2,
+      "status": "success",
+      "qualification": "pass_5_of_5_single_image",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-e/generated_images/attempt2/revealing-arm-e-attempt2.png",
+      "image_sha256": "bceb902f08a497859bcac03a27396df0d1f597e8741f013011e504632a9155ba",
+      "thumbnail_512_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-e/generated_images/attempt2/revealing-arm-e-attempt2-512.png",
+      "thumbnail_512_sha256": "5dfe5b7db470faf4940a14a3444daebb19b550dbbf89ac49c7f9bec02e5a9d95",
+      "hard_gate_pass_count": 5,
+      "hard_gate_total": 5,
+      "technical_qualified": true,
+      "review_file": "pixel_review_attempt2.json",
+      "audit_file": "pixel_review_audit_attempt2.json"
+    }
+  ],
+  "current_technical_status": "visual_technical_qualified",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending_unscored",
+    "score": null
+  },
+  "representative_promotion": {
+    "eligible": false,
+    "promoted": false,
+    "reason": "Technical 5/5 does not substitute for pending requesting-user judgment, and representative promotion is disabled for this test."
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-02-saxophone",
+  "profile_id": "alto_tenor_saxophone_reed_conical_body",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/result.png",
+  "image_sha256": "6da25453c09aad56508c8b6bdaf9bf66566e3d14a61e1b0d923de2bac8b6a769",
+  "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/thumbnail.png",
+  "thumbnail_sha256": "239a289f653f79d71ae6c894ddd4432073083f4bfb0f2f1ea819192db39bc5db",
+  "inspection_policy": {
+    "partial_is_fail": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true,
+    "reviewed_original": true,
+    "reviewed_thumbnail": true,
+    "reviewed_native_crops": true
+  },
+  "supplemental_crops": [
+    {
+      "purpose": "mouthpiece and embouchure inspection",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/mouthpiece-crop.png",
+      "sha256": "14142e08455abc314de52ecddf3e36c3bd78020eefca96f7da632920f3038ece"
+    },
+    {
+      "purpose": "dense keywork and both-hand contact inspection",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/keywork-crop.png",
+      "sha256": "a6a07ebe0337223791287e9746a21a6c6c7963cf0f0ef8bfb93b18d211029ec3"
+    },
+    {
+      "purpose": "native-scale single-reed and ligature inspection",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-02-saxophone/reed-native-crop.png",
+      "sha256": "0e1bb4da5bf3b5ffe0a00dc054eb3043a65dccfe087fc6e27392403ae4ca98bd"
+    }
+  ],
+  "hard_gate_order": [
+    "vo_instrument_sax_curved_conical_body",
+    "vo_instrument_sax_single_reed",
+    "vo_instrument_sax_dense_keywork",
+    "vo_instrument_sax_playing_contact",
+    "vo_instrument_sax_not_trumpet"
+  ],
+  "hard_gates": [
+    {
+      "id": "vo_instrument_sax_curved_conical_body",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 340 x 512 the hooked neck, long tapering keyed brass body, lower bow, and broad flared bell form an immediately recognizable alto-saxophone silhouette at plausible player scale."
+    },
+    {
+      "id": "vo_instrument_sax_single_reed",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "The black mouthpiece and gold ligature hardware are clear in the 260 x 180 native crop, but a separately identifiable tan cane single reed cannot be resolved with confidence between the lower lip, mouthpiece, and ligature. Ligature-only or ambiguous reed evidence is partial and therefore fails."
+    },
+    {
+      "id": "vo_instrument_sax_dense_keywork",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The thumbnail retains a dense line of side keys; the native keywork crop resolves multiple linked rods, pearl touches, pads, key cups, guards, and levers along the metal body."
+    },
+    {
+      "id": "vo_instrument_sax_playing_contact",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The lips visibly close around the reed-mouthpiece region, while the performer's left hand occupies the upper key stack and right hand the lower stack with several fingertips contacting plausible pearl/key regions in the same frame."
+    },
+    {
+      "id": "vo_instrument_sax_not_trumpet",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Native inspection shows a curved black reed-style mouthpiece on a crook, extensive side keywork, a tapering bowed body, and a large bell; there is no cup mouthpiece or three-piston valve cluster, so the object does not read as a modern piston trumpet or generic brass prop."
+    }
+  ],
+  "gate_summary": {
+    "pass_count": 4,
+    "fail_count": 1,
+    "total": 5,
+    "overall_status": "fail",
+    "qualification": "not_promotable_due_to_single_reed_gate"
+  },
+  "reference_appearance_continuity": {
+    "status": "pass",
+    "scope": "visible appearance only",
+    "evidence": "The generated original adult performer carries the scoped visible cues of long dark center-parted wavy hair, softly defined eye makeup, muted rose lip color, and a luminous natural skin-surface finish while adapting gaze and mouth position to active playing.",
+    "claim_boundaries_respected": true,
+    "claims_not_made": [
+      "biometric identity",
+      "same-person identity",
+      "ethnicity or nationality",
+      "health",
+      "attractiveness",
+      "personality",
+      "protected traits"
+    ]
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "image_call_count": 1,
+  "retry_count": 0
+}

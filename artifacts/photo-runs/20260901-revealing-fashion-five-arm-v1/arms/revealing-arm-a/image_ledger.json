@@ -1,0 +1,49 @@
+{
+  "schema_version": "photo-image-call-ledger/v1",
+  "arm_id": "revealing-arm-a",
+  "pack_id": "c7cca799903d3865",
+  "runtime_prompt_id": "76fdafc442f6e733",
+  "source_authorial_core_file_sha256": "5e9400a47498edc4439e42b23ab0dbfc82845875e99bfd0cad4b5692120f9410",
+  "source_authorial_core_canonical_sha256": "cfe7bbfebbb8588e0d20e89be5a4e26045cf03f7f536341770d8410c50642f11",
+  "source_intent_lock_sha256": "f26467fb23dc4dea9f55e8c1912d8989e814b6c1b0df4d7322e6a841e68fc420",
+  "effective_visual_contract_sha256": "3022210e668bba8ac17905565c96a353306a5711d5b64c27741f0e8bce20d5f9",
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "actual_image_call_count": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "tool": "built_in_image_gen",
+      "reference_count": 1,
+      "outcome": "blocked_unscored",
+      "output_path": null,
+      "output_sha256": null,
+      "block_code": "moderation_blocked",
+      "block_stage": "output",
+      "retry_of": null
+    },
+    {
+      "attempt": 2,
+      "tool": "built_in_image_gen",
+      "runtime_prompt_id": "7947ea49c3e8ffbc",
+      "ledger_prompt_id": "e5f3a6559b332860",
+      "ledger_run_id": "d5165b3870cd3f5e",
+      "reference_count": 1,
+      "outcome": "success",
+      "output_path": "generated_images/attempt2/revealing-armor-native.png",
+      "output_sha256": "c58ba503431d8e139e344d29e339c4f7c96a10dd727b459569ef6893f64e7b0a",
+      "thumbnail_path": "generated_images/attempt2/revealing-armor-512.png",
+      "thumbnail_sha256": "634f78d91863a5fbb05387d7c27d63cb6e90488d8264924c8cc805ede0c71707",
+      "retry_of": "attempt_1_blocked_unscored",
+      "recovery_policy_sha256": "de465cb45bed4f03f4f68b94c337ccde28486afd594d9f8bee15663166b5d8a9"
+    }
+  ],
+  "saved_image_run_record_created": true,
+  "saved_image_run_ledger": "runs/image_runs.ndjson",
+  "saved_image_run_manifest": "run_manifest_recorder_attempt2.json",
+  "attempt_1_record_preserved_as": "image_ledger_attempt1.json",
+  "authorized_recovery_attempt_performed": true,
+  "further_retry_performed": false,
+  "further_retry_allowed": false,
+  "paid_api_fallback_performed": false,
+  "final_status": "technical_pass_user_pending"
+}

@@ -1,0 +1,73 @@
+{
+  "contract_version": "photo-strict-pixel-review/v1",
+  "arm_id": "revealing-arm-e",
+  "test_case_id": "rf-e-sheer-optical-layering",
+  "profile_id": "sheer_garment_optical_layering",
+  "image_path": null,
+  "image_sha256": null,
+  "review_status": "not_run_blocked_unscored",
+  "strict_policy": {
+    "all_gates_must_pass_in_one_saved_image": true,
+    "partial_is_fail": true,
+    "native_review_required": true,
+    "thumbnail_512_review_required": true,
+    "cross_attempt_component_aggregation_allowed": false
+  },
+  "review_scales": {
+    "native": {
+      "status": "not_run",
+      "reason": "The sole native image call was blocked before an image file was returned."
+    },
+    "thumbnail_512": {
+      "status": "not_run",
+      "thumbnail_path": null,
+      "thumbnail_sha256": null,
+      "reason": "No native image existed from which to derive a 512-pixel review thumbnail."
+    }
+  },
+  "hard_gates": [
+    {
+      "id": "vo_sheer_textile_first_read",
+      "review_scale": "thumbnail",
+      "status": "not_scored",
+      "evidence": "No rendered pixels were returned."
+    },
+    {
+      "id": "vo_sheer_weave_edge_legibility",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "No rendered pixels were returned."
+    },
+    {
+      "id": "vo_sheer_transmission_relationship",
+      "review_scale": "both",
+      "status": "not_scored",
+      "evidence": "No rendered pixels were returned."
+    },
+    {
+      "id": "vo_sheer_layer_coherence",
+      "review_scale": "native",
+      "status": "not_scored",
+      "evidence": "No rendered pixels were returned."
+    },
+    {
+      "id": "vo_sheer_not_optical_or_generation_substitute",
+      "review_scale": "both",
+      "status": "not_scored",
+      "evidence": "No rendered pixels were returned."
+    }
+  ],
+  "gate_pass_count": null,
+  "gate_total": 5,
+  "qualification": "blocked_unscored",
+  "representative_promotion": {
+    "eligible": false,
+    "promoted": false,
+    "reason": "A blocked call produced no saved image and no pixel evidence."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending_unscored",
+    "score": null
+  }
+}

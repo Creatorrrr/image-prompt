@@ -1,0 +1,119 @@
+{
+  "contract_version": "photo-independent-arm-summary/v2",
+  "arm_id": "revealing-arm-c",
+  "phase": "B",
+  "status": "completed_technical_pass_unscored",
+  "random_seed": 144073,
+  "profile_id": "run_local_bounded_side_waist_cutouts",
+  "test_case_id": "rf-c-side-waist-cutouts",
+  "pack": {
+    "contract_version": "photo-candidate-pack/v6",
+    "pack_id": "a7e986d2286c25c9",
+    "sha256": "04a4ce3535e58ac03a6e81b13b44fa06eceae90cf85198a9a528a3dbef9602ed"
+  },
+  "frozen_invariants": {
+    "authorial_core_file_sha256": "abe4f3162c89b1234e062614a7958ebdb408e3685fb0123cabc00200f44e9b24",
+    "authorial_core_byte_unchanged": true,
+    "salt_pan_pouring_action_preserved": true,
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "reference_role": "general_visible_appearance_guidance_only",
+    "gate_definitions_changed": false
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "run_id": "ca55d8879773bfe3",
+      "prompt_id": "07a76321e5fc376a",
+      "preflight": {
+        "composed_prompt_audit": "pass",
+        "runtime_request_audit": "pass",
+        "custom_topology_literal_preflight": "pass"
+      },
+      "render_artifacts": {
+        "native": {
+          "path": "generated_native.png",
+          "sha256": "0e8ff67afb8b53e18e28fa065cf627d42895b1c6fdf33c0a3135c7245321fc55",
+          "dimensions": "1024x1535"
+        },
+        "thumbnail_512": {
+          "path": "generated_thumbnail_512.png",
+          "sha256": "ccd78d9a4e0ed76648472ee01f6edce07fdce22c6e9796b4cd42320ff03ea0cf",
+          "dimensions": "341x512"
+        }
+      },
+      "pixel_qualification": {
+        "status": "fail",
+        "passed_gate_count": 4,
+        "required_gate_count": 5,
+        "failed_gate_ids": [
+          "rl_side_cutouts_bounded_edges"
+        ]
+      }
+    },
+    {
+      "attempt": 2,
+      "run_id": "c0888e111a50cdbd",
+      "retry_of_run_id": "ca55d8879773bfe3",
+      "prompt_id": "177631441a51971f",
+      "repair_scope": "Only rl_side_cutouts_bounded_edges was repaired by adding a visible opaque outer-side vertical fabric band around each waist window; the four passed gates were preserved.",
+      "preflight": {
+        "composed_prompt_audit": "pass",
+        "runtime_request_audit": "pass",
+        "custom_topology_literal_preflight": "pass",
+        "single_gate_repair_delta_audit": "pass"
+      },
+      "render_artifacts": {
+        "native": {
+          "path": "generated_native_attempt2.png",
+          "sha256": "8d5d60b25e74e8468d199cf2332ef438c78182fb61c66cfe1c0d9ed12562b7b0",
+          "dimensions": "1024x1536"
+        },
+        "thumbnail_512": {
+          "path": "generated_thumbnail_512_attempt2.png",
+          "sha256": "bded3e634b1b5c46e58d0406e029052c9a50e6d9305817d01dec296557d1cac9",
+          "dimensions": "341x512"
+        }
+      },
+      "pixel_qualification": {
+        "status": "pass",
+        "qualification": "technical-pass-unscored",
+        "attempt_1_evidence_combined": false,
+        "passed_gate_count": 5,
+        "required_gate_count": 5,
+        "failed_gate_ids": []
+      }
+    }
+  ],
+  "generation": {
+    "tool": "built_in_image_gen",
+    "image_call_count": 2,
+    "initial_call_count": 1,
+    "authorized_additional_call_count": 1,
+    "third_attempt_performed": false,
+    "paid_fallback_used": false,
+    "tool_status": "success"
+  },
+  "final_pixel_qualification": {
+    "qualifying_attempt": 2,
+    "status": "pass",
+    "qualification": "technical-pass-unscored",
+    "passed_gate_count": 5,
+    "required_gate_count": 5,
+    "evidence_combined_across_attempts": false,
+    "combined_review_path": "pixel_review_all_attempts.json",
+    "combined_review_sha256": "d86b873cf52c3e8957ea2468a5662250849fd8fc1cafd432c04023275cb2cbef"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "score_state": "unscored",
+    "source": "not_yet_received"
+  },
+  "representative_promotion": {
+    "promoted": false,
+    "reason": "Representative promotion was not authorized; user judgment remains pending and unscored."
+  },
+  "independence": {
+    "other_arm_directories_or_outputs_read": false,
+    "cross_arm_inputs_used": false
+  }
+}

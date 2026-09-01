@@ -1,0 +1,120 @@
+{
+  "contract_version": "instrument-semantics-independent-test-case/v1",
+  "arm_id": "arm-03-double-bass",
+  "worktree_id": "main-workspace",
+  "profile_id": "double_bass_human_scale_floor_supported",
+  "confusion_target": "cello",
+  "independence": {
+    "independent_no_cross_arm_inputs": true,
+    "permitted_precore_inputs": [
+      "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator/SKILL.md",
+      "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/request_envelope.json",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/reference_manifest.json",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+      "delegated arm assignment"
+    ],
+    "candidate_pack_profile_registry_research_tests_or_prior_outputs_read_before_freeze": false
+  },
+  "randomization": {
+    "seed_uint32": 1711376315,
+    "seed_source": "One unsigned 32-bit draw from four bytes of /dev/urandom using od -An -N4 -tu4.",
+    "selection_algorithm": "For four ordered five-item menus, index_i = floor(seed / 5^i) mod 5, with i = 0 setting, 1 event, 2 lighting, 3 camera_composition.",
+    "indices": {
+      "setting": 0,
+      "event": 3,
+      "lighting": 2,
+      "camera_composition": 0
+    },
+    "menus": {
+      "setting": [
+        "decommissioned coastal pump hall at blue hour",
+        "rain-darkened rooftop greenhouse before dawn",
+        "subterranean railway inspection bay at first light",
+        "desert observatory loading chamber after a storm",
+        "empty museum freight atrium during a winter sunset"
+      ],
+      "event": [
+        "a resonant pizzicato phrase while a pulley shadow crosses the wall",
+        "a tuning harmonic as a loose plan sheet lifts in the draft",
+        "a vigorous bowed downbeat as a distant warning beacon rotates",
+        "a sustained bowed phrase while a rolling service door admits sea mist",
+        "a soft final cadence as an overhead work light comes alive"
+      ],
+      "lighting": [
+        "hard sunrise shaft with dim overhead practicals",
+        "diffuse skylight reflected from wet masonry",
+        "cyan blue-hour windows crossed by one warm tungsten maintenance lamp",
+        "amber sodium-vapor pools with cool spill from outside",
+        "single bounced work light through suspended dust"
+      ],
+      "camera_composition": [
+        "low eye-level 35mm vertical environmental full-body frame with complete instrument and floor junction visible",
+        "waist-height 50mm horizontal frame with strong architectural symmetry",
+        "slightly elevated 40mm three-quarter frame with reflected silhouette",
+        "ground-level 28mm vertical frame with controlled converging lines",
+        "eye-level 65mm full-body frame compressed against repeating steel bays"
+      ]
+    },
+    "selected_result": {
+      "setting": "decommissioned coastal pump hall at blue hour",
+      "event": "a sustained bowed phrase while a rolling service door admits sea mist",
+      "lighting": "cyan blue-hour windows crossed by one warm tungsten maintenance lamp",
+      "camera_composition": "low eye-level 35mm vertical environmental full-body frame with complete instrument and floor junction visible"
+    }
+  },
+  "frozen_intent": {
+    "authorial_core_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/authorial_core.json",
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "lighting",
+      "framing",
+      "camera"
+    ],
+    "open_dimensions": [
+      "color",
+      "material",
+      "atmosphere"
+    ],
+    "minimum_open_dimensions_satisfied": true,
+    "schema_normalization": {
+      "reason": "The first generator preflight rejected three descriptive open-dimension labels as unknown before producing any candidate pack.",
+      "original_authorial_core_sha256": "e42840662e1e29cf621fdef79565671dabd5debfbbe3ead35fc033d4319a92ec",
+      "original_test_case_sha256": "3857767883c179f4e310a16df8dae6f04ed58ce8e1074c094f35ac1a9b0459e3",
+      "replacement": "wardrobe, material_behavior, and secondary_set_dressing were mapped mechanically to the allowed color, material, and atmosphere dimensions without changing the selected concept or baseline prompt.",
+      "candidate_pack_existed_before_normalization": false
+    }
+  },
+  "required_gates": [
+    {
+      "gate_id": "vo_instrument_double_bass_human_scale",
+      "pass_condition": "The complete instrument is visibly comparable to the standing adult and reads as roughly human-height or taller rather than seated-player cello scale."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_long_neck",
+      "pass_condition": "The elongated neck, fingerboard, pegbox, and scroll are visibly continuous above the large body."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_floor_endpin",
+      "pass_condition": "A visible endpin physically connects the instrument base to the floor and clearly supports the upright instrument."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_play_relation",
+      "pass_condition": "One hand visibly fingers the neck while the other visibly bows the strings, with plausible contact and posture."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_not_cello",
+      "pass_condition": "The combined standing-player scale, tall shoulder/neck geometry, large lower bouts, and floor-supported performance relation unambiguously distinguish a double bass from a cello."
+    }
+  ],
+  "pixel_policy": {
+    "partial_is_fail": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true,
+    "appearance_continuity_is_separate": true,
+    "call_limit": 1,
+    "retry_allowed": false
+  }
+}

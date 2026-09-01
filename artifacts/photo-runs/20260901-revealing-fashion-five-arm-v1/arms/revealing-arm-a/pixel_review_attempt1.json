@@ -1,0 +1,83 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "revealing-arm-a",
+  "test_case_id": "rf-a-revealing-armor",
+  "profile_id": "commercial_appeal_revealing_armor",
+  "overall_status": "blocked_unscored",
+  "image_path": null,
+  "image_sha256": null,
+  "review_inputs": {
+    "native": {
+      "status": "unscored",
+      "path": null,
+      "reason": "The built-in image call returned no accessible image bytes."
+    },
+    "thumbnail_512": {
+      "status": "unscored",
+      "path": null,
+      "reason": "A 512-pixel thumbnail cannot be derived without a generated image."
+    }
+  },
+  "strict_status_policy": {
+    "pixel_gate_statuses_when_an_image_exists": [
+      "pass",
+      "fail"
+    ],
+    "partial_maps_to": "fail",
+    "blocked_without_pixels_maps_to": "unscored",
+    "prompt_or_runtime_pass_is_pixel_proof": false
+  },
+  "hard_gates": [
+    {
+      "id": "vo_revealing_armor_adult_original",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No pixels were returned."
+    },
+    {
+      "id": "vo_revealing_armor_first_read",
+      "review_scale": "thumbnail",
+      "status": "unscored",
+      "evidence": "No 512-pixel thumbnail exists."
+    },
+    {
+      "id": "vo_revealing_armor_exposure_legible",
+      "review_scale": "thumbnail",
+      "status": "unscored",
+      "evidence": "No 512-pixel thumbnail exists."
+    },
+    {
+      "id": "vo_revealing_armor_opaque_intimate_coverage",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No pixels were returned."
+    },
+    {
+      "id": "vo_revealing_armor_attachment_logic",
+      "review_scale": "native",
+      "status": "unscored",
+      "evidence": "No native-resolution image exists."
+    },
+    {
+      "id": "vo_revealing_armor_not_plain_swimwear",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No pixels were returned."
+    },
+    {
+      "id": "vo_revealing_armor_request_tone_preserved",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No pixels were returned."
+    }
+  ],
+  "user_judgment": {
+    "status": "pending_unscored",
+    "source": "not_yet_received"
+  },
+  "representative_promotion": {
+    "allowed": false,
+    "status": "forbidden",
+    "reason": "The render is blocked-unscored and no hard pixel gate can be evaluated."
+  }
+}
