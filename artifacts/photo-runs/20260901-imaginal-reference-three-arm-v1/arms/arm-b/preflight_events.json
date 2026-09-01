@@ -1,0 +1,27 @@
+{
+  "schema_version": "photo-imaginal-arm-preflight-events/v1",
+  "arm_id": "arm-b",
+  "candidate_pack_count": 1,
+  "image_call_count": 1,
+  "events": [
+    {
+      "stage": "authorial_core_normalization",
+      "status": "resolved_before_pack_creation",
+      "failure": "baseline_prompt_en contained the ungrounded blanket negative directive 'no legible text'",
+      "resolution": "Rephrased paperwork as carrying tiny visually non-semantic marks while preserving the same scene meaning."
+    },
+    {
+      "stage": "intent_lock_normalization",
+      "status": "resolved_before_pack_creation",
+      "failure": "reference_styling was not an allowed photo-intent-lock dimension",
+      "resolution": "Changed only the dimension key to the standard reference_use dimension; evidence text and reference scope stayed unchanged."
+    },
+    {
+      "stage": "visual_intent_normalization",
+      "status": "resolved_before_pack_creation",
+      "failure": "Independently authored semantic bindings lacked the registry's exact component-anchor strings",
+      "resolution": "Restated the already-authored five components with the registry's canonical audit phrases while preserving the subject, event, anomaly, response, routine, and physical consequence."
+    }
+  ],
+  "boundary": "All three events occurred before any candidate pack was emitted. They consumed zero image calls and did not use sibling-arm inputs."
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "space-pixel-qualification-rubric/v1",
+  "created_before_render_results_observed": true,
+  "decision_rule": {"allowed_gate_statuses":["pass","fail"],"partial_counts_as":"fail","same_saved_image_requirement":true,"profile_qualified_when":"all four profile hard gates, representation gate, and all common technical controls pass in the same saved image","prompt_or_audit_pass_is_pixel_pass":false,"requesting_user_preference":"pending_separate_judgment"},
+  "common_technical_controls": [
+    {"id":"reference_visible_appearance_continuity","scale":"native","description":"The original adult fictional subject preserves recognizable visible face-shape, eye-aperture and spacing, lower-face, hairline, and long dark-hair cues from the attached portrait without making an identity claim."},
+    {"id":"adult_age_continuity","scale":"both","description":"The subject remains visibly adult without de-aging or doll-like reshaping."},
+    {"id":"gross_structural_coherence","scale":"both","description":"Bodies, limbs, instruments, displays, and required spatial relations are coherent enough to support the tested scene."},
+    {"id":"required_interaction_contact","scale":"native","description":"Any handrail, telescope control, tool, or instrument interaction required by the assigned event has readable physical contact."},
+    {"id":"unrequested_text_artifacts","scale":"native","description":"Pseudo-writing, captions, watermarks, or signage do not supply missing scientific meaning."}
+  ],
+  "arms": {
+    "arm-01-barred-galaxy": [
+      {"id":"vo_space_barred_bulge","scale":"thumbnail","description":"One central bulge anchors the galactic disk."},
+      {"id":"vo_space_barred_bar","scale":"both","description":"An elongated stellar bar crosses the central bulge."},
+      {"id":"vo_space_barred_arm_attachment","scale":"native","description":"Spiral arms visibly begin near the two bar ends."},
+      {"id":"vo_space_barred_shared_disk","scale":"both","description":"Bulge, bar, and arms occupy one coherent disk."},
+      {"id":"representation_false_color_multiwavelength","scale":"native","description":"The display reads as a false-color or multiwavelength scientific observation rather than an ordinary-color direct view or fictional portal."}
+    ],
+    "arm-02-microgravity": [
+      {"id":"vo_space_microgravity_interior","scale":"thumbnail","description":"Station racks, handrails, and stowage establish an orbital interior."},
+      {"id":"vo_space_microgravity_float","scale":"both","description":"Multiple bodies or objects float without visible support."},
+      {"id":"vo_space_microgravity_orientations","scale":"both","description":"Floating elements have no shared downward orientation."},
+      {"id":"vo_space_microgravity_control","scale":"native","description":"Rails or restraints are actively used for motion control."},
+      {"id":"representation_visible_light_documentary","scale":"native","description":"The station scene reads as visible-light operational documentary rather than wire levitation or a rotated studio set."}
+    ],
+    "arm-03-solar-flare": [
+      {"id":"vo_space_flare_sun_context","scale":"thumbnail","description":"Solar disk or limb context owns the burst."},
+      {"id":"vo_space_flare_active_region","scale":"both","description":"A localized magnetic active region remains identifiable."},
+      {"id":"vo_space_flare_burst","scale":"native","description":"A compact intense brightening or paired ribbons occupy that region."},
+      {"id":"vo_space_flare_response","scale":"both","description":"Connected coronal response remains local to the burst."},
+      {"id":"representation_false_color_multiwavelength","scale":"native","description":"The display reads as a false-color or multiwavelength solar observation rather than a detached fictional explosion."}
+    ]
+  }
+}

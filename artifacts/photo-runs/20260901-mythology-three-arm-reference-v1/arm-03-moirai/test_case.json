@@ -1,0 +1,65 @@
+{
+  "schema_version": "photo-visual-test-case/v1",
+  "test_case_id": "arm-03-moirai-tidal-observatory-life-allocation",
+  "profile_id": "moirai_fate_thread_life_allocation",
+  "pack_id": "c59053b35e2dcb85",
+  "concept": "Three adult fate-workers allocate one adult lighthouse keeper's finite lifespan in a storm-battered tidal observatory by spinning, measuring, and cutting one continuous luminous life thread into a clear hourglass token.",
+  "single_frame_causal_contract": {
+    "actor": "Three distinct adult fate-workers, each owning one readable station.",
+    "action": "The first spins the thread origin, the second measures an allotted span of the same thread, and the third cuts its endpoint.",
+    "target": "One adult lighthouse keeper holding a clear hourglass directly beneath the cutting station.",
+    "consequence": "The allotted segment enters the hourglass and illuminates a finite amount of amber sand while the unused segment is dark."
+  },
+  "reference_contract": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible facial and hair appearance reference for the central measuring woman only",
+    "assessment_boundary": "Compare only observable facial geometry, adult-scale eye proportions, face length, jaw width, hairline, and long center-parted dark hair; do not assess identity, same-person status, or sensitive traits."
+  },
+  "pre_render_gate_source": {
+    "candidate_pack_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/candidate_pack.json",
+    "candidate_pack_sha256": "765275a7cfba604402a4a12bd58b3a249f2933d651ca3c34176d11d72ba80bf3",
+    "effective_visual_contract_sha256": "c770774217e32034e36652a7c0a761732a545d270bddfd30351d8feb07f1bec4",
+    "gates_were_immutable_in_pack_before_image_call": true,
+    "this_test_case_file_was_serialized_after_image_delivery": true
+  },
+  "profile_hard_gates": [
+    {
+      "id": "vo_myth_moirai_three_roles",
+      "review_scale": "thumbnail",
+      "criterion": "Three fate figures remain distinct as separate workers."
+    },
+    {
+      "id": "vo_myth_moirai_spin",
+      "review_scale": "native",
+      "criterion": "The first role visibly forms the thread origin."
+    },
+    {
+      "id": "vo_myth_moirai_measure",
+      "review_scale": "both",
+      "criterion": "The middle role visibly measures an allotted length."
+    },
+    {
+      "id": "vo_myth_moirai_cut",
+      "review_scale": "both",
+      "criterion": "The final role visibly cuts the thread endpoint."
+    },
+    {
+      "id": "vo_myth_moirai_continuity",
+      "review_scale": "native",
+      "criterion": "One life thread continuously links all three actions."
+    }
+  ],
+  "supplemental_predeclared_checks": [
+    "The complete actor-action-target-consequence chain must be visible in one still.",
+    "All six worker hands and the spindle, ruler, shears, thread path, recipient, and hourglass consequence should be unobstructed.",
+    "The central figure should retain observable facial and hair appearance cues from the reference without an identity judgment.",
+    "Hands, tool contact, thread contact, faces, and any incidental text or pseudo-text must be reviewed at native scale."
+  ],
+  "attempt_policy": {
+    "maximum_image_calls": 1,
+    "retries_allowed": 0,
+    "partial_gate_result_is_fail": true,
+    "qualification_rule": "All five profile hard gates must pass simultaneously in the one saved image; user preference remains a separate pending judgment."
+  }
+}

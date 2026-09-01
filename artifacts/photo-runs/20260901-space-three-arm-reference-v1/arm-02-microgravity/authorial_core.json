@@ -1,0 +1,87 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create a pixel-verifiable, complex reference-guided photograph in which a scheduled orbital-station inspection makes microgravity legible through unsupported bodies, divergent object orientations, and active handrail control.",
+  "subject": "An original visibly adult station specialist, using the attached portrait only as visible face-and-hair appearance reference and never as identity evidence.",
+  "setting": "A crowded operational orbital-station module lined with equipment racks, handrails, cables, and secured stowage during a scheduled inspection.",
+  "event": "The specialist floats diagonally with both feet clear of every surface, hooks fingertips around a handrail to arrest motion, and passes among multiple unsupported loose objects pointing in different directions.",
+  "visual_priorities": [
+    "Make the indoor microgravity state unmistakable through simultaneous unsupported floating, divergent orientations, and handrail-based motion control.",
+    "Keep the original adult subject's referenced visible facial structure, eye appearance, lower-face shape, hairline, and long dark wavy hair readable in the same wide frame."
+  ],
+  "baseline_prompt_en": "Create a landscape visible-light operational documentary photograph inside a crowded orbital-station module during a scheduled inspection. Microgravity is made visible through simultaneous unsupported floating, divergent orientations, and handrail-based motion control. An original visibly adult station specialist floats diagonally with both feet visibly clear of every surface while hooked fingertips arrest motion on a handrail. The specialist's readable face shape, eye appearance, lower-face shape, hairline, and long dark wavy hair follow the attached portrait as appearance-only reference. At least three loose objects float unsupported at clearly different orientations; one soft equipment pouch appears upside down relative to the specialist. Dense station racks, handrails, cables, labeled equipment panels, and secured stowage establish a functional orbital interior. The wide composition presents several competing orientations rather than one organizing down direction, while crisp practical cabin light keeps the face, free-floating body, loose objects, and controlling hand contact simultaneously legible.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "시각 의미 데이터와 후보팩",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "basis": "request_context",
+      "resolution": "Treat the randomly assigned microgravity concept as pixel-verifiable visual semantics whose defining components must survive the prompt and rendered image.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉과 첨부 이미지 활용",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the assigned complex scheduled station-inspection scene and the inspected portrait strictly as visible appearance reference for one original adult fictional subject, then evaluate the resulting pixels.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "Microgravity is made visible through simultaneous unsupported floating, divergent orientations, and handrail-based motion control."
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "An original visibly adult station specialist"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "floats diagonally with both feet visibly clear of every surface while hooked fingertips arrest motion on a handrail"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "readable face shape, eye appearance, lower-face shape, hairline, and long dark wavy hair follow the attached portrait as appearance-only reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "visible-light operational documentary",
+    "family": "orbital-station inspection photography",
+    "evidence": [
+      "practical cabin illumination with physically readable surfaces",
+      "wide operational context with the subject and inspection environment equally legible"
+    ]
+  },
+  "variation_key": "scheduled_station_inspection"
+}

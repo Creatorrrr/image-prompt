@@ -1,0 +1,219 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:84e63c02ba328ec774d9222a6881634530b3a526;skill_sha256:9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Independently test whether the katabasis_living_underworld_descent hard visual meaning survives one reference-conditioned image render, with no retry."
+  },
+  "evidence": [
+    {
+      "id": "e-source-profile",
+      "kind": "prompt-inspection",
+      "claim": "The pre-render effective contract required living agency, a visible human-world origin, a bounded downward crossing, a distinct underworld destination, and a visible purpose token in one image.",
+      "artifact": "candidate_pack.json pack ce021c982f366a85; composed_prompt_audit.json effective_visual_contract_sha256 5a8df72a8e0d920c1b23adca52629ace7570eb05f6ca9eb713e511a25314be45"
+    },
+    {
+      "id": "e-composed-audit",
+      "kind": "package-check",
+      "claim": "The composed prompt passed fail-closed audit with every hard evidence phrase literal and negative_en preserved.",
+      "artifact": "composed_prompt_audit.json status pass; failures empty"
+    },
+    {
+      "id": "e-prompt-review",
+      "kind": "prompt-evaluation",
+      "claim": "The final positive prompt contains all four frozen anchor phrases, all five profile evidence bindings, and a single-frame actor/action/target/consequence relation within the absolute word budget.",
+      "artifact": "composed_prompt.json; composed_prompt_audit.json actual_words 258 and failures empty"
+    },
+    {
+      "id": "e-runtime-audit",
+      "kind": "package-check",
+      "claim": "The exact native runtime prompt, reference path/hash/role, intent lock, and negative bytes passed runtime audit before generation.",
+      "artifact": "render_request_audit.json status pass; runtime_prompt_id d248a7971fc0f019"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The built-in image_gen tool delivered one saved PNG from one call with no retry.",
+      "artifact": "render-attempt-01.png sha256 0eb511d354d819c161c93120551bbdf5f76a23e3122589486c04faf9533bfff4; run_manifest.json image_call_count 1 retries 0"
+    },
+    {
+      "id": "e-thumbnail",
+      "kind": "render-observation",
+      "claim": "At 256x320, the daylight origin, descending stair, living traveler, red cord, skeletal ferryman, dead inhabitants, astrolabe, and sparking chain are readable, but the traveler appears settled at the stair bottom rather than crossing a bounded threshold.",
+      "artifact": "review-thumbnail.png sha256 b985564331b2e05d4845d6b226c7d637dda741a1bd127166db0cead4fff5ca3f"
+    },
+    {
+      "id": "e-native",
+      "kind": "render-observation",
+      "claim": "At 1122x1402 and in native crops, both boots occupy one lower landing with no gate-straddling descent; the ferryman's map tablet also carries malformed pseudo-lettering.",
+      "artifact": "render-attempt-01.png plus review-threshold-native.png and review-consequence-native.png"
+    },
+    {
+      "id": "e-review-audit",
+      "kind": "package-check",
+      "claim": "The render-review schema passed and derived one failed hard gate, vo_myth_katabasis_threshold.",
+      "artifact": "self_review_audit.json schema_failures empty; qualification_status failed_technical_hard_gates"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One still must simultaneously read as an alive and agentive visitor actively crossing downward from a retained human-world origin into a distinct realm of the dead while carrying a visible mission token.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "katabasis-five-part-conjunction",
+        "statement": "Living traveler, human-world origin, bounded downward threshold, underworld destination, and purpose token must all pass in the same pixels.",
+        "evidence_ids": [
+          "e-source-profile"
+        ],
+        "causal_controls": [
+          "living-state contrast",
+          "origin-to-destination continuity",
+          "boot and boundary geometry",
+          "directional depth path",
+          "carried objective relation"
+        ]
+      },
+      {
+        "id": "reference-appearance-boundary",
+        "statement": "Only observable face-and-hair cues may continue from the source portrait; no same-person or identity conclusion is made.",
+        "evidence_ids": [
+          "e-runtime-audit",
+          "e-native"
+        ],
+        "causal_controls": [
+          "center-parted near-black soft waves",
+          "brow eye and face-shape cues",
+          "adult appearance continuity without identity inference"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "camera",
+      "lighting",
+      "framing",
+      "color"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-threshold-collapse",
+      "scale": "global",
+      "axis": "bounded active downward crossing",
+      "source_state": "The prompt and profile require boots visibly straddling a bounded downward threshold during descent.",
+      "render_state": "Both boots are settled on the same lower landing; the stair is behind the traveler and no gate is being crossed.",
+      "evidence_ids": [
+        "e-thumbnail",
+        "e-native",
+        "e-review-audit"
+      ]
+    },
+    {
+      "id": "m-pseudotext",
+      "scale": "local",
+      "axis": "unrequested text artifact",
+      "source_state": "The objective is a cracked map tablet; no readable lettering is requested.",
+      "render_state": "The tablet prominently displays malformed pseudo-Latin glyphs.",
+      "evidence_ids": [
+        "e-native"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-threshold-simplification",
+      "stage": "generator-response",
+      "statement": "The generator preserved the stair topology and underworld relation but simplified the hardest transitional body geometry into a stable landing pose.",
+      "evidence_ids": [
+        "e-composed-audit",
+        "e-runtime-audit",
+        "e-native"
+      ],
+      "falsifier": "An unchanged-prompt matched render would clearly place the two boots on opposite sides of a bounded gate while preserving all other hard relations."
+    },
+    {
+      "id": "h-tablet-text-prior",
+      "stage": "generator-response",
+      "statement": "The tablet prop triggered an inscription prior even though no textual content was requested.",
+      "evidence_ids": [
+        "e-native"
+      ],
+      "falsifier": "A matched render of the same audited prompt would preserve a plainly cracked map surface without pseudo-lettering."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill or runtime rule was changed; this record preserves one motivating rendered evaluation for a future bounded repair.",
+    "generalization_basis": "A single no-retry render can diagnose a local failure but cannot justify a reusable skill change or promotion.",
+    "hypothesis_ids": [
+      "h-threshold-simplification",
+      "h-tablet-text-prior"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-composed-audit",
+        "e-runtime-audit",
+        "e-review-audit"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-source-profile",
+        "e-composed-audit",
+        "e-prompt-review"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-thumbnail",
+        "e-native",
+        "e-review-audit"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-current-katabasis-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "living agency",
+          "human-world origin",
+          "bounded downward threshold",
+          "underworld destination",
+          "purpose token"
+        ],
+        "evidence_ids": [
+          "e-thumbnail",
+          "e-native",
+          "e-review-audit"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Prompt and runtime preflight passed, but the one saved render failed the bounded active downward crossing hard gate; four other profile gates passing cannot be combined into qualification, and user preference remains unscored.",
+    "evidence_ids": [
+      "e-composed-audit",
+      "e-runtime-audit",
+      "e-native",
+      "e-review-audit"
+    ]
+  }
+}

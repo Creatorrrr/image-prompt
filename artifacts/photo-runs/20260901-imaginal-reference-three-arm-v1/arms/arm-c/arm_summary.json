@@ -1,0 +1,51 @@
+{
+  "schema_version": "photo-imaginal-arm-summary/v1",
+  "arm_id": "arm-c",
+  "keyword": "face pareidolia",
+  "profile_id": "face_pareidolia_embedded_nonface_pattern",
+  "scene": "coastal weather observatory preparing a storm-glass instrument",
+  "tool": "builtin_image_gen",
+  "image_calls_used": 1,
+  "retries_used": 0,
+  "paths": {
+    "result": "result.png",
+    "thumbnail": "thumbnail.png",
+    "composed_prompt": "composed_prompt.json",
+    "render_request": "render_request.json",
+    "pixel_review": "pixel_review.json",
+    "ledger": "arm_ledger.ndjson",
+    "manifest": "run_manifest.json"
+  },
+  "hashes": {
+    "result_sha256": "edfecceb850d03debad1c731cbbd253a746dcfbef6d3ee2dc2f4f74c4aac55fe",
+    "prompt_id": "62984751bb6143c6",
+    "pack_id": "9b1e716042586012",
+    "effective_visual_contract_sha256": "2d167e45f0cc21e463e4cbe1905c6edee192301a51e239e7d93f41186cdfea13"
+  },
+  "evidence_layers": {
+    "candidate_pack": "pass",
+    "composed_prompt_audit": "pass_with_advisory_warnings",
+    "runtime_request_audit": "pass",
+    "generation_delivery": "success",
+    "rendered_pixels": "fail",
+    "user_judgment": "pending"
+  },
+  "target_gate_result": {
+    "count": 5,
+    "passed": 3,
+    "failed": 2,
+    "failed_gate_ids": [
+      "vo_imaginal_pareidolia_material_continuity",
+      "vo_imaginal_pareidolia_unadded_components"
+    ]
+  },
+  "supplemental_gate_result": {
+    "scene_coastal_weather_observatory": "pass",
+    "reference_visible_style_only": "pass",
+    "identity_comparison": "not_assessed"
+  },
+  "bounded_decision": "revise",
+  "decision_rationale": "The face and storm-glass source are jointly legible, but the ringed eyes and smooth smile look added rather than continuously formed by ordinary crystals, bubbles, and sediment. Strict partial-is-fail qualification therefore rejects the single render while preserving successful scene and styling-reference evidence.",
+  "retry_boundary": "No retry was authorized because the arm's image_call_budget was exactly one.",
+  "user_aesthetic_judgment": "pending"
+}

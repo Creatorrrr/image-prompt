@@ -1,0 +1,120 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "c59053b35e2dcb85",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex arm-03 independent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render-attempt-01.png",
+  "result_sha256": "054ec31dbff7a446e317de6aa4ab8bf93056e6139564e04869893160baeb0395",
+  "source_reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "scope": "visible facial and hair appearance only; this is not an identity or same-person assessment"
+  },
+  "hard_gates": {
+    "vo_myth_moirai_three_roles": {
+      "status": "pass",
+      "evidence": "At 384x288 thumbnail scale, three spatially separate adult women are immediately readable as spinner at the loaded wheel, measurer at the bronze rule, and cutter at the shears."
+    },
+    "vo_myth_moirai_spin": {
+      "status": "pass",
+      "evidence": "In the native left crop, a bright red filament visibly exits a densely wound spool while the first woman's hand guides that origin line."
+    },
+    "vo_myth_moirai_measure": {
+      "status": "pass",
+      "evidence": "At both scales, the middle woman holds a graduated bronze rule with both hands and the same red filament lies taut across its marked length."
+    },
+    "vo_myth_moirai_cut": {
+      "status": "fail",
+      "evidence": "The shears are clearly present at both scales, but native inspection shows the blades still open and one unbroken glowing filament bending downward through the blade area; no severed gap or detached endpoint is visible."
+    },
+    "vo_myth_moirai_continuity": {
+      "status": "pass",
+      "evidence": "Native inspection traces one luminous red filament continuously from the wound spool, across the measuring rule, into the shears zone, and downward toward the keeper's hourglass."
+    }
+  },
+  "thumbnail_inspection": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render-attempt-01-thumbnail.png",
+    "sha256": "a1ed4231cfee812f0d878cda9ec1791c8b64712da46d376cfcf7280f6c9b72d5",
+    "dimensions": "384x288",
+    "observation": "The three role stations, one red path, yellow-coated adult recipient, and glowing hourglass consequence survive the thumbnail gestalt. The tiny thumbnail cannot prove a severed endpoint."
+  },
+  "native_inspection": {
+    "dimensions": "1448x1086",
+    "crop_paths": [
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/native-crop-left-spinner.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/native-crop-center-measurer.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/native-crop-cut-contact.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/native-crop-hourglass-consequence.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/native-crop-center-face.png"
+    ],
+    "observation": "Spool origin, ruler contact, adult recipient, and illuminated hourglass are strong. The cutting state is the decisive native-scale failure because the filament remains uninterrupted through open blades."
+  },
+  "single_frame_causal_review": {
+    "actor": {
+      "status": "pass",
+      "evidence": "Three adult workers and one adult lighthouse keeper are visible in the same frame."
+    },
+    "action": {
+      "status": "fail",
+      "evidence": "Spinning and measuring are explicit, but cutting is only staged by open shears around an intact bent filament."
+    },
+    "target": {
+      "status": "pass",
+      "evidence": "The yellow-coated lighthouse keeper visibly holds the clear hourglass directly under the shears station."
+    },
+    "consequence": {
+      "status": "pass",
+      "evidence": "Amber sand and light are already active inside the hourglass, with the red line descending into its upper bulb."
+    },
+    "overall_status": "fail"
+  },
+  "reference_visible_appearance_continuity": {
+    "status": "fail",
+    "assessment_boundary": "Observable appearance comparison only; no identity, same-person, biometric, or sensitive-trait claim.",
+    "passed_observations": [
+      "The central measuring woman has loose long dark hair with a near-center part and similar broad wave massing.",
+      "Adult facial scale, elongated oval face, lower-face width, straight brows, nose and softly full lips remain broadly comparable."
+    ],
+    "failed_observation": "The generated central face looks downward with lowered eyelids, so source-visible eye aperture, shape, and spacing cannot all be compared; partial continuity is scored fail under the predeclared rule."
+  },
+  "anatomy_contact_text_artifacts": {
+    "hands": {
+      "status": "fail",
+      "evidence": "No obvious extra digits or fused hands are visible, but only five of the six worker hands are clearly exposed; the spinner's second hand is hidden."
+    },
+    "tool_contact": {
+      "status": "fail",
+      "evidence": "Spool and ruler contacts are coherent, while the intact filament through open shears fails the requested cutting contact state."
+    },
+    "recipient_contact": {
+      "status": "pass",
+      "evidence": "Both of the adult keeper's hands plausibly support the hourglass at its base and waist."
+    },
+    "facial_anatomy": {
+      "status": "pass",
+      "evidence": "All four adult faces are structurally coherent at native scale without obvious fused or broken features."
+    },
+    "text_artifacts": {
+      "status": "pass",
+      "evidence": "There is no caption, watermark, or requested semantic text; ruler ticks and astrolabe/table markings are decorative functional marks, with minor pseudo-glyph ambiguity that does not carry the concept."
+    }
+  },
+  "technical_decision": {
+    "profile_gate_pass_count": 4,
+    "profile_gate_fail_count": 1,
+    "qualified": false,
+    "decision": "revise",
+    "failed_profile_gate_ids": [
+      "vo_myth_moirai_cut"
+    ],
+    "partial_is_fail": true,
+    "retries_permitted": 0
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

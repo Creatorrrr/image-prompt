@@ -1,0 +1,242 @@
+{
+  "schema_version": "space-root-independent-pixel-review/v1",
+  "reviewed_at": "2026-09-01T19:07:24+09:00",
+  "reviewer": "root",
+  "review_order": "after_all_three_independent_arms_completed",
+  "source_rubric": "precommitted_pixel_rubric.json",
+  "partial_counts_as": "fail",
+  "same_saved_image_requirement": true,
+  "review_inputs": {
+    "reference_image": {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "boundary": "Visible adult appearance reference only; no identity, same-person, biometric, or sensitive-trait claim."
+    },
+    "scales": [
+      "native",
+      "whole-image"
+    ],
+    "self_reviews_used_as_authoritative_evidence": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-barred-galaxy",
+      "profile_id": "barred_spiral_galaxy_structure",
+      "representation_mode": "false_color_or_multiwavelength",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-space-three-arm-reference-v1/arm-01-barred-galaxy/render.png",
+        "sha256": "76c930ce5dc6eb067dd590feef898167dd707e57586dbe27a34e66dd30587a84",
+        "width": 1536,
+        "height": 1024
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_continuity",
+          "status": "pass",
+          "evidence": "The face remains clearly readable and preserves the reference's oval-to-tapered outline, similar eye aperture and spacing, center-parted hairline, and long dark wavy hair. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional astronomer remains visibly adult with natural facial and body proportions."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "Face, torso, arm, hand, controller, console, and display form a coherent control-room scene."
+        },
+        {
+          "id": "required_interaction_contact",
+          "status": "pass",
+          "evidence": "The right hand visibly wraps around and operates a raised physical control."
+        },
+        {
+          "id": "unrequested_text_artifacts",
+          "status": "pass",
+          "evidence": "Incidental alert and console writing is not needed to identify the galaxy structure; the scientific meaning is carried by the display pixels."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_space_barred_bulge",
+          "status": "pass",
+          "evidence": "A single bright central bulge visibly anchors the displayed disk."
+        },
+        {
+          "id": "vo_space_barred_bar",
+          "status": "pass",
+          "evidence": "An elongated luminous bar crosses the bulge on a clear diagonal axis."
+        },
+        {
+          "id": "vo_space_barred_arm_attachment",
+          "status": "pass",
+          "evidence": "The two dominant curved arms visibly depart near opposite ends of the central bar rather than forming detached arcs."
+        },
+        {
+          "id": "vo_space_barred_shared_disk",
+          "status": "pass",
+          "evidence": "Bulge, bar, and arms occupy one coherent sufficiently face-on disk."
+        },
+        {
+          "id": "representation_false_color_multiwavelength",
+          "status": "pass",
+          "evidence": "Blue, pink, and warm mapped emissions appear on a scientific observation display, not as a portal or ordinary direct view."
+        }
+      ],
+      "failed_gate_ids": [],
+      "technical_pixel_status": "pass"
+    },
+    {
+      "arm_id": "arm-02-microgravity",
+      "profile_id": "microgravity_orbital_interior",
+      "representation_mode": "visible_light_observation",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-space-three-arm-reference-v1/arm-02-microgravity/render.png",
+        "sha256": "ee91e964df6bb70f108f3dfacf642f4ceb215dd9c55e6264731114574cea01de",
+        "width": 1448,
+        "height": 1086
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_continuity",
+          "status": "pass",
+          "evidence": "The smaller but unobstructed face preserves the reference's tapered lower face, similar eye aperture and spacing, center-parted hairline, and long dark wavy hair. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional station specialist remains visibly adult."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "The diagonal body, limbs, rail grip, hatch, racks, and loose objects are structurally coherent enough to support the event."
+        },
+        {
+          "id": "required_interaction_contact",
+          "status": "pass",
+          "evidence": "The right-hand fingers and thumb visibly grip the blue rail to arrest motion."
+        },
+        {
+          "id": "unrequested_text_artifacts",
+          "status": "pass",
+          "evidence": "Panel labels are incidental; unsupported floating, divergent object angles, and rail control establish microgravity without captions."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_space_microgravity_interior",
+          "status": "pass",
+          "evidence": "Dense racks, handrails, stowage, equipment panels, and a circular hatch establish an orbital-station interior."
+        },
+        {
+          "id": "vo_space_microgravity_float",
+          "status": "pass",
+          "evidence": "The specialist is fully unsupported while multiple separate bags or objects float without visible support."
+        },
+        {
+          "id": "vo_space_microgravity_orientations",
+          "status": "pass",
+          "evidence": "The diagonal body, black pouch, upper bag, tablet, and lower clear pouch occupy visibly different orientations with no single shared down direction."
+        },
+        {
+          "id": "vo_space_microgravity_control",
+          "status": "pass",
+          "evidence": "The handrail is actively gripped as a motion-control mechanism."
+        },
+        {
+          "id": "representation_visible_light_documentary",
+          "status": "pass",
+          "evidence": "Practical cabin light, dense operational hardware, several unsupported elements across depth, and active rail contact read as orbital documentary rather than a lone wire pose or empty rotated set."
+        }
+      ],
+      "failed_gate_ids": [],
+      "technical_pixel_status": "pass"
+    },
+    {
+      "arm_id": "arm-03-solar-flare",
+      "profile_id": "solar_flare_active_region_burst",
+      "representation_mode": "false_color_or_multiwavelength",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-space-three-arm-reference-v1/arm-03-solar-flare/render.png",
+        "sha256": "a659a3c859b2ea07f5458f083888118003f16edff620d570b00ec60d527811e7",
+        "width": 1536,
+        "height": 1024
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_continuity",
+          "status": "pass",
+          "evidence": "The visible face preserves the reference's oval-to-tapered outline, similar eye aperture and spacing, lower-face shape, hairline, and long dark wavy hair. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional heliophysicist remains visibly adult."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "Subject, gloved arm, controller, telescope, window, and display form one coherent field-laboratory scene."
+        },
+        {
+          "id": "required_interaction_contact",
+          "status": "pass",
+          "evidence": "The gloved hand visibly encloses the telescope-console control."
+        },
+        {
+          "id": "unrequested_text_artifacts",
+          "status": "pass",
+          "evidence": "Tiny interface numerals do not carry the event; solar disk, active region, burst, and connected loops supply the meaning."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_space_flare_sun_context",
+          "status": "pass",
+          "evidence": "A complete solar disk visibly owns the localized burst."
+        },
+        {
+          "id": "vo_space_flare_active_region",
+          "status": "pass",
+          "evidence": "A concentrated magnetically structured active region surrounds the brightest event."
+        },
+        {
+          "id": "vo_space_flare_burst",
+          "status": "pass",
+          "evidence": "A compact saturated white-orange brightening occupies that active region."
+        },
+        {
+          "id": "vo_space_flare_response",
+          "status": "pass",
+          "evidence": "Curved bright coronal loops remain visibly connected to and local around the burst."
+        },
+        {
+          "id": "representation_false_color_multiwavelength",
+          "status": "pass",
+          "evidence": "The blue-gold whole-disk mapping and color scale read as a false-color solar observation, not a detached explosion."
+        }
+      ],
+      "failed_gate_ids": [],
+      "technical_pixel_status": "pass"
+    }
+  ],
+  "aggregate": {
+    "qualified_arms": 3,
+    "total_arms": 3,
+    "profile_gate_passes": 15,
+    "profile_gate_total": 15,
+    "common_gate_passes": 15,
+    "common_gate_total": 15,
+    "all_gates_pass_in_each_saved_image": true,
+    "technical_pixel_status": "pass",
+    "requesting_user_preference": "pending_separate_judgment",
+    "scope": "These three randomly assigned, single-generation holdouts only; this is not a universal guarantee for all 16 profiles or an aesthetic preference judgment."
+  }
+}

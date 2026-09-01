@@ -1,0 +1,84 @@
+{
+  "schema_version": "photo-visual-profile-render-test/v1",
+  "test_id": "mythology-three-arm-reference-20260901-arm-02-katabasis",
+  "arm_id": "arm-02-katabasis",
+  "profile_id": "katabasis_living_underworld_descent",
+  "pack_id": "ce021c982f366a85",
+  "runtime_prompt_id": "d248a7971fc0f019",
+  "source_request_sha256": "ac3d78504fabac5fdbed1c19d51b0e8dcfaf0a5bb0cbb32f92d1893d778813c0",
+  "source_authorial_core_sha256": "6d759845e851d666b9727b55edee6cb420ea0d370e7dd5252c1611bc8ace7d3b",
+  "source_intent_lock_sha256": "ec49b044ba4d0d1a1bf71b8963bd43d664a5f2c47c4a2e0d77d892297d5dffc0",
+  "effective_visual_contract_sha256": "5a8df72a8e0d920c1b23adca52629ace7570eb05f6ca9eb713e511a25314be45",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "scope": "visible_face_and_hair_appearance_only",
+    "prohibited_inference": [
+      "same-person identity",
+      "biometric identity",
+      "sensitive or protected traits"
+    ]
+  },
+  "gate_freeze": {
+    "timing": "bound in candidate_pack and composed_prompt_audit before the single image call",
+    "partial_policy": "partial_is_fail",
+    "same_image_policy": "all profile gates must pass simultaneously in render-attempt-01.png",
+    "pixel_evidence_required": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true
+  },
+  "profile_hard_gates": [
+    {
+      "id": "vo_myth_katabasis_living",
+      "review_scale": "both",
+      "criterion": "The descending traveler remains visibly alive and agentive."
+    },
+    {
+      "id": "vo_myth_katabasis_origin",
+      "review_scale": "thumbnail",
+      "criterion": "Human-world origin cues remain visible behind the traveler."
+    },
+    {
+      "id": "vo_myth_katabasis_threshold",
+      "review_scale": "both",
+      "criterion": "A bounded crossing establishes a clear downward direction."
+    },
+    {
+      "id": "vo_myth_katabasis_destination",
+      "review_scale": "native",
+      "criterion": "A distinct underworld realm lies beyond the crossed boundary."
+    },
+    {
+      "id": "vo_myth_katabasis_purpose",
+      "review_scale": "native",
+      "criterion": "A purpose token or mission cue accompanies the living visitor."
+    }
+  ],
+  "supplemental_pixel_checks": [
+    {
+      "id": "core_actor_action_target_consequence",
+      "review_scale": "both",
+      "criterion": "The living actor, downward and astrolabe action, ferryman/map-tablet target, and broken-chain consequence are simultaneously legible."
+    },
+    {
+      "id": "reference_visible_appearance_continuity",
+      "review_scale": "native",
+      "criterion": "The generated adult subject retains the reference's observable face-and-hair cues without making a same-person claim."
+    },
+    {
+      "id": "anatomy_and_contact_coherence",
+      "review_scale": "native",
+      "criterion": "Hands, feet, astrolabe grip, skeletal reach, chain interaction, and ground contact are grossly coherent."
+    },
+    {
+      "id": "unrequested_text_artifacts",
+      "review_scale": "native",
+      "criterion": "No distracting pseudo-lettering or malformed text appears when readable text was not requested."
+    }
+  ],
+  "qualification_rule": {
+    "qualified": "every profile_hard_gate is pass in the same saved image",
+    "revise": "one or more profile_hard_gates fail or are only partial",
+    "unscored": "no saved pixels are available for direct review",
+    "user_preference": "pending until provided directly by the requesting user"
+  }
+}

@@ -1,0 +1,228 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Independently test whether the moirai_fate_thread_life_allocation profile survives both audited prompt composition and one reference-conditioned generated image."
+  },
+  "evidence": [
+    {
+      "id": "e-source-reference",
+      "kind": "source-observation",
+      "claim": "The supplied reference visibly shows an adult-scale frontal portrait with long dark center-parted hair and readable facial geometry; it is used only as appearance evidence.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The composed audit passed all intent-lock, visual-obligation, identity-reference-mode, negative-byte, and literal-evidence checks.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/composed_prompt_audit.json"
+    },
+    {
+      "id": "e-runtime",
+      "kind": "package-check",
+      "claim": "The exact native runtime string and one reference file passed the render-request audit before generation.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "One built-in image generation call delivered a concrete 1448x1086 PNG; no retry or fallback was used.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render-attempt-01.png sha256=054ec31dbff7a446e317de6aa4ab8bf93056e6139564e04869893160baeb0395"
+    },
+    {
+      "id": "e-thumbnail",
+      "kind": "render-observation",
+      "claim": "At thumbnail scale, three separate role stations, a continuous red path, the adult recipient, and the glowing hourglass are readable.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render-attempt-01-thumbnail.png"
+    },
+    {
+      "id": "e-native",
+      "kind": "render-observation",
+      "claim": "Native crops prove spin and measure but show open shears around an intact filament with no severed gap; source-visible eye aperture continuity is also not fully judgeable.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/self_review.json"
+    },
+    {
+      "id": "e-review-audit",
+      "kind": "package-check",
+      "claim": "The render-review auditor found no schema failures and correctly rejected technical qualification because vo_myth_moirai_cut failed.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/self_review_audit.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One still must simultaneously show three distinct adult workers spinning, measuring, and actually cutting one continuous mortal life thread whose allotted result changes the same adult recipient's hourglass state.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-three-role-chain",
+        "statement": "Three distinct workers own the spin, measure, and cut stages along one thread.",
+        "evidence_ids": [
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "role separation",
+          "tool ownership",
+          "single continuous thread topology"
+        ]
+      },
+      {
+        "id": "inv-cut-endpoint",
+        "statement": "The third station must show a severed endpoint rather than scissors near an intact bent thread.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-native"
+        ],
+        "causal_controls": [
+          "closed blade contact",
+          "visible severed gap",
+          "detached allotted segment"
+        ]
+      },
+      {
+        "id": "inv-reference-appearance",
+        "statement": "The central worker should retain comparable visible face and hair cues without any identity judgment.",
+        "evidence_ids": [
+          "e-source-reference",
+          "e-native"
+        ],
+        "causal_controls": [
+          "adult eye aperture visibility",
+          "face length",
+          "jaw width",
+          "center-parted long dark hair"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "framing within simultaneous legibility",
+      "camera height",
+      "light direction",
+      "storm detail"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-cut-not-severed",
+      "scale": "regional",
+      "axis": "action topology",
+      "source_state": "Prompt requires open role ownership culminating in a visibly cut endpoint and a severed allotted segment.",
+      "render_state": "Shears remain open around one intact luminous strand that bends downward with no visible gap.",
+      "evidence_ids": [
+        "e-native",
+        "e-review-audit"
+      ]
+    },
+    {
+      "id": "m-eye-comparison-blocked",
+      "scale": "local",
+      "axis": "reference-visible eye geometry",
+      "source_state": "Reference eyes are frontally open enough to assess aperture, shape, and spacing.",
+      "render_state": "The central worker looks down with lowered lids, blocking a complete appearance comparison.",
+      "evidence_ids": [
+        "e-source-reference",
+        "e-native"
+      ]
+    },
+    {
+      "id": "m-hidden-spinner-hand",
+      "scale": "local",
+      "axis": "hand visibility",
+      "source_state": "The frozen prompt requests all six worker hands unobstructed.",
+      "render_state": "Only five worker hands are clearly exposed; the spinner's second hand is hidden.",
+      "evidence_ids": [
+        "e-native"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-cut-continuity-collapse",
+      "stage": "generator-response",
+      "statement": "In this single sample, the generator preserved line continuity and the hourglass relation by bending the strand through the shears instead of realizing a severed endpoint; one sample cannot establish a systematic model mechanism.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-native"
+      ],
+      "falsifier": "A matched-condition render from the same frozen prompt that shows a clear severed gap and detached measured segment would weaken a systematic generator-response explanation."
+    },
+    {
+      "id": "h-appearance-viewpoint",
+      "stage": "prompt-interaction",
+      "statement": "The downward task gaze made the measurement action readable but reduced comparability of the reference-visible eyes; this remains a tradeoff hypothesis rather than proven prompt causality.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-native"
+      ],
+      "falsifier": "A task-focused downward gaze that still exposes the full eye aperture and spacing would show the tradeoff is not necessary."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill change is authorized or supported by one motivating render; retain the failure as evaluation evidence.",
+    "generalization_basis": "One frozen prompt and one no-retry image are insufficient for a reusable runtime rule.",
+    "hypothesis_ids": [
+      "h-cut-continuity-collapse",
+      "h-appearance-viewpoint"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-runtime",
+        "e-review-audit"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-thumbnail",
+        "e-native"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "current-moirai-arm",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "three-role allocation",
+          "cut endpoint",
+          "thread continuity",
+          "reference-visible appearance"
+        ],
+        "evidence_ids": [
+          "e-native"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The preflight contracts passed and four of five Moirai pixel gates passed, but the cut endpoint remained intact; strict simultaneous qualification therefore fails and user preference remains unscored.",
+    "evidence_ids": [
+      "e-prompt",
+      "e-runtime",
+      "e-native",
+      "e-review-audit"
+    ]
+  }
+}

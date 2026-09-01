@@ -1,0 +1,26 @@
+{
+  "schema_version": "space-three-arm-random-assignment/v1",
+  "created_at": "2026-09-01T18:36:47+09:00",
+  "random_method": "32-bit seed from /dev/urandom; each domain bucket selected by documented integer-division modulo; each variation bucket selected independently by documented integer-division modulo",
+  "seed": 2253228305,
+  "source_profile_buckets": {
+    "astronomical_structure": ["active_comet_coma_tail_system", "barred_spiral_galaxy_structure", "interacting_galaxies_tidal_structure", "einstein_ring_lens_alignment", "black_hole_shadow_reconstruction", "relativistic_accretion_disk_visualization", "protostar_disk_bipolar_outflow", "supernova_remnant_shock_shell"],
+    "orbital_operation": ["eva_spacewalk_work_system", "microgravity_orbital_interior", "spacecraft_docking_capture_alignment"],
+    "solar_or_surface": ["auroral_arc_curtain_atmosphere", "solar_prominence_magnetic_loop", "solar_flare_active_region_burst", "cme_coronagraph_snapshot", "planetary_rover_surface_operation"]
+  },
+  "selection_formula": {
+    "astronomical_structure": "seed % 8",
+    "orbital_operation": "floor(seed / 11) % 3",
+    "solar_or_surface": "floor(seed / 37) % 5",
+    "astronomical_variation": "floor(seed / 101) % 3",
+    "orbital_variation": "floor(seed / 211) % 3",
+    "solar_or_surface_variation": "floor(seed / 431) % 3"
+  },
+  "assignments": [
+    {"arm_id":"arm-01-barred-galaxy","profile_id":"barred_spiral_galaxy_structure","variation_key":"orbital_observatory_control_room"},
+    {"arm_id":"arm-02-microgravity","profile_id":"microgravity_orbital_interior","variation_key":"scheduled_station_inspection"},
+    {"arm_id":"arm-03-solar-flare","profile_id":"solar_flare_active_region_burst","variation_key":"traverse_mobile_field_lab"}
+  ],
+  "reference": {"path":"/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg","sha256":"3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea","role":"visible appearance reference for an original adult fictional subject; not identity evidence"},
+  "independence_policy": {"native_image_calls_per_arm":1,"semantic_retries":0,"cross_arm_inputs":false,"sibling_directories_must_not_be_read":true,"generator_and_reviewer_in_same_arm":true,"root_review_after_all_arms":true}
+}

@@ -1,0 +1,110 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent complex reference-guided science-editorial test image in which a localized active-region solar flare is visibly testable without becoming a detached coronal event; use the attached portrait only as appearance guidance for an original adult fictional subject.",
+  "subject": "An original visibly adult heliophysicist whose visible facial structure and long dark wavy hair are guided only by the attached appearance reference.",
+  "setting": "A pressurized mobile lunar field laboratory halted mid-traverse, with lunar regolith and a small Earth visible through a window.",
+  "event": "The heliophysicist operates a shielded solar telescope while a nontext false-color display shows a localized magnetically complex active region producing an intense compact brightening or paired flare ribbons and a short connected coronal response.",
+  "visual_priorities": [
+    "Keep the adult subject's face, long dark wavy hair, and gloved telescope interaction readable as appearance continuity rather than identity evidence.",
+    "Keep the flare localized inside one active region on the visible solar disk with a compact bright core or paired ribbons and nearby connected coronal response.",
+    "Keep the lunar mobile-laboratory context, regolith, and small Earth simultaneously legible in a landscape frame."
+  ],
+  "baseline_prompt_en": "Create a landscape science-editorial photograph inside a pressurized mobile lunar field laboratory halted mid-traverse. An original visibly adult heliophysicist with visible facial structure and long dark wavy hair guided only by the attached appearance reference operates a shielded solar telescope with one gloved hand. Keep the face and telescope interaction readable. Lunar regolith and a small Earth appear through the window. A large nontext false-color solar observation display shows the solar disk, with a localized magnetically complex active region that remains visually legible. Inside that region, show an intense compact brightening or paired flare ribbons and a short connected coronal response in nearby loops or plasma. The event stays localized on the disk as an active-region eruption rather than dominating the entire scene. Use crisp instrument detail, controlled cabin light, and credible photographic depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "basis": "request_context",
+      "resolution": "Make the chosen solar-flare visual meaning explicit and pixel-testable in the composed photograph rather than treating it as a decorative label.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the independently assigned mobile lunar heliophysics laboratory scene as the complex test context and preserve all elements needed to judge the solar event in one frame.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Reference appearance mode: use only observable facial structure, eye aperture and spacing, lower-face shape, hairline, and long dark wavy hair to guide an original visibly adult fictional subject; do not infer identity or sensitive traits.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "visual_semantics_goal",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a localized magnetically complex active region that remains visually legible"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "An original visibly adult heliophysicist"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "an intense compact brightening or paired flare ribbons and a short connected coronal response"
+      },
+      {
+        "anchor_id": "reference_appearance_mode",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "visible facial structure and long dark wavy hair guided only by the attached appearance reference"
+      },
+      {
+        "anchor_id": "complex_lunar_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "setting",
+        "prompt_evidence": "inside a pressurized mobile lunar field laboratory halted mid-traverse"
+      },
+      {
+        "anchor_id": "false_color_representation",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "color",
+        "prompt_evidence": "A large nontext false-color solar observation display shows the solar disk"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "setting",
+      "color"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "science-editorial photography",
+    "family": "credible lunar field-research reportage",
+    "evidence": [
+      "crisp instrument detail",
+      "controlled cabin light",
+      "credible photographic depth"
+    ]
+  },
+  "variation_key": "traverse_mobile_field_lab"
+}

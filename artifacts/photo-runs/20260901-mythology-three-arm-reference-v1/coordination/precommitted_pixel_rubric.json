@@ -1,0 +1,63 @@
+{
+  "schema": "mythology-pixel-qualification-rubric/v1",
+  "created_before_render_results_observed": true,
+  "decision_rule": {
+    "allowed_gate_statuses": ["pass", "fail"],
+    "partial_counts_as": "fail",
+    "same_image_requirement": true,
+    "profile_qualified_when": "all five profile hard gates pass in the same saved image",
+    "representative_eligible_when": "profile qualified and all common technical controls pass",
+    "prompt_or_audit_pass_is_pixel_pass": false,
+    "requesting_user_preference": "pending_separate_judgment"
+  },
+  "common_technical_controls": [
+    {
+      "id": "reference_visible_appearance_continuity",
+      "scale": "native",
+      "description": "The original adult fictional subject retains the reference's visible face-shape, eye-aperture, lower-face, hairline, and long dark hair cues without claiming identity or same-person recognition."
+    },
+    {
+      "id": "adult_age_continuity",
+      "scale": "both",
+      "description": "The subject remains visibly adult with no de-aging or doll-like reshaping."
+    },
+    {
+      "id": "gross_structural_coherence",
+      "scale": "both",
+      "description": "Bodies, limbs, props, and spatial relations remain coherent enough to support the tested action."
+    },
+    {
+      "id": "required_contact_anatomy",
+      "scale": "native",
+      "description": "Hands, tools, thread, weapon, threshold, and other required contacts are physically readable where the concept depends on them."
+    },
+    {
+      "id": "unrequested_text_artifacts",
+      "scale": "native",
+      "description": "No pseudo-writing, captions, watermarks, or signage supplies missing semantics."
+    }
+  ],
+  "arms": {
+    "arm-01-chaoskampf": [
+      {"id": "vo_myth_chaoskampf_champion", "scale": "thumbnail", "description": "A tradition-bound ordering champion remains distinct and readable."},
+      {"id": "vo_myth_chaoskampf_adversary", "scale": "both", "description": "The primordial chaos adversary remains visually and culturally distinct."},
+      {"id": "vo_myth_chaoskampf_combat", "scale": "both", "description": "Contact geometry makes the active combat causally legible."},
+      {"id": "vo_myth_chaoskampf_defeat", "scale": "native", "description": "The adversary visibly transitions into defeat or partition."},
+      {"id": "vo_myth_chaoskampf_order", "scale": "both", "description": "New cosmic order visibly results from that specific defeat."}
+    ],
+    "arm-02-katabasis": [
+      {"id": "vo_myth_katabasis_living", "scale": "both", "description": "The descending traveler remains visibly alive and agentive."},
+      {"id": "vo_myth_katabasis_origin", "scale": "thumbnail", "description": "Human-world origin cues remain visible behind the traveler."},
+      {"id": "vo_myth_katabasis_threshold", "scale": "both", "description": "A bounded crossing establishes a clear downward direction."},
+      {"id": "vo_myth_katabasis_destination", "scale": "native", "description": "A distinct underworld realm lies beyond the crossed boundary."},
+      {"id": "vo_myth_katabasis_purpose", "scale": "native", "description": "A purpose token or mission cue accompanies the living visitor."}
+    ],
+    "arm-03-moirai": [
+      {"id": "vo_myth_moirai_three_roles", "scale": "thumbnail", "description": "Three fate figures remain distinct as separate workers."},
+      {"id": "vo_myth_moirai_spin", "scale": "native", "description": "The first role visibly forms the thread origin."},
+      {"id": "vo_myth_moirai_measure", "scale": "both", "description": "The middle role visibly measures an allotted length."},
+      {"id": "vo_myth_moirai_cut", "scale": "both", "description": "The final role visibly cuts the thread endpoint."},
+      {"id": "vo_myth_moirai_continuity", "scale": "native", "description": "One life thread continuously links all three actions."}
+    ]
+  }
+}
