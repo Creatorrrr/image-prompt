@@ -1,0 +1,95 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent, randomized, complex photographic test scene for the arm-assigned vibraphone meaning, use the attachment only for bounded visible adult appearance cues, render the image, and judge whether the instrument semantics are actually visible in the pixels.",
+  "subject": "An original adult vibraphonist performing on an unmistakable motor-equipped pedal vibraphone.",
+  "setting": "An empty planetarium's circular stage during overnight projector calibration.",
+  "event": "At the first motor-on downbeat, the performer strikes separate metal bars with two yarn-wrapped mallets while depressing the damper pedal and the resonator fan disks turn beneath the bar deck.",
+  "visual_priorities": [
+    "Readable vibraphone anatomy: silvery metal bars, ranked resonator tubes with visible rotating fan disks, and a full-width damper pedal.",
+    "Simultaneously readable mallet-to-bar contact and foot-to-pedal action in one coherent photograph.",
+    "The attachment governs only visible adult facial appearance, hairstyle, makeup placement, and skin-surface finish for an original performer."
+  ],
+  "baseline_prompt_en": "A photorealistic editorial photograph on an empty planetarium's circular stage during overnight projector calibration. An original adult vibraphonist performs on an unmistakable motor-equipped pedal vibraphone built around two rows of silvery metal bars. At the first motor-on downbeat, her two yarn-wrapped mallets make real playing contact with separate metal bars while her right foot visibly depresses the full-width damper pedal. Beneath the bar deck, complete ranks of vertical resonator tubes reveal circular motor-driven fan disks turning inside several tube mouths. This combined metal-bar deck, resonator bank, motor fans, and damping pedal establishes the instrument as a vibraphone, distinct from a xylophone's wooden-bar construction. Use Image 1 only for the original adult performer's visible facial appearance, long dark wavy hairstyle, restrained warm eye makeup, natural rose lips, and luminous skin-surface finish. A narrow amber follow spot intersects cool moving constellation projections and dim red aisle lights. A low 35 mm three-quarter view from the audience aisle keeps her face in the upper third, sends the bars diagonally through the frame, and preserves an unobstructed sightline under the instrument to the fans, resonators, pedal, and pressing foot.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent randomized complex concept render test",
+      "source_text": "그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "One arm independently selects a seeded setting-event-light-camera combination, writes a prompt using the attachment within its declared scope, generates one image, and performs pixel-level semantic checks.",
+      "sources": []
+    },
+    {
+      "term": "반영한 키워드",
+      "source_text": "반영한 키워드",
+      "basis": "request_context",
+      "resolution": "For this routed arm, the assigned keyword means a vibraphone with visible metal bars, resonator fan disks, a damper pedal, and simultaneous mallet-and-pedal performance action, visibly distinguishable from a xylophone.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached Image 1 only as a scoped visible-appearance reference for an original adult performer: visible face, hairstyle, makeup placement, and skin-surface finish.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a photorealistic editorial photograph on an empty planetarium's circular stage during overnight projector calibration"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakable motor-equipped pedal vibraphone built around two rows of silvery metal bars"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "her two yarn-wrapped mallets make real playing contact with separate metal bars while her right foot visibly depresses the full-width damper pedal"
+      },
+      {
+        "anchor_id": "core_reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use Image 1 only for the original adult performer's visible facial appearance, long dark wavy hairstyle, restrained warm eye makeup, natural rose lips, and luminous skin-surface finish"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic editorial music performance",
+    "family": "cinematic architectural performance reportage",
+    "evidence": [
+      "narrow amber follow spot intersecting cool moving constellation projections",
+      "low 35 mm three-quarter view from the audience aisle"
+    ]
+  },
+  "variation_key": "arm-04-vibraphone-seed-2834404087"
+}

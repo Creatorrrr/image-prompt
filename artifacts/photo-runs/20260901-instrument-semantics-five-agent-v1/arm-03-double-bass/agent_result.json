@@ -1,0 +1,119 @@
+{
+  "contract_version": "instrument-semantics-agent-result/v1",
+  "arm_id": "arm-03-double-bass",
+  "profile_id": "double_bass_human_scale_floor_supported",
+  "confusion_target": "cello",
+  "status": "complete",
+  "technical_qualification": "pass",
+  "user_judgment": "pending",
+  "concept": {
+    "summary": "An original adult double-bass performer sustains a bowed phrase in a decommissioned coastal pump hall while sea mist enters at blue hour, photographed as a low eye-level 35mm vertical full-body environmental portrait under cyan window light and one tungsten lamp.",
+    "setting": "decommissioned coastal pump hall at blue hour",
+    "event": "sustained bowed phrase while a rolling service door admits sea mist",
+    "lighting": "cyan blue-hour windows crossed by one warm tungsten maintenance lamp",
+    "camera_composition": "low eye-level 35mm vertical full-body environmental frame with complete instrument and floor junction visible"
+  },
+  "randomization": {
+    "seed_uint32": 1711376315,
+    "method": "One unsigned 32-bit /dev/urandom draw, then base-5 modulo selection across independent setting, event, lighting, and camera-composition menus.",
+    "selected_indices": [0, 3, 2, 0]
+  },
+  "freeze_record": {
+    "final_authorial_core_file_sha256": "37d52a88b112537a55511697c9bc5ce4407a7d4306f375b116b9fb71a9ab0d4a",
+    "canonical_authorial_core_sha256": "745c29fbc65cb9a5fff5a167fb1d415a5f24ac1759c0a945a4518dd3c69dccff",
+    "canonical_intent_lock_sha256": "8c892c425707149812019e53ed4b58850e34c31b97c4456632d38ac69c88f95a",
+    "open_dimensions": ["color", "material", "atmosphere"],
+    "note": "The first preflight rejected three descriptive open-dimension labels before any pack existed; they were mechanically normalized to allowed schema names without changing the selected concept or baseline prompt. Original hashes remain recorded in test_case.json."
+  },
+  "exact_prompt_en": "Create one photorealistic vertical environmental photograph. An original adult double-bass performer stands in a decommissioned coastal pump hall at blue hour, on wet concrete as a partly open rolling service door admits a narrow ribbon of sea mist. A full-sized upright double bass rises nearly to the standing performer's head: a human-scale waisted wooden body stands upright nearly as tall as the adult performer, and the long neck rises near or above the player's head, with pegbox and scroll fully visible. A load-bearing endpin anchors the large body to the floor at a clearly visible contact point. The standing or high-stool performer bows or plucks the strings; here the standing adult fingers the neck while the bow contacts the strings, and the right hand draws a bow in clear contact across the strings. The relationship is explicit because human-scale upright-bass geometry beside a standing adult makes clear that a medium cello held between conventionally seated knees does not substitute. Cyan window light crosses one warm tungsten maintenance lamp, revealing wet reflections, varnished wood, matte charcoal wool clothing, and sparse rust-red pipe accents. Use a low eye-level 35mm full-body composition that keeps the performer, scroll, broad lower bouts, hands, bow contact, endpin, and floor junction simultaneously legible, with the mist held as a narrow backlit layer behind the scroll. Image 1 contributes only observable visible adult facial appearance, long dark wavy hairstyle, understated eye makeup, and softly luminous natural skin-surface finish. Realize those surface cues in a newly designed original adult performer whose identity, origin, health, attractiveness, personality, and protected traits remain unspecified.",
+  "exact_negative_en": "excessive HDR, plastic-looking skin, 3D render look, over-processed retouching, fake-looking background, distorted fingers, low resolution, body distortion, illustration look",
+  "audits": {
+    "candidate_composed": {
+      "status": "pass",
+      "quality_status": "warn",
+      "pack_id": "d048a78f1c0121cd",
+      "failures": 0,
+      "note": "Only advisory length and uncovered-intent-preserved warnings; all binding and hard-evidence checks passed."
+    },
+    "render_request": {
+      "status": "pass",
+      "runtime_prompt_id": "f41c66802369e7ff",
+      "negative_matches_pack": true,
+      "reference_count": 1,
+      "failures": 0
+    }
+  },
+  "generation": {
+    "tool": "builtin_image_gen",
+    "call_count": 1,
+    "retry_count": 0,
+    "result": "success",
+    "preview_only": false,
+    "source_output_path": "/Users/chasoik/.codex/generated_images/01a05a13-8ce9-7d20-9a9b-ec132bae2a5d/exec-b7dfea29-0ca0-4294-94e4-0907c0cddb73.png",
+    "saved_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/result.png",
+    "sha256": "14e1ffab35d6a823033244e2a3fec3c483372553b270dcc3daf1d00039710724",
+    "dimensions": "1024x1536",
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/result-thumbnail.png"
+  },
+  "gate_results": [
+    {
+      "gate_id": "vo_instrument_double_bass_human_scale",
+      "status": "pass",
+      "evidence": "At thumbnail scale the instrument runs from a scroll above the standing adult's head to a floor endpin and has a near-human-scale broad body."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_long_neck",
+      "status": "pass",
+      "evidence": "Fingerboard, elongated neck, pegbox, and scroll are continuous and rise above the performer's head."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_floor_endpin",
+      "status": "pass",
+      "evidence": "A coherent endpin with dark foot visibly connects the body to wet concrete and supports it."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_play_relation",
+      "status": "pass",
+      "evidence": "The standing adult fingers the upper fingerboard with the left hand while the right-hand bow visibly crosses the strings near the bridge."
+    },
+    {
+      "gate_id": "vo_instrument_double_bass_not_cello",
+      "status": "pass",
+      "evidence": "Standing posture, head-high neck and scroll, very large body, and floor support jointly distinguish a double bass from a conventionally seated cello."
+    }
+  ],
+  "appearance_reference_assessment": {
+    "status": "pass",
+    "scope": "visible adult face, hairstyle and hair color, makeup placement, and skin-surface finish only",
+    "evidence": "Long dark softly wavy hair, understated eye makeup, and a softly luminous natural skin finish remain visibly continuous with Image 1 at native scale.",
+    "same_person_or_biometric_claim": false,
+    "protected_trait_or_health_attractiveness_personality_inference": false
+  },
+  "ledger": {
+    "run_id": "fbe1826b0c339f54",
+    "prompt_id": "25c40823808c4bf3",
+    "candidate_pack_version": "v6",
+    "source_ref": "d462f0c4cde07e0a62750876f53b43e548c21e1d",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "worktree_id": "main-workspace",
+    "independent_no_cross_arm_inputs": true
+  },
+  "artifacts": [
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/authorial_core.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/test_case.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/visual_intent.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/candidate_pack.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/composed_prompt.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/candidate_composed_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/render_request.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/render_request_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/generation_result.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/result.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/result-thumbnail.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/pixel_review.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/image_runs.ndjson",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/run_manifest.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-03-double-bass/agent_result.json"
+  ]
+}

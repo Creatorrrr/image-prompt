@@ -1,0 +1,68 @@
+{
+  "contract_version": "photo-independent-arm-summary/v1",
+  "arm_id": "revealing-arm-c",
+  "phase": "B",
+  "status": "completed_nonqualifying",
+  "random_seed": 144073,
+  "profile_id": "run_local_bounded_side_waist_cutouts",
+  "test_case_id": "rf-c-side-waist-cutouts",
+  "pack": {
+    "contract_version": "photo-candidate-pack/v6",
+    "pack_id": "a7e986d2286c25c9",
+    "sha256": "04a4ce3535e58ac03a6e81b13b44fa06eceae90cf85198a9a528a3dbef9602ed"
+  },
+  "preflight": {
+    "composed_prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "custom_topology_literal_preflight": "pass"
+  },
+  "generation": {
+    "tool": "built_in_image_gen",
+    "image_call_count": 1,
+    "retry_count": 0,
+    "paid_fallback_used": false,
+    "tool_status": "success",
+    "run_id": "ca55d8879773bfe3",
+    "prompt_id": "07a76321e5fc376a"
+  },
+  "reference": {
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "general_visible_appearance_guidance_only",
+    "identity_preservation": false
+  },
+  "render_artifacts": {
+    "native": {
+      "path": "generated_native.png",
+      "sha256": "0e8ff67afb8b53e18e28fa065cf627d42895b1c6fdf33c0a3135c7245321fc55",
+      "dimensions": "1024x1535"
+    },
+    "thumbnail_512": {
+      "path": "generated_thumbnail_512.png",
+      "sha256": "ccd78d9a4e0ed76648472ee01f6edce07fdce22c6e9796b4cd42320ff03ea0cf",
+      "dimensions": "341x512"
+    }
+  },
+  "pixel_qualification": {
+    "status": "fail",
+    "score_state": "unscored",
+    "passed_gate_count": 4,
+    "required_gate_count": 5,
+    "failed_gate_ids": [
+      "rl_side_cutouts_bounded_edges"
+    ],
+    "failure_summary": "The two side openings reach the outer lateral silhouette and therefore lack complete closed fabric perimeters at native scale."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "score_state": "unscored",
+    "source": "not_yet_received"
+  },
+  "representative_promotion": {
+    "promoted": false,
+    "reason": "Strict simultaneous 5/5 pixel qualification was not achieved."
+  },
+  "independence": {
+    "other_arm_directories_or_outputs_read": false,
+    "cross_arm_inputs_used": false
+  }
+}

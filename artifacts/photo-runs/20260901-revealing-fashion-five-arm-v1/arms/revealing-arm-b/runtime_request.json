@@ -1,0 +1,37 @@
+{
+  "schema_version": "photo-image-render-request/v2",
+  "pack_id": "37c3f83ab2b21b29",
+  "runtime_prompt_en": "Create a photorealistic high-fashion location editorial on the rain-darkened banked rooftop test track of the former Fiat Lingotto factory in Turin. One unmistakably adult woman in her early thirties sprints along the banked curve while unwinding a scarlet windsock from a chrome survey reel; the fabric catches the crosswind in a sweeping arc, her leading foot lands on reflective asphalt, one hand braces the reel at her hip, and droplets trace the taut line. Frame her as a rear-three-quarter full figure, with the entire body, opening, closure, visible front-side silhouette, reel, and sprinting action readable together. She wears a non-explicit revealing-fashion ensemble realized as a structured one-piece dress: a bounded oval upper-back opening is enclosed by continuous finished fabric edges at both shoulders, both side seams, and the waist. A centered metal neck clasp plus a narrow horizontal opaque fabric bridge visibly secure the opening during motion. Dense opaque front and side panels visibly cover the breasts and pelvis, and the three-quarter torso angle keeps that stable front-side coverage inspectable. The exposed skin inside the finished oval opening itself carries the open-back topology; swept-up hair clears every edge, directional rooftop light and soft side fill reveal the boundary, and the garment remains a single closed-front dress in solid nontransparent fabric. Preserve the monumental concrete helix, guardrails, rain reflections, Turin roofs, distant mountain haze, natural adult skin texture, wet footprints, wind-loaded cloth, and crisp industrial detail. Image 1 serves only as general visible appearance guidance for the adult subject's face, hair, and complexion; create an original adult editorial character with independently authored body, garment, pose, action, and setting.\n\nAvoid: impossible perspective, illustration look, 3D render look, low resolution, excessive HDR, cartoon style, broken window geometry, warped walls, over-processed retouching, fake-looking background",
+  "runtime_negative_en": "impossible perspective, illustration look, 3D render look, low resolution, excessive HDR, cartoon style, broken window geometry, warped walls, over-processed retouching, fake-looking background",
+  "source_intent_lock_sha256": "93da48156da393ce7be72826c11a4a1aa1b55c44c36b7a72a38871e73def634d",
+  "audit_boundary": {
+    "composed_prompt_audit_status": "pass",
+    "runtime_prompt_audit_status": "not_run",
+    "inherits_composed_prompt_pass": false
+  },
+  "references": [
+    {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "general_visible_appearance_guidance",
+      "scope": "Adult subject general visible face, hair, and complexion guidance only.",
+      "identity_or_same_person_claim": false,
+      "sensitive_attribute_inference": false,
+      "body_shape_inference": false,
+      "source_outfit_inference": false
+    }
+  ],
+  "run_local_test_binding": {
+    "profile_id": "run_local_structured_open_back_garment",
+    "test_case_id": "rf-b-structured-open-back",
+    "required_view": "rear-three-quarter full figure",
+    "strict_gate_count": 5,
+    "partial_is_fail": true
+  },
+  "image_call_policy": {
+    "tool": "built_in_image_gen",
+    "maximum_calls": 1,
+    "retries_allowed": false,
+    "paid_api_fallback_allowed": false
+  }
+}

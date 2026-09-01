@@ -1,0 +1,69 @@
+{
+  "contract_version": "photo-arm-phase-b-report/v1",
+  "arm_id": "revealing-arm-b",
+  "phase": "B",
+  "status": "complete_technical_pass_user_judgment_pending",
+  "outcome": "One audited built-in render was generated and preserved. All five run-local structured-open-back pixel gates passed simultaneously at their required native and/or 512-thumbnail scales; user judgment remains pending and unscored, and the image was not promoted as representative.",
+  "execution_invariants": {
+    "authorial_core_file_bytes_preserved": true,
+    "authorial_core_file_sha256": "d1a3b0634e4a387bf952e1ef8cd69b8623d27e2c9ea91e8c4f62e34a29038d4d",
+    "candidate_pack_count": 1,
+    "built_in_image_gen_call_count": 1,
+    "retry_count": 0,
+    "paid_api_fallback_used": false,
+    "other_arm_input_used": false
+  },
+  "preflight": {
+    "pack_id": "37c3f83ab2b21b29",
+    "authorial_core_canonical_sha256": "72cdd764694d7ce015188993fba36c4f3ca2222eba951fa640cfbd3b7ec3c74c",
+    "intent_lock_sha256": "93da48156da393ce7be72826c11a4a1aa1b55c44c36b7a72a38871e73def634d",
+    "composed_audit": "pass",
+    "runtime_audit": "pass",
+    "reference_hash_verified": true
+  },
+  "render": {
+    "run_id": "71734af8647bd6c8",
+    "prompt_id": "0ad0d176554c22cf",
+    "runtime_prompt_id": "ff954f754ebe8dcc",
+    "native_image": {
+      "path": "generated_images/revealing-arm-b-native.png",
+      "sha256": "21acf999d11ea41a6bec58af2cb8f817100a78429a48a7221ed9cd30341fa1f8",
+      "dimensions": "1086x1448"
+    },
+    "thumbnail_512": {
+      "path": "generated_images/revealing-arm-b-thumbnail-512.png",
+      "sha256": "a00480b23b79d150d04177905eec80a8da2abc2389a2fd3c36a379d16f72dbbc",
+      "dimensions": "384x512"
+    }
+  },
+  "pixel_qualification": {
+    "review_mode": "blind-ish strict pixel review",
+    "partial_is_fail": true,
+    "status": "pass",
+    "result": "5/5",
+    "same_image_simultaneity": true,
+    "user_judgment": "pending_unscored",
+    "representative_promotion": false
+  },
+  "evidence_files": [
+    "target_assignment.json",
+    "test_case.json",
+    "candidate_pack.json",
+    "composed_prompt.json",
+    "composed_audit.json",
+    "runtime_request.json",
+    "runtime_audit.json",
+    "run_ledger.ndjson",
+    "run_manifest.json",
+    "pixel_review.json",
+    "arm_summary.json"
+  ],
+  "hash_verification": {
+    "status": "pass",
+    "algorithm": "SHA-256",
+    "verified_entry_count": 15,
+    "manifest_path": "artifact_sha256.json",
+    "verification_rule": "Every listed artifact digest is recomputed from exact file bytes; the hash manifest itself is excluded to avoid self-reference."
+  },
+  "scope_statement": "Only this arm was written. Shared assignment and test-suite content was read through jq filters that emitted revealing-arm-b rows only. No other arm directory or output was read or used."
+}

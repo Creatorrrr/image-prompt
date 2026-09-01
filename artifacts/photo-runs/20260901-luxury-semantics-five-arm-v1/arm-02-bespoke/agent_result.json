@@ -1,0 +1,78 @@
+{
+  "schema_version": "photo-independent-arm-agent-result/v1",
+  "arm_id": "arm-02-bespoke",
+  "target_profile_id": "bespoke_tailoring_individual_pattern",
+  "task_status": "completed",
+  "candidate_pack_integrity": {
+    "unchanged": true,
+    "file_sha256_before_and_after": "57dc740361ab9017b3897ac01ced65a87995277bb0bd9b3e791c5c5d32277086"
+  },
+  "frozen_input_file_sha256": {
+    "request_envelope.json": "15aebfe10f9ca1e9049c0c8be5c745a970d962b5b4cd73074dc8746bb242c726",
+    "authorial_core.json": "7447e1b783ae329f529e483c3cef804101ac75df08252244dee12558b62f57a4",
+    "visual_intent.json": "209929be3564c1b3c590d9b7f1893b57ccd9fd65465ba1dea441d706da4bf256",
+    "candidate_pack.json": "57dc740361ab9017b3897ac01ced65a87995277bb0bd9b3e791c5c5d32277086"
+  },
+  "preflight": {
+    "composed_prompt_audit": "pass",
+    "composed_prompt_quality_status": "warn",
+    "composed_prompt_failures": [],
+    "composed_prompt_warning_boundary": "Five frozen mandatory intents were preserved literally but remained marked uncovered by the immutable pack.",
+    "runtime_request_audit": "pass",
+    "runtime_request_failures": [],
+    "runtime_prompt_id": "304e23fc05853752",
+    "effective_visual_contract_sha256": "cb2420b57aa67bea8eeff4ed7b1fc44215bc41aa2393a527a12b8d51baf07ff5"
+  },
+  "generation": {
+    "tool": "built_in_imagegen",
+    "intent": "generate_with_reference",
+    "image_call_count": 1,
+    "delivery_status": "success",
+    "prompt_changed_after_call": false,
+    "regeneration_attempted": false,
+    "reference_attached_via_referenced_image_paths": true,
+    "reference_path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "reference_scope": "Broad appearance continuity only: long center-parted dark wavy hair, brown eyes, softly oval facial outline, and natural brows. No same-person, biometric identity, ethnicity, nationality, health, or attractiveness judgment.",
+    "result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-02-bespoke/result.png",
+    "result_sha256": "2edae6f18bc2aab06fa088246ca0fc59b01ab026412e9b2acfaaf9a6f5bda4fc",
+    "result_dimensions": "1402x1122",
+    "ledger_run_id": "eb66398aa480c18f"
+  },
+  "pixel_review": {
+    "reviewed_at_thumbnail": true,
+    "reviewed_at_native": true,
+    "partial_is_fail": true,
+    "required_gate_count": 5,
+    "qualification_status": "failed_technical_hard_gates",
+    "technical_qualified": false,
+    "representative_eligible": false,
+    "schema_failures": [],
+    "gates": {
+      "vo_luxury_bespoke_individual_pattern": "pass",
+      "vo_luxury_bespoke_basted_correction": "pass",
+      "vo_luxury_bespoke_hand_canvas": "fail",
+      "vo_luxury_bespoke_record_continuity": "pass",
+      "vo_luxury_bespoke_not_mtm_or_portrait": "pass"
+    },
+    "failed_gate_reason": "The pixels show exterior basting and a gray lapel facing, but no clearly exposed canvas layer or unmistakable internal pad-stitch field.",
+    "user_judgment": "not_yet_received"
+  },
+  "skill_effects": [
+    {
+      "skill": "photo-prompt-image-generator",
+      "effect": "Required v6 authorial binding, visual-obligation evidence, composed audit, exact runtime audit, immutable prompt after generation, and arm-local ledger/manifest."
+    },
+    {
+      "skill": "imagegen",
+      "effect": "Required the built-in generator, actual reference attachment, project-local result preservation, and exact one-call accounting."
+    },
+    {
+      "skill": "image-prompt-skill-improver",
+      "effect": "Kept package, prompt, generation delivery, rendered pixels, and user judgment as separate evidence layers; forced the ambiguous internal-construction cue to fail rather than partial-pass."
+    }
+  ],
+  "skill_caused_block_or_pause": null,
+  "cross_arm_inputs_used": false,
+  "committed_or_staged": false
+}

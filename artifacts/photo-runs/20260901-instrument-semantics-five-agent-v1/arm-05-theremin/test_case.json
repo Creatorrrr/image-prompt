@@ -1,0 +1,148 @@
+{
+  "contract_version": "instrument-semantic-test-case/v1",
+  "arm_id": "arm-05-theremin",
+  "assigned_profile_id": "theremin_dual_antenna_noncontact",
+  "confusion_target": "MIDI controller",
+  "prepack_freeze": {
+    "authorial_core_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-05-theremin/authorial_core.json",
+    "authorial_core_file_sha256": "f5cfd9b0f11ae5fead2f9e81f58c820141a3da70bf64c2f0559c3ee05ecb19ca",
+    "frozen_before_candidate_pack_or_registry_read": true,
+    "permitted_inputs": [
+      "photo-prompt-image-generator SKILL.md",
+      "imagegen SKILL.md",
+      "shared request_envelope.json",
+      "shared reference/reference_manifest.json",
+      "shared reference/appearance_reference.jpg",
+      "arm assignment",
+      "agent general knowledge",
+      "OS entropy"
+    ],
+    "cross_arm_inputs_used": false,
+    "prior_photo_runs_used": false
+  },
+  "randomization": {
+    "seed_type": "unsigned 32-bit integer",
+    "seed": 926806901,
+    "seed_source": "/dev/urandom",
+    "seed_command": "od -An -N4 -tu4 /dev/urandom | tr -d ' '",
+    "selection_method": "Before consulting project candidate or profile data, define five ordered option lists of length five from general knowledge. Decode the seed as successive base-5 mixed-radix digits: index_d = floor(seed / 5^d) mod 5 for setting, event, lighting, camera, and composition.",
+    "selection_space": {
+      "setting": [
+        "disused radio-observatory control room at blue hour",
+        "rain-streaked glass-roofed botanical conservatory at night",
+        "closed Art Deco planetarium rehearsal stage",
+        "brutalist subterranean archive beside a reflecting pool",
+        "decommissioned ferry terminal in coastal fog"
+      ],
+      "event": [
+        "live recording while distant lightning silhouettes the exterior",
+        "calibration concert beside a slowly swinging glass pendulum",
+        "solo performance accompanied by a reactive analog oscilloscope trace",
+        "sound-check beneath a drifting kinetic mobile",
+        "improvised encore as loose paper score pages lift in ventilation"
+      ],
+      "lighting": [
+        "warm tungsten practicals, cyan skylight, and narrow rim light",
+        "sodium-orange rain light, soft cyan instrument glow, and neutral bounced key",
+        "violet projector spill, warm footlights, and light atmospheric haze",
+        "cool moonlight through panes with amber work lamps",
+        "hard noon sun shafts with green reflected fill"
+      ],
+      "camera": [
+        "eye-level 35 mm environmental portrait",
+        "low 28 mm diagonal full-figure view",
+        "waist-high 50 mm symmetric medium-wide view",
+        "elevated 40 mm overhead-oblique view",
+        "side-profile 65 mm compressed medium view"
+      ],
+      "composition": [
+        "cabinet centered with the performer directly behind it",
+        "head-to-mid-thigh frame with the full cabinet and both hand fields unobstructed",
+        "layered reflection in wet glass while the instrument remains frontally readable",
+        "triangular arrangement linking face, vertical rod, and loop antenna",
+        "deep corridor vanishing point behind a lateral performer-instrument pairing"
+      ]
+    },
+    "selected_indices": {
+      "setting": 1,
+      "event": 0,
+      "lighting": 1,
+      "camera": 0,
+      "composition": 1
+    },
+    "selected_result": {
+      "setting": "rain-streaked glass-roofed botanical conservatory at night",
+      "event": "live recording while distant lightning silhouettes the exterior",
+      "lighting": "sodium-orange rain light, soft cyan instrument glow, and neutral bounced key",
+      "camera": "eye-level 35 mm environmental portrait",
+      "composition": "head-to-mid-thigh frame with the full cabinet and both hand fields unobstructed"
+    }
+  },
+  "intent_dimensions": {
+    "locked": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "required_component_groups": [
+    {
+      "group_id": "vo_instrument_theremin_powered_cabinet",
+      "prepack_observation_target": "A dedicated cabinet-style electronic instrument visibly reads as powered and operational."
+    },
+    {
+      "group_id": "vo_instrument_theremin_two_antennas",
+      "prepack_observation_target": "One vertical rod antenna and one distinct horizontal loop antenna are both fully visible."
+    },
+    {
+      "group_id": "vo_instrument_theremin_separate_hand_fields",
+      "prepack_observation_target": "The performer's two hands occupy visibly separate pitch and volume control fields."
+    },
+    {
+      "group_id": "vo_instrument_theremin_noncontact",
+      "prepack_observation_target": "Clear air gaps are visible between each controlling hand and its antenna."
+    },
+    {
+      "group_id": "vo_instrument_theremin_not_controller",
+      "prepack_observation_target": "The object reads as the dedicated two-antenna field instrument rather than the MIDI-controller confounder."
+    }
+  ],
+  "pixel_gate_ids": [
+    "vo_instrument_theremin_powered_cabinet",
+    "vo_instrument_theremin_two_antennas",
+    "vo_instrument_theremin_separate_hand_fields",
+    "vo_instrument_theremin_noncontact",
+    "vo_instrument_theremin_not_controller"
+  ],
+  "pixel_policy": {
+    "partial_is_fail": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true,
+    "each_gate_requires_direct_visible_evidence": true
+  },
+  "appearance_reference_scope": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "allowed": [
+      "visible adult facial appearance",
+      "visible hairstyle and hair color",
+      "visible makeup placement and skin-surface finish"
+    ],
+    "performer_requirement": "original adult performer",
+    "separate_pixel_review": true,
+    "disallowed_claims": [
+      "biometric identity verification",
+      "same-person claim",
+      "ethnicity or nationality inference",
+      "health inference",
+      "attractiveness inference",
+      "personality inference",
+      "protected-trait inference"
+    ]
+  }
+}

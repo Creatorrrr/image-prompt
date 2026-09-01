@@ -1,0 +1,98 @@
+{
+  "contract_version": "photo-independent-arm-test-case/v1",
+  "arm_id": "arm-04-vibraphone",
+  "profile_id": "vibraphone_metal_bars_motor_pedal",
+  "confusion_target": "xylophone",
+  "independence": {
+    "mode": "independent-no-cross-arm-inputs",
+    "other_arm_inputs_read": false,
+    "previous_photo_runs_read": false,
+    "candidate_pack_or_registry_read_before_core_freeze": false,
+    "prepack_inputs": [
+      "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator/SKILL.md",
+      "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/request_envelope.json",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/reference_manifest.json",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+      "coordinator arm assignment",
+      "agent general knowledge"
+    ]
+  },
+  "randomization": {
+    "seed_type": "unsigned-32-bit",
+    "seed": 2834404087,
+    "seed_source": "four bytes from /dev/urandom interpreted as an unsigned decimal integer",
+    "selection_algorithm": "xorshift32; advance once per pool in setting, event, lighting, camera_composition order; select state modulo pool length",
+    "states": [
+      3477654432,
+      296269694,
+      4020891517,
+      2592271774
+    ],
+    "indices": {
+      "setting": 0,
+      "event": 2,
+      "lighting": 1,
+      "camera_composition": 4
+    },
+    "pools": {
+      "setting": [
+        "empty planetarium circular stage during overnight projector calibration",
+        "glass-roofed botanical conservatory after rain",
+        "decommissioned railway roundhouse during a storm",
+        "brutalist radio studio during a midnight live session",
+        "coastal ferry terminal before first departure",
+        "modernist sculpture gallery at dawn"
+      ],
+      "event": [
+        "a sustained tremolo resolves as mechanical louvers open",
+        "a crossed-mallet chord coincides with a projector alignment sweep",
+        "the first motor-on downbeat visibly combines bar strikes, pedal depression, and rotating resonator fans",
+        "a measured solo passage reaches its damped release",
+        "a syncopated phrase lands while a loose score page lifts in ventilation",
+        "a final chord rings as the house lights transition"
+      ],
+      "lighting": [
+        "cold skylight with warm floor practicals",
+        "narrow amber follow spot intersecting cool constellation projections and dim red aisle lights",
+        "hard white projector beam through light haze",
+        "soft dawn side light with reflected silver fill",
+        "cyan work lights with one tungsten inspection lamp",
+        "high-contrast moonlight pattern with subtle amber bounce"
+      ],
+      "camera_composition": [
+        "28 mm centered wide view from stage level",
+        "50 mm elevated frontal three-quarter view",
+        "40 mm side profile with split-level foreground",
+        "24 mm symmetrical low view from behind the front row",
+        "35 mm low audience-aisle three-quarter view with face in the upper third, diagonal bar deck, and clear under-instrument sightline",
+        "45 mm close environmental portrait from keyboard height"
+      ]
+    },
+    "selected_result": {
+      "setting": "empty planetarium circular stage during overnight projector calibration",
+      "event": "the first motor-on downbeat visibly combines bar strikes, pedal depression, and rotating resonator fans",
+      "lighting": "narrow amber follow spot intersecting cool constellation projections and dim red aisle lights",
+      "camera_composition": "35 mm low audience-aisle three-quarter view with face in the upper third, diagonal bar deck, and clear under-instrument sightline"
+    }
+  },
+  "frozen_before_postcore_project_data": true,
+  "open_dimensions": [
+    "framing",
+    "composition",
+    "lighting",
+    "camera"
+  ],
+  "pixel_policy": {
+    "partial_is_fail": true,
+    "prompt_or_audit_pass_is_not_pixel_pass": true,
+    "required_gates": [
+      "vo_instrument_vibraphone_metal_bars",
+      "vo_instrument_vibraphone_resonator_fans",
+      "vo_instrument_vibraphone_damper_pedal",
+      "vo_instrument_vibraphone_mallet_pedal_action",
+      "vo_instrument_vibraphone_not_xylophone"
+    ],
+    "reference_scope_review_is_separate": true
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "contract_version": "photo-run-local-pixel-review/v1",
+  "arm_id": "revealing-arm-c",
+  "profile_id": "run_local_bounded_side_waist_cutouts",
+  "test_case_id": "rf-c-side-waist-cutouts",
+  "review_policy": {
+    "partial_is_fail": true,
+    "all_gates_must_pass_in_one_image": true,
+    "prompt_or_audit_text_is_not_pixel_evidence": true,
+    "representative_promotion_requires_full_gate_pass": true
+  },
+  "images": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-c/generated_native.png",
+      "sha256": "0e8ff67afb8b53e18e28fa065cf627d42895b1c6fdf33c0a3135c7245321fc55",
+      "pixel_width": 1024,
+      "pixel_height": 1535,
+      "inspected": true
+    },
+    "thumbnail_512": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-c/generated_thumbnail_512.png",
+      "sha256": "ccd78d9a4e0ed76648472ee01f6edce07fdce22c6e9796b4cd42320ff03ea0cf",
+      "pixel_width": 341,
+      "pixel_height": 512,
+      "inspected": true
+    }
+  },
+  "hard_gates": [
+    {
+      "id": "rl_side_cutouts_first_read",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 341x512, two separate waist-skin openings are immediately visible on opposite sides of the opaque central torso panel, and the dress remains visibly continuous into the skirt rather than reading as a crop top."
+    },
+    {
+      "id": "rl_side_cutouts_bounded_edges",
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "At 1024x1535, each skin opening reaches the outer lateral garment/body silhouette. A fabric band does not close the outer side of either opening, so neither opening has the required complete closed sewn perimeter; smooth finished inner curves are only partial compliance and therefore fail."
+    },
+    {
+      "id": "rl_side_cutouts_central_bridge",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, a broad opaque black front panel runs continuously from the bodice through the waist into the skirt between the two exposed waist areas."
+    },
+    {
+      "id": "rl_side_cutouts_opaque_coverage",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, opaque black fabric securely covers the breasts and pelvis; within the tested torso topology, deliberate exposure is confined to the paired waist areas."
+    },
+    {
+      "id": "rl_side_cutouts_not_substitute",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, the result is one opaque continuous dress with direct skin openings and visible fabric edges; the effect is not produced by shadow, a jacket gap, separated crop-top pieces, pose occlusion, or transparent material."
+    }
+  ],
+  "summary": {
+    "passed_gate_count": 4,
+    "required_gate_count": 5,
+    "failed_gate_ids": [
+      "rl_side_cutouts_bounded_edges"
+    ],
+    "overall_status": "fail",
+    "qualification": "unscored",
+    "representative_promotion": false,
+    "reason": "All five gates were required simultaneously; one strict native-scale topology gate failed."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "score_state": "unscored",
+    "source": "not_yet_received"
+  }
+}

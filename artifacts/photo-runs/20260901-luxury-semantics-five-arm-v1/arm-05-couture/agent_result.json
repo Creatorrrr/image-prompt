@@ -1,0 +1,124 @@
+{
+  "arm_id": "arm-05-couture",
+  "status": "success",
+  "target_profile": "couture_atelier_individual_construction",
+  "pack_id": "778b6c806319336f",
+  "candidate_pack_version": "v6",
+  "audits": {
+    "composed_prompt": {
+      "status": "pass",
+      "exit_code": 0,
+      "quality_status": "warn",
+      "failure_count": 0,
+      "note": "Warnings only report candidate-pack intents preserved through free literal description; the blocking audit passed."
+    },
+    "runtime_request": {
+      "status": "pass",
+      "exit_code": 0,
+      "runtime_prompt_id": "d5ea6986d418f021",
+      "reference_count": 1,
+      "failure_count": 0
+    },
+    "pixel_review": {
+      "qualification_status": "visual_technical_qualified_user_judgment_pending",
+      "technical_qualified": true,
+      "required_hard_gate_count": 5,
+      "failed_hard_gates": [],
+      "schema_failures": [],
+      "user_judgment": "not_yet_received"
+    }
+  },
+  "generation": {
+    "tool": "builtin_imagegen",
+    "intent": "generate_with_general_appearance_reference",
+    "actual_image_call_count": 1,
+    "attempt": 1,
+    "source_result_path": "/Users/chasoik/.codex/generated_images/01a059cf-1a51-79f0-9ebc-071b05b834f1/exec-9ae7c019-5065-48ab-9388-b21143f8d961.png",
+    "persistent_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-05-couture/result.png",
+    "result_sha256": "35b10629be010c3a08a03049aa27650901077e203269a038bc535c2557ef3b87",
+    "dimensions": "1122x1402",
+    "prompt_changed_after_generation": false,
+    "regeneration_performed": false
+  },
+  "render_gates": {
+    "vo_luxury_couture_individual_toile": "pass",
+    "vo_luxury_couture_live_correction": "pass",
+    "vo_luxury_couture_internal_layers": "pass",
+    "vo_luxury_couture_hand_finish": "pass",
+    "vo_luxury_couture_not_gown_only": "pass"
+  },
+  "strict_review_policy": {
+    "partial_is_fail": true,
+    "review_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "result": "all_five_required_gates_pass"
+  },
+  "reference": {
+    "path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "general_appearance_reference_only",
+    "allowed_continuity": [
+      "long center-parted dark wavy hair",
+      "brown eyes",
+      "softly oval facial outline",
+      "natural brows"
+    ],
+    "claims_not_made": [
+      "same-person identity",
+      "ethnicity",
+      "nationality",
+      "attractiveness",
+      "health",
+      "biometric identity"
+    ]
+  },
+  "frozen_input_integrity": {
+    "request_envelope_file_sha256": "844ee79fefd1b3f2f56b1669a72379de3b734403b9b33061d3006257a22a2559",
+    "authorial_core_file_sha256": "27c71cb3b47bb9096896f6751b907ba724336e7d19b9322391b3fb783b46a215",
+    "visual_intent_file_sha256": "5aa87c7d33555703e8b7511a9632d6a5843df2117b3f73c7072dcf7e48a5eab1",
+    "candidate_pack_file_sha256": "6ca2447e28692389435b53f96b1ca99779a5312255d60808ff58256593141f88",
+    "candidate_pack_modified": false
+  },
+  "ledger": {
+    "status": "recorded",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-05-couture/image_runs.ndjson",
+    "run_id": "c19202dbd3cebded",
+    "manifest_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-05-couture/run_manifest.json"
+  },
+  "skill_actions": [
+    {
+      "skill": "photo-prompt-image-generator",
+      "action": "Kept candidate_pack immutable, composed only after reading the frozen arm inputs, blocked generation until composed and exact runtime audits passed, and recorded the independent v6 run locally."
+    },
+    {
+      "skill": "imagegen",
+      "action": "Used built-in generation once, attached the audited local reference path, preserved the default output, and copied it non-destructively into the arm folder."
+    },
+    {
+      "skill": "image-prompt-skill-improver",
+      "action": "Separated package, prompt, delivery, pixel, and user-judgment evidence; inspected thumbnail and native pixels; treated partial as failure."
+    }
+  ],
+  "skill_caused_pauses_or_blocks": [],
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "other_arm_outputs_read": false,
+    "coordination_outputs_read": false
+  },
+  "files": [
+    "composed_prompt.json",
+    "composed_audit.txt",
+    "render_request.json",
+    "render_audit.txt",
+    "result.png",
+    "thumbnail.png",
+    "couture-detail.png",
+    "hand-finish-detail.png",
+    "pixel_review.json",
+    "image_runs.ndjson",
+    "run_manifest.json",
+    "agent_result.json"
+  ]
+}

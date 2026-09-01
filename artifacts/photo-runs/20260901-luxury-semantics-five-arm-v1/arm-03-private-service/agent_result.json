@@ -1,0 +1,100 @@
+{
+  "schema_version": "photo-independent-agent-result/v1",
+  "arm_id": "arm-03-private-service",
+  "target_profile_id": "private_client_service_interaction",
+  "outcome": "completed_with_pixel_gate_failure",
+  "decision": "revise",
+  "candidate_pack_modified": false,
+  "prompt_changed_after_generation": false,
+  "regeneration_attempted": false,
+  "actual_image_call_count": 1,
+  "tool": "built-in_imagegen",
+  "pack_id": "1637690abf4da33b",
+  "prompt_id": "3daa2c782f5e9475",
+  "runtime_prompt_id": "b05bfe22639a3f04",
+  "ledger_run_id": "a76f96a4b8738ad0",
+  "generated_image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-03-private-service/result.png",
+    "sha256": "221a893e0cf2ff7b39f9737833883210e81c3c425f2621eb8f616514b3af714a",
+    "width": 1536,
+    "height": 1024,
+    "source_path": "/Users/chasoik/.codex/generated_images/01a059ce-3c3f-7f10-a8ea-9e98d27960b8/exec-dbbcc1d4-1c79-4ddc-a7a3-5149cd24a8d0.png"
+  },
+  "audits": {
+    "composed_prompt": {
+      "status": "pass",
+      "quality_status": "warn",
+      "blocking_failures": 0,
+      "note": "Only uncovered-intent warnings remained, and every frozen anchor was preserved literally."
+    },
+    "render_request": {
+      "status": "pass",
+      "blocking_failures": 0,
+      "reference_count": 1,
+      "negative_matches_pack": true
+    },
+    "pixel_review": {
+      "schema_failures": 0,
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "passed_gate_count": 4,
+      "failed_gate_count": 1
+    }
+  },
+  "five_gate_results": [
+    {
+      "id": "vo_luxury_service_response",
+      "status": "pass"
+    },
+    {
+      "id": "vo_luxury_service_curated_few",
+      "status": "pass"
+    },
+    {
+      "id": "vo_luxury_service_careful_handling",
+      "status": "pass"
+    },
+    {
+      "id": "vo_luxury_service_aftercare",
+      "status": "fail",
+      "reason": "The blank notebook is not visibly identifiable as repair, restoration, maintenance, or aftercare continuity."
+    },
+    {
+      "id": "vo_luxury_service_not_room_or_champagne",
+      "status": "pass"
+    }
+  ],
+  "reference_use": {
+    "path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "scope": "general appearance continuity only",
+    "disallowed_claims_made": false
+  },
+  "skill_effects": [
+    {
+      "skill": "photo-prompt-image-generator",
+      "effect": "Blocked rendering until composed and exact runtime-input audits passed; preserved the frozen prompt and required strict post-render gate review."
+    },
+    {
+      "skill": "imagegen",
+      "effect": "Used the built-in tool once, attached the local reference path, and copied the delivered PNG from the default generated-images location into the project arm."
+    },
+    {
+      "skill": "image-prompt-skill-improver",
+      "effect": "Kept prompt validity, generation delivery, rendered pixels, and user judgment as separate evidence layers; a partial aftercare cue remained a failure."
+    }
+  ],
+  "stop_reason": "The one authorized image call was consumed and the instructions prohibit prompt changes or regeneration after generation.",
+  "blocker": null,
+  "artifacts": {
+    "composed_prompt": "composed_prompt.json",
+    "composed_audit": "composed_audit.txt",
+    "render_request": "render_request.json",
+    "render_audit": "render_audit.txt",
+    "image": "result.png",
+    "pixel_review": "pixel_review.json",
+    "pixel_review_audit": "pixel_review_audit.txt",
+    "run_manifest": "run_manifest.json",
+    "ledger": "image_runs.ndjson"
+  }
+}

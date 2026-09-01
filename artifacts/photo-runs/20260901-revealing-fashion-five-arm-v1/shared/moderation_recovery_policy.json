@@ -1,0 +1,44 @@
+{
+  "schema_version": "photo-output-moderation-recovery/v1",
+  "created_at": "2026-09-01T07:19:30+09:00",
+  "reason": "Three otherwise-audited first attempts returned no accessible pixels after output moderation, so they remain unscored. The imagegen workflow permits one targeted iteration; this policy allows one target-preserving recovery asset per affected arm.",
+  "affected_arms": [
+    {
+      "arm_id": "revealing-arm-a",
+      "attempt_1_request_id": "20fb8c8f-901b-484e-a69f-27e4384814cd",
+      "attempt_1_status": "blocked_unscored"
+    },
+    {
+      "arm_id": "revealing-arm-d",
+      "attempt_1_request_id": "1525b201-9c43-4979-b4d5-4c96ee1b073a",
+      "attempt_1_status": "blocked_unscored"
+    },
+    {
+      "arm_id": "revealing-arm-e",
+      "attempt_1_request_id": "0de1987f-332d-4969-a5ac-f6a462a30c08",
+      "attempt_1_status": "blocked_unscored"
+    }
+  ],
+  "constraints": {
+    "maximum_additional_calls_per_affected_arm": 1,
+    "preserve_original_attempt_records": true,
+    "preserve_request_envelope": true,
+    "preserve_frozen_authorial_core_bytes": true,
+    "preserve_assigned_profile_or_run_local_topology": true,
+    "preserve_all_required_pixel_gates": true,
+    "preserve_general_appearance_reference_role_and_hash": true,
+    "no_cross_arm_inputs": true,
+    "no_paid_api_fallback": true,
+    "no_composite_gate_pass_across_attempts": true,
+    "stop_after_first_complete_single_image_gate_pass": true
+  },
+  "allowed_change": "One targeted open-dimension presentation and wording repair: replace repeated anatomical wording with observable garment landmarks and a neutral catalog/editorial camera treatment while keeping the same coverage, exposure topology, action, and hard meaning.",
+  "forbidden_changes": [
+    "weakening or replacing the assigned target",
+    "changing a locked subject, event, or concept dimension",
+    "dropping a required hard-profile evidence field",
+    "using another arm's image or prompt",
+    "averaging or combining gate evidence across attempts"
+  ],
+  "qualification_rule": "Attempt 2 may pass only if one saved native image independently passes every gate in that arm's unchanged test case. A second block remains blocked_unscored."
+}

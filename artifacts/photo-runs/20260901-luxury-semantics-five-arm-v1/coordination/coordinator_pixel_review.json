@@ -1,0 +1,140 @@
+{
+  "schema_version": "photo-five-arm-coordinator-review/v1",
+  "reviewer": "root coordinator, post-arm independent pixel review",
+  "protocol": {
+    "partial_is_fail": true,
+    "same_image_requirement": true,
+    "scales": ["thumbnail", "native", "profile-declared detail crop"],
+    "agent_results_hidden_from_other_arms": true,
+    "coordinator_review_started_after_each_arm_finished": true
+  },
+  "reference": {
+    "path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "role": "general adult fictional subject appearance continuity only",
+    "observable_scope": "Long center-parted dark wavy hair and broad face-and-brow cues remain visually continuous across the five renders.",
+    "non_claims": [
+      "no same-person or biometric identity claim",
+      "no ethnicity or nationality inference",
+      "no attractiveness, personality, health, or status inference"
+    ]
+  },
+  "aggregate": {
+    "random_seed": 868462607,
+    "arms": 5,
+    "composed_prompt_audits_passed": 5,
+    "render_request_audits_passed": 5,
+    "successful_generations": 5,
+    "total_image_calls": 5,
+    "regenerations": 0,
+    "hard_gates_passed": 23,
+    "hard_gates_total": 25,
+    "technically_qualified_arms": 3,
+    "technically_failed_arms": 2,
+    "suite_status": "fail",
+    "suite_rule": "All five arms must pass all five gates.",
+    "failed_gate_ids": [
+      "vo_luxury_bespoke_hand_canvas",
+      "vo_luxury_service_aftercare"
+    ],
+    "requesting_user_judgment": "not_yet_received"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-conspicuous",
+      "target_profile": "conspicuous_original_house_code_display",
+      "pack_id": "31b8bf8d7443a3c7",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-01-conspicuous/result.png",
+      "image_sha256": "936af092c548608e6735b03601db56003a3bf1b19d0842ea0e0321950948ff78",
+      "prompt_audit": "pass",
+      "render_request_audit": "pass",
+      "image_calls": 1,
+      "agent_coordinator_agreement": true,
+      "technical_status": "pass",
+      "gates": {
+        "vo_luxury_loud_original_code": {"status": "pass", "evidence": "An abstract crescent and stepped radial emblem is visible without readable brand text or a letter monogram."},
+        "vo_luxury_loud_prominence": {"status": "pass", "evidence": "The large central emblem remains the first-look focus at thumbnail scale."},
+        "vo_luxury_loud_coherent_repetition": {"status": "pass", "evidence": "The same radial code repeats at controlled smaller scales on corner plates, latch, and nearby plaques."},
+        "vo_luxury_loud_material_integration": {"status": "pass", "evidence": "Raised metal relief and smaller code plates align with leather panels, seams, straps, rivets, and latch hardware."},
+        "vo_luxury_loud_not_logo_or_clutter": {"status": "pass", "evidence": "No copied monogram or readable brand substitutes for the coherent object construction."}
+      }
+    },
+    {
+      "arm_id": "arm-02-bespoke",
+      "target_profile": "bespoke_tailoring_individual_pattern",
+      "pack_id": "b996a731f07e4b79",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-02-bespoke/result.png",
+      "image_sha256": "2edae6f18bc2aab06fa088246ca0fc59b01ab026412e9b2acfaaf9a6f5bda4fc",
+      "prompt_audit": "pass",
+      "render_request_audit": "pass",
+      "image_calls": 1,
+      "agent_coordinator_agreement": true,
+      "technical_status": "fail",
+      "gates": {
+        "vo_luxury_bespoke_individual_pattern": {"status": "pass", "evidence": "Foreground draft sheets, measurement contours, and a matching record binder are visibly tied to the single client."},
+        "vo_luxury_bespoke_basted_correction": {"status": "pass", "evidence": "White basting lines cover the unfinished jacket while the cutter actively adjusts the shoulder."},
+        "vo_luxury_bespoke_hand_canvas": {"status": "fail", "evidence": "Only the exterior jacket and ordinary lapel facing are readable; exposed canvas or an unmistakable internal pad-stitch field is absent."},
+        "vo_luxury_bespoke_record_continuity": {"status": "pass", "evidence": "The open binder shows jacket diagrams, measurement-like notes, and material swatches linked by a repeated marker."},
+        "vo_luxury_bespoke_not_mtm_or_portrait": {"status": "pass", "evidence": "At thumbnail scale the scene reads as active one-client drafting and fitting, not a finished suit portrait."}
+      }
+    },
+    {
+      "arm_id": "arm-03-private-service",
+      "target_profile": "private_client_service_interaction",
+      "pack_id": "1637690abf4da33b",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-03-private-service/result.png",
+      "image_sha256": "221a893e0cf2ff7b39f9737833883210e81c3c425f2621eb8f616514b3af714a",
+      "prompt_audit": "pass",
+      "render_request_audit": "pass",
+      "image_calls": 1,
+      "agent_coordinator_agreement": true,
+      "technical_status": "fail",
+      "gates": {
+        "vo_luxury_service_response": {"status": "pass", "evidence": "One client points to the damaged case while one gloved advisor responds at that object."},
+        "vo_luxury_service_curated_few": {"status": "pass", "evidence": "Exactly three large material swatches remain distinct on a compact tray at thumbnail scale."},
+        "vo_luxury_service_careful_handling": {"status": "pass", "evidence": "Both gloved hands align and inspect the rolled map and leather case."},
+        "vo_luxury_service_aftercare": {"status": "fail", "evidence": "The blank notebook and pen carry no repair diagram, maintenance step, linked sample, or other visible aftercare function."},
+        "vo_luxury_service_not_room_or_champagne": {"status": "pass", "evidence": "The advisor-client action dominates; the polished room and storm view remain secondary."}
+      }
+    },
+    {
+      "arm_id": "arm-04-high-jewelry",
+      "target_profile": "high_jewelry_setting_integration",
+      "pack_id": "e9a96d5c335c98f2",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-04-high-jewelry/result.png",
+      "image_sha256": "85352f9cec712f6a935c481436519dd7c90314a83c7c5dd699cabeefda23cc80",
+      "prompt_audit": "pass",
+      "render_request_audit": "pass",
+      "image_calls": 1,
+      "agent_coordinator_agreement": true,
+      "technical_status": "pass",
+      "gates": {
+        "vo_luxury_jewelry_matched_stones": {"status": "pass", "evidence": "A deliberate blue-green graduated sequence is visible on the brooch and ordered tray."},
+        "vo_luxury_jewelry_setting_contact": {"status": "pass", "evidence": "The native detail shows silver-toned rims and small prong or bead contacts holding individual stones."},
+        "vo_luxury_jewelry_metal_support": {"status": "pass", "evidence": "A continuous spiral gallery and pavé-bearing ribs support the layout."},
+        "vo_luxury_jewelry_integrated_design": {"status": "pass", "evidence": "At thumbnail scale the stones and metal read as one original spiral-wave brooch."},
+        "vo_luxury_jewelry_not_sparkle_or_price": {"status": "pass", "evidence": "Mechanical setting structure, rather than loose sparkle or a value claim, carries the meaning."}
+      }
+    },
+    {
+      "arm_id": "arm-05-couture",
+      "target_profile": "couture_atelier_individual_construction",
+      "pack_id": "778b6c806319336f",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-luxury-semantics-five-arm-v1/arm-05-couture/result.png",
+      "image_sha256": "35b10629be010c3a08a03049aa27650901077e203269a038bc535c2557ef3b87",
+      "prompt_audit": "pass",
+      "render_request_audit": "pass",
+      "image_calls": 1,
+      "agent_coordinator_agreement": true,
+      "technical_status": "pass",
+      "gates": {
+        "vo_luxury_couture_individual_toile": {"status": "pass", "evidence": "The single client wears a cream unfinished toile with basting, pins, and exposed seam allowances."},
+        "vo_luxury_couture_live_correction": {"status": "pass", "evidence": "Two artisans actively work at the worn toile with pins, loose threads, and an opened side seam."},
+        "vo_luxury_couture_internal_layers": {"status": "pass", "evidence": "The open panel exposes a large rectangular boning and support grid."},
+        "vo_luxury_couture_hand_finish": {"status": "pass", "evidence": "An artisan pinches the attachment edge and applies a small hand tool directly at the open seam."},
+        "vo_luxury_couture_not_gown_only": {"status": "pass", "evidence": "At thumbnail scale the two artisans, unfinished edges, and exposed support dominate over glamour posing."}
+      }
+    }
+  ],
+  "evidence_boundary": "Prompt and render-request audits prove contract and byte preservation, not pixels. This coordinator review is a pixel observation, not a user aesthetic judgment."
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "photo-independent-arm-summary/v1",
+  "arm_id": "revealing-arm-a",
+  "phase_b_status": "technical_pass_user_pending",
+  "target": {
+    "profile_id": "commercial_appeal_revealing_armor",
+    "keyword": "revealing fantasy armor",
+    "required_gate_count": 7
+  },
+  "preflight": {
+    "candidate_pack_version": "v6",
+    "pack_id": "c7cca799903d3865",
+    "attempts": [
+      {
+        "attempt": 1,
+        "composed_audit_status": "pass",
+        "composed_quality_status": "warn",
+        "runtime_audit_status": "pass"
+      },
+      {
+        "attempt": 2,
+        "composed_audit_status": "pass",
+        "composed_quality_status": "warn",
+        "runtime_audit_status": "pass"
+      }
+    ]
+  },
+  "generation": {
+    "tool": "built_in_image_gen",
+    "actual_call_count": 2,
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "blocked_unscored",
+        "block_code": "moderation_blocked",
+        "block_stage": "output",
+        "image_saved_under_arm": false
+      },
+      {
+        "attempt": 2,
+        "outcome": "success",
+        "image_saved_under_arm": true,
+        "native_path": "generated_images/attempt2/revealing-armor-native.png",
+        "native_sha256": "c58ba503431d8e139e344d29e339c4f7c96a10dd727b459569ef6893f64e7b0a",
+        "thumbnail_path": "generated_images/attempt2/revealing-armor-512.png",
+        "thumbnail_sha256": "634f78d91863a5fbb05387d7c27d63cb6e90488d8264924c8cc805ede0c71707"
+      }
+    ],
+    "authorized_recovery_attempt_performed": true,
+    "further_retry_performed": false,
+    "paid_api_fallback_performed": false
+  },
+  "pixel_qualification": {
+    "qualifying_attempt": 2,
+    "native_review": "pass",
+    "thumbnail_512_review": "pass",
+    "hard_gate_pass_count": 7,
+    "hard_gate_fail_count": 0,
+    "hard_gate_unscored_count": 0,
+    "partial_counts_as_fail": true,
+    "prompt_or_runtime_pass_counts_as_pixel_proof": false,
+    "cross_attempt_evidence_combined": false
+  },
+  "reference_boundary": {
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "adult_subject_general_visible_appearance_guidance_only",
+    "identity_claimed": false,
+    "same_person_claimed": false,
+    "sensitive_attributes_inferred": false,
+    "body_shape_inferred": false,
+    "original_outfit_inferred": false
+  },
+  "user_judgment": "pending_unscored",
+  "representative_promotion_allowed": false,
+  "other_arm_outputs_read": false,
+  "summary": "Attempt 1 remains blocked-unscored. The single authorized recovery call produced one saved image whose native and 512px views independently pass all seven unchanged hard gates. Requesting-user judgment remains pending and representative promotion remains forbidden."
+}

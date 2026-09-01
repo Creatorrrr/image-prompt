@@ -1,0 +1,88 @@
+{
+  "contract_version": "photo-run-local-pixel-review/v1",
+  "arm_id": "revealing-arm-c",
+  "attempt": 2,
+  "profile_id": "run_local_bounded_side_waist_cutouts",
+  "test_case_id": "rf-c-side-waist-cutouts",
+  "review_policy": {
+    "partial_is_fail": true,
+    "all_gates_must_pass_in_attempt_2_alone": true,
+    "attempt_1_evidence_combination_allowed": false,
+    "prompt_or_audit_text_is_not_pixel_evidence": true,
+    "representative_promotion": false
+  },
+  "images": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-c/generated_native_attempt2.png",
+      "sha256": "8d5d60b25e74e8468d199cf2332ef438c78182fb61c66cfe1c0d9ed12562b7b0",
+      "pixel_width": 1024,
+      "pixel_height": 1536,
+      "inspected": true
+    },
+    "thumbnail_512": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-c/generated_thumbnail_512_attempt2.png",
+      "sha256": "bded3e634b1b5c46e58d0406e029052c9a50e6d9305817d01dec296557d1cac9",
+      "pixel_width": 341,
+      "pixel_height": 512,
+      "inspected": true
+    }
+  },
+  "supplemental_same_image_crop": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-revealing-fashion-five-arm-v1/arms/revealing-arm-c/waist_native_crop_attempt2.png",
+    "sha256": "b183760344ca5a50e1ec6dcead48ee236e2f31fbe118efb19d05200ff64763bf",
+    "source_native_sha256": "8d5d60b25e74e8468d199cf2332ef438c78182fb61c66cfe1c0d9ed12562b7b0",
+    "use": "native-scale perimeter inspection only"
+  },
+  "hard_gates": [
+    {
+      "id": "rl_side_cutouts_first_read",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "At 341x512, two distinct lateral waist skin windows remain first-read on opposite sides of the opaque central panel, while the garment reads as one continuous dress rather than separated pieces."
+    },
+    {
+      "id": "rl_side_cutouts_bounded_edges",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "At 1024x1536, each opening is enclosed on its outer side by a clearly visible opaque black vertical fabric band running from the underarm-side seam to the high-hip seam. The native crop shows continuous finished seam piping around both closed skin windows, including both outer bands, with hair, arms, bowl, and crop clear of them."
+    },
+    {
+      "id": "rl_side_cutouts_central_bridge",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, a broad opaque black front panel remains continuous from bodice through waist to skirt between the two windows."
+    },
+    {
+      "id": "rl_side_cutouts_opaque_coverage",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, opaque black fabric securely covers the breasts and pelvis, with the deliberate torso exposure confined to the paired waist windows."
+    },
+    {
+      "id": "rl_side_cutouts_not_substitute",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "At both scales, direct skin is visible through two sewn windows in one opaque continuous dress; shadow, a jacket gap, separated crop-top pieces, pose occlusion, and transparent fabric are not carrying the effect."
+    }
+  ],
+  "repair_policy_check": {
+    "status": "pass",
+    "required_local_change_visible": true,
+    "both_outer_bands_unobscured": true,
+    "four_attempt_1_passed_gates_preserved_in_attempt_2": true
+  },
+  "summary": {
+    "passed_gate_count": 5,
+    "required_gate_count": 5,
+    "failed_gate_ids": [],
+    "overall_status": "pass",
+    "qualification": "technical-pass-unscored",
+    "representative_promotion": false,
+    "reason": "Attempt 2 independently satisfies all five unchanged gates in one saved image; user judgment remains separate."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "score_state": "unscored",
+    "source": "not_yet_received"
+  }
+}

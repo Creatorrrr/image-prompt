@@ -1,0 +1,154 @@
+{
+  "contract_version": "instrument-semantic-agent-result/v1",
+  "arm_id": "arm-01-geomungo",
+  "profile_id": "geomungo_fretted_suldae_zither",
+  "confusion_target": "gayageum",
+  "status": "completed_with_pixel_gate_failure",
+  "seed": 322530066,
+  "concept": {
+    "setting": "A coastal lighthouse keeper room during dense sea fog, adapted for a solitary night performance.",
+    "event": "A precise accented geomungo stroke at the instant a draft bends an oil-lamp flame and the lighthouse optic sweeps through the room.",
+    "lighting": "Deep theatrical indigo room light crossed by one hard moving white beam, with the oil lamp as a warm practical.",
+    "camera_composition": "A low seated 55 mm environmental portrait; the full zither forms a strong horizontal band, the face sits in the upper third, and both hand-to-instrument contacts remain unobstructed."
+  },
+  "isolation": {
+    "authorial_core_frozen_before_candidate_data": true,
+    "authorial_core_file_sha256": "fd79bdbfaf7ce38b5e92494bb74581cfbdd0d1c27a218b2d203a3d49bfd674b4",
+    "authorial_core_canonical_sha256": "f512360a6bdb631e24820bd1e1a6ceeca8dffca3030f65caa550d7e957f3af27",
+    "test_case_file_sha256": "64e53eed118ee4a337dd6fbaec66fef316e333c0ceaa19110714fcb03c4b1422",
+    "cross_arm_inputs_used": false,
+    "image_call_count": 1,
+    "retry_performed": false
+  },
+  "profile_binding": {
+    "candidate_pack_version": "v6",
+    "pack_id": "619617f9572536a4",
+    "required_component_groups": [
+      "horizontal_zither_form",
+      "fixed_frets_and_bridges",
+      "suldae_action",
+      "seated_support_relation",
+      "gayageum_confound_control"
+    ],
+    "required_evidence_fields": [
+      "zither_form_phrase",
+      "fret_bridge_phrase",
+      "suldae_phrase",
+      "support_phrase",
+      "gayageum_confound_phrase"
+    ],
+    "required_gates": [
+      "vo_instrument_geomungo_horizontal_zither",
+      "vo_instrument_geomungo_fixed_frets",
+      "vo_instrument_geomungo_suldae_contact",
+      "vo_instrument_geomungo_seated_support",
+      "vo_instrument_geomungo_not_gayageum"
+    ],
+    "effective_visual_contract_sha256": "d741f80733afb2529e5aa9b7f4bbc6341a1ab4e933ee74c6d30686ffe10a175b"
+  },
+  "prompt_en": "Create a photorealistic environmental portrait inside a coastal lighthouse keeper room during dense sea fog. An original adult performer sits cross-legged behind a full-scale Korean geomungo. It is a long horizontal wooden zither with a small set of strings, specifically six thick strings; prominent fixed gwae frets coexist with movable bridges on the playing surface. The fretted zither rests horizontally before the seated performer at a plausible full instrument scale, spanning the lower frame with both endpoints visible. Her left hand presses a string firmly over a fixed fret; the right hand uses a short suldae stick on the strings, with its tip in visible contact, the suldae tip visibly contacting a string in a precise accented stroke. Bare-finger plucking across many individual bridges does not substitute for the visible fixed-fret and suldae system. Freeze the instant when a draft bends the oil-lamp flame. Deep indigo ambient light fills the room while a hard white sweep from the lighthouse optic grazes the fret row; warm lamp bounce joins performer, hands, and wood in one believable exposure. Use a low seated 55 mm three-quarter viewpoint: the zither forms a strong horizontal band, the face occupies the upper third, and both hand contacts stay unobstructed and sharp. Image 1 is only a scoped visible-appearance reference for this original adult performer: use its visible adult facial appearance, long dark wavy center-parted hair, softly defined eye makeup, muted rose lips, and natural luminous skin-surface finish.",
+  "negative_en": "body distortion, plastic-looking skin, unrealistic hands, 3D render look, excessive HDR, over-processed retouching, distorted fingers, fake-looking background",
+  "audits": {
+    "composed_prompt": {
+      "status": "pass",
+      "quality_status": "warn",
+      "failure_count": 0,
+      "warning_count": 6,
+      "note": "Only advisory prompt-length and uncovered-intent-preserved warnings were emitted."
+    },
+    "render_request": {
+      "status": "pass",
+      "failure_count": 0,
+      "runtime_prompt_id": "3c1462a3b3209838",
+      "reference_count": 1,
+      "negative_matches_pack": true
+    },
+    "pixel_review": {
+      "schema_failure_count": 0,
+      "qualification_status": "failed_technical_hard_gates",
+      "technical_qualified": false,
+      "representative_eligible": false,
+      "failed_gate_ids": [
+        "vo_instrument_geomungo_fixed_frets"
+      ]
+    }
+  },
+  "generation": {
+    "tool": "built_in_image_gen",
+    "call_count": 1,
+    "reference_attached": true,
+    "reference_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/reference/appearance_reference.jpg",
+    "reference_sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "native_tool_result_path": "/Users/chasoik/.codex/generated_images/01a05a12-f49d-7d61-9116-d73e5f187ac5/exec-312ff4da-d9ac-4c72-8685-a7960b7fd634.png",
+    "copied_result_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/result.png",
+    "copied_result_sha256": "ad18315a24b975bbb6c1f9958367597cea42e11ac6a202ed1b6d57c648919a80",
+    "width": 1536,
+    "height": 1024,
+    "preview_only": false,
+    "retry_permitted": false
+  },
+  "gate_results": [
+    {
+      "gate_id": "vo_instrument_geomungo_horizontal_zither",
+      "status": "pass",
+      "evidence": "The thumbnail shows one long dark wooden Korean zither spanning nearly the entire lower frame as the dominant object being played."
+    },
+    {
+      "gate_id": "vo_instrument_geomungo_fixed_frets",
+      "status": "fail",
+      "evidence": "The native surface crop clearly shows repeated raised fixed-looking bars, but a second, visually distinct set of separate movable bridges cannot be identified; coexistence is only partial and therefore fails."
+    },
+    {
+      "gate_id": "vo_instrument_geomungo_suldae_contact",
+      "status": "pass",
+      "evidence": "The performer's right hand visibly grips a short stick and its enlarged tip meets a string on the playing surface in both the full image and native contact crop."
+    },
+    {
+      "gate_id": "vo_instrument_geomungo_seated_support",
+      "status": "pass",
+      "evidence": "The performer is visibly cross-legged behind the full-size instrument, which rests horizontally on a low support at a plausible zither scale."
+    },
+    {
+      "gate_id": "vo_instrument_geomungo_not_gayageum",
+      "status": "pass",
+      "evidence": "The small string set, repeated full-width fret-like structures, and active right-hand stick contact do not read as many individual bridges with bare-finger-only gayageum technique."
+    }
+  ],
+  "reference_scope_result": {
+    "status": "pass",
+    "assessment": "The original adult performer retains the scoped visible cues: long dark wavy center-parted hair, softly defined eye makeup, muted rose lips, and a natural luminous skin-surface finish.",
+    "claim_boundaries_respected": [
+      "no biometric identity verification",
+      "no same-person claim",
+      "no ethnicity nationality health attractiveness personality or protected-trait inference"
+    ],
+    "user_judgment": "not_yet_received"
+  },
+  "ledger": {
+    "run_id": "59660bd892c5e432",
+    "prompt_id": "a88cd706eddc3bf9",
+    "source_ref": "git:d462f0c4cde07e0a62750876f53b43e548c21e1d+working-tree",
+    "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "imagegen_skill_sha256": "681ddb4ad6d06a2acc78a3535b583f8d0c1ea800ecda3d56370d3310fd2cd4ba",
+    "worktree_id": "main-workspace:/Users/chasoik/Projects/image-prompt"
+  },
+  "artifacts": [
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/authorial_core.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/test_case.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/visual_intent.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/candidate_pack.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/composed_prompt.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/composed_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/render_request.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/render_request_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/result.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/result-thumbnail.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/review-crops/instrument-surface-native.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/review-crops/suldae-contact-native.png",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/pixel_review.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/pixel_review_audit.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/image_runs.ndjson",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/run_manifest.json",
+    "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-instrument-semantics-five-agent-v1/arm-01-geomungo/agent_result.json"
+  ]
+}

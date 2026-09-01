@@ -1,0 +1,77 @@
+{
+  "schema_version": "photo-five-arm-test-cases/v1",
+  "selection_method": {
+    "candidate_axes": [
+      "quiet_luxury",
+      "conspicuous_luxury",
+      "couture_atelier",
+      "bespoke_tailoring",
+      "heritage_travel",
+      "high_jewelry",
+      "fine_watchmaking",
+      "private_client_service"
+    ],
+    "random_seed": 868462607,
+    "method": "Ruby Random seeded shuffle, first five",
+    "selected_in_order": [
+      "conspicuous_luxury",
+      "bespoke_tailoring",
+      "private_client_service",
+      "high_jewelry",
+      "couture_atelier"
+    ]
+  },
+  "reference_image": {
+    "path": "/tmp/codex-remote-attachments/01a0582f-f499-7082-b606-e4a6631522c3/81B9B993-3FF6-4483-8D3F-4BB2B7B40264/1-사진-1.jpg",
+    "sha256": "e3e010b75a48da02f914d7e8202690b3353450a78832daaefea0bbbc234aa5b3",
+    "width": 960,
+    "height": 1280,
+    "format": "jpeg",
+    "role": "general adult fictional subject appearance continuity only",
+    "non_claims": [
+      "no biometric identity claim",
+      "no ethnicity or nationality inference",
+      "no personality or status inference"
+    ]
+  },
+  "test_protocol": {
+    "independence": "Each arm may read only its own frozen inputs, shared skill assets, and the common reference image; no cross-arm prompts, images, or judgments.",
+    "prompt_precondition": "The v6 composed-prompt audit and exact native render-request audit must pass before generation.",
+    "image_calls_per_arm": 1,
+    "pixel_rule": "Every profile render gate must pass in the same saved image at its declared native, thumbnail, or both scale; partial evidence is fail.",
+    "overall_rule": "An arm passes only when all five of its render gates pass. The five-arm suite passes only when all arms pass.",
+    "user_judgment": "Not yet received and separate from technical qualification."
+  },
+  "arms": [
+    {
+      "id": "arm-01-conspicuous",
+      "keyword_axis": "conspicuous luxury",
+      "complex_scene": "orbital ferry-terminal diplomatic case unveiling during a rainstorm and launch countdown",
+      "target_profile": "conspicuous_original_house_code_display"
+    },
+    {
+      "id": "arm-02-bespoke",
+      "keyword_axis": "bespoke tailoring",
+      "complex_scene": "midnight emergency fitting inside a high-altitude radio observatory before a treaty broadcast",
+      "target_profile": "bespoke_tailoring_individual_pattern"
+    },
+    {
+      "id": "arm-03-private-service",
+      "keyword_axis": "private client luxury",
+      "complex_scene": "one-to-one restoration appointment above a storm-flooded city for a damaged heirloom map case",
+      "target_profile": "private_client_service_interaction"
+    },
+    {
+      "id": "arm-04-high-jewelry",
+      "keyword_axis": "high jewelry",
+      "complex_scene": "matched gemstone setting in a deep-sea submersible laboratory beside bioluminescent water",
+      "target_profile": "high_jewelry_setting_integration"
+    },
+    {
+      "id": "arm-05-couture",
+      "keyword_axis": "haute couture",
+      "complex_scene": "individual zero-gravity performance toile fitting in an abandoned planetarium at dawn",
+      "target_profile": "couture_atelier_individual_construction"
+    }
+  ]
+}
