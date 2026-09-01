@@ -1,0 +1,137 @@
+{
+  "schema": "mythology-three-arm-root-pixel-review/v1",
+  "reviewer": "root coordinator independent pixel reviewer",
+  "rubric_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/coordination/precommitted_pixel_rubric.json",
+  "review_boundary": "Pixel observations are separate from prompt audit, runtime delivery, and requesting-user preference. Reference comparison is limited to visible adult face and hair appearance; it is not an identity or same-person determination.",
+  "independence": {
+    "arms": 3,
+    "image_calls_total": 3,
+    "image_calls_per_arm": 1,
+    "retries_total": 0,
+    "cross_arm_inputs": false
+  },
+  "data_layer": {
+    "focused_test_command": ".venv/bin/python -m unittest tests.test_photo_mythology_visual_semantics",
+    "tests_run": 8,
+    "tests_passed": 8,
+    "status": "pass",
+    "does_not_prove_pixels": true
+  },
+  "audit_layer": {
+    "candidate_pack_version": "v6",
+    "composed_prompt_audits_passed": 3,
+    "runtime_request_audits_passed": 3,
+    "saved_images": 3,
+    "does_not_prove_pixels": true
+  },
+  "pixel_summary": {
+    "profile_gate_pass_count": 11,
+    "profile_gate_total": 15,
+    "profile_qualified_arms": 0,
+    "arms_requiring_revision": 3,
+    "partial_is_fail": true,
+    "requesting_user_preference": "pending"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-chaoskampf",
+      "profile_id": "chaoskampf_cosmogonic_ordering",
+      "pack_id": "521ae094353daf7a",
+      "prompt_id": "ce4d9aec6cde8c8e",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-01-chaoskampf/render-attempt-01.png",
+        "sha256": "f881178191337c11a6d0711e883411b069f93797b4bc6edc38bd9786123277bb",
+        "dimensions": "1024x1535"
+      },
+      "hard_gates": [
+        {"id": "vo_myth_chaoskampf_champion", "status": "pass", "evidence": "The adult storm-bearer is the dominant spear-wielding ordering champion and remains separate from the serpent."},
+        {"id": "vo_myth_chaoskampf_adversary", "status": "pass", "evidence": "A massive rain-black sea serpent is materially distinct from the champion and reads as the primordial adversary."},
+        {"id": "vo_myth_chaoskampf_combat", "status": "pass", "evidence": "Both hands grip one spear and lightning follows the shaft into visible spear-to-head contact."},
+        {"id": "vo_myth_chaoskampf_defeat", "status": "fail", "evidence": "The foreground head and coils remain actively intact; distant fragmentation is not unambiguously caused by the spear contact."},
+        {"id": "vo_myth_chaoskampf_order", "status": "fail", "evidence": "Irregular waterways and terraces can read as pre-existing quarry terrain rather than new cosmic order emerging from the defeat."}
+      ],
+      "common_controls": [
+        {"id": "reference_visible_appearance_continuity", "status": "fail", "evidence": "Hair broadly survives, but the eyes are larger and rounder, the face shorter, and the lower face narrower than the reference's visible appearance cues."},
+        {"id": "adult_age_continuity", "status": "pass", "evidence": "The rendered champion remains visibly adult."},
+        {"id": "gross_structural_coherence", "status": "fail", "evidence": "Human anatomy is coherent, but the fragmented distant coil has ambiguous one-body continuity with the foreground head."},
+        {"id": "required_contact_anatomy", "status": "fail", "evidence": "Spear contact is readable, but the blade lands on the upper head rather than pinning the armored jaw to the meridian stone."},
+        {"id": "unrequested_text_artifacts", "status": "pass", "evidence": "No caption, watermark, or pseudo-writing is visible."}
+      ],
+      "decision": "revise"
+    },
+    {
+      "arm_id": "arm-02-katabasis",
+      "profile_id": "katabasis_living_underworld_descent",
+      "pack_id": "ce021c982f366a85",
+      "prompt_id": "6b36f8a9594aa525",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/render-attempt-01.png",
+        "sha256": "0eb511d354d819c161c93120551bbdf5f76a23e3122589486c04faf9533bfff4",
+        "dimensions": "1122x1402"
+      },
+      "hard_gates": [
+        {"id": "vo_myth_katabasis_living", "status": "pass", "evidence": "Warm skin, condensed breath, active reach, and a firm astrolabe grip make the visitor visibly alive and agentive."},
+        {"id": "vo_myth_katabasis_origin", "status": "pass", "evidence": "A bright vegetated opening, upper stair, and red cord preserve the human-world origin behind her."},
+        {"id": "vo_myth_katabasis_threshold", "status": "fail", "evidence": "Both boots are settled on one lower landing, so no body part visibly straddles a bounded active downward crossing."},
+        {"id": "vo_myth_katabasis_destination", "status": "pass", "evidence": "The black waterway, boat, skeletal ferryman, and dead inhabitants form a distinct underworld destination."},
+        {"id": "vo_myth_katabasis_purpose", "status": "pass", "evidence": "The glowing astrolabe is aimed toward the ferryman's map tablet and chain as a legible mission cue."}
+      ],
+      "common_controls": [
+        {"id": "reference_visible_appearance_continuity", "status": "pass", "evidence": "Long center-parted dark waves and broad adult facial appearance cues remain visible; no identity claim is made."},
+        {"id": "adult_age_continuity", "status": "pass", "evidence": "The traveler remains visibly adult."},
+        {"id": "gross_structural_coherence", "status": "pass", "evidence": "Traveler, ferryman, boat, stair, astrolabe, and chain are spatially coherent."},
+        {"id": "required_contact_anatomy", "status": "fail", "evidence": "Hand-to-astrolabe contact is coherent, but the required threshold-crossing foot geometry is absent."},
+        {"id": "unrequested_text_artifacts", "status": "fail", "evidence": "The map tablet contains prominent malformed pseudo-lettering although readable text was not requested."}
+      ],
+      "decision": "revise"
+    },
+    {
+      "arm_id": "arm-03-moirai",
+      "profile_id": "moirai_fate_thread_life_allocation",
+      "pack_id": "c59053b35e2dcb85",
+      "prompt_id": "dd9b46fde40628d9",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-03-moirai/render-attempt-01.png",
+        "sha256": "054ec31dbff7a446e317de6aa4ab8bf93056e6139564e04869893160baeb0395",
+        "dimensions": "1448x1086"
+      },
+      "hard_gates": [
+        {"id": "vo_myth_moirai_three_roles", "status": "pass", "evidence": "Three adult workers remain immediately distinct as spinner, measurer, and cutter."},
+        {"id": "vo_myth_moirai_spin", "status": "pass", "evidence": "A luminous filament visibly exits a loaded spool under the left worker's guiding hand."},
+        {"id": "vo_myth_moirai_measure", "status": "pass", "evidence": "The same filament lies taut across the middle worker's graduated bronze rule."},
+        {"id": "vo_myth_moirai_cut", "status": "fail", "evidence": "The shears remain open around an uninterrupted bending filament; no severed gap or detached endpoint is visible."},
+        {"id": "vo_myth_moirai_continuity", "status": "pass", "evidence": "One red filament remains traceable from spool through rule and shears toward the hourglass."}
+      ],
+      "common_controls": [
+        {"id": "reference_visible_appearance_continuity", "status": "fail", "evidence": "Hair and broad facial form survive, but downward gaze hides the source-visible eye aperture and spacing, so the complete appearance control is not judgeable."},
+        {"id": "adult_age_continuity", "status": "pass", "evidence": "All depicted people remain visibly adult."},
+        {"id": "gross_structural_coherence", "status": "pass", "evidence": "Bodies, tools, table, thread path, recipient, and hourglass are grossly coherent."},
+        {"id": "required_contact_anatomy", "status": "fail", "evidence": "Spool and ruler contacts pass, but open shears do not realize the required cut state."},
+        {"id": "unrequested_text_artifacts", "status": "pass", "evidence": "Functional ticks and decorative marks do not supply missing semantics; no caption or watermark is present."}
+      ],
+      "decision": "revise"
+    }
+  ],
+  "test_derived_candidate_pack_findings": [
+    {
+      "profile_id": "chaoskampf_cosmogonic_ordering",
+      "finding": "The current wording can produce a strong battle while letting defeat and ordered terrain appear spatially unrelated or pre-existing.",
+      "recommended_contract_refinement": "Require defeat-state change and newly forming boundary or world matter to share one impact locus and one-body lineage; explicitly reject pre-existing ordered terrain and disconnected fragment effects."
+    },
+    {
+      "profile_id": "katabasis_living_underworld_descent",
+      "finding": "A completed arrival inside the underworld can visually substitute for an active threshold descent.",
+      "recommended_contract_refinement": "Require a crossing topology with trailing foot or hand on the human-world side, leading foot below or beyond the boundary, and center-of-mass movement directed downward; reject both feet settled on one landing."
+    },
+    {
+      "profile_id": "moirai_fate_thread_life_allocation",
+      "finding": "The render preserved continuous-thread evidence by sacrificing the cut endpoint, revealing tension between the continuity and cut gates.",
+      "recommended_contract_refinement": "Define continuity as one traceable same thread from spool through measurement to a single localized cut point, while requiring closed blades, a small severed gap, and a detached endpoint beyond that point."
+    },
+    {
+      "profile_id": "cross_profile_reference_control",
+      "finding": "A reference-bound face can drift or become non-comparable when complex action and wide composition dominate.",
+      "recommended_contract_refinement": "When appearance continuity is a control, reserve enough face size and a gaze angle that keeps eye aperture, face length, and lower-face width directly inspectable."
+    }
+  ]
+}

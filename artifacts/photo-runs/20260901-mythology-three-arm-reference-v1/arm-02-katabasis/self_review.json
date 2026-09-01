@@ -1,0 +1,88 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "ce021c982f366a85",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex independent pixel reviewer arm-02",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/render-attempt-01.png",
+  "result_sha256": "0eb511d354d819c161c93120551bbdf5f76a23e3122589486c04faf9533bfff4",
+  "source_reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "review_scope": "observable face and hair appearance continuity only; no same-person or identity determination"
+  },
+  "inspection_inputs": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/review-thumbnail.png",
+      "sha256": "b985564331b2e05d4845d6b226c7d637dda741a1bd127166db0cead4fff5ca3f",
+      "pixel_size": "256x320"
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/render-attempt-01.png",
+      "sha256": "0eb511d354d819c161c93120551bbdf5f76a23e3122589486c04faf9533bfff4",
+      "pixel_size": "1122x1402"
+    },
+    "native_crops": [
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/review-face-native.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/review-threshold-native.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-mythology-three-arm-reference-v1/arm-02-katabasis/review-consequence-native.png"
+    ]
+  },
+  "hard_gates": {
+    "vo_myth_katabasis_living": {
+      "status": "pass",
+      "evidence": "Thumbnail and native views show a warm-toned adult woman with visible condensed breath, an active forward reach, and a firm astrolabe grip, clearly differentiated from the surrounding skeletons."
+    },
+    "vo_myth_katabasis_origin": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, a bright outdoor opening, wet upper stair, and red cord remain visibly behind and above the traveler as human-world origin cues."
+    },
+    "vo_myth_katabasis_threshold": {
+      "status": "fail",
+      "evidence": "The stair direction from daylight to the lower chamber is visible, but both boots stand together on the same lower landing; no bounded gate-straddling or active downward crossing is simultaneously visible, so this is only partial."
+    },
+    "vo_myth_katabasis_destination": {
+      "status": "pass",
+      "evidence": "Native pixels clearly show a black subterranean waterway, boat, hooded skeletal ferryman, and multiple dead inhabitants beyond the stair, forming a distinct underworld realm."
+    },
+    "vo_myth_katabasis_purpose": {
+      "status": "pass",
+      "evidence": "Native pixels show the traveler carrying and aiming a luminous brass astrolabe toward the ferryman's cracked map tablet while its beam reaches the boat chain, making the mission cue legible."
+    }
+  },
+  "supplemental_checks": {
+    "core_actor_action_target_consequence": {
+      "status": "fail",
+      "evidence": "The living actor, astrolabe reach, ferryman/map-tablet target, and sparking chain consequence are visible, but the required active downward step is absent because both feet are settled on one landing; the conjunction is partial and therefore fails."
+    },
+    "reference_visible_appearance_continuity": {
+      "status": "pass",
+      "evidence": "The result preserves observable reference cues including long near-black center-parted soft waves, softly arched brows, brown almond-shaped eyes under warm light, and a tapered oval adult face. This is appearance continuity only, not an identity judgment."
+    },
+    "anatomy_and_contact_coherence": {
+      "status": "pass",
+      "evidence": "At native size, the woman's feet contact the landing, her hand-to-astrolabe grip is readable, the ferryman's reaching skeletal hand is coherent, and the light-to-chain interaction has no gross contact or anatomy break."
+    },
+    "unrequested_text_artifacts": {
+      "status": "fail",
+      "evidence": "The ferryman's tablet contains prominent malformed pseudo-Latin lettering even though no readable text was requested."
+    }
+  },
+  "artifact_observations": {
+    "anatomy": "No gross extra-limb, hand, foot, or skeletal-joint failure was found at native size.",
+    "contact": "Boot-to-ground and hand-to-astrolabe contact are plausible; the magical beam intersects the chain with a localized spark.",
+    "text": "Prominent pseudo-lettering is present on the map tablet and is a visible quality defect.",
+    "chain_consequence": "A bright spark and stressed link communicate chain damage, although a completely separated falling open link is less explicit than the prompt."
+  },
+  "profile_qualified": false,
+  "overall_decision": "revise",
+  "decision_rationale": "Four of five profile gates pass, but the bounded active downward crossing gate fails in the same image; partial evidence cannot qualify. The unrequested pseudo-text is an additional revision issue.",
+  "prompt_preflight_status": "pass",
+  "pixel_status": "fail",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No direct requesting-user preference judgment has been received."
+  }
+}

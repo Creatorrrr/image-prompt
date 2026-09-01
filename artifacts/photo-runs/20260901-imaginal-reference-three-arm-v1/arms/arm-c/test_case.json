@@ -1,0 +1,78 @@
+{
+  "schema_version": "photo-imaginal-render-test-case/v1",
+  "test_case_id": "imaginal-reference-three-arm-v1-arm-c",
+  "arm_id": "arm-c",
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "assignment_sha256": "e6618f0013fa7bec928cade19359dd6091e14f88a281d4543878a9178650136e",
+    "request_envelope_sha256": "8039ae3ff591d0e9a8db0a52f04cd71da9e7292c8a69d07a322e982446749116"
+  },
+  "assigned_keyword": "face pareidolia",
+  "target_profile_id": "face_pareidolia_embedded_nonface_pattern",
+  "random_complex_scene": "coastal weather observatory preparing a storm-glass instrument",
+  "candidate_pack_seed": 5829874854134792247,
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible long dark wavy hairstyle and dark blouse styling reference only; create an original adult facial identity",
+    "identity_comparison": "out_of_scope"
+  },
+  "attempt_policy": {
+    "image_call_budget": 1,
+    "retries_allowed": 0,
+    "partial_is_fail": true,
+    "substituted_or_confounded_evidence_is_fail": true,
+    "user_judgment_separate": true
+  },
+  "preflight_contract": {
+    "candidate_pack_version": "v6",
+    "pack_id": "9b1e716042586012",
+    "authorial_core_sha256": "9900c6cb53646f3a41bae8e15982eebc482174916b6d98df073f1addd7b989cc",
+    "intent_lock_sha256": "dcbe9b7f38bba3cd1b52187d52b7f506040f481fdcc89a859d11006cc894d1f7",
+    "effective_visual_contract_sha256": "2d167e45f0cc21e463e4cbe1905c6edee192301a51e239e7d93f41186cdfea13",
+    "composed_prompt_path": "composed_prompt.json",
+    "render_request_path": "render_request.json"
+  },
+  "target_hard_gates": [
+    {
+      "id": "vo_imaginal_pareidolia_nonface_source",
+      "review_scale": "thumbnail"
+    },
+    {
+      "id": "vo_imaginal_pareidolia_face_relation",
+      "review_scale": "both"
+    },
+    {
+      "id": "vo_imaginal_pareidolia_material_continuity",
+      "review_scale": "native"
+    },
+    {
+      "id": "vo_imaginal_pareidolia_dual_read",
+      "review_scale": "both"
+    },
+    {
+      "id": "vo_imaginal_pareidolia_unadded_components",
+      "review_scale": "native"
+    }
+  ],
+  "supplemental_gates": [
+    {
+      "id": "scene_coastal_weather_observatory",
+      "review_scale": "both",
+      "success_condition": "The coastal observatory, storm weather, lighthouse, and active storm-glass preparation remain jointly legible."
+    },
+    {
+      "id": "reference_visible_style_only",
+      "review_scale": "both",
+      "success_condition": "Long dark wavy hair and a dark flowing blouse survive without making any facial-identity claim."
+    }
+  ],
+  "result": {
+    "path": "result.png",
+    "sha256": "edfecceb850d03debad1c731cbbd253a746dcfbef6d3ee2dc2f4f74c4aac55fe",
+    "native_dimensions": "1448x1086",
+    "thumbnail_path": "thumbnail.png",
+    "thumbnail_sha256": "0ccdd29cade2f53fa658d9e00f7cec88d53e24ff3ed714d26899a3fcfee5be49"
+  },
+  "serialization_note": "This test-case file was assembled after rendering from the immutable assignment and the pre-render frozen core, pack, composed prompt, and render request; it does not rewrite those earlier contracts."
+}

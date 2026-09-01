@@ -1,0 +1,88 @@
+{
+  "schema_version": "photo-imaginal-root-cross-review/v1",
+  "reviewer": "root_coordinator_independent_pixel_cross_review",
+  "decision_policy": "partial_is_fail",
+  "review_boundary": {
+    "thumbnail": "Judge composition and target relations from each saved thumbnail without using prompt audit as pixel evidence.",
+    "native": "Judge material continuity, connection topology, projection registration, and reference styling from each saved native PNG.",
+    "identity": "No biometric, same-person, protected-trait, health, attractiveness, or personality claim is made.",
+    "user_judgment": "pending"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "keyword": "phantasmagoria projection",
+      "profile_id": "phantasmagoria_projected_spectral_sequence",
+      "result_sha256": "c62e3a1bfec75f50435bed4054d80208c51d51da2b68efb25139abc02a5c13c7",
+      "target_gates": {
+        "vo_imaginal_phantasmagoria_apparatus": "pass",
+        "vo_imaginal_phantasmagoria_light_path": "pass",
+        "vo_imaginal_phantasmagoria_surface": "pass",
+        "vo_imaginal_phantasmagoria_sequence": "pass",
+        "vo_imaginal_phantasmagoria_depth": "pass"
+      },
+      "target_profile_result": "pass-with-user-pending",
+      "scene_gate": {
+        "status": "fail",
+        "evidence": "The route map and tripod camera are visible, but the camera points toward the projection wall, so recording the salt-stained route map is not demonstrated."
+      },
+      "reference_style_gate": "pass",
+      "full_case_result": "revise",
+      "root_agrees_with_arm_review": true
+    },
+    {
+      "arm_id": "arm-b",
+      "keyword": "matter-of-fact magical realism",
+      "profile_id": "magical_realism_matter_of_fact_anomaly",
+      "result_sha256": "fe445cadb3c35500b124c160d58eb86f1044322d3c65890a26d12af9d8276bba",
+      "target_gates": {
+        "vo_imaginal_magic_realism_ordinary_world": "pass",
+        "vo_imaginal_magic_realism_single_anomaly": "pass",
+        "vo_imaginal_magic_realism_matter_of_fact": "pass",
+        "vo_imaginal_magic_realism_routine_continuity": "pass",
+        "vo_imaginal_magic_realism_shared_physics": "pass"
+      },
+      "target_profile_result": "pass-with-user-pending",
+      "scene_gate": "pass",
+      "reference_style_gate": "pass",
+      "frozen_core_anchor_gate": {
+        "id": "parcel_cast_shadow_connection",
+        "status": "fail",
+        "evidence": "The moonlit railway world reads as a detached irregular floor aperture or shadow-pool, not as the sealed parcel's ordinary cast shadow in sharp physical contact with that parcel."
+      },
+      "full_case_result": "revise",
+      "root_review_delta": "The arm correctly qualified the broader five-gate magical-realism profile, but the root review treats the locked parcel-shadow topology as a separate full-case hard gate rather than a nonblocking divergence."
+    },
+    {
+      "arm_id": "arm-c",
+      "keyword": "face pareidolia",
+      "profile_id": "face_pareidolia_embedded_nonface_pattern",
+      "result_sha256": "edfecceb850d03debad1c731cbbd253a746dcfbef6d3ee2dc2f4f74c4aac55fe",
+      "target_gates": {
+        "vo_imaginal_pareidolia_nonface_source": "pass",
+        "vo_imaginal_pareidolia_face_relation": "pass",
+        "vo_imaginal_pareidolia_material_continuity": "fail",
+        "vo_imaginal_pareidolia_dual_read": "pass",
+        "vo_imaginal_pareidolia_unadded_components": "fail"
+      },
+      "target_profile_result": "revise",
+      "scene_gate": "pass",
+      "reference_style_gate": "pass",
+      "full_case_result": "revise",
+      "failure_evidence": "The ringed circular eyes and smooth dark smile interrupt the storm-glass crystal and liquid structure and look deliberately inserted rather than incidentally formed by ordinary bubbles, sediment, viewpoint, and spacing.",
+      "root_agrees_with_arm_review": true
+    }
+  ],
+  "aggregate": {
+    "prompt_audits_passed": "3/3",
+    "runtime_audits_passed": "3/3",
+    "images_delivered": "3/3",
+    "independent_manifests_passed": "3/3",
+    "reference_style_gates_passed": "3/3",
+    "target_profile_gates_passed": "13/15",
+    "target_profiles_qualified": "2/3",
+    "full_frozen_test_cases_qualified": "0/3",
+    "user_judgments_received": "0/3",
+    "bounded_decision": "revise"
+  }
+}

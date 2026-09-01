@@ -1,0 +1,133 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one complex landscape editorial photograph that makes a randomly assigned barred-spiral-galaxy visual meaning independently inspectable in the same frame as an original visibly adult astronomer whose appearance is guided by the attached portrait in appearance-only reference mode.",
+  "subject": "An original visibly adult astronomer guided only by the reference portrait's visible facial structure and long dark wavy hair appearance, beside a complete barred spiral galaxy observation display.",
+  "setting": "An orbital observatory control room during a minor micrometeoroid alert.",
+  "event": "The astronomer adjusts a physical telescope control while the observation display presents the complete face-on barred spiral galaxy morphology.",
+  "visual_priorities": [
+    "The adult astronomer's face stays large, unobstructed, and clear enough for appearance-only comparison without identity inference.",
+    "The display preserves one central bulge, one elongated stellar bar, two arms that begin near opposite bar ends, and one coherent galactic disk as independently inspectable structures."
+  ],
+  "baseline_prompt_en": "Create a complex landscape editorial photograph inside an orbital observatory control room during a minor micrometeoroid alert. An original visibly adult astronomer with the reference portrait's visible facial structure, almond-shaped dark eyes with similar aperture and spacing, softly tapered lower-face shape, center-parted hairline, and long dark wavy hair adjusts a physical telescope control. Keep her face large, unobstructed, naturally textured, and clearly lit for appearance-only comparison. Beside her, a large nontext scientific observation display shows a sufficiently face-on barred spiral galaxy in false-color multiwavelength light: one luminous central bulge, an elongated stellar bar crossing the bulge, two spiral arms beginning near the opposite ends of the bar, and every structure embedded within one coherent galactic disk. Preserve a believable alert-state workspace, tactile controls, restrained urgency, and independent legibility of both the adult astronomer and the complete galaxy morphology.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "visual semantics and candidate-pack application",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "basis": "request_context",
+      "resolution": "The assigned space meaning must become a concrete, inspectable photographic structure and later be tested in rendered pixels rather than merely named.",
+      "sources": []
+    },
+    {
+      "term": "independent random complex reference render test",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "For this independently assigned arm, compose a complex orbital-observatory scene with one original adult astronomer and a visibly testable barred spiral galaxy, then generate and inspect one image.",
+      "sources": []
+    },
+    {
+      "term": "attached portrait appearance reference",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use appearance-only reference mode for visible facial structure, eye aperture and spacing, lower-face shape, hairline, and long dark wavy hair on an original adult fictional subject; do not treat the image as identity, same-person, or sensitive-trait evidence.",
+      "sources": []
+    },
+    {
+      "term": "barred spiral galaxy structure",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "The preassigned random concept is a sufficiently face-on single barred spiral galaxy with a central bulge, an elongated stellar bar through it, and spiral arms emerging near both bar ends within one coherent disk.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "request_binding": {
+    "contract_version": "photo-request-binding/v1",
+    "request_id": "space-three-arm-reference-20260901-arm-01",
+    "request_sha256": "4e68ecbe87c19987be80de87e848e243d14d5c82cf95de6b77f6ce2d70a1b706",
+    "request_envelope_sha256": "c0966b24a028f33da228fd530ffa71c36779db23deb891eecff9bccd6f762516",
+    "active_spans": [
+      {
+        "span_id": "apply_visual_semantics_and_candidate_pack",
+        "start": 0,
+        "end": 21,
+        "text": "시각 의미 데이터와 후보팩에 반영해줘."
+      },
+      {
+        "span_id": "independent_random_complex_reference_render_test",
+        "start": 22,
+        "end": 174,
+        "text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘."
+      }
+    ]
+  },
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a sufficiently face-on barred spiral galaxy in false-color multiwavelength light"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "An original visibly adult astronomer with the reference portrait's visible facial structure"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "adjusts a physical telescope control"
+      },
+      {
+        "anchor_id": "visual_semantic_test",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "independent legibility of both the adult astronomer and the complete galaxy morphology"
+      },
+      {
+        "anchor_id": "reference_appearance_mode",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "appearance-only comparison"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ],
+    "augmentation_policy": "open_dimensions_only_and_subordinate",
+    "material_change_policy": "rebuild_core_after_requester_input",
+    "candidate_revision_policy": "forbidden",
+    "canonical_sha256": "2f8c0233cd27ecce6cabb4cfded4ffa81653781cf11812032e8c3d1ca94ba9fd",
+    "lock_id": "2f8c0233cd27ecce"
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "landscape editorial photography",
+    "family": "observational science editorial",
+    "evidence": [
+      "believable orbital-observatory materials and tactile controls",
+      "clear adult face and independently inspectable nontext observation display"
+    ]
+  },
+  "variation_key": "orbital_observatory_control_room",
+  "canonical_sha256": "1c896a12e14d38061e3b09773dda64c9a042b5f2a554295e9f93f3cadcd39438",
+  "core_id": "1c896a12e14d3806"
+}

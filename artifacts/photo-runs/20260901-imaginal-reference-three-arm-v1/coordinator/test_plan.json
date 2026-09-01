@@ -1,0 +1,38 @@
+{
+  "schema_version": "photo-imaginal-reference-three-arm-test-plan/v1",
+  "goal": "Test whether three randomly selected imaginal visual-profile keywords survive candidate-pack composition and one independent built-in image generation call per arm.",
+  "decision_policy": "partial_is_fail",
+  "evidence_layers": [
+    "package_and_structural_validity",
+    "composed_prompt_behavior",
+    "generation_delivery",
+    "thumbnail_and_native_pixel_fidelity",
+    "requesting_user_judgment"
+  ],
+  "reference_boundary": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible long dark wavy hairstyle and dark blouse styling reference only",
+    "prohibited_claims": [
+      "biometric_identity",
+      "same_person_identity",
+      "protected_traits",
+      "health",
+      "attractiveness",
+      "personality"
+    ]
+  },
+  "independence": {
+    "subagent_count": 3,
+    "one_arm_per_subagent": true,
+    "image_call_budget_per_arm": 1,
+    "cross_arm_prompts_packs_messages_images_reviews": "forbidden",
+    "retry_policy": "zero_retries_for_qualification"
+  },
+  "qualification": {
+    "target_gate_rule": "Every profile render gate must pass in the same saved image at its declared review scale.",
+    "concept_gate_rule": "The assigned complex scene and practical action must remain readable without substituting for the target profile.",
+    "reference_gate_rule": "The output must visibly use the authorized hairstyle or blouse styling while remaining an original adult character; no identity conclusion is scored.",
+    "overall_rule": "A missing, partial, ambiguous, environmentally confounded, or substituted target component fails the arm. User aesthetic acceptance remains pending until supplied directly."
+  }
+}

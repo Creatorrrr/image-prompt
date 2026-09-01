@@ -17294,6 +17294,534 @@
         {"id": "vo_myth_chaoskampf_order", "review_scale": "both", "description": "New cosmic order visibly results from that specific defeat."}
       ],
       "reject_substitutes": ["generic_dragon_fight", "dead_monster_without_combat", "arena_duel", "unrelated_cosmic_background", "pantheon_mixed_combat"]
+    },
+    {
+      "id": "active_comet_coma_tail_system",
+      "category": "astronomy_small_body_active_comet_structure",
+      "activation": {"exact_terms": ["active comet coma tail system", "solar-heated comet with coma and tails", "활동 혜성 코마 꼬리 구조"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "An active comet is read through a compact head embedded in a diffuse coma and one or more continuous tails directed away from the Sun; a bare asteroid, atmospheric meteor, or rocket plume is not equivalent.",
+        "paraphrase_examples": ["a condensed comet head blooms into a hazy coma and a continuous tail whose vector points away from the illuminating Sun", "태양 쪽의 응축된 머리를 코마가 감싸고 반대 방향으로 먼지나 이온 꼬리가 연속해서 뻗는다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["compact_head", "diffuse_coma", "continuous_tail", "solar_direction"], "groups": [
+          {"id": "compact_head", "any_terms": ["one compact bright comet head remains embedded at the origin of the visible activity"]},
+          {"id": "diffuse_coma", "any_terms": ["a broad diffuse coma surrounds the compact head rather than forming a hard solid outline"]},
+          {"id": "continuous_tail", "any_terms": ["at least one dust or ion tail grows continuously outward from the coma"]},
+          {"id": "solar_direction", "any_terms": ["the tail vector points away from the clearly established direction of solar illumination"]}
+        ]},
+        "contrast_examples": ["a bare asteroid without coma", "an atmospheric meteor streak", "a rocket exhaust plume", "an isolated glowing ball with a detached trail"]
+      },
+      "concept_candidate": {"concept_terms": ["compact comet head", "diffuse coma", "continuous dust or ion tail", "anti-solar tail direction"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["active comet with coherent coma and anti-solar tail"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the head, surrounding coma, continuous tail origin, and solar direction readable in one coherent astronomical frame.",
+      "required_evidence_fields": ["head_phrase", "coma_phrase", "tail_phrase", "solar_vector_phrase"],
+      "evidence_requirements": {
+        "head_phrase": {"min_content_words": 7, "must_mention_any": ["one compact bright comet head remains embedded at the origin of the visible activity"]},
+        "coma_phrase": {"min_content_words": 8, "must_mention_any": ["a broad diffuse coma surrounds the compact head rather than forming a hard solid outline"]},
+        "tail_phrase": {"min_content_words": 7, "must_mention_any": ["at least one dust or ion tail grows continuously outward from the coma"]},
+        "solar_vector_phrase": {"min_content_words": 8, "must_mention_any": ["the tail vector points away from the clearly established direction of solar illumination"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_comet_head", "review_scale": "thumbnail", "description": "A compact comet head anchors the visible activity."},
+        {"id": "vo_space_comet_coma", "review_scale": "both", "description": "A diffuse coma visibly surrounds the compact head."},
+        {"id": "vo_space_comet_tail", "review_scale": "both", "description": "A continuous dust or ion tail emerges from the coma."},
+        {"id": "vo_space_comet_solar_vector", "review_scale": "native", "description": "Tail direction is coherent with the established solar illumination vector."}
+      ],
+      "reject_substitutes": ["bare_asteroid", "atmospheric_meteor", "rocket_plume", "detached_light_trail"]
+    },
+    {
+      "id": "barred_spiral_galaxy_structure",
+      "category": "astronomy_galaxy_barred_spiral_morphology",
+      "activation": {"exact_terms": ["barred spiral galaxy structure", "central-bar spiral arm attachment", "막대나선은하 중심 막대 구조"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A barred spiral galaxy requires a central bulge crossed by an elongated stellar bar, with spiral arms beginning near the bar ends inside a common disk; a normal spiral, edge-on galaxy, or lens flare does not satisfy the morphology.",
+        "paraphrase_examples": ["an oblique face-on disk shows a bright bulge, a straight central stellar bar, and two arms curling from the bar tips", "밝은 중심팽대부를 가로지르는 막대의 양 끝에서 나선팔이 이어지고 하나의 원반 안에 놓인다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["central_bulge", "stellar_bar", "arm_attachment", "shared_disk"], "groups": [
+          {"id": "central_bulge", "any_terms": ["one luminous central bulge remains centered inside the galactic disk"]},
+          {"id": "stellar_bar", "any_terms": ["an elongated stellar bar visibly crosses the central bulge"]},
+          {"id": "arm_attachment", "any_terms": ["spiral arms begin near both ends of the central bar"]},
+          {"id": "shared_disk", "any_terms": ["the bulge bar and arms remain embedded in one coherent galactic disk"]}
+        ]},
+        "contrast_examples": ["a normal unbarred spiral galaxy", "an edge-on galaxy hiding the bar", "a starburst lens flare", "two curved light trails around a dot"]
+      },
+      "concept_candidate": {"concept_terms": ["luminous bulge", "elongated stellar bar", "arms from bar ends", "single galactic disk"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["barred spiral morphology with arms attached to the bar ends"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a sufficiently face-on view so the bulge, bar, arm attachment, and shared disk remain jointly legible.",
+      "required_evidence_fields": ["bulge_phrase", "bar_phrase", "arm_phrase", "disk_phrase"],
+      "evidence_requirements": {
+        "bulge_phrase": {"min_content_words": 6, "must_mention_any": ["one luminous central bulge remains centered inside the galactic disk"]},
+        "bar_phrase": {"min_content_words": 6, "must_mention_any": ["an elongated stellar bar visibly crosses the central bulge"]},
+        "arm_phrase": {"min_content_words": 6, "must_mention_any": ["spiral arms begin near both ends of the central bar"]},
+        "disk_phrase": {"min_content_words": 7, "must_mention_any": ["the bulge bar and arms remain embedded in one coherent galactic disk"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_barred_bulge", "review_scale": "thumbnail", "description": "One central bulge anchors the galactic disk."},
+        {"id": "vo_space_barred_bar", "review_scale": "both", "description": "An elongated stellar bar crosses the central bulge."},
+        {"id": "vo_space_barred_arm_attachment", "review_scale": "native", "description": "Spiral arms visibly begin near the two bar ends."},
+        {"id": "vo_space_barred_shared_disk", "review_scale": "both", "description": "Bulge, bar, and arms occupy one coherent disk."}
+      ],
+      "reject_substitutes": ["unbarred_spiral", "edge_on_galaxy", "stellar_lens_flare", "detached_curved_trails"]
+    },
+    {
+      "id": "interacting_galaxies_tidal_structure",
+      "category": "astronomy_galaxy_interaction_tidal_morphology",
+      "activation": {"exact_terms": ["interacting galaxies with tidal bridge", "galaxy merger tidal tails and bridge", "상호작용 은하 조석 꼬리 다리"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "Interacting galaxies require at least two distinct galactic nuclei or bodies plus tidal tails, a bridge, shells, or asymmetric distortion that is visibly connected to their mutual encounter; unrelated neighboring galaxies are insufficient.",
+        "paraphrase_examples": ["two resolved galactic cores pull a luminous bridge between them while long tidal tails peel from their outer disks", "서로 구별되는 두 은하핵 사이로 조석 다리가 이어지고 바깥 원반이 긴 꼬리로 휘어진다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["distinct_galaxies", "tidal_connection", "distorted_disks", "shared_encounter"], "groups": [
+          {"id": "distinct_galaxies", "any_terms": ["at least two distinct galactic nuclei or bodies remain separately identifiable"]},
+          {"id": "tidal_connection", "any_terms": ["a luminous tidal bridge or continuous tail physically links the encounter geometry"]},
+          {"id": "distorted_disks", "any_terms": ["one or both outer disks show asymmetric stretching shells or pulled material"]},
+          {"id": "shared_encounter", "any_terms": ["the distortions converge on the same close galactic interaction rather than unrelated overlap"]}
+        ]},
+        "contrast_examples": ["two unrelated galaxies in one field", "a single irregular galaxy", "decorative nebula ribbons", "two overlapping disks without tidal deformation"]
+      },
+      "concept_candidate": {"concept_terms": ["two resolved galaxy cores", "tidal bridge", "outer-disk tails", "shared encounter geometry"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["interacting galaxies with connected tidal deformation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame both galactic bodies and the complete bridge or tail so mutual distortion reads as one physical encounter.",
+      "required_evidence_fields": ["galaxies_phrase", "bridge_phrase", "distortion_phrase", "encounter_phrase"],
+      "evidence_requirements": {
+        "galaxies_phrase": {"min_content_words": 7, "must_mention_any": ["at least two distinct galactic nuclei or bodies remain separately identifiable"]},
+        "bridge_phrase": {"min_content_words": 8, "must_mention_any": ["a luminous tidal bridge or continuous tail physically links the encounter geometry"]},
+        "distortion_phrase": {"min_content_words": 8, "must_mention_any": ["one or both outer disks show asymmetric stretching shells or pulled material"]},
+        "encounter_phrase": {"min_content_words": 8, "must_mention_any": ["the distortions converge on the same close galactic interaction rather than unrelated overlap"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_interaction_two_galaxies", "review_scale": "thumbnail", "description": "Two distinct galactic bodies or nuclei remain identifiable."},
+        {"id": "vo_space_interaction_tidal_bridge", "review_scale": "both", "description": "A tidal bridge or tail visibly connects the encounter."},
+        {"id": "vo_space_interaction_distortion", "review_scale": "native", "description": "Outer disks show asymmetric interaction-caused distortion or shells."},
+        {"id": "vo_space_interaction_shared_geometry", "review_scale": "both", "description": "All deformation belongs to the same close galactic encounter."}
+      ],
+      "reject_substitutes": ["unrelated_galaxy_pair", "single_irregular_galaxy", "decorative_nebula_ribbon", "undistorted_overlap"]
+    },
+    {
+      "id": "einstein_ring_lens_alignment",
+      "category": "astronomy_gravitational_lensing_ring_geometry",
+      "activation": {"exact_terms": ["Einstein ring lens alignment", "gravitational-lens ring around foreground galaxy", "아인슈타인 고리 중력렌즈 정렬"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "An Einstein ring visualization requires a foreground lens mass centered within one nearly circular ring or matched arcs made from a more distant source, with tangential curvature and lens-source alignment; a halo, portal, black-hole ring, or planetary ring is not sufficient.",
+        "paraphrase_examples": ["a foreground elliptical galaxy sits at the center of a thin tangential arc that nearly closes into a ring from a lensed background source", "전경 렌즈 은하를 중심으로 배경 광원이 얇은 접선 방향 호나 거의 완전한 고리로 늘어난다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["foreground_lens", "lensed_ring", "tangential_curvature", "alignment"], "groups": [
+          {"id": "foreground_lens", "any_terms": ["one foreground lens galaxy or mass remains visible at the geometric center"]},
+          {"id": "lensed_ring", "any_terms": ["a thin ring or matched arcs from a background source surround the lens"]},
+          {"id": "tangential_curvature", "any_terms": ["the elongated source images curve tangentially around the foreground lens"]},
+          {"id": "alignment", "any_terms": ["lens center ring center and background-source images share one coherent alignment"]}
+        ]},
+        "contrast_examples": ["a glowing halo around a galaxy", "a science-fiction portal", "a black-hole emission ring", "rings around a planet"]
+      },
+      "concept_candidate": {"concept_terms": ["foreground lens galaxy", "thin lensed ring", "tangential arcs", "shared optical alignment"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["foreground gravitational lens centered inside a thin Einstein ring"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Center the foreground lens while preserving thin tangential arcs and their shared ring alignment at native resolution.",
+      "required_evidence_fields": ["lens_phrase", "ring_phrase", "curvature_phrase", "alignment_phrase"],
+      "evidence_requirements": {
+        "lens_phrase": {"min_content_words": 7, "must_mention_any": ["one foreground lens galaxy or mass remains visible at the geometric center"]},
+        "ring_phrase": {"min_content_words": 8, "must_mention_any": ["a thin ring or matched arcs from a background source surround the lens"]},
+        "curvature_phrase": {"min_content_words": 7, "must_mention_any": ["the elongated source images curve tangentially around the foreground lens"]},
+        "alignment_phrase": {"min_content_words": 8, "must_mention_any": ["lens center ring center and background-source images share one coherent alignment"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_einstein_foreground_lens", "review_scale": "both", "description": "A foreground lens remains visible at the geometric center."},
+        {"id": "vo_space_einstein_ring", "review_scale": "thumbnail", "description": "A thin ring or matched arcs surround the lens."},
+        {"id": "vo_space_einstein_tangential", "review_scale": "native", "description": "Elongated source images curve tangentially around the lens."},
+        {"id": "vo_space_einstein_alignment", "review_scale": "both", "description": "Lens and lensed images share one coherent alignment."}
+      ],
+      "reject_substitutes": ["galaxy_halo", "science_fiction_portal", "black_hole_ring", "planetary_ring"]
+    },
+    {
+      "id": "black_hole_shadow_reconstruction",
+      "category": "astronomy_compact_object_measurement_reconstruction",
+      "activation": {"exact_terms": ["black hole shadow reconstruction", "event-horizon-scale emission ring reconstruction", "블랙홀 그림자 재구성 영상"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A black-hole shadow reconstruction is a measurement-derived image with a central brightness depression enclosed by an uneven emission ring at event-horizon scale; it must not claim a direct photograph of a solid black sphere, eclipse, or portal.",
+        "paraphrase_examples": ["a sparse interferometric reconstruction shows a dark central shadow enclosed by a thick asymmetric millimeter-emission ring", "측정 재구성 특유의 제한된 해상도 안에서 어두운 중심 그림자와 밝기가 비대칭인 방출 고리가 보인다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["central_shadow", "emission_ring", "brightness_asymmetry", "reconstruction_character"], "groups": [
+          {"id": "central_shadow", "any_terms": ["one roughly circular central brightness depression forms the black-hole shadow"]},
+          {"id": "emission_ring", "any_terms": ["a thick surrounding emission ring encloses the central depression"]},
+          {"id": "brightness_asymmetry", "any_terms": ["one side of the emission ring is visibly brighter than the opposite side"]},
+          {"id": "reconstruction_character", "any_terms": ["limited-resolution measurement reconstruction texture remains visible instead of a crisp direct-photo sphere"]}
+        ]},
+        "contrast_examples": ["a solid black circle", "a solar eclipse", "a science-fiction portal", "a crisp black sphere in a star field"]
+      },
+      "concept_candidate": {"concept_terms": ["central brightness depression", "thick emission ring", "asymmetric brightness", "interferometric reconstruction texture"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["measurement-derived black-hole shadow and asymmetric emission ring"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Preserve the central depression, enclosing asymmetric ring, and visibly reconstructed measurement character without direct-photograph claims.",
+      "required_evidence_fields": ["shadow_phrase", "emission_phrase", "asymmetry_phrase", "reconstruction_phrase"],
+      "evidence_requirements": {
+        "shadow_phrase": {"min_content_words": 7, "must_mention_any": ["one roughly circular central brightness depression forms the black-hole shadow"]},
+        "emission_phrase": {"min_content_words": 6, "must_mention_any": ["a thick surrounding emission ring encloses the central depression"]},
+        "asymmetry_phrase": {"min_content_words": 8, "must_mention_any": ["one side of the emission ring is visibly brighter than the opposite side"]},
+        "reconstruction_phrase": {"min_content_words": 8, "must_mention_any": ["limited-resolution measurement reconstruction texture remains visible instead of a crisp direct-photo sphere"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_bh_shadow", "review_scale": "thumbnail", "description": "A central brightness depression remains clearly enclosed."},
+        {"id": "vo_space_bh_emission_ring", "review_scale": "both", "description": "A thick emission ring visibly surrounds the shadow."},
+        {"id": "vo_space_bh_asymmetry", "review_scale": "native", "description": "The emission ring has a clear brightness asymmetry."},
+        {"id": "vo_space_bh_reconstruction", "review_scale": "both", "description": "The image reads as limited-resolution measurement reconstruction evidence."}
+      ],
+      "reject_substitutes": ["solid_black_circle", "solar_eclipse", "science_fiction_portal", "crisp_black_sphere"]
+    },
+    {
+      "id": "relativistic_accretion_disk_visualization",
+      "category": "astronomy_compact_object_scientific_visualization",
+      "activation": {"exact_terms": ["relativistic accretion-disk visualization", "lensed far-side accretion disk around black hole", "상대론적 강착원반 중력렌즈 시각화"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A relativistic black-hole accretion-disk visualization requires a luminous disk, a dark central shadow, the far side gravitationally lensed above and below the shadow, and Doppler-like brightness asymmetry; a planetary ring or generic fire vortex is not equivalent.",
+        "paraphrase_examples": ["the far rim of a luminous accretion disk bends into upper and lower arcs around a dark shadow while the approaching side burns brighter", "빛나는 원반의 먼 쪽이 블랙홀 그림자 위아래로 휘어 보이고 한쪽 가장자리가 상대적으로 밝다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["accretion_disk", "central_shadow", "lensed_far_side", "brightness_asymmetry"], "groups": [
+          {"id": "accretion_disk", "any_terms": ["one luminous flattened accretion disk surrounds the compact central region"]},
+          {"id": "central_shadow", "any_terms": ["a dark central shadow interrupts the luminous disk geometry"]},
+          {"id": "lensed_far_side", "any_terms": ["the far side of the disk appears gravitationally warped above and below the shadow"]},
+          {"id": "brightness_asymmetry", "any_terms": ["one orbital side is visibly brighter than the receding opposite side"]}
+        ]},
+        "contrast_examples": ["rings around Saturn", "a flat glowing halo", "a fire tornado", "an ordinary edge-on protoplanetary disk"]
+      },
+      "concept_candidate": {"concept_terms": ["luminous accretion disk", "central shadow", "lensed far-side arcs", "orbital brightness asymmetry"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["relativistically lensed accretion disk around a dark shadow"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the complete disk and shadow with far-side lensing and side-to-side brightness difference in one scientific visualization.",
+      "required_evidence_fields": ["disk_phrase", "shadow_phrase", "lensing_phrase", "brightness_phrase"],
+      "evidence_requirements": {
+        "disk_phrase": {"min_content_words": 7, "must_mention_any": ["one luminous flattened accretion disk surrounds the compact central region"]},
+        "shadow_phrase": {"min_content_words": 7, "must_mention_any": ["a dark central shadow interrupts the luminous disk geometry"]},
+        "lensing_phrase": {"min_content_words": 9, "must_mention_any": ["the far side of the disk appears gravitationally warped above and below the shadow"]},
+        "brightness_phrase": {"min_content_words": 8, "must_mention_any": ["one orbital side is visibly brighter than the receding opposite side"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_accretion_disk", "review_scale": "thumbnail", "description": "A luminous flattened disk surrounds the compact center."},
+        {"id": "vo_space_accretion_shadow", "review_scale": "both", "description": "A dark central shadow interrupts the disk."},
+        {"id": "vo_space_accretion_lensing", "review_scale": "native", "description": "Far-side disk light bends above and below the shadow."},
+        {"id": "vo_space_accretion_brightness", "review_scale": "both", "description": "Opposing orbital sides show a readable brightness asymmetry."}
+      ],
+      "reject_substitutes": ["planetary_ring", "flat_glowing_halo", "fire_vortex", "ordinary_protoplanetary_disk"]
+    },
+    {
+      "id": "protostar_disk_bipolar_outflow",
+      "category": "astronomy_stellar_birth_disk_outflow_geometry",
+      "activation": {"exact_terms": ["protostar disk bipolar outflow system", "protostellar disk with perpendicular twin jets", "원시별 원반 양극 분출 구조"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A protostellar system requires an embedded young central source, a flattened circumstellar dust disk, and two opposed jets or outflow cavities approximately perpendicular to the disk, all within a surrounding envelope; a mature ringed star or hourglass nebula is insufficient.",
+        "paraphrase_examples": ["an obscured young stellar source sits in a dark flattened disk while paired jets pierce the envelope along the perpendicular axis", "먼지 포락층 속 원시별과 납작한 원반을 가로질러 수직축 양쪽으로 제트 공동이 뚫린다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["embedded_source", "flattened_disk", "bipolar_outflow", "perpendicular_geometry"], "groups": [
+          {"id": "embedded_source", "any_terms": ["one embedded young central source remains partly obscured by surrounding dust"]},
+          {"id": "flattened_disk", "any_terms": ["a flattened circumstellar dust disk crosses the central source"]},
+          {"id": "bipolar_outflow", "any_terms": ["two opposed jets or outflow cavities extend from the same central source"]},
+          {"id": "perpendicular_geometry", "any_terms": ["the bipolar outflow axis remains approximately perpendicular to the flattened disk"]}
+        ]},
+        "contrast_examples": ["a mature star with decorative rings", "a spiral galaxy", "an hourglass nebula without a disk", "one unrelated beam crossing a dusty star"]
+      },
+      "concept_candidate": {"concept_terms": ["embedded young source", "flattened dust disk", "paired outflows", "disk-jet perpendicularity"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["embedded protostar with disk-perpendicular bipolar outflows"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the embedded source, complete disk plane, both outflow lobes, and their perpendicular relation visible together.",
+      "required_evidence_fields": ["source_phrase", "disk_phrase", "outflow_phrase", "geometry_phrase"],
+      "evidence_requirements": {
+        "source_phrase": {"min_content_words": 8, "must_mention_any": ["one embedded young central source remains partly obscured by surrounding dust"]},
+        "disk_phrase": {"min_content_words": 7, "must_mention_any": ["a flattened circumstellar dust disk crosses the central source"]},
+        "outflow_phrase": {"min_content_words": 9, "must_mention_any": ["two opposed jets or outflow cavities extend from the same central source"]},
+        "geometry_phrase": {"min_content_words": 9, "must_mention_any": ["the bipolar outflow axis remains approximately perpendicular to the flattened disk"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_protostar_source", "review_scale": "native", "description": "An embedded young central source remains visibly dust-obscured."},
+        {"id": "vo_space_protostar_disk", "review_scale": "both", "description": "A flattened dust disk crosses the central source."},
+        {"id": "vo_space_protostar_outflow", "review_scale": "thumbnail", "description": "Two opposed outflow lobes share one central origin."},
+        {"id": "vo_space_protostar_perpendicular", "review_scale": "both", "description": "The outflow axis remains perpendicular to the disk plane."}
+      ],
+      "reject_substitutes": ["mature_ringed_star", "spiral_galaxy", "diskless_hourglass_nebula", "unrelated_single_beam"]
+    },
+    {
+      "id": "supernova_remnant_shock_shell",
+      "category": "astronomy_stellar_death_expanding_remnant",
+      "activation": {"exact_terms": ["supernova remnant shock shell", "expanding filamentary supernova remnant", "초신성 잔해 충격파 껍질"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A supernova remnant is an expanding shell or filament network whose outer shock boundary sweeps surrounding material and encloses an evolved interior; a live stellar explosion, planetary nebula, or generic colorful cloud is not enough.",
+        "paraphrase_examples": ["a broken spherical web of shock-heated filaments marks an expanding front with compressed gas just outside and diffuse ejecta within", "끊어진 필라멘트 껍질의 바깥 경계가 주변 가스를 밀어내고 내부에는 더 희박한 잔해가 남는다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["shell_geometry", "filament_network", "outer_shock", "swept_surroundings"], "groups": [
+          {"id": "shell_geometry", "any_terms": ["an incomplete but coherent expanding shell encloses the remnant interior"]},
+          {"id": "filament_network", "any_terms": ["thin shock-heated filaments trace much of the shell boundary"]},
+          {"id": "outer_shock", "any_terms": ["one outer shock front remains distinguishable from the diffuse inner ejecta"]},
+          {"id": "swept_surroundings", "any_terms": ["compressed or displaced surrounding gas visibly records outward expansion"]}
+        ]},
+        "contrast_examples": ["a star exploding in the present moment", "a symmetric planetary nebula", "a generic colorful nebula", "a smoke ring in space"]
+      },
+      "concept_candidate": {"concept_terms": ["evolved shell", "shock-heated filaments", "outer shock front", "swept surrounding gas"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["filamentary supernova-remnant shell with an expanding shock front"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show enough of the evolved shell to connect filaments, outer shock, interior ejecta, and swept surroundings causally.",
+      "required_evidence_fields": ["shell_phrase", "filament_phrase", "shock_phrase", "surroundings_phrase"],
+      "evidence_requirements": {
+        "shell_phrase": {"min_content_words": 8, "must_mention_any": ["an incomplete but coherent expanding shell encloses the remnant interior"]},
+        "filament_phrase": {"min_content_words": 7, "must_mention_any": ["thin shock-heated filaments trace much of the shell boundary"]},
+        "shock_phrase": {"min_content_words": 8, "must_mention_any": ["one outer shock front remains distinguishable from the diffuse inner ejecta"]},
+        "surroundings_phrase": {"min_content_words": 7, "must_mention_any": ["compressed or displaced surrounding gas visibly records outward expansion"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_snr_shell", "review_scale": "thumbnail", "description": "A coherent evolved shell encloses the remnant interior."},
+        {"id": "vo_space_snr_filaments", "review_scale": "both", "description": "Thin shock-heated filaments trace the shell boundary."},
+        {"id": "vo_space_snr_shock", "review_scale": "native", "description": "An outer shock front differs from diffuse inner ejecta."},
+        {"id": "vo_space_snr_surroundings", "review_scale": "both", "description": "Swept surrounding material records the outward expansion."}
+      ],
+      "reject_substitutes": ["live_supernova_explosion", "planetary_nebula", "generic_colored_nebula", "space_smoke_ring"]
+    },
+    {
+      "id": "auroral_arc_curtain_atmosphere",
+      "category": "space_weather_auroral_atmospheric_structure",
+      "activation": {"exact_terms": ["auroral arc curtain atmosphere", "aurora curtains with vertical rays above horizon", "오로라 호 커튼 대기 구조"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "An aurora scene requires emission above a planetary horizon or atmospheric context, organized as long arcs or folded curtains with field-aligned vertical rays; green clouds, a nebula, or light pollution do not establish auroral structure.",
+        "paraphrase_examples": ["a long luminous arc folds into a curtain above the dark horizon while narrow rays rise vertically through the curtain", "행성 지평선 위 긴 발광 호가 접힌 커튼으로 이어지고 그 안에서 가느다란 수직 광선이 솟는다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["atmospheric_horizon", "auroral_arc", "curtain_folds", "vertical_rays"], "groups": [
+          {"id": "atmospheric_horizon", "any_terms": ["a planetary horizon or atmospheric layer anchors the emission above the surface"]},
+          {"id": "auroral_arc", "any_terms": ["one long luminous auroral arc extends across the sky"]},
+          {"id": "curtain_folds", "any_terms": ["the arc develops folded curtain-like sheets rather than cloud masses"]},
+          {"id": "vertical_rays", "any_terms": ["narrow vertical rays remain embedded within the auroral curtain"]}
+        ]},
+        "contrast_examples": ["green storm clouds", "a colorful nebula", "city light pollution", "a smooth gradient band with no rays"]
+      },
+      "concept_candidate": {"concept_terms": ["planetary horizon", "long auroral arc", "folded curtains", "field-aligned rays"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["auroral arcs and ray-filled curtains above a planetary horizon"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Include the horizon and enough sky for the arc, curtain folds, and narrow rays to remain structurally distinct.",
+      "required_evidence_fields": ["horizon_phrase", "arc_phrase", "curtain_phrase", "ray_phrase"],
+      "evidence_requirements": {
+        "horizon_phrase": {"min_content_words": 8, "must_mention_any": ["a planetary horizon or atmospheric layer anchors the emission above the surface"]},
+        "arc_phrase": {"min_content_words": 6, "must_mention_any": ["one long luminous auroral arc extends across the sky"]},
+        "curtain_phrase": {"min_content_words": 7, "must_mention_any": ["the arc develops folded curtain-like sheets rather than cloud masses"]},
+        "ray_phrase": {"min_content_words": 7, "must_mention_any": ["narrow vertical rays remain embedded within the auroral curtain"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_aurora_horizon", "review_scale": "thumbnail", "description": "A planetary horizon anchors the emission above a surface."},
+        {"id": "vo_space_aurora_arc", "review_scale": "both", "description": "A long luminous auroral arc crosses the sky."},
+        {"id": "vo_space_aurora_curtain", "review_scale": "both", "description": "The arc forms folded curtain-like luminous sheets."},
+        {"id": "vo_space_aurora_rays", "review_scale": "native", "description": "Narrow vertical rays remain visible within the curtain."}
+      ],
+      "reject_substitutes": ["green_clouds", "colorful_nebula", "light_pollution", "smooth_gradient_band"]
+    },
+    {
+      "id": "solar_prominence_magnetic_loop",
+      "category": "solar_activity_prominence_limb_geometry",
+      "activation": {"exact_terms": ["solar prominence magnetic loop", "limb-anchored solar prominence arch", "태양 홍염 자기 고리 구조"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A solar prominence visualization requires a visible solar limb and a coherent plasma arch whose two footpoints are anchored to the chromosphere, with loop-scale continuity; a detached flame, terrestrial fire, or generic coronal glow is insufficient.",
+        "paraphrase_examples": ["a vast arc of glowing plasma rises beyond the solar limb and returns to two separated footpoints on the chromosphere", "태양 가장자리 밖으로 솟은 플라스마 고리가 두 발점으로 채층에 다시 연결된다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["solar_limb", "plasma_arch", "two_footpoints", "loop_continuity"], "groups": [
+          {"id": "solar_limb", "any_terms": ["the curved solar limb remains visible beneath the prominence"]},
+          {"id": "plasma_arch", "any_terms": ["one large arch of luminous plasma rises above the limb"]},
+          {"id": "two_footpoints", "any_terms": ["both ends of the plasma arch attach to separated chromospheric footpoints"]},
+          {"id": "loop_continuity", "any_terms": ["the luminous material follows one coherent magnetic loop from footpoint to footpoint"]}
+        ]},
+        "contrast_examples": ["a detached flame shape", "fire on a dark sphere", "a generic solar halo", "one unanchored glowing arc"]
+      },
+      "concept_candidate": {"concept_terms": ["curved solar limb", "plasma arch", "paired footpoints", "magnetic-loop continuity"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["limb-anchored solar prominence following one magnetic loop"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the solar limb and entire arch so both chromospheric footpoints and loop continuity survive the crop.",
+      "required_evidence_fields": ["limb_phrase", "arch_phrase", "footpoint_phrase", "loop_phrase"],
+      "evidence_requirements": {
+        "limb_phrase": {"min_content_words": 6, "must_mention_any": ["the curved solar limb remains visible beneath the prominence"]},
+        "arch_phrase": {"min_content_words": 7, "must_mention_any": ["one large arch of luminous plasma rises above the limb"]},
+        "footpoint_phrase": {"min_content_words": 9, "must_mention_any": ["both ends of the plasma arch attach to separated chromospheric footpoints"]},
+        "loop_phrase": {"min_content_words": 9, "must_mention_any": ["the luminous material follows one coherent magnetic loop from footpoint to footpoint"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_prominence_limb", "review_scale": "thumbnail", "description": "The curved solar limb remains visible beneath the feature."},
+        {"id": "vo_space_prominence_arch", "review_scale": "both", "description": "A large plasma arch rises beyond the solar limb."},
+        {"id": "vo_space_prominence_footpoints", "review_scale": "native", "description": "Both arch ends attach to separated chromospheric footpoints."},
+        {"id": "vo_space_prominence_loop", "review_scale": "both", "description": "Plasma traces one coherent footpoint-to-footpoint magnetic loop."}
+      ],
+      "reject_substitutes": ["detached_flame", "terrestrial_fire", "solar_halo", "unanchored_glowing_arc"]
+    },
+    {
+      "id": "solar_flare_active_region_burst",
+      "category": "solar_activity_flare_active_region_emission",
+      "activation": {"exact_terms": ["solar flare active-region burst", "compact solar flare ribbons in active region", "태양 플레어 활동영역 폭발 방출"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A solar flare image requires a localized active region on the visible Sun with a compact, intense brightening or paired ribbons and immediate coronal response; a prominence loop, whole-disk glow, or detached CME front is a different structure.",
+        "paraphrase_examples": ["a magnetically complex sunspot region contains a compact saturated flash with paired bright ribbons and short coronal loops", "복잡한 흑점 활동영역 안에서 국소적인 강한 섬광과 두 밝은 리본, 짧은 코로나 고리가 함께 나타난다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["visible_sun", "active_region", "localized_burst", "coronal_response"], "groups": [
+          {"id": "visible_sun", "any_terms": ["the solar disk or limb establishes the burst on the Sun"]},
+          {"id": "active_region", "any_terms": ["a localized magnetically complex active region anchors the event"]},
+          {"id": "localized_burst", "any_terms": ["an intense compact brightening or paired flare ribbons occur inside that region"]},
+          {"id": "coronal_response", "any_terms": ["short bright coronal loops or nearby plasma response remain connected to the burst"]}
+        ]},
+        "contrast_examples": ["a limb prominence", "uniform whole-sun brightness", "a detached CME front", "a lens flare over a solar photograph"]
+      },
+      "concept_candidate": {"concept_terms": ["solar disk context", "magnetic active region", "compact flare ribbons", "connected coronal response"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["localized solar flare burst inside a magnetic active region"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the active region large enough for its localized burst, ribbon structure, and connected coronal response to be reviewed.",
+      "required_evidence_fields": ["sun_phrase", "region_phrase", "burst_phrase", "response_phrase"],
+      "evidence_requirements": {
+        "sun_phrase": {"min_content_words": 7, "must_mention_any": ["the solar disk or limb establishes the burst on the Sun"]},
+        "region_phrase": {"min_content_words": 7, "must_mention_any": ["a localized magnetically complex active region anchors the event"]},
+        "burst_phrase": {"min_content_words": 9, "must_mention_any": ["an intense compact brightening or paired flare ribbons occur inside that region"]},
+        "response_phrase": {"min_content_words": 9, "must_mention_any": ["short bright coronal loops or nearby plasma response remain connected to the burst"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_flare_sun_context", "review_scale": "thumbnail", "description": "Solar disk or limb context owns the burst."},
+        {"id": "vo_space_flare_active_region", "review_scale": "both", "description": "A localized magnetic active region remains identifiable."},
+        {"id": "vo_space_flare_burst", "review_scale": "native", "description": "A compact intense brightening or paired ribbons occupy that region."},
+        {"id": "vo_space_flare_response", "review_scale": "both", "description": "Connected coronal response remains local to the burst."}
+      ],
+      "reject_substitutes": ["solar_prominence", "whole_disk_glow", "detached_cme_front", "camera_lens_flare"]
+    },
+    {
+      "id": "cme_coronagraph_snapshot",
+      "category": "solar_space_weather_coronagraph_measurement",
+      "activation": {"exact_terms": ["CME coronagraph snapshot", "coronagraph occulting-disk coronal mass ejection", "코로나그래프 코로나질량방출 관측"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A coronal mass ejection coronagraph snapshot requires an occulting disk masking the bright Sun, a known solar-center marker or scale, and a broad outward-expanding plasma front in the surrounding corona; a solar flare, comet, or decorative halo is not equivalent.",
+        "paraphrase_examples": ["a coronagraph's dark occulting disk hides the photosphere while a broad asymmetric plasma front expands through the outer corona", "검은 차폐 원반이 태양광구를 가리고 그 바깥 코로나에서 넓은 비대칭 플라스마 전면이 바깥으로 팽창한다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["occulting_disk", "solar_center", "expanding_front", "outer_corona"], "groups": [
+          {"id": "occulting_disk", "any_terms": ["one opaque coronagraph occulting disk masks the bright solar photosphere"]},
+          {"id": "solar_center", "any_terms": ["a solar-center marker or inner scale remains registered behind the occulting disk"]},
+          {"id": "expanding_front", "any_terms": ["a broad asymmetric plasma front expands radially away from the masked Sun"]},
+          {"id": "outer_corona", "any_terms": ["the ejected front remains embedded in the fainter surrounding outer corona"]}
+        ]},
+        "contrast_examples": ["a bright solar flare on the disk", "a comet tail", "a decorative circular halo", "an eclipse photograph without an ejection front"]
+      },
+      "concept_candidate": {"concept_terms": ["coronagraph occulting disk", "registered solar center", "broad radial plasma front", "faint outer corona"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["coronagraph observation of a broad outward CME front"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Center the occulting disk while preserving the solar marker, complete ejection front, and faint outer-corona context.",
+      "required_evidence_fields": ["occulting_phrase", "center_phrase", "front_phrase", "corona_phrase"],
+      "evidence_requirements": {
+        "occulting_phrase": {"min_content_words": 8, "must_mention_any": ["one opaque coronagraph occulting disk masks the bright solar photosphere"]},
+        "center_phrase": {"min_content_words": 9, "must_mention_any": ["a solar-center marker or inner scale remains registered behind the occulting disk"]},
+        "front_phrase": {"min_content_words": 9, "must_mention_any": ["a broad asymmetric plasma front expands radially away from the masked Sun"]},
+        "corona_phrase": {"min_content_words": 8, "must_mention_any": ["the ejected front remains embedded in the fainter surrounding outer corona"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_cme_occulting_disk", "review_scale": "thumbnail", "description": "An opaque coronagraph disk masks the bright photosphere."},
+        {"id": "vo_space_cme_solar_center", "review_scale": "native", "description": "A solar-center marker remains registered behind the mask."},
+        {"id": "vo_space_cme_expanding_front", "review_scale": "both", "description": "A broad asymmetric plasma front expands radially outward."},
+        {"id": "vo_space_cme_outer_corona", "review_scale": "both", "description": "The front remains embedded in a fainter outer corona."}
+      ],
+      "reject_substitutes": ["solar_flare", "comet_tail", "decorative_halo", "eclipse_without_ejection"]
+    },
+    {
+      "id": "eva_spacewalk_work_system",
+      "category": "human_spaceflight_eva_task_geometry",
+      "activation": {"exact_terms": ["EVA spacewalk work system", "tethered extravehicular station maintenance", "선외활동 우주유영 작업 체계"], "requires_adult_character": true, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "An EVA work scene requires a suited crew member outside a spacecraft, a visible life-support backpack, a restraint system such as tether, handrail, or foot restraint, and direct task contact with exterior hardware; an indoor costume portrait or free-floating pose is insufficient.",
+        "paraphrase_examples": ["a fully suited crew member outside the station braces on a handrail, safety tether clipped, life-support pack visible, and a gloved tool engaged with exterior hardware", "우주선 외부에서 생명유지 배낭과 안전줄이 보이는 승무원이 손잡이에 몸을 고정하고 장갑 낀 도구로 외부 장치를 작업한다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["vehicle_exterior", "eva_suit_plss", "restraint_system", "task_contact"], "groups": [
+          {"id": "vehicle_exterior", "any_terms": ["the suited worker remains unmistakably outside a spacecraft or orbital station"]},
+          {"id": "eva_suit_plss", "any_terms": ["the pressure suit helmet and visible life-support backpack form a complete EVA system"]},
+          {"id": "restraint_system", "any_terms": ["a safety tether handrail or foot restraint visibly secures the worker to the vehicle"]},
+          {"id": "task_contact", "any_terms": ["a gloved hand or tool makes direct contact with specific exterior hardware"]}
+        ]},
+        "contrast_examples": ["an astronaut costume in a studio", "a suited person inside a capsule", "an untethered floating portrait", "an astronaut posing beside untouched equipment"]
+      },
+      "concept_candidate": {"concept_terms": ["vehicle exterior", "complete EVA suit and PLSS", "tether or handrail restraint", "gloved hardware contact"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["restrained EVA worker performing exterior hardware maintenance"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the worker, vehicle exterior, life-support pack, restraint connection, and contacted hardware readable in one frame.",
+      "required_evidence_fields": ["exterior_phrase", "suit_phrase", "restraint_phrase", "task_phrase"],
+      "evidence_requirements": {
+        "exterior_phrase": {"min_content_words": 8, "must_mention_any": ["the suited worker remains unmistakably outside a spacecraft or orbital station"]},
+        "suit_phrase": {"min_content_words": 10, "must_mention_any": ["the pressure suit helmet and visible life-support backpack form a complete EVA system"]},
+        "restraint_phrase": {"min_content_words": 10, "must_mention_any": ["a safety tether handrail or foot restraint visibly secures the worker to the vehicle"]},
+        "task_phrase": {"min_content_words": 9, "must_mention_any": ["a gloved hand or tool makes direct contact with specific exterior hardware"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_eva_exterior", "review_scale": "thumbnail", "description": "The worker is clearly outside a spacecraft or station."},
+        {"id": "vo_space_eva_suit_plss", "review_scale": "both", "description": "Pressure suit, helmet, and life-support backpack form one EVA system."},
+        {"id": "vo_space_eva_restraint", "review_scale": "native", "description": "A tether, handrail, or foot restraint visibly secures the worker."},
+        {"id": "vo_space_eva_task_contact", "review_scale": "both", "description": "A gloved hand or tool contacts specific exterior hardware."}
+      ],
+      "reject_substitutes": ["studio_astronaut_costume", "intravehicular_suited_portrait", "untethered_pose", "equipment_without_contact"]
+    },
+    {
+      "id": "microgravity_orbital_interior",
+      "category": "human_spaceflight_microgravity_interior_evidence",
+      "activation": {"exact_terms": ["microgravity orbital interior", "free-floating station interior with no shared down", "미세중력 궤도정거장 내부"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A microgravity station interior requires recognizable orbital-habitat hardware, multiple unsupported free-floating bodies or objects, differing local orientations without a shared down direction, and handrails or restraints used for control; jumping, levitation, or lying on a rotated set is insufficient.",
+        "paraphrase_examples": ["inside a station module, a crew member and loose objects float unsupported at different orientations while fingertips use a handrail to arrest motion", "정거장 모듈 안에서 사람과 물체가 서로 다른 방향으로 떠 있고 손끝은 손잡이로 이동을 멈춘다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["orbital_interior", "unsupported_float", "orientation_diversity", "control_hardware"], "groups": [
+          {"id": "orbital_interior", "any_terms": ["station-module racks handrails and stowage establish a real orbital interior"]},
+          {"id": "unsupported_float", "any_terms": ["multiple bodies or loose objects float without visible support or ballistic jumping cues"]},
+          {"id": "orientation_diversity", "any_terms": ["subjects and objects occupy different orientations with no shared downward direction"]},
+          {"id": "control_hardware", "any_terms": ["hands feet or restraints engage rails and loops to control motion"]}
+        ]},
+        "contrast_examples": ["a person jumping", "stage-wire levitation", "someone lying on a rotated room", "a neat spacecraft cabin with every object resting"]
+      },
+      "concept_candidate": {"concept_terms": ["station-module interior", "unsupported floating objects", "multiple orientations", "handrail motion control"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["microgravity station interior with unsupported multi-orientation floating"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use the station interior and several floating elements at different orientations so microgravity remains undeniable at thumbnail scale.",
+      "required_evidence_fields": ["interior_phrase", "float_phrase", "orientation_phrase", "control_phrase"],
+      "evidence_requirements": {
+        "interior_phrase": {"min_content_words": 8, "must_mention_any": ["station-module racks handrails and stowage establish a real orbital interior"]},
+        "float_phrase": {"min_content_words": 9, "must_mention_any": ["multiple bodies or loose objects float without visible support or ballistic jumping cues"]},
+        "orientation_phrase": {"min_content_words": 9, "must_mention_any": ["subjects and objects occupy different orientations with no shared downward direction"]},
+        "control_phrase": {"min_content_words": 8, "must_mention_any": ["hands feet or restraints engage rails and loops to control motion"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_microgravity_interior", "review_scale": "thumbnail", "description": "Station racks, handrails, and stowage establish an orbital interior."},
+        {"id": "vo_space_microgravity_float", "review_scale": "both", "description": "Multiple bodies or objects float without visible support."},
+        {"id": "vo_space_microgravity_orientations", "review_scale": "both", "description": "Floating elements have no shared downward orientation."},
+        {"id": "vo_space_microgravity_control", "review_scale": "native", "description": "Rails or restraints are actively used for motion control."}
+      ],
+      "reject_substitutes": ["jumping_person", "wire_levitation", "rotated_room_pose", "settled_spacecraft_cabin"]
+    },
+    {
+      "id": "spacecraft_docking_capture_alignment",
+      "category": "spaceflight_docking_interface_capture_geometry",
+      "activation": {"exact_terms": ["spacecraft docking capture alignment", "coaxial docking interfaces at capture", "우주선 도킹 포획 정렬"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A docking scene requires two opposed spacecraft or modules with compatible interfaces on a shared approach axis, close alignment, and visible soft-capture or hard-mate contact evidence; a flyby, formation flight, collision, or unrelated rings is insufficient.",
+        "paraphrase_examples": ["two opposed docking rings share one centerline as guide petals meet and capture latches begin engaging", "마주 보는 두 도킹 인터페이스가 하나의 중심축에 놓이고 가이드 구조가 맞닿으며 포획 래치가 걸리기 시작한다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["two_vehicles", "opposed_interfaces", "shared_axis", "capture_contact"], "groups": [
+          {"id": "two_vehicles", "any_terms": ["two distinct spacecraft or modules remain visible on opposite sides of the approach"]},
+          {"id": "opposed_interfaces", "any_terms": ["compatible docking interfaces face each other rather than the camera"]},
+          {"id": "shared_axis", "any_terms": ["both interface centers share one coherent approach and alignment axis"]},
+          {"id": "capture_contact", "any_terms": ["guide petals latches seals or contact indicators show active capture or mating"]}
+        ]},
+        "contrast_examples": ["a spacecraft flyby", "formation flight with separation", "a collision", "two decorative rings in space"]
+      },
+      "concept_candidate": {"concept_terms": ["two opposed modules", "compatible docking rings", "shared centerline", "capture hardware engagement"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["coaxially aligned docking interfaces entering active capture"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a three-quarter or cutaway view that preserves both vehicles, opposed interfaces, shared axis, and capture contact.",
+      "required_evidence_fields": ["vehicles_phrase", "interfaces_phrase", "axis_phrase", "capture_phrase"],
+      "evidence_requirements": {
+        "vehicles_phrase": {"min_content_words": 9, "must_mention_any": ["two distinct spacecraft or modules remain visible on opposite sides of the approach"]},
+        "interfaces_phrase": {"min_content_words": 8, "must_mention_any": ["compatible docking interfaces face each other rather than the camera"]},
+        "axis_phrase": {"min_content_words": 8, "must_mention_any": ["both interface centers share one coherent approach and alignment axis"]},
+        "capture_phrase": {"min_content_words": 9, "must_mention_any": ["guide petals latches seals or contact indicators show active capture or mating"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_docking_two_vehicles", "review_scale": "thumbnail", "description": "Two distinct vehicles remain visible across the approach."},
+        {"id": "vo_space_docking_interfaces", "review_scale": "both", "description": "Compatible docking interfaces directly oppose each other."},
+        {"id": "vo_space_docking_axis", "review_scale": "both", "description": "Interface centers share one coherent approach axis."},
+        {"id": "vo_space_docking_capture", "review_scale": "native", "description": "Guide or latch hardware shows active capture contact."}
+      ],
+      "reject_substitutes": ["spacecraft_flyby", "formation_flight", "collision", "decorative_space_rings"]
+    },
+    {
+      "id": "planetary_rover_surface_operation",
+      "category": "planetary_exploration_rover_instrument_operation",
+      "activation": {"exact_terms": ["planetary rover surface operation", "mobile rover conducting surface sampling", "행성 탐사 로버 표면 작업"], "requires_adult_character": false, "semantic_discovery_requires_component_evidence": true},
+      "semantics": {
+        "definition": "A planetary rover operation requires a mobile surface vehicle with grounded mobility hardware, a visible science instrument or sampling mechanism interacting with a specific target, and an immediate trace or collected result; wheel count is mission-specific and must not be universalized.",
+        "paraphrase_examples": ["a grounded rover braces beside an outcrop while its articulated instrument contacts one rock target and a fresh drill trace or sample tube records the operation", "지면에 닿은 이동형 로버가 노두 옆에 정지해 관절식 장비로 한 암석을 접촉하고 새 천공 흔적이나 시료관이 결과를 보여준다"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["mobile_rover", "ground_contact", "instrument_target", "operation_result"], "groups": [
+          {"id": "mobile_rover", "any_terms": ["one mission-coherent mobile rover body and mobility system remain identifiable"]},
+          {"id": "ground_contact", "any_terms": ["wheels tracks legs or other mobility hardware visibly contact the planetary surface"]},
+          {"id": "instrument_target", "any_terms": ["a science instrument drill scoop camera or sampler engages one specific surface target"]},
+          {"id": "operation_result", "any_terms": ["a fresh track drill mark displaced soil measured target or collected sample records the task"]}
+        ]},
+        "contrast_examples": ["a stationary lander", "an orbiter above a planet", "a toy rover", "a rover portrait with no instrument interaction"]
+      },
+      "concept_candidate": {"concept_terms": ["mission-coherent rover", "surface contact", "instrument-target interaction", "fresh operation result"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["mobile planetary rover actively operating a science instrument"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the complete mobility system, ground contact, instrument target, and immediate operation result legible in one surface scene.",
+      "required_evidence_fields": ["rover_phrase", "ground_phrase", "instrument_phrase", "result_phrase"],
+      "evidence_requirements": {
+        "rover_phrase": {"min_content_words": 8, "must_mention_any": ["one mission-coherent mobile rover body and mobility system remain identifiable"]},
+        "ground_phrase": {"min_content_words": 9, "must_mention_any": ["wheels tracks legs or other mobility hardware visibly contact the planetary surface"]},
+        "instrument_phrase": {"min_content_words": 10, "must_mention_any": ["a science instrument drill scoop camera or sampler engages one specific surface target"]},
+        "result_phrase": {"min_content_words": 11, "must_mention_any": ["a fresh track drill mark displaced soil measured target or collected sample records the task"]}
+      },
+      "render_gates": [
+        {"id": "vo_space_rover_mobile_body", "review_scale": "thumbnail", "description": "A mission-coherent mobile rover body remains clearly identifiable."},
+        {"id": "vo_space_rover_ground_contact", "review_scale": "both", "description": "The rover mobility system visibly contacts the planetary surface."},
+        {"id": "vo_space_rover_instrument_target", "review_scale": "native", "description": "A science instrument engages one specific surface target."},
+        {"id": "vo_space_rover_result", "review_scale": "both", "description": "A fresh physical trace or collected result records the operation."}
+      ],
+      "reject_substitutes": ["stationary_lander", "planetary_orbiter", "toy_rover", "inactive_rover_portrait"]
     }
   ]
 }

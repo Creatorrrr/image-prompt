@@ -1,0 +1,194 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Test whether the assigned face-pareidolia keyword survives a single complex reference-conditioned image generation and strict pixel review."
+  },
+  "evidence": [
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The permitted visible reference cues are long dark wavy hair and a dark blouse; facial identity comparison and protected-trait inference are outside scope.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Candidate-pack composition and exact runtime request audits passed.",
+      "artifact": "composed_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The final prompt literally binds all five profile evidence fields, the frozen subject/action anchors, and the styling-reference boundary.",
+      "artifact": "composed_prompt.json sha256=5ba187417d3998ae46afb0c64b272acca301a701054b3e56d060c52fbe7b7c47"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "One built-in image generation call delivered one saved native result; zero retries were used.",
+      "artifact": "result.png sha256=edfecceb850d03debad1c731cbbd253a746dcfbef6d3ee2dc2f4f74c4aac55fe and run_manifest.json"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Three of five hard gates passed; material continuity and ordinary-unadded-components failed at native scale.",
+      "artifact": "pixel_review.json and pixel_review_audit.json"
+    },
+    {
+      "id": "e-scene-reference",
+      "kind": "render-observation",
+      "claim": "The assigned coastal observatory scene and both permitted styling-reference cues passed at thumbnail and native scales.",
+      "artifact": "pixel_review.json supplemental_gates"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "An ordinary storm-glass object and a compelling face relation must remain simultaneously legible, with every apparent feature visibly continuous with ordinary bubbles, crystals, liquid, or sediment rather than looking inserted or drawn.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "pareidolia-dual-read",
+        "statement": "The complete storm-glass source and the eye-mouth face relation coexist in one view.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "full source-object framing",
+          "two eye-like ordinary components",
+          "one mouth-like interval"
+        ]
+      },
+      {
+        "id": "pareidolia-material-origin",
+        "statement": "Substrate continuity and visibly ordinary unadded parts carry every apparent facial feature.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "uninterrupted local material texture",
+          "viewpoint-dependent spacing",
+          "absence of icon-like inserted feature geometry"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact observer pose",
+      "exact lighthouse position",
+      "incidental desk-prop layout"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-material-continuity",
+      "scale": "regional",
+      "axis": "substrate continuity through apparent face features",
+      "source_state": "Ordinary bubbles, crystals, and sediment should remain structurally continuous across the face relation.",
+      "render_state": "Ringed eye disks and a uniform dark smile arc interrupt the surrounding liquid-and-crystal material logic.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-unadded-components",
+      "scale": "regional",
+      "axis": "ordinary-component origin",
+      "source_state": "Viewpoint and spacing among ordinary instrument contents should create the reading.",
+      "render_state": "The eye and mouth geometry appears purpose-designed, inserted, or drawn.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-iconization",
+      "stage": "generator-response",
+      "statement": "The generator satisfied the strongly specified face relation by iconizing the eyes and mouth, despite prompt clauses requiring ordinary material continuity.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render"
+      ],
+      "falsifier": "Matched-condition repeated renders that preserve a compelling face while keeping all apparent features visibly continuous with ordinary bubbles, crystals, and sediment would weaken a systematic generator-response explanation."
+    },
+    {
+      "id": "hypothesis-sampling",
+      "stage": "sampling",
+      "statement": "A single stochastic sample may overstate how often the prompt produces icon-like inserted features.",
+      "evidence_ids": [
+        "e-generation",
+        "e-render"
+      ],
+      "falsifier": "Several matched repeated renders showing the same inserted-eye and drawn-smile substitution would weaken the sampling-only explanation."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill change was authorized in this arm; preserve the failed render as evidence for a later minimal open-dimension repair or broader evaluation.",
+    "generalization_basis": "One motivating render cannot justify a reusable skill default.",
+    "hypothesis_ids": [
+      "hypothesis-iconization",
+      "hypothesis-sampling"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-c-motivating-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "face relation",
+          "nonface source legibility",
+          "material continuity",
+          "ordinary component origin"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Prompt and runtime audits passed and one image was delivered, but two required pixel gates failed; user judgment is pending and no retry was authorized.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-render"
+    ]
+  }
+}

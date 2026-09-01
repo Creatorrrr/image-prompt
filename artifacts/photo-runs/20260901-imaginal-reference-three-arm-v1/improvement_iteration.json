@@ -1,0 +1,281 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Test three randomly selected imaginal keywords in independent complex reference-assisted image generations and determine whether the target meanings survive in delivered pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The portrait was used only for visible long dark wavy hairstyle and dark blouse styling; identity and protected-trait claims were excluded.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The focused imaginal semantics suite passed 9 of 9 and the generated visual-profile index matched 189 profiles and 1090 exact terms.",
+      "artifact": ".venv/bin/python -m unittest tests.test_photo_imaginal_visual_semantics -v; build_visual_profile_index.py --check"
+    },
+    {
+      "id": "e-a-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Arm A composed and runtime audits passed with the phantasmagoria evidence contract bound.",
+      "artifact": "arms/arm-a/composed_audit.json and arms/arm-a/render_request_audit.json"
+    },
+    {
+      "id": "e-a-render",
+      "kind": "render-observation",
+      "claim": "Arm A passed all five phantasmagoria gates but failed the assigned route-map recording scene action.",
+      "artifact": "arms/arm-a/result.png and arms/arm-a/pixel_review.json"
+    },
+    {
+      "id": "e-b-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Arm B composed and runtime audits passed with the matter-of-fact magical-realism evidence contract bound.",
+      "artifact": "arms/arm-b/composed_audit.json and arms/arm-b/render_request_audit.json"
+    },
+    {
+      "id": "e-b-render",
+      "kind": "render-observation",
+      "claim": "Arm B passed the five broad magical-realism gates, scene gate, and reference-style gate.",
+      "artifact": "arms/arm-b/result.png and arms/arm-b/pixel_review.json"
+    },
+    {
+      "id": "e-b-root",
+      "kind": "render-observation",
+      "claim": "Root cross-review found the railway world detached from the parcel rather than visibly formed by the parcel's connected cast shadow required by the frozen core.",
+      "artifact": "coordinator/root_cross_review.json"
+    },
+    {
+      "id": "e-c-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Arm C composed and runtime audits passed with the face-pareidolia evidence contract bound.",
+      "artifact": "arms/arm-c/composed_audit.json and arms/arm-c/render_request_audit.json"
+    },
+    {
+      "id": "e-c-render",
+      "kind": "render-observation",
+      "claim": "Arm C passed three of five face-pareidolia gates and failed material continuity plus ordinary unadded components.",
+      "artifact": "arms/arm-c/result.png and arms/arm-c/pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each selected keyword must satisfy every declared target profile gate in one saved image while the assigned complex scene and bounded reference styling remain legible.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "target-all-of",
+        "statement": "All target-profile relations and material owners coexist in the same render at their declared review scales.",
+        "evidence_ids": [
+          "e-a-render",
+          "e-b-render",
+          "e-c-render"
+        ],
+        "causal_controls": [
+          "complete target gate set",
+          "thumbnail relation legibility",
+          "native material continuity"
+        ]
+      },
+      {
+        "id": "frozen-scene",
+        "statement": "The randomized subject, setting, and event remain visible rather than becoming prompt-only metadata.",
+        "evidence_ids": [
+          "e-a-prompt",
+          "e-a-render",
+          "e-b-prompt",
+          "e-b-root",
+          "e-c-prompt",
+          "e-c-render"
+        ],
+        "causal_controls": [
+          "actor action target relation",
+          "object connection topology",
+          "same-frame scene evidence"
+        ]
+      },
+      {
+        "id": "reference-scope",
+        "statement": "Only the authorized hairstyle and blouse styling are evaluated from the portrait, with identity and protected-trait claims out of scope.",
+        "evidence_ids": [
+          "e-reference"
+        ],
+        "causal_controls": [
+          "visible long dark wavy hair",
+          "visible dark blouse",
+          "identity unscored"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact facial identity",
+      "camera lens",
+      "minor prop placement",
+      "incidental background texture"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-a-scene-action",
+      "scale": "global",
+      "axis": "action_target",
+      "source_state": "The tripod camera records the salt-stained route map.",
+      "render_state": "The camera points toward the projection wall while the map remains behind the filmmaker.",
+      "evidence_ids": [
+        "e-a-render"
+      ]
+    },
+    {
+      "id": "mismatch-b-shadow-connection",
+      "scale": "regional",
+      "axis": "connection_topology",
+      "source_state": "The railway platform opens inside the parcel's physically connected cast shadow.",
+      "render_state": "The platform reads as a detached irregular floor aperture or shadow-pool.",
+      "evidence_ids": [
+        "e-b-prompt",
+        "e-b-root"
+      ]
+    },
+    {
+      "id": "mismatch-c-material-ownership",
+      "scale": "regional",
+      "axis": "material_continuity",
+      "source_state": "Ordinary bubbles, crystal, and sediment incidentally form a face while remaining continuous storm-glass material.",
+      "render_state": "Ringed eyes and a smooth smile look added or drawn and interrupt the surrounding material structure.",
+      "evidence_ids": [
+        "e-c-prompt",
+        "e-c-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-a-priority",
+      "stage": "prompt-interaction",
+      "statement": "The visually dominant projection sequence captured the camera's action target and displaced the lower-priority map-recording relation.",
+      "evidence_ids": [
+        "e-a-prompt",
+        "e-a-render"
+      ],
+      "falsifier": "A matched single-call render that keeps the same projection hierarchy while visibly placing the map in the camera's optical path would weaken this explanation."
+    },
+    {
+      "id": "hypothesis-b-topology",
+      "stage": "generator-response",
+      "statement": "The generator realized the deep miniature railway as a familiar portal aperture and dropped the less common parcel-to-cast-shadow attachment topology.",
+      "evidence_ids": [
+        "e-b-prompt",
+        "e-b-root"
+      ],
+      "falsifier": "A matched render with the platform boundary touching the parcel at the cast-shadow origin while preserving the same office routine would weaken this explanation."
+    },
+    {
+      "id": "hypothesis-c-face-symbol",
+      "stage": "generator-response",
+      "statement": "The generator over-literalized the requested face relation into symbolic eyes and a smile instead of preserving substrate-owned bubble, crystal, and sediment morphology.",
+      "evidence_ids": [
+        "e-c-prompt",
+        "e-c-render"
+      ],
+      "falsifier": "A matched render with irregular ordinary bubbles and sediment that retain continuous material texture while still producing a face reading would weaken this explanation."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill or profile change was authorized; preserve the three results as bounded render evidence and do not promote partial or core-divergent cases.",
+    "generalization_basis": "The run evaluates current contracts rather than implementing a new rule.",
+    "hypothesis_ids": [
+      "hypothesis-a-priority",
+      "hypothesis-b-topology",
+      "hypothesis-c-face-symbol"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-a-prompt",
+        "e-b-prompt",
+        "e-c-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-a-render",
+        "e-b-render",
+        "e-b-root",
+        "e-c-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-arm-a",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "phantasmagoria_projection_topology",
+          "scene_action_target"
+        ],
+        "evidence_ids": [
+          "e-a-render"
+        ]
+      },
+      {
+        "id": "holdout-arm-b",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "magical_realism_relation",
+          "frozen_cast_shadow_connection"
+        ],
+        "evidence_ids": [
+          "e-b-render",
+          "e-b-root"
+        ]
+      },
+      {
+        "id": "holdout-arm-c",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "pareidolia_material_continuity",
+          "ordinary_component_ownership"
+        ],
+        "evidence_ids": [
+          "e-c-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The target keyword contracts qualified in two of three images, but no full frozen complex case passed every target, scene, and locked-core gate; user judgment remains pending.",
+    "evidence_ids": [
+      "e-package",
+      "e-a-render",
+      "e-b-root",
+      "e-c-render"
+    ]
+  }
+}

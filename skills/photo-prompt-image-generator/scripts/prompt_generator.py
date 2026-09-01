@@ -104,6 +104,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_natural_environment_extension.json",
     "photo_prompt_imaginal_extension.json",
     "photo_prompt_mythology_extension.json",
+    "photo_prompt_space_extension.json",
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",
     "photo_prompt_punk_aesthetics_extension.json",

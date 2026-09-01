@@ -1,0 +1,80 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one difficult, independently authored render test for the randomized concept phantasmagoria projection: a legible succession of projected spectral images, not merely generic mist or ghosts, staged around an adult original character whose hairstyle and blouse styling draw only from the supplied reference.",
+  "subject": "an unmistakably adult archival filmmaker with an original facial identity, long dark wavy hair, and a dark blouse",
+  "setting": "an abandoned aquarium ticket hall with corroded turnstiles, fogged glass, damp tile, and an old projection rig",
+  "event": "the filmmaker records a salt-stained route map while a visibly ordered procession of projected spectral marine forms crosses the hall",
+  "visual_priorities": [
+    "make multiple separate projector beams and a readable progression of distinct spectral marine images the dominant evidence",
+    "keep the route-map recording action and the adult subject's long dark wavy hair and dark blouse clearly legible"
+  ],
+  "baseline_prompt_en": "A cinematic documentary photograph inside an abandoned aquarium ticket hall: an unmistakably adult archival filmmaker with an original facial identity, long dark wavy hair, and a dark blouse records a salt-stained route map on a tripod-mounted camera. Behind her, a projected sequence of spectral marine apparitions visibly advances from one form to the next across the tiled wall: a compact jellyfish silhouette, then an unfurling translucent bell, then trailing luminous tendrils, then a dispersed shoal-like afterimage. Separate cones of projector light connect an old rotating lantern rig to each crisp apparition, while slight edge overlap makes their ordered succession readable in one still frame. Corroded turnstiles, fogged aquarium glass, damp reflections, and numbered ticket windows anchor the real hall. Frame the filmmaker, camera, route map, projector, beams, and the full four-stage apparition sequence together in a wide three-quarter view. Use cool cyan projection light against muted amber practical lamps, restrained grain, realistic optics, and materially believable wet tile.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "randomized independent complex concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "use the coordinator-assigned arm variation phantasmagoria projection as a difficult single-frame test with a staged spectral-image sequence",
+      "sources": []
+    },
+    {
+      "term": "attached-image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "use only the visible long dark wavy hairstyle and dark blouse styling while designing an adult character with an original facial identity",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "서로 다른 컨셉으로 반영한 키워드",
+        "dimension": "concept",
+        "prompt_evidence": "a projected sequence of spectral marine apparitions visibly advances from one form to the next"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult archival filmmaker with an original facial identity, long dark wavy hair, and a dark blouse"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "records a salt-stained route map on a tripod-mounted camera"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic documentary photography",
+    "family": "decayed public-infrastructure spectral projection study",
+    "evidence": [
+      "wide three-quarter environmental composition",
+      "cool projection light against muted amber practical lamps"
+    ]
+  },
+  "variation_key": "arm-a-phantasmagoria-abandoned-aquarium-ticket-hall"
+}

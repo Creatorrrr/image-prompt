@@ -1,0 +1,233 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the newly assigned chaoskampf_cosmogonic_ordering meaning survives both the audited prompt and one generated image while preserving only visible face and hair appearance cues from the supplied reference."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The byte-exact requester envelope asks for independent random complex concepts, reference use, image generation, and rendered-pixel testing.",
+      "artifact": "request_envelope.json sha256 ab594af378d821bf5bf393957a72fd9f7e0ceb8583e1e8183774f4b1bdaa12ff"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The reference visibly supplies long center-parted dark wavy hair and face-appearance cues only; it supplies no identity or sensitive-trait conclusion.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-pack",
+      "kind": "package-check",
+      "claim": "Candidate-pack v6 generation and composed-prompt audit passed with all five profile evidence fields literal and no optional visual concept selected.",
+      "artifact": "composed_prompt_audit.json status pass; effective visual contract 8fefbb5377399267e95292a16a1bfc520b15197000993310be5093dc73567d94"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The 248-word final prompt preserves every core anchor, all five chaoskampf obligation phrases, single-frame actor/action/target/consequence, and the reference-appearance boundary.",
+      "artifact": "composed_prompt.json sha256 b18efa3973957d0172e9b4cb9af7143b0ec4f62a3db4e601f11767ca18c21a90"
+    },
+    {
+      "id": "e-runtime",
+      "kind": "package-check",
+      "claim": "The exact built-in runtime prompt, negative bytes, intent-lock hash, and reference bytes passed preflight before generation.",
+      "artifact": "render_request_audit.json status pass runtime_prompt_id e8e92865a8d65515"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The built-in image tool delivered one native PNG; no retry or fallback occurred.",
+      "artifact": "render-attempt-01.png 1024x1535 sha256 f881178191337c11a6d0711e883411b069f93797b4bc6edc38bd9786123277bb"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Champion, primordial adversary, and active weapon contact pass, while defeat transition and defeat-caused cosmic ordering fail under strict thumbnail/native review.",
+      "artifact": "self_review.json and self_review_audit.json"
+    },
+    {
+      "id": "e-appearance",
+      "kind": "render-observation",
+      "claim": "Hair silhouette remains continuous, but the rendered eyes are larger and rounder, the face is shorter, and the lower face and jaw are narrower than the source appearance cues.",
+      "artifact": "source-appearance-crop.png and render-face-crop.png; no identity claim"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "The image must read as one tradition-bound champion defeating one primordial sea-chaos adversary, with that same defeat visibly creating a new ordered world in the same frame.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-combat-causality",
+        "statement": "Champion, adversary, two-handed weapon contact, and localized defeat remain one traceable causal event.",
+        "evidence_ids": [
+          "e-pack",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "weapon-force path",
+          "contact geometry",
+          "one-body defeat transition"
+        ]
+      },
+      {
+        "id": "inv-order-consequence",
+        "statement": "Exactly four straight rivers and newly formed concentric terraces visibly originate from the localized defeat rather than pre-exist as scenery.",
+        "evidence_ids": [
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "shared origin at impact",
+          "countable river topology",
+          "newly formed ordered boundary"
+        ]
+      },
+      {
+        "id": "inv-reference-appearance",
+        "statement": "Visible face and hair appearance cues remain continuous without asserting identity.",
+        "evidence_ids": [
+          "e-reference"
+        ],
+        "causal_controls": [
+          "eye aperture and spacing",
+          "face length",
+          "jaw width",
+          "hair partition and wave silhouette"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact camera placement within low medium-wide framing",
+      "lightning branch shape",
+      "minor bronze ornament",
+      "incidental spray"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-order",
+      "scale": "global",
+      "axis": "defeat-caused world order",
+      "source_state": "Four straight rivers and concentric terraces newly emerge from the pinned flood at the defeat point.",
+      "render_state": "More than four irregular waterways and horizontal terraces resemble existing terrain, so causal newness is unclear.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "m-defeat",
+      "scale": "regional",
+      "axis": "one-body defeat transition",
+      "source_state": "The contacted serpent passes visibly from active resistance into defeat or partition.",
+      "render_state": "The foreground head and coils remain active while a separate-looking raised coil fragments in the background.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "m-appearance",
+      "scale": "regional",
+      "axis": "visible face geometry continuity",
+      "source_state": "Reference appearance has a longer face, narrower eye aperture, and broader lower-face width.",
+      "render_state": "The generated face has larger rounder eyes, shorter face length, and a more tapered jaw.",
+      "evidence_ids": [
+        "e-reference",
+        "e-appearance"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-causal-compression",
+      "stage": "generator-response",
+      "statement": "The generator strongly realized the combat inventory but compressed the exact defeat-to-order topology into generic epic terrain, weakening causal ownership of the channels and terraces.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render"
+      ],
+      "falsifier": "A matched, independently permitted render using the same frozen evidence shows exactly four impact-origin rivers and newly formed concentric terraces without changing the prompt semantics."
+    },
+    {
+      "id": "h-reference-drift",
+      "stage": "generator-response",
+      "statement": "The distant action framing and fantasy beautification response outweighed the requested source-relative face geometry despite explicit appearance controls.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-appearance"
+      ],
+      "falsifier": "A matched permitted identity-controlled render at comparable face scale retains the source-relative eye aperture, face length, and jaw width while keeping the same action scene."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No reusable skill change is claimed from this one motivating render.",
+    "generalization_basis": "The arm records falsifiable generator-response hypotheses and preserves the failed sample for later unrelated holdout testing.",
+    "hypothesis_ids": [
+      "h-causal-compression",
+      "h-reference-drift"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-pack",
+        "e-runtime"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render",
+        "e-appearance"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-motivating-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "combat causality",
+          "defeat transition",
+          "cosmic order consequence",
+          "reference appearance continuity"
+        ],
+        "evidence_ids": [
+          "e-render",
+          "e-appearance"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Structural and prompt layers pass, but strict native-pixel review fails the defeat, order, exact core action/consequence, and visible appearance-continuity requirements; user preference is still unscored.",
+    "evidence_ids": [
+      "e-pack",
+      "e-runtime",
+      "e-render",
+      "e-appearance"
+    ]
+  }
+}

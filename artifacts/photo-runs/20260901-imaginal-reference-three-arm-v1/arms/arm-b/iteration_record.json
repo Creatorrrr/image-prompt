@@ -1,0 +1,186 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether one independently assigned matter-of-fact magical-realism keyword survives a complex reference-guided image generation and strict pixel review."
+  },
+  "evidence": [
+    {
+      "id": "e-source-reference",
+      "kind": "source-observation",
+      "claim": "The supplied portrait visibly provides long dark wavy hairstyle and dark blouse styling only; facial identity relation is outside this evaluation.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The composed v6 prompt preserves all five literal magical-realism evidence fields, every intent anchor, the assigned scene, and the scoped reference styling.",
+      "artifact": "composed_prompt.json sha256=3aa34a43dfb63fc016464aceff4095e36e1c228138299300ea973a5cb7eff4a5; composed_audit.json status=pass quality_status=warn"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Composed-prompt and exact runtime-request audits reported no blocking failures.",
+      "artifact": "composed_audit.json status=pass failures=0; render_request_audit.json status=pass failures=0"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "One built-in image generation call delivered a saved 1536 by 1024 PNG with zero retries.",
+      "artifact": "result.png sha256=fe445cadb3c35500b124c160d58eb86f1044322d3c65890a26d12af9d8276bba; image_calls=1"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Thumbnail and native inspection passed all five derived vo gates plus the assigned scene and scoped reference-use gates.",
+      "artifact": "pixel_review.json; pixel_review_audit.json technical_qualified=true failed_hard_gates=[]"
+    },
+    {
+      "id": "e-render-divergence",
+      "kind": "render-observation",
+      "claim": "The impossible region reads more strongly as an irregular floor aperture or shadow-pool than as a cast shadow visibly attached to the parcel.",
+      "artifact": "result.png and pixel_review.json supplemental_observations.nonblocking_prompt_divergence"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A concrete railway lost-property routine, one bounded impossibility, calm practical acceptance, continued parcel logging, and a shared physical consequence must remain visible together in one credible photograph.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "ordinary-world-and-task",
+        "statement": "The everyday workplace and practical sorting task remain the immediate global read.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "railway lost-property inventory",
+          "clipboard logging",
+          "sealed parcel handling"
+        ]
+      },
+      {
+        "id": "one-naturalized-anomaly",
+        "statement": "Exactly one impossible railway scene occurs while the worker responds without theatrical awe.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "single bounded anomalous region",
+          "neutral work-focused face",
+          "simultaneous routine hand actions"
+        ]
+      },
+      {
+        "id": "shared-physics",
+        "statement": "Depth, occlusion, floor perspective, and soot-like residue join the impossible event to the office.",
+        "evidence_ids": [
+          "e-render"
+        ],
+        "causal_controls": [
+          "floor-following boundary",
+          "depth-consistent railway",
+          "material residue on linoleum"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact camera focal length",
+      "parcel shelf position",
+      "background inventory arrangement"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-shadow-attachment",
+      "scale": "regional",
+      "axis": "anomaly-to-parcel topology",
+      "source_state": "The prompt specifies a cast shadow visibly connected to the sealed parcel.",
+      "render_state": "The rendered anomaly reads primarily as an irregular aperture or shadow-pool on the floor near the parcel.",
+      "evidence_ids": [
+        "e-render-divergence"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-portal-substitution",
+      "stage": "generator-response",
+      "statement": "The generator preserved naturalized impossibility and shared floor physics but converted the harder parcel-shadow attachment relation into a more familiar floor-portal topology.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render-divergence"
+      ],
+      "falsifier": "Matched-condition repeated renders that consistently keep the anomalous region visibly attached to the parcel while preserving all five profile gates would weaken this generator-response hypothesis."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No skill change was authorized or attempted in this one-arm evaluation.",
+    "generalization_basis": "A single motivating render cannot establish a reusable correction.",
+    "hypothesis_ids": [
+      "hypothesis-portal-substitution"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-b-motivating-render",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "ordinary-world legibility",
+          "single anomaly",
+          "matter-of-fact response",
+          "routine continuity",
+          "shared physics"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "This motivating case is technically qualified for its five target gates, but the event-specific parcel-shadow attachment drifted, no unrelated render holdout exists, and requesting-user judgment is pending; broader skill promotion is unsupported.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-render",
+      "e-render-divergence"
+    ]
+  }
+}

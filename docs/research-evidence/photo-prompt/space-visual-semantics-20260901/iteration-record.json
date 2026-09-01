@@ -1,0 +1,328 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "84e63c02ba328ec774d9222a6881634530b3a526+pre-existing-working-tree",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen visual-semantics and candidate-pack data from the referenced space-keyword research, then test a bounded random sample of the new narrow profiles in three isolated, single-generation, appearance-reference image arms."
+  },
+  "evidence": [
+    {
+      "id": "space_reference_conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies a broad inventory of space words and elements but does not itself distinguish observable single-frame structures from broad domain vocabulary, representation modes, or speculative concepts.",
+      "artifact": "ChatGPT conversation 6a967360-6848-83ee-836b-0e0478b4fc3b and docs/research-evidence/photo-prompt/space-visual-semantics-20260901/source-research.md"
+    },
+    {
+      "id": "space_external_research",
+      "kind": "external-research",
+      "claim": "Official NASA, ESA, STScI, ALMA, and ESO sources support bounded observable relations for sixteen astronomical and operational profiles and distinguish direct observation, false-color imagery, measurement reconstruction, simulation, and artist concepts.",
+      "artifact": "docs/research-evidence/photo-prompt/space-visual-semantics-20260901/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "space_runtime_data",
+      "kind": "source-observation",
+      "claim": "Runtime data contains sixteen four-component visual profiles, forty-eight complete candidates arranged as eight six-slot clusters, and five representation modes; broad space vocabulary remains advisory rather than exact hard activation.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json and photo_prompt_space_extension.json"
+    },
+    {
+      "id": "space_package_validation",
+      "kind": "package-check",
+      "claim": "Dictionary validation, a registry-bound visual index with 205 profiles and 1138 exact terms, and a sharded Gemini embedding-2 semantic index with 7608 entries all pass their structural checks.",
+      "artifact": "validate_photo_prompt_dictionary.py reported valid; build_visual_profile_index.py --check reported 205 profiles and 1138 exact terms; eval_semantic.py --check-index reported status ok with dictionary hash aca3f8b0fe7a9b24401d2765b0733d272a458fc0ba67410e4364e1eaf8b7d4c3 and 7608 entries"
+    },
+    {
+      "id": "space_prompt_evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "Focused tests pass exact direct routing, broad and neighboring negative controls, profile completeness, forty-eight-candidate loading, eight cluster bindings, five representation modes, evidence coverage, generated-index ownership, and optional-only embedding discovery.",
+      "artifact": ".venv/bin/python -m pytest -q tests/test_photo_space_visual_semantics.py: 11 passed and 156 subtests passed"
+    },
+    {
+      "id": "space_regression_boundary",
+      "kind": "source-observation",
+      "claim": "The broader visual-obligation and retrieval run passed 43 tests and 306 subtests but retained six yandere fixture failures caused by clinical_nursing_duty_system. Replaying the five affected inputs against the HEAD and current registries produced identical matches, and no new space profile appeared in those failures.",
+      "artifact": "tests.test_photo_visual_obligations plus tests.test_photo_visual_profile_retrieval; HEAD-registry versus current-registry diagnostic replay"
+    },
+    {
+      "id": "space_three_arm_prompt_artifacts",
+      "kind": "prompt-evaluation",
+      "claim": "Each isolated arm produced a v6 candidate pack with the assigned hard profile, a literal four-component prompt binding, an appearance-reference render request, and a passing pre-render audit while optional candidate inspiration remained advisory.",
+      "artifact": "artifacts/photo-runs/20260901-space-three-arm-reference-v1/arm-01-barred-galaxy, arm-02-microgravity, and arm-03-solar-flare candidate_pack.json, composed_prompt.json, and render-request audit files"
+    },
+    {
+      "id": "space_three_arm_render_observation",
+      "kind": "render-observation",
+      "claim": "Independent root inspection of the three saved images found all fifteen profile and representation gates and all fifteen common technical gates present under the precommitted partial-is-fail rule. The qualified profiles are barred spiral structure, orbital-interior microgravity, and a solar flare within an active region.",
+      "artifact": "artifacts/photo-runs/20260901-space-three-arm-reference-v1/coordination/root_independent_pixel_review.json and aggregate_report.md"
+    },
+    {
+      "id": "space_generation_independence",
+      "kind": "measurement",
+      "claim": "Random seed 2253228305 selected three different profile families. Three isolated agents used no cross-arm inputs and made exactly one native image call each with zero semantic retries; the saved image hashes and dimensions match their manifests.",
+      "artifact": "artifacts/photo-runs/20260901-space-three-arm-reference-v1/coordination/random_assignment.json and each arm run_manifest.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A narrow space request resolves into four independently visible structure or operation components plus an explicit evidence-mode read, while broad domain words and speculative labels stay advisory and the supplied portrait is used only for visible adult appearance continuity.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "four_component_space_observability",
+        "statement": "Every promoted space profile requires four independent component groups, four literal prompt evidence fields, and four pixel gates instead of a famous label, generic star field, glow, explosion, or isolated prop.",
+        "evidence_ids": [
+          "space_external_research",
+          "space_runtime_data",
+          "space_prompt_evaluation",
+          "space_three_arm_render_observation"
+        ],
+        "causal_controls": [
+          "narrow direct phrase activates only its intended profile",
+          "a close visual substitute remains a negative control",
+          "partial component evidence is a failed render"
+        ]
+      },
+      {
+        "id": "representation_mode_ownership",
+        "statement": "Visible-light observation, false-color or multiwavelength imagery, measurement reconstruction, scientific simulation, and artist concept remain explicitly distinguishable so an image cannot silently present one evidence class as another.",
+        "evidence_ids": [
+          "space_external_research",
+          "space_runtime_data",
+          "space_prompt_evaluation",
+          "space_three_arm_render_observation"
+        ],
+        "causal_controls": [
+          "barred galaxy and solar flare displays visibly read as false-color observations",
+          "station microgravity reads as visible-light operational documentary",
+          "speculative megastructures remain candidate-only"
+        ]
+      },
+      {
+        "id": "exact_advisory_and_evidence_layer_separation",
+        "statement": "Only narrow exact meanings create hard visual duties; semantic candidates remain optional, and package, prompt, rendered pixels, user aesthetics, and appearance-reference comparison remain separate evidence layers.",
+        "evidence_ids": [
+          "space_runtime_data",
+          "space_prompt_evaluation",
+          "space_three_arm_prompt_artifacts",
+          "space_three_arm_render_observation"
+        ],
+        "causal_controls": [
+          "embedding-only discovery cannot create a hard profile",
+          "optional candidate IDs may be rejected when they conflict with a frozen concept",
+          "technical pixel PASS does not imply user preference or identity"
+        ]
+      },
+      {
+        "id": "independent_single_generation_qualification",
+        "statement": "Each holdout is authored and generated independently from the same frozen request and reference, receives one native generation, and is reviewed against a rubric fixed before any result is observed.",
+        "evidence_ids": [
+          "space_generation_independence",
+          "space_three_arm_render_observation"
+        ],
+        "causal_controls": [
+          "no sibling-arm inputs",
+          "one native image call per arm",
+          "root review occurs only after all arms complete"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "original adult fictional subject wardrobe and role",
+      "camera and lighting choices that preserve all gates",
+      "fictional but coherent observatory, station, or field-lab setting",
+      "specific wavelength palette when the evidence mode is explicit",
+      "explicit requester definitions that override a registry default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "space_vocabulary_vs_pixel_contract",
+      "scale": "global",
+      "axis": "research taxonomy breadth",
+      "source_state": "The referenced inventory mixes objects, processes, missions, observational products, human operations, fiction, moods, and broad field names.",
+      "render_state": "Only sixteen narrow meanings were promoted because each can be decomposed into four falsifiable same-image relations; all other vocabulary remains advisory candidate material.",
+      "evidence_ids": [
+        "space_reference_conversation",
+        "space_external_research",
+        "space_runtime_data"
+      ]
+    },
+    {
+      "id": "spectacle_vs_structure",
+      "scale": "regional",
+      "axis": "astronomical event representation",
+      "source_state": "Generic star fields, bright explosions, glowing rings, detached streaks, and circular portals can superficially resemble many space keywords.",
+      "render_state": "The target requires profile-owned relations such as bar-to-arm attachment, burst-to-active-region ownership, source-to-tail geometry, or vehicle-to-target contact.",
+      "evidence_ids": [
+        "space_external_research",
+        "space_runtime_data",
+        "space_three_arm_render_observation"
+      ]
+    },
+    {
+      "id": "image_style_vs_evidence_mode",
+      "scale": "local",
+      "axis": "scientific representation",
+      "source_state": "A colorful astronomy image may be read as direct photography, false color, reconstruction, simulation, or fiction without an explicit boundary.",
+      "render_state": "Each candidate cluster and tested prompt declares a representation mode, and the pixels must visibly support that mode without relying on captions.",
+      "evidence_ids": [
+        "space_external_research",
+        "space_runtime_data",
+        "space_three_arm_render_observation"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "component_relations_prevent_generic_space_substitution",
+      "stage": "representation",
+      "statement": "Four independent component groups plus nearest-substitute rejects will prevent generic celestial spectacle from substituting for the requested structure or operation.",
+      "evidence_ids": [
+        "space_external_research",
+        "space_runtime_data"
+      ],
+      "falsifier": "A broad space phrase activates a hard profile, or a close substitute passes while one required relation is missing."
+    },
+    {
+      "id": "six_slot_clusters_preserve_operational_context",
+      "stage": "prompt-priority",
+      "statement": "Eight coherent six-slot candidate clusters will keep subject, action, location, prop, composition, and treatment aligned without forcing optional inspiration over the frozen authorial core.",
+      "evidence_ids": [
+        "space_runtime_data",
+        "space_prompt_evaluation",
+        "space_three_arm_prompt_artifacts"
+      ],
+      "falsifier": "A cluster references a missing candidate, a candidate lacks semantic metadata, or an optional candidate overrides a required profile relation."
+    },
+    {
+      "id": "representation_labels_prevent_evidence_class_drift",
+      "stage": "prompt-interaction",
+      "statement": "Explicit representation modes will prevent observational, reconstructed, simulated, and speculative imagery from being silently conflated in generated prompts and reviews.",
+      "evidence_ids": [
+        "space_external_research",
+        "space_runtime_data",
+        "space_three_arm_render_observation"
+      ],
+      "falsifier": "A rendered holdout passes its scientific meaning only by treating a portal, detached explosion, rotated studio, or artist concept as the requested evidence mode."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test",
+      "tool"
+    ],
+    "general_rule": "Promote only narrow space meanings with four falsifiable same-image component relations and an explicit representation class; keep broad taxonomy, mood, and speculative labels advisory.",
+    "generalization_basis": "The component-and-evidence-mode method applies across celestial morphology, energetic events, solar weather, orbital operations, docking, EVA, and surface robotics while retaining separate confound controls for each profile.",
+    "hypothesis_ids": [
+      "component_relations_prevent_generic_space_substitution",
+      "six_slot_clusters_preserve_operational_context",
+      "representation_labels_prevent_evidence_class_drift"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/space-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/space-visual-semantics-20260901/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/space-visual-semantics-20260901/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_space_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/aca3f8b0fe7a9b24/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_space_visual_semantics.py",
+      "artifacts/photo-runs/20260901-space-three-arm-reference-v1/"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "space_package_validation"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "space_prompt_evaluation",
+        "space_three_arm_prompt_artifacts"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "space_three_arm_render_observation"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout_barred_spiral_observatory",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "central bulge and elongated bar",
+          "spiral-arm attachment to both bar ends",
+          "shared face-on disk",
+          "false-color display",
+          "appearance reference and controller contact"
+        ],
+        "evidence_ids": [
+          "space_three_arm_render_observation"
+        ]
+      },
+      {
+        "id": "heldout_microgravity_station_inspection",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "station racks handrails and stowage",
+          "unsupported floating body and objects",
+          "divergent orientations",
+          "rail-based motion control",
+          "visible-light operational documentary"
+        ],
+        "evidence_ids": [
+          "space_three_arm_render_observation"
+        ]
+      },
+      {
+        "id": "heldout_solar_flare_field_lab",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "solar disk ownership",
+          "localized active region",
+          "compact flare burst",
+          "connected local coronal response",
+          "false-color solar observation"
+        ],
+        "evidence_ids": [
+          "space_three_arm_render_observation"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "render-fidelity",
+    "rationale": "The source-backed profiles and candidate extension, regenerated indexes, focused direct and negative-control tests, audited v6 packs and prompts, and three unrelated randomly assigned single-generation render holdouts all pass. Promotion is bounded to technical render fidelity demonstrated by the three tested profiles; it is not a universal claim for all sixteen profiles, scientific measurement validity, identity continuity, or user aesthetic approval. The six broader regression failures are reproduced unchanged against the baseline registry and remain outside this space intervention.",
+    "evidence_ids": [
+      "space_external_research",
+      "space_runtime_data",
+      "space_package_validation",
+      "space_prompt_evaluation",
+      "space_regression_boundary",
+      "space_three_arm_prompt_artifacts",
+      "space_three_arm_render_observation",
+      "space_generation_independence"
+    ]
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "138b16f55bb142a8",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "codex_agent_native_pixel_reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-space-three-arm-reference-v1/arm-01-barred-galaxy/render.png",
+  "result_sha256": "76c930ce5dc6eb067dd590feef898167dd707e57586dbe27a34e66dd30587a84",
+  "native_dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "review_inputs": {
+    "native_full": "render.png",
+    "thumbnail": "render-thumbnail.png",
+    "face_native_crop": "review-face-native.png",
+    "galaxy_native_crop": "review-galaxy-native.png",
+    "contact_native_crop": "review-contact-native.png"
+  },
+  "hard_gates": {
+    "vo_space_barred_bulge": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, one bright central bulge clearly anchors the displayed galactic disk."
+    },
+    "vo_space_barred_bar": {
+      "status": "pass",
+      "evidence": "At both thumbnail and native scale, an elongated bright stellar bar visibly crosses the luminous central bulge."
+    },
+    "vo_space_barred_arm_attachment": {
+      "status": "pass",
+      "evidence": "In the native galaxy crop, two main spiral arms visibly leave the opposite ends of the central bar and curve outward."
+    },
+    "vo_space_barred_shared_disk": {
+      "status": "pass",
+      "evidence": "At both scales, the bulge, bar, and attached arms form one continuous, sufficiently face-on galactic disk."
+    }
+  },
+  "rubric_common_gates": {
+    "reference_visible_appearance_continuity": {
+      "status": "pass",
+      "scale": "native",
+      "evidence": "Appearance-only comparison shows continuing visible face-shape, eye-aperture and spacing, tapered lower-face, center-parted hairline, and long dark wavy hair cues; this is not an identity or same-person judgment."
+    },
+    "adult_age_continuity": {
+      "status": "pass",
+      "scale": "both",
+      "evidence": "The original fictional astronomer remains visibly adult at both scales, with natural facial texture and no doll-like reshaping."
+    },
+    "gross_structural_coherence": {
+      "status": "pass",
+      "scale": "both",
+      "evidence": "The adult body, visible arm and hand, control console, observation display, and their spatial relationships remain coherent."
+    },
+    "required_interaction_contact": {
+      "status": "pass",
+      "scale": "native",
+      "evidence": "The native contact crop clearly shows the astronomer's fingers and thumb gripping the raised physical telescope-control knob."
+    },
+    "unrequested_text_artifacts": {
+      "status": "pass",
+      "scale": "native",
+      "evidence": "The barred-galaxy meaning is supplied by visible bulge, bar, arm attachment, and disk pixels without reliance on captions; side alert copy and tiny console glyphs do not name or replace the scientific morphology."
+    }
+  },
+  "rubric_profile_gates": {
+    "vo_space_barred_bulge": {
+      "status": "pass",
+      "scale": "thumbnail",
+      "evidence": "One central luminous bulge is independently visible."
+    },
+    "vo_space_barred_bar": {
+      "status": "pass",
+      "scale": "both",
+      "evidence": "The central light distribution is an unmistakably elongated bar crossing the bulge."
+    },
+    "vo_space_barred_arm_attachment": {
+      "status": "pass",
+      "scale": "native",
+      "evidence": "Both dominant spiral arms begin at the two ends of the elongated bar in the same image."
+    },
+    "vo_space_barred_shared_disk": {
+      "status": "pass",
+      "scale": "both",
+      "evidence": "Bulge, bar, and arms remain embedded within one coherent face-on disk."
+    },
+    "representation_false_color_multiwavelength": {
+      "status": "pass",
+      "scale": "native",
+      "evidence": "The galaxy appears as blue, pink, and warm analytical color mapping on an observatory display, clearly reading as false-color or multiwavelength scientific imagery rather than a portal or ordinary direct view."
+    }
+  },
+  "same_saved_image_all_profile_gates": true,
+  "partial_counts_as_fail": true,
+  "failed_gate_ids": [],
+  "technical_pixel_status": "pass",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  },
+  "requesting_user_preference": {
+    "status": "not_yet_received",
+    "separate_from_technical_gates": true
+  }
+}
