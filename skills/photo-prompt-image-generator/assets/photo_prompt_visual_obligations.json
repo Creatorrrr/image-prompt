@@ -19487,6 +19487,1251 @@
         {"id":"vo_legend_ghost_ship_present_anomaly","review_scale":"both","description":"A witness wake reflection waterline or shadow makes the spectral breach observable."}
       ],
       "reject_substitutes": ["foggy_abandoned_ship","ordinary_shipwreck","empty_deck","fully_translucent_boat","unrelated_double_exposure","cloud_ship_silhouette"]
+    },
+    {
+      "id": "capri_trouser_below_knee_clear_ankle_gap",
+      "category": "garment_trouser_length_topology",
+      "activation": {
+        "exact_terms": [
+          "capri pants",
+          "capri trousers",
+          "capri pant",
+          "pedal pushers",
+          "pedal-pusher trousers",
+          "카프리 팬츠",
+          "카프리팬츠",
+          "카프리 바지"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bifurcated trouser garment whose left and right hems both end below the knees around the calves while clearly exposed lower-leg intervals continue from those hems to the ankles and shoes. Fit, fabric, and decoration may vary. The paired below-knee hem landmarks and bare ankle gaps distinguish capri trousers from Bermuda shorts, full-length trousers, and ankle-adjacent seven-eighth crops.",
+        "paraphrase_examples": [
+          "양쪽 바지통이 무릎 아래 종아리에서 각각 끝나고 밑단부터 발목까지 맨다리가 이어지는 카프리",
+          "two separately readable trouser hems stop at mid-calf while both ankles remain clearly exposed",
+          "a full-body frame proves garment length through knee, hem, ankle, and shoe landmarks rather than camera cropping"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_trouser_legs",
+            "paired_below_knee_hems",
+            "clear_ankle_gaps",
+            "same_landmark_legibility",
+            "short_ankle_crop_confound_control"
+          ],
+          "groups": [
+            {"id":"two_trouser_legs","any_terms":["two independent trouser legs remain readable through the crotch and stride","좌우 두 바지통과 중앙 분리가 보임"]},
+            {"id":"paired_below_knee_hems","any_terms":["both trouser hems end below the knees around mid-calf","양쪽 밑단이 모두 무릎 아래 종아리 부근에서 끝남"]},
+            {"id":"clear_ankle_gaps","any_terms":["bare lower-leg gaps continue from both hems to the ankles","두 밑단과 발목 사이 맨다리 구간이 각각 이어짐"]},
+            {"id":"same_landmark_legibility","any_terms":["left and right hems share the same readable calf landmark","두 밑단의 무릎·종아리·발목 관계가 한 프레임에서 확인됨"]},
+            {"id":"short_ankle_crop_confound_control","any_terms":["the visible calf gaps distinguish this length from knee shorts and ankle crops","버뮤다 쇼츠와 7/8 발목 크롭의 길이 관계와 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "Bermuda shorts ending at the knees",
+          "seven-eighth trousers ending just above the ankle bones",
+          "full-length trousers hidden by shoes",
+          "a camera crop that cuts off the lower legs",
+          "one trouser hem obscured by a bag or foreground object"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two trouser legs",
+          "paired below-knee hems",
+          "mid-calf landmarks",
+          "two bare ankle gaps",
+          "knees hems ankles and shoes together",
+          "distinct from Bermuda and seven-eighth lengths"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["capri trousers"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a full-body or lower-body-readable frame that keeps both knees, both actual trouser hems, both ankle gaps, both ankles, and both shoes visible together. A natural step may separate the legs, but the length topology must remain legible without depending on the pose.",
+      "required_evidence_fields": [
+        "trouser_bifurcation_phrase",
+        "below_knee_hems_phrase",
+        "bare_ankle_gap_phrase",
+        "paired_landmark_phrase",
+        "length_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "trouser_bifurcation_phrase":{"min_content_words":8,"must_mention_any":["two independent trouser legs remain readable through the crotch and stride"]},
+        "below_knee_hems_phrase":{"min_content_words":8,"must_mention_any":["both trouser hems end below the knees around mid-calf"]},
+        "bare_ankle_gap_phrase":{"min_content_words":9,"must_mention_any":["bare lower-leg gaps continue from both hems to the ankles"]},
+        "paired_landmark_phrase":{"min_content_words":8,"must_mention_any":["left and right hems share the same readable calf landmark"]},
+        "length_confound_phrase":{"min_content_words":10,"must_mention_any":["the visible calf gaps distinguish this length from knee shorts and ankle crops"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_capri_two_trouser_legs","review_scale":"thumbnail","description":"The lower garment reads as two trouser legs rather than a skirt or crop artifact."},
+        {"id":"vo_summer_capri_paired_below_knee_hems","review_scale":"both","description":"Both actual garment hems end below the knees around the calves."},
+        {"id":"vo_summer_capri_clear_ankle_gaps","review_scale":"both","description":"Bare lower-leg intervals remain visible from both hems to both ankles."},
+        {"id":"vo_summer_capri_landmarks_unobstructed","review_scale":"native","description":"Both knees, hems, ankles, and shoes are simultaneously traceable without occlusion."},
+        {"id":"vo_summer_capri_not_bermuda_or_ankle_crop","review_scale":"native","description":"Knee-length shorts, ankle-adjacent crops, full-length trousers, and camera cropping do not substitute for the capri relation."}
+      ],
+      "reject_substitutes": [
+        "bermuda_knee_shorts",
+        "seven_eighth_ankle_crop",
+        "full_length_trousers",
+        "camera_cropped_lower_legs",
+        "one_hidden_trouser_hem"
+      ]
+    },
+    {
+      "id": "gathered_ankle_voluminous_trouser",
+      "category": "garment_trouser_volume_cuff_topology",
+      "activation": {
+        "exact_terms": [
+          "harem pants",
+          "harem trousers",
+          "Aladdin pants",
+          "Aladdin trousers",
+          "하렘 팬츠",
+          "하렘팬츠",
+          "알라딘 팬츠",
+          "알라딘팬츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A long bifurcated trouser construction with one gathered or drawstring waist, pronounced fabric volume through the seat, crotch, hips, and thighs, multiple loose folds that travel down each leg, and two narrow gathered or elasticated ankle cuffs. A dropped rise may strengthen the form but is not universally required. The convergence into two ankle cuffs distinguishes this topology from straight wide trousers, smooth balloon or barrel legs, and ordinary joggers.",
+        "paraphrase_examples": [
+          "허리에서 모인 많은 천이 엉덩이와 가랑이에 풍성한 여유를 만들고 좌우 발목 밴딩으로 각각 수렴하는 바지",
+          "roomy seat and thigh volume falls in loose folds before gathering tightly at both ankles",
+          "the waist, crotch depth, outer-leg volume, fold convergence, and two cuffs remain readable in one frame"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "gathered_waistband",
+            "roomy_seat_crotch_volume",
+            "hip_thigh_fabric_mass",
+            "two_gathered_ankle_cuffs",
+            "wide_balloon_jogger_confound_control"
+          ],
+          "groups": [
+            {"id":"gathered_waistband","any_terms":["one gathered waistband releases substantial fabric into both trouser legs","하나의 셔링 허리밴드에서 많은 천이 시작됨"]},
+            {"id":"roomy_seat_crotch_volume","any_terms":["the seat and crotch remain visibly roomy beneath the waistband","허리 아래 엉덩이와 가랑이에 넉넉한 부피가 남음"]},
+            {"id":"hip_thigh_fabric_mass","any_terms":["loose folds preserve pronounced volume through both hips and thighs","양쪽 골반과 허벅지에 여러 느슨한 주름과 풍성한 부피가 보임"]},
+            {"id":"two_gathered_ankle_cuffs","any_terms":["multiple folds converge separately into two narrow gathered ankle cuffs","여러 주름이 좌우의 좁은 발목 커프로 각각 수렴함"]},
+            {"id":"wide_balloon_jogger_confound_control","any_terms":["the gathered cuffs distinguish the silhouette from straight wide legs and smooth balloon hems","직선 와이드·매끈한 벌룬 밑단·평범한 조거와 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "straight wide-leg trousers with open hems",
+          "balloon trousers with smooth tapered hems and no gathered cuffs",
+          "ordinary joggers with little seat or thigh volume",
+          "parachute trousers whose drawcords do not create ankle convergence",
+          "a long skirt hiding all leg separation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "gathered waistband",
+          "roomy seat and crotch",
+          "pronounced hip and thigh volume",
+          "loose fold convergence",
+          "two narrow gathered ankle cuffs",
+          "distinct from joggers and balloon trousers"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["harem trousers"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the waistband, seat and crotch depth, both outer-leg volumes, fold convergence, both ankle cuffs, and footwear visible together. Use a slight diagonal stance or natural step so the fabric volume and two-leg topology survive without hiding a cuff.",
+      "required_evidence_fields": [
+        "gathered_waist_phrase",
+        "roomy_seat_crotch_phrase",
+        "hip_thigh_volume_phrase",
+        "ankle_cuff_convergence_phrase",
+        "harem_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "gathered_waist_phrase":{"min_content_words":9,"must_mention_any":["one gathered waistband releases substantial fabric into both trouser legs"]},
+        "roomy_seat_crotch_phrase":{"min_content_words":9,"must_mention_any":["the seat and crotch remain visibly roomy beneath the waistband"]},
+        "hip_thigh_volume_phrase":{"min_content_words":9,"must_mention_any":["loose folds preserve pronounced volume through both hips and thighs"]},
+        "ankle_cuff_convergence_phrase":{"min_content_words":9,"must_mention_any":["multiple folds converge separately into two narrow gathered ankle cuffs"]},
+        "harem_confound_phrase":{"min_content_words":11,"must_mention_any":["the gathered cuffs distinguish the silhouette from straight wide legs and smooth balloon hems"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_harem_gathered_waist","review_scale":"thumbnail","description":"One gathered waistband visibly releases substantial trouser fabric."},
+        {"id":"vo_summer_harem_roomy_seat_crotch","review_scale":"both","description":"The seat and crotch carry clear volume below the waistband rather than a conventional close trouser rise."},
+        {"id":"vo_summer_harem_hip_thigh_volume","review_scale":"both","description":"Both legs retain pronounced hip-and-thigh fabric mass and loose folds."},
+        {"id":"vo_summer_harem_two_gathered_cuffs","review_scale":"native","description":"The loose folds converge into two separately visible narrow gathered ankle cuffs."},
+        {"id":"vo_summer_harem_not_wide_balloon_jogger","review_scale":"native","description":"Straight wide trousers, smooth balloon hems, ordinary joggers, and a hidden bifurcation do not substitute."}
+      ],
+      "reject_substitutes": [
+        "straight_wide_leg_trousers",
+        "smooth_balloon_taper",
+        "low_volume_joggers",
+        "uncuffed_parachute_pants",
+        "skirt_like_hidden_bifurcation"
+      ]
+    },
+    {
+      "id": "balloon_curved_leg_tapered_hem",
+      "category": "garment_trouser_curved_leg_topology",
+      "activation": {
+        "exact_terms": [
+          "balloon pants",
+          "balloon trousers",
+          "balloon-leg pants",
+          "curved balloon trousers",
+          "벌룬 팬츠",
+          "벌룬팬츠",
+          "볼륨 벌룬 팬츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bifurcated trouser silhouette in which each leg forms a deliberately convex outer contour, reaches its greatest fabric volume away from the body around the thigh or calf, and then narrows smoothly into a clean lower hem. The paired curved legs and smooth taper distinguish balloon trousers from straight wide legs, harem trousers gathered into ankle cuffs, joggers, and a balloon prop near ordinary pants.",
+        "paraphrase_examples": [
+          "좌우 바지 옆선이 각각 바깥으로 볼록하게 휘고 중간에서 가장 부풀었다가 매끈한 밑단으로 좁아짐",
+          "two separately readable convex trouser legs peak in volume at mid-leg before clean tapered hems",
+          "curved seam and fabric mass, not a wide lens or bent pose, own the balloon silhouette"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_curved_trouser_legs",
+            "paired_convex_outer_contours",
+            "mid_leg_volume_peak",
+            "smooth_tapered_hems",
+            "harem_wide_prop_confound_control"
+          ],
+          "groups": [
+            {"id":"two_curved_trouser_legs","any_terms":["two trouser legs remain separately traceable from crotch to hem","가랑이부터 밑단까지 좌우 두 바지통이 따로 보임"]},
+            {"id":"paired_convex_outer_contours","any_terms":["left and right outer seams form deliberate convex curves","좌우 옆선이 각각 바깥으로 볼록하게 휨"]},
+            {"id":"mid_leg_volume_peak","any_terms":["fabric volume peaks away from the body around each mid-leg","각 바지통 중간에서 몸 바깥쪽으로 가장 큰 부피가 생김"]},
+            {"id":"smooth_tapered_hems","any_terms":["both convex legs narrow smoothly into clean lower hems","두 볼록한 바지통이 셔링 없이 매끈한 밑단으로 좁아짐"]},
+            {"id":"harem_wide_prop_confound_control","any_terms":["the clean taper distinguishes these legs from gathered harem cuffs and straight wide hems","하렘 커프·직선 와이드·풍선 소품과 구조적으로 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "straight wide-leg trousers",
+          "harem trousers with elastic ankle gathering",
+          "ordinary joggers with a rib cuff",
+          "barrel distortion from a wide-angle lens",
+          "a round balloon prop beside straight trousers"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two trouser legs",
+          "paired convex side seams",
+          "mid-leg volume peaks",
+          "smooth tapered lower legs",
+          "clean hem openings",
+          "distinct from harem cuffs and straight wide legs"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["balloon trousers"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a front or three-quarter full-body view with enough side clearance to trace both convex outer contours from hip to hem. Keep the crotch, both volume peaks, both smooth tapers, and both clean hems visible without foreground objects cutting through the silhouette.",
+      "required_evidence_fields": [
+        "two_legs_phrase",
+        "convex_contours_phrase",
+        "volume_peak_phrase",
+        "smooth_taper_phrase",
+        "balloon_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "two_legs_phrase":{"min_content_words":9,"must_mention_any":["two trouser legs remain separately traceable from crotch to hem"]},
+        "convex_contours_phrase":{"min_content_words":8,"must_mention_any":["left and right outer seams form deliberate convex curves"]},
+        "volume_peak_phrase":{"min_content_words":9,"must_mention_any":["fabric volume peaks away from the body around each mid-leg"]},
+        "smooth_taper_phrase":{"min_content_words":9,"must_mention_any":["both convex legs narrow smoothly into clean lower hems"]},
+        "balloon_confound_phrase":{"min_content_words":11,"must_mention_any":["the clean taper distinguishes these legs from gathered harem cuffs and straight wide hems"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_balloon_two_legs","review_scale":"thumbnail","description":"The lower garment reads as two separately traceable trouser legs."},
+        {"id":"vo_summer_balloon_paired_convex_contours","review_scale":"both","description":"Both outer leg contours bow outward in deliberate convex curves."},
+        {"id":"vo_summer_balloon_mid_leg_volume","review_scale":"both","description":"Fabric volume visibly peaks away from the body around each mid-leg."},
+        {"id":"vo_summer_balloon_smooth_tapered_hems","review_scale":"native","description":"Both legs narrow smoothly into clean hems without gathered ankle cuffs."},
+        {"id":"vo_summer_balloon_not_harem_wide_or_prop","review_scale":"native","description":"Harem cuffs, straight wide legs, joggers, lens distortion, and balloon props do not substitute."}
+      ],
+      "reject_substitutes": [
+        "straight_wide_leg_trousers",
+        "gathered_harem_ankle_cuffs",
+        "ordinary_jogger_cuffs",
+        "wide_angle_leg_distortion",
+        "balloon_prop_beside_trousers"
+      ]
+    },
+    {
+      "id": "wrap_skirt_overlap_closure",
+      "category": "garment_skirt_overlap_closure_topology",
+      "activation": {
+        "exact_terms": [
+          "wrap skirt",
+          "wrap-front skirt",
+          "tie wrap skirt",
+          "summer wrap skirt",
+          "랩 스커트",
+          "랩스커트",
+          "여름 랩스커트",
+          "여름랩스커트"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A skirt closure made from two separately traceable fabric panels that begin at the waist, cross diagonally over the front or side, and remain held by one visible tie, button, snap, or buckle while an under-panel continues beneath the top edge. A printed diagonal, decorative sash, single slit, asymmetrical hem, or separate scarf cannot replace the functional panel overlap.",
+        "paraphrase_examples": [
+          "허리에서 시작한 두 스커트 판이 사선으로 실제 겹치고 옆 끈이나 단추가 그 겹침을 고정함",
+          "one front panel crosses over another while the lower panel continues behind the diagonal edge",
+          "the waist fastening and two fabric layers remain visible together rather than reading as a printed line"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "shared_skirt_waist",
+            "two_panel_edges",
+            "diagonal_front_overlap",
+            "functional_waist_fastening",
+            "underpanel_print_scarf_confound_control"
+          ],
+          "groups": [
+            {"id":"shared_skirt_waist","any_terms":["both skirt panels begin from one continuous waist construction","두 스커트 판이 하나의 허리 구조에서 시작됨"]},
+            {"id":"two_panel_edges","any_terms":["two separately traceable skirt panel edges remain visible","겹침을 만드는 두 개의 실제 천 가장자리가 보임"]},
+            {"id":"diagonal_front_overlap","any_terms":["one panel crosses diagonally over the other across the skirt front","한 판이 다른 판 위를 사선으로 가로질러 겹침"]},
+            {"id":"functional_waist_fastening","any_terms":["a visible waist tie button snap or buckle holds the overlap","허리의 끈 단추 스냅 또는 버클이 겹침을 실제로 고정함"]},
+            {"id":"underpanel_print_scarf_confound_control","any_terms":["the continuing under-panel proves a real wrap rather than a printed stripe or separate scarf","아래판의 연속성이 프린트 선이나 별도 스카프와 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "a single skirt panel with a diagonal print",
+          "an asymmetrical hem without panel overlap",
+          "a front slit exposing one edge only",
+          "a scarf tied over a conventional skirt",
+          "a crop that hides the waist fastening"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one skirt waist",
+          "two panel edges",
+          "diagonal front overlap",
+          "continuing under-panel",
+          "functional waist fastening",
+          "distinct from print slit or scarf"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["wrap skirt"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the full waist, fastening point, two panel edges, diagonal overlap, and enough lower skirt to follow the under-panel visible in one front or three-quarter view. A hand may approach the tie, but it must not cover the closure or the overlap origin.",
+      "required_evidence_fields": [
+        "shared_waist_phrase",
+        "two_panel_edges_phrase",
+        "diagonal_overlap_phrase",
+        "functional_fastening_phrase",
+        "underpanel_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "shared_waist_phrase":{"min_content_words":9,"must_mention_any":["both skirt panels begin from one continuous waist construction"]},
+        "two_panel_edges_phrase":{"min_content_words":8,"must_mention_any":["two separately traceable skirt panel edges remain visible"]},
+        "diagonal_overlap_phrase":{"min_content_words":10,"must_mention_any":["one panel crosses diagonally over the other across the skirt front"]},
+        "functional_fastening_phrase":{"min_content_words":10,"must_mention_any":["a visible waist tie button snap or buckle holds the overlap"]},
+        "underpanel_confound_phrase":{"min_content_words":12,"must_mention_any":["the continuing under-panel proves a real wrap rather than a printed stripe or separate scarf"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_wrap_skirt_shared_waist","review_scale":"thumbnail","description":"Both panels visibly belong to one skirt waist construction."},
+        {"id":"vo_summer_wrap_skirt_two_panel_edges","review_scale":"both","description":"Two distinct fabric panel edges remain separately traceable."},
+        {"id":"vo_summer_wrap_skirt_diagonal_overlap","review_scale":"both","description":"One panel visibly crosses diagonally over a continuing under-panel."},
+        {"id":"vo_summer_wrap_skirt_functional_fastening","review_scale":"native","description":"A visible tie, button, snap, or buckle physically holds the overlap at the waist."},
+        {"id":"vo_summer_wrap_skirt_not_print_slit_scarf","review_scale":"native","description":"A print, asymmetrical hem, slit, separate scarf, or hidden waist does not substitute."}
+      ],
+      "reject_substitutes": [
+        "diagonal_printed_skirt",
+        "asymmetrical_hem_only",
+        "single_front_slit",
+        "separate_scarf_over_skirt",
+        "hidden_waist_fastening"
+      ]
+    },
+    {
+      "id": "lace_trim_attached_edge",
+      "category": "garment_attached_trim_material_topology",
+      "activation": {
+        "exact_terms": [
+          "lace trim",
+          "lace-trimmed",
+          "lace edge trim",
+          "attached lace trim",
+          "레이스 트림",
+          "레이스트림",
+          "레이스 트리밍",
+          "레이스트리밍"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A narrow lace band attached along the edge of a different base garment. The lace retains real openwork cells and repeating thread motifs, a visible stitched or joined attachment boundary, and at least one scalloped or motif-shaped free edge that contrasts with the smoother base fabric. A lace print, embroidered line without open cells, whole-lace garment, random frill, or detached lace accessory is not attached lace trim.",
+        "paraphrase_examples": [
+          "매끈한 캐미솔 몸판의 네크라인이나 밑단에 실제 구멍과 꽃 모티프가 있는 좁은 레이스 띠가 봉제됨",
+          "a separate openwork lace band follows the neckline edge with a stitched join and scalloped free border",
+          "the lace-to-base material boundary remains sharp enough to distinguish trim from a printed motif"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "different_base_garment",
+            "narrow_lace_band",
+            "openwork_repeating_motifs",
+            "attached_boundary_and_free_edge",
+            "print_whole_lace_detached_confound_control"
+          ],
+          "groups": [
+            {"id":"different_base_garment","any_terms":["a smooth base-garment edge remains visibly different from the lace","바탕 의복의 표면과 레이스 표면이 구별됨"]},
+            {"id":"narrow_lace_band","any_terms":["one narrow lace band follows a neckline cuff or hem edge","좁은 레이스 띠가 네크라인 소매 끝 또는 밑단을 따라감"]},
+            {"id":"openwork_repeating_motifs","any_terms":["real open cells and repeating thread motifs remain visible in the lace","레이스 안에 실제 구멍과 반복 실 모티프가 보임"]},
+            {"id":"attached_boundary_and_free_edge","any_terms":["a stitched attachment line and scalloped free edge remain separately readable","봉제된 부착선과 스캘럽 자유 가장자리가 각각 보임"]},
+            {"id":"print_whole_lace_detached_confound_control","any_terms":["the material boundary distinguishes attached trim from printed lace and whole-lace fabric","재료 경계가 레이스 프린트 전체 레이스 또는 분리 장식과 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "flat lace graphics printed on satin",
+          "a whole garment made from lace with no base-fabric edge",
+          "solid embroidery without open cells",
+          "a detached lace scarf near the garment",
+          "soft ruffles whose edge has no repeating lace motif"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "different base fabric",
+          "narrow attached lace band",
+          "real openwork cells",
+          "repeating thread motifs",
+          "stitched attachment boundary",
+          "scalloped free edge"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["attached lace trim"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Choose a framing and torso angle that keep the base garment, complete trimmed edge, openwork motifs, stitched join, and scalloped free border readable together. Use directional light and sufficient native detail so translucency or shallow depth of field does not erase the attachment boundary.",
+      "required_evidence_fields": [
+        "base_garment_phrase",
+        "narrow_lace_band_phrase",
+        "openwork_motifs_phrase",
+        "attachment_free_edge_phrase",
+        "lace_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "base_garment_phrase":{"min_content_words":9,"must_mention_any":["a smooth base-garment edge remains visibly different from the lace"]},
+        "narrow_lace_band_phrase":{"min_content_words":10,"must_mention_any":["one narrow lace band follows a neckline cuff or hem edge"]},
+        "openwork_motifs_phrase":{"min_content_words":10,"must_mention_any":["real open cells and repeating thread motifs remain visible in the lace"]},
+        "attachment_free_edge_phrase":{"min_content_words":10,"must_mention_any":["a stitched attachment line and scalloped free edge remain separately readable"]},
+        "lace_confound_phrase":{"min_content_words":11,"must_mention_any":["the material boundary distinguishes attached trim from printed lace and whole-lace fabric"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_lace_trim_base_material","review_scale":"thumbnail","description":"The base garment remains a visibly different continuous material from the trim."},
+        {"id":"vo_summer_lace_trim_narrow_band","review_scale":"both","description":"A narrow lace band visibly follows a garment edge rather than covering the entire garment."},
+        {"id":"vo_summer_lace_trim_openwork_motifs","review_scale":"native","description":"Real open cells and repeating thread motifs survive at native scale."},
+        {"id":"vo_summer_lace_trim_attachment_and_scallop","review_scale":"native","description":"The stitched attachment boundary and scalloped free edge are separately traceable."},
+        {"id":"vo_summer_lace_trim_not_print_whole_or_detached","review_scale":"both","description":"Printed lace, whole-lace fabric, solid embroidery, ruffles, and detached lace accessories do not substitute."}
+      ],
+      "reject_substitutes": [
+        "printed_lace_graphic",
+        "whole_lace_garment",
+        "solid_embroidery_line",
+        "detached_lace_accessory",
+        "plain_fabric_ruffle"
+      ]
+    },
+    {
+      "id": "jelly_footwear_molded_translucent_surface",
+      "category": "footwear_molded_translucent_material_topology",
+      "activation": {
+        "exact_terms": [
+          "jelly shoes",
+          "jelly sandals",
+          "jelly flats",
+          "jelly footwear",
+          "젤리 슈즈",
+          "젤리슈즈",
+          "젤리 샌들",
+          "젤리샌들",
+          "젤리 플랫",
+          "젤리플랫"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A recognizable pair of flats or sandals whose uppers or strap networks are formed as coherent molded translucent or semi-translucent plastic structures. Continuous molded edges and thickness, light transmission that partly reveals the feet or ground, glossy specular highlights, and real sole attachment must coexist. Generic clear rain boots, glass footwear, metallic shoes, glossy leather, transparent overlays, and jellyfish imagery do not establish jelly footwear.",
+        "paraphrase_examples": [
+          "반투명 몰드 스트랩과 밑창 연결부가 이어지고 발이 재료 너머로 부분적으로 보이는 젤리 샌들",
+          "two low flats keep coherent molded perforated uppers, visible plastic thickness, transmitted color, and glossy edges",
+          "the shoes remain flexible-looking molded footwear rather than glass sculptures or clear rain boots"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "recognizable_pair_footwear",
+            "coherent_molded_upper_or_straps",
+            "translucent_foot_visibility",
+            "plastic_thickness_specular_response",
+            "glass_boot_leather_jellyfish_confound_control"
+          ],
+          "groups": [
+            {"id":"recognizable_pair_footwear","any_terms":["two wearable flats or sandals remain structurally recognizable on the feet","양발에 신은 플랫 또는 샌들의 구조가 분명함"]},
+            {"id":"coherent_molded_upper_or_straps","any_terms":["continuous molded uppers or strap networks attach coherently to both soles","몰드 갑피나 스트랩 망이 양쪽 밑창에 연속적으로 연결됨"]},
+            {"id":"translucent_foot_visibility","any_terms":["transmitted light partly reveals both feet through the colored material","반투명 재료 너머로 양발이 부분적으로 보임"]},
+            {"id":"plastic_thickness_specular_response","any_terms":["visible plastic thickness and glossy edge highlights preserve the molded material","재료 두께와 광택 가장자리가 몰드 플라스틱 표면을 드러냄"]},
+            {"id":"glass_boot_leather_jellyfish_confound_control","any_terms":["the molded sole attachment distinguishes jelly footwear from glass boots and glossy leather","몰드 밑창 연결이 유리 신발 레인부츠 광택 가죽과 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "clear knee-high rain boots",
+          "glass slipper sculptures",
+          "opaque glossy leather flats",
+          "transparent socks over ordinary shoes",
+          "jellyfish motifs printed on footwear"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two recognizable flats or sandals",
+          "coherent molded upper or straps",
+          "translucent colored plastic",
+          "partial foot visibility",
+          "visible plastic thickness and gloss",
+          "sole attachment"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["jelly sandals"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep both shoes, their complete soles, molded uppers or strap networks, foot-to-material contact, and transmitted light visible. Use a lower-body or full-body frame with a native-scale shoe region and directional reflections that reveal plastic thickness without clipping the translucent material.",
+      "required_evidence_fields": [
+        "footwear_pair_phrase",
+        "molded_upper_phrase",
+        "translucency_phrase",
+        "plastic_response_phrase",
+        "jelly_confound_phrase"
+      ],
+      "evidence_requirements": {
+        "footwear_pair_phrase":{"min_content_words":10,"must_mention_any":["two wearable flats or sandals remain structurally recognizable on the feet"]},
+        "molded_upper_phrase":{"min_content_words":10,"must_mention_any":["continuous molded uppers or strap networks attach coherently to both soles"]},
+        "translucency_phrase":{"min_content_words":10,"must_mention_any":["transmitted light partly reveals both feet through the colored material"]},
+        "plastic_response_phrase":{"min_content_words":10,"must_mention_any":["visible plastic thickness and glossy edge highlights preserve the molded material"]},
+        "jelly_confound_phrase":{"min_content_words":11,"must_mention_any":["the molded sole attachment distinguishes jelly footwear from glass boots and glossy leather"]}
+      },
+      "render_gates": [
+        {"id":"vo_summer_jelly_pair_footwear","review_scale":"thumbnail","description":"Both items read as wearable flats or sandals on the feet."},
+        {"id":"vo_summer_jelly_coherent_molded_uppers","review_scale":"both","description":"Molded uppers or strap networks connect coherently to both soles."},
+        {"id":"vo_summer_jelly_translucent_foot_visibility","review_scale":"both","description":"Light transmission partially reveals both feet or the ground through the material."},
+        {"id":"vo_summer_jelly_plastic_thickness_gloss","review_scale":"native","description":"Plastic thickness, molded edges, and glossy highlights are visible without turning the shoes into glass."},
+        {"id":"vo_summer_jelly_not_boot_glass_leather_motif","review_scale":"native","description":"Rain boots, glass sculptures, glossy leather, transparent socks, and jellyfish prints do not substitute."}
+      ],
+      "reject_substitutes": [
+        "clear_rain_boots",
+        "glass_slipper_sculpture",
+        "glossy_leather_flats",
+        "transparent_socks_ordinary_shoes",
+        "jellyfish_printed_footwear"
+      ]
+    },
+    {
+      "id": "fan_side_public_event_telephoto",
+      "category": "capture_relation_public_event_fan_side",
+      "activation": {
+        "exact_terms": [
+          "fan-side public-event telephoto photo",
+          "fansign audience-side telephoto photo",
+          "music-show arrival fan-taken telephoto",
+          "public-schedule fan telephoto photograph",
+          "팬사인회 관객석 망원 직찍",
+          "음악방송 출근길 팬 망원 촬영",
+          "공개 일정 팬 촬영 망원 사진"
+        ],
+        "project_glossary_aliases": [
+          "홈마 행사 망원 직찍"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A clearly adult subject is photographed at a public scheduled event from the audience side of a visible venue boundary. Long-lens compression, spectator-distance foreground layers, and an event-transition action coexist. The pixels establish a fan-side public-event geometry, not the actual photographer's identity, upload source, celebrity status, or rarity.",
+        "paraphrase_examples": [
+          "공개 팬사인회에서 관객석 난간과 전경 카메라 너머로 성인 피사체를 망원 촬영한 사진",
+          "희연사 계열로 수집될 수 있는 음악방송 출근길 팬 촬영이지만 공개 일정과 관객 측 거리 관계가 화면에 보이는 경우",
+          "an adult performer crossing a public event boundary in a compressed long-lens view from behind spectator heads"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "public_event_anchor",
+            "audience_side_boundary",
+            "telephoto_compression",
+            "spectator_distance_foreground",
+            "event_transition_action"
+          ],
+          "groups": [
+            {"id":"public_event_anchor","any_terms":["a clearly public scheduled event anchors the scene","공개 일정 행사임을 보여주는 장소와 운영 단서"]},
+            {"id":"audience_side_boundary","any_terms":["the camera observes from the audience side behind a visible venue boundary","관객 측 카메라와 피사체 사이에 행사 경계가 보임"]},
+            {"id":"telephoto_compression","any_terms":["a long-lens compressed view isolates the adult subject from the event background","망원 압축과 얕은 심도로 성인 피사체가 행사 배경에서 분리됨"]},
+            {"id":"spectator_distance_foreground","any_terms":["foreground heads cameras or railings establish real spectator distance","전경의 머리 카메라 난간 중 하나가 관객 거리를 만듦"]},
+            {"id":"event_transition_action","any_terms":["the adult subject is visibly arriving greeting signing or moving between event positions","성인 피사체가 도착 인사 서명 또는 행사 위치 이동 중임"]}
+          ]
+        },
+        "contrast_examples": [
+          "a polished 200 mm studio portrait",
+          "a private-life paparazzi photograph",
+          "an official press-pit image without an audience-side boundary",
+          "a close two-person fan selfie",
+          "a crowd scene with no legible event subject"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "public scheduled event",
+          "audience-side venue boundary",
+          "long-lens compression",
+          "spectator-distance foreground layers",
+          "arrival greeting signing or transition action",
+          "fan-side geometry without authorship inference"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["fan-side public-event telephoto photograph"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Place one clearly adult subject inside a readable public-event environment and keep a visible audience-side boundary between camera and subject. Use long-lens compression plus one spectator-distance foreground layer, while a concrete arrival, greeting, signing, or transition action remains readable.",
+      "required_evidence_fields": [
+        "public_event_anchor_phrase",
+        "audience_boundary_phrase",
+        "telephoto_compression_phrase",
+        "spectator_distance_phrase",
+        "event_action_phrase"
+      ],
+      "evidence_requirements": {
+        "public_event_anchor_phrase":{"min_content_words":7,"must_mention_any":["a clearly public scheduled event anchors the scene"]},
+        "audience_boundary_phrase":{"min_content_words":10,"must_mention_any":["the camera observes from the audience side behind a visible venue boundary"]},
+        "telephoto_compression_phrase":{"min_content_words":10,"must_mention_any":["a long-lens compressed view isolates the adult subject from the event background"]},
+        "spectator_distance_phrase":{"min_content_words":8,"must_mention_any":["foreground heads cameras or railings establish real spectator distance"]},
+        "event_action_phrase":{"min_content_words":10,"must_mention_any":["the adult subject is visibly arriving greeting signing or moving between event positions"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_fan_event_public_anchor","review_scale":"thumbnail","description":"A public scheduled event or public arrival transition is immediately legible."},
+        {"id":"vo_rare_fan_event_audience_boundary","review_scale":"both","description":"A venue boundary or spectator layer places the camera on the audience side."},
+        {"id":"vo_rare_fan_event_telephoto_compression","review_scale":"both","description":"Long-lens compression and subject isolation remain visible rather than a normal close portrait."},
+        {"id":"vo_rare_fan_event_spectator_distance","review_scale":"native","description":"Foreground heads, cameras, railings, or equivalent layers establish physical spectator distance."},
+        {"id":"vo_rare_fan_event_not_press_paparazzi_studio","review_scale":"native","description":"Studio portraiture, private paparazzi, official press framing without an audience relation, and fan selfies do not substitute."}
+      ],
+      "reject_substitutes": [
+        "studio_long_lens_portrait",
+        "private_life_paparazzi",
+        "official_press_without_audience_boundary",
+        "two_person_fan_selfie",
+        "crowd_without_legible_event_subject"
+      ]
+    },
+    {
+      "id": "camera_display_rephotographed_preview",
+      "category": "capture_relation_camera_display_rephotograph",
+      "activation": {
+        "exact_terms": [
+          "camera-screen preview photograph",
+          "rear LCD rephotographed preview",
+          "camera LCD phone rephotograph",
+          "카메라 액정 프리뷰 사진",
+          "카메라 LCD 재촬영 프리뷰",
+          "후면 액정 직전 촬영본 프리뷰"
+        ],
+        "project_glossary_aliases": [
+          "홈마 카메라 액정 프리뷰"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A second camera or phone photographs the rear display of a real camera while that display visibly shows a just-captured adult event subject. Camera-body bezel, oblique screen geometry, glare or moire, and second-generation color or pixel artifacts coexist. This proves a rephotographed camera display, not that every fansite preview uses this form.",
+        "paraphrase_examples": [
+          "카메라 후면 액정과 베젤 전체가 보이고 액정 속 직전 촬영 인물에 모아레와 반사가 생긴 프리뷰",
+          "홈마 프리뷰 중에서도 액정을 휴대폰으로 다시 찍은 형태만 좁게 시각화한 사진",
+          "an oblique phone photograph of a rear camera LCD showing the adult performer captured moments earlier"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "camera_body_lcd_frame",
+            "just_captured_subject_on_display",
+            "secondary_capture_geometry",
+            "screen_optical_artifacts",
+            "event_capture_context"
+          ],
+          "groups": [
+            {"id":"camera_body_lcd_frame","any_terms":["the rear camera body and LCD bezel visibly surround the display","후면 카메라 몸체와 LCD 베젤이 화면을 실제로 둘러쌈"]},
+            {"id":"just_captured_subject_on_display","any_terms":["the LCD visibly shows the just-captured adult event subject","액정 안에 직전 촬영된 성인 행사 피사체가 보임"]},
+            {"id":"secondary_capture_geometry","any_terms":["an oblique phone rephotograph makes the display an image within the image","비스듬한 휴대폰 재촬영으로 화면 속 화면 관계가 생김"]},
+            {"id":"screen_optical_artifacts","any_terms":["screen glare moire pixel grid and second-generation color shift remain localized to the LCD","액정에 국소적인 반사 모아레 픽셀 격자와 2차 색 이동이 남음"]},
+            {"id":"event_capture_context","any_terms":["camera controls and the surrounding venue imply a recent public-event capture","카메라 조작부와 주변 행사장이 직전 공개 행사 촬영을 뒷받침함"]}
+          ]
+        },
+        "contrast_examples": [
+          "a clean full-frame photograph with a fake camera UI overlay",
+          "a software screenshot",
+          "a phone screen instead of a camera LCD",
+          "the front of a camera with no rear display",
+          "a generic low-resolution event photograph"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "rear camera LCD and bezel",
+          "just-captured adult event subject on screen",
+          "oblique phone rephotograph",
+          "localized glare and moire",
+          "pixel-grid and second-generation color shift",
+          "image-within-image preview geometry"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["rephotographed rear-camera preview"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Make the physical rear camera body and LCD bezel a dominant frame-within-frame. Show the just-captured adult subject inside the LCD while an oblique phone rephotograph produces localized glare, moire, pixel-grid texture, and second-generation color shift without turning the result into a software screenshot.",
+      "required_evidence_fields": [
+        "camera_lcd_bezel_phrase",
+        "captured_subject_display_phrase",
+        "secondary_capture_phrase",
+        "screen_artifact_phrase",
+        "event_capture_context_phrase"
+      ],
+      "evidence_requirements": {
+        "camera_lcd_bezel_phrase":{"min_content_words":9,"must_mention_any":["the rear camera body and LCD bezel visibly surround the display"]},
+        "captured_subject_display_phrase":{"min_content_words":9,"must_mention_any":["the LCD visibly shows the just-captured adult event subject"]},
+        "secondary_capture_phrase":{"min_content_words":10,"must_mention_any":["an oblique phone rephotograph makes the display an image within the image"]},
+        "screen_artifact_phrase":{"min_content_words":12,"must_mention_any":["screen glare moire pixel grid and second-generation color shift remain localized to the LCD"]},
+        "event_capture_context_phrase":{"min_content_words":10,"must_mention_any":["camera controls and the surrounding venue imply a recent public-event capture"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_lcd_physical_camera_frame","review_scale":"thumbnail","description":"A physical rear camera body and LCD bezel clearly frame the inner image."},
+        {"id":"vo_rare_lcd_subject_inside_display","review_scale":"both","description":"The reference-guided adult subject is visibly present inside the camera display."},
+        {"id":"vo_rare_lcd_secondary_capture_geometry","review_scale":"both","description":"Oblique rephotograph geometry makes the LCD a real image within the image."},
+        {"id":"vo_rare_lcd_localized_screen_artifacts","review_scale":"native","description":"Glare, moire, pixel grid, or second-generation color shift belongs to the LCD surface."},
+        {"id":"vo_rare_lcd_not_overlay_screenshot_phone_screen","review_scale":"native","description":"A clean photo with fake UI, software screenshot, phone display, camera-front view, or generic low resolution does not substitute."}
+      ],
+      "reject_substitutes": [
+        "fake_camera_ui_overlay",
+        "software_screenshot",
+        "phone_screen_instead_of_camera_lcd",
+        "camera_front_without_rear_display",
+        "generic_low_resolution_event_photo"
+      ]
+    },
+    {
+      "id": "companion_viewpoint_everyday_candid",
+      "category": "capture_relation_off_camera_companion",
+      "activation": {
+        "exact_terms": [
+          "off-camera companion viewpoint candid",
+          "across-table companion candid photograph",
+          "nearby companion-view everyday photo",
+          "동행자가 맞은편에서 찍은 일상 사진",
+          "가까운 동행자 시점 일상 사진",
+          "조수석 동행자 시점 캔디드"
+        ],
+        "project_glossary_aliases": [
+          "남친이 찍어준 일상 사진",
+          "여친이 찍어준 일상 사진"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One clearly adult subject is seen from the nearby physical position of an off-camera companion during an ordinary task. A concrete nearby viewpoint, one target-directed glance or handoff, occupied hands, and everyday environmental evidence coexist. The geometry may evoke a boyfriend-picture or girlfriend-picture convention, but it does not establish an actual relationship, availability, consent, or identity.",
+        "paraphrase_examples": [
+          "카페 맞은편 자리에서 음료를 건네며 카메라 밖 동행자를 짧게 바라보는 성인 피사체",
+          "희얼사나 남친짤 여친짤로 저장될 법한 분위기이지만 실제 연애 관계가 아니라 가까운 동행자 카메라 위치로만 표현한 사진",
+          "an adult passenger turns from an everyday task toward the nearby companion holding the camera"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "single_adult_subject",
+            "ordinary_task_setting",
+            "nearby_companion_camera_position",
+            "off_camera_target_response",
+            "non_selfie_perspective_relation"
+          ],
+          "groups": [
+            {"id":"single_adult_subject","any_terms":["one clearly adult subject remains the only fully visible person","분명한 성인 피사체 한 명만 완전한 인물로 보임"]},
+            {"id":"ordinary_task_setting","any_terms":["a concrete everyday task and lived-in setting remain readable","구체적인 일상 행동과 생활 공간이 함께 보임"]},
+            {"id":"nearby_companion_camera_position","any_terms":["the camera occupies a nearby companion position across a table beside a seat or at a doorway","카메라가 맞은편 좌석 옆자리 또는 문가의 가까운 동행자 위치에 있음"]},
+            {"id":"off_camera_target_response","any_terms":["one glance offer or handoff is directed toward the same off-camera companion","한 번의 시선 건넴 또는 전달 행동이 같은 카메라 밖 동행자를 향함"]},
+            {"id":"non_selfie_perspective_relation","any_terms":["camera distance and perspective belong to a nearby seated companion rather than arm-length selfie geometry","촬영 거리와 원근이 팔 길이 셀피가 아니라 가까운 동행자 위치에 속함"]}
+          ]
+        },
+        "contrast_examples": [
+          "an arm-length front-camera selfie",
+          "a mirror selfie",
+          "a posed two-person couple portrait",
+          "an influencer pose with no everyday action",
+          "an image presented as proof of a real romantic relationship"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one clearly adult subject",
+          "ordinary lived-in task",
+          "across-table passenger-seat or doorway camera position",
+          "one glance offer or handoff toward the lens holder",
+          "nearby companion perspective",
+          "relationship geometry without relationship inference"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["off-camera companion-view candid"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Photograph one clearly adult subject from a physically plausible nearby companion position during a concrete everyday task. Make one glance, offer, or handoff point toward that same off-camera lens holder, while the subject's hands and perspective remain consistent with an observed candid rather than a self-held camera.",
+      "required_evidence_fields": [
+        "single_adult_subject_phrase",
+        "everyday_task_phrase",
+        "companion_camera_position_phrase",
+        "off_camera_response_phrase",
+        "perspective_relation_phrase"
+      ],
+      "evidence_requirements": {
+        "single_adult_subject_phrase":{"min_content_words":9,"must_mention_any":["one clearly adult subject remains the only fully visible person"]},
+        "everyday_task_phrase":{"min_content_words":8,"must_mention_any":["a concrete everyday task and lived-in setting remain readable"]},
+        "companion_camera_position_phrase":{"min_content_words":13,"must_mention_any":["the camera occupies a nearby companion position across a table beside a seat or at a doorway"]},
+        "off_camera_response_phrase":{"min_content_words":11,"must_mention_any":["one glance offer or handoff is directed toward the same off-camera companion"]},
+        "perspective_relation_phrase":{"min_content_words":13,"must_mention_any":["camera distance and perspective belong to a nearby seated companion rather than arm-length selfie geometry"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_companion_single_adult","review_scale":"thumbnail","description":"One clearly adult subject is the only fully visible person and remains the first-read subject."},
+        {"id":"vo_rare_companion_everyday_action","review_scale":"both","description":"A concrete everyday task and lived-in setting are simultaneously readable."},
+        {"id":"vo_rare_companion_nearby_viewpoint","review_scale":"both","description":"Camera height, distance, and occlusion establish a plausible nearby companion position."},
+        {"id":"vo_rare_companion_targeted_response","review_scale":"native","description":"A glance, offer, or handoff is visibly directed toward the same off-camera lens holder."},
+        {"id":"vo_rare_companion_not_selfie_couple_proof","review_scale":"native","description":"Arm-length or mirror selfie geometry, posed couple portraiture, and claims of a real relationship do not substitute."}
+      ],
+      "reject_substitutes": [
+        "arm_length_front_camera_selfie",
+        "mirror_selfie",
+        "posed_two_person_couple_portrait",
+        "influencer_pose_without_everyday_action",
+        "real_relationship_or_availability_inference"
+      ]
+    },
+    {
+      "id": "production_gap_behind_scenes",
+      "category": "capture_relation_between_takes_production",
+      "activation": {
+        "exact_terms": [
+          "between-takes production photograph",
+          "production-gap behind-the-scenes photo",
+          "behind-the-scenes production process photo",
+          "촬영 중간 비하인드 사진",
+          "테이크 사이 제작 현장 사진",
+          "제작 과정이 보이는 비하인드컷"
+        ],
+        "project_glossary_aliases": [
+          "촬영장 비하인드컷"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A clearly adult performer is captured during a real production gap while apparatus, crew operation, and an unfinished between-takes action remain simultaneously visible. The image shows the making process rather than a polished scene still, an empty backstage location, or the publication status of an unreleased image.",
+        "paraphrase_examples": [
+          "조명 스탠드와 카메라 모니터가 프레임 가장자리에 있고 스태프가 의상을 조정하는 테이크 사이 성인 배우",
+          "희연사나 미공개 비하인드로 수집될 수 있지만 픽셀 계약은 실제 제작 장비와 진행 중인 작업에 한정한 사진",
+          "an adult performer pauses mid-adjustment while a camera rig crew hand and monitor expose the unfinished production phase"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "production_apparatus",
+            "crew_operation_trace",
+            "adult_performer_between_takes",
+            "unfinished_work_action",
+            "apparatus_frame_relation"
+          ],
+          "groups": [
+            {"id":"production_apparatus","any_terms":["a camera rig light stand monitor slate or wardrobe tool is physically visible","카메라 리그 조명 스탠드 모니터 슬레이트 의상 도구 중 하나가 실제로 보임"]},
+            {"id":"crew_operation_trace","any_terms":["a crew member hand cable adjustment or monitor operation shows active production work","스태프 손 케이블 조정 또는 모니터 운용이 제작 작업을 보여줌"]},
+            {"id":"adult_performer_between_takes","any_terms":["the clearly adult performer is visibly between takes rather than performing the finished scene","분명한 성인 피사체가 완성 장면 연기가 아니라 테이크 사이 상태임"]},
+            {"id":"unfinished_work_action","any_terms":["one rehearsal reset adjustment or preparation action remains visibly unfinished","리허설 리셋 조정 또는 준비 행동 하나가 끝나지 않은 채 보임"]},
+            {"id":"apparatus_frame_relation","any_terms":["production apparatus intrudes at the frame edge and shares the performer's space","제작 장비가 프레임 가장자리에 들어와 피사체와 같은 공간을 차지함"]}
+          ]
+        },
+        "contrast_examples": [
+          "a polished finished scene still",
+          "an ordinary dressing-room portrait",
+          "an empty backstage corridor",
+          "a concert performance frame",
+          "an image labeled unreleased without visible production activity"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "visible production apparatus",
+          "crew operation trace",
+          "adult performer between takes",
+          "unfinished rehearsal reset or adjustment",
+          "apparatus intruding at frame edge",
+          "making-process evidence rather than publication status"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["between-takes production photograph"],
+        "forbidden_prompt_terms": ["BTS photo"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep one clearly adult performer and one unfinished rehearsal, reset, wardrobe, lighting, or camera-preparation action in the same frame as concrete production apparatus. Let a rig, monitor, light, cable, slate, crew hand, or wardrobe tool cross the frame edge so the making process remains first-read.",
+      "required_evidence_fields": [
+        "production_apparatus_phrase",
+        "crew_operation_phrase",
+        "between_takes_adult_phrase",
+        "unfinished_action_phrase",
+        "apparatus_frame_relation_phrase"
+      ],
+      "evidence_requirements": {
+        "production_apparatus_phrase":{"min_content_words":11,"must_mention_any":["a camera rig light stand monitor slate or wardrobe tool is physically visible"]},
+        "crew_operation_phrase":{"min_content_words":12,"must_mention_any":["a crew member hand cable adjustment or monitor operation shows active production work"]},
+        "between_takes_adult_phrase":{"min_content_words":12,"must_mention_any":["the clearly adult performer is visibly between takes rather than performing the finished scene"]},
+        "unfinished_action_phrase":{"min_content_words":11,"must_mention_any":["one rehearsal reset adjustment or preparation action remains visibly unfinished"]},
+        "apparatus_frame_relation_phrase":{"min_content_words":10,"must_mention_any":["production apparatus intrudes at the frame edge and shares the performer's space"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_bts_production_apparatus","review_scale":"thumbnail","description":"Concrete production apparatus is immediately visible beside the adult performer."},
+        {"id":"vo_rare_bts_active_crew_trace","review_scale":"both","description":"A crew operation, cable, monitor, tool, or adjustment shows active making rather than decorative equipment."},
+        {"id":"vo_rare_bts_between_takes_state","review_scale":"both","description":"The performer reads as between takes, rehearsing, resetting, or being adjusted."},
+        {"id":"vo_rare_bts_unfinished_action","review_scale":"native","description":"One production action is visibly in progress and incomplete in the saved frame."},
+        {"id":"vo_rare_bts_not_finished_still_empty_backstage","review_scale":"native","description":"A polished scene still, ordinary dressing-room portrait, empty backstage decor, concert frame, or metadata-only unreleased claim does not substitute."}
+      ],
+      "reject_substitutes": [
+        "polished_finished_scene_still",
+        "ordinary_dressing_room_portrait",
+        "empty_backstage_corridor",
+        "concert_performance_frame",
+        "metadata_only_unreleased_claim"
+      ]
+    },
+    {
+      "id": "physical_print_scan_material_context",
+      "category": "capture_relation_physical_print_scan",
+      "activation": {
+        "exact_terms": [
+          "full-edge scanned print photograph",
+          "physical photo print scan",
+          "album-page photograph scan",
+          "물리 인화사진 스캔",
+          "인화지 가장자리가 보이는 스캔사진",
+          "앨범 속 사진 전체 스캔"
+        ],
+        "project_glossary_aliases": [
+          "실물 사진 스캔본"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical photographic print containing a clearly adult subject is itself captured or scanned as a material object. Complete print edges, substrate thickness or curl, surrounding album or scanner context, and localized physical wear coexist. The material lineage is visible, while age, provenance, rarity, and who owned the print remain metadata claims.",
+        "paraphrase_examples": [
+          "성인 인물이 담긴 인화지 네 변과 앨범 마운트가 보이고 모서리 말림과 국소 먼지가 남은 스캔본",
+          "희얼사나 과사처럼 보관될 수 있지만 단순 세피아가 아니라 물리 인화지의 전체 경계와 재질이 보이는 사진",
+          "a complete curled photo print on an album page with localized emulsion wear and the adult portrait contained inside"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "complete_print_boundary",
+            "substrate_material_depth",
+            "surrounding_scan_or_album_context",
+            "localized_physical_wear",
+            "image_within_material_object"
+          ],
+          "groups": [
+            {"id":"complete_print_boundary","any_terms":["all four physical print edges remain visible around the contained photograph","사진을 둘러싼 실물 인화지 네 변이 모두 보임"]},
+            {"id":"substrate_material_depth","any_terms":["paper thickness corner curl or emulsion edge separates the print from the depicted scene","종이 두께 모서리 말림 또는 유제 가장자리가 내부 장면과 인화지를 구별함"]},
+            {"id":"surrounding_scan_or_album_context","any_terms":["an album mount scanner bed or neutral capture surface surrounds the print","앨범 마운트 스캐너 베드 또는 중립 촬영면이 인화지를 둘러쌈"]},
+            {"id":"localized_physical_wear","any_terms":["localized dust scratches fading or handling marks belong to the physical print surface","국소 먼지 흠집 퇴색 또는 손자국이 실물 인화지 표면에만 남음"]},
+            {"id":"image_within_material_object","any_terms":["the clearly adult portrait remains an image contained inside a separate material object","분명한 성인 인물사진이 별도의 물리 객체 안에 담긴 이미지로 읽힘"]}
+          ]
+        },
+        "contrast_examples": [
+          "a sepia filter on a clean digital portrait",
+          "a fake Polaroid border graphic",
+          "global dust texture covering the entire canvas",
+          "a cropped print with no visible physical edge",
+          "an old-looking image presented as proof of date or provenance"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "all four physical print edges",
+          "paper thickness curl or emulsion edge",
+          "album mount or scanner bed",
+          "localized physical wear",
+          "adult portrait inside a separate material object",
+          "material lineage without age or provenance inference"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["full-edge physical print scan"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the complete physical print as an object, including all four edges, material thickness or curl, and a surrounding album mount, scanner bed, or capture surface. Keep localized wear attached to the print substrate while the clearly adult portrait remains a distinct image contained inside it.",
+      "required_evidence_fields": [
+        "complete_print_edge_phrase",
+        "substrate_depth_phrase",
+        "scan_album_context_phrase",
+        "localized_wear_phrase",
+        "image_within_object_phrase"
+      ],
+      "evidence_requirements": {
+        "complete_print_edge_phrase":{"min_content_words":10,"must_mention_any":["all four physical print edges remain visible around the contained photograph"]},
+        "substrate_depth_phrase":{"min_content_words":13,"must_mention_any":["paper thickness corner curl or emulsion edge separates the print from the depicted scene"]},
+        "scan_album_context_phrase":{"min_content_words":11,"must_mention_any":["an album mount scanner bed or neutral capture surface surrounds the print"]},
+        "localized_wear_phrase":{"min_content_words":13,"must_mention_any":["localized dust scratches fading or handling marks belong to the physical print surface"]},
+        "image_within_object_phrase":{"min_content_words":13,"must_mention_any":["the clearly adult portrait remains an image contained inside a separate material object"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_scan_complete_print_boundary","review_scale":"thumbnail","description":"The complete physical print silhouette and all four edges are legible."},
+        {"id":"vo_rare_scan_material_depth","review_scale":"both","description":"Paper thickness, curl, mount, or emulsion edge makes the print a physical object."},
+        {"id":"vo_rare_scan_surrounding_context","review_scale":"both","description":"An album page, scanner bed, or capture surface visibly surrounds the print."},
+        {"id":"vo_rare_scan_localized_wear","review_scale":"native","description":"Dust, scratches, fading, or handling marks are localized to the physical print surface."},
+        {"id":"vo_rare_scan_not_sepia_border_texture_provenance","review_scale":"native","description":"Sepia filtering, a fake border, global dirt texture, missing print edges, and inferred date or provenance do not substitute."}
+      ],
+      "reject_substitutes": [
+        "sepia_filter_only",
+        "fake_polaroid_border_graphic",
+        "global_dust_texture",
+        "cropped_print_without_physical_edge",
+        "date_or_provenance_inference"
+      ]
+    },
+    {
+      "id": "early_2000s_compact_digicam_social_repost",
+      "category": "capture_processing_compact_digicam_social_repost",
+      "activation": {
+        "exact_terms": [
+          "early-2000s compact digicam social repost",
+          "2000s compact CCD social photo",
+          "early social-network digicam snapshot",
+          "2000년대 싸이월드 디카 사진",
+          "2000년대 콤팩트 CCD SNS 재업로드 사진",
+          "초기 SNS 디카 플래시 사진"
+        ],
+        "project_glossary_aliases": [
+          "싸이월드 디카 재업로드"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A clearly adult subject is photographed with a compact-digicam capture stack: near-axis direct flash, close background shadow or rapid falloff, clipped highlights and mixed white balance, CCD-like chroma noise or purple fringing, and mild social-platform JPEG recompression. The stack creates a plausible early-digital social-photo appearance without proving the actual year, device, account, or upload history.",
+        "paraphrase_examples": [
+          "직광 플래시 뒤 그림자와 제한된 하이라이트 차가운 CCD 색 번짐 약한 JPEG 재압축이 함께 보이는 성인 일상사진",
+          "희얼사나 과사로 저장될 법한 싸이월드 디카 분위기이지만 실제 촬영 연도와 계정 이력은 주장하지 않는 사진",
+          "an adult late-night snapshot with compact-camera flash falloff CCD chroma fringing and mild second-generation JPEG artifacts"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "compact_direct_flash_geometry",
+            "background_shadow_falloff",
+            "limited_dynamic_range_mixed_white_balance",
+            "ccd_chroma_fringing",
+            "mild_social_jpeg_recompression"
+          ],
+          "groups": [
+            {"id":"compact_direct_flash_geometry","any_terms":["near-axis compact-camera flash lights the adult subject with frontal specular highlights","광축 가까운 콤팩트 카메라 플래시가 성인 피사체를 정면 반사광으로 비춤"]},
+            {"id":"background_shadow_falloff","any_terms":["a close background shadow and rapid flash falloff remain visible behind the subject","피사체 뒤 가까운 배경 그림자와 빠른 플래시 광량 감소가 보임"]},
+            {"id":"limited_dynamic_range_mixed_white_balance","any_terms":["clipped highlights deep shadows and mixed cool-warm white balance show limited dynamic range","클리핑된 하이라이트 깊은 그림자 차갑고 따뜻한 혼합 화이트밸런스가 제한된 다이내믹레인지를 보임"]},
+            {"id":"ccd_chroma_fringing","any_terms":["fine chroma noise and restrained purple fringing gather around bright edges","미세한 색 노이즈와 절제된 보라색 프린징이 밝은 경계에 모임"]},
+            {"id":"mild_social_jpeg_recompression","any_terms":["mild JPEG blocking and mosquito noise appear around high-contrast edges without destroying facial detail","약한 JPEG 블로킹과 모기 노이즈가 고대비 경계에 생기지만 얼굴 디테일은 유지됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "a modern HDR phone portrait with a retro color filter",
+          "film grain without direct-flash geometry",
+          "a clean studio strobe portrait",
+          "extreme fake degradation that destroys facial structure",
+          "a photograph claimed to prove an exact year or deleted account"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "near-axis compact-camera flash",
+          "close background shadow and rapid falloff",
+          "limited dynamic range and mixed white balance",
+          "fine CCD chroma noise and purple fringing",
+          "mild JPEG recompression around contrast edges",
+          "early-digital appearance without historical proof"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["early-digital compact-camera social snapshot"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a clearly adult subject in a plausible everyday snapshot and combine near-axis compact-camera flash, a close background shadow, rapid falloff, limited dynamic range, mixed white balance, restrained CCD chroma fringing, and mild JPEG recompression. Keep facial structure readable and treat the result as an appearance rather than proof of date or device history.",
+      "required_evidence_fields": [
+        "direct_flash_phrase",
+        "background_falloff_phrase",
+        "dynamic_range_white_balance_phrase",
+        "ccd_fringing_phrase",
+        "jpeg_recompression_phrase"
+      ],
+      "evidence_requirements": {
+        "direct_flash_phrase":{"min_content_words":11,"must_mention_any":["near-axis compact-camera flash lights the adult subject with frontal specular highlights"]},
+        "background_falloff_phrase":{"min_content_words":12,"must_mention_any":["a close background shadow and rapid flash falloff remain visible behind the subject"]},
+        "dynamic_range_white_balance_phrase":{"min_content_words":13,"must_mention_any":["clipped highlights deep shadows and mixed cool-warm white balance show limited dynamic range"]},
+        "ccd_fringing_phrase":{"min_content_words":11,"must_mention_any":["fine chroma noise and restrained purple fringing gather around bright edges"]},
+        "jpeg_recompression_phrase":{"min_content_words":15,"must_mention_any":["mild JPEG blocking and mosquito noise appear around high-contrast edges without destroying facial detail"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_digicam_direct_flash","review_scale":"thumbnail","description":"Near-axis direct flash and frontal highlights read immediately as compact-camera capture."},
+        {"id":"vo_rare_digicam_background_shadow_falloff","review_scale":"both","description":"A close background shadow and rapid flash falloff coexist behind the subject."},
+        {"id":"vo_rare_digicam_limited_range_mixed_wb","review_scale":"both","description":"Clipped highlights, deep shadows, and mixed white balance establish limited early-digital response."},
+        {"id":"vo_rare_digicam_ccd_jpeg_artifacts","review_scale":"native","description":"Restrained chroma noise, purple fringing, and mild JPEG edge artifacts are visible while facial detail survives."},
+        {"id":"vo_rare_digicam_not_modern_filter_or_history_claim","review_scale":"native","description":"Modern HDR plus a filter, film grain alone, clean studio light, destructive fake degradation, and historical claims do not substitute."}
+      ],
+      "reject_substitutes": [
+        "modern_hdr_retro_filter",
+        "film_grain_without_flash_geometry",
+        "clean_studio_strobe",
+        "destructive_fake_degradation",
+        "exact_year_device_or_account_claim"
+      ]
+    },
+    {
+      "id": "contact_sheet_selection_context",
+      "category": "capture_relation_contact_sheet_selection",
+      "activation": {
+        "exact_terms": [
+          "contact-sheet selection photograph",
+          "photographic contact sheet with selection mark",
+          "sequential proof-sheet photograph",
+          "선택 표시가 있는 컨택트 시트",
+          "연속 프레임 사진 컨택트 시트",
+          "사진 셀렉용 밀착 인화지"
+        ],
+        "project_glossary_aliases": [
+          "셀렉 표시 컨택트 시트"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A proof sheet shows multiple temporally adjacent frames of the same clearly adult subject and scene, arranged in a consistent contact-grid or film-strip system with one visible selection mark or chosen frame. The sheet makes an editing sequence observable, while B-cut, outtake, publication, and rejection status remain metadata unless the selection context is shown.",
+        "paraphrase_examples": [
+          "같은 성인 피사체의 연속 동작이 작은 프레임들로 이어지고 한 컷에 셀렉 표시가 된 밀착 인화지",
+          "B컷이나 아웃테이크라는 말 대신 실제 촬영 시퀀스와 선택 과정을 화면에 보이는 형태로 만든 사진",
+          "a consistent proof sheet of near-adjacent adult portrait frames with one circled selection"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "repeated_same_subject_scene",
+            "temporal_micro_progression",
+            "contact_grid_or_film_strip",
+            "single_selection_mark",
+            "consistent_frame_system"
+          ],
+          "groups": [
+            {"id":"repeated_same_subject_scene","any_terms":["the same clearly adult subject and scene repeat across multiple small frames","같은 분명한 성인 피사체와 장면이 여러 작은 프레임에 반복됨"]},
+            {"id":"temporal_micro_progression","any_terms":["pose gaze or action changes by small adjacent steps from frame to frame","포즈 시선 또는 행동이 프레임마다 작은 연속 단계로 변함"]},
+            {"id":"contact_grid_or_film_strip","any_terms":["a regular proof-sheet grid or film-strip structure contains the sequence","규칙적인 밀착 인화 격자 또는 필름 스트립 구조가 시퀀스를 담음"]},
+            {"id":"single_selection_mark","any_terms":["one frame carries a visible circle grease-pencil mark or equivalent selection cue","한 프레임에 원형 표시 그리스펜 또는 동등한 셀렉 단서가 보임"]},
+            {"id":"consistent_frame_system","any_terms":["uniform frame dimensions spacing and scene continuity distinguish the sheet from a decorative collage","균일한 프레임 크기 간격과 장면 연속성이 장식 콜라주와 구별됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "a decorative scrapbook collage",
+          "unrelated portraits arranged in a mood board",
+          "one photograph with a film border",
+          "a repeated identical tile with no temporal change",
+          "a single image merely labeled B-cut or outtake"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "same adult subject repeated across frames",
+          "small temporal progression",
+          "regular proof-sheet grid or film strip",
+          "one visible selection mark",
+          "uniform spacing and scene continuity",
+          "editing sequence without outtake-status inference"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["photographic contact sheet"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Build one regular proof-sheet or film-strip surface from multiple small frames of the same clearly adult subject and scene. Let pose, gaze, or action progress by small adjacent steps, preserve consistent frame dimensions and spacing, and mark exactly one frame with a visible selection cue.",
+      "required_evidence_fields": [
+        "same_subject_sequence_phrase",
+        "temporal_progression_phrase",
+        "proof_sheet_structure_phrase",
+        "selection_mark_phrase",
+        "consistent_frame_system_phrase"
+      ],
+      "evidence_requirements": {
+        "same_subject_sequence_phrase":{"min_content_words":12,"must_mention_any":["the same clearly adult subject and scene repeat across multiple small frames"]},
+        "temporal_progression_phrase":{"min_content_words":11,"must_mention_any":["pose gaze or action changes by small adjacent steps from frame to frame"]},
+        "proof_sheet_structure_phrase":{"min_content_words":11,"must_mention_any":["a regular proof-sheet grid or film-strip structure contains the sequence"]},
+        "selection_mark_phrase":{"min_content_words":13,"must_mention_any":["one frame carries a visible circle grease-pencil mark or equivalent selection cue"]},
+        "consistent_frame_system_phrase":{"min_content_words":14,"must_mention_any":["uniform frame dimensions spacing and scene continuity distinguish the sheet from a decorative collage"]}
+      },
+      "render_gates": [
+        {"id":"vo_rare_contact_same_subject_sequence","review_scale":"thumbnail","description":"The same adult subject and scene repeat across multiple frames as one coherent sequence."},
+        {"id":"vo_rare_contact_temporal_progression","review_scale":"both","description":"Pose, gaze, or action changes by small temporally adjacent steps rather than unrelated images."},
+        {"id":"vo_rare_contact_regular_proof_sheet","review_scale":"both","description":"A regular contact-grid or film-strip system contains the frames."},
+        {"id":"vo_rare_contact_single_selection_mark","review_scale":"native","description":"Exactly one frame carries a legible selection mark or equivalent chosen-frame cue."},
+        {"id":"vo_rare_contact_not_collage_or_metadata_outtake","review_scale":"native","description":"A scrapbook collage, mood board, single film border, repeated identical tile, or metadata-only outtake label does not substitute."}
+      ],
+      "reject_substitutes": [
+        "decorative_scrapbook_collage",
+        "unrelated_portrait_mood_board",
+        "single_photo_with_film_border",
+        "identical_repeated_tile",
+        "metadata_only_b_cut_or_outtake"
+      ]
     }
   ]
 }
