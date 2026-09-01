@@ -1,0 +1,94 @@
+{
+  "schema_version": "photo-independent-pixel-review/v1",
+  "arm_id": "arm-02-arson",
+  "pack_id": "02b7f27adc3bbd0a",
+  "prompt_id": "41b9c4914b8dcd08",
+  "assigned_profile": "deliberate_arson_causality",
+  "review_policy": "partial_is_fail",
+  "tool_outcome": "success",
+  "native_image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-02-arson/render-native.png",
+    "sha256": "fdd1e76bd46e2c97a8d67eab9e9a0e48559c2bc6c132feda6a3e9ed394a8d75f",
+    "width": 1536,
+    "height": 1024
+  },
+  "thumbnail_image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-02-arson/render-thumbnail.png",
+    "sha256": "34c8b003d081b7d1ac1569a4a8bfc6ff9d3eeae2dbdf811842ee4ad1f830afde",
+    "width": 512,
+    "height": 341
+  },
+  "source_reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "precommitted_rubric_sha256": "840cabb694cdeb7c6e6f1405fd38f21186aac4f76c0582e79b6f636d379c3bf6",
+  "hard_gates": [
+    {
+      "gate_id": "arson_actor_target",
+      "profile_gate_id": "vo_crime_arson_setter_target",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The 512 px thumbnail clearly separates the crouching adult fire-setter from the single blue greenhouse service door."
+    },
+    {
+      "gate_id": "arson_ignition_path",
+      "profile_gate_id": "vo_crime_arson_ignition_path",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "At native scale, one pale linear ignition path runs continuously from the crouching actor's hand to the bright point at the door base."
+    },
+    {
+      "gate_id": "arson_same_point_origin",
+      "profile_gate_id": "vo_crime_arson_origin",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The fresh flame is centered exactly where the visible linear path meets the bottom edge of the selected door."
+    },
+    {
+      "gate_id": "arson_outward_expansion",
+      "profile_gate_id": "vo_crime_arson_growth",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Orange flame and a broad dark scorch plume expand upward and outward on the same door from the contact point."
+    },
+    {
+      "gate_id": "reference_adult_supporting_appearance",
+      "profile_gate_id": null,
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The foreground fictional adult shows long center-parted dark wavy hair, oval facial geometry, dark eyes, and softly arched brows."
+    },
+    {
+      "gate_id": "reference_role_separation",
+      "profile_gate_id": null,
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "The investigator is spatially separate and does not occlude the event, but her large foreground face and torso dominate the thumbnail more strongly than the smaller fire-setting relation; the required secondary visual hierarchy is only partial and therefore fails."
+    },
+    {
+      "gate_id": "thumbnail_relation_readability",
+      "profile_gate_id": null,
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail still shows the crouching actor, blue door, diagonal ignition path, and bright same-point fire as one readable chain."
+    },
+    {
+      "gate_id": "native_origin_boundary",
+      "profile_gate_id": null,
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Native pixels clearly separate the pale fuse, its door-base contact, the orange origin, and the vertical scorch boundary."
+    }
+  ],
+  "failed_gate_ids": [
+    "reference_role_separation"
+  ],
+  "profile_hard_gate_status": "pass",
+  "common_reference_and_readability_status": "fail",
+  "overall_status": "fail",
+  "technical_qualified": false,
+  "retry_performed": false,
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "boundary": "Prompt and runtime audits passed, but this record scores visible pixels only. One failed hard gate makes the arm fail; user preference is separate."
+}

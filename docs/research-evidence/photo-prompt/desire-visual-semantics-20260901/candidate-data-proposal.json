@@ -1,0 +1,1002 @@
+{
+  "schema_version": "photo-desire-research-proposal/v1",
+  "title": "욕망 개념군 시각 의미 및 후보팩 강화 제안",
+  "source_conversation": {
+    "conversation_id": "6a96aa3f-6878-83ee-84c8-b5c6ab7ac451",
+    "title": "욕망 관련 개념 조사",
+    "keyword_families": [
+      "need_want_desire_wish",
+      "longing_yearning_craving",
+      "drive_urge_impulse_temptation",
+      "greed_avarice_acquisitiveness_insatiability",
+      "covetousness_cupidity_pleonexia",
+      "recognition_status_display",
+      "achievement_ambition_striving",
+      "power_control_domination",
+      "pleasure_lust_indulgence",
+      "obsession_fixation_compulsion",
+      "conatus_epithymia_tanha_lobha_kama",
+      "reward_satisfaction_contentment"
+    ]
+  },
+  "reviewed_at": "2026-09-01",
+  "status": "research_complete_runtime_unapplied",
+  "decision": {
+    "candidate_profiles": 9,
+    "promotion_state": "proposal_only",
+    "runtime_registry_changed": false,
+    "semantic_index_changed": false,
+    "image_generation_performed": false,
+    "pixel_evaluation_performed": false,
+    "user_judgment_performed": false
+  },
+  "sources": [
+    {"id": "S01", "url": "https://plato.stanford.edu/entries/desire/", "role": "desire_theory_and_action_boundary"},
+    {"id": "S02", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2756052/", "role": "wanting_liking_learning_distinction"},
+    {"id": "S03", "url": "https://doi.org/10.1037/a0026545", "role": "desire_conflict_resistance_enactment"},
+    {"id": "S04", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10948792/", "role": "face_context_inference_boundary"},
+    {"id": "S05", "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/sjp.12387", "role": "longing_and_absent_target"},
+    {"id": "S06", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10903135/", "role": "greed_more_and_not_enough_concept"},
+    {"id": "S07", "url": "https://classics.mit.edu/Aristotle/nicomachaen.5.v.html", "role": "pleonexia_distribution_lineage"},
+    {"id": "S08", "url": "https://doi.org/10.1111/j.1467-8721.2006.00449.x", "role": "specific_goal_commitment_feedback_persistence"},
+    {"id": "S09", "url": "https://doi.org/10.1037/0033-295X.110.2.265", "role": "power_resource_control"},
+    {"id": "S10", "url": "https://doi.org/10.5465/19416520802211628", "role": "power_status_distinction"},
+    {"id": "S11", "url": "https://journals.sagepub.com/doi/abs/10.1509/jmkg.74.4.015", "role": "public_status_signaling_boundary"},
+    {"id": "S12", "url": "https://www.nimh.nih.gov/health/publications/obsessive-compulsive-disorder-when-unwanted-thoughts-or-repetitive-behaviors-take-over", "role": "clinical_obsession_compulsion_boundary"},
+    {"id": "S13", "url": "https://plato.stanford.edu/entries/spinoza-psychological/", "role": "conatus_lineage_only"},
+    {"id": "S14", "url": "https://classics.mit.edu/Plato/republic.5.iv.html", "role": "epithymia_lineage_only"},
+    {"id": "S15", "url": "https://suttacentral.net/an4.199/en/sujato", "role": "tanha_lineage_only"}
+  ],
+  "activation_policy": {
+    "hard_activation_requires": [
+      "exact_or_contextual_event_phrase",
+      "all_required_component_groups_placeable",
+      "no_safety_or_age_conflict",
+      "no_clinical_or_personality_inference",
+      "one_unambiguous_owned_profile"
+    ],
+    "advisory_only": [
+      "broad_alias_hit",
+      "bm25f_only_hit",
+      "embedding_only_hit",
+      "facial_expression_or_pose_only",
+      "philosophical_or_religious_lineage_term",
+      "clinical_or_trait_term"
+    ],
+    "broad_terms_forbidden_from_hard_activation": [
+      "욕구", "욕망", "바람", "소망", "열망", "갈망", "갈구", "욕동", "충동", "욕심", "탐욕", "집착", "강박", "야심", "야망", "권력욕", "지배욕", "질투", "선망",
+      "need", "want", "desire", "wish", "longing", "yearning", "craving", "drive", "urge", "impulse", "greed", "avarice", "ambition", "power", "envy", "jealousy", "obsession", "fixation", "compulsion", "conatus", "epithymia", "tanha", "taṇhā", "lobha", "kama", "kāma"
+    ],
+    "retrieval_precedence": [
+      "safety_and_age_constraints",
+      "exact_relationship_profile",
+      "exact_event_profile",
+      "existing_specific_profile",
+      "broad_alias_advisory",
+      "bm25f_or_embedding_advisory"
+    ]
+  },
+  "concept_disposition": [
+    {
+      "family": "general_desire",
+      "terms_ko": ["욕구", "욕망", "욕심", "바람", "소망"],
+      "terms_other": ["Need", "Want", "Desire", "Wish"],
+      "mode": "broad_advisory_only",
+      "hard_route": null
+    },
+    {
+      "family": "longing_for_inaccessible_target",
+      "terms_ko": ["열망", "갈망", "갈구"],
+      "terms_other": ["Longing", "Yearning", "Sehnsucht"],
+      "mode": "broad_advisory_with_exact_event_route",
+      "hard_route": "inaccessible_target_longing_relation"
+    },
+    {
+      "family": "drive_impulse_and_temptation",
+      "terms_ko": ["욕동", "충동", "동기", "유혹"],
+      "terms_other": ["Appetite", "Drive", "Urge", "Impulse", "Craving"],
+      "mode": "broad_advisory_with_exact_goal_conflict_route",
+      "hard_route": "temptation_goal_conflict_choice"
+    },
+    {
+      "family": "concrete_survival_and_affection_needs",
+      "terms_ko": ["생존욕", "애정욕"],
+      "terms_other": ["survival need", "affection need"],
+      "mode": "domain_specific_existing_or_future_profile",
+      "hard_route": null
+    },
+    {
+      "family": "adult_target_directed_lust_behavior",
+      "terms_ko": ["욕정"],
+      "terms_other": ["Lust"],
+      "mode": "reuse_existing_profile_only_when_adult_behavior_is_explicit",
+      "hard_route": "target_directed_seductive_display"
+    },
+    {
+      "family": "pleasure_and_indulgence",
+      "terms_ko": ["쾌락욕", "탐닉"],
+      "terms_other": ["Kāma"],
+      "mode": "P1_deferred",
+      "hard_route": null
+    },
+    {
+      "family": "achievement_ambition_and_expansion",
+      "terms_ko": ["야심", "야망", "성취욕", "확장욕", "초월욕"],
+      "terms_other": ["Ambition", "striving"],
+      "mode": "broad_advisory_with_exact_progress_route",
+      "hard_route": "next_milestone_ambition_pursuit"
+    },
+    {
+      "family": "competition_and_superiority",
+      "terms_ko": ["승부욕", "경쟁심", "우월욕"],
+      "terms_other": ["competition", "superiority striving"],
+      "mode": "P1_deferred",
+      "hard_route": null
+    },
+    {
+      "family": "recognition_status_and_display",
+      "terms_ko": ["인정욕", "명예욕", "허영", "과시욕"],
+      "terms_other": ["recognition seeking", "status seeking", "vanity"],
+      "mode": "broad_advisory_with_exact_audience_route",
+      "hard_route": "public_recognition_bid_audience_response"
+    },
+    {
+      "family": "acquisition_accumulation_and_greed",
+      "terms_ko": ["물욕", "소유욕", "축적욕", "독점욕", "탐심", "탐욕", "과욕"],
+      "terms_other": ["Greed", "Avarice", "Acquisitiveness", "Rapacity", "Insatiability"],
+      "mode": "broad_advisory_with_exact_acquisition_or_capacity_routes",
+      "hard_routes": ["repeated_acquisition_without_use_cycle", "excess_accumulation_overflow_event"]
+    },
+    {
+      "family": "coveting_other_owned_object",
+      "terms_ko": ["선망", "탐심"],
+      "terms_other": ["Covetousness", "Cupidity"],
+      "mode": "broad_advisory_with_exact_ownership_boundary_route",
+      "hard_route": "other_owned_object_covetous_approach"
+    },
+    {
+      "family": "pleonexia_distribution",
+      "terms_ko": ["과욕", "탐욕"],
+      "terms_other": ["Pleonexia"],
+      "mode": "broad_advisory_with_exact_allocation_route",
+      "hard_route": "pleonexia_unfair_share_taking_event"
+    },
+    {
+      "family": "power_control_and_domination",
+      "terms_ko": ["권력욕", "지배욕", "통제욕", "정복욕"],
+      "terms_other": ["power seeking", "domination", "control", "conquest"],
+      "mode": "broad_advisory_with_exact_resource_control_route",
+      "hard_route": "resource_control_acquisition_event"
+    },
+    {
+      "family": "comparison_envy_jealousy_and_lack",
+      "terms_ko": ["질투", "선망", "결핍"],
+      "terms_other": ["envy", "jealousy", "lack"],
+      "mode": "P1_deferred",
+      "hard_route": null
+    },
+    {
+      "family": "fixation_and_clinical_terms",
+      "terms_ko": ["집착", "강박"],
+      "terms_other": ["Obsession", "Fixation", "Compulsion"],
+      "mode": "hard_route_forbidden",
+      "hard_route": null
+    },
+    {
+      "family": "reward_fulfillment_and_contentment",
+      "terms_ko": ["보상", "충족", "만족", "지족"],
+      "terms_other": ["reward", "fulfillment", "satisfaction", "contentment"],
+      "mode": "outcome_state_separate_research",
+      "hard_route": null
+    },
+    {
+      "family": "philosophical_and_religious_lineage",
+      "terms_ko": [],
+      "terms_other": ["Epithymia", "Taṇhā", "Lobha", "Conatus"],
+      "mode": "citation_and_advisory_only",
+      "hard_route": null
+    }
+  ],
+  "evidence_boundary": {
+    "verified": [
+      "source_definitions_and_theoretical_distinctions",
+      "current_repository_profile_and_candidate_overlap",
+      "proposed_json_syntax",
+      "proposed_internal_id_references"
+    ],
+    "design_inference_not_directly_verified_by_sources": [
+      "camera_geometry",
+      "prop_combinations",
+      "exact_candidate_wording",
+      "profile_activation_phrases"
+    ],
+    "not_yet_verified": [
+      "runtime_activation",
+      "prompt_renderability",
+      "generated_pixels",
+      "cross_arm_independence",
+      "user_semantic_judgment"
+    ]
+  },
+  "nonvisual_claim_policy": {
+    "never_infer": [
+      "private_intent",
+      "personality_trait",
+      "mental_health_diagnosis",
+      "addiction",
+      "consent",
+      "legal_guilt",
+      "actual_social_rank",
+      "actual_power_outside_the_visible_event",
+      "religious_identity"
+    ],
+    "allowed_language": [
+      "visible_target_directed_action",
+      "visible_access_or_ownership_relation",
+      "visible_allocation_or_resource_control_change",
+      "visible_audience_or_owner_response",
+      "visible_immediate_consequence"
+    ]
+  },
+  "reuse_existing_profiles": [
+    {
+      "id": "achievement_reward_smile",
+      "reuse_for": ["post_achievement_result", "visible_success_consequence"],
+      "do_not_reuse_for": ["ambition_as_ongoing_goal_pursuit"]
+    },
+    {
+      "id": "target_directed_seductive_display",
+      "reuse_for": ["adult_target_directed_invitation_behavior"],
+      "do_not_reuse_for": ["consent", "private_lust", "generic_desire"]
+    },
+    {
+      "id": "yandere_affection_control_relation",
+      "reuse_for": ["exact_yandere_archetype_only"],
+      "do_not_reuse_for": ["generic_obsession", "generic_possession", "OCD", "jealousy"]
+    },
+    {
+      "id": "decadent_languor_environment",
+      "reuse_for": ["worn_luxury_after_event_environment"],
+      "do_not_reuse_for": ["generic_hedonism", "generic_indulgence", "desire"]
+    },
+    {
+      "id": "conspicuous_original_house_code_display",
+      "reuse_for": ["original_nonletter_luxury_display_object_grammar"],
+      "do_not_reuse_for": ["recognition_without_audience_response", "status_as_trait"]
+    }
+  ],
+  "reuse_existing_candidates": [
+    {"id": "local_press_recognition_capture", "for_profile": "public_recognition_bid_audience_response", "role": "capture_context"},
+    {"id": "multi_observer_recognition_cue", "for_profile": "public_recognition_bid_audience_response", "role": "social_cue"},
+    {"id": "press_lens_attention_cluster", "for_profile": "public_recognition_bid_audience_response", "role": "social_cue"},
+    {"id": "crowd_path_opening_for_subject", "for_profile": "public_recognition_bid_audience_response", "role": "social_cue"},
+    {"id": "local_reputation_arrival", "for_profile": "public_recognition_bid_audience_response", "role": "narrative_phase"},
+    {"id": "security_verify_credential_control_gate", "for_profile": "resource_control_acquisition_event", "role": "action", "restriction": "only_for_explicit_access_control_scene"},
+    {"id": "security_credential_reader_entry_log_set", "for_profile": "resource_control_acquisition_event", "role": "prop", "restriction": "only_for_explicit_access_control_scene"},
+    {"id": "controlled_facility_access_lobby", "for_profile": "resource_control_acquisition_event", "role": "location", "restriction": "only_for_explicit_access_control_scene"}
+  ],
+  "proposed_profiles": [
+    {
+      "id": "inaccessible_target_longing_relation",
+      "priority": "P0",
+      "category": "target_access_relation",
+      "meaning": "A visible adult attempts an incomplete approach toward one identifiable but currently inaccessible target.",
+      "exact_activation_phrases_ko": [
+        "접근할 수 없는 명확한 대상을 향해 닫히는 장벽 너머로 손을 뻗는 성인",
+        "떠나는 대상과 물리적 장벽 사이에서 접근이 차단된 성인"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult reaching toward one clearly inaccessible target across a closing barrier",
+        "an adult's approach visibly blocked while the identifiable target departs"
+      ],
+      "broad_advisory_terms": ["열망", "갈망", "갈구", "longing", "yearning", "sehnsucht"],
+      "required_component_groups": [
+        {"id": "identifiable_target", "all_of": ["one_concrete_target_or_continuity_trace"]},
+        {"id": "access_barrier", "all_of": ["physical_or_procedural_barrier_or_unbridgeable_distance"]},
+        {"id": "incomplete_approach", "all_of": ["same_adult_target_directed_reach_or_movement", "no_contact_or_entry"]},
+        {"id": "immediate_blocking_result", "any_of": ["closed_door", "departing_transport", "visible_contact_gap", "denied_entry"]}
+      ],
+      "composition_instruction": "Keep the adult, barrier, and target in one readable triangular relationship; give the target and contact gap dedicated visible area.",
+      "reject_substitutes": ["sad_window_portrait", "targetless_waiting", "distant_view_appreciation", "grief_by_expression_only"],
+      "render_gates": ["target_identifiable", "barrier_separates_actor_and_target", "approach_action_visible", "failure_or_delay_visible"],
+      "source_ids": ["S01", "S04", "S05"]
+    },
+    {
+      "id": "temptation_goal_conflict_choice",
+      "priority": "P0",
+      "category": "goal_conflict_event",
+      "meaning": "The same adult faces a visible immediate reward that conflicts with a marked longer-term goal and either resists or enacts the desire.",
+      "exact_activation_phrases_ko": [
+        "즉시 보상과 표시된 장기 목표 사이에서 저항하거나 실행하는 동일 성인",
+        "한쪽을 선택하면 다른 목표 진척이 중단되는 유혹과 목표 갈등 사건"
+      ],
+      "exact_activation_phrases_en": [
+        "the same adult visibly resisting or enacting an immediate reward that conflicts with a marked long-term goal",
+        "a mutually exclusive choice between a visible reward and the same adult's ongoing goal task"
+      ],
+      "broad_advisory_terms": ["유혹", "충동", "욕동", "temptation", "urge", "impulse", "craving"],
+      "required_component_groups": [
+        {"id": "immediate_reward", "all_of": ["concrete_immediate_reward_cue"]},
+        {"id": "conflicting_goal", "all_of": ["concrete_long_term_goal_marker_or_active_task"]},
+        {"id": "same_actor_choice", "all_of": ["same_adult_hand_or_body_between_paths"]},
+        {"id": "mutual_exclusion", "all_of": ["spatial_or_time_constraint_prevents_both_paths"]},
+        {"id": "observable_outcome", "any_of": ["reward_left_untouched", "goal_progress_interrupted", "reward_enacted", "resistance_action"]}
+      ],
+      "composition_instruction": "Give the reward and goal marker separate readable regions connected by the same adult's paused or committed action.",
+      "reject_substitutes": ["ordinary_product_comparison", "menu_choice", "reward_closeup", "seductive_pose", "hesitation_without_goal_marker"],
+      "render_gates": ["reward_visible", "conflicting_goal_visible", "same_actor_connects_both", "outcome_visible"],
+      "source_ids": ["S02", "S03", "S04"]
+    },
+    {
+      "id": "repeated_acquisition_without_use_cycle",
+      "priority": "P0",
+      "category": "acquisition_cycle_event",
+      "meaning": "The same adult acquires another item from a category while multiple prior acquisitions remain visibly unopened or unused.",
+      "exact_activation_phrases_ko": [
+        "미개봉 동일 계열 물건을 여러 개 둔 채 같은 물건을 또 수령하는 동일 성인",
+        "사용 흔적 없는 이전 획득물 앞에서 새 중복 항목을 결제하는 성인"
+      ],
+      "exact_activation_phrases_en": [
+        "the same adult acquiring another duplicate while multiple prior matching items remain unopened and unused",
+        "a new same-category purchase visibly linked to an unused sequence of prior acquisitions"
+      ],
+      "broad_advisory_terms": ["소유욕", "획득욕", "탐닉", "acquisitiveness", "craving", "obsession"],
+      "required_component_groups": [
+        {"id": "prior_acquisitions", "all_of": ["multiple_same_category_prior_items"]},
+        {"id": "nonuse_state", "all_of": ["unopened_or_unused_state_visible"]},
+        {"id": "new_acquisition", "all_of": ["same_adult_paying_receiving_or_packing_another_matching_item"]},
+        {"id": "continuity", "all_of": ["prior_and_new_items_linked_in_one_scene"]},
+        {"id": "imbalance_trace", "any_of": ["storage_pressure", "attention_displacement", "continued_nonuse"]}
+      ],
+      "composition_instruction": "Connect prior unused items, the adult, and the new item along one depth or action line.",
+      "reject_substitutes": ["retail_inventory", "warehouse_work", "disaster_preparation", "shared_bulk_purchase", "actively_used_collection", "clinical_diagnosis"],
+      "render_gates": ["prior_matching_items_visible", "nonuse_visible", "new_acquisition_action_visible", "same_actor_and_category_continuity_visible"],
+      "source_ids": ["S02", "S04", "S06", "S12"]
+    },
+    {
+      "id": "excess_accumulation_overflow_event",
+      "priority": "P0",
+      "category": "capacity_overflow_event",
+      "meaning": "An adult adds more matching resources after a visible storage or use capacity is already full, causing overflow or displacement.",
+      "exact_activation_phrases_ko": [
+        "이미 가득 찬 용량 경계에 같은 자원을 더 넣어 넘치게 하는 성인",
+        "충분히 채워진 저장공간에 추가 반입해 다른 물건이 밀려나는 사건"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult adding more matching resources to an already full bounded capacity, causing visible overflow",
+        "additional accumulation displacing other needed items from a visibly full storage limit"
+      ],
+      "broad_advisory_terms": ["축적욕", "탐욕", "과욕", "greed", "avarice", "insatiability"],
+      "required_component_groups": [
+        {"id": "bounded_capacity", "all_of": ["visible_storage_or_use_boundary"]},
+        {"id": "already_sufficient_stock", "all_of": ["capacity_already_full_before_incoming_item"]},
+        {"id": "continued_input", "all_of": ["same_adult_adding_or_bringing_more"]},
+        {"id": "overflow_consequence", "any_of": ["spilling", "falling", "other_item_displaced", "path_blocked"]},
+        {"id": "causal_continuity", "all_of": ["incoming_action_and_overflow_read_as_one_event"]}
+      ],
+      "composition_instruction": "Frame the capacity boundary, incoming object, adult action, and displaced result in one causal line.",
+      "reject_substitutes": ["normal_restock", "moving_boxes", "archive_work", "abundance_still_life", "emergency_preparation"],
+      "render_gates": ["capacity_boundary_visible", "preexisting_full_state_visible", "additional_input_visible", "overflow_or_displacement_visible"],
+      "source_ids": ["S04", "S06"]
+    },
+    {
+      "id": "other_owned_object_covetous_approach",
+      "priority": "P0",
+      "category": "ownership_boundary_event",
+      "meaning": "One adult makes an overt claim, exchange bid, or boundary-crossing reach toward a single clearly other-owned object while the owner responds.",
+      "exact_activation_phrases_ko": [
+        "다른 성인의 소유가 명확한 물건에 공개적으로 청구하거나 손을 뻗고 소유자가 반응하는 사건",
+        "소유자와 물건의 경계를 향해 다른 성인이 교환 제안 또는 침범 행동을 하는 장면"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult overtly claiming or reaching toward one clearly other-owned object while the owner responds",
+        "a visible exchange bid or boundary crossing toward an object still held or worn by its owner"
+      ],
+      "broad_advisory_terms": ["소유욕", "선망", "탐심", "covetousness", "cupidity", "envy"],
+      "required_component_groups": [
+        {"id": "single_object", "all_of": ["one_primary_object"]},
+        {"id": "owner_relation", "all_of": ["owner_wearing_holding_or_contextually_controlling_object"]},
+        {"id": "claimant_action", "any_of": ["overt_claim", "exchange_bid", "boundary_crossing_reach"]},
+        {"id": "owner_response", "any_of": ["protecting", "refusing", "considering", "withdrawing_object"]},
+        {"id": "ownership_geometry", "all_of": ["claimant_object_owner_triangle"]}
+      ],
+      "composition_instruction": "Make the owner-object bond and claimant's directed action readable in the same triangular composition.",
+      "reject_substitutes": ["envy_by_gaze_only", "gift_exchange", "ordinary_purchase", "shared_use", "owner_admiring_own_object", "automatic_theft_label"],
+      "render_gates": ["object_identifiable", "owner_relation_visible", "claim_action_visible", "owner_response_visible"],
+      "source_ids": ["S01", "S04", "S06"]
+    },
+    {
+      "id": "pleonexia_unfair_share_taking_event",
+      "priority": "P0",
+      "category": "allocation_boundary_event",
+      "meaning": "Within one marked allocation system, an adult moves an extra share from another recipient's allocation beyond the adult's own share, creating visible imbalance.",
+      "exact_activation_phrases_ko": [
+        "표시된 자기 몫을 넘어 다른 수령자의 할당분을 가져가 빈자리를 만드는 사건",
+        "동일 분배 시스템에서 한 성인이 타인의 지정 몫을 자기 쪽으로 옮기는 장면"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult taking an extra share across a marked allocation boundary and leaving another recipient short",
+        "within one allocation system, an adult moves another recipient's assigned share into their own allocation"
+      ],
+      "broad_advisory_terms": ["과욕", "탐욕", "불공정", "pleonexia", "greed"],
+      "required_component_groups": [
+        {"id": "allocation_system", "all_of": ["one_visible_equal_or_assigned_share_system"]},
+        {"id": "recipient_relations", "all_of": ["shares_linked_to_distinct_recipients"]},
+        {"id": "boundary_crossing", "all_of": ["adult_moves_extra_share_across_own_boundary"]},
+        {"id": "other_share_loss", "all_of": ["visible_gap_or_shortage_in_other_allocation"]},
+        {"id": "causal_frame", "all_of": ["taking_action_and_harmed_share_visible_together"]}
+      ],
+      "composition_instruction": "Use a readable top-down or oblique allocation layout with the moving hand, crossed boundary, and resulting gap visible together.",
+      "reject_substitutes": ["agreed_redistribution", "gift_or_donation", "allocator_mistake", "multi_share_delivery_work", "large_share_without_taking_action"],
+      "render_gates": ["allocation_rule_visible", "distinct_recipient_shares_visible", "extra_taking_action_visible", "other_share_gap_visible"],
+      "source_ids": ["S04", "S07"]
+    },
+    {
+      "id": "public_recognition_bid_audience_response",
+      "priority": "P0",
+      "category": "status_recognition_event",
+      "meaning": "An adult publicly presents a specific work, achievement, or role marker to an identifiable audience whose independent attention produces an immediate recognition result.",
+      "exact_activation_phrases_ko": [
+        "자신의 구체적 결과물을 청중에게 공개하고 여러 청중이 독립적으로 주목·인정하는 성인",
+        "성과 또는 역할 표지를 제시한 뒤 청중의 길 열기·렌즈·소개 반응이 생기는 장면"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult publicly presenting a specific work or achievement to an identifiable audience with independent recognition responses",
+        "a visible recognition bid followed by multiple audience sightlines and an immediate access, award, or introduction result"
+      ],
+      "broad_advisory_terms": ["인정욕", "명예욕", "과시욕", "허영", "status seeking", "recognition", "vanity"],
+      "required_component_groups": [
+        {"id": "presented_marker", "all_of": ["specific_work_achievement_or_role_marker"]},
+        {"id": "presentation_action", "any_of": ["unveiling", "entry", "presentation", "demonstration"]},
+        {"id": "audience_response", "all_of": ["multiple_independent_audience_sightlines_or_actions"]},
+        {"id": "recognition_result", "any_of": ["attention_cluster", "award", "introduction", "path_opened", "access_granted"]},
+        {"id": "causal_composition", "all_of": ["presentation_reads_as_cause_of_response"]}
+      ],
+      "composition_instruction": "Link presenter, presented marker, and audience response in a readable arc; audience reactions need separate visible faces, bodies, or lenses.",
+      "reject_substitutes": ["incidental_crowd", "unrelated_press", "low_angle_status_pose", "luxury_object_without_audience", "actual_rank_claim"],
+      "render_gates": ["presented_marker_visible", "presentation_action_visible", "multiple_audience_responses_visible", "recognition_result_visible"],
+      "source_ids": ["S04", "S10", "S11"]
+    },
+    {
+      "id": "next_milestone_ambition_pursuit",
+      "priority": "P0",
+      "category": "goal_progress_event",
+      "meaning": "After a visible completed milestone, the same adult actively invests effort or resources toward a distinct next milestone with readable progress feedback.",
+      "exact_activation_phrases_ko": [
+        "완료한 이정표 다음의 더 높은 목표를 표시하고 현재 작업과 자원을 투입하는 동일 성인",
+        "이전 완료·현재 진척·다음 목표가 한 진행축에서 보이는 성취 추구 장면"
+      ],
+      "exact_activation_phrases_en": [
+        "the same adult working toward a distinct next milestone after a visible completed milestone with progress feedback",
+        "a past-current-next goal progression with active effort and resource commitment toward the next target"
+      ],
+      "broad_advisory_terms": ["성취욕", "야심", "야망", "ambition", "striving", "achievement motivation"],
+      "required_component_groups": [
+        {"id": "completed_milestone", "all_of": ["one_prior_milestone_visibly_completed"]},
+        {"id": "next_milestone", "all_of": ["one_distinct_specific_next_goal"]},
+        {"id": "progress_feedback", "all_of": ["current_progress_state_visible"]},
+        {"id": "active_next_step", "all_of": ["same_adult_performing_next_goal_task"]},
+        {"id": "resource_commitment", "any_of": ["time", "training_tool", "material", "work_surface", "schedule_block"]}
+      ],
+      "composition_instruction": "Arrange completed, current, and next milestones along one readable progression while keeping the adult's current task visually central.",
+      "reject_substitutes": ["post_success_celebration", "routine_work", "determined_expression", "text_only_plan", "achievement_reward_smile_duplicate"],
+      "render_gates": ["prior_completion_visible", "next_goal_distinct", "current_progress_visible", "active_effort_visible"],
+      "source_ids": ["S04", "S08"]
+    },
+    {
+      "id": "resource_control_acquisition_event",
+      "priority": "P0",
+      "category": "power_resource_event",
+      "meaning": "An adult visibly seeks or obtains control over a valued resource or access right, changing whether affected people can receive, enter, or use it.",
+      "exact_activation_phrases_ko": [
+        "가치 있는 자원 또는 접근권의 통제권을 넘겨받아 다른 사람의 허용·보류 상태가 바뀌는 사건",
+        "기존 통제자에게 자원 배분 권한을 청구하고 피영향자의 접근 경로가 재지정되는 장면"
+      ],
+      "exact_activation_phrases_en": [
+        "an adult seeking or obtaining control over a valued resource or access right, visibly changing others' access",
+        "a control claim that reroutes, grants, withholds, or blocks a resource for identifiable affected people"
+      ],
+      "broad_advisory_terms": ["권력욕", "지배욕", "통제욕", "정복욕", "power seeking", "domination", "control"],
+      "required_component_groups": [
+        {"id": "valued_resource", "all_of": ["specific_resource_or_access_right"]},
+        {"id": "existing_control", "all_of": ["existing_controller_or_control_system"]},
+        {"id": "control_claim", "any_of": ["claim", "transfer", "takeover", "rerouting_action"]},
+        {"id": "affected_party", "all_of": ["people_or_path_depending_on_resource"]},
+        {"id": "access_result", "any_of": ["granted", "withheld", "blocked", "rerouted"]}
+      ],
+      "composition_instruction": "Keep the valued resource, controller, claimant action, and affected party on one readable control axis.",
+      "reject_substitutes": ["routine_security_work", "collaborative_handoff", "throne_pose", "uniform_only", "low_camera_angle", "actual_power_trait_claim"],
+      "render_gates": ["resource_identifiable", "control_structure_visible", "claim_or_transfer_action_visible", "affected_access_change_visible"],
+      "source_ids": ["S04", "S09", "S10"]
+    }
+  ],
+  "proposed_candidates": [
+    {
+      "id": "adult_incomplete_reach_across_closing_barrier",
+      "slot": "action",
+      "ko": "성인이 닫히는 장벽 너머의 명확한 대상을 향해 손과 몸을 뻗지만 접촉하거나 통과하지 못함",
+      "en": "an adult reaches hand and body toward a clear target beyond a closing barrier without making contact or passing through",
+      "aliases": ["blocked reach toward inaccessible target"],
+      "keywords": ["incomplete approach", "closing barrier", "visible target", "no contact"],
+      "embedding_text": "adult target-directed approach visibly stopped by a closing physical boundary",
+      "for_any": ["inaccessible_target_longing_relation"],
+      "tier": "optional",
+      "source_ids": ["S01", "S05"]
+    },
+    {
+      "id": "identifiable_target_beyond_access_barrier",
+      "slot": "prop",
+      "ko": "투명문·출발 게이트·막힌 통로 너머에서 형태와 연속성이 읽히는 단일 목표 대상",
+      "en": "one identifiable target with continuity cues beyond a transparent door, departure gate, or blocked passage",
+      "aliases": ["target beyond visible access barrier"],
+      "keywords": ["identifiable target", "access barrier", "departing target"],
+      "embedding_text": "single readable target separated from an adult by a visible access barrier",
+      "for_any": ["inaccessible_target_longing_relation"],
+      "tier": "optional",
+      "source_ids": ["S05"]
+    },
+    {
+      "id": "actor_barrier_target_continuity_triangle",
+      "slot": "composition",
+      "ko": "인물–장벽–대상을 한 번에 읽히게 하고 손끝과 대상 사이 간극을 전용 가시 영역에 둔 삼각 구도",
+      "en": "a readable actor-barrier-target triangle with dedicated visible space for the gap between reaching hand and target",
+      "aliases": ["actor barrier target triangle"],
+      "keywords": ["relationship triangle", "contact gap", "barrier separation"],
+      "embedding_text": "composition showing the adult, separating barrier, target, and failed contact in one relation",
+      "for_any": ["inaccessible_target_longing_relation"],
+      "tier": "optional",
+      "source_ids": ["S04", "S05"]
+    },
+    {
+      "id": "contact_gap_after_blocked_approach",
+      "slot": "aftermath_trace",
+      "ko": "닫힌 경계와 닿지 않은 손끝 사이에 남은 명확한 간극 또는 막힌 진입 흔적",
+      "en": "a clear residual gap between the closed boundary and the unreached hand, or a visible denied-entry trace",
+      "aliases": ["blocked approach contact gap"],
+      "keywords": ["failed contact", "denied entry", "closed boundary"],
+      "embedding_text": "immediate visible consequence of an incomplete approach toward a target",
+      "for_any": ["inaccessible_target_longing_relation"],
+      "tier": "optional",
+      "source_ids": ["S01", "S04"]
+    },
+    {
+      "id": "adult_paused_hand_between_reward_and_goal_task",
+      "slot": "action",
+      "ko": "동일 성인의 손과 몸이 즉시 보상과 진행 중인 장기 목표 작업 사이에서 멈추거나 한쪽으로 결단함",
+      "en": "the same adult's hand and body pause or commit between an immediate reward and an ongoing long-term goal task",
+      "aliases": ["paused action between reward and goal"],
+      "keywords": ["temptation", "goal conflict", "resistance", "enactment"],
+      "embedding_text": "same adult visibly choosing between immediate reward and conflicting long-term goal",
+      "for_any": ["temptation_goal_conflict_choice"],
+      "tier": "optional",
+      "source_ids": ["S03"]
+    },
+    {
+      "id": "immediate_reward_long_term_goal_marker_pair",
+      "slot": "prop",
+      "ko": "즉시 소비 가능한 보상 단서와 같은 인물의 진행 중 목표를 나타내는 도구·진척물의 명확한 쌍",
+      "en": "a clear pair of an immediately consumable reward cue and a tool or progress artifact marking the same adult's ongoing goal",
+      "aliases": ["reward and long-term goal marker pair"],
+      "keywords": ["immediate reward", "goal marker", "conflict pair"],
+      "embedding_text": "two concrete objects representing immediate reward and conflicting long-term goal",
+      "for_any": ["temptation_goal_conflict_choice"],
+      "tier": "optional",
+      "source_ids": ["S03"]
+    },
+    {
+      "id": "mutually_exclusive_reward_goal_paths",
+      "slot": "composition",
+      "ko": "보상과 목표 작업을 별도 영역에 두고 동일 인물의 동작이 두 경로를 연결하며 동시에 수행하기 어렵게 보이는 분할 구도",
+      "en": "a split composition where reward and goal task occupy separate regions connected by one adult and cannot plausibly be pursued at once",
+      "aliases": ["mutually exclusive temptation paths"],
+      "keywords": ["split choice", "same actor", "mutual exclusion"],
+      "embedding_text": "one adult connects two visible but mutually exclusive reward and goal paths",
+      "for_any": ["temptation_goal_conflict_choice"],
+      "tier": "optional",
+      "source_ids": ["S03", "S04"]
+    },
+    {
+      "id": "resisted_reward_or_interrupted_progress_trace",
+      "slot": "aftermath_trace",
+      "ko": "손대지 않고 남겨 둔 보상 또는 보상 실행으로 멈춘 목표 진척 중 하나가 즉시 보임",
+      "en": "either the reward remains visibly untouched after resistance or goal progress is visibly interrupted after enactment",
+      "aliases": ["temptation outcome trace"],
+      "keywords": ["untouched reward", "interrupted progress", "visible outcome"],
+      "embedding_text": "observable consequence showing resistance to or enactment of a conflicting desire",
+      "for_any": ["temptation_goal_conflict_choice"],
+      "tier": "optional",
+      "source_ids": ["S03"]
+    },
+    {
+      "id": "acquire_new_duplicate_beside_unused_prior_set",
+      "slot": "action",
+      "ko": "미개봉 동일 계열 물건이 여러 개 남아 있는 앞에서 같은 성인이 새 중복 항목을 결제·수령·포장함",
+      "en": "the same adult pays for, receives, or packs a new duplicate beside multiple unopened matching prior items",
+      "aliases": ["new duplicate acquisition beside unused prior set"],
+      "keywords": ["new acquisition", "unused duplicates", "same category"],
+      "embedding_text": "same adult visibly acquires another item while previous matching acquisitions remain unused",
+      "for_any": ["repeated_acquisition_without_use_cycle"],
+      "tier": "optional",
+      "source_ids": ["S02", "S06"]
+    },
+    {
+      "id": "unopened_same_category_acquisition_sequence",
+      "slot": "prop",
+      "ko": "봉인·포장·태그가 유지되어 사용 흔적이 없는 동일 계열 이전 획득물의 연속",
+      "en": "a sequence of same-category prior acquisitions with seals, packaging, or tags intact and no use traces",
+      "aliases": ["unopened matching acquisition sequence"],
+      "keywords": ["unopened", "unused", "matching prior items"],
+      "embedding_text": "multiple matching items visibly acquired before but never opened or used",
+      "for_any": ["repeated_acquisition_without_use_cycle"],
+      "tier": "optional",
+      "source_ids": ["S02"]
+    },
+    {
+      "id": "prior_stock_actor_new_item_depth_chain",
+      "slot": "composition",
+      "ko": "이전 미사용 획득물–현재 성인–새 획득물을 하나의 깊이선으로 연결하는 구도",
+      "en": "a depth chain connecting prior unused acquisitions, the current adult, and the newly acquired item",
+      "aliases": ["prior actor new item continuity chain"],
+      "keywords": ["continuity chain", "prior items", "new item"],
+      "embedding_text": "composition making repeated acquisition continuity legible without a hidden-state label",
+      "for_any": ["repeated_acquisition_without_use_cycle"],
+      "tier": "optional",
+      "source_ids": ["S04"]
+    },
+    {
+      "id": "accumulated_without_use_trace",
+      "slot": "aftermath_trace",
+      "ko": "개봉·사용 흔적은 없고 보관 공간만 차지하는 동일 계열 묶음",
+      "en": "a same-category group with no opening or use traces that visibly occupies storage space",
+      "aliases": ["nonuse accumulation trace"],
+      "keywords": ["no use trace", "storage pressure", "unused accumulation"],
+      "embedding_text": "visible mismatch between repeated acquisition and absence of use",
+      "for_any": ["repeated_acquisition_without_use_cycle"],
+      "tier": "optional",
+      "source_ids": ["S02", "S06"]
+    },
+    {
+      "id": "add_item_into_already_full_bounded_storage",
+      "slot": "action",
+      "ko": "성인이 이미 가득 찬 경계 안으로 같은 자원이나 물건을 추가 투입함",
+      "en": "an adult adds another matching resource or object into a visibly bounded space that is already full",
+      "aliases": ["continued input into full capacity"],
+      "keywords": ["already full", "continued input", "capacity boundary"],
+      "embedding_text": "adult continues adding resources after visible capacity is reached",
+      "for_any": ["excess_accumulation_overflow_event"],
+      "tier": "optional",
+      "source_ids": ["S06"]
+    },
+    {
+      "id": "full_capacity_container_with_incoming_match",
+      "slot": "prop",
+      "ko": "윗선·문·칸막이로 용량이 명확하고 이미 채워졌으며 같은 계열 새 항목이 들어오는 저장 구조",
+      "en": "a storage structure with a clear rim, door, or compartment boundary, already full as another matching item arrives",
+      "aliases": ["full bounded capacity with incoming item"],
+      "keywords": ["full container", "visible limit", "incoming match"],
+      "embedding_text": "clearly bounded full storage with an additional matching resource entering",
+      "for_any": ["excess_accumulation_overflow_event"],
+      "tier": "optional",
+      "source_ids": ["S06"]
+    },
+    {
+      "id": "incoming_action_to_overflow_causal_line",
+      "slot": "composition",
+      "ko": "추가 투입 손동작에서 가득 찬 경계를 거쳐 넘치거나 밀려난 결과까지 한 선으로 읽히는 구도",
+      "en": "a causal line from the adding hand through the full boundary to the overflowing or displaced result",
+      "aliases": ["input to overflow causal line"],
+      "keywords": ["causal composition", "overflow", "displacement"],
+      "embedding_text": "composition visibly connecting continued accumulation to capacity overflow",
+      "for_any": ["excess_accumulation_overflow_event"],
+      "tier": "optional",
+      "source_ids": ["S04", "S06"]
+    },
+    {
+      "id": "overflow_displacement_consequence",
+      "slot": "aftermath_trace",
+      "ko": "추가 항목 때문에 떨어진 물건, 넘친 자원, 막힌 통로, 밀려난 다른 필수품 중 하나",
+      "en": "one visible consequence: fallen items, spilled resources, a blocked path, or other needed items displaced by the addition",
+      "aliases": ["capacity overflow consequence"],
+      "keywords": ["fallen item", "spillage", "blocked path", "displaced item"],
+      "embedding_text": "immediate physical consequence of adding beyond a visible capacity",
+      "for_any": ["excess_accumulation_overflow_event"],
+      "tier": "optional",
+      "source_ids": ["S06"]
+    },
+    {
+      "id": "overt_claim_or_exchange_bid_toward_other_owned_object",
+      "slot": "action",
+      "ko": "다른 성인이 착용·보유 중인 단일 물건을 향해 공개적 청구, 교환 제안, 경계 넘는 손 뻗기 중 하나를 함",
+      "en": "an adult makes an overt claim, exchange bid, or boundary-crossing reach toward one object another adult is wearing or holding",
+      "aliases": ["claim toward clearly other-owned object"],
+      "keywords": ["overt claim", "exchange bid", "other-owned object"],
+      "embedding_text": "visible ownership boundary event between claimant, object, and current owner",
+      "for_any": ["other_owned_object_covetous_approach"],
+      "tier": "optional",
+      "source_ids": ["S01", "S06"]
+    },
+    {
+      "id": "owner_contact_bound_single_object",
+      "slot": "prop",
+      "ko": "기존 소유자가 착용하거나 손에 쥐고 있어 소유 관계가 명확한 단일 핵심 물건",
+      "en": "one primary object whose ownership relation is clear because the current owner wears or holds it",
+      "aliases": ["owner-bound primary object"],
+      "keywords": ["single object", "owner contact", "ownership relation"],
+      "embedding_text": "single object visibly linked to its current owner before another adult's claim",
+      "for_any": ["other_owned_object_covetous_approach"],
+      "tier": "optional",
+      "source_ids": ["S04"]
+    },
+    {
+      "id": "claimant_object_owner_boundary_triangle",
+      "slot": "composition",
+      "ko": "청구자–핵심 물건–기존 소유자와 두 사람의 손동작을 한 번에 읽히게 한 소유 경계 삼각 구도",
+      "en": "an ownership-boundary triangle showing claimant, primary object, current owner, and both adults' hand actions",
+      "aliases": ["claimant object owner triangle"],
+      "keywords": ["ownership triangle", "claim action", "owner response"],
+      "embedding_text": "composition making the object ownership relation and opposing actions visible together",
+      "for_any": ["other_owned_object_covetous_approach"],
+      "tier": "optional",
+      "source_ids": ["S04"]
+    },
+    {
+      "id": "owner_protection_or_refusal_response",
+      "slot": "social_cue",
+      "ko": "소유자가 물건을 몸 쪽으로 당기거나 손으로 보호·거절·보류 의사를 행동으로 보임",
+      "en": "the owner pulls the object closer or visibly protects, refuses, or withholds it through action",
+      "aliases": ["owner boundary response"],
+      "keywords": ["protect object", "refusal", "withhold", "owner response"],
+      "embedding_text": "current owner's immediate behavioral response to another adult's object-directed claim",
+      "for_any": ["other_owned_object_covetous_approach"],
+      "tier": "optional",
+      "source_ids": ["S04"]
+    },
+    {
+      "id": "move_extra_share_across_marked_allocation_boundary",
+      "slot": "action",
+      "ko": "한 성인이 표시된 자기 몫의 경계를 넘어 다른 수령자의 지정 몫 하나를 자기 쪽으로 옮김",
+      "en": "an adult moves one extra assigned share across the marked boundary of their own allocation",
+      "aliases": ["take extra share across allocation line"],
+      "keywords": ["extra share", "allocation boundary", "other recipient"],
+      "embedding_text": "visible action taking beyond one's assigned share within one allocation system",
+      "for_any": ["pleonexia_unfair_share_taking_event"],
+      "tier": "optional",
+      "source_ids": ["S07"]
+    },
+    {
+      "id": "equal_or_assigned_share_layout",
+      "slot": "prop",
+      "ko": "같은 분배 시스템 안에서 수령자별로 구분되고 동일하거나 명시적으로 지정된 몫의 배열",
+      "en": "a single distribution layout with equal or explicitly assigned shares separated by recipient",
+      "aliases": ["marked recipient share system"],
+      "keywords": ["equal shares", "assigned shares", "recipient boundary"],
+      "embedding_text": "visible allocation rule linking distinct shares to distinct recipients",
+      "for_any": ["pleonexia_unfair_share_taking_event"],
+      "tier": "optional",
+      "source_ids": ["S07"]
+    },
+    {
+      "id": "top_down_allocation_boundary_violation",
+      "slot": "composition",
+      "ko": "위 또는 비스듬한 시점에서 모든 몫, 침범하는 손, 넘어간 경계, 피해 몫을 동시에 읽는 분배 구도",
+      "en": "a top-down or oblique allocation composition showing all shares, the crossing hand, crossed boundary, and harmed allocation together",
+      "aliases": ["allocation boundary violation overview"],
+      "keywords": ["top-down allocation", "crossed boundary", "taking hand"],
+      "embedding_text": "composition showing the distribution rule and its visible violation in one frame",
+      "for_any": ["pleonexia_unfair_share_taking_event"],
+      "tier": "optional",
+      "source_ids": ["S04", "S07"]
+    },
+    {
+      "id": "missing_share_gap_for_other_recipient",
+      "slot": "aftermath_trace",
+      "ko": "추가 몫이 이동한 뒤 다른 수령자의 지정 영역에 남은 한 칸의 빈자리 또는 부족",
+      "en": "a one-share gap or shortage left in another recipient's assigned area after the transfer",
+      "aliases": ["other recipient missing share gap"],
+      "keywords": ["missing share", "visible shortage", "harmed allocation"],
+      "embedding_text": "immediate allocation imbalance caused by taking beyond one's share",
+      "for_any": ["pleonexia_unfair_share_taking_event"],
+      "tier": "optional",
+      "source_ids": ["S07"]
+    },
+    {
+      "id": "present_specific_work_or_role_marker_to_audience",
+      "slot": "action",
+      "ko": "성인이 자신의 구체적 작업·성과·역할 표지를 식별 가능한 청중 앞에서 공개·발표·시연함",
+      "en": "an adult unveils, presents, or demonstrates a specific work, achievement, or role marker before an identifiable audience",
+      "aliases": ["public recognition bid with concrete marker"],
+      "keywords": ["presentation", "achievement marker", "audience"],
+      "embedding_text": "adult publicly presents a concrete result to elicit visible audience attention",
+      "for_any": ["public_recognition_bid_audience_response"],
+      "tier": "optional",
+      "source_ids": ["S10", "S11"]
+    },
+    {
+      "id": "textless_achievement_or_role_marker",
+      "slot": "prop",
+      "ko": "문자 판독 없이도 작업 결과·완성물·역할을 알아볼 수 있는 구체적 표지",
+      "en": "a concrete work result, finished artifact, or role marker readable without relying on text",
+      "aliases": ["readable textless achievement marker"],
+      "keywords": ["work result", "finished artifact", "role marker"],
+      "embedding_text": "specific non-text artifact publicly presented as the focus of recognition",
+      "for_any": ["public_recognition_bid_audience_response"],
+      "tier": "optional",
+      "source_ids": ["S11"]
+    },
+    {
+      "id": "presenter_artifact_audience_response_arc",
+      "slot": "composition",
+      "ko": "발표자–제시물–청중의 독립 반응을 호 형태로 연결해 발표 행동이 반응 원인으로 읽히는 구도",
+      "en": "an arc linking presenter, presented artifact, and independent audience responses so the presentation reads as their cause",
+      "aliases": ["presenter artifact audience arc"],
+      "keywords": ["recognition arc", "causal audience response", "presentation geometry"],
+      "embedding_text": "composition connecting a public presentation to multiple observable recognition responses",
+      "for_any": ["public_recognition_bid_audience_response"],
+      "tier": "optional",
+      "source_ids": ["S04", "S10"]
+    },
+    {
+      "id": "multiple_independent_recognition_sightlines",
+      "slot": "social_cue",
+      "ko": "서로 다른 청중의 시선·렌즈·몸 방향·길 열기 행동이 같은 발표자와 제시물로 독립 수렴함",
+      "en": "independent audience gazes, lenses, body orientations, or path-opening actions converge on the same presenter and artifact",
+      "aliases": ["multi-observer recognition convergence"],
+      "keywords": ["multiple observers", "attention cluster", "recognition response"],
+      "embedding_text": "several independent audience actions visibly recognizing one presenter and presented work",
+      "for_any": ["public_recognition_bid_audience_response"],
+      "tier": "optional",
+      "source_ids": ["S10", "S11"]
+    },
+    {
+      "id": "work_on_next_marked_milestone_after_completed_one",
+      "slot": "action",
+      "ko": "완료 표시가 있는 이전 이정표 옆에서 동일 성인이 구분된 다음 이정표의 현재 작업을 수행함",
+      "en": "the same adult actively works on a distinct next milestone beside a visibly completed prior milestone",
+      "aliases": ["active next milestone after completion"],
+      "keywords": ["completed milestone", "next goal", "active effort"],
+      "embedding_text": "adult continues goal pursuit toward a specific next milestone after a visible completion",
+      "for_any": ["next_milestone_ambition_pursuit"],
+      "tier": "optional",
+      "source_ids": ["S08"]
+    },
+    {
+      "id": "completed_current_next_milestone_set",
+      "slot": "prop",
+      "ko": "문자에 의존하지 않고 완료·현재 진척·다음 목표를 서로 다른 상태로 표시한 이정표 세트",
+      "en": "a milestone set marking completed, current-progress, and next-goal states distinctly without relying on readable text",
+      "aliases": ["completed current next milestone set"],
+      "keywords": ["milestone states", "progress feedback", "next target"],
+      "embedding_text": "visual goal system separating prior completion, current progress, and specific next target",
+      "for_any": ["next_milestone_ambition_pursuit"],
+      "tier": "optional",
+      "source_ids": ["S08"]
+    },
+    {
+      "id": "past_current_next_progress_axis",
+      "slot": "composition",
+      "ko": "완료된 과거–중앙의 현재 작업–구분된 다음 목표를 한 진행축으로 배치한 구도",
+      "en": "a progression axis from completed past milestone through central current work to a distinct next target",
+      "aliases": ["past current next goal axis"],
+      "keywords": ["progress axis", "current work", "next milestone"],
+      "embedding_text": "composition showing ongoing goal progression rather than post-success celebration",
+      "for_any": ["next_milestone_ambition_pursuit"],
+      "tier": "optional",
+      "source_ids": ["S04", "S08"]
+    },
+    {
+      "id": "visible_progress_feedback_update",
+      "slot": "aftermath_trace",
+      "ko": "현재 작업으로 채워지거나 이동한 비문자형 진척 표지와 사용 중인 도구 흔적",
+      "en": "a non-text progress marker visibly advanced by the current task together with traces of the tool in use",
+      "aliases": ["current progress feedback trace"],
+      "keywords": ["feedback update", "advanced marker", "tool use trace"],
+      "embedding_text": "observable feedback and effort trace linking current work to the next goal",
+      "for_any": ["next_milestone_ambition_pursuit"],
+      "tier": "optional",
+      "source_ids": ["S08"]
+    },
+    {
+      "id": "claim_or_redirect_resource_access_control",
+      "slot": "action",
+      "ko": "성인이 가치 있는 자원이나 접근권의 통제 토큰을 청구·이관받거나 배분 경로를 재지정함",
+      "en": "an adult claims or receives a control token for a valued resource or visibly reroutes its allocation path",
+      "aliases": ["resource control claim or rerouting"],
+      "keywords": ["control claim", "resource access", "rerouting"],
+      "embedding_text": "visible action seeking control over a concrete resource that affects other people's access",
+      "for_any": ["resource_control_acquisition_event"],
+      "tier": "optional",
+      "source_ids": ["S09", "S10"]
+    },
+    {
+      "id": "resource_access_token_and_control_interface",
+      "slot": "prop",
+      "ko": "특정 자원·문·배분 장치와 직접 연결된 열쇠·권한 토큰·제어 장치의 세트",
+      "en": "a key, authority token, or control interface directly linked to a specific resource, gate, or allocation system",
+      "aliases": ["resource control token set"],
+      "keywords": ["access token", "control interface", "valued resource"],
+      "embedding_text": "concrete resource and its visible mechanism for granting or withholding access",
+      "for_any": ["resource_control_acquisition_event"],
+      "tier": "optional",
+      "source_ids": ["S09"]
+    },
+    {
+      "id": "resource_controller_affected_party_axis",
+      "slot": "composition",
+      "ko": "자원–기존 통제자–통제권 청구 행동–피영향자의 접근 경로를 한 축에서 읽는 구도",
+      "en": "a single axis showing resource, existing controller, control-claim action, and the affected party's access path",
+      "aliases": ["resource control affected party axis"],
+      "keywords": ["resource axis", "controller", "affected access"],
+      "embedding_text": "composition making resource control and its effect on other people visible together",
+      "for_any": ["resource_control_acquisition_event"],
+      "tier": "optional",
+      "source_ids": ["S04", "S09", "S10"]
+    },
+    {
+      "id": "access_granted_withheld_or_rerouted_response",
+      "slot": "social_cue",
+      "ko": "통제권 변경 직후 피영향자의 문·배분선·자원 경로가 허용·보류·차단·재지정된 상태",
+      "en": "immediately after the control change, the affected person's gate, allocation line, or resource path is granted, withheld, blocked, or rerouted",
+      "aliases": ["affected access state change"],
+      "keywords": ["access granted", "withheld", "blocked", "rerouted"],
+      "embedding_text": "visible consequence showing how a control claim changes another person's resource access",
+      "for_any": ["resource_control_acquisition_event"],
+      "tier": "optional",
+      "source_ids": ["S09", "S10"]
+    }
+  ],
+  "regression_cases": [
+    {"id": "longing_exact_positive", "query": "접근할 수 없는 명확한 대상을 향해 닫히는 장벽 너머로 손을 뻗는 성인", "path": "exact", "expected_hard_profiles": ["inaccessible_target_longing_relation"]},
+    {"id": "longing_broad_negative", "query": "quiet longing portrait", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["longing"]},
+    {"id": "longing_confusion_negative", "query": "a sad adult looking through a window at a distant landscape", "path": "exact", "expected_hard_profiles": []},
+    {"id": "temptation_exact_positive", "query": "the same adult visibly resisting an immediate reward that conflicts with a marked long-term goal", "path": "exact", "expected_hard_profiles": ["temptation_goal_conflict_choice"]},
+    {"id": "temptation_broad_negative", "query": "irresistible temptation", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["temptation"]},
+    {"id": "temptation_confusion_negative", "query": "an adult compares two ordinary menu choices", "path": "exact", "expected_hard_profiles": []},
+    {"id": "repeat_acquisition_exact_positive", "query": "the same adult acquires another duplicate while prior matching items remain unopened and unused", "path": "exact", "expected_hard_profiles": ["repeated_acquisition_without_use_cycle"]},
+    {"id": "repeat_acquisition_broad_negative", "query": "obsessive shopping", "path": "exact", "expected_hard_profiles": [], "forbidden_claims": ["addiction", "OCD"]},
+    {"id": "repeat_acquisition_confusion_negative", "query": "a store worker arranging unopened matching inventory", "path": "exact", "expected_hard_profiles": []},
+    {"id": "overflow_exact_positive", "query": "an adult adds more matching resources into an already full bounded space, visibly displacing other items", "path": "exact", "expected_hard_profiles": ["excess_accumulation_overflow_event"]},
+    {"id": "overflow_broad_negative", "query": "insatiable greed", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["greed", "insatiability"]},
+    {"id": "overflow_confusion_negative", "query": "a family calmly restocks an almost empty pantry for emergency preparation", "path": "exact", "expected_hard_profiles": []},
+    {"id": "covetous_exact_positive", "query": "an adult overtly claims one object still worn by another adult while the owner pulls it closer", "path": "exact", "expected_hard_profiles": ["other_owned_object_covetous_approach"]},
+    {"id": "covetous_broad_negative", "query": "a covetous expression", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["covetousness"]},
+    {"id": "covetous_confusion_negative", "query": "one adult gives a wrapped gift to another adult", "path": "exact", "expected_hard_profiles": []},
+    {"id": "pleonexia_exact_positive", "query": "an adult takes an extra share across a marked allocation boundary, leaving another recipient's share short", "path": "exact", "expected_hard_profiles": ["pleonexia_unfair_share_taking_event"]},
+    {"id": "pleonexia_broad_negative", "query": "pleonexia", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["pleonexia"]},
+    {"id": "pleonexia_confusion_negative", "query": "an allocator corrects a mistaken share assignment with all recipients agreeing", "path": "exact", "expected_hard_profiles": []},
+    {"id": "recognition_exact_positive", "query": "an adult publicly presents a specific work while multiple audience members independently turn cameras and open a path", "path": "exact", "expected_hard_profiles": ["public_recognition_bid_audience_response"]},
+    {"id": "recognition_broad_negative", "query": "recognition seeking", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["recognition"]},
+    {"id": "recognition_confusion_negative", "query": "an adult in luxury clothing stands near an unrelated press crowd", "path": "exact", "expected_hard_profiles": []},
+    {"id": "ambition_exact_positive", "query": "the same adult works toward a distinct next milestone after a visible completed milestone with progress feedback", "path": "exact", "expected_hard_profiles": ["next_milestone_ambition_pursuit"]},
+    {"id": "ambition_broad_negative", "query": "ambitious expression", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["ambition"]},
+    {"id": "ambition_confusion_negative", "query": "an adult celebrates a completed achievement and smiles at the result", "path": "exact", "expected_hard_profiles": ["achievement_reward_smile"], "expected_absent_profiles": ["next_milestone_ambition_pursuit"]},
+    {"id": "power_exact_positive", "query": "an adult obtains control of a valued access token and visibly reroutes other people's access to the resource", "path": "exact", "expected_hard_profiles": ["resource_control_acquisition_event"]},
+    {"id": "power_broad_negative", "query": "a powerful dominant pose on a throne", "path": "exact", "expected_hard_profiles": [], "expected_advisory_terms": ["power"]},
+    {"id": "power_confusion_negative", "query": "a security worker performs a routine credential check at a controlled lobby", "path": "exact", "expected_hard_profiles": []},
+    {"id": "clinical_terms_negative", "query": "obsession fixation compulsion OCD addiction", "path": "exact", "expected_hard_profiles": [], "forbidden_claims": ["diagnosis", "trait"]},
+    {"id": "philosophical_terms_negative", "query": "conatus epithymia taṇhā lobha kāma", "path": "exact", "expected_hard_profiles": [], "forbidden_insertions": ["religious_iconography", "ethnic_appearance", "trait_label"]},
+    {"id": "bm25f_advisory_only", "query": "the actor wants more control and recognition", "path": "bm25f_only", "expected_hard_profiles": [], "expected_optional_profiles": ["public_recognition_bid_audience_response", "resource_control_acquisition_event"]},
+    {"id": "embedding_advisory_only", "query": "a scene semantically similar to wanting an unreachable future", "path": "embedding_only", "expected_hard_profiles": [], "expected_optional_profiles": ["inaccessible_target_longing_relation", "next_milestone_ambition_pursuit"]}
+  ],
+  "evaluation_contract": {
+    "policy": "partial_is_fail",
+    "independent_generation_per_qualifying_arm": 1,
+    "cross_arm_inputs_forbidden": true,
+    "prompt_pass_is_pixel_pass": false,
+    "runtime_pass_is_pixel_pass": false,
+    "user_judgment_is_separate": true,
+    "required_pixel_checks": [
+      "target_resource_or_share_identifiable",
+      "access_ownership_allocation_or_control_relation_readable",
+      "current_action_origin_and_destination_visible",
+      "barrier_owner_audience_goal_or_affected_party_visible",
+      "immediate_consequence_visible",
+      "small_required_detail_has_dedicated_visible_region",
+      "no_expression_or_pose_only_substitution"
+    ]
+  },
+  "recommended_first_three_arm_trial": [
+    "temptation_goal_conflict_choice",
+    "pleonexia_unfair_share_taking_event",
+    "public_recognition_bid_audience_response"
+  ]
+}
