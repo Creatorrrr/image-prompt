@@ -102,6 +102,7 @@ RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
     "photo_prompt_natural_environment_extension.json",
+    "photo_prompt_imaginal_extension.json",
     "photo_prompt_mythology_extension.json",
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",

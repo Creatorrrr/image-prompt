@@ -1,0 +1,275 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "61e7bf4b57b412af567629b6618a900cc36d892b",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Strengthen visual-semantic data and candidate-pack coverage from the referenced mythology-keyword research while preventing broad labels and named cultural variants from becoming unsupported universal pixel rules."
+  },
+  "evidence": [
+    {
+      "id": "mythology_reference_conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplies a broad research inventory spanning thirty-eight mythology categories and hundreds of terms, but does not itself distinguish hard single-frame obligations from advisory vocabulary.",
+      "artifact": "ChatGPT conversation 6a967556-eed0-83ee-8d7b-46124506b1c3 and docs/research-evidence/photo-prompt/mythology-visual-semantics-20260901/source-research.md"
+    },
+    {
+      "id": "mythology_external_research",
+      "kind": "external-research",
+      "claim": "Scholarly, museum, and official cultural sources support bounded creation, realm-connection, fate-role, status-transition, underworld-descent, judgment, preservation, and combat-order relations while exposing tradition-specific variation and terminology limits.",
+      "artifact": "docs/research-evidence/photo-prompt/mythology-visual-semantics-20260901/source-research.md and docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "mythology_runtime_data",
+      "kind": "source-observation",
+      "claim": "Runtime data now contains ten narrow five-component visual profiles and sixty candidates arranged as ten complete six-slot motif clusters, with broad mythology vocabulary kept outside exact activation terms.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_mythology_extension.json and skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json"
+    },
+    {
+      "id": "mythology_package_validation",
+      "kind": "package-check",
+      "claim": "JSON and JSONL parsing, dictionary metadata validation, a registry-bound visual index with 189 profiles and 1090 exact terms, and a sharded semantic index with 7560 entries all pass their validation commands.",
+      "artifact": "validate_photo_prompt_dictionary.py reported valid metadata; build_visual_profile_index.py --check reported 189 profiles and 1090 exact terms; eval_semantic.py --check-index reported status ok with 7560 entries"
+    },
+    {
+      "id": "mythology_prompt_evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "Focused mythology tests pass direct exact-term routing, broad and adjacent negative controls, candidate completeness, profile structure, evidence binding, and runtime extension loading.",
+      "artifact": ".venv/bin/python -m pytest -q tests/test_photo_mythology_visual_semantics.py: 8 passed and 135 subtests passed"
+    },
+    {
+      "id": "mythology_regression_boundary",
+      "kind": "source-observation",
+      "claim": "The broader visual-obligation and retrieval run passed 34 tests and 170 subtests but failed six yandere fixture assertions because clinical_nursing_duty_system also matched nurse text; replay against the HEAD registry and current registry produced identical clinical-nursing matches, so this failure is outside the mythology change.",
+      "artifact": "pytest tests/test_photo_visual_obligations.py tests/test_photo_visual_profile_retrieval.py: 34 passed, 6 failed; diagnostic HEAD-registry versus current-registry replay returned identical matches for the five affected fixture inputs"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A narrow requested mythology motif resolves into inspectable actor, object or realm, relation, transition, and consequence evidence with explicit nearest-neighbor rejections, while broad and culture-only vocabulary remains advisory.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five_component_myth_observability",
+        "statement": "Every implemented mythology profile requires five independent observable component groups, five prompt evidence fields, and five render gates rather than a famous label, prop, glow, or atmosphere.",
+        "evidence_ids": [
+          "mythology_external_research",
+          "mythology_runtime_data",
+          "mythology_prompt_evaluation"
+        ],
+        "causal_controls": [
+          "direct motif phrase activates only its intended profile",
+          "close visual substitute remains a negative control",
+          "partial or disconnected evidence remains failure"
+        ]
+      },
+      {
+        "id": "exact_hard_advisory_semantic_separation",
+        "statement": "Only narrow exact motif phrases create hard duties; BM25F, embedding similarity, broad mythology labels, deity names, and culture names can propose candidates but cannot independently create a hard obligation.",
+        "evidence_ids": [
+          "mythology_reference_conversation",
+          "mythology_runtime_data",
+          "mythology_prompt_evaluation"
+        ],
+        "causal_controls": [
+          "twenty-four broad terms are held out as direct negatives",
+          "semantic discovery requires component evidence",
+          "exact activation lists omit bare axis mundi apotheosis katabasis flood and dragon"
+        ]
+      },
+      {
+        "id": "cultural_variant_and_evidence_layer_boundary",
+        "statement": "Named traditions preserve their own cast and iconography, and package or prompt success is never reported as historical authenticity, rendered-pixel fidelity, religious truth, or user approval.",
+        "evidence_ids": [
+          "mythology_external_research",
+          "mythology_package_validation",
+          "mythology_prompt_evaluation"
+        ],
+        "causal_controls": [
+          "generic comparative motifs do not copy named museum objects",
+          "Egyptian judgment and Greek Moirai remain culture-specific profiles",
+          "render and user evaluation remain unscored"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "original character appearance and wardrobe",
+      "camera lighting and photographic treatment that preserve all evidence",
+      "tradition-specific agents objects and realm names supplied by the requester",
+      "original unreadable ornament and material design",
+      "explicit requester definitions that override a generic comparative default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "keyword_inventory_vs_visual_contract",
+      "scale": "global",
+      "axis": "research taxonomy breadth",
+      "source_state": "The referenced conversation groups myth types deities cultures artifacts motifs and narrative abstractions into one broad keyword inventory.",
+      "render_state": "Only a small subset has separable actor relation transition and consequence evidence stable enough for a fail-closed single-frame contract.",
+      "evidence_ids": [
+        "mythology_reference_conversation",
+        "mythology_external_research"
+      ]
+    },
+    {
+      "id": "famous_symbol_vs_causal_event",
+      "scale": "regional",
+      "axis": "motif representation",
+      "source_state": "Common representations reduce fate to a thread, flood to a boat, apotheosis to glow, katabasis to a cave, and cosmic creation to a decorative egg or tree.",
+      "render_state": "The target requires the same object to participate in a visible role sequence or state transition whose consequence remains attributable in one frame.",
+      "evidence_ids": [
+        "mythology_external_research",
+        "mythology_runtime_data"
+      ]
+    },
+    {
+      "id": "comparative_label_vs_named_tradition",
+      "scale": "local",
+      "axis": "cultural specificity",
+      "source_state": "Comparative labels such as world-parent separation axis mundi flood myth and Chaoskampf can obscure differences among named texts and living cultural traditions.",
+      "render_state": "The target retains only the abstract relation in generic candidates and requires named variants to keep source-specific cast objects and lineage without iconographic mixing.",
+      "evidence_ids": [
+        "mythology_external_research"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "component_contracts_prevent_symbol_substitution",
+      "stage": "representation",
+      "statement": "Five independent component groups and explicit rejects will prevent a famous object or atmosphere from substituting for the requested mythology event.",
+      "evidence_ids": [
+        "mythology_external_research",
+        "mythology_runtime_data"
+      ],
+      "falsifier": "A close substitute such as a storm boat decorative egg generic scale or dragon fight activates one of the ten new hard profiles."
+    },
+    {
+      "id": "six_slot_clusters_preserve_causal_scene_structure",
+      "stage": "prompt-priority",
+      "statement": "Binding one aesthetic subject action location prop and composition candidate per motif will make candidate selection preserve the event chain instead of accumulating isolated mythology nouns.",
+      "evidence_ids": [
+        "mythology_runtime_data",
+        "mythology_prompt_evaluation"
+      ],
+      "falsifier": "A motif manifest omits a slot references a missing candidate or allows one candidate to serve unrelated motif clusters."
+    },
+    {
+      "id": "narrow_exact_routes_prevent_cultural_overreach",
+      "stage": "prompt-interaction",
+      "statement": "Narrow exact terms plus broad-term negative controls will keep culture names deity names and comparative labels from creating unsupported universal duties.",
+      "evidence_ids": [
+        "mythology_external_research",
+        "mythology_prompt_evaluation"
+      ],
+      "falsifier": "A bare term such as myth world tree axis mundi fate apotheosis katabasis Anubis flood or dragon hard-activates a new profile."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Promote only narrow mythology meanings whose actor object or realm relation transition and consequence can all be falsified in one still; keep broad taxonomy and named cultural variation advisory until explicitly bound.",
+    "generalization_basis": "The component-and-confound method applies across creation transitions realm connections distributed roles status changes directed journeys judgment systems preservation chains and combat consequences without assuming one universal mythology appearance.",
+    "hypothesis_ids": [
+      "component_contracts_prevent_symbol_substitution",
+      "six_slot_clusters_preserve_causal_scene_structure",
+      "narrow_exact_routes_prevent_cultural_overreach"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/mythology-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/mythology-visual-semantics-20260901/iteration-record.json",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_mythology_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/62f09c5438d7219a/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_mythology_visual_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "mythology_package_validation"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "mythology_prompt_evaluation"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating_direct_mythology_routes",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "ten exact motif routes",
+          "five-component profile structure",
+          "sixty-candidate runtime loading"
+        ],
+        "evidence_ids": [
+          "mythology_prompt_evaluation"
+        ]
+      },
+      {
+        "id": "heldout_broad_mythology_terms",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "generic mythology vocabulary",
+          "bare deity and motif labels",
+          "culture-only and cosmic abstraction terms"
+        ],
+        "evidence_ids": [
+          "mythology_prompt_evaluation"
+        ]
+      },
+      {
+        "id": "heldout_nearest_visual_substitutes",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "decorative egg and giant tree",
+          "generic thread glow cave and scales",
+          "storm boat and dragon-fight confounders"
+        ],
+        "evidence_ids": [
+          "mythology_prompt_evaluation"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The research ledger, ten fail-closed profiles, sixty runtime-loaded candidates, regenerated indexes, and focused exact and negative-control tests pass at package and prompt-behavior layers. The broader regression failures reproduce with the HEAD registry and concern a pre-existing nurse-to-yandere fixture interaction, not a mythology profile. No render or user evidence was collected, so the work is implemented but not promoted as pixel fidelity, cultural approval, or aesthetic success.",
+    "evidence_ids": [
+      "mythology_reference_conversation",
+      "mythology_external_research",
+      "mythology_runtime_data",
+      "mythology_package_validation",
+      "mythology_prompt_evaluation",
+      "mythology_regression_boundary"
+    ]
+  }
+}

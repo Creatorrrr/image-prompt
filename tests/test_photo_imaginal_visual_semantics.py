@@ -83,6 +83,17 @@ class PhotoImaginalVisualSemanticsTests(unittest.TestCase):
         cls.tags = prompt_generator.load_json(TAGS_PATH)
         cls.registry = prompt_generator.load_visual_obligation_registry(REGISTRY_PATH)
         cls.index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+        cls.routing_registry = {
+            **cls.registry,
+            "profiles": [
+                profile
+                for profile in cls.registry["profiles"]
+                if str(profile.get("id") or "") in PROFILE_IDS
+            ],
+        }
+        cls.routing_index = prompt_generator.build_visual_profile_index_payload(
+            cls.routing_registry
+        )
         cls.by_slot = {
             slot: {str(row["id"]): row for row in rows}
             for slot, rows in cls.tags["slots"].items()
@@ -92,20 +103,26 @@ class PhotoImaginalVisualSemanticsTests(unittest.TestCase):
         }
 
     def hard_visual_matches(self, text: str) -> set[str]:
-        return set(
-            prompt_generator.candidate_pack_auto_visual_obligation_matches(
-                self.registry,
-                [
-                    {
-                        "source": "concept_lock",
-                        "text": text,
-                        "polarity": "required",
-                        "priority": "critical",
-                        "mandatory": True,
-                    }
-                ],
-            )
+        resolution = prompt_generator.resolve_visual_profile_hits(
+            self.routing_registry,
+            [
+                {
+                    "source": "concept_lock",
+                    "text": text,
+                    "polarity": "required",
+                    "priority": "critical",
+                    "mandatory": True,
+                }
+            ],
+            visual_profile_index=self.routing_index,
+            adult_context=True,
         )
+        return {
+            str(hit["profile_id"])
+            for hit in resolution["hits"]
+            if hit.get("match_basis") == "exact"
+            and hit.get("hard_eligible") is True
+        }
 
     def test_extension_has_fifty_seven_complete_candidates_and_is_loaded(self):
         self.assertIn(EXTENSION_PATH.name, prompt_generator.RESEARCH_EXTENSION_FILENAMES)
@@ -293,9 +310,12 @@ class PhotoImaginalVisualSemanticsTests(unittest.TestCase):
                 {
                     "source": "authorial_core_interpretation",
                     "text": (
-                        "one familiar room preserves a repeated chair while a single "
-                        "bounded seam changes orientation; the same person crosses the "
-                        "join and the wider photographic geometry stays coherent"
+                        "ordinary recognizable room route furniture or routine; one "
+                        "bounded change of orientation scale adjacency or continuity; "
+                        "the same distinctive object pattern or threshold appears on both "
+                        "sides; one person or object remains identifiable across the "
+                        "impossible join; light perspective contact or shadow localizes "
+                        "the break to one seam"
                     ),
                     "polarity": "advisory",
                 }
