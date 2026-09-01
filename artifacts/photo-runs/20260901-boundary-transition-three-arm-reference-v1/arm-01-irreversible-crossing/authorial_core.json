@@ -1,0 +1,89 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create a random, complex, single-frame photorealistic test of a visible point-of-no-return crossing, using the attached portrait only as visible adult appearance guidance, then preserve enough causal evidence in the image for strict pixel review.",
+  "subject": "One unmistakably adult woman guided only by the reference's visible long center-parted dark wavy hair, dark brown eyes, softly arched brows, and broadly comparable face proportions.",
+  "setting": "The circular emergency transfer airlock between a catastrophically damaged orbital habitat and a small reentry capsule above Earth.",
+  "event": "In one continuous photographic instant, the woman is mid-stride across the docking threshold while the route behind her decompresses and seals away and the reentry capsule's committed descent is already visibly beginning ahead.",
+  "visual_priorities": [
+    "The same single adult subject, concrete airlock threshold, one-way travel direction, lost return route, and already-begun downstream condition must read together in one frame.",
+    "Reference-guided visible facial and hair characteristics remain legible without displacing the irreversible crossing event hierarchy."
+  ],
+  "baseline_prompt_en": "Create a photorealistic wide editorial disaster photograph inside an orbital emergency airlock. One unmistakably adult woman, guided only by the reference's visible long center-parted dark wavy hair, dark brown eyes, softly arched brows, and broadly comparable face proportions, is captured in a single continuous moment halfway across a circular docking threshold into a reentry capsule. Her leading hand, torso, and boot are inside the capsule while her trailing boot has just lifted over the metal sill, establishing one readable direction. Behind her, the damaged habitat corridor is decompressing; loose insulation and fractured panels stream backward as segmented pressure-door blades close and the flexible docking tunnel tears away along the exact return path. Ahead, Earth fills the forward window and the first orange reentry-plasma streaks have already begun across the capsule exterior. Keep her face readable, the full threshold visible, and the causal approach-crossing-consequence chain dominant.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept test using the attached image",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use this arm's assigned visible point-of-no-return crossing as a causally inspectable orbital airlock disaster scene, and use the attachment only for visible adult appearance guidance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "the causal approach-crossing-consequence chain dominant"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "halfway across a circular docking threshold into a reentry capsule"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "long center-parted dark wavy hair, dark brown eyes, softly arched brows, and broadly comparable face proportions"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "guided only by the reference's visible"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic editorial disaster photography",
+    "family": "high-stakes orbital documentary still",
+    "evidence": [
+      "readable pressure-door mechanisms and directional debris",
+      "natural facial detail within a wide environmental frame"
+    ]
+  },
+  "variation_key": "arm-01-seed-910165687-orbital-airlock"
+}

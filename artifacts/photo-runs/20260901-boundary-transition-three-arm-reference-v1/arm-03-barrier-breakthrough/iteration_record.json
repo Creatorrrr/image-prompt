@@ -1,0 +1,199 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "git:327ce0c65ca87035111bc92042f95eacd70ca8b7",
+    "candidate_revision": "working-tree-runtime-sha256:8d7037ee82aa834dad5db79bb17a71fe54e9e50b5a918cdfd4be30039f3d3508"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the implemented barrier_breakthrough_causal_event profile and candidate data survive into one independently authored, reference-guided, complex photoreal render."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The requesting user asked for three independent random complex concepts, prompt generation from the supplied image, image generation, and pixel-level verification.",
+      "artifact": "request_envelope.json sha256=0e1de2b304361b29189ce67de10c3030def1437818b9982288c4658fb5d9f55e"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The inspected reference visibly supplies adult appearance guidance only: long center-parted dark wavy hair, dark eyes, softly arched brows, and broad face proportions.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The frozen v6 composed prompt preserves all intent anchors and all five literal barrier-breakthrough evidence fields.",
+      "artifact": "composed_prompt.json sha256=c5b1252bad20b8cf544b02bf6ff06b81d8948ae8d10ab05eab17292673f12dc6"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The composed prompt and exact image render request both pass their fail-closed audits with zero failures.",
+      "artifact": "composed_prompt_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Built-in image_gen delivered one saved native render on the single allowed call, with no retry.",
+      "artifact": "run_ledger.ndjson run_id=eef62e55c440a9b1"
+    },
+    {
+      "id": "e-thumbnail",
+      "kind": "render-observation",
+      "claim": "At 288x384, the intact barrier, left-to-right force, fresh aperture, crossing ram, event hierarchy, and reference-guided appearance remain readable.",
+      "artifact": "render_thumbnail.png sha256=c61197c70113746666ec3eafbee0652318f366d81655f710d49300562bd5fd61"
+    },
+    {
+      "id": "e-native",
+      "kind": "render-observation",
+      "claim": "At 1086x1448, radial cracks, torn laminated edges, hydraulic contact, localized shards and spray, and the observable adult appearance all pass the precommitted gates.",
+      "artifact": "render_native.png sha256=5e1d6c78c24b6eaf22822270d526fbf525961377a1c60c3137b2c40d58a61fd6"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One coherent approach-contact-rupture-aperture-passage event must be visible through a finite resisting barrier while the appearance-guided adult remains readable.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "physical-breakthrough-mechanism",
+        "statement": "The same contact point must own barrier resistance, force alignment, fresh rupture, new aperture crossing, and localized displacement.",
+        "evidence_ids": [
+          "e-request",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "finite intact barrier around one breach",
+          "one aligned hydraulic-force vector",
+          "radial cracks and bent layers from the contact",
+          "ram crossing the new aperture",
+          "localized fragments and spray"
+        ]
+      },
+      {
+        "id": "reference-appearance-boundary",
+        "statement": "Only observable adult appearance cues from the portrait guide the new fictional scene; identity and protected-trait inference remain outside the claim.",
+        "evidence_ids": [
+          "e-reference",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "long center-parted dark wavy hair",
+          "dark eyes",
+          "softly arched brows",
+          "broadly comparable face proportions",
+          "adult impression"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact shard shape",
+      "minor diegetic markings",
+      "water droplet placement",
+      "incidental suit seams"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-optional-body-crossing",
+      "scale": "regional",
+      "axis": "crossing extent",
+      "source_state": "The authored prompt asked for the ram, leading shoulder, and one knee to occupy the passage.",
+      "render_state": "The ram clearly crosses the aperture while the shoulder and knee remain on the near side; the official object-or-force crossing gate still passes.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-native"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-profile-actuation",
+      "stage": "prompt-priority",
+      "statement": "When the five barrier-breakthrough evidence groups are hard-bound in one approach-contact-passage axis, the generator can preserve the complete official mechanism instead of substituting a generic explosion or victory pose.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-thumbnail",
+        "e-native"
+      ],
+      "falsifier": "Any official gate fails at its declared scale, or the image shows only an explosion, preexisting doorway, rubble aftermath, or static pose."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent barrier breakthrough as one finite-barrier, aligned-force, contact-rupture, fresh-aperture-crossing, localized-aftermath conjunction with strict same-image render gates.",
+    "generalization_basis": "The rule encodes reusable causal topology and explicit confusion substitutes rather than the motivating subject, tool, corridor, palette, or reference portrait.",
+    "hypothesis_ids": [
+      "h-profile-actuation"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_boundary_transition_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt",
+        "e-package"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-generation",
+        "e-thumbnail",
+        "e-native"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "held-out-arm-03-resin-bulkhead",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "resisting barrier",
+          "aligned force",
+          "fresh rupture",
+          "aperture crossing",
+          "localized aftermath",
+          "reference appearance"
+        ],
+        "evidence_ids": [
+          "e-thumbnail",
+          "e-native"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "promote",
+    "claim_scope": "render-fidelity",
+    "rationale": "This independent held-out arm passes all five official and five coordinator gates under the recorded seed, reference, prompt, and built-in generator conditions. The claim is limited to this tested condition; user aesthetic judgment and universal profile reliability remain unproved.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-thumbnail",
+      "e-native"
+    ]
+  }
+}

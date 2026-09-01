@@ -18602,6 +18602,252 @@
         {"id": "vo_crime_terrorism_compulsion_purpose", "review_scale": "both", "description": "A declared population-intimidation or government-compulsion purpose links the event."}
       ],
       "reject_substitutes": ["ordinary_combat", "peaceful_protest", "industrial_accident", "private_violence_without_public_purpose"]
+    },
+    {
+      "id": "critical_threshold_pretransition_accumulation",
+      "category": "bounded_system_pretransition_critical_approach",
+      "activation": {
+        "exact_terms": ["visible pretransition critical threshold", "pretransition critical accumulation", "임계 전 축적 장면", "전이 직전 임계 축적"],
+        "exclude_if_any_terms": ["mountain summit", "victory pose", "already ruptured", "generic suspense", "산 정상", "승리 포즈", "이미 파열", "일반 긴장감"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bounded system remains intact while a readable pressure, heat, tension, charge, or load accumulates toward a system-owned threshold reference. A localized precursor and a still-visible remaining margin must coexist before the transition; suspense, a gauge alone, a peak, an aura, or post-rupture aftermath is insufficient.",
+        "paraphrase_examples": ["압력 용기의 물리 기준선 가까이 막이 불룩해지고 국소 응력이 보이지만 안전 여유와 봉쇄가 아직 남아 있는 전이 직전", "an intact load-bearing system with a rising driver, owned threshold datum, localized precursor strain, and a visibly remaining margin before failure"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["bounded_intact_system", "accumulating_driver", "threshold_reference", "localized_precursor", "remaining_margin"], "groups": [
+          {"id": "bounded_intact_system", "any_terms": ["one bounded physical system remains intact and owns the approaching transition"]},
+          {"id": "accumulating_driver", "any_terms": ["pressure heat tension charge or load visibly accumulates through that same system"]},
+          {"id": "threshold_reference", "any_terms": ["a system-owned safety line rating mark clearance datum or mechanical indicator defines the threshold"]},
+          {"id": "localized_precursor", "any_terms": ["localized bulging strain heat discoloration vibration or instability appears at the most stressed region"]},
+          {"id": "remaining_margin", "any_terms": ["an intact boundary and visible remaining gap prove the transition or rupture has not yet occurred"]}
+        ]},
+        "contrast_examples": ["a nervous portrait", "a dashboard gauge with no owned system", "a mountain summit", "an explosion aftermath", "a glowing power aura"]
+      },
+      "concept_candidate": {"concept_terms": ["bounded intact system", "accumulating driver", "owned threshold reference", "localized precursor", "remaining margin before transition"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible pretransition critical accumulation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the complete bounded system and its threshold reference, with the accumulating driver, localized precursor strain, intact containment, and remaining margin all readable before any rupture or state transition.",
+      "required_evidence_fields": ["system_phrase", "driver_phrase", "threshold_phrase", "precursor_phrase", "margin_phrase"],
+      "evidence_requirements": {
+        "system_phrase": {"min_content_words": 10, "must_mention_any": ["one bounded physical system remains intact and owns the approaching transition"]},
+        "driver_phrase": {"min_content_words": 11, "must_mention_any": ["pressure heat tension charge or load visibly accumulates through that same system"]},
+        "threshold_phrase": {"min_content_words": 14, "must_mention_any": ["a system-owned safety line rating mark clearance datum or mechanical indicator defines the threshold"]},
+        "precursor_phrase": {"min_content_words": 13, "must_mention_any": ["localized bulging strain heat discoloration vibration or instability appears at the most stressed region"]},
+        "margin_phrase": {"min_content_words": 14, "must_mention_any": ["an intact boundary and visible remaining gap prove the transition or rupture has not yet occurred"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_critical_bounded_system", "review_scale": "thumbnail", "description": "One coherent bounded system remains visibly intact."},
+        {"id": "vo_boundary_critical_driver_reference", "review_scale": "both", "description": "The accumulating driver and a system-owned threshold reference are simultaneously comparable."},
+        {"id": "vo_boundary_critical_precursor", "review_scale": "native", "description": "Localized precursor strain, heat, bulging, vibration, or instability belongs to the most stressed region."},
+        {"id": "vo_boundary_critical_remaining_gap", "review_scale": "both", "description": "A visible margin or clearance remains before the threshold is crossed."},
+        {"id": "vo_boundary_critical_not_transitioned", "review_scale": "both", "description": "The system has not already ruptured, collapsed, or completed its state transition."}
+      ],
+      "reject_substitutes": ["generic_suspense", "gauge_without_owned_system", "mountain_peak", "post_rupture_aftermath", "aura_only_powerup"]
+    },
+    {
+      "id": "barrier_breakthrough_causal_event",
+      "category": "resisting_barrier_contact_rupture_crossing",
+      "activation": {
+        "exact_terms": ["visible physical barrier breakthrough", "physical barrier breakthrough event", "물리적 장벽 돌파 장면", "장벽 관통 돌파 사건"],
+        "exclude_if_any_terms": ["business breakthrough", "scientific breakthrough", "preexisting doorway", "barrierless explosion", "사업 돌파", "연구 혁신", "기존 출입구", "장벽 없는 폭발"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One aligned subject or force meets a previously resisting finite-thickness barrier, initiates rupture at a localized contact point, opens a new aperture, and crosses the former boundary with displaced material or another consequence at that same point. A barrierless explosion, preexisting opening, beam through fog, rubble-only aftermath, or victory pose is insufficient.",
+        "paraphrase_examples": ["두께가 있는 장벽의 한 접촉점에 힘이 집중되어 균열이 번지고 새 구멍을 통해 동일 주체가 통과하며 잔해가 같은 점에서 밀려나는 순간", "one continuous force vector joins resistant barrier, contact rupture, fresh aperture, passage, and localized displaced material"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["resisting_barrier", "aligned_force", "contact_rupture", "new_aperture_crossing", "localized_displacement"], "groups": [
+          {"id": "resisting_barrier", "any_terms": ["a finite-thickness barrier retains intact resistant material around one fresh breach"]},
+          {"id": "aligned_force", "any_terms": ["one subject object or force vector aligns directly with the same barrier contact point"]},
+          {"id": "contact_rupture", "any_terms": ["fresh cracks tearing shear or plastic deformation radiates from that localized contact point"]},
+          {"id": "new_aperture_crossing", "any_terms": ["a newly opened aperture carries the same subject object or displaced material across the former boundary"]},
+          {"id": "localized_displacement", "any_terms": ["debris dust fluid fragments or deformation traces remain localized along the contact-to-passage path"]}
+        ]},
+        "contrast_examples": ["an explosion in open air", "a person walking through a normal door", "light passing through fog", "rubble after an unseen event", "a triumphant hero pose"]
+      },
+      "concept_candidate": {"concept_terms": ["resisting finite barrier", "aligned force", "contact-point rupture", "fresh aperture crossing", "localized displacement trace"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible physical barrier breakthrough event"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use one continuous approach-contact-aperture-passage axis, preserve enough intact barrier perimeter to prove prior resistance, and show both sides plus the fresh rupture and localized displaced material.",
+      "required_evidence_fields": ["barrier_phrase", "force_phrase", "rupture_phrase", "crossing_phrase", "displacement_phrase"],
+      "evidence_requirements": {
+        "barrier_phrase": {"min_content_words": 12, "must_mention_any": ["a finite-thickness barrier retains intact resistant material around one fresh breach"]},
+        "force_phrase": {"min_content_words": 13, "must_mention_any": ["one subject object or force vector aligns directly with the same barrier contact point"]},
+        "rupture_phrase": {"min_content_words": 14, "must_mention_any": ["fresh cracks tearing shear or plastic deformation radiates from that localized contact point"]},
+        "crossing_phrase": {"min_content_words": 15, "must_mention_any": ["a newly opened aperture carries the same subject object or displaced material across the former boundary"]},
+        "displacement_phrase": {"min_content_words": 13, "must_mention_any": ["debris dust fluid fragments or deformation traces remain localized along the contact-to-passage path"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_breakthrough_resisting_barrier", "review_scale": "thumbnail", "description": "A finite intact barrier surrounds one clearly fresh breach."},
+        {"id": "vo_boundary_breakthrough_force_contact", "review_scale": "both", "description": "One subject or force aligns with the localized rupture point."},
+        {"id": "vo_boundary_breakthrough_fresh_rupture", "review_scale": "native", "description": "Fresh cracks, tearing, shear, or deformation radiate from that contact."},
+        {"id": "vo_boundary_breakthrough_aperture_crossing", "review_scale": "both", "description": "The new aperture and a coherent crossing through the former boundary are visible."},
+        {"id": "vo_boundary_breakthrough_local_aftermath", "review_scale": "native", "description": "Displaced material and aftermath stay localized to the contact-to-passage path."}
+      ],
+      "reject_substitutes": ["barrierless_explosion", "preexisting_opening", "beam_through_fog", "aftermath_rubble_only", "victory_pose_only"]
+    },
+    {
+      "id": "dormant_capacity_limiter_release",
+      "category": "functional_restraint_disengagement_same_source_output",
+      "activation": {
+        "exact_terms": ["sealed power limiter release", "functional limiter release event", "봉인된 능력 제한 해제 장면", "기능 리미터 해제 사건"],
+        "exclude_if_any_terms": ["waking from sleep", "ordinary unlocked door", "external power donor", "possession", "잠에서 깨어남", "일반 문 열기", "외부 힘 주입", "빙의"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same subject or system contains a functional limiter that visibly blocks motion, pressure, flow, or output. An active disengagement opens that limiter, and previously contained output emerges from the same source with an old-bound comparison and localized consequence. Waking, glow alone, an ordinary lock, costume change, possession, or external power donation is insufficient.",
+        "paraphrase_examples": ["기계식 조속기와 클램프가 engaged 위치에서 풀리며 같은 장치 안에 갇혀 있던 압력과 움직임이 한 경로로 방출되는 순간", "one continuous source, functional restraint, disengagement action, same-source output path, and localized release consequence"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["same_source_system", "functional_limiter", "active_disengagement", "same_source_output", "localized_old_bound_consequence"], "groups": [
+          {"id": "same_source_system", "any_terms": ["one continuous subject machine vessel or mechanism owns both the restrained and released states"]},
+          {"id": "functional_limiter", "any_terms": ["a connected clamp seal valve lock collar governor or restraint visibly blocks motion pressure flow or output"]},
+          {"id": "active_disengagement", "any_terms": ["a hand control linkage break retraction or opening actively changes the limiter from engaged to disengaged"]},
+          {"id": "same_source_output", "any_terms": ["previously contained motion pressure material light or energy emerges through the opened path from that same source"]},
+          {"id": "localized_old_bound_consequence", "any_terms": ["the former restraint position and a localized displacement pressure heat or material consequence remain comparable"]}
+        ]},
+        "contrast_examples": ["a sleeping person opening their eyes", "glowing eyes and aura", "an ordinary door unlock", "a costume transformation", "an external entity granting power"]
+      },
+      "concept_candidate": {"concept_terms": ["same restrained source", "functional limiter", "active disengagement", "same-source output", "localized old-bound consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["functional limiter release from contained capacity"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the limiter's former blocking position, current disengagement action, same-source output path, and localized consequence in one traceable frame; the effect must not collapse into an unowned aura or external power transfer.",
+      "required_evidence_fields": ["system_phrase", "limiter_phrase", "disengagement_phrase", "output_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "system_phrase": {"min_content_words": 14, "must_mention_any": ["one continuous subject machine vessel or mechanism owns both the restrained and released states"]},
+        "limiter_phrase": {"min_content_words": 16, "must_mention_any": ["a connected clamp seal valve lock collar governor or restraint visibly blocks motion pressure flow or output"]},
+        "disengagement_phrase": {"min_content_words": 17, "must_mention_any": ["a hand control linkage break retraction or opening actively changes the limiter from engaged to disengaged"]},
+        "output_phrase": {"min_content_words": 17, "must_mention_any": ["previously contained motion pressure material light or energy emerges through the opened path from that same source"]},
+        "consequence_phrase": {"min_content_words": 15, "must_mention_any": ["the former restraint position and a localized displacement pressure heat or material consequence remain comparable"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_limiter_same_source", "review_scale": "thumbnail", "description": "One continuous subject or system owns both the restrained and released state."},
+        {"id": "vo_boundary_limiter_functional_restraint", "review_scale": "both", "description": "A mechanically or physically connected limiter has a readable blocking function."},
+        {"id": "vo_boundary_limiter_disengagement", "review_scale": "native", "description": "The limiter is visibly being opened, retracted, broken, or otherwise disengaged."},
+        {"id": "vo_boundary_limiter_output_path", "review_scale": "both", "description": "Released output follows a coherent path from that same source."},
+        {"id": "vo_boundary_limiter_local_consequence", "review_scale": "native", "description": "A localized consequence and former restraint position remain inspectable without relying on aura alone."}
+      ],
+      "reject_substitutes": ["sleep_awakening", "aura_or_glowing_eyes_only", "ordinary_unlocked_door", "costume_change", "external_power_or_possession"]
+    },
+    {
+      "id": "technical_overload_progressive_failure",
+      "category": "rated_system_excess_load_dependency_failure",
+      "activation": {
+        "exact_terms": ["progressive rated-system overload failure", "rated technical overload cascade", "정격 초과 연쇄 고장", "기술 시스템 과부하 연쇄"],
+        "exclude_if_any_terms": ["short circuit only", "external explosion", "impact damage", "isolated spark", "단락만", "외부 폭발", "충격 파손", "스파크 하나"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A technical system with a readable normal rating receives sustained excess load, develops a localized heat, insulation, deformation, or strain failure at one owned component, and propagates that failure through connected dependencies toward a protection response or functional loss. A short circuit alone, external explosion, isolated spark, single broken part, or post-collapse aftermath is insufficient.",
+        "paraphrase_examples": ["정격 표식과 현재 부하가 같은 전기 패널에 보이고 한 단자에서 시작한 열 변색과 절연 손상이 버스 경로를 따라 퍼져 차단기가 동작하는 과정", "a rated system under sustained excess input with a localized failure origin, dependency propagation, and protective trip or functional loss"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["rated_system", "sustained_excess_load", "localized_failure_origin", "dependency_propagation", "protection_or_loss"], "groups": [
+          {"id": "rated_system", "any_terms": ["one coherent technical system displays or physically implies a normal rating and connected load path"]},
+          {"id": "sustained_excess_load", "any_terms": ["input demand remains visibly above that rating long enough to create dangerous heating strain or deformation"]},
+          {"id": "localized_failure_origin", "any_terms": ["heat discoloration sag insulation damage deformation or leakage begins at one identifiable owned component"]},
+          {"id": "dependency_propagation", "any_terms": ["failure evidence advances through a connected electrical thermal fluid or mechanical dependency path"]},
+          {"id": "protection_or_loss", "any_terms": ["a breaker relay shutdown relief action stalled output or other functional consequence completes the cascade"]}
+        ]},
+        "contrast_examples": ["an isolated electrical spark", "a short circuit with no rated overload context", "external impact damage", "one broken component", "rubble after an unseen collapse"]
+      },
+      "concept_candidate": {"concept_terms": ["rated technical system", "sustained excess load", "localized failure origin", "dependency propagation", "protection or functional loss"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["progressive rated-system overload failure"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Trace the actual power, thermal, fluid, or mechanical path from rating and excess input through the first failed component into connected propagation and protection action or functional loss.",
+      "required_evidence_fields": ["rating_phrase", "load_phrase", "origin_phrase", "propagation_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "rating_phrase": {"min_content_words": 14, "must_mention_any": ["one coherent technical system displays or physically implies a normal rating and connected load path"]},
+        "load_phrase": {"min_content_words": 15, "must_mention_any": ["input demand remains visibly above that rating long enough to create dangerous heating strain or deformation"]},
+        "origin_phrase": {"min_content_words": 14, "must_mention_any": ["heat discoloration sag insulation damage deformation or leakage begins at one identifiable owned component"]},
+        "propagation_phrase": {"min_content_words": 14, "must_mention_any": ["failure evidence advances through a connected electrical thermal fluid or mechanical dependency path"]},
+        "consequence_phrase": {"min_content_words": 15, "must_mention_any": ["a breaker relay shutdown relief action stalled output or other functional consequence completes the cascade"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_overload_rated_system", "review_scale": "thumbnail", "description": "One coherent rated technical system and its connected load path are readable."},
+        {"id": "vo_boundary_overload_excess_input", "review_scale": "both", "description": "A system-owned rating and visibly excessive sustained input are comparable."},
+        {"id": "vo_boundary_overload_failure_origin", "review_scale": "native", "description": "Heat, deformation, insulation damage, sag, or leakage begins at one identifiable component."},
+        {"id": "vo_boundary_overload_dependency_cascade", "review_scale": "both", "description": "Failure evidence propagates through connected dependencies rather than appearing as isolated sparks."},
+        {"id": "vo_boundary_overload_protection_loss", "review_scale": "both", "description": "A protection response, shutdown, stalled output, or functional loss completes the overload event."}
+      ],
+      "reject_substitutes": ["short_circuit_only", "external_impact_or_explosion", "isolated_spark", "single_broken_component", "post_collapse_only"]
+    },
+    {
+      "id": "phase_transition_nucleation_growth",
+      "category": "single_specimen_new_phase_nucleation_interface_growth",
+      "activation": {
+        "exact_terms": ["visible phase transition by nucleation and growth", "nucleation-growth phase transition", "핵생성과 성장으로 보이는 상전이", "핵생성 성장 상전이"],
+        "exclude_if_any_terms": ["color gradient only", "lighting change", "smoke aura", "two unrelated materials", "색 그라데이션만", "조명 변화", "연기 오라", "무관한 두 물질"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One bounded material specimen remains continuous while a readable temperature, pressure, field, or concentration gradient drives multiple new-phase nuclei and a growing interface through the parent phase. Both phases must coexist in the same material system; lighting gradients, smoke, aura, unrelated materials, a completed product, or fantasy costume transformation is insufficient.",
+        "paraphrase_examples": ["투명 관찰 용기 안의 한 시료에서 기존 상 속에 복수의 새 결정 핵이 생기고 온도 구배 방향으로 계면이 성장하며 두 상이 동시에 남아 있는 장면", "one bounded specimen under a readable driver with parent phase, multiple nuclei, a propagating interface, and simultaneous phase coexistence"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["bounded_specimen", "driving_gradient", "parent_phase", "new_phase_nuclei", "growing_interface_coexistence"], "groups": [
+          {"id": "bounded_specimen", "any_terms": ["one material specimen has a complete readable boundary that owns every phase region"]},
+          {"id": "driving_gradient", "any_terms": ["a temperature pressure field or concentration gradient acts coherently across that same specimen"]},
+          {"id": "parent_phase", "any_terms": ["the original parent phase remains materially legible around the emerging regions"]},
+          {"id": "new_phase_nuclei", "any_terms": ["multiple distinct nuclei of a new phase form inside the parent material rather than as surface decoration"]},
+          {"id": "growing_interface_coexistence", "any_terms": ["a continuous advancing interface keeps parent and new phases simultaneously visible inside one specimen"]}
+        ]},
+        "contrast_examples": ["a colored lighting gradient", "smoke over a surface", "two separate objects made of different materials", "a fully finished crystal", "a fantasy costume transformation"]
+      },
+      "concept_candidate": {"concept_terms": ["one bounded specimen", "driving physical gradient", "parent phase", "multiple new-phase nuclei", "growing coexistence interface"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible nucleation-and-growth phase transition"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the full specimen boundary and gradient direction at a scale where multiple nuclei, parent phase, new phase, and at least one advancing interface coexist as material structure rather than lighting or atmosphere.",
+      "required_evidence_fields": ["specimen_phrase", "gradient_phrase", "parent_phrase", "nuclei_phrase", "interface_phrase"],
+      "evidence_requirements": {
+        "specimen_phrase": {"min_content_words": 13, "must_mention_any": ["one material specimen has a complete readable boundary that owns every phase region"]},
+        "gradient_phrase": {"min_content_words": 14, "must_mention_any": ["a temperature pressure field or concentration gradient acts coherently across that same specimen"]},
+        "parent_phrase": {"min_content_words": 12, "must_mention_any": ["the original parent phase remains materially legible around the emerging regions"]},
+        "nuclei_phrase": {"min_content_words": 16, "must_mention_any": ["multiple distinct nuclei of a new phase form inside the parent material rather than as surface decoration"]},
+        "interface_phrase": {"min_content_words": 15, "must_mention_any": ["a continuous advancing interface keeps parent and new phases simultaneously visible inside one specimen"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_phase_bounded_specimen", "review_scale": "thumbnail", "description": "One complete specimen boundary owns all visible phase regions."},
+        {"id": "vo_boundary_phase_driving_gradient", "review_scale": "both", "description": "A coherent physical driving gradient is readable across that specimen."},
+        {"id": "vo_boundary_phase_parent_and_nuclei", "review_scale": "native", "description": "The parent phase remains visible around multiple distinct new-phase nuclei."},
+        {"id": "vo_boundary_phase_growing_interface", "review_scale": "both", "description": "At least one continuous advancing interface separates coexisting phases."},
+        {"id": "vo_boundary_phase_not_lighting", "review_scale": "both", "description": "The transition reads as material structure, not only color, light, smoke, aura, or unrelated objects."}
+      ],
+      "reject_substitutes": ["lighting_color_gradient", "smoke_or_aura", "unrelated_material_objects", "completed_product_only", "fantasy_costume_transformation"]
+    },
+    {
+      "id": "irreversible_threshold_crossing_consequence",
+      "category": "one_way_threshold_lost_return_committed_state",
+      "activation": {
+        "exact_terms": ["visible point-of-no-return crossing", "irreversible threshold crossing event", "비가역 경계 횡단 장면", "돌이킬 수 없는 경계 횡단"],
+        "exclude_if_any_terms": ["ordinary doorway", "reversible portal", "one-way sign only", "standing beyond line", "일반 출입문", "왕복 포털", "일방통행 표지만", "선 너머 서 있기"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same subject or process crosses a defined one-way threshold while its return route visibly closes, collapses, floods, burns, severs, or is consumed, and a committed downstream consequence begins beyond it. An ordinary doorway, reversible portal, sign alone, subject merely beyond a line, or black-hole icon is insufficient.",
+        "paraphrase_examples": ["같은 인물이 경계를 막 통과한 뒤 뒤의 다리가 붕괴해 귀환 경로가 사라지고 앞쪽의 새로운 조건이 이미 시작되는 장면", "one continuous subject intersecting a one-way threshold as the route behind becomes unavailable and a downstream committed state begins"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["continuous_subject", "defined_threshold", "directed_crossing", "lost_return_path", "committed_consequence"], "groups": [
+          {"id": "continuous_subject", "any_terms": ["one identifiable subject object or process remains continuous from approach through crossing into the downstream state"]},
+          {"id": "defined_threshold", "any_terms": ["a concrete bridge hatch airlock edge line or boundary owns the one-way transition"]},
+          {"id": "directed_crossing", "any_terms": ["the subject intersects or has just cleared that threshold along one readable direction of travel"]},
+          {"id": "lost_return_path", "any_terms": ["the route behind visibly closes collapses floods burns severs or is consumed so return is physically unavailable"]},
+          {"id": "committed_consequence", "any_terms": ["a concrete new condition or irreversible downstream process has already begun beyond the threshold"]}
+        ]},
+        "contrast_examples": ["walking through a normal door", "standing inside a glowing portal", "a one-way road sign", "a person already on the far side with no lost route", "a generic black hole symbol"]
+      },
+      "concept_candidate": {"concept_terms": ["continuous crossing subject", "defined one-way threshold", "directed crossing", "lost return path", "committed downstream consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible irreversible threshold crossing"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Align approach, threshold, crossing subject, visibly lost return route behind, and concrete downstream consequence ahead in one directional frame; do not rely on signage or a portal effect alone.",
+      "required_evidence_fields": ["subject_phrase", "threshold_phrase", "crossing_phrase", "lost_path_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "subject_phrase": {"min_content_words": 16, "must_mention_any": ["one identifiable subject object or process remains continuous from approach through crossing into the downstream state"]},
+        "threshold_phrase": {"min_content_words": 13, "must_mention_any": ["a concrete bridge hatch airlock edge line or boundary owns the one-way transition"]},
+        "crossing_phrase": {"min_content_words": 15, "must_mention_any": ["the subject intersects or has just cleared that threshold along one readable direction of travel"]},
+        "lost_path_phrase": {"min_content_words": 17, "must_mention_any": ["the route behind visibly closes collapses floods burns severs or is consumed so return is physically unavailable"]},
+        "consequence_phrase": {"min_content_words": 14, "must_mention_any": ["a concrete new condition or irreversible downstream process has already begun beyond the threshold"]}
+      },
+      "render_gates": [
+        {"id": "vo_boundary_irreversible_subject_continuity", "review_scale": "thumbnail", "description": "One continuous subject or process remains readable across the crossing event."},
+        {"id": "vo_boundary_irreversible_defined_threshold", "review_scale": "both", "description": "A concrete threshold owns the one-way transition."},
+        {"id": "vo_boundary_irreversible_directed_crossing", "review_scale": "both", "description": "The subject intersects or has just cleared that threshold along a readable direction."},
+        {"id": "vo_boundary_irreversible_lost_return", "review_scale": "native", "description": "The return route is visibly closed, collapsed, flooded, burned, severed, or consumed."},
+        {"id": "vo_boundary_irreversible_committed_result", "review_scale": "both", "description": "A concrete downstream condition has already begun and ordinary passage cannot substitute."}
+      ],
+      "reject_substitutes": ["ordinary_doorway", "reversible_portal", "one_way_sign_only", "already_beyond_line", "black_hole_icon_only"]
     }
   ]
 }

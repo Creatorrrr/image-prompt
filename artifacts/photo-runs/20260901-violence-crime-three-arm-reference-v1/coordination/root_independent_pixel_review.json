@@ -1,0 +1,206 @@
+{
+  "schema_version": "photo-root-independent-pixel-review/v1",
+  "run_id": "20260901-violence-crime-three-arm-reference-v1",
+  "reviewer": "Codex root coordinator after all isolated arms completed",
+  "review_policy": "partial_is_fail",
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "reference_boundary": "The supplied portrait is compared only for visible adult appearance in a fictional supporting role. No identity, same-person, protected-trait, age-proof, criminal-role, victim-role, consent, personality, health, nationality, attractiveness, or biometric claim is made.",
+  "arms": [
+    {
+      "arm_id": "arm-01-robbery",
+      "assigned_profile": "robbery_forced_property_transfer",
+      "generation_outcome": "success",
+      "native_image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery/render_native.png",
+        "sha256": "86450c09c754a0f2eec8228dd5e9369dee47d42dabb5fcd9a880620554b6ea48",
+        "dimensions": "1536x1024"
+      },
+      "thumbnail_image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery/render_thumbnail.png",
+        "sha256": "a094bd0267c8cea2f572714ef514c7d4d36f9d62dfe4b96e1060b0ebdebc69a1",
+        "dimensions": "384x256"
+      },
+      "prompt_audit_status": "pass",
+      "profile_gate_results": [
+        {
+          "gate_id": "vo_crime_robbery_roles",
+          "status": "pass",
+          "evidence": "The offender at right and the courier at center remain visibly distinct people at thumbnail and native scale."
+        },
+        {
+          "gate_id": "vo_crime_robbery_coercion",
+          "status": "pass",
+          "evidence": "The raised crowbar is visibly directed toward the courier while the offender reaches for the red case."
+        },
+        {
+          "gate_id": "vo_crime_robbery_property_origin",
+          "status": "pass",
+          "evidence": "The courier hugs the red case and visibly grips its top handle, establishing initial control."
+        },
+        {
+          "gate_id": "vo_crime_robbery_transfer",
+          "status": "fail",
+          "evidence": "The offender points at or lightly touches the case but does not visibly grip and pull that same property toward offender control."
+        }
+      ],
+      "coordinator_common_gate_results": [
+        {
+          "gate_id": "reference_visible_adult_appearance",
+          "status": "pass",
+          "evidence": "The adult investigator at left visibly preserves long center-parted dark wavy hair, an oval face, dark eyes, and softly arched brows."
+        },
+        {
+          "gate_id": "reference_role_secondary",
+          "status": "pass",
+          "evidence": "The investigator remains smaller at the far-left alarm and does not obscure the central crime relation."
+        },
+        {
+          "gate_id": "relation_thumbnail_readability",
+          "status": "fail",
+          "evidence": "Actor, target, threat, and property read at thumbnail scale, but movement into offender possession does not."
+        },
+        {
+          "gate_id": "relation_native_detail",
+          "status": "fail",
+          "evidence": "Victim ownership is clear, but offender grip and transfer direction remain absent at native scale."
+        },
+        {
+          "gate_id": "clean_delivery",
+          "status": "pass",
+          "evidence": "No watermark is visible; incidental fictional station signage is integrated into the environment."
+        }
+      ],
+      "agent_rubric_conformance": {
+        "status": "pass",
+        "evidence": "The arm froze all four profile gates and all five coordinator common gates before generation."
+      },
+      "profile_status": "fail",
+      "overall_status": "fail",
+      "technical_qualified": false,
+      "user_judgment": "unscored"
+    },
+    {
+      "arm_id": "arm-02-arson",
+      "assigned_profile": "deliberate_arson_causality",
+      "generation_outcome": "success",
+      "native_image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-02-arson/render-native.png",
+        "sha256": "fdd1e76bd46e2c97a8d67eab9e9a0e48559c2bc6c132feda6a3e9ed394a8d75f",
+        "dimensions": "1536x1024"
+      },
+      "thumbnail_image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-02-arson/render-thumbnail.png",
+        "sha256": "34c8b003d081b7d1ac1569a4a8bfc6ff9d3eeae2dbdf811842ee4ad1f830afde",
+        "dimensions": "512x341"
+      },
+      "prompt_audit_status": "pass",
+      "profile_gate_results": [
+        {
+          "gate_id": "vo_crime_arson_setter_target",
+          "status": "pass",
+          "evidence": "The crouching adult fire-setter and selected blue greenhouse service door are distinct."
+        },
+        {
+          "gate_id": "vo_crime_arson_ignition_path",
+          "status": "pass",
+          "evidence": "A continuous pale ignition path connects the setter's hand to the selected door base."
+        },
+        {
+          "gate_id": "vo_crime_arson_origin",
+          "status": "pass",
+          "evidence": "Fresh flame begins at the same path-to-door contact point."
+        },
+        {
+          "gate_id": "vo_crime_arson_growth",
+          "status": "pass",
+          "evidence": "Flame and dark scorching expand upward and outward from that origin point."
+        }
+      ],
+      "coordinator_common_gate_results": [
+        {
+          "gate_id": "reference_visible_adult_appearance",
+          "status": "pass",
+          "evidence": "The adult investigator visibly preserves long center-parted dark wavy hair, an oval face, dark eyes, and softly arched brows."
+        },
+        {
+          "gate_id": "reference_role_secondary",
+          "status": "fail",
+          "evidence": "The foreground investigator's face and torso dominate the thumbnail more strongly than the smaller fire-setting event."
+        },
+        {
+          "gate_id": "relation_thumbnail_readability",
+          "status": "pass",
+          "evidence": "The actor, selected door, ignition path, and fire remain readable as one chain at thumbnail scale."
+        },
+        {
+          "gate_id": "relation_native_detail",
+          "status": "pass",
+          "evidence": "The path, contact point, flame origin, and scorch boundary remain distinct at native scale."
+        },
+        {
+          "gate_id": "clean_delivery",
+          "status": "pass",
+          "evidence": "No watermark is visible; the small service-door sign is scene-integrated and is not used as exact semantic evidence."
+        }
+      ],
+      "agent_rubric_conformance": {
+        "status": "fail",
+        "evidence": "The arm froze the four profile gates but only four of the coordinator's five common gates; clean_delivery was omitted from its precommitted rubric. Root inspection scored that omitted coordinator gate separately, without changing the frozen arm record."
+      },
+      "profile_status": "pass",
+      "overall_status": "fail",
+      "technical_qualified": false,
+      "user_judgment": "unscored"
+    },
+    {
+      "arm_id": "arm-03-minor-crime",
+      "assigned_profile": "declared_minor_targeted_crime_relation",
+      "generation_outcome": "blocked",
+      "tool_error": {
+        "code": "moderation_blocked",
+        "stage": "input",
+        "category": "other",
+        "request_id": "e5aedd7d-c213-4e05-9b5d-c1943eee7cb7"
+      },
+      "image_call_count": 1,
+      "retry_count": 0,
+      "native_image": null,
+      "thumbnail_image": null,
+      "prompt_audit_status": "pass",
+      "artifact_gate_results": [
+        {
+          "gate_id": "declared_under_eighteen",
+          "status": "pass",
+          "basis": "frozen authorial artifact only",
+          "evidence": "The frozen test case explicitly declares a fictional sixteen-year-old victim without inferring age from appearance."
+        }
+      ],
+      "pixel_gate_results": [],
+      "unscored_pixel_gate_count": 9,
+      "agent_rubric_conformance": {
+        "status": "pass",
+        "evidence": "The arm froze all five assigned gates and all five coordinator common gates before the blocked generation call."
+      },
+      "profile_status": "blocked",
+      "overall_status": "blocked",
+      "technical_qualified": null,
+      "user_judgment": "unscored",
+      "boundary": "A model safety block is a generation outcome, not a pixel failure or a pixel pass."
+    }
+  ],
+  "aggregate": {
+    "arm_pass_count": 0,
+    "arm_fail_count": 2,
+    "arm_blocked_count": 1,
+    "successful_image_count": 2,
+    "successful_profile_pixel_pass_count": 1,
+    "successful_profile_pixel_fail_count": 1,
+    "blocked_profile_pixel_count": 1,
+    "prompt_audit_pass_count": 3,
+    "image_call_count": 3,
+    "retry_count": 0,
+    "render_fidelity_status": "fail",
+    "decision": "revise"
+  },
+  "boundary": "Package and prompt audit success do not establish pixel success. The arson profile itself passed all four profile gates, but its full arm failed the reference hierarchy gate; robbery was only partial; the declared-minor arm produced no pixels. Requesting-user aesthetic judgment remains unscored."
+}

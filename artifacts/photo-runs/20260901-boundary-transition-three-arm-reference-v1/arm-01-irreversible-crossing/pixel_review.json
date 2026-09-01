@@ -1,0 +1,68 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "8d23fad358dcdf73",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "arm-01 independent agent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-01-irreversible-crossing/render_native.png",
+  "result_sha256": "f26165e014dc2260690dd3c2305083a9ca3aff5e55d49b573d029c2a7929440c",
+  "review_scales": {
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-01-irreversible-crossing/render_thumbnail.png",
+    "native": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-boundary-transition-three-arm-reference-v1/arm-01-irreversible-crossing/render_native.png"
+  },
+  "decision_rule": "partial_is_fail",
+  "hard_gates": {
+    "vo_boundary_irreversible_subject_continuity": {
+      "status": "pass",
+      "evidence": "At thumbnail scale one uninterrupted adult body spans the circular collar: face and torso are on the capsule side while the bent legs remain visibly connected through the same crossing pose."
+    },
+    "vo_boundary_irreversible_defined_threshold": {
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show a concrete circular metal docking collar with radial segmented panels physically separating the damaged aft tunnel from the capsule interior."
+    },
+    "vo_boundary_irreversible_directed_crossing": {
+      "status": "pass",
+      "evidence": "The woman's forward hand braces on the capsule floor and her torso advances toward the camera while her legs trail through the ring, giving one readable inward direction across the sill."
+    },
+    "vo_boundary_irreversible_lost_return": {
+      "status": "fail",
+      "evidence": "Native pixels show fire and torn metal in the aft tunnel, but the circular passage remains visibly open; neither a closed pressure door nor a completely severed docking tunnel makes return physically unavailable."
+    },
+    "vo_boundary_irreversible_committed_result": {
+      "status": "fail",
+      "evidence": "Earth and an orange atmospheric band appear through the side window, but there is no unambiguous plasma flow over the capsule exterior or other visible motion proving that committed reentry has already begun rather than an orbital sunrise."
+    }
+  },
+  "common_gates": {
+    "C1_reference_appearance": {
+      "status": "pass",
+      "evidence": "At native scale the visible adult has long center-parted dark wavy hair, dark eyes, softly arched brows, and broadly comparable face proportions; this is appearance guidance only and not a same-person claim."
+    },
+    "C2_event_hierarchy": {
+      "status": "pass",
+      "evidence": "The woman remains the clear focal subject while the complete circular threshold and damaged aft tunnel stay visible around her rather than being obscured by a close portrait crop."
+    },
+    "C3_thumbnail_event_readability": {
+      "status": "fail",
+      "evidence": "The thumbnail clearly shows the subject, ring, and travel direction, but the still-open return tunnel and sunrise-like downstream glow do not establish lost return plus committed result together."
+    },
+    "C4_native_mechanism_detail": {
+      "status": "fail",
+      "evidence": "Native inspection reveals burning debris but no inspectable closure, severed joint, or collapsed barrier across the exact docking path, so the physical reason return is unavailable remains ambiguous."
+    },
+    "C5_clean_delivery": {
+      "status": "pass",
+      "evidence": "Native pixels contain no watermark or scene-breaking accidental text; small instrument markings remain incidental and unreadable."
+    }
+  },
+  "overall_decision": {
+    "status": "fail",
+    "reason": "Two official visual-obligation gates and two coordinator common gates fail under the precommitted partial-is-fail rule; successful subject, threshold, direction, appearance, hierarchy, and clean delivery cannot compensate."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "git:327ce0c65ca87035111bc92042f95eacd70ca8b7:working-tree-snapshot",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the applied phase-transition visual semantics and candidate-pack data survive one independently authored, reference-guided, randomized complex render."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The supplied portrait visibly supports only bounded adult appearance cues, and the precommitted rubric requires one specimen, one gradient, parent material, multiple nuclei, and a continuous interface.",
+      "artifact": "request_envelope.json; assignment.json; pixel_rubric_precommit.json; reference SHA-256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Candidate-pack v6 generated one request-scoped phase_transition_nucleation_growth obligation and both composed and runtime audits passed with no failures.",
+      "artifact": "candidate_pack.json; composed_prompt_audit.json; image_render_request_audit.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The audited final prompt literally binds the five required evidence fields while preserving all five authorial-core anchors.",
+      "artifact": "composed_prompt.json; pack_id 552ad0172701ea2b; runtime_prompt_id 85fedc19badda4f0"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The built-in image generator returned one saved image from exactly one attached-reference call and no retry.",
+      "artifact": "render_native.png; run_ledger.ndjson; run_manifest.json"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Thumbnail and native review passed all five official visual-obligation gates and all five coordinator gates in the same saved image.",
+      "artifact": "pixel_review.json; pixel_review_audit.json; render_native.png SHA-256 9c5cb6422e087d999a16e9b01d7434ecf3d0456698d7ccd2f3abb36678c381a1"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One complete ampoule simultaneously reads as a bounded specimen under a cold-to-warm gradient, with amber parent fluid, multiple pale solid nuclei, and a continuous advancing frost interface.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "same-specimen-coexistence",
+        "statement": "Every phase region and the advancing interface remain inside one readable specimen boundary.",
+        "evidence_ids": ["e-source"],
+        "causal_controls": ["complete ampoule boundary", "material continuity", "same-frame parent and new phases"]
+      },
+      {
+        "id": "gradient-owned-growth",
+        "statement": "The new phase and interface align with a coherent physical cold-to-warm driver rather than a color-light effect.",
+        "evidence_ids": ["e-source"],
+        "causal_controls": ["frosted cooling clamp", "clear warm ring", "condensation gradient", "interface direction"]
+      },
+      {
+        "id": "reference-bounded-appearance",
+        "statement": "The generated adult retains only the reference's observable hair, eye, eyebrow, and broad facial-proportion cues without an identity claim.",
+        "evidence_ids": ["e-source"],
+        "causal_controls": ["appearance_reference role", "visible adult continuity", "no biometric inference"]
+      }
+    ],
+    "flexible_dimensions": ["minor greenhouse geometry", "incidental plant placement", "exact hand placement", "minor instrument finish"]
+  },
+  "mismatches": [],
+  "hypotheses": [
+    {
+      "id": "h-phase-obligation-survival",
+      "stage": "prompt-priority",
+      "statement": "If all five profile evidence bindings remain literal and the ampoule shares one focal plane with the subject, the generator can preserve the complete nucleation-growth relation in a complex single frame.",
+      "evidence_ids": ["e-package", "e-prompt"],
+      "falsifier": "Any official pixel gate fails or becomes ambiguous in the single delivered image."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "This arm evaluated the already-applied request-scoped profile and candidate data without modifying runtime sources.",
+    "generalization_basis": "The profile expresses a case-independent same-specimen, driver, parent, nuclei, and interface mechanism.",
+    "hypothesis_ids": ["h-phase-obligation-survival"],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt"]},
+    "render": {"status": "pass", "evidence_ids": ["e-generation", "e-render"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "arm-02-randomized-motivating-case",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["bounded specimen", "driving gradient", "parent phase", "new-phase nuclei", "growing interface", "reference appearance"],
+        "evidence_ids": ["e-render"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "diagnosed",
+    "claim_scope": "render-fidelity",
+    "rationale": "This one randomized arm is a full technical pixel PASS, but it remains a motivating case without an unrelated held-out render inside this arm and without requesting-user judgment; no universal promotion claim is made.",
+    "evidence_ids": ["e-package", "e-prompt", "e-generation", "e-render"]
+  }
+}

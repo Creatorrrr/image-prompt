@@ -1,0 +1,127 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:327ce0c65ca87035111bc92042f95eacd70ca8b7",
+    "candidate_revision": "working-tree-snapshot:78423253a6c7903b0ed8cc29f16d3021c9234b06bf80ca71c4005ccc4dac9c5f"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Test whether the newly bound irreversible-threshold visual semantics and candidate-pack contract survive one reference-guided complex image generation."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The supplied portrait visibly provides an adult impression, long center-parted dark wavy hair, dark eyes, softly arched brows, and broadly comparable face proportions only.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256:3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The composed prompt binds all five irreversible-crossing evidence fields and passes composed and exact runtime-input audits.",
+      "artifact": "composed_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Candidate pack v6 activates irreversible_threshold_crossing_consequence through agent_postcore_interpretation with five official hard gates.",
+      "artifact": "candidate_pack.json pack_id:8d23fad358dcdf73"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Built-in image generation delivered one native image in the single permitted call.",
+      "artifact": "generation_outcome.json"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "The image passes subject continuity, concrete threshold, and directed crossing, but fails lost return and committed downstream result under partial-is-fail review.",
+      "artifact": "pixel_review.json and pixel_review_audit.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One continuous reference-guided adult subject must visibly cross a concrete one-way threshold while the exact return path becomes physically unavailable and a distinct downstream process has already begun in the same frame.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-crossing-chain",
+        "statement": "Subject continuity, concrete threshold, crossing direction, lost return, and committed result must coexist in one saved image.",
+        "evidence_ids": ["e-package", "e-prompt"],
+        "causal_controls": ["threshold topology", "travel direction", "return-path closure", "downstream process evidence"]
+      },
+      {
+        "id": "inv-reference-boundary",
+        "statement": "The portrait guides visible adult appearance only and does not support a same-person or protected-trait claim.",
+        "evidence_ids": ["e-source"],
+        "causal_controls": ["visible hair", "visible eyes", "visible brows", "broad face proportions"]
+      }
+    ],
+    "flexible_dimensions": ["camera angle", "light ownership", "metal surface detail", "exact limb placement"]
+  },
+  "mismatches": [
+    {
+      "id": "m-lost-return",
+      "scale": "regional",
+      "axis": "return-path topology",
+      "source_state": "The contract requires a closed, collapsed, or severed exact crossing path.",
+      "render_state": "The aft tunnel is burning and damaged but remains visibly open through the docking collar.",
+      "evidence_ids": ["e-render"]
+    },
+    {
+      "id": "m-committed-result",
+      "scale": "global",
+      "axis": "downstream-state legibility",
+      "source_state": "The contract requires an irreversible downstream process already underway.",
+      "render_state": "Earth and an orange band are visible, but the band is equally readable as orbital sunrise rather than reentry plasma.",
+      "evidence_ids": ["e-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-path-open",
+      "stage": "generator-response",
+      "statement": "The generator treated fire and structural damage as sufficient danger while preserving an open passage, weakening the requested physical unavailability relation.",
+      "evidence_ids": ["e-prompt", "e-render"],
+      "falsifier": "A matched future render from the same contract clearly places closed iris blades or a fully separated tunnel across the exact return axis."
+    },
+    {
+      "id": "h-plasma-ambiguous",
+      "stage": "generator-response",
+      "statement": "The first-plasma wording collapsed into an attractive orange Earth horizon because the exterior flow geometry was not visually distinct enough from sunrise.",
+      "evidence_ids": ["e-prompt", "e-render"],
+      "falsifier": "A matched future render shows a directional plasma sheath visibly contacting and streaming around the capsule exterior."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "This arm makes no runtime-data intervention; it preserves the failed render as evidence for coordinator-level revision.",
+    "generalization_basis": "Both failures concern the reusable causal relations owned by the profile rather than reference-specific facial details.",
+    "hypothesis_ids": ["h-path-open", "h-plasma-ambiguous"],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt"]},
+    "render": {"status": "fail", "evidence_ids": ["e-render", "e-generation"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "arm-01-motivating",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": ["subject continuity", "threshold", "direction", "lost return", "committed result", "reference appearance"],
+        "evidence_ids": ["e-render"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Preflight and delivery pass, but two of five official pixel gates fail in the only permitted attempt; no promotion claim is supported and requesting-user judgment remains pending.",
+    "evidence_ids": ["e-package", "e-prompt", "e-generation", "e-render"]
+  }
+}
