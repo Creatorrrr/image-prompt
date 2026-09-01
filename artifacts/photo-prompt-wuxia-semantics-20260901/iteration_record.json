@@ -1,0 +1,229 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "266054f917aa290c320481d28e9297913379247c",
+    "candidate_revision": "working-tree-2026-09-01-wuxia-visual-semantics"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Strengthen the visual-semantic data and candidate pack from the referenced wuxia keyword research with detailed source research, bounded observable components, confusion controls, and regression coverage."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The referenced conversation supplied a broad wuxia vocabulary spanning jianghu society, martial action, institutions, props, locations, ethics, narrative states, and genre boundaries.",
+      "artifact": "chatgpt-conversation://6a962b10-f04c-83e8-8cfa-e1d0d60a7544"
+    },
+    {
+      "id": "e-baseline",
+      "kind": "prompt-inspection",
+      "claim": "The baseline candidate pack reduced wuxia mainly to portrait, costume, sword, bamboo, and mist candidates and treated wuxia, xianxia, fantasy, and cosplay as near-synonyms without scene-level social relations.",
+      "artifact": "baseline revision plus working-tree diff for skills/photo-prompt-image-generator/assets/photo_prompt_tags.json"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Ten source-bound records support a four-tier visualizability model, six observable scene families, explicit wuxia-xianxia and event-substitute boundaries, and limitations on hidden-state inference.",
+      "artifact": "docs/research-evidence/photo-prompt/wuxia-20260901/source-research.md and docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary metadata, generated semantic and visual-profile indexes, 65 focused and related regression tests, and git diff whitespace validation pass on the integrated working tree.",
+      "artifact": "artifacts/photo-prompt-wuxia-semantics-20260901/validation_summary.json"
+    },
+    {
+      "id": "e-routing",
+      "kind": "prompt-evaluation",
+      "claim": "Six narrow multilingual scene phrases route to exactly one intended hard profile, while broad genre, social, setting, adjacent-genre, and substitute terms remain non-hard; unrelated visual-routing fixtures continue to pass.",
+      "artifact": "tests/test_photo_wuxia_visual_semantics.py and artifacts/photo-prompt-wuxia-semantics-20260901/validation_summary.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A selected wuxia scene is represented as one bounded visible event with all required adult roles, environmental anchors, action geometry, ownership, and immediate consequence, while broad lore and hidden social or moral claims remain non-hard.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-event-owner",
+        "statement": "Every hard wuxia scene has one relation owner, five required component groups, five evidence fields, five pixel-review gates, and at least five explicit substitutes that cannot pass.",
+        "evidence_ids": ["e-research", "e-package", "e-routing"],
+        "causal_controls": [
+          "adult role count",
+          "bounded event space",
+          "trajectory or threat line",
+          "ownership and support",
+          "immediate consequence"
+        ]
+      },
+      {
+        "id": "inv-narrow-activation",
+        "statement": "Only narrow multilingual scene phrases may activate a hard profile; generic wuxia, jianghu, xia, biwu, biaoju, martial-arts, location, and costume terms remain discovery context.",
+        "evidence_ids": ["e-research", "e-routing"],
+        "causal_controls": [
+          "exact phrase",
+          "negative context",
+          "semantic component guard",
+          "generic term holdout"
+        ]
+      },
+      {
+        "id": "inv-no-hidden-identity-or-virtue",
+        "statement": "Costume, face, title, faction styling, ethnicity, nationality, reputation, or presumed virtue cannot prove a xia, sect, escort, or jianghu relation.",
+        "evidence_ids": ["e-research", "e-package"],
+        "causal_controls": [
+          "external action geometry",
+          "distinct role positions",
+          "owned objects",
+          "observable consequence"
+        ]
+      },
+      {
+        "id": "inv-genre-separation",
+        "statement": "Wuxia candidates no longer retrieve xianxia or cosplay as automatic synonyms, and xianxia cultivation remains a separate context route.",
+        "evidence_ids": ["e-baseline", "e-research", "e-routing"],
+        "causal_controls": [
+          "aliases",
+          "keywords",
+          "embedding boundary text",
+          "adjacent-genre negative cases"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "camera angle",
+      "lens and crop outside required visibility",
+      "color palette",
+      "lighting style outside required separation",
+      "incidental architecture and wardrobe detail",
+      "fictional names and blank token design"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-genre-conflation",
+      "scale": "global",
+      "axis": "wuxia genre boundary",
+      "source_state": "The conversation distinguishes jianghu martial chivalry from cultivation-centered xianxia and generic kung-fu presentation.",
+      "render_state": "Legacy candidates combined wuxia with xianxia fantasy and cosplay language.",
+      "evidence_ids": ["e-request", "e-baseline", "e-research"]
+    },
+    {
+      "id": "m-flat-inventory",
+      "scale": "regional",
+      "axis": "social event representation",
+      "source_state": "Inn tension biwu xia intervention biaoju escort and sect relations require multiple roles zones and consequences.",
+      "render_state": "The baseline exposed mostly isolated genre costume weapon and location candidates without one owner for those relations.",
+      "evidence_ids": ["e-request", "e-baseline", "e-research"]
+    },
+    {
+      "id": "m-hidden-state-risk",
+      "scale": "local",
+      "axis": "visual claim boundary",
+      "source_state": "Internal energy rank loyalty virtue reputation and identity are narrative semantics unless externalized through observable events.",
+      "render_state": "Broad labels could encourage a prompt or evaluator to treat costume and atmosphere as evidence for hidden lore.",
+      "evidence_ids": ["e-request", "e-research"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-relational-scene-owner",
+      "stage": "representation",
+      "statement": "Assigning one all-of visual profile to each high-value wuxia event will preserve its roles paths zones ownership and immediate consequence better than a flat list of style tags.",
+      "evidence_ids": ["e-baseline", "e-research", "e-routing"],
+      "falsifier": "The new profiles omit required role or geometry groups, or narrow exact phrases do not materialize the complete intended contract."
+    },
+    {
+      "id": "h-generic-terms-advisory",
+      "stage": "representation",
+      "statement": "Keeping genre social and setting-only terms advisory prevents false hard obligations without blocking narrow event phrases.",
+      "evidence_ids": ["e-research", "e-routing"],
+      "falsifier": "A broad term hard-activates one of the six profiles, or a documented narrow phrase fails to activate exactly its intended profile."
+    },
+    {
+      "id": "h-adjacent-genre-separation",
+      "stage": "representation",
+      "statement": "Removing xianxia and cosplay from legacy wuxia aliases and keywords reduces adjacent-genre collapse while preserving explicit cultivation discovery on the xianxia route.",
+      "evidence_ids": ["e-baseline", "e-research", "e-routing"],
+      "falsifier": "Legacy wuxia aliases or keywords still contain xianxia or cosplay synonyms, or the xianxia candidate still uses wuxia as an alias."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "reference", "test"],
+    "general_rule": "Translate broad genre research into direct morphology candidates, relation-owned event profiles, advisory social context, and nonvisual lore exclusions; require narrow activation and complete component evidence before any hard visual claim.",
+    "generalization_basis": "The same separation between objects, multi-actor relations, social context, and hidden state applies across rooftop movement, duels, public standoffs, ritual contests, protective interventions, and institutional escorts.",
+    "hypothesis_ids": [
+      "h-relational-scene-owner",
+      "h-generic-terms-advisory",
+      "h-adjacent-genre-separation"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/aefe314da4c1fe7e/",
+      "docs/research-evidence/photo-prompt/wuxia-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "tests/test_photo_wuxia_visual_semantics.py",
+      "tests/test_photo_traditional_clothing_semantics.py",
+      "artifacts/photo-prompt-wuxia-semantics-20260901/validation_summary.json",
+      "artifacts/photo-prompt-wuxia-semantics-20260901/iteration_record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-routing"]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-broad-and-adjacent-terms",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "generic genre terms",
+          "social-world terms",
+          "xianxia cultivation",
+          "generic locations",
+          "scene substitutes"
+        ],
+        "evidence_ids": ["e-routing"]
+      },
+      {
+        "id": "holdout-unrelated-visual-families",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "weapon profiles",
+          "traditional clothing profiles",
+          "visual profile retrieval",
+          "BM25F retrieval",
+          "shared visual-obligation routing"
+        ],
+        "evidence_ids": ["e-package", "e-routing"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "Source-bound candidate and contract data, narrow and negative routing behavior, generated-index consistency, and unrelated structural regressions pass. No image was rendered and no user aesthetic judgment was collected, so render fidelity and promotion remain unclaimed.",
+    "evidence_ids": ["e-research", "e-package", "e-routing"]
+  }
+}

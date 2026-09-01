@@ -1,0 +1,186 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "266054f917aa290c320481d28e9297913379247c",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Strengthen fantasy-keyword visual semantics and candidate-pack data from the referenced fantasy terminology research without turning broad genre, class, ancestry, or metaphysical labels into unsupported hard pixel claims."
+  },
+  "evidence": [
+    {
+      "id": "fantasy_source_research",
+      "kind": "external-research",
+      "claim": "Authoritative museum, library, science-history, primary-text, and specialist-reference sources support bounded morphology, process, threshold, and causal-relation dimensions while also exposing tradition and single-still limitations.",
+      "artifact": "docs/research-evidence/photo-prompt/fantasy-visual-semantics-20260901/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "fantasy_runtime_sources",
+      "kind": "source-observation",
+      "claim": "The runtime sources now contain twelve five-component visual profiles, forty-three candidate entries, and four-scene identity-core role recipes for summoner and alchemist.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json, photo_prompt_tags.json, and concept_recipes.json"
+    },
+    {
+      "id": "fantasy_package_validation",
+      "kind": "package-check",
+      "claim": "JSON parsing, visual-profile index check, dictionary metadata validation, profile count, exact-term count, and sharded semantic-index generation completed without validation errors.",
+      "artifact": "build_visual_profile_index.py --check reported 144 profiles and 894 exact terms; validate_photo_prompt_dictionary.py reported valid metadata; build_semantic_index.py wrote 7278 entries in 16 shards"
+    },
+    {
+      "id": "fantasy_prompt_routing_tests",
+      "kind": "prompt-evaluation",
+      "claim": "Focused routing tests pass direct activation, adjacent-negative boundaries, griffin-hippogriff-wyvern separation, candidate completeness, role scene reference integrity, alias boundaries, and approved evidence binding.",
+      "artifact": ".venv/bin/python -m pytest -q tests/test_photo_fantasy_visual_semantics.py: 9 passed and 78 subtests passed"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A requested narrow fantasy concept resolves into observable morphology, boundary, process, or causal-relation evidence with explicit confound controls, while broad or adjacent terminology remains advisory unless the user supplies a definition.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "five_component_observability",
+        "statement": "Every promoted fantasy visual profile must require five independent observable component groups and five pixel review gates rather than rely on a label, costume, aura, or decorative prop.",
+        "evidence_ids": ["fantasy_source_research", "fantasy_runtime_sources", "fantasy_prompt_routing_tests"],
+        "causal_controls": ["direct exact term activates only the intended narrow profile", "adjacent nouns and generic fantasy labels remain negative controls", "semantic similarity remains candidate-only"]
+      },
+      {
+        "id": "relation_and_topology_separation",
+        "statement": "Portal, summoning, alchemy, construct agency, familiar cooperation, magic-circle boundary, and creature topology must remain distinct contracts with explicit nearest-neighbor rejection.",
+        "evidence_ids": ["fantasy_source_research", "fantasy_prompt_routing_tests"],
+        "causal_controls": ["griffin uses lion rear while hippogriff uses horse rear", "summoner uses a separately arriving entity while necromancer uses a dead anchor", "portal requires two spaces and crossing while magic circle requires a local inside-outside rule"]
+      },
+      {
+        "id": "evidence_layer_boundary",
+        "statement": "Package and prompt-routing success cannot be reported as rendered-pixel fidelity or user aesthetic approval.",
+        "evidence_ids": ["fantasy_package_validation", "fantasy_prompt_routing_tests"],
+        "causal_controls": ["render evaluation remains unscored", "user evaluation remains unscored", "no image generation is used as hidden validation"]
+      }
+    ],
+    "flexible_dimensions": [
+      "original character appearance and wardrobe",
+      "fictional culture and setting",
+      "camera and lighting choices that preserve evidence",
+      "non-readable original symbols and surface ornament",
+      "creature color texture scale and temperament",
+      "explicit requester definitions that override registry defaults"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "broad_taxonomy_vs_pixel_contract",
+      "scale": "global",
+      "axis": "terminology breadth",
+      "source_state": "The referenced conversation contains genre, metaphysical, class, ancestry, object, creature, and narrative terms in one broad taxonomy.",
+      "render_state": "Only a subset has stable single-still morphology or causal evidence; hardening the entire taxonomy would invent unsupported appearance rules.",
+      "evidence_ids": ["fantasy_source_research"]
+    },
+    {
+      "id": "role_label_vs_visible_mechanism",
+      "scale": "regional",
+      "axis": "fantasy profession representation",
+      "source_state": "Summoner and alchemist are role labels that can be represented by inherited costume, game icons, glow, bottles, or laboratory clutter.",
+      "render_state": "The target needs operator-source-entity arrival and operator-apparatus-material transition chains that survive removal of costume and atmosphere.",
+      "evidence_ids": ["fantasy_source_research", "fantasy_runtime_sources"]
+    },
+    {
+      "id": "hybrid_name_vs_connected_anatomy",
+      "scale": "local",
+      "axis": "fantasy creature topology",
+      "source_state": "Griffin, hippogriff, wyvern, and hydra names are often satisfied by approximate wings, extra heads, or collage-like animal parts.",
+      "render_state": "The target requires connected limb counts, separate roots, correct rear-animal ownership, and uncropped hybrid junctions.",
+      "evidence_ids": ["fantasy_source_research", "fantasy_prompt_routing_tests"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "observable_component_profiles_reduce_alias_drift",
+      "stage": "representation",
+      "statement": "Encoding independent component groups and nearest-neighbor rejects will prevent a famous label or approximate noun from becoming a false hard visual match.",
+      "evidence_ids": ["fantasy_source_research", "fantasy_runtime_sources"],
+      "falsifier": "An adjacent generic term activates one of the twelve new profiles or a direct term routes to the wrong new profile."
+    },
+    {
+      "id": "causal_role_clusters_reduce_costume_only_scenes",
+      "stage": "prompt-priority",
+      "statement": "Identity-core role recipes built from operator, action, medium, localized change, and aftermath candidates will prioritize visible role mechanisms over robe, bottle, glow, or inherited iconography.",
+      "evidence_ids": ["fantasy_runtime_sources", "fantasy_prompt_routing_tests"],
+      "falsifier": "A role variant omits the fixed practitioner subject or references a missing action, prop, effect, location, or aftermath candidate."
+    },
+    {
+      "id": "explicit_confound_pairs_preserve_neighbor_distinctions",
+      "stage": "prompt-interaction",
+      "statement": "Pairwise confound controls for portal versus magic circle, summoner versus necromancer, griffin versus hippogriff, and wyvern versus dragon will keep composed prompts from collapsing into the nearest popular trope.",
+      "evidence_ids": ["fantasy_source_research", "fantasy_prompt_routing_tests"],
+      "falsifier": "A held-out adjacent phrase produces more than the intended new profile or broad genre and ancestry labels force a new profile."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "reference", "test"],
+    "general_rule": "Promote only narrow fantasy meanings that can be falsified through connected morphology, boundary, process, or causal relation; represent roles through coherent candidate clusters and keep broad labels advisory.",
+    "generalization_basis": "The same component-and-confound method applies across thresholds, operator events, constructed agents, hybrid anatomy, temporal transitions, and cooperative bonds, while the source review identifies where cultural or narrative variation blocks universal hardening.",
+    "hypothesis_ids": ["observable_component_profiles_reduce_alias_drift", "causal_role_clusters_reduce_costume_only_scenes", "explicit_confound_pairs_preserve_neighbor_distinctions"],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/fantasy-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/fantasy-visual-semantics-20260901/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/fantasy-visual-semantics-20260901/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/concept_recipes.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/",
+      "tests/test_photo_fantasy_visual_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["fantasy_package_validation"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["fantasy_prompt_routing_tests"]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating_direct_fantasy_terms",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["twelve direct routes", "five-component contracts", "candidate cluster completeness"],
+        "evidence_ids": ["fantasy_prompt_routing_tests"]
+      },
+      {
+        "id": "heldout_neighbor_confounders",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["portal site and ring negatives", "summoner necromancer separation", "griffin hippogriff wyvern separation", "construct substitutions"],
+        "evidence_ids": ["fantasy_prompt_routing_tests"]
+      },
+      {
+        "id": "heldout_broad_labels",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["genre labels", "wizard sorcerer warlock", "dragon", "elf orc fairy", "hard magic"],
+        "evidence_ids": ["fantasy_prompt_routing_tests"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The source-backed contracts, candidate clusters, role recipes, regenerated indexes, and focused routing holdouts pass at package and prompt-behavior layers. No render or user evidence was collected, so the work is implemented but not claimed as pixel fidelity or aesthetic approval.",
+    "evidence_ids": ["fantasy_source_research", "fantasy_runtime_sources", "fantasy_package_validation", "fantasy_prompt_routing_tests"]
+  }
+}
