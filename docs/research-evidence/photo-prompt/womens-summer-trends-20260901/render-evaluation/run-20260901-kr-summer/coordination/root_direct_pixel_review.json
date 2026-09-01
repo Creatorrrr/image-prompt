@@ -1,0 +1,137 @@
+{
+  "schema_version": "photo-root-direct-pixel-review/v1",
+  "reviewed_at": "2026-09-02T00:20:00+09:00",
+  "reviewer": "root coordinator direct pixel reinspection",
+  "review_method": "direct_pixel_inspection_after_subagent_completion",
+  "blindness": "not_blind_to_arm_assignment_or_subagent_verdict",
+  "partial_is_fail": true,
+  "reference_boundary": "The supplied portrait is evaluated only as a source of visible adult appearance cues. This review does not infer identity, same-person status, biometrics, protected traits, health, attractiveness, personality, or nationality.",
+  "evidence_layer_boundary": "Candidate-pack, composed-prompt, and runtime-request PASS do not establish delivered pixels. A blocked generation has no pixel score, and user preference remains separate.",
+  "arms": [
+    {
+      "arm_id": "capri",
+      "profile_id": "capri_trouser_below_knee_clear_ankle_gap",
+      "delivery_status": "success",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/capri/generated_capri.png",
+        "sha256": "dd03e2df1921d8cc0d37e3dc4c571c92428de34e34d51ffc356cada24ac2afb3",
+        "width": 1023,
+        "height": 1537
+      },
+      "package_status": "pass",
+      "prompt_status": "pass",
+      "runtime_status": "pass",
+      "pixel_gate_evaluations": [
+        {
+          "id": "vo_summer_capri_two_trouser_legs",
+          "status": "pass",
+          "evidence": "The black lower garment separates continuously from the crotch through the walking stride into two independently readable trouser legs."
+        },
+        {
+          "id": "vo_summer_capri_paired_below_knee_hems",
+          "status": "pass",
+          "evidence": "Both dark hems are visible below their corresponding knees around the calves in the same full-body frame."
+        },
+        {
+          "id": "vo_summer_capri_clear_ankle_gaps",
+          "status": "pass",
+          "evidence": "Continuous bare lower-leg intervals remain visible from both hems to both ankles above the flats."
+        },
+        {
+          "id": "vo_summer_capri_landmarks_unobstructed",
+          "status": "pass",
+          "evidence": "Both knee positions, hem edges, ankles, and shoes can be traced simultaneously without a crop or foreground obstruction."
+        },
+        {
+          "id": "vo_summer_capri_not_bermuda_or_ankle_crop",
+          "status": "pass",
+          "evidence": "The hems sit materially below the knees while leaving long calf-to-ankle gaps, excluding knee shorts, ankle crops, full length, and camera truncation."
+        }
+      ],
+      "overall_pixel_status": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "harem",
+      "profile_id": "gathered_ankle_voluminous_trouser",
+      "delivery_status": "success",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/harem/generated.png",
+        "sha256": "5b3ed5999ff7dcb0d71020fe840c51e4a5e7bdd0c1a7fb97c6eaf7c7df6eb7db",
+        "width": 1024,
+        "height": 1536
+      },
+      "package_status": "pass",
+      "prompt_status": "pass",
+      "runtime_status": "pass",
+      "pixel_gate_evaluations": [
+        {
+          "id": "vo_summer_harem_gathered_waist",
+          "status": "pass",
+          "evidence": "One dense gathered waistband is clearly visible and releases a large olive fabric mass into two legs."
+        },
+        {
+          "id": "vo_summer_harem_roomy_seat_crotch",
+          "status": "pass",
+          "evidence": "The upper trousers retain a visibly loose central drape and roomy seat-crotch region beneath the waistband."
+        },
+        {
+          "id": "vo_summer_harem_hip_thigh_volume",
+          "status": "pass",
+          "evidence": "Both hip and thigh regions preserve pronounced fabric mass and multiple long folds rather than collapsing into slim legs."
+        },
+        {
+          "id": "vo_summer_harem_two_gathered_cuffs",
+          "status": "pass",
+          "evidence": "Folds converge separately into two visible narrow elastic-gathered ankle cuffs above two translucent sandals."
+        },
+        {
+          "id": "vo_summer_harem_not_wide_balloon_jogger",
+          "status": "pass",
+          "evidence": "The two-leg bifurcation, upper volume, loose folds, and visibly ruched paired cuffs exclude straight wide legs, smooth balloon hems, and a low-volume jogger substitute."
+        }
+      ],
+      "overall_pixel_status": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "lace",
+      "profile_id": "lace_trim_attached_edge",
+      "delivery_status": "blocked",
+      "image": null,
+      "package_status": "pass",
+      "prompt_status": "pass",
+      "runtime_status": "pass",
+      "generation_outcome": {
+        "status": "moderation_blocked",
+        "stage": "output",
+        "category": "sexual",
+        "image_call_count": 1,
+        "retry_count": 0
+      },
+      "pixel_gate_evaluations": [
+        {"id": "vo_summer_lace_trim_base_material", "status": "unscored", "evidence": "No pixels were delivered."},
+        {"id": "vo_summer_lace_trim_narrow_band", "status": "unscored", "evidence": "No pixels were delivered."},
+        {"id": "vo_summer_lace_trim_openwork_motifs", "status": "unscored", "evidence": "No pixels were delivered."},
+        {"id": "vo_summer_lace_trim_attachment_and_scallop", "status": "unscored", "evidence": "No pixels were delivered."},
+        {"id": "vo_summer_lace_trim_not_print_whole_or_detached", "status": "unscored", "evidence": "No pixels were delivered."}
+      ],
+      "overall_pixel_status": "blocked_unscored",
+      "user_judgment": "pending"
+    }
+  ],
+  "aggregate": {
+    "requested_arms": 3,
+    "delivered_arms": 2,
+    "pixel_qualified_arms": 2,
+    "pixel_failed_arms": 0,
+    "blocked_unscored_arms": 1,
+    "delivered_gate_passes": 10,
+    "delivered_gate_total": 10,
+    "all_requested_gate_total": 15,
+    "render_evaluation_status": "blocked",
+    "decision": "revise",
+    "user_judgment": "pending",
+    "rationale": "The two delivered images pass every fixed profile gate under direct reinspection, but the third required arm returned no pixels. Render-fidelity qualification is therefore incomplete rather than failed or promoted."
+  }
+}

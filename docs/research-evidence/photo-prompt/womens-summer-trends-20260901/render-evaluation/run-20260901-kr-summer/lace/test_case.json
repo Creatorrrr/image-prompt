@@ -1,0 +1,31 @@
+{
+  "schema_version": "photo-womens-summer-trend-semantic-pixel-case/v1",
+  "arm_id": "kr-summer-lace",
+  "concept_seed": 26090173,
+  "concept": "late-night laundromat beside a rain-slick intercity bus terminal",
+  "profile_id": "lace_trim_attached_edge",
+  "target_region": "camisole neckline, lower hem, lace openwork, stitched join, and base satin",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference"
+  },
+  "required_review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "required_gate_ids": [
+    "vo_summer_lace_trim_base_material",
+    "vo_summer_lace_trim_narrow_band",
+    "vo_summer_lace_trim_openwork_motifs",
+    "vo_summer_lace_trim_attachment_and_scallop",
+    "vo_summer_lace_trim_not_print_whole_or_detached"
+  ],
+  "verdict_rule": {
+    "unit": "one_saved_image",
+    "pass": "all_required_gates_pass",
+    "partial_or_missing_component_in_delivered_pixels": "fail",
+    "prompt_presence_only": "insufficient",
+    "missing_or_blocked_render": "unscored"
+  }
+}

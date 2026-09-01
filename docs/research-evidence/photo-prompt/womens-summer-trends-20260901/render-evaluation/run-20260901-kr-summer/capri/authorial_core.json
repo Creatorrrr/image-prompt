@@ -1,0 +1,61 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent complex fashion photograph that tests the visible below-knee length topology of capri trousers while using the attached portrait only as an adult appearance reference.",
+  "subject": "A clearly adult woman whose visible hair, eyes, makeup, and calm expression are guided by the attached portrait.",
+  "setting": "A rain-cleared rooftop greenhouse in Seoul at cobalt blue hour.",
+  "event": "She steps between wet planters while fastening a lemon mini bag at her hip.",
+  "visual_priorities": [
+    "Both trouser hems visibly end below the knees at mid-calf with bare lower-leg gaps before the shoes.",
+    "The full-body framing keeps both knee, hem, ankle, and shoe landmarks unobstructed."
+  ],
+  "baseline_prompt_en": "Create a full-body 35 mm fashion photograph in a rain-cleared rooftop greenhouse in Seoul at cobalt blue hour. A clearly adult woman with long dark center-parted softly waved hair, warm brown eyes, natural makeup, and a calm expression is guided only by the visible appearance in the attached portrait. She steps between wet planters while fastening a lemon mini bag at her hip. She wears an ivory ribbed fitted tank, a featherlight blue striped overshirt moving in the breeze, and black fitted capri trousers that end clearly below both knees at mid-calf, leaving unmistakable bare lower-calf-to-ankle gaps above pointed ballet flats. Keep both knees, trouser hems, ankles, and shoes unobstructed in the same frame. Wet glass, small herb labels, reflected city lights, and one silver pendant add layered detail; cool ambient light meets one warm greenhouse practical.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "three independent random complex concepts testing applied keywords",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm independently tests capri-trouser length topology in a complex rooftop-greenhouse fashion scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a rain-cleared rooftop greenhouse in Seoul at cobalt blue hour"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a clearly adult woman with long dark center-parted softly waved hair, warm brown eyes, natural makeup, and a calm expression"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "she steps between wet planters while fastening a lemon mini bag at her hip"
+      }
+    ],
+    "locked_dimensions": ["concept", "subject", "event"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial street fashion photography",
+    "family": "rain-polished Seoul rooftop realism",
+    "evidence": ["wet greenhouse glass", "mixed cool ambient and warm practical light"]
+  },
+  "variation_key": "kr-summer-capri-rooftop-20260901"
+}

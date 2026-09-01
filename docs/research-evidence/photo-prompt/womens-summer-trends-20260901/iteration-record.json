@@ -1,0 +1,357 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "b92ad285980c37b03b5f611d371645dd242cd093",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply the referenced and subsequently expanded Korean summer-trend research to visual-semantics and candidate-pack data, then use three independent subagents to author, generate, and pixel-test different random complex appearance-reference concepts."
+  },
+  "evidence": [
+    {
+      "id": "summer_reference_conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation and its later domestic-trend addition prioritize capri lengths, harem or balloon volume, lace and wrap construction, lightweight layers, low-profile or jelly footwear, small accessories, and lemon accents, but mix popularity labels with observable garment structure.",
+      "artifact": "ChatGPT conversation 6a96bb47-e36c-83ee-81fe-9684f936f26d and docs/research-evidence/photo-prompt/womens-summer-trends-20260901/source-research.md"
+    },
+    {
+      "id": "summer_external_research",
+      "kind": "external-research",
+      "claim": "Current official KakaoStyle, Musinsa, and 29CM material supports the domestic summer candidate priorities, while a Museums Victoria record supports gathered-ankle harem structure; none of these sources establishes pixel fidelity or hidden textile performance.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/source-research.md and docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "summer_runtime_data",
+      "kind": "source-observation",
+      "claim": "Runtime data now contains twenty-six relevant axis-owned candidate IDs, including twenty-three new and three strengthened candidates, plus six narrow five-component visual profiles for capri, harem, balloon, wrap, attached lace trim, and molded translucent jelly footwear.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json and skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json"
+    },
+    {
+      "id": "summer_package_validation",
+      "kind": "package-check",
+      "claim": "At the summer-isolated checkpoint, dictionary validation passed with 252 registry-bound profiles, 1353 exact terms, and 7835 sharded semantic entries; the focused summer suite passed 10 tests. After an unrelated concurrent task extended the same shared assets, the current combined worktree also validates with 259 profiles, 1404 exact terms, 7842 semantic entries, and the summer suite still passes all 10 tests.",
+      "artifact": "validate_photo_prompt_dictionary.py: valid at both checkpoints; build_visual_profile_index.py --check: isolated 252 profiles and 1353 exact terms, current combined 259 profiles and 1404 exact terms; build_semantic_index.py: isolated 7835 entries, current combined 7842 entries; python -m unittest -q tests.test_photo_womens_summer_trend_visual_semantics: 10 tests OK at both checkpoints"
+    },
+    {
+      "id": "summer_concurrent_workspace_boundary",
+      "kind": "repository-history",
+      "claim": "During final verification, an unrelated rare-photo visual-semantics task added seven profiles, seven semantic entries, its own evidence directory, and tests to the shared working tree. Those files and combined derived indexes were preserved, not edited or attributed to the summer intervention.",
+      "artifact": "git status --short showed docs/research-evidence/photo-prompt/rare-photo-visual-semantics-20260902, tests/test_photo_rare_photo_visual_semantics.py, its fixture, visual index 259/1404, and semantic entry_count 7842"
+    },
+    {
+      "id": "summer_prompt_regressions",
+      "kind": "prompt-evaluation",
+      "claim": "The v6 authorial-core suite passes 18 tests and visual-profile retrieval passes 12 tests, while all three isolated summer packs expose the intended hard visual profile and all three composed and runtime audits pass.",
+      "artifact": "python -m unittest -q tests.test_photo_authorial_core_v6: 18 tests OK; tests.test_photo_visual_profile_retrieval: 12 tests OK; three arm candidate_pack.json, composed_prompt.json, and runtime_audit.json files"
+    },
+    {
+      "id": "summer_baseline_boundary",
+      "kind": "source-observation",
+      "claim": "Five existing yandere routing fixture failures reproduce identically against HEAD and the current registry because nurse text also activates the pre-existing clinical_nursing_duty_system; no summer profile appears in those failures. Two prompt-generator expectations are also stale at 140 missing concept-recipe references and a 6910 versus 7835 semantic-row count.",
+      "artifact": "HEAD-versus-current diagnostic replay for five visual_obligation_routing_v1.jsonl yandere cases and focused unittest replay of test_all_concept_recipe_forced_slots_are_registered plus test_all_semantic_inputs_exclude_control_and_process_metadata"
+    },
+    {
+      "id": "summer_capri_render",
+      "kind": "render-observation",
+      "claim": "The independent capri arm delivered one 1023 by 1537 image whose two legs, paired below-knee hems, paired bare ankle gaps, unobstructed landmarks, and non-Bermuda or non-ankle-crop boundary all pass at the required scales.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/capri/generated_capri.png, pixel_review.json, run_manifest.json, and coordination/root_direct_pixel_review.json"
+    },
+    {
+      "id": "summer_harem_render",
+      "kind": "render-observation",
+      "claim": "The independent harem arm delivered one 1024 by 1536 image whose gathered waist, roomy seat-crotch, bilateral hip-thigh volume, paired gathered cuffs, and substitute boundary all pass at the required scales; translucent molded sandals are also visible but are not part of the scored harem gates.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/harem/generated.png, pixel_review.json, run_manifest.json, and coordination/root_direct_pixel_review.json"
+    },
+    {
+      "id": "summer_lace_block",
+      "kind": "generation-outcome",
+      "claim": "The independent lace arm passed its v6 pack, composed prompt, and runtime audits, but its one authorized image call was blocked at output moderation and returned no pixels; all five lace gates are therefore unscored and no retry was made.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/lace/generation_outcome.json, pixel_review.json, and run_manifest.json"
+    },
+    {
+      "id": "summer_generation_independence",
+      "kind": "measurement",
+      "claim": "Three explicitly isolated subagents used separate frozen request envelopes, authorial cores, visual intents, candidate packs, prompts, and run directories with no cross-arm inputs. Each arm made exactly one image call; two delivered images and one was blocked.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/capri/run_manifest.json, harem/run_manifest.json, lace/run_manifest.json, and tests/fixtures/photo_prompt/womens_summer_trend_pixel_test_cases_v1.jsonl"
+    },
+    {
+      "id": "summer_root_pixel_review",
+      "kind": "render-observation",
+      "claim": "Coordinator direct reinspection corroborates 10 of 10 gates across the two delivered images and records the blocked lace arm separately; this was not blind to assignment or subagent verdict and does not score user preference.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/coordination/root_direct_pixel_review.json and aggregate_report.md"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A selected summer garment meaning must survive as its own visible same-frame topology rather than as a retailer label or styling mood, while the supplied portrait affects only visible adult appearance cues and user preference remains separately unscored.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "topology_over_trend_label",
+        "statement": "Every promoted garment profile requires five independently reviewable components and five fail-closed gates that distinguish the nearest retail or visual substitute.",
+        "evidence_ids": [
+          "summer_external_research",
+          "summer_runtime_data",
+          "summer_package_validation",
+          "summer_root_pixel_review"
+        ],
+        "causal_controls": [
+          "exact narrow phrase activates one hard profile",
+          "broad or negated neighboring terms stay non-hard",
+          "one missing or ambiguous delivered-image gate fails that arm"
+        ]
+      },
+      {
+        "id": "axis_owned_candidates",
+        "statement": "Outfit formulas are decomposed across wardrobe, garment detail, silhouette, footwear, surface, accessory, and color owners so one trend label cannot silently force every styling dimension.",
+        "evidence_ids": [
+          "summer_reference_conversation",
+          "summer_external_research",
+          "summer_runtime_data",
+          "summer_package_validation"
+        ],
+        "causal_controls": [
+          "candidate IDs have exactly one slot owner",
+          "semantic metadata supports human use without protected-trait inference",
+          "performance and hidden-construction claims stay outside visual candidates"
+        ]
+      },
+      {
+        "id": "evidence_layer_separation",
+        "statement": "Package, prompt, runtime request, delivered pixels, and requesting-user preference remain distinct evidence layers, and an output block is recorded as blocked rather than as visual failure or success.",
+        "evidence_ids": [
+          "summer_prompt_regressions",
+          "summer_capri_render",
+          "summer_harem_render",
+          "summer_lace_block",
+          "summer_root_pixel_review"
+        ],
+        "causal_controls": [
+          "prompt and runtime audits precede generation",
+          "pixel gates cite delivered images only",
+          "user judgment remains pending"
+        ]
+      },
+      {
+        "id": "independent_single_call_arms",
+        "statement": "Each test arm uses only its own frozen lineage, one appearance reference, one image call, and no sibling-arm artifact, while coordinator review occurs only after the arms complete.",
+        "evidence_ids": [
+          "summer_generation_independence",
+          "summer_root_pixel_review"
+        ],
+        "causal_controls": [
+          "three separate subagents",
+          "cross_arm_inputs_used false in every manifest",
+          "one image call and no retry per arm"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "random complex setting and event",
+      "camera, light, and composition that preserve assigned gates",
+      "non-scored supporting summer candidates",
+      "fictional styling details unrelated to identity",
+      "explicit requester definitions that override a default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "popularity_vs_observable_structure",
+      "scale": "global",
+      "axis": "trend evidence",
+      "source_state": "Domestic retail and editorial research ranks current terms and combinations but does not define a sufficient pixel contract.",
+      "render_state": "Only six narrow structures are hard profiles; popularity percentages, broad styling labels, hidden cups, fiber claims, comfort, cooling, UV, and waterproofing remain outside pixel certainty.",
+      "evidence_ids": [
+        "summer_reference_conversation",
+        "summer_external_research",
+        "summer_runtime_data"
+      ]
+    },
+    {
+      "id": "garment_name_vs_nearest_substitute",
+      "scale": "regional",
+      "axis": "lower-garment topology",
+      "source_state": "Capri, Bermuda, 7/8 crop, harem, balloon, straight wide, and jogger names overlap across retail taxonomies and can be substituted by a generator.",
+      "render_state": "Length landmarks, upper-volume relations, leg curvature, hem topology, and explicit substitute rejects own the hard decision rather than the label alone.",
+      "evidence_ids": [
+        "summer_external_research",
+        "summer_runtime_data",
+        "summer_capri_render",
+        "summer_harem_render"
+      ]
+    },
+    {
+      "id": "lace_prompt_vs_no_pixels",
+      "scale": "local",
+      "axis": "render delivery",
+      "source_state": "The lace arm contains five audited prompt bindings for base material, narrow band, openwork cells, attachment line, and scalloped free edge.",
+      "render_state": "The output moderation block returned no image, so none of those five visual relations can be scored from pixels.",
+      "evidence_ids": [
+        "summer_prompt_regressions",
+        "summer_lace_block"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "five_component_profiles_reduce_substitution",
+      "stage": "representation",
+      "statement": "Five profile-owned component relations and nearest-substitute rejects will reduce common retail-label substitutions in complex generated scenes.",
+      "evidence_ids": [
+        "summer_external_research",
+        "summer_runtime_data",
+        "summer_capri_render",
+        "summer_harem_render"
+      ],
+      "falsifier": "A broad or neighboring term creates the hard profile, or a delivered image passes while a required topology component is absent or ambiguous."
+    },
+    {
+      "id": "axis_ownership_preserves_composable_trends",
+      "stage": "prompt-priority",
+      "statement": "Separating wardrobe formula, construction detail, silhouette, material, footwear, accessory, and color will let candidate packs combine domestic summer cues without one monolithic trend entry overriding the frozen scene.",
+      "evidence_ids": [
+        "summer_runtime_data",
+        "summer_package_validation",
+        "summer_prompt_regressions"
+      ],
+      "falsifier": "A candidate appears in multiple owner slots, lacks semantic metadata, or is required over a conflicting authorial core."
+    },
+    {
+      "id": "dedicated_detail_framing_supports_lace",
+      "stage": "generator-response",
+      "statement": "A knee-up or closer frame with explicit base-material, openwork, stitch-line, and scallop evidence should make attached lace trim auditable when image delivery succeeds.",
+      "evidence_ids": [
+        "summer_runtime_data",
+        "summer_prompt_regressions",
+        "summer_lace_block"
+      ],
+      "falsifier": "A delivered rerender at the recorded detail scale collapses the trim into print, whole-lace fabric, embroidery, ruffle, or detached accessory."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test",
+      "tool"
+    ],
+    "general_rule": "Translate current summer-trend priorities into axis-owned candidate atoms and narrow five-component topology profiles; promote only exact observable structure and keep broad popularity, hidden construction, performance, identity, and user taste outside pixel claims.",
+    "generalization_basis": "The same length-landmark, volume-and-cuff, panel-overlap, material-boundary, and molded-transmission method applies across the prioritized dailywear categories while retaining profile-specific substitute controls.",
+    "hypothesis_ids": [
+      "five_component_profiles_reduce_substitution",
+      "axis_ownership_preserves_composable_trends",
+      "dedicated_detail_framing_supports_lace"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/iteration-record.json",
+      "docs/research-evidence/photo-prompt/womens-summer-trends-20260901/render-evaluation/run-20260901-kr-summer/",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/",
+      "tests/fixtures/photo_prompt/womens_summer_trend_pixel_test_cases_v1.jsonl",
+      "tests/test_photo_womens_summer_trend_visual_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "summer_package_validation"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "summer_prompt_regressions"
+      ]
+    },
+    "render": {
+      "status": "blocked",
+      "evidence_ids": [
+        "summer_capri_render",
+        "summer_harem_render",
+        "summer_lace_block",
+        "summer_root_pixel_review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout_capri_rooftop_greenhouse",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "two trouser legs",
+          "paired below-knee calf hems",
+          "paired bare ankle gaps",
+          "unobstructed lower-body landmarks",
+          "Bermuda and ankle-crop boundary"
+        ],
+        "evidence_ids": [
+          "summer_capri_render",
+          "summer_root_pixel_review"
+        ]
+      },
+      {
+        "id": "heldout_harem_viaduct_market",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "gathered waist",
+          "roomy seat and crotch",
+          "bilateral hip-thigh volume",
+          "paired gathered ankle cuffs",
+          "straight-wide balloon and jogger boundary"
+        ],
+        "evidence_ids": [
+          "summer_harem_render",
+          "summer_root_pixel_review"
+        ]
+      },
+      {
+        "id": "heldout_lace_laundromat_terminal",
+        "case_role": "held-out",
+        "status": "blocked",
+        "covered_axes": [
+          "different base garment material",
+          "narrow attached lace band",
+          "openwork cells and motifs",
+          "stitch line and scalloped free edge",
+          "printed whole-lace and detached-accessory boundary"
+        ],
+        "evidence_ids": [
+          "summer_lace_block"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The domestic research translation, twenty-six axis-owned candidate entries, six five-component profiles, regenerated indexes, focused and v6 retrieval tests, and all three pack-prompt-runtime audits pass. The two delivered independent images also pass all ten assigned hard gates under subagent and coordinator inspection. Render promotion is not justified because the third required lace arm was blocked before pixels, leaving five gates unscored; user aesthetic approval is also pending. The implementation remains useful and structurally validated, but the next authorized iteration should requalify only the blocked lace delivery with the same frozen visual duties and a newly audited, moderation-safe commercial detail concept rather than silently rewriting this run."
+    ,"evidence_ids": [
+      "summer_reference_conversation",
+      "summer_external_research",
+      "summer_runtime_data",
+      "summer_package_validation",
+      "summer_concurrent_workspace_boundary",
+      "summer_prompt_regressions",
+      "summer_baseline_boundary",
+      "summer_capri_render",
+      "summer_harem_render",
+      "summer_lace_block",
+      "summer_generation_independence",
+      "summer_root_pixel_review"
+    ]
+  }
+}

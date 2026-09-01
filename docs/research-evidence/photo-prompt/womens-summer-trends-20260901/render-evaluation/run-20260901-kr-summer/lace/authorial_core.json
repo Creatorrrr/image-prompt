@@ -1,0 +1,61 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent complex fashion photograph that tests whether lace is rendered as visibly attached trim with openwork motifs and scalloped edges rather than as a generic printed texture, while using the attached portrait only as an adult appearance reference.",
+  "subject": "A clearly adult woman whose visible hair, eyes, makeup, and calm expression are guided by the attached portrait.",
+  "setting": "A late-night self-service laundromat beside a rain-slick intercity bus terminal.",
+  "event": "She transfers a folded striped shirt from a chrome dryer into a clear jelly tote.",
+  "visual_priorities": [
+    "Ivory floral lace trim is visibly sewn along both the satin camisole neckline and lower hem, with repeating openwork motifs and scalloped free edges.",
+    "A knee-up 50 mm frame and crisp frontal torso angle make the lace-to-satin attachment boundary readable."
+  ],
+  "baseline_prompt_en": "Create a crisp knee-up 50 mm fashion photograph in a late-night self-service laundromat beside a rain-slick intercity bus terminal. A clearly adult woman with long dark center-parted softly waved hair, warm brown eyes, natural makeup, and a calm expression is guided only by the visible appearance in the attached portrait. She transfers a folded striped shirt from a chrome dryer into a clear jelly tote. Her charcoal satin camisole has ivory floral lace trim visibly attached along the neckline and lower hem: repeating openwork flower motifs, fine mesh holes, stitched attachment lines, and scalloped free edges clearly contrast with the smooth satin body. She pairs it with washed wide-leg denim and a featherlight sheer cardigan slipped to her elbows. Fluorescent reflections, circular dryer windows, amber bus lights, ticket stubs, and rain beads create layered depth while the frontal torso angle keeps both lace edges unobstructed and sharply legible.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "three independent random complex concepts testing applied keywords",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm independently tests attached lace-trim topology and material legibility in a complex laundromat-terminal scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a late-night self-service laundromat beside a rain-slick intercity bus terminal"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a clearly adult woman with long dark center-parted softly waved hair, warm brown eyes, natural makeup, and a calm expression"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "she transfers a folded striped shirt from a chrome dryer into a clear jelly tote"
+      }
+    ],
+    "locked_dimensions": ["concept", "subject", "event"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "night fashion editorial",
+    "family": "fluorescent transit-laundromat realism",
+    "evidence": ["circular chrome dryer reflections", "rain-slick terminal lights"]
+  },
+  "variation_key": "kr-summer-lace-laundromat-20260901"
+}
