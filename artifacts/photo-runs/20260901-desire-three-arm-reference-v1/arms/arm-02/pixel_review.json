@@ -1,0 +1,98 @@
+{
+  "schema_version": "photo-independent-arm-pixel-review/v1",
+  "arm_id": "arm-02",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-02/generated.png",
+    "sha256": "ba772689a4da27f07db781fe42a2a34ee23b782a80f7796807336ca2f885f2c5",
+    "width": 1122,
+    "height": 1402
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-02/generated.thumbnail.png",
+    "sha256": "bdbd4e2750f1bb9971d2f2f36247fe7244f05a3e5591feb4490d763c427367d9",
+    "width": 336,
+    "height": 420
+  },
+  "review_policy": {
+    "partial_is_fail": true,
+    "gate_status_values": [
+      "pass",
+      "fail"
+    ],
+    "required_scale_enforced": true,
+    "single_saved_image_only": true
+  },
+  "hard_gates": [
+    {
+      "id": "vo_desire_power_resource",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "scale_observations": {
+        "thumbnail": "At 336x420, a bright blue FRESHWATER ROUTE remains first-read, connects three large community tanks, and terminates at a visibly flowing outlet."
+      }
+    },
+    {
+      "id": "vo_desire_power_existing_control",
+      "review_scale": "both",
+      "status": "pass",
+      "scale_observations": {
+        "thumbnail": "The left MASTER AUTHORITY and COMMAND console, seated adult controller, and shared brass key remain readable as the existing control position.",
+        "native": "At 1122x1402, the seated adult's PLANT CONTROLLER patch, hand at the key ring, HOLD display, and locked console visibly establish current authority before transfer."
+      }
+    },
+    {
+      "id": "vo_desire_power_claim",
+      "review_scale": "both",
+      "status": "pass",
+      "scale_observations": {
+        "thumbnail": "The central adult woman's raised hand is visibly placed on the brass key in the COMMAND socket while the prior controller's hand remains at the transfer point.",
+        "native": "Her fingers visibly grasp the inserted brass key at the exact console interface, with the blue ACTIVE route displayed beside the handover."
+      }
+    },
+    {
+      "id": "vo_desire_power_affected_party",
+      "review_scale": "native",
+      "status": "pass",
+      "scale_observations": {
+        "native": "An identifiable adult in a blue raincoat stands at the CLINIC OUTLET and holds an open metal vessel directly under the water stream from the same illuminated freshwater line."
+      }
+    },
+    {
+      "id": "vo_desire_power_access_result",
+      "review_scale": "both",
+      "status": "pass",
+      "scale_observations": {
+        "thumbnail": "The blue path travels from the console area across the floor to the clinic outlet, where water visibly enters the affected adult's vessel.",
+        "native": "Red HOLD and blue ACTIVE route states coexist on the console; the blue route reaches the labeled CLINIC OUTLET and produces a visible water stream into the vessel."
+      }
+    }
+  ],
+  "gate_summary": {
+    "total": 5,
+    "pass": 5,
+    "fail": 0,
+    "all_required_scales_reviewed": true,
+    "rendered_pixel_verdict": "pass"
+  },
+  "reference_appearance_review": {
+    "status": "pass",
+    "review_scale": "native",
+    "observable_evidence": "The central subject is visibly adult and has long dark wavy hair with a near-center part, dark brown-looking eyes, an oval face, natural makeup, and a neutral focused expression.",
+    "claim_boundary": "This is observable appearance adherence only. Identity, same-person status, biometrics, protected traits, health, attractiveness, personality, and nationality were not assessed."
+  },
+  "selected_creative_rule_review": {
+    "status": "pass",
+    "observable_evidence": "The floor boundary is illuminated blue, the panel reads AUTHORITY LINE LIVE, and the same line visibly continues toward the freshwater manifold and clinic outlet."
+  },
+  "minor_non_gate_observation": "Small lettering on the emergency authorization folio is partly garbled; no hard-gate verdict relies on that lettering.",
+  "separate_verdicts": {
+    "prompt_audit": "pass_with_advisory_warnings",
+    "runtime_request_audit": "pass",
+    "rendered_pixels": "pass",
+    "user_judgment": "pending"
+  },
+  "repair": {
+    "attempted": false,
+    "reason": "The protocol permits one generation call and no repair; all five hard gates passed on the saved output."
+  }
+}

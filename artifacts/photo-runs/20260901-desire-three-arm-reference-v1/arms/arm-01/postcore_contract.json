@@ -1,0 +1,23 @@
+{
+  "schema_version": "photo-independent-arm-postcore-contract/v1",
+  "arm_id": "arm-01",
+  "profile_id": "other_owned_object_covetous_approach",
+  "exact_activation_phrase": "visible claim toward another adult's owned object",
+  "required_evidence": {
+    "object_phrase": "one primary object remains visibly held or worn by its current adult owner",
+    "claim_phrase": "another adult makes an overt claim exchange bid or reach toward that same object",
+    "owner_response_phrase": "the current owner pulls protects refuses or withholds the object through action",
+    "geometry_phrase": "claimant object and owner form one readable ownership-boundary triangle",
+    "continuity_phrase": "the object never loses continuity with the owner during the claim"
+  },
+  "render_gates": [
+    {"id": "vo_desire_covet_owner_object", "review_scale": "thumbnail", "description": "One primary object is visibly held or worn by its current adult owner."},
+    {"id": "vo_desire_covet_claim", "review_scale": "both", "description": "Another adult performs an overt claim, bid, or boundary-crossing reach toward that object."},
+    {"id": "vo_desire_covet_owner_response", "review_scale": "both", "description": "The current owner's protection, refusal, consideration, or withholding is visible as action."},
+    {"id": "vo_desire_covet_geometry", "review_scale": "native", "description": "Claimant, object, and owner form one readable ownership-boundary relation."},
+    {"id": "vo_desire_covet_continuity", "review_scale": "both", "description": "The object remains continuously linked to the owner during the claim."}
+  ],
+  "reject_substitutes": ["envy_by_gaze_only", "gift_exchange", "ordinary_purchase", "shared_use", "owner_admiring_own_object"],
+  "index_policy": "The arm-local visual and semantic indexes are synthetic run-local fixtures for exact/BM25F routing only. Do not make embedding or RRF quality claims.",
+  "evaluation_policy": "All five render gates must pass at their stated scales; partial is fail. Prompt audit, runtime audit, rendered pixels, and user judgment are separate verdicts."
+}

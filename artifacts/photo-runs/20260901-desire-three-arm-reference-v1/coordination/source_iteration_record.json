@@ -1,0 +1,118 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "327ce0c65ca87035111bc92042f95eacd70ca8b7",
+    "candidate_revision": "working-tree-20260901-desire-visual-semantics"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Reflect the researched desire keywords in visual-semantic data and candidate packs, then test three independently generated reference-guided concepts without conflating prompt, runtime, pixels, or user judgment."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "The research separates broad internal-state labels from observable target, access, ownership, allocation, recognition, milestone, and control events.",
+      "artifact": "docs/research-evidence/photo-prompt/desire-visual-semantics-20260901/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "e-baseline-gap",
+      "kind": "repository-history",
+      "claim": "The baseline lacked the nine desire-event visual profiles and their runtime candidate extension.",
+      "artifact": "baseline revision 327ce0c65ca87035111bc92042f95eacd70ca8b7 compared with the named changed paths"
+    },
+    {
+      "id": "e-implementation",
+      "kind": "source-observation",
+      "claim": "The working tree contains nine profiles with five component groups and five pixel gates each, plus 54 candidate rows across seven candidate slots.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json; skills/photo-prompt-image-generator/assets/photo_prompt_desire_extension.json"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Nine focused structural and routing tests passed with both the frozen run-local visual-profile index and the subsequently validated current shared index.",
+      "artifact": "DESIRE_VISUAL_PROFILE_INDEX=artifacts/photo-runs/20260901-desire-three-arm-reference-v1/coordination/run-local-indexes/photo_prompt_visual_profile_index.json .venv/bin/python -m unittest tests.test_photo_desire_visual_semantics -v => 9 tests OK; .venv/bin/python -m unittest tests.test_photo_desire_visual_semantics -v => 9 tests OK"
+    },
+    {
+      "id": "e-index-boundary",
+      "kind": "source-observation",
+      "claim": "The three arms use explicitly synthetic frozen exact/BM25F fixtures and do not support embedding or RRF quality claims. A later concurrent worktree regeneration made the current shared dictionary metadata valid, but it was not an input to these frozen arms.",
+      "artifact": "artifacts/photo-runs/20260901-desire-three-arm-reference-v1/coordination/run-local-indexes/run_local_index_manifest.json; current validate_photo_prompt_dictionary.py => metadata valid"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A narrow observable desire-event phrase owns one five-part visual contract, while broad desire, trait, clinical, philosophical, and confusion-neighbor terms cannot create hard obligations.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-observable-event",
+        "statement": "Every hard profile is expressed through observable objects, actions, relations, and immediate consequences rather than inferred private desire.",
+        "evidence_ids": ["e-research", "e-implementation"],
+        "causal_controls": ["exact event phrase", "five literal component groups", "five scale-bound render gates"]
+      },
+      {
+        "id": "inv-confusion-boundary",
+        "statement": "Broad labels and nearest visual substitutes remain advisory or inactive.",
+        "evidence_ids": ["e-research", "e-package"],
+        "causal_controls": ["narrow exact activation", "exclude terms", "reject substitutes"]
+      },
+      {
+        "id": "inv-evidence-layering",
+        "statement": "Package, prompt, runtime, rendered pixels, and user judgment retain separate verdicts.",
+        "evidence_ids": ["e-index-boundary"],
+        "causal_controls": ["partial_is_fail", "independent arms", "user judgment pending"]
+      }
+    ],
+    "flexible_dimensions": ["photographic setting", "framing", "lighting", "camera system", "supporting prop style"]
+  },
+  "mismatches": [
+    {
+      "id": "m-source-gap",
+      "scale": "global",
+      "axis": "desire concept representation",
+      "source_state": "Research identified nine observable event structures and multiple confusion boundaries.",
+      "render_state": "The baseline runtime source had no owned profiles or candidate extension for these nine structures.",
+      "evidence_ids": ["e-research", "e-baseline-gap"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-event-contract",
+      "stage": "representation",
+      "statement": "Encoding each concept as a narrow five-component event contract will prevent broad desire labels and facial-expression substitutes from silently becoming hard obligations.",
+      "evidence_ids": ["e-research", "e-baseline-gap"],
+      "falsifier": "A broad label or named confusion neighbor hard-activates a new profile, or an exact phrase activates zero or multiple new profiles."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "reference", "policy", "test"],
+    "general_rule": "Represent desire-family requests only through narrowly named observable event profiles with owned evidence fields, confusion exclusions, runtime candidate rows, and scale-bound pixel gates.",
+    "generalization_basis": "The implementation covers nine distinct target/access/ownership/allocation/recognition/milestone/control structures and explicitly excludes broad, trait, clinical, philosophical, and near-neighbor routes.",
+    "hypothesis_ids": ["h-event-contract"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_desire_extension.json",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "docs/research-evidence/photo-prompt/desire-visual-semantics-20260901/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/desire-visual-semantics-20260901/source-research.md",
+      "docs/research-evidence/photo-prompt/desire-visual-semantics-20260901/candidate-data-proposal.json",
+      "tests/test_photo_desire_visual_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "not-run", "evidence_ids": []},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": []
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The source-level representation and exact/confusion routing checks pass. This does not promote prompt behavior, render fidelity, embedding retrieval, or user appeal; those require separate evidence.",
+    "evidence_ids": ["e-implementation", "e-package", "e-index-boundary"]
+  }
+}

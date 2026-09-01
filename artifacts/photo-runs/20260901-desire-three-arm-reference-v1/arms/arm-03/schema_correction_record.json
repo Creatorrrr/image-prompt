@@ -1,0 +1,32 @@
+{
+  "schema_version": "photo-prepack-schema-correction/v1",
+  "arm_id": "arm-03",
+  "failed_command_stage": "candidate_pack_preflight_before_output",
+  "failure": "authorial core intent_lock contains unknown dimensions: audience_response, reference_appearance",
+  "pre_correction_authorial_core_sha256": "f3145ef7807fd0d90fdd143c72425cc0e8df3bd453ff3badafe37e459542356a",
+  "final_authorial_core_sha256": "57fa82bfb605772fb0d65f48ef195a75001b9783b9fb4385d8888a2c3ec02d5f",
+  "corrections": [
+    {
+      "from": "audience_response",
+      "to": "viewer_outcome",
+      "scope": "intent_lock dimension label only"
+    },
+    {
+      "from": "reference_appearance",
+      "to": "appearance",
+      "scope": "intent_lock dimension label only"
+    }
+  ],
+  "semantic_change": false,
+  "preserved_verbatim_fields": [
+    "source_request",
+    "interpreted_intent",
+    "subject",
+    "setting",
+    "event",
+    "visual_priorities",
+    "baseline_prompt_en",
+    "semantic_anchors[].source_text",
+    "semantic_anchors[].prompt_evidence"
+  ]
+}

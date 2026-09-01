@@ -1,0 +1,103 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently test the assigned observable concept, visible public recognition bid with audience response, through one random complex photorealistic civic-event scenario while using the attached image only for observable adult appearance.",
+  "subject": "A clearly adult woman presenting a newly unveiled mechanical heron she built",
+  "setting": "A rain-slicked night market beneath a railway viaduct during a crowded community kinetic-art festival, with lanterns, awnings, steam, cables, wet pavement, a mobile stage, and a public tally display",
+  "event": "Beside her newly unveiled mechanical heron, the adult inventor deliberately steps into the brightest public spot, points from the sculpture's maker plaque back to herself, raises one hand toward the gathered crowd in an unmistakable bid to be recognized for the work, and receives a simultaneous visible audience response: bodies and phone cameras turn toward her, two people lift star-shaped voting paddles, others clap, and a public tally display lights up with her entrant number.",
+  "visual_priorities": [
+    "Make the subject's deliberate public bid for recognition and the audience's response simultaneously legible in one frame.",
+    "Preserve the reference's observable adult facial and hair appearance without making an identity or same-person claim.",
+    "Keep the mechanical heron, maker plaque, voting paddles, audience orientation, applause, and illuminated tally spatially coherent."
+  ],
+  "baseline_prompt_en": "Create a complex photorealistic single-frame scene at a rain-slicked night market beneath a railway viaduct during a crowded community kinetic-art festival. A clearly adult woman with long, dark, softly waved hair, an oval face, straight dark brows, almond-shaped brown eyes, and softly defined lips stands beside a newly unveiled mechanical heron she built on a small mobile stage. The adult inventor deliberately steps into the brightest public spot, points from the sculpture's maker plaque back to herself, raises one hand toward the gathered crowd in an unmistakable bid to be recognized for the work, and receives a simultaneous visible audience response: bodies and phone cameras turn toward her, two people lift star-shaped voting paddles, others clap, and a public tally display lights up with her entrant number. Wet pavement mirrors lanterns, cables, market awnings, steam, and the moving sculpture. Prioritize a clear actor-to-audience relationship and simultaneous evidence of public acknowledgment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Use locally generated entropy to select one materially layered but single-frame photorealistic setting; the selected setting is a rain-slicked night market beneath a railway viaduct during a community kinetic-art festival.",
+      "sources": []
+    },
+    {
+      "term": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+      "basis": "request_context",
+      "resolution": "Realize the assigned concept as a visible public recognition bid and an unmistakable audience response in the same frame, with separate observable cues for actor action, audience orientation, audience endorsement, and a public result trace.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached image only as an observable visibly adult appearance reference for hair and facial features, without claiming identity or any sensitive or unobservable attribute.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "concept",
+        "prompt_evidence": "an unmistakable bid to be recognized for the work"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "A clearly adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "points from the sculpture's maker plaque back to herself"
+      },
+      {
+        "anchor_id": "audience_response",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "viewer_outcome",
+        "prompt_evidence": "bodies and phone cameras turn toward her"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "long, dark, softly waved hair, an oval face, straight dark brows, almond-shaped brown eyes, and softly defined lips"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "viewer_outcome",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic-natural",
+    "family": "observational civic-event editorial photography",
+    "evidence": [
+      "rain reflections and festival steam",
+      "simultaneous subject-to-audience action",
+      "coherent public event details"
+    ]
+  },
+  "variation_key": "arm-03-83f33de4a2cb632d9aef864f53647973"
+}

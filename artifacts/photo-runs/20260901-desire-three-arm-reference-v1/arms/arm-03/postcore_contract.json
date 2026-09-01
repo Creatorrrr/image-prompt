@@ -1,0 +1,23 @@
+{
+  "schema_version": "photo-independent-arm-postcore-contract/v1",
+  "arm_id": "arm-03",
+  "profile_id": "public_recognition_bid_audience_response",
+  "exact_activation_phrase": "visible public recognition bid with audience response",
+  "required_evidence": {
+    "marker_phrase": "the adult presents one specific work achievement or role marker",
+    "presentation_phrase": "the presentation action occurs before an identifiable audience",
+    "audience_phrase": "several audience members respond independently toward presenter and marker",
+    "result_phrase": "attention access award or introduction changes immediately",
+    "causal_phrase": "presenter marker and audience responses form one causal arc"
+  },
+  "render_gates": [
+    {"id": "vo_desire_recognition_marker", "review_scale": "thumbnail", "description": "One specific work, achievement, or role marker is visibly presented."},
+    {"id": "vo_desire_recognition_presentation", "review_scale": "both", "description": "The adult performs a public presentation, unveiling, entry, or demonstration action."},
+    {"id": "vo_desire_recognition_audience", "review_scale": "both", "description": "Several audience members show independent responses toward presenter and marker."},
+    {"id": "vo_desire_recognition_result", "review_scale": "native", "description": "Attention, access, award, introduction, or path-opening changes immediately."},
+    {"id": "vo_desire_recognition_causality", "review_scale": "both", "description": "The presentation visibly causes the audience response rather than sharing an incidental crowd."}
+  ],
+  "reject_substitutes": ["incidental_crowd", "unrelated_press", "luxury_object_without_audience", "low_angle_status_pose", "actual_rank_claim"],
+  "index_policy": "The arm-local visual and semantic indexes are synthetic run-local fixtures for exact/BM25F routing only. Do not make embedding or RRF quality claims.",
+  "evaluation_policy": "All five render gates must pass at their stated scales; partial is fail. Prompt audit, runtime audit, rendered pixels, and user judgment are separate verdicts."
+}

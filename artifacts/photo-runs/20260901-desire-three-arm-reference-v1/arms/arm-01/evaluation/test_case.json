@@ -1,0 +1,99 @@
+{
+  "schema_version": "photo-independent-test-case-evaluation/v1",
+  "test_case_id": "desire-three-arm-20260901-arm-01",
+  "arm_id": "arm-01",
+  "precommit_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-01/test_case_precommit.json",
+  "assigned_observable_concept": "visible claim toward another adult's owned object",
+  "selected_complex_scenario": "Arctic research-station airlock during a whiteout evacuation",
+  "randomization": {
+    "method": "openssl rand -hex 16; final hexadecimal digit modulo 8 over a predeclared ordered scenario table",
+    "seed_hex": "9ab8100fa112caaba6ecac192b42e0a6",
+    "selected_zero_based_index": 6
+  },
+  "profile_qualification": {
+    "profile_id": "other_owned_object_covetous_approach",
+    "exact_profile_activation": "pass",
+    "required_binding_count": 5,
+    "required_binding_presence": "pass",
+    "synthetic_index_claim_boundary": "Exact/BM25F run-local fixture only; no embedding or RRF quality claim."
+  },
+  "preflight": {
+    "candidate_pack_version": "v6",
+    "pack_id": "1a923459d47d9098",
+    "pack_array_length": 1,
+    "prompt_audit_status": "pass",
+    "prompt_audit_quality_status": "warn",
+    "runtime_audit_status": "pass",
+    "generation_authorized": true
+  },
+  "generation": {
+    "tool": "native_image_gen",
+    "call_count": 1,
+    "repair_count": 0,
+    "reference_count": 1,
+    "output_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-01/generated.png",
+    "output_sha256": "5ae8d1ebe062dff92e08074ee45185248792d2ec6bbcb0a49b2d1c0548fb3f16"
+  },
+  "expected_hard_gates": [
+    "vo_desire_covet_owner_object",
+    "vo_desire_covet_claim",
+    "vo_desire_covet_owner_response",
+    "vo_desire_covet_geometry",
+    "vo_desire_covet_continuity"
+  ],
+  "observed_gate_results": [
+    {
+      "id": "vo_desire_covet_owner_object",
+      "required_scale": "thumbnail",
+      "status": "pass"
+    },
+    {
+      "id": "vo_desire_covet_claim",
+      "required_scale": "both",
+      "status": "pass"
+    },
+    {
+      "id": "vo_desire_covet_owner_response",
+      "required_scale": "both",
+      "status": "fail"
+    },
+    {
+      "id": "vo_desire_covet_geometry",
+      "required_scale": "native",
+      "status": "pass"
+    },
+    {
+      "id": "vo_desire_covet_continuity",
+      "required_scale": "both",
+      "status": "pass"
+    }
+  ],
+  "result": {
+    "passed_gate_count": 4,
+    "failed_gate_count": 1,
+    "total_gate_count": 5,
+    "overall_pixel_status": "fail",
+    "partial_is_fail": true,
+    "failure_summary": "The owner-held object, claimant action, relation geometry, and owner-object continuity are visible, but the owner's response reads as an open-palm offer or consideration rather than unmistakable protection, refusal, or withholding."
+  },
+  "reference_observable_appearance": {
+    "status": "pass",
+    "claim_scope": "visible adult appearance only",
+    "identity_or_same_person_evaluation": "out_of_scope_not_performed"
+  },
+  "verdict_layers": {
+    "prompt_audit": "pass",
+    "runtime_audit": "pass",
+    "rendered_pixels": "fail",
+    "reference_observable_appearance": "pass",
+    "user_judgment": "pending"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "retry_policy": {
+    "retry_performed": false,
+    "reason": "Exactly one generation call was permitted for this independent arm."
+  }
+}

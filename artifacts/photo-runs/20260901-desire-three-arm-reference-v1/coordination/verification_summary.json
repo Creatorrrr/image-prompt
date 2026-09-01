@@ -1,0 +1,129 @@
+{
+  "schema_version": "photo-desire-three-arm-verification/v1",
+  "verified_at": "2026-09-01T21:48:41+09:00",
+  "source_implementation": {
+    "visual_profile_count": 9,
+    "component_groups_per_profile": 5,
+    "render_gates_per_profile": 5,
+    "total_render_gates": 45,
+    "candidate_extension_count": 54,
+    "candidate_slot_counts": {
+      "subject": 9,
+      "action": 9,
+      "location": 9,
+      "prop": 9,
+      "composition": 9,
+      "aftermath_trace": 6,
+      "social_cue": 3
+    },
+    "broad_term_policy": "advisory_only",
+    "narrow_event_policy": "exact hard activation with five owned evidence fields",
+    "shared_real_index_status": "current shared visual and semantic index metadata valid after concurrent worktree regeneration; not used by the frozen arms",
+    "run_local_index_status": "synthetic fixture for exact and BM25F testing only; embedding and RRF claims forbidden"
+  },
+  "focused_package_checks": [
+    {
+      "command": "DESIRE_VISUAL_PROFILE_INDEX=artifacts/photo-runs/20260901-desire-three-arm-reference-v1/coordination/run-local-indexes/photo_prompt_visual_profile_index.json .venv/bin/python -m unittest tests.test_photo_desire_visual_semantics -v",
+      "status": "pass",
+      "tests": 9
+    },
+    {
+      "command": ".venv/bin/python -m unittest tests.test_photo_desire_visual_semantics -v",
+      "status": "pass",
+      "tests": 9,
+      "index_scope": "current shared visual-profile index"
+    },
+    {
+      "command": ".venv/bin/python skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/photo-runs/20260901-desire-three-arm-reference-v1/coordination/source_iteration_record.json",
+      "status": "pass",
+      "errors": []
+    },
+    {
+      "command": "jq -e over every run JSON artifact",
+      "status": "pass"
+    },
+    {
+      "command": "git diff --check over desire source and test paths",
+      "status": "pass"
+    },
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass",
+      "result": "photo prompt dictionary metadata is valid"
+    }
+  ],
+  "independent_arm_checks": [
+    {
+      "arm_id": "arm-01",
+      "profile_id": "other_owned_object_covetous_approach",
+      "pack_id": "1a923459d47d9098",
+      "candidate_pack_contract": "photo-candidate-pack/v6",
+      "prompt_audit": "pass_with_quality_warnings",
+      "runtime_request_audit": "pass",
+      "reference_count": 1,
+      "image_generation_calls": 1,
+      "repair_calls": 0,
+      "cross_arm_inputs_used": false,
+      "image_sha256": "5ae8d1ebe062dff92e08074ee45185248792d2ec6bbcb0a49b2d1c0548fb3f16",
+      "pixel_gate_result": "4_of_5",
+      "pixel_verdict": "fail",
+      "failed_gate_ids": ["vo_desire_covet_owner_response"]
+    },
+    {
+      "arm_id": "arm-02",
+      "profile_id": "resource_control_acquisition_event",
+      "pack_id": "6fc2cdcfef300bfc",
+      "candidate_pack_contract": "photo-candidate-pack/v6",
+      "prompt_audit": "pass_with_quality_warnings",
+      "runtime_request_audit": "pass",
+      "reference_count": 1,
+      "image_generation_calls": 1,
+      "repair_calls": 0,
+      "cross_arm_inputs_used": false,
+      "image_sha256": "ba772689a4da27f07db781fe42a2a34ee23b782a80f7796807336ca2f885f2c5",
+      "pixel_gate_result": "5_of_5",
+      "pixel_verdict": "pass",
+      "failed_gate_ids": []
+    },
+    {
+      "arm_id": "arm-03",
+      "profile_id": "public_recognition_bid_audience_response",
+      "pack_id": "f9fa2e75648a1d33",
+      "candidate_pack_contract": "photo-candidate-pack/v6",
+      "prompt_audit": "pass_with_quality_warnings",
+      "runtime_request_audit": "pass",
+      "reference_count": 1,
+      "image_generation_calls": 1,
+      "repair_calls": 0,
+      "cross_arm_inputs_used": false,
+      "image_sha256": "c4f9348d6156ab4a7b329dac53c779769643148c68a63fc5bbb81417d56419bb",
+      "pixel_gate_result": "5_of_5",
+      "pixel_verdict": "pass",
+      "failed_gate_ids": []
+    }
+  ],
+  "audit_replay": {
+    "composed_prompt_audits": {"pass": 3, "fail": 0, "quality_warn": 3},
+    "runtime_request_audits": {"pass": 3, "fail": 0, "reference_count_each": 1},
+    "pack_ids_unique": true,
+    "random_context_seeds_unique": true,
+    "image_hashes_unique": true,
+    "root_pixel_review_matches_agent_reviews": true
+  },
+  "strict_pixel_summary": {
+    "arm_pass_count": 2,
+    "arm_fail_count": 1,
+    "gate_pass_count": 14,
+    "gate_fail_count": 1,
+    "partial_is_fail": true,
+    "user_judgment": "pending"
+  },
+  "known_limits": [
+    "The three arms were frozen before the later concurrent shared-index regeneration and therefore used synthetic run-local exact/BM25F fixtures; their results cannot substantiate embedding or RRF retrieval quality even though the current shared dictionary metadata now validates.",
+    "The long full visual-obligation regression run was inconclusive in a concurrently modified worktree: before interruption it reported five yandere fixture failures. A filtered registry containing the existing yandere profile plus only the nine desire profiles matched all eight yandere fixture expectations, so the desire additions alone did not reproduce those failures.",
+    "Prompt audits passed but retained advisory length or uncovered-intent warnings; these warnings are not pixel failures.",
+    "Generated signage contains some model-created or imperfect text; no hard gate, real identity, rank, or authority claim depends solely on that text.",
+    "Reference review covers observable visibly adult appearance only and does not establish identity or same-person status.",
+    "User semantic and aesthetic judgment has not yet been received."
+  ]
+}

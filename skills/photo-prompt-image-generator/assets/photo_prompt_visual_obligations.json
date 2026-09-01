@@ -18848,6 +18848,645 @@
         {"id": "vo_boundary_irreversible_committed_result", "review_scale": "both", "description": "A concrete downstream condition has already begun and ordinary passage cannot substitute."}
       ],
       "reject_substitutes": ["ordinary_doorway", "reversible_portal", "one_way_sign_only", "already_beyond_line", "black_hole_icon_only"]
+    },
+    {
+      "id": "inaccessible_target_longing_relation",
+      "category": "identifiable_target_blocked_approach_relation",
+      "activation": {
+        "exact_terms": ["visible inaccessible-target approach failure", "inaccessible target blocked approach event", "접근 불가 대상에 대한 막힌 접근 장면", "명확한 대상 접근 실패 사건"],
+        "exclude_if_any_terms": ["sad window portrait", "targetless waiting", "distant view appreciation", "generic nostalgia", "슬픈 창가 초상", "대상 없는 기다림", "먼 풍경 감상", "일반 향수"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One adult makes an incomplete approach toward one identifiable target while a physical or procedural barrier or unbridgeable distance keeps the target inaccessible. The adult, target, barrier, directed action, and immediate contact or entry gap must coexist; a sad expression, window portrait, targetless waiting, distant-view appreciation, nostalgia, grief, or generic separation is insufficient.",
+        "paraphrase_examples": ["닫히는 투명 게이트 너머의 한 대상을 향해 같은 성인이 손과 몸을 뻗지만 접촉하지 못하고 손끝과 경계 사이 간극이 남는 순간", "one identifiable target beyond a closing boundary, the same adult's incomplete target-directed reach, continued separation, and a visible failed-contact gap"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["identifiable_target", "access_barrier", "incomplete_approach", "relationship_continuity", "blocked_result"], "groups": [
+          {"id": "identifiable_target", "any_terms": ["one identifiable target remains visible beyond the separating barrier"]},
+          {"id": "access_barrier", "any_terms": ["a closing physical barrier clearly blocks contact or passage"]},
+          {"id": "incomplete_approach", "any_terms": ["the same adult reaches toward that target without making contact"]},
+          {"id": "relationship_continuity", "any_terms": ["adult target and barrier share one readable relationship axis"]},
+          {"id": "blocked_result", "any_terms": ["a visible gap proves the approach remains incomplete"]}
+        ]},
+        "contrast_examples": ["a sad adult at a window", "a person waiting with no target", "a traveler appreciating a distant landscape", "a nostalgic portrait", "an empty closed door with no action"]
+      },
+      "concept_candidate": {"concept_terms": ["identifiable inaccessible target", "closing access barrier", "same-adult incomplete approach", "readable actor-barrier-target axis", "visible failed-contact gap"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible inaccessible-target blocked approach event"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the adult, barrier, and identifiable target in one readable triangular relationship, with the reaching action and remaining contact or entry gap large enough to judge at thumbnail and native scale.",
+      "required_evidence_fields": ["target_phrase", "barrier_phrase", "approach_phrase", "continuity_phrase", "result_phrase"],
+      "evidence_requirements": {
+        "target_phrase": {"min_content_words": 8, "must_mention_any": ["one identifiable target remains visible beyond the separating barrier"]},
+        "barrier_phrase": {"min_content_words": 8, "must_mention_any": ["a closing physical barrier clearly blocks contact or passage"]},
+        "approach_phrase": {"min_content_words": 9, "must_mention_any": ["the same adult reaches toward that target without making contact"]},
+        "continuity_phrase": {"min_content_words": 8, "must_mention_any": ["adult target and barrier share one readable relationship axis"]},
+        "result_phrase": {"min_content_words": 8, "must_mention_any": ["a visible gap proves the approach remains incomplete"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_longing_target", "review_scale": "thumbnail", "description": "One identifiable target is visibly distinct beyond the barrier."},
+        {"id": "vo_desire_longing_barrier", "review_scale": "both", "description": "A physical or procedural barrier actually separates adult and target."},
+        {"id": "vo_desire_longing_approach", "review_scale": "both", "description": "The same adult's target-directed reach or movement is visibly incomplete."},
+        {"id": "vo_desire_longing_continuity", "review_scale": "native", "description": "Adult, barrier, and target form one continuous relationship rather than unrelated scene elements."},
+        {"id": "vo_desire_longing_blocked_result", "review_scale": "both", "description": "A contact or entry gap visibly proves failure or delay of access."}
+      ],
+      "reject_substitutes": ["sad_window_portrait", "targetless_waiting", "distant_view_appreciation", "generic_nostalgia", "grief_expression_only"]
+    },
+    {
+      "id": "temptation_goal_conflict_choice",
+      "category": "immediate_reward_long_term_goal_conflict_event",
+      "activation": {
+        "exact_terms": ["visible immediate-reward versus long-term-goal conflict", "immediate reward and long-term goal conflict event", "즉시 보상과 장기 목표의 가시적 갈등 장면", "보상 유혹과 목표 저항 사건"],
+        "exclude_if_any_terms": ["ordinary menu choice", "product comparison", "reward closeup", "seductive pose", "일반 메뉴 선택", "상품 비교", "보상 클로즈업", "유혹적 포즈"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same adult faces one concrete immediate reward that conflicts with a marked longer-term goal, makes one visible resistance or enactment choice, and leaves an immediate outcome on the untouched reward or interrupted goal path. A menu choice, ordinary comparison, reward close-up, seductive pose, or hesitation without a goal marker is insufficient.",
+        "paraphrase_examples": ["진행 중인 목표 도구 옆의 즉시 보상에 손을 뻗다 멈추고, 같은 성인의 선택 때문에 보상이 그대로 남거나 진척이 중단된 순간", "one adult connecting a ready reward, active long-term goal, mutually exclusive hand action, and a same-frame resistance or enactment consequence"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["immediate_reward", "conflicting_goal", "same_actor_choice", "mutual_exclusion", "observable_outcome"], "groups": [
+          {"id": "immediate_reward", "any_terms": ["a concrete immediate reward is ready within the adult's reach"]},
+          {"id": "conflicting_goal", "any_terms": ["the same adult's long-term goal tool and progress remain visible"]},
+          {"id": "same_actor_choice", "any_terms": ["the same adult's hand makes one choice between reward and goal task"]},
+          {"id": "mutual_exclusion", "any_terms": ["the setting makes the two actions mutually exclusive in this moment"]},
+          {"id": "observable_outcome", "any_terms": ["untouched reward or interrupted progress shows the choice outcome"]}
+        ]},
+        "contrast_examples": ["choosing between two menu items", "comparing two products", "a dessert close-up", "a seductive portrait", "an indecisive person without a visible goal"]
+      },
+      "concept_candidate": {"concept_terms": ["concrete immediate reward", "visible long-term goal", "same-adult choice action", "mutually exclusive paths", "resistance or enactment outcome"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible immediate-reward versus long-term-goal conflict"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Give the reward and long-term goal separate readable regions connected by the same adult's paused or committed hand action, and preserve the rejected or interrupted path as a visible outcome.",
+      "required_evidence_fields": ["reward_phrase", "goal_phrase", "choice_phrase", "exclusion_phrase", "outcome_phrase"],
+      "evidence_requirements": {
+        "reward_phrase": {"min_content_words": 9, "must_mention_any": ["a concrete immediate reward is ready within the adult's reach"]},
+        "goal_phrase": {"min_content_words": 10, "must_mention_any": ["the same adult's long-term goal tool and progress remain visible"]},
+        "choice_phrase": {"min_content_words": 11, "must_mention_any": ["the same adult's hand makes one choice between reward and goal task"]},
+        "exclusion_phrase": {"min_content_words": 10, "must_mention_any": ["the setting makes the two actions mutually exclusive in this moment"]},
+        "outcome_phrase": {"min_content_words": 9, "must_mention_any": ["untouched reward or interrupted progress shows the choice outcome"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_temptation_reward", "review_scale": "thumbnail", "description": "One concrete immediate reward is visible and actionable."},
+        {"id": "vo_desire_temptation_goal", "review_scale": "both", "description": "The same adult's specific longer-term goal and current progress remain visible."},
+        {"id": "vo_desire_temptation_choice", "review_scale": "both", "description": "The same adult visibly resists or enacts one path rather than merely posing."},
+        {"id": "vo_desire_temptation_exclusion", "review_scale": "native", "description": "The scene makes reward and goal actions mutually exclusive in the represented moment."},
+        {"id": "vo_desire_temptation_outcome", "review_scale": "both", "description": "An untouched reward or interrupted progress trace visibly records the choice outcome."}
+      ],
+      "reject_substitutes": ["ordinary_menu_choice", "product_comparison", "reward_closeup_only", "seductive_pose", "hesitation_without_goal_marker"]
+    },
+    {
+      "id": "repeated_acquisition_without_use_cycle",
+      "category": "same_category_reacquisition_visible_nonuse_cycle",
+      "activation": {
+        "exact_terms": ["visible repeated acquisition without use", "same-category reacquisition beside unused prior items", "미사용 상태의 반복 획득 장면", "사용하지 않은 중복품 추가 획득 사건"],
+        "exclude_if_any_terms": ["retail inventory", "warehouse work", "disaster preparation", "active collection", "소매 재고", "창고 업무", "재난 대비", "사용 중인 컬렉션"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same adult acquires another item from one category while several prior matching acquisitions remain visibly sealed or unused and already press on personal storage or attention. This is an observable acquisition event, not a diagnosis of addiction, obsession, compulsion, greed, or personality; retail inventory, warehouse work, emergency preparation, shared bulk purchase, or an actively used collection is insufficient.",
+        "paraphrase_examples": ["개인 보관 공간의 미개봉 동일 제품 여러 개 앞에서 같은 성인이 같은 계열의 새 물건을 수령하고 보관 압박이 이어지는 순간", "one adult linking multiple sealed matching prior items to a new same-category receipt with visible nonuse and storage pressure"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["same_adult_owner", "matching_prior_items", "visible_nonuse", "new_acquisition", "imbalance_trace"], "groups": [
+          {"id": "same_adult_owner", "any_terms": ["the same adult owns the prior and current acquisitions"]},
+          {"id": "matching_prior_items", "any_terms": ["several matching prior items remain sealed and unused"]},
+          {"id": "visible_nonuse", "any_terms": ["intact packaging and absent use traces prove prior nonuse"]},
+          {"id": "new_acquisition", "any_terms": ["the same adult receives another item from that same category"]},
+          {"id": "imbalance_trace", "any_terms": ["storage pressure or continued nonuse remains visible"]}
+        ]},
+        "contrast_examples": ["a store employee arranging stock", "a warehouse worker", "emergency food storage", "a shared delivery", "a collector actively using and cataloging objects"]
+      },
+      "concept_candidate": {"concept_terms": ["same adult owner", "matching prior acquisitions", "sealed visible nonuse", "new same-category acquisition", "storage or attention imbalance"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible repeated same-category acquisition without prior use"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Connect prior sealed matching items, the same adult, and the new acquisition along one depth or action line, while keeping personal ownership, nonuse, and storage pressure distinct from retail or work inventory.",
+      "required_evidence_fields": ["owner_phrase", "prior_phrase", "nonuse_phrase", "new_phrase", "imbalance_phrase"],
+      "evidence_requirements": {
+        "owner_phrase": {"min_content_words": 8, "must_mention_any": ["the same adult owns the prior and current acquisitions"]},
+        "prior_phrase": {"min_content_words": 8, "must_mention_any": ["several matching prior items remain sealed and unused"]},
+        "nonuse_phrase": {"min_content_words": 8, "must_mention_any": ["intact packaging and absent use traces prove prior nonuse"]},
+        "new_phrase": {"min_content_words": 9, "must_mention_any": ["the same adult receives another item from that same category"]},
+        "imbalance_phrase": {"min_content_words": 7, "must_mention_any": ["storage pressure or continued nonuse remains visible"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_repeat_same_adult", "review_scale": "thumbnail", "description": "One adult visibly links the prior and new acquisitions."},
+        {"id": "vo_desire_repeat_matching_items", "review_scale": "both", "description": "Several prior items visibly match the category of the new item."},
+        {"id": "vo_desire_repeat_nonuse", "review_scale": "native", "description": "Packaging, seals, tags, or absence of use traces establish prior nonuse."},
+        {"id": "vo_desire_repeat_new_acquisition", "review_scale": "both", "description": "The same adult is actively receiving, paying for, or packing another matching item."},
+        {"id": "vo_desire_repeat_imbalance", "review_scale": "both", "description": "Personal storage pressure or continued nonuse is visible without collapsing into retail inventory."}
+      ],
+      "reject_substitutes": ["retail_inventory", "warehouse_work", "disaster_preparation", "shared_bulk_purchase", "actively_used_collection"]
+    },
+    {
+      "id": "excess_accumulation_overflow_event",
+      "category": "continued_input_beyond_visible_capacity_event",
+      "activation": {
+        "exact_terms": ["visible accumulation beyond capacity", "continued accumulation causing physical overflow", "가시적 용량 초과 축적 장면", "가득 찬 용량에 추가 투입하는 사건"],
+        "exclude_if_any_terms": ["normal restock", "moving boxes", "archive work", "abundance still life", "일반 재입고", "이사 상자", "기록 보관 업무", "풍성한 정물"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult continues adding matching resources after one visible storage or use capacity is already full, causing physical overflow, displacement, blockage, or the loss of space for another needed item in the same frame. Normal restocking, moving, archive work, abundance still life, or emergency preparation is insufficient.",
+        "paraphrase_examples": ["이미 선반 경계까지 채워진 동일 물건 위로 같은 성인이 한 개를 더 넣자 물건이 떨어지고 통로가 막히는 순간", "one bounded capacity already full before the adult's additional matching input, with the adding action and physical displacement joined in one causal line"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["bounded_capacity", "already_full", "continued_input", "physical_consequence", "causal_continuity"], "groups": [
+          {"id": "bounded_capacity", "any_terms": ["one bounded storage capacity has a clearly readable limit"]},
+          {"id": "already_full", "any_terms": ["matching stock already fills that capacity before the new input"]},
+          {"id": "continued_input", "any_terms": ["the same adult adds another matching item beyond the full limit"]},
+          {"id": "physical_consequence", "any_terms": ["items spill fall block a path or displace needed contents"]},
+          {"id": "causal_continuity", "any_terms": ["adding action full boundary and consequence form one causal line"]}
+        ]},
+        "contrast_examples": ["restocking an almost empty pantry", "moving labeled boxes", "an archivist organizing records", "a full still life with no action", "emergency preparation"]
+      },
+      "concept_candidate": {"concept_terms": ["bounded capacity", "already full matching stock", "continued adult input", "physical overflow or displacement", "single causal line"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible continued accumulation beyond a full capacity"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the capacity boundary, preexisting full state, incoming matching item, adult hand action, and displaced physical result in one traceable line; the limit must be visible before the addition.",
+      "required_evidence_fields": ["capacity_phrase", "full_phrase", "input_phrase", "consequence_phrase", "causal_phrase"],
+      "evidence_requirements": {
+        "capacity_phrase": {"min_content_words": 8, "must_mention_any": ["one bounded storage capacity has a clearly readable limit"]},
+        "full_phrase": {"min_content_words": 9, "must_mention_any": ["matching stock already fills that capacity before the new input"]},
+        "input_phrase": {"min_content_words": 10, "must_mention_any": ["the same adult adds another matching item beyond the full limit"]},
+        "consequence_phrase": {"min_content_words": 9, "must_mention_any": ["items spill fall block a path or displace needed contents"]},
+        "causal_phrase": {"min_content_words": 9, "must_mention_any": ["adding action full boundary and consequence form one causal line"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_overflow_capacity", "review_scale": "thumbnail", "description": "One physical storage or use boundary has a clearly readable limit."},
+        {"id": "vo_desire_overflow_already_full", "review_scale": "both", "description": "The capacity is visibly full before the incoming item is added."},
+        {"id": "vo_desire_overflow_continued_input", "review_scale": "both", "description": "The same adult actively adds another matching item beyond the full limit."},
+        {"id": "vo_desire_overflow_consequence", "review_scale": "native", "description": "Spillage, falling items, blockage, or displacement is physically visible."},
+        {"id": "vo_desire_overflow_causality", "review_scale": "both", "description": "The adding action, full boundary, and physical consequence read as one event."}
+      ],
+      "reject_substitutes": ["normal_restock", "moving_boxes", "archive_work", "abundance_still_life", "emergency_preparation"]
+    },
+    {
+      "id": "other_owned_object_covetous_approach",
+      "category": "overt_claim_toward_currently_owned_object_relation",
+      "activation": {
+        "exact_terms": ["visible claim toward another adult's owned object", "overt claim at an owner-held object event", "다른 성인 소유물에 대한 가시적 청구 장면", "소유자가 든 물건을 향한 공개적 청구 사건"],
+        "exclude_if_any_terms": ["gift exchange", "ordinary purchase", "shared use", "owner admiring own object", "선물 교환", "일반 구매", "공동 사용", "자기 물건 감상"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One adult makes an overt claim, exchange bid, or boundary-crossing reach toward one primary object still visibly held or worn by another adult, and the current owner responds by protecting, refusing, considering, or withholding it. Gaze alone, gift exchange, ordinary purchase, shared use, owner admiration, or an automatic theft claim is insufficient.",
+        "paraphrase_examples": ["한 성인이 착용 중인 물건을 다른 성인이 공개적으로 요구하며 손을 뻗고, 현재 소유자가 물건을 몸 쪽으로 당겨 경계를 보이는 순간", "one owner-held object between two adults, an overt claim or bid, the owner's protective response, and an unbroken owner-object relation"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["owner_bound_object", "claimant_action", "owner_response", "ownership_geometry", "object_continuity"], "groups": [
+          {"id": "owner_bound_object", "any_terms": ["one primary object remains visibly held or worn by its current adult owner"]},
+          {"id": "claimant_action", "any_terms": ["another adult makes an overt claim exchange bid or reach toward that same object"]},
+          {"id": "owner_response", "any_terms": ["the current owner pulls protects refuses or withholds the object through action"]},
+          {"id": "ownership_geometry", "any_terms": ["claimant object and owner form one readable ownership-boundary triangle"]},
+          {"id": "object_continuity", "any_terms": ["the object never loses continuity with the owner during the claim"]}
+        ]},
+        "contrast_examples": ["an envious gaze", "giving a present", "paying a seller", "two adults sharing an object", "an owner admiring their own possession"]
+      },
+      "concept_candidate": {"concept_terms": ["owner-held primary object", "adult claimant action", "current owner response", "ownership-boundary triangle", "owner-object continuity"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible overt claim toward an owner-held object"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Make the owner-object contact, claimant's directed action, and owner's behavioral response readable in one triangle; preserve object continuity and do not substitute an expressive gaze or implied crime.",
+      "required_evidence_fields": ["object_phrase", "claim_phrase", "owner_response_phrase", "geometry_phrase", "continuity_phrase"],
+      "evidence_requirements": {
+        "object_phrase": {"min_content_words": 11, "must_mention_any": ["one primary object remains visibly held or worn by its current adult owner"]},
+        "claim_phrase": {"min_content_words": 13, "must_mention_any": ["another adult makes an overt claim exchange bid or reach toward that same object"]},
+        "owner_response_phrase": {"min_content_words": 12, "must_mention_any": ["the current owner pulls protects refuses or withholds the object through action"]},
+        "geometry_phrase": {"min_content_words": 9, "must_mention_any": ["claimant object and owner form one readable ownership-boundary triangle"]},
+        "continuity_phrase": {"min_content_words": 10, "must_mention_any": ["the object never loses continuity with the owner during the claim"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_covet_owner_object", "review_scale": "thumbnail", "description": "One primary object is visibly held or worn by its current adult owner."},
+        {"id": "vo_desire_covet_claim", "review_scale": "both", "description": "Another adult performs an overt claim, bid, or boundary-crossing reach toward that object."},
+        {"id": "vo_desire_covet_owner_response", "review_scale": "both", "description": "The current owner's protection, refusal, consideration, or withholding is visible as action."},
+        {"id": "vo_desire_covet_geometry", "review_scale": "native", "description": "Claimant, object, and owner form one readable ownership-boundary relation."},
+        {"id": "vo_desire_covet_continuity", "review_scale": "both", "description": "The object remains continuously linked to the owner during the claim."}
+      ],
+      "reject_substitutes": ["envy_by_gaze_only", "gift_exchange", "ordinary_purchase", "shared_use", "owner_admiring_own_object"]
+    },
+    {
+      "id": "pleonexia_unfair_share_taking_event",
+      "category": "assigned_share_boundary_crossing_shortage_event",
+      "activation": {
+        "exact_terms": ["visible unfair extra-share taking", "taking beyond one's marked share event", "표시된 몫을 넘는 추가 취득 장면", "타인의 지정 몫을 가져가는 분배 사건"],
+        "exclude_if_any_terms": ["agreed redistribution", "gift donation", "allocator mistake", "delivery work", "합의 재분배", "선물 기부", "배분 실수", "운반 업무"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Inside one marked allocation system, an adult crosses the boundary of their own share and moves one extra assigned share away from another recipient, leaving an immediate same-frame shortage. Agreed redistribution, donation, allocator error, multi-share delivery work, or a large share without a visible taking action is insufficient.",
+        "paraphrase_examples": ["수령자별로 같은 몫이 놓인 분배대에서 한 성인이 자기 선을 넘어 옆 사람 몫 하나를 가져가고 그 자리에 빈칸이 남는 순간", "one allocation rule, distinct recipient shares, a boundary-crossing hand, an extra share moving, and an immediate gap in another recipient's area"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["allocation_system", "recipient_links", "extra_taking", "other_shortage", "taking_gap_causality"], "groups": [
+          {"id": "allocation_system", "any_terms": ["one allocation system shows distinct equal or assigned recipient shares"]},
+          {"id": "recipient_links", "any_terms": ["each physical share remains visibly linked to a different recipient"]},
+          {"id": "extra_taking", "any_terms": ["the same adult moves one extra share across their own marked boundary"]},
+          {"id": "other_shortage", "any_terms": ["another recipient's assigned area shows an immediate missing-share gap"]},
+          {"id": "taking_gap_causality", "any_terms": ["taking hand crossed boundary and resulting shortage appear together"]}
+        ]},
+        "contrast_examples": ["consensual redistribution", "donating one's share", "a distributor correcting an error", "a worker carrying several shares", "a person merely standing beside a larger allocation"]
+      },
+      "concept_candidate": {"concept_terms": ["marked allocation system", "recipient-linked shares", "extra-share boundary crossing", "other recipient shortage", "taking-to-gap causality"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible extra-share taking across a marked allocation boundary"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a top-down or oblique allocation view that keeps every share, recipient boundary, crossing hand, moved extra share, and resulting gap visible together without relying on moral or personality labels.",
+      "required_evidence_fields": ["allocation_phrase", "recipient_phrase", "taking_phrase", "shortage_phrase", "causal_phrase"],
+      "evidence_requirements": {
+        "allocation_phrase": {"min_content_words": 9, "must_mention_any": ["one allocation system shows distinct equal or assigned recipient shares"]},
+        "recipient_phrase": {"min_content_words": 9, "must_mention_any": ["each physical share remains visibly linked to a different recipient"]},
+        "taking_phrase": {"min_content_words": 11, "must_mention_any": ["the same adult moves one extra share across their own marked boundary"]},
+        "shortage_phrase": {"min_content_words": 10, "must_mention_any": ["another recipient's assigned area shows an immediate missing-share gap"]},
+        "causal_phrase": {"min_content_words": 9, "must_mention_any": ["taking hand crossed boundary and resulting shortage appear together"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_pleonexia_allocation", "review_scale": "thumbnail", "description": "One readable allocation system contains distinct equal or assigned shares."},
+        {"id": "vo_desire_pleonexia_recipients", "review_scale": "both", "description": "Shares remain visibly tied to different recipients."},
+        {"id": "vo_desire_pleonexia_taking", "review_scale": "both", "description": "One adult visibly moves an extra share across their own marked boundary."},
+        {"id": "vo_desire_pleonexia_shortage", "review_scale": "native", "description": "Another recipient's assigned area has a visible same-share shortage."},
+        {"id": "vo_desire_pleonexia_causality", "review_scale": "both", "description": "Taking hand, crossed boundary, and resulting gap appear in one causal frame."}
+      ],
+      "reject_substitutes": ["agreed_redistribution", "gift_or_donation", "allocator_mistake", "multi_share_delivery", "large_share_without_taking"]
+    },
+    {
+      "id": "public_recognition_bid_audience_response",
+      "category": "public_presentation_multiobserver_recognition_event",
+      "activation": {
+        "exact_terms": ["visible public recognition bid with audience response", "public presentation causing audience recognition event", "청중 반응이 보이는 공개 인정 요청 장면", "결과물 공개와 다중 청중 인정 사건"],
+        "exclude_if_any_terms": ["incidental crowd", "unrelated press", "luxury object alone", "low angle pose", "우연한 군중", "무관한 기자", "사치품 단독", "낮은 앵글 포즈"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult publicly presents one specific work, achievement, or role marker to an identifiable audience whose several independent attention or access responses produce an immediate recognition result. This is an observable recognition bid, not proof of vanity, enduring status, fame, or actual rank; an incidental crowd, unrelated press, luxury object alone, or status pose is insufficient.",
+        "paraphrase_examples": ["성인이 완성한 비문자 결과물을 공개하자 서로 다른 청중이 렌즈와 몸을 동시에 돌리고 길을 열어 즉시 주목이 형성되는 순간", "one adult presenter, one concrete marker, a public presentation action, several independent audience responses, and an immediate recognition consequence"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["presented_marker", "presentation_action", "audience_response", "recognition_result", "presentation_response_causality"], "groups": [
+          {"id": "presented_marker", "any_terms": ["the adult presents one specific work achievement or role marker"]},
+          {"id": "presentation_action", "any_terms": ["the presentation action occurs before an identifiable audience"]},
+          {"id": "audience_response", "any_terms": ["several audience members respond independently toward presenter and marker"]},
+          {"id": "recognition_result", "any_terms": ["attention access award or introduction changes immediately"]},
+          {"id": "presentation_response_causality", "any_terms": ["presenter marker and audience responses form one causal arc"]}
+        ]},
+        "contrast_examples": ["a person near an incidental crowd", "press looking elsewhere", "a luxury object with no audience", "a low-angle portrait", "an audience with no presented result"]
+      },
+      "concept_candidate": {"concept_terms": ["specific presented marker", "public presentation action", "independent audience responses", "immediate recognition result", "presentation-to-response arc"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible public presentation with multiobserver recognition response"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Link presenter, specific marker, and several independent audience responses in one readable arc, reserving enough space for the immediate attention, access, award, or introduction consequence.",
+      "required_evidence_fields": ["marker_phrase", "presentation_phrase", "audience_phrase", "result_phrase", "causal_phrase"],
+      "evidence_requirements": {
+        "marker_phrase": {"min_content_words": 9, "must_mention_any": ["the adult presents one specific work achievement or role marker"]},
+        "presentation_phrase": {"min_content_words": 8, "must_mention_any": ["the presentation action occurs before an identifiable audience"]},
+        "audience_phrase": {"min_content_words": 9, "must_mention_any": ["several audience members respond independently toward presenter and marker"]},
+        "result_phrase": {"min_content_words": 7, "must_mention_any": ["attention access award or introduction changes immediately"]},
+        "causal_phrase": {"min_content_words": 8, "must_mention_any": ["presenter marker and audience responses form one causal arc"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_recognition_marker", "review_scale": "thumbnail", "description": "One specific work, achievement, or role marker is visibly presented."},
+        {"id": "vo_desire_recognition_presentation", "review_scale": "both", "description": "The adult performs a public presentation, unveiling, entry, or demonstration action."},
+        {"id": "vo_desire_recognition_audience", "review_scale": "both", "description": "Several audience members show independent responses toward presenter and marker."},
+        {"id": "vo_desire_recognition_result", "review_scale": "native", "description": "Attention, access, award, introduction, or path-opening changes immediately."},
+        {"id": "vo_desire_recognition_causality", "review_scale": "both", "description": "The presentation visibly causes the audience response rather than sharing an incidental crowd."}
+      ],
+      "reject_substitutes": ["incidental_crowd", "unrelated_press", "luxury_object_without_audience", "low_angle_status_pose", "actual_rank_claim"]
+    },
+    {
+      "id": "next_milestone_ambition_pursuit",
+      "category": "completed_current_next_goal_progress_event",
+      "activation": {
+        "exact_terms": ["visible next-milestone pursuit after completion", "completed-current-next milestone pursuit event", "완료 뒤 다음 이정표를 추구하는 가시적 장면", "이전 완료와 다음 목표가 연결된 성취 추구 사건"],
+        "exclude_if_any_terms": ["post-success celebration", "routine work", "determined expression", "text-only plan", "성공 후 축하", "일상 업무", "결연한 표정", "텍스트 계획표"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "After one visible completed milestone, the same adult actively invests effort or resources toward one distinct next milestone while current progress feedback connects the completed and future states. This is a goal-pursuit event, not proof of ambition as a personality trait; celebration, routine work, determined expression, or a text-only plan is insufficient.",
+        "paraphrase_examples": ["완료 표시가 있는 이전 결과 옆에서 같은 성인이 다음 목표용 작업을 수행하고 진척 표지가 움직이며 도구와 시간이 실제로 투입되는 장면", "one completed milestone, one distinct next target, current feedback, same-adult next-step work, and visible resource commitment on a single progression axis"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["completed_milestone", "next_milestone", "progress_feedback", "active_next_step", "resource_commitment"], "groups": [
+          {"id": "completed_milestone", "any_terms": ["one prior milestone remains visibly completed"]},
+          {"id": "next_milestone", "any_terms": ["a distinct next milestone is concrete and identifiable"]},
+          {"id": "progress_feedback", "any_terms": ["current progress feedback connects completed and next states"]},
+          {"id": "active_next_step", "any_terms": ["the same adult performs the next-step task with visible effort"]},
+          {"id": "resource_commitment", "any_terms": ["tools materials training time or schedule show resource commitment"]}
+        ]},
+        "contrast_examples": ["celebrating a completed result", "ordinary desk work", "a determined portrait", "a text-only goal list", "a smiling success portrait"]
+      },
+      "concept_candidate": {"concept_terms": ["completed prior milestone", "distinct next milestone", "current progress feedback", "same-adult next-step effort", "visible resource commitment"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible pursuit of a distinct next milestone after completion"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Arrange completed milestone, central current work, and distinct next goal on one readable progression axis, with feedback and committed tools, material, training time, or schedule visible without relying on text.",
+      "required_evidence_fields": ["completed_phrase", "next_phrase", "feedback_phrase", "work_phrase", "commitment_phrase"],
+      "evidence_requirements": {
+        "completed_phrase": {"min_content_words": 6, "must_mention_any": ["one prior milestone remains visibly completed"]},
+        "next_phrase": {"min_content_words": 8, "must_mention_any": ["a distinct next milestone is concrete and identifiable"]},
+        "feedback_phrase": {"min_content_words": 8, "must_mention_any": ["current progress feedback connects completed and next states"]},
+        "work_phrase": {"min_content_words": 10, "must_mention_any": ["the same adult performs the next-step task with visible effort"]},
+        "commitment_phrase": {"min_content_words": 9, "must_mention_any": ["tools materials training time or schedule show resource commitment"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_ambition_completed", "review_scale": "thumbnail", "description": "One prior milestone is visibly complete."},
+        {"id": "vo_desire_ambition_next", "review_scale": "both", "description": "A distinct and concrete next milestone is readable."},
+        {"id": "vo_desire_ambition_feedback", "review_scale": "both", "description": "Current progress feedback visibly connects completed and next states."},
+        {"id": "vo_desire_ambition_work", "review_scale": "native", "description": "The same adult performs the specific next-step task with visible effort."},
+        {"id": "vo_desire_ambition_commitment", "review_scale": "both", "description": "Tools, materials, training time, or schedule show actual resource commitment."}
+      ],
+      "reject_substitutes": ["post_success_celebration", "routine_work", "determined_expression", "text_only_plan", "achievement_reward_duplicate"]
+    },
+    {
+      "id": "resource_control_acquisition_event",
+      "category": "valued_resource_control_claim_affected_access_event",
+      "activation": {
+        "exact_terms": ["visible acquisition of resource-control authority", "resource access control claim changing another person's access", "자원 통제권 획득이 보이는 장면", "다른 사람의 접근을 바꾸는 자원 통제 청구 사건"],
+        "exclude_if_any_terms": ["routine security work", "collaborative handoff", "throne pose", "uniform only", "일상 경비 업무", "협업 인계", "왕좌 포즈", "제복만"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult visibly seeks or obtains control over one valued resource or access right, and the resulting grant, withholding, blockage, or rerouting changes an identifiable affected person's practical access. This is a bounded resource-control event, not proof of enduring power, domination, occupation, or rank; routine security work, collaborative handoff, throne pose, uniform, height, or camera angle is insufficient.",
+        "paraphrase_examples": ["기존 통제자에게서 특정 자원 게이트의 권한 토큰을 넘겨받은 성인이 배분 경로를 바꾸자 다른 성인의 접근선이 즉시 허용 또는 차단되는 장면", "one valued resource, an existing control system, a visible claim or transfer, an affected adult, and an immediate changed access path"],
+        "component_semantics": {"minimum_component_groups": 5, "required_group_ids": ["valued_resource", "existing_control", "control_claim", "affected_party", "access_result"], "groups": [
+          {"id": "valued_resource", "any_terms": ["one valued resource or access right is concrete and identifiable"]},
+          {"id": "existing_control", "any_terms": ["an existing controller or control system visibly owns current authority"]},
+          {"id": "control_claim", "any_terms": ["another adult claims receives or reroutes that control"]},
+          {"id": "affected_party", "any_terms": ["an identifiable affected person depends on the same resource path"]},
+          {"id": "access_result", "any_terms": ["grant withholding blockage or rerouting visibly changes that access"]}
+        ]},
+        "contrast_examples": ["a guard checking credentials as routine work", "a consensual team handoff", "a throne portrait", "a uniformed adult", "a low-angle dominant pose"]
+      },
+      "concept_candidate": {"concept_terms": ["concrete valued resource", "existing controller", "visible control claim or transfer", "identifiable affected person", "changed access state"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visible control acquisition over a concrete resource and affected access"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the valued resource, existing controller or interface, claimant's control action, affected person, and changed access path on one readable axis; do not rely on hierarchy poses or occupational styling.",
+      "required_evidence_fields": ["resource_phrase", "control_phrase", "claim_phrase", "affected_phrase", "result_phrase"],
+      "evidence_requirements": {
+        "resource_phrase": {"min_content_words": 9, "must_mention_any": ["one valued resource or access right is concrete and identifiable"]},
+        "control_phrase": {"min_content_words": 10, "must_mention_any": ["an existing controller or control system visibly owns current authority"]},
+        "claim_phrase": {"min_content_words": 8, "must_mention_any": ["another adult claims receives or reroutes that control"]},
+        "affected_phrase": {"min_content_words": 9, "must_mention_any": ["an identifiable affected person depends on the same resource path"]},
+        "result_phrase": {"min_content_words": 9, "must_mention_any": ["grant withholding blockage or rerouting visibly changes that access"]}
+      },
+      "render_gates": [
+        {"id": "vo_desire_power_resource", "review_scale": "thumbnail", "description": "One valued resource or access right is concrete and identifiable."},
+        {"id": "vo_desire_power_existing_control", "review_scale": "both", "description": "An existing controller or control system visibly owns current authority."},
+        {"id": "vo_desire_power_claim", "review_scale": "both", "description": "Another adult visibly claims, receives, or reroutes that control."},
+        {"id": "vo_desire_power_affected_party", "review_scale": "native", "description": "An identifiable affected person depends on the same resource path."},
+        {"id": "vo_desire_power_access_result", "review_scale": "both", "description": "Grant, withholding, blockage, or rerouting visibly changes the affected person's access."}
+      ],
+      "reject_substitutes": ["routine_security_work", "collaborative_handoff", "throne_pose", "uniform_only", "low_camera_angle"]
+    },
+    {
+      "id": "local_legend_site_transmission",
+      "category": "site_evidence_teller_listener_transmission",
+      "activation": {
+        "exact_terms": ["visible local legend transmission at its site", "site-bound local legend being told", "현장 향토전설 전승", "장소에 묶인 전설 구술"],
+        "exclude_if_any_terms": ["generic storytelling portrait", "fiction reading", "unrelated lecture", "stage monologue", "일반 이야기 낭독", "무관한 강의"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "At one identifiable present-day site, a teller actively links one specific surviving trace or evidence object to attentive listeners through a readable gesture and shared line of attention. A storyteller portrait, tour group, atmospheric ruin, unrelated lecture, or book reading without the site-evidence-listener relation is insufficient.",
+        "paraphrase_examples": ["현재의 바위 흔적 앞에서 지역 화자가 그 표면을 가리키고 청자가 같은 흔적을 확인하며 기록한다", "at the named site one teller points from a fixed trace to listeners who follow and record the account"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["identifiable_present_site", "specific_evidence_object", "active_teller", "attentive_listeners", "transmission_relation"],
+          "groups": [
+            {"id":"identifiable_present_site","any_terms":["one concrete present site remains recognizable around the evidence object"]},
+            {"id":"specific_evidence_object","any_terms":["one fixed trace rock spring grave tree ruin or artifact is the shared referent"]},
+            {"id":"active_teller","any_terms":["a visible teller speaks and gestures from the evidence object rather than posing alone"]},
+            {"id":"attentive_listeners","any_terms":["at least one listener visibly follows records or compares the teller's site claim"]},
+            {"id":"transmission_relation","any_terms":["teller gesture listener attention and site evidence converge on the same referent"]}
+          ]
+        },
+        "contrast_examples": ["a generic storyteller portrait", "tourists near a ruin", "a lecturer in a classroom", "an old book on a table", "a foggy folklore location", "listeners looking elsewhere"]
+      },
+      "concept_candidate": {"concept_terms":["identifiable present site","specific evidence object","active teller gesture","listener uptake","shared site referent","oral transmission"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["visible site-bound local-legend transmission"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Keep the specific site and evidence object visible while the teller's gesture begins at that object and the listeners' gaze, notes, recording device, or checking action returns to the same referent in one frame.",
+      "required_evidence_fields": ["site_phrase","evidence_object_phrase","teller_phrase","listener_phrase","transmission_relation_phrase"],
+      "evidence_requirements": {
+        "site_phrase":{"min_content_words":8,"must_mention_any":["one concrete present site remains recognizable around the evidence object"]},
+        "evidence_object_phrase":{"min_content_words":9,"must_mention_any":["one fixed trace object is the shared referent at that site"]},
+        "teller_phrase":{"min_content_words":9,"must_mention_any":["a visible teller speaks and gestures from the evidence object"]},
+        "listener_phrase":{"min_content_words":9,"must_mention_any":["at least one listener visibly follows records or compares the account"]},
+        "transmission_relation_phrase":{"min_content_words":10,"must_mention_any":["teller gesture listener attention and site evidence converge on the same referent"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_site_transmission_present_site","review_scale":"thumbnail","description":"One concrete present site is recognizable rather than an abstract storytelling backdrop."},
+        {"id":"vo_legend_site_transmission_evidence_object","review_scale":"both","description":"One fixed site-specific evidence object is clearly readable."},
+        {"id":"vo_legend_site_transmission_teller_action","review_scale":"both","description":"The teller actively gestures from or toward that evidence object."},
+        {"id":"vo_legend_site_transmission_listener_uptake","review_scale":"native","description":"A listener visibly attends records or checks the same claim."},
+        {"id":"vo_legend_site_transmission_shared_referent","review_scale":"both","description":"Teller gesture listener attention and evidence object converge on one referent."}
+      ],
+      "reject_substitutes": ["storyteller_portrait","tour_group_only","atmospheric_ruin_only","unrelated_book_reading","lecture_without_site_evidence","listeners_without_shared_attention"]
+    },
+    {
+      "id": "legendary_rock_trace_evidence",
+      "category": "fixed_rock_anomalous_trace_scale_site_evidence",
+      "activation": {
+        "exact_terms": ["legendary rock trace as site evidence", "hero-trace rock evidence", "전설 바위 흔적 증거", "장수바위 흔적 현장 증거"],
+        "exclude_if_any_terms": ["ordinary weathered rock", "painted footprint", "loose stone prop", "fantasy monolith", "일반 풍화 바위", "그려진 발자국"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One distinctive rock or outcrop remains fixed to a precise site and carries an anomalous imprint, body hollow, grip groove, hoof mark, or cleft that is continuous with the rock surface. A human, tool, or body-scale comparison makes the trace legible and separates it from ordinary weathering, painted symbols, loose props, and generic monoliths.",
+        "paraphrase_examples": ["지면에 박힌 특이 바위의 손가락 홈을 성인 손과 도구로 함께 재어 비범한 크기와 표면 연속성을 보인다", "a fixed boulder carries a five-finger grip trace whose scale and surface continuity are read beside a witness hand"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["fixed_distinctive_rock", "anomalous_surface_trace", "readable_scale_relation", "surface_contact_logic", "site_reading_context"],
+          "groups": [
+            {"id":"fixed_distinctive_rock","any_terms":["one distinctive rock or outcrop is visibly rooted in its precise terrain site"]},
+            {"id":"anomalous_surface_trace","any_terms":["one imprint hollow groove or cleft is materially continuous with the rock surface"]},
+            {"id":"readable_scale_relation","any_terms":["a hand body tool or nearby structure makes the anomalous trace scale readable"]},
+            {"id":"surface_contact_logic","any_terms":["trace contour depth and weathering show a contact-shaped event rather than painted decoration"]},
+            {"id":"site_reading_context","any_terms":["a witness measurement gesture or site landmark frames the rock as evidence"]}
+          ]
+        },
+        "contrast_examples": ["ordinary cracked boulder", "painted handprint", "small footprint-shaped prop", "floating monolith", "a person posing beside a rock", "trace hidden by crop"]
+      },
+      "concept_candidate": {"concept_terms":["fixed distinctive rock","embedded anomalous trace","human scale relation","contact-shaped contour","site landmark","evidence reading"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["legendary rock trace as physical site evidence"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Show enough of the rooted rock and terrain to establish site identity, while a readable anomalous trace, scale reference, surface continuity, and witness or documentation gesture occupy the same spatial axis.",
+      "required_evidence_fields": ["fixed_rock_phrase","trace_phrase","scale_phrase","contact_logic_phrase","site_reading_phrase"],
+      "evidence_requirements": {
+        "fixed_rock_phrase":{"min_content_words":9,"must_mention_any":["one distinctive rock remains visibly rooted in its precise terrain site"]},
+        "trace_phrase":{"min_content_words":9,"must_mention_any":["one anomalous trace is materially continuous with the rock surface"]},
+        "scale_phrase":{"min_content_words":9,"must_mention_any":["a human hand body or tool makes the trace scale readable"]},
+        "contact_logic_phrase":{"min_content_words":10,"must_mention_any":["trace contour depth and weathering establish a contact-shaped event"]},
+        "site_reading_phrase":{"min_content_words":9,"must_mention_any":["a witness measurement or landmark frames the rock as site evidence"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_rock_fixed_site","review_scale":"thumbnail","description":"The distinctive rock reads as fixed to one precise terrain site."},
+        {"id":"vo_legend_rock_anomalous_trace","review_scale":"both","description":"One anomalous trace is visibly embedded in the rock surface."},
+        {"id":"vo_legend_rock_scale_relation","review_scale":"both","description":"A human tool or structural scale comparison makes the trace size legible."},
+        {"id":"vo_legend_rock_surface_continuity","review_scale":"native","description":"Trace depth contour and weathering remain continuous with stone rather than paint or an attached prop."},
+        {"id":"vo_legend_rock_evidence_context","review_scale":"both","description":"The frame reads the rock as site evidence rather than generic fantasy scenery."}
+      ],
+      "reject_substitutes": ["ordinary_weathered_rock","painted_symbol","loose_footprint_prop","fantasy_monolith","pose_beside_rock","trace_hidden_by_crop"]
+    },
+    {
+      "id": "legendary_landform_origin_causality",
+      "category": "extraordinary_agent_terrain_contact_deformation_result",
+      "activation": {
+        "exact_terms": ["visible legendary landform-origin event", "extraordinary act forming the landform", "전설 지형 기원 인과 장면", "비범한 행위로 지형이 생기는 장면"],
+        "exclude_if_any_terms": ["landscape portrait", "finished valley", "detached explosion", "map diagram", "mountain aura", "풍경 인물 사진", "완성된 계곡"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An extraordinary agent directly contacts ordinary terrain and one continuous displacement path becomes a new landform consequence in the same frame. The baseline terrain, contact action, fresh deformation, and formed result must remain causally joined; a hero posing in scenery, a finished valley, detached blast, map, or aura does not prove origin causality.",
+        "paraphrase_examples": ["거인의 발이 평지에 닿은 자리에서 신선한 골이 끊기지 않고 계곡으로 벌어진다", "a dragon's body drags through ordinary ground and the continuous furrow becomes a river course behind the contact"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["extraordinary_agent", "baseline_terrain", "direct_contact_action", "continuous_deformation_path", "formed_landform_result"],
+          "groups": [
+            {"id":"extraordinary_agent","any_terms":["one extraordinary agent remains the identifiable owner of the terrain-forming act"]},
+            {"id":"baseline_terrain","any_terms":["ordinary terrain before the contact remains readable as a baseline"]},
+            {"id":"direct_contact_action","any_terms":["the agent's body hand foot tool or movement directly contacts and displaces terrain"]},
+            {"id":"continuous_deformation_path","any_terms":["fresh displaced material forms one unbroken path from contact into the emerging feature"]},
+            {"id":"formed_landform_result","any_terms":["a valley ridge river cleft basin island or comparable landform visibly begins from that path"]}
+          ]
+        },
+        "contrast_examples": ["hero standing on a mountain", "finished valley without a cause", "an explosion above the ground", "a landscape map", "glowing mountain aura", "unrelated before-after panels"]
+      },
+      "concept_candidate": {"concept_terms":["extraordinary causal agent","ordinary terrain baseline","direct terrain contact","continuous deformation path","forming landform consequence"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["visible legendary landform-origin causality"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Arrange ordinary terrain before the action, the extraordinary agent's direct contact, one fresh continuous displacement path, and the forming landform consequence along a single readable direction in one still.",
+      "required_evidence_fields": ["agent_phrase","baseline_phrase","contact_phrase","deformation_phrase","landform_result_phrase"],
+      "evidence_requirements": {
+        "agent_phrase":{"min_content_words":9,"must_mention_any":["one extraordinary agent owns the visible terrain-forming act"]},
+        "baseline_phrase":{"min_content_words":9,"must_mention_any":["ordinary terrain before contact remains readable as the baseline"]},
+        "contact_phrase":{"min_content_words":10,"must_mention_any":["the agent's body tool or movement directly contacts and displaces terrain"]},
+        "deformation_phrase":{"min_content_words":10,"must_mention_any":["fresh displaced material forms one unbroken path from the contact"]},
+        "landform_result_phrase":{"min_content_words":10,"must_mention_any":["a concrete new landform visibly begins from that continuous path"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_landform_agent","review_scale":"thumbnail","description":"One extraordinary agent clearly owns the landform-forming action."},
+        {"id":"vo_legend_landform_baseline","review_scale":"both","description":"Ordinary pre-contact terrain remains readable as the baseline."},
+        {"id":"vo_legend_landform_direct_contact","review_scale":"both","description":"The agent directly contacts and displaces terrain."},
+        {"id":"vo_legend_landform_continuous_trace","review_scale":"native","description":"A fresh unbroken deformation path joins contact to result."},
+        {"id":"vo_legend_landform_result","review_scale":"both","description":"A concrete landform consequence visibly begins from that path."}
+      ],
+      "reject_substitutes": ["landscape_pose","finished_landform_only","detached_explosion","map_or_diagram","aura_only","before_after_panels"]
+    },
+    {
+      "id": "guarded_hidden_treasure_attempt_failure",
+      "category": "fixed_cache_active_attempt_guardian_interruption_failed_transfer",
+      "activation": {
+        "exact_terms": ["guarded hidden treasure attempt visibly failing", "guardian blocks treasure recovery", "수호자가 보물 회수를 막는 실패 장면", "매장 보물 회수 시도 실패"],
+        "exclude_if_any_terms": ["open treasure chest portrait", "guard beside treasure", "successful treasure handoff", "aftermath only", "generic dungeon fight", "보물상자 인물 사진", "수호자와 보물 정물"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A clearly adult seeker is caught in an active digging, opening, reaching, or lifting attempt toward one fixed hidden cache while an identifiable guardian interrupts that same access path. The transfer visibly fails and the cache remains attached to its site. An open-chest portrait, guard merely standing nearby, successful handoff, aftermath, or unrelated fight is insufficient.",
+        "paraphrase_examples": ["성인 탐색자가 고분 바닥의 반쯤 드러난 상자를 들어 올리려는 순간 수호자가 접근선을 막아 상자가 원위치에 남는다", "an adult seeker's tool reaches a fixed hoard niche while the guardian blocks the exact line and the cache remains embedded"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["fixed_hidden_cache", "adult_retrieval_actor", "active_access_attempt", "guardian_interruption", "failed_transfer_retention"],
+          "groups": [
+            {"id":"fixed_hidden_cache","any_terms":["one hidden cache remains visibly attached to soil masonry burial layer or fixed niche"]},
+            {"id":"adult_retrieval_actor","any_terms":["one clearly adult seeker is identifiable as the actor attempting recovery"]},
+            {"id":"active_access_attempt","any_terms":["the adult seeker actively digs opens reaches lifts or extracts toward that exact cache"]},
+            {"id":"guardian_interruption","any_terms":["one identifiable guardian directly blocks redirects or stops the same access path"]},
+            {"id":"failed_transfer_retention","any_terms":["the attempt is visibly incomplete and the treasure remains untransferred at the site"]}
+          ]
+        },
+        "contrast_examples": ["adult posing with an open chest", "guard beside untouched treasure", "successful treasure handoff", "body after an unseen attack", "generic combat in a cave", "loose coins on a table"]
+      },
+      "concept_candidate": {"concept_terms":["fixed hidden cache","adult recovery actor","active retrieval attempt","guardian-owned interruption","failed transfer","retained hoard"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["guarded hidden-treasure recovery attempt visibly failing"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Place the adult seeker's active reach or tool path, the guardian's opposing intervention, and the still-fixed cache in one causal triangle so the failed transfer is already visible without relying on aftermath.",
+      "required_evidence_fields": ["cache_phrase","adult_seeker_phrase","attempt_phrase","guardian_phrase","failed_transfer_phrase"],
+      "evidence_requirements": {
+        "cache_phrase":{"min_content_words":10,"must_mention_any":["one hidden cache remains visibly attached to its soil masonry or fixed niche"]},
+        "adult_seeker_phrase":{"min_content_words":9,"must_mention_any":["one clearly adult seeker is the identifiable recovery actor"]},
+        "attempt_phrase":{"min_content_words":10,"must_mention_any":["the adult seeker actively reaches digs opens or lifts toward that exact cache"]},
+        "guardian_phrase":{"min_content_words":10,"must_mention_any":["one identifiable guardian directly interrupts the same access path"]},
+        "failed_transfer_phrase":{"min_content_words":10,"must_mention_any":["the transfer visibly fails and the treasure remains at the site"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_treasure_fixed_cache","review_scale":"thumbnail","description":"One hidden cache reads as fixed to a specific site."},
+        {"id":"vo_legend_treasure_adult_attempt","review_scale":"both","description":"A clearly adult seeker is actively attempting to recover that cache."},
+        {"id":"vo_legend_treasure_guardian_interruption","review_scale":"both","description":"An identifiable guardian acts on the same access path."},
+        {"id":"vo_legend_treasure_failed_transfer","review_scale":"native","description":"The attempt visibly fails before the cache transfers."},
+        {"id":"vo_legend_treasure_cache_retained","review_scale":"both","description":"The hoard remains attached to the site rather than in the seeker's possession."}
+      ],
+      "reject_substitutes": ["open_chest_portrait","guard_beside_treasure","successful_handoff","aftermath_only","generic_dungeon_combat","loose_treasure_still_life"]
+    },
+    {
+      "id": "submerged_settlement_in_situ_structure",
+      "category": "underwater_multi_structure_foundation_plan_in_situ",
+      "activation": {
+        "exact_terms": ["submerged settlement with in-situ architecture", "underwater settlement fixed in place", "원위치 건축이 남은 수몰 정착지", "수중 정착지 원위치 구조"],
+        "exclude_if_any_terms": ["single shipwreck", "scattered artifacts", "underwater fantasy palace", "loose ruins", "one masonry wall", "단일 난파선", "흩어진 유물"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Several architectural elements remain joined to fixed foundations and street, courtyard, or room alignments in one submerged settlement plan. Water, sediment, aquatic occupation, and diver or ROV scale establish in-situ context. A single shipwreck, scattered artifacts, fantasy palace, loose rubble, or one wall does not prove a settlement.",
+        "paraphrase_examples": ["퇴적층에 박힌 여러 기초와 벽·문지방·거리 경계가 연결되고 ROV가 크기를 기록한다", "multiple submerged wall returns and thresholds remain joined to foundations along a street while a diver provides scale"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["settlement_plan", "fixed_foundations", "joined_architecture", "submerged_environment", "survey_scale_evidence"],
+          "groups": [
+            {"id":"settlement_plan","any_terms":["multiple structures form a readable street courtyard room or neighborhood arrangement"]},
+            {"id":"fixed_foundations","any_terms":["walls and thresholds remain visibly attached to foundations embedded in sediment"]},
+            {"id":"joined_architecture","any_terms":["at least several wall returns floors thresholds or street edges remain spatially connected"]},
+            {"id":"submerged_environment","any_terms":["water depth sediment aquatic growth turbidity or light behavior occupies the architecture"]},
+            {"id":"survey_scale_evidence","any_terms":["an adult diver ROV scale marker or survey light makes the settlement dimensions legible"]}
+          ]
+        },
+        "contrast_examples": ["one shipwreck", "scattered amphorae", "fantasy palace underwater", "loose masonry pile", "single wall fragment", "surface city behind blue glass"]
+      },
+      "concept_candidate": {"concept_terms":["multi-structure settlement plan","fixed foundations","joined masonry","submerged environmental occupation","diver or ROV scale","in-situ evidence"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["submerged settlement with in-situ architecture"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Use an elevated oblique or wide underwater view that reveals several aligned structures and a street, courtyard, or room plan, plus a nearer foundation junction and diver or ROV scale cue, all visibly embedded in the aquatic site.",
+      "required_evidence_fields": ["settlement_plan_phrase","foundation_phrase","architecture_phrase","submerged_environment_phrase","scale_phrase"],
+      "evidence_requirements": {
+        "settlement_plan_phrase":{"min_content_words":10,"must_mention_any":["multiple structures form a readable street courtyard or room arrangement"]},
+        "foundation_phrase":{"min_content_words":10,"must_mention_any":["walls and thresholds remain attached to foundations embedded in sediment"]},
+        "architecture_phrase":{"min_content_words":10,"must_mention_any":["several wall returns floors thresholds or street edges remain connected"]},
+        "submerged_environment_phrase":{"min_content_words":10,"must_mention_any":["water sediment aquatic growth and depth cues occupy the architecture"]},
+        "scale_phrase":{"min_content_words":10,"must_mention_any":["an adult diver ROV or scale marker makes settlement dimensions legible"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_submerged_settlement_plan","review_scale":"thumbnail","description":"Several structures form a readable settlement-scale plan."},
+        {"id":"vo_legend_submerged_fixed_foundations","review_scale":"both","description":"Architecture remains attached to foundations embedded in sediment."},
+        {"id":"vo_legend_submerged_joined_architecture","review_scale":"both","description":"Several walls thresholds floors or street edges remain spatially joined."},
+        {"id":"vo_legend_submerged_environment","review_scale":"native","description":"Water sediment aquatic growth and depth behavior visibly occupy the site."},
+        {"id":"vo_legend_submerged_scale","review_scale":"both","description":"A diver ROV or survey marker establishes architectural scale."}
+      ],
+      "reject_substitutes": ["single_shipwreck","scattered_artifacts","underwater_fantasy_palace","loose_rubble","single_wall","surface_city_filter"]
+    },
+    {
+      "id": "ghost_ship_former_vessel_breach",
+      "category": "same_vessel_physical_baseline_spectral_breach_service_residue",
+      "activation": {
+        "exact_terms": ["former vessel breaking into spectral continuity", "ghost ship with former-vessel continuity breach", "과거 선박 연속성이 갈라지는 유령선", "물질 선체와 유령성 단절이 공존하는 배"],
+        "exclude_if_any_terms": ["foggy abandoned ship", "ordinary shipwreck", "empty deck", "fully translucent boat", "unrelated crew overlay", "안개 낀 빈 배", "일반 난파선"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One identifiable former working vessel remains physically readable through hull, rigging, deck, and service residue while a bounded connected part of that same structure breaks into translucency, absence, or spectral displacement. A present witness, waterline, wake, or reflection makes the anomaly legible. A foggy abandoned ship, ordinary wreck, empty deck, fully translucent boat, or unrelated double exposure is insufficient.",
+        "paraphrase_examples": ["닳은 도르래와 화물 결박이 남은 물질 선체의 일부가 같은 삭구 선을 따라 투명한 공백으로 끊기고 항적도 그 지점에서 어긋난다", "one working ship keeps a solid bow and service-worn deck while the connected mid-hull becomes spectrally absent and its wake breaks under a witness view"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["same_vessel_identity", "physical_hull_baseline", "bounded_spectral_breach", "former_service_residue", "present_anomaly_evidence"],
+          "groups": [
+            {"id":"same_vessel_identity","any_terms":["one continuous hull rigging and deck arrangement identifies the same vessel across all regions"]},
+            {"id":"physical_hull_baseline","any_terms":["a substantial connected portion remains opaque solid weight-bearing and water-interacting"]},
+            {"id":"bounded_spectral_breach","any_terms":["one bounded connected region becomes translucent absent displaced or spectrally discontinuous"]},
+            {"id":"former_service_residue","any_terms":["worn rigging cargo fittings repair marks or watch equipment establish former operation"]},
+            {"id":"present_anomaly_evidence","any_terms":["a witness wake reflection waterline or shadow visibly disagrees at the spectral breach"]}
+          ]
+        },
+        "contrast_examples": ["foggy abandoned ship", "ordinary wreck", "empty deck", "fully transparent fantasy boat", "crew double exposure", "ship silhouette in clouds"]
+      },
+      "concept_candidate": {"concept_terms":["same-vessel continuity","physical hull baseline","bounded spectral breach","former service residue","anomalous wake or reflection","present witness"]},
+      "runtime_expression": {"default_mode":"label_plus_definition","prompt_label_terms":["ghost ship with former-vessel continuity breach"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
+      "composition_instruction": "Use a three-quarter maritime view that keeps a substantial solid hull and rigging beside one bounded spectral discontinuity, former service-worn details, and a witness or water-interaction anomaly tied to the same vessel.",
+      "required_evidence_fields": ["vessel_identity_phrase","physical_hull_phrase","spectral_breach_phrase","service_residue_phrase","present_anomaly_phrase"],
+      "evidence_requirements": {
+        "vessel_identity_phrase":{"min_content_words":10,"must_mention_any":["one continuous hull rigging and deck arrangement identifies the same vessel"]},
+        "physical_hull_phrase":{"min_content_words":10,"must_mention_any":["a substantial connected portion remains opaque solid and water-interacting"]},
+        "spectral_breach_phrase":{"min_content_words":10,"must_mention_any":["one bounded connected region becomes translucent absent or spectrally displaced"]},
+        "service_residue_phrase":{"min_content_words":10,"must_mention_any":["worn rigging cargo fittings or repair marks establish former operation"]},
+        "present_anomaly_phrase":{"min_content_words":10,"must_mention_any":["a witness wake reflection or waterline visibly disagrees at the breach"]}
+      },
+      "render_gates": [
+        {"id":"vo_legend_ghost_ship_same_vessel","review_scale":"thumbnail","description":"One identifiable vessel remains continuous across physical and spectral regions."},
+        {"id":"vo_legend_ghost_ship_physical_baseline","review_scale":"both","description":"A substantial opaque solid water-interacting hull region remains readable."},
+        {"id":"vo_legend_ghost_ship_bounded_breach","review_scale":"both","description":"One bounded connected region breaks into spectral absence or displacement."},
+        {"id":"vo_legend_ghost_ship_service_residue","review_scale":"native","description":"Service-worn details establish the ship as a former working vessel."},
+        {"id":"vo_legend_ghost_ship_present_anomaly","review_scale":"both","description":"A witness wake reflection waterline or shadow makes the spectral breach observable."}
+      ],
+      "reject_substitutes": ["foggy_abandoned_ship","ordinary_shipwreck","empty_deck","fully_translucent_boat","unrelated_double_exposure","cloud_ship_silhouette"]
     }
   ]
 }

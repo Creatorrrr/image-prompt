@@ -1,0 +1,253 @@
+{
+  "schema_version": "legend-root-independent-pixel-review/v1",
+  "reviewed_at": "2026-09-01T21:47:45+09:00",
+  "reviewer": "root",
+  "review_order": "after_all_three_independent_arms_completed",
+  "partial_counts_as": "fail",
+  "same_saved_image_requirement": true,
+  "self_reviews_used_as_authoritative_evidence": false,
+  "review_inputs": {
+    "reference_image": {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "boundary": "Visible adult facial, hair, and makeup appearance only; no identity, same-person, biometric, protected-trait, nationality, health, attractiveness, or personality claim."
+    },
+    "scales": [
+      "native",
+      "whole-image"
+    ],
+    "random_selection": "coordination/selection.json"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-guarded-treasure-cliff",
+      "profile_id": "guarded_hidden_treasure_attempt_failure",
+      "concept": "An adult climber reaches a sealed cliff niche at winter dawn while a stone guardian closes the same access path and the cache should remain fixed in place.",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/arm-01-guarded-treasure-cliff/generated_image.png",
+        "sha256": "f90c9504db578c3b23283cdad4175b5852b7621680fb60755478890e5c02d36d",
+        "width": 1122,
+        "height": 1402
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "independence_controls": {
+        "cross_arm_inputs": "pass",
+        "one_image_call_no_retry": "pass",
+        "prepack_binding_integrity": "fail",
+        "evidence": "The arm used no sibling outputs and made one image call, but visual_intent.json stores an empty bindings object. The agent also reported schema-only dimension renaming after post-core access began."
+      },
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_anchors",
+          "status": "pass",
+          "evidence": "The adult subject visibly carries long center-parted near-black wavy hair, brown almond-shaped eyes, softly defined brows, fine dark eyeliner, and muted coral-pink lips. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional climber remains visibly adult."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "The climber, reach, cliff niche, stone guardian, blocking slab, and wet rock form one coherent physical scene."
+        },
+        {
+          "id": "meaning_independent_of_text",
+          "status": "pass",
+          "evidence": "No label or caption is required to read the climber-guardian interaction."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_legend_treasure_fixed_cache",
+          "status": "fail",
+          "evidence": "Only a small golden glint is visible beneath the slab; at whole-image and thumbnail reading it does not establish one legible cache fixed to the niche."
+        },
+        {
+          "id": "vo_legend_treasure_adult_attempt",
+          "status": "pass",
+          "evidence": "A clearly adult climber visibly extends a gloved hand into the same cliff recess."
+        },
+        {
+          "id": "vo_legend_treasure_guardian_interruption",
+          "status": "pass",
+          "evidence": "The stone guardian holds a slab directly across the climber's access line."
+        },
+        {
+          "id": "vo_legend_treasure_failed_transfer",
+          "status": "fail",
+          "evidence": "The frame does not unambiguously show a transfer being stopped before removal; hand, slab, and tiny gold cue are spatially ambiguous."
+        },
+        {
+          "id": "vo_legend_treasure_cache_retained",
+          "status": "fail",
+          "evidence": "Possible gold remains in the recess at native scale, but retention is not legible at both required scales."
+        }
+      ],
+      "failed_gate_ids": [
+        "vo_legend_treasure_fixed_cache",
+        "vo_legend_treasure_failed_transfer",
+        "vo_legend_treasure_cache_retained"
+      ],
+      "technical_pixel_status": "fail"
+    },
+    {
+      "arm_id": "arm-02-submerged-settlement-lake",
+      "profile_id": "submerged_settlement_in_situ_structure",
+      "concept": "An adult underwater archaeologist records a drowned lakeside street whose foundations and joined architecture remain in situ under survey lights.",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/arm-02-submerged-settlement-lake/generated_image.png",
+        "sha256": "3cc348ada245a73fab934f20f3000f0ba95e30e55cd87e45681d3eaf4afada1c",
+        "width": 1402,
+        "height": 1122
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "independence_controls": {
+        "cross_arm_inputs": "pass",
+        "one_image_call_no_retry": "pass",
+        "prepack_binding_integrity": "fail",
+        "evidence": "The arm used no sibling outputs and made one image call, but visual_intent.json stores an empty bindings object even though the composed prompt later contains the five literal profile evidence fields."
+      },
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_anchors",
+          "status": "pass",
+          "evidence": "Through the clear helmet, the adult subject visibly carries center-parted near-black softly waved hair, warm brown eyes, softly defined brows, fine dark eyeliner, and muted coral lips. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional underwater archaeologist remains visibly adult."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "The helmeted researcher, slate, second diver, survey lamps, street, walls, foundations, and water volume form one coherent survey scene."
+        },
+        {
+          "id": "meaning_independent_of_text",
+          "status": "pass",
+          "evidence": "The settlement meaning is carried by joined architecture and the underwater environment, not by the pseudo-writing on the slate."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_legend_submerged_settlement_plan",
+          "status": "pass",
+          "evidence": "A long paved street and repeated room-scale structures on both sides create a readable settlement plan."
+        },
+        {
+          "id": "vo_legend_submerged_fixed_foundations",
+          "status": "pass",
+          "evidence": "Standing walls and thresholds visibly rise from continuous masonry bases embedded in sediment and aquatic growth."
+        },
+        {
+          "id": "vo_legend_submerged_joined_architecture",
+          "status": "pass",
+          "evidence": "Street edges, wall returns, thresholds, floors, and foundations remain spatially joined rather than scattered as loose rubble."
+        },
+        {
+          "id": "vo_legend_submerged_environment",
+          "status": "pass",
+          "evidence": "Water surface, depth falloff, caustic shafts, suspended haze, sediment, and algae visibly occupy the architecture."
+        },
+        {
+          "id": "vo_legend_submerged_scale",
+          "status": "pass",
+          "evidence": "The foreground adult, distant diver, repeated lamps, door openings, and street width establish architectural scale."
+        }
+      ],
+      "failed_gate_ids": [],
+      "technical_pixel_status": "pass"
+    },
+    {
+      "arm_id": "arm-03-legendary-rock-moor",
+      "profile_id": "legendary_rock_trace_evidence",
+      "concept": "An adult field researcher measures a giant five-finger grip trace on one fixed storm-cleared coastal boulder at blue hour.",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-legend-semantics-three-arm-reference-v1/arm-03-legendary-rock-moor/generated_image.png",
+        "sha256": "ab2a68963026bdb66896597c1a130e0edb917795a8f99ca30369452ce9359be4",
+        "width": 1402,
+        "height": 1122
+      },
+      "package_audit": "pass",
+      "prompt_request_audit": "pass",
+      "independence_controls": {
+        "cross_arm_inputs": "pass",
+        "one_image_call_no_retry": "pass",
+        "prepack_binding_integrity": "fail",
+        "evidence": "The arm used no sibling outputs and made one image call, but visual_intent.json stores an empty bindings object even though the composed prompt later contains the five literal profile evidence fields."
+      },
+      "common_gates": [
+        {
+          "id": "reference_visible_appearance_anchors",
+          "status": "pass",
+          "evidence": "The adult subject visibly carries long center-parted near-black wavy hair, brown almond-shaped eyes, softly defined brows, fine dark eyeliner, and muted rosy lips. This is an appearance-only comparison."
+        },
+        {
+          "id": "adult_age_continuity",
+          "status": "pass",
+          "evidence": "The fictional field researcher remains visibly adult."
+        },
+        {
+          "id": "gross_structural_coherence",
+          "status": "pass",
+          "evidence": "The researcher, folding scale, markers, survey staff, fixed boulder, wet moor, and coastal horizon form one coherent field-documentation frame."
+        },
+        {
+          "id": "meaning_independent_of_text",
+          "status": "pass",
+          "evidence": "Numbered markers aid measurement, but the hand-shaped embedded trace, ruler, and site context carry the tested meaning without captions."
+        }
+      ],
+      "profile_gates": [
+        {
+          "id": "vo_legend_rock_fixed_site",
+          "status": "pass",
+          "evidence": "The massive boulder has a broad terrain-bound base continuous with the wet coastal moor."
+        },
+        {
+          "id": "vo_legend_rock_anomalous_trace",
+          "status": "pass",
+          "evidence": "One palm hollow and five deep finger channels read together on the same exposed rock face."
+        },
+        {
+          "id": "vo_legend_rock_scale_relation",
+          "status": "pass",
+          "evidence": "The adult researcher, folding scale, survey staff, and five markers make the trace's monumental size legible."
+        },
+        {
+          "id": "vo_legend_rock_surface_continuity",
+          "status": "pass",
+          "evidence": "The grooves retain rock grain, relief shadow, and mineral wear continuous with the surrounding boulder rather than reading as paint or an attached prop."
+        },
+        {
+          "id": "vo_legend_rock_evidence_context",
+          "status": "pass",
+          "evidence": "The active ruler placement, markers, and survey staff make the frame read as field-site documentation rather than generic fantasy scenery."
+        }
+      ],
+      "failed_gate_ids": [],
+      "technical_pixel_status": "pass"
+    }
+  ],
+  "aggregate": {
+    "pixel_qualified_arms": 2,
+    "total_arms": 3,
+    "profile_gate_passes": 12,
+    "profile_gate_total": 15,
+    "common_gate_passes": 12,
+    "common_gate_total": 12,
+    "clean_prepack_binding_arms": 0,
+    "cross_arm_isolation_passes": 3,
+    "single_call_no_retry_passes": 3,
+    "technical_pixel_status": "fail_partial_is_fail",
+    "protocol_status": "fail_empty_prepack_bindings",
+    "requesting_user_judgment": "pending_separate_judgment",
+    "decision": "revise",
+    "scope": "Three seeded, independently generated single-call holdouts covering three of the newly added hard profiles. This is not a universal result for all new legend profiles, an identity judgment, or an aesthetic approval."
+  }
+}

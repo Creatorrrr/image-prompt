@@ -1,0 +1,128 @@
+{
+  "schema_version": "photo-independent-arm-pixel-review/v1",
+  "arm_id": "arm-03",
+  "assigned_profile_id": "public_recognition_bid_audience_response",
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/generated.png",
+    "sha256": "c4f9348d6156ab4a7b329dac53c779769643148c68a63fc5bbb81417d56419bb",
+    "width": 1122,
+    "height": 1402
+  },
+  "gate_source": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/postcore_contract.json",
+    "sha256": "ec9d0db7aa490c9a83b4f6d0901f63b1b86b326bac9c96faf4028e00d928d78b"
+  },
+  "review_policy": {
+    "partial_is_fail": true,
+    "allowed_statuses": [
+      "pass",
+      "fail"
+    ],
+    "metadata_free_pixel_evidence_only": true,
+    "required_gate_count": 5
+  },
+  "review_artifacts": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/thumbnail.png",
+      "sha256": "e6fc50cd913affd452a0752cf39d00499cc33463d036ca3a7401298e4689becb",
+      "width": 409,
+      "height": 512
+    },
+    "native_subject_marker_crop": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/native_subject_marker_crop.png",
+      "sha256": "2fdd0650f3110c1f43eb71790e4283f4da24f06f9401003f5283bbdd2f6e1cf8",
+      "width": 500,
+      "height": 500
+    },
+    "native_result_crop": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/native_result_crop.png",
+      "sha256": "f9b07d19a096cbbe91d1c5b69a9bc919f3bdcb071af21e15d9dca6c7c86be359",
+      "width": 500,
+      "height": 500
+    },
+    "native_causal_crop": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-desire-three-arm-reference-v1/arms/arm-03/native_causal_crop.png",
+      "sha256": "26eff6fde31e8f8c8c34c1742ec60d2b9b7c0add170ba09b835fac8c17fc62a5",
+      "width": 800,
+      "height": 800
+    }
+  },
+  "hard_gates": [
+    {
+      "id": "vo_desire_recognition_marker",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": {
+        "thumbnail": "The 409 x 512 image shows a large metallic mechanical heron on a wheeled plinth at left with a bright plaque directly below it; the specific work remains unmistakable without zooming."
+      }
+    },
+    {
+      "id": "vo_desire_recognition_presentation",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": {
+        "thumbnail": "The adult stands between the heron and the crowd, raises one open hand above her head, and points the other index finger toward her own chest.",
+        "native": "The 800 x 800 crop shows the adult's self-pointing finger and raised open hand beside the heron, with the audience facing the same presentation space."
+      }
+    },
+    {
+      "id": "vo_desire_recognition_audience",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": {
+        "thumbnail": "Multiple audience members at right and foreground aim separate phones toward the presenter; star paddles and several clapping hands are simultaneously visible.",
+        "native": "The native crops show several distinct faces turned toward the presenter, one raised star paddle, multiple clapping hands, and a phone screen containing the presenter."
+      }
+    },
+    {
+      "id": "vo_desire_recognition_result",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": {
+        "native": "The native result crop shows an illuminated public board reading APPLAUSE TALLY with the lit value 142 above the responding crowd, making an immediate quantified recognition result visible."
+      }
+    },
+    {
+      "id": "vo_desire_recognition_causality",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": {
+        "thumbnail": "The presenter is centered between the heron and the responding crowd; her self-pointing and raised-hand gestures align with phones, paddles, applause, and the tally in one frame.",
+        "native": "The 800 x 800 crop simultaneously contains the heron and plaque, the presenter's two directed gestures, independently responding audience members, and the edge of the illuminated tally, rather than an unrelated crowd."
+      }
+    }
+  ],
+  "reference_appearance_adherence": {
+    "status": "pass",
+    "scope": "observable adult appearance cues only",
+    "source_observations": "The reference visibly shows a clearly adult person with long dark softly waved hair, an oval face, straight dark brows, almond-shaped brown eyes, and softly defined lips.",
+    "render_observations": "The native subject crop visibly retains long dark softly waved hair, an oval face, straight dark brows, brown almond-shaped eyes, and softly defined lips on a clearly adult subject.",
+    "limitation": "The event framing provides less facial detail than the studio reference; this is not an identity or same-person assessment."
+  },
+  "non_gating_observations": [
+    {
+      "id": "creative_reflection_arc",
+      "status": "fail",
+      "evidence": "Wet pavement reflections are visible, but a continuous reflected line from the presenter's hand through phone screens to the tally is not independently readable at thumbnail scale.",
+      "impact": "This optional authorial-direction miss does not alter the five assigned profile gates."
+    },
+    {
+      "id": "invented_plaque_text_boundary",
+      "status": "pass",
+      "evidence": "The plaque visibly identifies the sculpture as a kinetic heron, but its generated personal name and role text are not used as evidence for real identity or rank."
+    }
+  ],
+  "verdicts": {
+    "prompt_audit": "pass",
+    "runtime_request_audit": "pass",
+    "rendered_pixels": "pass",
+    "hard_gate_pass_count": 5,
+    "hard_gate_fail_count": 0,
+    "reference_appearance_adherence": "pass",
+    "user_judgment": "pending"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}
