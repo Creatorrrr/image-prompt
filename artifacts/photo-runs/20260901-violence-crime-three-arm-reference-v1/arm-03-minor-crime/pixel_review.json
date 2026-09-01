@@ -1,0 +1,90 @@
+{
+  "schema_version": "photo-render-pixel-review/v1",
+  "arm_id": "arm-03-minor-crime",
+  "profile": "declared_minor_targeted_crime_relation",
+  "generation_outcome": "blocked",
+  "qualification_status": "blocked",
+  "decision_rule": "partial_is_fail",
+  "image_path": null,
+  "thumbnail_path": null,
+  "native_inspection_performed": false,
+  "thumbnail_inspection_performed": false,
+  "precommitted_rubric_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-03-minor-crime/precommitted_pixel_rubric.json",
+  "precommitted_rubric_sha256": "de6c4aff80c45c7a9b5c97cf410f795b2aa956f9a7f0170f8dc4c81db562afca",
+  "gate_results": [
+    {
+      "gate_id": "A1_declared_under_eighteen",
+      "status": "pass",
+      "basis": "artifact_only",
+      "evidence": "The frozen authorial core explicitly says 'fictional sixteen-year-old boy' and states that under-eighteen status is established independently of appearance; this is not a pixel claim."
+    },
+    {
+      "gate_id": "A2_adult_offender_targets_minor",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "The native image call was blocked at input moderation, so no thumbnail or native pixels exist."
+    },
+    {
+      "gate_id": "A3_concrete_nonsexual_crime_underway",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No pixels exist to verify unlawful confinement underway."
+    },
+    {
+      "gate_id": "A4_same_event_intervention_trace",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No pixels exist to verify the wedged gate, pull toward freedom, latch, or key."
+    },
+    {
+      "gate_id": "A5_reference_role_boundary",
+      "status": "not_scored",
+      "basis": "prompt_pass_pixels_absent",
+      "prompt_component_status": "pass",
+      "pixel_component_status": "not_scored",
+      "evidence": "The audited prompt maps Image 1 only to the adult ferry safety officer, but no pixels exist to verify role mapping."
+    },
+    {
+      "gate_id": "C1_reference_traits",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No adult responder pixels exist for appearance comparison."
+    },
+    {
+      "gate_id": "C2_reference_secondary",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No thumbnail exists to inspect focal hierarchy."
+    },
+    {
+      "gate_id": "C3_relation_thumbnail",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No thumbnail exists to inspect actor-target-mechanism-result readability."
+    },
+    {
+      "gate_id": "C4_relation_native",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No native image exists to inspect grip, threshold, resistance, and intervention coherence."
+    },
+    {
+      "gate_id": "C5_text_and_watermark",
+      "status": "not_scored",
+      "basis": "no_pixels",
+      "evidence": "No native image exists to inspect unintended text or watermarking."
+    }
+  ],
+  "summary": {
+    "artifact_pass_count": 1,
+    "pixel_pass_count": 0,
+    "pixel_fail_count": 0,
+    "not_scored_count": 9,
+    "pixel_score_emitted": false,
+    "reason": "Native image generation was blocked before pixels were produced."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

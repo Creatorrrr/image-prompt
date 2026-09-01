@@ -1,0 +1,82 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "7a14245c32cb3853",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex arm-01 independent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery/render_native.png",
+  "result_sha256": "86450c09c754a0f2eec8228dd5e9369dee47d42dabb5fcd9a880620554b6ea48",
+  "hard_gates": {
+    "vo_crime_robbery_roles": {
+      "status": "pass",
+      "evidence": "At 384x256 thumbnail scale the adult offender at right and the specific adult courier at center are visually distinct through separate faces, bodies, wardrobe, posture, and opposing positions around the red case."
+    },
+    "vo_crime_robbery_coercion": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scales the right-hand offender raises a hooked steel crowbar toward the courier while reaching for her case; his forward stance and her defensive recoil make the directed threat readable."
+    },
+    "vo_crime_robbery_property_origin": {
+      "status": "pass",
+      "evidence": "At native scale the courier visibly hugs the red leather case against her torso with both arms, including one hand wrapped around the top handle, establishing her initial control."
+    },
+    "vo_crime_robbery_transfer": {
+      "status": "fail",
+      "evidence": "At native scale the offender's lower gloved hand only points toward or lightly touches the lower front edge of the case; it does not visibly grip the shared handle or pull the case toward his body. The case remains squarely hugged against the courier, so same-property movement into offender control is ambiguous rather than complete."
+    }
+  },
+  "review_scales": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery/render_thumbnail.png",
+      "sha256": "a094bd0267c8cea2f572714ef514c7d4d36f9d62dfe4b96e1060b0ebdebc69a1",
+      "dimensions": "384x256"
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-violence-crime-three-arm-reference-v1/arm-01-robbery/render_native.png",
+      "sha256": "86450c09c754a0f2eec8228dd5e9369dee47d42dabb5fcd9a880620554b6ea48",
+      "dimensions": "1536x1024"
+    }
+  },
+  "precommitted_gate_mapping": {
+    "R1_distinct_adults": "pass",
+    "R2_directed_force_or_threat": "pass",
+    "R3_initial_holder_control": "pass",
+    "R4_same_property_transfer": "fail"
+  },
+  "common_gates": {
+    "C1_reference_appearance": {
+      "status": "pass",
+      "evidence": "At native scale the secondary alarm-button investigator has long center-parted dark wavy hair, oval facial geometry, dark eyes, and softly arched brows. This is an observable-trait comparison only."
+    },
+    "C2_supporting_role_secondary": {
+      "status": "pass",
+      "evidence": "At thumbnail scale the reference-guided investigator is smaller at the far left, pressing the alarm, and does not obscure the offender, courier, crowbar, or red case."
+    },
+    "C3_relation_thumbnail_readability": {
+      "status": "fail",
+      "evidence": "The offender, courier, raised crowbar, and victim-held case are clear at thumbnail scale, but the result is not a visible transfer toward offender control; the offender appears to reach or point rather than pull."
+    },
+    "C4_relation_native_detail": {
+      "status": "fail",
+      "evidence": "Native detail clearly shows the courier's ownership and the shared red case, but the offender lacks a convincing grip and there is no readable transfer direction."
+    },
+    "C5_clean_delivery": {
+      "status": "pass",
+      "evidence": "No watermark is visible. Incidental tram-station and alarm signage is integrated into the fictional environment and is not scene-breaking."
+    }
+  },
+  "supplemental_observations": {
+    "overall_precommitted_result": "fail",
+    "decision_rule": "partial_is_fail",
+    "appearance_reference_role": "Image 1 guided only the visible adult appearance of the fictional station investigator at left; it was not mapped to the offender or victim.",
+    "identity_boundary": "No identity, same-person, protected-trait, personality, consent, health, nationality, attractiveness, or biometric claim is made.",
+    "complexity_survival": "The near-future observatory tram station, severe sleet, red signal lighting, stranded commuters, red leather case, emergency-alarm action, and 28mm environmental feel all survive visibly.",
+    "generation_call_count": 1,
+    "retry_performed": false
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user preference or acceptance judgment has been received."
+  }
+}

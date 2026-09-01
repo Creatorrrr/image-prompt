@@ -1,0 +1,59 @@
+{
+  "schema_version": "photo-pixel-rubric-precommit/v1",
+  "arm_id": "arm-01-robbery",
+  "profile_id": "robbery_forced_property_transfer",
+  "decision_rule": "partial_is_fail",
+  "tool_block_rule": "A tool safety block is recorded as blocked_generation and receives no pixel score.",
+  "review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "hard_gates": [
+    {
+      "gate_id": "R1_distinct_adults",
+      "scale": "thumbnail",
+      "pass_condition": "One adult offender and one specific adult property holder are visually distinct and unambiguous."
+    },
+    {
+      "gate_id": "R2_directed_force_or_threat",
+      "scale": "thumbnail",
+      "pass_condition": "The offender's raised steel crowbar is visibly directed toward the courier and clearly compels the taking."
+    },
+    {
+      "gate_id": "R3_initial_holder_control",
+      "scale": "native",
+      "pass_condition": "The courier's hand visibly grips the handle of the red leather chronometer case against the courier's body."
+    },
+    {
+      "gate_id": "R4_same_property_transfer",
+      "scale": "native",
+      "pass_condition": "The offender grips that same red case and its position, opposing arm tension, and motion make movement toward offender control visible."
+    },
+    {
+      "gate_id": "C1_reference_appearance",
+      "scale": "native",
+      "pass_condition": "The secondary adult station investigator visibly has long center-parted dark wavy hair, oval facial geometry, dark eyes, and softly arched brows."
+    },
+    {
+      "gate_id": "C2_supporting_role_secondary",
+      "scale": "thumbnail",
+      "pass_condition": "The reference-guided investigator is a secondary supporting role and does not obscure the criminal-event relation."
+    },
+    {
+      "gate_id": "C3_relation_thumbnail_readability",
+      "scale": "thumbnail",
+      "pass_condition": "Actor, target, coercive mechanism, and forced-transfer result remain readable at thumbnail scale."
+    },
+    {
+      "gate_id": "C4_relation_native_detail",
+      "scale": "native",
+      "pass_condition": "Hands, shared case identity, initial ownership, and transfer direction remain readable at native scale."
+    },
+    {
+      "gate_id": "C5_clean_delivery",
+      "scale": "native",
+      "pass_condition": "The image contains no unintended watermark or scene-breaking accidental text."
+    }
+  ],
+  "overall_pass_condition": "Every hard gate passes. Any partial, ambiguous, or failed gate makes the arm fail."
+}

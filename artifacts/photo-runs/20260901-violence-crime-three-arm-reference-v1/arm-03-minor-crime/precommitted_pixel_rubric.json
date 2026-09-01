@@ -1,0 +1,59 @@
+{
+  "schema_version": "photo-precommitted-pixel-rubric/v1",
+  "arm_id": "arm-03-minor-crime",
+  "profile": "declared_minor_targeted_crime_relation",
+  "decision_rule": "partial_is_fail",
+  "frozen_before_candidate_pack": true,
+  "gates": [
+    {
+      "gate_id": "A1_declared_under_eighteen",
+      "method": "artifact",
+      "pass_condition": "The frozen authorial core explicitly declares the victim sixteen and states that under-eighteen status is established independently of appearance."
+    },
+    {
+      "gate_id": "A2_adult_offender_targets_minor",
+      "method": "thumbnail_and_native_pixels",
+      "pass_condition": "One identifiable adult offender specifically grips or forces the same declared minor; their roles and target relation are unambiguous."
+    },
+    {
+      "gate_id": "A3_concrete_nonsexual_crime_underway",
+      "method": "thumbnail_and_native_pixels",
+      "pass_condition": "Unlawful confinement is visibly underway through the offender forcing the minor across the open locked-cage threshold, rather than being conveyed by mood alone."
+    },
+    {
+      "gate_id": "A4_same_event_intervention_trace",
+      "method": "native_pixels",
+      "pass_condition": "The adult responder visibly interrupts that same confinement event, with the wedged gate, pull toward freedom, bent latch, or dropped key forming a coherent same-event trace."
+    },
+    {
+      "gate_id": "A5_reference_role_boundary",
+      "method": "prompt_and_pixels",
+      "pass_condition": "Reference-guided traits appear only on the adult protective responder; neither the declared minor nor the offender is mapped to that appearance."
+    },
+    {
+      "gate_id": "C1_reference_traits",
+      "method": "native_pixels",
+      "pass_condition": "The adult protective responder visibly has long center-parted dark wavy hair, oval facial geometry, dark eyes, and softly arched brows without any identity claim."
+    },
+    {
+      "gate_id": "C2_reference_secondary",
+      "method": "thumbnail_pixels",
+      "pass_condition": "The reference-guided adult remains a supporting responder and does not obscure the offender-minor-crime relation."
+    },
+    {
+      "gate_id": "C3_relation_thumbnail",
+      "method": "thumbnail_pixels",
+      "pass_condition": "Actor, target, cage-threshold mechanism, and intervention result are all readable at thumbnail scale."
+    },
+    {
+      "gate_id": "C4_relation_native",
+      "method": "native_pixels",
+      "pass_condition": "Offender grip, minor resistance outside the threshold, gate intervention, and same-event trace are spatially coherent at native scale."
+    },
+    {
+      "gate_id": "C5_text_and_watermark",
+      "method": "native_pixels",
+      "pass_condition": "No watermark or unintended text materially corrupts the required evidence; exact text is not used as evidence."
+    }
+  ]
+}

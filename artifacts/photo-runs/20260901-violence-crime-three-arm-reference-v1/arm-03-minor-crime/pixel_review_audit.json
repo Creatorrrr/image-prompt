@@ -1,0 +1,35 @@
+{
+  "schema_version": "photo-render-pixel-review-audit/v1",
+  "arm_id": "arm-03-minor-crime",
+  "record_status": "valid_blocked_record",
+  "qualification_status": "blocked",
+  "checks": {
+    "precommitted_gate_ids_preserved": true,
+    "partial_is_fail_preserved": true,
+    "manifest_status_matches": true,
+    "ledger_status_matches": true,
+    "image_call_count_is_one": true,
+    "image_paths_are_empty": true,
+    "thumbnail_absence_matches_no_native_result": true,
+    "no_pixel_pass_or_fail_claimed": true,
+    "tool_block_not_converted_to_pixel_score": true,
+    "retry_count_is_zero": true
+  },
+  "artifact_only_gate_passes": [
+    "A1_declared_under_eighteen"
+  ],
+  "pixel_gates_scored": [],
+  "pixel_gates_not_scored": [
+    "A2_adult_offender_targets_minor",
+    "A3_concrete_nonsexual_crime_underway",
+    "A4_same_event_intervention_trace",
+    "A5_reference_role_boundary",
+    "C1_reference_traits",
+    "C2_reference_secondary",
+    "C3_relation_thumbnail",
+    "C4_relation_native",
+    "C5_text_and_watermark"
+  ],
+  "failures": [],
+  "boundary": "This audit validates the blocked review record only. It does not inspect pixels and does not establish visual qualification."
+}

@@ -17822,6 +17822,786 @@
         {"id": "vo_space_rover_result", "review_scale": "both", "description": "A fresh physical trace or collected result records the operation."}
       ],
       "reject_substitutes": ["stationary_lander", "planetary_orbiter", "toy_rover", "inactive_rover_portrait"]
+    },
+    {
+      "id": "interpersonal_credible_threat_relation",
+      "category": "interpersonal_violence_threat_relation",
+      "activation": {
+        "exact_terms": ["credible threat against a specific person", "interpersonal violence threat", "대인 위협", "구체적 위해 협박"],
+        "exclude_if_any_terms": ["weather threat", "cyber threat score", "abstract menace", "날씨 위협", "사이버 위협 점수"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["specific person", "threatening gesture", "credible harm", "coercive demand", "특정 사람", "위해 협박", "강압 요구"], "exclude_if_any_terms": ["metaphor only", "risk dashboard", "비유", "위험 대시보드"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An interpersonal threat scene shows one identifiable actor directing a credible threat of harm at one specific adult target, a coercive communication or gesture, and an immediate target response tied to that threat. General hostility, ominous styling, weapons without a directed target, and abstract danger indicators are insufficient.",
+        "paraphrase_examples": ["한 성인이 다른 특정 성인의 퇴로를 막고 위해를 예고하는 손짓과 요구를 하며 대상이 그 행위자에게서 물러선다", "one adult directs an imminent-harm gesture and coercive demand at a named target whose guarded retreat answers that same threat"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["threat_actor", "specific_target", "directed_threat", "target_response"], "groups": [
+          {"id": "threat_actor", "any_terms": ["one identifiable adult initiates the threatening communication or gesture"]},
+          {"id": "specific_target", "any_terms": ["one specific adult target is visibly addressed rather than a generic crowd"]},
+          {"id": "directed_threat", "any_terms": ["the actor's posture gesture object or words clearly point the promised harm toward that target"]},
+          {"id": "target_response", "any_terms": ["guarded retreat raised protection or coerced compliance responds to the same directed threat"]}
+        ]},
+        "contrast_examples": ["two adults arguing without a threat", "a weapon displayed with no target", "a generic villain portrait", "a digital threat dashboard"]
+      },
+      "concept_candidate": {"concept_terms": ["actor-to-target threat axis", "credible harm gesture", "coercive demand", "targeted guarded response"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["credible interpersonal threat"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the adult actor, specific adult target, directed threatening gesture or communication, and the target's immediate response readable on one interaction axis.",
+      "required_evidence_fields": ["actor_phrase", "target_phrase", "threat_phrase", "response_phrase"],
+      "evidence_requirements": {
+        "actor_phrase": {"min_content_words": 7, "must_mention_any": ["one identifiable adult initiates the threatening communication or gesture"]},
+        "target_phrase": {"min_content_words": 8, "must_mention_any": ["one specific adult target is visibly addressed rather than a generic crowd"]},
+        "threat_phrase": {"min_content_words": 10, "must_mention_any": ["the actor's posture gesture object or words clearly point the promised harm toward that target"]},
+        "response_phrase": {"min_content_words": 9, "must_mention_any": ["guarded retreat raised protection or coerced compliance responds to the same directed threat"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_threat_actor_target", "review_scale": "thumbnail", "description": "One identifiable adult actor visibly addresses one specific adult target."},
+        {"id": "vo_crime_threat_direction", "review_scale": "both", "description": "The threatening gesture or communication is directed along the actor-target axis."},
+        {"id": "vo_crime_threat_credibility", "review_scale": "native", "description": "Immediate harm or coercion is concretely legible rather than merely ominous."},
+        {"id": "vo_crime_threat_response", "review_scale": "both", "description": "The target's protection, retreat, or compliance visibly answers the same threat."}
+      ],
+      "reject_substitutes": ["generic_hostility", "undirected_weapon_display", "villain_portrait", "abstract_danger_indicator"]
+    },
+    {
+      "id": "interpersonal_physical_assault_event",
+      "category": "interpersonal_physical_force_event",
+      "activation": {
+        "exact_terms": ["interpersonal physical assault", "physical assault in progress", "대인 폭행", "물리적 폭행"],
+        "exclude_if_any_terms": ["combat sport", "martial arts sparring", "stage fight rehearsal", "격투 스포츠", "무술 대련", "액션 리허설"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["assailant", "victim", "unwanted force", "impact", "가해자", "피해자", "원치 않는 물리력", "충격"], "exclude_if_any_terms": ["consensual match", "choreography rehearsal", "합의된 경기", "안무 연습"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical assault scene shows an adult assailant applying unwanted bodily force to a specific adult target, direct contact or immediate impact, and a localized bodily or environmental consequence at that same contact. Sport, mutual sparring, staged choreography, accidental collision, and aftermath without causality are separate.",
+        "paraphrase_examples": ["한 성인의 가격 동작이 특정 성인의 방어 자세와 같은 접점의 즉각적인 균형 붕괴로 이어진다", "the assailant's force reaches one target at a visible contact point and produces an immediate defensive or balance response"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["assailant", "assault_target", "force_contact", "localized_consequence"], "groups": [
+          {"id": "assailant", "any_terms": ["one adult assailant visibly initiates unwanted physical force"]},
+          {"id": "assault_target", "any_terms": ["one specific adult target receives or actively shields from that force"]},
+          {"id": "force_contact", "any_terms": ["limb body or held object reaches a coherent contact or near-contact point on the target"]},
+          {"id": "localized_consequence", "any_terms": ["deflection loss of balance displaced clothing or nearby object movement occurs at that same interaction"]}
+        ]},
+        "contrast_examples": ["a boxing match", "two dancers in stage combat", "an accidental crowd collision", "an injured person with no assailant"]
+      },
+      "concept_candidate": {"concept_terms": ["adult assailant", "specific adult target", "unwanted force contact", "same-point consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["interpersonal physical assault"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the adult assailant, specific target, force path, contact point, and immediate same-point consequence without substituting unrelated injury or generic fighting atmosphere.",
+      "required_evidence_fields": ["assailant_phrase", "victim_phrase", "contact_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "assailant_phrase": {"min_content_words": 7, "must_mention_any": ["one adult assailant visibly initiates unwanted physical force"]},
+        "victim_phrase": {"min_content_words": 9, "must_mention_any": ["one specific adult target receives or actively shields from that force"]},
+        "contact_phrase": {"min_content_words": 10, "must_mention_any": ["limb body or held object reaches a coherent contact or near-contact point on the target"]},
+        "consequence_phrase": {"min_content_words": 11, "must_mention_any": ["deflection loss of balance displaced clothing or nearby object movement occurs at that same interaction"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_assault_actor_target", "review_scale": "thumbnail", "description": "Adult assailant and specific adult target remain separately legible."},
+        {"id": "vo_crime_assault_force_path", "review_scale": "both", "description": "The assailant's force follows a coherent path toward the target."},
+        {"id": "vo_crime_assault_contact", "review_scale": "native", "description": "Contact or near-contact occurs at one anatomically coherent interaction point."},
+        {"id": "vo_crime_assault_consequence", "review_scale": "both", "description": "A same-point defensive, balance, clothing, or object consequence is visible."}
+      ],
+      "reject_substitutes": ["combat_sport", "staged_fight", "accidental_collision", "injury_without_assailant"]
+    },
+    {
+      "id": "robbery_forced_property_transfer",
+      "category": "violent_property_transfer_event",
+      "activation": {
+        "exact_terms": ["robbery forced property transfer", "violent robbery", "폭력 강도 사건", "강도 범행"],
+        "exclude_if_any_terms": ["color intensity", "training intensity", "강도 높은 운동", "색 강도"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["property", "money", "wallet", "coercion", "victim", "재물", "현금", "지갑", "강압", "피해자"], "exclude_if_any_terms": ["exercise intensity", "material strength", "운동 강도", "재료 강도"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A robbery scene requires an adult offender using force or a credible threat against a specific adult victim to obtain property, with the property visibly transferring from victim control toward offender control. Theft without confrontation, assault without property, consensual payment, and found property do not satisfy the relation.",
+        "paraphrase_examples": ["가해자가 특정 피해자에게 위해를 가하며 피해자의 지갑이 피해자 손에서 가해자 쪽으로 넘어간다", "an offender coerces one victim while a wallet visibly crosses from the victim's possession into the offender's control"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["robber", "robbery_victim", "force_or_threat", "property_transfer"], "groups": [
+          {"id": "robber", "any_terms": ["one adult offender initiates the taking and controls the coercive action"]},
+          {"id": "robbery_victim", "any_terms": ["one specific adult victim visibly owns holds or guards the targeted property"]},
+          {"id": "force_or_threat", "any_terms": ["force or a credible directed threat compels the victim during the taking"]},
+          {"id": "property_transfer", "any_terms": ["cash bag phone wallet or other property visibly moves from victim control toward offender control"]}
+        ]},
+        "contrast_examples": ["unseen pickpocketing", "a consensual purchase", "an assault with no property", "someone finding an abandoned wallet"]
+      },
+      "concept_candidate": {"concept_terms": ["coercive taking", "victim-held property", "offender control", "visible transfer path"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["robbery by forced property transfer"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the adult offender, specific adult victim, directed force or threat, and a continuous property-transfer path visible in one frame.",
+      "required_evidence_fields": ["offender_phrase", "owner_phrase", "coercion_phrase", "transfer_phrase"],
+      "evidence_requirements": {
+        "offender_phrase": {"min_content_words": 8, "must_mention_any": ["one adult offender initiates the taking and controls the coercive action"]},
+        "owner_phrase": {"min_content_words": 10, "must_mention_any": ["one specific adult victim visibly owns holds or guards the targeted property"]},
+        "coercion_phrase": {"min_content_words": 10, "must_mention_any": ["force or a credible directed threat compels the victim during the taking"]},
+        "transfer_phrase": {"min_content_words": 12, "must_mention_any": ["cash bag phone wallet or other property visibly moves from victim control toward offender control"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_robbery_roles", "review_scale": "thumbnail", "description": "Adult offender and specific adult property holder remain clearly distinct."},
+        {"id": "vo_crime_robbery_coercion", "review_scale": "both", "description": "Force or a credible directed threat compels the taking."},
+        {"id": "vo_crime_robbery_property_origin", "review_scale": "native", "description": "The targeted property visibly begins under the victim's control."},
+        {"id": "vo_crime_robbery_transfer", "review_scale": "both", "description": "The same property moves toward the offender's possession or control."}
+      ],
+      "reject_substitutes": ["nonconfrontational_theft", "consensual_payment", "assault_without_property", "found_property"]
+    },
+    {
+      "id": "forced_relocation_abduction_event",
+      "category": "abduction_forced_relocation_event",
+      "activation": {
+        "exact_terms": ["forcible abduction", "kidnapping event", "납치", "유괴"],
+        "exclude_if_any_terms": ["rescue transport", "medical evacuation", "parent carrying child", "구조 이송", "의료 후송"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["abductor", "captive", "forced movement", "blocked exit", "가해자", "피랍자", "강제 이동", "퇴로 차단"], "exclude_if_any_terms": ["consensual travel", "emergency rescue", "합의된 이동", "긴급 구조"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult abduction scene shows one or more abductors depriving a specific adult target of freedom and forcing that target from one place toward another, with a visible control method and a directional relocation path. Arrest, rescue, consensual travel, and restraint without relocation are not equivalent.",
+        "paraphrase_examples": ["성인 가해자가 특정 성인의 퇴로를 막고 차량 문 쪽으로 강제로 이동시키며 대상은 반대 방향으로 버틴다", "an abductor controls one adult captive and forces them along a visible path toward a vehicle or enclosed destination"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["abductor", "specific_captive", "control_method", "forced_relocation"], "groups": [
+          {"id": "abductor", "any_terms": ["one or more adult abductors visibly direct and control the movement"]},
+          {"id": "specific_captive", "any_terms": ["one specific adult captive is prevented from leaving or choosing the route"]},
+          {"id": "control_method", "any_terms": ["grip restraint blocked exit surrounding formation or directed threat removes freedom of movement"]},
+          {"id": "forced_relocation", "any_terms": ["the captive is pulled carried or compelled along a readable path from origin toward vehicle room or secondary place"]}
+        ]},
+        "contrast_examples": ["a lawful arrest", "a rescue carry", "friends entering a vehicle", "a restrained person who remains in place"]
+      },
+      "concept_candidate": {"concept_terms": ["adult abductor", "specific captive", "freedom-removing control", "origin-to-destination path"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["forcible abduction"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the adult abductor, specific adult captive, freedom-removing control, origin, and directional path toward a second place in one readable frame.",
+      "required_evidence_fields": ["abductor_phrase", "captive_phrase", "control_phrase", "relocation_phrase"],
+      "evidence_requirements": {
+        "abductor_phrase": {"min_content_words": 9, "must_mention_any": ["one or more adult abductors visibly direct and control the movement"]},
+        "captive_phrase": {"min_content_words": 11, "must_mention_any": ["one specific adult captive is prevented from leaving or choosing the route"]},
+        "control_phrase": {"min_content_words": 11, "must_mention_any": ["grip restraint blocked exit surrounding formation or directed threat removes freedom of movement"]},
+        "relocation_phrase": {"min_content_words": 14, "must_mention_any": ["the captive is pulled carried or compelled along a readable path from origin toward vehicle room or secondary place"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_abduction_roles", "review_scale": "thumbnail", "description": "Adult abductor and specific adult captive remain visually distinct."},
+        {"id": "vo_crime_abduction_control", "review_scale": "both", "description": "A visible control method removes the captive's freedom of movement."},
+        {"id": "vo_crime_abduction_origin", "review_scale": "native", "description": "An origin or blocked exit establishes where the forced movement begins."},
+        {"id": "vo_crime_abduction_path", "review_scale": "both", "description": "The captive is visibly moved toward a separate vehicle, room, or destination."}
+      ],
+      "reject_substitutes": ["lawful_arrest", "rescue_transport", "consensual_travel", "stationary_restraint"]
+    },
+    {
+      "id": "hostage_third_party_compulsion",
+      "category": "hostage_third_party_coercion_relation",
+      "activation": {
+        "exact_terms": ["hostage third-party compulsion", "hostage-taking", "인질극", "인질 강압"],
+        "exclude_if_any_terms": ["kidnapping without demand", "protective custody", "stage hostage rehearsal", "요구 없는 납치", "보호 구금"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["hostage", "captor", "demand", "government", "third party", "인질", "억류자", "요구", "정부", "제3자"], "exclude_if_any_terms": ["role play", "rescue drill", "역할극", "구조 훈련"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A hostage-taking scene requires an adult captor controlling a specific adult hostage, a communicated threat tied to that hostage, and a demand directed at a distinct third party such as authorities or an organization. Captivity or kidnapping without third-party compulsion is not a hostage relation.",
+        "paraphrase_examples": ["성인 억류자가 특정 성인 인질을 통제하며 통신 장치로 외부 당국에 요구를 전달한다", "a captor visibly controls one adult hostage while directing a conditional demand to authorities outside the captive pair"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["captor", "specific_hostage", "conditional_threat", "third_party_demand"], "groups": [
+          {"id": "captor", "any_terms": ["one adult captor visibly maintains control over the scene"]},
+          {"id": "specific_hostage", "any_terms": ["one specific adult hostage is confined or physically controlled"]},
+          {"id": "conditional_threat", "any_terms": ["harm to the hostage is made conditional on compliance with a demand"]},
+          {"id": "third_party_demand", "any_terms": ["a radio phone message sign or negotiation line directs the demand to authorities organization or another distinct party"]}
+        ]},
+        "contrast_examples": ["a kidnapping with no demand", "a private domestic argument", "protective custody", "an action-film rehearsal"]
+      },
+      "concept_candidate": {"concept_terms": ["adult captor", "specific adult hostage", "conditional harm", "external negotiation target"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["hostage-taking with third-party demand"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the adult captor and specific adult hostage together while a separate communication path makes the conditional demand to a distinct third party legible.",
+      "required_evidence_fields": ["captor_phrase", "hostage_phrase", "condition_phrase", "demand_phrase"],
+      "evidence_requirements": {
+        "captor_phrase": {"min_content_words": 8, "must_mention_any": ["one adult captor visibly maintains control over the scene"]},
+        "hostage_phrase": {"min_content_words": 10, "must_mention_any": ["one specific adult hostage is confined or physically controlled"]},
+        "condition_phrase": {"min_content_words": 11, "must_mention_any": ["harm to the hostage is made conditional on compliance with a demand"]},
+        "demand_phrase": {"min_content_words": 14, "must_mention_any": ["a radio phone message sign or negotiation line directs the demand to authorities organization or another distinct party"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_hostage_captive_pair", "review_scale": "thumbnail", "description": "Adult captor visibly controls one specific adult hostage."},
+        {"id": "vo_crime_hostage_conditional_threat", "review_scale": "both", "description": "Threatened harm to the hostage is visibly conditional on compliance."},
+        {"id": "vo_crime_hostage_third_party", "review_scale": "native", "description": "A distinct outside authority, organization, or negotiator receives the demand."},
+        {"id": "vo_crime_hostage_demand_link", "review_scale": "both", "description": "The communication path connects captor, hostage condition, and external demand."}
+      ],
+      "reject_substitutes": ["kidnapping_without_demand", "ordinary_captivity", "protective_custody", "stage_hostage_scene"]
+    },
+    {
+      "id": "fictional_intentional_homicide_causality",
+      "category": "fictional_fatal_interpersonal_causality",
+      "activation": {
+        "exact_terms": ["fictional intentional homicide", "fictional murder causality", "허구의 고의적 살인", "허구 살해 사건"],
+        "exclude_if_any_terms": ["real death confirmation", "accidental death", "suicide", "실제 사망 판정", "사고사", "자살"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["fictional", "assailant", "victim", "fatal action", "허구", "가해자", "피해자", "치명적 행위"], "exclude_if_any_terms": ["medical diagnosis", "news claim about real person", "의학적 진단", "실존 인물 보도 주장"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A declared fictional intentional-homicide scene shows an adult perpetrator deliberately applying a fatal action to one specific adult victim and a localized terminal consequence tied to that action. A still image cannot medically verify real death, legal culpability, identity, or exact cause; accident, self-harm, combat, and aftermath without a causal actor remain separate.",
+        "paraphrase_examples": ["허구 장면에서 성인 가해자의 의도적 치명 행위가 특정 성인 피해자에게 직접 이어지고 같은 접점에 비가역적 결과가 남는다", "a declared fictional perpetrator's deliberate fatal action reaches one adult victim and produces a same-location terminal consequence"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["fictional_perpetrator", "specific_victim", "deliberate_fatal_action", "terminal_consequence"], "groups": [
+          {"id": "fictional_perpetrator", "any_terms": ["one declared fictional adult perpetrator visibly initiates the fatal action"]},
+          {"id": "specific_victim", "any_terms": ["one specific declared fictional adult victim receives that action"]},
+          {"id": "deliberate_fatal_action", "any_terms": ["the action path and controlled follow-through make deliberate lethal causality readable"]},
+          {"id": "terminal_consequence", "any_terms": ["an immediate localized collapse loss of agency or terminal scene trace occurs at the same target"]}
+        ]},
+        "contrast_examples": ["an accidental fall", "a battlefield exchange", "self-harm", "a body discovered with no visible causal actor"]
+      },
+      "concept_candidate": {"concept_terms": ["declared fictional perpetrator", "specific fictional victim", "deliberate fatal path", "localized terminal consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional intentional homicide"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare fiction and keep the adult perpetrator, specific adult victim, deliberate fatal action path, and localized terminal consequence visible without making real-world medical or legal claims.",
+      "required_evidence_fields": ["fiction_phrase", "victim_phrase", "action_phrase", "terminal_phrase"],
+      "evidence_requirements": {
+        "fiction_phrase": {"min_content_words": 9, "must_mention_any": ["one declared fictional adult perpetrator visibly initiates the fatal action"]},
+        "victim_phrase": {"min_content_words": 10, "must_mention_any": ["one specific declared fictional adult victim receives that action"]},
+        "action_phrase": {"min_content_words": 11, "must_mention_any": ["the action path and controlled follow-through make deliberate lethal causality readable"]},
+        "terminal_phrase": {"min_content_words": 14, "must_mention_any": ["an immediate localized collapse loss of agency or terminal scene trace occurs at the same target"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_homicide_declared_fiction", "review_scale": "thumbnail", "description": "The scene is presented as fiction rather than evidence about real people."},
+        {"id": "vo_crime_homicide_actor_target", "review_scale": "both", "description": "One adult perpetrator and one specific adult victim remain causally linked."},
+        {"id": "vo_crime_homicide_fatal_path", "review_scale": "native", "description": "A deliberate fatal action follows a coherent path to the victim."},
+        {"id": "vo_crime_homicide_terminal_result", "review_scale": "both", "description": "A localized terminal consequence visibly follows the same action."}
+      ],
+      "reject_substitutes": ["accidental_death", "self_harm", "mutual_combat", "aftermath_without_causal_actor"]
+    },
+    {
+      "id": "fictional_organized_crime_operation",
+      "category": "fictional_organized_criminal_group_operation",
+      "activation": {
+        "exact_terms": ["fictional organized crime operation", "criminal syndicate operation", "허구의 조직범죄", "범죄조직 작전"],
+        "exclude_if_any_terms": ["ordinary business team", "film crew", "lawful logistics", "일반 회사 팀", "촬영팀", "합법 물류"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["structured group", "coordinated serious crime", "material benefit", "roles", "구조화된 집단", "중대 범죄 공모", "물질적 이익", "역할 분담"], "exclude_if_any_terms": ["legal enterprise", "sports team", "합법 기업", "스포츠 팀"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A declared fictional organized-crime operation shows a continuing adult group with differentiated roles coordinating one serious illegal objective for material benefit, plus a shared operational trace connecting those roles. Gang styling, matching clothes, a meeting, or lawful logistics alone do not establish the organization or crime.",
+        "paraphrase_examples": ["허구의 성인 조직이 지휘·감시·운반·장물 처리 역할을 나눠 하나의 불법 물류 흐름과 수익 기록을 공유한다", "a fictional continuing group divides command surveillance transport and resale roles around one serious illegal operation and common proceeds trail"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["continuing_group", "role_differentiation", "serious_illegal_objective", "benefit_operation_trace"], "groups": [
+          {"id": "continuing_group", "any_terms": ["three or more fictional adult members show stable coordination beyond a chance encounter"]},
+          {"id": "role_differentiation", "any_terms": ["command lookout transport enforcement or disposal roles are visibly differentiated"]},
+          {"id": "serious_illegal_objective", "any_terms": ["all roles converge on one explicitly declared serious illegal operation"]},
+          {"id": "benefit_operation_trace", "any_terms": ["shared ledger proceeds contraband route or handoff chain links the operation to material benefit"]}
+        ]},
+        "contrast_examples": ["friends in dark suits", "a lawful warehouse team", "a one-time street fight", "a vague secret meeting"]
+      },
+      "concept_candidate": {"concept_terms": ["continuing fictional criminal group", "differentiated operational roles", "shared serious crime objective", "proceeds or handoff trace"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional organized-crime operation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare fiction and stage at least three adult members so differentiated roles, one serious illegal objective, and a shared benefit or handoff trace remain jointly legible.",
+      "required_evidence_fields": ["group_phrase", "roles_phrase", "objective_phrase", "benefit_phrase"],
+      "evidence_requirements": {
+        "group_phrase": {"min_content_words": 11, "must_mention_any": ["three or more fictional adult members show stable coordination beyond a chance encounter"]},
+        "roles_phrase": {"min_content_words": 10, "must_mention_any": ["command lookout transport enforcement or disposal roles are visibly differentiated"]},
+        "objective_phrase": {"min_content_words": 10, "must_mention_any": ["all roles converge on one explicitly declared serious illegal operation"]},
+        "benefit_phrase": {"min_content_words": 12, "must_mention_any": ["shared ledger proceeds contraband route or handoff chain links the operation to material benefit"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_org_continuing_group", "review_scale": "thumbnail", "description": "At least three fictional adult members form one coordinated group."},
+        {"id": "vo_crime_org_roles", "review_scale": "both", "description": "Members perform visibly differentiated operational roles rather than posing uniformly."},
+        {"id": "vo_crime_org_objective", "review_scale": "native", "description": "The roles converge on one explicitly declared serious illegal objective."},
+        {"id": "vo_crime_org_benefit_trace", "review_scale": "both", "description": "A proceeds, ledger, contraband, route, or handoff trace links the operation."}
+      ],
+      "reject_substitutes": ["gang_fashion_only", "lawful_logistics_team", "chance_group_encounter", "vague_secret_meeting"]
+    },
+    {
+      "id": "deliberate_arson_causality",
+      "category": "deliberate_fire_setting_event",
+      "activation": {
+        "exact_terms": ["deliberate arson event", "intentional fire-setting causality", "방화", "고의 방화"],
+        "exclude_if_any_terms": ["wildfire", "electrical accident", "firefighter training", "산불", "전기 사고", "소방 훈련"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["fire setter", "ignition point", "accelerant trail", "target property", "방화범", "발화점", "가연성 흔적", "표적 재산"], "exclude_if_any_terms": ["natural ignition", "accidental fire", "자연 발화", "우발 화재"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A deliberate arson scene shows an adult fire-setter intentionally initiating fire at a specific property target, a coherent ignition point or introduced fuel path, and new flame or smoke growth beginning from that same point. A building already burning, wildfire, accident, firefighting, and ceremonial flame are insufficient.",
+        "paraphrase_examples": ["성인 방화범의 점화 동작이 특정 건물 출입구의 한 발화점에 닿고 그 지점에서 새 불꽃과 연기가 퍼진다", "a fire-setter's deliberate ignition reaches one property target and a fresh flame front grows from the same introduced point"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["fire_setter", "property_target", "ignition_action", "same_point_fire_growth"], "groups": [
+          {"id": "fire_setter", "any_terms": ["one adult fire-setter visibly initiates the deliberate ignition"]},
+          {"id": "property_target", "any_terms": ["one specific structure vehicle or property surface is the selected target"]},
+          {"id": "ignition_action", "any_terms": ["a coherent contact path joins ignition source introduced fuel or fuse to the target point"]},
+          {"id": "same_point_fire_growth", "any_terms": ["new flame smoke scorching or spreading heat begins at that exact ignition point"]}
+        ]},
+        "contrast_examples": ["a building already on fire", "a natural wildfire", "an electrical accident", "a firefighter lighting a training burn"]
+      },
+      "concept_candidate": {"concept_terms": ["adult fire-setter", "specific property target", "deliberate ignition point", "same-point flame growth"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["deliberate arson event"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the adult fire-setter, selected property target, ignition-source path, and new same-point flame or smoke growth visible without relying on an unrelated burning background.",
+      "required_evidence_fields": ["setter_phrase", "property_phrase", "ignition_phrase", "growth_phrase"],
+      "evidence_requirements": {
+        "setter_phrase": {"min_content_words": 9, "must_mention_any": ["one adult fire-setter visibly initiates the deliberate ignition"]},
+        "property_phrase": {"min_content_words": 11, "must_mention_any": ["one specific structure vehicle or property surface is the selected target"]},
+        "ignition_phrase": {"min_content_words": 13, "must_mention_any": ["a coherent contact path joins ignition source introduced fuel or fuse to the target point"]},
+        "growth_phrase": {"min_content_words": 12, "must_mention_any": ["new flame smoke scorching or spreading heat begins at that exact ignition point"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_arson_setter_target", "review_scale": "thumbnail", "description": "An adult fire-setter and one selected property target remain visible."},
+        {"id": "vo_crime_arson_ignition_path", "review_scale": "both", "description": "A coherent ignition-source path reaches one target point."},
+        {"id": "vo_crime_arson_origin", "review_scale": "native", "description": "Fresh burning visibly originates at the same deliberate ignition point."},
+        {"id": "vo_crime_arson_growth", "review_scale": "both", "description": "New flame, smoke, or scorching expands outward from that point."}
+      ],
+      "reject_substitutes": ["already_burning_building", "wildfire", "accidental_fire", "firefighting_or_training"]
+    },
+    {
+      "id": "burglary_forced_entry_crime_event",
+      "category": "unlawful_building_entry_crime_event",
+      "activation": {
+        "exact_terms": ["burglary forced-entry event", "unlawful building entry for crime", "침입절도", "주거침입 절도"],
+        "exclude_if_any_terms": ["locksmith service", "emergency rescue entry", "authorized inspection", "열쇠 수리", "긴급 구조 진입", "허가된 점검"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["intruder", "forced entry", "broken lock", "target property", "침입자", "강제 진입", "파손된 잠금장치", "표적 재물"], "exclude_if_any_terms": ["owner entry", "maintenance", "소유자 출입", "유지보수"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A burglary scene shows an adult intruder crossing a secured building boundary without authorization, fresh entry defeat at that exact boundary, and a linked criminal objective inside such as targeted property or evidence of search. Mere trespass, lawful locksmith work, rescue entry, and theft outdoors are different.",
+        "paraphrase_examples": ["성인 침입자가 갓 파손한 잠금장치를 통과해 실내의 특정 보관함을 탐색하며 파편이 같은 문턱에 남는다", "an intruder crosses a freshly defeated lock and the same path leads toward a specific interior property target"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["intruder", "secured_boundary", "fresh_entry_defeat", "interior_crime_objective"], "groups": [
+          {"id": "intruder", "any_terms": ["one adult intruder visibly crosses the boundary without ordinary authorization cues"]},
+          {"id": "secured_boundary", "any_terms": ["a door window gate or other secured building boundary separates outside from inside"]},
+          {"id": "fresh_entry_defeat", "any_terms": ["broken lock pried frame cut screen displaced pane or tool contact marks the same crossing point"]},
+          {"id": "interior_crime_objective", "any_terms": ["a specific interior safe drawer inventory or search path makes the intended crime legible"]}
+        ]},
+        "contrast_examples": ["simple outdoor trespass", "a locksmith opening a door", "firefighters forcing rescue entry", "street theft"]
+      },
+      "concept_candidate": {"concept_terms": ["adult intruder", "secured building boundary", "fresh defeat trace", "interior property objective"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["burglary through forced entry"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the adult intruder spanning outside and inside, the secured boundary, fresh defeat trace at the crossing, and one specific interior crime objective.",
+      "required_evidence_fields": ["intruder_phrase", "boundary_phrase", "defeat_phrase", "objective_phrase"],
+      "evidence_requirements": {
+        "intruder_phrase": {"min_content_words": 11, "must_mention_any": ["one adult intruder visibly crosses the boundary without ordinary authorization cues"]},
+        "boundary_phrase": {"min_content_words": 12, "must_mention_any": ["a door window gate or other secured building boundary separates outside from inside"]},
+        "defeat_phrase": {"min_content_words": 14, "must_mention_any": ["broken lock pried frame cut screen displaced pane or tool contact marks the same crossing point"]},
+        "objective_phrase": {"min_content_words": 13, "must_mention_any": ["a specific interior safe drawer inventory or search path makes the intended crime legible"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_burglary_intruder_boundary", "review_scale": "thumbnail", "description": "An adult intruder visibly crosses one secured building boundary."},
+        {"id": "vo_crime_burglary_fresh_defeat", "review_scale": "both", "description": "Fresh breakage or tool contact marks the exact crossing point."},
+        {"id": "vo_crime_burglary_inside_outside", "review_scale": "native", "description": "The frame preserves a readable outside-to-inside entry path."},
+        {"id": "vo_crime_burglary_objective", "review_scale": "both", "description": "A specific interior property or search objective is visibly linked."}
+      ],
+      "reject_substitutes": ["simple_trespass", "lawful_locksmith", "rescue_entry", "outdoor_theft"]
+    },
+    {
+      "id": "retaliatory_violence_prior_harm_relation",
+      "category": "retaliation_prior_harm_consequence_relation",
+      "activation": {
+        "exact_terms": ["retaliatory violence relation", "blood-feud reprisal", "보복 폭력", "피의 복수"],
+        "exclude_if_any_terms": ["sports rematch", "legal appeal", "symbolic revenge fashion", "스포츠 재대결", "법적 항소", "복수 패션"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["prior harm", "reprisal", "same parties", "revenge target", "선행 피해", "보복", "동일 당사자", "복수 대상"], "exclude_if_any_terms": ["unrelated attack", "fiction title only", "무관한 공격", "작품 제목만"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Retaliatory violence requires a declared prior harm or debt, an adult retaliator who connects that earlier event to a specific adult target, a new violent reprisal, and a visible continuity token or mirrored consequence linking the two events. Anger, a single attack, competition, and abstract revenge styling are insufficient.",
+        "paraphrase_examples": ["선행 피해를 보여주는 부서진 표식과 사진을 든 성인이 같은 상대에게 새 보복 행위를 가하며 동일 문양이 두 사건을 잇는다", "a retaliator carries a prior-harm token into a new attack against the identified responsible target and a repeated trace links both events"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["prior_harm", "retaliator_target_link", "new_reprisal_action", "continuity_trace"], "groups": [
+          {"id": "prior_harm", "any_terms": ["a photo damaged token memorial mark or split-scene record establishes an earlier injury or loss"]},
+          {"id": "retaliator_target_link", "any_terms": ["one adult retaliator visibly identifies one specific adult target as connected to that earlier harm"]},
+          {"id": "new_reprisal_action", "any_terms": ["a new directed violent action is presented as repayment or reprisal for the prior event"]},
+          {"id": "continuity_trace", "any_terms": ["a repeated object mark wound pattern location or timeline connects the prior harm to the new consequence"]}
+        ]},
+        "contrast_examples": ["an angry portrait", "a single assault with no prior event", "a sports rematch", "a revenge-themed costume"]
+      },
+      "concept_candidate": {"concept_terms": ["prior-harm evidence", "responsible target link", "new reprisal action", "cross-event continuity trace"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["retaliatory violence tied to prior harm"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a split-time, evidence-board, reflected, or object-continuity composition that keeps the prior harm, adult retaliator, specific adult target, new reprisal, and linking trace readable.",
+      "required_evidence_fields": ["prior_phrase", "link_phrase", "reprisal_phrase", "continuity_phrase"],
+      "evidence_requirements": {
+        "prior_phrase": {"min_content_words": 14, "must_mention_any": ["a photo damaged token memorial mark or split-scene record establishes an earlier injury or loss"]},
+        "link_phrase": {"min_content_words": 15, "must_mention_any": ["one adult retaliator visibly identifies one specific adult target as connected to that earlier harm"]},
+        "reprisal_phrase": {"min_content_words": 13, "must_mention_any": ["a new directed violent action is presented as repayment or reprisal for the prior event"]},
+        "continuity_phrase": {"min_content_words": 15, "must_mention_any": ["a repeated object mark wound pattern location or timeline connects the prior harm to the new consequence"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_retaliation_prior_harm", "review_scale": "thumbnail", "description": "A legible earlier harm or debt remains present in the composition."},
+        {"id": "vo_crime_retaliation_target_link", "review_scale": "both", "description": "The adult retaliator connects one specific adult target to that harm."},
+        {"id": "vo_crime_retaliation_new_action", "review_scale": "native", "description": "A new directed violent reprisal is visibly distinct from the earlier event."},
+        {"id": "vo_crime_retaliation_continuity", "review_scale": "both", "description": "A repeated token, mark, place, or timeline links cause and reprisal."}
+      ],
+      "reject_substitutes": ["anger_only", "single_attack_without_history", "sports_rematch", "revenge_styling_only"]
+    },
+    {
+      "id": "forensic_scene_documentation_process",
+      "category": "forensic_scene_preservation_documentation",
+      "activation": {
+        "exact_terms": ["forensic scene documentation process", "crime-scene evidence documentation", "범죄현장 감식", "현장보존 감식"],
+        "exclude_if_any_terms": ["crime scene fashion", "detective portrait", "yellow tape backdrop", "범죄현장 패션", "형사 인물사진", "폴리스라인 배경"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["overall midrange close-up", "evidence marker", "measurement scale", "scene log", "전경 중경 근접", "증거번호표", "측정 눈금", "현장 기록"], "exclude_if_any_terms": ["decorative prop", "no documentation", "장식 소품", "기록 없음"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Forensic scene documentation is a preservation process, not yellow-tape styling: an undisturbed scene is recorded through linked overall, midrange, and close-up views, stable evidence identifiers and measurement scales, and a location or sequence log that preserves where each item was found. A detective portrait or scattered markers without spatial continuity is insufficient.",
+        "paraphrase_examples": ["전체 현장과 증거의 위치 관계를 먼저 기록한 뒤 동일 번호표를 중경과 눈금 포함 근접 촬영에서 이어 간다", "linked overall midrange and scale-bearing close-up records preserve one item's identifier and location before collection"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["scene_preservation", "view_sequence", "stable_identifiers", "spatial_record"], "groups": [
+          {"id": "scene_preservation", "any_terms": ["access control clean path and gloved handling preserve the scene before collection"]},
+          {"id": "view_sequence", "any_terms": ["overall midrange and close-up documentation views refer to the same evidence location"]},
+          {"id": "stable_identifiers", "any_terms": ["one evidence marker identifier and measurement scale stay consistent across the documentation set"]},
+          {"id": "spatial_record", "any_terms": ["scene sketch photo log or coordinate reference preserves where the item sits relative to fixed landmarks"]}
+        ]},
+        "contrast_examples": ["yellow tape around an empty alley", "a detective portrait", "random evidence markers", "evidence already moved before documentation"]
+      },
+      "concept_candidate": {"concept_terms": ["preserved scene", "overall-midrange-close-up sequence", "stable evidence identifier", "measurement and location log"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["forensic scene documentation process"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show a preserved scene and a legible linked documentation sequence with the same evidence identifier, measurement scale, and fixed-landmark location rather than decorative police props alone.",
+      "required_evidence_fields": ["preservation_phrase", "sequence_phrase", "identifier_phrase", "location_phrase"],
+      "evidence_requirements": {
+        "preservation_phrase": {"min_content_words": 12, "must_mention_any": ["access control clean path and gloved handling preserve the scene before collection"]},
+        "sequence_phrase": {"min_content_words": 12, "must_mention_any": ["overall midrange and close-up documentation views refer to the same evidence location"]},
+        "identifier_phrase": {"min_content_words": 13, "must_mention_any": ["one evidence marker identifier and measurement scale stay consistent across the documentation set"]},
+        "location_phrase": {"min_content_words": 15, "must_mention_any": ["scene sketch photo log or coordinate reference preserves where the item sits relative to fixed landmarks"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_forensic_preservation", "review_scale": "thumbnail", "description": "Controlled access and handling make scene preservation operationally legible."},
+        {"id": "vo_crime_forensic_view_sequence", "review_scale": "both", "description": "Overall, midrange, and close-up records point to the same evidence location."},
+        {"id": "vo_crime_forensic_identifier_scale", "review_scale": "native", "description": "A stable identifier and measurement scale accompany the documented item."},
+        {"id": "vo_crime_forensic_spatial_record", "review_scale": "both", "description": "A log, sketch, or fixed landmark preserves the item's original location."}
+      ],
+      "reject_substitutes": ["yellow_tape_styling", "detective_portrait", "random_markers", "moved_evidence_without_record"]
+    },
+    {
+      "id": "bloodstain_observation_documentation",
+      "category": "bloodstain_pattern_observation_documentation",
+      "activation": {
+        "exact_terms": ["bloodstain pattern documentation", "blood-trace observation record", "혈흔 패턴 기록", "혈흔 감식"],
+        "exclude_if_any_terms": ["red paint splatter", "abstract blood texture", "fashion makeup", "붉은 페인트 튐", "추상 피 텍스처", "분장"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["overall photograph", "measurement scale", "orientation", "pattern boundary", "전체 사진", "측정 눈금", "방향", "패턴 경계"], "exclude_if_any_terms": ["cause certainty", "weapon certainty", "사인 확정", "흉기 확정"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Bloodstain observation documentation records a declared fictional or controlled stain field before interpretation: the substrate and full pattern boundary, stain distribution and orientation, scale-bearing close-ups, and a location record remain visible. Color alone does not prove blood, and a still pattern does not by itself establish weapon, assailant, sequence, or cause.",
+        "paraphrase_examples": ["허구 현장의 벽과 바닥에 걸친 전체 혈흔 경계를 먼저 보존하고 방향 표식·눈금·번호가 같은 근접 기록으로 이어진다", "an overall declared fictional stain field, substrate boundary, orientation marker, and scale-bearing close-up are recorded before causal interpretation"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["declared_stain_field", "substrate_boundary", "scale_orientation", "interpretation_boundary"], "groups": [
+          {"id": "declared_stain_field", "any_terms": ["the authorial core declares a fictional or controlled bloodstain field rather than identifying blood from color alone"]},
+          {"id": "substrate_boundary", "any_terms": ["the full distribution and its wall floor fabric or object substrate boundaries remain visible"]},
+          {"id": "scale_orientation", "any_terms": ["measurement scale orientation marker and consistent evidence number accompany representative close-ups"]},
+          {"id": "interpretation_boundary", "any_terms": ["documentation records observable form and location without claiming a unique weapon actor sequence or cause"]}
+        ]},
+        "contrast_examples": ["red paint splatter", "a blood-themed texture", "one unscaled close-up", "a diagram claiming a unique weapon from stains"]
+      },
+      "concept_candidate": {"concept_terms": ["declared fictional stain field", "full substrate boundary", "scale and orientation", "observation before interpretation"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional bloodstain documentation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare the fictional or controlled stain context and keep the full substrate boundary, distribution, orientation marker, evidence number, and scale-bearing detail visible without asserting a unique causal reconstruction.",
+      "required_evidence_fields": ["declaration_phrase", "boundary_phrase", "measurement_phrase", "uncertainty_phrase"],
+      "evidence_requirements": {
+        "declaration_phrase": {"min_content_words": 15, "must_mention_any": ["the authorial core declares a fictional or controlled bloodstain field rather than identifying blood from color alone"]},
+        "boundary_phrase": {"min_content_words": 13, "must_mention_any": ["the full distribution and its wall floor fabric or object substrate boundaries remain visible"]},
+        "measurement_phrase": {"min_content_words": 13, "must_mention_any": ["measurement scale orientation marker and consistent evidence number accompany representative close-ups"]},
+        "uncertainty_phrase": {"min_content_words": 15, "must_mention_any": ["documentation records observable form and location without claiming a unique weapon actor sequence or cause"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_bloodstain_declared_context", "review_scale": "thumbnail", "description": "The scene presents a declared fictional or controlled stain field."},
+        {"id": "vo_crime_bloodstain_full_boundary", "review_scale": "both", "description": "The full pattern distribution and substrate boundaries remain visible."},
+        {"id": "vo_crime_bloodstain_scale_orientation", "review_scale": "native", "description": "Scale, orientation, and evidence identifier accompany representative details."},
+        {"id": "vo_crime_bloodstain_no_unique_cause", "review_scale": "both", "description": "The record stays observational and does not visually assert one unique cause."}
+      ],
+      "reject_substitutes": ["red_paint_only", "decorative_blood_texture", "unscaled_closeup", "unique_cause_claim_from_pattern"]
+    },
+    {
+      "id": "custodial_torture_purpose_relation",
+      "category": "custodial_torture_authority_purpose_relation",
+      "activation": {
+        "exact_terms": ["custodial torture", "torture under official control", "고문", "구금 고문"],
+        "exclude_if_any_terms": ["medical treatment", "combat injury", "consensual endurance performance", "의료 처치", "전투 부상", "합의된 인내 공연"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["custody", "official control", "severe suffering", "interrogation purpose", "punishment", "구금", "공적 통제", "극심한 고통", "정보 획득 목적", "처벌"], "exclude_if_any_terms": ["lawful medical procedure", "sport", "합법 의료 절차", "스포츠"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A custodial-torture scene requires a declared fictional adult detainee under the physical control of an official or officially acquiesced controller, intentional infliction of severe physical or mental suffering, and a stated purpose such as obtaining information, punishment, intimidation, coercion, or discrimination. Restraint, questioning, injury, or cruelty without all relations is not enough; pixels cannot independently prove official authority or legal classification.",
+        "paraphrase_examples": ["허구의 구금실에서 공적 통제자가 특정 성인 수감자를 움직이지 못하게 통제하고 정보 요구와 연동된 의도적 고통을 가한다", "a declared fictional official controller holds one adult detainee in custody while intentional severe suffering is tied to a visible interrogation or punishment demand"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["custodial_control", "specific_detainee", "intentional_severe_suffering", "qualifying_purpose"], "groups": [
+          {"id": "custodial_control", "any_terms": ["a declared fictional official or officially tolerated controller has physical custody or control"]},
+          {"id": "specific_detainee", "any_terms": ["one specific adult detainee cannot freely leave or end the encounter"]},
+          {"id": "intentional_severe_suffering", "any_terms": ["the controller intentionally causes severe physical or mental suffering rather than incidental discomfort"]},
+          {"id": "qualifying_purpose", "any_terms": ["information confession punishment intimidation coercion or discrimination is visibly stated as the purpose"]}
+        ]},
+        "contrast_examples": ["an ordinary interrogation", "a restrained medical patient", "combat injury", "cruel assault without official custody or qualifying purpose"]
+      },
+      "concept_candidate": {"concept_terms": ["declared fictional official control", "specific adult detainee", "intentional severe suffering", "information punishment intimidation or coercion purpose"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional custodial torture"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare fiction and keep official or acquiesced custody, one adult detainee, intentional severe suffering, and the information, punishment, intimidation, coercion, or discrimination purpose jointly readable.",
+      "required_evidence_fields": ["custody_phrase", "detainee_phrase", "suffering_phrase", "purpose_phrase"],
+      "evidence_requirements": {
+        "custody_phrase": {"min_content_words": 15, "must_mention_any": ["a declared fictional official or officially tolerated controller has physical custody or control"]},
+        "detainee_phrase": {"min_content_words": 11, "must_mention_any": ["one specific adult detainee cannot freely leave or end the encounter"]},
+        "suffering_phrase": {"min_content_words": 14, "must_mention_any": ["the controller intentionally causes severe physical or mental suffering rather than incidental discomfort"]},
+        "purpose_phrase": {"min_content_words": 14, "must_mention_any": ["information confession punishment intimidation coercion or discrimination is visibly stated as the purpose"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_torture_custody", "review_scale": "thumbnail", "description": "Declared fictional official custody or acquiesced control is visibly established."},
+        {"id": "vo_crime_torture_detainee", "review_scale": "both", "description": "One specific adult detainee cannot freely leave or end the encounter."},
+        {"id": "vo_crime_torture_suffering", "review_scale": "native", "description": "Intentional severe physical or mental suffering is tied to the controller."},
+        {"id": "vo_crime_torture_purpose", "review_scale": "both", "description": "A qualifying information, punishment, intimidation, coercion, or discrimination purpose is legible."}
+      ],
+      "reject_substitutes": ["ordinary_interrogation", "medical_restraint", "combat_injury", "cruel_assault_without_custodial_purpose"]
+    },
+    {
+      "id": "genocidal_group_destruction_campaign",
+      "category": "declared_genocidal_group_destruction_campaign",
+      "activation": {
+        "exact_terms": ["genocidal group-destruction campaign", "genocide", "집단학살", "집단살해"],
+        "exclude_if_any_terms": ["battlefield massacre without group intent", "natural disaster", "generic mass casualty", "집단 파괴 의도 없는 전장 학살", "자연재해", "일반 대량 피해"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["protected group", "intent to destroy", "coordinated campaign", "targeted group members", "보호 집단", "파괴 의도", "조직적 캠페인", "집단 구성원 표적화"], "exclude_if_any_terms": ["appearance-based group inference", "random casualties", "외모 기반 집단 추론", "무작위 피해"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A genocide profile applies only when the authorial core explicitly declares intent to destroy, in whole or in part, a protected group and one or more qualifying acts against members of that group. The visual scene must show a coordinated campaign, repeated group-targeting evidence, and a group-destruction consequence; pixels alone cannot prove special intent or infer real nationality, ethnicity, race, or religion from appearance.",
+        "paraphrase_examples": ["허구의 보호 집단이 사용자 서사에서 명시되고 동일 작전 표식의 여러 부대가 집단 구성원과 생존 기반을 반복 표적화한다", "a fictional protected group is explicitly declared while repeated units, records, and coordinated attacks show a campaign aimed at destroying that group in part"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["declared_protected_group", "special_intent_context", "coordinated_qualifying_acts", "group_destruction_consequence"], "groups": [
+          {"id": "declared_protected_group", "any_terms": ["the requester declares a fictional or contextual protected group without deriving membership from appearance"]},
+          {"id": "special_intent_context", "any_terms": ["orders records repeated targeting or campaign design explicitly states intent to destroy that group in whole or part"]},
+          {"id": "coordinated_qualifying_acts", "any_terms": ["multiple linked agents or units carry out repeated killing serious harm destructive living conditions birth prevention or child transfer acts"]},
+          {"id": "group_destruction_consequence", "any_terms": ["the same group-specific campaign produces repeated member loss displacement survival-system destruction or forced child removal"]}
+        ]},
+        "contrast_examples": ["a generic battlefield massacre", "random mass casualties", "forced cultural assimilation without physical-destruction intent", "a natural disaster"]
+      },
+      "concept_candidate": {"concept_terms": ["request-declared protected group", "explicit group-destruction intent", "coordinated qualifying acts", "repeated group-specific consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional genocidal campaign"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use only a requester-declared fictional or contextual group and show campaign-wide coordination, explicit group-destruction intent evidence, repeated qualifying acts, and group-specific consequences without inferring group identity from appearance.",
+      "required_evidence_fields": ["group_phrase", "intent_phrase", "campaign_phrase", "destruction_phrase"],
+      "evidence_requirements": {
+        "group_phrase": {"min_content_words": 16, "must_mention_any": ["the requester declares a fictional or contextual protected group without deriving membership from appearance"]},
+        "intent_phrase": {"min_content_words": 17, "must_mention_any": ["orders records repeated targeting or campaign design explicitly states intent to destroy that group in whole or part"]},
+        "campaign_phrase": {"min_content_words": 19, "must_mention_any": ["multiple linked agents or units carry out repeated killing serious harm destructive living conditions birth prevention or child transfer acts"]},
+        "destruction_phrase": {"min_content_words": 17, "must_mention_any": ["the same group-specific campaign produces repeated member loss displacement survival-system destruction or forced child removal"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_genocide_declared_group", "review_scale": "thumbnail", "description": "A fictional or contextual protected group is declared without appearance-based inference."},
+        {"id": "vo_crime_genocide_campaign", "review_scale": "both", "description": "Repeated agents, units, routes, or records establish one coordinated campaign."},
+        {"id": "vo_crime_genocide_group_targeting", "review_scale": "native", "description": "Qualifying acts repeatedly target the same declared group rather than random casualties."},
+        {"id": "vo_crime_genocide_destruction_trace", "review_scale": "both", "description": "Group-specific member or survival-system destruction follows the coordinated acts."}
+      ],
+      "reject_substitutes": ["generic_massacre", "random_mass_casualties", "cultural_destruction_only", "natural_disaster"]
+    },
+    {
+      "id": "armed_conflict_protected_status_breach",
+      "category": "declared_war_crime_protected_status_breach",
+      "activation": {
+        "exact_terms": ["armed-conflict protected-status breach", "war crime", "전쟁범죄", "무력충돌 보호대상 침해"],
+        "exclude_if_any_terms": ["ordinary combat", "lawful military target", "training exercise", "일반 교전", "합법적 군사 표적", "훈련"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["armed conflict nexus", "protected civilian", "medical site", "prisoner of war", "prohibited act", "무력충돌 연계", "보호 민간인", "의료 시설", "전쟁포로", "금지 행위"], "exclude_if_any_terms": ["no protected status", "ordinary battle", "보호 지위 없음", "일반 전투"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A war-crime profile requires an explicitly declared armed-conflict nexus, a person or object whose protected status is supplied by the authorial core and visible context, a prohibited act directed at that protected target, and a localized consequence. Combat imagery, destruction, uniforms, or civilian presence alone cannot establish the legal classification.",
+        "paraphrase_examples": ["허구의 무력충돌 중 명확히 표시된 의료 구호소를 식별한 전투원이 그 보호 시설에 의도적으로 공격을 가하고 같은 지점에 결과가 남는다", "in a declared fictional armed conflict, a clearly identified protected medical site or detained person is intentionally subjected to a prohibited act with same-target consequence"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["armed_conflict_nexus", "declared_protected_status", "prohibited_directed_act", "protected_target_consequence"], "groups": [
+          {"id": "armed_conflict_nexus", "any_terms": ["the scene is explicitly situated within a declared international or non-international armed conflict"]},
+          {"id": "declared_protected_status", "any_terms": ["the authorial core identifies a civilian detainee wounded person medical site aid object or other protected target and context supports it"]},
+          {"id": "prohibited_directed_act", "any_terms": ["one identifiable actor or unit directs the declared prohibited act at that same protected person or object"]},
+          {"id": "protected_target_consequence", "any_terms": ["damage deprivation forced transfer mistreatment or injury occurs specifically at the protected target"]}
+        ]},
+        "contrast_examples": ["ordinary fighting between combatants", "damage to an unmarked military target", "a disaster in a war zone", "uniformed soldiers near civilians without a prohibited act"]
+      },
+      "concept_candidate": {"concept_terms": ["declared armed-conflict nexus", "authorial-core protected status", "directed prohibited act", "same protected-target consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional war-crime protected-status breach"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare the armed-conflict nexus and protected status, then keep the responsible actor or unit, prohibited act, protected target, and same-target consequence legible without treating generic combat as proof.",
+      "required_evidence_fields": ["conflict_phrase", "protected_phrase", "act_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "conflict_phrase": {"min_content_words": 15, "must_mention_any": ["the scene is explicitly situated within a declared international or non-international armed conflict"]},
+        "protected_phrase": {"min_content_words": 20, "must_mention_any": ["the authorial core identifies a civilian detainee wounded person medical site aid object or other protected target and context supports it"]},
+        "act_phrase": {"min_content_words": 17, "must_mention_any": ["one identifiable actor or unit directs the declared prohibited act at that same protected person or object"]},
+        "consequence_phrase": {"min_content_words": 13, "must_mention_any": ["damage deprivation forced transfer mistreatment or injury occurs specifically at the protected target"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_war_conflict_nexus", "review_scale": "thumbnail", "description": "A declared fictional armed-conflict context is unambiguously present."},
+        {"id": "vo_crime_war_protected_status", "review_scale": "both", "description": "The authorial-core protected person or object has supporting visible context."},
+        {"id": "vo_crime_war_directed_breach", "review_scale": "native", "description": "An identifiable actor or unit directs the prohibited act at that target."},
+        {"id": "vo_crime_war_target_consequence", "review_scale": "both", "description": "A localized consequence occurs specifically at the protected target."}
+      ],
+      "reject_substitutes": ["ordinary_combat", "unmarked_military_target", "war_zone_disaster", "uniforms_without_prohibited_act"]
+    },
+    {
+      "id": "controlled_execution_custody_causality",
+      "category": "execution_custody_controlled_killing_event",
+      "activation": {
+        "exact_terms": ["controlled execution event", "extrajudicial execution", "public execution", "처형", "초법적 처형", "공개처형"],
+        "exclude_if_any_terms": ["execution of a plan", "computer execution", "military drill", "계획 실행", "프로그램 실행", "군사 훈련"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["condemned captive", "executioner", "custody", "ordered killing", "사형수", "집행자", "구금", "명령된 살해"], "exclude_if_any_terms": ["software", "business plan", "소프트웨어", "사업 계획"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An execution scene shows a specific adult captive already under complete control, one or more executioners arranged in an ordered killing procedure, a command or synchronized action, and an immediate consequence on that captive without reciprocal combat. The scene alone does not determine whether the execution is lawful, unlawful, judicial, summary, or extrajudicial unless the authorial core states it.",
+        "paraphrase_examples": ["완전히 제압된 특정 성인 포로가 지정 위치에 놓이고 집행자의 명령 신호와 동시 동작이 그 포로에게만 향한다", "a controlled adult captive occupies a fixed execution position while an authority signal triggers a synchronized lethal action directed only at that captive"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["controlled_captive", "execution_authority", "ordered_killing_procedure", "nonreciprocal_consequence"], "groups": [
+          {"id": "controlled_captive", "any_terms": ["one specific adult captive is restrained guarded or otherwise under complete control before the action"]},
+          {"id": "execution_authority", "any_terms": ["an executioner commander or authority role organizes the killing rather than an impulsive fight"]},
+          {"id": "ordered_killing_procedure", "any_terms": ["fixed placement prepared method command signal or synchronized action makes the procedure controlled and deliberate"]},
+          {"id": "nonreciprocal_consequence", "any_terms": ["the action and immediate consequence affect the captive without return fire or mutual combat"]}
+        ]},
+        "contrast_examples": ["active battlefield combat", "an impulsive murder", "a ceremonial firing-squad drill", "an execution chamber with no captive or action"]
+      },
+      "concept_candidate": {"concept_terms": ["specific controlled adult captive", "execution authority", "ordered lethal procedure", "nonreciprocal immediate consequence"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["controlled execution event"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the specific adult captive, complete custody, authority signal, ordered lethal procedure, and nonreciprocal same-target consequence visible; add legal subtype only when the authorial core supplies it.",
+      "required_evidence_fields": ["captive_phrase", "authority_phrase", "procedure_phrase", "nonreciprocal_phrase"],
+      "evidence_requirements": {
+        "captive_phrase": {"min_content_words": 16, "must_mention_any": ["one specific adult captive is restrained guarded or otherwise under complete control before the action"]},
+        "authority_phrase": {"min_content_words": 14, "must_mention_any": ["an executioner commander or authority role organizes the killing rather than an impulsive fight"]},
+        "procedure_phrase": {"min_content_words": 15, "must_mention_any": ["fixed placement prepared method command signal or synchronized action makes the procedure controlled and deliberate"]},
+        "nonreciprocal_phrase": {"min_content_words": 14, "must_mention_any": ["the action and immediate consequence affect the captive without return fire or mutual combat"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_execution_controlled_captive", "review_scale": "thumbnail", "description": "One specific adult captive is visibly under complete control."},
+        {"id": "vo_crime_execution_authority", "review_scale": "both", "description": "An executioner or authority role organizes the event."},
+        {"id": "vo_crime_execution_procedure", "review_scale": "native", "description": "Fixed placement and a command or synchronized action establish procedure."},
+        {"id": "vo_crime_execution_nonreciprocal", "review_scale": "both", "description": "The consequence reaches only the captive without reciprocal combat."}
+      ],
+      "reject_substitutes": ["active_combat", "impulsive_murder", "ceremonial_drill", "empty_execution_setting"]
+    },
+    {
+      "id": "adult_nonconsensual_sexual_violence_relation",
+      "category": "adult_nonconsensual_sexual_act_or_attempt",
+      "activation": {
+        "exact_terms": ["adult non-consensual sexual violence", "adult sexual assault", "성인 대상 성폭력", "비동의 성적 폭력"],
+        "exclude_if_any_terms": ["consensual intimacy", "medical examination", "dance performance", "합의된 친밀감", "의료 검진", "춤 공연"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["unwanted sexual act", "without valid consent", "coercion", "blocked withdrawal", "원치 않는 성적 행위", "유효한 동의 없음", "강압", "철회 방해"], "exclude_if_any_terms": ["mutual consent", "clinical care", "상호 동의", "임상 처치"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult sexual-violence scene requires the authorial core to declare an unwanted sexual act, attempt, contact, or sexualized communication involving a specific adult target, lack of valid consent or consent produced by force, intimidation, fraud, coercion, threat, deception, incapacitation, abuse of power, or vulnerability, and a visible actor-to-target control relation. Clothing, affect, location, or intimacy alone never establishes consent or its absence.",
+        "paraphrase_examples": ["허구의 두 성인 장면에서 대상이 접촉을 명확히 거부하고 물러나려 하지만 행위자가 퇴로와 손목을 통제하며 원치 않는 성적 접촉을 지속한다", "a declared fictional adult target withdraws and rejects unwanted sexual contact while the actor blocks exit and uses coercive control to continue the attempt"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["adult_actor_target", "declared_unwanted_sexual_act", "invalid_consent_or_coercion", "withdrawal_control_response"], "groups": [
+          {"id": "adult_actor_target", "any_terms": ["one adult actor and one specific adult target remain clearly differentiated"]},
+          {"id": "declared_unwanted_sexual_act", "any_terms": ["the authorial core explicitly declares the sexual act attempt contact or communication as unwanted"]},
+          {"id": "invalid_consent_or_coercion", "any_terms": ["lack of valid consent or force intimidation fraud coercion threat deception incapacitation power abuse or vulnerability is explicitly present"]},
+          {"id": "withdrawal_control_response", "any_terms": ["target refusal withdrawal protection or freeze response and the actor's blocking or controlling action refer to the same encounter"]}
+        ]},
+        "contrast_examples": ["consensual adult intimacy", "a medical examination", "a dance pose", "an ambiguous embrace with no declared lack of consent"]
+      },
+      "concept_candidate": {"concept_terms": ["specific adult target", "declared unwanted sexual act or attempt", "invalid consent or coercion", "same-encounter refusal and control"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional adult sexual violence"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare fiction, adult status, and nonconsent or coercive means explicitly; keep the actor, specific target, unwanted act or attempt, target refusal or withdrawal, and blocking control readable without inferring consent from appearance.",
+      "required_evidence_fields": ["adults_phrase", "unwanted_phrase", "consent_phrase", "control_phrase"],
+      "evidence_requirements": {
+        "adults_phrase": {"min_content_words": 11, "must_mention_any": ["one adult actor and one specific adult target remain clearly differentiated"]},
+        "unwanted_phrase": {"min_content_words": 14, "must_mention_any": ["the authorial core explicitly declares the sexual act attempt contact or communication as unwanted"]},
+        "consent_phrase": {"min_content_words": 18, "must_mention_any": ["lack of valid consent or force intimidation fraud coercion threat deception incapacitation power abuse or vulnerability is explicitly present"]},
+        "control_phrase": {"min_content_words": 20, "must_mention_any": ["target refusal withdrawal protection or freeze response and the actor's blocking or controlling action refer to the same encounter"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_sexual_adult_roles", "review_scale": "thumbnail", "description": "One adult actor and one specific adult target remain distinct."},
+        {"id": "vo_crime_sexual_unwanted_act", "review_scale": "both", "description": "The declared unwanted sexual act, attempt, contact, or communication is scene-relevant."},
+        {"id": "vo_crime_sexual_coercion", "review_scale": "native", "description": "Explicit nonconsent or a qualifying coercive means is visibly supported."},
+        {"id": "vo_crime_sexual_refusal_control", "review_scale": "both", "description": "Target refusal or withdrawal and actor blocking or control form one relation."}
+      ],
+      "reject_substitutes": ["consensual_adult_intimacy", "medical_examination", "dance_pose", "ambiguous_embrace_without_nonconsent"]
+    },
+    {
+      "id": "declared_minor_targeted_crime_relation",
+      "category": "declared_minor_victim_specific_crime_relation",
+      "activation": {
+        "exact_terms": ["crime targeting a declared minor", "crime against a minor", "미성년자 대상 범죄", "아동 대상 범죄"],
+        "exclude_if_any_terms": ["child safety education", "protective intervention only", "school drill", "아동 안전 교육", "보호 개입만", "학교 훈련"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["declared minor", "specific crime act", "adult offender", "child victim", "명시된 미성년자", "구체적 범죄 행위", "성인 가해자", "아동 피해자"], "exclude_if_any_terms": ["age inferred from appearance", "ordinary caregiving", "외모로 나이 추론", "일상 돌봄"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "This profile applies when the authorial core explicitly declares a specific victim to be under eighteen and names a concrete criminal act directed at that minor. The scene must show the offender-to-minor targeting relation, the act or coercive mechanism, and an immediate consequence or intervention trace. Pixels alone do not prove age, and body size, clothing, school setting, or facial appearance must not be the sole basis for minor status.",
+        "paraphrase_examples": ["사용자 서사에서 미성년자로 명시된 피해자에게 성인 가해자가 구체적 비성적 범죄 행위를 가하고 보호자의 개입 흔적이 같은 사건을 잇는다", "a requester-declared minor is specifically targeted by an adult offender's named nonsexual crime and a same-event escape protection or consequence trace remains visible"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["declared_minor_status", "specific_offender", "concrete_crime_act", "minor_target_consequence"], "groups": [
+          {"id": "declared_minor_status", "any_terms": ["the authorial core explicitly declares the victim under eighteen without deriving age from appearance alone"]},
+          {"id": "specific_offender", "any_terms": ["one identifiable adult offender or organized actor specifically targets that declared minor"]},
+          {"id": "concrete_crime_act", "any_terms": ["a named assault abduction forced labor trafficking theft coercion confinement or other concrete crime is visibly underway"]},
+          {"id": "minor_target_consequence", "any_terms": ["escape attempt protective intervention displaced possession confinement or immediate harm trace belongs to the same minor-targeted event"]}
+        ]},
+        "contrast_examples": ["ordinary caregiving", "a school safety drill", "a child alone in a dramatic setting", "age guessed from a small adult's appearance"]
+      },
+      "concept_candidate": {"concept_terms": ["request-declared under-eighteen victim", "specific adult offender", "named concrete crime", "same-event consequence or intervention"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["crime targeting a requester-declared minor"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Require requester-declared minor status and one named crime, then keep the specific offender, minor target, concrete act, and same-event consequence or protective intervention readable without deriving age from appearance alone.",
+      "required_evidence_fields": ["minor_phrase", "offender_phrase", "crime_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "minor_phrase": {"min_content_words": 17, "must_mention_any": ["the authorial core explicitly declares the victim under eighteen without deriving age from appearance alone"]},
+        "offender_phrase": {"min_content_words": 14, "must_mention_any": ["one identifiable adult offender or organized actor specifically targets that declared minor"]},
+        "crime_phrase": {"min_content_words": 18, "must_mention_any": ["a named assault abduction forced labor trafficking theft coercion confinement or other concrete crime is visibly underway"]},
+        "consequence_phrase": {"min_content_words": 18, "must_mention_any": ["escape attempt protective intervention displaced possession confinement or immediate harm trace belongs to the same minor-targeted event"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_minor_declared_status", "review_scale": "thumbnail", "description": "Minor status comes from the authorial core, not appearance alone."},
+        {"id": "vo_crime_minor_specific_target", "review_scale": "both", "description": "An identifiable adult offender specifically targets the declared minor."},
+        {"id": "vo_crime_minor_concrete_act", "review_scale": "native", "description": "One named concrete crime is visibly underway rather than implied by mood."},
+        {"id": "vo_crime_minor_event_trace", "review_scale": "both", "description": "A same-event consequence, escape, or protective intervention trace is visible."}
+      ],
+      "reject_substitutes": ["ordinary_caregiving", "school_safety_drill", "dramatic_child_portrait", "age_inference_from_appearance"]
+    },
+    {
+      "id": "adult_human_trafficking_exploitation_chain",
+      "category": "adult_trafficking_action_means_exploitation_chain",
+      "activation": {
+        "exact_terms": ["adult human-trafficking exploitation chain", "trafficking in adults", "성인 인신매매", "성인 인신 착취 이동"],
+        "exclude_if_any_terms": ["migrant smuggling only", "voluntary employment", "ordinary travel", "이주 알선만", "자발적 고용", "일반 여행"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["recruitment transport harboring receipt", "force fraud coercion", "exploitation purpose", "adult victim", "모집 운송 은닉 인수", "폭력 사기 강압", "착취 목적", "성인 피해자"], "exclude_if_any_terms": ["consensual job placement", "travel assistance", "합의된 취업 알선", "여행 지원"]},
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Adult trafficking in persons requires an adult victim, an action such as recruitment, transportation, transfer, harboring, or receipt, a means such as force, threat, coercion, abduction, fraud, deception, abuse of power or vulnerability, and a linked purpose of exploitation. Movement alone, smuggling, voluntary work, kidnapping without exploitation, and exploitative labor without the trafficking chain are distinct.",
+        "paraphrase_examples": ["성인 피해자가 허위 취업 문서로 모집되어 이동 중 통제되고 여권 압수와 채무 기록이 강제노동 장소의 착취 목적을 잇는다", "an adult victim is recruited by deception, controlled during transfer, deprived of documents, and delivered into a visibly exploitative labor arrangement"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["adult_trafficking_victim", "trafficking_action", "coercive_or_deceptive_means", "exploitation_destination"], "groups": [
+          {"id": "adult_trafficking_victim", "any_terms": ["one specific adult victim remains identifiable across recruitment transfer harboring or receipt"]},
+          {"id": "trafficking_action", "any_terms": ["recruitment transportation transfer harboring or receipt is visibly part of one linked chain"]},
+          {"id": "coercive_or_deceptive_means", "any_terms": ["force threat coercion abduction fraud deception power abuse vulnerability abuse or controlling payment removes meaningful choice"]},
+          {"id": "exploitation_destination", "any_terms": ["forced labor servitude slavery-like service sexual exploitation or organ-removal purpose is linked to the destination or controller"]}
+        ]},
+        "contrast_examples": ["migrant smuggling without exploitation", "voluntary travel", "a normal job placement", "kidnapping with no exploitation purpose"]
+      },
+      "concept_candidate": {"concept_terms": ["specific adult victim", "recruitment-to-receipt chain", "coercive or deceptive means", "linked exploitation purpose"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["adult human-trafficking exploitation chain"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep one adult victim continuous across action, coercive or deceptive means, controller, and exploitative destination or service so the chain is not reduced to travel, kidnapping, or workplace atmosphere.",
+      "required_evidence_fields": ["victim_phrase", "action_phrase", "means_phrase", "exploitation_phrase"],
+      "evidence_requirements": {
+        "victim_phrase": {"min_content_words": 14, "must_mention_any": ["one specific adult victim remains identifiable across recruitment transfer harboring or receipt"]},
+        "action_phrase": {"min_content_words": 14, "must_mention_any": ["recruitment transportation transfer harboring or receipt is visibly part of one linked chain"]},
+        "means_phrase": {"min_content_words": 18, "must_mention_any": ["force threat coercion abduction fraud deception power abuse vulnerability abuse or controlling payment removes meaningful choice"]},
+        "exploitation_phrase": {"min_content_words": 17, "must_mention_any": ["forced labor servitude slavery-like service sexual exploitation or organ-removal purpose is linked to the destination or controller"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_trafficking_victim_continuity", "review_scale": "thumbnail", "description": "One specific adult victim remains continuous across the depicted chain."},
+        {"id": "vo_crime_trafficking_action", "review_scale": "both", "description": "Recruitment, transfer, harboring, transport, or receipt is visibly active."},
+        {"id": "vo_crime_trafficking_means", "review_scale": "native", "description": "A coercive, deceptive, or power-abusing means removes meaningful choice."},
+        {"id": "vo_crime_trafficking_exploitation", "review_scale": "both", "description": "The same chain reaches a visibly exploitative controller, service, or destination."}
+      ],
+      "reject_substitutes": ["smuggling_without_exploitation", "voluntary_travel", "ordinary_job_placement", "kidnapping_without_exploitation"]
+    },
+    {
+      "id": "terrorism_civilian_coercion_purpose_relation",
+      "category": "terrorism_civilian_harm_public_compulsion_relation",
+      "activation": {
+        "exact_terms": ["terrorism civilian-coercion event", "terrorist attack against civilians", "테러", "테러 공격"],
+        "exclude_if_any_terms": ["ordinary battlefield attack", "peaceful protest", "industrial accident", "일반 전장 공격", "평화 시위", "산업 사고"],
+        "context_disambiguation": {"required_with_authorial_core": true, "any_terms": ["civilian target", "intimidate population", "compel government", "public threat", "민간 대상", "대중 위협", "정부 강요", "공개 협박"], "exclude_if_any_terms": ["combatants only", "natural disaster", "전투원만", "자연재해"]},
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A terrorism scene requires a declared violent act or threat intended to cause death or serious bodily injury to civilians or noncombatants, a public or population-facing target, and an explicit purpose to intimidate a population or compel a government or international organization. Destruction, ideology, armed actors, protest, or combat alone does not establish terrorism, and pixels cannot independently prove political purpose.",
+        "paraphrase_examples": ["허구의 공공 교통 허브에서 민간인을 겨냥한 폭력 위협이 외부 방송 요구와 연결되어 정부의 특정 행동을 강요하려는 목적을 드러낸다", "a declared fictional threat against civilians at a public hub is linked through a broadcast demand to population intimidation or government compulsion"],
+        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["civilian_or_noncombatant_target", "violent_act_or_threat", "public_intimidation_reach", "government_or_population_purpose"], "groups": [
+          {"id": "civilian_or_noncombatant_target", "any_terms": ["specific civilians noncombatants or a civilian public place are the declared target"]},
+          {"id": "violent_act_or_threat", "any_terms": ["one identifiable actor or group directs a declared deadly or seriously injurious act or threat at that target"]},
+          {"id": "public_intimidation_reach", "any_terms": ["broadcast crowd-facing message public venue or mass notification extends fear beyond one private victim"]},
+          {"id": "government_or_population_purpose", "any_terms": ["an explicit demand or authorial-core statement ties the act to intimidating a population or compelling government or international organization action"]}
+        ]},
+        "contrast_examples": ["ordinary combat between fighters", "a peaceful protest", "an industrial explosion", "a private violent crime with no population or government purpose"]
+      },
+      "concept_candidate": {"concept_terms": ["declared civilian target", "violent act or threat", "public intimidation reach", "population or government compulsion purpose"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["declared fictional terrorism civilian-coercion event"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Declare fiction and keep the civilian or noncombatant target, actor-directed violent act or threat, public intimidation channel, and explicit population or government-compulsion purpose in one causal scene.",
+      "required_evidence_fields": ["civilian_phrase", "violence_phrase", "public_phrase", "purpose_phrase"],
+      "evidence_requirements": {
+        "civilian_phrase": {"min_content_words": 13, "must_mention_any": ["specific civilians noncombatants or a civilian public place are the declared target"]},
+        "violence_phrase": {"min_content_words": 19, "must_mention_any": ["one identifiable actor or group directs a declared deadly or seriously injurious act or threat at that target"]},
+        "public_phrase": {"min_content_words": 16, "must_mention_any": ["broadcast crowd-facing message public venue or mass notification extends fear beyond one private victim"]},
+        "purpose_phrase": {"min_content_words": 21, "must_mention_any": ["an explicit demand or authorial-core statement ties the act to intimidating a population or compelling government or international organization action"]}
+      },
+      "render_gates": [
+        {"id": "vo_crime_terrorism_civilian_target", "review_scale": "thumbnail", "description": "Specific civilians, noncombatants, or a civilian public place form the declared target."},
+        {"id": "vo_crime_terrorism_directed_threat", "review_scale": "both", "description": "An identifiable actor or group directs a serious violent act or threat there."},
+        {"id": "vo_crime_terrorism_public_reach", "review_scale": "native", "description": "A public venue, broadcast, message, or notification extends intimidation outward."},
+        {"id": "vo_crime_terrorism_compulsion_purpose", "review_scale": "both", "description": "A declared population-intimidation or government-compulsion purpose links the event."}
+      ],
+      "reject_substitutes": ["ordinary_combat", "peaceful_protest", "industrial_accident", "private_violence_without_public_purpose"]
     }
   ]
 }
