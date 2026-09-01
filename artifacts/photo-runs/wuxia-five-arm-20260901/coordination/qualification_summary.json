@@ -1,0 +1,143 @@
+{
+  "schema_version": "wuxia-five-arm-qualification/v1",
+  "run_id": "wuxia-five-arm-20260901",
+  "run_date": "2026-09-01",
+  "reference": {
+    "source_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "frozen_copy": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/coordination/reference_portrait.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "scope": "Visible adult appearance cues only; no biometric identity, protected-trait, personality, attractiveness, or same-person claim."
+  },
+  "experimental_controls": {
+    "independent_arms": 5,
+    "image_generation_calls_per_arm": 1,
+    "total_image_generation_calls": 5,
+    "retries": 0,
+    "cross_arm_inputs_used": false,
+    "frozen_before_pack_generation": true,
+    "strict_scene_qualification_rule": "Every hard pixel gate must pass; partial evidence counts as failure."
+  },
+  "pipeline_audits": {
+    "candidate_pack_schema": "photo-candidate-pack/v6",
+    "composed_prompt_audits": {
+      "passed": 5,
+      "total": 5
+    },
+    "render_request_audits": {
+      "passed": 5,
+      "total": 5
+    },
+    "generated_images": {
+      "succeeded": 5,
+      "total": 5
+    },
+    "json_and_ledger_parse": "pass",
+    "image_hashes_match_manifests": true
+  },
+  "pixel_summary": {
+    "hard_gates_passed": 20,
+    "hard_gates_total": 25,
+    "all_gate_scene_passes": 2,
+    "all_gate_scene_total": 5,
+    "strict_technical_qualification_rate": 0.4,
+    "coordinator_cross_review": "agrees_with_all_five_independent_agent_gate_results",
+    "requesting_user_judgment": "pending"
+  },
+  "arms": [
+    {
+      "arm_id": "arm01_rooftop_herbal_cipher",
+      "concept": "rain-polished old-city rooftop herbal-courier cipher at blue hour",
+      "profile_id": "wuxia_rooftop_qinggong_traversal",
+      "pack_id": "596e5bf84da40cad",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/arm01_rooftop_herbal_cipher/generated.png",
+      "image_sha256": "93a0eb97a1f9eeb4ff68afa12d1abd7ace047325d41ef4bb38c51a5d888e17a8",
+      "dimensions": "1536x1024",
+      "hard_gates_passed": 5,
+      "hard_gates_total": 5,
+      "technical_result": "pass",
+      "failed_gates": []
+    },
+    {
+      "arm_id": "arm02_bamboo_stream_duel",
+      "concept": "misty dawn bamboo-stream aerial duel with opposed landing anchors",
+      "profile_id": "wuxia_bamboo_forest_aerial_duel",
+      "pack_id": "d10f0a998fa91d5c",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/arm02_bamboo_stream_duel/generated_image.png",
+      "image_sha256": "cd925b268b7290e157b699d0cde7a6b51459b68cea1520a55d898bc78beb898e",
+      "dimensions": "1536x1024",
+      "hard_gates_passed": 5,
+      "hard_gates_total": 5,
+      "technical_result": "pass",
+      "failed_gates": []
+    },
+    {
+      "arm_id": "arm03_snowbound_inn",
+      "concept": "snowbound jianghu courier inn with a coded jade-tally recognition event",
+      "profile_id": "jianghu_inn_identity_standoff",
+      "pack_id": "2e85c8e8b5dec4ca",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/arm03_snowbound_inn/render.png",
+      "image_sha256": "5b42c7a067babca9cf027f6cb7064df54ccb43b85f31ea49a5f2097126a9a5a9",
+      "dimensions": "1536x1024",
+      "hard_gates_passed": 4,
+      "hard_gates_total": 5,
+      "technical_result": "fail",
+      "failed_gates": [
+        {
+          "id": "vo_wuxia_inn_watchful_relation",
+          "reason": "The lead, stair traveler, and server do not share eyelines converging on the jade tally."
+        }
+      ]
+    },
+    {
+      "arm_id": "arm04_market_bridge_intervention",
+      "concept": "lantern-lit canal-market bridge protective intervention and boat escape",
+      "profile_id": "xia_protective_intervention_event",
+      "pack_id": "132dce81495a566c",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/arm04_market_bridge_intervention/render_attempt_01.png",
+      "image_sha256": "9fd6a8f38ae4cef60f368ecd07bee802d01fc11a35a538c346a5a46ef7ec98b5",
+      "dimensions": "1536x1024",
+      "hard_gates_passed": 2,
+      "hard_gates_total": 5,
+      "technical_result": "fail",
+      "failed_gates": [
+        {
+          "id": "vo_wuxia_xia_three_roles",
+          "reason": "The aggressor and the courier's extended arm are clipped, so all three complete adults are not preserved."
+        },
+        {
+          "id": "vo_wuxia_xia_directed_threat",
+          "reason": "The aggressor and polearm aim at the intervener instead of visibly targeting the courier."
+        },
+        {
+          "id": "vo_wuxia_xia_interposition",
+          "reason": "Without an explicit aggressor-to-courier threat line, occupation of that same line is only partial."
+        }
+      ]
+    },
+    {
+      "arm_id": "arm05_desert_biaoju",
+      "concept": "storm-bright desert-fortress biaoju departure with sealed astronomical crates",
+      "profile_id": "biaoju_guarded_cargo_departure",
+      "pack_id": "19c47c76a2417610",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/wuxia-five-arm-20260901/arm05_desert_biaoju/generated_image.png",
+      "image_sha256": "cbee0483139c0b53ffd344b9ae0e30e870528fc013e978554ce3b12c7cb55a76",
+      "dimensions": "1537x1023",
+      "hard_gates_passed": 4,
+      "hard_gates_total": 5,
+      "technical_result": "fail",
+      "failed_gates": [
+        {
+          "id": "vo_wuxia_biaoju_route_continuity",
+          "reason": "Cart orientation and road direction diverge, and no continuous wheel-and-hoof trace connects the yard threshold to the road."
+        }
+      ]
+    }
+  ],
+  "evidence_boundaries": [
+    "Structured-data, prompt, and runtime audit passes do not imply pixel qualification.",
+    "A scene fails technical qualification when any hard pixel gate fails.",
+    "Optional story embellishments are not substitutes for profile-owned event geometry.",
+    "Requesting-user preference and acceptance remain separate from coordinator and agent technical review."
+  ]
+}

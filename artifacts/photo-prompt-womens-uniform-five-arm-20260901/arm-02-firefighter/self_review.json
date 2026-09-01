@@ -1,0 +1,142 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "44f6724518cc639b",
+  "contract_version": "photo-visual-obligations/v1",
+  "profile_id": "firefighter_protective_response_system",
+  "reviewer": "arm-02-firefighter agent thumbnail-and-native pixel review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/firefighter-native.png",
+  "result_sha256": "7b73c3140af0e0843197e356ebd6220cbfa321bd347c91cec592aa0cb30e9746",
+  "result_dimensions": {
+    "width": 1024,
+    "height": 1536
+  },
+  "review_scales": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/firefighter-thumbnail.png",
+      "sha256": "38381fd5a632ad97467cc5a32d0f2726890af5ca505bbdc36004ddfecae5a53f",
+      "dimensions": "341x512",
+      "inspected": true
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/firefighter-native.png",
+      "sha256": "7b73c3140af0e0843197e356ebd6220cbfa321bd347c91cec592aa0cb30e9746",
+      "dimensions": "1024x1536",
+      "inspected": true
+    },
+    "supplemental_crops": []
+  },
+  "hard_gates": {
+    "vo_firefighter_protective_role_identity": {
+      "status": "pass",
+      "evidence": "At thumbnail scale the subject immediately reads as a working firefighter: helmet, dark turnout ensemble, reflective bands, SCBA cylinder, hose, gauge, and industrial response station are simultaneously visible."
+    },
+    "vo_firefighter_ppe_component_system": {
+      "status": "pass",
+      "evidence": "Thumbnail and native pixels show a secured helmet, high-collared coat, matching reflective trousers, two heavy gloves, black protective boots, harness, and back-mounted breathing cylinder joined as one coherent head-to-foot system."
+    },
+    "vo_firefighter_equipment_action": {
+      "status": "pass",
+      "evidence": "Both gloved hands have distinct, plausible contact with the inline pressure-gauge and metal coupling assembly on the large red hose; the pose reads as an active check rather than prop holding."
+    },
+    "vo_firefighter_response_state": {
+      "status": "pass",
+      "evidence": "Native pixels clearly resolve the round connected gauge, its pointer and marked face, plus the seated metal coupling; together they show a measured, controlled connected state as the visible consequence of the check."
+    },
+    "vo_firefighter_not_helmet_or_hero_only": {
+      "status": "pass",
+      "evidence": "The thumbnail remains task-led: both hands, live gauge, coupling, hose, SCBA, full turnout system, and chemical-plant pipework carry the role, so helmet styling or a heroic pose is not the sole evidence."
+    }
+  },
+  "common_gates": {
+    "common_adult_fictional_subject": {
+      "status": "pass",
+      "evidence": "Both scales show one original fictional subject with clearly adult facial and body proportions and professional working presentation; this is a visible adult-fictional presentation judgment only."
+    },
+    "common_reference_face_hair_appearance_guidance": {
+      "status": "pass",
+      "evidence": "The visible calm face, centered dark eyes, softly waved long dark hair around and into the collar, and restrained natural makeup observably follow the supplied portrait's appearance cues. This review makes no identity, biometric, or same-person claim."
+    },
+    "common_anatomy_action_coherence": {
+      "status": "pass",
+      "evidence": "Native inspection shows two anatomically assigned arms, separate heavy gloves, coherent glove-to-gauge and glove-to-coupling contacts, two aligned legs and boots, a stable face, and plausible PPE interfaces without fused or duplicated decisive anatomy."
+    },
+    "common_scene_action_legibility": {
+      "status": "pass",
+      "evidence": "Refinery towers, dense pipework, the foam-monitor valve assembly, red hose, pressure gauge, diagonal precipitation, icy wet speckling, and reflective soaked deck establish a cold chemical-plant equipment check with a visible ready-state consequence in one frame."
+    }
+  },
+  "reject_substitute_checks": [
+    {
+      "substitute": "firefighter_helmet_only",
+      "status": "rejected",
+      "evidence": "The full turnout system, SCBA, hose, gauge, coupling, and task contact remain legible without relying on the helmet."
+    },
+    {
+      "substitute": "station_hero_portrait_without_task",
+      "status": "rejected",
+      "evidence": "Both hands are occupied at the gauge-and-coupling assembly, making the equipment check more prominent than portrait posing."
+    },
+    {
+      "substitute": "industrial_or_military_gear_substitution",
+      "status": "rejected",
+      "evidence": "Turnout cut, reflective banding, firefighter helmet, breathing cylinder, and hose-pressure task form a fire-response-specific ensemble."
+    },
+    {
+      "substitute": "dramatic_smoke_without_response_relation",
+      "status": "rejected",
+      "evidence": "The scene uses cold precipitation and wet plant equipment; the operative relation is the hand-to-gauge check, not atmospheric smoke."
+    },
+    {
+      "substitute": "mismatched_or_incomplete_protective_interfaces",
+      "status": "rejected",
+      "evidence": "Helmet, raised visor, collar, coat, gloves, trousers, boots, harness, and cylinder appear mutually compatible and continuous across the body."
+    }
+  ],
+  "confound_checks": [
+    {
+      "confound": "generated_pseudo_brand_and_lettering",
+      "impact": "nonblocking_for_semantic_gates",
+      "evidence": "Helmet and valve contain generated lettering, including an AKRON-like valve mark. It is an unrequested textual artifact, but it does not substitute for or obscure any required firefighter or common gate."
+    },
+    {
+      "confound": "long_hair_partly_visible_outside_collar",
+      "impact": "nonblocking",
+      "evidence": "A few long dark waves remain visible beside the face and collar, while the majority is controlled within the helmet-and-collar area; protective interfaces and the requested appearance cue remain legible."
+    },
+    {
+      "confound": "gauge_semantics_require_visual_inference",
+      "impact": "nonblocking",
+      "evidence": "The image cannot establish a real-world certified pressure threshold, but the connected round gauge, visible pointer, marked dial, secured coupling, and checking hand jointly establish the profile's observable ready-state consequence."
+    }
+  ],
+  "reference_appearance_review": {
+    "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "permitted_role": "visible facial and hair appearance guidance for an original adult fictional subject",
+    "visible_face_guidance": "pass",
+    "long_dark_softly_waved_hair_guidance": "pass",
+    "restrained_natural_makeup_guidance": "pass",
+    "biometric_identity_verification": "not_performed",
+    "same_person_claim": "not_made",
+    "protected_trait_inference": "not_performed",
+    "user_perceived_resemblance": "pending"
+  },
+  "overall_verdict": {
+    "scope": "firefighter protective-response profile plus common adult/reference/anatomy/scene-action gates",
+    "status": "PASS",
+    "passed_profile_gates": 5,
+    "failed_profile_gates": 0,
+    "passed_common_gates": 4,
+    "failed_common_gates": 0,
+    "ambiguous_or_missing_gates": [],
+    "qualification": "technical_pixel_pass_user_judgment_pending",
+    "package_prompt_delivery_boundary": "Candidate-pack, composed-prompt, and runtime audits passed and one native image was delivered; those layers are separate from this pixel judgment."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

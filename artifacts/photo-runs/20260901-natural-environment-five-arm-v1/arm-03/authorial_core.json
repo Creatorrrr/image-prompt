@@ -1,0 +1,95 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently randomized, complex photorealistic test scene in which old-growth forest structure remains the primary readable subject while an adult whose general visible appearance is guided by the supplied portrait performs a small, coherent field action; the resulting pixels must permit strict observation of the environmental structure rather than merely naming it.",
+  "subject": "A clearly adult field observer, visually guided only by the supplied appearance reference, kept small within an expansive old-growth temperate rainforest transect.",
+  "setting": "A rain-cleared temperate rainforest containing living trees of markedly different diameters and ages, vertically layered crowns and a canopy opening, an upright dead snag, and a large mossy fallen nurse log carrying seedlings.",
+  "event": "The observer kneels beside the near end of the fallen nurse log and photographs its seedlings while the forest's structural layers remain unobstructed across the frame.",
+  "visual_priorities": [
+    "old-growth forest structure is the primary subject, visibly expressed through multiple living-tree cohorts, vertically layered canopy, standing snag, and fallen nurse log",
+    "the referenced adult appearance remains visibly continuous without claiming identity and without obscuring any structural evidence",
+    "deep spatial legibility from foreground nurse log through midground tree cohorts to the canopy gap"
+  ],
+  "baseline_prompt_en": "Create a photorealistic wide horizontal ecological field photograph in a rain-cleared temperate old-growth rainforest. Old-growth forest structure is the primary subject: young saplings, mid-sized mature trees, and massive ancient trunks form clearly different living-tree cohorts; low understory foliage, a broken mid-canopy, and high crowns create distinct vertical canopy layers around one open gap. A tall barkless standing dead snag remains fully visible, while a huge moss-covered fallen nurse log crosses the foreground with rooted seedlings growing from its decaying wood. At the near end of the log, an unmistakably adult field observer, guided by the provided appearance reference with general facial continuity and long dark softly waved hair, kneels in practical neutral field clothing and photographs the seedlings. Keep the observer small and offset so every structural feature stays unobstructed. Clearing rain leaves wet bark, luminous moss, suspended mist, and cloud-filtered midday light. Use a 24 mm full-frame perspective, deep focus, natural color, credible scale, and connected foreground-to-canopy depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept that tests whether a reflected keyword is actually visible in the generated image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the assigned ordinary-language environmental term as the arm's primary visible structure, independently randomize a coherent person-plus-environment scene, generate one photograph from the supplied appearance reference, and judge literal pixel observability.",
+      "sources": []
+    },
+    {
+      "term": "old-growth forest structure",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A forest whose long continuity is visually suggested by multiple living-tree age and diameter cohorts, vertically layered crowns and a canopy gap, standing deadwood, and a large fallen decaying log supporting regeneration.",
+      "sources": []
+    },
+    {
+      "term": "using the attached image",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait only as a general visible appearance reference for a clearly adult person in a new photograph, without identity or same-person claims.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "Old-growth forest structure is the primary subject"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult field observer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "kneels in practical neutral field clothing and photographs the seedlings"
+      },
+      {
+        "anchor_id": "appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "guided by the provided appearance reference with general facial continuity and long dark softly waved hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "ecological field photography",
+    "family": "immersive environmental portraiture",
+    "evidence": [
+      "wide-angle deep-focus transect composition",
+      "natural wet-surface detail and credible botanical scale"
+    ]
+  },
+  "variation_key": "arm-03-seed-1148298314"
+}

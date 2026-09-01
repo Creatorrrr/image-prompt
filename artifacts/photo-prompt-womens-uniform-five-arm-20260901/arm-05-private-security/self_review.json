@@ -1,0 +1,208 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:9dc48644214dd386c8a7a3fea8e0f469ceea7bc4+working-tree; SKILL.md sha256 9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Independently test the allocated 보안요원 keyword and private_security_access_control profile in a complex biotech-lab fire-alarm credential-fallback scene using the supplied JPEG only for facial and hair appearance guidance."
+  },
+  "evidence": [
+    {
+      "id": "e-reference-source",
+      "kind": "source-observation",
+      "claim": "The 1086x1448 JPEG was hash-verified and inspected only for visible facial and hair appearance guidance; no identity, biometric, same-person, protected-trait, occupation, health, or attractiveness claim was made.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The v6 candidate pack, visual intent, composed prompt, and exact render request passed fail-closed audits; the composed audit retained advisory prompt-budget warnings but no blocking failure.",
+      "artifact": "candidate_pack.json; composed_prompt_audit.json status pass quality_status warn; render_request_audit.json status pass"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The final English prompt preserved all five intent anchors and all five literal private-security evidence bindings; kuudere and medium-native-glitch similarity candidates were rejected and chosen visual concepts remained empty.",
+      "artifact": "composed_prompt.json sha256 67ca44eea69a97340b1c3a05b67d9dac296cd86d337ddf5a63a7f754d1af47c5; composed_prompt_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Exactly one built-in image-generation call delivered a native 1024x1536 PNG; no retry or alternate generator was used.",
+      "artifact": "run_manifest.json image_call_count 1; runs/image_runs.ndjson run_id 7a5c827db28736b1; render_native.png sha256 e9c6a2b9a2fab6bf48359e7cf4c6fd0a14718161d14c8503c29bf494a4f85680"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Thumbnail and native inspection found 3 of 5 profile gates and all 4 common gates observable; the credential-reader-log relation and approval-to-gate consequence were ambiguous, so the strict 7 of 9 result fails.",
+      "artifact": "pixel_review.json; profile_render_review.json; profile_render_review_audit.json qualification_status failed_technical_hard_gates"
+    },
+    {
+      "id": "e-core-procedure",
+      "kind": "package-check",
+      "claim": "The first pre-profile core draft was preserved after the validator rejected the unsupported dimension name reference_usage; the only correction renamed that schema dimension to reference_use without changing source_request, baseline prompt, semantic anchors, or experimental meaning.",
+      "artifact": "authorial_core_prevalidation_draft.json sha256 6124b4ca4796c129d6ef14cbd565d5be614d1b266239ff27238b059db4ef8d54; authorial_core.json file sha256 6f8ee867900ae6dae7953485f53cb4725fee45a66fa4de447339516b817feaa7"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "In one delivered image, all five private-security access-control gates and all four common adult, reference-scope, anatomy, and scene-action gates must be observable at their declared scales; ambiguous or partial evidence is failure.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-private-role-system",
+        "statement": "The woman must read as adult private facility security through a coherent non-police site uniform and facility-bounded workflow rather than costume, police, military, dark-suit fashion, or monitor-only shorthand.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "facility-specific uniform and identifiers",
+          "reader, roster, queue, and controlled entry context",
+          "absence of public-police or military substitution"
+        ]
+      },
+      {
+        "id": "inv-access-chain",
+        "statement": "The same credential, reader, entry record, access decision, and one gate consequence must form a visible causal chain in one frame.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render"
+        ],
+        "causal_controls": [
+          "credential-to-reader interaction",
+          "same-record linkage",
+          "visible approve or deny state",
+          "unmistakable matching gate state"
+        ]
+      },
+      {
+        "id": "inv-reference-boundary",
+        "statement": "The attached portrait guides only visible facial and hair appearance for an original adult fictional subject and never establishes identity or protected traits.",
+        "evidence_ids": [
+          "e-reference-source",
+          "e-render"
+        ],
+        "causal_controls": [
+          "long dark center-parted loose waves",
+          "bounded facial-appearance comparison",
+          "explicit original-adult-fictional framing"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact visitor count",
+      "minor uniform tailoring details",
+      "incidental facility lettering",
+      "precise alarm-light reflection shape"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-credential-record",
+      "scale": "regional",
+      "axis": "credential-reader-log causal relation",
+      "source_state": "One visitor credential is visibly scanned or compared at the reader and visibly linked to that same marked access record.",
+      "render_state": "The pass, approval reader, and roster coexist, but the pass is separated from the reader, the pen rests on the sheet, and the same-record link is not visually provable.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-gate-consequence",
+      "scale": "regional",
+      "axis": "decision-to-gate consequence",
+      "source_state": "The approved decision unmistakably opens one particular controlled gate or a denied decision visibly keeps it locked.",
+      "render_state": "Green lane indicators and transparent barriers exist, but the relevant barrier's open-versus-closed geometry and causal tie to the approval remain ambiguous.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-chain-collapse",
+      "stage": "generator-response",
+      "statement": "The generator rendered the requested object inventory and approval text but collapsed two physical links—scan or same-record contact and gate-state consequence—into adjacent props rather than one unambiguous action chain.",
+      "evidence_ids": [
+        "e-generation",
+        "e-render"
+      ],
+      "falsifier": "A matched future render with unchanged semantics and settings shows the pass actively at the reader, an unmistakably marked corresponding record, and one visibly open gate caused by the same approval."
+    },
+    {
+      "id": "hypothesis-prompt-competition",
+      "stage": "prompt-interaction",
+      "statement": "Simultaneously requesting a visitor surge, full uniform, portrait appearance, alarm context, pass, reader, log, decision, and gate may have preserved object presence while weakening contact and topology priority.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render"
+      ],
+      "falsifier": "A shorter evidence-equivalent prompt that keeps all hard phrases but foregrounds scan contact and gate geometry still produces the same two ambiguities across matched renders."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No shared skill or semantic source was edited by this arm; preserve this failure as evidence and change only a future authorized, predeclared prompt or profile mechanism rather than claiming a fix from this single render.",
+    "generalization_basis": "The current arm is one motivating sample with a no-retry policy, so it can identify observable failure modes but cannot establish a reusable generator correction.",
+    "hypothesis_ids": [],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-core-procedure"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-05-motivating-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "private role identity",
+          "credential-reader-log relation",
+          "access decision",
+          "controlled gate consequence",
+          "adult reference anatomy and scene action"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Package, prompt, exact-input runtime audit, and delivery succeeded, but two of five profile pixel gates remain ambiguous in the sole permitted render. Ambiguous is failure, and user judgment has not been received.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-render"
+    ]
+  }
+}

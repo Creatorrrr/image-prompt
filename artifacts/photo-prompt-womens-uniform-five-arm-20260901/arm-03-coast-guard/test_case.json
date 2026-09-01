@@ -1,0 +1,85 @@
+{
+  "schema_version": "photo-render-test-case/v1",
+  "arm_id": "arm-03-coast-guard",
+  "experimental_allocation_provenance": "coordinator_assignment_not_requester_text",
+  "target_keyword": "해양경찰",
+  "profile_id": "maritime_safety_coast_guard_role",
+  "scenario": "dawn storm-debris recovery around a disabled sailboat",
+  "request_envelope_sha256": "2c3cdfc6a0d610d770721c2438daf92a44999ba65f507de9bd0be947b686bd2e",
+  "request_text_sha256": "bd1cb8b8164a8bdf10ce9eaf7f4c12d6136e8c135841be4c48af53f054caa882",
+  "authorial_core_file_sha256": "49a3ba104dc3d390640a5e2a5870dcf7077598b716382eab211dbcc809d5377f",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible facial and hair appearance guidance for an original adult fictional subject",
+    "claim_boundary": "No identity, biometric, same-person, ethnicity, nationality, occupation, health, attractiveness, or protected-trait claim."
+  },
+  "grading_policy": {
+    "allowed_statuses": [
+      "observable",
+      "ambiguous",
+      "missing"
+    ],
+    "pass_status": "observable",
+    "fail_statuses": [
+      "ambiguous",
+      "missing"
+    ],
+    "partial_is_fail": true,
+    "all_hard_gates_required_in_one_saved_image": true
+  },
+  "profile_gates": [
+    {
+      "id": "vo_coast_guard_maritime_role_identity",
+      "review_scale": "thumbnail",
+      "description": "The adult subject first reads as a maritime-safety responder rather than naval fashion dock staff or traffic police."
+    },
+    {
+      "id": "vo_coast_guard_flotation_duty_system",
+      "review_scale": "both",
+      "description": "Weather-ready clothing flotation radio gloves and deck footwear form one coherent maritime duty system."
+    },
+    {
+      "id": "vo_coast_guard_rescue_action",
+      "review_scale": "both",
+      "description": "One rescue line lifebuoy sling or recovery-appliance action is visibly underway."
+    },
+    {
+      "id": "vo_coast_guard_target_recovery_relation",
+      "review_scale": "both",
+      "description": "A concrete water target and continuous route to a controlled boat-side recovery consequence remain readable."
+    },
+    {
+      "id": "vo_coast_guard_not_naval_style_or_prop_only",
+      "review_scale": "thumbnail",
+      "description": "Naval styling a boat lifebuoy dock or rope alone does not establish coast-guard rescue duty."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_adult_original_subject",
+      "review_scale": "both",
+      "description": "The principal subject is unmistakably an adult original fictional woman, without youth coding."
+    },
+    {
+      "id": "common_reference_facial_hair_appearance",
+      "review_scale": "native",
+      "description": "The subject visibly carries the reference-guided front-facing facial appearance and long dark softly waved hair while remaining an original fictional person; technical resemblance is not an identity claim."
+    },
+    {
+      "id": "common_anatomy_hands_limbs",
+      "review_scale": "native",
+      "description": "Visible hands, fingers, arms, body joints, and interacting figures are anatomically coherent enough for the rescue action."
+    },
+    {
+      "id": "common_scene_dawn_storm_debris_disabled_sailboat",
+      "review_scale": "thumbnail",
+      "description": "Dawn light, recent-storm wetness and floating debris, and a disabled sailboat are jointly legible."
+    },
+    {
+      "id": "common_scene_action_recovery_transfer",
+      "review_scale": "both",
+      "description": "The officer's line handling, the patrol-boat rail, the disabled sailboat, and one rescued adult form a readable in-progress transfer rather than a posed portrait."
+    }
+  ]
+}

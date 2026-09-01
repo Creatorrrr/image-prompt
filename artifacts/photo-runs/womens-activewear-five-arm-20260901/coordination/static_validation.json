@@ -1,0 +1,62 @@
+{
+  "schema_version": "photo-activewear-static-validation/v1",
+  "validated_at": "2026-09-01",
+  "status": "pass_with_unrelated_regression_boundary",
+  "checks": [
+    {
+      "id": "activewear_focused_tests",
+      "command": ".venv/bin/python -m unittest tests.test_photo_womens_activewear_visual_semantics -v",
+      "status": "pass",
+      "result": "9 tests passed"
+    },
+    {
+      "id": "dictionary_metadata",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass",
+      "result": "photo prompt dictionary metadata is valid"
+    },
+    {
+      "id": "visual_profile_index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass",
+      "result": "170 profiles, 1003 exact terms"
+    },
+    {
+      "id": "semantic_index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "status": "pass",
+      "result": "7443 entries, gemini-embedding-2, 768 dimensions"
+    },
+    {
+      "id": "scene_expression_inventory",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current --compact",
+      "status": "pass",
+      "result": "112 routes passed, 0 failed"
+    },
+    {
+      "id": "iteration_record",
+      "command": ".venv/bin/python .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py artifacts/photo-runs/womens-activewear-five-arm-20260901/iteration_record.json",
+      "status": "pass",
+      "result": "status ok, no errors"
+    },
+    {
+      "id": "five_arm_integrity",
+      "command": "per-arm manifest, pack, audit, image-hash, reference-hash, and source-grounding checks",
+      "status": "pass",
+      "result": "5 v6 packs, 5 composed audits, 5 runtime audits, 5 one-call manifests, 0 cross-arm inputs, 0 image hash mismatches, 5 source-grounded assigned profiles"
+    },
+    {
+      "id": "whitespace",
+      "command": "git diff --check",
+      "status": "pass",
+      "result": "no whitespace errors"
+    }
+  ],
+  "unrelated_regression_boundary": {
+    "status": "fail_outside_activewear_scope",
+    "command": "six previously failing focused methods from tests.test_photo_visual_obligations",
+    "result": "five pass; test_yandere_profile_requires_affection_control_relation_not_role_prop fails because concurrently added clinical_nursing_duty_system activates a new obligation in the existing nurse-yandere fixture",
+    "activewear_attribution": false,
+    "action": "preserved and reported; not weakened or rewritten in the activewear task"
+  }
+}

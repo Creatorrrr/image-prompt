@@ -1,0 +1,203 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "9dc48644214dd386c8a7a3fea8e0f469ceea7bc4",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the request-scoped clinical_nursing_duty_system profile and its five visual bindings survive one independent complex native render."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The v6 candidate pack and exact runtime request passed their structural audits.",
+      "artifact": "candidate_pack.json, composed_prompt_audit.json, render_request_audit.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five clinical-nursing evidence bindings and all four frozen semantic anchors occur literally in the audited final prompt.",
+      "artifact": "composed_prompt.json"
+    },
+    {
+      "id": "e-delivery",
+      "kind": "generation-outcome",
+      "claim": "One built-in image_gen call delivered a preserved native PNG and no retry was made.",
+      "artifact": "render-attempt-01.png sha256 ef1a731435c467027bf24574874070028d6b9d5b41e73ea69c15b5bd0d8dac1d"
+    },
+    {
+      "id": "e-pixels",
+      "kind": "render-observation",
+      "claim": "Eight of ten strict thumbnail/native gates are observable; documented chart-monitor agreement and active aftershock plus battery-to-generator transfer are ambiguous.",
+      "artifact": "self_review.json"
+    },
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied image was used only as visible facial and long dark softly waved hair appearance guidance for an original adult fictional subject.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "At thumbnail and native scales, one adult fictional nurse must read through a coherent duty-uniform system, one patient-linked assessment, a visibly matching documented care state, and a legible earthquake-aftershock power-transfer scene, while the reference remains appearance guidance only.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "invariant-professional-role",
+        "statement": "The nurse role must be task-led rather than costume-led and must include all five profile evidence dimensions.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-pixels"
+        ],
+        "causal_controls": [
+          "coherent scrub system",
+          "patient marker",
+          "assessment action",
+          "chart-monitor agreement"
+        ]
+      },
+      {
+        "id": "invariant-complex-scene",
+        "statement": "Aftershock evidence and the active battery-to-generator transition must coexist with the bedside action in one frame.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-pixels"
+        ],
+        "causal_controls": [
+          "physical aftershock disturbance",
+          "two power states",
+          "generator activation",
+          "shared lighting consequence"
+        ]
+      },
+      {
+        "id": "invariant-reference-boundary",
+        "statement": "The portrait guides only visible facial and hair appearance for an original adult fictional subject.",
+        "evidence_ids": [
+          "e-reference",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "facial appearance direction",
+          "long dark softly waved hair",
+          "adult fictional subject statement"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact framing",
+      "camera distance",
+      "scrub color",
+      "lighting placement"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-documented-state",
+      "scale": "local",
+      "axis": "documented clinical-state agreement",
+      "source_state": "The test contract requires a chart or handover record whose state visibly agrees with the bedside monitor.",
+      "render_state": "A green check and adjacent chart are visible, but no monitor value or trace can be verified against the chart.",
+      "evidence_ids": [
+        "e-pixels"
+      ]
+    },
+    {
+      "id": "mismatch-power-transition",
+      "scale": "global",
+      "axis": "event-state legibility",
+      "source_state": "The test contract requires an active earthquake aftershock and a battery-to-generator transfer in one still.",
+      "render_state": "Damage, debris, a lit generator, and mixed illumination are visible, but the battery and active transfer state are not established and aftershock motion is not provable.",
+      "evidence_ids": [
+        "e-pixels"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-documented-state-actuation",
+      "stage": "generator-response",
+      "statement": "The generator converted the explicit chart-monitor agreement into generic co-location plus a check mark instead of a verifiable shared reading.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-pixels"
+      ],
+      "falsifier": "A matched no-retry-policy render with unchanged prompt bytes produces a clearly identical monitor value or trace on the chart."
+    },
+    {
+      "id": "hypothesis-transition-representation",
+      "stage": "prompt-priority",
+      "statement": "Mixed lights and a generator establish emergency power but do not give the static frame a uniquely readable battery-to-generator transfer indicator or unmistakable aftershock motion cue.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-pixels"
+      ],
+      "falsifier": "An independent evaluator identifies both the battery source and the active transfer plus aftershock motion from pixels without reading the prompt."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No shared semantic, candidate, profile, prompt-skill, or test source was changed in this isolated render arm.",
+    "generalization_basis": "One motivating render is insufficient to justify a reusable runtime change.",
+    "hypothesis_ids": [
+      "hypothesis-documented-state-actuation",
+      "hypothesis-transition-representation"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-pixels"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-motivating-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "clinical-duty role",
+          "documented care state",
+          "aftershock power-transfer event"
+        ],
+        "evidence_ids": [
+          "e-pixels"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The package and prompt pass, delivery succeeds, and eight gates are observable, but partial or ambiguous evidence fails the documented-state and complex-scene gates; no general improvement claim is supported by one render.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-delivery",
+      "e-pixels"
+    ]
+  }
+}

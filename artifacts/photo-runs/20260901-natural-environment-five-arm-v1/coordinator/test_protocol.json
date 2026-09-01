@@ -1,0 +1,76 @@
+{
+  "schema_version": "photo-natural-environment-five-arm-test-protocol/v1",
+  "attempt_policy": {
+    "built_in_imagegen_calls_per_arm": 1,
+    "semantic_retries": 0,
+    "tool_failure_policy": "A blocked or empty tool result is generation-unscored, not a pixel failure and not permission for API fallback.",
+    "pixel_failure_policy": "Preserve the first render as failed evidence; do not repair or rerender in this qualification run."
+  },
+  "independence": {
+    "agents": 5,
+    "separate_arm_directories": true,
+    "independent_no_cross_arm_inputs": true,
+    "forbidden_inputs": [
+      "another arm prompt or authorial core",
+      "another arm candidate pack",
+      "another arm generated image",
+      "another arm review or agent message"
+    ]
+  },
+  "pre_core": {
+    "rule": "Each arm reads only the shared user request envelope, assigned ordinary-language target term, random seed, reference-control boundary, and the target skill SKILL.md until authorial_core.json is frozen.",
+    "randomization": "Each arm independently derives a bounded random complex photographic concept from its assigned seed before inspecting assets, registries, tests, prior prompts, or other artifacts.",
+    "reference_role": "The attached portrait is appearance guidance, never evidence of identity personality protected traits or environmental meaning."
+  },
+  "preflight_pass": [
+    "request envelope and authorial core hashes are preserved",
+    "a post-core recipe-route diagnostic proves that exactly one intended natural-environment mixin maps the assigned keyword to every expected candidate ID",
+    "the expected candidate IDs remain present in the canonical dictionary and mixin mapping; v6 public-pack masking of locked or non-open slots is not treated as candidate absence",
+    "exactly one intended hard visual profile is active",
+    "composed prompt audit passes",
+    "runtime request audit passes with the exact attached reference hash"
+  ],
+  "candidate_pack_boundary": {
+    "discovery": "The coordinator-assigned keyword is not falsely attributed to an exact span in the immutable raw user envelope. The mixin route is therefore checked post-core as a recipe/data diagnostic, while the v6 pack remains bound to the real request envelope and frozen authorial core.",
+    "public_masking": "photo-candidate-pack/v6 may withhold selected or locked sampler slots from its public candidate surfaces. Qualification requires the canonical mapping, active hard profile, audited literal prompt evidence, and any target candidates that are actually public; it does not require masked IDs to be injected into the public JSON.",
+    "forbidden": "Do not hand-edit generated candidate packs or invent a user concept-lock. Preserve failed setup artifacts as diagnostic evidence."
+  },
+  "shared_pixel_gates": [
+    {
+      "id": "shared_single_saved_image",
+      "review_scale": "both",
+      "description": "One concrete saved image is reviewed at thumbnail and native scale; no cross-attempt component averaging is allowed."
+    },
+    {
+      "id": "shared_environment_primary_legibility",
+      "review_scale": "thumbnail",
+      "description": "The assigned environmental system remains the dominant readable scene structure rather than a decorative backdrop behind a portrait."
+    },
+    {
+      "id": "shared_reference_appearance_continuity",
+      "review_scale": "both",
+      "description": "An unmistakably adult subject shows general facial-appearance and long dark softly waved hair continuity with the attached reference without making a same-person or identity claim."
+    },
+    {
+      "id": "shared_reference_non_occlusion",
+      "review_scale": "both",
+      "description": "The reference-guided subject is integrated into the scene without hiding any required environmental component or relation."
+    },
+    {
+      "id": "shared_photographic_coherence",
+      "review_scale": "native",
+      "description": "Perspective lighting anatomy material contact and scale read as one coherent photorealistic capture."
+    }
+  ],
+  "target_pixel_gates": {
+    "source": "The exact five target_gate_ids in coordinator/assignments.json, resolved against the SHA-256-frozen visual registry.",
+    "strict_all": true,
+    "partial_is_fail": true,
+    "same_saved_image_required": true
+  },
+  "verdicts": {
+    "technical_pass": "Every target gate and every shared pixel gate passes in the same saved image.",
+    "technical_fail": "Any target or shared gate fails, is ambiguous, is occluded, or is supported only by prompt text.",
+    "user_judgment": "pending until the requesting user directly reviews the five images"
+  }
+}

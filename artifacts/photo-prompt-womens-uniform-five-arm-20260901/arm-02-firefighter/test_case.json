@@ -1,0 +1,116 @@
+{
+  "contract_version": "photo-womens-uniform-render-test-case/v1",
+  "arm_id": "arm-02-firefighter",
+  "worktree_id": "main-workspace:/Users/chasoik/Projects/image-prompt",
+  "target_keyword": "소방관",
+  "profile_id": "firefighter_protective_response_system",
+  "experimental_allocation": {
+    "provenance": "coordinator_experimental_allocation",
+    "is_source_request": false,
+    "selection_manifest_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/coordinator/selection_manifest.json",
+    "selection_manifest_sha256": "41356a71b34e3913ed2953ee51aa0ab185dbe135d41bab994fa26876d8a9e7ba",
+    "selection_method": "deterministic SHA-256-seeded stratified random choice",
+    "scenario": "chemical-plant standby equipment check during freezing rain"
+  },
+  "frozen_package": {
+    "request_text_sha256": "bd1cb8b8164a8bdf10ce9eaf7f4c12d6136e8c135841be4c48af53f054caa882",
+    "authorial_core_file_sha256": "82844797381754b008803b54c6b2b96978dcb0141fde981404d092fc0b9c55b8",
+    "authorial_core_canonical_sha256": "6e196ad1fe2929f85fdd71e7e7f1d43998e5f4e5d159055bfd793b3be6cde9dd",
+    "intent_lock_sha256": "bd7bd55dd510429d9877dd06e8e9d8138005af360004f37e8e334762ce4ad7f5",
+    "visual_intent_file_sha256": "db870afe4330058017ac1041a12ef398758563e2207a81c988a5a27502b0e0d4",
+    "candidate_pack_sha256": "39bd37669f08682fae6e6642aad133b535c1c2bbc1765f3ebb08d975a0a8511b",
+    "pack_id": "44f6724518cc639b",
+    "prompt_sha256": "744c81f2db3bb0f604cdc3fb213bac5869414baaf01631d62c8c39d218f41097",
+    "negative_sha256": "28c141a8722fbbe8f7520b81ffb5b38991611f1e8363b38567139cd94f859d6c",
+    "effective_visual_contract_sha256": "3c08087e20cfecbd3bdd6a198b47d565b3014d57a4f421e5ead61d9f89fa38c8"
+  },
+  "required_gate_ids": [
+    "vo_firefighter_protective_role_identity",
+    "vo_firefighter_ppe_component_system",
+    "vo_firefighter_equipment_action",
+    "vo_firefighter_response_state",
+    "vo_firefighter_not_helmet_or_hero_only",
+    "common_adult_fictional_subject",
+    "common_reference_face_hair_appearance_guidance",
+    "common_anatomy_action_coherence",
+    "common_scene_action_legibility"
+  ],
+  "gates": [
+    {
+      "id": "vo_firefighter_protective_role_identity",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "criterion": "The adult subject first reads as a working firefighter in a protective response system rather than a helmet portrait."
+    },
+    {
+      "id": "vo_firefighter_ppe_component_system",
+      "source": "profile",
+      "review_scale": "both",
+      "criterion": "Helmet, coat, trousers, gloves, boots, and breathing-equipment interfaces visibly form one coherent protective ensemble."
+    },
+    {
+      "id": "vo_firefighter_equipment_action",
+      "source": "profile",
+      "review_scale": "both",
+      "criterion": "Both hands visibly inspect, connect, or deploy hazard-matched response equipment."
+    },
+    {
+      "id": "vo_firefighter_response_state",
+      "source": "profile",
+      "review_scale": "native",
+      "criterion": "A gauge, seal, indicator, connection, or controlled tool state visibly confirms the check's consequence."
+    },
+    {
+      "id": "vo_firefighter_not_helmet_or_hero_only",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "criterion": "A helmet, dramatic atmosphere, or heroic pose does not carry the role without the protective system and working task."
+    },
+    {
+      "id": "common_adult_fictional_subject",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "The sole principal subject has unambiguously adult proportions and presentation; this is a fictional-subject rendering check, not an identity or age-verification claim."
+    },
+    {
+      "id": "common_reference_face_hair_appearance_guidance",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "The visible face and hair observably follow the reference's calm front-facing appearance, long dark softly waved hair, and restrained natural makeup while remaining an original fictional subject; no biometric or same-person judgment is made."
+    },
+    {
+      "id": "common_anatomy_action_coherence",
+      "source": "common",
+      "review_scale": "native",
+      "criterion": "Hands, arms, legs, face, PPE interfaces, and hand-to-equipment contacts are anatomically coherent and not fused, duplicated, or hidden at the decisive action."
+    },
+    {
+      "id": "common_scene_action_legibility",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "Chemical-plant equipment, freezing rain, a staged hose or breathing-apparatus check, and a visible ready-state consequence coexist legibly in the same saved image."
+    }
+  ],
+  "reference_scope": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "permitted_role": "visible facial and hair appearance guidance for an original adult fictional subject",
+    "claim_boundary": "no identity, biometric, same-person, ethnicity, nationality, occupation, health, attractiveness, or protected-trait claim"
+  },
+  "prepack_isolation": {
+    "status": "core_frozen_before_candidate_data",
+    "cross_arm_inputs": false,
+    "other_arm_directories_inspected": false,
+    "assignment_treated_as_source_request": false
+  },
+  "generation_policy": {
+    "built_in_image_gen_calls_allowed": 1,
+    "retry_allowed": false,
+    "partial_or_ambiguous_gate_result": "fail",
+    "review_required_at": [
+      "thumbnail",
+      "native"
+    ],
+    "user_judgment": "pending_requesting_user"
+  }
+}

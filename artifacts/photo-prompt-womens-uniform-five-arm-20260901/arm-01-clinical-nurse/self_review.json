@@ -1,0 +1,150 @@
+{
+  "schema_version": "photo-womens-uniform-arm-self-review/v1",
+  "arm_id": "arm-01-clinical-nurse",
+  "pack_id": "a9a179eb94f140e9",
+  "runtime_prompt_id": "56d2d74e52c52fc0",
+  "review_protocol": {
+    "observation_states": [
+      "observable",
+      "ambiguous",
+      "missing"
+    ],
+    "partial_or_ambiguous_is_fail": true,
+    "required_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "image_call_count": 1,
+    "retry_count": 0
+  },
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-01-clinical-nurse/render-attempt-01.png",
+    "sha256": "ef1a731435c467027bf24574874070028d6b9d5b41e73ea69c15b5bd0d8dac1d",
+    "width": 1402,
+    "height": 1122
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-01-clinical-nurse/render-attempt-01-thumbnail.png",
+    "sha256": "c737766fe4d41fe2d2174c3e952030cf1976b9f6f8ddeb0c86b1c30e3351d717",
+    "width": 384,
+    "height": 307
+  },
+  "evidence_layers": {
+    "candidate_pack": {
+      "status": "pass",
+      "evidence": "The immutable v6 pack a9a179eb94f140e9 contains the request-scoped clinical_nursing_duty_system profile with all five evidence bindings."
+    },
+    "prompt_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "evidence": "The final composed audit has no failures; its four warnings state that anchor intents were preserved by explicit free-description assertions."
+    },
+    "runtime_audit": {
+      "status": "pass",
+      "evidence": "Runtime prompt 56d2d74e52c52fc0 binds the exact pack, intent lock, negative bytes, effective visual contract, and one hashed appearance-only reference."
+    },
+    "render_delivery": {
+      "status": "success",
+      "evidence": "One built-in image_gen call delivered a native 1402x1122 PNG, copied without alteration into this arm; no retry was made."
+    },
+    "rendered_pixels": {
+      "status": "fail",
+      "passed_gate_count": 8,
+      "required_gate_count": 10,
+      "failed_gate_ids": [
+        "vo_nursing_documented_state",
+        "common_scene_aftershock_power_transfer"
+      ],
+      "evidence": "Eight gates are observable, but the chart-to-monitor numerical agreement and the active aftershock plus battery-to-generator transition remain ambiguous; ambiguity is a failure."
+    },
+    "user_judgment": {
+      "status": "pending",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user acceptance or preference judgment has been received for this render."
+    }
+  },
+  "gates": [
+    {
+      "gate_id": "vo_nursing_clinical_role_identity",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The thumbnail immediately reads as an on-duty nurse: navy scrubs, clipped ID badge, gloves, IV line, bedside monitor, and active patient care share one frame."
+    },
+    {
+      "gate_id": "vo_nursing_uniform_system",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "both",
+      "evidence": "Matching navy short-sleeved scrub top and trouser fabric, practical glove use, and a clipped identifier form one coherent duty-workwear system at both scales."
+    },
+    {
+      "gate_id": "vo_nursing_patient_linked_task",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "both",
+      "evidence": "The nurse points to the foreground patient's monitor while gripping that patient's IV line; the wristband, chart, cot, and monitor are spatially linked."
+    },
+    {
+      "gate_id": "vo_nursing_documented_state",
+      "observation_status": "ambiguous",
+      "qualification_status": "fail",
+      "review_scale": "native",
+      "evidence": "The chart and monitor are adjacent and a large green check asserts completion, but native pixels do not establish a verifiable matching measurement or trace between them."
+    },
+    {
+      "gate_id": "vo_nursing_not_costume_or_prop_only",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The patient-linked IV and monitor action plus charted bedside workflow carry the role beyond clothing, badge, or a hospital backdrop alone."
+    },
+    {
+      "gate_id": "common_adult_original_subject",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "both",
+      "evidence": "The primary fictional nurse is unambiguously adult-presenting through mature facial presentation, body proportions, and professional bedside role."
+    },
+    {
+      "gate_id": "common_reference_face_hair_scope",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "both",
+      "evidence": "The adult fictional subject has a front-readable softly modeled face and long dark softly waved hair that visibly follow the permitted appearance guidance. Identity, biometric, and same-person similarity were not assessed."
+    },
+    {
+      "gate_id": "common_anatomy_hands_and_contact",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "native",
+      "evidence": "The extended pointing hand, curled supporting fingers, line-gripping hand, wrists, glove folds, and IV-line contact remain anatomically and mechanically coherent at native scale."
+    },
+    {
+      "gate_id": "common_scene_aftershock_power_transfer",
+      "observation_status": "ambiguous",
+      "qualification_status": "fail",
+      "review_scale": "thumbnail",
+      "evidence": "Damaged walls, floor debris, a lit generator, and mixed amber/cool illumination establish disaster aftermath and generator power, but no battery or transfer indicator is visible and the still frame does not prove an active aftershock."
+    },
+    {
+      "gate_id": "common_scene_action_single_frame",
+      "observation_status": "observable",
+      "qualification_status": "pass",
+      "review_scale": "both",
+      "evidence": "One coherent bedside beat links nurse, foreground adult patient, wristband, IV line, monitor, and chart without a competing primary action."
+    }
+  ],
+  "supplemental_observations": [
+    "The generated chart and wristband contain readable invented-looking personal text and numbers that were not requested; they are not treated as real identity evidence.",
+    "Clinical shoes are outside the crop, but the scrub top, matching trouser fabric, badge, and task relation remain sufficient for the profile's uniform-system gate."
+  ],
+  "summary": {
+    "passed_gate_count": 8,
+    "failed_gate_count": 2,
+    "required_gate_count": 10,
+    "overall_technical_verdict": "revise",
+    "promotion_status": "not_qualified",
+    "retry_authorized": false
+  }
+}

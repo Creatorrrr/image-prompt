@@ -1,0 +1,158 @@
+{
+  "schema_version": "photo-fantasy-arm-self-review/v1",
+  "arm_id": "arm-03-circle-armor",
+  "pack_id": "7cef523115588408",
+  "review_policy": {
+    "partial_counts_as_fail": true,
+    "candidate_pack_prompt_audit_pixels_and_user_judgment_are_separate": true,
+    "reference_claim_boundary": "visible appearance guidance only for an original adult fictional woman; no identity, biometric, protected-trait, attractiveness, or same-person claim"
+  },
+  "candidate_pack_state": {
+    "status": "pass",
+    "candidate_pack_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-03-circle-armor/candidate_pack.json",
+    "candidate_pack_sha256": "69bf393c4e4e9c249d776df6d2f7bbeb02a5600b2ef886315ecffc8b80ee6ddf",
+    "active_profile_ids": [
+      "magic_circle_local_rule_boundary",
+      "living_armor_hollow_articulated_agency"
+    ],
+    "chosen_visual_concept_ids": [],
+    "chosen_creative_candidate_ids": [],
+    "optional_candidates_rejected": true
+  },
+  "prompt_audit_state": {
+    "status": "pass",
+    "quality_status": "warn",
+    "audit_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-03-circle-armor/composed_audit.json",
+    "audit_sha256": "e85e249e8273fbcb0b66f1390769dd9ad74f76c422d434111bc971d672d9a3ba",
+    "blocking_failures": [],
+    "boundary": "Literal prompt and v6 contract bindings passed; this does not prove rendered pixels."
+  },
+  "runtime_audit_state": {
+    "status": "pass",
+    "runtime_prompt_id": "2e85ec352b2fa994",
+    "audit_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-03-circle-armor/render_request_audit.json",
+    "audit_sha256": "8e0901308653471a3df0057a3f4d10b9c60957ce3fb94859061cd8914c54f546",
+    "negative_matches_pack": true,
+    "reference_count": 1
+  },
+  "rendered_pixel_state": {
+    "status": "fail",
+    "technical_verdict": "revise",
+    "native_image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-03-circle-armor/render-attempt-01.png",
+    "native_image_sha256": "898d174f69e0d273cadd766ae16b703ec161e014feaf57fe860b6174d7576899",
+    "native_dimensions": {
+      "width": 1402,
+      "height": 1122
+    },
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-03-circle-armor/render-attempt-01-thumbnail.png",
+    "thumbnail_sha256": "f199610b4b06b4f69f77fb255e1fca89c094e53dd80f367531f85cc640bd1c04",
+    "thumbnail_dimensions": {
+      "width": 384,
+      "height": 307
+    },
+    "reviewed_scales": [
+      "native",
+      "thumbnail"
+    ],
+    "target_profile_gate_pass_count": 7,
+    "target_profile_gate_total": 10,
+    "all_required_gate_pass_count": 11,
+    "all_required_gate_total": 14,
+    "failed_gate_ids": [
+      "vo_fantasy_magic_circle_closed",
+      "vo_fantasy_living_armor_hollow",
+      "vo_fantasy_living_armor_not_wearer"
+    ],
+    "gates": [
+      {
+        "gate_id": "vo_fantasy_magic_circle_closed",
+        "status": "fail",
+        "review_scale": "thumbnail",
+        "evidence": "The ellipse reads as nearly complete, but its upper-left arc is hidden by the kneeling subject; closure is inferred rather than fully visible without a gap."
+      },
+      {
+        "gate_id": "vo_fantasy_magic_circle_surface",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "The luminous ellipse lies flat on wet marble with coherent foreshortening, reflections, and floor contact at native and thumbnail scales."
+      },
+      {
+        "gate_id": "vo_fantasy_magic_circle_regions",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "The interior is teal-toned and relatively still with broad window reflections, while the exterior is darker and visibly rippled."
+      },
+      {
+        "gate_id": "vo_fantasy_magic_circle_stop",
+        "status": "pass",
+        "review_scale": "native",
+        "evidence": "Along the lower and right arcs, the calm teal treatment meets the darker rippled water at the luminous boundary line."
+      },
+      {
+        "gate_id": "vo_fantasy_magic_circle_not_decor",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "Different water states, the subject's contact, and local wet residue make the circle causal rather than only a rug, halo, portal, or free-floating glyph effect."
+      },
+      {
+        "gate_id": "vo_fantasy_living_armor_shell",
+        "status": "pass",
+        "review_scale": "thumbnail",
+        "evidence": "One continuous helmet, torso, two arms, and two legs form a complete readable armor figure within the frame."
+      },
+      {
+        "gate_id": "vo_fantasy_living_armor_joints",
+        "status": "pass",
+        "review_scale": "native",
+        "evidence": "Native pixels show overlapping pauldrons, segmented elbow plates, hip plates, cuisses, poleyns, and bent knees articulating coherently."
+      },
+      {
+        "gate_id": "vo_fantasy_living_armor_hollow",
+        "status": "fail",
+        "review_scale": "both",
+        "evidence": "A black visor opening contains no visible face, but the native crop shows no back wall or through-gap and dark flexible material fills the neck and elbow gaps; empty interior volume is not proven."
+      },
+      {
+        "gate_id": "vo_fantasy_living_armor_agency",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "The armor plants both feet, grips and raises the gilded frame, and displaces dripping water with contact ripples."
+      },
+      {
+        "gate_id": "vo_fantasy_living_armor_not_wearer",
+        "status": "fail",
+        "review_scale": "both",
+        "evidence": "Only the blacked-out visor suggests emptiness; the human proportions and dark joint underlayers remain compatible with an armored wearer, and no second opening confirms absence."
+      },
+      {
+        "gate_id": "common_reference_appearance",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "Within the allowed appearance-only scope, the fictional adult subject has long dark wavy hair, a visible center-parted hairline, and restrained natural makeup consistent with the reference guidance."
+      },
+      {
+        "gate_id": "common_adult_subject",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "The museum conservator is depicted as a clearly adult fictional woman with mature styling and no youth-coded setting or wardrobe."
+      },
+      {
+        "gate_id": "common_anatomy",
+        "status": "pass",
+        "review_scale": "native",
+        "evidence": "The kneeling posture, arms, legs, and both visible hands are coherent at native scale without a major anatomical distortion."
+      },
+      {
+        "gate_id": "common_scene_action",
+        "status": "pass",
+        "review_scale": "both",
+        "evidence": "The woman visibly stabilizes the floor circle while the armor visibly lifts a wet gilded frame; both assigned actions remain legible at thumbnail scale."
+      }
+    ]
+  },
+  "pending_user_judgment_state": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "technical_review_is_not_user_acceptance": true
+  }
+}

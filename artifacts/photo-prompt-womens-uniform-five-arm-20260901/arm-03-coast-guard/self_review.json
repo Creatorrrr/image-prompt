@@ -1,0 +1,84 @@
+{
+  "schema_version": "photo-independent-arm-self-review/v1",
+  "arm_id": "arm-03-coast-guard",
+  "objective": "Test whether the assigned 해양경찰 / maritime_safety_coast_guard_role semantics survive one complex reference-guided built-in render of dawn storm-debris recovery around a disabled sailboat.",
+  "evidence_layers": {
+    "package_and_structural_validity": {
+      "status": "pass",
+      "evidence": [
+        "candidate_pack.json is one photo-candidate-pack/v6 object with pack_id c634cbfe12176678",
+        "visual_obligations activates only maritime_safety_coast_guard_role as the request-scoped hard profile",
+        "all five required evidence bindings are literal and composed_prompt_audit.json has status pass with no failures",
+        "profile_render_review_audit.json has no schema failures"
+      ],
+      "boundary": "Structural validity does not prove rendered pixels."
+    },
+    "prompt_behavior": {
+      "status": "pass_with_advisory_warnings",
+      "evidence": [
+        "positive_prompt.txt contains the exact 170-word audited prompt bytes",
+        "negative_prompt.txt byte-equals the pack negative",
+        "both unrelated optional visual concepts were left unselected",
+        "all six creative candidates were explicitly rejected",
+        "composed audit warnings are uncovered-intent notices whose exact frozen anchor phrases remain literal in prompt_en"
+      ],
+      "boundary": "Prompt binding proves intended controls were sent, not that the model rendered them."
+    },
+    "generation_delivery": {
+      "status": "pass",
+      "evidence": [
+        "The built-in image generation tool was called exactly once with the specified reference path",
+        "No retry or second image call was made",
+        "One native 1402 x 1122 PNG was saved with SHA-256 070e85c6c1346f13bf59084da60923d746dc3eccb4a4056df1b6fa546a562ee9",
+        "One 384 x 307 thumbnail was derived and both thumbnail and native files were inspected"
+      ],
+      "boundary": "Successful delivery does not establish target-gate fidelity."
+    },
+    "rendered_pixel_fidelity": {
+      "status": "fail",
+      "profile_gates_observable": 3,
+      "profile_gates_total": 5,
+      "all_gates_observable": 6,
+      "all_gates_total": 10,
+      "failed_or_ambiguous_gate_ids": [
+        "vo_coast_guard_flotation_duty_system",
+        "vo_coast_guard_target_recovery_relation",
+        "common_reference_facial_hair_appearance",
+        "common_scene_action_recovery_transfer"
+      ],
+      "evidence": [
+        "The principal subject's deck footwear is out of frame, leaving the complete uniform/flotation/radio/gloves/footwear system ambiguous.",
+        "The principal black-and-yellow rope and thinner target-side yellow line do not form an unambiguously continuous rescuer-to-target route.",
+        "The target remains on the disabled sailboat, so movement toward the patrol-boat rail is not visibly completed enough to establish the specified recovery consequence.",
+        "The generated three-quarter face and wet tied-low hair only partially preserve the front-facing facial and long softly waved hair appearance scope."
+      ],
+      "boundary": "Ambiguous or partial evidence is failure; components cannot be averaged into a pass."
+    },
+    "user_judgment": {
+      "status": "pending",
+      "source": "not_yet_received",
+      "boundary": "No technical result is presented as user acceptance or aesthetic preference."
+    }
+  },
+  "procedural_compliance": {
+    "skills_and_required_references_read": "pass",
+    "coordinator_hashes_validated": "pass",
+    "byte_identical_request_envelope": "pass",
+    "core_frozen_before_profile_pack_or_prior_artifact_inspection": "pass_after_one_schema_only_correction_before_successful_pack_generation",
+    "exactly_one_built_in_image_call": "pass",
+    "no_retry": "pass",
+    "no_shared_semantic_or_candidate_file_edits": "pass",
+    "other_arm_files_modified": false,
+    "cross_arm_outputs_used_as_generation_inputs": false,
+    "strict_no_other_arm_directory_inspection": {
+      "status": "deviation",
+      "detail": "After core freeze, one repo-wide rg query for the schema key semantic_clarification_decisions traversed other current-run arm files and returned only matching file paths/line numbers and the matching key line. No other arm prompt, pack semantics, image, review, or candidate content was opened or used; all composition guidance subsequently came from this arm's pack and repository tests. The absolute no-inspection instruction was nevertheless not perfectly satisfied.",
+      "impact": "Run-manifest cross_arm_inputs_used=false remains accurate for generation inputs, but strict procedural independence is not claimed."
+    }
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "Package, prompt, and delivery succeeded, but two of five hard profile gates are ambiguous and strict procedural independence has a disclosed inspection deviation. The one-shot result is retained as failed evidence and must not be promoted."
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "photo-pack-setup-attempts/v1",
+  "arm_id": "arm-01",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "preflight_fail_preserved",
+      "pack_id": "7b584fb962f1b45d",
+      "path": "candidate_pack.preflight-fail.json",
+      "sha256": "88ae427714345dad8804ea546ee7b174719afa138ad4347f70aa028732e18007",
+      "reason": "The initial pack had the hard profile but no post-core recipe-route soft-anchor setup."
+    },
+    {
+      "attempt": 2,
+      "status": "invocation_rejected_no_pack",
+      "reason": "A raw --concept route attempted to create a non-envelope concept lock.",
+      "error": "v5/v6 --concept-lock values must exactly equal the request-envelope active spans in order; omit them to derive the values safely"
+    },
+    {
+      "attempt": 3,
+      "status": "setup_rejected",
+      "pack_id": "9414c43ca20e9fb1",
+      "reason": "Explicit forced sets selected private route material but public v6 masking made this unsuitable as route proof. The pack was not hand-edited."
+    },
+    {
+      "attempt": 4,
+      "status": "setup_rejected",
+      "pack_id": "0353f8d000ec9ee6",
+      "reason": "The original four-anchor soft floor admitted an unrelated weather candidate and failed the all-seven assigned-slot preflight."
+    },
+    {
+      "attempt": 5,
+      "status": "selected_final_pack",
+      "pack_id": "1574dadbae62d1c9",
+      "path": "candidate_pack.json",
+      "sha256": "67789a6f0ac4fc36b4bab558d8c9cd3067916d9f152450d10aed31ee140fdd5f",
+      "setup": "post-core recipe-derived seven-anchor rule selection without a fabricated concept lock"
+    }
+  ],
+  "image_generation_calls": 1
+}

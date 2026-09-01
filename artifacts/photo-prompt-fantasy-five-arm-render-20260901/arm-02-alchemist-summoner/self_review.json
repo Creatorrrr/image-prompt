@@ -1,0 +1,144 @@
+{
+  "schema_version": "photo-fantasy-five-arm-self-review/v1",
+  "arm_id": "arm-02-alchemist-summoner",
+  "review_policy": "pass_or_fail_only_partial_is_fail",
+  "image": {
+    "native_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-02-alchemist-summoner/render-attempt-01.png",
+    "native_sha256": "d9c85bb9a5159336100090bf43173901c35248bf3992fc6a0eed43a1a444f8b7",
+    "native_dimensions": "1402x1122",
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-02-alchemist-summoner/render-attempt-01-thumbnail.png",
+    "thumbnail_sha256": "36adc77c1e13ced438da9b06b3cf5cb429b7885ee3e9793aa27151b407b51d4a",
+    "thumbnail_dimensions": "512x409",
+    "inspected_scales": [
+      "native",
+      "thumbnail"
+    ]
+  },
+  "states": {
+    "candidate_pack": {
+      "status": "pass",
+      "pack_id": "b38b29c02bb01d0a",
+      "active_profile_ids": [
+        "alchemist_material_transmutation_process",
+        "summoner_distinct_entity_arrival"
+      ],
+      "optional_visual_concept_ids_selected": []
+    },
+    "prompt_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-02-alchemist-summoner/composed_audit.json",
+      "failures": []
+    },
+    "runtime_audit": {
+      "status": "pass",
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-02-alchemist-summoner/render_request_audit.json",
+      "failures": []
+    },
+    "rendered_pixel": {
+      "status": "fail",
+      "pass_count": 13,
+      "required_gate_count": 14,
+      "failed_gate_ids": [
+        "vo_fantasy_alchemist_transition"
+      ],
+      "reason": "Endpoint material contrast and residue are visible, but the bounded internal transmutation zone is not unambiguously readable; partial evidence is a failure."
+    },
+    "user_judgment": {
+      "status": "pending",
+      "source": "not_yet_received"
+    }
+  },
+  "gates": [
+    {
+      "gate_id": "vo_fantasy_alchemist_operator",
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The operator is visibly responsible for the process: her lower hand grips a rod inserted into the heated vessel while the other hand directs the simultaneous arrival."
+    },
+    {
+      "gate_id": "vo_fantasy_alchemist_apparatus",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "A heated round vessel connects through a sealed glass neck and long transfer tube toward the receiver; the connected chain remains readable at thumbnail and native scales."
+    },
+    {
+      "gate_id": "vo_fantasy_alchemist_states",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The left heated vessel contains a darker reddish liquid while the downstream receiver holds a lighter luminous translucent fluid, visible together in one frame."
+    },
+    {
+      "gate_id": "vo_fantasy_alchemist_transition",
+      "status": "fail",
+      "review_scale": "native",
+      "evidence": "The endpoints and stained wet bench are legible, but the glass path lacks one unmistakably bounded internal change zone; the amber illumination is broad and the clear emergence can read as summoning instead of material transmutation. Partial endpoint contrast therefore fails this gate."
+    },
+    {
+      "gate_id": "vo_fantasy_alchemist_not_costume",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The image shows active stirring, a heated connected apparatus, paired liquids, transfer hardware, droplets, and bench residue, so clothing and bottles are not carrying the alchemy claim alone."
+    },
+    {
+      "gate_id": "vo_fantasy_summoner_operator",
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "One living operator extends a clearly readable open hand toward the arrival while remaining the only human actor."
+    },
+    {
+      "gate_id": "vo_fantasy_summoner_source",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The transparent entity has a continuous narrowing tail rooted at the complete glass receiver/elbow mouth, spatially anchoring its arrival."
+    },
+    {
+      "gate_id": "vo_fantasy_summoner_entity",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "A large separately embodied transparent beast head and torso are distinct from both the woman and the apparatus, with no human duplication."
+    },
+    {
+      "gate_id": "vo_fantasy_summoner_relation",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Her splayed palm and gaze aim toward the beast while its head faces back toward her hand, forming a clear directional control relation."
+    },
+    {
+      "gate_id": "vo_fantasy_summoner_not_companion",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The beast visibly streams from the bounded glass source amid displaced droplets and particulate spray, so it reads as an arrival event rather than a static companion, empty circle, or generic glow."
+    },
+    {
+      "gate_id": "common_reference_appearance",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The original fictional subject visibly carries the reference-guided long dark wavy hair, center-part hairline, soft facial contour, and restrained natural makeup balance; this is appearance guidance only, not identity evidence."
+    },
+    {
+      "gate_id": "common_adult_subject",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The sole fictional human subject reads unmistakably as an adult woman in both the full-size image and thumbnail."
+    },
+    {
+      "gate_id": "common_anatomy",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The native crop shows five separated fingers on the raised hand and a coherent rod grip on the working hand, with no obvious fused limb or major facial deformation."
+    },
+    {
+      "gate_id": "common_scene_action",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Stirring at the heated vessel, a connected transfer path, a directed raised hand, and a source-rooted emerging entity create a jointly readable process-and-arrival action."
+    }
+  ],
+  "target_pass_count": 13,
+  "required_gate_count": 14,
+  "failed_gate_ids": [
+    "vo_fantasy_alchemist_transition"
+  ],
+  "overall_technical_verdict": "fail_one_required_pixel_gate_no_retry"
+}

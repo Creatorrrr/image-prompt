@@ -1,0 +1,78 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "e8728ef3d92ab536",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "agent_native_and_thumbnail_pixel_review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-02-racerback-rooftop/render_native.png",
+  "result_sha256": "84bcd96103ba5aaa6f829c728f28a4aa2d3be84cf5438f3f15a2d64e4b38d4c6",
+  "hard_gates": {
+    "vo_activewear_racerback_two_straps": {
+      "status": "pass",
+      "evidence": "At the 340x512 thumbnail scale, two separate black shoulder straps are visibly traceable from the principal runner's left and right shoulders before their central interaction."
+    },
+    "vo_activewear_racerback_center_convergence": {
+      "status": "fail",
+      "evidence": "At both thumbnail and native scales, the two diagonal straps visibly cross as an X instead of merging into one central converged path between the shoulder blades; partial intersection is not convergence."
+    },
+    "vo_activewear_racerback_yoke_continuity": {
+      "status": "fail",
+      "evidence": "Native pixels show crossed diagonal paths and a broad triangular back opening below the intersection, with no single narrow Y-shaped central yoke continuing down the upper spine."
+    },
+    "vo_activewear_racerback_lower_attachment": {
+      "status": "fail",
+      "evidence": "The lower bra band is visible at both scales, but a single central yoke is absent, so continuous central-yoke attachment into the lower band is not proven."
+    },
+    "vo_activewear_racerback_not_cross_or_parallel": {
+      "status": "fail",
+      "evidence": "Native pixels clearly show an X-shaped strap crossing on the upper back, which is the explicit crossback substitute this gate requires the topology to exclude."
+    }
+  },
+  "strict_pixel_verdict": {
+    "status": "fail",
+    "rule": "all_five_required_gates_must_pass_in_one_saved_image",
+    "passed_gate_ids": [
+      "vo_activewear_racerback_two_straps"
+    ],
+    "failed_gate_ids": [
+      "vo_activewear_racerback_center_convergence",
+      "vo_activewear_racerback_yoke_continuity",
+      "vo_activewear_racerback_lower_attachment",
+      "vo_activewear_racerback_not_cross_or_parallel"
+    ]
+  },
+  "review_scales": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-02-racerback-rooftop/render_native.png",
+      "sha256": "84bcd96103ba5aaa6f829c728f28a4aa2d3be84cf5438f3f15a2d64e4b38d4c6",
+      "pixel_width": 1023,
+      "pixel_height": 1537
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-02-racerback-rooftop/render_thumbnail_512.png",
+      "sha256": "f1e65727344e93e74da083441b04a53e04505cba76d02370df7b23d1083674f1",
+      "pixel_width": 340,
+      "pixel_height": 512
+    }
+  },
+  "supplemental_observations": {
+    "scene_preservation": {
+      "status": "pass",
+      "evidence": "One saved frame visibly preserves two adult runners, a mid-contact relay exchange, wind-driven ribbons, rainfall, wet rooftop pavement, railings, puddle reflections, and kinetic forward motion."
+    },
+    "appearance_continuity": {
+      "status": "pass",
+      "evidence": "The principal adult subject retains the reference-guided general facial appearance and long dark hair while remaining an original rendered subject in a new pose and scene."
+    },
+    "biometric_identity": {
+      "status": "not_evaluated",
+      "evidence": "The supplied portrait was used only as an appearance reference; this review makes no same-person or biometric identity claim."
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

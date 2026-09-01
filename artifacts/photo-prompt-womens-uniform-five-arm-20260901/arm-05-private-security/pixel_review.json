@@ -1,0 +1,159 @@
+{
+  "schema_version": "photo-visual-semantics-pixel-review/v1",
+  "arm_id": "arm-05-private-security",
+  "reviewer": "arm-05 agent pixel reviewer",
+  "result_image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/render_native.png",
+    "sha256": "e9c6a2b9a2fab6bf48359e7cf4c6fd0a14718161d14c8503c29bf494a4f85680",
+    "dimensions": "1024x1536"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/render_thumbnail.png",
+    "sha256": "c7d13e66b8b90fd1928d1c07748515f723da3ef3bdeab664f2e77edbabc88f43",
+    "dimensions": "341x512"
+  },
+  "inspection": {
+    "thumbnail_viewed": true,
+    "native_viewed": true,
+    "metadata_used_as_pixel_proof": false,
+    "grading_scale": [
+      "observable",
+      "ambiguous",
+      "missing"
+    ],
+    "ambiguous_counts_as_failure": true,
+    "partial_credit": false
+  },
+  "gates": [
+    {
+      "id": "vo_security_private_role_identity",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "The first read is a uniformed facility-security worker: black coordinated duty clothing, shoulder radio, facility-security chest patches and ID, duty belt, visitor pass, access lanes, and a queued public. The setting and facility markings distinguish the role from fashion, police patrol, or military duty.",
+      "native_regions": [
+        "uniform and equipment: x60-710 y430-1210",
+        "facility lobby and queue: x0-1024 y0-1040"
+      ]
+    },
+    {
+      "id": "vo_security_credential_reader_relation",
+      "source": "profile",
+      "review_scale": "both",
+      "status": "ambiguous",
+      "passes": false,
+      "pixel_evidence": "The left hand holds a TEMPORARY VISITOR PASS near a tabletop reader that displays ACCESS APPROVED, and a printed roster lies beside it. However, the pass is separated from the reader, no scan/contact moment is visible, the pen rests on the sheet, and the same printed record cannot be linked to that credential from pixels alone.",
+      "native_regions": [
+        "pass and reader: x20-390 y850-1260",
+        "printed roster: x100-690 y1120-1430"
+      ]
+    },
+    {
+      "id": "vo_security_access_decision",
+      "source": "profile",
+      "review_scale": "native",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "The reader visibly says ACCESS APPROVED with a green check, the officer holds the temporary pass while looking down toward the checkpoint, a roster row is highlighted green, and her other hand directs the queue. Together these pixels communicate an approval decision.",
+      "native_regions": [
+        "green approval display and pass: x20-380 y840-1260",
+        "highlighted log and routing hand: x110-940 y480-1420"
+      ]
+    },
+    {
+      "id": "vo_security_gate_consequence",
+      "source": "profile",
+      "review_scale": "both",
+      "status": "ambiguous",
+      "passes": false,
+      "pixel_evidence": "A green turnstile light and transparent lane barriers are visible behind the approval display, but the relevant glass wing's open-versus-closed state is not unmistakable. The queue remains behind the barrier and the pixels do not establish that one particular gate opened because of this approval.",
+      "native_regions": [
+        "turnstile lanes and green light: x590-1024 y650-1330",
+        "approval display: x20-260 y1030-1280"
+      ]
+    },
+    {
+      "id": "vo_security_not_police_or_monitor_only",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "Facility-security labeling, a biosciences lobby, a visitor pass, approval reader, printed roster, and controlled turnstiles jointly carry the image. Police vehicles, public-agency insignia, weapons, military markers, and monitor-wall substitution are absent from the visible frame.",
+      "native_regions": [
+        "facility sign and uniform IDs: x0-560 y150-900",
+        "access workflow: x20-1024 y650-1430"
+      ]
+    },
+    {
+      "id": "common_adult_subject",
+      "source": "common",
+      "review_scale": "both",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "The principal fictional subject has clearly adult facial and body proportions and performs an adult professional facility-security role; the thumbnail contains no age ambiguity.",
+      "native_regions": [
+        "principal subject: x40-920 y180-1250"
+      ]
+    },
+    {
+      "id": "common_reference_appearance_scope",
+      "source": "common",
+      "review_scale": "native",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "The rendered fictional subject visibly follows the reference's long dark center-parted loose waves and broad facial-appearance direction around brows, eyes, nose, and lips. This is appearance comparison only and does not assert biometric identity or that the images depict the same person.",
+      "native_regions": [
+        "face and hair: x120-650 y180-760"
+      ]
+    },
+    {
+      "id": "common_anatomy_coherence",
+      "source": "common",
+      "review_scale": "native",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "Both arms connect coherently to the shoulders; the near hand plausibly grips the pass, the extended palm has a plausible finger arrangement, the torso and belt remain continuous, and no fused limb or broken contact prevents reading the action.",
+      "native_regions": [
+        "pass-holding hand: x60-340 y860-1050",
+        "raised routing hand: x835-925 y485-650"
+      ]
+    },
+    {
+      "id": "common_scene_action",
+      "source": "common",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "passes": true,
+      "pixel_evidence": "The red alarm beacon, FIRE ALARM CREDENTIAL SYSTEM FALLBACK sign, LUMINIS BIOSCIENCES lobby marker, disabled-looking turnstile context, visitor queue, raised routing hand, pass, reader, and roster make the biotech-lab fallback surge and active queue-control scene readable at thumbnail scale.",
+      "native_regions": [
+        "alarm and explanatory sign: x0-800 y0-530",
+        "queue and checkpoint: x20-1024 y430-1430"
+      ]
+    }
+  ],
+  "summary": {
+    "profile_gates": {
+      "observable": 3,
+      "ambiguous": 2,
+      "missing": 0,
+      "total": 5
+    },
+    "common_gates": {
+      "observable": 4,
+      "ambiguous": 0,
+      "missing": 0,
+      "total": 4
+    },
+    "all_gates": {
+      "observable": 7,
+      "ambiguous": 2,
+      "missing": 0,
+      "total": 9
+    },
+    "technical_pixel_verdict": "fail",
+    "decision": "revise",
+    "rationale": "All-observable qualification fails because the credential-reader-log relation and approval-to-gate consequence remain ambiguous in the same delivered image. No retry was permitted.",
+    "user_judgment": "pending"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create and visibly test one independently randomized complex professional-uniform concept: 철도 기관사 / rail-driver operation in an autumn commuter-train cab during leaf-fall low-adhesion restrictions, with the supplied JPEG used only as facial and hair appearance guidance for an original adult fictional subject.",
+  "subject": "one original adult fictional woman rail driver operating a commuter train",
+  "setting": "the active driving cab of a commuter train moving through an autumn leaf-fall corridor under low-adhesion restrictions",
+  "event": "she actively controls a cautious approach while monitoring the line and the low-adhesion operating condition",
+  "visual_priorities": [
+    "the professional rail-driver role must be legible through uniform, cab controls, and hands-on operation rather than portrait styling alone",
+    "the autumn low-adhesion restriction must read through one coherent operational moment with wet leaf contamination and cautious train handling",
+    "the supplied image guides only visible facial structure and long dark softly waved hair for an original adult fictional subject"
+  ],
+  "baseline_prompt_en": "A photorealistic operational documentary photograph inside the active driving cab of a commuter train in autumn. One original adult fictional woman rail driver actively drives an autumn commuter train under low-adhesion leaf-fall restrictions. Her professional rail-driver uniform is visibly tied to operating the train: a tailored dark navy jacket over a pale collared shirt, a neat dark tie, and functional shoulder epaulettes. Seated at the driver's console, she grips the traction-and-brake controller with one hand while the other is poised beside the vigilance controls; illuminated speed and brake gauges face her. Through the broad windscreen, steel rails, a clear lineside signal, and wet crushed leaves on the railhead establish the route and slippery seasonal condition as she makes a cautious controlled approach. Show her alert gaze alternating between the instruments and the track, with upright working posture. Her visible facial structure and long dark softly waved hair are guided only by the supplied appearance reference, realizing a new adult fictional person rather than reproducing identity. Use a three-quarter medium-wide cab view, natural overcast daylight, practical instrument glow, realistic fabric and worn control surfaces, and enough depth to keep both her operational action and the forward railway context unmistakable.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "For this independent arm, the authorized randomized test concept is 철도 기관사 / rail-driver operation in an autumn commuter cab during leaf-fall low-adhesion restrictions.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied JPEG only for visible facial structure and long dark softly waved hair as appearance guidance for an original adult fictional subject; it supplies no identity, biometric, same-person, ethnicity, nationality, occupation, health, attractiveness, or protected-trait claim.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "Her professional rail-driver uniform is visibly tied to operating the train"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One original adult fictional woman rail driver"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "actively drives an autumn commuter train under low-adhesion leaf-fall restrictions"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible facial structure and long dark softly waved hair are guided only by the supplied appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic operational documentary photography",
+    "family": "autumn commuter-cab environmental portrait",
+    "evidence": [
+      "natural overcast daylight mixed with practical instrument glow",
+      "realistic worn controls, uniform fabric, and wet leaf-contaminated rail context"
+    ]
+  },
+  "variation_key": "arm-04-rail-driver-autumn-low-adhesion"
+}

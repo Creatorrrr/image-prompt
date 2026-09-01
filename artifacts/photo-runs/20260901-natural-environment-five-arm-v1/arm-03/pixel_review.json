@@ -1,0 +1,173 @@
+{
+  "schema_version": "photo-natural-environment-pixel-review/v1",
+  "arm_id": "arm-03",
+  "target_term": "old-growth forest structure",
+  "pack_id": "83f7796e7c777440",
+  "reviewer": {
+    "reviewer_id": "codex-arm-03-agent",
+    "method": "direct_pixel_inspection"
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-03/render.png",
+    "sha256": "20d4c269617b06545aeb837fec50a488ccfa87634791766fbefd239dcb60d0b2",
+    "width_px": 1536,
+    "height_px": 1024
+  },
+  "inspection_surfaces": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-03/render.png",
+      "sha256": "20d4c269617b06545aeb837fec50a488ccfa87634791766fbefd239dcb60d0b2",
+      "width_px": 1536,
+      "height_px": 1024
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-03/render-thumbnail.png",
+      "sha256": "9b3342d82d6b65045f74af110a094f102eb28dc7437cbae706f64b3c0ee48c82",
+      "width_px": 384,
+      "height_px": 256,
+      "relationship_to_result": "deterministic size-only resampling of render.png for thumbnail inspection; not a second generation or a content edit"
+    }
+  },
+  "same_saved_image_reviewed": true,
+  "strict_all": true,
+  "partial_is_fail": true,
+  "gates": [
+    {
+      "gate_id": "vo_natural_old_growth_cohorts",
+      "group": "target",
+      "description": "Live trees visibly vary in trunk diameter and height rather than forming one uniform cohort.",
+      "required_scale": "thumbnail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "status": "pass",
+      "observable_evidence": "At 384 x 256, massive edge trunks, several medium-diameter conifers, and slender saplings differ clearly in both girth and height across the frame."
+    },
+    {
+      "gate_id": "vo_natural_old_growth_canopy_layers",
+      "group": "target",
+      "description": "Overstory, midstory, and understory remain spatially separate across the forest depth.",
+      "required_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "Both views separate foreground ferns and low broadleaf growth, middle-distance saplings and conifer boughs, and tall overstory crowns surrounding the bright canopy opening."
+    },
+    {
+      "gate_id": "vo_natural_old_growth_standing_snag",
+      "group": "target",
+      "description": "A standing dead snag is visibly distinct from shadowed or leafless live trunks.",
+      "required_scale": "native",
+      "reviewed_scales": [
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "The center-frame upright snag has a jagged broken crown, exposed weathered brown wood, and no live crown, making it structurally distinct from the surrounding green live conifers."
+    },
+    {
+      "gate_id": "vo_natural_old_growth_fallen_log",
+      "group": "target",
+      "description": "A large fallen log has credible scale and physical contact with the forest floor.",
+      "required_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "A person-scaled, moss-covered decaying trunk spans the lower-left foreground and rests through wet vegetation; additional downed trunks lie along the right floor, all readable at both scales."
+    },
+    {
+      "gate_id": "vo_natural_old_growth_non_inference",
+      "group": "target",
+      "description": "Uniform plantation rows, generic lushness, or a single giant tree do not substitute for the complete structure.",
+      "required_scale": "thumbnail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "status": "pass",
+      "observable_evidence": "The thumbnail simultaneously shows irregularly spaced multi-size live cohorts, separated vegetation tiers, a central snag, and several fallen logs; it is not a row plantation, generic green wall, or single-tree scene."
+    },
+    {
+      "gate_id": "shared_single_saved_image",
+      "group": "shared",
+      "description": "One concrete saved image is reviewed at thumbnail and native scale; no cross-attempt component averaging is allowed.",
+      "required_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "The native result is one saved PNG with SHA-256 20d4c269617b06545aeb837fec50a488ccfa87634791766fbefd239dcb60d0b2; the thumbnail is only a size-resampled inspection view of those same pixels."
+    },
+    {
+      "gate_id": "shared_environment_primary_legibility",
+      "group": "shared",
+      "description": "The assigned environmental system remains the dominant readable scene structure rather than a decorative backdrop behind a portrait.",
+      "required_scale": "thumbnail",
+      "reviewed_scales": [
+        "thumbnail"
+      ],
+      "status": "pass",
+      "observable_evidence": "At thumbnail scale the forest spans the full frame and its logs, trunks, snag, and crown tiers establish the composition; the crouching observer is a small subordinate figure near the lower center-right."
+    },
+    {
+      "gate_id": "shared_reference_appearance_continuity",
+      "group": "shared",
+      "description": "An unmistakably adult subject shows general facial-appearance and long dark softly waved hair continuity with the attached reference without making a same-person or identity claim.",
+      "required_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "fail",
+      "observable_evidence": "The rendered subject is visibly adult and has long dark softly waved hair, but the face is tiny at thumbnail scale and remains a downward-looking three-quarter profile at native scale. General facial-appearance continuity with the frontal reference cannot be observed confidently at both required scales; hair continuity alone is only partial evidence."
+    },
+    {
+      "gate_id": "shared_reference_non_occlusion",
+      "group": "shared",
+      "description": "The reference-guided subject is integrated into the scene without hiding any required environmental component or relation.",
+      "required_scale": "both",
+      "reviewed_scales": [
+        "thumbnail",
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "The observer remains small and low in the frame; the central snag, main fallen log, different live-tree cohorts, and foreground-to-crown layering remain readable around the figure at both scales."
+    },
+    {
+      "gate_id": "shared_photographic_coherence",
+      "group": "shared",
+      "description": "Perspective lighting anatomy material contact and scale read as one coherent photorealistic capture.",
+      "required_scale": "native",
+      "reviewed_scales": [
+        "native"
+      ],
+      "status": "pass",
+      "observable_evidence": "Native inspection shows a consistent wide-angle perspective, mist-softened daylight, coherent wet bark and moss, credible tree-to-human scale, and plausible crouching anatomy, camera grip, and ground contact."
+    }
+  ],
+  "gate_summary": {
+    "target_passed": 5,
+    "target_failed": 0,
+    "shared_passed": 4,
+    "shared_failed": 1,
+    "total_passed": 9,
+    "total_failed": 1,
+    "failed_gate_ids": [
+      "shared_reference_appearance_continuity"
+    ]
+  },
+  "technical_verdict": "fail",
+  "verdict_reason": "The protocol requires all five target gates and all five shared gates to pass in the same saved image. Facial-appearance continuity is not observable at both required scales, so partial hair continuity cannot qualify the image.",
+  "review_audit": {
+    "status": "not_applicable",
+    "reason": "audit_image_render_review.py audits only a frozen generic render-repair contract. This initial v6 candidate pack has no render_repair contract; the coordinator target and shared gates are recorded directly here."
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "boundary": "These are direct pixel observations, not identity claims or user preference. Prompt and runtime audit success did not determine the pixel verdict."
+}

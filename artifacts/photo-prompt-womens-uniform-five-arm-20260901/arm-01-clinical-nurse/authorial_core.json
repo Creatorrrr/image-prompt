@@ -1,0 +1,83 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent randomized visual-semantics test image of an original adult fictional woman whose assigned concept is a clinical nurse performing active duty during an earthquake-aftershock power transfer in a backup ward, while using the supplied image only as visible facial and hair appearance guidance.",
+  "subject": "An original adult fictional woman working as a clinical nurse in recognizable duty clothing and equipment, with visible facial and hair appearance guided by the supplied reference.",
+  "setting": "A makeshift hospital backup ward during the immediate aftermath of an earthquake, at the moment emergency battery power transfers to a generator.",
+  "event": "The nurse stabilizes an IV line and checks an adult patient's portable vital-sign monitor as the aftershock moves curtains and ward lighting returns in stages.",
+  "visual_priorities": [
+    "Unmistakable clinical nursing duty system through clothing, carried tools, hygiene state, and patient-directed action",
+    "A single-frame causal read of earthquake aftershock plus active emergency power transfer",
+    "Physically plausible hands, clinical-tool contact, and readable care workflow",
+    "Reference-guided visible facial appearance and long dark softly waved hair for an original adult fictional subject"
+  ],
+  "baseline_prompt_en": "Create a documentary-style full-body-to-three-quarter photograph of an original adult fictional woman working as a clinical nurse in a makeshift backup ward during the immediate aftershock of an earthquake, precisely as hospital power transfers from emergency batteries to a generator. She wears a solid scrub top and matching trousers under a practical isolation gown, a clipped blank ID badge, closed nonslip clinical shoes, a stethoscope carried ready, and medical gloves. Her long dark softly waved hair is secured back from her face, with the reference used only for visible facial and hair appearance guidance. She braces beside a rolling medication cart, one gloved hand stabilizing an IV line while the other checks a portable vital-sign monitor for an adult patient on a cot. The monitor briefly flickers, amber emergency lamps still glow, ceiling lights return in a staggered row, and loose curtain fabric sways from the aftershock. Show competent triage action, readable clinical equipment, physically plausible hands and tool contact, and a tense but controlled disaster-care atmosphere.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent randomized complex concept and attached-image render test",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm instantiates the requested random complex test as an adult clinical nurse performing patient care in an earthquake-aftershock backup ward during an emergency power transfer, with the attachment used only for visible facial and hair appearance guidance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a tense but controlled disaster-care atmosphere"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "an original adult fictional woman working as a clinical nurse"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "one gloved hand stabilizing an IV line while the other checks a portable vital-sign monitor for an adult patient on a cot"
+      },
+      {
+        "anchor_id": "appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "the reference used only for visible facial and hair appearance guidance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic emergency-care documentary photography",
+    "family": "crisis-response photojournalism",
+    "evidence": [
+      "staggered emergency and generator lighting",
+      "active bedside care with practical clinical equipment",
+      "natural fabric, skin, and ward-surface texture"
+    ]
+  },
+  "variation_key": "arm-01-clinical-nurse-earthquake-power-transfer"
+}

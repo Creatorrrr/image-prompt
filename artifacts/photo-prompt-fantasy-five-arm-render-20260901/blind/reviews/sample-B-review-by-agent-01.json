@@ -1,0 +1,118 @@
+{
+  "schema_version": "photo-fantasy-blind-pixel-review/v1",
+  "sample_id": "B",
+  "reviewer": "agent-01",
+  "native_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/blind/samples/sample-B.png",
+  "native_sha256": "db78b51455a51e53f016c813bdab289ad6b7d43192510f0bcea20d86f11d90d0",
+  "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/blind/samples/sample-B-thumbnail.png",
+  "thumbnail_sha256": "7fd85be3ffaa2ac3153b1d14c869425fbfc8a47834894c9ebe23797312048497",
+  "review_policy": {
+    "native_and_thumbnail_inspected": true,
+    "partial_or_ambiguous_is_fail": true,
+    "single_image_evidence_only": true,
+    "prompt_blind": true
+  },
+  "target_gates": [
+    {
+      "id": "vo_fantasy_griffin_eagle_head",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Both scales show a distinct gray feathered eagle head with a sharply hooked dark beak."
+    },
+    {
+      "id": "vo_fantasy_griffin_wings_fore",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The taloned avian forequarters and one raised feathered wing are clear, but a second independently readable wing is ambiguous and blends into the neck-and-shoulder feather mass at thumbnail scale; the bundled gate is incomplete."
+    },
+    {
+      "id": "vo_fantasy_griffin_lion_rear",
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "The tawny lion rump and tail read at thumbnail scale, but only one hind-leg-and-paw structure is unambiguous; the required rear legs and paws are not fully resolved."
+    },
+    {
+      "id": "vo_fantasy_griffin_transition",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Native pixels show feathered neck, chest, wing roots, and eagle forelimbs joining one tawny furred torso without a detached collage seam."
+    },
+    {
+      "id": "vo_fantasy_griffin_not_hippogriff",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The eagle head and taloned forequarters join a lion-colored haunch and tufted feline tail; no horse rear, lion head, plain-eagle body, or detached parts substitute."
+    },
+    {
+      "id": "vo_fantasy_phoenix_former_state",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "A blackened birdlike remnant lies in a broad charred ash nest directly beneath the central ember column at both scales."
+    },
+    {
+      "id": "vo_fantasy_phoenix_new_bird",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail clearly shows one coherent renewed orange bird with head, body, and two spread wings rising from the same central anchor."
+    },
+    {
+      "id": "vo_fantasy_phoenix_transition",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Native detail forms one continuous path from blackened remnant feathers and ash through orange ember filaments into the renewed bird's feathered body."
+    },
+    {
+      "id": "vo_fantasy_phoenix_motion",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "High-spread wings, a vertical trailing body, falling ash, and rising sparks create an unmistakable upward-emergence motion at both scales."
+    },
+    {
+      "id": "vo_fantasy_phoenix_not_firebird",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The ash nest, charred former body, and continuous ember-to-feather column make a rebirth relation rather than an isolated flaming bird, fire wings alone, unrelated second bird, or ashes alone."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_reference_appearance",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The adult fictional woman retains a readable oval facial structure, long dark wavy hair, and restrained natural eye-and-lip makeup at both scales. This assesses permitted appearance continuity only, not identity."
+    },
+    {
+      "id": "common_adult_subject",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The human subject reads unambiguously as an adult fictional woman in both the native image and thumbnail."
+    },
+    {
+      "id": "common_anatomy",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Her face, crouched torso, visible hand on the camera, and body proportions remain photographically coherent without a major anatomy break at either scale."
+    },
+    {
+      "id": "common_scene_action",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "A tripod-mounted field camera and hand on its controls are visible, but she looks away from the viewfinder and no exposed plate, shutter event, captured photograph, or other immediate documentation consequence is readable; the action remains preparatory or ambiguous."
+    }
+  ],
+  "target_pass_count": 8,
+  "target_gate_count": 10,
+  "total_pass_count": 11,
+  "total_gate_count": 14,
+  "failed_gate_ids": [
+    "vo_fantasy_griffin_wings_fore",
+    "vo_fantasy_griffin_lion_rear",
+    "common_scene_action"
+  ],
+  "technical_verdict": "fail",
+  "technical_summary": "Sample B is not strictly qualified: two griffin component gates and the common readable-action-and-consequence gate fail under the partial-or-ambiguous-is-fail policy.",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

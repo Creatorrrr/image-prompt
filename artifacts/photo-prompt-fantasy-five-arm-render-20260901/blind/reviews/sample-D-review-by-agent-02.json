@@ -1,0 +1,95 @@
+{
+  "schema_version": "photo-fantasy-blind-pixel-review/v1",
+  "sample_id": "D",
+  "reviewer": "agent-02",
+  "native_sha256": "6d56402c9cdf66efd43e49510eb5b7c572c338bf83faa72141e927f4feb218b9",
+  "thumbnail_sha256": "db82b6716a7821dcbc4d0276047c001e8bf96ab950769a7857d1c5d551b1cb72",
+  "target_gates": [
+    {
+      "id": "vo_fantasy_wyvern_single_body",
+      "status": "pass",
+      "evidence": "At thumbnail scale, one continuous head-neck-torso-pelvis-tail silhouette forms a single creature."
+    },
+    {
+      "id": "vo_fantasy_wyvern_two_wings",
+      "status": "fail",
+      "evidence": "Two shoulder wings are suggested, but the entire left wing extends beyond the canvas edge; cropped wing evidence fails the strict both-scale requirement."
+    },
+    {
+      "id": "vo_fantasy_wyvern_two_legs",
+      "status": "pass",
+      "evidence": "Exactly two hind legs descend from the rear torso and meet the dusty ground, readable at native and thumbnail scales."
+    },
+    {
+      "id": "vo_fantasy_wyvern_no_forelegs",
+      "status": "pass",
+      "evidence": "Native pixels show wing roots occupying the shoulder forelimb positions and no additional front-leg pair."
+    },
+    {
+      "id": "vo_fantasy_wyvern_not_dragon",
+      "status": "pass",
+      "evidence": "The creature reads as two wings plus two hind legs with no four-legged dragon or extra-limbed substitute at either scale."
+    },
+    {
+      "id": "vo_fantasy_hydra_single_body",
+      "status": "pass",
+      "evidence": "The neck cluster rises from one grounded torso with one shared limb and tail system, clearly legible in the thumbnail."
+    },
+    {
+      "id": "vo_fantasy_hydra_neck_count",
+      "status": "pass",
+      "evidence": "Four neck paths can be followed from the shared shoulder mass to four heads at both scales, exceeding the three-neck minimum."
+    },
+    {
+      "id": "vo_fantasy_hydra_roots",
+      "status": "fail",
+      "evidence": "At native scale, the lower necks overlap and merge into a dark central shoulder mass; four separate non-merged roots cannot be verified unambiguously."
+    },
+    {
+      "id": "vo_fantasy_hydra_heads",
+      "status": "pass",
+      "evidence": "Four heads keep separate outlines, visible jaws, and differing left, forward, upper-right, and lower-right orientations at both scales."
+    },
+    {
+      "id": "vo_fantasy_hydra_not_bundle",
+      "status": "pass",
+      "evidence": "A single substantial torso and grounded limb system prevent the creature from reading as a loose snake bundle, duplicated bodies, head halo, or three-headed dog."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_reference_appearance",
+      "status": "pass",
+      "evidence": "The original fictional woman has a clearly readable soft facial structure, long dark wavy hair, and restrained natural makeup at native and thumbnail scales; this is appearance continuity only."
+    },
+    {
+      "id": "common_adult_subject",
+      "status": "pass",
+      "evidence": "The foreground fictional human subject reads unambiguously as an adult woman at both scales."
+    },
+    {
+      "id": "common_anatomy",
+      "status": "pass",
+      "evidence": "Her face, tablet-holding hands, torso, legs, and stance remain photographically coherent without a major visible anatomy defect at either scale."
+    },
+    {
+      "id": "common_scene_action",
+      "status": "fail",
+      "evidence": "Survey equipment and a tablet establish a field role, but she faces the camera in a static pose without a readable measurement action or immediate action-linked consequence; role props alone are partial evidence."
+    }
+  ],
+  "target_pass_count": 8,
+  "target_gate_count": 10,
+  "total_pass_count": 11,
+  "total_gate_count": 14,
+  "failed_gate_ids": [
+    "vo_fantasy_wyvern_two_wings",
+    "vo_fantasy_hydra_roots",
+    "common_scene_action"
+  ],
+  "technical_verdict": "fail",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

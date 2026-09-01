@@ -1,0 +1,42 @@
+{
+  "schema_version": "photo-arm-package-validation/v1",
+  "status": "pass_with_documented_warning",
+  "checks": [
+    {
+      "id": "womens_professional_uniform_focused_tests",
+      "command": ".venv/bin/python -m unittest tests.test_photo_womens_professional_uniform_visual_semantics -v",
+      "status": "pass",
+      "summary": "7 tests ran; all passed."
+    },
+    {
+      "id": "visual_profile_index_current",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass",
+      "summary": "visual profile index ok: 170 profiles, 1003 exact terms"
+    },
+    {
+      "id": "candidate_pack_v6",
+      "status": "pass",
+      "summary": "One successful photo-candidate-pack/v6 was emitted with pack_id a6b877f8ad1c02cd and one hard rail_driver_operation obligation."
+    },
+    {
+      "id": "composed_prompt_audit",
+      "status": "pass_with_warning",
+      "summary": "No failures; final prompt is 179 words. The frozen 198-word baseline exceeds the advisory 180-word baseline target but remains within the absolute bound."
+    },
+    {
+      "id": "render_request_audit",
+      "status": "pass",
+      "summary": "Exact runtime text, negative bytes, intent-lock hash, and one reference path/hash passed preflight."
+    },
+    {
+      "id": "profile_pixel_review_record_audit",
+      "status": "pass",
+      "summary": "The exact five derived rail_driver_operation hard gates were present and recorded as technically qualified; common gates remain a separate stricter layer."
+    }
+  ],
+  "documented_preflight_event": {
+    "status": "corrected",
+    "summary": "The first pack command emitted no pack because reference_appearance was not an allowed intent-lock dimension. The initial core was preserved, only the schema label was changed to reference_use, and baseline/intent/subject/setting/event bytes were unchanged."
+  }
+}

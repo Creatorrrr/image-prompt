@@ -1,0 +1,58 @@
+{
+  "schema_version": "photo-natural-environment-arm-preflight/v1",
+  "arm_id": "arm-02",
+  "status": "pass",
+  "checks": [
+    {
+      "id": "request_envelope_raw_hash",
+      "status": "pass",
+      "evidence": "request_envelope.json SHA-256 de2ac8ac9a7a4860d2b71177220e071c31e8a3225f97748d45e826e7488a8d9e matches the coordinator handoff."
+    },
+    {
+      "id": "prepack_core_freeze",
+      "status": "pass",
+      "evidence": "authorial_core.json raw SHA-256 eb6851c865fac3332940e800d70e907e3ba83fc0b532eb95506e9b05b387b38c was frozen before project asset lookup; normalized canonical core SHA-256 is 2282e811fa0aeea0b522c4972647be89ef187a0d8e58e423d22ea83eb5c534e7."
+    },
+    {
+      "id": "postcore_recipe_route",
+      "status": "pass",
+      "evidence": "The coordinator post-core diagnostic maps the assigned keyword to exactly one mixin, 카르스트 배수 지형, with the six expected slot IDs; this is not claimed as a raw-envelope route."
+    },
+    {
+      "id": "candidate_data_existence",
+      "status": "pass",
+      "evidence": "All six expected entry IDs exist in the canonical natural-environment extension in their assigned slots."
+    },
+    {
+      "id": "candidate_pack_selection",
+      "status": "pass",
+      "evidence": "Generator-produced v6 pack 24ea1161c6432c1f exposes the six recipe-derived candidates and the audited composed object selects all six."
+    },
+    {
+      "id": "exact_hard_profile",
+      "status": "pass",
+      "evidence": "Exactly one hard profile is active: karst_closed_depression_losing_stream_resurgence, with the assigned five target gates."
+    },
+    {
+      "id": "composed_prompt_audit",
+      "status": "pass",
+      "evidence": "audit_composed_prompt.py reports zero failures, six chosen candidates, and effective visual contract de68aeb10544789bbef01e21cafbca4b414fae0c631716d0a40577442ef84fa1."
+    },
+    {
+      "id": "runtime_request_audit",
+      "status": "pass",
+      "evidence": "audit_image_render_request.py binds the exact prompt, negative, intent lock, one existing reference path, and reference digest with zero failures."
+    },
+    {
+      "id": "reference_bytes",
+      "status": "pass",
+      "evidence": "The appearance reference SHA-256 is 3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea and dimensions are 1086 by 1448."
+    }
+  ],
+  "preserved_failed_setup": {
+    "path": "candidate_pack.preflight-failed.json",
+    "sha256": "b187ce46f2e3b46fb0567fbccb30ef9d84cd06334f649ae840dfbd6f73fcaaaa",
+    "reason": "First setup omitted the assigned candidate IDs from the public slot surfaces; only the pack setup was corrected before image generation."
+  },
+  "image_calls_before_preflight_pass": 0
+}

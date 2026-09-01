@@ -1,0 +1,71 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "02680147b4042f1b",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "arm-01-stirrup-studio independent agent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-01-stirrup-studio/render_native.png",
+  "result_sha256": "d4cc59656565aa9f53079d66dc0a8f3a25513e4ce2ca0c5b558fe5abbb589cdc",
+  "hard_gates": {
+    "vo_activewear_stirrup_fitted_legs": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scale, two separate matte cobalt fitted legging legs remain continuously readable down to distinct ankle hems."
+    },
+    "vo_activewear_stirrup_hem_transition": {
+      "status": "pass",
+      "evidence": "At native scale, each ankle hem visibly narrows into a same-color garment band that continues onto its corresponding foot."
+    },
+    "vo_activewear_stirrup_underfoot_route": {
+      "status": "fail",
+      "evidence": "The supporting-foot band is traceable beneath the raised arch, but the lifted-foot band is visible mainly along the lateral instep and its under-arch crossing is not unambiguous in native pixels."
+    },
+    "vo_activewear_stirrup_bilateral": {
+      "status": "fail",
+      "evidence": "Both feet show blue bands, yet only the supporting foot clearly proves the complete hem-to-underfoot loop; the lifted side does not provide equally complete matching construction."
+    },
+    "vo_activewear_stirrup_not_sock_or_shoe": {
+      "status": "pass",
+      "evidence": "Native pixels show bare toes, insteps, heels, and arches with narrow cobalt bands emerging directly from the legging hems, visibly distinct from socks, footed tights, shoes, or leg warmers."
+    }
+  },
+  "strict_pixel_verdict": "fail",
+  "strict_verdict_reason": "All five gates must pass in the same saved image; the underfoot-route and bilateral-consistency gates fail because the lifted-foot loop is incomplete or ambiguous.",
+  "reviewed_scales": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-01-stirrup-studio/render_native.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "d4cc59656565aa9f53079d66dc0a8f3a25513e4ce2ca0c5b558fe5abbb589cdc"
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-01-stirrup-studio/render_thumbnail_512.png",
+      "width": 341,
+      "height": 512,
+      "sha256": "626c1375e08f6b019d0e9ae75c2fa3a51badd05c44217eda67f1eca39571cf57"
+    },
+    "native_foot_crop": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-01-stirrup-studio/render_foot_crop_native.png",
+      "width": 1024,
+      "height": 560
+    }
+  },
+  "scene_preservation": {
+    "status": "pass",
+    "evidence": "The saved frame retains a sunlit high-ceiling aerial-dance studio, translucent curtains, an ivory suspended silk, and a readable one-leg balance drill."
+  },
+  "appearance_continuity": {
+    "status": "pass",
+    "scope": "facial_hair_general_appearance_only",
+    "evidence": "The adult subject retains the reference's general portrait cues, including long dark softly waved hair and comparable facial presentation, while lighting, pose, wardrobe, and setting change for the scene."
+  },
+  "biometric_identity": {
+    "status": "not_evaluated",
+    "boundary": "The reference is appearance evidence only; this review does not infer, verify, or claim same-person identity."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

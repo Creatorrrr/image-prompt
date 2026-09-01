@@ -1,0 +1,50 @@
+{
+  "schema_version": "photo-fantasy-attempt-summary/v1",
+  "attempt": 1,
+  "image_call_count": 5,
+  "composed_audit_pass_count": 5,
+  "runtime_audit_pass_count": 5,
+  "self_review_all_gate_pass_count": 1,
+  "blind_review_all_gate_pass_count": 0,
+  "strict_union_all_gate_pass_count": 0,
+  "partial_counts_as_fail": true,
+  "arms": [
+    {
+      "arm_id": "arm-01-golem-portal",
+      "self": {"pass_count":12,"gate_count":14,"failed_gate_ids":["vo_fantasy_portal_complete_boundary","common_scene_action"]},
+      "blind": {"pass_count":13,"gate_count":14,"failed_gate_ids":["vo_fantasy_portal_complete_boundary"]},
+      "strict_union_failed_gate_ids": ["vo_fantasy_portal_complete_boundary","common_scene_action"],
+      "attempt_verdict": "fail"
+    },
+    {
+      "arm_id": "arm-02-alchemist-summoner",
+      "self": {"pass_count":13,"gate_count":14,"failed_gate_ids":["vo_fantasy_alchemist_transition"]},
+      "blind": {"pass_count":13,"gate_count":14,"failed_gate_ids":["vo_fantasy_alchemist_apparatus"]},
+      "strict_union_failed_gate_ids": ["vo_fantasy_alchemist_apparatus","vo_fantasy_alchemist_transition"],
+      "attempt_verdict": "fail"
+    },
+    {
+      "arm_id": "arm-03-circle-armor",
+      "self": {"pass_count":11,"gate_count":14,"failed_gate_ids":["vo_fantasy_magic_circle_closed","vo_fantasy_living_armor_hollow","vo_fantasy_living_armor_not_wearer"]},
+      "blind": {"pass_count":11,"gate_count":14,"failed_gate_ids":["vo_fantasy_living_armor_hollow","vo_fantasy_living_armor_not_wearer","common_scene_action"]},
+      "strict_union_failed_gate_ids": ["vo_fantasy_magic_circle_closed","vo_fantasy_living_armor_hollow","vo_fantasy_living_armor_not_wearer","common_scene_action"],
+      "attempt_verdict": "fail"
+    },
+    {
+      "arm_id": "arm-04-wyvern-hydra",
+      "self": {"pass_count":14,"gate_count":14,"failed_gate_ids":[]},
+      "blind": {"pass_count":11,"gate_count":14,"failed_gate_ids":["vo_fantasy_wyvern_two_wings","vo_fantasy_hydra_roots","common_scene_action"]},
+      "strict_union_failed_gate_ids": ["vo_fantasy_wyvern_two_wings","vo_fantasy_hydra_roots","common_scene_action"],
+      "attempt_verdict": "fail"
+    },
+    {
+      "arm_id": "arm-05-phoenix-griffin",
+      "self": {"pass_count":13,"gate_count":14,"failed_gate_ids":["vo_fantasy_griffin_wings_fore"]},
+      "blind": {"pass_count":11,"gate_count":14,"failed_gate_ids":["vo_fantasy_griffin_wings_fore","vo_fantasy_griffin_lion_rear","common_scene_action"]},
+      "strict_union_failed_gate_ids": ["vo_fantasy_griffin_wings_fore","vo_fantasy_griffin_lion_rear","common_scene_action"],
+      "attempt_verdict": "fail"
+    }
+  ],
+  "retry_decision": "One and only one open-dimension visibility repair was authorized for every arm because every strict union contained at least one failed gate.",
+  "claim_boundary": "All five prompts and runtime inputs passed audit. These results are rendered-pixel failures only; user acceptance is still pending."
+}

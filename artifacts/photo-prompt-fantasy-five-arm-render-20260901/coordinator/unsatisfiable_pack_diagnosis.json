@@ -1,0 +1,27 @@
+{
+  "schema_version": "photo-fantasy-pack-defect/v1",
+  "status": "confirmed_across_five_independent_arms",
+  "render_calls_before_detection": 0,
+  "affected_packs": [
+    "e3e969fd65f1e1fe",
+    "fbf84ae9e9379817",
+    "2a12a2a4b6b3279a",
+    "189440255970d287",
+    "4c6b3ff82739ea4f"
+  ],
+  "root_cause": "Pre-pack visual-intent bindings were frozen byte-for-byte into candidate packs without validating the profile-declared minimum content-word and anchor rules. The composed audit then required both binding equality and a longer phrase, making the emitted packs impossible to satisfy. The wyvern foreleg anchor also used an instruction-shaped negative that conflicted with the positive-prompt guard.",
+  "independent_reproductions": {
+    "arm-01-golem-portal": {"failing_binding_fields": 10, "image_calls": 0},
+    "arm-02-alchemist-summoner": {"failing_binding_fields": 9, "image_calls": 0},
+    "arm-03-circle-armor": {"failing_binding_fields": 9, "image_calls": 0},
+    "arm-04-wyvern-hydra": {"failing_binding_fields": 10, "additional_failure": "blanket_negative_directive", "image_calls": 0},
+    "arm-05-phoenix-griffin": {"failing_binding_fields": 10, "image_calls": 0}
+  },
+  "repair": [
+    "Validate every supplied visual-intent binding against the same evidence rules before candidate-pack emission.",
+    "Extend the five test visual-intent binding sets without changing their profile meaning.",
+    "Replace the wyvern negative foreleg anchor with positive wing-to-forelimb ownership geometry.",
+    "Rebuild the visual-profile index and all five immutable candidate packs, preserving the rejected packs and audits."
+  ],
+  "claim_boundary": "This is a candidate-pack contract failure found before rendering, not a pixel failure."
+}

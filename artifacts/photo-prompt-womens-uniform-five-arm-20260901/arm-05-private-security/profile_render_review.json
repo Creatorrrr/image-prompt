@@ -1,0 +1,41 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "1418f425e2ef5fc7",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "arm-05 agent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/render_native.png",
+  "result_sha256": "e9c6a2b9a2fab6bf48359e7cf4c6fd0a14718161d14c8503c29bf494a4f85680",
+  "review_scales": {
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/render_thumbnail.png",
+    "native": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/render_native.png"
+  },
+  "hard_gates": {
+    "vo_security_private_role_identity": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, the radio, facility-security patches and ID, visitor pass, access lane, and queue make the adult subject read as private facility security rather than a fashion portrait or public police scene."
+    },
+    "vo_security_credential_reader_relation": {
+      "status": "fail",
+      "evidence": "At native scale, the held visitor pass is near an ACCESS APPROVED reader and a printed roster, but the pass is not visibly touching or being scanned by the reader and the same roster entry cannot be linked unambiguously; this is ambiguous and therefore fails."
+    },
+    "vo_security_access_decision": {
+      "status": "pass",
+      "evidence": "At native scale, the green ACCESS APPROVED display, held temporary visitor pass, highlighted roster row, officer's downward task gaze, and raised routing hand make an approval decision observable."
+    },
+    "vo_security_gate_consequence": {
+      "status": "fail",
+      "evidence": "At thumbnail and native scales, a green lane light and transparent turnstile panels are visible, but the relevant glass barrier's open-versus-closed position is not unmistakable and cannot be causally tied to the approval; ambiguity fails the gate."
+    },
+    "vo_security_not_police_or_monitor_only": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, facility-specific security text, the biosciences lobby, visitor pass, reader, roster, and turnstiles dominate; there is no public-police vehicle, weapon, agency badge, military checkpoint, or monitor-wall-only substitution."
+    }
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}
