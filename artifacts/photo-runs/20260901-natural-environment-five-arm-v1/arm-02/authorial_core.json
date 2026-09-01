@@ -1,0 +1,80 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently test the assigned karst surface subsurface drainage concept in one complex photorealistic environmental scene, using the supplied portrait only as a general adult appearance reference while keeping the landform and connected water-routing evidence primary and unobstructed.",
+  "subject": "A broad karst plateau showing a sinking surface stream and lower-slope resurgence, plus one adult documentary landscape photographer used as an appearance-reference carrier.",
+  "setting": "A wet limestone plateau and closed basin viewed from a low ridge immediately after monsoon rain, with a lower cave spring in the same continuous landscape.",
+  "event": "The photographer places paired red flow markers beside the point where runoff sinks into limestone while the lower resurgence visibly discharges.",
+  "visual_priorities": [
+    "The surface-to-subsurface drainage chain reads as the main subject at thumbnail and native scale.",
+    "The reference-guided adult remains facially readable without blocking any karst evidence."
+  ],
+  "baseline_prompt_en": "Create one photorealistic 35 mm deep-focus environmental photograph from a low ridge after clearing monsoon rain. The principal subject is a broad karst plateau whose surface water visibly drains underground and returns as a spring. Show pale exposed limestone etched by solution grooves, a closed bowl-shaped depression collecting runoff, and a continuous rain-fed stream descending across the basin into a clearly visible swallow opening; on the lower slope, blue-green water must visibly issue from a separate dark limestone cave mouth as a vigorous resurgence pool. Place one unmistakably adult documentary landscape photographer with the reference portrait's general facial appearance, long dark softly waved hair, and natural facial texture in the lower-left quarter, clearly visible yet no larger than one fifth of the frame, placing two small red flow markers beside the exact point where a rain-fed stream sinks into a limestone opening. Keep every drainage feature unobstructed and legible together. Use wet charcoal rock, moss green, turquoise water, distant mist, foreground runoff, oblique late-afternoon sunlight, realistic scale, continuous terrain, and crisp geological depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use this arm's independently assigned natural-environment keyword and recorded seed to author a complex photographic test scene before consulting project candidate data.",
+      "sources": []
+    },
+    {
+      "term": "karst surface subsurface drainage",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A visibly connected karst landform system with solution-weathered limestone, a closed depression, a surface stream that sinks into rock, and a lower spring resurgence.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a broad karst plateau whose surface water visibly drains underground and returns as a spring"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult documentary landscape photographer with the reference portrait's general facial appearance, long dark softly waved hair, and natural facial texture"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "placing two small red flow markers beside the exact point where a rain-fed stream sinks into a limestone opening"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental documentary photography",
+    "family": "storm-cleared karst field study",
+    "evidence": [
+      "deep-focus terrain continuity",
+      "wet limestone under oblique natural light"
+    ]
+  },
+  "variation_key": "arm-02-seed-593355573"
+}

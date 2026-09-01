@@ -1,0 +1,142 @@
+{
+  "schema_version": "photo-render-gate-review/v1",
+  "arm_id": "arm-03-coast-guard",
+  "pack_id": "c634cbfe12176678",
+  "profile_id": "maritime_safety_coast_guard_role",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-03-coast-guard/render_native.png",
+  "result_sha256": "070e85c6c1346f13bf59084da60923d746dc3eccb4a4056df1b6fa546a562ee9",
+  "thumbnail_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-03-coast-guard/render_thumbnail.png",
+  "thumbnail_sha256": "2b1c23ddf640672618d6668e6256620d0e028991d47ddc08063c5972b088d831",
+  "native_dimensions": {
+    "width": 1402,
+    "height": 1122
+  },
+  "thumbnail_dimensions": {
+    "width": 384,
+    "height": 307
+  },
+  "inspection_sources": [
+    "render_thumbnail.png at 384 x 307",
+    "render_native.png at 1402 x 1122",
+    "review_crop_primary.png for face, duty system, hands, and line handling",
+    "review_crop_relation.png for target, line continuity, vessel gap, and recovery consequence"
+  ],
+  "grading_policy": {
+    "observable": "pass",
+    "ambiguous": "fail",
+    "missing": "fail",
+    "partial_is_fail": true,
+    "all_hard_gates_required_in_one_saved_image": true
+  },
+  "gates": [
+    {
+      "id": "vo_coast_guard_maritime_role_identity",
+      "group": "profile",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "The first read is an adult maritime responder: high-visibility wet-duty jacket, black flotation vest, chest radio, gloves, patrol-boat rail and markings, open sea, damaged sailboat, and an assisted adult."
+    },
+    {
+      "id": "vo_coast_guard_flotation_duty_system",
+      "group": "profile",
+      "review_scale": "both",
+      "status": "ambiguous",
+      "technical_pass": false,
+      "pixel_evidence": "High-visibility waterproof clothing, black flotation, chest radio, and gloves are clear at both scales, but the principal subject's feet are outside the native frame, so deck footwear cannot be verified as part of the system."
+    },
+    {
+      "id": "vo_coast_guard_rescue_action",
+      "group": "profile",
+      "review_scale": "both",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "The principal officer tensions a black-and-yellow line while the second equipped responder assists the orange-jacketed adult on the sailboat; the action is visibly underway at thumbnail and native scale."
+    },
+    {
+      "id": "vo_coast_guard_target_recovery_relation",
+      "group": "profile",
+      "review_scale": "both",
+      "status": "ambiguous",
+      "technical_pass": false,
+      "pixel_evidence": "A concrete orange-jacketed target and boat-side assistance are visible, but the officer's black-and-yellow line drops toward the foreground while a thinner yellow line reaches the target, so one continuous rescuer-to-target path is not certain. The target remains on the sailboat rather than visibly crossing toward the patrol-boat rail."
+    },
+    {
+      "id": "vo_coast_guard_not_naval_style_or_prop_only",
+      "group": "profile",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "Responder gear, line handling, the assisted adult, damaged sailboat, storm debris, and patrol-boat context jointly establish active maritime rescue rather than a fashion portrait or isolated prop display."
+    },
+    {
+      "id": "common_adult_original_subject",
+      "group": "common",
+      "review_scale": "both",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "The principal subject has clearly adult facial and body proportions and performs an adult professional task with no youth or student coding. Original-fictional status comes from the recorded generation/reference contract, not an identity inference from pixels."
+    },
+    {
+      "id": "common_reference_facial_hair_appearance",
+      "group": "common",
+      "review_scale": "native",
+      "status": "ambiguous",
+      "technical_pass": false,
+      "pixel_evidence": "The generated subject has a broadly similar adult facial presentation and dark hair, but the face is three-quarter rather than front-facing and most hair length/wave is compressed into a wet low ponytail. The full requested facial-and-long-soft-wave appearance cannot be verified. This is appearance comparison only, not a same-person or biometric claim."
+    },
+    {
+      "id": "common_anatomy_hands_limbs",
+      "group": "common",
+      "review_scale": "native",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "The principal officer's gloved line hand, rail hand, arms, shoulders, and stance are coherent. The second responder and orange-jacketed adult retain readable arms and contact despite partial occlusion; no action-breaking extra or fused limb is evident."
+    },
+    {
+      "id": "common_scene_dawn_storm_debris_disabled_sailboat",
+      "group": "common",
+      "review_scale": "thumbnail",
+      "status": "observable",
+      "technical_pass": true,
+      "pixel_evidence": "A low dawn sun, wet reflective deck, choppy gray water, dense floating branches, slack/damaged rigging, and a debris-surrounded sailboat are jointly legible in the thumbnail."
+    },
+    {
+      "id": "common_scene_action_recovery_transfer",
+      "group": "common",
+      "review_scale": "both",
+      "status": "ambiguous",
+      "technical_pass": false,
+      "pixel_evidence": "Officer, rail, disabled sailboat, and orange-jacketed adult all read, but the line discontinuity and the target's position still inside/on the sailboat make the intended transfer toward the patrol boat uncertain rather than fully observable."
+    }
+  ],
+  "summary": {
+    "profile_gate_counts": {
+      "observable": 3,
+      "ambiguous": 2,
+      "missing": 0,
+      "total": 5
+    },
+    "common_gate_counts": {
+      "observable": 3,
+      "ambiguous": 2,
+      "missing": 0,
+      "total": 5
+    },
+    "all_gate_counts": {
+      "observable": 6,
+      "ambiguous": 4,
+      "missing": 0,
+      "total": 10
+    },
+    "profile_pixel_verdict": "fail",
+    "overall_pixel_verdict": "fail",
+    "bounded_decision": "revise",
+    "rationale": "Two of five hard coast-guard gates and two common gates are ambiguous. Because partial or ambiguous evidence is failure, this one-shot render is not technically qualified."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "claim": "No user aesthetic or semantic acceptance is inferred from technical review."
+  }
+}

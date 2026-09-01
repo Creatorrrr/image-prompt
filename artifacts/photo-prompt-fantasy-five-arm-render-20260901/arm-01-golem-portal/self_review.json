@@ -1,0 +1,151 @@
+{
+  "schema_version": "photo-fantasy-arm-self-review/v1",
+  "arm_id": "arm-01-golem-portal",
+  "pack_id": "eddf0dd3261aaa2c",
+  "runtime_prompt_id": "1e1659b9cdbb50b8",
+  "review_protocol": {
+    "partial_is_fail": true,
+    "required_scales": [
+      "thumbnail",
+      "native"
+    ],
+    "image_call_count": 1,
+    "retry_count": 0
+  },
+  "image": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-01-golem-portal/render-attempt-01.png",
+    "sha256": "6fd823f6c39be63c25a77af14a33b7ac48e8e51f689603663c2e9ffd10f0ccd1",
+    "width": 1402,
+    "height": 1122
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/arm-01-golem-portal/render-attempt-01-thumbnail.png",
+    "sha256": "f33e3286ec3b29e381992823ec05bc59d6504b24cc366b05802c15f85f892bf9",
+    "width": 512,
+    "height": 409
+  },
+  "states": {
+    "candidate_pack": {
+      "status": "pass",
+      "evidence": "The immutable v6 pack id eddf0dd3261aaa2c was accepted by the composed-prompt auditor with both required request-scoped visual profiles active."
+    },
+    "prompt_audit": {
+      "status": "pass",
+      "quality_status": "warn",
+      "evidence": "The final composed audit has no blocking failures; its warnings are advisory prompt-budget and uncovered-intent notices whose literal anchors remain present."
+    },
+    "runtime_audit": {
+      "status": "pass",
+      "evidence": "Runtime prompt 1e1659b9cdbb50b8 binds the exact pack, intent lock, negative bytes, effective visual contract, and one hashed appearance-only reference."
+    },
+    "rendered_pixels": {
+      "status": "fail",
+      "passed_gate_count": 12,
+      "required_gate_count": 14,
+      "failed_gate_ids": [
+        "vo_fantasy_portal_complete_boundary",
+        "common_scene_action"
+      ],
+      "evidence": "The first preserved render passes 12 gates but fails strict qualification because the complete portal boundary is not contained and the crossing direction reverses the frozen ruin-to-archive event."
+    },
+    "pending_user_judgment": {
+      "status": "pending",
+      "source": "not_yet_received",
+      "evidence": "No requesting-user acceptance or preference judgment has been received for this rendered attempt."
+    }
+  },
+  "gates": [
+    {
+      "gate_id": "vo_fantasy_golem_complete_body",
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The thumbnail shows one coherent golem with head, torso, two articulated arms, and two legs reading as one complete agent."
+    },
+    {
+      "gate_id": "vo_fantasy_golem_material",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Brown stone and packed-clay blocks continue consistently across the torso, shoulders, arms, hips, legs, and joint bands at both scales."
+    },
+    {
+      "gate_id": "vo_fantasy_golem_assembly",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native pixels clearly show fitted blocks, stacked plate courses, gaps, seams, and articulated stone bands around the limbs."
+    },
+    {
+      "gate_id": "vo_fantasy_golem_agency",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The lifted trailing foot, planted leading foot, displaced threshold debris, forward lean, and forearm-and-hand contact with the rectangular crate jointly show independent load-carrying motion."
+    },
+    {
+      "gate_id": "vo_fantasy_golem_not_statue",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "A dynamic walking gait and active crate transport make the body read as an acting construct, not an inert statue, costume, robot, rubble pile, or inscription."
+    },
+    {
+      "gate_id": "vo_fantasy_portal_complete_boundary",
+      "status": "fail",
+      "review_scale": "thumbnail",
+      "evidence": "The stone-and-light threshold is anchored to the archive, but its upper and right boundary are cropped or obscured by the image frame, so the full closed boundary is not visible; partial counts as fail."
+    },
+    {
+      "gate_id": "vo_fantasy_portal_two_spaces",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The near side is a warm, wet, book-lined archive while the far side is a bright snowy stone ruin, simultaneously visible and materially distinct."
+    },
+    {
+      "gate_id": "vo_fantasy_portal_crossing",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The golem straddles the threshold with a trailing foot on the wet archive floor and its leading body and foot in snow; portal-edge occlusion and contact remain coherent."
+    },
+    {
+      "gate_id": "vo_fantasy_portal_local_effect",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Blue-white light, frost-like particles, dust, and floor reflection concentrate at the portal plane and threshold contact rather than covering the whole frame."
+    },
+    {
+      "gate_id": "vo_fantasy_portal_not_ring",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Although the threshold glows, it presents two different complete spaces plus an intersecting golem and localized crossing effects, so it is not merely a ring, mirror, window, or empty arch."
+    },
+    {
+      "gate_id": "common_reference_appearance",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The adult fictional woman has a front-readable face, long center-parted dark wavy hair, softly defined eyes and lips, and restrained natural makeup consistent with the permitted visible-appearance guidance. Identity and biometric sameness were not evaluated."
+    },
+    {
+      "gate_id": "common_adult_subject",
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The human subject reads clearly as an adult woman through mature facial presentation, adult proportions, and archive-surveyor role styling."
+    },
+    {
+      "gate_id": "common_anatomy",
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "The woman's face, hands, arms, and book interaction are coherent, and the golem's load-bearing limbs and block hands remain structurally readable without a major anatomy break."
+    },
+    {
+      "gate_id": "common_scene_action",
+      "status": "fail",
+      "review_scale": "both",
+      "evidence": "The woman visibly records in an open ledger and the golem carries a crate across the plane, but the golem faces and steps from the archive toward the snowy ruin, reversing the frozen ruin-to-archive direction; partial counts as fail."
+    }
+  ],
+  "summary": {
+    "passed_gate_count": 12,
+    "failed_gate_count": 2,
+    "required_gate_count": 14,
+    "overall_technical_verdict": "revise",
+    "promotion_status": "not_qualified",
+    "retry_authorized": false
+  }
+}

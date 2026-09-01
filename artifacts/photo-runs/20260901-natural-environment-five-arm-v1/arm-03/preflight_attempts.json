@@ -1,0 +1,38 @@
+{
+  "schema_version": "photo-pack-preflight-attempts/v1",
+  "arm_id": "arm-03",
+  "image_generation_calls_during_preflight": 0,
+  "attempts": [
+    {
+      "artifact": "candidate_pack_preflight_fail_hybrid.json",
+      "status": "fail",
+      "reason": "recipe-derived expected candidate IDs were not all exposed by the first hybrid candidate surface"
+    },
+    {
+      "artifact": "candidate_pack_preflight_fail_rule_singletons.json",
+      "status": "fail",
+      "reason": "v6 authorial-opening projection masked singleton subject, action, and location candidates"
+    },
+    {
+      "artifact": "candidate_pack_preflight_fail_forced_singletons.json",
+      "status": "fail",
+      "reason": "forcing recipe IDs still produced singleton authorial openings for three scene slots"
+    },
+    {
+      "artifact": "candidate_pack_preflight_fail_incompatible_action.json",
+      "status": "fail",
+      "reason": "the first alternate action pool did not expose the expected action and surface candidates together"
+    },
+    {
+      "artifact": "candidate_pack_preflight_fail_bad_location_alt.json",
+      "status": "fail",
+      "reason": "an invalid alternate location ID left the expected location as a singleton authorial opening"
+    },
+    {
+      "artifact": "candidate_pack.json",
+      "status": "pass",
+      "reason": "recipe route is documented, all six expected IDs exist in canonical data and the final pack, and exactly one intended hard profile is active"
+    }
+  ],
+  "policy": "Pack invocation and post-core setup may be corrected before generation; the qualification still permits exactly one built-in image generation call and no semantic or pixel retry."
+}

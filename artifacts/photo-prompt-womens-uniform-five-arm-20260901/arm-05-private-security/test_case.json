@@ -1,0 +1,96 @@
+{
+  "schema_version": "photo-visual-semantics-test-case/v1",
+  "arm_id": "arm-05-private-security",
+  "target_keyword": "보안요원",
+  "required_profile_id": "private_security_access_control",
+  "allocation_provenance": "experimental_allocation_not_requester_text",
+  "complex_scenario": "biotech-laboratory visitor surge during a fire-alarm credential-system fallback",
+  "criteria_provenance": {
+    "profile_gates": "Frozen in candidate_pack.json before the image call.",
+    "common_gates": "Required by the delegated experimental task before the image call.",
+    "serialization_note": "This wrapper file was serialized after delivery; no source gate wording or all-observable decision rule was changed after pixel inspection.",
+    "candidate_pack_sha256": "f5031db5e6863c2b417a34b55a66776c5f53dbd4ff332a569b162f638bada271"
+  },
+  "reference_scope": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "allowed_use": "visible facial and hair appearance guidance for an original adult fictional subject",
+    "disallowed_claims": [
+      "identity or biometric match",
+      "same-person claim",
+      "ethnicity or nationality inference",
+      "occupation inference",
+      "health or attractiveness judgment",
+      "protected-trait inference"
+    ]
+  },
+  "review_scales": [
+    "thumbnail",
+    "native"
+  ],
+  "profile_gates": [
+    {
+      "id": "vo_security_private_role_identity",
+      "review_scale": "thumbnail",
+      "criterion": "The adult subject first reads as private site security rather than police, military staff, or dark-suit fashion."
+    },
+    {
+      "id": "vo_security_credential_reader_relation",
+      "review_scale": "both",
+      "criterion": "One visitor credential is visibly compared with a reader and the same access record."
+    },
+    {
+      "id": "vo_security_access_decision",
+      "review_scale": "native",
+      "criterion": "An authorize or deny decision remains legible through the reader, log, and guard action."
+    },
+    {
+      "id": "vo_security_gate_consequence",
+      "review_scale": "both",
+      "criterion": "One controlled door or gate visibly changes or remains locked according to the decision."
+    },
+    {
+      "id": "vo_security_not_police_or_monitor_only",
+      "review_scale": "thumbnail",
+      "criterion": "Police styling, a badge, earpiece, monitor wall, or dark suit alone does not establish site access control."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_adult_subject",
+      "review_scale": "both",
+      "criterion": "The principal subject is unmistakably an adult fictional woman."
+    },
+    {
+      "id": "common_reference_appearance_scope",
+      "review_scale": "native",
+      "criterion": "The result visibly uses facial and hair appearance cues from the reference while remaining an original fictional rendering; evaluation does not claim identity."
+    },
+    {
+      "id": "common_anatomy_coherence",
+      "review_scale": "native",
+      "criterion": "Visible arms, hands, fingers, posture, and held-object contact are anatomically coherent enough for the action."
+    },
+    {
+      "id": "common_scene_action",
+      "review_scale": "thumbnail",
+      "criterion": "The biotech-lab fire-alarm credential-fallback visitor-surge scene and active queue-control action are readable without prompt metadata."
+    }
+  ],
+  "grading_scale": [
+    "observable",
+    "ambiguous",
+    "missing"
+  ],
+  "decision_rule": {
+    "all_gates_must_be_observable": true,
+    "ambiguous_counts_as_failure": true,
+    "missing_counts_as_failure": true,
+    "partial_credit": false,
+    "user_judgment_separate": true
+  },
+  "attempt_policy": {
+    "built_in_image_call_limit": 1,
+    "retry_allowed": false
+  }
+}

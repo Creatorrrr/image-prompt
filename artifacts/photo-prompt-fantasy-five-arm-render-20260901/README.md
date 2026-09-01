@@ -8,3 +8,4 @@ This run freezes the user's request, five independently authored baseline prompt
 - Reference scope: visible facial appearance, hair, and restrained makeup balance for an original adult fictional woman only; no identity or biometric claim
 - Outcome layers: source/index proof, candidate-pack proof, prompt audit, rendered pixels, and user acceptance remain separate
 
+Final result: target-keyword gates passed completely in 2/5 arms; the full 14-gate set passed in 1/5 arms. See `report.md` and `coordinator/final_summary.json`. User judgment remains pending.

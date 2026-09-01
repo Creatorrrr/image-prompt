@@ -1,0 +1,97 @@
+{
+  "schema_version": "photo-natural-environment-mixin-route-diagnostics/v1",
+  "recorded_at": "2026-09-01",
+  "stage": "post-core coordinator preflight",
+  "command_template": ".venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --concept <assigned-term> --explain-concept --emit-candidate-pack --candidate-pack-version v6 --n 1",
+  "boundary": "This is a recipe/data diagnostic for coordinator-assigned test terms. It is not an exact-span user concept-lock and is not the candidate pack used for rendering.",
+  "source_hashes": {
+    "concept_recipes_sha256": "8de3e32b6cd3022c3dae98d7f0ff1aaed7920032a265c67208e0ddbdbfa43a6c",
+    "natural_environment_extension_sha256": "98ec22aca12188f95fa87a0e69cd722c9089101c88873750efd4d19228f101ba"
+  },
+  "routes": [
+    {
+      "arm_id": "arm-01",
+      "term": "cumulonimbus convective storm structure",
+      "applied_mixins": ["적란운 구조"],
+      "combined_forced_slots": {
+        "aesthetic_trend": ["convective_storm_structure_aesthetic"],
+        "subject": ["cumulonimbus_storm_cell_subject"],
+        "action": ["convective_tower_anvil_rain_outflow"],
+        "location": ["open_plain_full_storm_cell_location"],
+        "surface_material": ["storm_rain_wet_outflow_surface"],
+        "composition": ["full_convective_cell_outflow_frame"],
+        "weather": ["cumulonimbus_rain_shaft_outflow"]
+      },
+      "soft_anchor_count": 7,
+      "status": "pass"
+    },
+    {
+      "arm_id": "arm-02",
+      "term": "karst surface subsurface drainage",
+      "applied_mixins": ["카르스트 배수 지형"],
+      "combined_forced_slots": {
+        "aesthetic_trend": ["karst_drainage_landform_aesthetic"],
+        "subject": ["karst_drainage_system_subject"],
+        "action": ["karst_losing_stream_spring_connection"],
+        "location": ["karst_losing_stream_spring_location"],
+        "surface_material": ["karst_solution_pitted_limestone_surface"],
+        "composition": ["surface_to_subsurface_drainage_frame"]
+      },
+      "soft_anchor_count": 6,
+      "status": "pass"
+    },
+    {
+      "arm_id": "arm-03",
+      "term": "old-growth forest structure",
+      "applied_mixins": ["노령림 구조"],
+      "combined_forced_slots": {
+        "aesthetic_trend": ["old_growth_forest_structure_aesthetic"],
+        "subject": ["old_growth_forest_structural_subject"],
+        "action": ["old_growth_gap_deadwood_regeneration"],
+        "location": ["old_growth_forest_gap_location"],
+        "surface_material": ["old_growth_deadwood_decay_surface"],
+        "composition": ["layered_vertical_forest_depth_frame"]
+      },
+      "soft_anchor_count": 6,
+      "status": "pass"
+    },
+    {
+      "arm_id": "arm-04",
+      "term": "aeolian dune wind structure",
+      "applied_mixins": ["풍성사구 과정"],
+      "combined_forced_slots": {
+        "aesthetic_trend": ["aeolian_dune_process_aesthetic"],
+        "subject": ["aeolian_dune_field_subject"],
+        "action": ["dune_saltation_stoss_lee_migration"],
+        "location": ["aeolian_dune_crosswind_location"],
+        "surface_material": ["dune_ripple_stoss_slipface_surface"],
+        "composition": ["dune_stoss_crest_slipface_frame"],
+        "weather": ["dune_near_ground_sand_drift"]
+      },
+      "soft_anchor_count": 7,
+      "status": "pass"
+    },
+    {
+      "arm_id": "arm-05",
+      "term": "alpine treeline ecotone gradient",
+      "applied_mixins": ["고산 수목한계 전이지대"],
+      "combined_forced_slots": {
+        "aesthetic_trend": ["alpine_treeline_ecotone_aesthetic"],
+        "subject": ["alpine_treeline_ecotone_subject"],
+        "action": ["treeline_canopy_krummholz_tundra_transition"],
+        "location": ["alpine_treeline_slope_location"],
+        "surface_material": ["treeline_wind_pruned_krummholz_surface"],
+        "composition": ["upslope_treeline_gradient_frame"]
+      },
+      "soft_anchor_count": 6,
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "routes": 5,
+    "passed": 5,
+    "failed": 0,
+    "one_mixin_per_term": true,
+    "all_expected_ids_mapped": true
+  }
+}

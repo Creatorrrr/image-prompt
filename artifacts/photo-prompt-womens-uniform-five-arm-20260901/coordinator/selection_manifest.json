@@ -1,0 +1,75 @@
+{
+  "schema_version": "photo-womens-uniform-five-arm-selection/v1",
+  "selection_method": "deterministic SHA-256-seeded stratified random choice: one arm each from clinical care, public emergency response, maritime safety, rail operation, and private access control; then one role-compatible complex scenario from that role's three-item scenario pool",
+  "seed_material_sha256": "7d17f6370dea581a32a0749bb2286ce26caf02de1253ac5a29696bd8d4730019",
+  "request_sha256": "bd1cb8b8164a8bdf10ce9eaf7f4c12d6136e8c135841be4c48af53f054caa882",
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "independence_policy": "Each subagent must freeze its own authorial core before reading candidate-pack assets, must not inspect another arm directory, must make exactly one image-generation call, and must review its own preserved render at thumbnail and native scale.",
+  "arms": [
+    {
+      "arm_id": "arm-01-clinical-nurse",
+      "role_keyword": "간호사",
+      "profile_id": "clinical_nursing_duty_system",
+      "scenario": "earthquake-aftershock backup ward during a power transfer",
+      "required_gate_ids": [
+        "vo_nursing_clinical_role_identity",
+        "vo_nursing_uniform_system",
+        "vo_nursing_patient_linked_task",
+        "vo_nursing_documented_state",
+        "vo_nursing_not_costume_or_prop_only"
+      ]
+    },
+    {
+      "arm_id": "arm-02-firefighter",
+      "role_keyword": "소방관",
+      "profile_id": "firefighter_protective_response_system",
+      "scenario": "chemical-plant standby equipment check during freezing rain",
+      "required_gate_ids": [
+        "vo_firefighter_protective_role_identity",
+        "vo_firefighter_ppe_component_system",
+        "vo_firefighter_equipment_action",
+        "vo_firefighter_response_state",
+        "vo_firefighter_not_helmet_or_hero_only"
+      ]
+    },
+    {
+      "arm_id": "arm-03-coast-guard",
+      "role_keyword": "해양경찰",
+      "profile_id": "maritime_safety_coast_guard_role",
+      "scenario": "dawn storm-debris recovery around a disabled sailboat",
+      "required_gate_ids": [
+        "vo_coast_guard_maritime_role_identity",
+        "vo_coast_guard_flotation_duty_system",
+        "vo_coast_guard_rescue_action",
+        "vo_coast_guard_target_recovery_relation",
+        "vo_coast_guard_not_naval_style_or_prop_only"
+      ]
+    },
+    {
+      "arm_id": "arm-04-rail-driver",
+      "role_keyword": "철도 기관사",
+      "profile_id": "rail_driver_operation",
+      "scenario": "autumn leaf-fall commuter cab during low-adhesion restrictions",
+      "required_gate_ids": [
+        "vo_rail_driver_operator_identity",
+        "vo_rail_driver_control_contact",
+        "vo_rail_driver_route_crosscheck",
+        "vo_rail_driver_cab_relationship",
+        "vo_rail_driver_not_passenger_or_dispatch"
+      ]
+    },
+    {
+      "arm_id": "arm-05-private-security",
+      "role_keyword": "보안요원",
+      "profile_id": "private_security_access_control",
+      "scenario": "biotech-lab visitor surge during a fire-alarm credential fallback",
+      "required_gate_ids": [
+        "vo_security_private_role_identity",
+        "vo_security_credential_reader_relation",
+        "vo_security_access_decision",
+        "vo_security_gate_consequence",
+        "vo_security_not_police_or_monitor_only"
+      ]
+    }
+  ]
+}

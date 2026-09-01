@@ -1,0 +1,116 @@
+{
+  "schema_version": "photo-fantasy-blind-pixel-review/v1",
+  "sample_id": "A",
+  "reviewer": "agent-05",
+  "native_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/blind/samples/sample-A.png",
+  "native_sha256": "898d174f69e0d273cadd766ae16b703ec161e014feaf57fe860b6174d7576899",
+  "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-fantasy-five-arm-render-20260901/blind/samples/sample-A-thumbnail.png",
+  "thumbnail_sha256": "f199610b4b06b4f69f77fb255e1fca89c094e53dd80f367531f85cc640bd1c04",
+  "reviewed_scales": [
+    "native",
+    "thumbnail"
+  ],
+  "partial_policy": "Any partial, ambiguous, cropped, hidden, or split-across-scales evidence is fail.",
+  "target_gates": [
+    {
+      "id": "vo_fantasy_living_armor_shell",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The thumbnail clearly shows one continuous armored helmet, torso, two arms, and two planted legs."
+    },
+    {
+      "id": "vo_fantasy_living_armor_joints",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "Native pixels show overlapping articulated plates at both shoulders, elbows, hips, knees, and ankles while the figure bends and grips the frame."
+    },
+    {
+      "id": "vo_fantasy_living_armor_hollow",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The visor opening is uniformly black at both scales; it hides any contents rather than visibly exposing empty interior volume, so a concealed wearer cannot be ruled out."
+    },
+    {
+      "id": "vo_fantasy_living_armor_agency",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Braced feet and bent arms lift a heavy framed painting, with tilted geometry, dripping water, and surrounding ripples showing an immediate object consequence."
+    },
+    {
+      "id": "vo_fantasy_living_armor_not_wearer",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "Because no opening proves an empty shell, the complete human-shaped figure remains visually compatible with an armored person behind a dark visor."
+    },
+    {
+      "id": "vo_fantasy_magic_circle_closed",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "evidence": "The entire luminous circular boundary is visible as one closed ellipse with no cropped or missing segment."
+    },
+    {
+      "id": "vo_fantasy_magic_circle_surface",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The ellipse lies on the marble floor and follows its receding perspective and reflections at native and thumbnail scales."
+    },
+    {
+      "id": "vo_fantasy_magic_circle_regions",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Inside the line the marble is pale, visible, and comparatively calm; outside it the floodwater is darker, deeper-looking, and visibly rippled."
+    },
+    {
+      "id": "vo_fantasy_magic_circle_stop",
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "At native scale the dense exterior ripples give way to the calmer exposed-floor region along the luminous boundary rather than crossing it unchanged."
+    },
+    {
+      "id": "vo_fantasy_magic_circle_not_decor",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The line separates visibly different flood states and therefore functions as a boundary rather than only a floating halo, rug, or decorative glyph ring."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_reference_appearance",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The adult fictional woman has a clearly readable facial presentation, long dark wavy hair, near-center part, and restrained natural makeup at both scales; this is appearance-only evidence."
+    },
+    {
+      "id": "common_adult_subject",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "The human subject reads unambiguously as an adult fictional woman in both the native image and thumbnail."
+    },
+    {
+      "id": "common_anatomy",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Her face, kneeling body, two arms, and both visible hands remain photographically coherent, with readable fingers and natural limb attachment."
+    },
+    {
+      "id": "common_scene_action",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "She kneels with palms on the flooded floor and looks outward, but no tool, measurement, handling task, or unequivocal causal consequence makes a field, laboratory, conservation, survey, or ecology action readable."
+    }
+  ],
+  "target_pass_count": 8,
+  "target_gate_count": 10,
+  "total_pass_count": 11,
+  "total_gate_count": 14,
+  "failed_gate_ids": [
+    "vo_fantasy_living_armor_hollow",
+    "vo_fantasy_living_armor_not_wearer",
+    "common_scene_action"
+  ],
+  "technical_verdict": "fail",
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "photo-visual-semantics-test-case/v1",
+  "arm_id": "arm-01-clinical-nurse",
+  "allocation_provenance": "experimental_allocation_not_requester_text",
+  "assigned_keyword": "간호사",
+  "required_profile_id": "clinical_nursing_duty_system",
+  "complex_scenario": "earthquake-aftershock backup ward during a power transfer",
+  "request_envelope_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-01-clinical-nurse/request_envelope.json",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible facial and hair appearance guidance for an original adult fictional subject",
+    "claim_boundary": "No identity, biometric, same-person, ethnicity, nationality, occupation, health, attractiveness, or protected-trait claim."
+  },
+  "grading_policy": {
+    "allowed_observations": [
+      "observable",
+      "ambiguous",
+      "missing"
+    ],
+    "pass_condition": "observable",
+    "fail_conditions": [
+      "ambiguous",
+      "missing"
+    ],
+    "partial_is_fail": true,
+    "review_scales": [
+      "thumbnail",
+      "native"
+    ]
+  },
+  "gates": [
+    {
+      "id": "vo_nursing_clinical_role_identity",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "criterion": "The adult subject and workwear first read as a clinical nurse on duty rather than a costume model or generic visitor."
+    },
+    {
+      "id": "vo_nursing_uniform_system",
+      "source": "profile",
+      "review_scale": "both",
+      "criterion": "Scrub or tunic-and-trouser components form one coherent practical duty-uniform system with identification placement."
+    },
+    {
+      "id": "vo_nursing_patient_linked_task",
+      "source": "profile",
+      "review_scale": "both",
+      "criterion": "One assessment action is visibly linked to one identifiable patient or patient marker."
+    },
+    {
+      "id": "vo_nursing_documented_state",
+      "source": "profile",
+      "review_scale": "native",
+      "criterion": "The open chart or handover record visibly agrees with the bedside monitor state."
+    },
+    {
+      "id": "vo_nursing_not_costume_or_prop_only",
+      "source": "profile",
+      "review_scale": "thumbnail",
+      "criterion": "Clinical role relation survives beyond a stethoscope, badge, or hospital backdrop alone."
+    },
+    {
+      "id": "common_adult_original_subject",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "The primary fictional subject is unambiguously adult-presenting."
+    },
+    {
+      "id": "common_reference_face_hair_scope",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "The primary subject visibly carries the reference-observed front-facing facial appearance direction and long dark softly waved hair, evaluated as appearance guidance only."
+    },
+    {
+      "id": "common_anatomy_hands_and_contact",
+      "source": "common",
+      "review_scale": "native",
+      "criterion": "Hands, fingers, gloves, IV-line handling, and equipment contact are physically coherent."
+    },
+    {
+      "id": "common_scene_aftershock_power_transfer",
+      "source": "common",
+      "review_scale": "thumbnail",
+      "criterion": "Aftershock disturbance and a simultaneous battery-to-generator lighting transition are both visually legible."
+    },
+    {
+      "id": "common_scene_action_single_frame",
+      "source": "common",
+      "review_scale": "both",
+      "criterion": "One coherent single-frame nursing action links nurse, patient marker, IV line, monitor, and chart without causal ambiguity."
+    }
+  ]
+}

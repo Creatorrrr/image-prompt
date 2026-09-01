@@ -1,0 +1,238 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "9dc48644214dd386c8a7a3fea8e0f469ceea7bc4",
+    "candidate_revision": "working-tree-2026-09-01-womens-activewear"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply researched women's activewear keywords to the visual-semantic data and candidate pack, then use five independent subagents to create distinct random complex concepts, write reference-guided prompts, generate images, and verify whether each keyword survives in actual saved pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The user requested candidate-pack and visual-semantic integration followed by five independent prompt, generation, and pixel-verification arms using the supplied portrait.",
+      "artifact": "current user request, chatgpt-conversation://6a964451-f18c-83ee-bfae-ea1c2b92db13, and per-arm request_envelope.json"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "The research separates activewear topology, garment length, seam and knit morphology, ensemble relations, performance claims, and visible confusion boundaries without inferring wearer traits.",
+      "artifact": "docs/research-evidence/photo-prompt/womens-activewear-20260901/source-research.md, candidate-data-proposal.json, and twelve activewear rows in research_evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The working tree adds 35 activewear candidates and ten five-component hard profiles; dictionary metadata, merged generated indexes, and nine focused activewear tests validate.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/coordination/final_source_snapshot.json and tests/test_photo_womens_activewear_visual_semantics.py"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five v6 packs bind exactly one assigned profile from a frozen-core-grounded post-core visual intent, and all five composed-prompt and runtime-request audits pass.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arms are represented by arm-* candidate_pack.json, composed_prompt_audit.json, and image_render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Five isolated agents each made exactly one built-in image-generation call with zero retries and no fallback; four calls saved images and one bib-short call was output-stage safety blocked.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/coordination/five_arm_results.json and per-arm run_manifest.json"
+    },
+    {
+      "id": "e-stirrup-render",
+      "kind": "render-observation",
+      "claim": "The stirrup image passes fitted legs, hem transition, and substitute rejection but fails unambiguous under-arch routing and complete bilateral proof.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-01-stirrup-studio/render_review.json"
+    },
+    {
+      "id": "e-racerback-render",
+      "kind": "render-observation",
+      "claim": "The racerback image shows two shoulder straps but renders an X cross-back instead of a centered Y-shaped convergence and yoke-to-band path.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-02-racerback-rooftop/render_review.json"
+    },
+    {
+      "id": "e-two-in-one-render",
+      "kind": "render-observation",
+      "claim": "The two-in-one running-shorts image passes all five shared-waist, outer-shell, fitted-inner, two-hem, and substitute-rejection gates.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-03-two-in-one-forest/render_review.json"
+    },
+    {
+      "id": "e-unitard-render",
+      "kind": "render-observation",
+      "claim": "The athletic-unitard image passes all five upper-waist, crotch, two-leg, selected-length, and substitute-rejection gates.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-04-unitard-mocap/render_review.json"
+    },
+    {
+      "id": "e-bib-block",
+      "kind": "generation-outcome",
+      "claim": "The cycling-bib-shorts prompt and runtime audits pass, but output moderation returns no image; all five pixel gates remain unscored and no retry occurs.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/arm-05-bib-ferry/agent_result.json"
+    },
+    {
+      "id": "e-cross-review",
+      "kind": "render-observation",
+      "claim": "Independent coordinator inspection confirms two arm passes, two arm failures, one unscored arm, and 14 pass, 6 fail, and 5 unscored gates; user judgment remains pending.",
+      "artifact": "artifacts/photo-runs/womens-activewear-five-arm-20260901/coordination/cross_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "An activewear keyword survives in one saved image as a jointly visible garment category, connected topology, length or layer relation, seam or support route, and explicit substitute boundary rather than as a label, color, pose, or performance claim.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "connected-activewear-system",
+        "statement": "Each hard activewear profile exposes five component groups, five prompt evidence fields, five render gates, and explicit substitute rejection.",
+        "evidence_ids": ["e-research", "e-package", "e-prompt"],
+        "causal_controls": ["garment category", "localized parts", "part-to-part continuity", "length or layer relation", "negative substitute"]
+      },
+      {
+        "id": "pixel-all-gates-boundary",
+        "statement": "Every required relation must be judgeable in the same saved image; a prompt label, one-sided evidence, hidden route, or familiar substitute cannot pass.",
+        "evidence_ids": ["e-stirrup-render", "e-racerback-render", "e-two-in-one-render", "e-unitard-render", "e-cross-review"],
+        "causal_controls": ["thumbnail inspection", "native inspection", "bilateral visibility", "route continuity", "strict partial-is-failure rule"]
+      },
+      {
+        "id": "reference-and-claim-boundary",
+        "statement": "The supplied adult portrait guides facial, hair, and general appearance only; it does not prove biometric identity, source clothing, body traits, protected traits, health, attractiveness, ethnicity, or nationality.",
+        "evidence_ids": ["e-request", "e-generation", "e-cross-review"],
+        "causal_controls": ["adult presentation", "general appearance guidance", "garment morphology", "non-biometric review", "user acceptance"]
+      }
+    ],
+    "flexible_dimensions": [
+      "random complex scene and event",
+      "camera viewpoint and crop",
+      "lighting, weather, and atmosphere",
+      "fabric color consistent with the assigned construction",
+      "non-conflicting props",
+      "adult-subject styling that preserves target-region visibility"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-core-dimension-vocabulary",
+      "scale": "global",
+      "axis": "authorial-core dimension schema",
+      "source_state": "Frozen cores used human-readable open-dimension names such as wardrobe_topology, reference_usage, material_detail, or visibility.",
+      "render_state": "The v6 generator accepts style, reference_use, material, and framing, so byte-preserved originals required documented schema-only compatibility copies with no semantic change.",
+      "evidence_ids": ["e-prompt"]
+    },
+    {
+      "id": "mismatch-stirrup-route",
+      "scale": "local",
+      "axis": "bilateral under-arch loop route",
+      "source_state": "Both ankle hems must continue through matching garment-owned loops visibly beneath both foot arches.",
+      "render_state": "The lifted-foot band reads mainly across the lateral instep, so a complete under-arch path is not unambiguous on both sides.",
+      "evidence_ids": ["e-stirrup-render", "e-cross-review"]
+    },
+    {
+      "id": "mismatch-racerback-crossback",
+      "scale": "regional",
+      "axis": "central strap convergence and yoke continuity",
+      "source_state": "Two shoulder straps must merge into one centered Y-shaped junction and continue as a narrow yoke to the lower band.",
+      "render_state": "The straps form an X with a triangular opening and no single centered yoke-to-band route.",
+      "evidence_ids": ["e-racerback-render", "e-cross-review"]
+    },
+    {
+      "id": "mismatch-bib-no-pixels",
+      "scale": "global",
+      "axis": "render availability",
+      "source_state": "All five cycling-bib topology gates require one saved native image.",
+      "render_state": "The output-stage safety block produced no image, leaving every gate unscored.",
+      "evidence_ids": ["e-bib-block"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-componentized-activewear-profiles",
+      "stage": "representation",
+      "statement": "Encoding activewear as connected garment-owned topology and explicit substitutes transfers across unrelated complex scenes better than labels or performance claims alone.",
+      "evidence_ids": ["e-research", "e-two-in-one-render", "e-unitard-render"],
+      "falsifier": "Held-out activewear images repeatedly retain only the label while losing the connected components even when every target region is unobstructed."
+    },
+    {
+      "id": "hypothesis-route-viewpoint-dominates",
+      "stage": "prompt-interaction",
+      "statement": "Narrow strap and loop semantics fail when the viewpoint does not expose the entire owned route, even when the prompt contains every definition phrase.",
+      "evidence_ids": ["e-stirrup-render", "e-racerback-render"],
+      "falsifier": "The same routes fail equally often after the camera is constrained to an unobstructed orthographic back or under-arch view."
+    },
+    {
+      "id": "hypothesis-prompt-pixel-separation",
+      "stage": "observation",
+      "statement": "Prompt and runtime audits cannot establish pixel fidelity or render availability; saved-pixel review and blocked-call handling must remain separate.",
+      "evidence_ids": ["e-prompt", "e-racerback-render", "e-bib-block", "e-cross-review"],
+      "falsifier": "Across future runs, every audited prompt always produces an image and every image passes all assigned pixel gates."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["reference", "policy", "test"],
+    "general_rule": "Represent women's activewear with observable garment topology, layer and length relations, seam or support routes, material morphology, and explicit confounders; keep performance and marketing claims outside pixel certainty; require source-grounded hard activation and all saved-pixel gates together.",
+    "generalization_basis": "The 35 candidates span garment detail, silhouette and proportion, material surface, and wardrobe style; the ten hard profiles exercise strap convergence, band length, separate cups, dual layers, split hems, skirt-short layering, integrated liners, bib continuity, one-piece leg continuity, and underfoot loops.",
+    "hypothesis_ids": ["hypothesis-componentized-activewear-profiles", "hypothesis-route-viewpoint-dominates", "hypothesis-prompt-pixel-separation"],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/womens-activewear-20260901",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5e53676d8ec7c5df",
+      "tests/fixtures/photo_prompt/womens_activewear_pixel_test_cases_v1.jsonl",
+      "tests/test_photo_womens_activewear_visual_semantics.py",
+      "artifacts/photo-runs/womens-activewear-five-arm-20260901"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-prompt"]},
+    "render": {"status": "fail", "evidence_ids": ["e-stirrup-render", "e-racerback-render", "e-two-in-one-render", "e-unitard-render", "e-bib-block", "e-cross-review"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "motivating-stirrup",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": ["fitted legs", "hem transition", "under-arch route", "bilateral loops", "sock and shoe boundary"],
+        "evidence_ids": ["e-stirrup-render"]
+      },
+      {
+        "id": "heldout-racerback",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["two shoulder straps", "center convergence", "Y yoke", "lower-band attachment", "cross-back boundary"],
+        "evidence_ids": ["e-racerback-render"]
+      },
+      {
+        "id": "heldout-two-in-one",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["shared waist", "loose outer shell", "fitted inner shorts", "two hem levels", "brief and print boundary"],
+        "evidence_ids": ["e-two-in-one-render"]
+      },
+      {
+        "id": "heldout-unitard",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["upper-waist continuity", "crotch continuity", "two fitted legs", "selected length", "separates and romper boundary"],
+        "evidence_ids": ["e-unitard-render"]
+      },
+      {
+        "id": "heldout-cycling-bib",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["fitted shorts", "upper-bib continuity", "two straps", "pad or cycling context", "suspender and unitard boundary"],
+        "evidence_ids": ["e-bib-block"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The researched candidate data, ten hard profiles, generated indexes, focused tests, five source-grounded v6 packs, and all prompt/runtime audits pass. Two unrelated garment systems also pass every saved-pixel gate. However, the stirrup under-arch route and racerback Y-yoke topology fail in actual pixels, and the cycling-bib arm has no pixels after an output safety block. Strict render-fidelity promotion is therefore not justified, and user aesthetic acceptance remains unscored.",
+    "evidence_ids": ["e-package", "e-prompt", "e-generation", "e-stirrup-render", "e-racerback-render", "e-bib-block", "e-cross-review"]
+  }
+}

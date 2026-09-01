@@ -1,0 +1,180 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:9dc48644214dd386c8a7a3fea8e0f469ceea7bc4+working-tree-snapshot",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Evaluate whether the current women-professional-uniform semantics and v6 candidate-pack path visibly realize one independently allocated complex firefighter concept using the supplied portrait only as facial and hair appearance guidance."
+  },
+  "evidence": [
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied JPEG visibly provides a calm front-facing adult facial appearance, long dark softly waved hair, and restrained natural makeup; it supplies no identity, occupation, or protected-trait evidence.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/coordinator/reference_manifest.json sha256=039a518051697f9b5cc21846e3021302e219f25311f7770646da9a118a35098c"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The one-item v6 candidate pack, composed prompt, five profile evidence bindings, and exact runtime request all passed their deterministic audits.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/composed_prompt_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The final 176-word prompt preserves all four frozen intent anchors and all five distinct firefighter profile evidence phrases, while rejecting both unrelated optional visual concepts.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/composed_prompt.json and composed_prompt_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Exactly one built-in native image-generation call produced and preserved a 1024x1536 PNG with matching source and repo-local SHA-256.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/run_manifest.json"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Thumbnail and native review passed all five firefighter profile gates and all four common adult, reference-appearance, anatomy, and scene-action gates in the same saved image.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/self_review.json sha256-pending-final-inventory"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "The image must first read as one adult fictional working firefighter whose coherent head-to-foot turnout and breathing-apparatus system, hands-on equipment check, visible gauge consequence, and freezing-rain chemical-plant setting coexist in one frame.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "firefighter-system",
+        "statement": "Helmet, coat, trousers, gloves, boots, and breathing apparatus form one protective system rather than isolated costume props.",
+        "evidence_ids": [
+          "e-package",
+          "e-render"
+        ],
+        "causal_controls": [
+          "head-to-foot component visibility",
+          "protected interface continuity",
+          "thumbnail role read"
+        ]
+      },
+      {
+        "id": "equipment-causality",
+        "statement": "Both hands perform one equipment check and a connected gauge or coupling shows an already-visible controlled consequence.",
+        "evidence_ids": [
+          "e-package",
+          "e-render"
+        ],
+        "causal_controls": [
+          "hand-to-gauge contact",
+          "hand-to-coupling contact",
+          "visible pointer and seated connection"
+        ]
+      },
+      {
+        "id": "reference-boundary",
+        "statement": "The portrait affects visible face and hair guidance only and never becomes identity, occupation, or protected-trait evidence.",
+        "evidence_ids": [
+          "e-reference",
+          "e-render"
+        ],
+        "causal_controls": [
+          "visible calm facial appearance",
+          "long dark softly waved hair",
+          "explicit original-fictional-subject scope"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "exact pipe layout",
+      "exact precipitation streak placement",
+      "exact red spill-light placement",
+      "incidental equipment lettering"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-pseudo-lettering",
+      "scale": "local",
+      "axis": "incidental generated text",
+      "source_state": "No specific organization name, equipment brand, or numeral was requested.",
+      "render_state": "The helmet and valve carry generated rescue and AKRON-like lettering; it is visible but does not carry any target gate.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-profile-actuation",
+      "stage": "prompt-priority",
+      "statement": "Keeping all five exact profile evidence phrases inside one concise 176-word prompt gives the firefighter system, task contact, and ready-state consequence enough joint priority to survive the complex industrial scene.",
+      "evidence_ids": [
+        "e-package",
+        "e-render"
+      ],
+      "falsifier": "Any firefighter profile gate is missing or ambiguous at its declared thumbnail or native review scale in the saved image."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "Evaluation only; this arm makes no shared skill, profile, candidate, test, or documentation change.",
+    "generalization_basis": "The current arm tests one motivating allocation and cannot establish cross-concept generality by itself.",
+    "hypothesis_ids": [
+      "h-profile-actuation"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "firefighter-chemical-plant-motivating",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "protective ensemble",
+          "equipment action",
+          "ready-state consequence",
+          "reference-bounded appearance",
+          "scene-action coexistence"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "This arm technically passes its motivating render contract, but one successful arm without an unrelated held-out render or direct requesting-user judgment cannot promote the broader skill behavior.",
+    "evidence_ids": [
+      "e-package",
+      "e-render"
+    ]
+  }
+}

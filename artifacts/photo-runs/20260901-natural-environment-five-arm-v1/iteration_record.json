@@ -1,0 +1,66 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "9dc48644214dd386c8a7a3fea8e0f469ceea7bc4",
+    "candidate_revision": "working-tree-2026-09-01-natural-environment-five-arm"
+  },
+  "goal": {
+    "claim_scope": "end-to-end render fidelity",
+    "request": "Apply the researched natural-environment visual semantics and candidate data, then independently test five random complex concepts with one attached appearance reference and one image generation attempt per arm."
+  },
+  "evidence": [
+    {
+      "id": "e-research-data",
+      "kind": "external-research-and-package",
+      "claim": "Twelve relational environment grammars produced 75 candidate records, 12 mixins, and 8 still-image hard profiles with observable and non-inference boundaries.",
+      "artifact": "docs/research-evidence/photo-prompt/natural_environment_visual_semantics_20260901.md"
+    },
+    {
+      "id": "e-package-tests",
+      "kind": "prompt-evaluation",
+      "claim": "The natural-environment scope passes focused routing, dictionary, retrieval, index, and scene-expression checks.",
+      "artifact": "artifacts/photo-prompt-natural-environment-semantics-20260901/validation_summary.json"
+    },
+    {
+      "id": "e-route-preflight",
+      "kind": "candidate-route-evaluation",
+      "claim": "All five randomly assigned terms map to exactly one intended mixin and all expected current candidate IDs after each core is frozen.",
+      "artifact": "artifacts/photo-runs/20260901-natural-environment-five-arm-v1/coordinator/mixin_route_diagnostics.json"
+    },
+    {
+      "id": "e-pixels",
+      "kind": "render-evaluation",
+      "claim": "Five built-in one-shot images pass all 25 target environment gates; shared gates pass 24 of 25 and the strict full randomized scenarios pass 3 of 5.",
+      "artifact": "artifacts/photo-runs/20260901-natural-environment-five-arm-v1/coordinator/cross_pixel_review.json"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-relational-grammar-survives-pixels",
+      "statement": "Component-plus-relation contracts preserve natural-environment meaning in complex referenced photographs better than broad scenery labels.",
+      "falsifier": "Any sampled image loses one required environment component or substitutes a confound while still being marked pass.",
+      "result": "supported_in_five_sampled_profiles"
+    },
+    {
+      "id": "h-reference-does-not-occlude-environment",
+      "statement": "A visible reference-guided adult can be integrated without hiding the environment and while remaining facially readable.",
+      "falsifier": "Any arm either hides a target component or loses reference-appearance readability at a required scale.",
+      "result": "falsified_by_arm_03_facial_readability"
+    }
+  ],
+  "evaluation": {
+    "package": "pass",
+    "prompt": "pass_5_of_5",
+    "runtime": "pass_5_of_5",
+    "render_keyword": "pass_5_of_5",
+    "render_shared": "pass_4_of_5",
+    "render_full_scenario": "pass_3_of_5",
+    "user": "pending"
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "end-to-end render fidelity",
+    "rationale": "The natural-environment representation is pixel-qualified on all five sampled profiles, but the complete reference-integrated qualification remains partial because arm-03 loses observable facial continuity and arm-02 loses a randomized secondary action. No rerender was used to hide either failure."
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "schema_version": "photo-fantasy-five-arm-final-summary/v1",
+  "date": "2026-09-01",
+  "request_sha256": "bd1cb8b8164a8bdf10ce9eaf7f4c12d6136e8c135841be4c48af53f054caa882",
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "reference_policy": "Visible appearance guidance for an original adult fictional woman only; no identity, biometric, protected-trait, attractiveness, or same-person claim.",
+  "evaluation_policy": {
+    "partial_is_fail": true,
+    "scale_policy": "Each gate is evaluated at its declared native, thumbnail, or both scale.",
+    "final_gate_policy": "A gate passes only when both the generating agent self-review and an independent blind cross-review pass it; their failed-gate union is final.",
+    "user_judgment": "pending"
+  },
+  "layer_states": {
+    "source_and_index": {
+      "status": "pass",
+      "selected_profile_count": 10,
+      "visual_profile_count": 144,
+      "visual_exact_term_count": 894,
+      "semantic_entry_count": 7278,
+      "semantic_shard_count": 16
+    },
+    "candidate_packs": {
+      "status": "pass",
+      "pack_count": 5,
+      "contract_version": "photo-candidate-pack/v6",
+      "active_profile_count_per_pack": 2,
+      "hard_gate_count_per_pack": 10
+    },
+    "prompt_audits": {
+      "status": "pass_all",
+      "pass_count": 5,
+      "quality_status": "warn_all_nonblocking"
+    },
+    "runtime_audits": {
+      "status": "pass_all",
+      "pass_count": 5
+    },
+    "rendered_target_keyword_sets": {
+      "status": "partial",
+      "strict_pass_arm_count": 2,
+      "arm_count": 5,
+      "passed_arm_ids": [
+        "arm-01-golem-portal",
+        "arm-04-wyvern-hydra"
+      ]
+    },
+    "rendered_full_technical_sets": {
+      "status": "partial",
+      "strict_pass_arm_count": 1,
+      "arm_count": 5,
+      "passed_arm_ids": [
+        "arm-01-golem-portal"
+      ]
+    },
+    "user_judgment": {
+      "status": "pending",
+      "source": "not_yet_received"
+    }
+  },
+  "data_and_pack_repair": {
+    "discovered_defect": "The first frozen visual-intent bindings could be shorter than the selected profile min_content_words, while the later composed audit required exact frozen text plus the longer evidence minimum. That made the candidate packs unsatisfiable before rendering.",
+    "repair": [
+      "Validate binding content-word minimums, required anchors, forbidden terms, and blanket-negative directives before candidate-pack emission.",
+      "Express the wyvern forelimb boundary as positive visible geometry instead of a blanket negative.",
+      "Rebuild the visual profile index and all five immutable candidate packs after validation passes."
+    ],
+    "verification": "11 pytest cases and 78 subtests passed; visual profile index check passed for 144 profiles and 894 exact terms.",
+    "pre_repair_image_calls": 0
+  },
+  "attempts": {
+    "attempt_01": {
+      "image_call_count": 5,
+      "prompt_audit_pass_count": 5,
+      "runtime_audit_pass_count": 5,
+      "strict_full_pass_arm_count": 0
+    },
+    "attempt_02": {
+      "image_call_count": 5,
+      "retry_count_per_arm": 1,
+      "third_attempt_allowed": false,
+      "prompt_audit_pass_count": 5,
+      "runtime_audit_pass_count": 5,
+      "strict_target_keyword_pass_arm_count": 2,
+      "strict_full_pass_arm_count": 1
+    },
+    "total_image_call_count": 10
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-golem-portal",
+      "concept": "Rain-dark archive threshold survey: a fitted-stone golem carries records through a complete portal from a snowy ruin while the woman logs the crossing.",
+      "keywords": ["golem", "fantasy portal"],
+      "pack_id": "eddf0dd3261aaa2c",
+      "pack_sha256": "b999013c70f93a8bb6413ee0726b78ddab3895c237e0f85ec1d754bbad0ad4dd",
+      "image_path": "arm-01-golem-portal/render-attempt-02.png",
+      "image_sha256": "e696e84105e87b1299a3c83e4fe01090288e93c4d5b759ba7e72578e5dfa0178",
+      "self_review": {"pass_count": 14, "gate_count": 14, "failed_gate_ids": []},
+      "blind_review": {"sample_id": "C2", "pass_count": 14, "gate_count": 14, "failed_gate_ids": []},
+      "final_target_keyword_pass_count": 10,
+      "final_target_keyword_gate_count": 10,
+      "final_total_pass_count": 14,
+      "final_total_gate_count": 14,
+      "final_failed_gate_ids": [],
+      "final_technical_verdict": "pass",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-02-alchemist-summoner",
+      "concept": "Copper-and-glass heatwork laboratory: a material process feeds a distinct liquid-glass summoned entity.",
+      "keywords": ["alchemist", "summoner"],
+      "pack_id": "b38b29c02bb01d0a",
+      "pack_sha256": "a7992afce53789505702d088b17c8d1d775244063f4c860507880cbe94f4c104",
+      "image_path": "arm-02-alchemist-summoner/render-attempt-02.png",
+      "image_sha256": "b22ba76d80c954c4b8fdd6901bf5377fc40b67363f7d15a448e849293a4dce68",
+      "self_review": {"pass_count": 14, "gate_count": 14, "failed_gate_ids": []},
+      "blind_review": {"sample_id": "E2", "pass_count": 13, "gate_count": 14, "failed_gate_ids": ["vo_fantasy_alchemist_apparatus"]},
+      "final_target_keyword_pass_count": 9,
+      "final_target_keyword_gate_count": 10,
+      "final_total_pass_count": 13,
+      "final_total_gate_count": 14,
+      "final_failed_gate_ids": ["vo_fantasy_alchemist_apparatus"],
+      "final_technical_verdict": "revise",
+      "failure_reason": "The connected glass train is readable, but a distinct crucible cannot be separated unambiguously from the copper burners/supports.",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-03-circle-armor",
+      "concept": "Flooded museum conservation response: a complete floor rule-circle halts water while articulated armor lifts a framed painting.",
+      "keywords": ["magic circle", "living armor"],
+      "pack_id": "7cef523115588408",
+      "pack_sha256": "69bf393c4e4e9c249d776df6d2f7bbeb02a5600b2ef886315ecffc8b80ee6ddf",
+      "image_path": "arm-03-circle-armor/render-attempt-02.png",
+      "image_sha256": "73eb4d119095f6e84fd0f38245ed3ec3e66abfcf5e32f9a0ffc318a342927b6b",
+      "self_review": {"pass_count": 12, "gate_count": 14, "failed_gate_ids": ["vo_fantasy_living_armor_hollow", "vo_fantasy_living_armor_not_wearer"]},
+      "blind_review": {"sample_id": "A2", "pass_count": 12, "gate_count": 14, "failed_gate_ids": ["vo_fantasy_living_armor_hollow", "vo_fantasy_living_armor_not_wearer"]},
+      "final_target_keyword_pass_count": 8,
+      "final_target_keyword_gate_count": 10,
+      "final_total_pass_count": 12,
+      "final_total_gate_count": 14,
+      "final_failed_gate_ids": ["vo_fantasy_living_armor_hollow", "vo_fantasy_living_armor_not_wearer"],
+      "final_technical_verdict": "revise",
+      "failure_reason": "The visor and neck gaps stay opaque black, so empty through-space and the absence of a wearer are not proven in pixels.",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-04-wyvern-hydra",
+      "concept": "Volcanic plateau field survey: the woman measures a two-legged, two-winged wyvern beside a single-bodied multi-neck hydra.",
+      "keywords": ["wyvern", "hydra"],
+      "pack_id": "bb9f2481d20349de",
+      "pack_sha256": "5360675e65f0df9bd843132aa149ed49a8defe95f7f0454c959f3a53b90b1dde",
+      "image_path": "arm-04-wyvern-hydra/render-attempt-02.png",
+      "image_sha256": "765214e2a1cd91c1567925073824e15eae705375a1e5d4abb9540c13f1da6732",
+      "self_review": {"pass_count": 14, "gate_count": 14, "failed_gate_ids": []},
+      "blind_review": {"sample_id": "D2", "pass_count": 13, "gate_count": 14, "failed_gate_ids": ["common_reference_appearance"]},
+      "final_target_keyword_pass_count": 10,
+      "final_target_keyword_gate_count": 10,
+      "final_total_pass_count": 13,
+      "final_total_gate_count": 14,
+      "final_failed_gate_ids": ["common_reference_appearance"],
+      "final_technical_verdict": "revise",
+      "failure_reason": "Both fantasy creature topologies pass, but the small side-facing human figure does not preserve enough facial and makeup evidence at thumbnail scale to pass the both-scale appearance gate.",
+      "user_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-05-phoenix-griffin",
+      "concept": "Fire-scarred alpine ecology survey: a phoenix emerges causally from an ash bed while a griffin stands on the ridge.",
+      "keywords": ["phoenix rebirth", "griffin"],
+      "pack_id": "faa462fca67316a2",
+      "pack_sha256": "6222018457f190671c21b78b6136c82fe244902e7cbc557ca2a98a4c9e5c9d41",
+      "image_path": "arm-05-phoenix-griffin/render-attempt-02.png",
+      "image_sha256": "7d850bd6e5fc414fce00fed68cf0afa3d9b2afdbb96b450e26e66427fbe13fa2",
+      "self_review": {"pass_count": 14, "gate_count": 14, "failed_gate_ids": []},
+      "blind_review": {"sample_id": "B2", "pass_count": 13, "gate_count": 14, "failed_gate_ids": ["vo_fantasy_griffin_wings_fore"]},
+      "final_target_keyword_pass_count": 9,
+      "final_target_keyword_gate_count": 10,
+      "final_total_pass_count": 13,
+      "final_total_gate_count": 14,
+      "final_failed_gate_ids": ["vo_fantasy_griffin_wings_fore"],
+      "final_technical_verdict": "revise",
+      "failure_reason": "One griffin wing is clear, but the second wing merges with the torso and cannot be read independently at both scales.",
+      "user_judgment": "pending"
+    }
+  ],
+  "claim_boundary": "Source/index, candidate-pack, prompt/runtime audit, rendered pixels, and user judgment are separate evidence layers. A pass in an earlier layer does not promote a later layer."
+}

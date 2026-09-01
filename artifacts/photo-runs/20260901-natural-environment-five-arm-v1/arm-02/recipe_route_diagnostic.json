@@ -1,0 +1,28 @@
+{
+  "schema_version": "postcore-recipe-route-diagnostic/v1",
+  "producer": "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py --explain-concept",
+  "input_source": "coordinator_assigned_keyword",
+  "input_keyword": "karst surface subsurface drainage",
+  "raw_envelope_route_claimed": false,
+  "resolved_concept": "카르스트 배수 지형",
+  "applied_mixins": [
+    "카르스트 배수 지형"
+  ],
+  "matched": true,
+  "combined_forced_slots": {
+    "aesthetic_trend": ["karst_drainage_landform_aesthetic"],
+    "subject": ["karst_drainage_system_subject"],
+    "action": ["karst_losing_stream_spring_connection"],
+    "location": ["karst_losing_stream_spring_location"],
+    "surface_material": ["karst_solution_pitted_limestone_surface"],
+    "composition": ["surface_to_subsurface_drainage_frame"]
+  },
+  "soft_anchor_minimum": 4,
+  "review_gate": {
+    "id": "karst_surface_subsurface_drainage_connected",
+    "status": "manual",
+    "check": "용식 암반·폐쇄 함몰·소실수·통로·용천이 한 배수관계로 읽히는가"
+  },
+  "diagnostic_only": true,
+  "composition_source": false
+}

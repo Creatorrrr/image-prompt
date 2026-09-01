@@ -1,0 +1,18 @@
+{
+  "schema_version": "photo-fantasy-blind-review-contract/v1",
+  "status_values": ["pass", "fail"],
+  "partial_policy": "Any partial, ambiguous, cropped, hidden, or split-across-scales evidence is fail.",
+  "scale_policy": "Respect each target gate review_scale and inspect the native image plus supplied thumbnail. All required components must coexist in this one image.",
+  "prompt_blindness": "Do not inspect prompts, candidate packs, source-arm folders, self-reviews, coordinator mapping, or other images.",
+  "common_gates": [
+    {"id":"common_reference_appearance","review_scale":"both","description":"The original adult fictional woman's visible facial structure, long dark wavy hair, and restrained natural makeup remain observably guided by the supplied portrait; this is appearance continuity only, not identity verification."},
+    {"id":"common_adult_subject","review_scale":"both","description":"The human subject reads unambiguously as an adult original fictional woman."},
+    {"id":"common_anatomy","review_scale":"both","description":"Visible human face, hands, and body anatomy remain photographically coherent enough for the scene."},
+    {"id":"common_scene_action","review_scale":"both","description":"The human subject's specified field, laboratory, conservation, survey, or ecology action and its immediate scene consequence are visually readable rather than a passive portrait."}
+  ],
+  "output_schema": {
+    "schema_version": "photo-fantasy-blind-pixel-review/v1",
+    "required_fields": ["sample_id","reviewer","native_sha256","thumbnail_sha256","target_gates","common_gates","target_pass_count","target_gate_count","total_pass_count","total_gate_count","failed_gate_ids","technical_verdict","user_judgment"]
+  },
+  "user_judgment": {"status":"pending","source":"not_yet_received"}
+}

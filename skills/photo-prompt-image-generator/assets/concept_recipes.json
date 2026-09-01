@@ -211,11 +211,13 @@
       }
     },
     "간호사": {
-      "preset": "clinical_handover_vitals",
+      "preset": "clinical_nursing_duty_documentary",
       "set": [
         "subject=nurse_role",
-        "costume_style=nurse_uniform_costume",
-        "location=hospital_corridor"
+        "costume_style=clinical_nursing_scrub_duty_system",
+        "location=active_clinical_bedside_handover_zone",
+        "action=nurse_patient_identifier_vitals_handover",
+        "prop=clinical_identifier_chart_monitor_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -229,45 +231,35 @@
       "soft_min_anchors": 1,
       "anchor_terms": {
         "costume_style": [
-          "nurse-uniform",
-          "nurse",
-          "medical"
+          "clinical scrub top and trousers",
+          "visible staff identifier",
+          "closed practical footwear"
         ],
         "location": [
-          "hospital corridor",
-          "clinical"
+          "active bedside handover zone",
+          "clinical monitor and chart context"
         ]
       },
       "additional": [
-        "adult nurse duty uniform with clear medical-uniform details"
+        "adult clinical nursing duty reads through a coherent scrub-and-identifier system plus an observable identifier, vitals, and handover sequence; never a costume or pin-up shorthand"
       ],
       "intent_axis": [
-        "adult nurse on duty in a clear medical uniform",
-        "professional clinical care identity",
-        "cold hospital corridor atmosphere"
+        "adult nurse verifying the patient identifier and vitals before a chart handover",
+        "clinical role proven by task, tool, setting, and coherent workwear"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
         "costume_style": [
-          "nurse_uniform_costume"
+          "clinical_nursing_scrub_duty_system"
         ],
         "location": [
-          {
-            "id": "hospital_corridor",
-            "w": 2
-          },
-          {
-            "id": "hospital_waiting_room",
-            "w": 2
-          },
-          "clinic_corridor_handover",
-          "hospital_records_room",
-          "pharmacy_dispensing_counter"
+          "active_clinical_bedside_handover_zone"
+        ],
+        "action": [
+          "nurse_patient_identifier_vitals_handover"
         ],
         "prop": [
-          "sealed_medical_chart_sleeve",
-          "clinical_chart_clipboard_prop",
-          "clinic_handover_chart_prop"
+          "clinical_identifier_chart_monitor_set"
         ],
         "composition": [
           "service_window_split_frame",
@@ -389,25 +381,17 @@
           "body display"
         ],
         "preferred_presets": [
-          "clinical_handover_vitals"
+          "clinical_nursing_duty_documentary"
         ]
       },
       "role_scene_policy": {
         "enabled": true,
         "scene_family": "clinical_care_space",
         "allowed_locations": [
-          "hospital_corridor",
-          "hospital_waiting_room",
-          "clinic_corridor_handover",
-          "hospital_records_room",
-          "pharmacy_dispensing_counter"
+          "active_clinical_bedside_handover_zone"
         ],
         "preferred_locations": [
-          "hospital_corridor",
-          "hospital_waiting_room",
-          "clinic_corridor_handover",
-          "hospital_records_room",
-          "pharmacy_dispensing_counter"
+          "active_clinical_bedside_handover_zone"
         ],
         "forbidden_locations": [
           "highland_pasture"
@@ -417,10 +401,13 @@
       }
     },
     "경찰": {
-      "preset": "police_traffic_control_documentary",
+      "preset": "police_public_safety_duty_documentary",
       "set": [
         "subject=police_officer_role",
-        "costume_style=police_uniform_costume"
+        "costume_style=police_public_safety_duty_uniform",
+        "location=controlled_public_safety_perimeter",
+        "action=police_perimeter_radio_flow_control",
+        "prop=police_radio_log_barrier_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -430,32 +417,35 @@
       "soft_min_anchors": 1,
       "anchor_terms": {
         "costume_style": [
-          "police-uniform",
-          "police",
-          "uniform"
+          "structured public-safety duty uniform",
+          "visible role identifier",
+          "duty belt and radio"
         ],
         "location": [
-          "traffic crossing",
-          "city intersection",
-          "service desk"
+          "controlled public-safety perimeter",
+          "barrier and managed pedestrian flow"
         ]
       },
       "additional": [
-        "adult police-officer duty uniform with clear uniform details"
+        "adult police duty reads through a jurisdiction-neutral uniform system, radio coordination, a controlled perimeter, and a visible incident log; no fetish costume or unsupported real insignia"
       ],
       "intent_axis": [
-        "adult police officer on duty in uniform",
-        "professional public-safety authority"
+        "adult police officer coordinating pedestrian flow and a safety perimeter by radio",
+        "public-safety role proven by task, tool, setting, and coherent workwear"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
         "costume_style": [
-          "police_uniform_costume"
+          "police_public_safety_duty_uniform"
         ],
         "location": [
-          "traffic_crossing_rain",
-          "city_intersection_night",
-          "lost_child_service_desk"
+          "controlled_public_safety_perimeter"
+        ],
+        "action": [
+          "police_perimeter_radio_flow_control"
+        ],
+        "prop": [
+          "police_radio_log_barrier_set"
         ]
       },
       "critical_anchor_slots": [
@@ -534,14 +524,10 @@
         "enabled": true,
         "scene_family": "procedural_public_safety",
         "allowed_locations": [
-          "traffic_crossing_rain",
-          "city_intersection_night",
-          "lost_child_service_desk"
+          "controlled_public_safety_perimeter"
         ],
         "preferred_locations": [
-          "traffic_crossing_rain",
-          "city_intersection_night",
-          "lost_child_service_desk"
+          "controlled_public_safety_perimeter"
         ],
         "forbidden_locations": [
           "highland_pasture"
@@ -551,7 +537,7 @@
       },
       "preset_affinity": {
         "preferred_presets": [
-          "police_traffic_control_documentary"
+          "police_public_safety_duty_documentary"
         ],
         "discouraged_presets": [
           "beastkin_threshold_portrait"
@@ -1951,12 +1937,13 @@
       "mixin_cue_budget": 2
     },
     "소방관": {
-      "preset": "firefighter_station_portrait",
+      "preset": "firefighter_protective_readiness_documentary",
       "set": [
         "subject=firefighter_role_model",
-        "costume_style=firefighter_turnout_gear_costume",
-        "location=fire_station_bay",
-        "action=holding_firefighter_helmet"
+        "costume_style=firefighter_turnout_ppe_system",
+        "location=fire_station_apparatus_check_bay",
+        "action=firefighter_scba_pressure_equipment_check",
+        "prop=firefighter_scba_gauge_tool_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -1978,10 +1965,10 @@
         ]
       },
       "additional": [
-        "adult firefighter identity stays grounded in protective turnout gear, helmet, and station bay; no disaster victims, burns, gore, or injury focus"
+        "adult firefighter duty reads through a coherent turnout-PPE system and a visible SCBA pressure-and-equipment check; no disaster victims, burns, gore, or injury focus"
       ],
       "intent_axis": [
-        "adult firefighter portrait, turnout gear, fire-station vehicle bay, calm emergency authority"
+        "adult firefighter performing a documented protective-equipment readiness check in an apparatus bay"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -1993,12 +1980,13 @@
       "mixin_cue_budget": 2
     },
     "보안요원": {
-      "preset": "security_guard_watch_portrait",
+      "preset": "private_security_access_control_documentary",
       "set": [
         "subject=security_guard_role_model",
-        "costume_style=security_guard_uniform_costume",
-        "location=security_control_room",
-        "action=checking_security_monitors"
+        "costume_style=private_security_access_control_uniform",
+        "location=controlled_facility_access_lobby",
+        "action=security_verify_credential_control_gate",
+        "prop=security_credential_reader_entry_log_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -2019,10 +2007,10 @@
         ]
       },
       "additional": [
-        "adult security-guard identity reads as surveillance work and controlled access authority, not generic dark-suit fashion"
+        "adult private-security duty reads through credential verification, a controlled entry point, a reader, and an entry log, not generic dark-suit fashion or police impersonation"
       ],
       "intent_axis": [
-        "adult security guard portrait, control room, surveillance monitors, controlled watchfulness"
+        "adult private-security worker verifying access at a controlled facility gate"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -2034,12 +2022,13 @@
       "mixin_cue_budget": 2
     },
     "요리사": {
-      "preset": "chef_kitchen_service_portrait",
+      "preset": "professional_kitchen_workflow_documentary",
       "set": [
         "subject=chef_role_model",
-        "costume_style=chef_white_coat_costume",
-        "location=professional_kitchen_pass",
-        "action=serving_from_kitchen_pass"
+        "costume_style=professional_kitchen_protective_workwear",
+        "location=professional_kitchen_pass_hygiene_station",
+        "action=chef_temperature_ticket_hygiene_check",
+        "prop=chef_thermometer_ticket_sanitation_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -2061,10 +2050,10 @@
         ]
       },
       "additional": [
-        "adult chef identity stays grounded in a real professional kitchen pass and white coat; avoid food-commercial still life replacing the person"
+        "adult chef duty reads through a temperature check, ticket flow, clean workwear, and a professional hygiene station; exact coat form varies by workplace"
       ],
       "intent_axis": [
-        "adult chef portrait, professional kitchen pass, white coat, controlled service tension"
+        "adult chef performing a temperature, ticket, and hygiene cross-check at a professional kitchen pass"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -4483,13 +4472,12 @@
       }
     },
     "호텔리어": {
-      "preset": "luxury_hotel_editorial",
+      "preset": "hotel_front_desk_service_documentary",
       "set": [
         "subject=hotelier_role_model",
-        "costume_style=hotelier_concierge_uniform",
-        "location=luxury_hotel_lobby",
-        "action=holding_hotel_keycard",
-        "prop=hotel_keycard_prop"
+        "location=hotel_front_desk_registration_zone",
+        "action=hotel_register_guest_issue_keycard",
+        "prop=hotel_keycard_reservation_terminal_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -4498,10 +4486,10 @@
       ],
       "soft_min_anchors": 2,
       "additional": [
-        "hotelier role reads through concierge uniform, keycard, and lobby service"
+        "hotel front-desk work reads through reservation verification and keycard issuance; coordinated service attire is property-specific and must not be treated as a universal uniform"
       ],
       "intent_axis": [
-        "hotelier role portrait with keycard in a hotel lobby"
+        "hotel front-desk worker verifying a reservation and issuing a keycard at the registration zone"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -4578,14 +4566,13 @@
       }
     },
     "우체부": {
-      "preset": "hand_to_hand_envelope_drop",
+      "preset": "postal_route_delivery_documentary",
       "set": [
         "subject=postal_carrier",
-        "location=home_entryway_doorstep",
-        "action=offering_prop_with_averted_gaze",
-        "prop=sealed_mission_envelope_prop",
-        "relational_action=hand_just_left_object",
-        "prop_direction=toward_partner_handoff"
+        "costume_style=postal_route_delivery_uniform_system",
+        "location=postal_route_doorstep_delivery_point",
+        "action=postal_scan_sort_deliver_route_item",
+        "prop=postal_scanner_route_mailbag_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -4594,10 +4581,10 @@
       ],
       "soft_min_anchors": 2,
       "additional": [
-        "postal carrier role reads through doorway delivery and hand-to-hand envelope exchange"
+        "postal carrier duty reads through route sorting or scanning, a route mailbag, and a delivery point; exact issued garments vary by role and employer"
       ],
       "intent_axis": [
-        "postal carrier at a doorway delivering an envelope with visible handoff direction"
+        "postal route carrier scanning and delivering a route item at a visible delivery point"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -4637,14 +4624,13 @@
       }
     },
     "응급구조사": {
-      "preset": "field_blanket_aftercare",
+      "preset": "emergency_medical_transport_documentary",
       "set": [
         "subject=emergency_medical_technician",
-        "location=hospital_waiting_room",
-        "action=wrapping_blanket_around_partner",
-        "prop=ice_pack_wrapped_in_towel_prop",
-        "relational_action=wrapping_blanket_around_partner",
-        "safety_profile=clinical_care_profile"
+        "costume_style=emt_high_visibility_transport_uniform",
+        "location=ambulance_loading_handover_bay",
+        "action=emt_assess_secure_transport_patient",
+        "prop=emt_stretcher_monitor_medical_pack_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -4653,10 +4639,10 @@
       ],
       "soft_min_anchors": 2,
       "additional": [
-        "EMT role reads through non-graphic field aftercare and practical blanket or ice-pack support"
+        "adult EMT duty reads through a patient assessment, secured stretcher, transport monitor, medical pack, and a clear ambulance loading or handover state"
       ],
       "intent_axis": [
-        "emergency medical technician providing calm non-graphic aftercare"
+        "adult emergency medical technician assessing and securing one patient for non-graphic transport"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -5277,13 +5263,13 @@
       }
     },
     "기차 차장": {
-      "preset": "train_platform_saved_ticket_farewell",
+      "preset": "rail_platform_dispatch_documentary",
       "set": [
         "subject=train_conductor",
-        "location=train_platform_last_car",
-        "action=offering_ticket_while_looking_away",
-        "prop=train_ticket_stub_prop",
-        "relational_action=offering_ticket_while_looking_away"
+        "costume_style=rail_platform_dispatch_uniform",
+        "location=staffed_platform_dispatch_zone",
+        "action=rail_dispatch_doors_clear_ready_signal",
+        "prop=rail_dispatch_radio_indicator_baton_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -5292,10 +5278,10 @@
       ],
       "soft_min_anchors": 2,
       "additional": [
-        "train conductor role reads through platform, saved ticket, uniform service, and farewell motion"
+        "when the conductor is assigned platform-train dispatch duty, the role reads through door-clearance verification, radio coordination, and a ready-to-start signal rather than a farewell tableau"
       ],
       "intent_axis": [
-        "train conductor at the last-car platform offering a ticket stub"
+        "adult train conductor completing a platform door-clearance and ready-signal sequence"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -5561,15 +5547,13 @@
       }
     },
     "역무원": {
-      "preset": "train_platform_saved_ticket_farewell",
+      "preset": "rail_platform_dispatch_documentary",
       "set": [
         "subject=station_staff_role_model",
-        "costume_style=station_staff_uniform",
-        "location=train_station_staff_room",
-        "action=checking_ticket_gate_pose",
-        "prop=ticket_punch_prop",
-        "composition=through_doorway_deep_frame",
-        "mood=wandering_loneliness"
+        "costume_style=rail_platform_dispatch_uniform",
+        "location=staffed_platform_dispatch_zone",
+        "action=rail_dispatch_doors_clear_ready_signal",
+        "prop=rail_dispatch_radio_indicator_baton_set"
       ],
       "soft_anchor_slots": [
         "subject",
@@ -5579,10 +5563,10 @@
       ],
       "soft_min_anchors": 2,
       "additional": [
-        "station staff role reads through uniform, ticket punch, gate threshold, and controlled departures"
+        "platform dispatch staff reads through door-clearance verification, radio coordination, and a ready-to-start signal at the platform-train interface"
       ],
       "intent_axis": [
-        "station staff with ticket punch at a train-station threshold"
+        "adult platform dispatch staff completing a door-clearance and ready-signal sequence"
       ],
       "likeness_mode": "inspired",
       "safety_requirements": [
@@ -6164,13 +6148,13 @@
       "mixin_cue_budget": 2
     },
     "해양경찰": {
-      "preset": "storm_traffic_safety",
+      "preset": "maritime_rescue_coast_guard_documentary",
       "set": {
         "subject": "coast_guard_role_model",
-        "location": "wet_market_auction_aisle",
-        "action": "coiling_rescue_rope",
-        "prop": "rescue_rope_radio_prop",
-        "safety_profile": "procedural_authority_profile"
+        "costume_style": "coast_guard_maritime_rescue_uniform",
+        "location": "coast_guard_rescue_boat_deck",
+        "action": "coast_guard_rescue_line_recovery",
+        "prop": "coast_guard_rescue_line_lifebuoy_radio_set"
       },
       "soft_anchor_slots": [
         "subject",
@@ -6198,10 +6182,10 @@
         ]
       },
       "additional": [
-        "coast guard rescue procedure role"
+        "adult coast-guard maritime safety duty reads through flotation-compatible workwear, a rescue line and lifebuoy, radio coordination, and a visible recovery target"
       ],
       "intent_axis": [
-        "coast guard rescue procedure role"
+        "adult coast-guard worker coordinating a non-graphic rescue-line recovery from a working boat deck"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
@@ -6209,16 +6193,16 @@
           "coast_guard_role_model"
         ],
         "location": [
-          "wet_market_auction_aisle"
+          "coast_guard_rescue_boat_deck"
         ],
         "action": [
-          "coiling_rescue_rope"
+          "coast_guard_rescue_line_recovery"
         ],
         "prop": [
-          "rescue_rope_radio_prop"
+          "coast_guard_rescue_line_lifebuoy_radio_set"
         ],
-        "safety_profile": [
-          "procedural_authority_profile"
+        "costume_style": [
+          "coast_guard_maritime_rescue_uniform"
         ]
       },
       "critical_anchor_slots": [
@@ -6375,12 +6359,13 @@
       "mixin_cue_budget": 2
     },
     "철도 기관사": {
-      "preset": "night_shift_handover_corridor",
+      "preset": "rail_driver_operation_documentary",
       "set": {
         "subject": "train_driver_role_model",
-        "location": "railway_driver_cab",
-        "action": "operating_train_controls",
-        "prop": "train_control_key_prop"
+        "costume_style": "rail_driver_cab_duty_uniform",
+        "location": "active_rail_driver_cab",
+        "action": "train_driver_control_signal_crosscheck",
+        "prop": "train_cab_controller_route_display_set"
       },
       "soft_anchor_slots": [
         "subject",
@@ -6404,10 +6389,10 @@
         ]
       },
       "additional": [
-        "train driver role inside a cab"
+        "adult train-driver duty reads through a controller-position and route-signal cross-check inside an active cab, with operator documents and cab controls visible"
       ],
       "intent_axis": [
-        "train driver role inside a cab"
+        "adult train driver cross-checking the controller position against a route and signal display"
       ],
       "likeness_mode": "inspired",
       "anchor_pool": {
@@ -6415,13 +6400,16 @@
           "train_driver_role_model"
         ],
         "location": [
-          "railway_driver_cab"
+          "active_rail_driver_cab"
         ],
         "action": [
-          "operating_train_controls"
+          "train_driver_control_signal_crosscheck"
         ],
         "prop": [
-          "train_control_key_prop"
+          "train_cab_controller_route_display_set"
+        ],
+        "costume_style": [
+          "rail_driver_cab_duty_uniform"
         ]
       },
       "critical_anchor_slots": [
@@ -40635,9 +40623,462 @@
       },
       "review_gates": [{"id": "private_client_response_and_aftercare", "check": "상담자-고객의 반응 관계와 소수 큐레이션·관리 후속이 함께 읽히는가", "machine_checkable": false}],
       "mixin_cue_budget": 4
+    },
+    "노령림 구조": {
+      "set": {
+        "aesthetic_trend": "old_growth_forest_structure_aesthetic",
+        "subject": "old_growth_forest_structural_subject",
+        "action": "old_growth_gap_deadwood_regeneration",
+        "location": "old_growth_forest_gap_location",
+        "surface_material": "old_growth_deadwood_decay_surface",
+        "composition": "layered_vertical_forest_depth_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["varied large live trees, multiple canopy layers, standing snags and fallen logs"],
+        "action": ["gap light reaches patchy regeneration around deadwood in different decay stages"],
+        "composition": ["forest floor, vertical trunks and canopy layers remain readable in one depth frame"]
+      },
+      "anchor_pool": {
+        "subject": ["old_growth_forest_structural_subject"],
+        "action": ["old_growth_gap_deadwood_regeneration"],
+        "location": ["old_growth_forest_gap_location"],
+        "surface_material": ["old_growth_deadwood_decay_surface"],
+        "composition": ["layered_vertical_forest_depth_frame"]
+      },
+      "additional": ["Preserve connected stand structure: varied large trees, layered canopy, standing and fallen deadwood, patchy understory and one regeneration gap. A uniformly green plantation, one ancient tree or generic misty woods is insufficient."],
+      "intent_axis": ["old-growth stand structure rather than age styling or generic forest mood"],
+      "guide": {
+        "definition_ko": "노령림은 큰 나무 하나가 아니라 다양한 나무 크기, 다층 수관, 선 고사목, 도목, 갭과 패치형 하층식생이 함께 만드는 구조로 표현한다.",
+        "dominant_axes": ["tree_size_variation", "canopy_layers", "deadwood_states", "gap_regeneration"],
+        "anchor_guidance": "전경 도목부터 중경 줄기와 상층 수관까지 깊이를 열어 구조 소유 관계를 보여준다.",
+        "anti_patterns": ["single ancient tree", "uniform plantation", "generic green forest", "mist-only woodland"]
+      },
+      "review_gates": [{"id": "old_growth_structure_connected", "check": "다층 수관·큰 생목·선 고사목·도목·갭 갱신이 한 숲 구조로 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "습지 수문 모자이크": {
+      "set": {
+        "aesthetic_trend": "wetland_hydrology_mosaic_aesthetic",
+        "subject": "wetland_hydrology_mosaic_subject",
+        "action": "wetland_hydroperiod_vegetation_zoning",
+        "location": "wetland_shallow_channel_mosaic_location",
+        "surface_material": "wetland_hydric_soil_waterline_surface",
+        "composition": "shallow_water_patch_mosaic_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["shallow water, saturated soil and hydrophytic vegetation form one habitat mosaic"],
+        "action": ["water-depth and saturation bands organize the vegetation"],
+        "surface_material": ["dark saturated soil meets a shallow waterline and rooted emergent plants"]
+      },
+      "anchor_pool": {
+        "subject": ["wetland_hydrology_mosaic_subject"],
+        "action": ["wetland_hydroperiod_vegetation_zoning"],
+        "location": ["wetland_shallow_channel_mosaic_location"],
+        "surface_material": ["wetland_hydric_soil_waterline_surface"],
+        "composition": ["shallow_water_patch_mosaic_frame"]
+      },
+      "additional": ["Link hydrology, saturated soil and vegetation bands in the same scene. An ordinary pond, flooded lawn or reed wallpaper without shallow-water and soil relations is insufficient."],
+      "intent_axis": ["wetland hydrology visibly organizing soil and vegetation rather than water or reeds alone"],
+      "guide": {
+        "definition_ko": "습지는 얕은 또는 계절성 물, 포화 토양, 수생 적응 식생이 물 깊이와 기간에 따라 배열되는 모자이크로 표현한다.",
+        "dominant_axes": ["hydrology", "saturated_soil", "hydrophytic_vegetation", "upland_transition"],
+        "anchor_guidance": "얕은 수로·포화 패치·식생대·상부지 경계를 넓은 프레임에서 연결한다.",
+        "anti_patterns": ["ordinary pond", "flooded lawn", "reeds only", "deep open water"]
+      },
+      "review_gates": [{"id": "wetland_hydrology_soil_vegetation_connected", "check": "얕은 물·포화 토양·수생 식생대·상부지 전이가 한 수문 모자이크로 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "하천변 범람원 구배": {
+      "set": {
+        "aesthetic_trend": "riparian_floodplain_gradient_aesthetic",
+        "subject": "riparian_channel_floodplain_subject",
+        "action": "riparian_channel_floodplain_exchange",
+        "location": "riparian_active_channel_floodplain_location",
+        "surface_material": "layered_sediment_bank_surface",
+        "composition": "channel_to_upland_cross_section_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["active channel, fresh sediment surfaces, floodplain and upland form one corridor"],
+        "action": ["erosion and deposition organize floodplain levels and vegetation"],
+        "composition": ["the frame crosses from active water through bank and floodplain to drier upland"]
+      },
+      "anchor_pool": {
+        "subject": ["riparian_channel_floodplain_subject"],
+        "action": ["riparian_channel_floodplain_exchange"],
+        "location": ["riparian_active_channel_floodplain_location"],
+        "surface_material": ["layered_sediment_bank_surface"],
+        "composition": ["channel_to_upland_cross_section_frame"]
+      },
+      "additional": ["Show the active channel, eroded and freshly deposited surfaces, adjacent floodplain levels and moisture-graded vegetation. A scenic river ribbon or generic tree-lined bank is insufficient."],
+      "intent_axis": ["channel process and floodplain elevation jointly organizing the riparian corridor"],
+      "guide": {
+        "definition_ko": "하천변 회랑은 수로·침식면·신선한 퇴적톱·범람원 단구·상부지의 높이와 수분 구배로 표현한다.",
+        "dominant_axes": ["active_channel", "erosion_deposition", "floodplain_levels", "vegetation_gradient"],
+        "anchor_guidance": "수로에서 상부지까지 가로지르는 횡단 구도로 상대 높이와 수분 변화를 보존한다.",
+        "anti_patterns": ["river ribbon only", "generic wooded bank", "waterfall scene", "unrelated meadow"]
+      },
+      "review_gates": [{"id": "riparian_channel_floodplain_gradient_connected", "check": "활성 수로·침식/퇴적면·범람원·상부지 식생 구배가 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "조간대 수직 대상": {
+      "set": {
+        "aesthetic_trend": "intertidal_zonation_aesthetic",
+        "subject": "intertidal_band_subject",
+        "action": "intertidal_tide_exposure_cycle",
+        "location": "rocky_intertidal_tide_band_location",
+        "surface_material": "intertidal_wet_dry_biotic_band_surface",
+        "composition": "shore_to_sea_tidal_bands_frame",
+        "weather": "intertidal_low_tide_exposure"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition", "weather"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["high-to-low tide exposure and biological bands remain traceable"],
+        "action": ["one low-tide state exposes upper bands while the lowest zone stays submerged"],
+        "composition": ["shore-to-sea order preserves spray, high, middle and low zones"]
+      },
+      "anchor_pool": {
+        "subject": ["intertidal_band_subject"],
+        "action": ["intertidal_tide_exposure_cycle"],
+        "location": ["rocky_intertidal_tide_band_location"],
+        "surface_material": ["intertidal_wet_dry_biotic_band_surface"],
+        "composition": ["shore_to_sea_tidal_bands_frame"],
+        "weather": ["intertidal_low_tide_exposure"]
+      },
+      "additional": ["Use one internally consistent tide state and preserve vertically changing wetness, immersion and attached life. A generic rocky beach, aquarium or isolated tide pool is insufficient."],
+      "intent_axis": ["tidal exposure zonation rather than coastal scenery alone"],
+      "guide": {
+        "definition_ko": "조간대는 고조선과 저조선 사이에서 노출 시간·젖음·부착 생물·물웅덩이가 높이에 따라 달라지는 연속대로 표현한다.",
+        "dominant_axes": ["tide_limits", "exposure_gradient", "wet_dry_surface", "biological_zonation"],
+        "anchor_guidance": "해안에서 바다 방향으로 대상 순서를 추적하고 간조 상태를 전 프레임에서 일치시킨다.",
+        "anti_patterns": ["generic rocky beach", "one tide pool", "aquarium", "mixed tide states"]
+      },
+      "review_gates": [{"id": "intertidal_tide_state_and_bands_connected", "check": "고조-저조 범위·젖음 구배·웅덩이·생물대가 한 조석 상태로 일치하는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "카르스트 배수 지형": {
+      "set": {
+        "aesthetic_trend": "karst_drainage_landform_aesthetic",
+        "subject": "karst_drainage_system_subject",
+        "action": "karst_losing_stream_spring_connection",
+        "location": "karst_losing_stream_spring_location",
+        "surface_material": "karst_solution_pitted_limestone_surface",
+        "composition": "surface_to_subsurface_drainage_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["soluble rock, closed depression, losing stream, conduit and spring form one system"],
+        "action": ["surface water disappears into solution openings and reappears at a spring"],
+        "surface_material": ["solution pits, grooves and enlarged fractures follow water paths"]
+      },
+      "anchor_pool": {
+        "subject": ["karst_drainage_system_subject"],
+        "action": ["karst_losing_stream_spring_connection"],
+        "location": ["karst_losing_stream_spring_location"],
+        "surface_material": ["karst_solution_pitted_limestone_surface"],
+        "composition": ["surface_to_subsurface_drainage_frame"]
+      },
+      "additional": ["Connect surface and subsurface drainage through soluble rock landforms. A generic cave, random limestone towers, dry sinkhole or impact crater is insufficient."],
+      "intent_axis": ["dissolution landforms and groundwater drainage relation rather than limestone appearance alone"],
+      "guide": {
+        "definition_ko": "카르스트는 용해성 암석, 폐쇄 함몰, 소실천, 확대 균열·동굴 통로, 용천 재출현이 하나의 배수계로 연결될 때 성립한다.",
+        "dominant_axes": ["soluble_rock", "closed_depression", "losing_water", "conduit_resurgence"],
+        "anchor_guidance": "표면 유입과 지하 통로·출구를 같은 깊이축 또는 연속 지형으로 묶는다.",
+        "anti_patterns": ["generic cave", "limestone towers only", "impact crater", "dry depression only"]
+      },
+      "review_gates": [{"id": "karst_surface_subsurface_drainage_connected", "check": "용식 암반·폐쇄 함몰·소실수·통로·용천이 한 배수관계로 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "활동 빙하 지형": {
+      "set": {
+        "aesthetic_trend": "glacial_process_landscape_aesthetic",
+        "subject": "active_glacier_landform_subject",
+        "action": "glacier_flow_erosion_deposition_relation",
+        "location": "active_valley_glacier_margin_location",
+        "surface_material": "glacier_blue_ice_debris_banding_surface",
+        "composition": "ice_flow_valley_moraine_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["continuous valley ice, coherent crevasses, broad steep-sided valley and moraines"],
+        "action": ["crevasses and debris align to one down-valley ice flow"],
+        "composition": ["ice flow, valley walls and margin moraines share one depth axis"]
+      },
+      "anchor_pool": {
+        "subject": ["active_glacier_landform_subject"],
+        "action": ["glacier_flow_erosion_deposition_relation"],
+        "location": ["active_valley_glacier_margin_location"],
+        "surface_material": ["glacier_blue_ice_debris_banding_surface"],
+        "composition": ["ice_flow_valley_moraine_frame"]
+      },
+      "additional": ["Show a continuous flowing ice mass and the landforms it owns: coherent crevasses, glacial valley geometry and moraine debris. Snowy peaks, blue ice props or a frozen lake are insufficient."],
+      "intent_axis": ["active ice flow connected to erosion and deposition rather than cold color or snow"],
+      "guide": {
+        "definition_ko": "활동 빙하는 연속 빙체의 하향 흐름, 흐름에 맞는 크레바스, 빙식곡 형태, 가장자리 빙퇴석의 관계로 표현한다.",
+        "dominant_axes": ["continuous_ice_mass", "flow_aligned_crevasses", "glacial_valley", "moraine_deposition"],
+        "anchor_guidance": "상류-하류 축과 측퇴석을 함께 보여 빙하가 계곡과 암설을 소유하도록 한다.",
+        "anti_patterns": ["snow mountain", "frozen lake", "blue ice sculpture", "ice cave only"]
+      },
+      "review_gates": [{"id": "glacier_flow_landform_debris_connected", "check": "빙체 흐름·크레바스·빙식곡·빙퇴석이 같은 빙하 과정으로 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "풍성사구 과정": {
+      "set": {
+        "aesthetic_trend": "aeolian_dune_process_aesthetic",
+        "subject": "aeolian_dune_field_subject",
+        "action": "dune_saltation_stoss_lee_migration",
+        "location": "aeolian_dune_crosswind_location",
+        "surface_material": "dune_ripple_stoss_slipface_surface",
+        "composition": "dune_stoss_crest_slipface_frame",
+        "weather": "dune_near_ground_sand_drift"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition", "weather"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["gentle stoss slopes, sharp crests and steep lee slip faces share one wind direction"],
+        "action": ["near-ground sand crosses the crest and deposits on the lee face"],
+        "surface_material": ["ripple orientation agrees with slope asymmetry and deposition"]
+      },
+      "anchor_pool": {
+        "subject": ["aeolian_dune_field_subject"],
+        "action": ["dune_saltation_stoss_lee_migration"],
+        "location": ["aeolian_dune_crosswind_location"],
+        "surface_material": ["dune_ripple_stoss_slipface_surface"],
+        "composition": ["dune_stoss_crest_slipface_frame"],
+        "weather": ["dune_near_ground_sand_drift"]
+      },
+      "additional": ["Make wind direction coherent across stoss slope, crest, slip face, ripples and low drifting sand. A studio sand pile, beach mound or smooth fantasy desert is insufficient."],
+      "intent_axis": ["wind-built dune asymmetry and transport rather than sand quantity or desert palette"],
+      "guide": {
+        "definition_ko": "풍성사구는 완만한 풍상사면, 마루, 급한 풍하 활강사면, 정렬된 모래결과 지면 가까운 이동층이 같은 바람 방향을 가리켜야 한다.",
+        "dominant_axes": ["stoss_slope", "crest", "slip_face", "ripple_transport_alignment"],
+        "anchor_guidance": "횡풍 구도로 여러 사구의 비대칭 단면과 모래결을 비교 가능하게 한다.",
+        "anti_patterns": ["random sand pile", "beach mound", "smooth desert", "unrelated sandstorm"]
+      },
+      "review_gates": [{"id": "dune_wind_profile_transport_connected", "check": "풍상사면·마루·활강사면·모래결·이동층이 같은 바람과 퇴적 과정을 가리키는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "화산 열수지대": {
+      "set": {
+        "aesthetic_trend": "volcanic_hydrothermal_field_aesthetic",
+        "subject": "volcanic_hydrothermal_field_subject",
+        "action": "hydrothermal_vent_alteration_relation",
+        "location": "hydrothermal_vent_field_location",
+        "surface_material": "hydrothermal_altered_ground_mineral_crust_surface",
+        "composition": "vent_plume_altered_ground_frame",
+        "weather": "localized_hydrothermal_steam"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition", "weather"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["localized fumaroles, boiling pools or mudpots and altered ground form one vent field"],
+        "action": ["steam issues from fractures beside mineral alteration and deposits"],
+        "composition": ["each plume remains anchored to a visible vent opening"]
+      },
+      "anchor_pool": {
+        "subject": ["volcanic_hydrothermal_field_subject"],
+        "action": ["hydrothermal_vent_alteration_relation"],
+        "location": ["hydrothermal_vent_field_location"],
+        "surface_material": ["hydrothermal_altered_ground_mineral_crust_surface"],
+        "composition": ["vent_plume_altered_ground_frame"],
+        "weather": ["localized_hydrothermal_steam"]
+      },
+      "additional": ["Keep steam localized to visible fractures and pair it with altered ground, mineral crusts and a hot-water feature. Theatrical fog, a spa pool or glowing lava alone is insufficient."],
+      "intent_axis": ["vent-source and hydrothermal alteration relation rather than volcanic mood or steam alone"],
+      "guide": {
+        "definition_ko": "화산 열수지대는 분기공·국소 증기·끓는 물 또는 머드팟·열수변질 암석·광물 침전이 한 균열대에 연결되어야 한다.",
+        "dominant_axes": ["vent_source", "localized_steam", "hot_water_feature", "alteration_deposition"],
+        "anchor_guidance": "증기 기둥의 뿌리와 변질 지표의 경계를 같은 프레임에서 보존한다.",
+        "anti_patterns": ["theatrical fog", "spa hot spring", "lava only", "smoke machine"]
+      },
+      "review_gates": [{"id": "hydrothermal_vent_steam_alteration_connected", "check": "분기공·국소 증기·열수 특징·변질 지표가 한 열수계로 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "적란운 구조": {
+      "set": {
+        "aesthetic_trend": "convective_storm_structure_aesthetic",
+        "subject": "cumulonimbus_storm_cell_subject",
+        "action": "convective_tower_anvil_rain_outflow",
+        "location": "open_plain_full_storm_cell_location",
+        "surface_material": "storm_rain_wet_outflow_surface",
+        "composition": "full_convective_cell_outflow_frame",
+        "weather": "cumulonimbus_rain_shaft_outflow"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition", "weather"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["vertical tower, fibrous anvil, dark base, precipitation shaft and outflow form one cell"],
+        "action": ["the convective tower spreads into an anvil above localized precipitation"],
+        "surface_material": ["ground wetting and outflow effects remain tied to the rain shaft and cell"]
+      },
+      "anchor_pool": {
+        "subject": ["cumulonimbus_storm_cell_subject"],
+        "action": ["convective_tower_anvil_rain_outflow"],
+        "location": ["open_plain_full_storm_cell_location"],
+        "surface_material": ["storm_rain_wet_outflow_surface"],
+        "composition": ["full_convective_cell_outflow_frame"],
+        "weather": ["cumulonimbus_rain_shaft_outflow"]
+      },
+      "additional": ["Preserve the complete storm structure from ground outflow and rain shaft to dark base, deep tower and fibrous anvil. Dark overcast, pasted lightning or smoke is insufficient."],
+      "intent_axis": ["vertically connected cumulonimbus morphology and ground consequence rather than storm color"],
+      "guide": {
+        "definition_ko": "적란운은 큰 수직 대류탑, 섬유상 또는 줄무늬 모루, 어두운 밑면, 국소 강수축, 지상 유출 경계가 같은 셀에 연결될 때 성립한다.",
+        "dominant_axes": ["vertical_tower", "fibrous_anvil", "precipitation_shaft", "outflow_boundary"],
+        "anchor_guidance": "지평선과 구름 꼭대기를 동시에 담아 수직 구조와 지상 결과를 연결한다.",
+        "anti_patterns": ["dark overcast", "lightning icon", "smoke column", "cropped cloud top"]
+      },
+      "review_gates": [{"id": "cumulonimbus_tower_anvil_rain_outflow_connected", "check": "대류탑·섬유상 모루·강수축·돌풍전선이 한 폭풍 셀로 연결되는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "고산 수목한계 전이지대": {
+      "set": {
+        "aesthetic_trend": "alpine_treeline_ecotone_aesthetic",
+        "subject": "alpine_treeline_ecotone_subject",
+        "action": "treeline_canopy_krummholz_tundra_transition",
+        "location": "alpine_treeline_slope_location",
+        "surface_material": "treeline_wind_pruned_krummholz_surface",
+        "composition": "upslope_treeline_gradient_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["closed subalpine forest, stunted scattered trees, krummholz and treeless tundra share one slope"],
+        "action": ["tree height and spacing change gradually upslope"],
+        "surface_material": ["wind-pruned ground-hugging trees shelter in patches near rocks"]
+      },
+      "anchor_pool": {
+        "subject": ["alpine_treeline_ecotone_subject"],
+        "action": ["treeline_canopy_krummholz_tundra_transition"],
+        "location": ["alpine_treeline_slope_location"],
+        "surface_material": ["treeline_wind_pruned_krummholz_surface"],
+        "composition": ["upslope_treeline_gradient_frame"]
+      },
+      "additional": ["Show treeline as a transition zone: closed forest opens into shorter wider-spaced trees and krummholz before treeless alpine vegetation. A hard graphic line, isolated bonsai or snowy peak alone is insufficient."],
+      "intent_axis": ["continuous elevation-driven vegetation transition rather than a literal line"],
+      "guide": {
+        "definition_ko": "고산 수목한계선은 선 하나가 아니라 폐쇄 아고산림, 성긴 왜소목, 바람에 눕는 크룸홀츠, 무수목 고산 식생이 이어지는 전이지대다.",
+        "dominant_axes": ["canopy_openness", "tree_height_spacing", "krummholz", "treeless_alpine_zone"],
+        "anchor_guidance": "등고선과 평행하지 않은 상향 시선으로 나무 높이·밀도·형태의 변화를 추적한다.",
+        "anti_patterns": ["hard boundary line", "single stunted tree", "bonsai", "snowy mountain only"]
+      },
+      "review_gates": [{"id": "treeline_forest_krummholz_tundra_gradient", "check": "폐쇄 수관림·왜소목·크룸홀츠·무수목 지대가 완만한 상향 구배로 이어지는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "맹그로브 조석 뿌리 체계": {
+      "set": {
+        "aesthetic_trend": "mangrove_tidal_root_system_aesthetic",
+        "subject": "mangrove_intertidal_root_subject",
+        "action": "mangrove_roots_slow_tide_trap_sediment",
+        "location": "mangrove_tidal_channel_location",
+        "surface_material": "mangrove_prop_root_mud_sediment_surface",
+        "composition": "mangrove_water_root_canopy_depth_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["tree-owned prop roots span tidal water and muddy sediment beneath one canopy"],
+        "action": ["tidal water slows among roots and fine sediment settles"],
+        "composition": ["water, root network, trunks and canopy remain connected by depth"]
+      },
+      "anchor_pool": {
+        "subject": ["mangrove_intertidal_root_subject"],
+        "action": ["mangrove_roots_slow_tide_trap_sediment"],
+        "location": ["mangrove_tidal_channel_location"],
+        "surface_material": ["mangrove_prop_root_mud_sediment_surface"],
+        "composition": ["mangrove_water_root_canopy_depth_frame"]
+      },
+      "additional": ["Make the prop roots tree-owned and intertidal, with a coherent waterline, muddy substrate and trapped fine sediment. Tropical trees, dry exposed roots or a nontidal swamp are insufficient."],
+      "intent_axis": ["mangrove root geometry interacting with tides and sediment rather than tropical vegetation alone"],
+      "guide": {
+        "definition_ko": "맹그로브 숲은 나무에 연결된 지주근이 조석수로와 진흙 바닥을 가로지르고 물을 늦춰 미세 퇴적물을 붙잡는 체계로 표현한다.",
+        "dominant_axes": ["tree_owned_prop_roots", "tidal_waterline", "sediment_trapping", "root_canopy_continuity"],
+        "anchor_guidance": "낮은 시점으로 수선·뿌리·줄기·수관 네 층을 동시에 보인다.",
+        "anti_patterns": ["ordinary tropical trees", "dry exposed roots", "generic swamp", "floating roots"]
+      },
+      "review_gates": [{"id": "mangrove_tide_roots_sediment_connected", "check": "지주근이 나무와 조석수로에 연결되고 그 사이 퇴적 포착이 읽히는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
+    },
+    "산호초 횡단 대상": {
+      "set": {
+        "aesthetic_trend": "coral_reef_zonation_aesthetic",
+        "subject": "coral_reef_cross_shore_subject",
+        "action": "reef_flat_crest_forereef_wave_gradient",
+        "location": "coral_reef_cross_shore_location",
+        "surface_material": "reef_living_structure_sand_channel_surface",
+        "composition": "reef_flat_crest_forereef_profile_frame"
+      },
+      "soft_anchor_slots": ["aesthetic_trend", "subject", "action", "location", "surface_material", "composition"],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["sheltered reef flat, breaking crest and descending fore reef form one system"],
+        "action": ["wave energy crosses the flat, breaks at the crest and dissipates down the slope"],
+        "surface_material": ["living framework, sand patches and channels change with depth and exposure"]
+      },
+      "anchor_pool": {
+        "subject": ["coral_reef_cross_shore_subject"],
+        "action": ["reef_flat_crest_forereef_wave_gradient"],
+        "location": ["coral_reef_cross_shore_location"],
+        "surface_material": ["reef_living_structure_sand_channel_surface"],
+        "composition": ["reef_flat_crest_forereef_profile_frame"]
+      },
+      "additional": ["Keep the cross-shore order and energy-depth change from reef flat through breaking crest to fore-reef slope. A colorful aquarium, one coral head or uniform underwater garden is insufficient."],
+      "intent_axis": ["cross-shore reef morphology and wave-depth zonation rather than coral color or abundance"],
+      "guide": {
+        "definition_ko": "산호초 대상분포는 얕고 보호된 리프 플랫, 파도가 부서지는 마루, 더 깊게 내려가는 외해 사면과 각 구역의 기질·생물 변화로 표현한다.",
+        "dominant_axes": ["reef_flat", "breaking_crest", "fore_reef_slope", "depth_energy_gradient"],
+        "anchor_guidance": "분할 수면·항공·광각 수중 시점을 사용해 세 구역의 순서와 상대 깊이를 보존한다.",
+        "anti_patterns": ["aquarium", "single coral head", "uniform coral garden", "unrelated tropical fish"]
+      },
+      "review_gates": [{"id": "coral_reef_flat_crest_forereef_connected", "check": "리프 플랫·쇄파 마루·외해 사면과 깊이/에너지 변화가 한 산호초 체계로 이어지는가", "machine_checkable": false}],
+      "mixin_cue_budget": 4
     }
   },
   "aliases": {
+    "old-growth forest structure": "노령림 구조",
+    "structured old-growth forest": "노령림 구조",
+    "노령림 층위 구조": "노령림 구조",
+    "원시림 층위 구조": "노령림 구조",
+    "wetland hydrology vegetation mosaic": "습지 수문 모자이크",
+    "wetland hydrology mosaic": "습지 수문 모자이크",
+    "습지 수문 식생 모자이크": "습지 수문 모자이크",
+    "riparian channel floodplain gradient": "하천변 범람원 구배",
+    "riparian floodplain gradient": "하천변 범람원 구배",
+    "하천변 수로 범람원 구배": "하천변 범람원 구배",
+    "intertidal vertical zonation": "조간대 수직 대상",
+    "intertidal shore zonation": "조간대 수직 대상",
+    "조간대 수직 대상분포": "조간대 수직 대상",
+    "karst surface subsurface drainage": "카르스트 배수 지형",
+    "karst drainage landscape": "카르스트 배수 지형",
+    "카르스트 지표 지하 배수": "카르스트 배수 지형",
+    "active glacier flow landform": "활동 빙하 지형",
+    "glacial erosion deposition landscape": "활동 빙하 지형",
+    "활동 빙하 흐름 지형": "활동 빙하 지형",
+    "aeolian dune wind structure": "풍성사구 과정",
+    "aeolian dune process": "풍성사구 과정",
+    "풍성 사구 바람 구조": "풍성사구 과정",
+    "volcanic hydrothermal field process": "화산 열수지대",
+    "volcanic hydrothermal field": "화산 열수지대",
+    "화산 열수지대 과정": "화산 열수지대",
+    "cumulonimbus convective storm structure": "적란운 구조",
+    "convective storm structure": "적란운 구조",
+    "적란운 대류 폭풍 구조": "적란운 구조",
+    "alpine treeline ecotone gradient": "고산 수목한계 전이지대",
+    "alpine treeline transition": "고산 수목한계 전이지대",
+    "고산 수목한계선 생태 구배": "고산 수목한계 전이지대",
+    "mangrove intertidal root sediment system": "맹그로브 조석 뿌리 체계",
+    "mangrove tidal root system": "맹그로브 조석 뿌리 체계",
+    "맹그로브 조간대 뿌리 퇴적 체계": "맹그로브 조석 뿌리 체계",
+    "coral reef cross-shore zonation": "산호초 횡단 대상",
+    "coral reef zonation profile": "산호초 횡단 대상",
+    "산호초 횡단 대상분포": "산호초 횡단 대상",
     "quiet luxury": "콰이어트 럭셔리",
     "discreet luxury": "콰이어트 럭셔리",
     "understated luxury": "콰이어트 럭셔리",

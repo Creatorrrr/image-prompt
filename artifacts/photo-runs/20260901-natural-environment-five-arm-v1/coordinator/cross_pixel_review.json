@@ -1,0 +1,177 @@
+{
+  "schema_version": "photo-natural-environment-coordinator-cross-review/v1",
+  "reviewer": "root coordinator direct pixel review",
+  "reviewed_at": "2026-09-01",
+  "method": {
+    "same_saved_image_per_arm": true,
+    "native_review": "view_image detail=original on every exact saved render",
+    "thumbnail_review": "whole-frame legibility checked on the same image; arm-provided deterministic thumbnails were used where present",
+    "partial_is_fail": true,
+    "prompt_text_is_not_pixel_evidence": true,
+    "identity_boundary": "Only visible general adult appearance continuity was reviewed. No same-person or biometric identity claim was made."
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01",
+      "keyword": "cumulonimbus convective storm structure",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-01/render.png",
+        "sha256": "fd7ed9c27e9fa079a20a99f9692fb55551c70b019b3ae609ed40e01e986b06c8",
+        "width": 1122,
+        "height": 1402
+      },
+      "target_gates": {
+        "vo_natural_cumulonimbus_dark_base": "pass",
+        "vo_natural_cumulonimbus_tower": "pass",
+        "vo_natural_cumulonimbus_anvil": "pass",
+        "vo_natural_cumulonimbus_precipitation": "pass",
+        "vo_natural_cumulonimbus_non_inference": "pass"
+      },
+      "target_evidence": "The same storm body has a broad dark base, a continuous cauliflower tower, a high spreading fibrous canopy, and rain shafts reaching the basin; lightning or smoke is not doing the semantic work.",
+      "shared_gates": {
+        "shared_single_saved_image": "pass",
+        "shared_environment_primary_legibility": "pass",
+        "shared_reference_appearance_continuity": "pass",
+        "shared_reference_non_occlusion": "pass",
+        "shared_photographic_coherence": "pass"
+      },
+      "keyword_verdict": "pass",
+      "strict_test_case_verdict": "pass",
+      "coordinator_agrees_with_arm_reviewer": true
+    },
+    {
+      "arm_id": "arm-02",
+      "keyword": "karst surface subsurface drainage",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-02/render.png",
+        "sha256": "0726cf2688254aaee21d097b3bb28f516258e2e4e39ea3a1589e88b44dabc4da",
+        "width": 1536,
+        "height": 1024
+      },
+      "target_gates": {
+        "vo_natural_karst_solution_rock": "pass",
+        "vo_natural_karst_closed_depression": "pass",
+        "vo_natural_karst_losing_stream": "pass",
+        "vo_natural_karst_resurgence": "pass",
+        "vo_natural_karst_non_inference": "pass"
+      },
+      "target_evidence": "Jointed solution-weathered rock owns the terrain; a closed bowl, a foreground stream entering a swallow opening, and a separate cave-mouth spring are simultaneously visible without pretending to expose the hidden route.",
+      "shared_gates": {
+        "shared_single_saved_image": "pass",
+        "shared_environment_primary_legibility": "pass",
+        "shared_reference_appearance_continuity": "pass",
+        "shared_reference_non_occlusion": "pass",
+        "shared_photographic_coherence": "pass"
+      },
+      "keyword_verdict": "pass",
+      "supplemental_full_prompt_gate": {
+        "id": "placing_two_red_flow_markers",
+        "status": "fail",
+        "evidence": "Both red markers are already planted while the subject's hands rest near the knees, so active placement is not visible."
+      },
+      "strict_test_case_verdict": "fail",
+      "coordinator_agrees_with_arm_reviewer": true
+    },
+    {
+      "arm_id": "arm-03",
+      "keyword": "old-growth forest structure",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-03/render.png",
+        "sha256": "20d4c269617b06545aeb837fec50a488ccfa87634791766fbefd239dcb60d0b2",
+        "width": 1536,
+        "height": 1024
+      },
+      "target_gates": {
+        "vo_natural_old_growth_cohorts": "pass",
+        "vo_natural_old_growth_canopy_layers": "pass",
+        "vo_natural_old_growth_standing_snag": "pass",
+        "vo_natural_old_growth_fallen_log": "pass",
+        "vo_natural_old_growth_non_inference": "pass"
+      },
+      "target_evidence": "Massive and smaller live-tree cohorts, separated canopy and understory tiers, a central broken standing snag, and person-scaled fallen logs in ground contact form one complete non-plantation structure.",
+      "shared_gates": {
+        "shared_single_saved_image": "pass",
+        "shared_environment_primary_legibility": "pass",
+        "shared_reference_appearance_continuity": "fail",
+        "shared_reference_non_occlusion": "pass",
+        "shared_photographic_coherence": "pass"
+      },
+      "shared_failure_evidence": "The subject is adult and has long dark softly waved hair, but the face is too small at thumbnail scale and remains downward-looking at native scale; general facial-appearance continuity cannot be established at both required scales.",
+      "keyword_verdict": "pass",
+      "strict_test_case_verdict": "fail",
+      "coordinator_agrees_with_arm_reviewer": true
+    },
+    {
+      "arm_id": "arm-04",
+      "keyword": "aeolian dune wind structure",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-04/render.png",
+        "sha256": "8b12f6a1897c2481c5cc7b9eaac5d7dcf0297602d56be8b90b8362fa6e996bf9",
+        "width": 1672,
+        "height": 941
+      },
+      "target_gates": {
+        "vo_natural_dune_stoss_slope": "pass",
+        "vo_natural_dune_crest": "pass",
+        "vo_natural_dune_slipface": "pass",
+        "vo_natural_dune_ripples": "pass",
+        "vo_natural_dune_non_inference": "pass"
+      },
+      "target_evidence": "A long gentle stoss face rises to one narrow continuous crest; the same crest drops into a steeper smooth lee face, while coherent fine ripples cross the stoss surface.",
+      "shared_gates": {
+        "shared_single_saved_image": "pass",
+        "shared_environment_primary_legibility": "pass",
+        "shared_reference_appearance_continuity": "pass",
+        "shared_reference_non_occlusion": "pass",
+        "shared_photographic_coherence": "pass"
+      },
+      "keyword_verdict": "pass",
+      "strict_test_case_verdict": "pass",
+      "coordinator_agrees_with_arm_reviewer": true
+    },
+    {
+      "arm_id": "arm-05",
+      "keyword": "alpine treeline ecotone gradient",
+      "image": {
+        "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-05/render.png",
+        "sha256": "6840602b277c8bcc5b3b84a14337c33e5389bf4f76609e9c4739bdb772cb0297",
+        "width": 1537,
+        "height": 1023
+      },
+      "target_gates": {
+        "vo_natural_treeline_lower_forest": "pass",
+        "vo_natural_treeline_sparse_transition": "pass",
+        "vo_natural_treeline_krummholz": "pass",
+        "vo_natural_treeline_tundra": "pass",
+        "vo_natural_treeline_non_inference": "pass"
+      },
+      "target_evidence": "The same upslope view contains dense lower forest, progressively shorter and wider-spaced upright trees, a low wind-shaped woody band, and treeless upper ground in order.",
+      "shared_gates": {
+        "shared_single_saved_image": "pass",
+        "shared_environment_primary_legibility": "pass",
+        "shared_reference_appearance_continuity": "pass",
+        "shared_reference_non_occlusion": "pass",
+        "shared_photographic_coherence": "pass"
+      },
+      "keyword_verdict": "pass",
+      "strict_test_case_verdict": "pass",
+      "coordinator_agrees_with_arm_reviewer": true
+    }
+  ],
+  "summary": {
+    "generated_images": 5,
+    "built_in_image_calls": 5,
+    "semantic_or_pixel_retries": 0,
+    "target_gates_passed": 25,
+    "target_gates_total": 25,
+    "keyword_qualified_arms": 5,
+    "keyword_total_arms": 5,
+    "shared_gates_passed": 24,
+    "shared_gates_total": 25,
+    "protocol_technical_pass_arms": 4,
+    "protocol_technical_total_arms": 5,
+    "strict_full_test_case_pass_arms": 3,
+    "strict_full_test_case_total_arms": 5,
+    "user_judgment": "pending"
+  }
+}

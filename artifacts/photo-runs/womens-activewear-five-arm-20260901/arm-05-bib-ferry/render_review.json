@@ -1,0 +1,72 @@
+{
+  "contract_version": "photo-activewear-render-review/v1",
+  "canonical_equivalent_of": "moe-render-review/v1",
+  "arm_id": "arm-05-bib-ferry",
+  "pack_id": "29fcb7caa0807196",
+  "profile_id": "cycling_bib_shorts_strap_pad_continuity",
+  "target_keyword": "cycling bib shorts",
+  "randomized_complex_concept": "fogbound ferry bicycle checkpoint with salt-spray deck lights",
+  "image_state": {
+    "status": "no_image",
+    "tool_status": "safety_block",
+    "image_call_count": 1,
+    "image_path": null,
+    "image_sha256": null,
+    "thumbnail_path": null,
+    "thumbnail_sha256": null,
+    "reason": "The exactly-one built-in image_gen call was blocked at the output moderation stage and returned no image bytes or path."
+  },
+  "strict_pixel_verdict": "unscored",
+  "verdict_rule": {
+    "all_required_in_one_saved_image": "pass",
+    "partial_or_missing": "fail",
+    "blocked_or_no_image": "unscored",
+    "user_judgment": "pending"
+  },
+  "hard_gates": [
+    {
+      "id": "vo_activewear_bib_fitted_shorts",
+      "review_scale": "thumbnail",
+      "status": "unscored",
+      "evidence": "No saved image or thumbnail exists, so two coherent thigh-length cycling-short legs cannot be inspected."
+    },
+    {
+      "id": "vo_activewear_bib_upper_continuity",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No saved image exists at thumbnail or native scale, so short-to-upper-bib continuity cannot be inspected."
+    },
+    {
+      "id": "vo_activewear_bib_two_straps",
+      "review_scale": "both",
+      "status": "unscored",
+      "evidence": "No saved image exists at thumbnail or native scale, so two garment-owned shoulder straps cannot be inspected."
+    },
+    {
+      "id": "vo_activewear_bib_pad_or_context",
+      "review_scale": "native",
+      "status": "unscored",
+      "evidence": "No native image exists, so the saddle-pad region or rider-to-bicycle context cannot be inspected."
+    },
+    {
+      "id": "vo_activewear_bib_not_suspenders_or_unitard",
+      "review_scale": "native",
+      "status": "unscored",
+      "evidence": "No native image exists, so purpose-built bib-short topology versus suspenders, overalls, ordinary shorts, or unitard substitutes cannot be inspected."
+    }
+  ],
+  "scene_preservation": {
+    "status": "unscored",
+    "evidence": "No rendered pixels exist for the ferry checkpoint, bicycle, salt spray, fog, or deck lights."
+  },
+  "appearance_continuity": {
+    "status": "unscored",
+    "evidence": "No rendered face or hair exists to compare with the supplied appearance reference.",
+    "boundary": "Adult facial, hair, and general-appearance continuity only; no biometric identity, protected-trait, health, attractiveness, nationality, ethnicity, or same-person claim."
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  },
+  "representative_eligible": false
+}

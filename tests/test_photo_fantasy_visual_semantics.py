@@ -314,6 +314,45 @@ class PhotoFantasyVisualSemanticsTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
 
+    def test_visual_intent_rejects_underlength_frozen_binding_before_pack(self):
+        short_binding = (
+            "one complete humanoid or creature body is assembled from nonliving material"
+        )
+        payload = {
+            "contract_version": "photo-visual-intent/v1",
+            "provenance": "agent_prepack",
+            "obligations": [
+                {
+                    "profile_id": "golem_constructed_material_agency",
+                    "source": "agent_postcore_interpretation",
+                    "scope": "request_only",
+                    "source_text": "frozen golem interpretation",
+                    "bindings": {"body_phrase": short_binding},
+                }
+            ],
+        }
+        with self.assertRaisesRegex(ValueError, "content words but requires at least"):
+            prompt_generator.normalize_visual_intent(payload, self.registry)
+
+        payload["obligations"][0]["bindings"]["body_phrase"] = (
+            short_binding + " with fitted articulated limbs"
+        )
+        normalized = prompt_generator.normalize_visual_intent(payload, self.registry)
+        self.assertEqual(
+            normalized["obligations"][0]["bindings"]["body_phrase"],
+            short_binding + " with fitted articulated limbs",
+        )
+
+    def test_wyvern_forelimb_boundary_is_positive_geometry(self):
+        profile = self.profiles["wyvern_two_leg_wing_tail_topology"]
+        requirement = profile["evidence_requirements"]["foreleg_phrase"]
+        anchor = requirement["must_mention_any"][0]
+        self.assertEqual(prompt_generator.find_blanket_negative_directives(anchor), [])
+        self.assertGreaterEqual(
+            len(prompt_generator.visual_intent_evidence_tokens(anchor)),
+            requirement["min_content_words"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

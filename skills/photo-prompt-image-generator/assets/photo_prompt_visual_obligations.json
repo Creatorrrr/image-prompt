@@ -10969,12 +10969,12 @@
         "paraphrase_examples": ["몸통 하나에 날개 두 장과 뒷다리 두 개만 연결되고 별도 앞다리 없이 긴 꼬리가 이어지는 와이번", "one coherent body with a single head, paired wings, exactly two hind legs, no separate forelegs, and a long tail"],
         "component_semantics": {
           "minimum_component_groups": 5,
-          "required_group_ids": ["single_body", "paired_wings", "two_hind_legs", "no_forelegs", "long_tail"],
+          "required_group_ids": ["single_body", "paired_wings", "two_hind_legs", "wing_forelimb_ownership", "long_tail"],
           "groups": [
             {"id": "single_body", "any_terms": ["one head neck torso and pelvis form one coherent creature body", "머리 목 몸통과 골반이 하나의 일관된 생물 몸을 형성"]},
             {"id": "paired_wings", "any_terms": ["exactly two wings connect symmetrically near the shoulders", "정확히 두 날개가 어깨 부근에 대칭 연결"]},
             {"id": "two_hind_legs", "any_terms": ["exactly two weight-bearing hind legs descend from the pelvis", "정확히 두 개의 체중 지지 뒷다리가 골반에서 내려옴"]},
-            {"id": "no_forelegs", "any_terms": ["no separate foreleg pair appears beneath or beside the wings", "날개 아래나 옆에 별도의 앞다리 한 쌍이 없음"]},
+            {"id": "wing_forelimb_ownership", "any_terms": ["the shoulder wings occupy the forelimb positions as the only front appendage pair on the chest", "어깨 날개가 가슴의 앞쪽 부속지 한 쌍 전체를 차지함"]},
             {"id": "long_tail", "any_terms": ["one long tail continues from the pelvis without branching", "긴 꼬리 하나가 골반에서 갈라짐 없이 이어짐"]}
           ]
         },
@@ -10988,7 +10988,7 @@
         "body_phrase": {"min_content_words": 11, "must_mention_any": ["one head neck torso and pelvis form one coherent creature body"]},
         "wings_phrase": {"min_content_words": 8, "must_mention_any": ["exactly two wings connect symmetrically near the shoulders"]},
         "hind_legs_phrase": {"min_content_words": 9, "must_mention_any": ["exactly two weight-bearing hind legs descend from the pelvis"]},
-        "foreleg_phrase": {"min_content_words": 10, "must_mention_any": ["no separate foreleg pair appears beneath or beside the wings"]},
+        "foreleg_phrase": {"min_content_words": 10, "must_mention_any": ["the shoulder wings occupy the forelimb positions as the only front appendage pair on the chest"]},
         "tail_phrase": {"min_content_words": 9, "must_mention_any": ["one long tail continues from the pelvis without branching"]}
       },
       "render_gates": [
@@ -11265,6 +11265,4475 @@
         {"id": "vo_fantasy_magic_circle_not_decor", "review_scale": "both", "description": "A portal ring, rug, halo, glyph cloud, or copied ritual diagram does not substitute."}
       ],
       "reject_substitutes": ["decorative_floor_pattern", "portal_ring", "character_halo", "floating_glyph_cloud", "copied_ritual_diagram"]
+    },
+    {
+      "id": "racerback_sports_bra_strap_convergence",
+      "category": "activewear_back_strap_topology",
+      "activation": {
+        "exact_terms": [
+          "racerback sports bra",
+          "racerback bra",
+          "레이서백 스포츠브라",
+          "레이서백 브라"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A sports-bra back topology in which two separate shoulder straps converge between the shoulder blades into one narrow central Y-shaped yoke that remains connected to the lower band. The convergence and attachment distinguish it from parallel straps, a single X crossing, or a halter neck.",
+        "paraphrase_examples": [
+          "two shoulder straps converging into one central racerback yoke between the shoulder blades",
+          "양쪽 어깨 스트랩이 견갑 사이 중앙 Y형 등판으로 수렴하는 레이서백 구조",
+          "The photograph must preserve all five visible garment-owned relations for racerback sports bra in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "two_separate_shoulder_straps",
+            "central_scapular_convergence",
+            "single_y_or_narrow_back_yoke",
+            "strap_to_lower_band_continuity",
+            "parallel_crossback_halter_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "two_separate_shoulder_straps",
+              "any_terms": [
+                "two separate shoulder straps leave the left and right shoulders",
+                "both shoulder straps remain independently traceable before convergence",
+                "좌우 어깨에서 두 스트랩이 각각 시작됨"
+              ]
+            },
+            {
+              "id": "central_scapular_convergence",
+              "any_terms": [
+                "both straps visibly converge between the shoulder blades",
+                "left and right strap paths meet at the central upper back",
+                "두 스트랩이 견갑 사이 중앙에서 수렴함"
+              ]
+            },
+            {
+              "id": "single_y_or_narrow_back_yoke",
+              "any_terms": [
+                "one narrow Y-shaped racerback yoke continues below the convergence",
+                "the merged strap path forms one central back yoke",
+                "수렴점 아래로 하나의 좁은 Y형 등판이 이어짐"
+              ]
+            },
+            {
+              "id": "strap_to_lower_band_continuity",
+              "any_terms": [
+                "the central yoke remains visibly attached to the lower bra band",
+                "the back strap system connects continuously into the underband",
+                "중앙 등판이 하부 브라 밴드에 연속 연결됨"
+              ]
+            },
+            {
+              "id": "parallel_crossback_halter_confound_control",
+              "any_terms": [
+                "parallel straps, an X crossing, and a halter neck remain visibly excluded by the topology",
+                "the back structure cannot be replaced by parallel, crossed, or neck-tied straps",
+                "평행 스트랩과 X자 교차 및 홀터넥을 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "parallel two straps",
+          "single x crossback",
+          "halter neck",
+          "printed y shape",
+          "one occluded strap"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two separate shoulder straps leave the left and right shoulders",
+          "both straps visibly converge between the shoulder blades",
+          "one narrow Y-shaped racerback yoke continues below the convergence",
+          "the central yoke remains visibly attached to the lower bra band",
+          "parallel straps, an X crossing, and a halter neck remain visibly excluded by the topology"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "racerback sports bra"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use an upper-body or three-quarter rear view with both shoulders, shoulder blades, strap paths and lower band visible.",
+      "required_evidence_fields": [
+        "two_separate_shoulder_straps_phrase",
+        "central_scapular_convergence_phrase",
+        "single_y_or_narrow_back_yoke_phrase",
+        "strap_to_lower_band_continuity_phrase",
+        "parallel_crossback_halter_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "two_separate_shoulder_straps_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "two separate shoulder straps leave the left and right shoulders",
+            "both shoulder straps remain independently traceable before convergence"
+          ]
+        },
+        "central_scapular_convergence_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "both straps visibly converge between the shoulder blades",
+            "left and right strap paths meet at the central upper back"
+          ]
+        },
+        "single_y_or_narrow_back_yoke_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "one narrow Y-shaped racerback yoke continues below the convergence",
+            "the merged strap path forms one central back yoke"
+          ]
+        },
+        "strap_to_lower_band_continuity_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the central yoke remains visibly attached to the lower bra band",
+            "the back strap system connects continuously into the underband"
+          ]
+        },
+        "parallel_crossback_halter_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "parallel straps, an X crossing, and a halter neck remain visibly excluded by the topology",
+            "the back structure cannot be replaced by parallel, crossed, or neck-tied straps"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_racerback_two_straps",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that two separate shoulder straps leave the left and right shoulders without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_racerback_center_convergence",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that both straps visibly converge between the shoulder blades without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_racerback_yoke_continuity",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that one narrow Y-shaped racerback yoke continues below the convergence without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_racerback_lower_attachment",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the central yoke remains visibly attached to the lower bra band without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_racerback_not_cross_or_parallel",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that parallel straps, an X crossing, and a halter neck remain visibly excluded by the topology without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "parallel_two_straps",
+        "single_x_crossback",
+        "halter_neck",
+        "printed_y_shape",
+        "one_occluded_strap"
+      ]
+    },
+    {
+      "id": "longline_sports_bra_extended_underband",
+      "category": "activewear_bra_length_topology",
+      "activation": {
+        "exact_terms": [
+          "longline sports bra",
+          "long-line sports bra",
+          "롱라인 스포츠브라",
+          "롱라인 브라"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A sports bra whose front or cup body continues into one broad fitted underband extending over the lower ribcage. The actual bra hem must remain separate from any lower-garment waistband so a crop tank or high-rise occlusion cannot substitute for the longline construction.",
+        "paraphrase_examples": [
+          "an extended sports-bra underband continuing below the cups over the lower ribcage",
+          "컵 아래에서 하부 갈비뼈까지 이어지는 넓은 롱라인 언더밴드",
+          "The photograph must preserve all five visible garment-owned relations for longline sports bra in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "sports_bra_upper_body",
+            "cup_or_front_panel_lower_edge",
+            "extended_ribcage_underband",
+            "one_garment_continuity",
+            "crop_tank_high_waist_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "sports_bra_upper_body",
+              "any_terms": [
+                "the upper garment reads clearly as one fitted sports bra",
+                "a neckline, armholes, straps, and bra front form one upper unit",
+                "상의가 하나의 밀착 스포츠브라로 읽힘"
+              ]
+            },
+            {
+              "id": "cup_or_front_panel_lower_edge",
+              "any_terms": [
+                "the lower edge of the cups or front bra panel remains visible",
+                "the bra body has a readable lower boundary above the extension",
+                "컵 또는 전면 패널의 하단 경계가 보임"
+              ]
+            },
+            {
+              "id": "extended_ribcage_underband",
+              "any_terms": [
+                "a broad fitted underband extends downward over the lower ribcage",
+                "the underband is visibly deeper than a standard narrow bra band",
+                "넓은 언더밴드가 하부 갈비뼈까지 연장됨"
+              ]
+            },
+            {
+              "id": "one_garment_continuity",
+              "any_terms": [
+                "the bra body and extended underband remain one continuous garment",
+                "no layer break separates the bra front from the longline band",
+                "브라 몸판과 연장 밴드가 한 의복으로 이어짐"
+              ]
+            },
+            {
+              "id": "crop_tank_high_waist_confound_control",
+              "any_terms": [
+                "a crop tank or high-rise waistband cannot substitute for the extended bra band",
+                "the bra hem stays visibly separate from the lower garment waistband",
+                "크롭 탱크와 하이라이즈 허리밴드 가림을 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "standard narrow bra band",
+          "separate crop tank",
+          "high waist legging occlusion",
+          "torso crop hiding hem",
+          "color block without extended band"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the upper garment reads clearly as one fitted sports bra",
+          "the lower edge of the cups or front bra panel remains visible",
+          "a broad fitted underband extends downward over the lower ribcage",
+          "the bra body and extended underband remain one continuous garment",
+          "a crop tank or high-rise waistband cannot substitute for the extended bra band"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "longline sports bra"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the full bra from neckline through the lower ribcage and keep the waistband of any lower garment separated from the bra hem.",
+      "required_evidence_fields": [
+        "sports_bra_upper_body_phrase",
+        "cup_or_front_panel_lower_edge_phrase",
+        "extended_ribcage_underband_phrase",
+        "one_garment_continuity_phrase",
+        "crop_tank_high_waist_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "sports_bra_upper_body_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the upper garment reads clearly as one fitted sports bra",
+            "a neckline, armholes, straps, and bra front form one upper unit"
+          ]
+        },
+        "cup_or_front_panel_lower_edge_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the lower edge of the cups or front bra panel remains visible",
+            "the bra body has a readable lower boundary above the extension"
+          ]
+        },
+        "extended_ribcage_underband_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a broad fitted underband extends downward over the lower ribcage",
+            "the underband is visibly deeper than a standard narrow bra band"
+          ]
+        },
+        "one_garment_continuity_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the bra body and extended underband remain one continuous garment",
+            "no layer break separates the bra front from the longline band"
+          ]
+        },
+        "crop_tank_high_waist_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a crop tank or high-rise waistband cannot substitute for the extended bra band",
+            "the bra hem stays visibly separate from the lower garment waistband"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_longline_bra_upper",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that the upper garment reads clearly as one fitted sports bra without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_longline_bra_lower_edge",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the lower edge of the cups or front bra panel remains visible without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_longline_bra_extended_band",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a broad fitted underband extends downward over the lower ribcage without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_longline_bra_one_unit",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that the bra body and extended underband remain one continuous garment without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_longline_bra_not_crop_or_occlusion",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a crop tank or high-rise waistband cannot substitute for the extended bra band without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "standard_narrow_bra_band",
+        "separate_crop_tank",
+        "high_waist_legging_occlusion",
+        "torso_crop_hiding_hem",
+        "color_block_without_extended_band"
+      ]
+    },
+    {
+      "id": "encapsulated_sports_bra_separate_cups",
+      "category": "activewear_bra_cup_topology",
+      "activation": {
+        "exact_terms": [
+          "encapsulation sports bra",
+          "encapsulated sports bra",
+          "인캡슐레이션 스포츠브라"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A sports-bra cup topology with separately shaped left and right cup boundaries, a readable center bridge or separator, and continuous attachment to straps and an underband. A flat compression panel, printed outlines, or lighting shadows do not establish encapsulation.",
+        "paraphrase_examples": [
+          "two separately shaped sports-bra cups joined by a readable center bridge",
+          "좌우 컵과 중심 브리지가 각각 읽히는 스포츠브라 인캡슐레이션 구조",
+          "The photograph must preserve all five visible garment-owned relations for encapsulation sports bra in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "left_cup_boundary",
+            "right_cup_boundary",
+            "center_bridge_or_separator",
+            "cup_to_band_and_strap_attachment",
+            "flat_panel_printed_cup_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "left_cup_boundary",
+              "any_terms": [
+                "the left cup has its own complete shaped boundary",
+                "the left breast volume is contained by a separately constructed cup",
+                "왼쪽 컵의 독립된 입체 경계가 보임"
+              ]
+            },
+            {
+              "id": "right_cup_boundary",
+              "any_terms": [
+                "the right cup has its own complete shaped boundary",
+                "the right breast volume is contained by a separately constructed cup",
+                "오른쪽 컵의 독립된 입체 경계가 보임"
+              ]
+            },
+            {
+              "id": "center_bridge_or_separator",
+              "any_terms": [
+                "a readable center bridge or separator divides the two cups",
+                "the two cup structures meet at a distinct central connector",
+                "두 컵 사이에 중심 브리지 또는 분리 경계가 보임"
+              ]
+            },
+            {
+              "id": "cup_to_band_and_strap_attachment",
+              "any_terms": [
+                "both cups connect coherently into the straps and lower band",
+                "cup edges terminate in a continuous bra support structure",
+                "양쪽 컵이 스트랩과 하부 밴드에 연속 연결됨"
+              ]
+            },
+            {
+              "id": "flat_panel_printed_cup_confound_control",
+              "any_terms": [
+                "a flat panel, printed outlines, or lighting shadows cannot substitute for separate cups",
+                "both cup volumes must be garment construction rather than surface graphics",
+                "평면 패널과 프린트 및 조명 그림자를 컵 구조로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "flat compression panel",
+          "printed cup outlines",
+          "lighting only cup shadow",
+          "one occluded cup",
+          "separate padding not connected to bra"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the left cup has its own complete shaped boundary",
+          "the right cup has its own complete shaped boundary",
+          "a readable center bridge or separator divides the two cups",
+          "both cups connect coherently into the straps and lower band",
+          "a flat panel, printed outlines, or lighting shadows cannot substitute for separate cups"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "encapsulation sports bra"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a neutral front or limited three-quarter upper-body view that shows both cup boundaries, the center bridge, straps and underband without deep shadows.",
+      "required_evidence_fields": [
+        "left_cup_boundary_phrase",
+        "right_cup_boundary_phrase",
+        "center_bridge_or_separator_phrase",
+        "cup_to_band_and_strap_attachment_phrase",
+        "flat_panel_printed_cup_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "left_cup_boundary_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the left cup has its own complete shaped boundary",
+            "the left breast volume is contained by a separately constructed cup"
+          ]
+        },
+        "right_cup_boundary_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the right cup has its own complete shaped boundary",
+            "the right breast volume is contained by a separately constructed cup"
+          ]
+        },
+        "center_bridge_or_separator_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a readable center bridge or separator divides the two cups",
+            "the two cup structures meet at a distinct central connector"
+          ]
+        },
+        "cup_to_band_and_strap_attachment_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "both cups connect coherently into the straps and lower band",
+            "cup edges terminate in a continuous bra support structure"
+          ]
+        },
+        "flat_panel_printed_cup_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a flat panel, printed outlines, or lighting shadows cannot substitute for separate cups",
+            "both cup volumes must be garment construction rather than surface graphics"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_encapsulation_left_cup",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that the left cup has its own complete shaped boundary without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_encapsulation_right_cup",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the right cup has its own complete shaped boundary without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_encapsulation_center_bridge",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a readable center bridge or separator divides the two cups without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_encapsulation_attachment",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that both cups connect coherently into the straps and lower band without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_encapsulation_not_flat_or_print",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a flat panel, printed outlines, or lighting shadows cannot substitute for separate cups without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "flat_compression_panel",
+        "printed_cup_outlines",
+        "lighting_only_cup_shadow",
+        "one_occluded_cup",
+        "separate_padding_not_connected_to_bra"
+      ]
+    },
+    {
+      "id": "two_in_one_running_shorts_dual_layer",
+      "category": "activewear_short_layer_topology",
+      "activation": {
+        "exact_terms": [
+          "2-in-1 running shorts",
+          "two-in-one running shorts",
+          "2-in-1 training shorts",
+          "투인원 러닝 쇼츠",
+          "투인원 쇼츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One athletic waist system supports a loose outer running-short shell and a separately readable fitted inner short with two independent leg openings. Distinct outer and inner hem levels must coexist, excluding a brief liner, a color-blocked single layer, or unrelated leggings.",
+        "paraphrase_examples": [
+          "a loose outer short shell over separately readable fitted inner shorts",
+          "루즈한 외부 쇼츠 셸과 별도 밀착 이너 쇼츠의 두 겹 구조",
+          "The photograph must preserve all five visible garment-owned relations for two-in-one running shorts in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "shared_waist_system",
+            "loose_outer_shell",
+            "separate_fitted_inner_shorts",
+            "two_distinct_hem_levels",
+            "brief_liner_color_block_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "shared_waist_system",
+              "any_terms": [
+                "one shared athletic waist system supports both short layers",
+                "the outer shell and inner short originate beneath the same waistband",
+                "하나의 허리 시스템이 두 쇼츠 층을 함께 지지함"
+              ]
+            },
+            {
+              "id": "loose_outer_shell",
+              "any_terms": [
+                "a loose outer running-short shell forms its own two-leg silhouette",
+                "the outer layer has separate lightweight front and back panels",
+                "루즈한 외부 러닝 쇼츠 셸이 별도 실루엣을 형성함"
+              ]
+            },
+            {
+              "id": "separate_fitted_inner_shorts",
+              "any_terms": [
+                "separately fitted inner shorts form two readable leg openings",
+                "the inner layer hugs both thighs as an independent short",
+                "별도 밀착 이너 쇼츠의 두 다리 개구가 보임"
+              ]
+            },
+            {
+              "id": "two_distinct_hem_levels",
+              "any_terms": [
+                "outer-shell hems and longer inner-short hems remain simultaneously visible",
+                "two independent hem levels prove the layered construction",
+                "외부 셸과 이너 쇼츠의 두 밑단 높이가 동시에 보임"
+              ]
+            },
+            {
+              "id": "brief_liner_color_block_confound_control",
+              "any_terms": [
+                "a brief liner or single-layer color block cannot substitute for fitted inner shorts",
+                "unrelated leggings and skort panels remain excluded",
+                "브리프 라이너와 단일 색 블록 및 별도 레깅스를 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "brief liner only",
+          "single layer color block",
+          "shorts over unrelated leggings",
+          "one hidden inner leg",
+          "skort outer panel"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one shared athletic waist system supports both short layers",
+          "a loose outer running-short shell forms its own two-leg silhouette",
+          "separately fitted inner shorts form two readable leg openings",
+          "outer-shell hems and longer inner-short hems remain simultaneously visible",
+          "a brief liner or single-layer color block cannot substitute for fitted inner shorts"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "two-in-one running shorts"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a full-body or waist-to-knee three-quarter stride with both outer-shell and inner-short hems visible on at least one side and the shared waist readable.",
+      "required_evidence_fields": [
+        "shared_waist_system_phrase",
+        "loose_outer_shell_phrase",
+        "separate_fitted_inner_shorts_phrase",
+        "two_distinct_hem_levels_phrase",
+        "brief_liner_color_block_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "shared_waist_system_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "one shared athletic waist system supports both short layers",
+            "the outer shell and inner short originate beneath the same waistband"
+          ]
+        },
+        "loose_outer_shell_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a loose outer running-short shell forms its own two-leg silhouette",
+            "the outer layer has separate lightweight front and back panels"
+          ]
+        },
+        "separate_fitted_inner_shorts_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "separately fitted inner shorts form two readable leg openings",
+            "the inner layer hugs both thighs as an independent short"
+          ]
+        },
+        "two_distinct_hem_levels_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "outer-shell hems and longer inner-short hems remain simultaneously visible",
+            "two independent hem levels prove the layered construction"
+          ]
+        },
+        "brief_liner_color_block_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a brief liner or single-layer color block cannot substitute for fitted inner shorts",
+            "unrelated leggings and skort panels remain excluded"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_two_in_one_shared_waist",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that one shared athletic waist system supports both short layers without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_two_in_one_outer_shell",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a loose outer running-short shell forms its own two-leg silhouette without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_two_in_one_inner_shorts",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that separately fitted inner shorts form two readable leg openings without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_two_in_one_two_hems",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that outer-shell hems and longer inner-short hems remain simultaneously visible without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_two_in_one_not_brief_or_print",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a brief liner or single-layer color block cannot substitute for fitted inner shorts without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "brief_liner_only",
+        "single_layer_color_block",
+        "shorts_over_unrelated_leggings",
+        "one_hidden_inner_leg",
+        "skort_outer_panel"
+      ]
+    },
+    {
+      "id": "split_running_shorts_side_opening",
+      "category": "activewear_short_side_topology",
+      "activation": {
+        "exact_terms": [
+          "split running shorts",
+          "side-split running shorts",
+          "스플릿 러닝 쇼츠",
+          "사이드 스플릿 쇼츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An outer running-short shell contains a real open side seam where overlapping front and back panels separate during a natural stride. The continuous opening path and panel overlap distinguish the construction from a contrast stripe, curved dolphin hem, fold shadow, or accidental tear.",
+        "paraphrase_examples": [
+          "a real side opening where overlapping front and back running-short panels separate in stride",
+          "옆선이 실제로 열리고 앞뒤 패널이 겹쳐 움직이는 스플릿 러닝 쇼츠",
+          "The photograph must preserve all five visible garment-owned relations for split running shorts in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "outer_running_short_shell",
+            "real_open_side_seam",
+            "overlapping_front_back_panels",
+            "stride_separation",
+            "stripe_dolphin_tear_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "outer_running_short_shell",
+              "any_terms": [
+                "one lightweight outer running-short shell remains fully readable",
+                "the shorts retain a coherent waistband, front, back, and hems",
+                "하나의 가벼운 외부 러닝 쇼츠 셸이 온전히 보임"
+              ]
+            },
+            {
+              "id": "real_open_side_seam",
+              "any_terms": [
+                "a real open path interrupts the side seam of the shorts",
+                "the side construction contains a visible garment opening",
+                "쇼츠 옆선에 실제로 열린 경로가 보임"
+              ]
+            },
+            {
+              "id": "overlapping_front_back_panels",
+              "any_terms": [
+                "front and back shell panels overlap along the open side",
+                "two finished panel edges remain separately traceable at the opening",
+                "열린 옆선에서 앞뒤 패널 가장자리가 겹쳐 보임"
+              ]
+            },
+            {
+              "id": "stride_separation",
+              "any_terms": [
+                "a natural stride separates the overlapping panels without tearing them",
+                "leg movement makes the intended side opening legible",
+                "자연스러운 보폭에서 겹친 패널이 손상 없이 벌어짐"
+              ]
+            },
+            {
+              "id": "stripe_dolphin_tear_confound_control",
+              "any_terms": [
+                "a side stripe, curved dolphin hem, fold shadow, or tear cannot substitute",
+                "the opening remains a finished garment construction rather than damage",
+                "옆줄과 돌핀 밑단 및 찢김을 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "contrast side stripe",
+          "curved dolphin hem only",
+          "fabric tear",
+          "fold shadow",
+          "closed pose hiding opening"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one lightweight outer running-short shell remains fully readable",
+          "a real open path interrupts the side seam of the shorts",
+          "front and back shell panels overlap along the open side",
+          "a natural stride separates the overlapping panels without tearing them",
+          "a side stripe, curved dolphin hem, fold shadow, or tear cannot substitute"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "split running shorts"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a side or three-quarter natural running stride that shows the open side path and overlapping front/back panels without turning the opening into a tear.",
+      "required_evidence_fields": [
+        "outer_running_short_shell_phrase",
+        "real_open_side_seam_phrase",
+        "overlapping_front_back_panels_phrase",
+        "stride_separation_phrase",
+        "stripe_dolphin_tear_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "outer_running_short_shell_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "one lightweight outer running-short shell remains fully readable",
+            "the shorts retain a coherent waistband, front, back, and hems"
+          ]
+        },
+        "real_open_side_seam_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a real open path interrupts the side seam of the shorts",
+            "the side construction contains a visible garment opening"
+          ]
+        },
+        "overlapping_front_back_panels_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "front and back shell panels overlap along the open side",
+            "two finished panel edges remain separately traceable at the opening"
+          ]
+        },
+        "stride_separation_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a natural stride separates the overlapping panels without tearing them",
+            "leg movement makes the intended side opening legible"
+          ]
+        },
+        "stripe_dolphin_tear_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a side stripe, curved dolphin hem, fold shadow, or tear cannot substitute",
+            "the opening remains a finished garment construction rather than damage"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_split_short_shell",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that one lightweight outer running-short shell remains fully readable without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_split_short_open_side",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a real open path interrupts the side seam of the shorts without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_split_short_overlap",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that front and back shell panels overlap along the open side without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_split_short_stride_path",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a natural stride separates the overlapping panels without tearing them without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_split_short_not_stripe_or_tear",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a side stripe, curved dolphin hem, fold shadow, or tear cannot substitute without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "contrast_side_stripe",
+        "curved_dolphin_hem_only",
+        "fabric_tear",
+        "fold_shadow",
+        "closed_pose_hiding_opening"
+      ]
+    },
+    {
+      "id": "active_skort_outer_skirt_inner_shorts",
+      "category": "activewear_skirt_short_layer_topology",
+      "activation": {
+        "exact_terms": [
+          "active skort",
+          "running skort",
+          "tennis skort",
+          "athletic skort",
+          "스포츠 스코트",
+          "러닝 스코트",
+          "테니스 스코트"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One shared waistband connects an outer skirt panel and separately constructed inner shorts whose two-leg layer becomes visible during a neutral step. Both layers must remain legible as one skort system rather than an ordinary skirt, shorts alone, or a separate wrap panel.",
+        "paraphrase_examples": [
+          "one shared-waist skort system with an outer skirt and inner shorts",
+          "겉 스커트와 이너 쇼츠가 한 허리에서 결합된 구조",
+          "The photograph must preserve all five visible garment-owned relations for athletic skort in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "shared_waistband",
+            "outer_skirt_panel",
+            "separate_inner_shorts",
+            "natural_reveal_of_both_layers",
+            "skirt_shorts_wrap_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "shared_waistband",
+              "any_terms": [
+                "one shared waistband visibly owns both the skirt and short layers",
+                "the outer panel and inner shorts join beneath the same waist",
+                "하나의 허리밴드가 스커트와 쇼츠 두 층을 함께 소유함"
+              ]
+            },
+            {
+              "id": "outer_skirt_panel",
+              "any_terms": [
+                "a continuous outer skirt panel wraps around the hip line",
+                "the skirt layer retains its own hem and draped panel boundary",
+                "연속된 외부 스커트 패널과 자체 밑단이 보임"
+              ]
+            },
+            {
+              "id": "separate_inner_shorts",
+              "any_terms": [
+                "separate fitted inner shorts show two independent leg openings",
+                "the inner short layer remains structurally distinct from the skirt",
+                "별도 밀착 이너 쇼츠의 두 다리 개구가 보임"
+              ]
+            },
+            {
+              "id": "natural_reveal_of_both_layers",
+              "any_terms": [
+                "a neutral step reveals both layers within the same garment system",
+                "the inner shorts appear through a natural side or stride opening",
+                "중립적인 걸음에서 두 의복 층이 동시에 드러남"
+              ]
+            },
+            {
+              "id": "skirt_shorts_wrap_confound_control",
+              "any_terms": [
+                "an ordinary skirt, shorts alone, or a separate wrap panel cannot substitute",
+                "pleat shadows and fully hidden liners remain insufficient",
+                "일반 스커트와 쇼츠 단독 및 별도 랩 패널을 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "ordinary skirt",
+          "shorts without outer skirt",
+          "separate wrap skirt",
+          "pleat shadow as inner short",
+          "fully occluded inner layer"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one shared waistband visibly owns both the skirt and short layers",
+          "a continuous outer skirt panel wraps around the hip line",
+          "separate fitted inner shorts show two independent leg openings",
+          "a neutral step reveals both layers within the same garment system",
+          "an ordinary skirt, shorts alone, or a separate wrap panel cannot substitute"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "athletic skort"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a neutral step or three-quarter court/running stance that exposes part of the inner shorts while preserving the full outer skirt panel and shared waist.",
+      "required_evidence_fields": [
+        "shared_waistband_phrase",
+        "outer_skirt_panel_phrase",
+        "separate_inner_shorts_phrase",
+        "natural_reveal_of_both_layers_phrase",
+        "skirt_shorts_wrap_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "shared_waistband_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "one shared waistband visibly owns both the skirt and short layers",
+            "the outer panel and inner shorts join beneath the same waist"
+          ]
+        },
+        "outer_skirt_panel_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a continuous outer skirt panel wraps around the hip line",
+            "the skirt layer retains its own hem and draped panel boundary"
+          ]
+        },
+        "separate_inner_shorts_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "separate fitted inner shorts show two independent leg openings",
+            "the inner short layer remains structurally distinct from the skirt"
+          ]
+        },
+        "natural_reveal_of_both_layers_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a neutral step reveals both layers within the same garment system",
+            "the inner shorts appear through a natural side or stride opening"
+          ]
+        },
+        "skirt_shorts_wrap_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "an ordinary skirt, shorts alone, or a separate wrap panel cannot substitute",
+            "pleat shadows and fully hidden liners remain insufficient"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_skort_shared_waist",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that one shared waistband visibly owns both the skirt and short layers without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_skort_outer_panel",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a continuous outer skirt panel wraps around the hip line without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_skort_inner_shorts",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that separate fitted inner shorts show two independent leg openings without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_skort_two_layers",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a neutral step reveals both layers within the same garment system without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_skort_not_skirt_or_wrap",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that an ordinary skirt, shorts alone, or a separate wrap panel cannot substitute without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "ordinary_skirt",
+        "shorts_without_outer_skirt",
+        "separate_wrap_skirt",
+        "pleat_shadow_as_inner_short",
+        "fully_occluded_inner_layer"
+      ]
+    },
+    {
+      "id": "exercise_dress_integrated_short_liner",
+      "category": "activewear_dress_liner_topology",
+      "activation": {
+        "exact_terms": [
+          "exercise dress with built-in shorts",
+          "active dress with built-in shorts",
+          "운동 드레스 내장 쇼츠",
+          "내장 쇼츠 액티브 드레스"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One active dress continues from the upper garment into an outer skirt while an integrated fitted short liner forms two readable inner legs. The liner connection and outer-inner relation distinguish it from an ordinary athletic dress worn over separate biker shorts.",
+        "paraphrase_examples": [
+          "an active dress with a continuous outer skirt and integrated fitted inner shorts",
+          "한 벌 액티브 드레스의 외부 스커트 아래 연결된 별도 이너 쇼츠",
+          "The photograph must preserve all five visible garment-owned relations for exercise dress with integrated shorts in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "continuous_dress_upper_and_skirt",
+            "integrated_inner_liner_connection",
+            "two_inner_short_legs",
+            "outer_inner_layer_relation",
+            "ordinary_dress_separate_shorts_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "continuous_dress_upper_and_skirt",
+              "any_terms": [
+                "one dress continues from the upper garment into the outer skirt",
+                "the upper body, waist, and outer skirt remain one continuous dress",
+                "상의에서 허리와 외부 스커트까지 한 드레스로 이어짐"
+              ]
+            },
+            {
+              "id": "integrated_inner_liner_connection",
+              "any_terms": [
+                "the fitted inner liner is visibly integrated into the dress waist or torso",
+                "the liner connection belongs to the same garment rather than a separate short",
+                "밀착 이너 라이너가 같은 드레스 내부에 연결됨"
+              ]
+            },
+            {
+              "id": "two_inner_short_legs",
+              "any_terms": [
+                "the integrated liner forms two separately readable fitted short legs",
+                "both inner-short hems remain traceable beneath the skirt",
+                "내장 라이너의 두 밀착 쇼츠 다리와 밑단이 보임"
+              ]
+            },
+            {
+              "id": "outer_inner_layer_relation",
+              "any_terms": [
+                "the outer skirt and inner shorts remain simultaneously readable as nested layers",
+                "a restrained step reveals the liner while preserving the full dress silhouette",
+                "외부 스커트와 이너 쇼츠의 층 관계가 동시에 보임"
+              ]
+            },
+            {
+              "id": "ordinary_dress_separate_shorts_confound_control",
+              "any_terms": [
+                "an ordinary dress over separate biker shorts cannot substitute for the integrated liner",
+                "a skort or single inner brief remains structurally different",
+                "일반 드레스와 별도 바이커 쇼츠 및 스코트를 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "ordinary athletic dress",
+          "separate biker shorts",
+          "skort without dress upper",
+          "single inner brief",
+          "hidden liner"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one dress continues from the upper garment into the outer skirt",
+          "the fitted inner liner is visibly integrated into the dress waist or torso",
+          "the integrated liner forms two separately readable fitted short legs",
+          "the outer skirt and inner shorts remain simultaneously readable as nested layers",
+          "an ordinary dress over separate biker shorts cannot substitute for the integrated liner"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "exercise dress with integrated shorts"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a full or three-quarter side step showing the complete dress silhouette and a restrained glimpse of both fitted inner-short legs under the outer skirt.",
+      "required_evidence_fields": [
+        "continuous_dress_upper_and_skirt_phrase",
+        "integrated_inner_liner_connection_phrase",
+        "two_inner_short_legs_phrase",
+        "outer_inner_layer_relation_phrase",
+        "ordinary_dress_separate_shorts_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "continuous_dress_upper_and_skirt_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "one dress continues from the upper garment into the outer skirt",
+            "the upper body, waist, and outer skirt remain one continuous dress"
+          ]
+        },
+        "integrated_inner_liner_connection_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the fitted inner liner is visibly integrated into the dress waist or torso",
+            "the liner connection belongs to the same garment rather than a separate short"
+          ]
+        },
+        "two_inner_short_legs_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the integrated liner forms two separately readable fitted short legs",
+            "both inner-short hems remain traceable beneath the skirt"
+          ]
+        },
+        "outer_inner_layer_relation_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the outer skirt and inner shorts remain simultaneously readable as nested layers",
+            "a restrained step reveals the liner while preserving the full dress silhouette"
+          ]
+        },
+        "ordinary_dress_separate_shorts_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "an ordinary dress over separate biker shorts cannot substitute for the integrated liner",
+            "a skort or single inner brief remains structurally different"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_dress_continuous_outer",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that one dress continues from the upper garment into the outer skirt without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_dress_liner_connection",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that the fitted inner liner is visibly integrated into the dress waist or torso without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_dress_two_inner_legs",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the integrated liner forms two separately readable fitted short legs without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_dress_outer_inner_relation",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the outer skirt and inner shorts remain simultaneously readable as nested layers without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_dress_not_separate_shorts",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that an ordinary dress over separate biker shorts cannot substitute for the integrated liner without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "ordinary_athletic_dress",
+        "separate_biker_shorts",
+        "skort_without_dress_upper",
+        "single_inner_brief",
+        "hidden_liner"
+      ]
+    },
+    {
+      "id": "cycling_bib_shorts_strap_pad_continuity",
+      "category": "activewear_cycling_bib_topology",
+      "activation": {
+        "exact_terms": [
+          "cycling bib shorts",
+          "bike bib shorts",
+          "사이클 빕 쇼츠",
+          "사이클링 빕 쇼츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Fitted two-leg cycling shorts continue upward into one bib torso section and two shoulder straps, with a saddle-pad region or explicit bicycle-riding context. This continuous riding system differs from clipped suspenders, fashion overalls, ordinary biker shorts, or an unqualified unitard.",
+        "paraphrase_examples": [
+          "cycling shorts continuing into shoulder straps and an upper bib section with readable saddle-pad construction",
+          "사이클 쇼츠에서 어깨 스트랩과 상부 메시·안장 패드까지 이어지는 빕 구조",
+          "The photograph must preserve all five visible garment-owned relations for cycling bib shorts in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "fitted_two_leg_cycling_shorts",
+            "short_to_upper_bib_continuity",
+            "two_shoulder_straps",
+            "saddle_pad_or_explicit_cycling_context",
+            "suspenders_unitard_overall_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "fitted_two_leg_cycling_shorts",
+              "any_terms": [
+                "fitted cycling shorts form two coherent thigh-length leg openings",
+                "both short legs retain a close riding cut and separate hems",
+                "두 개의 밀착 사이클 쇼츠 다리와 밑단이 보임"
+              ]
+            },
+            {
+              "id": "short_to_upper_bib_continuity",
+              "any_terms": [
+                "the cycling shorts continue upward into one upper bib torso section",
+                "no separate waistband break interrupts the short-to-bib connection",
+                "쇼츠에서 상부 빕 몸판까지 하나로 이어짐"
+              ]
+            },
+            {
+              "id": "two_shoulder_straps",
+              "any_terms": [
+                "two garment-owned bib straps continue over the shoulders",
+                "left and right shoulder straps connect the upper bib around the torso",
+                "빕 몸판에서 두 어깨 스트랩이 연속 연결됨"
+              ]
+            },
+            {
+              "id": "saddle_pad_or_explicit_cycling_context",
+              "any_terms": [
+                "an anatomically placed saddle-pad region or explicit bicycle-riding context remains visible",
+                "the chamois region or rider-to-bicycle relation identifies the cycling system",
+                "안장 패드 영역 또는 실제 자전거 주행 관계가 보임"
+              ]
+            },
+            {
+              "id": "suspenders_unitard_overall_confound_control",
+              "any_terms": [
+                "clipped suspenders, fashion overalls, ordinary biker shorts, or a unitard cannot substitute",
+                "the garment must remain a purpose-built bib-short system",
+                "멜빵과 오버올 및 일반 바이커 쇼츠를 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "ordinary biker shorts",
+          "clip on suspenders",
+          "fashion overalls",
+          "unitard without cycling pad or context",
+          "jersey occluding all straps"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "fitted cycling shorts form two coherent thigh-length leg openings",
+          "the cycling shorts continue upward into one upper bib torso section",
+          "two garment-owned bib straps continue over the shoulders",
+          "an anatomically placed saddle-pad region or explicit bicycle-riding context remains visible",
+          "clipped suspenders, fashion overalls, ordinary biker shorts, or a unitard cannot substitute"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "cycling bib shorts"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show a full-body or torso-to-knee cycling view with the jersey opened or omitted enough to reveal the bib straps, upper section, short legs and saddle-pad region.",
+      "required_evidence_fields": [
+        "fitted_two_leg_cycling_shorts_phrase",
+        "short_to_upper_bib_continuity_phrase",
+        "two_shoulder_straps_phrase",
+        "saddle_pad_or_explicit_cycling_context_phrase",
+        "suspenders_unitard_overall_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "fitted_two_leg_cycling_shorts_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "fitted cycling shorts form two coherent thigh-length leg openings",
+            "both short legs retain a close riding cut and separate hems"
+          ]
+        },
+        "short_to_upper_bib_continuity_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the cycling shorts continue upward into one upper bib torso section",
+            "no separate waistband break interrupts the short-to-bib connection"
+          ]
+        },
+        "two_shoulder_straps_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "two garment-owned bib straps continue over the shoulders",
+            "left and right shoulder straps connect the upper bib around the torso"
+          ]
+        },
+        "saddle_pad_or_explicit_cycling_context_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "an anatomically placed saddle-pad region or explicit bicycle-riding context remains visible",
+            "the chamois region or rider-to-bicycle relation identifies the cycling system"
+          ]
+        },
+        "suspenders_unitard_overall_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "clipped suspenders, fashion overalls, ordinary biker shorts, or a unitard cannot substitute",
+            "the garment must remain a purpose-built bib-short system"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_bib_fitted_shorts",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that fitted cycling shorts form two coherent thigh-length leg openings without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_bib_upper_continuity",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the cycling shorts continue upward into one upper bib torso section without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_bib_two_straps",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that two garment-owned bib straps continue over the shoulders without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_bib_pad_or_context",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that an anatomically placed saddle-pad region or explicit bicycle-riding context remains visible without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_bib_not_suspenders_or_unitard",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that clipped suspenders, fashion overalls, ordinary biker shorts, or a unitard cannot substitute without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "ordinary_biker_shorts",
+        "clip_on_suspenders",
+        "fashion_overalls",
+        "unitard_without_cycling_pad_or_context",
+        "jersey_occluding_all_straps"
+      ]
+    },
+    {
+      "id": "unitard_upper_crotch_leg_continuity",
+      "category": "activewear_one_piece_leg_topology",
+      "activation": {
+        "exact_terms": [
+          "short unitard",
+          "long unitard",
+          "athletic unitard",
+          "쇼트 유니타드",
+          "롱 유니타드",
+          "운동용 유니타드"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One fitted athletic garment continues from the upper body through the waist and real crotch before dividing into two fitted legs of a selected short or long length. The uninterrupted topology excludes a bodysuit with separate shorts, matching top and leggings, a dress, or a loose romper.",
+        "paraphrase_examples": [
+          "one fitted athletic unitard continuing from the upper body through the crotch into two legs",
+          "상체에서 가랑이와 두 밀착 다리까지 한 벌로 이어지는 운동용 유니타드",
+          "The photograph must preserve all five visible garment-owned relations for athletic unitard in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "upper_to_waist_continuity",
+            "waist_to_crotch_continuity",
+            "two_fitted_leg_openings",
+            "selected_short_or_long_length",
+            "bodysuit_separates_romper_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "upper_to_waist_continuity",
+              "any_terms": [
+                "the fitted upper garment and waist remain one continuous unit",
+                "torso seams continue uninterrupted into the waist",
+                "밀착 상체와 허리가 한 의복으로 연결됨"
+              ]
+            },
+            {
+              "id": "waist_to_crotch_continuity",
+              "any_terms": [
+                "the same garment continues from the waist through a visible crotch",
+                "the waist flows into one central rise without a layer break",
+                "같은 의복이 허리에서 실제 가랑이까지 이어짐"
+              ]
+            },
+            {
+              "id": "two_fitted_leg_openings",
+              "any_terms": [
+                "a visible inseam separates two fitted unitard legs",
+                "left and right leg openings move independently beneath the crotch",
+                "인심이 두 개의 밀착 유니타드 다리를 분리함"
+              ]
+            },
+            {
+              "id": "selected_short_or_long_length",
+              "any_terms": [
+                "both unitard legs keep one coherent selected short or long length",
+                "the paired hems end at matching landmarks for the chosen variant",
+                "선택한 쇼트 또는 롱 길이가 양쪽 다리에 일관됨"
+              ]
+            },
+            {
+              "id": "bodysuit_separates_romper_confound_control",
+              "any_terms": [
+                "a bodysuit with separate shorts, matching separates, a dress, or loose romper cannot substitute",
+                "the waist and crotch cannot be hidden by a cropped frame",
+                "바디수트와 별도 하의 및 루즈 롬퍼를 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "bodysuit plus separate shorts",
+          "matching top and leggings",
+          "loose romper",
+          "dress",
+          "cropped frame hiding crotch"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the fitted upper garment and waist remain one continuous unit",
+          "the same garment continues from the waist through a visible crotch",
+          "a visible inseam separates two fitted unitard legs",
+          "both unitard legs keep one coherent selected short or long length",
+          "a bodysuit with separate shorts, matching separates, a dress, or loose romper cannot substitute"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "athletic unitard"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a front or limited three-quarter full-body stance showing the upper garment, waist, crotch, inseam and both selected-length fitted legs in one uninterrupted unit.",
+      "required_evidence_fields": [
+        "upper_to_waist_continuity_phrase",
+        "waist_to_crotch_continuity_phrase",
+        "two_fitted_leg_openings_phrase",
+        "selected_short_or_long_length_phrase",
+        "bodysuit_separates_romper_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "upper_to_waist_continuity_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the fitted upper garment and waist remain one continuous unit",
+            "torso seams continue uninterrupted into the waist"
+          ]
+        },
+        "waist_to_crotch_continuity_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "the same garment continues from the waist through a visible crotch",
+            "the waist flows into one central rise without a layer break"
+          ]
+        },
+        "two_fitted_leg_openings_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a visible inseam separates two fitted unitard legs",
+            "left and right leg openings move independently beneath the crotch"
+          ]
+        },
+        "selected_short_or_long_length_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "both unitard legs keep one coherent selected short or long length",
+            "the paired hems end at matching landmarks for the chosen variant"
+          ]
+        },
+        "bodysuit_separates_romper_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "a bodysuit with separate shorts, matching separates, a dress, or loose romper cannot substitute",
+            "the waist and crotch cannot be hidden by a cropped frame"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_unitard_upper_waist",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that the fitted upper garment and waist remain one continuous unit without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_unitard_crotch_continuity",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that the same garment continues from the waist through a visible crotch without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_unitard_two_fitted_legs",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that a visible inseam separates two fitted unitard legs without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_unitard_selected_length",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that both unitard legs keep one coherent selected short or long length without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_unitard_not_separates_or_romper",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that a bodysuit with separate shorts, matching separates, a dress, or loose romper cannot substitute without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "bodysuit_plus_separate_shorts",
+        "matching_top_and_leggings",
+        "loose_romper",
+        "dress",
+        "cropped_frame_hiding_crotch"
+      ]
+    },
+    {
+      "id": "stirrup_leggings_underfoot_loop",
+      "category": "activewear_leg_hem_foot_topology",
+      "activation": {
+        "exact_terms": [
+          "stirrup leggings",
+          "stirrup tights",
+          "스터럽 레깅스",
+          "스터럽 타이츠"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Each fitted legging leg continues at the hem into a garment-owned strap that travels beneath the foot arch and reconnects. Bilateral hem-to-loop continuity distinguishes stirrup leggings from same-color socks, shoe straps, footed tights, leg warmers, or one hidden loop.",
+        "paraphrase_examples": [
+          "a strap extending from each legging hem under the arch of the foot",
+          "각 레깅스 밑단에서 발바닥 아래로 이어지는 스터럽 고리",
+          "The photograph must preserve all five visible garment-owned relations for stirrup leggings in one frame."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "fitted_legging_legs",
+            "hem_to_strap_transition",
+            "underfoot_route",
+            "left_right_consistency",
+            "sock_footed_tight_shoe_strap_confound_control"
+          ],
+          "groups": [
+            {
+              "id": "fitted_legging_legs",
+              "any_terms": [
+                "two fitted legging legs continue cleanly to the ankle hems",
+                "both lower legs remain visible with separate garment edges",
+                "두 밀착 레깅스 다리가 발목 밑단까지 이어짐"
+              ]
+            },
+            {
+              "id": "hem_to_strap_transition",
+              "any_terms": [
+                "each ankle hem visibly transitions into a narrow garment-owned strap",
+                "the strap grows directly from the legging hem on both sides",
+                "각 발목 밑단이 의복 소유의 좁은 스트랩으로 전환됨"
+              ]
+            },
+            {
+              "id": "underfoot_route",
+              "any_terms": [
+                "each strap travels visibly beneath the arch of the foot",
+                "the underfoot loop path remains traceable outside the footwear",
+                "각 스트랩이 발바닥 아치 아래로 지나가는 경로가 보임"
+              ]
+            },
+            {
+              "id": "left_right_consistency",
+              "any_terms": [
+                "left and right stirrup loops remain structurally consistent and visible",
+                "both feet show matching hem-to-loop construction",
+                "좌우 두 발에 같은 밑단-고리 구조가 보임"
+              ]
+            },
+            {
+              "id": "sock_footed_tight_shoe_strap_confound_control",
+              "any_terms": [
+                "socks, footed tights, shoe straps, or leg warmers cannot substitute for the loops",
+                "one hidden foot loop remains insufficient evidence",
+                "양말과 풋티드 타이츠 및 신발 스트랩을 대체물로 인정하지 않음"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "same color socks",
+          "shoe straps",
+          "footed tights",
+          "leg warmers",
+          "one hidden foot loop"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two fitted legging legs continue cleanly to the ankle hems",
+          "each ankle hem visibly transitions into a narrow garment-owned strap",
+          "each strap travels visibly beneath the arch of the foot",
+          "left and right stirrup loops remain structurally consistent and visible",
+          "socks, footed tights, shoe straps, or leg warmers cannot substitute for the loops"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "stirrup leggings"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a full-body or lower-leg frame with both ankle hems, bare or minimally covered feet and the under-arch strap path visible outside the shoes.",
+      "required_evidence_fields": [
+        "fitted_legging_legs_phrase",
+        "hem_to_strap_transition_phrase",
+        "underfoot_route_phrase",
+        "left_right_consistency_phrase",
+        "sock_footed_tight_shoe_strap_confound_control_phrase"
+      ],
+      "evidence_requirements": {
+        "fitted_legging_legs_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "two fitted legging legs continue cleanly to the ankle hems",
+            "both lower legs remain visible with separate garment edges"
+          ]
+        },
+        "hem_to_strap_transition_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "each ankle hem visibly transitions into a narrow garment-owned strap",
+            "the strap grows directly from the legging hem on both sides"
+          ]
+        },
+        "underfoot_route_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "each strap travels visibly beneath the arch of the foot",
+            "the underfoot loop path remains traceable outside the footwear"
+          ]
+        },
+        "left_right_consistency_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "left and right stirrup loops remain structurally consistent and visible",
+            "both feet show matching hem-to-loop construction"
+          ]
+        },
+        "sock_footed_tight_shoe_strap_confound_control_phrase": {
+          "min_content_words": 6,
+          "must_mention_any": [
+            "socks, footed tights, shoe straps, or leg warmers cannot substitute for the loops",
+            "one hidden foot loop remains insufficient evidence"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_activewear_stirrup_fitted_legs",
+          "review_scale": "thumbnail",
+          "description": "The rendered garment clearly proves that two fitted legging legs continue cleanly to the ankle hems without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_stirrup_hem_transition",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that each ankle hem visibly transitions into a narrow garment-owned strap without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_stirrup_underfoot_route",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that each strap travels visibly beneath the arch of the foot without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_stirrup_bilateral",
+          "review_scale": "both",
+          "description": "The rendered garment clearly proves that left and right stirrup loops remain structurally consistent and visible without relying on a label or hidden metadata."
+        },
+        {
+          "id": "vo_activewear_stirrup_not_sock_or_shoe",
+          "review_scale": "native",
+          "description": "The rendered garment clearly proves that socks, footed tights, shoe straps, or leg warmers cannot substitute for the loops without relying on a label or hidden metadata."
+        }
+      ],
+      "reject_substitutes": [
+        "same_color_socks",
+        "shoe_straps",
+        "footed_tights",
+        "leg_warmers",
+        "one_hidden_foot_loop"
+      ]
+    },
+    {
+      "id": "clinical_nursing_duty_system",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "clinical nurse on duty",
+          "nurse on clinical duty",
+          "nurse",
+          "임상 근무 간호사",
+          "근무 중인 간호사",
+          "간호사"
+        ],
+        "exclude_if_any_terms": [
+          "nurse costume",
+          "nurse cosplay",
+          "간호사 코스튬",
+          "간호사 코스프레"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "clinical bedside",
+            "patient identifier",
+            "vital signs",
+            "medication handover",
+            "care documentation",
+            "scrub uniform",
+            "임상 병상",
+            "환자 식별",
+            "활력 징후",
+            "간호 인계",
+            "간호 기록",
+            "스크럽 제복"
+          ],
+          "exclude_if_any_terms": [
+            "costume party",
+            "pin-up styling",
+            "hospital fashion set",
+            "코스튬 파티",
+            "핀업 스타일",
+            "병원 패션 세트"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult clinical nurse whose professional identity is proved by a coherent washable duty-uniform system, one patient-linked assessment or handover action, and a visible documented care state or immediate safe-care consequence.",
+        "paraphrase_examples": [
+          "환자 식별 정보와 활력 징후를 교차 확인하며 인계 기록을 남기는 성인 간호사",
+          "an adult bedside clinician whose clean workwear, assessment contact, and charted result agree"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "clinical_role_and_uniform",
+            "patient_linked_task",
+            "documented_care_state"
+          ],
+          "groups": [
+            {
+              "id": "clinical_role_and_uniform",
+              "any_terms": [
+                "adult clinical nurse in coherent scrub workwear",
+                "washable short-sleeved duty tunic and trousers",
+                "일관된 스크럽 근무복의 성인 간호사"
+              ]
+            },
+            {
+              "id": "patient_linked_task",
+              "any_terms": [
+                "checks patient identifier before vital-sign assessment",
+                "performs a bedside handover linked to one patient",
+                "한 환자의 식별 정보와 활력 징후를 확인"
+              ]
+            },
+            {
+              "id": "documented_care_state",
+              "any_terms": [
+                "charted reading matches the bedside monitor",
+                "handover sheet records the completed check",
+                "기록된 수치와 병상 모니터 상태가 일치"
+              ]
+            },
+            {
+              "id": "practical_infection_control",
+              "any_terms": [
+                "forearms clear for hand hygiene",
+                "clean duty clothing and visible identification placement",
+                "손 위생을 방해하지 않는 소매와 깨끗한 근무복"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a fashion portrait in nurse-inspired clothing without a patient-linked clinical task",
+          "a doctor laboratory worker or caregiver whose actual role is not visually established",
+          "a stethoscope badge or hospital corridor used as the only evidence"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult clinical nurse",
+          "coherent washable scrub system",
+          "patient identifier cross-check",
+          "bedside vital-sign assessment",
+          "documented handover consequence",
+          "task-led rather than costume-led role"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "clinical nurse"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult nurse, coherent clinical workwear, one patient-linked assessment or handover, and the matching documented care state readable together. Let the care relation carry the role while wearer fit and trouser or tunic options remain flexible.",
+      "required_evidence_fields": [
+        "clinical_nurse_uniform_phrase",
+        "patient_identifier_task_phrase",
+        "assessment_or_handover_phrase",
+        "documented_care_state_phrase",
+        "task_led_role_phrase"
+      ],
+      "evidence_requirements": {
+        "clinical_nurse_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult clinical nurse in coherent scrub workwear",
+            "adult nurse in a washable duty tunic and trousers"
+          ]
+        },
+        "patient_identifier_task_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "checks the patient identifier before assessment",
+            "links the bedside check to one identified patient"
+          ]
+        },
+        "assessment_or_handover_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "performs a bedside vital-sign assessment",
+            "conducts a patient-linked clinical handover"
+          ]
+        },
+        "documented_care_state_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "charted reading matches the bedside monitor",
+            "handover sheet records the completed check"
+          ]
+        },
+        "task_led_role_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "the patient-linked task carries the professional role",
+            "clinical procedure rather than costume styling establishes the role"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_nursing_clinical_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject and workwear first read as a clinical nurse on duty rather than a costume model or generic hospital visitor."
+        },
+        {
+          "id": "vo_nursing_uniform_system",
+          "review_scale": "both",
+          "description": "The visible scrub or tunic-and-trouser components form one practical washable duty-uniform system with coherent fit and identification placement."
+        },
+        {
+          "id": "vo_nursing_patient_linked_task",
+          "review_scale": "both",
+          "description": "One assessment or handover action is visibly linked to one identifiable patient or patient marker."
+        },
+        {
+          "id": "vo_nursing_documented_state",
+          "review_scale": "native",
+          "description": "A chart monitor or handover record visibly agrees with the completed clinical check."
+        },
+        {
+          "id": "vo_nursing_not_costume_or_prop_only",
+          "review_scale": "thumbnail",
+          "description": "A nurse-style dress stethoscope badge or corridor alone does not substitute for the clinical role relation."
+        }
+      ],
+      "reject_substitutes": [
+        "nurse_costume_or_cosplay",
+        "stethoscope_or_badge_only",
+        "hospital_corridor_without_patient_task",
+        "doctor_or_lab_worker_substitution",
+        "generic_caregiver_without_documented_clinical_state"
+      ]
+    },
+    {
+      "id": "police_public_safety_duty_system",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "police officer on duty",
+          "police duty uniform",
+          "police officer",
+          "근무 중인 경찰관",
+          "경찰 근무 제복",
+          "경찰관"
+        ],
+        "exclude_if_any_terms": [
+          "police costume",
+          "police cosplay",
+          "경찰 코스튬",
+          "경찰 코스프레"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "public safety perimeter",
+            "traffic control",
+            "incident log",
+            "radio dispatch",
+            "duty belt",
+            "공공 안전 통제",
+            "교통 통제",
+            "사건 기록",
+            "무전 지령",
+            "근무 장구"
+          ],
+          "exclude_if_any_terms": [
+            "costume party",
+            "fashion editorial",
+            "security guard",
+            "코스튬 파티",
+            "패션 화보",
+            "민간 보안요원"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult police officer whose role is visible through one coherent fictional or non-identifying duty-uniform variant, a public-safety control task, a governed person route or perimeter target, and an immediate orderly consequence.",
+        "paraphrase_examples": [
+          "무전 지령을 받으며 보행자 동선을 통제하고 안전 구역을 확보하는 성인 경찰관",
+          "an adult officer whose uniform equipment radio action and controlled public space all agree"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "coherent_duty_uniform",
+            "public_safety_action",
+            "governed_target_and_consequence"
+          ],
+          "groups": [
+            {
+              "id": "coherent_duty_uniform",
+              "any_terms": [
+                "adult officer in one coherent duty-uniform variant",
+                "matched shirt trousers footwear radio and utility belt",
+                "한 체계로 맞춰진 경찰 근무복과 장구"
+              ]
+            },
+            {
+              "id": "public_safety_action",
+              "any_terms": [
+                "directs pedestrians around a controlled perimeter",
+                "records and radios a public-safety instruction",
+                "통제 구역 주변의 보행자 동선을 지시"
+              ]
+            },
+            {
+              "id": "governed_target_and_consequence",
+              "any_terms": [
+                "pedestrians follow the opened safe route",
+                "barrier line and traffic flow visibly respond",
+                "시민이 확보된 안전 동선을 따라 이동"
+              ]
+            },
+            {
+              "id": "generic_identifier_policy",
+              "any_terms": [
+                "fictional unreadable agency identifiers",
+                "generic non-national insignia placement",
+                "실존 기관을 복제하지 않은 가상 표식"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a police-inspired fashion costume with no governed public-safety target",
+          "a private security guard at an access desk",
+          "a weapon badge patrol car or flashing lights used as the only proof"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult public-safety officer",
+          "coherent fictional duty uniform",
+          "radio and incident log relation",
+          "pedestrian or perimeter control",
+          "visible orderly consequence",
+          "non-identifying insignia"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "police officer on duty"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the adult officer, one coherent duty-uniform system, a radio or log-supported public-safety action, its governed route or perimeter target, and the immediate orderly result in one frame. Keep identifiers fictional and unreadable.",
+      "required_evidence_fields": [
+        "police_duty_uniform_phrase",
+        "public_safety_action_phrase",
+        "governed_target_phrase",
+        "orderly_consequence_phrase",
+        "fictional_identifier_phrase"
+      ],
+      "evidence_requirements": {
+        "police_duty_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult officer in one coherent duty-uniform variant",
+            "matched police duty shirt trousers footwear radio and utility belt"
+          ]
+        },
+        "public_safety_action_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "directs pedestrians around a controlled perimeter",
+            "records and radios a public-safety instruction"
+          ]
+        },
+        "governed_target_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "the barrier line and pedestrian route form the governed target",
+            "one controlled traffic lane is the visible safety target"
+          ]
+        },
+        "orderly_consequence_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "pedestrians follow the opened safe route",
+            "traffic flow visibly responds to the hand signal"
+          ]
+        },
+        "fictional_identifier_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "fictional unreadable agency identifiers",
+            "generic non-national insignia placement"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_police_duty_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject reads as an on-duty police officer responsible for public safety rather than costume fashion or private security."
+        },
+        {
+          "id": "vo_police_uniform_component_coherence",
+          "review_scale": "native",
+          "description": "Garment footwear radio utility equipment and generic identifier placement form one coherent duty-uniform variant."
+        },
+        {
+          "id": "vo_police_public_safety_action",
+          "review_scale": "both",
+          "description": "One concrete public-safety control instruction is visibly underway and connected to the officer."
+        },
+        {
+          "id": "vo_police_target_consequence",
+          "review_scale": "both",
+          "description": "The governed route perimeter person or traffic flow visibly responds to the officer action."
+        },
+        {
+          "id": "vo_police_not_costume_weapon_or_security",
+          "review_scale": "thumbnail",
+          "description": "A costume badge weapon patrol vehicle flashing light or private-security desk alone does not establish this role."
+        }
+      ],
+      "reject_substitutes": [
+        "police_costume_or_cosplay",
+        "badge_weapon_or_vehicle_only",
+        "private_security_access_control",
+        "generic_uniformed_fashion_model",
+        "real_agency_insignia_copy"
+      ]
+    },
+    {
+      "id": "firefighter_protective_response_system",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "structural firefighter on duty",
+          "firefighter response gear",
+          "firefighter",
+          "구조 소방관 근무",
+          "소방관 방화복",
+          "소방관"
+        ],
+        "exclude_if_any_terms": [
+          "firefighter costume",
+          "firefighter cosplay",
+          "소방관 코스튬",
+          "소방관 코스프레"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "turnout coat and trousers",
+            "helmet chin strap",
+            "self-contained breathing apparatus",
+            "equipment inspection",
+            "hose or rescue tool",
+            "방화복 상하의",
+            "헬멧 턱끈",
+            "공기호흡기",
+            "장비 점검",
+            "호스 또는 구조 도구"
+          ],
+          "exclude_if_any_terms": [
+            "costume party",
+            "calendar portrait",
+            "helmet fashion",
+            "코스튬 파티",
+            "달력 화보",
+            "헬멧 패션"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult firefighter whose response role is proved by a coordinated protective ensemble covering head body hands and feet, one hazard-matched equipment action, and a visible ready checked or controlled response state.",
+        "paraphrase_examples": [
+          "방화복 장갑 부츠 헬멧 공기호흡기를 연결해 점검하고 출동 준비 상태를 확인하는 성인 소방관",
+          "an adult responder whose turnout ensemble equipment contact and readiness indicator form one protective system"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "coordinated_protective_ensemble",
+            "equipment_action",
+            "response_state"
+          ],
+          "groups": [
+            {
+              "id": "coordinated_protective_ensemble",
+              "any_terms": [
+                "helmet coat trousers gloves and boots form one protective ensemble",
+                "turnout gear interfaces cleanly with breathing apparatus",
+                "헬멧 방화복 장갑 부츠가 하나의 보호 체계로 연결"
+              ]
+            },
+            {
+              "id": "equipment_action",
+              "any_terms": [
+                "checks the breathing-apparatus seal and pressure",
+                "connects a hose or rescue tool for deployment",
+                "공기호흡기 압력과 결합 상태를 점검"
+              ]
+            },
+            {
+              "id": "response_state",
+              "any_terms": [
+                "pressure gauge confirms the ready state",
+                "apparatus bay indicator shows the checked equipment ready",
+                "압력계와 출동 표시가 점검 완료 상태를 확인"
+              ]
+            },
+            {
+              "id": "mobility_and_coverage",
+              "any_terms": [
+                "wrist ankle neck and face interfaces remain protected",
+                "articulated protective coverage still permits working movement",
+                "손목 발목 목 얼굴 접점의 보호와 가동성"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a person holding a firefighter helmet in ordinary clothes",
+          "a heroic station portrait without equipment interaction",
+          "industrial workwear or military tactical gear without fire-response coherence"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult structural firefighter",
+          "coordinated turnout protective ensemble",
+          "breathing apparatus inspection",
+          "hazard-matched rescue equipment",
+          "visible ready-state confirmation",
+          "working mobility and interface coverage"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "firefighter on duty"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult responder, coordinated turnout ensemble, equipment interface, hands-on check, and resulting ready state readable together. Match the configuration to one declared fire or rescue task rather than using a helmet or station bay as shorthand.",
+      "required_evidence_fields": [
+        "firefighter_protective_ensemble_phrase",
+        "equipment_interface_phrase",
+        "hands_on_check_phrase",
+        "ready_state_consequence_phrase",
+        "task_matched_configuration_phrase"
+      ],
+      "evidence_requirements": {
+        "firefighter_protective_ensemble_phrase": {
+          "min_content_words": 5,
+          "must_mention_any": [
+            "helmet coat trousers gloves and boots form one protective ensemble",
+            "adult firefighter wears a coordinated turnout protective system"
+          ]
+        },
+        "equipment_interface_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "turnout gear interfaces cleanly with breathing apparatus",
+            "protected wrist ankle neck and face interfaces remain visible"
+          ]
+        },
+        "hands_on_check_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "checks the breathing-apparatus seal and pressure",
+            "connects the hose and verifies the rescue tool"
+          ]
+        },
+        "ready_state_consequence_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "pressure gauge confirms the ready state",
+            "checked equipment indicator shows deployment readiness"
+          ]
+        },
+        "task_matched_configuration_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "protective configuration matches the declared response task",
+            "equipment arrangement agrees with the rescue phase"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_firefighter_protective_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as a working firefighter in a protective response system rather than a helmet portrait."
+        },
+        {
+          "id": "vo_firefighter_ppe_component_system",
+          "review_scale": "both",
+          "description": "Helmet coat trousers gloves boots and breathing-equipment interfaces visibly form one coherent protective ensemble."
+        },
+        {
+          "id": "vo_firefighter_equipment_action",
+          "review_scale": "both",
+          "description": "Hands visibly inspect connect or deploy hazard-matched response equipment."
+        },
+        {
+          "id": "vo_firefighter_response_state",
+          "review_scale": "native",
+          "description": "A gauge seal indicator connection or controlled tool state visibly confirms the consequence of the check."
+        },
+        {
+          "id": "vo_firefighter_not_helmet_or_hero_only",
+          "review_scale": "thumbnail",
+          "description": "A helmet station portrait dramatic smoke or heroic pose alone does not establish the protective response role."
+        }
+      ],
+      "reject_substitutes": [
+        "firefighter_helmet_only",
+        "station_hero_portrait_without_task",
+        "industrial_or_military_gear_substitution",
+        "dramatic_smoke_without_response_relation",
+        "mismatched_or_incomplete_protective_interfaces"
+      ]
+    },
+    {
+      "id": "emergency_medical_transport_system",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "emergency medical technician on duty",
+          "paramedic transport care",
+          "emergency medical technician",
+          "응급구조사 근무",
+          "구급대원 이송 처치",
+          "응급구조사"
+        ],
+        "exclude_if_any_terms": [
+          "paramedic costume",
+          "EMT costume",
+          "구급대원 코스튬",
+          "응급구조사 코스프레"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "ambulance loading bay",
+            "patient assessment",
+            "stretcher restraint",
+            "transport monitor",
+            "handover destination",
+            "구급차 적재 구역",
+            "환자 평가",
+            "들것 고정",
+            "이송 모니터",
+            "병원 인계"
+          ],
+          "exclude_if_any_terms": [
+            "costume party",
+            "ambulance fashion",
+            "generic nurse portrait",
+            "코스튬 파티",
+            "구급차 패션",
+            "일반 간호사 포트레이트"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult out-of-hospital emergency clinician whose role is made visible by coherent high-visibility clinical workwear, one patient assessment or packaging action, transport equipment contact, and a clearly safer ready-for-transfer state.",
+        "paraphrase_examples": [
+          "환자 상태를 확인하고 들것 고정 장치와 이송 모니터를 점검해 병원 인계를 준비하는 성인 응급구조사",
+          "an adult EMT whose assessment packaging transport equipment and transfer consequence stay linked"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "field_clinician_identity",
+            "assessment_or_packaging",
+            "transport_ready_consequence"
+          ],
+          "groups": [
+            {
+              "id": "field_clinician_identity",
+              "any_terms": [
+                "adult EMT in coherent high-visibility clinical workwear",
+                "paramedic uniform interfaces with gloves radio and medical pack",
+                "고시인성 임상 근무복과 장갑 무전 의료 가방의 일관성"
+              ]
+            },
+            {
+              "id": "assessment_or_packaging",
+              "any_terms": [
+                "checks one patient and secures the stretcher restraints",
+                "assesses breathing while preparing monitored transport",
+                "한 환자의 상태를 확인하며 들것 고정 장치를 체결"
+              ]
+            },
+            {
+              "id": "transport_ready_consequence",
+              "any_terms": [
+                "monitor and restraint indicators show transfer readiness",
+                "the patient is visibly secured for ambulance loading",
+                "모니터와 고정 장치가 이송 준비 완료 상태를 표시"
+              ]
+            },
+            {
+              "id": "care_transport_relation",
+              "any_terms": [
+                "patient stretcher ambulance and hospital handover route remain connected",
+                "care action visibly leads toward a transfer destination",
+                "환자 들것 구급차 인계 목적지가 하나의 이송 관계로 연결"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a uniformed person beside an ambulance without patient assessment or transport relation",
+          "a hospital nurse or firefighter whose role is not out-of-hospital transport care",
+          "medical equipment scattered as dramatic props"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult emergency medical clinician",
+          "high-visibility clinical workwear",
+          "patient assessment and packaging",
+          "stretcher restraint contact",
+          "transport monitor readiness",
+          "ambulance-to-handover relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "emergency medical technician"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the adult field clinician, coherent clinical transport workwear, one patient assessment or packaging action, the stretcher or monitor contact, and the resulting ready-for-transfer state together. Keep the care path non-graphic and operational.",
+      "required_evidence_fields": [
+        "emt_field_uniform_phrase",
+        "patient_assessment_phrase",
+        "transport_equipment_contact_phrase",
+        "transfer_ready_state_phrase",
+        "care_transport_relation_phrase"
+      ],
+      "evidence_requirements": {
+        "emt_field_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult EMT in coherent high-visibility clinical workwear",
+            "adult paramedic wears a matched transport-care uniform"
+          ]
+        },
+        "patient_assessment_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "assesses one patient before transport",
+            "checks breathing while preparing monitored transport"
+          ]
+        },
+        "transport_equipment_contact_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "secures the stretcher restraints by hand",
+            "connects the transport monitor to the patient"
+          ]
+        },
+        "transfer_ready_state_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "monitor and restraint indicators show transfer readiness",
+            "the patient is visibly secured for ambulance loading"
+          ]
+        },
+        "care_transport_relation_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "patient stretcher ambulance and handover route remain connected",
+            "care action visibly leads toward the transfer destination"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_emt_field_clinician_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as an out-of-hospital emergency medical clinician rather than generic medical or rescue staff."
+        },
+        {
+          "id": "vo_emt_uniform_equipment_coherence",
+          "review_scale": "both",
+          "description": "High-visibility clinical workwear gloves radio medical pack stretcher and monitor form one coherent transport-care system."
+        },
+        {
+          "id": "vo_emt_patient_assessment_packaging",
+          "review_scale": "both",
+          "description": "One concrete patient assessment or packaging action is visibly underway."
+        },
+        {
+          "id": "vo_emt_transfer_ready_consequence",
+          "review_scale": "native",
+          "description": "Restraint monitor loading or handover evidence visibly confirms a safer ready-for-transfer state."
+        },
+        {
+          "id": "vo_emt_not_ambulance_or_uniform_only",
+          "review_scale": "thumbnail",
+          "description": "An ambulance uniform medical bag or emergency lighting alone does not establish patient-linked transport care."
+        }
+      ],
+      "reject_substitutes": [
+        "ambulance_or_uniform_only",
+        "generic_nurse_or_firefighter_substitution",
+        "medical_props_without_patient_relation",
+        "dramatic_emergency_lighting_without_care",
+        "unsecured_or_unreadable_transport_state"
+      ]
+    },
+    {
+      "id": "maritime_safety_coast_guard_role",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "coast guard rescue duty",
+          "maritime safety officer on duty",
+          "coast guard officer",
+          "해양경찰 구조 근무",
+          "해상 안전 요원 근무",
+          "해양경찰"
+        ],
+        "exclude_if_any_terms": [
+          "coast guard costume",
+          "naval fashion",
+          "해양경찰 코스튬",
+          "해군풍 패션"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "rescue boat deck",
+            "lifejacket",
+            "rescue line",
+            "lifebuoy",
+            "marine radio",
+            "recovery target",
+            "구조정 갑판",
+            "구명조끼",
+            "구조 로프",
+            "구명부환",
+            "해상 무전",
+            "구조 대상"
+          ],
+          "exclude_if_any_terms": [
+            "wet market",
+            "traffic intersection",
+            "navy parade",
+            "어시장",
+            "교통 교차로",
+            "해군 열병식"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult maritime-safety officer whose role is visible through coherent weather-ready duty clothing and personal flotation, one rescue-appliance or line action, a concrete person vessel or marker target, and a controlled recovery consequence on water.",
+        "paraphrase_examples": [
+          "구조정에서 구명조끼와 무전을 갖추고 구조 로프를 대상에게 연결해 회수 경로를 확보하는 성인 해양 안전 요원",
+          "an adult coast-guard responder whose flotation radio rescue line target and recovery state all agree"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "maritime_duty_system",
+            "rescue_appliance_action",
+            "water_target_and_recovery"
+          ],
+          "groups": [
+            {
+              "id": "maritime_duty_system",
+              "any_terms": [
+                "adult maritime officer in weather-ready duty clothing and flotation",
+                "lifejacket radio gloves and deck footwear form one system",
+                "방수 근무복 구명조끼 무전 장갑 갑판화의 일관성"
+              ]
+            },
+            {
+              "id": "rescue_appliance_action",
+              "any_terms": [
+                "pays out a rescue line toward the marked target",
+                "secures a lifebuoy or recovery sling to the target route",
+                "표시된 대상에게 구조 로프를 풀어 연결"
+              ]
+            },
+            {
+              "id": "water_target_and_recovery",
+              "any_terms": [
+                "the line remains connected from rescuer to water target",
+                "recovery route leads toward the rescue boat rail",
+                "구조자와 수면 대상 사이의 로프 경로가 구조정 난간으로 이어짐"
+              ]
+            },
+            {
+              "id": "maritime_state_coherence",
+              "any_terms": [
+                "sea weather boat motion and protective configuration agree",
+                "radio status and deck crew attention support the same recovery phase",
+                "해상 날씨 선박 움직임 보호 장비가 같은 구조 단계와 일치"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a naval-style fashion portrait on a dock",
+          "a traffic-police scene with a rescue rope",
+          "a lifebuoy boat or uniform used without a water target and recovery relation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult maritime-safety officer",
+          "weather-ready flotation duty system",
+          "rescue line or lifebuoy action",
+          "concrete water target",
+          "continuous recovery route",
+          "boat and sea-state coherence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "coast guard rescue officer"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult maritime responder, flotation-equipped duty clothing, rescue line or appliance, concrete water target, and controlled recovery route visible in one frame. Let the water relation establish the role instead of naval styling or a dock backdrop.",
+      "required_evidence_fields": [
+        "maritime_duty_uniform_phrase",
+        "flotation_radio_system_phrase",
+        "rescue_appliance_action_phrase",
+        "water_target_relation_phrase",
+        "controlled_recovery_phrase"
+      ],
+      "evidence_requirements": {
+        "maritime_duty_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult maritime officer in weather-ready duty clothing",
+            "adult coast-guard responder wears a coherent deck-duty uniform"
+          ]
+        },
+        "flotation_radio_system_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "lifejacket radio gloves and deck footwear form one system",
+            "personal flotation and marine radio remain visibly integrated"
+          ]
+        },
+        "rescue_appliance_action_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "pays out a rescue line toward the marked target",
+            "secures a lifebuoy to the recovery route"
+          ]
+        },
+        "water_target_relation_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "the line remains connected from rescuer to water target",
+            "one visible water target anchors the rescue action"
+          ]
+        },
+        "controlled_recovery_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "recovery route leads toward the rescue boat rail",
+            "the secured target is visibly moving into the controlled recovery zone"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_coast_guard_maritime_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as a maritime-safety responder rather than naval fashion dock staff or traffic police."
+        },
+        {
+          "id": "vo_coast_guard_flotation_duty_system",
+          "review_scale": "both",
+          "description": "Weather-ready clothing flotation radio gloves and deck footwear form one coherent maritime duty system."
+        },
+        {
+          "id": "vo_coast_guard_rescue_action",
+          "review_scale": "both",
+          "description": "One rescue line lifebuoy sling or recovery-appliance action is visibly underway."
+        },
+        {
+          "id": "vo_coast_guard_target_recovery_relation",
+          "review_scale": "both",
+          "description": "A concrete water target and continuous route to a controlled boat-side recovery consequence remain readable."
+        },
+        {
+          "id": "vo_coast_guard_not_naval_style_or_prop_only",
+          "review_scale": "thumbnail",
+          "description": "Naval styling a boat lifebuoy dock or rope alone does not establish coast-guard rescue duty."
+        }
+      ],
+      "reject_substitutes": [
+        "naval_fashion_or_parade",
+        "dock_or_boat_backdrop_only",
+        "lifebuoy_or_rope_without_target",
+        "traffic_police_with_rescue_prop",
+        "wet_market_or_nonmaritime_scene"
+      ]
+    },
+    {
+      "id": "rail_driver_operation",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "train driver operating the cab",
+          "rail driver on duty",
+          "train driver",
+          "철도 기관사 운전 근무",
+          "열차 운전실 기관사",
+          "철도 기관사"
+        ],
+        "exclude_if_any_terms": [
+          "train driver costume",
+          "rail cosplay",
+          "기관사 코스튬",
+          "철도 코스프레"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "driver cab",
+            "traction brake controller",
+            "route display",
+            "signal aspect",
+            "platform departure",
+            "운전실",
+            "주간 제어기",
+            "노선 표시",
+            "신호 현시",
+            "플랫폼 출발"
+          ],
+          "exclude_if_any_terms": [
+            "passenger seat",
+            "platform conductor",
+            "control-room simulator fashion",
+            "승객 좌석",
+            "플랫폼 차장",
+            "시뮬레이터 패션"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult train driver visibly responsible for one active cab, proved by control contact, agreement among cab indication route signal and outside track state, and an operational consequence appropriate to the current phase.",
+        "paraphrase_examples": [
+          "운전 제어기와 운전실 표시를 확인하고 전방 신호와 플랫폼 상태를 교차 점검하는 성인 철도 기관사",
+          "an adult rail operator whose hand cab displays signal and outside track state agree"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "driver_cab_identity",
+            "control_and_crosscheck",
+            "matched_route_state"
+          ],
+          "groups": [
+            {
+              "id": "driver_cab_identity",
+              "any_terms": [
+                "adult train driver seated at the active cab controls",
+                "duty uniform and operator position belong to one driver station",
+                "성인 기관사가 실제 운전대에 앉아 있음"
+              ]
+            },
+            {
+              "id": "control_and_crosscheck",
+              "any_terms": [
+                "hand on traction or brake controller while scanning the route display",
+                "checks the departure indication before moving",
+                "제동 또는 주간 제어기에 손을 두고 운전 표시를 확인"
+              ]
+            },
+            {
+              "id": "matched_route_state",
+              "any_terms": [
+                "cab indication agrees with the visible signal and track",
+                "door or departure state matches the platform view",
+                "운전실 표시와 전방 신호 선로 상태가 일치"
+              ]
+            },
+            {
+              "id": "operational_phase",
+              "any_terms": [
+                "pre-departure brake check",
+                "controlled platform departure",
+                "route-speed cross-check",
+                "출발 전 제동 점검 또는 플랫폼 출발 단계"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a passenger or uniformed portrait inside a cab set",
+          "station dispatch staff standing on the platform",
+          "generic control-room screens with no train or route-state agreement"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult train driver",
+          "active driver-cab station",
+          "traction or brake control contact",
+          "route display cross-check",
+          "signal and outside-track agreement",
+          "operational departure consequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "train driver"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult driver, active cab station, one control contact, route display, outside signal or track state, and the resulting operational phase legible together. The driver-cab relation must carry the role rather than uniform or screens alone.",
+      "required_evidence_fields": [
+        "train_driver_cab_phrase",
+        "control_contact_phrase",
+        "route_display_crosscheck_phrase",
+        "signal_track_agreement_phrase",
+        "operational_phase_phrase"
+      ],
+      "evidence_requirements": {
+        "train_driver_cab_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult train driver seated at the active cab controls",
+            "adult rail operator occupies the working driver station"
+          ]
+        },
+        "control_contact_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "hand on the traction or brake controller",
+            "hand maintains contact with the driver control"
+          ]
+        },
+        "route_display_crosscheck_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "scans the route display before departure",
+            "cross-checks the cab indication with route information"
+          ]
+        },
+        "signal_track_agreement_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "cab indication agrees with the visible signal and track",
+            "departure state matches the platform and outside view"
+          ]
+        },
+        "operational_phase_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "pre-departure brake check",
+            "controlled platform departure phase",
+            "route-speed cross-check phase"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_rail_driver_operator_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as the operator of the train from a real driver station rather than a passenger or portrait model."
+        },
+        {
+          "id": "vo_rail_driver_control_contact",
+          "review_scale": "both",
+          "description": "One hand or foot visibly contacts a primary traction brake vigilance or departure control."
+        },
+        {
+          "id": "vo_rail_driver_route_crosscheck",
+          "review_scale": "native",
+          "description": "Cab indication route information outside signal and track state agree for the depicted operational phase."
+        },
+        {
+          "id": "vo_rail_driver_cab_relationship",
+          "review_scale": "both",
+          "description": "The driver station windscreen controls and operator remain large enough to establish one active cab relation."
+        },
+        {
+          "id": "vo_rail_driver_not_passenger_or_dispatch",
+          "review_scale": "thumbnail",
+          "description": "Uniform screens a passenger seat or platform-dispatch gesture alone does not substitute for train operation."
+        }
+      ],
+      "reject_substitutes": [
+        "uniformed_passenger_in_cab",
+        "platform_dispatch_staff",
+        "generic_control_room_screens",
+        "cab_backdrop_without_control_contact",
+        "unmatched_signal_route_or_outside_state"
+      ]
+    },
+    {
+      "id": "rail_platform_dispatch_operation",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "rail platform dispatch staff",
+          "train dispatch staff on platform",
+          "platform dispatcher",
+          "철도 플랫폼 발차 요원",
+          "열차 발차 업무 역무원",
+          "플랫폼 역무원"
+        ],
+        "exclude_if_any_terms": [
+          "station staff costume",
+          "train farewell",
+          "역무원 코스튬",
+          "열차 작별 장면"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "platform train interface",
+            "door clearance",
+            "dispatch corridor",
+            "ready-to-start signal",
+            "radio dispatch",
+            "플랫폼 열차 접점",
+            "출입문 안전 확인",
+            "발차 확인 구간",
+            "출발 신호",
+            "발차 무전"
+          ],
+          "exclude_if_any_terms": [
+            "farewell ticket",
+            "romantic platform",
+            "train driver cab",
+            "작별 표",
+            "낭만적 플랫폼",
+            "열차 운전실"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult rail dispatch worker whose role is visible at the platform-train interface through coherent staff uniform, a full door and passenger-clearance check, one authorized dispatch signal or radio action, and a safe departure consequence.",
+        "paraphrase_examples": [
+          "플랫폼에서 출입문과 승객 간격을 확인한 뒤 출발 신호를 보내고 열차가 안전하게 움직이는 것을 감시하는 성인 발차 요원",
+          "an adult dispatcher whose sightline clearance signal and departing train remain causally linked"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "platform_dispatch_identity",
+            "clearance_and_signal_action",
+            "safe_departure_consequence"
+          ],
+          "groups": [
+            {
+              "id": "platform_dispatch_identity",
+              "any_terms": [
+                "adult dispatch staff in a coherent rail uniform at the platform edge",
+                "radio high-visibility marker and station attire form one system",
+                "플랫폼 가장자리의 일관된 철도 발차 근무복"
+              ]
+            },
+            {
+              "id": "clearance_and_signal_action",
+              "any_terms": [
+                "scans every door and passenger gap before signaling",
+                "uses radio or hand signal only after the dispatch corridor is clear",
+                "모든 출입문과 승객 간격을 확인한 뒤 발차 신호"
+              ]
+            },
+            {
+              "id": "safe_departure_consequence",
+              "any_terms": [
+                "doors are closed and hazard indicators are clear as the train starts",
+                "the dispatcher continues watching the train leave the platform",
+                "출입문 표시가 정상이고 열차가 플랫폼을 안전하게 떠남"
+              ]
+            },
+            {
+              "id": "platform_train_interface",
+              "any_terms": [
+                "dispatcher sightline spans platform edge doors and train side",
+                "passenger zone door line and departure direction stay readable",
+                "발차 요원의 시선이 플랫폼 출입문 열차 측면을 연결"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a romantic conductor offering a saved ticket",
+          "a station portrait holding a punch tool with no door-clearance task",
+          "a train driver inside the cab or a generic traveler on the platform"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult rail dispatch worker",
+          "coherent platform staff uniform",
+          "door and passenger clearance scan",
+          "authorized radio or hand signal",
+          "platform-train interface sightline",
+          "safe departure consequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "rail platform dispatcher"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the adult dispatcher, rail staff uniform, complete platform-edge sightline, closed-door and passenger-clearance check, authorized radio or hand signal, and safe departure consequence together. Keep romance and ticket handoff outside the role proof.",
+      "required_evidence_fields": [
+        "rail_dispatch_uniform_phrase",
+        "door_passenger_clearance_phrase",
+        "dispatch_signal_phrase",
+        "platform_train_sightline_phrase",
+        "safe_departure_phrase"
+      ],
+      "evidence_requirements": {
+        "rail_dispatch_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult dispatch staff in a coherent rail uniform",
+            "adult platform dispatcher wears matched station duty attire"
+          ]
+        },
+        "door_passenger_clearance_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "scans every door and passenger gap before signaling",
+            "confirms the dispatch corridor is clear of passengers"
+          ]
+        },
+        "dispatch_signal_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "gives the authorized ready-to-start hand signal",
+            "uses the dispatch radio only after clearance"
+          ]
+        },
+        "platform_train_sightline_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "dispatcher sightline spans platform edge doors and train side",
+            "platform edge door line and departure direction stay visible"
+          ]
+        },
+        "safe_departure_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "doors are closed and hazard indicators are clear as the train starts",
+            "dispatcher continues watching the train leave safely"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_rail_dispatch_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as platform dispatch staff responsible for train departure rather than a traveler conductor or farewell character."
+        },
+        {
+          "id": "vo_rail_dispatch_clearance_check",
+          "review_scale": "both",
+          "description": "Door line passenger gap and dispatch corridor are visibly scanned before the signal is given."
+        },
+        {
+          "id": "vo_rail_dispatch_authorized_signal",
+          "review_scale": "both",
+          "description": "A radio hand signal baton or indicator action visibly communicates ready-to-start status."
+        },
+        {
+          "id": "vo_rail_dispatch_safe_departure",
+          "review_scale": "both",
+          "description": "Closed doors clear indicators and the watched departing train visibly show the safe consequence."
+        },
+        {
+          "id": "vo_rail_dispatch_not_ticket_farewell_or_driver",
+          "review_scale": "thumbnail",
+          "description": "A ticket punch farewell gesture station uniform or driver-cab setting alone does not establish platform dispatch."
+        }
+      ],
+      "reject_substitutes": [
+        "ticket_farewell_or_romance",
+        "station_uniform_portrait_only",
+        "train_driver_inside_cab",
+        "ticket_punch_without_clearance",
+        "signal_without_visible_safe_departure"
+      ]
+    },
+    {
+      "id": "private_security_access_control",
+      "category": "professional_role",
+      "activation": {
+        "exact_terms": [
+          "private security access-control guard",
+          "security guard on access duty",
+          "security guard",
+          "민간 출입 통제 보안요원",
+          "출입 보안 근무자",
+          "보안요원"
+        ],
+        "exclude_if_any_terms": [
+          "security costume",
+          "police officer",
+          "보안요원 코스튬",
+          "경찰관"
+        ],
+        "context_disambiguation": {
+          "required_with_authorial_core": true,
+          "any_terms": [
+            "access reader",
+            "visitor credential",
+            "entry log",
+            "controlled lobby",
+            "authorization decision",
+            "출입 리더기",
+            "방문자 신분증",
+            "출입 기록",
+            "통제 로비",
+            "접근 승인 판단"
+          ],
+          "exclude_if_any_terms": [
+            "police patrol",
+            "military checkpoint",
+            "nightclub fashion",
+            "경찰 순찰",
+            "군 검문소",
+            "나이트클럽 패션"
+          ]
+        },
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult private-security worker whose role is visible through a site-specific non-police uniform, credential-to-reader verification, a logged authorize or deny decision, and a controlled-entry consequence at one facility boundary.",
+        "paraphrase_examples": [
+          "방문자 신분증과 출입 권한을 리더기 및 기록과 대조한 뒤 승인된 출입구를 여는 성인 민간 보안요원",
+          "an adult access-control guard whose credential reader log decision and doorway state remain linked"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 3,
+          "required_group_ids": [
+            "site_specific_security_identity",
+            "credential_verification",
+            "access_decision_consequence"
+          ],
+          "groups": [
+            {
+              "id": "site_specific_security_identity",
+              "any_terms": [
+                "adult private guard in a coherent non-police site uniform",
+                "radio badge and access station belong to one facility system",
+                "경찰이 아닌 시설 보안 근무복과 출입대의 일관성"
+              ]
+            },
+            {
+              "id": "credential_verification",
+              "any_terms": [
+                "compares one visitor credential with the access reader and log",
+                "scans the badge while checking the approved entry list",
+                "방문자 신분증을 리더기와 승인 목록에 대조"
+              ]
+            },
+            {
+              "id": "access_decision_consequence",
+              "any_terms": [
+                "green reader state opens one controlled gate",
+                "denied status keeps the restricted door closed and prompts assistance",
+                "승인 상태에 따라 한 출입문이 열리거나 통제 상태를 유지"
+              ]
+            },
+            {
+              "id": "bounded_authority",
+              "any_terms": [
+                "authority remains limited to the named facility boundary",
+                "site badge differs clearly from public police insignia",
+                "권한이 특정 시설 출입 경계에 한정"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a police officer or military guard at a public checkpoint",
+          "a dark-suit fashion portrait beside surveillance monitors",
+          "a badge camera or earpiece without credential verification and entry consequence"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "adult private access-control guard",
+          "coherent site-specific non-police uniform",
+          "visitor credential verification",
+          "reader and entry-log relation",
+          "authorize or deny decision",
+          "controlled-door consequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "private security guard"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the adult private guard, site-specific non-police uniform, one visitor credential, reader and approved-entry log, explicit access decision, and resulting gate state readable together. Bound authority to the facility rather than public policing.",
+      "required_evidence_fields": [
+        "private_security_uniform_phrase",
+        "credential_reader_phrase",
+        "entry_log_phrase",
+        "access_decision_phrase",
+        "controlled_gate_consequence_phrase"
+      ],
+      "evidence_requirements": {
+        "private_security_uniform_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "adult private guard in a coherent non-police site uniform",
+            "adult security worker wears matched facility duty attire"
+          ]
+        },
+        "credential_reader_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "compares one visitor credential with the access reader",
+            "scans the visitor badge at the facility reader"
+          ]
+        },
+        "entry_log_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "checks the approved entry list and access log",
+            "reader result is matched to one visible entry record"
+          ]
+        },
+        "access_decision_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "makes a visible authorize or deny decision",
+            "confirms the visitor is approved for this facility"
+          ]
+        },
+        "controlled_gate_consequence_phrase": {
+          "min_content_words": 4,
+          "must_mention_any": [
+            "green reader state opens one controlled gate",
+            "denied status keeps the restricted door closed"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_security_private_role_identity",
+          "review_scale": "thumbnail",
+          "description": "The adult subject first reads as private site security rather than police military staff or dark-suit fashion."
+        },
+        {
+          "id": "vo_security_credential_reader_relation",
+          "review_scale": "both",
+          "description": "One visitor credential is visibly compared with a reader and the same access record."
+        },
+        {
+          "id": "vo_security_access_decision",
+          "review_scale": "native",
+          "description": "An authorize or deny decision remains legible through the reader log and guard action."
+        },
+        {
+          "id": "vo_security_gate_consequence",
+          "review_scale": "both",
+          "description": "One controlled door or gate visibly opens remains locked or routes the visitor to assistance according to the decision."
+        },
+        {
+          "id": "vo_security_not_police_or_monitor_only",
+          "review_scale": "thumbnail",
+          "description": "Police styling a badge earpiece monitor wall or dark suit alone does not establish site access control."
+        }
+      ],
+      "reject_substitutes": [
+        "police_or_military_authority",
+        "dark_suit_or_badge_only",
+        "surveillance_monitor_portrait_only",
+        "credential_without_reader_log_relation",
+        "reader_scan_without_gate_consequence"
+      ]
+    },
+    {
+      "id": "old_growth_forest_multilayer_deadwood_structure",
+      "category": "natural_environment_forest_structure",
+      "activation": {
+        "exact_terms": [
+          "old-growth forest structure",
+          "노령림 구조"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An old-growth forest is rendered as a structural relation among differently sized live trees, multiple canopy layers, standing dead trees, and large fallen wood. Age, ecological continuity, habitat quality, or protection status cannot be certified from appearance alone.",
+        "paraphrase_examples": [
+          "여러 크기의 살아 있는 나무와 층상 수관, 선 채로 죽은 나무, 굵은 쓰러진 목재가 같은 숲 구조로 연결됨"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "varied_live_tree_sizes",
+            "multilayer_canopy",
+            "standing_deadwood",
+            "large_down_wood"
+          ],
+          "groups": [
+            {
+              "id": "varied_live_tree_sizes",
+              "any_terms": [
+                "large live trees and smaller cohorts show visibly different trunk diameters and heights"
+              ]
+            },
+            {
+              "id": "multilayer_canopy",
+              "any_terms": [
+                "overstory midstory and understory foliage remain separately readable at multiple depths"
+              ]
+            },
+            {
+              "id": "standing_deadwood",
+              "any_terms": [
+                "at least one standing dead snag is structurally distinct from the live trunks"
+              ]
+            },
+            {
+              "id": "large_down_wood",
+              "any_terms": [
+                "one or more large fallen logs lie on the forest floor with convincing scale and contact"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "an even-aged plantation with uniform trunks",
+          "a generic lush forest lacking deadwood and vertical layers"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "uneven tree cohorts",
+          "layered canopy",
+          "standing snag",
+          "coarse fallen log"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "multi-layer old-growth forest structure"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a deep forest frame that simultaneously shows unequal live-tree sizes, separate canopy layers, a standing snag, and large fallen wood contacting the floor.",
+      "required_evidence_fields": [
+        "live_tree_cohorts_phrase",
+        "canopy_layers_phrase",
+        "standing_snag_phrase",
+        "fallen_log_phrase"
+      ],
+      "evidence_requirements": {
+        "live_tree_cohorts_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "large live trees and smaller cohorts show visibly different trunk diameters and heights"
+          ]
+        },
+        "canopy_layers_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "overstory midstory and understory foliage remain separately readable at multiple depths"
+          ]
+        },
+        "standing_snag_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "at least one standing dead snag is structurally distinct from the live trunks"
+          ]
+        },
+        "fallen_log_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "one or more large fallen logs lie on the forest floor with convincing scale and contact"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_old_growth_cohorts",
+          "review_scale": "thumbnail",
+          "description": "Live trees visibly vary in trunk diameter and height rather than forming one uniform cohort."
+        },
+        {
+          "id": "vo_natural_old_growth_canopy_layers",
+          "review_scale": "both",
+          "description": "Overstory, midstory, and understory remain spatially separate across the forest depth."
+        },
+        {
+          "id": "vo_natural_old_growth_standing_snag",
+          "review_scale": "native",
+          "description": "A standing dead snag is visibly distinct from shadowed or leafless live trunks."
+        },
+        {
+          "id": "vo_natural_old_growth_fallen_log",
+          "review_scale": "both",
+          "description": "A large fallen log has credible scale and physical contact with the forest floor."
+        },
+        {
+          "id": "vo_natural_old_growth_non_inference",
+          "review_scale": "thumbnail",
+          "description": "Uniform plantation rows, generic lushness, or a single giant tree do not substitute for the complete structure."
+        }
+      ],
+      "reject_substitutes": [
+        "uniform_even_aged_plantation",
+        "single_ancient_tree_only",
+        "generic_dense_green_forest",
+        "deadwood_without_canopy_layers",
+        "forest_age_or_protection_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "wetland_hydrology_soil_vegetation_mosaic",
+      "category": "natural_environment_wetland_hydrology",
+      "activation": {
+        "exact_terms": [
+          "wetland hydrology vegetation mosaic",
+          "습지 수문 식생 모자이크"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A wetland is rendered through shallow inundation or saturated ground, water-shaped soil evidence, hydrophytic vegetation, and a readable mosaic between wetter and less-wet patches. Legal delineation, hydroperiod duration, or soil chemistry cannot be certified from one image.",
+        "paraphrase_examples": [
+          "얕은 물과 포화 토양, 수생·습생 식생, 상대적으로 덜 젖은 미세 지형이 하나의 수문 모자이크를 이룸"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "shallow_water_or_saturation",
+            "water_shaped_soil",
+            "hydrophytic_vegetation",
+            "wet_dry_microtopography"
+          ],
+          "groups": [
+            {
+              "id": "shallow_water_or_saturation",
+              "any_terms": [
+                "shallow standing water or visibly saturated ground occupies connected low areas"
+              ]
+            },
+            {
+              "id": "water_shaped_soil",
+              "any_terms": [
+                "exposed mud dark saturated soil or a soft waterlogged margin remains visible"
+              ]
+            },
+            {
+              "id": "hydrophytic_vegetation",
+              "any_terms": [
+                "emergent or water-tolerant plants grow from the saturated substrate rather than beside a dry pond prop"
+              ]
+            },
+            {
+              "id": "wet_dry_microtopography",
+              "any_terms": [
+                "wetter pools channels or hollows alternate visibly with slightly raised vegetated patches"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "an ordinary ornamental pond with reeds at one edge",
+          "a flooded field with no water-soil-vegetation structure"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "shallow inundation",
+          "saturated mud",
+          "emergent hydrophytes",
+          "wet-dry microtopography"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "wetland hydrology-soil-vegetation mosaic"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame a connected wetland surface where shallow water, saturated soil, emergent vegetation, and raised drier patches can all be compared in one view.",
+      "required_evidence_fields": [
+        "wetland_water_phrase",
+        "wetland_soil_phrase",
+        "wetland_vegetation_phrase",
+        "wetland_mosaic_phrase"
+      ],
+      "evidence_requirements": {
+        "wetland_water_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "shallow standing water or visibly saturated ground occupies connected low areas"
+          ]
+        },
+        "wetland_soil_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "exposed mud dark saturated soil or a soft waterlogged margin remains visible"
+          ]
+        },
+        "wetland_vegetation_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "emergent or water-tolerant plants grow from the saturated substrate rather than beside a dry pond prop"
+          ]
+        },
+        "wetland_mosaic_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "wetter pools channels or hollows alternate visibly with slightly raised vegetated patches"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_wetland_connected_water",
+          "review_scale": "thumbnail",
+          "description": "Shallow water or saturation visibly occupies connected low areas rather than one isolated puddle."
+        },
+        {
+          "id": "vo_natural_wetland_soil_contact",
+          "review_scale": "native",
+          "description": "Mud or saturated soil is visible at the water margin with plausible ground contact."
+        },
+        {
+          "id": "vo_natural_wetland_hydrophytes",
+          "review_scale": "both",
+          "description": "Water-tolerant vegetation visibly emerges from or roots in the wet substrate."
+        },
+        {
+          "id": "vo_natural_wetland_microtopography",
+          "review_scale": "both",
+          "description": "Wetter hollows and slightly raised vegetated patches form a readable spatial mosaic."
+        },
+        {
+          "id": "vo_natural_wetland_non_inference",
+          "review_scale": "thumbnail",
+          "description": "A decorative pond, flooded lawn, or reeds alone do not establish the complete wetland relation."
+        }
+      ],
+      "reject_substitutes": [
+        "ornamental_pond_with_reeds",
+        "isolated_puddle",
+        "flooded_lawn_without_soil_evidence",
+        "dry_meadow_with_blue_reflection",
+        "legal_wetland_delineation_from_pixels"
+      ]
+    },
+    {
+      "id": "intertidal_high_low_exposure_zonation",
+      "category": "natural_environment_coastal_zonation",
+      "activation": {
+        "exact_terms": [
+          "intertidal vertical zonation",
+          "조간대 수직 대상"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Intertidal vertical zonation is shown as a continuous shore profile from a mostly dry spray or high zone through alternately wetted middle bands to a mostly wet low zone beside the current waterline. Species identity and exact tidal height cannot be inferred from pixels alone.",
+        "paraphrase_examples": [
+          "현재 수면에서 위쪽 마른 비말대까지 젖음 정도와 생물 피복이 단계적으로 달라지는 연속 해안 단면"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "upper_spray_zone",
+            "middle_alternating_zone",
+            "lower_wet_zone",
+            "continuous_vertical_order"
+          ],
+          "groups": [
+            {
+              "id": "upper_spray_zone",
+              "any_terms": [
+                "an upper shore band remains comparatively dry and only spray exposed"
+              ]
+            },
+            {
+              "id": "middle_alternating_zone",
+              "any_terms": [
+                "middle shore bands show alternating wet rock pools and patchy marine cover"
+              ]
+            },
+            {
+              "id": "lower_wet_zone",
+              "any_terms": [
+                "the lowest visible band beside the waterline remains wet with denser marine cover"
+              ]
+            },
+            {
+              "id": "continuous_vertical_order",
+              "any_terms": [
+                "all exposure bands occupy one continuous elevation sequence between sea and upper shore"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a rocky beach at sunset with no vertical bands",
+          "unrelated colored stripes painted across coastal rock"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "upper spray fringe",
+          "alternating middle shore",
+          "wet low shore",
+          "continuous elevation sequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "vertically ordered intertidal exposure zones"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use an oblique or sectional shore view that keeps the current waterline, wet low zone, alternating middle bands, and dry upper spray zone in one continuous frame.",
+      "required_evidence_fields": [
+        "upper_intertidal_phrase",
+        "middle_intertidal_phrase",
+        "lower_intertidal_phrase",
+        "vertical_order_phrase"
+      ],
+      "evidence_requirements": {
+        "upper_intertidal_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "an upper shore band remains comparatively dry and only spray exposed"
+          ]
+        },
+        "middle_intertidal_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "middle shore bands show alternating wet rock pools and patchy marine cover"
+          ]
+        },
+        "lower_intertidal_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "the lowest visible band beside the waterline remains wet with denser marine cover"
+          ]
+        },
+        "vertical_order_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "all exposure bands occupy one continuous elevation sequence between sea and upper shore"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_intertidal_upper_zone",
+          "review_scale": "both",
+          "description": "A comparatively dry upper spray band remains visible above the regularly wetted shore."
+        },
+        {
+          "id": "vo_natural_intertidal_middle_zone",
+          "review_scale": "native",
+          "description": "The middle shore contains alternately wetted bands, pools, or patchy marine cover."
+        },
+        {
+          "id": "vo_natural_intertidal_lower_zone",
+          "review_scale": "both",
+          "description": "A wetter lower band with denser marine cover visibly meets the current waterline."
+        },
+        {
+          "id": "vo_natural_intertidal_vertical_order",
+          "review_scale": "thumbnail",
+          "description": "Upper, middle, and lower bands form one continuous elevation order rather than disconnected inserts."
+        },
+        {
+          "id": "vo_natural_intertidal_non_inference",
+          "review_scale": "native",
+          "description": "Painted stripes, generic wet rocks, or species labels alone do not establish tidal exposure zonation."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_rocky_beach",
+        "single_tide_pool_closeup",
+        "painted_color_bands",
+        "wet_rocks_without_vertical_order",
+        "species_or_tidal_height_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "karst_closed_depression_losing_stream_resurgence",
+      "category": "natural_environment_karst_drainage",
+      "activation": {
+        "exact_terms": [
+          "karst surface subsurface drainage",
+          "카르스트 지표 지하 배수"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A karst drainage landscape is shown through soluble-rock terrain, a closed depression, surface water visibly disappearing into an opening, and a separate spring or resurgence outlet. The unseen underground connection, rock chemistry, and aquifer boundary remain contextual claims rather than pixel proof.",
+        "paraphrase_examples": [
+          "용식 암반의 폐쇄 함몰지에서 하천이 사라지고 다른 지점의 샘 출구가 함께 보이는 카르스트 배수 장면"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "soluble_rock_landform",
+            "closed_depression",
+            "losing_stream_entry",
+            "separate_resurgence"
+          ],
+          "groups": [
+            {
+              "id": "soluble_rock_landform",
+              "any_terms": [
+                "exposed pale jointed solution-weathered rock anchors the drainage landform"
+              ]
+            },
+            {
+              "id": "closed_depression",
+              "any_terms": [
+                "a bowl or sink-shaped closed depression lacks an ordinary surface outlet"
+              ]
+            },
+            {
+              "id": "losing_stream_entry",
+              "any_terms": [
+                "a surface stream visibly narrows and enters a sink opening or swallow hole"
+              ]
+            },
+            {
+              "id": "separate_resurgence",
+              "any_terms": [
+                "a distinct spring or cave-mouth outlet releases water elsewhere in the same landscape"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a cave interior with decorative stalactites only",
+          "a crater lake with an ordinary surface stream outlet"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "solution-weathered rock",
+          "closed depression",
+          "losing stream",
+          "resurgence outlet"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "karst closed-depression drainage endpoints"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a wide connected landscape view showing solution-weathered rock, one closed depression, a stream entering a swallow point, and a spatially separate spring outlet.",
+      "required_evidence_fields": [
+        "karst_rock_phrase",
+        "karst_depression_phrase",
+        "losing_stream_phrase",
+        "resurgence_phrase"
+      ],
+      "evidence_requirements": {
+        "karst_rock_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": [
+            "exposed pale jointed solution-weathered rock anchors the drainage landform"
+          ]
+        },
+        "karst_depression_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a bowl or sink-shaped closed depression lacks an ordinary surface outlet"
+          ]
+        },
+        "losing_stream_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a surface stream visibly narrows and enters a sink opening or swallow hole"
+          ]
+        },
+        "resurgence_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "a distinct spring or cave-mouth outlet releases water elsewhere in the same landscape"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_karst_solution_rock",
+          "review_scale": "both",
+          "description": "Jointed solution-weathered rock visibly owns the terrain rather than appearing as an isolated prop."
+        },
+        {
+          "id": "vo_natural_karst_closed_depression",
+          "review_scale": "thumbnail",
+          "description": "A closed sink-shaped depression is readable without an ordinary downslope surface outlet."
+        },
+        {
+          "id": "vo_natural_karst_losing_stream",
+          "review_scale": "native",
+          "description": "Surface water visibly enters a swallow point instead of merely passing behind rocks."
+        },
+        {
+          "id": "vo_natural_karst_resurgence",
+          "review_scale": "both",
+          "description": "A spatially separate spring or cave-mouth outlet visibly releases water into the landscape."
+        },
+        {
+          "id": "vo_natural_karst_non_inference",
+          "review_scale": "native",
+          "description": "The image does not claim to prove the unseen underground route, rock chemistry, or aquifer extent."
+        }
+      ],
+      "reject_substitutes": [
+        "cave_interior_only",
+        "crater_or_quarry_depression",
+        "stream_hidden_by_occlusion",
+        "spring_without_losing_stream",
+        "underground_connection_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "active_glacier_flow_valley_moraine_system",
+      "category": "natural_environment_glacial_landform",
+      "activation": {
+        "exact_terms": [
+          "active glacier flow landform",
+          "활동 빙하 유동 지형"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An active valley-glacier landform is shown as a continuous ice body descending through a broad U-shaped trough, with directional surface structure, moraine debris at the margins, and a distinct terminus feeding meltwater. A still image cannot measure current flow rate, ice age, or mass balance.",
+        "paraphrase_examples": [
+          "넓은 U자 계곡을 따라 내려오는 연속 빙체와 표면 유동선, 가장자리 퇴석, 말단 융빙수가 한 체계로 읽힘"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "valley_filling_ice_body",
+            "directional_ice_surface",
+            "moraine_margin",
+            "terminus_meltwater"
+          ],
+          "groups": [
+            {
+              "id": "valley_filling_ice_body",
+              "any_terms": [
+                "one continuous glacier body descends through a broad steep-sided U-shaped valley"
+              ]
+            },
+            {
+              "id": "directional_ice_surface",
+              "any_terms": [
+                "crevasses flow bands or debris stripes follow the glacier down-valley direction"
+              ]
+            },
+            {
+              "id": "moraine_margin",
+              "any_terms": [
+                "unsorted dark debris forms a lateral or terminal moraine directly against the ice margin"
+              ]
+            },
+            {
+              "id": "terminus_meltwater",
+              "any_terms": [
+                "a readable glacier terminus releases meltwater into a proglacial channel or pool"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a snowy mountain above a frozen lake",
+          "an isolated blue ice cave with no valley or moraine relation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "valley-filling ice",
+          "down-valley crevasses",
+          "lateral moraine",
+          "terminus meltwater"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "active valley-glacier landform system"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a wide down-valley or oblique view that connects the U-shaped trough, continuous crevassed ice, moraine debris, and terminus meltwater without hiding their contacts.",
+      "required_evidence_fields": [
+        "glacier_body_phrase",
+        "glacier_flow_surface_phrase",
+        "glacier_moraine_phrase",
+        "glacier_terminus_phrase"
+      ],
+      "evidence_requirements": {
+        "glacier_body_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "one continuous glacier body descends through a broad steep-sided U-shaped valley"
+          ]
+        },
+        "glacier_flow_surface_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "crevasses flow bands or debris stripes follow the glacier down-valley direction"
+          ]
+        },
+        "glacier_moraine_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": [
+            "unsorted dark debris forms a lateral or terminal moraine directly against the ice margin"
+          ]
+        },
+        "glacier_terminus_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a readable glacier terminus releases meltwater into a proglacial channel or pool"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_glacier_valley_body",
+          "review_scale": "thumbnail",
+          "description": "A continuous ice body visibly occupies and descends through a broad U-shaped valley."
+        },
+        {
+          "id": "vo_natural_glacier_surface_direction",
+          "review_scale": "native",
+          "description": "Crevasses, flow bands, or debris stripes provide a coherent down-valley surface direction."
+        },
+        {
+          "id": "vo_natural_glacier_moraine_contact",
+          "review_scale": "both",
+          "description": "Moraine debris directly contacts a lateral or terminal ice margin with plausible scale."
+        },
+        {
+          "id": "vo_natural_glacier_terminus_water",
+          "review_scale": "both",
+          "description": "A distinct terminus visibly feeds a proglacial meltwater channel or pool."
+        },
+        {
+          "id": "vo_natural_glacier_non_inference",
+          "review_scale": "native",
+          "description": "Snowfields, frozen lakes, or blue ice alone do not prove glacier flow, age, or mass balance."
+        }
+      ],
+      "reject_substitutes": [
+        "snowy_mountain_only",
+        "frozen_lake",
+        "ice_cave_closeup",
+        "ice_body_without_moraine_or_terminus",
+        "flow_rate_or_mass_balance_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "aeolian_dune_stoss_crest_slipface_transport",
+      "category": "natural_environment_aeolian_landform",
+      "activation": {
+        "exact_terms": [
+          "aeolian dune wind structure",
+          "풍성사구 바람 구조"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An aeolian dune is rendered through one connected asymmetric sand body with a broad gentle stoss slope, a sharp crest, a steep lee slip face, and smaller wind ripples or grain-transport traces aligned across the stoss side. Exact wind speed and migration rate cannot be inferred from a still image.",
+        "paraphrase_examples": [
+          "완만한 바람받이 사면에서 날카로운 마루를 넘어 급한 미끄럼면으로 이어지고 잔물결이 같은 방향을 지시하는 비대칭 사구"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "gentle_stoss_slope",
+            "sharp_dune_crest",
+            "steep_lee_slipface",
+            "aligned_ripples_transport"
+          ],
+          "groups": [
+            {
+              "id": "gentle_stoss_slope",
+              "any_terms": [
+                "a broad gently rising windward stoss slope forms one side of the dune"
+              ]
+            },
+            {
+              "id": "sharp_dune_crest",
+              "any_terms": [
+                "a narrow continuous crest separates the gentle stoss side from the lee side"
+              ]
+            },
+            {
+              "id": "steep_lee_slipface",
+              "any_terms": [
+                "a visibly steeper smooth slip face descends immediately behind the crest"
+              ]
+            },
+            {
+              "id": "aligned_ripples_transport",
+              "any_terms": [
+                "fine sand ripples or short saltation traces align coherently across the stoss surface"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a studio pile of sand with symmetric sides",
+          "random wavy texture painted onto a flat desert floor"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "gentle stoss slope",
+          "sharp crest",
+          "steep slip face",
+          "aligned sand ripples"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "asymmetric wind-built dune structure"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use an oblique side view that keeps the gentle stoss slope, crest line, steep lee slip face, and aligned surface ripples on one connected dune body.",
+      "required_evidence_fields": [
+        "dune_stoss_phrase",
+        "dune_crest_phrase",
+        "dune_slipface_phrase",
+        "dune_transport_phrase"
+      ],
+      "evidence_requirements": {
+        "dune_stoss_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a broad gently rising windward stoss slope forms one side of the dune"
+          ]
+        },
+        "dune_crest_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a narrow continuous crest separates the gentle stoss side from the lee side"
+          ]
+        },
+        "dune_slipface_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a visibly steeper smooth slip face descends immediately behind the crest"
+          ]
+        },
+        "dune_transport_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "fine sand ripples or short saltation traces align coherently across the stoss surface"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_dune_stoss_slope",
+          "review_scale": "thumbnail",
+          "description": "A broad gentle stoss slope is visibly longer and shallower than the lee side."
+        },
+        {
+          "id": "vo_natural_dune_crest",
+          "review_scale": "both",
+          "description": "One narrow continuous crest visibly connects and separates the two dune faces."
+        },
+        {
+          "id": "vo_natural_dune_slipface",
+          "review_scale": "both",
+          "description": "A steep smooth lee slip face descends directly from the same crest."
+        },
+        {
+          "id": "vo_natural_dune_ripples",
+          "review_scale": "native",
+          "description": "Fine ripples or saltation traces align coherently across the stoss surface."
+        },
+        {
+          "id": "vo_natural_dune_non_inference",
+          "review_scale": "native",
+          "description": "A symmetric sand pile, flat ripple texture, or dust cloud alone does not establish dune formation or migration."
+        }
+      ],
+      "reject_substitutes": [
+        "symmetric_sand_pile",
+        "flat_desert_ripple_texture",
+        "dust_cloud_without_dune_geometry",
+        "crest_without_stoss_slipface_relation",
+        "wind_speed_or_migration_rate_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "cumulonimbus_tower_anvil_precipitation_outflow",
+      "category": "natural_environment_convective_cloud_structure",
+      "activation": {
+        "exact_terms": [
+          "cumulonimbus convective storm structure",
+          "적란운 대류 폭풍 구조"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A mature cumulonimbus is rendered as one vertically connected storm body with a dark low base, a deep cauliflower-like convective tower, a fibrous or flattened anvil top, and a precipitation or virga shaft descending from the cloud. Lightning is optional, and storm severity cannot be certified from appearance alone.",
+        "paraphrase_examples": [
+          "어두운 낮은 구름 밑면에서 솟은 깊은 대류 탑이 섬유상 모루 꼭대기로 퍼지고 강수 기둥이 같은 구름에서 내려옴"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "dark_low_base",
+            "deep_convective_tower",
+            "fibrous_anvil_top",
+            "precipitation_shaft"
+          ],
+          "groups": [
+            {
+              "id": "dark_low_base",
+              "any_terms": [
+                "a broad dark cloud base sits low above the landscape or horizon"
+              ]
+            },
+            {
+              "id": "deep_convective_tower",
+              "any_terms": [
+                "a massive cauliflower-textured tower rises continuously from the same cloud base"
+              ]
+            },
+            {
+              "id": "fibrous_anvil_top",
+              "any_terms": [
+                "the upper cloud spreads into a flattened fibrous or striated anvil"
+              ]
+            },
+            {
+              "id": "precipitation_shaft",
+              "any_terms": [
+                "a rain hail or virga shaft visibly descends from beneath the storm body"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a dark overcast sky with a lightning graphic",
+          "a smoke plume with no connected cloud base or precipitation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "dark storm base",
+          "deep convective tower",
+          "fibrous anvil",
+          "precipitation shaft"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "mature tower-anvil cumulonimbus structure"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a wide vertical frame that preserves the low dark base, full convective tower, flattened fibrous anvil, and a descending precipitation shaft in one connected cloud system.",
+      "required_evidence_fields": [
+        "storm_base_phrase",
+        "convective_tower_phrase",
+        "anvil_top_phrase",
+        "precipitation_shaft_phrase"
+      ],
+      "evidence_requirements": {
+        "storm_base_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a broad dark cloud base sits low above the landscape or horizon"
+          ]
+        },
+        "convective_tower_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "a massive cauliflower-textured tower rises continuously from the same cloud base"
+          ]
+        },
+        "anvil_top_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the upper cloud spreads into a flattened fibrous or striated anvil"
+          ]
+        },
+        "precipitation_shaft_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a rain hail or virga shaft visibly descends from beneath the storm body"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_cumulonimbus_dark_base",
+          "review_scale": "thumbnail",
+          "description": "A broad dark base remains connected to the cloud tower above the landscape."
+        },
+        {
+          "id": "vo_natural_cumulonimbus_tower",
+          "review_scale": "both",
+          "description": "A deep cauliflower-textured convective tower rises continuously from the same base."
+        },
+        {
+          "id": "vo_natural_cumulonimbus_anvil",
+          "review_scale": "both",
+          "description": "The upper cloud visibly spreads into a flattened fibrous or striated anvil."
+        },
+        {
+          "id": "vo_natural_cumulonimbus_precipitation",
+          "review_scale": "native",
+          "description": "A precipitation or virga shaft descends from beneath the connected storm body."
+        },
+        {
+          "id": "vo_natural_cumulonimbus_non_inference",
+          "review_scale": "native",
+          "description": "Lightning, dark overcast, or smoke alone do not establish cumulonimbus structure or storm severity."
+        }
+      ],
+      "reject_substitutes": [
+        "dark_overcast_only",
+        "lightning_graphic_only",
+        "smoke_or_volcanic_plume",
+        "detached_anvil_shape",
+        "storm_severity_claim_from_pixels"
+      ]
+    },
+    {
+      "id": "alpine_treeline_forest_krummholz_tundra_gradient",
+      "category": "natural_environment_alpine_ecotone",
+      "activation": {
+        "exact_terms": [
+          "alpine treeline ecotone gradient",
+          "고산 수목한계 전이지대 구배"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An alpine treeline ecotone is rendered as an ordered upslope transition from closed lower forest through shorter and more widely spaced trees, into wind-shaped krummholz, and finally treeless alpine tundra. Climate cause, elevation, species, and long-term shift cannot be inferred from a single image.",
+        "paraphrase_examples": [
+          "아래쪽 닫힌 숲에서 키 작고 듬성한 나무, 편향된 왜성 관목형 수목, 위쪽 무수목 툰드라로 연속 전이됨"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "closed_lower_forest",
+            "short_sparse_transition",
+            "krummholz_band",
+            "treeless_alpine_tundra"
+          ],
+          "groups": [
+            {
+              "id": "closed_lower_forest",
+              "any_terms": [
+                "a dense continuous lower-slope forest forms the base of the elevation sequence"
+              ]
+            },
+            {
+              "id": "short_sparse_transition",
+              "any_terms": [
+                "trees become visibly shorter and more widely spaced farther upslope"
+              ]
+            },
+            {
+              "id": "krummholz_band",
+              "any_terms": [
+                "a distinct band of low wind-shaped flagged or mat-like woody growth occupies the upper transition"
+              ]
+            },
+            {
+              "id": "treeless_alpine_tundra",
+              "any_terms": [
+                "treeless alpine meadow tundra or exposed ground continues above the krummholz band"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "one twisted tree on an otherwise generic mountain",
+          "a sharp logging boundary between forest and bare slope"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "closed lower forest",
+          "short sparse trees",
+          "krummholz band",
+          "treeless alpine tundra"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": [
+          "ordered alpine forest-krummholz-tundra ecotone"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a wide upslope view that keeps dense lower forest, short sparse transition trees, the krummholz band, and treeless alpine ground in one ordered elevation sequence.",
+      "required_evidence_fields": [
+        "treeline_forest_phrase",
+        "treeline_sparse_phrase",
+        "treeline_krummholz_phrase",
+        "treeline_tundra_phrase"
+      ],
+      "evidence_requirements": {
+        "treeline_forest_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "a dense continuous lower-slope forest forms the base of the elevation sequence"
+          ]
+        },
+        "treeline_sparse_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "trees become visibly shorter and more widely spaced farther upslope"
+          ]
+        },
+        "treeline_krummholz_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": [
+            "a distinct band of low wind-shaped flagged or mat-like woody growth occupies the upper transition"
+          ]
+        },
+        "treeline_tundra_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": [
+            "treeless alpine meadow tundra or exposed ground continues above the krummholz band"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_natural_treeline_lower_forest",
+          "review_scale": "thumbnail",
+          "description": "Dense continuous lower forest visibly anchors the bottom of the elevation sequence."
+        },
+        {
+          "id": "vo_natural_treeline_sparse_transition",
+          "review_scale": "both",
+          "description": "Trees become progressively shorter and more widely spaced farther upslope."
+        },
+        {
+          "id": "vo_natural_treeline_krummholz",
+          "review_scale": "native",
+          "description": "A distinct band of low wind-shaped woody growth remains visible above upright trees."
+        },
+        {
+          "id": "vo_natural_treeline_tundra",
+          "review_scale": "both",
+          "description": "Treeless alpine ground continues above the krummholz band in the same slope view."
+        },
+        {
+          "id": "vo_natural_treeline_non_inference",
+          "review_scale": "native",
+          "description": "A lone twisted tree, logging edge, or snowline does not prove an alpine treeline ecotone or climate shift."
+        }
+      ],
+      "reject_substitutes": [
+        "single_twisted_tree",
+        "logging_or_fire_boundary",
+        "snowline_only",
+        "forest_bare_slope_binary_cut",
+        "climate_shift_or_elevation_claim_from_pixels"
+      ]
     }
   ]
 }

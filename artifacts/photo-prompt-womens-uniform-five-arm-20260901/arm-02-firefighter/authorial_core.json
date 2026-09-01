@@ -1,0 +1,88 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently allocated, visually demanding test photograph for the Korean keyword 소방관: an original adult fictional woman firefighter performing a chemical-plant standby equipment check during freezing rain, while using the supplied image only for visible facial and hair appearance guidance.",
+  "subject": "one original adult fictional woman firefighter in a complete operational protective system",
+  "setting": "an outdoor chemical-plant foam-monitor and pipe station during freezing rain",
+  "event": "she visibly checks the pressure gauge and coupling on a staged hose line with both gloved hands",
+  "visual_priorities": [
+    "the firefighter protective system reads as one coherent head-to-foot operational uniform",
+    "the equipment-check action and freezing-rain chemical-plant context remain simultaneously legible",
+    "the supplied image guides only visible facial and hair appearance for an original adult fictional subject"
+  ],
+  "baseline_prompt_en": "Create a photorealistic documentary photograph of one original fictional adult woman firefighter during a chemical-plant emergency-standby inspection in freezing rain. She is shown nearly full length beside exposed pipes and a foam-monitor station, visibly checking the pressure gauge and coupling on a staged hose line with both gloved hands. She wears a complete operational protective system: a hard firefighting helmet with lowered clear eye shield, a high-collared flame-resistant turnout coat and matching trousers with broad reflective bands, an air cylinder and harness secured on her back, heavy protective gloves, and sturdy black firefighting boots. Ice beads on the gear and rain streaks across the metalwork; cold vapor hangs around the valves. Keep her face visible beneath the helmet and use the supplied image only as guidance for a calm front-facing facial appearance, long dark softly waved hair tucked securely into the collar, and restrained natural makeup. Frame from helmet to boots at eye level so the equipment, hand-to-gauge action, wet protective layers, and hazardous industrial context all read immediately. Use cool storm daylight, red emergency spill light, realistic fabric wear, wet reflections, and crisp documentary detail.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "randomized complex-concept keyword render test",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This independent arm operationalizes the requested randomized test as the Korean keyword 소방관, realized through an adult fictional woman firefighter checking standby equipment at a chemical plant during freezing rain.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied JPEG only as visible facial and hair appearance guidance for an original adult fictional subject, without treating it as identity, biometric, same-person, ethnicity, nationality, occupation, health, attractiveness, or protected-trait evidence.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "chemical-plant emergency-standby inspection in freezing rain"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "one original fictional adult woman firefighter"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "visibly checking the pressure gauge and coupling on a staged hose line with both gloved hands"
+      },
+      {
+        "anchor_id": "core_reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "use the supplied image only as guidance for a calm front-facing facial appearance, long dark softly waved hair tucked securely into the collar, and restrained natural makeup"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic emergency-response documentary photography",
+    "family": "cold-weather industrial field reportage",
+    "evidence": [
+      "realistic wet protective fabric and metal textures",
+      "eye-level near-full-length action framing"
+    ]
+  },
+  "variation_key": "arm-02-firefighter-chemical-plant-freezing-rain"
+}

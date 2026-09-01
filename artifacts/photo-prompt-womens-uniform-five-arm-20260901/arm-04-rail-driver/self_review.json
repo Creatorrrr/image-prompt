@@ -1,0 +1,46 @@
+{
+  "schema_version": "photo-arm-self-review/v1",
+  "arm_id": "arm-04-rail-driver",
+  "decision": "revise",
+  "decision_scope": "single-arm render-fidelity qualification",
+  "evidence_layers": {
+    "package_and_structural_validity": {
+      "status": "pass_with_warning",
+      "evidence": "Focused professional-uniform tests passed 7/7, the generated visual-profile index check passed at 170 profiles and 1003 exact terms, the v6 pack exists, composed and runtime audits passed, and the frozen baseline carries only an advisory 198-word warning."
+    },
+    "prompt_level_behavior": {
+      "status": "pass",
+      "evidence": "The 179-word final prompt preserves every intent anchor and all five frozen rail_driver_operation evidence bindings; unrelated aircraft and cabin-crew meanings and all sampled creative candidates were rejected."
+    },
+    "generation_delivery": {
+      "status": "success",
+      "evidence": "The built-in image tool was called exactly once with the JPEG attached and returned one 1537x1023 PNG, which was copied into the arm. No retry occurred."
+    },
+    "rendered_pixel_fidelity": {
+      "status": "fail",
+      "profile_gate_summary": "5/5 rail_driver_operation gates observable",
+      "common_gate_summary": "3/4 common gates observable; common_scene_action ambiguous",
+      "evidence": "The driver identity, controller contact, cab relationship, caution display, amber signal, 40 marker, and wet autumn route are visible. The subject looks toward the camera rather than visibly scanning display or line, and leaf coating on both railheads is not unambiguous; the common scene-action gate therefore fails under partial-is-fail."
+    },
+    "user_judgment": {
+      "status": "pending",
+      "evidence": "No requesting-user acceptance or preference judgment has been received."
+    }
+  },
+  "process_integrity": {
+    "other_arm_inputs_used": false,
+    "shared_semantic_or_candidate_files_modified_by_this_arm": false,
+    "reference_role_limited_to_visible_face_and_hair_appearance": true,
+    "identity_or_protected_trait_claims_made": false,
+    "image_call_count": 1,
+    "retry_count": 0,
+    "initial_core_structural_correction_disclosed": true
+  },
+  "bounded_rationale": "This one render supports prompt/package correctness and complete target-profile visibility, but not full common-gate pixel qualification. The ambiguous scene-action evidence makes the strict arm result revise rather than promote. A second render might test a gaze-and-railhead repair, but the experiment explicitly permits only one image call, so no retry was attempted.",
+  "unproved": [
+    "universal robustness of rail_driver_operation across generators, seeds, jurisdictions, or cab designs",
+    "requesting-user satisfaction",
+    "identity or same-person continuity",
+    "any protected or personal trait of the reference subject"
+  ]
+}

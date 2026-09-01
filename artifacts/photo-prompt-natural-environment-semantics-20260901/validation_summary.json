@@ -1,0 +1,126 @@
+{
+  "schema_version": "photo-natural-environment-visual-semantics-validation/v1",
+  "validated_at": "2026-09-01",
+  "baseline_revision": "9dc48644214dd386c8a7a3fea8e0f469ceea7bc4",
+  "candidate_revision": "working-tree",
+  "scope": {
+    "new_candidate_records": 75,
+    "new_concept_mixins": 12,
+    "new_visual_profiles": 8,
+    "candidate_only_grammars": 4,
+    "new_research_evidence_rows": 12,
+    "claim_scope": "prompt-behavior"
+  },
+  "generated_indexes": {
+    "dictionary_version": "1.39",
+    "candidate_entry_count": 7443,
+    "semantic_embedding_model": "gemini-embedding-2",
+    "semantic_embedding_dimensions": 768,
+    "semantic_dictionary_hash": "5e53676d8ec7c5df1f549f641a6627be372b279b252424d33290b19bd697042b",
+    "semantic_shard_count": 16,
+    "visual_profile_count": 170,
+    "visual_profile_exact_term_count": 1003,
+    "visual_profile_registry_hash": "02eb44689dc5c6090af1868c842ec9c86a41e0a956b03a8d5dce47d455ab4fa0"
+  },
+  "checks": [
+    {
+      "id": "natural-environment-focused",
+      "command": ".venv/bin/python -m unittest tests.test_photo_natural_environment_semantics -v",
+      "status": "pass",
+      "test_count": 10,
+      "elapsed_seconds": 86.066
+    },
+    {
+      "id": "dictionary-metadata",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass"
+    },
+    {
+      "id": "visual-profile-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass",
+      "profile_count": 170,
+      "exact_term_count": 1003
+    },
+    {
+      "id": "semantic-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "status": "pass",
+      "entry_count": 7443
+    },
+    {
+      "id": "retrieval-and-expansion-regression",
+      "command": ".venv/bin/python -m pytest -q tests/test_photo_visual_profile_retrieval.py tests/test_photo_bm25f_retrieval.py tests/test_photo_concept_candidate_expansion.py",
+      "status": "pass",
+      "test_count": 25,
+      "subtest_count": 100,
+      "elapsed_seconds": 110.62
+    },
+    {
+      "id": "scene-expression-audit",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current",
+      "status": "pass",
+      "route_count": 112,
+      "pass_count": 112,
+      "fail_count": 0
+    },
+    {
+      "id": "diff-whitespace",
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "id": "integrated-visual-obligation-regression",
+      "command": ".venv/bin/python -m pytest -q tests/test_photo_visual_obligations.py tests/test_photo_visual_profile_retrieval.py tests/test_photo_bm25f_retrieval.py tests/test_photo_concept_candidate_expansion.py",
+      "status": "fail_out_of_scope",
+      "passed": 47,
+      "failed": 6,
+      "subtest_count": 242,
+      "elapsed_seconds": 732.4,
+      "failure_boundary": "All six failures are caused by the concurrently added clinical_nursing_duty_system exact route activating on yandere nursing fixtures. None names or activates a natural-environment candidate, mixin, or profile. The unrelated profile was preserved and not edited."
+    }
+  ],
+  "test_summary": {
+    "in_scope_passed": 35,
+    "in_scope_failed": 0,
+    "scene_routes_passed": 112,
+    "full_repository_suite_run": false,
+    "unrelated_integrated_failures": 6
+  },
+  "routing_evidence": {
+    "hard_exact_routes": [
+      "old_growth_forest_multilayer_deadwood_structure",
+      "wetland_hydrology_soil_vegetation_mosaic",
+      "intertidal_high_low_exposure_zonation",
+      "karst_closed_depression_losing_stream_resurgence",
+      "active_glacier_flow_valley_moraine_system",
+      "aeolian_dune_stoss_crest_slipface_transport",
+      "cumulonimbus_tower_anvil_precipitation_outflow",
+      "alpine_treeline_forest_krummholz_tundra_gradient"
+    ],
+    "candidate_only_routes": [
+      "riparian floodplain gradient",
+      "volcanic hydrothermal field process",
+      "mangrove intertidal root sediment system",
+      "coral reef cross-shore zonation"
+    ],
+    "broad_nonactivating_families": [
+      "forest or 숲",
+      "wetland or 습지",
+      "glacier or 빙하",
+      "desert or 사막",
+      "volcano or 화산",
+      "storm or 폭풍",
+      "reef or 산호초",
+      "nature or 자연환경"
+    ]
+  },
+  "evidence_boundary": {
+    "package": "pass",
+    "prompt_routing": "pass",
+    "rendered_pixels": "unscored",
+    "user_aesthetic_judgment": "unscored",
+    "decision": "promote_prompt_behavior_only"
+  },
+  "worktree_note": "The checkout contained pre-existing and concurrently appearing fantasy, activewear, professional-uniform, wuxia, research-ledger, generated-index, and render-artifact changes. They were preserved. Generated indexes reflect the integrated dictionary state at validation time, so their full diff is not attributable to natural-environment work alone."
+}

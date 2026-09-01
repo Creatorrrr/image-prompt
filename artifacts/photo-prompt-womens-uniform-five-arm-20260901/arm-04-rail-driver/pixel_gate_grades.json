@@ -1,0 +1,82 @@
+{
+  "schema_version": "photo-independent-pixel-gate-grades/v1",
+  "arm_id": "arm-04-rail-driver",
+  "pack_id": "a6b877f8ad1c02cd",
+  "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-04-rail-driver/rail_driver_native.png",
+  "image_sha256": "cae006a9efa64b8a84b6a9641c9ced40862fa5d82370762bcf0c834ec8ca5a07",
+  "review_surfaces": {
+    "thumbnail": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-04-rail-driver/rail_driver_thumbnail_512.png",
+    "native_original": "/Users/chasoik/Projects/image-prompt/artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-04-rail-driver/rail_driver_native.png"
+  },
+  "grading_policy": {
+    "allowed_statuses": [
+      "observable",
+      "ambiguous",
+      "missing"
+    ],
+    "partial_or_ambiguous_is_failure": true,
+    "same_saved_image_required": true
+  },
+  "profile_gates": [
+    {
+      "id": "vo_rail_driver_operator_identity",
+      "status": "observable",
+      "evidence": "At thumbnail scale, one adult-presenting woman occupies the driver seat, wears a coherent navy duty uniform, grips the cab controller, and is surrounded by forward-facing railway controls and windscreen context."
+    },
+    {
+      "id": "vo_rail_driver_control_contact",
+      "status": "observable",
+      "evidence": "At thumbnail and native scale, her right hand visibly wraps around the primary upright traction/brake-style controller mounted in the console gate."
+    },
+    {
+      "id": "vo_rail_driver_route_crosscheck",
+      "status": "observable",
+      "evidence": "At native scale, the center display visibly shows a caution route graphic, Reduced Adhesion, and 40; outside, an amber signal and round 40 marker align with wet autumn track. The separate current-speed dial reads 42 before the indicated next restriction, which remains plausible for an approach phase."
+    },
+    {
+      "id": "vo_rail_driver_cab_relationship",
+      "status": "observable",
+      "evidence": "Both scales keep the operator, controller, two major displays, windscreen, signal, and track large and connected within one active cab view."
+    },
+    {
+      "id": "vo_rail_driver_not_passenger_or_dispatch",
+      "status": "observable",
+      "evidence": "The visible controller grip, driver-seat placement, route displays, forward windscreen, and railway state exceed uniform or portrait cues and do not read as platform dispatch."
+    }
+  ],
+  "common_gates": [
+    {
+      "id": "common_adult_original_fictional",
+      "status": "observable",
+      "evidence": "The output visibly presents one adult woman with mature proportions in a professional work setting; original-fictional provenance comes from the single audited generation request rather than an identity claim."
+    },
+    {
+      "id": "common_reference_scope",
+      "status": "observable",
+      "evidence": "The output carries scoped appearance cues visible in Image 1, including long center-parted dark softly waved hair and restrained natural facial styling. This is appearance guidance only, not biometric verification or a same-person or protected-trait inference."
+    },
+    {
+      "id": "common_anatomy_contact",
+      "status": "observable",
+      "evidence": "At native scale, face and torso anatomy are coherent, and the visible right hand has plausible finger placement and contact around the controller."
+    },
+    {
+      "id": "common_scene_action",
+      "status": "ambiguous",
+      "evidence": "Control contact and matched caution information are visible, but her eyes face the camera instead of visibly scanning the instruments or line, and fallen leaves concentrate beside and between the rails rather than clearly coating both railheads. The requested active cross-check and leaf-contamination action therefore survives only partially."
+    }
+  ],
+  "counts": {
+    "profile_observable": 5,
+    "profile_ambiguous": 0,
+    "profile_missing": 0,
+    "common_observable": 3,
+    "common_ambiguous": 1,
+    "common_missing": 0,
+    "total_observable": 8,
+    "total_gates": 9
+  },
+  "strict_pixel_result": "fail",
+  "decision": "revise",
+  "reason": "All five rail-driver profile gates are observable, but the common scene-action gate is ambiguous; under the declared partial-is-fail policy the arm is not fully qualified."
+}

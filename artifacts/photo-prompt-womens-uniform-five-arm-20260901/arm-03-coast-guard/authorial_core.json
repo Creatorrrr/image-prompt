@@ -1,0 +1,81 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "For one independent randomized complex test arm, depict an original adult fictional woman as a clearly legible maritime police or coast guard professional during dawn storm-debris recovery around a disabled sailboat, using the attached portrait only as visible facial and hair appearance guidance.",
+  "subject": "one original adult fictional woman serving as a maritime police or coast guard officer",
+  "setting": "the wet deck of a small marked coastal patrol boat beside a disabled sailboat at dawn after a storm",
+  "event": "the officer secures a recovery line while her crew transfers one rescued adult from the disabled sailboat",
+  "visual_priorities": [
+    "maritime public-safety role must read through a coherent duty-uniform and flotation-equipment system",
+    "the officer's hands, recovery line, patrol boat, disabled sailboat, and rescued adult must form one visible rescue relation",
+    "the attached portrait guides only facial and long dark softly waved hair appearance for an original adult fictional subject"
+  ],
+  "baseline_prompt_en": "At dawn after a storm, one original adult fictional woman serving as a maritime police or coast guard officer works on the wet deck of a marked coastal patrol boat beside a disabled sailboat among floating branches. She wears a high-visibility waterproof flotation jacket over a dark operational duty uniform, a fastened buoyancy vest, a radio microphone, weatherproof gloves, a utility belt, and deck boots. Her long dark softly waved hair is secured in a low ponytail, while her visible facial appearance follows the attached portrait only as guidance for a new fictional subject. Braced against the rail, the officer secures a recovery line as a second partially visible crew member transfers one rescued adult in an orange life jacket from the sailboat. A taut line and clipped rescue sling visibly connect the officer's hand, the patrol boat, and the transfer. Broken branches drift around slack rigging; sea spray beads on gear. Documentary maritime-rescue photography, wide three-quarter view, dawn light breaking through rain clouds, with enough body and vessel context to read the uniform, equipment, action, and recovery consequence.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent randomized complex test arm",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Treat the coordinator-assigned maritime police or coast guard role and dawn storm-debris recovery scenario as this arm's agent-owned experimental choice, not as requester-authored text.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "Documentary maritime-rescue photography"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "각각 서로 다른 컨셉",
+        "dimension": "subject",
+        "prompt_evidence": "one original adult fictional woman serving as a maritime police or coast guard officer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "event",
+        "prompt_evidence": "the officer secures a recovery line as a second partially visible crew member transfers one rescued adult"
+      },
+      {
+        "anchor_id": "reference_role",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "the attached portrait only as guidance for a new fictional subject"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic documentary public-safety photography",
+    "family": "weather-exposed maritime rescue reportage",
+    "evidence": [
+      "wet working gear and sea spray",
+      "dawn light through retreating rain clouds"
+    ]
+  },
+  "variation_key": "arm-03-coast-guard-dawn-storm-debris-recovery"
+}

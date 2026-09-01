@@ -1,0 +1,97 @@
+{
+  "schema_version": "photo-natural-environment-pixel-review/v1",
+  "arm_id": "arm-01",
+  "reviewer": "independent arm-01 agent",
+  "review_inputs": {
+    "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260901-natural-environment-five-arm-v1/arm-01/render.png",
+    "result_sha256": "fd7ed9c27e9fa079a20a99f9692fb55551c70b019b3ae609ed40e01e986b06c8",
+    "result_dimensions": {"width": 1122, "height": 1402},
+    "reference_image": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "reference_role": "appearance_reference_not_edit_target",
+    "inspection_scales": ["thumbnail", "native"]
+  },
+  "strict_policy": {
+    "same_saved_image_required": true,
+    "partial_is_fail": true,
+    "prompt_text_is_not_pixel_evidence": true,
+    "cross_attempt_averaging": false,
+    "semantic_retries": 0
+  },
+  "target_gates": [
+    {
+      "id": "vo_natural_cumulonimbus_dark_base",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "observable_evidence": "A broad nearly black base spans the middle horizon and is visibly continuous with the tower."
+    },
+    {
+      "id": "vo_natural_cumulonimbus_tower",
+      "review_scale": "both",
+      "status": "pass",
+      "observable_evidence": "Deep cauliflower-textured cloud turrets rise continuously from the base through most of the image."
+    },
+    {
+      "id": "vo_natural_cumulonimbus_anvil",
+      "review_scale": "both",
+      "status": "pass",
+      "observable_evidence": "The upper part of the same cloud broadens into a pale horizontally spreading fibrous and striated canopy across the top of the frame."
+    },
+    {
+      "id": "vo_natural_cumulonimbus_precipitation",
+      "review_scale": "native",
+      "status": "pass",
+      "observable_evidence": "A dense dark rain shaft reaches from the central underside of the parent cloud toward the basin; a secondary rain curtain remains visible at right."
+    },
+    {
+      "id": "vo_natural_cumulonimbus_non_inference",
+      "review_scale": "native",
+      "status": "pass",
+      "observable_evidence": "The structure is supported by connected base, vertical tower, fibrous upper outflow and rain shaft together. There is no reliance on a lightning graphic or smoke and no storm-severity claim."
+    }
+  ],
+  "shared_gates": [
+    {
+      "id": "shared_single_saved_image",
+      "review_scale": "both",
+      "status": "pass",
+      "observable_evidence": "The same SHA-256-bound 1122 by 1402 PNG was inspected at thumbnail and native scale; generation call count is one."
+    },
+    {
+      "id": "shared_environment_primary_legibility",
+      "review_scale": "thumbnail",
+      "status": "pass",
+      "observable_evidence": "The storm and basin occupy most of the frame and read first; the lower-left person is secondary to the immense connected cloud system."
+    },
+    {
+      "id": "shared_reference_appearance_continuity",
+      "review_scale": "both",
+      "status": "pass",
+      "observable_evidence": "The result shows an unmistakably adult subject with broadly continuous general facial appearance, natural facial texture and long dark softly waved hair. This is resemblance evidence only, not an identity claim."
+    },
+    {
+      "id": "shared_reference_non_occlusion",
+      "review_scale": "both",
+      "status": "pass",
+      "observable_evidence": "The person remains in the lower-left foreground while the central dark base, towering cloud, fibrous upper canopy and central/right rain shafts remain visible around her."
+    },
+    {
+      "id": "shared_photographic_coherence",
+      "review_scale": "native",
+      "status": "pass",
+      "observable_evidence": "Low-angle perspective, sunset rim light, wet-clay reflections, wind-tossed hair and coat, hand-notebook contact, cloud scale and rain placement form one coherent photorealistic capture."
+    }
+  ],
+  "manual_concept_gate": {
+    "id": "cumulonimbus_tower_anvil_rain_outflow_connected",
+    "status": "pass",
+    "observable_evidence": "The vertical tower, fibrous upper outflow, localized rain shaft and ground-level wind/rain effects read as one connected convective cell."
+  },
+  "technical_verdict": "pass",
+  "failed_gate_ids": [],
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received",
+    "boundary": "The requesting user's aesthetic preference and perceived resemblance have not been supplied."
+  }
+}

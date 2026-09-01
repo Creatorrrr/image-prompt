@@ -1,0 +1,404 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "9dc48644214dd386c8a7a3fea8e0f469ceea7bc4",
+    "candidate_revision": "working-tree-2026-09-01-womens-professional-uniform"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply the researched women's professional-uniform semantics to visual profiles and candidate-pack data, then use five independent subagents to author distinct randomized complex concepts, compose prompts with the supplied adult portrait as scoped appearance guidance, generate one image per arm, and verify the actual saved pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The immutable requester text asks for semantic and candidate-pack integration followed by five independent complex-concept prompt, generation, and pixel-verification arms using the supplied image.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/coordinator/request_envelope.json and coordinator/reference_manifest.json"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Official health, public-safety, rail, maritime, infrastructure, food, postal, and occupational sources support modeling each role as a workwear system plus task, tool, target, and consequence while keeping generic gendered-uniform terms and non-universal service attire advisory.",
+      "artifact": "docs/research-evidence/photo-prompt/womens_uniform_visual_semantics_research_20260901.md and eleven womens_professional_uniform_visual_semantics rows in docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The working tree contains eight five-gate hard profiles, eleven role-task-tool-location candidate clusters, eleven procedural presets, updated role recipes, 7,443 semantic entries, 170 registry-bound visual profiles, and seven focused tests; dictionary metadata, the index check, the focused suite, and twelve shared retrieval tests pass.",
+      "artifact": "skills/photo-prompt-image-generator/assets, tests/test_photo_womens_professional_uniform_visual_semantics.py, and validation outputs recorded in the task"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All five v6 candidate packs activate exactly their assigned hard profile and all five final composed prompts and runtime render requests pass their respective audits.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-*/candidate_pack.json, composed_prompt*.json, composed_*audit.json, render_request.json, and render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Five distinct subagents each made exactly one successful built-in image-generation call with the same hashed appearance-only reference; no arm retried a render.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-*/run_manifest.json or agent_result.json plus coordinator/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-nurse-render",
+      "kind": "render-observation",
+      "claim": "The nurse render passes four of five target gates and eight of ten total gates; chart-to-monitor agreement and active power-transfer state remain ambiguous.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-01-clinical-nurse/self_review.json"
+    },
+    {
+      "id": "e-firefighter-render",
+      "kind": "render-observation",
+      "claim": "The firefighter render passes all five target and all four common gates with a complete turnout-SCBA system and visible gauge-and-coupling check.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-02-firefighter/self_review.json"
+    },
+    {
+      "id": "e-coast-guard-render",
+      "kind": "render-observation",
+      "claim": "The coast-guard render passes three of five target and six of ten total gates; cropped footwear and uncertain recovery-line continuity prevent qualification.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-03-coast-guard/pixel_review.json"
+    },
+    {
+      "id": "e-rail-render",
+      "kind": "render-observation",
+      "claim": "The rail-driver render passes all five target gates but only eight of nine total gates because the operator looks at the camera and leaf coating on the railheads is ambiguous.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-04-rail-driver/pixel_gate_grades.json"
+    },
+    {
+      "id": "e-security-render",
+      "kind": "render-observation",
+      "claim": "The private-security render passes three of five target and seven of nine total gates; the credential cannot be linked to the same log row and approval cannot be linked to an opened gate.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-05-private-security/pixel_review.json"
+    },
+    {
+      "id": "e-coordinator-review",
+      "kind": "render-observation",
+      "claim": "Independent coordinator inspection confirms two of five target profiles, one of five full scenes, twenty of twenty-five target gates, and thirty-eight of forty-seven total gates pass; user judgment remains pending.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/coordinator/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-independence-audit",
+      "kind": "package-check",
+      "claim": "All five arms used separate cores, packs, prompts, and render calls with no cross-arm generation content, but arm 03 logged a post-core schema-key search that exposed other arm filenames and one key-only line, so the strict no-inspection protocol is a warning rather than a clean pass.",
+      "artifact": "artifacts/photo-prompt-womens-uniform-five-arm-20260901/arm-03-coast-guard/agent_result.json and coordinator/coordinator_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A professional-uniform keyword survives a complex saved image as a coherent duty-workwear system plus role-owned tool, observable task, concrete target, and readable consequence rather than as a label, costume, prop collection, or workplace atmosphere alone.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "role-task-target-consequence-system",
+        "statement": "Every hard profile binds coherent workwear, role tool, task, target, and consequence through five prompt fields and five saved-pixel gates.",
+        "evidence_ids": [
+          "e-research",
+          "e-package",
+          "e-prompt"
+        ],
+        "causal_controls": [
+          "workwear components",
+          "role-owned tool",
+          "observable task",
+          "concrete target",
+          "visible consequence"
+        ]
+      },
+      {
+        "id": "gender-axis-separation",
+        "statement": "Woman or female specifies an adult wearer axis only and cannot automatically add a skirt, heels, makeup, body emphasis, or a different professional task.",
+        "evidence_ids": [
+          "e-research",
+          "e-package"
+        ],
+        "causal_controls": [
+          "adult wearer",
+          "optional fit",
+          "role invariance",
+          "no stereotype defaults",
+          "generic-uniform nonactivation"
+        ]
+      },
+      {
+        "id": "pixel-consequence-boundary",
+        "statement": "All required relations must be judgeable in one saved image; implied chart agreement, hidden footwear, discontinuous rescue lines, and an unobserved gate-opening consequence fail even when prompts and audits pass.",
+        "evidence_ids": [
+          "e-nurse-render",
+          "e-coast-guard-render",
+          "e-security-render",
+          "e-coordinator-review"
+        ],
+        "causal_controls": [
+          "thumbnail inspection",
+          "native inspection",
+          "continuity",
+          "state agreement",
+          "strict all-gates rule"
+        ]
+      },
+      {
+        "id": "reference-safety-boundary",
+        "statement": "The supplied adult portrait guides visible facial and hair appearance only and never proves identity, biometric match, same-person status, occupation, protected traits, health, attractiveness, ethnicity, or nationality.",
+        "evidence_ids": [
+          "e-request",
+          "e-nurse-render",
+          "e-firefighter-render",
+          "e-coast-guard-render",
+          "e-rail-render",
+          "e-security-render"
+        ],
+        "causal_controls": [
+          "adult presentation",
+          "facial appearance",
+          "hair appearance",
+          "non-biometric comparison",
+          "user acceptance"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "role-compatible randomized complex setting",
+      "camera viewpoint and crop that preserve all target relations",
+      "weather and emergency context",
+      "jurisdiction-neutral color and unbranded identifiers",
+      "non-conflicting secondary people and props",
+      "hairstyle adjustments that preserve both safety interfaces and scoped appearance"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-clinical-documented-state",
+      "scale": "local",
+      "axis": "chart-to-monitor agreement",
+      "source_state": "The charted reading must visibly match the bedside monitor or the handover record must visibly confirm the completed check.",
+      "render_state": "A chart, monitor, wristband, and large green check are present, but native pixels do not establish a matching measurement or trace.",
+      "evidence_ids": [
+        "e-nurse-render",
+        "e-coordinator-review"
+      ]
+    },
+    {
+      "id": "mismatch-maritime-crop-and-line-continuity",
+      "scale": "global",
+      "axis": "complete flotation system and continuous recovery route",
+      "source_state": "Weather-ready clothing, flotation, radio, gloves, deck footwear, one recovery line, water target, and controlled boat-side consequence must remain jointly visible.",
+      "render_state": "The subject's feet are cropped and the black-yellow foreground line cannot be proven continuous with the thinner target-side line; the target remains on the disabled sailboat.",
+      "evidence_ids": [
+        "e-coast-guard-render",
+        "e-coordinator-review"
+      ]
+    },
+    {
+      "id": "mismatch-security-causal-access-chain",
+      "scale": "regional",
+      "axis": "credential-reader-log-gate causality",
+      "source_state": "One credential must be compared with the same access record and produce one visibly opened, locked, or assistance-routed gate state.",
+      "render_state": "The pass, approved reader, roster, guard, and gate all exist, but pixels do not link the pass to one roster row or the approval to one changed gate state.",
+      "evidence_ids": [
+        "e-security-render",
+        "e-coordinator-review"
+      ]
+    },
+    {
+      "id": "mismatch-secondary-action-and-text-artifacts",
+      "scale": "global",
+      "axis": "full-scene action and unrequested readable text",
+      "source_state": "Secondary event conditions should remain visible without invented personal data, agency marks, brands, or operator UI becoming the main proof.",
+      "render_state": "The rail operator looks at the camera instead of scanning; all five images also contain some readable synthetic names, brands, identifiers, signs, or UI values, including patient-like personal data in the clinical arm.",
+      "evidence_ids": [
+        "e-nurse-render",
+        "e-firefighter-render",
+        "e-coast-guard-render",
+        "e-rail-render",
+        "e-security-render",
+        "e-coordinator-review"
+      ]
+    },
+    {
+      "id": "mismatch-independence-protocol",
+      "scale": "local",
+      "axis": "strict no-cross-arm discovery",
+      "source_state": "Each subagent must not inspect another arm directory or content.",
+      "render_state": "Arm 03 used a post-core repository-wide schema-key search that exposed other arm filenames and one schema-key line, although it did not use other arm prompt, pack, image, or review content for generation.",
+      "evidence_ids": [
+        "e-independence-audit"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-task-led-role-systems",
+      "stage": "representation",
+      "statement": "Encoding professional uniforms as coherent workwear plus role-owned task relations transfers more reliably across complex scenes than costume labels alone.",
+      "evidence_ids": [
+        "e-research",
+        "e-firefighter-render",
+        "e-rail-render",
+        "e-coordinator-review"
+      ],
+      "falsifier": "Held-out roles repeatedly collapse into portraits, costume cues, or unrelated workplace atmosphere even when the full task-target-consequence chain is explicitly framed and unobstructed."
+    },
+    {
+      "id": "hypothesis-consequence-is-the-weak-link",
+      "stage": "prompt-interaction",
+      "statement": "Image generation more readily preserves uniforms, tools, and actions than exact causal consequences such as chart agreement, continuous rescue routing, or approval-driven gate state.",
+      "evidence_ids": [
+        "e-nurse-render",
+        "e-coast-guard-render",
+        "e-security-render"
+      ],
+      "falsifier": "Future one-shot renders preserve causal state agreement at the same rate as visible garments and props without tighter close framing or explicit before-after geometry."
+    },
+    {
+      "id": "hypothesis-crop-and-gaze-are-contract-controls",
+      "stage": "observation",
+      "statement": "A visually attractive composition can still erase professional proof through cropped footwear, camera-facing gaze, or a target remaining at the source rather than reaching the requested consequence.",
+      "evidence_ids": [
+        "e-coast-guard-render",
+        "e-rail-render",
+        "e-coordinator-review"
+      ],
+      "falsifier": "Held-out images pass the same relation gates regardless of crop boundary, operator gaze, and target endpoint visibility."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent professional uniforms with observable garment components, role-owned tools, task-target-consequence relations, and explicit confusion substitutes; keep gender and non-universal service attire separate; activate hard obligations only from grounded professional terms; require every saved-pixel gate to pass together.",
+    "generalization_basis": "Eight hard profiles cover clinical care, public safety, firefighting, emergency medical transport, maritime rescue, train driving, platform dispatch, and private access control; three additional candidate-only service-workwear families cover kitchen, postal, and hotel contexts; five one-shot arms exercise unrelated complex scenes.",
+    "hypothesis_ids": [
+      "hypothesis-task-led-role-systems",
+      "hypothesis-consequence-is-the-weak-link",
+      "hypothesis-crop-and-gaze-are-contract-controls"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "docs/research-evidence/photo-prompt/womens_uniform_visual_semantics_research_20260901.md",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/concept_recipes.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/5e53676d8ec7c5df",
+      "tests/test_photo_womens_professional_uniform_visual_semantics.py",
+      "artifacts/photo-prompt-womens-uniform-five-arm-20260901"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-nurse-render",
+        "e-firefighter-render",
+        "e-coast-guard-render",
+        "e-rail-render",
+        "e-security-render",
+        "e-coordinator-review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-clinical-nurse",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "scrub-and-identifier system",
+          "patient-linked task",
+          "chart-monitor agreement",
+          "non-costume role boundary"
+        ],
+        "evidence_ids": [
+          "e-nurse-render"
+        ]
+      },
+      {
+        "id": "heldout-firefighter",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "complete turnout PPE",
+          "SCBA interface",
+          "gauge-and-coupling task",
+          "confirmed equipment state"
+        ],
+        "evidence_ids": [
+          "e-firefighter-render"
+        ]
+      },
+      {
+        "id": "heldout-coast-guard",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "flotation duty system",
+          "line-handling action",
+          "continuous recovery route",
+          "controlled boat-side consequence"
+        ],
+        "evidence_ids": [
+          "e-coast-guard-render"
+        ]
+      },
+      {
+        "id": "heldout-rail-driver",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "operator identity",
+          "controller contact",
+          "signal-route agreement",
+          "active scanning action"
+        ],
+        "evidence_ids": [
+          "e-rail-render"
+        ]
+      },
+      {
+        "id": "heldout-private-security",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "private role identity",
+          "credential-reader-log relation",
+          "authorization decision",
+          "gate-state consequence"
+        ],
+        "evidence_ids": [
+          "e-security-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The researched package, indexes, focused tests, five v6 packs, five composed prompts, five runtime audits, and five one-shot image deliveries pass. Twenty of twenty-five target gates survive pixels, but only firefighter and rail-driver target profiles pass completely, only the firefighter full scene passes, and causal consequence remains ambiguous in nursing, maritime rescue, and access control. The strict independence audit also carries a disclosed non-semantic arm-03 search warning. Render-fidelity promotion is therefore not justified; user judgment remains unscored.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-coordinator-review",
+      "e-independence-audit"
+    ]
+  }
+}

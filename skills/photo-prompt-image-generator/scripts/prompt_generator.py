@@ -101,6 +101,8 @@ VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
+    "photo_prompt_natural_environment_extension.json",
+    "photo_prompt_mythology_extension.json",
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",
     "photo_prompt_punk_aesthetics_extension.json",
@@ -11155,6 +11157,101 @@ def visual_intent_profile_ids_for_source_text(
     )
 
 
+VISUAL_INTENT_EVIDENCE_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "as",
+    "at",
+    "by",
+    "for",
+    "from",
+    "in",
+    "into",
+    "is",
+    "of",
+    "on",
+    "or",
+    "the",
+    "to",
+    "with",
+    "without",
+}
+
+
+def visual_intent_evidence_tokens(text: str) -> Set[str]:
+    """Mirror composed-audit evidence counting before a binding is frozen."""
+
+    return {
+        token.lower()
+        for token in re.findall(
+            r"[A-Za-z0-9]+(?:[./'’\-][A-Za-z0-9]+)*",
+            str(text or ""),
+        )
+        if token.lower() not in VISUAL_INTENT_EVIDENCE_STOPWORDS
+    }
+
+
+def validate_visual_intent_binding(
+    *,
+    obligation_index: int,
+    field: str,
+    phrase: str,
+    requirement: JsonDict,
+) -> None:
+    """Reject bindings that would make the emitted pack impossible to audit."""
+
+    try:
+        minimum_content_words = int(requirement.get("min_content_words", 3))
+    except (TypeError, ValueError):
+        minimum_content_words = 3
+    actual_content_words = len(visual_intent_evidence_tokens(phrase))
+    if actual_content_words < minimum_content_words:
+        raise ValueError(
+            f"visual intent obligation {obligation_index} binding {field!r} has "
+            f"{actual_content_words} content words but requires at least "
+            f"{minimum_content_words}; extend the same component evidence before "
+            "candidate-pack generation"
+        )
+
+    phrase_key = clean_spaces(phrase).lower()
+    required_anchors = [
+        clean_spaces(str(value))
+        for value in requirement.get("must_mention_any") or []
+        if clean_spaces(str(value))
+    ]
+    if required_anchors and not any(
+        clean_spaces(anchor).lower() in phrase_key for anchor in required_anchors
+    ):
+        raise ValueError(
+            f"visual intent obligation {obligation_index} binding {field!r} must "
+            f"contain one profile component anchor: {required_anchors}"
+        )
+
+    forbidden_terms = [
+        clean_spaces(str(value))
+        for value in requirement.get("must_not_contain") or []
+        if clean_spaces(str(value))
+    ]
+    forbidden_hits = [
+        term for term in forbidden_terms if term.lower() in phrase_key
+    ]
+    if forbidden_hits:
+        raise ValueError(
+            f"visual intent obligation {obligation_index} binding {field!r} "
+            f"contains forbidden profile terms: {forbidden_hits}"
+        )
+
+    blanket_directives = find_blanket_negative_directives(phrase)
+    if blanket_directives:
+        raise ValueError(
+            f"visual intent obligation {obligation_index} binding {field!r} "
+            "contains a blanket negative directive; express the same local boundary "
+            "as positive geometry or visible state: "
+            + " | ".join(blanket_directives)
+        )
+
+
 def normalize_visual_intent(
     payload: Any,
     registry: JsonDict,
@@ -11251,12 +11348,28 @@ def normalize_visual_intent(
                 + ", ".join(unknown_bindings)
             )
         bindings: JsonDict = {}
+        evidence_requirements = (
+            profile.get("evidence_requirements")
+            if isinstance(profile.get("evidence_requirements"), dict)
+            else {}
+        )
         for field, value in raw_bindings.items():
             phrase = clean_spaces(str(value or ""))
             if not phrase:
                 raise ValueError(
                     f"visual intent obligation {index} binding {field!r} must be non-empty"
                 )
+            requirement = (
+                evidence_requirements.get(str(field))
+                if isinstance(evidence_requirements.get(str(field)), dict)
+                else {}
+            )
+            validate_visual_intent_binding(
+                obligation_index=index,
+                field=str(field),
+                phrase=phrase,
+                requirement=requirement,
+            )
             bindings[str(field)] = phrase
         normalized_obligations.append(
             {
