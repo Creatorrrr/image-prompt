@@ -10206,6 +10206,1065 @@
         {"id": "vo_instrument_midi_not_theremin_or_synth", "review_scale": "native", "description": "A theremin, computer typing keyboard, unplugged controller, or autonomous synthesizer does not substitute."}
       ],
       "reject_substitutes": ["standalone_synthesizer", "computer_typing_keyboard", "theremin_noncontact_antennas", "unplugged_controller", "hidden_external_sound_destination"]
+    },
+    {
+      "id": "rapier_acute_point_elaborate_guard",
+      "category": "weapon_edged_thrusting_sword_morphology",
+      "activation": {
+        "exact_terms": ["rapier", "Renaissance rapier", "swept-hilt rapier", "cup-hilt rapier", "rapier sword", "레이피어", "르네상스 레이피어", "스웹트 힐트 레이피어", "컵 힐트 레이피어"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A rapier morphology with a long slender straight double-edged blade tapering to an acute point, an elaborate swept or cup guard that encloses the hand, a one-hand grip, and a pommel on one continuous hilt-to-blade axis. Blade proportion and protective guard topology distinguish it from a broad two-hand greatsword, a short smallsword silhouette, or a plain cruciform medieval sword.",
+        "paraphrase_examples": ["손을 감싸는 복잡한 가드와 가느다란 직선 양날 검신이 뾰족한 끝으로 이어지는 레이피어", "a slender thrusting sword whose ornate swept guard, one-hand grip, pommel, and acute point share one readable profile"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["slender_straight_blade", "acute_point", "elaborate_hand_guard", "grip_pommel_axis", "sword_confound_control"],
+          "groups": [
+            {"id": "slender_straight_blade", "any_terms": ["a long slender straight double-edged blade remains visible from guard to point", "가드부터 끝점까지 이어지는 길고 가느다란 직선 양날 검신"]},
+            {"id": "acute_point", "any_terms": ["the narrow blade converges continuously into one acute thrusting point", "가느다란 검신이 하나의 날카로운 찌르기 끝점으로 수렴"]},
+            {"id": "elaborate_hand_guard", "any_terms": ["a swept or cup guard visibly encloses and protects the gripping hand", "스웹트 또는 컵 가드가 손을 감싸 보호하는 구조"]},
+            {"id": "grip_pommel_axis", "any_terms": ["one hand grip and pommel align continuously with guard and blade", "한손 그립과 폼멜이 가드와 검신 축에 연속 정렬"]},
+            {"id": "sword_confound_control", "any_terms": ["a broad greatsword, short smallsword, or plain cruciform sword does not substitute", "대검 짧은 스몰소드 단순 십자 가드 검으로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a broad two-hand greatsword", "a short smallsword with a minimal guard", "a plain cruciform medieval sword", "an ornate hilt whose blade and acute point are cropped"]
+      },
+      "concept_candidate": {"concept_terms": ["rapier", "slender straight blade", "acute thrusting point", "elaborate swept or cup guard", "one-hand grip and pommel", "not broad greatsword"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["rapier with an elaborate hand-enclosing guard"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an unobstructed side or three-quarter profile that keeps the elaborate guard, gripping hand, one-hand grip, pommel, complete slender blade, and acute point on one continuous readable axis.",
+      "required_evidence_fields": ["blade_profile_phrase", "acute_point_phrase", "guard_phrase", "hilt_axis_phrase", "sword_confound_phrase"],
+      "evidence_requirements": {
+        "blade_profile_phrase": {"min_content_words": 11, "must_mention_any": ["a long slender straight double-edged blade remains visible from guard to point"]},
+        "acute_point_phrase": {"min_content_words": 9, "must_mention_any": ["the narrow blade converges continuously into one acute thrusting point"]},
+        "guard_phrase": {"min_content_words": 11, "must_mention_any": ["a swept or cup guard visibly encloses and protects the gripping hand"]},
+        "hilt_axis_phrase": {"min_content_words": 10, "must_mention_any": ["one hand grip and pommel align continuously with guard and blade"]},
+        "sword_confound_phrase": {"min_content_words": 12, "must_mention_any": ["a broad greatsword, short smallsword, or plain cruciform sword does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_rapier_slender_blade", "review_scale": "thumbnail", "description": "A long slender straight blade is visible continuously from guard to point."},
+        {"id": "vo_weapon_rapier_acute_point", "review_scale": "native", "description": "The narrow blade converges into one unambiguous acute point without cropping or doubling."},
+        {"id": "vo_weapon_rapier_elaborate_guard", "review_scale": "both", "description": "A swept or cup guard visibly encloses the gripping hand rather than becoming a plain crossguard."},
+        {"id": "vo_weapon_rapier_hilt_axis", "review_scale": "native", "description": "Guard, one-hand grip, pommel, blade, and point form one coherent continuous object."},
+        {"id": "vo_weapon_rapier_not_other_sword", "review_scale": "both", "description": "A broad greatsword, short smallsword, plain cruciform sword, or cropped ornate hilt does not substitute."}
+      ],
+      "reject_substitutes": ["broad_two_hand_greatsword", "short_smallsword", "plain_cruciform_sword", "cropped_blade_or_point", "guard_hidden_by_hand"]
+    },
+    {
+      "id": "halberd_axe_point_rear_spike",
+      "category": "weapon_polearm_composite_head_morphology",
+      "activation": {
+        "exact_terms": ["halberd", "halberd polearm", "halberd weapon", "할버드", "할베르드", "할버드 장병기"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A halberd morphology whose single long continuous shaft carries one integrated head with a lateral axe blade, an apical spear point, and a rear beak or spike. All three head functions and their socket-to-shaft relation must be readable together, preventing a spear-only, glaive-only, poleaxe, or oversized fantasy axe substitution.",
+        "paraphrase_examples": ["하나의 긴 자루 위에 옆 도끼날·위쪽 창끝·뒤쪽 부리나 스파이크가 함께 결합된 할버드", "a full-profile polearm whose axe blade, spear point, rear beak, socket, and continuous shaft are simultaneously legible"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["continuous_shaft", "lateral_axe_blade", "apical_spear_point", "rear_beak_spike", "polearm_confound_control"],
+          "groups": [
+            {"id": "continuous_shaft", "any_terms": ["one long continuous shaft remains visible from lower grip to head socket", "아래 그립부터 머리 소켓까지 하나의 긴 자루가 연속 노출"]},
+            {"id": "lateral_axe_blade", "any_terms": ["a distinct lateral axe blade projects from one side of the head", "머리 한쪽에서 분명한 옆 도끼날이 돌출"]},
+            {"id": "apical_spear_point", "any_terms": ["an apical spear point extends above the composite polearm head", "복합 머리 위로 꼭대기 창끝이 연장"]},
+            {"id": "rear_beak_spike", "any_terms": ["a rear beak or spike opposes the lateral axe blade", "옆 도끼날 반대편에 뒤쪽 부리 또는 스파이크"]},
+            {"id": "polearm_confound_control", "any_terms": ["a spear, glaive, poleaxe, or oversized fantasy axe does not substitute", "창 글레이브 폴액스 과장된 판타지 도끼로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a spear with only one point", "a glaive with one long cutting blade", "a poleaxe without the halberd head topology", "an oversized fantasy axe with no apical point or rear beak"]
+      },
+      "concept_candidate": {"concept_terms": ["halberd", "continuous long shaft", "lateral axe blade", "apical spear point", "rear beak or spike", "not spear or glaive"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["halberd with axe blade, spear point, and rear beak"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the lower shaft, hand spacing, socket, lateral axe blade, apical spear point, and rear beak in one side-readable composition without cropping any head component.",
+      "required_evidence_fields": ["shaft_phrase", "axe_blade_phrase", "spear_point_phrase", "rear_beak_phrase", "polearm_confound_phrase"],
+      "evidence_requirements": {
+        "shaft_phrase": {"min_content_words": 11, "must_mention_any": ["one long continuous shaft remains visible from lower grip to head socket"]},
+        "axe_blade_phrase": {"min_content_words": 11, "must_mention_any": ["a distinct lateral axe blade projects from one side of the head"]},
+        "spear_point_phrase": {"min_content_words": 9, "must_mention_any": ["an apical spear point extends above the composite polearm head"]},
+        "rear_beak_phrase": {"min_content_words": 9, "must_mention_any": ["a rear beak or spike opposes the lateral axe blade"]},
+        "polearm_confound_phrase": {"min_content_words": 11, "must_mention_any": ["a spear, glaive, poleaxe, or oversized fantasy axe does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_halberd_continuous_shaft", "review_scale": "thumbnail", "description": "One long shaft remains continuous from the lower grip to the integrated head socket."},
+        {"id": "vo_weapon_halberd_lateral_axe", "review_scale": "both", "description": "A distinct lateral axe blade projects visibly from the head."},
+        {"id": "vo_weapon_halberd_apical_point", "review_scale": "native", "description": "A separate apical spear point extends above the head without merging into the axe blade."},
+        {"id": "vo_weapon_halberd_rear_beak", "review_scale": "native", "description": "A rear beak or spike clearly opposes the lateral axe blade."},
+        {"id": "vo_weapon_halberd_not_other_polearm", "review_scale": "both", "description": "A spear, glaive, poleaxe, or oversized fantasy axe does not substitute for the complete halberd topology."}
+      ],
+      "reject_substitutes": ["spear_only_head", "glaive_single_blade", "poleaxe_head", "oversized_fantasy_axe", "cropped_rear_beak_or_point"]
+    },
+    {
+      "id": "compound_bow_cam_cable_system",
+      "category": "weapon_archery_compound_bow_morphology",
+      "activation": {
+        "exact_terms": ["compound bow", "compound-bow", "modern compound bow", "cam compound bow", "컴파운드 보우", "컴파운드보우", "현대식 컴파운드 보우", "캠 복합궁"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A compound bow morphology built around a rigid central riser, split or compact limbs, cams or pulleys at both limb tips, and visibly separate bowstring and cable paths. The complete vertical bow remains independent of a stock, preventing a recurve or longbow without cams and preventing a crossbow substitution.",
+        "paraphrase_examples": ["중앙 라이저·분할 림·양끝 캠·서로 분리된 보우스트링과 케이블 경로가 보이는 컴파운드 보우", "a vertical modern bow whose paired cams and distinct cable paths remain visible from limb tip to limb tip"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["central_riser", "split_limbs", "paired_tip_cams", "string_cable_paths", "bow_confound_control"],
+          "groups": [
+            {"id": "central_riser", "any_terms": ["a rigid central riser contains the hand grip and arrow window", "단단한 중앙 라이저에 손 그립과 화살 창이 결합"]},
+            {"id": "split_limbs", "any_terms": ["upper and lower split limbs connect the riser to both cam assemblies", "위아래 분할 림이 라이저와 양쪽 캠 장치를 연결"]},
+            {"id": "paired_tip_cams", "any_terms": ["distinct cams or pulleys remain visible at both limb tips", "양쪽 림 끝에 각각 분명한 캠 또는 풀리"]},
+            {"id": "string_cable_paths", "any_terms": ["bowstring and separate cable paths remain visually traceable around the cams", "보우스트링과 별도 케이블 경로가 캠 둘레에서 추적 가능"]},
+            {"id": "bow_confound_control", "any_terms": ["a recurve bow, longbow, or stock-mounted crossbow does not substitute", "리커브 보우 롱보우 스톡 장착 석궁으로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a recurve bow with no cams", "a longbow with one simple string", "a crossbow with a longitudinal stock", "a cropped bow that hides one cam and the cable path"]
+      },
+      "concept_candidate": {"concept_terms": ["compound bow", "rigid central riser", "split limbs", "paired limb-tip cams", "separate string and cables", "not recurve or crossbow"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["compound bow with paired cams and visible cable paths"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the entire vertical bow inside frame, with both limb-tip cams, split limbs, central riser and grip, bowstring, and separate cable routes unobstructed by hands, hair, costume, or background clutter.",
+      "required_evidence_fields": ["riser_phrase", "split_limb_phrase", "paired_cam_phrase", "cable_path_phrase", "bow_confound_phrase"],
+      "evidence_requirements": {
+        "riser_phrase": {"min_content_words": 10, "must_mention_any": ["a rigid central riser contains the hand grip and arrow window"]},
+        "split_limb_phrase": {"min_content_words": 11, "must_mention_any": ["upper and lower split limbs connect the riser to both cam assemblies"]},
+        "paired_cam_phrase": {"min_content_words": 10, "must_mention_any": ["distinct cams or pulleys remain visible at both limb tips"]},
+        "cable_path_phrase": {"min_content_words": 11, "must_mention_any": ["bowstring and separate cable paths remain visually traceable around the cams"]},
+        "bow_confound_phrase": {"min_content_words": 11, "must_mention_any": ["a recurve bow, longbow, or stock-mounted crossbow does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_compound_bow_full_riser_limbs", "review_scale": "thumbnail", "description": "The complete vertical riser and upper and lower limb system fit inside the frame."},
+        {"id": "vo_weapon_compound_bow_two_cams", "review_scale": "both", "description": "Distinct cam or pulley assemblies are visible at both limb tips."},
+        {"id": "vo_weapon_compound_bow_cable_paths", "review_scale": "native", "description": "A bowstring and separate cable paths can be traced coherently around the cams."},
+        {"id": "vo_weapon_compound_bow_grip_relation", "review_scale": "native", "description": "The hand meets the central riser grip without hiding either cam or inventing extra strings."},
+        {"id": "vo_weapon_compound_bow_not_simple_or_crossbow", "review_scale": "both", "description": "A camless recurve bow, longbow, or stock-mounted crossbow does not substitute."}
+      ],
+      "reject_substitutes": ["camless_recurve_bow", "simple_longbow", "stock_mounted_crossbow", "one_cam_cropped", "tangled_or_merged_cables"]
+    },
+    {
+      "id": "crossbow_stock_prod_release_system",
+      "category": "weapon_archery_crossbow_morphology",
+      "activation": {
+        "exact_terms": ["crossbow", "crossbow weapon", "crossbow system", "arbalest", "석궁", "쇠뇌", "석궁 무기", "석궁 체계"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A crossbow morphology that joins a longitudinal stock and bolt track to a transverse prod, one spanning string, and a visible release mechanism. The perpendicular stock-to-prod topology and coherent trigger region distinguish it from an ordinary vertical bow, a rifle-shaped stock without a prod, or a detached bow mounted ambiguously near a stock.",
+        "paraphrase_examples": ["세로 스톡과 볼트 트랙 위에 가로 활대·줄·발사 기구가 직각으로 결합된 석궁", "a crosswise prod and string mechanically integrated with a longitudinal stock, bolt track, and release housing"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["longitudinal_stock", "transverse_prod", "string_bolt_track", "release_mechanism", "crossbow_confound_control"],
+          "groups": [
+            {"id": "longitudinal_stock", "any_terms": ["one longitudinal stock runs from shoulder end through the central mechanism", "어깨 쪽 끝에서 중앙 기구까지 하나의 세로 스톡이 연결"]},
+            {"id": "transverse_prod", "any_terms": ["a transverse prod crosses the front of the stock at a clear perpendicular relation", "가로 활대가 스톡 앞부분을 분명한 직각 관계로 가로지름"]},
+            {"id": "string_bolt_track", "any_terms": ["one string spans the prod while a straight bolt track remains visible along the stock", "하나의 줄이 활대를 잇고 직선 볼트 트랙이 스톡 위에 노출"]},
+            {"id": "release_mechanism", "any_terms": ["a visible release housing and trigger region connect string retention to the stock", "줄 고정부와 스톡을 잇는 발사 하우징과 방아쇠 영역"]},
+            {"id": "crossbow_confound_control", "any_terms": ["an ordinary vertical bow, rifle, or detached prod-and-stock collage does not substitute", "일반 세로 활 소총 분리된 활대와 스톡 콜라주로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["an ordinary vertical bow", "a rifle silhouette with no transverse prod", "a detached bow placed in front of a stock", "a crossbow cropped so the release mechanism or one prod limb disappears"]
+      },
+      "concept_candidate": {"concept_terms": ["crossbow", "longitudinal stock", "transverse prod", "string and bolt track", "release mechanism", "not ordinary bow or rifle"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["crossbow with transverse prod and visible release mechanism"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a side or elevated three-quarter view that reveals the full transverse prod, complete string span, longitudinal stock, bolt track, release housing, trigger region, and coherent support-hand contact in one object.",
+      "required_evidence_fields": ["stock_phrase", "prod_phrase", "string_track_phrase", "release_phrase", "crossbow_confound_phrase"],
+      "evidence_requirements": {
+        "stock_phrase": {"min_content_words": 11, "must_mention_any": ["one longitudinal stock runs from shoulder end through the central mechanism"]},
+        "prod_phrase": {"min_content_words": 14, "must_mention_any": ["a transverse prod crosses the front of the stock at a clear perpendicular relation"]},
+        "string_track_phrase": {"min_content_words": 15, "must_mention_any": ["one string spans the prod while a straight bolt track remains visible along the stock"]},
+        "release_phrase": {"min_content_words": 13, "must_mention_any": ["a visible release housing and trigger region connect string retention to the stock"]},
+        "crossbow_confound_phrase": {"min_content_words": 14, "must_mention_any": ["an ordinary vertical bow, rifle, or detached prod-and-stock collage does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_crossbow_stock_prod_topology", "review_scale": "thumbnail", "description": "A longitudinal stock and transverse prod form one unmistakable perpendicular crossbow silhouette."},
+        {"id": "vo_weapon_crossbow_complete_prod_string", "review_scale": "both", "description": "Both prod limbs and one coherent spanning string remain completely visible."},
+        {"id": "vo_weapon_crossbow_bolt_track_release", "review_scale": "native", "description": "The bolt track, release housing, and trigger region connect plausibly along the stock."},
+        {"id": "vo_weapon_crossbow_contact_coherence", "review_scale": "native", "description": "Hands support one coherent crossbow without merging into the stock, string, prod, or trigger region."},
+        {"id": "vo_weapon_crossbow_not_bow_or_rifle", "review_scale": "both", "description": "An ordinary vertical bow, rifle, or detached prod-and-stock collage does not substitute."}
+      ],
+      "reject_substitutes": ["ordinary_vertical_bow", "rifle_without_prod", "detached_prod_stock_collage", "cropped_prod_limb", "missing_release_mechanism"]
+    },
+    {
+      "id": "revolver_chambered_cylinder_system",
+      "category": "weapon_firearm_revolver_external_morphology",
+      "activation": {
+        "exact_terms": ["revolver", "revolver handgun", "revolving-action handgun", "wheel gun", "리볼버", "회전식 리볼버", "리볼버 권총", "회전식 권총"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A revolver external morphology with a prominent multi-chamber cylinder held inside a frame, a barrel aligned with one chamber, a distinct grip and trigger guard, and an optional visible hammer. The side-readable cylinder-to-barrel relationship distinguishes it from a semi-automatic pistol whose slide and detachable-magazine silhouette replace the chambered cylinder.",
+        "paraphrase_examples": ["프레임 안 다중 약실 실린더와 그중 한 약실 축에 맞는 총열·그립·방아쇠울이 보이는 리볼버 외형", "a side profile whose chambered cylinder, frame, aligned barrel, trigger guard, grip, and optional hammer read as one revolver form"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["chambered_cylinder", "barrel_alignment", "frame_grip", "trigger_guard_hammer", "pistol_confound_control"],
+          "groups": [
+            {"id": "chambered_cylinder", "any_terms": ["a prominent multi-chamber cylinder is visibly retained inside the frame", "프레임 안에 고정된 돌출형 다중 약실 실린더"]},
+            {"id": "barrel_alignment", "any_terms": ["one barrel axis aligns visibly with the upper chamber of the cylinder", "하나의 총열 축이 실린더 위쪽 약실과 분명히 정렬"]},
+            {"id": "frame_grip", "any_terms": ["the frame surrounds the cylinder and connects continuously into a distinct grip", "프레임이 실린더를 감싸며 분명한 그립으로 연속 연결"]},
+            {"id": "trigger_guard_hammer", "any_terms": ["a trigger guard remains distinct and an external hammer may rise behind the frame", "분리된 방아쇠울과 프레임 뒤 선택적 외부 해머"]},
+            {"id": "pistol_confound_control", "any_terms": ["a semi-automatic pistol slide or magazine silhouette does not replace the cylinder", "반자동 권총 슬라이드나 탄창 실루엣이 실린더를 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a semi-automatic pistol with a slide", "a generic handgun with no visible cylinder", "a cylinder floating beside the frame", "a front-only view that hides chamber count and barrel alignment"]
+      },
+      "concept_candidate": {"concept_terms": ["revolver", "multi-chamber cylinder", "barrel aligned to one chamber", "frame and grip", "trigger guard and optional hammer", "not semi-automatic pistol"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["revolver-form reference with a visible chambered cylinder"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a side or slight three-quarter morphology view that exposes the chambered cylinder, frame, barrel alignment, trigger guard, grip, and optional hammer while hands avoid covering the cylinder-to-frame boundary.",
+      "required_evidence_fields": ["cylinder_phrase", "barrel_alignment_phrase", "frame_grip_phrase", "trigger_hammer_phrase", "pistol_confound_phrase"],
+      "evidence_requirements": {
+        "cylinder_phrase": {"min_content_words": 11, "must_mention_any": ["a prominent multi-chamber cylinder is visibly retained inside the frame"]},
+        "barrel_alignment_phrase": {"min_content_words": 12, "must_mention_any": ["one barrel axis aligns visibly with the upper chamber of the cylinder"]},
+        "frame_grip_phrase": {"min_content_words": 12, "must_mention_any": ["the frame surrounds the cylinder and connects continuously into a distinct grip"]},
+        "trigger_hammer_phrase": {"min_content_words": 14, "must_mention_any": ["a trigger guard remains distinct and an external hammer may rise behind the frame"]},
+        "pistol_confound_phrase": {"min_content_words": 13, "must_mention_any": ["a semi-automatic pistol slide or magazine silhouette does not replace the cylinder"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_revolver_chambered_cylinder", "review_scale": "both", "description": "A prominent multi-chamber cylinder is visibly retained within the frame."},
+        {"id": "vo_weapon_revolver_barrel_alignment", "review_scale": "native", "description": "The barrel axis aligns coherently with one cylinder chamber rather than floating or branching."},
+        {"id": "vo_weapon_revolver_frame_grip", "review_scale": "thumbnail", "description": "Frame, cylinder, barrel, trigger guard, and grip form one readable revolver silhouette."},
+        {"id": "vo_weapon_revolver_contact_visibility", "review_scale": "native", "description": "The presenting hand does not hide the cylinder-to-frame boundary or merge fingers into the trigger region."},
+        {"id": "vo_weapon_revolver_not_semiauto", "review_scale": "both", "description": "A semi-automatic pistol slide, magazine silhouette, or cylinderless generic handgun does not substitute."}
+      ],
+      "reject_substitutes": ["semi_automatic_pistol_slide", "cylinderless_generic_handgun", "floating_cylinder", "front_only_hidden_chambers", "hand_occludes_cylinder_frame_boundary"]
+    },
+    {
+      "id": "ground_mortar_tube_bipod_baseplate_system",
+      "category": "weapon_crew_served_ground_mortar_morphology",
+      "activation": {
+        "exact_terms": ["ground mortar system", "military mortar system", "mortar weapon system", "ground-emplaced mortar", "infantry mortar system", "박격포", "지상 박격포", "박격포 체계", "보병 박격포"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A ground-emplaced mortar system whose elevated launch tube is seated on a ground-contacting baseplate and stabilized by a connected bipod with visible sight or traverse-and-elevation hardware. The tube, mount, and baseplate must form one scale-coherent assembly, preventing a kitchen mortar and pestle, wheeled cannon, shoulder launcher, or unsupported tube substitution.",
+        "paraphrase_examples": ["비스듬히 세운 포신이 양각대와 지면 바닥판에 함께 연결되고 조준·조절 장치가 보이는 지상 박격포", "a crew-served ground mount whose elevated tube, bipod, baseplate, sight, and adjustment hardware remain mechanically connected"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["elevated_tube", "ground_baseplate", "connected_bipod", "sight_adjustment_hardware", "mortar_confound_control"],
+          "groups": [
+            {"id": "elevated_tube", "any_terms": ["one elevated mortar tube rises at a steep angle from the mounted assembly", "하나의 박격포 포신이 장착 구조에서 가파른 각도로 상승"]},
+            {"id": "ground_baseplate", "any_terms": ["the lower tube seats visibly into a broad baseplate contacting the ground", "포신 아래가 지면에 닿는 넓은 바닥판에 분명히 안착"]},
+            {"id": "connected_bipod", "any_terms": ["a two-legged bipod braces the tube and connects mechanically above the baseplate", "두 다리 양각대가 포신을 받치며 바닥판 위쪽에서 기계적으로 연결"]},
+            {"id": "sight_adjustment_hardware", "any_terms": ["sight and traverse or elevation adjustment hardware remain visible beside the tube", "포신 옆에 조준기와 방향 또는 고저 조절 장치가 노출"]},
+            {"id": "mortar_confound_control", "any_terms": ["a kitchen mortar, wheeled cannon, shoulder launcher, or unsupported tube does not substitute", "주방 절구 바퀴식 대포 어깨 발사기 지지 없는 관으로 대체하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["a kitchen mortar and pestle", "a wheeled field cannon", "a shoulder-fired launcher", "an isolated angled tube with no bipod or baseplate"]
+      },
+      "concept_candidate": {"concept_terms": ["ground mortar system", "elevated tube", "ground-contacting baseplate", "connected bipod", "sight and adjustment hardware", "not kitchen mortar or cannon"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["ground mortar system with tube, bipod, and baseplate"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a low three-quarter documentary view that shows the full elevated tube, both bipod legs, baseplate-to-ground contact, sight and adjustment hardware, and any examining hands without cropping or merging mount components.",
+      "required_evidence_fields": ["tube_phrase", "baseplate_phrase", "bipod_phrase", "sight_hardware_phrase", "mortar_confound_phrase"],
+      "evidence_requirements": {
+        "tube_phrase": {"min_content_words": 13, "must_mention_any": ["one elevated mortar tube rises at a steep angle from the mounted assembly"]},
+        "baseplate_phrase": {"min_content_words": 13, "must_mention_any": ["the lower tube seats visibly into a broad baseplate contacting the ground"]},
+        "bipod_phrase": {"min_content_words": 13, "must_mention_any": ["a two-legged bipod braces the tube and connects mechanically above the baseplate"]},
+        "sight_hardware_phrase": {"min_content_words": 13, "must_mention_any": ["sight and traverse or elevation adjustment hardware remain visible beside the tube"]},
+        "mortar_confound_phrase": {"min_content_words": 14, "must_mention_any": ["a kitchen mortar, wheeled cannon, shoulder launcher, or unsupported tube does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_weapon_mortar_elevated_tube", "review_scale": "thumbnail", "description": "One full mortar tube rises at a steep angle without becoming a shoulder launcher or cannon barrel."},
+        {"id": "vo_weapon_mortar_baseplate_ground", "review_scale": "both", "description": "The lower tube visibly seats on a broad baseplate that contacts the ground."},
+        {"id": "vo_weapon_mortar_connected_bipod", "review_scale": "both", "description": "Two distinct bipod legs brace the tube and remain mechanically connected above the baseplate."},
+        {"id": "vo_weapon_mortar_sight_adjustment", "review_scale": "native", "description": "Sight and traverse or elevation adjustment hardware remain legible beside the tube."},
+        {"id": "vo_weapon_mortar_not_substitute", "review_scale": "both", "description": "A kitchen mortar, wheeled cannon, shoulder launcher, or unsupported tube does not substitute."}
+      ],
+      "reject_substitutes": ["kitchen_mortar_and_pestle", "wheeled_field_cannon", "shoulder_launcher", "unsupported_tube", "cropped_bipod_or_baseplate"]
+    },
+    {
+      "id": "wuxia_rooftop_qinggong_traversal",
+      "category": "wuxia_qinggong_rooftop_spatial_relation",
+      "activation": {
+        "exact_terms": ["wuxia rooftop qinggong traversal", "qinggong old tiled-roof traversal", "wuxia qinggong rooftop chase", "무협 기와지붕 경공 이동", "기와지붕 경공 추격", "무협 경공 지붕 이동"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A human-scale wuxia qinggong traversal across old tiled roofs. One adult martial traveler must occupy an intermediate trajectory whose takeoff eave, airborne path, destination roof, and coherent cloth lag are all visible together. The relation distinguishes qinggong traversal from a static roof portrait, a modern rooftop jump, unsupported levitation, winged flight, broom flight, or xianxia flying-sword travel.",
+        "paraphrase_examples": ["이륙 기와 처마와 도착 지붕 사이를 성인 무인이 장포 지연과 함께 건너는 경공 이동", "one adult martial traveler crosses a gap between old tiled roofs with start path and landing direction simultaneously legible"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["old_tiled_roof_route", "takeoff_support", "airborne_trajectory", "destination_landing", "qinggong_confound_control"],
+          "groups": [
+            {"id": "old_tiled_roof_route", "any_terms": ["multiple old tiled roof planes form one continuous height-changing route", "여러 오래된 기와지붕 면이 높이 변화를 가진 하나의 경로를 형성"]},
+            {"id": "takeoff_support", "any_terms": ["one foot or toe visibly leaves a specific takeoff eave or roof ridge", "한 발 또는 발끝이 특정 처마나 지붕 능선에서 분명히 이륙"]},
+            {"id": "airborne_trajectory", "any_terms": ["the adult body occupies an intermediate travel arc while sleeves hem and hair tie lag behind the same direction", "성인 몸이 중간 이동 호를 차지하고 소매와 옷자락과 머리끈이 같은 방향 뒤로 지연"]},
+            {"id": "destination_landing", "any_terms": ["a separate destination roof offers one clear landing zone ahead of the body", "몸 앞쪽의 별도 도착 지붕에 분명한 착지 구역"]},
+            {"id": "qinggong_confound_control", "any_terms": ["the scene remains a roof-to-roof human traversal rather than static posing modern parkour or unsupported magical flight", "정지 포즈 현대 파쿠르 지지 없는 마법 비행이 아닌 지붕 사이 인간 이동"]}
+          ]
+        },
+        "contrast_examples": ["a fashion model standing on one roof", "a modern concrete rooftop parkour jump", "a floating immortal with no departure or destination", "a figure riding a broom flying sword or winged mount", "cropped feet and roof edges that hide the path"]
+      },
+      "concept_candidate": {"concept_terms": ["wuxia rooftop qinggong", "old tiled roof route", "takeoff eave", "airborne trajectory", "destination landing zone", "coherent cloth lag"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["human-scale wuxia qinggong crossing old tiled roofs"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide lateral or deep three-quarter frame that keeps the old tiled takeoff roof, the adult airborne body, the open gap, and the destination roof simultaneously visible; preserve feet, eaves, sleeve direction, and landing space.",
+      "required_evidence_fields": ["roof_route_phrase", "takeoff_phrase", "trajectory_phrase", "landing_phrase", "qinggong_confound_phrase"],
+      "evidence_requirements": {
+        "roof_route_phrase": {"min_content_words": 9, "must_mention_any": ["multiple old tiled roof planes form one continuous height-changing route"]},
+        "takeoff_phrase": {"min_content_words": 10, "must_mention_any": ["one foot or toe visibly leaves a specific takeoff eave or roof ridge"]},
+        "trajectory_phrase": {"min_content_words": 15, "must_mention_any": ["the adult body occupies an intermediate travel arc while sleeves hem and hair tie lag behind the same direction"]},
+        "landing_phrase": {"min_content_words": 11, "must_mention_any": ["a separate destination roof offers one clear landing zone ahead of the body"]},
+        "qinggong_confound_phrase": {"min_content_words": 14, "must_mention_any": ["the scene remains a roof-to-roof human traversal rather than static posing modern parkour or unsupported magical flight"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_rooftop_route", "review_scale": "thumbnail", "description": "At least two old tiled roof planes and the traversed gap read as one height-changing route."},
+        {"id": "vo_wuxia_rooftop_takeoff", "review_scale": "native", "description": "One visible foot or toe has a specific takeoff eave or ridge owner."},
+        {"id": "vo_wuxia_rooftop_trajectory", "review_scale": "both", "description": "The complete adult body occupies an intermediate path and cloth or hair lag agrees with its direction."},
+        {"id": "vo_wuxia_rooftop_destination", "review_scale": "both", "description": "A separate forward roof provides an unobstructed plausible landing zone."},
+        {"id": "vo_wuxia_rooftop_not_flight_or_pose", "review_scale": "both", "description": "Static roof posing, modern parkour, unsupported levitation, winged or vehicle flight, and cropped path anchors do not substitute."}
+      ],
+      "reject_substitutes": ["static_single_roof_portrait", "modern_concrete_rooftop_parkour", "unsupported_levitation", "flying_sword_broom_or_wings", "cropped_takeoff_or_destination"]
+    },
+    {
+      "id": "wuxia_bamboo_forest_aerial_duel",
+      "category": "wuxia_bamboo_duel_two_actor_spatial_relation",
+      "activation": {
+        "exact_terms": ["wuxia bamboo forest aerial duel", "wuxia bamboo canopy duel", "two-adult wuxia bamboo duel", "무협 죽림 공중 결투", "무협 죽림 경공 대결", "무협 대숲 공중 대결"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A two-adult wuxia duel whose action geography is owned by a bamboo forest. Vertical trunks and canopy depth keep both martial silhouettes separate while their opposed trajectories, one shared exchange point, and distinct support or landing zones remain visible. The contract rejects a generic bamboo portrait, one-person sword pose, merged fighters, ordinary ground sparring, or unanchored xianxia levitation.",
+        "paraphrase_examples": ["수직 죽림 깊이 안에서 두 성인 무인의 상승·하강 경로와 교환 지점이 분리되는 경공 결투", "two adult martial rivals cross distinct aerial paths among vertical bamboo with one shared exchange and separate landing anchors"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["bamboo_depth_owner", "two_distinct_adults", "opposed_trajectories", "shared_exchange_and_support", "bamboo_duel_confound_control"],
+          "groups": [
+            {"id": "bamboo_depth_owner", "any_terms": ["vertical bamboo trunks at multiple depths create one open lateral and vertical action corridor", "여러 깊이의 수직 대나무 줄기가 열린 가로세로 액션 통로를 형성"]},
+            {"id": "two_distinct_adults", "any_terms": ["two complete adult martial silhouettes remain separately readable without overlap or body merging", "두 성인 무인의 전신 실루엣이 겹치거나 합쳐지지 않고 따로 읽힘"]},
+            {"id": "opposed_trajectories", "any_terms": ["the rivals occupy opposed rising descending or lateral paths within the same bamboo depth axis", "두 상대가 같은 죽림 깊이축에서 서로 반대되는 상승 하강 또는 측면 경로를 차지"]},
+            {"id": "shared_exchange_and_support", "any_terms": ["one shared martial exchange point and separate branch ground or landing anchors remain visible for both fighters", "하나의 공동 무예 교환 지점과 두 인물 각각의 가지 지면 또는 착지 기준점이 보임"]},
+            {"id": "bamboo_duel_confound_control", "any_terms": ["the scene remains a two-person bamboo-owned duel rather than a portrait generic forest sparring or free-floating immortal tableau", "인물 사진 일반 숲 대련 지지 없는 선인 장면이 아닌 두 사람의 죽림 소유 결투"]}
+          ]
+        },
+        "contrast_examples": ["one model posing with a sword in bamboo", "two fighters merged into one silhouette", "ordinary ground sparring with bamboo wallpaper", "two floating immortals with no support or landing zones", "a dense forest crop that hides the exchange geography"]
+      },
+      "concept_candidate": {"concept_terms": ["wuxia bamboo forest duel", "vertical bamboo depth", "two adult rivals", "opposed trajectories", "shared exchange point", "separate landing anchors"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["two-adult aerial wuxia duel inside a bamboo action corridor"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide or deep frame with repeated vertical bamboo trunks, both complete adult figures, separate trajectories, one shared exchange point, and visible branch or ground anchors; do not crop either landing path.",
+      "required_evidence_fields": ["bamboo_depth_phrase", "two_adults_phrase", "trajectories_phrase", "exchange_support_phrase", "bamboo_confound_phrase"],
+      "evidence_requirements": {
+        "bamboo_depth_phrase": {"min_content_words": 12, "must_mention_any": ["vertical bamboo trunks at multiple depths create one open lateral and vertical action corridor"]},
+        "two_adults_phrase": {"min_content_words": 12, "must_mention_any": ["two complete adult martial silhouettes remain separately readable without overlap or body merging"]},
+        "trajectories_phrase": {"min_content_words": 14, "must_mention_any": ["the rivals occupy opposed rising descending or lateral paths within the same bamboo depth axis"]},
+        "exchange_support_phrase": {"min_content_words": 16, "must_mention_any": ["one shared martial exchange point and separate branch ground or landing anchors remain visible for both fighters"]},
+        "bamboo_confound_phrase": {"min_content_words": 16, "must_mention_any": ["the scene remains a two-person bamboo-owned duel rather than a portrait generic forest sparring or free-floating immortal tableau"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_bamboo_depth", "review_scale": "thumbnail", "description": "Vertical bamboo trunks at multiple depths define an open action corridor rather than a flat decorative backdrop."},
+        {"id": "vo_wuxia_bamboo_two_adults", "review_scale": "both", "description": "Two complete adult martial figures remain visually separate with coherent anatomy."},
+        {"id": "vo_wuxia_bamboo_trajectories", "review_scale": "both", "description": "The two figures occupy opposed traceable paths inside the same bamboo geography."},
+        {"id": "vo_wuxia_bamboo_exchange_support", "review_scale": "native", "description": "One shared exchange point and distinct support or landing anchors are visible for both figures."},
+        {"id": "vo_wuxia_bamboo_not_portrait_or_levitation", "review_scale": "both", "description": "A generic bamboo portrait, one-person sword pose, merged bodies, ground-only sparring, or unanchored levitation does not substitute."}
+      ],
+      "reject_substitutes": ["generic_bamboo_portrait", "single_sword_pose", "merged_two_fighters", "ground_only_sparring", "unanchored_xianxia_levitation"]
+    },
+    {
+      "id": "jianghu_inn_identity_standoff",
+      "category": "wuxia_jianghu_inn_multifaction_standoff_relation",
+      "activation": {
+        "exact_terms": ["jianghu frontier inn identity standoff", "wuxia inn faction standoff", "wuxia inn identity standoff", "강호 객잔 정체 탐색 대치", "무협 객잔 세력 대치", "객잔 정체 탐색 대치"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A pre-conflict jianghu standoff inside a sparse frontier inn. Adult travelers occupy at least two distinct doorway, table, or stair zones; their physically compatible eyelines and controlled hands test identities while ordinary bowls, cups, and service remain visibly intact. The all-of relation separates the scene from an empty historical restaurant, a Western saloon, a generic fantasy tavern, a friendly meal, or an open melee that has erased watchful restraint.",
+        "paraphrase_examples": ["객잔 문턱·탁자·계단 구역에 나뉜 성인 강호인들이 식사 흔적을 유지한 채 시선과 손으로 정체를 떠보는 대치", "adult jianghu travelers hold separate inn zones and exchange watchful eyelines while meal objects remain undisturbed before combat"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["sparse_frontier_inn", "separate_faction_zones", "compatible_watchful_relation", "preserved_public_routine", "inn_standoff_confound_control"],
+          "groups": [
+            {"id": "sparse_frontier_inn", "any_terms": ["a sparse public waystation shows wooden tables one entry threshold and a narrow stair or upper-room access", "성긴 공공 역참에 나무 탁자와 하나의 출입 문턱과 좁은 계단 또는 위층 출입구"]},
+            {"id": "separate_faction_zones", "any_terms": ["adult travelers occupy at least two clearly separated doorway table or stair zones", "성인 여행자들이 문 탁자 계단 중 최소 두 개의 분리된 구역을 차지"]},
+            {"id": "compatible_watchful_relation", "any_terms": ["crossing eyelines and paused hands connect the separated adults through one mutual identity-testing standoff", "교차 시선과 멈춘 손이 분리된 성인들을 하나의 상호 정체 탐색 대치로 연결"]},
+            {"id": "preserved_public_routine", "any_terms": ["simple bowls cups or a flask remain upright and visibly owned while conflict is still withheld", "단순한 그릇 잔 또는 술병이 서 있고 소유 관계가 보이며 충돌은 아직 유보"]},
+            {"id": "inn_standoff_confound_control", "any_terms": ["the scene remains a jianghu identity standoff rather than an empty restaurant friendly meal Western saloon fantasy tavern or active brawl", "빈 식당 친근한 식사 서부 살롱 판타지 선술집 난투가 아닌 강호 정체 대치"]}
+          ]
+        },
+        "contrast_examples": ["an empty Chinese-style restaurant", "friends sharing a relaxed meal", "a Western saloon shootout", "a cluttered fantasy tavern", "an active melee with no readable faction zones or intact routine"]
+      },
+      "concept_candidate": {"concept_terms": ["jianghu inn identity standoff", "sparse frontier waystation", "separate faction zones", "crossing eyelines", "paused hands", "intact meal routine"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["watchful jianghu identity standoff inside a sparse frontier inn"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide interior frame that maps the entry threshold, two or more table zones, and optional stair depth; keep every primary adult face, eyeline, controlled hand, and owned bowl or cup visible before combat begins.",
+      "required_evidence_fields": ["inn_structure_phrase", "faction_zones_phrase", "watchful_relation_phrase", "routine_phrase", "inn_confound_phrase"],
+      "evidence_requirements": {
+        "inn_structure_phrase": {"min_content_words": 15, "must_mention_any": ["a sparse public waystation shows wooden tables one entry threshold and a narrow stair or upper-room access"]},
+        "faction_zones_phrase": {"min_content_words": 13, "must_mention_any": ["adult travelers occupy at least two clearly separated doorway table or stair zones"]},
+        "watchful_relation_phrase": {"min_content_words": 15, "must_mention_any": ["crossing eyelines and paused hands connect the separated adults through one mutual identity-testing standoff"]},
+        "routine_phrase": {"min_content_words": 14, "must_mention_any": ["simple bowls cups or a flask remain upright and visibly owned while conflict is still withheld"]},
+        "inn_confound_phrase": {"min_content_words": 19, "must_mention_any": ["the scene remains a jianghu identity standoff rather than an empty restaurant friendly meal Western saloon fantasy tavern or active brawl"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_inn_structure", "review_scale": "thumbnail", "description": "A sparse public waystation with tables, entry threshold, and stair or upper access is legible."},
+        {"id": "vo_wuxia_inn_faction_zones", "review_scale": "both", "description": "At least two adult traveler groups or individuals occupy clearly separated functional zones."},
+        {"id": "vo_wuxia_inn_watchful_relation", "review_scale": "native", "description": "Physically compatible eyelines and paused hands connect the separated adults in one mutual standoff."},
+        {"id": "vo_wuxia_inn_preserved_routine", "review_scale": "both", "description": "Owned bowls, cups, flask, or service traces remain upright and preserve the pre-conflict public routine."},
+        {"id": "vo_wuxia_inn_not_generic_or_brawl", "review_scale": "both", "description": "An empty restaurant, friendly meal, Western saloon, generic fantasy tavern, or open melee does not substitute."}
+      ],
+      "reject_substitutes": ["empty_historical_restaurant", "friendly_group_meal", "western_saloon", "generic_fantasy_tavern", "open_melee_without_standoff"]
+    },
+    {
+      "id": "formal_biwu_reciprocal_salute_standoff",
+      "category": "wuxia_biwu_two_actor_precontact_relation",
+      "activation": {
+        "exact_terms": ["formal biwu palm-fist salute challenge", "ritualized wuxia reciprocal duel salute", "formal biwu reciprocal salute", "상호 포권례 비무", "무협 비무 포권례 대결", "비무 포권 대치"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A formal pre-contact contest between exactly two adult martial competitors. Both face each other and simultaneously perform a reciprocal palm-and-fist salute across a clean center gap inside one bounded courtyard or platform, while witnesses remain subordinate and outside the contest axis. The all-of relation distinguishes the scene from solo forms practice, an active brawl, modern boxing or MMA, military drill, a handshake, or a posed ceremony photograph.",
+        "paraphrase_examples": ["경계가 보이는 비무 공간에서 정확히 두 명의 성인 무인이 중앙 간격을 사이에 두고 서로를 향해 동시에 포권례를 하는 접촉 전 대치", "exactly two adult martial competitors exchange simultaneous palm-and-fist salutes across a clean pre-contact gap in one bounded contest space"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["exactly_two_primary_adults", "reciprocal_palm_fist_salute", "bounded_contest_space", "precontact_gap_and_witnesses", "biwu_confound_control"],
+          "groups": [
+            {"id": "exactly_two_primary_adults", "any_terms": ["exactly two complete adult martial competitors remain the only primary actors", "정확히 두 명의 완전한 성인 무인이 유일한 주행위자로 판독"]},
+            {"id": "reciprocal_palm_fist_salute", "any_terms": ["both adults face each other and simultaneously hold a palm-and-fist salute at chest height", "두 성인이 서로 마주 보며 가슴 높이에서 동시에 포권례를 유지"]},
+            {"id": "bounded_contest_space", "any_terms": ["one courtyard platform or marked contest boundary contains both competitors", "하나의 안뜰 단상 또는 표시된 비무 경계 안에 두 무인이 함께 위치"]},
+            {"id": "precontact_gap_and_witnesses", "any_terms": ["a clean center gap separates the competitors while any witnesses stay subordinate outside the contest axis", "깨끗한 중앙 간격이 두 무인을 분리하고 입회자는 비무 축 밖에서 보조적으로 배치"]},
+            {"id": "biwu_confound_control", "any_terms": ["the scene remains a reciprocal pre-contact biwu standoff rather than solo forms active brawling boxing MMA military drill handshake or posed ceremony", "독무 난투 복싱 종합격투기 군사 훈련 악수 기념사진이 아닌 상호 접촉 전 비무 대치"]}
+          ]
+        },
+        "contrast_examples": ["one performer demonstrating a solo form", "two fighters already exchanging blows", "a modern boxing or MMA face-off", "soldiers drilling in formation", "two people shaking hands for a ceremony photograph"]
+      },
+      "concept_candidate": {"concept_terms": ["formal biwu reciprocal salute", "exactly two adult competitors", "simultaneous palm-and-fist salute", "bounded courtyard platform", "clean pre-contact gap", "subordinate witnesses"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["formal two-adult biwu standoff with reciprocal palm-and-fist salutes"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a bilateral full-body frame with exactly two primary adult competitors, simultaneous chest-height palm-and-fist salutes, one clean center gap, a visible courtyard or platform boundary, and any witnesses kept outside the duel axis.",
+      "required_evidence_fields": ["two_adults_phrase", "reciprocal_salute_phrase", "contest_space_phrase", "precontact_witness_phrase", "biwu_confound_phrase"],
+      "evidence_requirements": {
+        "two_adults_phrase": {"min_content_words": 12, "must_mention_any": ["exactly two complete adult martial competitors remain the only primary actors"]},
+        "reciprocal_salute_phrase": {"min_content_words": 14, "must_mention_any": ["both adults face each other and simultaneously hold a palm-and-fist salute at chest height"]},
+        "contest_space_phrase": {"min_content_words": 11, "must_mention_any": ["one courtyard platform or marked contest boundary contains both competitors"]},
+        "precontact_witness_phrase": {"min_content_words": 15, "must_mention_any": ["a clean center gap separates the competitors while any witnesses stay subordinate outside the contest axis"]},
+        "biwu_confound_phrase": {"min_content_words": 20, "must_mention_any": ["the scene remains a reciprocal pre-contact biwu standoff rather than solo forms active brawling boxing MMA military drill handshake or posed ceremony"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_biwu_two_adults", "review_scale": "both", "description": "Exactly two complete adult competitors are the only primary actors."},
+        {"id": "vo_wuxia_biwu_reciprocal_salute", "review_scale": "native", "description": "Both adults face each other and simultaneously perform a readable palm-and-fist salute."},
+        {"id": "vo_wuxia_biwu_bounded_space", "review_scale": "thumbnail", "description": "One visible courtyard, platform, or contest boundary contains both competitors."},
+        {"id": "vo_wuxia_biwu_precontact_gap", "review_scale": "both", "description": "A clean pre-contact gap remains between the competitors and witnesses stay outside the contest axis."},
+        {"id": "vo_wuxia_biwu_not_sport_or_brawl", "review_scale": "both", "description": "Solo forms, active brawling, modern combat sport, military drill, handshake, or ceremony posing does not substitute."}
+      ],
+      "reject_substitutes": ["solo_taolu_demonstration", "active_contact_brawl", "modern_boxing_or_mma_faceoff", "military_drill", "handshake_ceremony_photo"]
+    },
+    {
+      "id": "xia_protective_intervention_event",
+      "category": "wuxia_xia_three_role_protective_event",
+      "activation": {
+        "exact_terms": ["xia protective intervention", "wuxia knight-errant protective intervention", "wuxia threat-line protective intervention", "협객의 위협선 보호 개입", "협객 보호 개입", "무협 약자 보호 장면"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A visible three-role wuxia event in which one adult aggressor directs an immediate physical threat toward a distinct traveler or civilian, and a distinct adult intervener physically enters that same threat line to block, redirect, or create an escape opening. The protective relation must be readable from positions and consequences; costume, facial expression, reputation, title, or presumed virtue cannot prove the xia relation by themselves.",
+        "paraphrase_examples": ["가해자의 즉각적 위협선과 여행자 사이에 성인 개입자가 실제로 들어가 공격을 막거나 피할 틈을 만드는 세 역할 무협 사건", "a distinct adult intervener enters the aggressor-to-traveler threat line and visibly blocks or redirects it to create an escape opening"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["three_distinct_event_roles", "directed_immediate_threat", "physical_interposition", "visible_protective_consequence", "xia_inference_confound_control"],
+          "groups": [
+            {"id": "three_distinct_event_roles", "any_terms": ["one adult intervener one aggressor and one threatened traveler or civilian remain separately readable", "성인 개입자 한 명 가해자 한 명 위협받는 여행자 또는 민간인 한 명이 분리되어 판독"]},
+            {"id": "directed_immediate_threat", "any_terms": ["the aggressor action and body line visibly target the threatened traveler or civilian", "가해자의 행동과 신체 방향이 위협받는 여행자 또는 민간인을 명확히 겨냥"]},
+            {"id": "physical_interposition", "any_terms": ["the adult intervener physically enters the same threat line between aggressor and threatened person", "성인 개입자가 가해자와 위협받는 사람 사이의 동일한 위협선에 물리적으로 진입"]},
+            {"id": "visible_protective_consequence", "any_terms": ["the threat is visibly blocked redirected or delayed long enough to create an escape opening", "위협이 눈에 보이게 차단 전환 또는 지연되어 피할 틈이 생성"]},
+            {"id": "xia_inference_confound_control", "any_terms": ["the protective relation is proven by event geometry and consequence rather than costume face title reputation presumed virtue or an unrelated trio", "보호 관계는 의상 얼굴 칭호 명성 추정된 덕목 또는 무관한 세 사람이 아니라 사건 기하와 결과로 증명"]}
+          ]
+        },
+        "contrast_examples": ["a lone heroic sword portrait", "a protector arriving after the threat has ended", "three unrelated travelers posing together", "a generic commercial escort formation", "a morally coded face with no visible protective action"]
+      },
+      "concept_candidate": {"concept_terms": ["xia protective intervention", "three distinct event roles", "directed threat line", "adult physical interposition", "blocked or redirected threat", "visible escape opening"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["three-role wuxia protective intervention proved by threat-line geometry"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a three-role frame that keeps the aggressor, threatened traveler, and adult intervener distinct; show the aggressor-to-traveler threat line, the intervener entering that line, and the blocked, redirected, or delayed consequence in one readable moment.",
+      "required_evidence_fields": ["three_roles_phrase", "threat_line_phrase", "interposition_phrase", "consequence_phrase", "xia_confound_phrase"],
+      "evidence_requirements": {
+        "three_roles_phrase": {"min_content_words": 14, "must_mention_any": ["one adult intervener one aggressor and one threatened traveler or civilian remain separately readable"]},
+        "threat_line_phrase": {"min_content_words": 12, "must_mention_any": ["the aggressor action and body line visibly target the threatened traveler or civilian"]},
+        "interposition_phrase": {"min_content_words": 14, "must_mention_any": ["the adult intervener physically enters the same threat line between aggressor and threatened person"]},
+        "consequence_phrase": {"min_content_words": 14, "must_mention_any": ["the threat is visibly blocked redirected or delayed long enough to create an escape opening"]},
+        "xia_confound_phrase": {"min_content_words": 22, "must_mention_any": ["the protective relation is proven by event geometry and consequence rather than costume face title reputation presumed virtue or an unrelated trio"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_xia_three_roles", "review_scale": "both", "description": "The adult intervener, aggressor, and threatened traveler or civilian remain distinct and complete."},
+        {"id": "vo_wuxia_xia_directed_threat", "review_scale": "both", "description": "The aggressor action visibly targets the threatened person rather than an unrelated direction."},
+        {"id": "vo_wuxia_xia_interposition", "review_scale": "native", "description": "The adult intervener physically occupies the same threat line between aggressor and threatened person."},
+        {"id": "vo_wuxia_xia_consequence", "review_scale": "both", "description": "A blocked, redirected, or delayed threat and a resulting escape opening are visible."},
+        {"id": "vo_wuxia_xia_not_appearance_inference", "review_scale": "thumbnail", "description": "Heroic costume, face, title, reputation, presumed virtue, or an unrelated trio does not substitute for the event relation."}
+      ],
+      "reject_substitutes": ["solo_hero_portrait", "after_the_fact_rescue_pose", "generic_escort_formation", "unrelated_three_person_group", "virtue_inferred_from_appearance"]
+    },
+    {
+      "id": "biaoju_guarded_cargo_departure",
+      "category": "wuxia_biaoju_escort_cargo_institution_relation",
+      "activation": {
+        "exact_terms": ["biaoju guarded cargo convoy departure", "escort bureau guarded cargo departure", "biaoju guarded cargo departure", "표국 화물 호송 출발", "표행 화물 호송 출발 장면", "표국 화물 호송"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A guarded commercial departure from a biaoju loading yard or gate onto a continuous road. Sealed boxes or bundled cargo visibly load a cart, pack animal, or coherent transport unit; adult martial escorts distribute around that owned load and orient along its route. The cargo-protection relation, not readable signage or costume alone, separates the scene from an army convoy, merchant-only caravan, adventuring party, empty courtyard, or generic wagon.",
+        "paraphrase_examples": ["표국 문 또는 적재 마당에서 봉인된 상자와 짐을 실은 운송 수단이 도로로 이어지고 성인 무장 호송인이 화물 둘레에 배치된 출발 장면", "adult martial escorts distribute around sealed cargo loaded on a coherent transport unit departing a bureau yard through a gate onto one continuous road"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["bureau_loading_origin", "owned_loaded_cargo", "distributed_adult_escorts", "continuous_departure_route", "biaoju_confound_control"],
+          "groups": [
+            {"id": "bureau_loading_origin", "any_terms": ["one loading yard or bureau gate opens directly onto the departure road", "하나의 적재 마당 또는 표국 문이 출발 도로로 직접 연결"]},
+            {"id": "owned_loaded_cargo", "any_terms": ["sealed boxes or bundled cargo visibly load one cart pack animal or coherent transport unit", "봉인된 상자 또는 묶인 짐이 수레 짐승 또는 하나의 일관된 운송 수단에 적재"]},
+            {"id": "distributed_adult_escorts", "any_terms": ["adult martial escorts occupy front rear and flank positions around the same owned cargo", "성인 무장 호송인이 동일한 화물의 앞 뒤 측면에 분산 배치"]},
+            {"id": "continuous_departure_route", "any_terms": ["wheels hooves handles and body orientations continue from yard through gate onto one readable road", "바퀴 발굽 손잡이 신체 방향이 마당에서 문을 지나 하나의 판독 가능한 도로로 연속"]},
+            {"id": "biaoju_confound_control", "any_terms": ["the scene remains a commercial armed cargo escort rather than an army convoy merchant-only caravan adventuring party empty courtyard or generic wagon", "군 수송대 상인만의 대상 모험가 파티 빈 마당 일반 수레가 아닌 상업적 무장 화물 호송"]}
+          ]
+        },
+        "contrast_examples": ["an army supply column", "unarmed merchants walking beside a caravan", "an adventuring party around miscellaneous packs", "an empty historical courtyard", "a wagon with no owned cargo or escort distribution"]
+      },
+      "concept_candidate": {"concept_terms": ["biaoju guarded cargo departure", "bureau loading gate", "sealed owned cargo", "coherent cart or pack transport", "distributed adult martial escorts", "continuous departure road"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["biaoju guarded cargo departure from loading yard to road"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide departure frame linking one loading yard or bureau gate to a road; keep sealed loaded cargo, the complete transport unit, and adult escorts at front, rear, and flanks visibly owned by the same route relation without requiring readable text.",
+      "required_evidence_fields": ["bureau_origin_phrase", "loaded_cargo_phrase", "escort_distribution_phrase", "departure_route_phrase", "biaoju_confound_phrase"],
+      "evidence_requirements": {
+        "bureau_origin_phrase": {"min_content_words": 11, "must_mention_any": ["one loading yard or bureau gate opens directly onto the departure road"]},
+        "loaded_cargo_phrase": {"min_content_words": 15, "must_mention_any": ["sealed boxes or bundled cargo visibly load one cart pack animal or coherent transport unit"]},
+        "escort_distribution_phrase": {"min_content_words": 14, "must_mention_any": ["adult martial escorts occupy front rear and flank positions around the same owned cargo"]},
+        "departure_route_phrase": {"min_content_words": 15, "must_mention_any": ["wheels hooves handles and body orientations continue from yard through gate onto one readable road"]},
+        "biaoju_confound_phrase": {"min_content_words": 20, "must_mention_any": ["the scene remains a commercial armed cargo escort rather than an army convoy merchant-only caravan adventuring party empty courtyard or generic wagon"]}
+      },
+      "render_gates": [
+        {"id": "vo_wuxia_biaoju_origin", "review_scale": "thumbnail", "description": "A loading yard or bureau gate visibly connects to the departure road."},
+        {"id": "vo_wuxia_biaoju_loaded_cargo", "review_scale": "both", "description": "Sealed boxes or bundled cargo visibly load one coherent cart, pack animal, or transport unit."},
+        {"id": "vo_wuxia_biaoju_escort_distribution", "review_scale": "both", "description": "Adult martial escorts occupy front, rear, and flank positions around the same owned cargo."},
+        {"id": "vo_wuxia_biaoju_route_continuity", "review_scale": "native", "description": "Transport contact points and body orientations continue from yard through gate onto one road."},
+        {"id": "vo_wuxia_biaoju_not_convoy_or_caravan", "review_scale": "both", "description": "An army convoy, merchant-only caravan, adventuring party, empty courtyard, or generic wagon does not substitute."}
+      ],
+      "reject_substitutes": ["army_supply_convoy", "merchant_only_caravan", "generic_adventuring_party", "empty_historical_courtyard", "unowned_generic_wagon"]
+    },
+    {
+      "id": "fantasy_portal_two_world_threshold",
+      "category": "fantasy_threshold_relation",
+      "activation": {
+        "exact_terms": ["fantasy portal", "dimensional portal", "interworld portal", "magic portal", "차원문", "판타지 포털", "이세계 포털", "마법 포털"],
+        "exclude_if_any_terms": ["web portal", "admin portal", "customer portal", "login portal", "portal site", "포털 사이트", "로그인 포털"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bounded threshold that simultaneously connects two visibly distinct spaces and supports a coherent crossing relation. The boundary, near-side space, far-side space, occlusion continuity, and localized crossing consequence must coexist; a glowing ring, mirror, window, or decorative arch alone is not a portal.",
+        "paraphrase_examples": ["서로 다른 두 공간이 하나의 경계면을 통해 동시에 보이고 인물이나 사물이 그 경계를 실제로 통과하는 차원문", "a bounded interworld threshold with distinct near and far spaces, coherent crossing occlusion, and localized residue"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["bounded_threshold", "distinct_near_space", "distinct_far_space", "crossing_continuity", "localized_consequence"],
+          "groups": [
+            {"id": "bounded_threshold", "any_terms": ["one closed threshold boundary is anchored to the physical scene", "하나의 닫힌 경계가 실제 장면 표면에 고정"]},
+            {"id": "distinct_near_space", "any_terms": ["the near side remains a complete readable local space", "가까운 쪽 공간이 완전하고 판독 가능"]},
+            {"id": "distinct_far_space", "any_terms": ["a materially different far-side space is visible through the same boundary", "같은 경계 너머로 물질적으로 다른 공간이 노출"]},
+            {"id": "crossing_continuity", "any_terms": ["one subject or object crosses the plane with coherent clipping and occlusion", "인물이나 사물 하나가 경계면에서 일관된 가림과 절단으로 통과"]},
+            {"id": "localized_consequence", "any_terms": ["light dust reflection or distortion changes locally at the threshold", "빛 먼지 반사 또는 왜곡이 경계에서만 국소적으로 변화"]}
+          ]
+        },
+        "contrast_examples": ["a glowing ring floating in darkness", "an ordinary mirror", "a window showing the same room", "an arch with no connected far-side space"]
+      },
+      "concept_candidate": {"concept_terms": ["two distinct spaces", "bounded threshold", "coherent crossing", "occlusion continuity", "localized portal residue", "not a glowing ring alone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["two-world fantasy portal threshold"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Frame the complete threshold and enough of both spaces to compare them, with one crossing subject or object intersecting the plane and local light, dust, reflection, or distortion proving the boundary.",
+      "required_evidence_fields": ["threshold_phrase", "near_space_phrase", "far_space_phrase", "crossing_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "threshold_phrase": {"min_content_words": 8, "must_mention_any": ["one closed threshold boundary is anchored to the physical scene"]},
+        "near_space_phrase": {"min_content_words": 8, "must_mention_any": ["the near side remains a complete readable local space"]},
+        "far_space_phrase": {"min_content_words": 10, "must_mention_any": ["a materially different far-side space is visible through the same boundary"]},
+        "crossing_phrase": {"min_content_words": 10, "must_mention_any": ["one subject or object crosses the plane with coherent clipping and occlusion"]},
+        "consequence_phrase": {"min_content_words": 9, "must_mention_any": ["light dust reflection or distortion changes locally at the threshold"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_portal_complete_boundary", "review_scale": "thumbnail", "description": "One complete threshold boundary remains anchored in the near-side scene."},
+        {"id": "vo_fantasy_portal_two_spaces", "review_scale": "both", "description": "Near and far spaces are simultaneously visible and materially distinct."},
+        {"id": "vo_fantasy_portal_crossing", "review_scale": "native", "description": "A crossing subject or object intersects the plane with coherent occlusion."},
+        {"id": "vo_fantasy_portal_local_effect", "review_scale": "native", "description": "The physical effect changes locally at the threshold rather than across the whole frame."},
+        {"id": "vo_fantasy_portal_not_ring", "review_scale": "both", "description": "A glowing ring, mirror, window, or empty arch does not substitute for the two-world crossing relation."}
+      ],
+      "reject_substitutes": ["glowing_ring_only", "ordinary_mirror", "same_space_window", "empty_decorative_arch", "crossing_without_occlusion_continuity"]
+    },
+    {
+      "id": "summoner_distinct_entity_arrival",
+      "category": "fantasy_summoning_causal_relation",
+      "activation": {
+        "exact_terms": ["fantasy summoner", "summoner character", "summoning a creature", "summoning an entity", "소환사", "생물 소환", "존재 소환", "召喚士"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A living operator causes one distinct entity to arrive from a bounded source or threshold. The operator, source, separate arriving entity, directional response, and local consequence must form one causal event; a companion portrait, empty magic circle, generic spell glow, or dead-body response does not establish summoning.",
+        "paraphrase_examples": ["살아 있는 시전자가 한정된 소환원에서 별개의 존재 하나를 불러내고 그 도착 반응과 흔적이 이어지는 장면", "a living operator, bounded source, separately arriving entity, directional response, and localized arrival consequence"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["living_operator", "bounded_source", "distinct_entity", "arrival_response", "arrival_consequence"],
+          "groups": [
+            {"id": "living_operator", "any_terms": ["one living operator performs a visible controlling action", "살아 있는 시전자 한 명이 판독 가능한 제어 동작 수행"]},
+            {"id": "bounded_source", "any_terms": ["one bounded source or threshold anchors the arrival", "하나의 한정된 소환원 또는 경계가 도착점을 고정"]},
+            {"id": "distinct_entity", "any_terms": ["one separately embodied entity emerges rather than duplicating the operator", "시전자 복제가 아닌 별도 몸을 가진 존재 하나가 출현"]},
+            {"id": "arrival_response", "any_terms": ["gesture gaze and entity orientation create a directional operator-to-arrival relation", "손짓 시선과 존재 방향이 시전자에서 도착체로 이어지는 관계 형성"]},
+            {"id": "arrival_consequence", "any_terms": ["dust light shadow or displaced objects respond locally to the arrival", "먼지 빛 그림자 또는 밀린 사물이 도착에 국소 반응"]}
+          ]
+        },
+        "contrast_examples": ["a mage posing beside a pet", "an empty glowing circle", "a necromancer animating a corpse", "two unrelated characters in the same frame"]
+      },
+      "concept_candidate": {"concept_terms": ["living summoner", "bounded arrival source", "distinct arriving entity", "directional control relation", "arrival consequence", "not companion portrait"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["summoner causing a distinct entity to arrive"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the operator, complete source boundary, emerging entity, directional gesture or gaze, and contact shadow or displaced material inside one readable cause-and-effect frame.",
+      "required_evidence_fields": ["operator_phrase", "source_phrase", "entity_phrase", "response_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "operator_phrase": {"min_content_words": 8, "must_mention_any": ["one living operator performs a visible controlling action"]},
+        "source_phrase": {"min_content_words": 8, "must_mention_any": ["one bounded source or threshold anchors the arrival"]},
+        "entity_phrase": {"min_content_words": 9, "must_mention_any": ["one separately embodied entity emerges rather than duplicating the operator"]},
+        "response_phrase": {"min_content_words": 10, "must_mention_any": ["gesture gaze and entity orientation create a directional operator-to-arrival relation"]},
+        "consequence_phrase": {"min_content_words": 10, "must_mention_any": ["dust light shadow or displaced objects respond locally to the arrival"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_summoner_operator", "review_scale": "thumbnail", "description": "One living operator remains visibly responsible for the event."},
+        {"id": "vo_fantasy_summoner_source", "review_scale": "both", "description": "The bounded arrival source is complete and spatially anchored."},
+        {"id": "vo_fantasy_summoner_entity", "review_scale": "both", "description": "The arriving entity is separately embodied and not an operator duplicate."},
+        {"id": "vo_fantasy_summoner_relation", "review_scale": "native", "description": "Gesture, gaze, and orientation form a clear operator-to-entity relation."},
+        {"id": "vo_fantasy_summoner_not_companion", "review_scale": "both", "description": "A companion portrait, empty circle, corpse animation, or generic glow does not substitute."}
+      ],
+      "reject_substitutes": ["companion_portrait", "empty_magic_circle", "generic_spell_glow", "corpse_animation", "unrelated_second_character"]
+    },
+    {
+      "id": "alchemist_material_transmutation_process",
+      "category": "fantasy_alchemy_process_relation",
+      "activation": {
+        "exact_terms": ["fantasy alchemist", "alchemist at work", "material transmutation", "alchemy transmutation", "연금술사", "연금술 변환", "錬金術師"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A practitioner uses connected workshop apparatus to transform a visible input material into a visibly different output state. Practitioner action, apparatus path, before-and-after material evidence, localized transition, and residue must coexist; costume, potion bottles, colored smoke, or a modern laboratory portrait alone is insufficient.",
+        "paraphrase_examples": ["연결된 증류·가열 장치에서 입력 재료와 다른 출력 상태가 동시에 비교되고 변환 경계와 잔류물이 보이는 연금술 작업", "an operator-driven apparatus path with paired material states, localized transformation, and physical residue"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["practitioner_action", "connected_apparatus", "paired_material_states", "localized_transition", "process_residue"],
+          "groups": [
+            {"id": "practitioner_action", "any_terms": ["one practitioner actively controls heat flow or material contact", "연금술사 한 명이 열 흐름 또는 재료 접촉을 능동 제어"]},
+            {"id": "connected_apparatus", "any_terms": ["retort crucible vessel and transfer path form one connected apparatus system", "레토르트 도가니 용기와 이동 경로가 하나의 연결 장치를 형성"]},
+            {"id": "paired_material_states", "any_terms": ["input and output material states remain simultaneously comparable", "입력과 출력 재료 상태가 동시에 비교 가능"]},
+            {"id": "localized_transition", "any_terms": ["color texture phase or crystal structure changes at one bounded transition zone", "색 질감 상 또는 결정 구조가 한정된 변환 구역에서 변화"]},
+            {"id": "process_residue", "any_terms": ["condensate slag sediment vapor or heat discoloration traces the process", "응축액 슬래그 침전 증기 또는 열 변색이 공정을 추적"]}
+          ]
+        },
+        "contrast_examples": ["a person in robes holding a bottle", "a potion still life", "colored smoke without input and output", "a generic modern chemistry portrait"]
+      },
+      "concept_candidate": {"concept_terms": ["working alchemist", "connected apparatus", "paired input and output", "bounded material transition", "process residue", "not potion still life"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["alchemist performing a visible material transmutation"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the practitioner's control action, the full connected apparatus path, paired material states, one localized change boundary, and residue at a scale where the material difference remains inspectable.",
+      "required_evidence_fields": ["practitioner_phrase", "apparatus_phrase", "material_states_phrase", "transition_phrase", "residue_phrase"],
+      "evidence_requirements": {
+        "practitioner_phrase": {"min_content_words": 9, "must_mention_any": ["one practitioner actively controls heat flow or material contact"]},
+        "apparatus_phrase": {"min_content_words": 11, "must_mention_any": ["retort crucible vessel and transfer path form one connected apparatus system"]},
+        "material_states_phrase": {"min_content_words": 8, "must_mention_any": ["input and output material states remain simultaneously comparable"]},
+        "transition_phrase": {"min_content_words": 11, "must_mention_any": ["color texture phase or crystal structure changes at one bounded transition zone"]},
+        "residue_phrase": {"min_content_words": 10, "must_mention_any": ["condensate slag sediment vapor or heat discoloration traces the process"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_alchemist_operator", "review_scale": "thumbnail", "description": "The practitioner visibly controls a material or apparatus operation."},
+        {"id": "vo_fantasy_alchemist_apparatus", "review_scale": "both", "description": "The retort, crucible, vessel, and transfer path remain mechanically connected."},
+        {"id": "vo_fantasy_alchemist_states", "review_scale": "native", "description": "Input and output materials are simultaneously comparable and visibly different."},
+        {"id": "vo_fantasy_alchemist_transition", "review_scale": "native", "description": "A bounded material-change zone and process residue remain legible."},
+        {"id": "vo_fantasy_alchemist_not_costume", "review_scale": "both", "description": "Robes, potion bottles, smoke, or laboratory decor alone do not establish alchemy."}
+      ],
+      "reject_substitutes": ["costume_and_bottle_only", "potion_still_life", "colored_smoke_only", "generic_chemist_portrait", "unconnected_apparatus_clutter"]
+    },
+    {
+      "id": "golem_constructed_material_agency",
+      "category": "fantasy_construct_material_agency",
+      "activation": {
+        "exact_terms": ["fantasy golem", "clay golem", "stone golem", "constructed golem", "골렘", "점토 골렘", "석재 골렘", "ゴーレム"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One independently acting body is visibly assembled from clay, stone, earth, wood, or another nonliving material and remains materially continuous through its joints. Construction seams, activation response, grounded motion, and task consequence establish agency; a statue, costume, metal robot, rubble pile, or sacred inscription alone does not.",
+        "paraphrase_examples": ["점토나 돌 조각이 관절까지 재료적으로 이어진 한 몸을 이루고 활성화 반응과 실제 과업 흔적을 남기는 골렘", "one assembled nonliving-material body with coherent joints, activation response, grounded motion, and task consequence"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["constructed_body", "material_continuity", "assembly_evidence", "activation_response", "task_consequence"],
+          "groups": [
+            {"id": "constructed_body", "any_terms": ["one complete humanoid or creature body is assembled from nonliving material", "비생물 재료로 조립된 완전한 인물형 또는 생물형 몸 하나"]},
+            {"id": "material_continuity", "any_terms": ["the same clay stone earth or wood continues across torso limbs and joints", "같은 점토 돌 흙 또는 목재가 몸통 팔다리와 관절을 연속 통과"]},
+            {"id": "assembly_evidence", "any_terms": ["seams fitted blocks packed clay or bindings reveal deliberate construction", "이음선 맞물린 블록 다져진 점토 또는 결속이 의도적 제작을 드러냄"]},
+            {"id": "activation_response", "any_terms": ["posture contact shadow and displaced material show independent motion", "자세 접촉 그림자와 밀린 재료가 독립 움직임을 증명"]},
+            {"id": "task_consequence", "any_terms": ["one handled load opened path or moved obstacle proves a completed task", "운반한 짐 열린 통로 또는 옮긴 장애물 하나가 과업 결과를 증명"]}
+          ]
+        },
+        "contrast_examples": ["an inert statue", "a person in rock armor", "a metal humanoid robot", "a pile of rubble with glowing symbols"]
+      },
+      "concept_candidate": {"concept_terms": ["constructed material body", "continuous joints", "assembly seams", "independent grounded motion", "task consequence", "not an inert statue"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["constructed-material golem performing one task"], "forbidden_prompt_terms": ["readable sacred text"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Show the whole constructed body, readable material joints and seams, grounded contact shadow, an active interaction with one object, and the resulting moved load or cleared obstacle without relying on copied sacred writing.",
+      "required_evidence_fields": ["body_phrase", "material_phrase", "assembly_phrase", "motion_phrase", "task_phrase"],
+      "evidence_requirements": {
+        "body_phrase": {"min_content_words": 10, "must_mention_any": ["one complete humanoid or creature body is assembled from nonliving material"]},
+        "material_phrase": {"min_content_words": 12, "must_mention_any": ["the same clay stone earth or wood continues across torso limbs and joints"]},
+        "assembly_phrase": {"min_content_words": 10, "must_mention_any": ["seams fitted blocks packed clay or bindings reveal deliberate construction"]},
+        "motion_phrase": {"min_content_words": 9, "must_mention_any": ["posture contact shadow and displaced material show independent motion"]},
+        "task_phrase": {"min_content_words": 12, "must_mention_any": ["one handled load opened path or moved obstacle proves a completed task"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_golem_complete_body", "review_scale": "thumbnail", "description": "One complete constructed body reads as a single agent."},
+        {"id": "vo_fantasy_golem_material", "review_scale": "both", "description": "Material remains continuous across torso, limbs, and joints."},
+        {"id": "vo_fantasy_golem_assembly", "review_scale": "native", "description": "Seams, fitted blocks, packed clay, or bindings show deliberate assembly."},
+        {"id": "vo_fantasy_golem_agency", "review_scale": "both", "description": "Grounded motion and one object interaction demonstrate independent agency."},
+        {"id": "vo_fantasy_golem_not_statue", "review_scale": "both", "description": "A statue, costume, robot, rubble pile, or inscription alone does not substitute."}
+      ],
+      "reject_substitutes": ["inert_statue", "rock_armor_costume", "metal_robot", "rubble_pile", "symbol_only_activation"]
+    },
+    {
+      "id": "living_armor_hollow_articulated_agency",
+      "category": "fantasy_living_armor_agency",
+      "activation": {
+        "exact_terms": ["living armor", "animated armor", "sentient armor", "살아있는 갑옷", "움직이는 갑옷", "자율 갑옷", "リビングアーマー"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A complete articulated armor shell moves independently while a visible opening proves that no wearer fills it. Coherent plate articulation, hollow interior, grounded motion, and object consequence must coexist; an armored person, mannequin, robot, cropped suit, or floating helmet is not living armor.",
+        "paraphrase_examples": ["열린 바이저나 관절 틈 안쪽이 비어 있으면서 완전한 판금 껍질이 스스로 움직이고 주변 사물에 결과를 남기는 살아 있는 갑옷", "a complete articulated armor shell with a visibly hollow interior, coherent independent motion, and physical consequence"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["complete_shell", "articulated_plates", "hollow_interior", "independent_motion", "object_consequence"],
+          "groups": [
+            {"id": "complete_shell", "any_terms": ["helmet torso arm and leg armor form one complete shell", "투구 몸통 팔과 다리 갑옷이 하나의 완전한 껍질 형성"]},
+            {"id": "articulated_plates", "any_terms": ["overlapping plates and joint gaps bend coherently at shoulders elbows hips and knees", "겹판과 관절 틈이 어깨 팔꿈치 엉덩이와 무릎에서 일관되게 굽힘"]},
+            {"id": "hollow_interior", "any_terms": ["an open visor neck gap or gauntlet opening reveals empty interior volume", "열린 바이저 목 틈 또는 건틀릿 입구가 빈 내부 부피를 노출"]},
+            {"id": "independent_motion", "any_terms": ["balanced posture contact shadows and plate movement show unsupported agency", "균형 자세 접촉 그림자와 판 움직임이 독립 행동을 증명"]},
+            {"id": "object_consequence", "any_terms": ["a grasped object opened door or displaced dust responds to the armor", "쥔 사물 열린 문 또는 밀린 먼지가 갑옷의 행동에 반응"]}
+          ]
+        },
+        "contrast_examples": ["a knight wearing armor", "armor on a mannequin", "a humanoid robot", "a floating helmet and gauntlets"]
+      },
+      "concept_candidate": {"concept_terms": ["complete armor shell", "articulated plates", "visible hollow interior", "independent motion", "object consequence", "not an armored wearer"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["visibly hollow articulated living armor"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a full or three-quarter view that keeps the open visor or another empty opening, major articulated joints, both ground contacts, and one object interaction simultaneously visible.",
+      "required_evidence_fields": ["shell_phrase", "articulation_phrase", "hollow_phrase", "motion_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "shell_phrase": {"min_content_words": 10, "must_mention_any": ["helmet torso arm and leg armor form one complete shell"]},
+        "articulation_phrase": {"min_content_words": 12, "must_mention_any": ["overlapping plates and joint gaps bend coherently at shoulders elbows hips and knees"]},
+        "hollow_phrase": {"min_content_words": 11, "must_mention_any": ["an open visor neck gap or gauntlet opening reveals empty interior volume"]},
+        "motion_phrase": {"min_content_words": 9, "must_mention_any": ["balanced posture contact shadows and plate movement show unsupported agency"]},
+        "consequence_phrase": {"min_content_words": 11, "must_mention_any": ["a grasped object opened door or displaced dust responds to the armor"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_living_armor_shell", "review_scale": "thumbnail", "description": "Helmet, torso, arms, and legs form one complete readable armor shell."},
+        {"id": "vo_fantasy_living_armor_joints", "review_scale": "native", "description": "Overlapping plates articulate coherently at the major joints."},
+        {"id": "vo_fantasy_living_armor_hollow", "review_scale": "both", "description": "At least one opening visibly proves empty interior volume and no wearer."},
+        {"id": "vo_fantasy_living_armor_agency", "review_scale": "both", "description": "Grounded motion and an object consequence show independent agency."},
+        {"id": "vo_fantasy_living_armor_not_wearer", "review_scale": "both", "description": "An armored person, mannequin, robot, crop, or floating pieces do not substitute."}
+      ],
+      "reject_substitutes": ["armored_wearer", "armor_mannequin", "humanoid_robot", "cropped_empty_suit", "floating_helmet_and_gauntlets"]
+    },
+    {
+      "id": "wyvern_two_leg_wing_tail_topology",
+      "category": "fantasy_creature_topology",
+      "activation": {
+        "exact_terms": ["wyvern", "heraldic wyvern", "two-legged wyvern", "와이번", "비룡", "ワイバーン"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A narrow heraldic-fantasy wyvern topology with one head, one torso, two wings, exactly two hind legs, no separate forelegs, and one long tail. Because traditions vary, an explicit user definition overrides this default; a four-legged dragon, bird, wingless serpent, or extra-limbed chimera fails this profile.",
+        "paraphrase_examples": ["몸통 하나에 날개 두 장과 뒷다리 두 개만 연결되고 별도 앞다리 없이 긴 꼬리가 이어지는 와이번", "one coherent body with a single head, paired wings, exactly two hind legs, no separate forelegs, and a long tail"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["single_body", "paired_wings", "two_hind_legs", "no_forelegs", "long_tail"],
+          "groups": [
+            {"id": "single_body", "any_terms": ["one head neck torso and pelvis form one coherent creature body", "머리 목 몸통과 골반이 하나의 일관된 생물 몸을 형성"]},
+            {"id": "paired_wings", "any_terms": ["exactly two wings connect symmetrically near the shoulders", "정확히 두 날개가 어깨 부근에 대칭 연결"]},
+            {"id": "two_hind_legs", "any_terms": ["exactly two weight-bearing hind legs descend from the pelvis", "정확히 두 개의 체중 지지 뒷다리가 골반에서 내려옴"]},
+            {"id": "no_forelegs", "any_terms": ["no separate foreleg pair appears beneath or beside the wings", "날개 아래나 옆에 별도의 앞다리 한 쌍이 없음"]},
+            {"id": "long_tail", "any_terms": ["one long tail continues from the pelvis without branching", "긴 꼬리 하나가 골반에서 갈라짐 없이 이어짐"]}
+          ]
+        },
+        "contrast_examples": ["a four-legged winged dragon", "a two-legged bird", "a wingless serpent", "a six-limbed chimera"]
+      },
+      "concept_candidate": {"concept_terms": ["wyvern topology", "paired wings", "two hind legs", "no separate forelegs", "long tail", "user definition overrides"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["two-legged winged wyvern topology"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a side or elevated three-quarter full-body view that separates both wings, both hind legs, the shoulder-to-wing roots, empty foreleg region, and full tail without overlap.",
+      "required_evidence_fields": ["body_phrase", "wings_phrase", "hind_legs_phrase", "foreleg_phrase", "tail_phrase"],
+      "evidence_requirements": {
+        "body_phrase": {"min_content_words": 11, "must_mention_any": ["one head neck torso and pelvis form one coherent creature body"]},
+        "wings_phrase": {"min_content_words": 8, "must_mention_any": ["exactly two wings connect symmetrically near the shoulders"]},
+        "hind_legs_phrase": {"min_content_words": 9, "must_mention_any": ["exactly two weight-bearing hind legs descend from the pelvis"]},
+        "foreleg_phrase": {"min_content_words": 10, "must_mention_any": ["no separate foreleg pair appears beneath or beside the wings"]},
+        "tail_phrase": {"min_content_words": 9, "must_mention_any": ["one long tail continues from the pelvis without branching"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_wyvern_single_body", "review_scale": "thumbnail", "description": "Head, torso, pelvis, and tail form one coherent creature silhouette."},
+        {"id": "vo_fantasy_wyvern_two_wings", "review_scale": "both", "description": "Exactly two readable wings attach near the shoulders."},
+        {"id": "vo_fantasy_wyvern_two_legs", "review_scale": "both", "description": "Exactly two hind legs attach to the pelvis and bear weight."},
+        {"id": "vo_fantasy_wyvern_no_forelegs", "review_scale": "native", "description": "No separate forelegs appear beneath or beside the wing roots."},
+        {"id": "vo_fantasy_wyvern_not_dragon", "review_scale": "both", "description": "A four-legged dragon, bird, wingless serpent, or extra-limbed chimera does not substitute."}
+      ],
+      "reject_substitutes": ["four_legged_dragon", "two_legged_bird", "wingless_serpent", "extra_limb_chimera", "cropped_hidden_leg_count"]
+    },
+    {
+      "id": "griffin_eagle_lion_topology",
+      "category": "fantasy_creature_topology",
+      "activation": {
+        "exact_terms": ["griffin", "gryphon", "griffon", "그리핀", "그리폰", "グリフィン"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A coherent hybrid whose eagle head, hooked beak, paired wings, and avian forequarters transition into a lion torso, hindquarters, hind legs, and tail. The junctions must read as one anatomy; a hippogriff's horse rear, winged lion, eagle, or collage-like chimera does not substitute.",
+        "paraphrase_examples": ["독수리 머리·부리·날개·앞부분이 사자 몸통·뒷다리·꼬리로 자연스럽게 이어지는 그리핀", "an eagle-headed winged forebody joined coherently to lion torso, hindquarters, legs, and tail"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["eagle_head", "paired_wings", "avian_forequarters", "lion_hindquarters", "coherent_transition"],
+          "groups": [
+            {"id": "eagle_head", "any_terms": ["one eagle head with a hooked beak and forward-facing neck anchors the creature", "갈고리 부리의 독수리 머리 하나와 목이 생물 앞부분을 고정"]},
+            {"id": "paired_wings", "any_terms": ["two feathered wings attach coherently behind the eagle shoulders", "깃털 날개 두 장이 독수리 어깨 뒤에 일관되게 연결"]},
+            {"id": "avian_forequarters", "any_terms": ["the chest and forelimbs retain avian structure or taloned forefeet", "가슴과 앞다리가 조류 구조 또는 발톱 달린 앞발을 유지"]},
+            {"id": "lion_hindquarters", "any_terms": ["lion torso hind legs paws and tail define the rear half", "사자 몸통 뒷다리 발과 꼬리가 뒤 절반을 정의"]},
+            {"id": "coherent_transition", "any_terms": ["feather fur skeleton and limb junctions transition as one viable anatomy", "깃털 털 골격과 팔다리 접합이 하나의 가능한 해부로 전환"]}
+          ]
+        },
+        "contrast_examples": ["a hippogriff with horse hindquarters", "a winged lion with a lion head", "a large eagle", "a collage of detached animal parts"]
+      },
+      "concept_candidate": {"concept_terms": ["eagle head", "paired feathered wings", "avian forequarters", "lion hindquarters and tail", "coherent hybrid junction", "not hippogriff"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["eagle-lion griffin topology"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a full side or three-quarter morphology view that keeps the beak, both wing roots, forequarters, lion rear legs, and lion tail readable while fur-to-feather junctions remain continuous.",
+      "required_evidence_fields": ["head_phrase", "wings_phrase", "forequarters_phrase", "hindquarters_phrase", "transition_phrase"],
+      "evidence_requirements": {
+        "head_phrase": {"min_content_words": 12, "must_mention_any": ["one eagle head with a hooked beak and forward-facing neck anchors the creature"]},
+        "wings_phrase": {"min_content_words": 10, "must_mention_any": ["two feathered wings attach coherently behind the eagle shoulders"]},
+        "forequarters_phrase": {"min_content_words": 10, "must_mention_any": ["the chest and forelimbs retain avian structure or taloned forefeet"]},
+        "hindquarters_phrase": {"min_content_words": 10, "must_mention_any": ["lion torso hind legs paws and tail define the rear half"]},
+        "transition_phrase": {"min_content_words": 11, "must_mention_any": ["feather fur skeleton and limb junctions transition as one viable anatomy"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_griffin_eagle_head", "review_scale": "both", "description": "The eagle head and hooked beak remain unambiguous."},
+        {"id": "vo_fantasy_griffin_wings_fore", "review_scale": "both", "description": "Two feathered wings and avian forequarters attach coherently."},
+        {"id": "vo_fantasy_griffin_lion_rear", "review_scale": "thumbnail", "description": "Lion torso, rear legs, paws, and tail define the rear half."},
+        {"id": "vo_fantasy_griffin_transition", "review_scale": "native", "description": "Feather-to-fur and skeletal junctions read as one anatomy."},
+        {"id": "vo_fantasy_griffin_not_hippogriff", "review_scale": "both", "description": "Horse hindquarters, a lion head, a plain eagle, or detached collage parts do not substitute."}
+      ],
+      "reject_substitutes": ["horse_rear_hippogriff", "winged_lion", "plain_eagle", "detached_animal_collage", "cropped_hybrid_junction"]
+    },
+    {
+      "id": "hippogriff_eagle_horse_topology",
+      "category": "fantasy_creature_topology",
+      "activation": {
+        "exact_terms": ["hippogriff", "hippogryph", "히포그리프", "히포그리프스", "ヒッポグリフ"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A coherent hybrid whose eagle head, hooked beak, paired wings, and avian forequarters transition into a horse torso, hindquarters, hind legs, and tail. The horse rear distinguishes it from a griffin, while the eagle head and forequarters distinguish it from a pegasus.",
+        "paraphrase_examples": ["독수리 머리·부리·날개·앞부분이 말 몸통·뒷다리·꼬리로 자연스럽게 이어지는 히포그리프", "an eagle-headed winged forebody joined coherently to horse torso, hindquarters, hooves, and tail"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["eagle_head", "paired_wings", "avian_forequarters", "horse_hindquarters", "coherent_transition"],
+          "groups": [
+            {"id": "eagle_head", "any_terms": ["one eagle head with a hooked beak anchors the front of the creature", "갈고리 부리의 독수리 머리 하나가 생물 앞부분을 고정"]},
+            {"id": "paired_wings", "any_terms": ["two feathered wings attach behind the avian shoulders", "깃털 날개 두 장이 조류형 어깨 뒤에 연결"]},
+            {"id": "avian_forequarters", "any_terms": ["the chest and forelimbs retain avian or taloned structure", "가슴과 앞다리가 조류형 또는 발톱 구조를 유지"]},
+            {"id": "horse_hindquarters", "any_terms": ["horse barrel hind legs hooves and horse tail define the rear half", "말 몸통 뒷다리 발굽과 말꼬리가 뒤 절반을 정의"]},
+            {"id": "coherent_transition", "any_terms": ["feather and horse anatomy meet through continuous scale-coherent junctions", "깃털과 말 해부가 연속되고 규모가 맞는 접합으로 이어짐"]}
+          ]
+        },
+        "contrast_examples": ["a griffin with lion hindquarters", "a pegasus with a horse head", "a large eagle", "a horse wearing detached wings"]
+      },
+      "concept_candidate": {"concept_terms": ["eagle head", "paired feathered wings", "avian forequarters", "horse hindquarters and tail", "coherent hybrid junction", "not griffin or pegasus"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["eagle-horse hippogriff topology"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a full side or three-quarter morphology view that exposes the eagle head, both wing roots, avian forequarters, horse barrel, rear hooves, and horse tail with the hybrid junction uncropped.",
+      "required_evidence_fields": ["head_phrase", "wings_phrase", "forequarters_phrase", "hindquarters_phrase", "transition_phrase"],
+      "evidence_requirements": {
+        "head_phrase": {"min_content_words": 12, "must_mention_any": ["one eagle head with a hooked beak anchors the front of the creature"]},
+        "wings_phrase": {"min_content_words": 9, "must_mention_any": ["two feathered wings attach behind the avian shoulders"]},
+        "forequarters_phrase": {"min_content_words": 9, "must_mention_any": ["the chest and forelimbs retain avian or taloned structure"]},
+        "hindquarters_phrase": {"min_content_words": 12, "must_mention_any": ["horse barrel hind legs hooves and horse tail define the rear half"]},
+        "transition_phrase": {"min_content_words": 10, "must_mention_any": ["feather and horse anatomy meet through continuous scale-coherent junctions"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_hippogriff_eagle_head", "review_scale": "both", "description": "The eagle head and hooked beak remain unambiguous."},
+        {"id": "vo_fantasy_hippogriff_wings_fore", "review_scale": "both", "description": "Two feathered wings and avian forequarters attach coherently."},
+        {"id": "vo_fantasy_hippogriff_horse_rear", "review_scale": "thumbnail", "description": "Horse barrel, rear legs, hooves, and horse tail define the rear half."},
+        {"id": "vo_fantasy_hippogriff_transition", "review_scale": "native", "description": "Feather-to-horse junctions read as one scale-coherent anatomy."},
+        {"id": "vo_fantasy_hippogriff_not_griffin", "review_scale": "both", "description": "Lion hindquarters, a horse head, a plain eagle, or attached costume wings do not substitute."}
+      ],
+      "reject_substitutes": ["lion_rear_griffin", "horse_head_pegasus", "plain_eagle", "detached_costume_wings", "cropped_hybrid_junction"]
+    },
+    {
+      "id": "hydra_multi_neck_single_body",
+      "category": "fantasy_creature_topology",
+      "activation": {
+        "exact_terms": ["hydra monster", "lernaean hydra", "multi-headed hydra", "히드라 괴물", "레르네의 히드라", "다두 히드라", "ヒュドラ"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One creature body supports three or more separately rooted, spatially readable necks and heads. Every neck must connect to the same shoulder or upper-torso system, with distinct head silhouettes, non-merged junctions, and grounded body scale; a three-headed dog, snake bundle, duplicated bodies, or decorative head halo is not a hydra.",
+        "paraphrase_examples": ["한 몸통의 어깨·상부 몸통에서 세 개 이상의 목이 각각 뿌리를 두고 갈라져 머리 실루엣이 분리되는 히드라", "one grounded creature body supporting three or more separately rooted readable necks and heads"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["single_body", "three_plus_necks", "separate_roots", "distinct_heads", "grounded_scale"],
+          "groups": [
+            {"id": "single_body", "any_terms": ["one torso pelvis and limb system anchors every neck", "하나의 몸통 골반과 팔다리 체계가 모든 목을 고정"]},
+            {"id": "three_plus_necks", "any_terms": ["three or more complete neck paths remain visible from torso to head", "세 개 이상의 완전한 목 경로가 몸통에서 머리까지 노출"]},
+            {"id": "separate_roots", "any_terms": ["each neck has a distinct non-merged root on the same shoulder system", "각 목이 같은 어깨 체계에 분리되고 합쳐지지 않은 뿌리를 가짐"]},
+            {"id": "distinct_heads", "any_terms": ["each head retains a separate silhouette jaw and orientation", "각 머리가 분리된 실루엣 턱과 방향을 유지"]},
+            {"id": "grounded_scale", "any_terms": ["feet body shadow and nearby objects preserve one coherent creature scale", "발 몸 그림자와 주변 사물이 하나의 일관된 생물 규모를 유지"]}
+          ]
+        },
+        "contrast_examples": ["three heads on one short neck", "a bundle of snakes", "three duplicated dragon bodies", "a three-headed dog"]
+      },
+      "concept_candidate": {"concept_terms": ["one body", "three or more necks", "separate neck roots", "distinct head silhouettes", "grounded scale", "not a snake bundle"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["single-body multi-neck hydra"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use a wide full-body or upper-body view that keeps the shared torso, every neck root, at least three complete neck paths, separate head silhouettes, and grounded scale references visible without overlap.",
+      "required_evidence_fields": ["body_phrase", "neck_count_phrase", "roots_phrase", "heads_phrase", "scale_phrase"],
+      "evidence_requirements": {
+        "body_phrase": {"min_content_words": 9, "must_mention_any": ["one torso pelvis and limb system anchors every neck"]},
+        "neck_count_phrase": {"min_content_words": 11, "must_mention_any": ["three or more complete neck paths remain visible from torso to head"]},
+        "roots_phrase": {"min_content_words": 12, "must_mention_any": ["each neck has a distinct non-merged root on the same shoulder system"]},
+        "heads_phrase": {"min_content_words": 9, "must_mention_any": ["each head retains a separate silhouette jaw and orientation"]},
+        "scale_phrase": {"min_content_words": 11, "must_mention_any": ["feet body shadow and nearby objects preserve one coherent creature scale"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_hydra_single_body", "review_scale": "thumbnail", "description": "All necks belong to one grounded torso and limb system."},
+        {"id": "vo_fantasy_hydra_neck_count", "review_scale": "both", "description": "At least three complete neck paths remain visible."},
+        {"id": "vo_fantasy_hydra_roots", "review_scale": "native", "description": "Each neck has a separate non-merged root on the shared shoulder system."},
+        {"id": "vo_fantasy_hydra_heads", "review_scale": "both", "description": "Heads retain distinct silhouettes, jaws, and orientations."},
+        {"id": "vo_fantasy_hydra_not_bundle", "review_scale": "both", "description": "A snake bundle, duplicated bodies, head halo, or three-headed dog does not substitute."}
+      ],
+      "reject_substitutes": ["snake_bundle", "duplicated_creature_bodies", "decorative_head_halo", "three_headed_dog", "merged_neck_roots"]
+    },
+    {
+      "id": "phoenix_rebirth_causal_cycle",
+      "category": "fantasy_rebirth_causal_relation",
+      "activation": {
+        "exact_terms": ["phoenix rebirth", "phoenix rising from ashes", "reborn phoenix", "불사조의 부활", "재에서 태어나는 불사조", "봉황 재생", "フェニックスの再生"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A single still compresses the phoenix rebirth cycle into connected evidence: an exhausted former body or ash nest, one emerging renewed bird, a contiguous ash-to-feather transition zone, directional rise, and localized heat or displacement. A generic flaming bird, fire wings, two unrelated birds, or ashes alone does not show rebirth.",
+        "paraphrase_examples": ["소진된 이전 몸이나 재 둥지에서 새 몸 하나가 솟고 재에서 깃털로 이어지는 전환부와 상승 흔적이 보이는 불사조 재생", "one renewed bird rising from a former-body or ash anchor through a contiguous ash-to-feather transition"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["former_state_anchor", "renewed_bird", "transition_zone", "upward_motion", "localized_consequence"],
+          "groups": [
+            {"id": "former_state_anchor", "any_terms": ["one ash nest charred remnant or exhausted former body anchors the prior state", "재 둥지 탄 흔적 또는 소진된 이전 몸 하나가 전 상태를 고정"]},
+            {"id": "renewed_bird", "any_terms": ["one coherent renewed bird emerges from the same anchor", "새로워진 새 한 마리가 같은 앵커에서 출현"]},
+            {"id": "transition_zone", "any_terms": ["ash ember filament and feather structures connect through one contiguous transition zone", "재 불씨 섬유와 깃털 구조가 하나의 연속 전환 구역으로 연결"]},
+            {"id": "upward_motion", "any_terms": ["wing posture falling ash and rising sparks establish upward emergence", "날개 자세 떨어지는 재와 솟는 불티가 상승 출현을 확립"]},
+            {"id": "localized_consequence", "any_terms": ["heat shimmer scorched surface and displaced ash remain localized around the rebirth", "열 아지랑이 그을린 표면과 밀린 재가 재생 주변에 국소 유지"]}
+          ]
+        },
+        "contrast_examples": ["a bird with fire-colored feathers", "a bird flying through flames", "two unrelated birds", "an empty pile of ashes"]
+      },
+      "concept_candidate": {"concept_terms": ["former-state ash anchor", "one renewed bird", "ash-to-feather transition", "upward emergence", "localized heat consequence", "not a flaming bird alone"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["phoenix visibly reborn from its ash anchor"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep the former-state anchor, single emerging bird, complete ash-to-feather transition, upward motion cues, and localized scorched or displaced material in one uncropped frame.",
+      "required_evidence_fields": ["former_state_phrase", "bird_phrase", "transition_phrase", "motion_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "former_state_phrase": {"min_content_words": 13, "must_mention_any": ["one ash nest charred remnant or exhausted former body anchors the prior state"]},
+        "bird_phrase": {"min_content_words": 9, "must_mention_any": ["one coherent renewed bird emerges from the same anchor"]},
+        "transition_phrase": {"min_content_words": 12, "must_mention_any": ["ash ember filament and feather structures connect through one contiguous transition zone"]},
+        "motion_phrase": {"min_content_words": 10, "must_mention_any": ["wing posture falling ash and rising sparks establish upward emergence"]},
+        "consequence_phrase": {"min_content_words": 13, "must_mention_any": ["heat shimmer scorched surface and displaced ash remain localized around the rebirth"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_phoenix_former_state", "review_scale": "both", "description": "An ash nest, charred remnant, or exhausted former body anchors the prior state."},
+        {"id": "vo_fantasy_phoenix_new_bird", "review_scale": "thumbnail", "description": "One coherent renewed bird emerges from that same anchor."},
+        {"id": "vo_fantasy_phoenix_transition", "review_scale": "native", "description": "Ash, ember filaments, and feathers form one contiguous transition."},
+        {"id": "vo_fantasy_phoenix_motion", "review_scale": "both", "description": "Wing posture, falling ash, and sparks establish upward emergence."},
+        {"id": "vo_fantasy_phoenix_not_firebird", "review_scale": "both", "description": "A flaming bird, fire wings, unrelated second bird, or ashes alone does not substitute."}
+      ],
+      "reject_substitutes": ["generic_flaming_bird", "fire_wings_only", "unrelated_two_birds", "ashes_without_new_body", "disconnected_ash_and_feathers"]
+    },
+    {
+      "id": "familiar_practitioner_reciprocal_bond",
+      "category": "fantasy_familiar_relation",
+      "activation": {
+        "exact_terms": ["witch's familiar", "witch familiar", "magical familiar", "spirit familiar", "사역마", "마녀의 패밀리어", "마법 패밀리어", "使い魔"],
+        "exclude_if_any_terms": ["familiar face", "familiar place", "familiar voice", "familiar feeling", "낯익은 얼굴", "익숙한 장소", "익숙한 목소리"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A practitioner and one distinct animal-like or spirit helper visibly coordinate through reciprocal attention, a shared signal or medium, and one joint task consequence. The relation, not species stereotype, establishes the familiar; a pet portrait, decorative animal, coincidental eye contact, generic companion, or historical demonization does not.",
+        "paraphrase_examples": ["시전자와 동물형 또는 영체 조력자가 서로 주의를 주고받고 공유 신호를 통해 같은 과업 결과에 기여하는 사역마 관계", "a practitioner and distinct helper exchanging attention through a shared signal and contributing to one task consequence"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["practitioner", "distinct_helper", "reciprocal_attention", "shared_signal", "joint_consequence"],
+          "groups": [
+            {"id": "practitioner", "any_terms": ["one practitioner performs a clear task-directed gesture or handling action", "시전자 한 명이 과업을 향한 분명한 손짓 또는 조작 수행"]},
+            {"id": "distinct_helper", "any_terms": ["one separately embodied animal-like or spirit helper remains spatially distinct", "별도 몸을 가진 동물형 또는 영체 조력자 하나가 공간적으로 분리"]},
+            {"id": "reciprocal_attention", "any_terms": ["gaze posture or movement forms a two-way attention loop", "시선 자세 또는 움직임이 양방향 주의 고리를 형성"]},
+            {"id": "shared_signal", "any_terms": ["one shared token thread reflection sound cue or light path links both participants", "공유 토큰 실 반사 소리 단서 또는 빛 경로 하나가 양쪽을 연결"]},
+            {"id": "joint_consequence", "any_terms": ["an opened latch found object carried sample or ward response proves one joint task", "열린 걸쇠 찾은 사물 운반 샘플 또는 결계 반응이 공동 과업 하나를 증명"]}
+          ]
+        },
+        "contrast_examples": ["a witch posing with a cat", "an animal looking at the camera", "a decorative raven", "an unrelated fantasy companion"]
+      },
+      "concept_candidate": {"concept_terms": ["practitioner", "distinct helper", "reciprocal attention", "shared signal", "joint task consequence", "not a pet portrait"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["practitioner and familiar coordinating one shared task"], "forbidden_prompt_terms": ["historical accusation", "real-world demonization"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep both participants, their reciprocal attention, one shared signal medium, and the same task consequence visible; use an original fictional design without treating a particular animal species as proof.",
+      "required_evidence_fields": ["practitioner_phrase", "helper_phrase", "attention_phrase", "signal_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "practitioner_phrase": {"min_content_words": 11, "must_mention_any": ["one practitioner performs a clear task-directed gesture or handling action"]},
+        "helper_phrase": {"min_content_words": 11, "must_mention_any": ["one separately embodied animal-like or spirit helper remains spatially distinct"]},
+        "attention_phrase": {"min_content_words": 9, "must_mention_any": ["gaze posture or movement forms a two-way attention loop"]},
+        "signal_phrase": {"min_content_words": 13, "must_mention_any": ["one shared token thread reflection sound cue or light path links both participants"]},
+        "consequence_phrase": {"min_content_words": 14, "must_mention_any": ["an opened latch found object carried sample or ward response proves one joint task"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_familiar_two_participants", "review_scale": "thumbnail", "description": "The practitioner and one distinct helper remain separately embodied."},
+        {"id": "vo_fantasy_familiar_attention", "review_scale": "both", "description": "Gaze, posture, or motion creates reciprocal rather than one-way attention."},
+        {"id": "vo_fantasy_familiar_signal", "review_scale": "native", "description": "One shared signal or medium visibly links both participants."},
+        {"id": "vo_fantasy_familiar_task", "review_scale": "both", "description": "Both participants contribute to one visible task consequence."},
+        {"id": "vo_fantasy_familiar_not_pet", "review_scale": "both", "description": "A pet portrait, decorative animal, coincidental gaze, or species stereotype does not substitute."}
+      ],
+      "reject_substitutes": ["pet_portrait", "decorative_animal", "coincidental_eye_contact", "generic_companion", "species_stereotype_only"]
+    },
+    {
+      "id": "magic_circle_local_rule_boundary",
+      "category": "fantasy_bounded_magic_relation",
+      "activation": {
+        "exact_terms": ["magic circle", "ritual magic circle", "summoning circle", "마법진", "마법 원진", "소환진", "魔法陣"],
+        "exclude_if_any_terms": ["circle of fifths", "social circle", "geometry circle", "mathematical circle", "오도권", "사교 모임", "수학 원"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A closed, surface-anchored boundary visibly governs one local fictional effect: the inside and outside differ, the effect stops or changes at the line, and contact or residue proves the boundary. Original non-readable markings may decorate it, but copied ritual instructions, a portal ring, decorative floor pattern, halo, or free-floating glyph cloud do not establish the contract.",
+        "paraphrase_examples": ["실제 바닥이나 벽에 닫힌 경계가 고정되고 안팎의 효과가 다르며 빛·먼지·물체 반응이 선에서 멈추는 마법진", "a closed surface boundary whose fictional effect differs inside and outside and terminates visibly at the line"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["closed_boundary", "surface_anchor", "inside_outside_difference", "boundary_stop", "contact_residue"],
+          "groups": [
+            {"id": "closed_boundary", "any_terms": ["one complete closed boundary remains visible without cropped gaps", "하나의 완전한 닫힌 경계가 잘림이나 틈 없이 노출"]},
+            {"id": "surface_anchor", "any_terms": ["the boundary conforms to a real floor wall table or object surface", "경계가 실제 바닥 벽 테이블 또는 사물 표면을 따름"]},
+            {"id": "inside_outside_difference", "any_terms": ["light material motion or state differs visibly inside versus outside", "빛 재료 움직임 또는 상태가 안쪽과 바깥쪽에서 다르게 보임"]},
+            {"id": "boundary_stop", "any_terms": ["the fictional effect terminates bends or changes exactly at the boundary line", "허구 효과가 경계선에서 정확히 멈추거나 굽거나 변화"]},
+            {"id": "contact_residue", "any_terms": ["dust liquid shadow scorch or object contact records the local rule", "먼지 액체 그림자 그을림 또는 사물 접촉이 국소 규칙을 기록"]}
+          ]
+        },
+        "contrast_examples": ["a decorative circular rug", "a glowing portal ring", "a halo behind a character", "floating symbols with no surface relation"]
+      },
+      "concept_candidate": {"concept_terms": ["closed boundary", "real surface anchor", "inside-outside difference", "effect stops at line", "contact residue", "original unreadable markings"]},
+      "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["surface-anchored magic circle enforcing a local rule"], "forbidden_prompt_terms": ["copied ritual instructions", "readable invocation"], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use an oblique view that shows the entire closed boundary, surface contact, both inside and outside regions, the exact effect cutoff, and one physical residue while markings remain original and unreadable.",
+      "required_evidence_fields": ["boundary_phrase", "surface_phrase", "difference_phrase", "stop_phrase", "residue_phrase"],
+      "evidence_requirements": {
+        "boundary_phrase": {"min_content_words": 9, "must_mention_any": ["one complete closed boundary remains visible without cropped gaps"]},
+        "surface_phrase": {"min_content_words": 11, "must_mention_any": ["the boundary conforms to a real floor wall table or object surface"]},
+        "difference_phrase": {"min_content_words": 10, "must_mention_any": ["light material motion or state differs visibly inside versus outside"]},
+        "stop_phrase": {"min_content_words": 12, "must_mention_any": ["the fictional effect terminates bends or changes exactly at the boundary line"]},
+        "residue_phrase": {"min_content_words": 11, "must_mention_any": ["dust liquid shadow scorch or object contact records the local rule"]}
+      },
+      "render_gates": [
+        {"id": "vo_fantasy_magic_circle_closed", "review_scale": "thumbnail", "description": "The full closed boundary is visible without cropped gaps."},
+        {"id": "vo_fantasy_magic_circle_surface", "review_scale": "both", "description": "The boundary conforms to a real surface with coherent perspective."},
+        {"id": "vo_fantasy_magic_circle_regions", "review_scale": "both", "description": "Inside and outside regions show a visible state difference."},
+        {"id": "vo_fantasy_magic_circle_stop", "review_scale": "native", "description": "The effect stops, bends, or changes exactly at the boundary line."},
+        {"id": "vo_fantasy_magic_circle_not_decor", "review_scale": "both", "description": "A portal ring, rug, halo, glyph cloud, or copied ritual diagram does not substitute."}
+      ],
+      "reject_substitutes": ["decorative_floor_pattern", "portal_ring", "character_halo", "floating_glyph_cloud", "copied_ritual_diagram"]
     }
   ]
 }

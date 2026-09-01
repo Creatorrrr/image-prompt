@@ -1,0 +1,39 @@
+{
+  "schema_version": "photo-fantasy-data-preflight/v1",
+  "status": "pass",
+  "source_layer": {
+    "selected_profile_count": 10,
+    "selected_profiles_present": true,
+    "selected_profile_ids": [
+      "golem_constructed_material_agency",
+      "fantasy_portal_two_world_threshold",
+      "alchemist_material_transmutation_process",
+      "summoner_distinct_entity_arrival",
+      "magic_circle_local_rule_boundary",
+      "living_armor_hollow_articulated_agency",
+      "wyvern_two_leg_wing_tail_topology",
+      "hydra_multi_neck_single_body",
+      "phoenix_rebirth_causal_cycle",
+      "griffin_eagle_lion_topology"
+    ],
+    "tags_version": "1.37",
+    "candidate_total": 5374,
+    "visual_profile_count": 144,
+    "visual_exact_term_count": 894,
+    "semantic_entry_count": 7278,
+    "semantic_shard_count": 16
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "result": "pass",
+      "evidence": "visual profile index ok: 144 profiles, 894 exact terms"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_photo_fantasy_visual_semantics.py",
+      "result": "pass",
+      "evidence": "9 passed, 78 subtests passed"
+    }
+  ],
+  "claim_boundary": "This proves source and test/index integrity. It does not prove candidate-pack inclusion, prompt presence, rendered pixels, or user acceptance."
+}

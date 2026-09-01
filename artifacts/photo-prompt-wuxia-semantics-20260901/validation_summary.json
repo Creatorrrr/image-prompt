@@ -1,0 +1,119 @@
+{
+  "schema_version": "photo-wuxia-visual-semantics-validation/v1",
+  "validated_at": "2026-09-01",
+  "baseline_revision": "266054f917aa290c320481d28e9297913379247c",
+  "candidate_revision": "working-tree",
+  "scope": {
+    "new_candidate_records": 39,
+    "narrowed_legacy_records": 4,
+    "new_visual_profiles": 6,
+    "new_research_evidence_rows": 10,
+    "claim_scope": "structural"
+  },
+  "generated_indexes": {
+    "dictionary_version": "1.37",
+    "candidate_entry_count": 7278,
+    "semantic_embedding_model": "gemini-embedding-2",
+    "semantic_embedding_dimensions": 768,
+    "semantic_dictionary_hash": "aefe314da4c1fe7e3243a1c555d7ced10e226c3a6bfdd1cc944a60ea7392d0ae",
+    "visual_profile_count": 144,
+    "visual_profile_exact_term_count": 894
+  },
+  "checks": [
+    {
+      "id": "wuxia-focused",
+      "command": ".venv/bin/python -m unittest tests.test_photo_wuxia_visual_semantics -v",
+      "status": "pass",
+      "test_count": 9,
+      "elapsed_seconds": 73.979
+    },
+    {
+      "id": "weapon-regression",
+      "command": ".venv/bin/python -m unittest tests.test_photo_weapon_visual_semantics -v",
+      "status": "pass",
+      "test_count": 8,
+      "elapsed_seconds": 56.332
+    },
+    {
+      "id": "traditional-clothing-regression",
+      "command": ".venv/bin/python -m unittest tests.test_photo_traditional_clothing_semantics -v",
+      "status": "pass",
+      "test_count": 8,
+      "elapsed_seconds": 67.233
+    },
+    {
+      "id": "visual-profile-retrieval-regression",
+      "command": ".venv/bin/python -m unittest tests.test_photo_visual_profile_retrieval -v",
+      "status": "pass",
+      "test_count": 12,
+      "elapsed_seconds": 76.234
+    },
+    {
+      "id": "bm25f-regression",
+      "command": ".venv/bin/python -m unittest tests.test_photo_bm25f_retrieval -v",
+      "status": "pass",
+      "test_count": 5,
+      "elapsed_seconds": 0.002
+    },
+    {
+      "id": "visual-obligation-regression",
+      "command": ".venv/bin/python -m unittest tests.test_photo_visual_obligations -v",
+      "status": "pass",
+      "test_count": 23,
+      "elapsed_seconds": 525.054
+    },
+    {
+      "id": "dictionary-metadata",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "status": "pass"
+    },
+    {
+      "id": "visual-profile-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "status": "pass"
+    },
+    {
+      "id": "semantic-index",
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "status": "pass"
+    },
+    {
+      "id": "diff-whitespace",
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "test_summary": {
+    "passed": 65,
+    "failed": 0,
+    "full_repository_suite_run": false
+  },
+  "routing_evidence": {
+    "hard_exact_routes": [
+      "wuxia_rooftop_qinggong_traversal",
+      "wuxia_bamboo_forest_aerial_duel",
+      "jianghu_inn_identity_standoff",
+      "formal_biwu_reciprocal_salute_standoff",
+      "xia_protective_intervention_event",
+      "biaoju_guarded_cargo_departure"
+    ],
+    "broad_nonactivating_families": [
+      "wuxia or 무협",
+      "jianghu or 강호",
+      "xia or 협객",
+      "biwu or 비무",
+      "biaoju or 표국",
+      "xianxia cultivation",
+      "generic martial portrait",
+      "generic bamboo rooftop tavern or caravan scenes"
+    ]
+  },
+  "evidence_boundary": {
+    "package": "pass",
+    "prompt_routing": "pass",
+    "rendered_pixels": "unscored",
+    "user_aesthetic_judgment": "unscored",
+    "decision": "implemented"
+  },
+  "worktree_note": "The checkout contained pre-existing and concurrently appearing weapon, fantasy, luxury, clothing, instrument, recipe, evidence, and generated-index changes. They were preserved. Generated indexes reflect the integrated dictionary state at validation time, so their full diff is not attributable to wuxia alone."
+}

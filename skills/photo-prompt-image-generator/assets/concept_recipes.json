@@ -3617,6 +3617,220 @@
         }
       ]
     },
+    "소환사": {
+      "preset": "folk_creature_threshold_portrait",
+      "identity_core": {
+        "subject": "summoner_practitioner_role_model"
+      },
+      "scene_variants": [
+        {
+          "id": "bounded_entity_arrival",
+          "weight": 1.0,
+          "set": {
+            "location": "summoning_observation_chamber",
+            "action": "summoning_distinct_entity_arrival",
+            "prop": "bounded_summoning_anchor_prop",
+            "surreal_physics_detail": "summoned_entity_contact_shadow_forming",
+            "aftermath_trace": "summoning_displaced_dust_trace"
+          },
+          "intent_axis": [
+            "adult fictional summoner causing one separately embodied entity to arrive from a complete bounded source with a forming contact shadow and displaced dust"
+          ]
+        },
+        {
+          "id": "crossworld_retrieval",
+          "weight": 0.92,
+          "set": {
+            "location": "two_world_portal_threshold_location",
+            "action": "opening_two_world_threshold_crossing",
+            "prop": "portal_threshold_control_markers_prop",
+            "surreal_physics_detail": "portal_cross_boundary_parallax",
+            "aftermath_trace": "portal_crossing_residue_trace"
+          },
+          "intent_axis": [
+            "adult fictional summoner maintaining one complete interworld threshold as a separate entity crosses with coherent occlusion and localized residue"
+          ]
+        },
+        {
+          "id": "arrival_stabilization",
+          "weight": 0.88,
+          "set": {
+            "location": "summoning_observation_chamber",
+            "action": "stabilizing_arrived_entity",
+            "prop": "bounded_summoning_anchor_prop",
+            "surreal_physics_detail": "summoned_entity_contact_shadow_forming",
+            "aftermath_trace": "summoning_displaced_dust_trace"
+          },
+          "intent_axis": [
+            "adult fictional summoner stabilizing one newly arrived separate entity as outline, shadow, and dust settle inside the bounded source"
+          ]
+        },
+        {
+          "id": "entity_return_release",
+          "weight": 0.82,
+          "set": {
+            "location": "two_world_portal_threshold_location",
+            "action": "releasing_summoned_entity_return",
+            "prop": "portal_threshold_control_markers_prop",
+            "surreal_physics_detail": "portal_cross_boundary_parallax",
+            "aftermath_trace": "portal_crossing_residue_trace"
+          },
+          "intent_axis": [
+            "adult fictional summoner releasing one separately embodied entity back through the same two-world threshold while the local residue closes behind it"
+          ]
+        }
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "location",
+        "action",
+        "prop",
+        "surreal_physics_detail",
+        "aftermath_trace"
+      ],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["adult fictional summoner"],
+        "action": ["distinct entity arrival", "two-world crossing", "arrival stabilization", "return release"],
+        "surreal_physics_detail": ["forming contact shadow", "portal-plane parallax"]
+      },
+      "additional": [
+        "summoner identity is causal and relational: one living operator, one bounded source, one separately embodied arriving or returning entity, a directional response, and one localized consequence must read in the same frame",
+        "costume, generic aura, empty magic circle, pet portrait, duplicated operator, or unrelated second character never establishes summoning",
+        "keep necromancer routing separate: a dead anchor and localized dead response belong to necromancer_dead_causality rather than this living-entity arrival contract"
+      ],
+      "intent_axis": [
+        "adult original fantasy summoner expressed through a bounded entity-arrival event rather than inherited costume or game-class iconography"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult original fictional practitioner; symbolic non-instructional magic only; no copied ritual diagram, readable invocation, sacrifice, victim, coercion, injury, or franchise identity"
+      ],
+      "salience_cues": [
+        "the operator-source-separate entity-response-consequence chain must survive removal of robes, staff, glowing particles, or genre costume"
+      ],
+      "anchor_floor": {"role": 1},
+      "review_gates": [
+        {
+          "id": "summoner_subject_identity_core",
+          "check": "subject가 summoner_practitioner_role_model로 고정되어야 한다",
+          "machine_checkable": true,
+          "assert": {"type": "forced_slot_any", "slot": "subject", "any_of": ["summoner_practitioner_role_model"]}
+        },
+        {
+          "id": "summoner_visible_arrival_chain",
+          "check": "살아 있는 시전자-한정된 소환원-별도 소환체-방향 반응-국소 결과가 같은 프레임에서 읽히고 동반자 초상이나 빈 마법진으로 대체되지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ]
+    },
+    "연금술사": {
+      "preset": "lab_glassware_transmutation_portrait",
+      "identity_core": {
+        "subject": "alchemist_practitioner_role_model"
+      },
+      "scene_variants": [
+        {
+          "id": "connected_retort_distillation",
+          "weight": 1.0,
+          "set": {
+            "location": "alchemist_heatwork_lab",
+            "action": "distilling_visible_material_transition",
+            "prop": "alchemical_retort_crucible_prop",
+            "surreal_physics_detail": "transmutation_boundary_material_gradient",
+            "aftermath_trace": "transmutation_before_after_trace"
+          },
+          "intent_axis": [
+            "adult fictional alchemist controlling one connected distillation path while paired material states and localized condensate preserve the transformation"
+          ]
+        },
+        {
+          "id": "paired_sample_assay",
+          "weight": 0.92,
+          "set": {
+            "location": "alchemist_heatwork_lab",
+            "action": "testing_transmutation_sample",
+            "prop": "paired_material_sample_prop",
+            "surreal_physics_detail": "transmutation_boundary_material_gradient",
+            "aftermath_trace": "transmutation_before_after_trace"
+          },
+          "intent_axis": [
+            "adult fictional alchemist comparing input and output samples in the same light while one bounded material gradient and residue link both states"
+          ]
+        },
+        {
+          "id": "crucible_output_cooling",
+          "weight": 0.86,
+          "set": {
+            "location": "alchemist_heatwork_lab",
+            "action": "cooling_transmuted_material",
+            "prop": "alchemical_retort_crucible_prop",
+            "surreal_physics_detail": "transmutation_boundary_material_gradient",
+            "aftermath_trace": "transmutation_before_after_trace"
+          },
+          "intent_axis": [
+            "adult fictional alchemist cooling one changed output as the crucible, heat boundary, slag, and before-after material trace keep the process legible"
+          ]
+        },
+        {
+          "id": "refinery_process_audit",
+          "weight": 0.78,
+          "set": {
+            "location": "alchemical_refinery",
+            "action": "testing_transmutation_sample",
+            "prop": "paired_material_sample_prop",
+            "surreal_physics_detail": "transmutation_boundary_material_gradient",
+            "aftermath_trace": "transmutation_before_after_trace"
+          },
+          "intent_axis": [
+            "adult fictional alchemist auditing a refinery output through paired samples, one localized material boundary, and a trace tied to the connected apparatus path"
+          ]
+        }
+      ],
+      "soft_anchor_slots": [
+        "subject",
+        "location",
+        "action",
+        "prop",
+        "surreal_physics_detail",
+        "aftermath_trace"
+      ],
+      "soft_min_anchors": 4,
+      "anchor_terms": {
+        "subject": ["adult fictional alchemist"],
+        "action": ["connected distillation", "paired sample assay", "crucible cooling", "process audit"],
+        "prop": ["connected retort and crucible", "paired input and output samples"]
+      },
+      "additional": [
+        "alchemist identity is process-first: practitioner action, connected apparatus, simultaneously comparable input and output states, one bounded material transition, and process residue must read together",
+        "robe, bottle, colored smoke, glassware clutter, chemistry costume, or a potion still life never establishes alchemical transmutation",
+        "do not infer historical authenticity, chemical composition, successful real-world transformation, or safe laboratory operation from generated pixels"
+      ],
+      "intent_axis": [
+        "adult original fantasy alchemist expressed through observable material transformation rather than a costume, potion inventory, or generic laboratory mood"
+      ],
+      "likeness_mode": "inspired",
+      "safety_requirements": [
+        "adult original fictional practitioner; symbolic non-instructional apparatus only; no actionable chemical recipe, explosive procedure, poison preparation, readable formula, injury, or franchise identity"
+      ],
+      "salience_cues": [
+        "the operator-apparatus-input/output-transition-residue chain must survive removal of robes, glowing liquid, smoke, or antique decor"
+      ],
+      "anchor_floor": {"role": 1},
+      "review_gates": [
+        {
+          "id": "alchemist_subject_identity_core",
+          "check": "subject가 alchemist_practitioner_role_model로 고정되어야 한다",
+          "machine_checkable": true,
+          "assert": {"type": "forced_slot_any", "slot": "subject", "any_of": ["alchemist_practitioner_role_model"]}
+        },
+        {
+          "id": "alchemist_visible_process_chain",
+          "check": "시전자-연결 장치-입력/출력 상태-국소 변환-잔류물이 같은 프레임에서 읽히고 의상·병·연기 정물로 대체되지 않아야 한다.",
+          "machine_checkable": false
+        }
+      ]
+    },
     "마법사": {
       "preset": "archive_ledger_threshold",
       "set": [
@@ -40473,6 +40687,14 @@
     "private appointment luxury": "프라이빗 클라이언트 럭셔리",
     "white-glove luxury service": "프라이빗 클라이언트 럭셔리",
     "화이트 글러브 서비스": "프라이빗 클라이언트 럭셔리",
+    "summoner": "소환사",
+    "fantasy summoner": "소환사",
+    "summoner character": "소환사",
+    "召喚士": "소환사",
+    "alchemist": "연금술사",
+    "fantasy alchemist": "연금술사",
+    "alchemist character": "연금술사",
+    "錬金術師": "연금술사",
     "팜프파탈": "팜므파탈",
     "succubus": "서큐버스",
     "Succubus": "서큐버스",

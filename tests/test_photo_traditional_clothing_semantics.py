@@ -134,7 +134,8 @@ class PhotoTraditionalClothingSemanticsTests(unittest.TestCase):
         }
 
     def test_candidate_pack_contains_bounded_garment_and_textile_clusters(self):
-        self.assertEqual(self.tags["version"], "1.31")
+        version = tuple(int(part) for part in str(self.tags["version"]).split("."))
+        self.assertGreaterEqual(version, (1, 31))
         expected_by_slot = {
             "costume_style": GARMENT_SYSTEM_IDS,
             "garment_detail": GARMENT_DETAIL_IDS,

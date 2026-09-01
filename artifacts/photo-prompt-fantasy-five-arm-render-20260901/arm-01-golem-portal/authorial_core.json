@@ -1,0 +1,64 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Stress-test the current fantasy visual semantics by rendering the agent-selected golem plus fantasy portal pair in a complex photorealistic scene, using the attached portrait only as visible appearance guidance for an original adult fictional woman.",
+  "subject": "One original adult fictional woman portal surveyor, with visible facial appearance and long dark wavy hair guided by the attached portrait, plus one constructed clay-and-stone golem.",
+  "setting": "A rain-dark archive hall containing a complete stone threshold that opens onto a snowy ruin.",
+  "event": "The surveyor records a clay-and-stone golem carrying a survey crate across the portal plane from the snowy ruin into the archive hall.",
+  "visual_priorities": [
+    "A complete threshold, two materially distinct spaces, and one body crossing the portal plane must be visible together.",
+    "The golem must read as one complete constructed body with continuous clay-and-stone material, assembled joints, grounded motion, and a moved survey crate.",
+    "The attached portrait controls visible facial appearance, dark wavy hair, and restrained makeup balance only; the subject remains an original adult fictional woman."
+  ],
+  "baseline_prompt_en": "Create a photorealistic fantasy field-documentation photograph of an original adult fictional woman whose visible facial appearance and long dark wavy hair are guided by Image 1. She stands in a rain-dark archive hall operating a complete stone threshold that reveals a snowy ruin as a materially distinct far-side space while the near-side hall remains fully readable. One clay-and-stone golem crosses the threshold plane with coherent clipping and occlusion. Its single constructed body keeps the same packed clay and fitted stone across torso, limbs, and joints, with visible assembly seams. Its grounded step forms a contact shadow and pushes threshold dust outward as it carries one survey crate from the ruin into the hall. Preserve the reference-visible facial structure, hairline, dark wavy hair texture, and natural makeup balance. Use a medium-wide eye-level documentary composition with both spaces, full golem anatomy, crossing plane, and moved crate legible in one frame.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "five independent pixel tests",
+      "source_text": "독립된 서브에이전트 5개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "request_context",
+      "resolution": "Treat this as one isolated arm whose assigned semantic pair is judged in rendered pixels, separately from candidate-pack and prompt-audit success.",
+      "sources": []
+    },
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "agent_general_knowledge",
+      "resolution": "Use a deterministic request-hash shuffle and assign this arm a rain-dark archive portal survey combining golem and portal topology.",
+      "sources": []
+    },
+    {
+      "term": "attached-image use",
+      "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait only for visible facial appearance, long dark wavy hair, and restrained makeup balance of an original adult fictional subject.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id":"core_concept","source_text":"랜덤한 복잡한 컨셉","dimension":"concept","prompt_evidence":"a complete stone threshold that reveals a snowy ruin"},
+      {"anchor_id":"core_subject","source_text":"첨부한 이미지를 활용하여","dimension":"subject","prompt_evidence":"an original adult fictional woman"},
+      {"anchor_id":"core_event","source_text":"이미지에 실제로 반영되는지까지 테스트","dimension":"event","prompt_evidence":"One clay-and-stone golem crosses the threshold plane"},
+      {"anchor_id":"core_setting","source_text":"서로 다른 컨셉","dimension":"setting","prompt_evidence":"a rain-dark archive hall"},
+      {"anchor_id":"core_reference_use","source_text":"첨부한 이미지를 활용하여","dimension":"reference_use","prompt_evidence":"guided by Image 1"},
+      {"anchor_id":"core_appearance","source_text":"첨부한 이미지","dimension":"appearance","prompt_evidence":"Preserve the reference-visible facial structure, hairline, dark wavy hair texture, and natural makeup balance"}
+    ],
+    "locked_dimensions": ["concept","subject","event","setting","reference_use","appearance"],
+    "open_dimensions": ["framing","composition","lighting","camera","color","material","atmosphere"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic fantasy field-documentation photography",
+    "family": "rainy archive portal survey",
+    "evidence": ["complete portal threshold with readable near and far spaces","grounded golem crossing with crate and displaced dust"]
+  },
+  "variation_key": "arm-01-golem-portal-bd1cb8b8"
+}
