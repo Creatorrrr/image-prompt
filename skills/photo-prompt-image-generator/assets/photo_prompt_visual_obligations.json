@@ -15734,6 +15734,1566 @@
         "forest_bare_slope_binary_cut",
         "climate_shift_or_elevation_claim_from_pixels"
       ]
+    },
+    {
+      "id": "oneiric_dream_logic_discontinuity",
+      "category": "oneiric_spatial_discontinuity",
+      "activation": {
+        "exact_terms": [
+          "dream logic scene",
+          "oneiric dream logic",
+          "dream discontinuity",
+          "꿈 논리",
+          "꿈의 불연속",
+          "몽환적 꿈 논리"
+        ],
+        "exclude_if_any_terms": [
+          "logic puzzle",
+          "dream journal",
+          "dream interpretation",
+          "sleeping portrait",
+          "dreamy portrait",
+          "dreamy lighting"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A familiar photographic scene whose orientation, scale, adjacency, or continuity breaks at one localized seam, made falsifiable by a repeated anchor and preserved subject or object continuity. Soft focus, pastel color, sleep, or floating props alone describe mood rather than dream logic.",
+        "paraphrase_examples": [
+          "같은 의자와 인물이 문턱 양쪽에 이어지지만 문턱 너머 방의 중력 방향만 바뀐다",
+          "one familiar corridor repeats a lamp across a seam where the destination reconnects at an impossible scale",
+          "a continuous walker crosses one bounded join while the same room changes orientation only beyond it"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "familiar_reality_anchor",
+            "single_local_discontinuity",
+            "repeated_comparison_anchor",
+            "subject_or_object_continuity",
+            "localized_seam_physics"
+          ],
+          "groups": [
+            {"id": "familiar_reality_anchor", "any_terms": ["ordinary recognizable room route furniture or routine", "익숙한 방 통로 가구 일상 행동"]},
+            {"id": "single_local_discontinuity", "any_terms": ["one bounded change of orientation scale adjacency or continuity", "한 경계에 국한된 방향 규모 인접 연속성 변화"]},
+            {"id": "repeated_comparison_anchor", "any_terms": ["the same distinctive object pattern or threshold appears on both sides", "같은 사물 무늬 문턱이 양쪽에 반복됨"]},
+            {"id": "subject_or_object_continuity", "any_terms": ["one person or object remains identifiable across the impossible join", "동일 인물 또는 사물이 불가능 접합을 가로질러 이어짐"]},
+            {"id": "localized_seam_physics", "any_terms": ["light perspective contact or shadow localizes the break to one seam", "빛 원근 접촉 그림자가 위반을 한 이음새에 국소화함"]}
+          ]
+        },
+        "contrast_examples": [
+          "soft-focus pastel portrait",
+          "a person sleeping in bed",
+          "random floating objects",
+          "uniformly warped room",
+          "foggy fantasy landscape",
+          "unrelated collage fragments"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "familiar scene anchor",
+          "localized dream discontinuity",
+          "repeated orientation object",
+          "single seam physics change",
+          "preserved traveler continuity",
+          "oneiric incongruity",
+          "bounded scale or adjacency break"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["localized dream-logic discontinuity"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame one familiar scene, the repeated comparison anchor, the complete localized seam, and the same crossing subject or object together so the discontinuity is readable as one relation rather than generalized distortion.",
+      "required_evidence_fields": [
+        "familiar_anchor_phrase",
+        "discontinuity_phrase",
+        "comparison_anchor_phrase",
+        "continuity_phrase",
+        "seam_physics_phrase"
+      ],
+      "evidence_requirements": {
+        "familiar_anchor_phrase": {"min_content_words": 8, "must_mention_any": ["one familiar photographic room and ordinary routine establish the reality anchor"]},
+        "discontinuity_phrase": {"min_content_words": 9, "must_mention_any": ["one bounded seam changes orientation scale adjacency or spatial continuity"]},
+        "comparison_anchor_phrase": {"min_content_words": 9, "must_mention_any": ["the same distinctive object appears clearly on both sides of the seam"]},
+        "continuity_phrase": {"min_content_words": 8, "must_mention_any": ["one identifiable subject continues physically across the impossible spatial join"]},
+        "seam_physics_phrase": {"min_content_words": 10, "must_mention_any": ["light perspective contact and shadow localize the change to that single seam"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_dream_familiar_anchor", "review_scale": "thumbnail", "description": "A recognizable ordinary scene establishes a stable reality anchor."},
+        {"id": "vo_imaginal_dream_single_discontinuity", "review_scale": "both", "description": "Exactly one localized orientation scale adjacency or continuity break remains legible."},
+        {"id": "vo_imaginal_dream_repeated_anchor", "review_scale": "both", "description": "One distinctive comparison object appears clearly across both sides of the seam."},
+        {"id": "vo_imaginal_dream_continuity", "review_scale": "native", "description": "The same subject or object remains identifiable through the impossible join."},
+        {"id": "vo_imaginal_dream_local_seam_physics", "review_scale": "native", "description": "Perspective light contact and shadow locate the violation at one seam."}
+      ],
+      "reject_substitutes": [
+        "soft_focus_or_pastel_mood",
+        "sleeping_subject_only",
+        "random_floating_props",
+        "uniform_scene_warp",
+        "fog_or_bloom_only",
+        "unrelated_collage_fragments"
+      ]
+    },
+    {
+      "id": "ambiguous_figure_ground_dual_read",
+      "category": "reversible_figure_ground_perception",
+      "activation": {
+        "exact_terms": [
+          "ambiguous figure",
+          "figure-ground reversal",
+          "bistable figure",
+          "모호 도형",
+          "도형-배경 반전",
+          "양안정 도형"
+        ],
+        "exclude_if_any_terms": [
+          "two pictures side by side",
+          "before and after panels",
+          "transparent overlay",
+          "double exposure portrait"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One unchanged depicted stimulus supports two complete and mutually exclusive figure-ground readings through the same precisely shared contour. A pair of separate pictures, transparent overlay, hidden object, or double exposure does not establish reversible perception.",
+        "paraphrase_examples": [
+          "하나의 흰 윤곽은 두 얼굴의 옆모습이면서 중앙의 잔 경계로도 완전하게 읽힌다",
+          "one unchanged coastline edge alternately belongs to an animal silhouette and the surrounding sky figure",
+          "the same negative-space border supports two complete readings without adding another outline"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "unchanged_single_stimulus",
+            "precisely_shared_contour",
+            "complete_first_reading",
+            "complete_second_reading",
+            "mutually_exclusive_figure_ground_relation"
+          ],
+          "groups": [
+            {"id": "unchanged_single_stimulus", "any_terms": ["one unchanged physical image or arrangement", "변하지 않는 하나의 물리 자극 또는 배열"]},
+            {"id": "precisely_shared_contour", "any_terms": ["one exact border belongs to either perceptual organization", "하나의 정확한 경계가 두 판독에 공유됨"]},
+            {"id": "complete_first_reading", "any_terms": ["the first figure reads as a complete recognizable form", "첫 도형이 완전한 인식 가능 형태로 읽힘"]},
+            {"id": "complete_second_reading", "any_terms": ["the second figure reads as a complete recognizable form", "두 번째 도형이 완전한 인식 가능 형태로 읽힘"]},
+            {"id": "mutually_exclusive_figure_ground_relation", "any_terms": ["when one region becomes figure the competing region becomes ground", "한 영역이 도형이면 다른 영역이 배경이 되는 관계"]}
+          ]
+        },
+        "contrast_examples": [
+          "two images placed side by side",
+          "a face hidden in busy clutter",
+          "transparent portrait overlay",
+          "double-exposure silhouette",
+          "two separate outlines touching",
+          "a single obvious logo"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "shared figure-ground contour",
+          "two complete perceptual readings",
+          "unchanged visual stimulus",
+          "mutually exclusive silhouette organization",
+          "balanced negative space",
+          "bistable perception",
+          "thumbnail dual readability"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["ambiguous figure-ground dual reading"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Center one unchanged shared contour and balance crop, contrast, and negative space so each of the two mutually exclusive readings remains complete at thumbnail and native scale.",
+      "required_evidence_fields": [
+        "unchanged_stimulus_phrase",
+        "shared_contour_phrase",
+        "first_reading_phrase",
+        "second_reading_phrase",
+        "reversal_relation_phrase"
+      ],
+      "evidence_requirements": {
+        "unchanged_stimulus_phrase": {"min_content_words": 8, "must_mention_any": ["one unchanged depicted arrangement supports both complete perceptual readings"]},
+        "shared_contour_phrase": {"min_content_words": 9, "must_mention_any": ["one precise physical border is shared by both figure organizations"]},
+        "first_reading_phrase": {"min_content_words": 8, "must_mention_any": ["the first side forms one complete recognizable figure silhouette"]},
+        "second_reading_phrase": {"min_content_words": 8, "must_mention_any": ["the competing side forms another complete recognizable figure silhouette"]},
+        "reversal_relation_phrase": {"min_content_words": 10, "must_mention_any": ["figure and ground ownership reverses across the same unchanged shared border"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_ambiguous_single_stimulus", "review_scale": "both", "description": "Both readings arise from one unchanged depicted stimulus."},
+        {"id": "vo_imaginal_ambiguous_shared_contour", "review_scale": "native", "description": "A single precise border is visibly shared by both organizations."},
+        {"id": "vo_imaginal_ambiguous_first_read", "review_scale": "thumbnail", "description": "The first percept remains a complete recognizable figure at thumbnail scale."},
+        {"id": "vo_imaginal_ambiguous_second_read", "review_scale": "thumbnail", "description": "The competing percept remains a complete recognizable figure at thumbnail scale."},
+        {"id": "vo_imaginal_ambiguous_reversal", "review_scale": "both", "description": "Figure-ground ownership can reverse without adding another outline."}
+      ],
+      "reject_substitutes": [
+        "two_separate_pictures",
+        "transparent_overlay",
+        "double_exposure",
+        "hidden_object_only",
+        "duplicate_outline",
+        "single_obvious_figure"
+      ]
+    },
+    {
+      "id": "impossible_object_global_connection",
+      "category": "globally_impossible_local_topology",
+      "activation": {
+        "exact_terms": [
+          "impossible object",
+          "Penrose object",
+          "impossible staircase",
+          "Penrose staircase",
+          "불가능 도형",
+          "불가능한 계단"
+        ],
+        "exclude_if_any_terms": [
+          "random stairs",
+          "floating architecture",
+          "tilted room",
+          "architectural collage",
+          "optical sculpture documentation"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A connected object or architectural path whose individual segments and nearby joins are plausible in perspective, yet whose complete depth, elevation, or closure relation is globally impossible from one fixed viewpoint. Random stairs, floating buildings, or generalized spatial distortion do not meet this topology.",
+        "paraphrase_examples": [
+          "각 계단참은 자연스럽지만 전체를 따라가면 계속 올라가 제자리로 돌아오는 한 계단 구조",
+          "a locally coherent beam turns through every visible joint and closes into a globally contradictory depth loop",
+          "one fixed camera reveals a channel whose complete connected path occupies incompatible elevations"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "locally_plausible_segments",
+            "complete_connected_path",
+            "global_topological_contradiction",
+            "single_fixed_viewpoint",
+            "material_light_joint_continuity"
+          ],
+          "groups": [
+            {"id": "locally_plausible_segments", "any_terms": ["each nearby stair beam channel or rail segment follows plausible perspective", "각 국소 계단 보 수로 난간이 자연스러운 원근을 따름"]},
+            {"id": "complete_connected_path", "any_terms": ["the entire path and every necessary join remain inside one frame", "전체 경로와 모든 필수 접합이 한 프레임에 보임"]},
+            {"id": "global_topological_contradiction", "any_terms": ["tracing the full connection produces incompatible depth elevation or closure", "전체 연결을 추적하면 깊이 높이 폐합이 모순됨"]},
+            {"id": "single_fixed_viewpoint", "any_terms": ["one locked camera position carries the complete illusion", "하나의 고정 시점이 전체 불가능 관계를 성립시킴"]},
+            {"id": "material_light_joint_continuity", "any_terms": ["material texture light and occlusion remain continuous across local joints", "국소 접합에서 재질 빛 가림이 연속됨"]}
+          ]
+        },
+        "contrast_examples": [
+          "random floating staircase fragments",
+          "a strongly tilted room",
+          "gravity-defying furniture",
+          "architectural photo collage",
+          "ordinary spiral stairs",
+          "a real separated forced-perspective sculpture"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "locally plausible segments",
+          "complete impossible connection",
+          "global elevation contradiction",
+          "fixed-view topology",
+          "continuous material joints",
+          "traceable closed path",
+          "local perspective global impossibility"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["globally impossible connected object"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use one locked viewpoint and include the entire connected path, every local joint, stable material and lighting cues, and the globally contradictory closure so viewers can trace the impossibility without a diagram.",
+      "required_evidence_fields": [
+        "local_segments_phrase",
+        "complete_path_phrase",
+        "global_contradiction_phrase",
+        "fixed_viewpoint_phrase",
+        "joint_continuity_phrase"
+      ],
+      "evidence_requirements": {
+        "local_segments_phrase": {"min_content_words": 9, "must_mention_any": ["each local stair beam or channel segment follows plausible nearby perspective"]},
+        "complete_path_phrase": {"min_content_words": 9, "must_mention_any": ["the entire connected route and every required join remain visible together"]},
+        "global_contradiction_phrase": {"min_content_words": 9, "must_mention_any": ["the complete connection produces an incompatible depth elevation or closure relation"]},
+        "fixed_viewpoint_phrase": {"min_content_words": 8, "must_mention_any": ["one fixed camera viewpoint carries the complete topological illusion"]},
+        "joint_continuity_phrase": {"min_content_words": 10, "must_mention_any": ["material texture illumination and occlusion remain coherent across every local joint"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_impossible_local_segments", "review_scale": "native", "description": "Every nearby segment and joint remains plausible in local perspective."},
+        {"id": "vo_imaginal_impossible_complete_path", "review_scale": "thumbnail", "description": "The complete connected path fits legibly inside one frame."},
+        {"id": "vo_imaginal_impossible_global_conflict", "review_scale": "both", "description": "Following the full path reveals one global depth elevation or closure contradiction."},
+        {"id": "vo_imaginal_impossible_fixed_view", "review_scale": "both", "description": "A single stable viewpoint carries the entire impossible relation."},
+        {"id": "vo_imaginal_impossible_joint_continuity", "review_scale": "native", "description": "Material lighting and occlusion stay coherent across all local joints."}
+      ],
+      "reject_substitutes": [
+        "random_stair_fragments",
+        "floating_architecture",
+        "tilted_room_only",
+        "gravity_defying_props",
+        "architectural_collage",
+        "incomplete_connection"
+      ]
+    },
+    {
+      "id": "liminal_transition_use_gap",
+      "category": "between_use_transition_place",
+      "activation": {
+        "exact_terms": [
+          "liminal space",
+          "liminal interior",
+          "between-use liminal space",
+          "리미널 스페이스",
+          "리미널 공간",
+          "리미널 실내"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary empty room",
+          "abandoned ruin",
+          "monster hallway",
+          "horror creature",
+          "generic backrooms"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A maintained familiar place suspended between expected passage and destination use: route or service cues remain, yet occupancy, active function, and temporal context are conspicuously missing or slightly displaced. Emptiness, darkness, decay, yellow corridors, or horror imagery alone do not establish liminality.",
+        "paraphrase_examples": [
+          "운영 조명과 대기 의자는 켜져 있지만 도착편과 승객이 없는 환승 대합실",
+          "a maintained pool passage still carries route and changing-area cues after every expected use has paused",
+          "repeating doors and ceiling bays lead toward an unresolved destination in a clean between-use concourse"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "transition_or_collective_use_function",
+            "familiar_maintained_service_cues",
+            "expected_occupancy_or_use_gap",
+            "temporal_residue_or_deviation",
+            "unresolved_route_or_threshold"
+          ],
+          "groups": [
+            {"id": "transition_or_collective_use_function", "any_terms": ["corridor concourse waiting room pool passage or service threshold", "통로 대합실 수영장 통행부 서비스 문턱의 전이 기능"]},
+            {"id": "familiar_maintained_service_cues", "any_terms": ["working lights clean surfaces furniture signs or route markers imply normal use", "작동 조명 깨끗한 표면 가구 안내 경로 표식이 정상 용도를 암시함"]},
+            {"id": "expected_occupancy_or_use_gap", "any_terms": ["the people destination activity or service expected from those cues is absent", "표식이 예상시키는 인구 목적 활동 서비스가 비어 있음"]},
+            {"id": "temporal_residue_or_deviation", "any_terms": ["small traces imply just-before just-after or suspended operation", "사용 직전 직후 또는 유예된 운영을 암시하는 작은 흔적"]},
+            {"id": "unresolved_route_or_threshold", "any_terms": ["depth cues continue toward a route or threshold whose endpoint stays unresolved", "깊이 단서가 도착 기능이 해소되지 않은 경로 또는 문턱으로 이어짐"]}
+          ]
+        },
+        "contrast_examples": [
+          "an ordinary empty bedroom",
+          "an abandoned collapsed ruin",
+          "a dark hallway with a monster",
+          "a yellow corridor without use cues",
+          "an infinite abstract room",
+          "a busy transit station"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "between-use transition space",
+          "maintained vacancy",
+          "familiar route cues",
+          "expected occupancy gap",
+          "suspended operating time",
+          "unresolved destination depth",
+          "uncanny structural deviation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["between-use liminal transition space"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use route depth to connect maintained service cues, the missing expected use, one temporal residue, and an unresolved destination within the same familiar transition place rather than relying on darkness or emptiness alone.",
+      "required_evidence_fields": [
+        "transition_function_phrase",
+        "maintained_cues_phrase",
+        "expected_use_gap_phrase",
+        "temporal_residue_phrase",
+        "unresolved_route_phrase"
+      ],
+      "evidence_requirements": {
+        "transition_function_phrase": {"min_content_words": 9, "must_mention_any": ["the corridor concourse or waiting area has a clear transition function"]},
+        "maintained_cues_phrase": {"min_content_words": 9, "must_mention_any": ["working lights clean surfaces furniture and route markers imply normal service"]},
+        "expected_use_gap_phrase": {"min_content_words": 10, "must_mention_any": ["the expected occupants destination activity and active service are conspicuously absent"]},
+        "temporal_residue_phrase": {"min_content_words": 9, "must_mention_any": ["small material traces imply operation just before or just after this moment"]},
+        "unresolved_route_phrase": {"min_content_words": 9, "must_mention_any": ["repeating depth cues continue toward an unresolved route or destination threshold"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_liminal_transition_function", "review_scale": "thumbnail", "description": "The place has a clear passage waiting or service-transition function."},
+        {"id": "vo_imaginal_liminal_maintained_cues", "review_scale": "native", "description": "Working maintained cues make the expected ordinary use concrete."},
+        {"id": "vo_imaginal_liminal_use_gap", "review_scale": "both", "description": "Expected occupancy activity or destination use is visibly missing."},
+        {"id": "vo_imaginal_liminal_temporal_residue", "review_scale": "native", "description": "Material traces suggest suspended just-before or just-after operation."},
+        {"id": "vo_imaginal_liminal_unresolved_route", "review_scale": "both", "description": "Route depth remains readable while its functional endpoint stays unresolved."}
+      ],
+      "reject_substitutes": [
+        "empty_room_only",
+        "abandoned_ruin",
+        "darkness_only",
+        "monster_or_horror_event",
+        "yellow_corridor_style",
+        "busy_active_service_space"
+      ]
+    },
+    {
+      "id": "magical_realism_matter_of_fact_anomaly",
+      "category": "ordinary_reality_naturalized_impossibility",
+      "activation": {
+        "exact_terms": [
+          "magical realism",
+          "magic realism",
+          "matter-of-fact magical realism",
+          "마술적 사실주의",
+          "마법적 사실주의",
+          "일상적 마술적 사실주의"
+        ],
+        "exclude_if_any_terms": [
+          "spell battle",
+          "magic academy",
+          "secret fantasy realm",
+          "horror reaction",
+          "dream sequence"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An otherwise concrete everyday reality contains one impossible occurrence that characters treat as an ordinary fact while continuing practical activity, and the occurrence shares the scene's material light, contact, occlusion, and consequence. It is a narrative relation, not a prescribed regional aesthetic, costume, palette, or spectacle.",
+        "paraphrase_examples": [
+          "세탁소 직원이 천장에서 내리는 작은 물고기를 피하지 않고 같은 다림질을 계속한다",
+          "commuters calmly queue while one impossible rain cloud waters only a ticket machine and leaves a real puddle",
+          "an ordinary baker adjusts a tray beside a loaf that slowly floats yet still casts one coherent workbench shadow"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "concrete_everyday_reality",
+            "single_impossible_occurrence",
+            "matter_of_fact_human_response",
+            "continued_practical_routine",
+            "shared_physical_consequence"
+          ],
+          "groups": [
+            {"id": "concrete_everyday_reality", "any_terms": ["specific ordinary home street workplace transport or service activity", "구체적인 평범한 집 거리 작업장 교통 서비스 활동"]},
+            {"id": "single_impossible_occurrence", "any_terms": ["one bounded physically impossible event occupies the ordinary setting", "하나의 국소적 물리 불가능 사건이 일상 공간에 존재함"]},
+            {"id": "matter_of_fact_human_response", "any_terms": ["people respond with restrained practical acceptance rather than theatrical awe", "인물이 과장된 경악 대신 절제된 실용적 수용을 보임"]},
+            {"id": "continued_practical_routine", "any_terms": ["the same everyday task continues through or around the anomaly", "같은 일상 과업이 이상 사건 중에도 계속됨"]},
+            {"id": "shared_physical_consequence", "any_terms": ["contact shadow occlusion displaced material or residue binds the anomaly to ordinary reality", "접촉 그림자 가림 이동 재료 잔류물이 사건을 일상 물리에 결합함"]}
+          ]
+        },
+        "contrast_examples": [
+          "a wizard casting a spell",
+          "spectators shocked by a portal",
+          "a secret magical kingdom",
+          "a dreamlike pastel montage",
+          "fantasy costume editorial",
+          "many unrelated surreal events"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "specific ordinary workplace",
+          "one impossible occurrence",
+          "restrained practical acceptance",
+          "routine continues through anomaly",
+          "shared contact and shadow",
+          "localized material consequence",
+          "naturalized supernatural event"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["matter-of-fact magical realism"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the specific ordinary task, one impossible occurrence, restrained human response, continued routine, and the occurrence's contact shadow or material consequence visible together under one realistic photographic environment.",
+      "required_evidence_fields": [
+        "ordinary_reality_phrase",
+        "single_anomaly_phrase",
+        "matter_of_fact_response_phrase",
+        "routine_continuity_phrase",
+        "shared_consequence_phrase"
+      ],
+      "evidence_requirements": {
+        "ordinary_reality_phrase": {"min_content_words": 9, "must_mention_any": ["a specific ordinary workplace and practical task establish everyday reality"]},
+        "single_anomaly_phrase": {"min_content_words": 9, "must_mention_any": ["one bounded physically impossible occurrence occupies that ordinary setting"]},
+        "matter_of_fact_response_phrase": {"min_content_words": 10, "must_mention_any": ["the nearby person responds with restrained practical acceptance and calm attention"]},
+        "routine_continuity_phrase": {"min_content_words": 9, "must_mention_any": ["the same practical routine continues visibly through the impossible occurrence"]},
+        "shared_consequence_phrase": {"min_content_words": 11, "must_mention_any": ["coherent contact shadow occlusion and material residue bind the anomaly to ordinary reality"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_magic_realism_ordinary_world", "review_scale": "thumbnail", "description": "A specific ordinary setting and practical task remain immediately legible."},
+        {"id": "vo_imaginal_magic_realism_single_anomaly", "review_scale": "both", "description": "Exactly one bounded impossible occurrence carries the scene's anomaly."},
+        {"id": "vo_imaginal_magic_realism_matter_of_fact", "review_scale": "native", "description": "Human response stays restrained practical and continuous with daily life."},
+        {"id": "vo_imaginal_magic_realism_routine_continuity", "review_scale": "both", "description": "The ordinary task visibly continues through or around the event."},
+        {"id": "vo_imaginal_magic_realism_shared_physics", "review_scale": "native", "description": "Contact shadow occlusion and material consequence join anomaly and reality."}
+      ],
+      "reject_substitutes": [
+        "spellcasting_spectacle",
+        "portal_awe_reaction",
+        "secret_fantasy_world",
+        "dream_sequence",
+        "fantasy_costume_only",
+        "multiple_unrelated_anomalies"
+      ]
+    },
+    {
+      "id": "mirror_reflection_action_mismatch",
+      "category": "aligned_reflection_behavior_breach",
+      "activation": {
+        "exact_terms": [
+          "independent reflection",
+          "delayed reflection",
+          "mismatched mirror reflection",
+          "mirror reflection action mismatch",
+          "독립된 거울상",
+          "지연된 거울상",
+          "거울 속 다른 행동"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary mirror selfie",
+          "twin portrait",
+          "double exposure",
+          "warped funhouse mirror",
+          "ghost outside mirror"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical subject and the corresponding geometrically aligned mirror image appear in the same frame with matching identity, scale, clothing, and room markers, while one action, gaze, or temporal phase differs. Ordinary reflection, twins, montage, optical warping, and double exposure do not establish independent reflection agency.",
+        "paraphrase_examples": [
+          "실물은 컵을 내려놓았지만 같은 옷과 방에 정렬된 거울상은 아직 컵을 들고 있다",
+          "the physical subject looks down while the matching aligned reflection independently meets the camera",
+          "one clear hand gesture differs across the mirror while every room edge and clothing marker still corresponds"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_subject_and_mirror_same_frame",
+            "identity_and_geometry_alignment",
+            "single_action_or_phase_mismatch",
+            "otherwise_normal_reflection",
+            "same_moment_comparison_anchor"
+          ],
+          "groups": [
+            {"id": "physical_subject_and_mirror_same_frame", "any_terms": ["the physical subject mirror edge and reflected subject appear together", "실물 인물 거울 경계 반사 인물이 한 프레임에 함께 보임"]},
+            {"id": "identity_and_geometry_alignment", "any_terms": ["face clothing scale room lines and position establish one corresponding subject", "얼굴 의복 크기 방 선 위치가 같은 대응 인물임을 확정함"]},
+            {"id": "single_action_or_phase_mismatch", "any_terms": ["one hand pose gaze task or action phase differs clearly", "하나의 손 자세 시선 과업 행동 단계가 분명히 다름"]},
+            {"id": "otherwise_normal_reflection", "any_terms": ["all unrelated reflection geometry illumination and occlusion remain coherent", "무관한 반사 기하 조명 가림은 정상적으로 일치함"]},
+            {"id": "same_moment_comparison_anchor", "any_terms": ["one shared prop contact or room event ties both sides to the same moment", "공유 소품 접촉 방 사건이 양쪽을 같은 순간에 결속함"]}
+          ]
+        },
+        "contrast_examples": [
+          "ordinary mirror selfie",
+          "two similar twins",
+          "a warped funhouse mirror",
+          "double-exposure portrait",
+          "a ghost visible beyond the mirror",
+          "misaligned collage panels"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "physical subject and reflection comparison",
+          "mirror-edge alignment markers",
+          "same identity and clothing",
+          "single independent gesture",
+          "delayed action phase",
+          "otherwise normal room reflection",
+          "shared moment anchor"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["aligned mirror reflection with one independent action"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Include the physical subject, full mirror boundary, corresponding reflected body, alignment markers, and one clearly different gesture or phase in the same frame while all unrelated reflection geometry remains coherent.",
+      "required_evidence_fields": [
+        "same_frame_phrase",
+        "alignment_phrase",
+        "action_mismatch_phrase",
+        "normal_reflection_phrase",
+        "same_moment_phrase"
+      ],
+      "evidence_requirements": {
+        "same_frame_phrase": {"min_content_words": 10, "must_mention_any": ["the physical subject mirror edge and corresponding reflected body appear together"]},
+        "alignment_phrase": {"min_content_words": 11, "must_mention_any": ["matching face clothing scale and room markers establish one geometrically aligned identity"]},
+        "action_mismatch_phrase": {"min_content_words": 9, "must_mention_any": ["one clear hand gesture gaze or action phase differs across the mirror"]},
+        "normal_reflection_phrase": {"min_content_words": 10, "must_mention_any": ["all unrelated room geometry illumination and occlusion remain normally reflected"]},
+        "same_moment_phrase": {"min_content_words": 10, "must_mention_any": ["one shared prop contact or room event ties both sides to the same moment"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_mirror_same_frame", "review_scale": "thumbnail", "description": "Physical subject mirror boundary and reflected subject appear together."},
+        {"id": "vo_imaginal_mirror_alignment", "review_scale": "both", "description": "Identity clothing scale and room markers establish correct reflection alignment."},
+        {"id": "vo_imaginal_mirror_action_mismatch", "review_scale": "both", "description": "One action gaze or phase difference remains unmistakably visible."},
+        {"id": "vo_imaginal_mirror_normal_remainder", "review_scale": "native", "description": "All unrelated reflection geometry light and occlusion stay coherent."},
+        {"id": "vo_imaginal_mirror_same_moment", "review_scale": "native", "description": "A shared event or contact anchors both sides to one moment."}
+      ],
+      "reject_substitutes": [
+        "ordinary_mirror_selfie",
+        "twin_or_second_person",
+        "double_exposure",
+        "funhouse_mirror_warp",
+        "misaligned_collage",
+        "ghost_outside_reflection"
+      ]
+    },
+    {
+      "id": "face_pareidolia_embedded_nonface_pattern",
+      "category": "face_like_pattern_in_nonface_substrate",
+      "activation": {
+        "exact_terms": [
+          "face pareidolia",
+          "facial pareidolia",
+          "pareidolic face pattern",
+          "얼굴 파레이돌리아",
+          "얼굴 착시 파레이돌리아",
+          "비얼굴 패턴의 얼굴 착시"
+        ],
+        "exclude_if_any_terms": [
+          "painted face",
+          "carved face",
+          "face mask",
+          "actual human face",
+          "emoji sticker"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Ordinary components of a clearly nonface substrate such as wood, rock, cloud, stains, architecture, or an appliance align into a face-like configuration while their original material identity remains fully legible. An actual face, mask, sculpture, painting, sticker, or inserted eyes does not count as face pareidolia.",
+        "paraphrase_examples": [
+          "나무의 두 옹이와 갈라진 틈이 눈과 입처럼 보이지만 목재 결은 끝까지 이어진다",
+          "two facade windows and a vent form a face-like arrangement while every element remains functional architecture",
+          "cloud cavities create a fleeting face reading without adding eyes paint or sculpted features"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "explicit_nonface_substrate",
+            "face_like_component_arrangement",
+            "substrate_material_continuity",
+            "simultaneous_face_and_source_legibility",
+            "ordinary_unadded_components"
+          ],
+          "groups": [
+            {"id": "explicit_nonface_substrate", "any_terms": ["wood rock cloud stain facade appliance or landscape is clearly the source", "목재 암석 구름 얼룩 건물 가전 풍경이 원천으로 분명함"]},
+            {"id": "face_like_component_arrangement", "any_terms": ["two eye-like marks and a mouth-like interval form a face relation", "두 눈 같은 흔적과 입 같은 간격이 얼굴 관계를 만듦"]},
+            {"id": "substrate_material_continuity", "any_terms": ["grain texture construction or atmospheric form continues through every apparent feature", "결 질감 구조 대기 형태가 모든 얼굴 같은 요소를 관통해 이어짐"]},
+            {"id": "simultaneous_face_and_source_legibility", "any_terms": ["viewers can read both the face-like arrangement and the original nonface source", "얼굴 같은 배열과 원래 비얼굴 원천이 동시에 읽힘"]},
+            {"id": "ordinary_unadded_components", "any_terms": ["ordinary substrate parts carry the reading through viewpoint and spacing", "보통의 바탕 구성요소가 시점과 간격으로 얼굴 읽기를 만듦"]}
+          ]
+        },
+        "contrast_examples": [
+          "a real human face",
+          "a carved stone head",
+          "a painted face mural",
+          "a theatrical mask",
+          "emoji eyes added to an appliance",
+          "a face pasted into a cloud"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "clear nonface substrate",
+          "eye-like ordinary components",
+          "mouth-like interval",
+          "continuous material texture",
+          "simultaneous face and source reading",
+          "viewpoint-dependent arrangement",
+          "unmodified substrate parts"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["face pareidolia embedded in a nonface material"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Choose a viewpoint where ordinary substrate components form one compelling face relation while the wider wood, stone, cloud, facade, stain, or appliance remains visible enough to preserve its nonface identity.",
+      "required_evidence_fields": [
+        "nonface_source_phrase",
+        "face_arrangement_phrase",
+        "material_continuity_phrase",
+        "dual_legibility_phrase",
+        "ordinary_components_phrase"
+      ],
+      "evidence_requirements": {
+        "nonface_source_phrase": {"min_content_words": 9, "must_mention_any": ["a clearly nonface wood rock cloud facade or appliance provides the source"]},
+        "face_arrangement_phrase": {"min_content_words": 10, "must_mention_any": ["two eye-like marks and one mouth-like interval create the face relation"]},
+        "material_continuity_phrase": {"min_content_words": 10, "must_mention_any": ["original grain texture structure or atmosphere continues through every apparent feature"]},
+        "dual_legibility_phrase": {"min_content_words": 10, "must_mention_any": ["the face-like arrangement and original nonface source remain simultaneously readable"]},
+        "ordinary_components_phrase": {"min_content_words": 10, "must_mention_any": ["ordinary substrate parts create the reading through their viewpoint and spacing"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_pareidolia_nonface_source", "review_scale": "thumbnail", "description": "The original nonface material or object remains clearly identifiable."},
+        {"id": "vo_imaginal_pareidolia_face_relation", "review_scale": "both", "description": "Ordinary components form a compelling eye and mouth relationship."},
+        {"id": "vo_imaginal_pareidolia_material_continuity", "review_scale": "native", "description": "Substrate texture and structure continue through all apparent facial features."},
+        {"id": "vo_imaginal_pareidolia_dual_read", "review_scale": "both", "description": "Face-like reading and source-object reading remain available together."},
+        {"id": "vo_imaginal_pareidolia_unadded_components", "review_scale": "native", "description": "The reading is carried by ordinary source components and viewpoint."}
+      ],
+      "reject_substitutes": [
+        "actual_human_face",
+        "mask_or_sculpture",
+        "painted_face",
+        "emoji_or_sticker_features",
+        "inserted_eyes",
+        "source_identity_lost"
+      ]
+    },
+    {
+      "id": "continuous_metamorphosis_source_target_bridge",
+      "category": "single_subject_contiguous_transformation",
+      "activation": {
+        "exact_terms": [
+          "visible metamorphosis",
+          "continuous metamorphosis",
+          "mid-metamorphosis",
+          "contiguous transformation bridge",
+          "연속 변신",
+          "변신 중",
+          "연속 변형"
+        ],
+        "exclude_if_any_terms": [
+          "business transformation",
+          "digital transformation",
+          "data transformation",
+          "costume change",
+          "before and after panels"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One identifiable subject simultaneously shows a readable source form, a readable target form, and an unbroken anatomical, material, or topological transition zone connecting them, with residue or directional evidence indicating one change path. Separate before-after figures, costume changes, overlays, attached decorations, or a completed target alone do not prove metamorphosis.",
+        "paraphrase_examples": [
+          "한 팔의 인간 피부와 손가락이 비늘과 날개 뼈로 점진 연결되어 같은 몸의 도착 형태로 이어진다",
+          "one wooden figure keeps its carved torso while a continuous grain-to-feather bridge becomes a living bird wing",
+          "source fibers, intermediate membrane, and target scales occupy connected regions of one moving subject"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "single_subject_identity_continuity",
+            "readable_source_state",
+            "readable_target_state",
+            "contiguous_intermediate_bridge",
+            "directional_residue_or_process_trace"
+          ],
+          "groups": [
+            {"id": "single_subject_identity_continuity", "any_terms": ["one body mass pose and identity carry all transformation regions", "한 몸의 질량 자세 정체성이 모든 변신 영역을 연결함"]},
+            {"id": "readable_source_state", "any_terms": ["a substantial region retains recognizable source anatomy material or structure", "충분한 영역이 출발 해부 재질 구조를 인식 가능하게 유지함"]},
+            {"id": "readable_target_state", "any_terms": ["a substantial region establishes recognizable emerging target anatomy material or structure", "충분한 영역이 도착 해부 재질 구조의 출현을 분명히 함"]},
+            {"id": "contiguous_intermediate_bridge", "any_terms": ["joints surface and topology change progressively through one unbroken intermediate zone", "관절 표면 위상이 하나의 끊김 없는 중간 영역에서 점진 변화함"]},
+            {"id": "directional_residue_or_process_trace", "any_terms": ["source residue tension contact or motion marks establish the direction of change", "출발 잔류물 장력 접촉 움직임 흔적이 변화 방향을 확정함"]}
+          ]
+        },
+        "contrast_examples": [
+          "two before-and-after people",
+          "a costume change",
+          "animal and person double exposure",
+          "decorative wings attached to clothing",
+          "one completed creature form",
+          "blood or wounds without transformation geometry"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "single-subject identity continuity",
+          "readable source form",
+          "readable target form",
+          "contiguous intermediate topology",
+          "material gradient",
+          "directional source residue",
+          "mid-transformation body framing"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["single-subject continuous visible metamorphosis"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame one subject so a substantial source region, the complete intermediate bridge, a substantial target region, and one directional residue or process trace remain connected and readable in the same body.",
+      "required_evidence_fields": [
+        "single_subject_phrase",
+        "source_state_phrase",
+        "target_state_phrase",
+        "transition_bridge_phrase",
+        "direction_trace_phrase"
+      ],
+      "evidence_requirements": {
+        "single_subject_phrase": {"min_content_words": 10, "must_mention_any": ["one continuous body mass and identity carries every transformation region"]},
+        "source_state_phrase": {"min_content_words": 10, "must_mention_any": ["a substantial connected region retains the recognizable source anatomy or material"]},
+        "target_state_phrase": {"min_content_words": 10, "must_mention_any": ["another substantial connected region establishes the recognizable emerging target form"]},
+        "transition_bridge_phrase": {"min_content_words": 11, "must_mention_any": ["joints surface and topology change progressively through one unbroken intermediate bridge"]},
+        "direction_trace_phrase": {"min_content_words": 10, "must_mention_any": ["source residue contact tension or motion traces establish one direction of change"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_metamorphosis_single_subject", "review_scale": "thumbnail", "description": "One continuous subject carries every visible transformation region."},
+        {"id": "vo_imaginal_metamorphosis_source_state", "review_scale": "both", "description": "A substantial recognizable source form remains visibly connected."},
+        {"id": "vo_imaginal_metamorphosis_target_state", "review_scale": "both", "description": "A substantial recognizable target form visibly emerges on the same subject."},
+        {"id": "vo_imaginal_metamorphosis_bridge", "review_scale": "native", "description": "An unbroken anatomical material or topology gradient joins both forms."},
+        {"id": "vo_imaginal_metamorphosis_direction_trace", "review_scale": "native", "description": "Residue contact tension or motion makes the change direction legible."}
+      ],
+      "reject_substitutes": [
+        "before_after_pair",
+        "costume_change",
+        "double_exposure_overlay",
+        "attached_decoration",
+        "completed_target_only",
+        "wounds_without_transition"
+      ]
+    },
+    {
+      "id": "phantasmagoria_projected_spectral_sequence",
+      "category": "apparatus_bound_spectral_projection_show",
+      "activation": {
+        "exact_terms": [
+          "phantasmagoria projection",
+          "projected phantasmagoria",
+          "spectral magic lantern show",
+          "phantasmagoria lantern show",
+          "판타스마고리아 투사",
+          "환등 환영극",
+          "유령 환등 공연"
+        ],
+        "exclude_if_any_terms": [
+          "actual ghost",
+          "single hologram",
+          "fog silhouette",
+          "empty projector stage",
+          "horror collage"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A staged spectral sequence produced by visible lantern or projector apparatus, a traceable light path, and a wall, smoke, or translucent receiving surface, with image replacement or scale change tied to operator or apparatus movement. A real ghost, hologram, fog silhouette, projector alone, or generic horror collage is not phantasmagoria in this historical projection sense.",
+        "paraphrase_examples": [
+          "이동식 환등기의 광추가 연무 스크린에 닿고 운영자가 거리를 바꾸자 해골상이 커진다",
+          "two lanterns switch a succession of spectral figures across one translucent screen while the apparatus remains visible",
+          "projected apparitions change scale and position along a bounded light cone inside a dark performance chamber"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "visible_projection_apparatus",
+            "traceable_bounded_light_path",
+            "receiving_wall_haze_or_screen",
+            "spectral_sequence_or_scale_change",
+            "projection_scene_spatial_distinction"
+          ],
+          "groups": [
+            {"id": "visible_projection_apparatus", "any_terms": ["lantern lens movable projector operator or switching mechanism is visible", "환등기 렌즈 이동식 투사기 운영자 전환 장치가 보임"]},
+            {"id": "traceable_bounded_light_path", "any_terms": ["a bounded cone connects the apparatus to the receiving surface", "경계가 분명한 광추가 장치와 투사면을 연결함"]},
+            {"id": "receiving_wall_haze_or_screen", "any_terms": ["spectral edges and brightness visibly land on wall smoke or translucent screen", "유령상 경계와 밝기가 벽 연기 반투명 스크린에 맺힘"]},
+            {"id": "spectral_sequence_or_scale_change", "any_terms": ["successive images replacement or projector-distance scale change is legible", "연속 영상 교체 또는 투사기 거리 변화에 따른 크기 변화가 읽힘"]},
+            {"id": "projection_scene_spatial_distinction", "any_terms": ["operator apparatus audience side and projected apparition occupy distinct coherent depth layers", "운영자 장치 관객 쪽 투사 환영이 서로 다른 일관된 깊이 층에 있음"]}
+          ]
+        },
+        "contrast_examples": [
+          "an actual ghost in a room",
+          "one modern hologram",
+          "a silhouette inside fog",
+          "an idle projector on stage",
+          "a horror-image collage",
+          "a translucent actor without projection source"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "visible lantern apparatus",
+          "bounded projection light cone",
+          "smoke or translucent screen",
+          "successive spectral images",
+          "projector-distance scale shift",
+          "operator-driven image switching",
+          "separated performance depth"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["apparatus-bound phantasmagoria projection sequence"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Separate the operator and visible apparatus, bounded light cone, receiving haze or screen, and multiple spectral phases in depth so scale or image change is causally attributable to projection machinery.",
+      "required_evidence_fields": [
+        "apparatus_phrase",
+        "light_path_phrase",
+        "receiving_surface_phrase",
+        "spectral_sequence_phrase",
+        "spatial_distinction_phrase"
+      ],
+      "evidence_requirements": {
+        "apparatus_phrase": {"min_content_words": 10, "must_mention_any": ["a visible lantern lens movable projector and operator establish the projection apparatus"]},
+        "light_path_phrase": {"min_content_words": 9, "must_mention_any": ["one bounded light cone connects the apparatus to the spectral image"]},
+        "receiving_surface_phrase": {"min_content_words": 10, "must_mention_any": ["projected spectral edges visibly land on smoke wall or translucent screen"]},
+        "spectral_sequence_phrase": {"min_content_words": 11, "must_mention_any": ["successive spectral images change scale or replace one another through apparatus movement"]},
+        "spatial_distinction_phrase": {"min_content_words": 11, "must_mention_any": ["operator apparatus audience side and projected apparition occupy distinct coherent depth layers"]}
+      },
+      "render_gates": [
+        {"id": "vo_imaginal_phantasmagoria_apparatus", "review_scale": "thumbnail", "description": "A lantern or projection apparatus and operator remain clearly visible."},
+        {"id": "vo_imaginal_phantasmagoria_light_path", "review_scale": "both", "description": "A bounded light cone physically connects apparatus and spectral image."},
+        {"id": "vo_imaginal_phantasmagoria_surface", "review_scale": "native", "description": "Spectral edges visibly register on haze wall or translucent screen."},
+        {"id": "vo_imaginal_phantasmagoria_sequence", "review_scale": "both", "description": "Image succession replacement or apparatus-driven scale change remains legible."},
+        {"id": "vo_imaginal_phantasmagoria_depth", "review_scale": "native", "description": "Operator apparatus audience and projected apparition occupy coherent separate depths."}
+      ],
+      "reject_substitutes": [
+        "actual_ghost",
+        "single_hologram",
+        "fog_silhouette",
+        "idle_projector",
+        "horror_collage",
+        "translucent_actor_only"
+      ]
+    },
+    {
+      "id": "earth_diver_first_land_creation",
+      "category": "comparative_creation_earth_diver_causality",
+      "activation": {
+        "exact_terms": [
+          "earth-diver creation myth",
+          "earth diver first land creation",
+          "대지 잠수 창세 신화"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A landless primordial water field contains one diver who retrieves a small amount of earth, returns it to the surface, and visibly initiates the first land from that same material. Swimming wildlife, ordinary mud, or an already completed island does not establish the creation chain.",
+        "paraphrase_examples": [
+          "원초의 물속으로 내려간 한 존재가 흙 한 줌을 회수해 수면으로 돌아오고 그 흙에서 최초의 땅이 퍼져 나간다",
+          "one diving agent brings sediment from beneath a shoreless ocean and the same clod begins expanding into land"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["primordial_water", "diver_agent", "retrieved_earth", "surface_return", "first_land_consequence"],
+          "groups": [
+            {"id": "primordial_water", "any_terms": ["shoreless primordial water fills the scene before land exists"]},
+            {"id": "diver_agent", "any_terms": ["one coherent diver travels below and back toward the surface"]},
+            {"id": "retrieved_earth", "any_terms": ["a small distinct clod of retrieved sediment remains with the diver"]},
+            {"id": "surface_return", "any_terms": ["the diver and recovered earth meet the water surface in one readable return path"]},
+            {"id": "first_land_consequence", "any_terms": ["new land visibly spreads from that same recovered sediment rather than preexisting nearby"]}
+          ]
+        },
+        "contrast_examples": [
+          "an animal swimming in an ordinary lake",
+          "a diver holding an unrelated treasure",
+          "mud beside an established coastline",
+          "a finished island without a retrieval sequence"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["shoreless primordial water", "single diver agent", "retrieved sediment clod", "surface return path", "same-material first-land expansion"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["earth-diver first-land creation chain"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the shoreless water, diver, recovered clod, surface return path, and land expanding from that exact clod legible in one uncropped frame.",
+      "required_evidence_fields": ["water_phrase", "diver_phrase", "earth_phrase", "return_phrase", "land_phrase"],
+      "evidence_requirements": {
+        "water_phrase": {"min_content_words": 7, "must_mention_any": ["shoreless primordial water fills the scene before land exists"]},
+        "diver_phrase": {"min_content_words": 8, "must_mention_any": ["one coherent diver travels below and back toward the surface"]},
+        "earth_phrase": {"min_content_words": 8, "must_mention_any": ["a small distinct clod of retrieved sediment remains with the diver"]},
+        "return_phrase": {"min_content_words": 9, "must_mention_any": ["the diver and recovered earth meet the water surface in one readable return path"]},
+        "land_phrase": {"min_content_words": 9, "must_mention_any": ["new land visibly spreads from that same recovered sediment rather than preexisting nearby"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_earth_diver_water", "review_scale": "thumbnail", "description": "The primordial water reads as landless before the creation event."},
+        {"id": "vo_myth_earth_diver_agent", "review_scale": "both", "description": "One diver follows a coherent submerged and returning path."},
+        {"id": "vo_myth_earth_diver_clod", "review_scale": "native", "description": "A distinct recovered sediment clod remains visibly attached to the return."},
+        {"id": "vo_myth_earth_diver_surface", "review_scale": "both", "description": "The diver and clod visibly reach the same water surface."},
+        {"id": "vo_myth_earth_diver_land", "review_scale": "both", "description": "First land visibly originates from that recovered clod."}
+      ],
+      "reject_substitutes": ["ordinary_swimming_animal", "unrelated_diver_treasure", "preexisting_coastline", "completed_island_only", "mud_without_retrieval_chain"]
+    },
+    {
+      "id": "cosmic_egg_world_emergence",
+      "category": "comparative_creation_cosmic_egg_transition",
+      "activation": {
+        "exact_terms": [
+          "cosmic egg creation myth",
+          "cosmic egg world emergence",
+          "우주 알 창세 신화"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One bounded primordial egg is shown before and during a causal rupture in which its interior, shell, or contained matter becomes an ordered world. A decorative egg, ordinary hatching animal, or unrelated planet behind a cracked shell does not demonstrate cosmic creation.",
+        "paraphrase_examples": [
+          "원초의 알 하나가 갈라지는 경계에서 내부 물질과 껍질이 하늘과 땅의 질서로 이어진다",
+          "a single cosmic egg ruptures and its own shell and interior visibly organize into world layers"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["primordial_egg", "bounded_interior", "causal_rupture", "material_continuity", "ordered_world"],
+          "groups": [
+            {"id": "primordial_egg", "any_terms": ["one dominant intact-to-opening egg anchors the primordial state"]},
+            {"id": "bounded_interior", "any_terms": ["the egg encloses visibly distinct luminous or material world potential"]},
+            {"id": "causal_rupture", "any_terms": ["one readable rupture line and outward opening connect before and after states"]},
+            {"id": "material_continuity", "any_terms": ["shell and interior matter continue directly into emerging cosmic structures"]},
+            {"id": "ordered_world", "any_terms": ["newly separated sky earth or world layers emerge from the egg rather than as background decoration"]}
+          ]
+        },
+        "contrast_examples": [
+          "an ornate closed egg",
+          "a bird hatching normally",
+          "a planet placed behind a broken eggshell",
+          "generic explosion without an egg-to-world transition"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["single primordial egg", "bounded world potential", "causal shell rupture", "egg-to-cosmos material continuity", "newly ordered world layers"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["cosmic egg visibly becoming the ordered world"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame one egg, its intact boundary, active rupture, continuous shell-to-world matter, and emerging ordered layers together without substituting a separate planet.",
+      "required_evidence_fields": ["egg_phrase", "interior_phrase", "rupture_phrase", "continuity_phrase", "world_phrase"],
+      "evidence_requirements": {
+        "egg_phrase": {"min_content_words": 8, "must_mention_any": ["one dominant intact-to-opening egg anchors the primordial state"]},
+        "interior_phrase": {"min_content_words": 8, "must_mention_any": ["the egg encloses visibly distinct luminous or material world potential"]},
+        "rupture_phrase": {"min_content_words": 9, "must_mention_any": ["one readable rupture line and outward opening connect before and after states"]},
+        "continuity_phrase": {"min_content_words": 8, "must_mention_any": ["shell and interior matter continue directly into emerging cosmic structures"]},
+        "world_phrase": {"min_content_words": 10, "must_mention_any": ["newly separated sky earth or world layers emerge from the egg rather than as background decoration"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_cosmic_egg_anchor", "review_scale": "thumbnail", "description": "One primordial egg clearly anchors the creation event."},
+        {"id": "vo_myth_cosmic_egg_interior", "review_scale": "native", "description": "Bounded interior matter is visible inside the egg."},
+        {"id": "vo_myth_cosmic_egg_rupture", "review_scale": "both", "description": "A coherent rupture connects the closed and opening states."},
+        {"id": "vo_myth_cosmic_egg_continuity", "review_scale": "native", "description": "Shell and interior matter continue into emerging cosmic structures."},
+        {"id": "vo_myth_cosmic_egg_world", "review_scale": "both", "description": "Ordered world layers visibly originate from the egg itself."}
+      ],
+      "reject_substitutes": ["decorative_closed_egg", "ordinary_animal_hatching", "separate_planet_and_shell", "generic_cosmic_explosion", "world_without_material_continuity"]
+    },
+    {
+      "id": "world_parent_separation_creation",
+      "category": "comparative_creation_world_parent_separation",
+      "activation": {
+        "exact_terms": [
+          "world-parent separation myth",
+          "sky earth parent separation creation",
+          "하늘 땅 부모 분리 창세"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A compressed sky-parent and earth-parent begin in contact, an active separating force opens a growing vertical interval between them, and light or habitable world space appears as the consequence. Two unrelated giants or an already open landscape does not show world-parent separation.",
+        "paraphrase_examples": [
+          "맞닿아 있던 하늘 부모와 땅 부모 사이를 한 분리자가 밀어 벌리고 그 틈에서 빛과 세계 공간이 생긴다",
+          "an active separator forces the contacting sky and earth parents apart until first light occupies the new interval"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["contacting_parents", "compressed_world", "separating_force", "growing_interval", "light_world_consequence"],
+          "groups": [
+            {"id": "contacting_parents", "any_terms": ["sky-parent and earth-parent begin as two distinct but contacting bodies or planes"]},
+            {"id": "compressed_world", "any_terms": ["the initial state visibly lacks open space between upper and lower parents"]},
+            {"id": "separating_force", "any_terms": ["one readable agent or force actively pushes the upper and lower parents apart"]},
+            {"id": "growing_interval", "any_terms": ["a continuous vertical gap opens between the same two formerly contacting parents"]},
+            {"id": "light_world_consequence", "any_terms": ["first light and habitable world space visibly occupy the newly opened interval"]}
+          ]
+        },
+        "contrast_examples": [
+          "two giants standing far apart",
+          "a normal horizon beneath an open sky",
+          "an embrace without active separation",
+          "generic light rays without parent bodies"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["contacting sky and earth parents", "compressed primordial interval", "active separating force", "same-pair vertical gap", "first-light world consequence"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["world parents visibly forced apart into first light"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use one vertical frame that preserves both contacting-origin cues and active separation, with the same sky and earth parents bounding a new illuminated world interval.",
+      "required_evidence_fields": ["parents_phrase", "compression_phrase", "force_phrase", "interval_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "parents_phrase": {"min_content_words": 9, "must_mention_any": ["sky-parent and earth-parent begin as two distinct but contacting bodies or planes"]},
+        "compression_phrase": {"min_content_words": 9, "must_mention_any": ["the initial state visibly lacks open space between upper and lower parents"]},
+        "force_phrase": {"min_content_words": 10, "must_mention_any": ["one readable agent or force actively pushes the upper and lower parents apart"]},
+        "interval_phrase": {"min_content_words": 10, "must_mention_any": ["a continuous vertical gap opens between the same two formerly contacting parents"]},
+        "consequence_phrase": {"min_content_words": 10, "must_mention_any": ["first light and habitable world space visibly occupy the newly opened interval"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_world_parent_contact", "review_scale": "both", "description": "The sky and earth parents retain evidence of prior contact."},
+        {"id": "vo_myth_world_parent_compression", "review_scale": "thumbnail", "description": "The initial world state reads as vertically compressed."},
+        {"id": "vo_myth_world_parent_force", "review_scale": "both", "description": "An active force visibly separates the upper and lower parents."},
+        {"id": "vo_myth_world_parent_gap", "review_scale": "native", "description": "One growing interval remains bounded by the same parents."},
+        {"id": "vo_myth_world_parent_light", "review_scale": "both", "description": "Light and world space arise inside the opened gap."}
+      ],
+      "reject_substitutes": ["unrelated_separated_giants", "ordinary_open_horizon", "embrace_without_separation", "light_rays_without_parents", "gap_without_origin_contact"]
+    },
+    {
+      "id": "axis_mundi_three_realm_connection",
+      "category": "comparative_cosmology_axis_mundi_relation",
+      "activation": {
+        "exact_terms": [
+          "mythic axis mundi",
+          "axis mundi three realms",
+          "세계축 삼계 연결"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One centered vertical axis physically and compositionally connects distinct lower, middle, and upper realms through readable boundary crossings. A giant tree, tower, or mountain that merely occupies the background without realm-specific transitions is not sufficient.",
+        "paraphrase_examples": [
+          "하나의 중심축이 지하·지상·천상 세 영역을 관통하며 각 경계에서 물질과 방향이 바뀐다",
+          "a single centered world axis crosses lower middle and upper realms with traceable passage through both boundaries"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["single_axis", "three_realms", "lower_crossing", "upper_crossing", "continuous_connection"],
+          "groups": [
+            {"id": "single_axis", "any_terms": ["one dominant centered vertical structure serves as the world axis"]},
+            {"id": "three_realms", "any_terms": ["lower middle and upper realms remain visually distinct around the same axis"]},
+            {"id": "lower_crossing", "any_terms": ["the axis visibly penetrates the boundary between lower and middle realms"]},
+            {"id": "upper_crossing", "any_terms": ["the axis visibly penetrates the boundary between middle and upper realms"]},
+            {"id": "continuous_connection", "any_terms": ["one uninterrupted route or energy flow connects all three realms along the axis"]}
+          ]
+        },
+        "contrast_examples": [
+          "a giant decorative tree",
+          "a tall tower in one landscape",
+          "three disconnected scenic panels",
+          "a mountain without boundary crossings"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["single centered world axis", "distinct lower middle upper realms", "lower boundary crossing", "upper boundary crossing", "continuous three-realm route"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["single axis mundi visibly connecting three realms"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the full height of one centered axis, three materially distinct realms, both boundary crossings, and one continuous route through all levels without cropping either endpoint.",
+      "required_evidence_fields": ["axis_phrase", "realms_phrase", "lower_phrase", "upper_phrase", "connection_phrase"],
+      "evidence_requirements": {
+        "axis_phrase": {"min_content_words": 8, "must_mention_any": ["one dominant centered vertical structure serves as the world axis"]},
+        "realms_phrase": {"min_content_words": 10, "must_mention_any": ["lower middle and upper realms remain visually distinct around the same axis"]},
+        "lower_phrase": {"min_content_words": 9, "must_mention_any": ["the axis visibly penetrates the boundary between lower and middle realms"]},
+        "upper_phrase": {"min_content_words": 9, "must_mention_any": ["the axis visibly penetrates the boundary between middle and upper realms"]},
+        "connection_phrase": {"min_content_words": 11, "must_mention_any": ["one uninterrupted route or energy flow connects all three realms along the axis"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_axis_single", "review_scale": "thumbnail", "description": "One centered structure dominates as the sole world axis."},
+        {"id": "vo_myth_axis_realms", "review_scale": "both", "description": "Lower middle and upper realms remain visually distinct."},
+        {"id": "vo_myth_axis_lower_crossing", "review_scale": "native", "description": "The axis visibly crosses the lower realm boundary."},
+        {"id": "vo_myth_axis_upper_crossing", "review_scale": "native", "description": "The axis visibly crosses the upper realm boundary."},
+        {"id": "vo_myth_axis_continuity", "review_scale": "both", "description": "A continuous connection remains readable through all three realms."}
+      ],
+      "reject_substitutes": ["decorative_giant_tree", "single_realm_tower", "disconnected_realm_panels", "mountain_without_crossings", "multiple_competing_axes"]
+    },
+    {
+      "id": "moirai_fate_thread_life_allocation",
+      "category": "greek_myth_moirai_life_thread_roles",
+      "activation": {
+        "exact_terms": [
+          "Moirai life thread",
+          "Moirai spin measure cut",
+          "모이라이 운명의 실"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Three distinct Moirai perform complementary actions on one continuous mortal life thread: Clotho spins its origin, Lachesis measures its allotted length, and Atropos cuts its endpoint. Three women with yarn or a severed thread without role continuity does not express the allocation of a life.",
+        "paraphrase_examples": [
+          "클로토가 뽑고 라케시스가 재며 아트로포스가 자르는 하나의 생명실이 세 역할을 연속적으로 연결한다",
+          "three fate figures occupy distinct spin measure and cut stations along one uninterrupted human life thread"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["three_fates", "spinning_origin", "measured_length", "cut_endpoint", "single_life_thread"],
+          "groups": [
+            {"id": "three_fates", "any_terms": ["three distinct fate figures occupy separate readable work roles"]},
+            {"id": "spinning_origin", "any_terms": ["the first figure visibly spins or draws the beginning of the thread"]},
+            {"id": "measured_length", "any_terms": ["the second figure visibly measures an allotted section of that same thread"]},
+            {"id": "cut_endpoint", "any_terms": ["the third figure visibly cuts the endpoint of that same thread"]},
+            {"id": "single_life_thread", "any_terms": ["one continuous mortal life thread physically connects the spin measure and cut roles"]}
+          ]
+        },
+        "contrast_examples": [
+          "three women holding unrelated yarn",
+          "one seamstress with scissors",
+          "a broken thread with no measurement role",
+          "generic red string of destiny"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["three distinct Moirai roles", "Clotho spinning origin", "Lachesis measured allotment", "Atropos cut endpoint", "one continuous mortal life thread"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["Moirai visibly spinning measuring and cutting one life thread"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Arrange three distinct work stations along one unbroken thread so spinning, measured allotment, and cutting are simultaneously legible from origin to endpoint.",
+      "required_evidence_fields": ["figures_phrase", "spin_phrase", "measure_phrase", "cut_phrase", "thread_phrase"],
+      "evidence_requirements": {
+        "figures_phrase": {"min_content_words": 8, "must_mention_any": ["three distinct fate figures occupy separate readable work roles"]},
+        "spin_phrase": {"min_content_words": 10, "must_mention_any": ["the first figure visibly spins or draws the beginning of the thread"]},
+        "measure_phrase": {"min_content_words": 10, "must_mention_any": ["the second figure visibly measures an allotted section of that same thread"]},
+        "cut_phrase": {"min_content_words": 10, "must_mention_any": ["the third figure visibly cuts the endpoint of that same thread"]},
+        "thread_phrase": {"min_content_words": 11, "must_mention_any": ["one continuous mortal life thread physically connects the spin measure and cut roles"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_moirai_three_roles", "review_scale": "thumbnail", "description": "Three fate figures remain distinct as separate workers."},
+        {"id": "vo_myth_moirai_spin", "review_scale": "native", "description": "The first role visibly forms the thread origin."},
+        {"id": "vo_myth_moirai_measure", "review_scale": "both", "description": "The middle role visibly measures an allotted length."},
+        {"id": "vo_myth_moirai_cut", "review_scale": "both", "description": "The final role visibly cuts the thread endpoint."},
+        {"id": "vo_myth_moirai_continuity", "review_scale": "native", "description": "One life thread continuously links all three actions."}
+      ],
+      "reject_substitutes": ["unrelated_yarn_holders", "single_seamstress", "thread_without_measurement", "generic_red_string", "three_roles_on_separate_threads"]
+    },
+    {
+      "id": "mythic_apotheosis_mortal_divine_transition",
+      "category": "mythic_apotheosis_identity_continuity",
+      "activation": {
+        "exact_terms": [
+          "mythic apotheosis of a mortal",
+          "mortal to deity apotheosis scene",
+          "필멸자의 신격화 장면"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same mortal remains identifiable across a staged transition into divine status through a retained mortal token, explicit reception or investiture by a divine order, and newly granted regalia or elevated placement. Mere levitation, glow, worship, or a deity replacing the mortal does not show apotheosis.",
+        "paraphrase_examples": [
+          "필멸자 시절의 표식을 지닌 같은 인물이 신적 존재들의 영접과 수여를 거쳐 새로운 신적 표지와 자리로 올라간다",
+          "one continuous mortal identity crosses a threshold where an established divine assembly receives and invests that person"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["same_mortal", "mortal_token", "threshold_transition", "divine_reception", "granted_status"],
+          "groups": [
+            {"id": "same_mortal", "any_terms": ["one continuous person remains identifiable before and during divine elevation"]},
+            {"id": "mortal_token", "any_terms": ["a retained mortal garment tool wound or worldly token anchors the former status"]},
+            {"id": "threshold_transition", "any_terms": ["the person visibly crosses from mortal ground toward a distinct divine level"]},
+            {"id": "divine_reception", "any_terms": ["an established divine assembly visibly receives crowns or invests the arriving mortal"]},
+            {"id": "granted_status", "any_terms": ["new regalia radiance or seat is visibly conferred rather than merely possessed"]}
+          ]
+        },
+        "contrast_examples": [
+          "a glowing floating person",
+          "a mortal worshipping a separate deity",
+          "a crowned ruler without divine reception",
+          "an unrelated god replacing the mortal"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["same mortal identity", "retained mortal-status token", "mortal-divine threshold crossing", "divine reception and investiture", "newly conferred divine status"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["same mortal visibly received and invested into divine status"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Preserve identity and the mortal token across a visible threshold, then show a divine assembly actively conferring new regalia or placement on that same person.",
+      "required_evidence_fields": ["identity_phrase", "token_phrase", "threshold_phrase", "reception_phrase", "status_phrase"],
+      "evidence_requirements": {
+        "identity_phrase": {"min_content_words": 9, "must_mention_any": ["one continuous person remains identifiable before and during divine elevation"]},
+        "token_phrase": {"min_content_words": 10, "must_mention_any": ["a retained mortal garment tool wound or worldly token anchors the former status"]},
+        "threshold_phrase": {"min_content_words": 10, "must_mention_any": ["the person visibly crosses from mortal ground toward a distinct divine level"]},
+        "reception_phrase": {"min_content_words": 11, "must_mention_any": ["an established divine assembly visibly receives crowns or invests the arriving mortal"]},
+        "status_phrase": {"min_content_words": 10, "must_mention_any": ["new regalia radiance or seat is visibly conferred rather than merely possessed"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_apotheosis_identity", "review_scale": "both", "description": "One mortal identity remains continuous through the transition."},
+        {"id": "vo_myth_apotheosis_token", "review_scale": "native", "description": "A retained token visibly anchors the former mortal state."},
+        {"id": "vo_myth_apotheosis_threshold", "review_scale": "thumbnail", "description": "Mortal and divine levels form a readable threshold crossing."},
+        {"id": "vo_myth_apotheosis_reception", "review_scale": "both", "description": "A divine order actively receives or invests the mortal."},
+        {"id": "vo_myth_apotheosis_status", "review_scale": "native", "description": "New divine status is visibly conferred on that same person."}
+      ],
+      "reject_substitutes": ["glowing_levitation_only", "mortal_worship_scene", "ordinary_royal_coronation", "identity_replacement", "divine_regalia_without_investiture"]
+    },
+    {
+      "id": "katabasis_living_underworld_descent",
+      "category": "mythic_katabasis_living_traveler_relation",
+      "activation": {
+        "exact_terms": [
+          "mythic katabasis into the underworld",
+          "living hero underworld descent",
+          "살아 있는 영웅의 저승 하강"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A demonstrably living traveler crosses a one-way downward threshold from the human world into a distinct underworld while carrying a visible objective, guide token, or retrieval purpose. Cave exploration, burial of a corpse, a dead soul being escorted, or directionless dark travel does not establish katabasis.",
+        "paraphrase_examples": [
+          "살아 있음을 보여 주는 여행자가 지상 경계를 뒤로하고 목적물을 든 채 저승의 문 아래로 내려간다",
+          "one living hero moves from daylight through a guarded downward gate toward an underworld objective"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["living_traveler", "human_world_origin", "downward_threshold", "underworld_destination", "purpose_token"],
+          "groups": [
+            {"id": "living_traveler", "any_terms": ["one traveler shows breath warm color active grip or another explicit sign of living agency"]},
+            {"id": "human_world_origin", "any_terms": ["daylight vegetation settlement or another human-world cue remains behind the traveler"]},
+            {"id": "downward_threshold", "any_terms": ["stairs slope gate or river crossing establishes a directional descent across a boundary"]},
+            {"id": "underworld_destination", "any_terms": ["a distinct chthonic realm lies below or beyond the crossed threshold"]},
+            {"id": "purpose_token", "any_terms": ["a named objective guide token retrieval object or mission cue travels with the living visitor"]}
+          ]
+        },
+        "contrast_examples": [
+          "ordinary cave exploration",
+          "a corpse entering a tomb",
+          "a dead soul escorted by a psychopomp",
+          "a dark road with no underworld boundary"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["explicitly living visitor", "human-world origin behind", "directional downward threshold", "distinct underworld destination", "visible descent objective"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["living traveler visibly descending across an underworld threshold"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Place the living traveler between a retained human-world origin and a lower underworld destination, with the crossed boundary, downward direction, and purpose token all readable.",
+      "required_evidence_fields": ["living_phrase", "origin_phrase", "threshold_phrase", "destination_phrase", "purpose_phrase"],
+      "evidence_requirements": {
+        "living_phrase": {"min_content_words": 11, "must_mention_any": ["one traveler shows breath warm color active grip or another explicit sign of living agency"]},
+        "origin_phrase": {"min_content_words": 10, "must_mention_any": ["daylight vegetation settlement or another human-world cue remains behind the traveler"]},
+        "threshold_phrase": {"min_content_words": 11, "must_mention_any": ["stairs slope gate or river crossing establishes a directional descent across a boundary"]},
+        "destination_phrase": {"min_content_words": 9, "must_mention_any": ["a distinct chthonic realm lies below or beyond the crossed threshold"]},
+        "purpose_phrase": {"min_content_words": 12, "must_mention_any": ["a named objective guide token retrieval object or mission cue travels with the living visitor"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_katabasis_living", "review_scale": "both", "description": "The descending traveler remains visibly alive and agentive."},
+        {"id": "vo_myth_katabasis_origin", "review_scale": "thumbnail", "description": "Human-world origin cues remain visible behind the traveler."},
+        {"id": "vo_myth_katabasis_threshold", "review_scale": "both", "description": "A bounded crossing establishes a clear downward direction."},
+        {"id": "vo_myth_katabasis_destination", "review_scale": "native", "description": "A distinct underworld realm lies beyond the crossed boundary."},
+        {"id": "vo_myth_katabasis_purpose", "review_scale": "native", "description": "A purpose token or mission cue accompanies the living visitor."}
+      ],
+      "reject_substitutes": ["ordinary_cave_exploration", "corpse_burial", "dead_soul_escort", "directionless_dark_travel", "underworld_without_living_visitor"]
+    },
+    {
+      "id": "egyptian_heart_weighing_judgment",
+      "category": "ancient_egyptian_afterlife_heart_weighing",
+      "activation": {
+        "exact_terms": [
+          "Egyptian weighing of the heart",
+          "Anubis weighing the heart against Ma'at's feather",
+          "고대 이집트 심장 무게 달기"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An ancient Egyptian judgment scene shows the deceased before a two-pan balance where a heart is weighed against the feather of Ma'at, Anubis attends the weighing, Thoth records the result, and Ammit or Osiris establishes the consequence. Generic scales, Anubis alone, or mixed-pantheon judgment imagery is not equivalent.",
+        "paraphrase_examples": [
+          "죽은 이 앞의 양팔 저울 한쪽에는 심장, 다른 쪽에는 마아트의 깃털이 있고 아누비스가 저울을 다루며 토트가 결과를 적는다",
+          "the deceased faces a heart-versus-feather balance attended by Anubis while Thoth records and judgment awaits"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["deceased_subject", "heart_feather_balance", "anubis_attendance", "thoth_recording", "judgment_consequence"],
+          "groups": [
+            {"id": "deceased_subject", "any_terms": ["one deceased person stands or kneels as the explicit subject of judgment"]},
+            {"id": "heart_feather_balance", "any_terms": ["one two-pan balance holds a human heart opposite the feather of Ma'at"]},
+            {"id": "anubis_attendance", "any_terms": ["Anubis visibly adjusts attends or verifies the central balance"]},
+            {"id": "thoth_recording", "any_terms": ["Thoth visibly writes or records the weighing result beside the scale"]},
+            {"id": "judgment_consequence", "any_terms": ["Ammit waits near the balance or Osiris receives the outcome as a visible consequence"]}
+          ]
+        },
+        "contrast_examples": [
+          "generic scales of justice",
+          "Anubis standing without a weighing",
+          "a heart and feather used as decoration",
+          "Greek and Egyptian judges mixed together"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["deceased judgment subject", "heart versus Ma'at feather balance", "Anubis attending scale", "Thoth recording result", "Ammit or Osiris consequence"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["ancient Egyptian heart weighing with recorded judgment"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use a coherent ancient Egyptian register with the deceased, central heart-versus-feather balance, Anubis, Thoth, and the judgment consequence all spatially connected without pantheon mixing.",
+      "required_evidence_fields": ["deceased_phrase", "balance_phrase", "anubis_phrase", "thoth_phrase", "consequence_phrase"],
+      "evidence_requirements": {
+        "deceased_phrase": {"min_content_words": 10, "must_mention_any": ["one deceased person stands or kneels as the explicit subject of judgment"]},
+        "balance_phrase": {"min_content_words": 12, "must_mention_any": ["one two-pan balance holds a human heart opposite the feather of Ma'at"]},
+        "anubis_phrase": {"min_content_words": 9, "must_mention_any": ["Anubis visibly adjusts attends or verifies the central balance"]},
+        "thoth_phrase": {"min_content_words": 10, "must_mention_any": ["Thoth visibly writes or records the weighing result beside the scale"]},
+        "consequence_phrase": {"min_content_words": 12, "must_mention_any": ["Ammit waits near the balance or Osiris receives the outcome as a visible consequence"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_egyptian_deceased", "review_scale": "thumbnail", "description": "The deceased remains the explicit subject of judgment."},
+        {"id": "vo_myth_egyptian_balance", "review_scale": "both", "description": "Heart and Ma'at feather occupy opposite balance pans."},
+        {"id": "vo_myth_egyptian_anubis", "review_scale": "native", "description": "Anubis visibly attends or adjusts the central scale."},
+        {"id": "vo_myth_egyptian_thoth", "review_scale": "native", "description": "Thoth visibly records the result beside the weighing."},
+        {"id": "vo_myth_egyptian_consequence", "review_scale": "both", "description": "Ammit or Osiris establishes a visible judgment consequence."}
+      ],
+      "reject_substitutes": ["generic_justice_scales", "anubis_without_weighing", "decorative_heart_and_feather", "mixed_pantheon_judgment", "balance_without_deceased"]
+    },
+    {
+      "id": "mythic_flood_preservation_vessel",
+      "category": "comparative_flood_myth_preservation_causality",
+      "activation": {
+        "exact_terms": [
+          "great flood myth preservation vessel",
+          "mythic flood survival ark",
+          "대홍수 신화 보존 선박"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A deliberately prepared and sealed vessel preserves a bounded lineage of people, animals, seeds, or provisions through a world-covering deluge, with both catastrophic water and post-flood recession, grounding, or release evidence visible. A storm boat, crowded ferry, or animals beside a ship does not establish mythic preservation.",
+        "paraphrase_examples": [
+          "봉인된 생존선 안에 사람·동물·씨앗의 계보가 질서 있게 보존되고 세계를 덮은 물 밖에는 물러남이나 착지의 흔적이 보인다",
+          "one prepared vessel carries bounded living cargo through a world flood toward visible grounding or released-bird evidence"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["prepared_vessel", "bounded_living_cargo", "sealed_preservation", "world_deluge", "survival_consequence"],
+          "groups": [
+            {"id": "prepared_vessel", "any_terms": ["one purpose-built vessel shows organized compartments provisions or flood preparation"]},
+            {"id": "bounded_living_cargo", "any_terms": ["a deliberately selected lineage of people animals seeds or provisions occupies the vessel"]},
+            {"id": "sealed_preservation", "any_terms": ["closed hatches sealed seams tied stores or sheltered decks visibly protect the cargo"]},
+            {"id": "world_deluge", "any_terms": ["floodwater overwhelms ordinary land markers at a world-scale rather than forming one local storm"]},
+            {"id": "survival_consequence", "any_terms": ["receding water grounding exposed peak or released bird marks survival beyond the flood"]}
+          ]
+        },
+        "contrast_examples": [
+          "a fishing boat in heavy rain",
+          "a crowded evacuation ferry",
+          "animals standing beside a ship",
+          "an ark-shaped vessel on calm water without preservation evidence"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["purpose-built sealed vessel", "bounded lineage cargo", "organized preservation provisions", "world-covering deluge", "recession grounding or release consequence"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["sealed mythic flood vessel visibly preserving living lineage"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the prepared vessel, selected living cargo, sealing evidence, submerged land markers, and a recession or survival cue in one coherent wide causal scene.",
+      "required_evidence_fields": ["vessel_phrase", "cargo_phrase", "seal_phrase", "deluge_phrase", "survival_phrase"],
+      "evidence_requirements": {
+        "vessel_phrase": {"min_content_words": 10, "must_mention_any": ["one purpose-built vessel shows organized compartments provisions or flood preparation"]},
+        "cargo_phrase": {"min_content_words": 12, "must_mention_any": ["a deliberately selected lineage of people animals seeds or provisions occupies the vessel"]},
+        "seal_phrase": {"min_content_words": 11, "must_mention_any": ["closed hatches sealed seams tied stores or sheltered decks visibly protect the cargo"]},
+        "deluge_phrase": {"min_content_words": 13, "must_mention_any": ["floodwater overwhelms ordinary land markers at a world-scale rather than forming one local storm"]},
+        "survival_phrase": {"min_content_words": 11, "must_mention_any": ["receding water grounding exposed peak or released bird marks survival beyond the flood"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_flood_vessel", "review_scale": "thumbnail", "description": "One purpose-built vessel visibly shows preservation preparation."},
+        {"id": "vo_myth_flood_cargo", "review_scale": "native", "description": "Selected living cargo and provisions remain deliberately organized."},
+        {"id": "vo_myth_flood_seal", "review_scale": "native", "description": "Visible sealing or shelter protects the bounded cargo."},
+        {"id": "vo_myth_flood_deluge", "review_scale": "both", "description": "Floodwater overwhelms normal land markers at world scale."},
+        {"id": "vo_myth_flood_survival", "review_scale": "both", "description": "Recession grounding or release evidence marks survival afterward."}
+      ],
+      "reject_substitutes": ["storm_fishing_boat", "evacuation_ferry", "animals_beside_ship", "calm_empty_ark", "flood_without_preservation_cargo"]
+    },
+    {
+      "id": "chaoskampf_cosmogonic_ordering",
+      "category": "comparative_combat_myth_cosmogonic_consequence",
+      "activation": {
+        "exact_terms": [
+          "Chaoskampf cosmogonic combat",
+          "combat myth that establishes cosmic order",
+          "우주 질서를 세우는 혼돈 전투 신화"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A named champion and a distinct primordial chaos adversary engage in traceable combat whose defeat directly produces or stabilizes cosmic order through partition, boundary, world matter, or sovereign placement. A dragon fight, monster slaying, or battle with no ordering consequence is not sufficient; named traditions must keep their own variant-specific lineage.",
+        "paraphrase_examples": [
+          "질서의 챔피언이 원초 혼돈의 적과 싸워 쓰러뜨리고 그 결과 생긴 경계·분할·세계 물질이 새 우주 질서를 구성한다",
+          "one mythic combat moves from champion versus primordial adversary to a visibly ordered world made from the defeat consequence"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["named_champion", "chaos_adversary", "traceable_combat", "defeat_transition", "cosmic_order_consequence"],
+          "groups": [
+            {"id": "named_champion", "any_terms": ["one tradition-bound champion remains distinct from the adversary and leads the ordering side"]},
+            {"id": "chaos_adversary", "any_terms": ["one primordial sea storm serpent or chaos adversary is visually distinct and tradition-bound"]},
+            {"id": "traceable_combat", "any_terms": ["weapon force counterforce and contact geometry make the central combat readable"]},
+            {"id": "defeat_transition", "any_terms": ["the adversary visibly passes from active resistance into a defeated or partitioned state"]},
+            {"id": "cosmic_order_consequence", "any_terms": ["new boundaries world matter stable realms or sovereign placement visibly result from that defeat"]}
+          ]
+        },
+        "contrast_examples": [
+          "a hero fighting a random dragon",
+          "a monster already dead without combat",
+          "an arena duel",
+          "a cosmic landscape unrelated to the battle"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": ["tradition-bound ordering champion", "primordial chaos adversary", "traceable combat geometry", "adversary defeat transition", "defeat-caused cosmic order"]
+      },
+      "runtime_expression": {
+        "default_mode": "label_plus_definition",
+        "prompt_label_terms": ["cosmogonic combat visibly producing ordered realms"],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Bind champion, adversary, combat contact, defeat transition, and the newly formed boundary or world order into one causal frame while preserving any named tradition's own cast.",
+      "required_evidence_fields": ["champion_phrase", "adversary_phrase", "combat_phrase", "defeat_phrase", "order_phrase"],
+      "evidence_requirements": {
+        "champion_phrase": {"min_content_words": 11, "must_mention_any": ["one tradition-bound champion remains distinct from the adversary and leads the ordering side"]},
+        "adversary_phrase": {"min_content_words": 12, "must_mention_any": ["one primordial sea storm serpent or chaos adversary is visually distinct and tradition-bound"]},
+        "combat_phrase": {"min_content_words": 10, "must_mention_any": ["weapon force counterforce and contact geometry make the central combat readable"]},
+        "defeat_phrase": {"min_content_words": 12, "must_mention_any": ["the adversary visibly passes from active resistance into a defeated or partitioned state"]},
+        "order_phrase": {"min_content_words": 12, "must_mention_any": ["new boundaries world matter stable realms or sovereign placement visibly result from that defeat"]}
+      },
+      "render_gates": [
+        {"id": "vo_myth_chaoskampf_champion", "review_scale": "thumbnail", "description": "A tradition-bound ordering champion remains distinct and readable."},
+        {"id": "vo_myth_chaoskampf_adversary", "review_scale": "both", "description": "The primordial chaos adversary remains visually and culturally distinct."},
+        {"id": "vo_myth_chaoskampf_combat", "review_scale": "both", "description": "Contact geometry makes the active combat causally legible."},
+        {"id": "vo_myth_chaoskampf_defeat", "review_scale": "native", "description": "The adversary visibly transitions into defeat or partition."},
+        {"id": "vo_myth_chaoskampf_order", "review_scale": "both", "description": "New cosmic order visibly results from that specific defeat."}
+      ],
+      "reject_substitutes": ["generic_dragon_fight", "dead_monster_without_combat", "arena_duel", "unrelated_cosmic_background", "pantheon_mixed_combat"]
     }
   ]
 }
