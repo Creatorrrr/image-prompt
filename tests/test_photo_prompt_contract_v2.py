@@ -2039,14 +2039,14 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             response["composition_guidance"]["prompt_budget"],
             {
                 "language": "en",
-                "minimum_words": 24,
-                "recommended_minimum_words": 50,
-                "recommended_maximum_words": 120,
-                "absolute_maximum_words": 320,
+                "minimum_words": 48,
+                "recommended_minimum_words": 100,
+                "recommended_maximum_words": 240,
+                "absolute_maximum_words": 640,
                 "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
                 "rule": (
-                    "Prefer 50 to 120 English words, but treat that range as advisory. Keep prompt_en "
-                    "between the absolute 24 and 320 word bounds, preserve required evidence, and reuse "
+                    "Prefer 100 to 240 English words, but treat that range as advisory. Keep prompt_en "
+                    "between the absolute 48 and 640 word bounds, preserve required evidence, and reuse "
                     "short literal phrases across moe, viewer, identity, and augmentation evidence instead "
                     "of stacking explanations."
                 ),
@@ -3337,7 +3337,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             [],
         )
 
-        over_recommended_prompt = compact_prompt + " " + " ".join(["extra"] * 81)
+        over_recommended_prompt = compact_prompt + " " + " ".join(["extra"] * 121)
         advisory_warnings = []
         over_recommended_checks = {
             row["check"]
@@ -3354,9 +3354,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             for row in advisory_warnings
             if row["check"] == "moe_response_prompt_budget"
         )
-        self.assertEqual(advisory_warning["actual_words"], 201)
-        self.assertEqual(advisory_warning["recommended_maximum_words"], 120)
-        self.assertEqual(advisory_warning["absolute_maximum_words"], 320)
+        self.assertEqual(advisory_warning["actual_words"], 241)
+        self.assertEqual(advisory_warning["recommended_maximum_words"], 240)
+        self.assertEqual(advisory_warning["absolute_maximum_words"], 640)
 
         legacy_budget_pack = copy.deepcopy(pack)
         legacy_budget_pack["moe_response"]["composition_guidance"][
@@ -3378,7 +3378,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         }
         self.assertIn("moe_response_prompt_budget", legacy_budget_checks)
 
-        absolute_overflow_prompt = compact_prompt + " " + " ".join(["extra"] * 201)
+        absolute_overflow_prompt = compact_prompt + " " + " ".join(["extra"] * 521)
         absolute_overflow_checks = {
             row["check"]
             for row in audit_composed_prompt.audit_moe_response(

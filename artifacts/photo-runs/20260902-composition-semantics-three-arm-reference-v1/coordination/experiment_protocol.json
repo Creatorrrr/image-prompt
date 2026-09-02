@@ -1,0 +1,48 @@
+{
+  "contract_version": "photo-composition-three-arm-protocol/v1",
+  "request_sha256": "4e68ecbe87c19987be80de87e848e243d14d5c82cf95de6b77f6ce2d70a1b706",
+  "source_ref": "git:215be788525890eecc38114838b457cec584f5bf;working-tree-dirty;composition-semantics-v1",
+  "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+  "candidate_pack_version": "v6",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible_adult_appearance_reference_only",
+    "observed_scope": [
+      "adult presentation",
+      "long dark wavy hair",
+      "natural adult facial proportions",
+      "dark blouse"
+    ],
+    "excluded_inferences": [
+      "identity",
+      "same-person status",
+      "biometrics",
+      "protected traits",
+      "health",
+      "attractiveness",
+      "personality",
+      "occupation",
+      "ethnicity",
+      "nationality",
+      "allegiance"
+    ]
+  },
+  "arm_policy": {
+    "independent_subagents": 3,
+    "one_candidate_pack_per_arm": true,
+    "one_image_generation_call_per_arm": true,
+    "cross_arm_prompts_packs_messages_images_forbidden": true,
+    "retry_policy": "none; preserve the first delivered result as qualification evidence",
+    "partial_is_fail": true,
+    "unscored_is_not_zero": true,
+    "user_judgment": "pending until direct requesting-user response"
+  },
+  "evidence_layers": [
+    "package_and_index",
+    "candidate_pack_and_composed_prompt",
+    "generation_outcome",
+    "delivered_pixels",
+    "requesting_user_judgment"
+  ]
+}

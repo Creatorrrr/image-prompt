@@ -1,0 +1,76 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent complex test photograph about a flooded archive map rescue, with one calm central action anchor, a clear primary-secondary-background attention order, and a physical architectural opening enclosing the subject.",
+  "subject": "one adult woman whose visible appearance is referenced from the supplied portrait",
+  "setting": "a flooded municipal archive before dawn",
+  "event": "she lifts a rolled paper map from a floating document tray while water drips back into the aisle",
+  "visual_priorities": [
+    "one central adult action anchor",
+    "primary face and hands before a small brass catalog tag and the shelving",
+    "a near doorway and catalog arch enclosing the subject",
+    "wet paper and shallow reflective water rendered as physical materials"
+  ],
+  "baseline_prompt_en": "Photorealistic editorial photograph in a flooded municipal archive before dawn. Treat Image 1 solely as a visible adult appearance reference: one adult woman with long dark wavy hair, natural adult facial proportions, and a dark blouse beneath a waterproof apron. She is lifting a rolled paper map from a floating document tray while water drips back into the aisle. Her face and working hands form the calm visual center; a small brass catalog tag reads as a quiet supporting detail while shelves recede behind. A near doorway and old catalog arch surround her, with shallow reflective water linking foreground to the distant stacks. Cold window light and one warm task lamp reveal natural skin, wet paper fibers, oxidized brass, and rippled water. Medium-wide vertical documentary framing with a readable rescue action.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "a flooded archive map rescue selected by the recorded stratified random draw",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "the supplied portrait controls only observable adult appearance in the generated scene",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "flooded municipal archive before dawn"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman with long dark wavy hair"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "lifting a rolled paper map from a floating document tray"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Treat Image 1 solely as a visible adult appearance reference"
+      }
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "reference_use"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color", "material", "timing", "atmosphere"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary_editorial_photo",
+    "family": "flooded archival rescue realism",
+    "evidence": ["mixed cold window and warm task light", "wet paper and oxidized brass textures"]
+  },
+  "variation_key": "arm-01-archive-center"
+}

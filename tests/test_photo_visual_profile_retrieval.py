@@ -135,6 +135,66 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
                 changed,
             )
 
+    def test_composition_relation_embedding_lane_remains_optional(self):
+        profile_ids = [
+            "third_grid_focal_anchor_relation",
+            "centered_primary_anchor_relation",
+            "axial_bilateral_symmetry_relation",
+            "asymmetric_counterbalance_relation",
+            "leading_line_target_continuity",
+            "look_motion_room_direction_relation",
+            "subject_field_negative_space_relation",
+            "frame_within_frame_boundary_relation",
+            "three_plane_depth_chain",
+            "pattern_break_focal_exception",
+            "primary_secondary_figure_ground_hierarchy",
+            "peak_action_event_phase",
+        ]
+        dimensions = len(profile_ids)
+        uniform = [dimensions ** -0.5] * dimensions
+        vectors = {
+            str(profile["id"]): list(uniform)
+            for profile in self.registry["profiles"]
+        }
+        for index, profile_id in enumerate(profile_ids):
+            vector = [0.0] * dimensions
+            vector[index] = 1.0
+            vectors[profile_id] = vector
+        fake_index = prompt_generator.build_visual_profile_index_payload(
+            self.registry,
+            vectors=vectors,
+            dimensions=dimensions,
+        )
+        profiles = {profile["id"]: profile for profile in self.registry["profiles"]}
+
+        for index, profile_id in enumerate(profile_ids):
+            with self.subTest(profile_id=profile_id):
+                query_vector = [0.0] * dimensions
+                query_vector[index] = 1.0
+                resolution = prompt_generator.resolve_visual_profile_hits(
+                    self.registry,
+                    [
+                        {
+                            "source": "authorial_core_interpretation",
+                            "text": profiles[profile_id]["semantics"][
+                                "paraphrase_examples"
+                            ][0],
+                            "polarity": "advisory",
+                        }
+                    ],
+                    visual_profile_index=fake_index,
+                    query_vector=query_vector,
+                    adult_context=True,
+                )
+                hit = next(
+                    row
+                    for row in resolution["hits"]
+                    if row["profile_id"] == profile_id
+                )
+                self.assertEqual(hit["match_basis"], "embedding")
+                self.assertFalse(hit["hard_eligible"])
+                self.assertTrue(hit["optional_eligible"])
+
     def test_embedding_only_paraphrase_projects_optional_candidate_from_one_resolution(self):
         source = "허벅지 사이의 공간이 매력적인 여성의 패션 사진"
         core = self.core(source)

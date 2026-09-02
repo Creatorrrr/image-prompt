@@ -1,0 +1,212 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:215be788525890eecc38114838b457cec584f5bf",
+    "candidate_revision": "git:215be788525890eecc38114838b457cec584f5bf;working-tree-dirty;composition-semantics-v1"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Add detailed observable photo-composition semantics and candidate data, then independently test three randomized complex concepts with the supplied adult-appearance reference."
+  },
+  "evidence": [
+    {
+      "id": "e-source-reference",
+      "kind": "source-observation",
+      "claim": "The supplied file visibly depicts an adult-presenting portrait with long dark wavy hair; its permitted role in this experiment is observable adult appearance only.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256:3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Composition labels were translated into observable spatial relations, boundaries, false substitutes, and pixel-review gates with bounded source claims.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/composition_visual_semantics_20260902.md"
+    },
+    {
+      "id": "e-baseline",
+      "kind": "repository-history",
+      "claim": "The baseline revision did not contain the twelve new composition visual-obligation profiles or their candidate IDs.",
+      "artifact": "git show 215be788525890eecc38114838b457cec584f5bf:skills/photo-prompt-image-generator/assets/{photo_prompt_visual_obligations.json,photo_prompt_tags.json}; exact new IDs absent"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary metadata, visual-profile index, semantic index, dedicated exact/negative/embedding tests, authorial-core v6, prepack isolation, scene-expression audit, contradiction, generalization, rule holdout, and retrieval holdout checks passed. The six failures in the broad visual-obligation suite reproduce on baseline HEAD around the unrelated exact term nurse.",
+      "artifact": "photo dictionary valid; visual index 312 profiles/1616 terms; semantic index 7986 entries/16 shards; new dedicated tests 4/4; authorial core 18/18; prepack isolation 6/6; scene expression 112/112; contradiction 0/2106; generalization 79/79; holdout 24/24; retrieval holdout 22/22"
+    },
+    {
+      "id": "e-prompt-01",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 01 v6 candidate pack, composed prompt, and runtime request passed their structural audits with all twelve requested hard gates represented.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/arm-01-archive-center/{composed_audit.json,runtime_audit.json}"
+    },
+    {
+      "id": "e-prompt-02",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 02 v6 candidate pack, composed prompt, and runtime request passed their structural audits with all twelve requested hard gates represented.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/arm-02-harbor-signal/{composed_prompt_audit.json,runtime_request_audit.json}"
+    },
+    {
+      "id": "e-prompt-03",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 03 v6 candidate pack, composed prompt, and runtime request passed their structural audits with all twelve requested hard gates represented.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/arm-03-fog-beacon/{composed_prompt_audit.json,runtime_request_audit.json}"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Each independent arm used its frozen request and authorial core, the supplied reference hash, no cross-arm inputs, and exactly one successful built-in image generation call with no retry or fallback.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/{coordination/frozen_inputs.json,arm-01-archive-center/run_manifest.json,arm-02-harbor-signal/run_manifest.json,arm-03-fog-beacon/run_manifest.json}"
+    },
+    {
+      "id": "e-render-01",
+      "kind": "render-observation",
+      "claim": "Arm 01 passed 11 of 12 hard gates; true frame center landed on a plain torso/apron region rather than the identity- or action-bearing face, hands, or map.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/coordination/root_pixel_review.json#arm-01-archive-center"
+    },
+    {
+      "id": "e-render-02",
+      "kind": "render-observation",
+      "claim": "Arm 02 passed all 12 hard gates for thirds placement, look/motion room, and a single focal exception in a repeated lamp pattern.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/coordination/root_pixel_review.json#arm-02-harbor-signal"
+    },
+    {
+      "id": "e-render-03",
+      "kind": "render-observation",
+      "claim": "Arm 03 passed 9 of 12 hard gates; the cropped lower body and camera-facing gaze did not establish the declared rightward travel vector or prove that right-side space was ahead.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-composition-semantics-three-arm-reference-v1/coordination/root_pixel_review.json#arm-03-fog-beacon"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every selected composition term must become a first-read observable spatial relation in the delivered pixels, and every hard gate for an arm must pass because partial fulfillment is failure.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-topology",
+        "statement": "A composition name or prompt mention cannot substitute for the required locations, boundaries, directions, relative weights, and false-substitute exclusions.",
+        "evidence_ids": ["e-research", "e-package"],
+        "causal_controls": ["component groups", "literal prompt evidence", "thumbnail and native pixel gates"]
+      },
+      {
+        "id": "reference-scope",
+        "statement": "The supplied portrait is restricted to visible adult appearance cues and cannot support identity, same-person, biometric, or protected-trait claims.",
+        "evidence_ids": ["e-source-reference"],
+        "causal_controls": ["reference role in frozen cores", "likeness mode off", "root review scope"]
+      },
+      {
+        "id": "independent-arms",
+        "statement": "Each arm must use independently frozen inputs, one image call, no retry, no fallback, and no cross-arm artifacts.",
+        "evidence_ids": ["e-generation"],
+        "causal_controls": ["per-arm hashes", "one-call manifests", "cross-arm input flag"]
+      }
+    ],
+    "flexible_dimensions": ["scene concept", "lighting", "wardrobe", "camera format", "environmental detail"]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-baseline-representation",
+      "scale": "global",
+      "axis": "composition semantics",
+      "source_state": "The research distinguished observable relations and confusion boundaries for composition terms.",
+      "render_state": "The baseline package lacked the twelve corresponding full visual-obligation contracts and gates.",
+      "evidence_ids": ["e-research", "e-baseline"]
+    },
+    {
+      "id": "mismatch-center-anchor",
+      "scale": "regional",
+      "axis": "true-center anchor placement",
+      "source_state": "An identity- or action-bearing anchor had to intersect the exact frame center.",
+      "render_state": "The exact center intersected a plain torso/apron area between the face and map-lifting action.",
+      "evidence_ids": ["e-render-01"]
+    },
+    {
+      "id": "mismatch-motion-room",
+      "scale": "regional",
+      "axis": "directional motion room",
+      "source_state": "A visible rightward subject vector had to make the larger right-side field read as space ahead.",
+      "render_state": "The body read paused and the gaze turned toward camera, leaving only an environmental bridge line rather than a subject vector.",
+      "evidence_ids": ["e-render-03"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-representation",
+      "stage": "representation",
+      "statement": "Composition concepts become testable when encoded as multiple observable component groups, literal evidence fields, render gates, and explicit false substitutes rather than aliases alone.",
+      "evidence_ids": ["e-research", "e-baseline", "e-package"],
+      "falsifier": "Exact terms still fail to route hard, false substitutes activate them, or composed prompts omit required evidence."
+    },
+    {
+      "id": "h-generator-response",
+      "stage": "generator-response",
+      "statement": "Even a structurally complete prompt may lose an exact center target or directional room relation when the generated pose, gaze, or crop contradicts the requested anchor.",
+      "evidence_ids": ["e-render-01", "e-render-02", "e-render-03"],
+      "falsifier": "Independent complex renders consistently pass the exact-center and directional-vector gates across conflicting scenes and poses."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "reference", "test"],
+    "general_rule": "Represent a composition term as an observable relation contract with four semantic components, literal prompt bindings, pixel gates, and reject-substitute boundaries; expose the same relation through a conservative candidate entry and conflicts.",
+    "generalization_basis": "The contracts refer to measurable frame relations rather than the three test scenes, and they are exercised through exact, negative, embedding-only, prompt, and independent render checks.",
+    "hypothesis_ids": ["h-representation", "h-generator-response"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/2b00c9b29da088d7/",
+      "tests/test_photo_visual_obligations.py",
+      "tests/test_photo_visual_profile_retrieval.py",
+      "docs/research-evidence/photo-prompt/composition_visual_semantics_20260902.md"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt-01", "e-prompt-02", "e-prompt-03"]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": ["e-render-01", "e-render-02", "e-render-03"]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-archive-center",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": ["center anchor", "frame within frame", "figure-ground hierarchy"],
+        "evidence_ids": ["e-render-01"]
+      },
+      {
+        "id": "arm-02-harbor-signal",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["thirds anchor", "motion room", "pattern exception"],
+        "evidence_ids": ["e-render-02"]
+      },
+      {
+        "id": "arm-03-fog-beacon",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["negative space", "asymmetric counterbalance", "motion room"],
+        "evidence_ids": ["e-render-03"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The package and prompt layers are complete, but strict pixel qualification passed only one of three independent arms and 32 of 36 hard gates. Center targeting and motion-room robustness therefore remain revision targets; user aesthetic judgment is still unscored.",
+    "evidence_ids": ["e-package", "e-prompt-01", "e-prompt-02", "e-prompt-03", "e-render-01", "e-render-02", "e-render-03"]
+  }
+}

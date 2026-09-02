@@ -15,6 +15,7 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 SCRIPT_DIR = SKILL_DIR / "scripts"
 WRAPPER_PATH = SCRIPT_DIR / "generate_photo_prompt.py"
 REGISTRY_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_obligations.json"
+TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 ROUTING_FIXTURE_PATH = (
     ROOT / "tests" / "fixtures" / "photo_prompt" / "visual_obligation_routing_v1.jsonl"
 )
@@ -1782,6 +1783,117 @@ class PhotoVisualObligationTests(unittest.TestCase):
         self.assertTrue(
             set(revealing["activation"]["project_glossary_aliases"])
             <= set(base_armor["activation"]["exclude_if_any_terms"])
+        )
+
+    def test_composition_relation_profiles_are_complete_and_exact_terms_route_hard(self):
+        profile_ids = {
+            "third_grid_focal_anchor_relation",
+            "centered_primary_anchor_relation",
+            "axial_bilateral_symmetry_relation",
+            "asymmetric_counterbalance_relation",
+            "leading_line_target_continuity",
+            "look_motion_room_direction_relation",
+            "subject_field_negative_space_relation",
+            "frame_within_frame_boundary_relation",
+            "three_plane_depth_chain",
+            "pattern_break_focal_exception",
+            "primary_secondary_figure_ground_hierarchy",
+            "peak_action_event_phase",
+        }
+        profiles = {profile["id"]: profile for profile in self.registry["profiles"]}
+        self.assertTrue(profile_ids <= set(profiles))
+
+        for profile_id in sorted(profile_ids):
+            with self.subTest(profile_id=profile_id):
+                profile = profiles[profile_id]
+                groups = profile["semantics"]["component_semantics"]
+                self.assertEqual(
+                    set(groups["required_group_ids"]),
+                    {group["id"] for group in groups["groups"]},
+                )
+                self.assertGreaterEqual(len(groups["groups"]), 4)
+                self.assertEqual(
+                    set(profile["required_evidence_fields"]),
+                    set(profile["evidence_requirements"]),
+                )
+                self.assertEqual(len(profile["render_gates"]), 4)
+                exact_term = profile["activation"]["exact_terms"][0]
+                matches = prompt_generator.candidate_pack_auto_visual_obligation_matches(
+                    self.registry,
+                    [
+                        {
+                            "source": "concept_lock",
+                            "text": f"A photograph using {exact_term}",
+                            "polarity": "required",
+                        }
+                    ],
+                )
+                self.assertIn(profile_id, matches)
+
+    def test_composition_relation_false_substitutes_do_not_hard_activate(self):
+        negatives = {
+            "third_grid_focal_anchor_relation": "a centered crop with a decorative grid overlay",
+            "centered_primary_anchor_relation": "symmetrical architecture with the subject at one edge",
+            "axial_bilateral_symmetry_relation": "one centered vase in an otherwise unrelated room",
+            "asymmetric_counterbalance_relation": "random clutter spread across both sides",
+            "leading_line_target_continuity": "decorative stripes ending at empty space",
+            "look_motion_room_direction_relation": "empty space behind a tightly cropped runner",
+            "subject_field_negative_space_relation": "a frame-filling portrait against crushed black exposure",
+            "frame_within_frame_boundary_relation": "a digital vignette and graphic border",
+            "three_plane_depth_chain": "three objects arranged as flat collage bands",
+            "pattern_break_focal_exception": "many randomly different objects with no repeated baseline",
+            "primary_secondary_figure_ground_hierarchy": "several equally bright focal points",
+            "peak_action_event_phase": "a settled pose with decorative speed lines",
+        }
+        for profile_id, text in negatives.items():
+            with self.subTest(profile_id=profile_id):
+                matches = prompt_generator.candidate_pack_auto_visual_obligation_matches(
+                    self.registry,
+                    [
+                        {
+                            "source": "concept_lock",
+                            "text": text,
+                            "polarity": "required",
+                        }
+                    ],
+                )
+                self.assertNotIn(profile_id, matches)
+
+    def test_composition_candidates_have_semantic_text_and_confusion_conflicts(self):
+        tags = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        profile_ids = {
+            "third_grid_focal_anchor_relation",
+            "centered_primary_anchor_relation",
+            "axial_bilateral_symmetry_relation",
+            "asymmetric_counterbalance_relation",
+            "leading_line_target_continuity",
+            "look_motion_room_direction_relation",
+            "subject_field_negative_space_relation",
+            "frame_within_frame_boundary_relation",
+            "three_plane_depth_chain",
+            "pattern_break_focal_exception",
+            "primary_secondary_figure_ground_hierarchy",
+            "peak_action_event_phase",
+        }
+        candidates = {row["id"]: row for row in tags["slots"]["composition"]}
+        self.assertTrue(profile_ids <= set(candidates))
+        for profile_id in sorted(profile_ids):
+            with self.subTest(profile_id=profile_id):
+                row = candidates[profile_id]
+                self.assertTrue(row["aliases"])
+                self.assertTrue(row["keywords"])
+                self.assertGreaterEqual(len(row["embedding_text"].split()), 12)
+
+        conflict_ids = {
+            row["id"] for row in tags["coherence_rules"]["slot_conflicts"]
+        }
+        self.assertTrue(
+            {
+                "centered_anchor_vs_third_grid_anchor",
+                "axial_symmetry_vs_asymmetric_counterbalance",
+                "negative_space_relation_vs_frame_filling_crop",
+            }
+            <= conflict_ids
         )
 
 

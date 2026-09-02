@@ -20,13 +20,18 @@ SUPPORTED_CANDIDATE_PACK_VERSIONS = {
     "photo-candidate-pack/v5",
     "photo-candidate-pack/v6",
 }
-MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 50
-MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 120
-AUTHORIAL_PROMPT_MIN_WORDS = 24
-AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 180
-AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 320
-AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 80
-AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v1"
+MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 100
+MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 240
+AUTHORIAL_PROMPT_MIN_WORDS = 48
+AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 360
+AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 640
+AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 160
+AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v2"
+LEGACY_AUTHORIAL_PROMPT_MIN_WORDS = 24
+LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 180
+LEGACY_AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 320
+LEGACY_AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 80
+LEGACY_AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -612,6 +617,24 @@ def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
     }
 
 
+def legacy_authorial_prompt_budget_contract() -> dict[str, Any]:
+    return {
+        "contract_version": LEGACY_AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
+        "language": "en",
+        "minimum_words": LEGACY_AUTHORIAL_PROMPT_MIN_WORDS,
+        "recommended_maximum_words": LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+        "absolute_maximum_words": LEGACY_AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        "required_evidence_headroom_words": LEGACY_AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+        "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
+        "policy": {
+            "recommended_maximum_is_warning": True,
+            "absolute_bounds_are_blocking": True,
+            "required_evidence_expands_advisory_ceiling": True,
+            "requester_meaning_outranks_concision": True,
+        },
+    }
+
+
 def nested_prompt_evidence_strings(value: Any) -> list[str]:
     if isinstance(value, str):
         text = value.strip()
@@ -707,7 +730,14 @@ def authorial_prompt_budget_metrics(
     prompt_en: str,
     *,
     baseline_only: bool = False,
+    budget_contract: dict[str, Any] | None = None,
 ) -> dict[str, int]:
+    active_budget = budget_contract or expected_authorial_prompt_budget_contract()
+    recommended_maximum_words = int(active_budget["recommended_maximum_words"])
+    absolute_maximum_words = int(active_budget["absolute_maximum_words"])
+    required_evidence_headroom_words = int(
+        active_budget["required_evidence_headroom_words"]
+    )
     word_matches = list(
         re.finditer(r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*", str(prompt_en or ""))
     )
@@ -729,11 +759,10 @@ def authorial_prompt_budget_metrics(
     actual_words = len(word_matches)
     required_evidence_words = len(covered_word_indexes)
     effective_recommended_maximum_words = min(
-        AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        absolute_maximum_words,
         max(
-            AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-            required_evidence_words
-            + AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+            recommended_maximum_words,
+            required_evidence_words + required_evidence_headroom_words,
         ),
     )
     return {
@@ -6439,7 +6468,12 @@ def audit_authorial_core_v5(
         else None
     )
     expected_budget = expected_authorial_prompt_budget_contract()
-    uses_advisory_budget = recorded_budget == expected_budget
+    legacy_budget = legacy_authorial_prompt_budget_contract()
+    uses_current_advisory_budget = recorded_budget == expected_budget
+    uses_legacy_advisory_budget = recorded_budget == legacy_budget
+    uses_advisory_budget = (
+        uses_current_advisory_budget or uses_legacy_advisory_budget
+    )
     if recorded_budget is not None and not uses_advisory_budget:
         failures.append(
             {
@@ -6451,26 +6485,38 @@ def audit_authorial_core_v5(
         )
 
     if uses_advisory_budget:
-        prompt_metrics = authorial_prompt_budget_metrics(pack, composed, prompt_en)
+        active_budget = expected_budget if uses_current_advisory_budget else legacy_budget
+        minimum_words = int(active_budget["minimum_words"])
+        recommended_maximum_words = int(active_budget["recommended_maximum_words"])
+        absolute_maximum_words = int(active_budget["absolute_maximum_words"])
+        required_evidence_headroom_words = int(
+            active_budget["required_evidence_headroom_words"]
+        )
+        prompt_metrics = authorial_prompt_budget_metrics(
+            pack,
+            composed,
+            prompt_en,
+            budget_contract=active_budget,
+        )
         prompt_word_count = prompt_metrics["actual_words"]
         if not (
-            AUTHORIAL_PROMPT_MIN_WORDS
+            minimum_words
             <= prompt_word_count
-            <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+            <= absolute_maximum_words
         ):
             failures.append(
                 {
                     "check": "authorial_core_prompt_budget",
                     "reason": "v5/v6 prompt_en exceeds the absolute photographic prompt bounds",
-                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
-                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "minimum_words": minimum_words,
+                    "recommended_maximum_words": recommended_maximum_words,
+                    "absolute_maximum_words": absolute_maximum_words,
                     "actual_words": prompt_word_count,
                 }
             )
         elif (
             warnings is not None
-            and prompt_word_count > AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+            and prompt_word_count > recommended_maximum_words
         ):
             warnings.append(
                 {
@@ -6479,8 +6525,8 @@ def audit_authorial_core_v5(
                         "prompt_en exceeds the default concise target; this is advisory because "
                         "requester meaning and literal hard evidence take priority"
                     ),
-                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "recommended_maximum_words": recommended_maximum_words,
+                    "absolute_maximum_words": absolute_maximum_words,
                     **prompt_metrics,
                 }
             )
@@ -6495,8 +6541,8 @@ def audit_authorial_core_v5(
                             "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional "
                             "candidate, styling, camera, or explanatory prose before hard evidence"
                         ),
-                        "required_evidence_headroom_words": AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
-                        "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                        "required_evidence_headroom_words": required_evidence_headroom_words,
+                        "absolute_maximum_words": absolute_maximum_words,
                         **prompt_metrics,
                     }
                 )
@@ -6507,26 +6553,27 @@ def audit_authorial_core_v5(
             composed,
             baseline_prompt,
             baseline_only=True,
+            budget_contract=active_budget,
         )
         baseline_word_count = baseline_metrics["actual_words"]
         if not (
-            AUTHORIAL_PROMPT_MIN_WORDS
+            minimum_words
             <= baseline_word_count
-            <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
+            <= absolute_maximum_words
         ):
             failures.append(
                 {
                     "check": "authorial_core_baseline_prompt_budget",
                     "reason": "baseline_prompt_en exceeds the absolute photographic prompt bounds",
-                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
-                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "minimum_words": minimum_words,
+                    "recommended_maximum_words": recommended_maximum_words,
+                    "absolute_maximum_words": absolute_maximum_words,
                     "actual_words": baseline_word_count,
                 }
             )
         elif (
             warnings is not None
-            and baseline_word_count > AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+            and baseline_word_count > recommended_maximum_words
         ):
             warnings.append(
                 {
@@ -6535,24 +6582,24 @@ def audit_authorial_core_v5(
                         "baseline_prompt_en exceeds the default concise target but remains within "
                         "the absolute bound"
                     ),
-                    "recommended_maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-                    "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+                    "recommended_maximum_words": recommended_maximum_words,
+                    "absolute_maximum_words": absolute_maximum_words,
                     **baseline_metrics,
                 }
             )
     else:
         prompt_word_count = english_prompt_word_count(prompt_en)
         if not (
-            AUTHORIAL_PROMPT_MIN_WORDS
+            LEGACY_AUTHORIAL_PROMPT_MIN_WORDS
             <= prompt_word_count
-            <= AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
+            <= LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
         ):
             failures.append(
                 {
                     "check": "authorial_core_prompt_budget",
                     "reason": "legacy v5/v6 packs retain their recorded 24 to 180 word hard boundary",
-                    "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
-                    "maximum_words": AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+                    "minimum_words": LEGACY_AUTHORIAL_PROMPT_MIN_WORDS,
+                    "maximum_words": LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
                     "actual_words": prompt_word_count,
                 }
             )

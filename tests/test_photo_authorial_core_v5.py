@@ -24,6 +24,13 @@ import audit_image_render_request  # noqa: E402
 import prompt_generator  # noqa: E402
 
 
+_TEST_PROMPT_BUDGET_EXTENSION = (
+    "Fine-grained surface cues, coherent near-to-far depth, controlled highlights, legible "
+    "shadow detail, and an intentional focal hierarchy keep the completed photographic frame "
+    "specific, balanced, natural, and visually unambiguous."
+)
+
+
 class PhotoAuthorialCoreV5Tests(unittest.TestCase):
     @staticmethod
     def envelope(request_text: str, active_texts: tuple[str, ...] | None = None) -> dict:
@@ -90,6 +97,12 @@ class PhotoAuthorialCoreV5Tests(unittest.TestCase):
         ),
         anchor_evidence: tuple[str, ...] | None = None,
     ) -> dict:
+        if len(prompt_generator.authorial_request_content_words(baseline_prompt_en)) < (
+            prompt_generator.AUTHORIAL_PROMPT_MIN_WORDS
+        ):
+            baseline_prompt_en = (
+                f"{baseline_prompt_en.rstrip()} {_TEST_PROMPT_BUDGET_EXTENSION}"
+            )
         if interpretations is None:
             interpretations = (
                 {

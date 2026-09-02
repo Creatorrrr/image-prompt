@@ -25601,6 +25601,618 @@
         "lens_ghost_orbs",
         "red_color_grade"
       ]
+    },
+    {
+      "id": "third_grid_focal_anchor_relation",
+      "category": "composition_third_grid_focal_anchor_relation",
+      "activation": {
+        "exact_terms": [
+          "third-grid focal-anchor relation",
+          "rule-of-thirds focal-anchor relation",
+          "삼분할 초점 기준 관계",
+          "삼분할 교차점 주 피사체 구도"
+        ],
+        "exclude_if_any_terms": ["centered portrait", "grid overlay", "equal quadrants", "automatic crop"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One unmistakable primary visual anchor sits near a thirds-line intersection, remains clearly off the frame center, and preserves enough surrounding field to make the placement a compositional relation rather than a grid graphic or incidental crop.",
+        "paraphrase_examples": [
+          "an adult figure occupies the lower-left thirds crossing while the harbor and travel direction remain readable",
+          "주 피사체 핵심이 화면 중앙을 벗어난 삼분할 교차점 근처에 있고 주변 장면이 충분히 보임",
+          "the focal object holds an off-center thirds anchor without losing the scene that explains it"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["third_anchor", "third_off_center", "third_field", "third_boundary"],
+          "groups": [
+            {"id": "third_anchor", "any_terms": ["one primary focal anchor lies near a visible thirds-line intersection", "하나의 주 초점 기준물이 삼분할선 교차점 근처에 놓임"]},
+            {"id": "third_off_center", "any_terms": ["the primary anchor remains unmistakably displaced from the exact frame center", "주 기준물이 화면 정중앙에서 분명히 벗어남"]},
+            {"id": "third_field", "any_terms": ["enough surrounding field remains visible to explain the anchor's spatial relation", "기준물의 공간 관계를 설명할 주변 영역이 충분히 보임"]},
+            {"id": "third_boundary", "any_terms": ["the relation is carried by subject placement rather than a visible grid overlay or accidental crop", "관계가 격자 오버레이나 우연한 크롭이 아니라 피사체 배치로 드러남"]}
+          ]
+        },
+        "contrast_examples": ["a centered subject", "a grid overlay on arbitrary placement", "a close crop with no surrounding field", "several equal focal anchors"]
+      },
+      "concept_candidate": {"concept_terms": ["off-center thirds anchor", "single primary focal point", "readable surrounding field", "placement rather than overlay"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["third-grid focal-anchor composition"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Place one primary focal anchor near a thirds intersection, keep it visibly off center, and retain enough surrounding field to make the subject-to-frame relation readable without relying on a drawn grid.",
+      "required_evidence_fields": ["third_anchor_phrase", "third_off_center_phrase", "third_field_phrase", "third_boundary_phrase"],
+      "evidence_requirements": {
+        "third_anchor_phrase": {"min_content_words": 7, "must_mention_any": ["one primary focal anchor lies near a visible thirds-line intersection"]},
+        "third_off_center_phrase": {"min_content_words": 8, "must_mention_any": ["the primary anchor remains unmistakably displaced from the exact frame center"]},
+        "third_field_phrase": {"min_content_words": 8, "must_mention_any": ["enough surrounding field remains visible to explain the anchor's spatial relation"]},
+        "third_boundary_phrase": {"min_content_words": 11, "must_mention_any": ["the relation is carried by subject placement rather than a visible grid overlay or accidental crop"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_third_anchor_location", "review_scale": "thumbnail", "description": "One primary focal anchor reads near a thirds-line intersection."},
+        {"id": "vo_composition_third_anchor_off_center", "review_scale": "both", "description": "The primary anchor remains clearly displaced from exact frame center."},
+        {"id": "vo_composition_third_surrounding_field", "review_scale": "both", "description": "The surrounding field remains sufficient to explain the off-center relation."},
+        {"id": "vo_composition_third_not_overlay_or_crop", "review_scale": "native", "description": "Visible placement, rather than a grid graphic or incidental crop, proves the relation."}
+      ],
+      "reject_substitutes": ["centered_subject", "grid_overlay_only", "contextless_close_crop", "multiple_equal_anchors"]
+    },
+    {
+      "id": "centered_primary_anchor_relation",
+      "category": "composition_centered_primary_anchor_relation",
+      "activation": {
+        "exact_terms": [
+          "centered primary-anchor relation",
+          "frame-center focal-anchor relation",
+          "중앙 주 피사체 기준 관계",
+          "화면 중심 초점 기준 구도"
+        ],
+        "exclude_if_any_terms": ["rule of thirds", "off-center portrait", "bilateral symmetry only", "center crop"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The identity-bearing or action-bearing part of one primary subject intersects the true frame center, surrounding margins reinforce its central dominance, and the center remains the first visual read without requiring mirrored scenery.",
+        "paraphrase_examples": [
+          "a clock repairer's hands and face align to the exact center while the workshop recedes around that axis",
+          "주 피사체의 핵심 행동점이 화면 정중앙에 걸리고 주변 요소가 중앙성을 지지함",
+          "the central anchor dominates even though left and right background details are not identical"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["center_anchor", "center_dominance", "center_margins", "center_boundary"],
+          "groups": [
+            {"id": "center_anchor", "any_terms": ["one identity-bearing or action-bearing primary anchor intersects the true frame center", "하나의 정체성 또는 행동 핵심 기준물이 화면 정중앙과 만남"]},
+            {"id": "center_dominance", "any_terms": ["the centered anchor remains the unmistakable first visual read", "중앙 기준물이 분명한 첫 시각 읽기로 유지됨"]},
+            {"id": "center_margins", "any_terms": ["surrounding margins and subordinate elements reinforce the anchor's central position", "주변 여백과 보조 요소가 기준물의 중앙 위치를 강화함"]},
+            {"id": "center_boundary", "any_terms": ["centrality is proven by the primary anchor and does not depend on mirrored background decoration", "중앙성은 주 기준물로 증명되며 배경 장식의 좌우 대칭에 의존하지 않음"]}
+          ]
+        },
+        "contrast_examples": ["an off-center thirds subject", "symmetrical architecture with an off-axis subject", "a centered crop of an edge subject", "several equal central objects"]
+      },
+      "concept_candidate": {"concept_terms": ["true frame-center anchor", "single central first read", "supportive surrounding margins", "centrality without required symmetry"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["centered primary-anchor composition"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Align one identity-bearing or action-bearing subject anchor to the true frame center, subordinate the surrounding elements, and use the margins to reinforce central dominance without requiring mirror symmetry.",
+      "required_evidence_fields": ["center_anchor_phrase", "center_dominance_phrase", "center_margins_phrase", "center_boundary_phrase"],
+      "evidence_requirements": {
+        "center_anchor_phrase": {"min_content_words": 9, "must_mention_any": ["one identity-bearing or action-bearing primary anchor intersects the true frame center"]},
+        "center_dominance_phrase": {"min_content_words": 7, "must_mention_any": ["the centered anchor remains the unmistakable first visual read"]},
+        "center_margins_phrase": {"min_content_words": 8, "must_mention_any": ["surrounding margins and subordinate elements reinforce the anchor's central position"]},
+        "center_boundary_phrase": {"min_content_words": 10, "must_mention_any": ["centrality is proven by the primary anchor and does not depend on mirrored background decoration"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_center_anchor_location", "review_scale": "thumbnail", "description": "The primary identity or action anchor intersects true frame center."},
+        {"id": "vo_composition_center_anchor_dominance", "review_scale": "thumbnail", "description": "The centered anchor remains the unmistakable first visual read."},
+        {"id": "vo_composition_center_supporting_margins", "review_scale": "both", "description": "Margins and subordinate elements visibly reinforce the central anchor."},
+        {"id": "vo_composition_center_not_symmetry_only", "review_scale": "native", "description": "The subject anchor, rather than mirrored decoration alone, proves centrality."}
+      ],
+      "reject_substitutes": ["off_center_subject", "background_symmetry_only", "center_crop_only", "multiple_equal_center_objects"]
+    },
+    {
+      "id": "axial_bilateral_symmetry_relation",
+      "category": "composition_axial_bilateral_symmetry_relation",
+      "activation": {
+        "exact_terms": [
+          "axial bilateral-symmetry relation",
+          "scene-axis mirror-balance relation",
+          "축상 좌우 대칭 관계",
+          "중심축 대응 대칭 구도"
+        ],
+        "exclude_if_any_terms": ["radial symmetry", "centered object only", "asymmetric balance", "reflection only"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One explicit vertical or diagonal axis organizes corresponding masses on both sides, with paired contours, spacing, and visual weight remaining recognizably matched while a central anchor binds the two halves.",
+        "paraphrase_examples": [
+          "paired conservatory arches and worktables mirror each other around the adult subject on the center aisle",
+          "명확한 중심축 양쪽의 형태와 간격이 대응하고 중앙 기준물이 두 절반을 묶음",
+          "two scene halves remain measurably correspondent beyond merely placing one object in the middle"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["symmetry_axis", "symmetry_pairs", "symmetry_weight", "symmetry_boundary"],
+          "groups": [
+            {"id": "symmetry_axis", "any_terms": ["one explicit scene axis remains continuously readable through the composition", "하나의 명확한 장면 축이 구도 전체에서 연속적으로 읽힘"]},
+            {"id": "symmetry_pairs", "any_terms": ["paired contours or objects correspond on opposite sides of that axis", "대응하는 윤곽 또는 물체가 축의 반대쪽에 짝으로 놓임"]},
+            {"id": "symmetry_weight", "any_terms": ["spacing and visual weight remain recognizably matched across the two halves", "간격과 시각 무게가 두 절반 사이에서 알아볼 수 있게 대응함"]},
+            {"id": "symmetry_boundary", "any_terms": ["the bilateral relation extends beyond a single centered object or isolated reflection", "좌우 관계가 단일 중앙 물체나 고립된 반사보다 넓게 이어짐"]}
+          ]
+        },
+        "contrast_examples": ["one centered object", "an asymmetric counterbalance", "radial spokes", "a reflection with unrelated side masses"]
+      },
+      "concept_candidate": {"concept_terms": ["explicit scene axis", "paired opposite contours", "matched spacing and weight", "bilateral relation beyond one object"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["axial bilateral symmetry"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Establish one explicit scene axis, arrange paired forms on opposite sides with corresponding contours and spacing, and keep their visual weight matched around a central binding anchor.",
+      "required_evidence_fields": ["symmetry_axis_phrase", "symmetry_pairs_phrase", "symmetry_weight_phrase", "symmetry_boundary_phrase"],
+      "evidence_requirements": {
+        "symmetry_axis_phrase": {"min_content_words": 8, "must_mention_any": ["one explicit scene axis remains continuously readable through the composition"]},
+        "symmetry_pairs_phrase": {"min_content_words": 8, "must_mention_any": ["paired contours or objects correspond on opposite sides of that axis"]},
+        "symmetry_weight_phrase": {"min_content_words": 9, "must_mention_any": ["spacing and visual weight remain recognizably matched across the two halves"]},
+        "symmetry_boundary_phrase": {"min_content_words": 10, "must_mention_any": ["the bilateral relation extends beyond a single centered object or isolated reflection"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_symmetry_axis_readable", "review_scale": "thumbnail", "description": "One explicit axis remains readable across the composed scene."},
+        {"id": "vo_composition_symmetry_paired_forms", "review_scale": "both", "description": "Opposite-side contours or objects form recognizable corresponding pairs."},
+        {"id": "vo_composition_symmetry_weight_match", "review_scale": "both", "description": "Spacing and visual weight remain visibly matched across both halves."},
+        {"id": "vo_composition_symmetry_not_center_object_only", "review_scale": "native", "description": "The bilateral relation extends beyond one centered object or reflection."}
+      ],
+      "reject_substitutes": ["centered_object_only", "asymmetric_balance", "radial_symmetry", "isolated_reflection"]
+    },
+    {
+      "id": "asymmetric_counterbalance_relation",
+      "category": "composition_asymmetric_counterbalance_relation",
+      "activation": {
+        "exact_terms": [
+          "asymmetric counterbalance relation",
+          "off-center visual-weight counterbalance",
+          "비대칭 시각 무게 상쇄 관계",
+          "오프센터 주보조 균형 구도"
+        ],
+        "exclude_if_any_terms": ["bilateral symmetry", "centered portrait", "random clutter", "equal pair"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A dominant off-center primary mass is balanced across the field by a smaller but visually stronger secondary cue, while intervening space keeps the two weights distinct and the total frame intentionally stable.",
+        "paraphrase_examples": [
+          "a large adult figure at one edge is counterweighted by a small bright lantern across an open rain-dark field",
+          "큰 오프센터 주 피사체와 떨어진 작은 고대비 요소가 빈 공간을 사이에 두고 균형을 만듦",
+          "unequal forms reach equilibrium through scale, contrast, and separation rather than mirror matching"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["asym_primary", "asym_counterweight", "asym_separation", "asym_boundary"],
+          "groups": [
+            {"id": "asym_primary", "any_terms": ["one dominant primary mass occupies a clearly off-center region", "하나의 지배적인 주 덩어리가 분명한 오프센터 영역을 차지함"]},
+            {"id": "asym_counterweight", "any_terms": ["a smaller separated cue gains enough contrast or meaning to counterweight the primary mass", "떨어진 작은 단서가 충분한 대비 또는 의미로 주 덩어리의 무게를 상쇄함"]},
+            {"id": "asym_separation", "any_terms": ["intervening open or low-detail space keeps the unequal weights spatially distinct", "사이의 열린 또는 저정보 공간이 불균등한 무게를 공간적으로 구분함"]},
+            {"id": "asym_boundary", "any_terms": ["the equilibrium follows deliberate scale contrast and separation rather than bilateral matching or random clutter", "균형이 좌우 대응이나 무작위 혼잡이 아니라 의도한 크기 대비와 분리에서 생김"]}
+          ]
+        },
+        "contrast_examples": ["bilateral symmetry", "one unopposed edge-heavy subject", "two equal objects", "random clutter across the frame"]
+      },
+      "concept_candidate": {"concept_terms": ["dominant off-center mass", "smaller high-value counterweight", "separating open field", "unequal but stable balance"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["asymmetric counterbalance"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Place one dominant primary mass off center, counterweight it with a smaller separated cue of stronger contrast or meaning, and preserve intervening low-detail space so the unequal weights read as intentional equilibrium.",
+      "required_evidence_fields": ["asym_primary_phrase", "asym_counterweight_phrase", "asym_separation_phrase", "asym_boundary_phrase"],
+      "evidence_requirements": {
+        "asym_primary_phrase": {"min_content_words": 8, "must_mention_any": ["one dominant primary mass occupies a clearly off-center region"]},
+        "asym_counterweight_phrase": {"min_content_words": 11, "must_mention_any": ["a smaller separated cue gains enough contrast or meaning to counterweight the primary mass"]},
+        "asym_separation_phrase": {"min_content_words": 10, "must_mention_any": ["intervening open or low-detail space keeps the unequal weights spatially distinct"]},
+        "asym_boundary_phrase": {"min_content_words": 12, "must_mention_any": ["the equilibrium follows deliberate scale contrast and separation rather than bilateral matching or random clutter"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_asym_primary_mass", "review_scale": "thumbnail", "description": "One dominant primary mass occupies a clearly off-center frame region."},
+        {"id": "vo_composition_asym_secondary_counterweight", "review_scale": "thumbnail", "description": "A smaller separated cue visibly counterweights the dominant primary mass."},
+        {"id": "vo_composition_asym_intervening_space", "review_scale": "both", "description": "Open or low-detail space separates the unequal visual weights."},
+        {"id": "vo_composition_asym_not_clutter_or_symmetry", "review_scale": "native", "description": "Deliberate scale and contrast, rather than symmetry or clutter, create equilibrium."}
+      ],
+      "reject_substitutes": ["bilateral_symmetry", "unopposed_edge_weight", "equal_object_pair", "random_distributed_clutter"]
+    },
+    {
+      "id": "leading_line_target_continuity",
+      "category": "composition_leading_line_target_continuity",
+      "activation": {
+        "exact_terms": [
+          "leading-line target-continuity relation",
+          "target-bound leading-line composition",
+          "목표 연결 리딩 라인 관계",
+          "주 피사체 도달 유도선 구도"
+        ],
+        "exclude_if_any_terms": ["decorative stripes", "vanishing point only", "speed lines", "radial blur"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One continuous physical line or aligned scene edge enters away from the subject, travels visibly through the frame, and terminates at the primary target with no stronger competing endpoint interrupting the viewing path.",
+        "paraphrase_examples": [
+          "wet rail edges begin at a lower corner and continue without interruption to the adult courier's hand",
+          "화면 가장자리에서 시작한 실제 선이 중간에 끊기지 않고 주 피사체에 도달함",
+          "a path of repeated aligned edges delivers the eye to one subject rather than merely pointing toward a vanishing point"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["line_origin", "line_continuity", "line_target", "line_boundary"],
+          "groups": [
+            {"id": "line_origin", "any_terms": ["one physical line or aligned edge begins away from the primary subject", "하나의 실제 선 또는 정렬된 경계가 주 피사체와 떨어진 곳에서 시작함"]},
+            {"id": "line_continuity", "any_terms": ["the line remains visibly continuous or rhythmically linked across the intervening frame", "유도선이 사이 화면을 가로질러 연속적 또는 리듬 있게 연결됨"]},
+            {"id": "line_target", "any_terms": ["the line terminates at the primary target's identity-bearing or action-bearing anchor", "유도선이 주 목표의 정체성 또는 행동 핵심 기준물에서 끝남"]},
+            {"id": "line_boundary", "any_terms": ["the viewing route avoids a stronger competing endpoint and is not decorative striping or speed graphics", "시선 경로가 더 강한 경쟁 끝점을 피하며 장식 줄무늬나 속도 그래픽이 아님"]}
+          ]
+        },
+        "contrast_examples": ["decorative stripes", "lines ending at empty space", "a vanishing point that bypasses the subject", "graphic speed lines"]
+      },
+      "concept_candidate": {"concept_terms": ["distant line origin", "continuous physical eye path", "target termination", "single dominant endpoint"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["target-bound leading line"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Begin one physical line or aligned edge away from the subject, keep it continuously readable through the frame, and terminate it at the primary identity or action anchor without a stronger competing endpoint.",
+      "required_evidence_fields": ["line_origin_phrase", "line_continuity_phrase", "line_target_phrase", "line_boundary_phrase"],
+      "evidence_requirements": {
+        "line_origin_phrase": {"min_content_words": 9, "must_mention_any": ["one physical line or aligned edge begins away from the primary subject"]},
+        "line_continuity_phrase": {"min_content_words": 10, "must_mention_any": ["the line remains visibly continuous or rhythmically linked across the intervening frame"]},
+        "line_target_phrase": {"min_content_words": 10, "must_mention_any": ["the line terminates at the primary target's identity-bearing or action-bearing anchor"]},
+        "line_boundary_phrase": {"min_content_words": 12, "must_mention_any": ["the viewing route avoids a stronger competing endpoint and is not decorative striping or speed graphics"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_line_origin_away", "review_scale": "thumbnail", "description": "A physical line begins away from the primary subject."},
+        {"id": "vo_composition_line_path_continuous", "review_scale": "both", "description": "The line remains visibly continuous across the intervening frame."},
+        {"id": "vo_composition_line_terminates_target", "review_scale": "both", "description": "The viewing line terminates at the primary target anchor."},
+        {"id": "vo_composition_line_not_decorative", "review_scale": "native", "description": "Decorative striping, speed graphics, or a competing endpoint do not substitute."}
+      ],
+      "reject_substitutes": ["decorative_stripes", "line_to_empty_space", "subject_bypassing_vanishing_point", "graphic_speed_lines"]
+    },
+    {
+      "id": "look_motion_room_direction_relation",
+      "category": "composition_look_motion_room_direction_relation",
+      "activation": {
+        "exact_terms": [
+          "look-motion-room direction relation",
+          "gaze-or-travel room composition",
+          "시선 이동 여백 방향 관계",
+          "진행 방향 앞 여백 구도"
+        ],
+        "exclude_if_any_terms": ["space behind subject", "centered frontal gaze", "random empty side", "tight crop"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A visible gaze, body-travel, or action vector establishes one direction, the subject's origin remains inside the frame, and noticeably more usable open space lies ahead of that vector than behind it.",
+        "paraphrase_examples": [
+          "the cyclist travels toward camera right and the frame leaves a wider readable pier ahead than behind the rear wheel",
+          "인물의 시선 또는 이동 벡터가 분명하고 그 앞쪽 여백이 뒤쪽보다 눈에 띄게 큼",
+          "open space extends the action direction rather than appearing on an unrelated side"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["room_vector", "room_origin", "room_ahead", "room_boundary"],
+          "groups": [
+            {"id": "room_vector", "any_terms": ["one visible gaze body-travel or carried-action vector defines a clear direction", "하나의 가시적 시선 몸 이동 또는 행동 벡터가 분명한 방향을 정함"]},
+            {"id": "room_origin", "any_terms": ["the subject or action origin remains visibly inside the frame", "피사체 또는 행동 시작점이 화면 안에 보이게 남음"]},
+            {"id": "room_ahead", "any_terms": ["the frame preserves noticeably more usable open space ahead of the vector than behind it", "화면이 벡터 뒤보다 앞에 눈에 띄게 더 큰 사용 가능한 여백을 남김"]},
+            {"id": "room_boundary", "any_terms": ["the open field extends the declared direction rather than sitting on an unrelated side or behind the subject", "열린 영역이 무관한 쪽이나 피사체 뒤가 아니라 선언된 방향을 연장함"]}
+          ]
+        },
+        "contrast_examples": ["space behind the movement", "a frontal gaze with equal margins", "an unrelated empty corner", "a crop that removes the travel origin"]
+      },
+      "concept_candidate": {"concept_terms": ["visible direction vector", "in-frame action origin", "greater room ahead", "directionally relevant open field"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["look and motion room"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Make one gaze or travel vector visibly directional, keep its origin inside the frame, and preserve substantially more open space ahead of that vector than behind it so the composition extends the action.",
+      "required_evidence_fields": ["room_vector_phrase", "room_origin_phrase", "room_ahead_phrase", "room_boundary_phrase"],
+      "evidence_requirements": {
+        "room_vector_phrase": {"min_content_words": 10, "must_mention_any": ["one visible gaze body-travel or carried-action vector defines a clear direction"]},
+        "room_origin_phrase": {"min_content_words": 8, "must_mention_any": ["the subject or action origin remains visibly inside the frame"]},
+        "room_ahead_phrase": {"min_content_words": 12, "must_mention_any": ["the frame preserves noticeably more usable open space ahead of the vector than behind it"]},
+        "room_boundary_phrase": {"min_content_words": 13, "must_mention_any": ["the open field extends the declared direction rather than sitting on an unrelated side or behind the subject"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_room_direction_vector", "review_scale": "thumbnail", "description": "One gaze or motion vector defines a clear travel direction."},
+        {"id": "vo_composition_room_origin_visible", "review_scale": "both", "description": "The subject or action origin remains visibly inside the frame."},
+        {"id": "vo_composition_room_greater_ahead", "review_scale": "thumbnail", "description": "Noticeably more open space lies ahead of the vector than behind."},
+        {"id": "vo_composition_room_not_wrong_side", "review_scale": "native", "description": "The open field extends the action direction rather than an unrelated side."}
+      ],
+      "reject_substitutes": ["space_behind_motion", "frontal_equal_margins", "unrelated_empty_corner", "cropped_action_origin"]
+    },
+    {
+      "id": "subject_field_negative_space_relation",
+      "category": "composition_subject_field_negative_space_relation",
+      "activation": {
+        "exact_terms": [
+          "subject-field negative-space relation",
+          "low-detail field subject-isolation composition",
+          "피사체 저정보 여백 관계",
+          "주 피사체 배경 여백 위계 구도"
+        ],
+        "exclude_if_any_terms": ["underexposed background", "empty crop", "frame filling", "blur only"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One large contiguous low-detail field remains visibly simpler than the primary subject, separates cleanly from its contour, and strengthens the subject's hierarchy while retaining enough tonal or material information to read as intentional space.",
+        "paraphrase_examples": [
+          "a small adult subject is isolated against a broad misty wall whose subtle texture remains visible",
+          "넓고 연속된 저정보 영역이 피사체 윤곽과 분리되고 의도한 여백으로 읽힘",
+          "the open field carries calm visual weight instead of reading as missing scenery or crushed blacks"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["negative_field", "negative_contour", "negative_hierarchy", "negative_boundary"],
+          "groups": [
+            {"id": "negative_field", "any_terms": ["one large contiguous low-detail field occupies a substantial part of the frame", "하나의 크고 연속된 저정보 영역이 화면의 상당 부분을 차지함"]},
+            {"id": "negative_contour", "any_terms": ["the primary subject contour separates cleanly from that simpler field", "주 피사체 윤곽이 더 단순한 영역에서 선명하게 분리됨"]},
+            {"id": "negative_hierarchy", "any_terms": ["the low-detail field visibly strengthens the subject's first-read hierarchy", "저정보 영역이 피사체의 첫 읽기 위계를 눈에 띄게 강화함"]},
+            {"id": "negative_boundary", "any_terms": ["subtle tonal or material information keeps the field intentional rather than an empty crop or lost exposure", "미세한 톤 또는 재질 정보가 영역을 빈 크롭이나 노출 손실이 아닌 의도한 공간으로 유지함"]}
+          ]
+        },
+        "contrast_examples": ["crushed-black background", "empty crop beside a subject", "uniform blur alone", "frame-filling portrait"]
+      },
+      "concept_candidate": {"concept_terms": ["large contiguous low-detail field", "clean subject contour", "strengthened first-read hierarchy", "intentional tonal field"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["subject-field negative space"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Reserve one large contiguous low-detail field, separate the primary contour cleanly against it, and preserve subtle tone or material so the space strengthens hierarchy rather than reading as an empty crop or exposure loss.",
+      "required_evidence_fields": ["negative_field_phrase", "negative_contour_phrase", "negative_hierarchy_phrase", "negative_boundary_phrase"],
+      "evidence_requirements": {
+        "negative_field_phrase": {"min_content_words": 10, "must_mention_any": ["one large contiguous low-detail field occupies a substantial part of the frame"]},
+        "negative_contour_phrase": {"min_content_words": 8, "must_mention_any": ["the primary subject contour separates cleanly from that simpler field"]},
+        "negative_hierarchy_phrase": {"min_content_words": 8, "must_mention_any": ["the low-detail field visibly strengthens the subject's first-read hierarchy"]},
+        "negative_boundary_phrase": {"min_content_words": 13, "must_mention_any": ["subtle tonal or material information keeps the field intentional rather than an empty crop or lost exposure"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_negative_large_field", "review_scale": "thumbnail", "description": "A large contiguous low-detail field occupies substantial frame area."},
+        {"id": "vo_composition_negative_subject_separation", "review_scale": "both", "description": "The primary subject contour separates cleanly from the simpler field."},
+        {"id": "vo_composition_negative_hierarchy", "review_scale": "thumbnail", "description": "The open field visibly strengthens first-read subject hierarchy."},
+        {"id": "vo_composition_negative_not_crop_or_exposure", "review_scale": "native", "description": "Visible tone or material distinguishes intentional space from crop or exposure loss."}
+      ],
+      "reject_substitutes": ["crushed_black_background", "empty_crop", "uniform_blur_only", "frame_filling_subject"]
+    },
+    {
+      "id": "frame_within_frame_boundary_relation",
+      "category": "composition_frame_within_frame_boundary_relation",
+      "activation": {
+        "exact_terms": [
+          "frame-within-frame boundary relation",
+          "physical foreground enclosure composition",
+          "실경 프레임 속 프레임 관계",
+          "전경 경계 피사체 포위 구도"
+        ],
+        "exclude_if_any_terms": ["digital vignette", "border graphic", "edge obstruction", "flat backdrop"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical scene-bound foreground opening encloses the primary subject on multiple sides, its thickness or occlusion proves that it occupies a nearer plane, and the subject remains legible through the opening.",
+        "paraphrase_examples": [
+          "an adult conservator is surrounded by the near arch and door jamb while the recess depth remains visible",
+          "실제 전경 개구부가 여러 방향에서 피사체를 둘러싸고 경계 두께와 가림이 깊이를 증명함",
+          "the subject is framed by architecture or foliage that belongs to the photographed space rather than a graphic border"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["frame_boundary", "frame_enclosure", "frame_depth", "frame_boundary_rule"],
+          "groups": [
+            {"id": "frame_boundary", "any_terms": ["one physical foreground opening belongs visibly to the photographed scene", "하나의 실제 전경 개구부가 촬영된 장면에 속한 것으로 분명히 보임"]},
+            {"id": "frame_enclosure", "any_terms": ["the opening encloses the primary subject on at least three readable sides", "개구부가 읽을 수 있는 최소 세 방향에서 주 피사체를 둘러쌈"]},
+            {"id": "frame_depth", "any_terms": ["boundary thickness overlap or occlusion proves a nearer foreground plane", "경계의 두께 겹침 또는 가림이 더 가까운 전경 면을 증명함"]},
+            {"id": "frame_boundary_rule", "any_terms": ["the subject remains legible through the opening and the enclosure is not a digital vignette or graphic border", "피사체가 개구부 안에서 읽히며 둘레가 디지털 비네팅이나 그래픽 테두리가 아님"]}
+          ]
+        },
+        "contrast_examples": ["digital vignette", "a graphic border", "one edge obstruction", "a flat arch printed on a backdrop"]
+      },
+      "concept_candidate": {"concept_terms": ["scene-bound foreground opening", "three-sided enclosure", "near-plane thickness and occlusion", "legible subject through opening"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["physical frame within a frame"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Use one physical foreground opening from the photographed scene to enclose the primary subject on at least three sides, show boundary thickness or occlusion, and keep the subject legible through the opening.",
+      "required_evidence_fields": ["frame_boundary_phrase", "frame_enclosure_phrase", "frame_depth_phrase", "frame_boundary_rule_phrase"],
+      "evidence_requirements": {
+        "frame_boundary_phrase": {"min_content_words": 9, "must_mention_any": ["one physical foreground opening belongs visibly to the photographed scene"]},
+        "frame_enclosure_phrase": {"min_content_words": 10, "must_mention_any": ["the opening encloses the primary subject on at least three readable sides"]},
+        "frame_depth_phrase": {"min_content_words": 9, "must_mention_any": ["boundary thickness overlap or occlusion proves a nearer foreground plane"]},
+        "frame_boundary_rule_phrase": {"min_content_words": 14, "must_mention_any": ["the subject remains legible through the opening and the enclosure is not a digital vignette or graphic border"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_frame_scene_bound_opening", "review_scale": "thumbnail", "description": "A physical foreground opening visibly belongs to the photographed scene."},
+        {"id": "vo_composition_frame_three_side_enclosure", "review_scale": "both", "description": "The opening encloses the primary subject on at least three readable sides."},
+        {"id": "vo_composition_frame_near_plane_depth", "review_scale": "native", "description": "Boundary thickness, overlap, or occlusion proves a nearer plane."},
+        {"id": "vo_composition_frame_not_vignette", "review_scale": "native", "description": "A digital vignette, graphic border, or single obstruction does not substitute."}
+      ],
+      "reject_substitutes": ["digital_vignette", "graphic_border", "single_edge_obstruction", "flat_backdrop_arch"]
+    },
+    {
+      "id": "three_plane_depth_chain",
+      "category": "composition_three_plane_depth_chain",
+      "activation": {
+        "exact_terms": [
+          "three-plane depth-chain relation",
+          "foreground-midground-background continuity composition",
+          "전중후경 깊이 연쇄 관계",
+          "삼중 공간층 연속 구도"
+        ],
+        "exclude_if_any_terms": ["flat collage", "three listed objects", "background blur only", "split screen"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Distinct foreground, middle-distance, and background anchors remain readable in one continuous space, with coherent overlap and scale recession linking each adjacent plane rather than merely listing three objects or blurring the backdrop.",
+        "paraphrase_examples": [
+          "a near glass edge overlaps an adult subject in the middle distance while a smaller greenhouse door anchors the background",
+          "전경 중경 배경 기준물이 각각 보이고 겹침과 크기 변화가 인접 층을 이어 줌",
+          "three depth planes form one navigable scene instead of three flat bands"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["depth_anchors", "depth_overlap", "depth_scale", "depth_boundary"],
+          "groups": [
+            {"id": "depth_anchors", "any_terms": ["distinct foreground middle-distance and background anchors are all simultaneously readable", "서로 다른 전경 중경 배경 기준물이 모두 동시에 읽힘"]},
+            {"id": "depth_overlap", "any_terms": ["coherent partial occlusion links the foreground to the middle distance and the middle distance to the background", "일관된 부분 가림이 전경과 중경 그리고 중경과 배경을 연결함"]},
+            {"id": "depth_scale", "any_terms": ["relative scale or atmospheric change recedes consistently from near to far", "상대 크기 또는 대기 변화가 가까운 곳에서 먼 곳으로 일관되게 후퇴함"]},
+            {"id": "depth_boundary", "any_terms": ["the three anchors occupy one continuous navigable space rather than flat bands a collage or background blur alone", "세 기준물이 평면 띠 콜라주 또는 배경 흐림만이 아니라 하나의 연속된 이동 가능 공간을 차지함"]}
+          ]
+        },
+        "contrast_examples": ["three flat graphic bands", "a collage", "background blur only", "three objects with no overlap or scale relation"]
+      },
+      "concept_candidate": {"concept_terms": ["three readable plane anchors", "adjacent-plane occlusion", "near-to-far scale recession", "continuous navigable space"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["three-plane depth chain"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep distinct foreground, middle-distance, and background anchors readable together, link adjacent planes through coherent overlap, and maintain near-to-far scale or atmospheric recession in one continuous space.",
+      "required_evidence_fields": ["depth_anchors_phrase", "depth_overlap_phrase", "depth_scale_phrase", "depth_boundary_phrase"],
+      "evidence_requirements": {
+        "depth_anchors_phrase": {"min_content_words": 9, "must_mention_any": ["distinct foreground middle-distance and background anchors are all simultaneously readable"]},
+        "depth_overlap_phrase": {"min_content_words": 13, "must_mention_any": ["coherent partial occlusion links the foreground to the middle distance and the middle distance to the background"]},
+        "depth_scale_phrase": {"min_content_words": 9, "must_mention_any": ["relative scale or atmospheric change recedes consistently from near to far"]},
+        "depth_boundary_phrase": {"min_content_words": 15, "must_mention_any": ["the three anchors occupy one continuous navigable space rather than flat bands a collage or background blur alone"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_depth_three_anchors", "review_scale": "thumbnail", "description": "Foreground, middle-distance, and background anchors all read simultaneously."},
+        {"id": "vo_composition_depth_adjacent_occlusion", "review_scale": "both", "description": "Coherent occlusion links each adjacent pair of depth planes."},
+        {"id": "vo_composition_depth_scale_recession", "review_scale": "both", "description": "Scale or atmosphere recedes consistently from near to far."},
+        {"id": "vo_composition_depth_not_flat_bands", "review_scale": "native", "description": "Flat bands, collage structure, or blur alone do not substitute."}
+      ],
+      "reject_substitutes": ["flat_graphic_bands", "collage_layers", "background_blur_only", "unrelated_three_objects"]
+    },
+    {
+      "id": "pattern_break_focal_exception",
+      "category": "composition_pattern_break_focal_exception",
+      "activation": {
+        "exact_terms": [
+          "pattern-break focal-exception relation",
+          "single exception in repeated-pattern composition",
+          "패턴 브레이크 초점 예외 관계",
+          "반복 규칙 단일 예외 구도"
+        ],
+        "exclude_if_any_terms": ["random variety", "several anomalies", "one object only", "chaotic texture"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A sufficiently long baseline of similar repeated forms establishes one readable rhythm, exactly one local exception breaks a single salient property, and that exception becomes the first focal read while the surrounding pattern remains intact.",
+        "paraphrase_examples": [
+          "a row of identical gray umbrellas establishes rhythm while one open amber umbrella becomes the sole focal break",
+          "충분히 반복된 동일 형태 속 하나의 색 또는 방향 예외만 첫 초점으로 읽힘",
+          "the viewer reads both the rule and the one violation at thumbnail scale"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["pattern_baseline", "pattern_exception", "pattern_focal", "pattern_boundary"],
+          "groups": [
+            {"id": "pattern_baseline", "any_terms": ["at least four similar forms establish one stable repeated visual baseline", "최소 네 개의 유사한 형태가 하나의 안정된 반복 기준을 만듦"]},
+            {"id": "pattern_exception", "any_terms": ["exactly one local element breaks color orientation spacing or state relative to that baseline", "정확히 하나의 국소 요소가 반복 기준과 비교해 색 방향 간격 또는 상태를 깸"]},
+            {"id": "pattern_focal", "any_terms": ["the single exception becomes the unmistakable first focal read while the baseline stays legible", "단일 예외가 분명한 첫 초점이 되면서 반복 기준도 계속 읽힘"]},
+            {"id": "pattern_boundary", "any_terms": ["the relation remains one rule and one exception rather than random variety several anomalies or chaotic texture", "관계가 무작위 다양성 여러 이상 또는 혼란한 질감이 아니라 하나의 규칙과 하나의 예외로 유지됨"]}
+          ]
+        },
+        "contrast_examples": ["randomly varied objects", "several competing anomalies", "one isolated object", "chaotic texture with no baseline"]
+      },
+      "concept_candidate": {"concept_terms": ["stable repeated baseline", "single local exception", "exception as first focal read", "one rule and one break"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["pattern-break focal exception"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Establish a stable baseline with at least four similar forms, vary exactly one local element in a salient property, and keep both the repeated rule and its single focal exception readable together.",
+      "required_evidence_fields": ["pattern_baseline_phrase", "pattern_exception_phrase", "pattern_focal_phrase", "pattern_boundary_phrase"],
+      "evidence_requirements": {
+        "pattern_baseline_phrase": {"min_content_words": 9, "must_mention_any": ["at least four similar forms establish one stable repeated visual baseline"]},
+        "pattern_exception_phrase": {"min_content_words": 12, "must_mention_any": ["exactly one local element breaks color orientation spacing or state relative to that baseline"]},
+        "pattern_focal_phrase": {"min_content_words": 12, "must_mention_any": ["the single exception becomes the unmistakable first focal read while the baseline stays legible"]},
+        "pattern_boundary_phrase": {"min_content_words": 15, "must_mention_any": ["the relation remains one rule and one exception rather than random variety several anomalies or chaotic texture"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_pattern_baseline_readable", "review_scale": "thumbnail", "description": "At least four similar forms establish a readable repeated baseline."},
+        {"id": "vo_composition_pattern_single_exception", "review_scale": "both", "description": "Exactly one local element visibly breaks the established pattern."},
+        {"id": "vo_composition_pattern_exception_focal", "review_scale": "thumbnail", "description": "The single exception becomes the unmistakable first focal read."},
+        {"id": "vo_composition_pattern_not_random_variety", "review_scale": "native", "description": "Random variety, multiple anomalies, or chaotic texture do not substitute."}
+      ],
+      "reject_substitutes": ["random_variety", "multiple_anomalies", "single_object_without_pattern", "chaotic_texture"]
+    },
+    {
+      "id": "primary_secondary_figure_ground_hierarchy",
+      "category": "composition_primary_secondary_figure_ground_hierarchy",
+      "activation": {
+        "exact_terms": [
+          "primary-secondary figure-ground hierarchy",
+          "three-level focal-hierarchy composition",
+          "주보조 도형 바탕 위계",
+          "일차 이차 배경 초점 구도"
+        ],
+        "exclude_if_any_terms": ["everything sharp equally", "background blur only", "equal focal points", "subject camouflage"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One primary figure owns the strongest edge, contrast, or semantic signal, a secondary element remains visibly subordinate yet readable, and the background supplies separation without competing for first attention.",
+        "paraphrase_examples": [
+          "the adult face and working hand read first, a small brass tool reads second, and greenhouse detail stays supportive",
+          "주 도형이 가장 강한 경계와 대비를 갖고 보조 요소와 배경이 단계적으로 낮아짐",
+          "three attention levels survive without relying on blur as the only separator"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["hierarchy_primary", "hierarchy_secondary", "hierarchy_ground", "hierarchy_boundary"],
+          "groups": [
+            {"id": "hierarchy_primary", "any_terms": ["one primary figure owns the frame's strongest edge contrast or semantic signal", "하나의 주 도형이 화면에서 가장 강한 경계 대비 또는 의미 신호를 가짐"]},
+            {"id": "hierarchy_secondary", "any_terms": ["one secondary element remains readable but visibly subordinate to the primary figure", "하나의 보조 요소가 읽히지만 주 도형보다 분명히 종속됨"]},
+            {"id": "hierarchy_ground", "any_terms": ["the background separates and supports both figures without competing for first attention", "배경이 첫 시선을 경쟁하지 않으면서 두 도형을 분리하고 지지함"]},
+            {"id": "hierarchy_boundary", "any_terms": ["the three attention levels follow edge contrast scale or meaning rather than background blur alone", "세 주의 단계가 배경 흐림만이 아니라 경계 대비 크기 또는 의미에서 생김"]}
+          ]
+        },
+        "contrast_examples": ["equal focal points", "background blur only", "camouflaged primary subject", "a secondary prop brighter than the subject"]
+      },
+      "concept_candidate": {"concept_terms": ["strongest primary signal", "readable subordinate secondary", "supportive background separation", "three attention levels"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["primary-secondary figure-ground hierarchy"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Give one primary figure the strongest edge, contrast, or semantic signal; keep one secondary element readable but subordinate; and use the background to separate both without competing for first attention.",
+      "required_evidence_fields": ["hierarchy_primary_phrase", "hierarchy_secondary_phrase", "hierarchy_ground_phrase", "hierarchy_boundary_phrase"],
+      "evidence_requirements": {
+        "hierarchy_primary_phrase": {"min_content_words": 10, "must_mention_any": ["one primary figure owns the frame's strongest edge contrast or semantic signal"]},
+        "hierarchy_secondary_phrase": {"min_content_words": 10, "must_mention_any": ["one secondary element remains readable but visibly subordinate to the primary figure"]},
+        "hierarchy_ground_phrase": {"min_content_words": 11, "must_mention_any": ["the background separates and supports both figures without competing for first attention"]},
+        "hierarchy_boundary_phrase": {"min_content_words": 12, "must_mention_any": ["the three attention levels follow edge contrast scale or meaning rather than background blur alone"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_hierarchy_primary_first", "review_scale": "thumbnail", "description": "One primary figure owns the strongest first-read visual signal."},
+        {"id": "vo_composition_hierarchy_secondary_subordinate", "review_scale": "both", "description": "A readable secondary element remains visibly subordinate to the primary."},
+        {"id": "vo_composition_hierarchy_background_support", "review_scale": "thumbnail", "description": "The background separates and supports without competing for first attention."},
+        {"id": "vo_composition_hierarchy_not_blur_only", "review_scale": "native", "description": "Edge, contrast, scale, or meaning establishes hierarchy beyond blur alone."}
+      ],
+      "reject_substitutes": ["equal_focal_points", "background_blur_only", "primary_camouflage", "secondary_outcompetes_primary"]
+    },
+    {
+      "id": "peak_action_event_phase",
+      "category": "composition_peak_action_event_phase",
+      "activation": {
+        "exact_terms": [
+          "peak-action event-phase relation",
+          "decisive unfinished-action composition",
+          "결정적 행동 단계 관계",
+          "원인 동작 결과 동시 구도"
+        ],
+        "exclude_if_any_terms": ["settled pose", "before action", "after action", "speed lines"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The photograph freezes an unstable mid-action instant in which a visible cause, a directional body or object trajectory, and an immediate consequence already beginning remain simultaneously legible before the event settles.",
+        "paraphrase_examples": [
+          "wind tears one paper panel free as the adult installer reaches across and the first fastener bends visibly",
+          "가시적 원인과 진행 중 궤적과 즉시 시작된 결과가 사건이 끝나기 전에 한 프레임에 함께 보임",
+          "the frame catches the point of maximum change rather than a posed anticipation or completed aftermath"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["action_cause", "action_trajectory", "action_consequence", "action_boundary"],
+          "groups": [
+            {"id": "action_cause", "any_terms": ["one visible cause or trigger remains identifiable inside the frame", "하나의 가시적 원인 또는 촉발 요소가 화면 안에서 식별됨"]},
+            {"id": "action_trajectory", "any_terms": ["a body limb fabric liquid or object shows one directional trajectory in mid-transition", "몸 팔다리 천 액체 또는 물체가 전환 중 하나의 방향 궤적을 보임"]},
+            {"id": "action_consequence", "any_terms": ["one immediate physical consequence has already begun but has not reached a settled endpoint", "하나의 즉시 물리적 결과가 이미 시작됐지만 안정된 끝점에 도달하지 않음"]},
+            {"id": "action_boundary", "any_terms": ["cause trajectory and consequence coexist in the same instant rather than a before pose completed aftermath or decorative speed graphic", "원인 궤적 결과가 이전 포즈 완료된 사후 장면 또는 장식 속도 그래픽이 아니라 같은 순간에 공존함"]}
+          ]
+        },
+        "contrast_examples": ["a posed anticipation", "a completed aftermath", "a frozen stance with speed lines", "motion blur with no visible cause"]
+      },
+      "concept_candidate": {"concept_terms": ["visible in-frame cause", "directional mid-transition trajectory", "immediate unfinished consequence", "single decisive instant"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["peak-action event phase"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Freeze one unstable action instant with an identifiable in-frame cause, a directional body or object trajectory, and one immediate consequence already beginning but not yet settled.",
+      "required_evidence_fields": ["action_cause_phrase", "action_trajectory_phrase", "action_consequence_phrase", "action_boundary_phrase"],
+      "evidence_requirements": {
+        "action_cause_phrase": {"min_content_words": 9, "must_mention_any": ["one visible cause or trigger remains identifiable inside the frame"]},
+        "action_trajectory_phrase": {"min_content_words": 12, "must_mention_any": ["a body limb fabric liquid or object shows one directional trajectory in mid-transition"]},
+        "action_consequence_phrase": {"min_content_words": 12, "must_mention_any": ["one immediate physical consequence has already begun but has not reached a settled endpoint"]},
+        "action_boundary_phrase": {"min_content_words": 16, "must_mention_any": ["cause trajectory and consequence coexist in the same instant rather than a before pose completed aftermath or decorative speed graphic"]}
+      },
+      "render_gates": [
+        {"id": "vo_composition_action_cause_visible", "review_scale": "thumbnail", "description": "One concrete in-frame cause or trigger remains visibly identifiable."},
+        {"id": "vo_composition_action_trajectory_midphase", "review_scale": "both", "description": "A body or object follows one readable directional mid-transition trajectory."},
+        {"id": "vo_composition_action_consequence_unfinished", "review_scale": "both", "description": "An immediate consequence has begun without reaching a settled endpoint."},
+        {"id": "vo_composition_action_not_before_after", "review_scale": "native", "description": "A posed before-state, completed aftermath, or speed graphic does not substitute."}
+      ],
+      "reject_substitutes": ["posed_anticipation", "completed_aftermath", "speed_graphic_only", "motion_blur_without_cause"]
     }
   ]
 }
