@@ -26213,6 +26213,312 @@
         {"id": "vo_composition_action_not_before_after", "review_scale": "native", "description": "A posed before-state, completed aftermath, or speed graphic does not substitute."}
       ],
       "reject_substitutes": ["posed_anticipation", "completed_aftermath", "speed_graphic_only", "motion_blur_without_cause"]
+    },
+    {
+      "id": "mirror_selfie_reflection_device_topology",
+      "category": "social_capture_mirror_selfie_topology",
+      "activation": {
+        "exact_terms": ["mirror-selfie reflection-device topology", "coherent mirror-selfie topology", "거셀", "거울 셀카", "미러 셀피"],
+        "exclude_if_any_terms": ["direct front-camera selfie", "empty mirror", "phone portrait", "software mirror frame", "phone screen photo"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical mirror boundary contains both one clearly adult subject's reflection and the phone held by that subject. The reflected gaze, hand-device contact, mirror-plane depth, and occlusion agree as one capture topology, so a direct front-camera selfie, an empty reflection, or an arbitrary phone cannot substitute.",
+        "paraphrase_examples": ["the mirror edge and reflected room establish a physical plane containing both the adult subject and her held phone", "거울 경계 안에서 성인 피사체와 손에 든 휴대폰이 같은 반사 공간을 공유함", "the subject's reflection gaze and phone occlusion agree with the mirror rather than a software frame"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["mirror_physical_plane", "mirror_subject_inside", "mirror_device_contact", "mirror_gaze_occlusion", "mirror_topology_boundary"],
+          "groups": [
+            {"id": "mirror_physical_plane", "any_terms": ["a visible mirror edge thickness seam or reflected-room discontinuity establishes one physical reflective plane", "거울 테두리 두께 이음 또는 반사된 공간 차이가 물리 반사면을 증명함"]},
+            {"id": "mirror_subject_inside", "any_terms": ["one clearly adult subject's face hair and body appear inside that same reflected space", "한 명의 분명한 성인 피사체 얼굴 머리카락 몸이 같은 반사 공간 안에 보임"]},
+            {"id": "mirror_device_contact", "any_terms": ["the reflected subject visibly grips one phone and the hand-to-device contact remains anatomically coherent", "반사된 피사체가 휴대폰 하나를 실제로 쥐고 손과 기기 접촉이 일관됨"]},
+            {"id": "mirror_gaze_occlusion", "any_terms": ["reflection gaze phone placement and any facial occlusion agree with the mirror geometry", "반사 시선 휴대폰 위치와 얼굴 가림이 거울 기하와 일치함"]},
+            {"id": "mirror_topology_boundary", "any_terms": ["a direct selfie empty mirror detached phone phone-screen image or software border does not substitute", "직접 셀피 빈 거울 분리된 휴대폰 화면 사진 또는 소프트웨어 테두리는 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["a direct arm-length selfie", "an adult standing beside an empty mirror", "a phone visible without hand contact", "a mirrored graphic frame with no reflected room", "a close-up of a phone screen"]
+      },
+      "concept_candidate": {"concept_terms": ["physical mirror plane", "adult subject and held phone inside reflection", "coherent reflection gaze and occlusion", "hand-device contact", "not direct selfie or software frame"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["coherent mirror-selfie topology"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Keep one physical mirror boundary readable, place the clearly adult subject and the phone she visibly grips inside the same reflected room, and align reflected gaze, hand contact, and facial occlusion with the mirror plane.",
+      "required_evidence_fields": ["mirror_plane_phrase", "mirror_subject_phrase", "mirror_device_phrase", "mirror_gaze_phrase", "mirror_boundary_phrase"],
+      "evidence_requirements": {
+        "mirror_plane_phrase": {"min_content_words": 12, "must_mention_any": ["a visible mirror edge thickness seam or reflected-room discontinuity establishes one physical reflective plane"]},
+        "mirror_subject_phrase": {"min_content_words": 12, "must_mention_any": ["one clearly adult subject's face hair and body appear inside that same reflected space"]},
+        "mirror_device_phrase": {"min_content_words": 13, "must_mention_any": ["the reflected subject visibly grips one phone and the hand-to-device contact remains anatomically coherent"]},
+        "mirror_gaze_phrase": {"min_content_words": 11, "must_mention_any": ["reflection gaze phone placement and any facial occlusion agree with the mirror geometry"]},
+        "mirror_boundary_phrase": {"min_content_words": 15, "must_mention_any": ["a direct selfie empty mirror detached phone phone-screen image or software border does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_social_mirror_physical_plane", "review_scale": "thumbnail", "description": "A physical mirror edge, seam, thickness, or reflected-room discontinuity establishes the reflective plane."},
+        {"id": "vo_social_mirror_subject_and_phone_inside", "review_scale": "both", "description": "The clearly adult subject and the phone she holds both appear inside the same reflection."},
+        {"id": "vo_social_mirror_hand_device_contact", "review_scale": "native", "description": "The reflected hand visibly grips one phone with coherent anatomy and device placement."},
+        {"id": "vo_social_mirror_gaze_occlusion_coherent", "review_scale": "both", "description": "Reflected gaze, phone position, and facial occlusion agree with the mirror geometry."},
+        {"id": "vo_social_mirror_not_direct_or_software", "review_scale": "native", "description": "Direct selfie, empty mirror, detached phone, phone-screen image, and software border do not substitute."}
+      ],
+      "reject_substitutes": ["direct_front_camera_selfie", "empty_mirror", "detached_phone", "phone_screen_image", "software_mirror_border"]
+    },
+    {
+      "id": "overhead_social_snapshot_relation",
+      "category": "social_capture_close_overhead_relation",
+      "activation": {
+        "exact_terms": ["close overhead social-snapshot relation", "overhead adult social portrait geometry", "MZ 항공샷", "인물 항공샷", "초근접 탑다운 인물샷"],
+        "exclude_if_any_terms": ["drone landscape", "eye-level portrait", "telephoto overhead", "flat crop", "fisheye face filter"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A camera visibly close above one clearly adult subject looks steeply downward. A surrounding ground plane, upward response, coherent top-down body foreshortening, and enlarged near hand or prop establish the elevated relation without turning a drone view, eye-level crop, or isolated stretched limb into an overhead portrait.",
+        "paraphrase_examples": ["a crouching adult looks up toward a nearby high camera while pavement radiates around the body and one raised hand becomes the near anchor", "가까운 상공 카메라와 바닥면과 위로 향한 반응이 같은 수직 관계를 보임", "top-down foreshortening remains coherent across head torso limbs and a raised prop"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["overhead_camera_position", "overhead_ground_plane", "overhead_subject_response", "overhead_foreshortening", "overhead_boundary"],
+          "groups": [
+            {"id": "overhead_camera_position", "any_terms": ["the camera is visibly close above one clearly adult subject and points steeply downward", "카메라가 분명한 성인 피사체 가까운 위쪽에서 가파르게 아래를 향함"]},
+            {"id": "overhead_ground_plane", "any_terms": ["a readable ground or floor plane surrounds the subject and anchors the vertical separation", "읽히는 바닥면이 피사체 주위를 둘러싸며 수직 거리를 고정함"]},
+            {"id": "overhead_subject_response", "any_terms": ["the subject's face gaze or raised hand responds toward the elevated camera position", "피사체 얼굴 시선 또는 든 손이 위쪽 카메라 위치를 향해 반응함"]},
+            {"id": "overhead_foreshortening", "any_terms": ["head torso limbs and one near prop follow coherent top-down foreshortening and scale change", "머리 몸통 팔다리와 가까운 소품이 일관된 탑다운 단축과 크기 변화를 따름"]},
+            {"id": "overhead_boundary", "any_terms": ["a drone landscape eye-level crop telephoto view or isolated stretched limb does not substitute", "드론 풍경 아이레벨 크롭 망원 시점 또는 한 팔다리 늘리기는 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["a drone shot with a tiny person", "an eye-level wide portrait", "a cropped head-and-shoulders photo", "one stretched arm with no ground plane", "a top-down flatlay without a subject response"]
+      },
+      "concept_candidate": {"concept_terms": ["near elevated camera", "surrounding ground plane", "upward subject response", "coherent top-down foreshortening", "not drone or eye-level crop"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["close overhead social snapshot"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Put the camera close above one clearly adult subject, point steeply down, retain a surrounding floor plane, direct one face, gaze, or raised-hand response upward, and keep top-down scale changes coherent across the body and a near prop.",
+      "required_evidence_fields": ["overhead_camera_phrase", "overhead_ground_phrase", "overhead_response_phrase", "overhead_foreshortening_phrase", "overhead_boundary_phrase"],
+      "evidence_requirements": {
+        "overhead_camera_phrase": {"min_content_words": 12, "must_mention_any": ["the camera is visibly close above one clearly adult subject and points steeply downward"]},
+        "overhead_ground_phrase": {"min_content_words": 12, "must_mention_any": ["a readable ground or floor plane surrounds the subject and anchors the vertical separation"]},
+        "overhead_response_phrase": {"min_content_words": 12, "must_mention_any": ["the subject's face gaze or raised hand responds toward the elevated camera position"]},
+        "overhead_foreshortening_phrase": {"min_content_words": 13, "must_mention_any": ["head torso limbs and one near prop follow coherent top-down foreshortening and scale change"]},
+        "overhead_boundary_phrase": {"min_content_words": 14, "must_mention_any": ["a drone landscape eye-level crop telephoto view or isolated stretched limb does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_social_overhead_camera_above", "review_scale": "thumbnail", "description": "The viewpoint reads immediately as a nearby camera steeply above the adult subject."},
+        {"id": "vo_social_overhead_ground_plane", "review_scale": "both", "description": "A ground or floor plane visibly surrounds the subject and anchors the vertical relation."},
+        {"id": "vo_social_overhead_upward_response", "review_scale": "both", "description": "The face, gaze, or a raised hand visibly responds toward the elevated camera."},
+        {"id": "vo_social_overhead_coherent_foreshortening", "review_scale": "native", "description": "Body parts and one near prop follow coherent top-down foreshortening and scale change."},
+        {"id": "vo_social_overhead_not_drone_or_stretch", "review_scale": "native", "description": "Drone distance, eye-level crop, telephoto view, and isolated limb stretching do not substitute."}
+      ],
+      "reject_substitutes": ["drone_landscape", "eye_level_crop", "telephoto_overhead", "flatlay_without_response", "isolated_limb_stretch"]
+    },
+    {
+      "id": "intentional_face_occluded_mood_portrait",
+      "category": "social_portrait_intentional_face_occlusion",
+      "activation": {
+        "exact_terms": ["intentional face-occluded mood portrait", "purposeful identity-zone occlusion portrait", "얼굴 안 보이는 감성샷", "얼굴 가린 감성 사진"],
+        "exclude_if_any_terms": ["accidental crop", "missed focus", "motion blur only", "empty scene", "full silhouette only"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One clearly adult subject remains readable through hair, posture, hands, clothing, and action while a scene-bound hand, prop, hair curtain, or deliberate head turn covers the identity-bearing eye-and-nose region. The occluder has visible contact or overlap, and setting plus action carries the mood; accidental crop, missed focus, total silhouette, or an absent face cannot substitute.",
+        "paraphrase_examples": ["a broad pressed fern held by the adult subject overlaps both eyes and the nose bridge while her hands and seed-sorting action remain clear", "소품 접촉이 눈과 콧대 식별 영역을 의도적으로 가리되 성인 인물의 행동과 장소는 읽힘", "mood comes from storm light and an unfinished task rather than a missing or blurred face"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["occluded_adult_subject", "occluded_identity_zone", "occluder_contact", "occluded_action_setting", "occluded_boundary"],
+          "groups": [
+            {"id": "occluded_adult_subject", "any_terms": ["one clearly adult subject remains readable through hair posture hands clothing and body orientation", "한 명의 분명한 성인 피사체가 머리카락 자세 손 의상 몸 방향으로 계속 읽힘"]},
+            {"id": "occluded_identity_zone", "any_terms": ["the eye-and-nose identity-bearing region is deliberately covered or turned away while some surrounding head structure remains visible", "눈과 코의 식별 영역은 의도적으로 가려지거나 돌아가고 주변 머리 구조 일부는 남음"]},
+            {"id": "occluder_contact", "any_terms": ["a scene-bound hand prop hair curtain or head turn has visible overlap contact or directional cause", "장면 속 손 소품 머리카락 또는 머리 회전이 가시적 겹침 접촉 또는 방향 원인을 가짐"]},
+            {"id": "occluded_action_setting", "any_terms": ["one concrete unfinished action and one identifiable setting carry the image's mood", "하나의 구체적인 미완 행동과 식별 가능한 장소가 이미지의 무드를 전달함"]},
+            {"id": "occluded_boundary", "any_terms": ["accidental crop missed focus motion blur empty scene or full silhouette alone does not substitute", "우연한 크롭 초점 실패 모션 블러 빈 장면 또는 전신 실루엣만으로는 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["a face cut off by the frame edge", "an out-of-focus portrait", "an empty atmospheric room", "a featureless silhouette", "a prop near but not overlapping the face"]
+      },
+      "concept_candidate": {"concept_terms": ["clearly adult subject remains readable", "eye-and-nose identity zone deliberately hidden", "scene-bound occluder contact", "action and setting carry mood", "not accidental crop or blur"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["intentional face-occluded mood portrait", "purposeful identity-zone occlusion portrait", "얼굴 안 보이는 감성샷", "얼굴 가린 감성 사진"], "runtime_forbidden_labels": ["intentional face-occluded mood portrait", "purposeful identity-zone occlusion portrait", "얼굴 안 보이는 감성샷", "얼굴 가린 감성 사진"]},
+      "composition_instruction": "Keep one clearly adult subject legible through hair, posture, hands, clothing, and action; make a scene-bound occluder visibly cover the eye-and-nose region; and let a concrete unfinished task plus setting carry the mood.",
+      "required_evidence_fields": ["occluded_subject_phrase", "occluded_identity_zone_phrase", "occluder_contact_phrase", "occluded_action_setting_phrase", "occluded_boundary_phrase"],
+      "evidence_requirements": {
+        "occluded_subject_phrase": {"min_content_words": 13, "must_mention_any": ["one clearly adult subject remains readable through hair posture hands clothing and body orientation"]},
+        "occluded_identity_zone_phrase": {"min_content_words": 16, "must_mention_any": ["the eye-and-nose identity-bearing region is deliberately covered or turned away while some surrounding head structure remains visible"]},
+        "occluder_contact_phrase": {"min_content_words": 14, "must_mention_any": ["a scene-bound hand prop hair curtain or head turn has visible overlap contact or directional cause"]},
+        "occluded_action_setting_phrase": {"min_content_words": 12, "must_mention_any": ["one concrete unfinished action and one identifiable setting carry the image's mood"]},
+        "occluded_boundary_phrase": {"min_content_words": 14, "must_mention_any": ["accidental crop missed focus motion blur empty scene or full silhouette alone does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_social_occluded_adult_subject_readable", "review_scale": "thumbnail", "description": "One clearly adult subject remains readable through hair, posture, hands, clothing, and orientation."},
+        {"id": "vo_social_occluded_identity_zone_hidden", "review_scale": "both", "description": "The eye-and-nose identity-bearing region is deliberately covered while surrounding head structure remains visible."},
+        {"id": "vo_social_occluded_scene_bound_contact", "review_scale": "native", "description": "A hand, prop, hair curtain, or head turn visibly causes the occlusion through contact or overlap."},
+        {"id": "vo_social_occluded_action_setting_mood", "review_scale": "both", "description": "A concrete unfinished action and identifiable setting, not face absence alone, carry the mood."},
+        {"id": "vo_social_occluded_not_crop_blur_silhouette", "review_scale": "native", "description": "Accidental crop, missed focus, motion blur, empty scene, and full silhouette do not substitute."}
+      ],
+      "reject_substitutes": ["accidental_face_crop", "missed_focus", "motion_blur_only", "empty_mood_scene", "full_silhouette_only"]
+    },
+    {
+      "id": "sheer_complexion_texture_preservation",
+      "category": "makeup_sheer_complexion_texture_preservation",
+      "activation": {
+        "exact_terms": ["sheer complexion texture-preservation contract", "thin translucent complexion correction", "맑고 투명한 얇은 피부 표현", "말간 얇은 베이스", "얇고 투명한 피부 메이크업"],
+        "exclude_if_any_terms": ["literal transparent skin", "poreless filter", "full coverage foundation", "overexposed face", "beauty blur"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A thin cosmetic correction lightly evens the complexion while pores, fine texture, and local natural color variation remain visible. Coverage amount stays separate from surface shine and lighting; literal transparency, full opaque coverage, overexposure, digital blur, or plastic smoothing cannot substitute.",
+        "paraphrase_examples": ["thin tone correction evens broad color while pores and small local variation remain readable", "얇은 톤 보정 아래 모공 잔결과 국소 색 변화가 남음", "surface highlight may vary independently from the preserved low-coverage texture"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["sheer_thin_correction", "sheer_texture_retention", "sheer_color_variation", "sheer_confound_control"],
+          "groups": [
+            {"id": "sheer_thin_correction", "any_terms": ["a thin cosmetic layer lightly evens broad complexion tone without opaque masking", "얇은 화장층이 불투명하게 덮지 않고 넓은 피부톤을 가볍게 고름"]},
+            {"id": "sheer_texture_retention", "any_terms": ["pores fine texture and small surface irregularities remain visible through the correction", "보정 아래 모공 잔결과 작은 표면 불균일이 계속 보임"]},
+            {"id": "sheer_color_variation", "any_terms": ["subtle local natural color variation remains instead of one uniform painted skin color", "하나의 균일한 페인트 피부색 대신 미세한 국소 자연 색 변화가 남음"]},
+            {"id": "sheer_confound_control", "any_terms": ["surface shine lighting and grading remain separate and literal transparency blur overexposure or plastic smoothing does not substitute", "표면 광 조명 색보정은 분리되며 문자 그대로의 투명함 블러 과노출 플라스틱 보정은 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["full opaque foundation", "poreless beauty filter", "washed-out overexposure", "oily shine with no texture", "literal translucent anatomy"]
+      },
+      "concept_candidate": {"concept_terms": ["thin complexion correction", "visible pores and fine texture", "local natural color variation", "coverage separate from finish", "not transparency blur or overexposure"]},
+      "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["sheer complexion texture-preservation contract", "thin translucent complexion correction", "맑고 투명한 얇은 피부 표현", "말간 얇은 베이스", "얇고 투명한 피부 메이크업"], "runtime_forbidden_labels": ["sheer complexion texture-preservation contract", "thin translucent complexion correction", "맑고 투명한 얇은 피부 표현", "말간 얇은 베이스", "얇고 투명한 피부 메이크업"]},
+      "composition_instruction": "Use a thin cosmetic correction that lightly evens broad tone while leaving pores, fine texture, and subtle local color variation readable; keep coverage separate from surface shine, light, and grading.",
+      "required_evidence_fields": ["sheer_correction_phrase", "sheer_texture_phrase", "sheer_variation_phrase", "sheer_boundary_phrase"],
+      "evidence_requirements": {
+        "sheer_correction_phrase": {"min_content_words": 12, "must_mention_any": ["a thin cosmetic layer lightly evens broad complexion tone without opaque masking"]},
+        "sheer_texture_phrase": {"min_content_words": 11, "must_mention_any": ["pores fine texture and small surface irregularities remain visible through the correction"]},
+        "sheer_variation_phrase": {"min_content_words": 12, "must_mention_any": ["subtle local natural color variation remains instead of one uniform painted skin color"]},
+        "sheer_boundary_phrase": {"min_content_words": 17, "must_mention_any": ["surface shine lighting and grading remain separate and literal transparency blur overexposure or plastic smoothing does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_sheer_thin_correction", "review_scale": "thumbnail", "description": "The complexion reads lightly evened rather than fully opaque or mask-like."},
+        {"id": "vo_makeup_sheer_texture_retained", "review_scale": "native", "description": "Pores, fine texture, and small natural surface irregularities remain visible."},
+        {"id": "vo_makeup_sheer_color_variation", "review_scale": "both", "description": "Subtle local natural color variation survives instead of one uniform painted tone."},
+        {"id": "vo_makeup_sheer_not_finish_or_filter", "review_scale": "native", "description": "Gloss, lighting, grading, blur, overexposure, plastic smoothing, and literal transparency do not substitute."}
+      ],
+      "reject_substitutes": ["full_opaque_coverage", "poreless_filter", "global_overexposure", "surface_gloss_only", "literal_transparent_skin"]
+    },
+    {
+      "id": "under_eye_high_cheek_blush_distribution",
+      "category": "makeup_under_eye_high_cheek_blush_distribution",
+      "activation": {
+        "exact_terms": ["under-eye high-cheek blush distribution", "lower-lid-adjacent cosmetic blush", "언더아이 블러셔", "눈밑 블러셔", "애교살 아래 블러셔"],
+        "exclude_if_any_terms": ["dark circles", "eye irritation", "allergic redness", "tear stain", "fatigue shadow"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Bilateral cosmetic pigment occupies the upper cheek directly below, but not inside, the lower-eyelid boundary. Its hue, soft edge, and controlled placement distinguish blush from dark circles, fatigue shadow, tears, eye irritation, or generalized facial redness.",
+        "paraphrase_examples": ["soft rose pigment sits on both upper cheeks immediately beneath the lower lids with a narrow clean eye boundary", "양쪽 눈 아래 높은 볼에 화장 색소가 놓이고 눈 점막과는 경계가 남음", "the color reads as controlled cosmetic placement rather than shadow irritation or tears"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["under_eye_bilateral_pigment", "under_eye_lid_boundary", "under_eye_soft_edges", "under_eye_confound_control"],
+          "groups": [
+            {"id": "under_eye_bilateral_pigment", "any_terms": ["bilateral cosmetic color occupies both upper cheeks directly below the lower eyelids", "양쪽 아래눈꺼풀 바로 밑 높은 볼에 화장 색이 대칭적으로 놓임"]},
+            {"id": "under_eye_lid_boundary", "any_terms": ["a narrow clean skin boundary keeps pigment outside the eye and lower-lid margin", "좁고 깨끗한 피부 경계가 색소를 눈과 아래눈꺼풀 가장자리 밖에 유지함"]},
+            {"id": "under_eye_soft_edges", "any_terms": ["the cheek pigment has controlled soft cosmetic edges and a readable blush hue", "볼 색소가 제어된 부드러운 화장 경계와 읽히는 블러셔 색을 가짐"]},
+            {"id": "under_eye_confound_control", "any_terms": ["dark circles fatigue shadow tears irritation and generalized redness do not substitute", "다크서클 피로 그림자 눈물 자극과 얼굴 전체 홍조는 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["blue-gray dark circles", "red eye irritation", "tear tracks", "cast shadow under the eyes", "diffuse full-face redness"]
+      },
+      "concept_candidate": {"concept_terms": ["bilateral upper-cheek cosmetic pigment", "lower-lid-adjacent placement", "clean eye boundary", "soft blush edge", "not dark circles or irritation"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["under-eye high-cheek blush"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Place readable cosmetic blush bilaterally on the upper cheeks immediately below the lower lids, preserve a narrow clean eye boundary, and keep the pigment hue and soft edges distinct from shadows, tears, irritation, and generalized redness.",
+      "required_evidence_fields": ["under_eye_pigment_phrase", "under_eye_boundary_phrase", "under_eye_edge_phrase", "under_eye_confound_phrase"],
+      "evidence_requirements": {
+        "under_eye_pigment_phrase": {"min_content_words": 12, "must_mention_any": ["bilateral cosmetic color occupies both upper cheeks directly below the lower eyelids"]},
+        "under_eye_boundary_phrase": {"min_content_words": 12, "must_mention_any": ["a narrow clean skin boundary keeps pigment outside the eye and lower-lid margin"]},
+        "under_eye_edge_phrase": {"min_content_words": 12, "must_mention_any": ["the cheek pigment has controlled soft cosmetic edges and a readable blush hue"]},
+        "under_eye_confound_phrase": {"min_content_words": 11, "must_mention_any": ["dark circles fatigue shadow tears irritation and generalized redness do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_under_eye_bilateral_pigment", "review_scale": "thumbnail", "description": "Readable cosmetic color appears on both upper cheeks immediately below the lower lids."},
+        {"id": "vo_makeup_under_eye_clean_lid_boundary", "review_scale": "native", "description": "A narrow clean boundary keeps pigment outside the eye and lower-lid margin."},
+        {"id": "vo_makeup_under_eye_soft_cosmetic_edges", "review_scale": "both", "description": "The pigment has a recognizable blush hue and controlled soft cosmetic edges."},
+        {"id": "vo_makeup_under_eye_not_shadow_irritation", "review_scale": "native", "description": "Dark circles, fatigue shadow, tears, irritation, and generalized redness do not substitute."}
+      ],
+      "reject_substitutes": ["dark_circles", "fatigue_shadow", "tear_tracks", "eye_irritation", "generalized_redness"]
+    },
+    {
+      "id": "cheekbone_temple_blush_drape",
+      "category": "makeup_cheekbone_temple_blush_drape",
+      "activation": {
+        "exact_terms": ["cheekbone-to-temple blush-drape distribution", "elongated high-cheek temple blush path", "드레이핑 블러셔", "블러셔 드레이핑", "광대 관자놀이 블러셔"],
+        "exclude_if_any_terms": ["cheekbone anatomy", "face-lifting claim", "cast shadow", "colored lighting", "contour stripe"],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A continuous elongated path of cosmetic pigment begins on each high cheekbone and blends upward-outward toward the corresponding temple. Color continuity, tapered diffusion, and bilateral placement distinguish the drape from facial anatomy, contour stripes, cast shadow, or colored light.",
+        "paraphrase_examples": ["rose pigment starts high on both cheeks and remains visibly continuous as it thins toward each temple", "양쪽 높은 광대에서 관자놀이까지 색소가 위쪽 바깥 방향으로 이어짐", "soft tapered edges preserve a blush path instead of a hard contour stripe or lighting gradient"],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": ["drape_cheek_origin", "drape_temple_path", "drape_tapered_edges", "drape_confound_control"],
+          "groups": [
+            {"id": "drape_cheek_origin", "any_terms": ["cosmetic pigment begins visibly on both high cheekbones", "화장 색소가 양쪽 높은 광대에서 분명히 시작함"]},
+            {"id": "drape_temple_path", "any_terms": ["the pigment remains continuously readable along an upward-outward path toward both temples", "색소가 양쪽 관자놀이를 향한 위쪽 바깥 방향 경로로 계속 읽힘"]},
+            {"id": "drape_tapered_edges", "any_terms": ["soft tapered edges thin gradually at the temple ends while preserving a recognizable blush hue", "부드럽게 가늘어지는 경계가 관자놀이 끝에서 점차 옅어지며 블러셔 색을 유지함"]},
+            {"id": "drape_confound_control", "any_terms": ["facial anatomy contour stripes cast shadow and colored lighting do not substitute", "얼굴 해부학 윤곽선 캐스트 섀도와 유색 조명은 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["naturally prominent cheekbones", "a hard contour stripe", "side-light shadow", "magenta stage light", "blush limited to cheek apples"]
+      },
+      "concept_candidate": {"concept_terms": ["bilateral high-cheek origin", "continuous upward-outward pigment path", "temple endpoint", "soft tapered edges", "not anatomy shadow or contour"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["cheekbone-to-temple blush drape"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Begin readable cosmetic color on both high cheekbones, continue it upward and outward to each temple, taper the soft edges gradually, and keep the hue distinct from anatomy, contour, cast shadow, and colored light.",
+      "required_evidence_fields": ["drape_origin_phrase", "drape_path_phrase", "drape_edge_phrase", "drape_confound_phrase"],
+      "evidence_requirements": {
+        "drape_origin_phrase": {"min_content_words": 8, "must_mention_any": ["cosmetic pigment begins visibly on both high cheekbones"]},
+        "drape_path_phrase": {"min_content_words": 13, "must_mention_any": ["the pigment remains continuously readable along an upward-outward path toward both temples"]},
+        "drape_edge_phrase": {"min_content_words": 14, "must_mention_any": ["soft tapered edges thin gradually at the temple ends while preserving a recognizable blush hue"]},
+        "drape_confound_phrase": {"min_content_words": 11, "must_mention_any": ["facial anatomy contour stripes cast shadow and colored lighting do not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_makeup_drape_bilateral_cheek_origin", "review_scale": "thumbnail", "description": "Cosmetic pigment visibly begins on both high cheekbones."},
+        {"id": "vo_makeup_drape_continuous_temple_path", "review_scale": "both", "description": "The pigment stays continuously readable along an upward-outward path to both temples."},
+        {"id": "vo_makeup_drape_soft_tapered_edges", "review_scale": "native", "description": "Soft edges taper gradually at the temples while retaining a recognizable blush hue."},
+        {"id": "vo_makeup_drape_not_anatomy_shadow_light", "review_scale": "native", "description": "Anatomy, contour stripes, cast shadow, and colored light do not substitute."}
+      ],
+      "reject_substitutes": ["cheekbone_anatomy", "hard_contour_stripe", "cast_shadow", "colored_light", "apple_blush_only"]
+    },
+    {
+      "id": "photobooth_four_cut_sequence",
+      "category": "social_format_photobooth_four_cut_sequence",
+      "activation": {
+        "exact_terms": ["photobooth four-cut sequence contract", "same-subject four-panel photobooth strip", "인생네컷", "인생 네 컷", "대왕네컷", "네컷사진"],
+        "exclude_if_any_terms": ["single portrait", "random collage", "duplicate panels", "contact sheet", "comic strip"],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Exactly four separated photobooth panels show the same clearly adult subject in one stable booth setup. Crop, background, and lighting remain coherent while pose, gaze, or hand action changes in a readable temporal progression; a single photo, random collage, duplicated tile, contact sheet, or illustrated comic cannot substitute.",
+        "paraphrase_examples": ["four equal booth panels repeat the same adult, backdrop, crop, and frontal light while each frame advances a different hand-and-gaze beat", "정확히 네 패널에서 같은 성인 피사체와 부스 조건은 유지되고 포즈만 순차적으로 달라짐", "physical strip gutters separate a coherent timed sequence rather than four unrelated images"],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": ["four_exact_panels", "four_same_adult", "four_stable_booth", "four_pose_progression", "four_format_boundary"],
+          "groups": [
+            {"id": "four_exact_panels", "any_terms": ["exactly four discrete image panels are separated by consistent photobooth gutters", "정확히 네 개의 개별 이미지 패널이 일관된 포토부스 여백으로 구분됨"]},
+            {"id": "four_same_adult", "any_terms": ["the same clearly adult subject with stable visible appearance repeats in all four panels", "같은 분명한 성인 피사체와 안정된 보이는 외형이 네 패널 모두에 반복됨"]},
+            {"id": "four_stable_booth", "any_terms": ["camera crop booth background and frontal lighting remain substantially consistent across panels", "카메라 크롭 부스 배경과 정면 조명이 패널 사이에서 대체로 일관됨"]},
+            {"id": "four_pose_progression", "any_terms": ["pose gaze or hand action changes across all four panels in one readable timed progression", "포즈 시선 또는 손동작이 네 패널에 걸쳐 읽히는 시간 진행으로 달라짐"]},
+            {"id": "four_format_boundary", "any_terms": ["a single portrait random collage duplicated tile contact sheet or comic strip does not substitute", "단일 인물사진 무작위 콜라주 복제 타일 컨택트 시트 또는 만화 칸은 대체하지 못함"]}
+          ]
+        },
+        "contrast_examples": ["one portrait with four stickers", "four unrelated people", "duplicated copies of one frame", "a proof-sheet contact grid", "an illustrated four-panel comic"]
+      },
+      "concept_candidate": {"concept_terms": ["exactly four separated panels", "same clearly adult subject", "stable booth setup", "four distinct sequential poses", "not collage duplicate or comic"]},
+      "runtime_expression": {"default_mode": "definition_with_optional_label", "prompt_label_terms": ["same-subject four-panel photobooth strip"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
+      "composition_instruction": "Render exactly four photobooth panels with consistent gutters, the same clearly adult subject, stable crop, background, and frontal light, plus four distinct pose, gaze, or hand-action beats that read as one timed progression.",
+      "required_evidence_fields": ["four_panel_phrase", "four_subject_phrase", "four_booth_phrase", "four_progression_phrase", "four_boundary_phrase"],
+      "evidence_requirements": {
+        "four_panel_phrase": {"min_content_words": 10, "must_mention_any": ["exactly four discrete image panels are separated by consistent photobooth gutters"]},
+        "four_subject_phrase": {"min_content_words": 13, "must_mention_any": ["the same clearly adult subject with stable visible appearance repeats in all four panels"]},
+        "four_booth_phrase": {"min_content_words": 12, "must_mention_any": ["camera crop booth background and frontal lighting remain substantially consistent across panels"]},
+        "four_progression_phrase": {"min_content_words": 13, "must_mention_any": ["pose gaze or hand action changes across all four panels in one readable timed progression"]},
+        "four_boundary_phrase": {"min_content_words": 15, "must_mention_any": ["a single portrait random collage duplicated tile contact sheet or comic strip does not substitute"]}
+      },
+      "render_gates": [
+        {"id": "vo_social_fourcut_exact_panels", "review_scale": "thumbnail", "description": "Exactly four discrete image panels appear with consistent photobooth gutters."},
+        {"id": "vo_social_fourcut_same_adult", "review_scale": "both", "description": "The same clearly adult subject and visible appearance repeat across all four panels."},
+        {"id": "vo_social_fourcut_stable_booth", "review_scale": "both", "description": "Crop, booth background, and frontal lighting remain substantially consistent."},
+        {"id": "vo_social_fourcut_pose_progression", "review_scale": "native", "description": "All four panels contain distinct pose, gaze, or hand-action beats in a readable progression."},
+        {"id": "vo_social_fourcut_not_collage_duplicate", "review_scale": "native", "description": "A single portrait, random collage, duplicated tile, contact sheet, or comic does not substitute."}
+      ],
+      "reject_substitutes": ["single_portrait", "random_collage", "duplicated_panels", "contact_sheet", "comic_strip"]
     }
   ]
 }

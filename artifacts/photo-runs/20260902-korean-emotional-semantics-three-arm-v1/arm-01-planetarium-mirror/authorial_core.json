@@ -1,0 +1,57 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Test 거셀, 언더아이 블러셔, 맑고 투명한 얇은 피부 표현, and the broad optional 느좋 shorthand in one randomized, complex but physically coherent planetarium mirror-selfie scene.",
+  "subject": "one clearly adult woman whose visible facial proportions and long dark wavy hair use the supplied portrait only as an appearance reference, without an identity claim",
+  "setting": "a closed planetarium service corridor with a floor-to-ceiling physical mirror after hours",
+  "event": "she retunes a pocket radio with one hand while the other hand visibly grips a matte black phone and she checks the shared reflection",
+  "visual_priorities": [
+    "the mirror boundary, reflected room, adult subject, and held phone form one coherent reflection topology",
+    "bilateral rose cosmetic pigment sits immediately below the lower lids with a clean eye boundary",
+    "thin complexion correction preserves pores, fine texture, and local natural color variation",
+    "a clear notebook and radio action keep the social snapshot lived-in rather than a static beauty pose"
+  ],
+  "baseline_prompt_en": "Photorealistic vertical social photograph in a closed planetarium service corridor after hours. Treat Image 1 solely as a visible adult appearance reference: one clearly adult woman with long dark wavy hair and the visible natural facial proportions of the supplied portrait, without asserting identity. A floor-to-ceiling mirror has a readable edge, seam, and reflected-room depth. Inside that reflection, the same adult subject retunes a small pocket radio with one hand while her other hand visibly grips a matte black phone; hand-to-device contact, phone placement, facial overlap, and her gaze toward the reflected screen all agree with the mirror. A clear notebook with blank star-chart shapes rests under one arm. Bilateral soft rose cosmetic color occupies both upper cheeks directly below the lower eyelids, with a narrow clean skin boundary outside the eyes and controlled soft edges. A thin cosmetic layer lightly evens broad complexion tone without opaque masking; pores, fine texture, small surface irregularities, and subtle local natural color variation remain visible. Dim amber practical lamps mix with one cool phone flash. Relaxed asymmetric posture, incomplete radio tuning, imperfect framing, and the specific corridor make the image feel naturally observed rather than staged.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "researched Korean emotional-photo terms",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "request_context",
+      "resolution": "This arm operationalizes 거셀 as reflection-device topology, 언더아이 블러셔 as lower-lid-adjacent upper-cheek pigment, a transparent-thin complexion phrase as low coverage with retained texture, and 느좋 as optional staging guidance.",
+      "sources": []
+    },
+    {
+      "term": "randomized complex concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "Seed 2635116469 assigned a closed planetarium service-corridor mirror, pocket-radio action, clear notebook, matte phone, and mixed amber/cool light.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "closed planetarium service corridor after hours"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "one clearly adult woman with long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여", "dimension": "event", "prompt_evidence": "retunes a small pocket radio with one hand while her other hand visibly grips a matte black phone"},
+      {"anchor_id": "reference_use", "source_text": "첨부한 이미지를 활용하여", "dimension": "reference_use", "prompt_evidence": "Treat Image 1 solely as a visible adult appearance reference"},
+      {"anchor_id": "tested_meaning", "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트", "dimension": "composition", "prompt_evidence": "mirror has a readable edge, seam, and reflected-room depth"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "reference_use", "composition"],
+    "open_dimensions": ["framing", "camera", "color", "material", "atmosphere"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic_social_portrait",
+    "family": "after-hours planetarium mirror snapshot",
+    "evidence": ["dim amber practical lamps mixed with cool phone flash", "imperfect reflection framing", "natural skin microtexture"]
+  },
+  "variation_key": "seed-2635116469-arm-01-planetarium-mirror"
+}

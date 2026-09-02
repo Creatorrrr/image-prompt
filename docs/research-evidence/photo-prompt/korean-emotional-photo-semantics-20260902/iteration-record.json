@@ -1,0 +1,346 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab",
+    "candidate_revision": "8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab plus working-tree Korean emotional-photo semantics and semantic-index dictionary hash 9a0d62d2d9fd9cfc14e78e30e64e406c44f1917ee2b8763d376ecd33a2d1a1ca"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Strengthen visual-semantic and candidate-pack data from the referenced Korean emotional-woman-photo research, then use exactly three independent randomized complex reference-image arms to author prompts, generate one image per arm, and test whether the target meanings appear in pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-source-conversation",
+      "kind": "source-observation",
+      "claim": "The referenced conversation collected broad taste and mood shorthands, social capture formats, camera relations, and makeup placements whose visual observability and ambiguity differ materially.",
+      "artifact": "chatgpt-conversation://6a97c429-7c50-83ee-8dc6-8ca004f246aa"
+    },
+    {
+      "id": "e-external-research",
+      "kind": "external-research",
+      "claim": "Trend editorials, official camera documentation, and peer-reviewed skin-perception and still-action sources support broad-versus-narrow routing, lens-versus-geometry separation, pigment placement, gloss-versus-coverage separation, and visible unfinished-action cues.",
+      "artifact": "docs/research-evidence/photo-prompt/korean-emotional-photo-semantics-20260902/source-research.md and seven domain rows in docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary validation, the 319-profile and 1,651-term visual index check, the 7,997-entry semantic index check, and eleven focused semantic, fixture, boundary, and retrieval tests pass.",
+      "artifact": "commands: validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index; python -m unittest tests.test_photo_korean_emotional_visual_semantics -v"
+    },
+    {
+      "id": "e-routing",
+      "kind": "prompt-evaluation",
+      "claim": "Seven narrow exact terms resolve to their intended hard profiles, sixteen researched queries retrieve the intended candidate at BM25F rank one with the mirror dual route in the top two, while broad mood terms and adjacent confounds do not hard activate.",
+      "artifact": "tests/test_photo_korean_emotional_visual_semantics.py"
+    },
+    {
+      "id": "e-candidate-packs",
+      "kind": "prompt-inspection",
+      "claim": "Three independently seeded v6 packs contain respectively three, two, and one request-scoped hard visual profiles, preserve frozen authorial cores, and expose unrelated visual concepts only as rejectable optional candidates.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-*/candidate_pack.json"
+    },
+    {
+      "id": "e-prompt-audits",
+      "kind": "prompt-evaluation",
+      "claim": "All three composed prompts and all three serialized render requests pass their blocking audits with the reference bound only as appearance_reference.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-*/composed_prompt_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-independence",
+      "kind": "measurement",
+      "claim": "Each arm ledger contains one run, image_call_count is one, retry count is zero, fallback count is zero, and cross_arm_inputs_used is false; the three arms used distinct directories, cores, packs, prompts, and reviews.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-*/image_runs.ndjson and run_manifest.json"
+    },
+    {
+      "id": "e-generation-arm1",
+      "kind": "generation-outcome",
+      "claim": "The planetarium mirror arm returned one 1086 by 1448 image from its single built-in generation call.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-01-planetarium-mirror/run_manifest.json"
+    },
+    {
+      "id": "e-render-arm1",
+      "kind": "render-observation",
+      "claim": "Independent arm and root native-plus-thumbnail inspection found all 13 mirror, under-eye pigment, and sheer-complexion gates fully observable.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-01-planetarium-mirror/pixel_review.json and coordination/root_pixel_review.json"
+    },
+    {
+      "id": "e-generation-arm2",
+      "kind": "generation-outcome",
+      "claim": "The rooftop overhead arm's only generation call was blocked at output moderation, returned no image, and was not retried or sent to a fallback provider.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-02-rooftop-overhead/generation_failure.json and run_manifest.json"
+    },
+    {
+      "id": "e-generation-arm3",
+      "kind": "generation-outcome",
+      "claim": "The greenhouse occlusion arm returned one 1086 by 1448 image from its single built-in generation call.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-03-greenhouse-occlusion/run_manifest.json"
+    },
+    {
+      "id": "e-render-arm3",
+      "kind": "render-observation",
+      "claim": "Independent arm and root native-plus-thumbnail inspection found all five adult-subject, identity-zone occlusion, prop-contact, action-setting, and confound-exclusion gates fully observable.",
+      "artifact": "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-03-greenhouse-occlusion/pixel_review.json and coordination/root_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each narrow requested meaning must survive as its declared observable relation at native and thumbnail scales without being replaced by a broad mood label, lens name, cosmetic confound, accidental crop, or metadata claim.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "narrow-hard-broad-optional",
+        "statement": "Only narrow component-complete terms become request-scoped hard profiles; taste, relationship-adjacent, sequence, body-adjacent, grading, and lens shorthands remain optional and bounded.",
+        "evidence_ids": [
+          "e-source-conversation",
+          "e-external-research",
+          "e-routing"
+        ],
+        "causal_controls": [
+          "exact term versus broad alias",
+          "component completeness",
+          "confound exclusion",
+          "hard obligation versus candidate"
+        ]
+      },
+      {
+        "id": "appearance-only-reference",
+        "statement": "The supplied portrait guides only visible adult facial proportions, long dark wavy hair, and visible natural texture; identity and all protected or nonvisual inferences remain outside the claim.",
+        "evidence_ids": [
+          "e-prompt-audits",
+          "e-independence"
+        ],
+        "causal_controls": [
+          "appearance_reference role",
+          "reference file hash",
+          "no identity assertion",
+          "adult-only scene language"
+        ]
+      },
+      {
+        "id": "pixels-over-runtime",
+        "statement": "Prompt and request audits, generation outcomes, rendered pixels, and user aesthetic judgment remain non-interchangeable evidence layers, with partial or missing pixel gates treated as failure and absent renders kept unscored.",
+        "evidence_ids": [
+          "e-prompt-audits",
+          "e-render-arm1",
+          "e-generation-arm2",
+          "e-render-arm3"
+        ],
+        "causal_controls": [
+          "native inspection",
+          "thumbnail inspection",
+          "single-call outcome",
+          "user judgment pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "original adult wardrobe",
+      "specific location dressing",
+      "noncritical props",
+      "camera and lighting within hard geometry",
+      "broad optional aesthetic intensity",
+      "user aesthetic preference"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-alias-only-data",
+      "scale": "global",
+      "axis": "visual-semantic representation",
+      "source_state": "Many researched Korean shorthands had no candidate route or only a broad synonym with no observable boundary.",
+      "render_state": "The candidate state contains bounded atoms and seven component-complete hard profiles with exact activation, reject substitutes, prompt evidence, and pixel gates.",
+      "evidence_ids": [
+        "e-source-conversation",
+        "e-external-research",
+        "e-package",
+        "e-routing"
+      ]
+    },
+    {
+      "id": "mismatch-broad-term-overclaim",
+      "scale": "global",
+      "axis": "semantic activation",
+      "source_state": "Terms such as good vibe, first-love material, airy-delicate, milky, photodump, companion-shot, and 0.5x can be mistaken for fixed observable truths.",
+      "render_state": "Those terms remain optional candidates with explicit adult, body, relationship, sequence, food, grading, and lens boundaries; only narrow relations hard activate.",
+      "evidence_ids": [
+        "e-external-research",
+        "e-routing"
+      ]
+    },
+    {
+      "id": "mismatch-render-coverage",
+      "scale": "regional",
+      "axis": "three-arm pixel qualification",
+      "source_state": "No rendered-pixel evidence existed for the new profiles before this run.",
+      "render_state": "Two delivered arms pass 18 of 18 evaluated gates, while the nine-gate overhead and draping arm remains unscored because its only call was blocked.",
+      "evidence_ids": [
+        "e-render-arm1",
+        "e-generation-arm2",
+        "e-render-arm3"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-component-contracts",
+      "stage": "representation",
+      "statement": "Four- or five-component profiles with explicit substitute rejection will prevent labels and nearby visual confounds from satisfying a narrow Korean shorthand.",
+      "evidence_ids": [
+        "e-external-research",
+        "e-routing",
+        "e-package"
+      ],
+      "falsifier": "A broad or confounding query hard activates, a narrow exact term misses, or a rendered image passes without every declared relation."
+    },
+    {
+      "id": "hypothesis-bounded-candidates",
+      "stage": "prompt-interaction",
+      "statement": "Optional macros with explicit nonvisual boundaries will add useful mood, lens, grading, or makeup guidance without inventing age, relationship, body, food, sequence, or identity facts.",
+      "evidence_ids": [
+        "e-routing",
+        "e-candidate-packs",
+        "e-prompt-audits"
+      ],
+      "falsifier": "A composed prompt turns an optional shorthand into a forbidden nonvisual claim or treats it as sufficient proof of a hard relation."
+    },
+    {
+      "id": "hypothesis-independent-single-call-rendering",
+      "stage": "generator-response",
+      "statement": "Three isolated single-call arms can reveal whether profile relations survive different complex scenes without cross-arm prompt repair or survivor bias from retries.",
+      "evidence_ids": [
+        "e-independence",
+        "e-generation-arm1",
+        "e-generation-arm2",
+        "e-generation-arm3"
+      ],
+      "falsifier": "Any arm uses a sibling artifact, retries after a visible failure, or lacks a complete ledger and frozen-input lineage."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Route broad Korean aesthetic shorthands to bounded optional candidates, reserve hard activation for observable multi-component relations, preserve appearance-only reference scope, and require one-call native-plus-thumbnail pixel qualification with partial_is_fail.",
+    "generalization_basis": "The same representation separates capture geometry, reflection topology, occlusion cause, complexion coverage, pigment distribution, format continuity, and nonvisual metadata across seven profiles and three unrelated randomized scenes.",
+    "hypothesis_ids": [
+      "hypothesis-component-contracts",
+      "hypothesis-bounded-candidates",
+      "hypothesis-independent-single-call-rendering"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/9a0d62d2d9fd9cfc",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "docs/research-evidence/photo-prompt/korean-emotional-photo-semantics-20260902/source-research.md",
+      "tests/test_photo_korean_emotional_visual_semantics.py",
+      "tests/test_photo_makeup_visual_semantics.py",
+      "tests/fixtures/photo_prompt/korean_emotional_photo_three_arm_pixel_cases_v1.jsonl",
+      "artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-routing",
+        "e-candidate-packs",
+        "e-prompt-audits"
+      ]
+    },
+    "render": {
+      "status": "blocked",
+      "evidence_ids": [
+        "e-render-arm1",
+        "e-generation-arm2",
+        "e-render-arm3"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "korean-emotional-exact-and-confound-routing",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "seven exact hard routes",
+          "broad optional terms",
+          "adjacent visual confounds",
+          "BM25F candidate retrieval"
+        ],
+        "evidence_ids": [
+          "e-routing"
+        ]
+      },
+      {
+        "id": "arm-01-planetarium-mirror",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "mirror topology",
+          "under-eye pigment distribution",
+          "sheer complexion texture preservation"
+        ],
+        "evidence_ids": [
+          "e-render-arm1"
+        ]
+      },
+      {
+        "id": "arm-02-rooftop-overhead",
+        "case_role": "motivating",
+        "status": "blocked",
+        "covered_axes": [
+          "close overhead relation",
+          "cheekbone-to-temple pigment path",
+          "0.5x optional recession",
+          "glossy lip optional finish"
+        ],
+        "evidence_ids": [
+          "e-generation-arm2"
+        ]
+      },
+      {
+        "id": "arm-03-greenhouse-occlusion",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "adult subject readability",
+          "scene-bound identity-zone occlusion",
+          "unfinished action and setting"
+        ],
+        "evidence_ids": [
+          "e-render-arm3"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "render-fidelity",
+    "rationale": "The structural and prompt behavior changes pass and two delivered arms pass all 18 evaluated gates, but one of three single calls was blocked, nine gates remain unscored, no unrelated rendered holdout exists, and user aesthetic judgment is pending; the change is implemented but not promoted for render fidelity.",
+    "evidence_ids": [
+      "e-package",
+      "e-routing",
+      "e-prompt-audits",
+      "e-independence",
+      "e-render-arm1",
+      "e-generation-arm2",
+      "e-render-arm3"
+    ]
+  }
+}
