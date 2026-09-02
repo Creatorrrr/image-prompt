@@ -1,0 +1,298 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/.agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "git:401f450e4c0ec32ef79c502e3c6a6666c9a106c4",
+    "candidate_revision": "git:401f450e4c0ec32ef79c502e3c6a6666c9a106c4;working-tree-dirty;suggestive-editorial-visual-semantics-v1"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Implement the researched adult suggestive-editorial keywords as observable visual semantics and candidate-pack data, then use three independent randomized complex concepts and the supplied adult-appearance reference to test whether the semantics survive into generated pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-reference",
+      "kind": "source-observation",
+      "claim": "The supplied portrait visibly supports only a bounded appearance reference: adult facial proportions, long dark wavy hair, and natural skin texture; it does not establish identity, same-person status, protected traits, personality, occupation, relationship, or consent.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256:3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "The researched genre and styling terms were bounded into visible adult action, occlusion topology, layer construction, room context, material physics, and false-substitute exclusions rather than being treated as exposure or appeal labels.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/docs/analysis/2026-09-02-suggestive-editorial-visual-semantics.md and approved suggestive_editorial_semantics_* rows in docs/research-evidence/photo-prompt/research_evidence.jsonl"
+    },
+    {
+      "id": "e-baseline",
+      "kind": "repository-history",
+      "claim": "The baseline revision did not contain the four new suggestive-editorial visual-obligation profiles, twenty candidate atoms, or four presets.",
+      "artifact": "git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/{photo_prompt_visual_obligations.json,photo_prompt_tags.json}; new IDs absent"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The focused eight-test module passed without skips; dictionary validation, current visual-profile index, scene-expression 112/112, and diff checks passed; the regenerated visual index contains 323 profiles and 1,667 exact terms, and the regenerated semantic index contains 8,021 current-dictionary entries in 16 shards. Broad genre slang and single cues remain outside the new hard routes. A 63-test related regression run separately reported six untouched HEAD yandere-versus-clinical-nurse expectation failures and one untouched short-baseline helper error, so no whole-suite green claim is made.",
+      "artifact": "python -m unittest tests.test_photo_suggestive_editorial_visual_semantics -v => 8/8 PASS; validate_photo_prompt_dictionary.py => PASS; build_visual_profile_index.py --check => PASS; audit_scene_expression.py --current => 112/112 PASS; related regression => failures=6 errors=1 in untouched baseline cases"
+    },
+    {
+      "id": "e-prompt-01",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 01's frozen v6 candidate pack, composed prompt, and serialized render request passed structural audits with all ten hard-gate evidence bindings present.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-01-window-reveal/{composed_prompt_audit.json,render_request_audit.json}"
+    },
+    {
+      "id": "e-prompt-02",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 02's frozen v6 candidate pack, composed prompt, and serialized render request passed structural audits with all five strategic-coverage hard-gate evidence bindings present.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-02-figure-coverage/{composed_prompt_audit.json,render_request_audit.json}"
+    },
+    {
+      "id": "e-prompt-03",
+      "kind": "prompt-evaluation",
+      "claim": "Arm 03's frozen v6 candidate pack, composed prompt, and serialized render request passed structural audits with all ten layered-fashion and physical-mirror hard-gate evidence bindings present.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-03-layered-mirror/{composed_prompt_audit.json,render_request_audit.json}"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Three independent arms used separate frozen inputs, the same bounded reference hash, one built-in image call each, no retry, no fallback, and no cross-arm artifacts; two calls delivered saved renders and one was blocked at input moderation.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/{coordination/source_snapshot.json,arm-01-window-reveal/run_manifest.json,arm-02-figure-coverage/run_manifest.json,arm-03-layered-mirror/run_manifest.json}"
+    },
+    {
+      "id": "e-render-01",
+      "kind": "render-observation",
+      "claim": "Root native-and-thumbnail review found the self-directed wrap-dress action, one stable lapel boundary, holistic bedroom context, diffused visible-window lighting, and material overlap fully observable, passing all ten Arm 01 gates.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/coordination/root_pixel_review.json#arm-01-window-reveal"
+    },
+    {
+      "id": "e-render-02",
+      "kind": "render-observation",
+      "claim": "Root native-and-thumbnail review found a complete adult figure, one continuous opaque cobalt path, plausible contour continuation, directional modeling and body-bounded negative space, passing all five Arm 02 gates.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/coordination/root_pixel_review.json#arm-02-figure-coverage"
+    },
+    {
+      "id": "e-block-03",
+      "kind": "generation-outcome",
+      "claim": "Arm 03's only authorized generation call was blocked at input moderation with no preview or local image, leaving all ten hard gates UNSCORED rather than failed.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-03-layered-mirror/{image_runs.ndjson,pixel_review.json,arm_result.json}; request_id:bfeb05e2-4c83-43c3-9193-d63a7e5f5dab"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each selected narrow keyword must become a first-read observable adult action, occlusion, layer, light, room, or material relation in one saved image; every required hard gate in that arm must pass because partial fulfillment is failure.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-relation-not-label",
+        "statement": "A genre label, amount of visible skin, fitted clothing, lingerie, bedroom, or direct gaze cannot substitute for the profile's complete component relation.",
+        "evidence_ids": [
+          "e-research",
+          "e-package"
+        ],
+        "causal_controls": [
+          "five component groups per profile",
+          "literal prompt evidence fields",
+          "thumbnail and native pixel gates",
+          "explicit reject substitutes"
+        ]
+      },
+      {
+        "id": "adult-reference-boundary",
+        "statement": "The supplied portrait is restricted to observable adult appearance cues and cannot ground identity, same-person, biometric, protected-trait, personality, occupation, relationship, or consent claims.",
+        "evidence_ids": [
+          "e-reference"
+        ],
+        "causal_controls": [
+          "appearance_reference role",
+          "per-arm reference hash",
+          "identity claims disabled",
+          "root review scope"
+        ]
+      },
+      {
+        "id": "independent-one-call-arms",
+        "statement": "Each arm must preserve its independently randomized pre-core, use one image call, and avoid retries, fallbacks, and cross-arm inputs.",
+        "evidence_ids": [
+          "e-generation"
+        ],
+        "causal_controls": [
+          "per-arm request and core hashes",
+          "one-call manifests",
+          "cross-arm input flags",
+          "separate agent execution"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "scene concept",
+      "time of day",
+      "room or studio architecture",
+      "supporting props",
+      "wardrobe color",
+      "camera format",
+      "lighting style when not owned by the selected profile"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-baseline-representation",
+      "scale": "global",
+      "axis": "suggestive-editorial visual semantics",
+      "source_state": "The research and user request distinguished self-directed reveal, strategic coverage, constructed inner-outer layering, and diffused private-room portrait relations.",
+      "render_state": "The baseline package lacked complete observable contracts and candidate data for those four relations.",
+      "evidence_ids": [
+        "e-research",
+        "e-baseline"
+      ]
+    },
+    {
+      "id": "mismatch-arm-03-render-availability",
+      "scale": "global",
+      "axis": "delivered layered-mirror pixel evidence",
+      "source_state": "The frozen prompt specified a non-explicit adult layered-fashion system and coherent physical mirror topology.",
+      "render_state": "Input moderation returned no preview or saved image, so the declared layer and mirror relations could not be inspected.",
+      "evidence_ids": [
+        "e-prompt-03",
+        "e-block-03"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-observable-contract",
+      "stage": "representation",
+      "statement": "Narrow suggestive-editorial concepts become testable and less confusable when encoded as five co-required observable component groups, literal prompt evidence, scale-specific gates, and explicit false substitutes rather than aliases or exposure amount.",
+      "evidence_ids": [
+        "e-research",
+        "e-baseline",
+        "e-package"
+      ],
+      "falsifier": "Narrow exact phrases fail to route, broad slang activates the profiles, prompt audits omit required evidence, or delivered renders repeatedly substitute exposure, crop, generic bedroom, or an unconstructed garment for the declared relation."
+    },
+    {
+      "id": "h-generator-delivery-boundary",
+      "stage": "external",
+      "statement": "A structurally valid non-explicit adult fashion prompt can still produce no pixel evidence when the generation service blocks the request, and that external outcome must remain separate from visual quality scoring.",
+      "evidence_ids": [
+        "e-prompt-03",
+        "e-block-03"
+      ],
+      "falsifier": "A future independently frozen safe rendering of the same profile family is delivered and can be judged without weakening the observable contract."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "policy",
+      "test"
+    ],
+    "general_rule": "Represent each narrow adult suggestive-editorial term as an adult-bounded observable relation with five co-required components, literal prompt bindings, scale-specific pixel gates, reject-substitute boundaries, and conservative candidate atoms; keep broad slang and single cues out of hard exact routing.",
+    "generalization_basis": "The profiles describe action, topology, layer construction, lighting, environment, and material physics rather than a person, one pose, one room, or the three generated concepts; static routing, negative cases, generated indexes, prompt audits, and independent complex render arms exercise different layers of the rule.",
+    "hypothesis_ids": [
+      "h-observable-contract",
+      "h-generator-delivery-boundary"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/e23540a43104732d/",
+      "docs/research-evidence/photo-prompt/research_evidence.jsonl",
+      "docs/analysis/2026-09-02-suggestive-editorial-visual-semantics.md",
+      "tests/test_photo_suggestive_editorial_visual_semantics.py",
+      "tests/fixtures/photo_prompt/suggestive_editorial_three_arm_pixel_cases_v1.jsonl",
+      "artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-01",
+        "e-prompt-02",
+        "e-prompt-03"
+      ]
+    },
+    "render": {
+      "status": "blocked",
+      "evidence_ids": [
+        "e-render-01",
+        "e-render-02",
+        "e-block-03"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-01-window-reveal",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "self-directed everyday action",
+          "single coverage-and-reveal boundary",
+          "private-room context",
+          "visible diffused window source",
+          "material overlap and contact shadow"
+        ],
+        "evidence_ids": [
+          "e-render-01"
+        ]
+      },
+      {
+        "id": "arm-02-figure-coverage",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "continuous opaque coverage path",
+          "contour continuation around both edges",
+          "directional shape light",
+          "body-bounded negative space",
+          "complete adult pose"
+        ],
+        "evidence_ids": [
+          "e-render-02"
+        ]
+      },
+      {
+        "id": "arm-03-layered-mirror",
+        "case_role": "held-out",
+        "status": "blocked",
+        "covered_axes": [
+          "constructed foundation and separate outer layer",
+          "traceable intersections and closures",
+          "physical mirror plane",
+          "subject-phone-hand reflection topology"
+        ],
+        "evidence_ids": [
+          "e-block-03"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "render-fidelity",
+    "rationale": "The package and all three prompt/runtime paths are structurally complete, and the two delivered independent renders passed all 15 evaluated hard gates. The third arm produced no pixels because of an input safety block, so its ten gates remain UNSCORED and full render-fidelity promotion would overstate the evidence. User aesthetic judgment also remains unscored.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt-01",
+      "e-prompt-02",
+      "e-prompt-03",
+      "e-render-01",
+      "e-render-02",
+      "e-block-03"
+    ]
+  }
+}

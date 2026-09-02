@@ -26519,6 +26519,670 @@
         {"id": "vo_social_fourcut_not_collage_duplicate", "review_scale": "native", "description": "A single portrait, random collage, duplicated tile, contact sheet, or comic does not substitute."}
       ],
       "reject_substitutes": ["single_portrait", "random_collage", "duplicated_panels", "contact_sheet", "comic_strip"]
+    },
+    {
+      "id": "adult_everyday_controlled_reveal_moment",
+      "category": "adult_editorial_controlled_reveal_relation",
+      "activation": {
+        "exact_terms": [
+          "adult everyday controlled reveal moment",
+          "controlled-reveal everyday adult portrait",
+          "성인 일상 동작의 조절된 가림-드러남 장면",
+          "성인 일상형 조절된 가림 드러남"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One unmistakably adult subject continues a concrete self-directed everyday action while one stable garment, sheet, hair, forearm, or frame-edge boundary creates a controlled reveal-and-coverage relation. Face, action, setting, material edge, and gravity remain legible together; exposure amount, a body crop, or an apparently covert viewpoint cannot establish the meaning.",
+        "paraphrase_examples": [
+          "an adult fastening a cuff beside a window while one overlapping shirt edge and its contact shadow remain physically traceable",
+          "성인 인물이 머리를 묶는 일상 동작을 계속하는 동안 한 개의 안정된 직물 가림 경계와 장소가 함께 읽힘",
+          "the frame preserves face action room context and a single material reveal boundary instead of isolating body fragments"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "everyday_reveal_adult_subject",
+            "everyday_reveal_self_directed_action",
+            "everyday_reveal_single_stable_boundary",
+            "everyday_reveal_holistic_context",
+            "everyday_reveal_material_physics"
+          ],
+          "groups": [
+            {
+              "id": "everyday_reveal_adult_subject",
+              "any_terms": [
+                "one unmistakably adult subject remains the visible actor",
+                "한 명의 명백한 성인 피사체가 장면의 행동 주체로 남음"
+              ]
+            },
+            {
+              "id": "everyday_reveal_self_directed_action",
+              "any_terms": [
+                "a concrete unfinished dressing grooming or room task remains self-directed",
+                "구체적인 미완의 옷 정리 단장 또는 공간 동작을 스스로 계속함"
+              ]
+            },
+            {
+              "id": "everyday_reveal_single_stable_boundary",
+              "any_terms": [
+                "one stable opaque or layered edge creates a traceable reveal-and-coverage boundary",
+                "한 개의 안정된 불투명 또는 겹침 가장자리가 추적 가능한 가림-드러남 경계를 만듦"
+              ]
+            },
+            {
+              "id": "everyday_reveal_holistic_context",
+              "any_terms": [
+                "face action torso and environmental context remain readable in one holistic frame",
+                "얼굴 동작 상체와 환경 맥락이 하나의 전체적 프레임에서 함께 읽힘"
+              ]
+            },
+            {
+              "id": "everyday_reveal_material_physics",
+              "any_terms": [
+                "fabric weight overlap contact shadow and gravity explain the coverage relation",
+                "직물 무게 겹침 접촉 그림자와 중력이 가림 관계를 설명함"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "an ordinary lifestyle portrait with no controlled material boundary",
+          "exposed skin or fitted clothing without a self-directed action",
+          "a headless torso crop",
+          "a hidden-camera or doorway-peeking viewpoint",
+          "a pasted prop that merely blocks anatomy"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult self-directed actor",
+          "unfinished everyday dressing or grooming action",
+          "one stable coverage-and-reveal edge",
+          "face action and room context together",
+          "fabric overlap contact shadow and gravity",
+          "not body-fragment or covert-observer framing"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "adult everyday controlled reveal moment",
+          "controlled-reveal everyday adult portrait",
+          "성인 일상 동작의 조절된 가림-드러남 장면",
+          "성인 일상형 조절된 가림 드러남"
+        ],
+        "runtime_forbidden_labels": [
+          "adult everyday controlled reveal moment",
+          "controlled-reveal everyday adult portrait",
+          "성인 일상 동작의 조절된 가림-드러남 장면",
+          "성인 일상형 조절된 가림 드러남"
+        ]
+      },
+      "composition_instruction": "Keep one unmistakably adult subject, one concrete self-directed everyday action, one stable coverage-and-reveal edge, the subject's face and surrounding room, and physically coherent material overlap in the same frame. Let the action and material boundary carry the relation; exposed skin, fitted clothing, a body-only crop, or a covert-observer viewpoint cannot substitute.",
+      "required_evidence_fields": [
+        "everyday_reveal_adult_phrase",
+        "everyday_reveal_action_phrase",
+        "everyday_reveal_boundary_phrase",
+        "everyday_reveal_context_phrase",
+        "everyday_reveal_material_phrase"
+      ],
+      "evidence_requirements": {
+        "everyday_reveal_adult_phrase": {
+          "min_content_words": 7,
+          "must_mention_any": ["one unmistakably adult subject remains the visible actor"]
+        },
+        "everyday_reveal_action_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": ["a concrete unfinished dressing grooming or room task remains self-directed"]
+        },
+        "everyday_reveal_boundary_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["one stable opaque or layered edge creates a traceable reveal-and-coverage boundary"]
+        },
+        "everyday_reveal_context_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["face action torso and environmental context remain readable in one holistic frame"]
+        },
+        "everyday_reveal_material_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": ["fabric weight overlap contact shadow and gravity explain the coverage relation"]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_everyday_reveal_adult_actor",
+          "review_scale": "both",
+          "description": "One unmistakably adult subject remains the visible actor without youthful or school-coded presentation."
+        },
+        {
+          "id": "vo_everyday_reveal_self_directed_action",
+          "review_scale": "thumbnail",
+          "description": "A concrete unfinished dressing, grooming, or room task reads as self-directed rather than passive posing."
+        },
+        {
+          "id": "vo_everyday_reveal_single_boundary",
+          "review_scale": "both",
+          "description": "One stable opaque or layered edge creates a traceable coverage-and-reveal boundary."
+        },
+        {
+          "id": "vo_everyday_reveal_holistic_context",
+          "review_scale": "thumbnail",
+          "description": "Face, action, torso, and environmental context remain legible together without a headless or body-fragment crop."
+        },
+        {
+          "id": "vo_everyday_reveal_material_physics",
+          "review_scale": "native",
+          "description": "Fabric weight, overlap, contact shadow, and gravity physically explain the coverage relation."
+        }
+      ],
+      "reject_substitutes": [
+        "ordinary_lifestyle_without_reveal_boundary",
+        "exposure_or_fitted_clothing_only",
+        "headless_body_fragment_crop",
+        "covert_observer_or_hidden_camera_view",
+        "pasted_prop_anatomy_block"
+      ]
+    },
+    {
+      "id": "strategic_coverage_figure_study",
+      "category": "adult_figure_study_strategic_coverage",
+      "activation": {
+        "exact_terms": [
+          "strategic coverage figure study",
+          "strategic-coverage implied figure study",
+          "전략적 가림의 임플라이드 피겨 스터디",
+          "성인 전략적 가림 피겨 스터디"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult figure study uses a stable opaque drape, limb, hair mass, or foreground form to maintain continuous non-explicit coverage while the surrounding body contour, light-to-form transition, and body-bounded negative space remain readable. The result is a holistic study of form rather than explicit anatomy, a censor-bar effect, a black cutout, or a fragmented body crop.",
+        "paraphrase_examples": [
+          "an adult figure remains holistically framed while one opaque drape follows a continuous coverage path and side light models the surrounding form",
+          "성인 인체의 가림 경로와 그 주변 윤곽이 끊기지 않고 빛과 네거티브 스페이스가 형태를 설명함",
+          "coverage remains physically stable at native scale instead of relying on a pasted foreground object"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "figure_coverage_adult_subject",
+            "figure_coverage_stable_opaque_path",
+            "figure_coverage_contour_continuity",
+            "figure_coverage_light_negative_space",
+            "figure_coverage_holistic_frame"
+          ],
+          "groups": [
+            {
+              "id": "figure_coverage_adult_subject",
+              "any_terms": [
+                "one unmistakably adult figure is the complete study subject",
+                "한 명의 명백한 성인 인체가 완전한 연구 대상임"
+              ]
+            },
+            {
+              "id": "figure_coverage_stable_opaque_path",
+              "any_terms": [
+                "one stable opaque coverage path remains continuous over non-explicit anatomy",
+                "한 개의 안정된 불투명 가림 경로가 비노골적 해부학 영역 위에서 연속됨"
+              ]
+            },
+            {
+              "id": "figure_coverage_contour_continuity",
+              "any_terms": [
+                "body contour continues plausibly around both edges of the occluding form",
+                "가림 형태의 양쪽 가장자리 주변으로 인체 윤곽이 자연스럽게 이어짐"
+              ]
+            },
+            {
+              "id": "figure_coverage_light_negative_space",
+              "any_terms": [
+                "directional light and continuous body-bounded negative space model three-dimensional form",
+                "방향성 빛과 연속된 인체 경계 네거티브 스페이스가 입체 형태를 모델링함"
+              ]
+            },
+            {
+              "id": "figure_coverage_holistic_frame",
+              "any_terms": [
+                "head torso support limbs and pose remain readable as one holistic figure study",
+                "머리 몸통 지지 사지와 포즈가 하나의 전체적 인체 연구로 읽힘"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "explicit anatomy",
+          "a sticker or censor bar pasted over the body",
+          "an unstable hand that fails to provide coverage",
+          "a featureless black silhouette",
+          "a disconnected body-part crop"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult holistic figure study",
+          "continuous stable opaque coverage path",
+          "body contour continuity around the occluder",
+          "directional light and body-bounded negative space",
+          "head torso support limbs and pose together",
+          "not explicit censor-bar black-cutout or fragment crop"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "strategic coverage figure study",
+          "strategic-coverage implied figure study",
+          "전략적 가림의 임플라이드 피겨 스터디",
+          "성인 전략적 가림 피겨 스터디"
+        ],
+        "runtime_forbidden_labels": [
+          "strategic coverage figure study",
+          "strategic-coverage implied figure study",
+          "전략적 가림의 임플라이드 피겨 스터디",
+          "성인 전략적 가림 피겨 스터디"
+        ]
+      },
+      "composition_instruction": "Frame one unmistakably adult figure holistically. Maintain one continuous opaque coverage path, preserve plausible contour continuity around its edges, use directional light and body-bounded negative space to model form, and keep head, torso, support, limbs, and pose readable together. Explicit anatomy, pasted blockers, black cutouts, and fragmented crops cannot substitute.",
+      "required_evidence_fields": [
+        "figure_coverage_adult_phrase",
+        "figure_coverage_path_phrase",
+        "figure_coverage_contour_phrase",
+        "figure_coverage_light_phrase",
+        "figure_coverage_frame_phrase"
+      ],
+      "evidence_requirements": {
+        "figure_coverage_adult_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": ["one unmistakably adult figure is the complete study subject"]
+        },
+        "figure_coverage_path_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["one stable opaque coverage path remains continuous over non-explicit anatomy"]
+        },
+        "figure_coverage_contour_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": ["body contour continues plausibly around both edges of the occluding form"]
+        },
+        "figure_coverage_light_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["directional light and continuous body-bounded negative space model three-dimensional form"]
+        },
+        "figure_coverage_frame_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["head torso support limbs and pose remain readable as one holistic figure study"]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_figure_coverage_adult_holistic",
+          "review_scale": "both",
+          "description": "One unmistakably adult figure remains the complete study subject without youthful coding."
+        },
+        {
+          "id": "vo_figure_coverage_stable_opaque_path",
+          "review_scale": "both",
+          "description": "One continuous opaque coverage path remains stable over non-explicit anatomy at thumbnail and native scale."
+        },
+        {
+          "id": "vo_figure_coverage_contour_continuity",
+          "review_scale": "native",
+          "description": "Body contour continues plausibly around both edges of the occluding form rather than disappearing behind a pasted blocker."
+        },
+        {
+          "id": "vo_figure_coverage_light_negative_space",
+          "review_scale": "thumbnail",
+          "description": "Directional light and continuous body-bounded negative space model three-dimensional form."
+        },
+        {
+          "id": "vo_figure_coverage_complete_pose",
+          "review_scale": "both",
+          "description": "Head, torso, support, limbs, and pose remain readable together without a fragmented body-part crop."
+        }
+      ],
+      "reject_substitutes": [
+        "explicit_anatomy",
+        "pasted_censor_bar_or_sticker",
+        "unstable_hand_cover",
+        "featureless_black_silhouette",
+        "disconnected_body_part_crop"
+      ]
+    },
+    {
+      "id": "underwear_as_outerwear_layer_system",
+      "category": "adult_fashion_underwear_outerwear_layer_system",
+      "activation": {
+        "exact_terms": [
+          "underwear as outerwear layer system",
+          "lingerie-as-outerwear layered editorial",
+          "언더웨어 애즈 아우터웨어 레이어 시스템",
+          "언더웨어 아우터웨어 레이어드 에디토리얼"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult fashion subject wears one clearly constructed intimate-wear-inspired foundation together with a separate tailored or ordinary outer layer. Layer order, intersections, hems, straps, lapels, closures, and material boundaries remain readable in an editorial or public fashion context; underwear alone, swimwear alone, one accidental strap, or fetish accessories alone cannot establish the system.",
+        "paraphrase_examples": [
+          "a clearly adult model wears a constructed bralette beneath an open tailored blazer with both garment layers and closures separately traceable",
+          "성인 패션 피사체의 캐미솔 기반층과 셔츠 또는 재킷 외층이 실제 교차 경계와 여밈으로 분리되어 읽힘",
+          "the outfit remains fashion-led because layer order and garment construction survive removal of exposed-skin emphasis"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "outerwear_layer_adult_subject",
+            "outerwear_layer_intimate_foundation",
+            "outerwear_layer_separate_outer_garment",
+            "outerwear_layer_intersection_construction",
+            "outerwear_layer_fashion_context"
+          ],
+          "groups": [
+            {
+              "id": "outerwear_layer_adult_subject",
+              "any_terms": [
+                "one unmistakably adult fashion subject wears the complete layered outfit",
+                "한 명의 명백한 성인 패션 피사체가 완전한 레이어드 의상을 착용함"
+              ]
+            },
+            {
+              "id": "outerwear_layer_intimate_foundation",
+              "any_terms": [
+                "a constructed bralette camisole slip or bodysuit forms the visible foundation layer",
+                "구조가 보이는 브라렛 캐미솔 슬립 또는 보디수트가 기반층을 이룸"
+              ]
+            },
+            {
+              "id": "outerwear_layer_separate_outer_garment",
+              "any_terms": [
+                "a separate blazer shirt cardigan trouser or skirt layer remains clearly present",
+                "별도의 블레이저 셔츠 카디건 트라우저 또는 스커트 층이 분명히 존재함"
+              ]
+            },
+            {
+              "id": "outerwear_layer_intersection_construction",
+              "any_terms": [
+                "layer order intersections hems straps lapels and closures remain physically traceable",
+                "레이어 순서 교차점 밑단 끈 라펠과 여밈이 물리적으로 추적 가능함"
+              ]
+            },
+            {
+              "id": "outerwear_layer_fashion_context",
+              "any_terms": [
+                "editorial lookbook backstage or public styling context keeps the image fashion-led",
+                "에디토리얼 룩북 백스테이지 또는 공적 스타일링 맥락이 패션 중심 읽기를 유지함"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "underwear worn alone",
+          "a swimsuit with no outer layer",
+          "one accidentally visible strap",
+          "painted-on or textureless sheer clothing",
+          "fetish accessories without a garment-layer system"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult fashion subject",
+          "constructed bralette camisole slip or bodysuit foundation",
+          "separate tailored or ordinary outer layer",
+          "traceable layer order hems straps lapels and closures",
+          "editorial lookbook backstage or public fashion context",
+          "not underwear swimwear strap or accessory alone"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "underwear as outerwear layer system",
+          "lingerie-as-outerwear layered editorial",
+          "언더웨어 애즈 아우터웨어 레이어 시스템",
+          "언더웨어 아우터웨어 레이어드 에디토리얼"
+        ],
+        "runtime_forbidden_labels": [
+          "underwear as outerwear layer system",
+          "lingerie-as-outerwear layered editorial",
+          "언더웨어 애즈 아우터웨어 레이어 시스템",
+          "언더웨어 아우터웨어 레이어드 에디토리얼"
+        ]
+      },
+      "composition_instruction": "Keep one unmistakably adult fashion subject, one constructed intimate-wear-inspired foundation, one separate outer garment, their physically traceable intersections and closures, and an editorial or public fashion context in the same frame. Underwear alone, swimwear alone, a stray strap, painted-on material, or isolated fetish accessories cannot substitute.",
+      "required_evidence_fields": [
+        "outerwear_layer_adult_phrase",
+        "outerwear_layer_foundation_phrase",
+        "outerwear_layer_outer_phrase",
+        "outerwear_layer_construction_phrase",
+        "outerwear_layer_context_phrase"
+      ],
+      "evidence_requirements": {
+        "outerwear_layer_adult_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": ["one unmistakably adult fashion subject wears the complete layered outfit"]
+        },
+        "outerwear_layer_foundation_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["a constructed bralette camisole slip or bodysuit forms the visible foundation layer"]
+        },
+        "outerwear_layer_outer_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["a separate blazer shirt cardigan trouser or skirt layer remains clearly present"]
+        },
+        "outerwear_layer_construction_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["layer order intersections hems straps lapels and closures remain physically traceable"]
+        },
+        "outerwear_layer_context_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["editorial lookbook backstage or public styling context keeps the image fashion-led"]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_outerwear_layer_adult_subject",
+          "review_scale": "both",
+          "description": "One unmistakably adult fashion subject wears the complete layered outfit without youthful coding."
+        },
+        {
+          "id": "vo_outerwear_layer_foundation",
+          "review_scale": "thumbnail",
+          "description": "A constructed bralette, camisole, slip, or bodysuit reads as the visible foundation layer."
+        },
+        {
+          "id": "vo_outerwear_layer_separate_outer",
+          "review_scale": "thumbnail",
+          "description": "A separate blazer, shirt, cardigan, trouser, or skirt layer remains clearly present."
+        },
+        {
+          "id": "vo_outerwear_layer_intersections",
+          "review_scale": "native",
+          "description": "Layer order, intersections, hems, straps, lapels, and closures remain physically traceable."
+        },
+        {
+          "id": "vo_outerwear_layer_fashion_context",
+          "review_scale": "both",
+          "description": "Editorial, lookbook, backstage, or public styling context keeps the image fashion-led rather than underwear-only."
+        }
+      ],
+      "reject_substitutes": [
+        "underwear_only",
+        "swimwear_only",
+        "accidental_visible_strap",
+        "painted_on_or_textureless_sheer",
+        "fetish_accessory_without_layer_system"
+      ]
+    },
+    {
+      "id": "soft_window_private_room_adult_portrait",
+      "category": "adult_private_room_soft_window_portrait",
+      "activation": {
+        "exact_terms": [
+          "soft-window private-room adult portrait",
+          "soft window private room portrait contract",
+          "소프트 윈도 사적 공간 성인 포트레이트",
+          "확산창광 사적 공간 성인 포트레이트"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One unmistakably adult subject continues a self-directed dressing, grooming, or room action inside a readable bedroom, hotel room, or dressing space. A window and translucent curtain produce a broad directional gradient with soft-edged shadows, while one garment or sheet relation remains physically legible. A bedroom, lingerie, bright exposure, passive reclining, or a hidden-observer frame alone cannot establish the portrait.",
+        "paraphrase_examples": [
+          "an adult fastens jewelry beside a curtained window while the room depth soft shadow gradient and garment edge remain readable",
+          "성인 피사체의 구체적 단장 동작과 사적 공간 단서가 커튼 확산창광 및 직물 관계와 한 장면에 공존함",
+          "the soft light has a visible window source and directional falloff instead of a flat high-key wash"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "private_window_adult_subject",
+            "private_window_room_identity",
+            "private_window_diffused_source",
+            "private_window_self_directed_action",
+            "private_window_material_relation"
+          ],
+          "groups": [
+            {
+              "id": "private_window_adult_subject",
+              "any_terms": [
+                "one unmistakably adult subject remains the portrait's visible actor",
+                "한 명의 명백한 성인 피사체가 포트레이트의 행동 주체로 남음"
+              ]
+            },
+            {
+              "id": "private_window_room_identity",
+              "any_terms": [
+                "bedroom hotel-room or dressing-space depth and furnishing cues remain readable",
+                "침실 호텔 객실 또는 드레싱 공간의 깊이와 가구 단서가 읽힘"
+              ]
+            },
+            {
+              "id": "private_window_diffused_source",
+              "any_terms": [
+                "a visible window and translucent curtain create a broad directional gradient with soft-edged shadows",
+                "보이는 창과 반투명 커튼이 부드러운 그림자 경계의 넓은 방향성 그라데이션을 만듦"
+              ]
+            },
+            {
+              "id": "private_window_self_directed_action",
+              "any_terms": [
+                "the adult continues one concrete dressing grooming or room action rather than passive reclining",
+                "성인이 수동적으로 기대는 대신 하나의 구체적인 옷 정리 단장 또는 공간 동작을 계속함"
+              ]
+            },
+            {
+              "id": "private_window_material_relation",
+              "any_terms": [
+                "one garment sheet or curtain edge shows thickness overlap contact shadow and gravity",
+                "한 개의 의복 시트 또는 커튼 가장자리가 두께 겹침 접촉 그림자와 중력을 보여줌"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "a generic bedroom portrait",
+          "lingerie alone",
+          "flat high-key overexposure",
+          "passive reclining without action",
+          "a hidden-camera doorway view"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "unmistakably adult self-directed portrait actor",
+          "readable bedroom hotel-room or dressing-space depth",
+          "visible window and translucent curtain diffusion",
+          "unfinished dressing grooming or room action",
+          "one garment sheet or curtain material relation",
+          "not bedroom lingerie brightness recline or covert framing alone"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "soft-window private-room adult portrait",
+          "soft window private room portrait contract",
+          "소프트 윈도 사적 공간 성인 포트레이트",
+          "확산창광 사적 공간 성인 포트레이트"
+        ],
+        "runtime_forbidden_labels": [
+          "soft-window private-room adult portrait",
+          "soft window private room portrait contract",
+          "소프트 윈도 사적 공간 성인 포트레이트",
+          "확산창광 사적 공간 성인 포트레이트"
+        ]
+      },
+      "composition_instruction": "Keep one unmistakably adult subject, readable bedroom or dressing-space depth, a visible curtained window with broad directional diffusion, one concrete self-directed dressing or grooming action, and one physically coherent garment, sheet, or curtain relation in the same frame. Bedroom location, lingerie, bright exposure, passive reclining, or covert framing alone cannot substitute.",
+      "required_evidence_fields": [
+        "private_window_adult_phrase",
+        "private_window_room_phrase",
+        "private_window_light_phrase",
+        "private_window_action_phrase",
+        "private_window_material_phrase"
+      ],
+      "evidence_requirements": {
+        "private_window_adult_phrase": {
+          "min_content_words": 9,
+          "must_mention_any": ["one unmistakably adult subject remains the portrait's visible actor"]
+        },
+        "private_window_room_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["bedroom hotel-room or dressing-space depth and furnishing cues remain readable"]
+        },
+        "private_window_light_phrase": {
+          "min_content_words": 14,
+          "must_mention_any": ["a visible window and translucent curtain create a broad directional gradient with soft-edged shadows"]
+        },
+        "private_window_action_phrase": {
+          "min_content_words": 14,
+          "must_mention_any": ["the adult continues one concrete dressing grooming or room action rather than passive reclining"]
+        },
+        "private_window_material_phrase": {
+          "min_content_words": 13,
+          "must_mention_any": ["one garment sheet or curtain edge shows thickness overlap contact shadow and gravity"]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_private_window_adult_actor",
+          "review_scale": "both",
+          "description": "One unmistakably adult subject remains the visible portrait actor without youthful coding."
+        },
+        {
+          "id": "vo_private_window_room_context",
+          "review_scale": "thumbnail",
+          "description": "Bedroom, hotel-room, or dressing-space depth and furnishing cues remain readable."
+        },
+        {
+          "id": "vo_private_window_diffused_source",
+          "review_scale": "both",
+          "description": "A visible window and translucent curtain create broad directional diffusion with soft-edged shadows rather than flat overexposure."
+        },
+        {
+          "id": "vo_private_window_self_directed_action",
+          "review_scale": "thumbnail",
+          "description": "The adult continues one concrete dressing, grooming, or room action rather than passively reclining."
+        },
+        {
+          "id": "vo_private_window_material_relation",
+          "review_scale": "native",
+          "description": "One garment, sheet, or curtain edge shows thickness, overlap, contact shadow, and gravity."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_bedroom_portrait",
+        "lingerie_only",
+        "flat_high_key_overexposure",
+        "passive_reclining_without_action",
+        "hidden_camera_doorway_view"
+      ]
     }
   ]
 }

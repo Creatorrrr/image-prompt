@@ -1,0 +1,169 @@
+{
+  "contract_version": "photo-root-three-arm-pixel-review/v1",
+  "reviewer": "root independent native-and-thumbnail pixel reviewer",
+  "reviewed_at": "2026-09-02",
+  "strict_rule": "Pass only when every required relation is fully observable in the one saved image; partial or missing evidence is fail. A blocked generation has no pixel evidence and remains UNSCORED rather than becoming a quality-zero failure.",
+  "evidence_boundaries": {
+    "prompt_or_runtime_pass_proves_pixels": false,
+    "successful_generation_proves_required_relations": false,
+    "technical_pixel_pass_proves_user_preference": false,
+    "user_aesthetic_judgment": "pending"
+  },
+  "reference_scope": {
+    "role": "appearance_reference",
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "allowed": [
+      "visible adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ],
+    "forbidden_claims": [
+      "identity",
+      "same-person status",
+      "biometrics",
+      "protected traits",
+      "health",
+      "attractiveness",
+      "personality",
+      "occupation",
+      "ethnicity",
+      "nationality",
+      "relationship"
+    ]
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-window-reveal",
+      "random_seed": 13389124217090213127,
+      "randomized_complex_concept": "Curtain-diffused private-bedroom dressing editorial in which one clearly adult woman tightens an opaque deep-plum wrap dress and one diagonal lapel edge forms the sole coverage-and-reveal boundary.",
+      "profile_ids": [
+        "adult_everyday_controlled_reveal_moment",
+        "soft_window_private_room_adult_portrait"
+      ],
+      "generation_status": "success",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-01-window-reveal/final.png",
+      "image_sha256": "bee8a97ee78bcff0ef9a56597c428af9f93593785479ba42895aaa278a4fb57f",
+      "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-01-window-reveal/thumbnail.png",
+      "thumbnail_sha256": "16163b663cd114c72a442cf973b116c3ebdce52ecda6110b83bf68965e966fbc",
+      "native_and_thumbnail_inspected": true,
+      "hard_gates": {
+        "vo_everyday_reveal_adult_actor": "pass",
+        "vo_everyday_reveal_self_directed_action": "pass",
+        "vo_everyday_reveal_single_boundary": "pass",
+        "vo_everyday_reveal_holistic_context": "pass",
+        "vo_everyday_reveal_material_physics": "pass",
+        "vo_private_window_adult_actor": "pass",
+        "vo_private_window_room_context": "pass",
+        "vo_private_window_diffused_source": "pass",
+        "vo_private_window_self_directed_action": "pass",
+        "vo_private_window_material_relation": "pass"
+      },
+      "hard_gate_summary": {
+        "passed": 10,
+        "failed": 0,
+        "unscored": 0,
+        "total": 10,
+        "technical_pixel_verdict": "pass"
+      },
+      "root_evidence": [
+        "At thumbnail scale one clearly adult subject, her face, both acting hands, torso, window, curtain, bed, mirror, slippers, and room depth remain readable together.",
+        "Both hands visibly tighten the waist tie while the lowered gaze follows the unfinished self-directed dressing action rather than a passive pose.",
+        "One dominant deep-plum lapel edge remains traceable from neckline through waist as the only coverage-and-reveal boundary.",
+        "Native pixels show weighted cloth, the inner and outer lapel overlap, crossover contact shadow, belt tension, and gravity folds.",
+        "The visible left window and translucent curtain produce a broad directional face-to-room gradient with soft-edged falloff rather than flat high-key exposure."
+      ],
+      "non_gating_observation": "The requested relation is carried by the V-shaped lapel and collarbone boundary; a more specific bare-one-shoulder variation did not appear, but it was not a required vo_* gate."
+    },
+    {
+      "arm_id": "arm-02-figure-coverage",
+      "random_seed": 1949316982481159071,
+      "randomized_complex_concept": "Full-length adult figure study in a pale limestone cyclorama crossed by one freestanding continuous opaque cobalt S-shaped sculptural screen under strong directional light.",
+      "profile_ids": [
+        "strategic_coverage_figure_study"
+      ],
+      "generation_status": "success",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-02-figure-coverage/final.png",
+      "image_sha256": "d20643a8fee7960d7007a7b114492b2744be4cd87fbe13e09aa36eeb259efab0",
+      "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-suggestive-editorial-three-arm-v1/arm-02-figure-coverage/thumbnail.png",
+      "thumbnail_sha256": "9821744ae09553add137ceadeb06f02d4fbcca00791ac08e7b68217aa5447cb4",
+      "native_and_thumbnail_inspected": true,
+      "hard_gates": {
+        "vo_figure_coverage_adult_holistic": "pass",
+        "vo_figure_coverage_stable_opaque_path": "pass",
+        "vo_figure_coverage_contour_continuity": "pass",
+        "vo_figure_coverage_light_negative_space": "pass",
+        "vo_figure_coverage_complete_pose": "pass"
+      },
+      "hard_gate_summary": {
+        "passed": 5,
+        "failed": 0,
+        "unscored": 0,
+        "total": 5,
+        "technical_pixel_verdict": "pass"
+      },
+      "root_evidence": [
+        "Thumbnail and native views preserve one clearly adult subject from head through both grounded boots in one complete asymmetric pose.",
+        "A single solid cobalt S-shaped form stays continuously opaque from the upper frame to the floor while covering the central clothed torso and pelvis.",
+        "Visible shoulders, waist, hips, thighs, and legs align plausibly around both screen edges; floor contact, surface texture, and cast shading make it read as a freestanding form rather than a software bar.",
+        "Strong diagonal window light models the face, arms, suit, screen, and floor while negative spaces remain readable under the raised arm, beside the bent arm, at the waist, and between the legs."
+      ]
+    },
+    {
+      "arm_id": "arm-03-layered-mirror",
+      "random_seed": 980534469,
+      "randomized_complex_concept": "Midnight-blue boutique-hotel dressing-room fashion editorial combining an opaque satin foundation, a separately constructed charcoal tuxedo outer layer, crossed fastening, and a fully bounded physical mirror-selfie topology.",
+      "profile_ids": [
+        "underwear_as_outerwear_layer_system",
+        "mirror_selfie_reflection_device_topology"
+      ],
+      "generation_status": "safety_block_no_output",
+      "moderation_stage": "input",
+      "moderation_category": "sexual",
+      "request_id": "bfeb05e2-4c83-43c3-9193-d63a7e5f5dab",
+      "image_path": null,
+      "native_and_thumbnail_inspected": false,
+      "hard_gates": {
+        "vo_outerwear_layer_adult_subject": "unscored",
+        "vo_outerwear_layer_foundation": "unscored",
+        "vo_outerwear_layer_separate_outer": "unscored",
+        "vo_outerwear_layer_intersections": "unscored",
+        "vo_outerwear_layer_fashion_context": "unscored",
+        "vo_social_mirror_physical_plane": "unscored",
+        "vo_social_mirror_subject_and_phone_inside": "unscored",
+        "vo_social_mirror_hand_device_contact": "unscored",
+        "vo_social_mirror_gaze_occlusion_coherent": "unscored",
+        "vo_social_mirror_not_direct_or_software": "unscored"
+      },
+      "hard_gate_summary": {
+        "passed": 0,
+        "failed": 0,
+        "unscored": 10,
+        "total": 10,
+        "technical_pixel_verdict": "unscored_no_render"
+      },
+      "root_evidence": [
+        "The composed-prompt and serialized render-request audits passed before generation.",
+        "The only authorized image call was blocked at input moderation and returned neither preview nor local image path.",
+        "No retry or provider fallback was performed, so no pixels exist for either the layered-fashion or physical-mirror gate set.",
+        "The arm is an experiment-execution block, not a quality-zero pixel failure."
+      ]
+    }
+  ],
+  "aggregate": {
+    "image_calls": 3,
+    "successful_renders": 2,
+    "blocked_renders": 1,
+    "retries": 0,
+    "fallbacks": 0,
+    "cross_arm_inputs_used": false,
+    "requested_hard_gates": 25,
+    "evaluated_hard_gates": 15,
+    "passed_hard_gates": 15,
+    "failed_hard_gates": 0,
+    "unscored_hard_gates": 10,
+    "rendered_arm_qualification": "2/2 rendered arms passed every required hard gate",
+    "three_arm_suite_verdict": "incomplete_due_to_one_generation_safety_block",
+    "user_aesthetic_judgment": "pending"
+  }
+}
