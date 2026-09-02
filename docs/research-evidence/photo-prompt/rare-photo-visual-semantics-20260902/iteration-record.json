@@ -1,0 +1,270 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "b92ad285980c37b03b5f611d371645dd242cd093",
+    "candidate_revision": "44466c2900a8a50886bbfe6a34179c891a820142"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "희얼사·희연사 조사 키워드를 관찰 가능한 시각 의미와 후보팩 데이터로 반영하고, 첨부 성인 외형 참조를 사용한 서로 다른 무작위 복합 컨셉 3개를 독립 arm에서 생성해 실제 픽셀 반영을 검증한다."
+  },
+  "evidence": [
+    {
+      "id": "e-source-boundary",
+      "kind": "source-observation",
+      "claim": "첨부 파일에서는 긴 짙은 웨이브 머리, 중앙에 가까운 가르마, 어두운 눈, 절제된 메이크업, 검은 상의 같은 보이는 성인 외형만 참조할 수 있으며 신원·동일인 여부·보호 특성·관계·유명인 여부는 판정할 수 없다.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "희얼사·희연사의 희소성, 촬영자, 공개 이력, 연도는 픽셀만으로 입증되지 않으므로 공개 행사 관객 경계, LCD 재촬영, 동행자 거리, 제작 과정, 물리 인화지, 초기 디카 처리, 컨택트 시트처럼 관찰 가능한 관계로 분해해야 한다.",
+      "artifact": "docs/research-evidence/photo-prompt/rare-photo-visual-semantics-20260902/source-research.md"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "신규 narrow exact profile과 broad-alias negative boundary를 검사한 focused test 8건, dictionary validation, visual-profile index check, scene-expression audit, BM25F retrieval, authorial-core v6, visual-profile retrieval이 통과했다. 레지스트리는 259 profiles와 1404 exact terms, semantic index는 7842 entries와 16 shards로 현재 데이터와 일치한다.",
+      "artifact": "tests/test_photo_rare_photo_visual_semantics.py; .venv/bin/python -m unittest tests.test_photo_rare_photo_visual_semantics -v; validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; audit_scene_expression.py --current"
+    },
+    {
+      "id": "e-baseline-suite",
+      "kind": "repository-history",
+      "claim": "전체 visual-obligations suite는 23건 중 17건 통과, 6건 실패했다. yandere fixture 5건과 yandere 계약 union 단위검사 1건의 충돌은 baseline HEAD의 clinical_nursing_duty_system exact term nurse로도 재현되며 신규 희얼사·희연사 프로필 때문에 생긴 회귀가 아니다.",
+      "artifact": "python -m unittest tests.test_photo_visual_obligations -v => Ran 23 tests, failures=6; git show b92ad285980c37b03b5f611d371645dd242cd093:skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json; tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl cases positive_yandere_en positive_yandere_ko candidate_yandere_relation_components negative_yandere_expression_only negative_yandere_role_prop_only; test_yandere_profile_requires_affection_control_relation_not_role_prop"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "세 독립 arm의 composed prompt와 exact runtime request가 blocking failure 0으로 PASS했고, 각 pack의 한 profile과 다섯 hard gate 및 첨부 reference 1개가 보존됐다.",
+      "artifact": "generated_images/rare-photo-three-agent-20260902/arm-1/composed_prompt.audit.json; arm-1/image_render_request.audit.json; arm-2/composed_prompt.audit.json; arm-2/image_render_request.audit.json; arm-3/composed_prompt.audit.json; arm-3/render_request.audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "세 arm이 built-in image generation을 각각 정확히 한 번 호출해 이미지를 전달했으며 retry, fallback, cross-arm input은 모두 없었다.",
+      "artifact": "generated_images/rare-photo-three-agent-20260902/arm-1/run_manifest.json; arm-2/run_manifest.json; arm-3/run_manifest.json"
+    },
+    {
+      "id": "e-render-lcd",
+      "kind": "render-observation",
+      "claim": "arm 1 저장 픽셀에는 물리 카메라 후면, 그 LCD 안의 성인 피사체, 기울어진 2차 촬영 구조, 화면에 국한된 모아레·픽셀 흔적, overlay·스크린샷·폰 화면 대체 방지가 함께 보여 5/5 hard gate가 PASS다.",
+      "artifact": "generated_images/rare-photo-three-agent-20260902/arm-1/final.png sha256=9ff83a9e7852c378481ac4cdb693cdf3dea9fb6833140672c79711c7add6c0e1; arm-1/pixel_review.json"
+    },
+    {
+      "id": "e-render-companion",
+      "kind": "render-observation",
+      "claim": "arm 2 저장 픽셀에는 한 성인 피사체, 베이커리 일상 행동, 맞은편 가까운 시점, 카메라 쪽 봉투 전달과 시선, 셀피·커플 증명 대체 방지가 함께 보여 5/5 hard gate가 PASS다.",
+      "artifact": "generated_images/rare-photo-three-agent-20260902/arm-2/final.png sha256=c37ca272e033ddaeca06b43d57acbf2b676cdf07ba4597488c776eee200809e5; arm-2/pixel_review.json"
+    },
+    {
+      "id": "e-render-fan",
+      "kind": "render-observation",
+      "claim": "arm 3 저장 픽셀에는 공개 행사 출입구, 관객 펜스·전경 휴대전화, 망원 거리 압축, 관객 거리, 스튜디오·무경계 보도 사진 대체 방지가 함께 보여 5/5 hard gate가 PASS다.",
+      "artifact": "generated_images/rare-photo-three-agent-20260902/arm-3/final.png sha256=d7a05e2e092a4786560d2111e02f088f938d41514c56478e5bfba859a2b444f7; arm-3/pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "각 좁은 프로필에서 정의한 관찰 가능한 촬영 관계의 다섯 필수 구성요소가 복합 장면과 외형 참조 속에서도 같은 한 프레임에 모두 읽혀야 하며 partial 또는 누락은 실패다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-observable-only",
+        "statement": "희소성, 촬영자, 공개·삭제 이력, 실제 연도, 실제 관계, 신원은 픽셀 계약으로 승격하지 않는다.",
+        "evidence_ids": [
+          "e-research",
+          "e-source-boundary"
+        ],
+        "causal_controls": [
+          "broad shorthand remains optional-candidate routing",
+          "only narrow exact visual phrases hard-activate profiles"
+        ]
+      },
+      {
+        "id": "inv-five-components",
+        "statement": "활성 프로필마다 다섯 필수 evidence binding과 다섯 strict render gate가 한 프레임에서 모두 관찰 가능해야 한다.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-render-lcd",
+          "e-render-companion",
+          "e-render-fan"
+        ],
+        "causal_controls": [
+          "profile-owned evidence fields",
+          "profile-owned hard gate ids",
+          "partial_is_fail review"
+        ]
+      },
+      {
+        "id": "inv-evidence-layers",
+        "statement": "prompt audit, runtime audit, generation success, saved-pixel review, requesting-user judgment은 서로 독립된 증거 층이다.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-generation",
+          "e-render-lcd",
+          "e-render-companion",
+          "e-render-fan"
+        ],
+        "causal_controls": [
+          "one frozen generation per arm",
+          "saved image hash",
+          "user status remains pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "venue and time of day",
+      "wardrobe within adult-safe bounds",
+      "lighting and color treatment",
+      "incidental props",
+      "camera height and crop that preserve required geometry"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-broad-label",
+      "scale": "global",
+      "axis": "semantic ownership",
+      "source_state": "희얼사와 희연사 broad labels mix nonvisual provenance claims with several unrelated observable capture relations.",
+      "render_state": "The delivered tests instantiate three distinct narrow relations rather than pretending that one generic rare-photo appearance proves the broad label.",
+      "evidence_ids": [
+        "e-research",
+        "e-render-lcd",
+        "e-render-companion",
+        "e-render-fan"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-decompose-broad-label",
+      "stage": "representation",
+      "statement": "Broad shorthand를 optional multi-candidate alias로 두고 관찰 가능한 관계만 narrow exact hard profile로 분해하면 메타데이터 환각 없이 다른 장면으로 전이된다.",
+      "evidence_ids": [
+        "e-research"
+      ],
+      "falsifier": "Broad shorthand 하나만으로도 촬영자·희소성·연도 같은 비시각 상태를 저장 픽셀에서 안정적으로 입증할 수 있거나, narrow decomposition이 서로 다른 장면에서 동일 관계를 보존하지 못한다."
+    },
+    {
+      "id": "h-explicit-five-gates",
+      "stage": "prompt-priority",
+      "statement": "프로필 소유의 다섯 evidence binding과 다섯 hard gate를 candidate pack과 runtime prompt에 유지하면 무작위 복합 컨셉에서도 핵심 촬영 관계가 부수 스타일보다 우선한다.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render-lcd",
+        "e-render-companion",
+        "e-render-fan"
+      ],
+      "falsifier": "Prompt와 runtime audit가 통과한 독립 렌더에서 필수 gate 하나라도 누락되거나 선택적 스타일이 핵심 관계를 대체한다."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "비시각 상태를 포함한 문화권 shorthand는 hard obligation으로 직접 사용하지 않고, 관찰 가능한 촬영 관계·물리 매체·처리 흔적으로 분해한 narrow exact profiles와 optional candidate atoms로 소유한다.",
+    "generalization_basis": "각 프로필은 연구 근거, 다섯 구성요소, 다섯 evidence binding, 다섯 render gate, 명시적 reject substitutes를 가지며 broad aliases와 hard activation을 분리한다.",
+    "hypothesis_ids": [
+      "h-decompose-broad-label",
+      "h-explicit-five-gates"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/40adae78dd82f326",
+      "docs/research-evidence/photo-prompt/rare-photo-visual-semantics-20260902/source-research.md",
+      "docs/research-evidence/photo-prompt/rare-photo-visual-semantics-20260902/evidence.jsonl",
+      "tests/test_photo_rare_photo_visual_semantics.py",
+      "tests/fixtures/photo_prompt/rare_photo_three_arm_pixel_test_cases_v1.jsonl"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-baseline-suite"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-render-lcd",
+        "e-render-companion",
+        "e-render-fan"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-lcd-rephotograph",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "nested physical display",
+          "secondary capture geometry",
+          "localized screen artifacts"
+        ],
+        "evidence_ids": [
+          "e-render-lcd"
+        ]
+      },
+      {
+        "id": "holdout-companion-viewpoint",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "nearby off-camera viewpoint",
+          "everyday handoff action",
+          "relationship non-inference"
+        ],
+        "evidence_ids": [
+          "e-render-companion"
+        ]
+      },
+      {
+        "id": "holdout-fan-event-telephoto",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "public event anchor",
+          "spectator boundary",
+          "telephoto distance compression"
+        ],
+        "evidence_ids": [
+          "e-render-fan"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "render-fidelity",
+    "rationale": "무작위 선택된 서로 다른 세 프로필은 독립 1회 렌더에서 각각 5/5 strict pixel gate를 통과했다. 그러나 7개 신규 프로필 전체 중 나머지 4개는 아직 렌더하지 않았고 사용자 체감 판단도 없으므로 전체 도메인 promotion이나 user-aesthetic 성공을 주장하지 않는다.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-render-lcd",
+      "e-render-companion",
+      "e-render-fan",
+      "e-baseline-suite"
+    ]
+  }
+}

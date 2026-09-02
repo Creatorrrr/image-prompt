@@ -1,0 +1,298 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "44466c2900a8a50886bbfe6a34179c891a820142+pre-existing-working-tree",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "참조 대화에서 조사한 하렘 관련 키워드를 바탕으로 시각 의미 데이터와 후보팩 데이터를 상세 리서치하고, 다의어 경계를 보존한 런타임 데이터와 회귀 검증으로 강화한다."
+  },
+  "evidence": [
+    {
+      "id": "e-harem-reference-conversation",
+      "kind": "source-observation",
+      "claim": "참조 대화는 현대 하렘·역하렘, love geometry, dating and otome game routes, 실제 비일부일처 관계, 역사적 harem·zenana·inner court, 동아시아 궁중, 그리고 한 중심 인물과 여러 구분되는 잠재 관계 인물이라는 키워드 지도를 제공했다.",
+      "artifact": "ChatGPT conversation 6a96f512-7e70-83e9-bd4f-5abf961ab4c2 and docs/research-evidence/photo-prompt/harem-visual-semantics-20260902/source-research.md"
+    },
+    {
+      "id": "e-harem-external-research",
+      "kind": "external-research",
+      "claim": "박물관·궁전청·UNESCO·학술·문화기관 출처 16개가 오스만 사적 가구 복합체, 무굴 제나나 안뜰, 구성된 오리엔탈리즘 타블로, 현대 세 명 이상 잠재 상대 구조, 오토메 경로, 조선 내명부, 명청 내정, polyamory·동물·복식 혼동 경계를 각각 지지한다.",
+      "artifact": "docs/research-evidence/photo-prompt/harem-visual-semantics-20260902/evidence.jsonl and source-research.md"
+    },
+    {
+      "id": "e-harem-runtime-data",
+      "kind": "source-observation",
+      "claim": "런타임은 다섯 개 성인 전용 five-component hard profile과 여덟 개 six-slot cluster의 후보 48개를 포함한다. 조선 내명부·명청 내정·오토메 경로는 candidate-only이며 bare harem, reverse harem, zenana, odalisque, polyamory, animal harem, harem pants 등은 새 profile을 hard 활성화하지 않는다.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json and photo_prompt_harem_extension.json"
+    },
+    {
+      "id": "e-harem-package",
+      "kind": "package-check",
+      "claim": "전체 사진 사전 메타데이터 검증, visual-profile index check, semantic index check가 통과했다. 공유 자산은 264 profiles, 1424 exact terms, 7890 Gemini embedding-2 768d semantic entries, 16 shards로 현재 원본과 일치한다.",
+      "artifact": "validate_photo_prompt_dictionary.py reported valid; build_visual_profile_index.py --check reported 264 profiles and 1424 exact terms; eval_semantic.py --check-index reported status ok, dictionary hash 29a1222789f120d0a4d19fab02ebd70abba644ba902ed5f36d154fdfdecd61bf, and 7890 entries"
+    },
+    {
+      "id": "e-harem-prompt-evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "집중 테스트는 좁은 영·한 문맥 구의 단일 exact routing, broad polysemy와 nearest substitute의 fail-closed, complete-component의 optional-only discovery, 기존 harem-trouser 소유권, 48개 후보 병합·출처 연결, 공유 인덱스 포함, 그리고 여덟 query에서 각 six-candidate cluster 전부가 BM25F 상위 8위 안에 나타남을 통과했다.",
+      "artifact": ".venv/bin/python -m unittest tests.test_photo_harem_visual_semantics -v"
+    },
+    {
+      "id": "e-harem-adjacent-regression",
+      "kind": "package-check",
+      "claim": "실제 재생성 semantic index를 사용하는 character-response 회귀 11건이 통과했고, 인접 desire와 space 20건 및 rare-photo와 wuxia 17건도 새 확장과 공유 인덱스에서 충돌 없이 통과했다.",
+      "artifact": ".venv/bin/python -m unittest tests.test_photo_character_response_concepts -v => 11 passed; .venv/bin/python -m unittest -q tests.test_photo_desire_visual_semantics tests.test_photo_space_visual_semantics => 20 passed; .venv/bin/python -m unittest -q tests.test_photo_rare_photo_visual_semantics tests.test_photo_wuxia_visual_semantics => 17 passed"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "좁은 하렘 관련 요청은 해당 의미가 소유한 다섯 관찰 가능 구성요소와 성인·주장 경계를 같은 프롬프트 계약에 보존해야 하고, 넓은 다의어는 optional candidate에만 영향을 주며, 모든 hard 구성의 partial 또는 누락은 실패다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-harem-polysemy-ownership",
+        "statement": "현대 서사, 오스만 사적 가구, 무굴 제나나, 오리엔탈리즘 미술, 동아시아 궁중, 게임, 실제 관계, 동물, 바지는 서로 다른 의미 소유자이며 bare label은 hard profile을 선택하지 않는다.",
+        "evidence_ids": [
+          "e-harem-reference-conversation",
+          "e-harem-external-research",
+          "e-harem-runtime-data",
+          "e-harem-prompt-evaluation"
+        ],
+        "causal_controls": [
+          "narrow adult and context-complete exact terms only",
+          "broad and adjacent terms are explicit negative controls",
+          "harem pants remain owned by gathered_ankle_voluminous_trouser"
+        ]
+      },
+      {
+        "id": "inv-harem-five-observable-components",
+        "statement": "각 hard profile은 인원수·장식·의상·표정·라벨이 아니라 서로 다른 다섯 구성요소, 다섯 prompt evidence field, 다섯 strict render gate, 다섯 reject substitute로 의미를 소유한다.",
+        "evidence_ids": [
+          "e-harem-external-research",
+          "e-harem-runtime-data",
+          "e-harem-prompt-evaluation"
+        ],
+        "causal_controls": [
+          "all represented people are clearly adult",
+          "identity rank ethnicity religion slavery consent and relationship status are not inferred",
+          "complete component text creates optional discovery but not hard activation"
+        ]
+      },
+      {
+        "id": "inv-harem-six-slot-candidate-coherence",
+        "statement": "각 의미 cluster는 subject, action, location, prop, composition, aftermath_trace의 여섯 후보를 하나의 primary tag로 묶고, 출처와 confusion boundary를 가지며, 실제 BM25F 검색에서 묶음 전체가 근접 상위권에 나타난다.",
+        "evidence_ids": [
+          "e-harem-external-research",
+          "e-harem-runtime-data",
+          "e-harem-prompt-evaluation",
+          "e-harem-package"
+        ],
+        "causal_controls": [
+          "each candidate has exactly one primary cluster requirement",
+          "every candidate is source-bound",
+          "candidate-only clusters contain no hard profile id"
+        ]
+      },
+      {
+        "id": "inv-harem-evidence-layer-separation",
+        "statement": "외부 연구, 데이터 구조, exact routing, 후보 검색, composed prompt, 생성 성공, 저장 픽셀, 사용자 판단은 서로 교환할 수 없는 증거 층이다.",
+        "evidence_ids": [
+          "e-harem-external-research",
+          "e-harem-package",
+          "e-harem-prompt-evaluation"
+        ],
+        "causal_controls": [
+          "render evaluation remains not-run",
+          "user evaluation remains unscored",
+          "prompt-behavior result does not claim pixel fidelity"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult genders and presentation when the requester specifies them",
+      "camera and lighting choices that preserve every required relation",
+      "historically coherent room details within the named regional context",
+      "modern fictional setting and distinct bid objects",
+      "explicit requester definitions that override a registry default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-one-word-many-domains",
+      "scale": "global",
+      "axis": "semantic ownership",
+      "source_state": "The referenced vocabulary uses harem-family words across fiction, architecture, institutions, art history, games, relationships, animals, and fashion.",
+      "render_state": "The runtime promotes only five narrow adult visual propositions and keeps broad or region-underspecified words advisory.",
+      "evidence_ids": [
+        "e-harem-reference-conversation",
+        "e-harem-external-research",
+        "e-harem-runtime-data"
+      ]
+    },
+    {
+      "id": "mismatch-headcount-vs-relation",
+      "scale": "regional",
+      "axis": "modern ensemble topology",
+      "source_state": "A central person near several adults can also be a friend group, fan crowd, retinue, work team, or established relationship.",
+      "render_state": "Modern profiles require one adult center, at least three distinct adult partners or rivals, separate center-directed bids, cross-awareness, and an unresolved center response; rivalry additionally requires one limited incompatible opportunity.",
+      "evidence_ids": [
+        "e-harem-external-research",
+        "e-harem-runtime-data",
+        "e-harem-prompt-evaluation"
+      ]
+    },
+    {
+      "id": "mismatch-palace-stereotype-vs-household-process",
+      "scale": "local",
+      "axis": "historical and East Asian scene evidence",
+      "source_state": "Luxury decor, court clothing, many women, or dramatic expressions can superficially stand in for private-household and inner-court concepts.",
+      "render_state": "Historical hard profiles require access and task relations; Joseon and Ming-Qing remain candidate-only process contexts that forbid status inference from appearance.",
+      "evidence_ids": [
+        "e-harem-external-research",
+        "e-harem-runtime-data"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-harem-exact-advisory-split",
+      "stage": "representation",
+      "statement": "Context-complete adult exact terms plus broad-term negative controls will prevent one polysemous label from forcing the wrong visual domain.",
+      "evidence_ids": [
+        "e-harem-external-research",
+        "e-harem-runtime-data",
+        "e-harem-prompt-evaluation"
+      ],
+      "falsifier": "A bare or adjacent harem-family term hard-activates a new profile, or a narrow exact term activates more than its intended profile."
+    },
+    {
+      "id": "h-harem-six-slot-retrieval-coherence",
+      "stage": "prompt-priority",
+      "statement": "Six source-bound candidates sharing one primary cluster tag and concrete relation text will make all parts of the intended scene available near the top of candidate retrieval without assigning hard obligations.",
+      "evidence_ids": [
+        "e-harem-runtime-data",
+        "e-harem-package",
+        "e-harem-prompt-evaluation"
+      ],
+      "falsifier": "A complete cluster query fails to surface any one of its six candidates near the top, or an optional candidate activates a hard profile by semantic similarity alone."
+    },
+    {
+      "id": "h-harem-visible-construction-disclosure",
+      "stage": "prompt-interaction",
+      "statement": "Requiring a visible studio seam, support, spill, or edge in the Orientalist tableau will separate a critical art-historical construction from an asserted historical household document.",
+      "evidence_ids": [
+        "e-harem-external-research",
+        "e-harem-runtime-data"
+      ],
+      "falsifier": "A generated tableau reads as documentary despite all prompt requirements, or the construction marker destroys rather than clarifies the requested composition."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "다의어 문화·서사 용어는 bare label로 hard 활성화하지 않고, 성인·지역·시대·장면 관계가 완결된 좁은 exact profile과 source-bound six-slot optional candidate cluster로 분해한다.",
+    "generalization_basis": "다섯 hard profile은 각각 five-component evidence와 rejects를 가지며, 세 candidate-only cluster는 한 프레임이 증명할 수 없는 신분·경로·관계 상태를 hard claim으로 승격하지 않는다.",
+    "hypothesis_ids": [
+      "h-harem-exact-advisory-split",
+      "h-harem-six-slot-retrieval-coherence",
+      "h-harem-visible-construction-disclosure"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/harem-visual-semantics-20260902/source-research.md",
+      "docs/research-evidence/photo-prompt/harem-visual-semantics-20260902/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/harem-visual-semantics-20260902/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_harem_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/29a1222789f120d0/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_harem_visual_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-harem-package",
+        "e-harem-adjacent-regression"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-harem-prompt-evaluation"
+      ]
+    },
+    "render": {
+      "status": "not-run",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-harem-narrow-exact-routing",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "English and Korean exact phrases",
+          "one intended profile only",
+          "adult and context-complete activation"
+        ],
+        "evidence_ids": [
+          "e-harem-prompt-evaluation"
+        ]
+      },
+      {
+        "id": "holdout-harem-polysemy-negative-boundary",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "broad genre and historical words",
+          "real relationship and game terms",
+          "animal mathematics and pants confounders"
+        ],
+        "evidence_ids": [
+          "e-harem-prompt-evaluation"
+        ]
+      },
+      {
+        "id": "holdout-harem-eight-cluster-retrieval",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "five hard-profile candidate clusters",
+          "three candidate-only clusters",
+          "all six candidates in BM25F top eight"
+        ],
+        "evidence_ids": [
+          "e-harem-prompt-evaluation"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "출처 기반 다의어 분해, 다섯 five-component hard profile, 여덟 six-slot cluster, 재생성한 공유 인덱스, exact·negative·optional·BM25F holdout가 통과해 prompt-behavior 범위의 구현은 완료했다. 그러나 이번 요청은 이미지 생성을 포함하지 않았고 render는 not-run, user judgment는 unscored이므로 실제 픽셀 충족이나 문화적·미학적 승인으로 promote하지 않는다.",
+    "evidence_ids": [
+      "e-harem-reference-conversation",
+      "e-harem-external-research",
+      "e-harem-runtime-data",
+      "e-harem-package",
+      "e-harem-prompt-evaluation",
+      "e-harem-adjacent-regression"
+    ]
+  }
+}

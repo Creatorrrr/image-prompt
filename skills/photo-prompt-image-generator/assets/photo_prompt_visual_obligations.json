@@ -20732,6 +20732,496 @@
         "identical_repeated_tile",
         "metadata_only_b_cut_or_outtake"
       ]
+    },
+    {
+      "id": "ottoman_imperial_harem_household_complex",
+      "category": "historical_private_household_spatial_relation",
+      "activation": {
+        "exact_terms": [
+          "adult Ottoman imperial harem household reconstruction",
+          "adult Topkapı harem domestic complex reconstruction",
+          "성인 오스만 제국 궁정 하렘 생활 재현",
+          "성인 톱카프 궁전 하렘 주거 복합체 재현"
+        ],
+        "exclude_if_any_terms": [
+          "harem pants",
+          "하렘 팬츠",
+          "animal harem",
+          "Hall's Harem theorem",
+          "Orientalist tableau"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A historically framed Ottoman imperial private-household reconstruction connects controlled access, layered circulation, courtyard residences, domestic-service rooms, multiple adult household tasks, and one localized completion result. It depicts a residential and working complex rather than an erotic salon and does not infer rank, religion, ethnicity, slavery, or intimate relations from appearance.",
+        "paraphrase_examples": [
+          "오스만 궁정의 사적 주거에서 통제 문턱과 안뜰, 생활실과 서비스실이 하나의 성인 가구 과업으로 이어지는 역사 재현",
+          "a private Ottoman court residence whose gate, passage, courtyard, apartments, laundry, storage, and kitchen are connected by one adult domestic task",
+          "성인 작업자들이 세탁물과 식기, 직물을 공간 사이로 운반하고 완료 흔적을 남기는 톱카프 사적 가구 복합체"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "ottoman_controlled_access_sequence",
+            "ottoman_layered_residential_complex",
+            "ottoman_adult_household_tasks",
+            "ottoman_task_objects_link_spaces",
+            "ottoman_localized_task_result"
+          ],
+          "groups": [
+            {"id":"ottoman_controlled_access_sequence","any_terms":["a controlled gate leads through a narrow passage or vestibule into the private courtyard","통제된 문이 좁은 연결 복도나 전실을 거쳐 사적 안뜰로 이어짐"]},
+            {"id":"ottoman_layered_residential_complex","any_terms":["courtyard residences and at least two domestic service spaces remain visible in depth","안뜰 주거실과 둘 이상의 세탁 저장 주방 같은 생활 서비스 공간이 깊이로 보임"]},
+            {"id":"ottoman_adult_household_tasks","any_terms":["multiple adults are differentiated by concrete linen tableware textile or food-service tasks rather than costume rank","여러 성인이 복식 신분이 아니라 세탁 식기 직물 또는 식사 서비스 과업으로 구분됨"]},
+            {"id":"ottoman_task_objects_link_spaces","any_terms":["the same baskets trays textiles or vessels visibly travel across entrance courtyard and service rooms","같은 바구니 쟁반 직물 또는 용기가 입구 안뜰 서비스실 사이를 잇음"]},
+            {"id":"ottoman_localized_task_result","any_terms":["empty carriers ordered shelves placed tableware or wet work surfaces show the household task result","빈 운반 도구 정리된 선반 배치된 식기 또는 젖은 작업면이 생활 과업 결과를 보임"]}
+          ]
+        },
+        "contrast_examples": [
+          "an erotic salon with reclining figures",
+          "a generic luxury room with tiles and cushions",
+          "a public throne or audience hall",
+          "a hotel spa or public bath",
+          "a costume group whose historical rank is inferred from appearance"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "controlled entrance to private courtyard",
+          "layered Ottoman residential and service rooms",
+          "multiple observable adult household tasks",
+          "task objects linking spaces",
+          "localized domestic completion result",
+          "no status or intimacy inference"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["harem", "concubine", "slave", "odalisque"],
+        "runtime_forbidden_labels": ["harem", "concubine", "slave", "odalisque"]
+      },
+      "composition_instruction": "Keep one controlled entrance, the narrow transition, an open courtyard, residential rooms, and at least two service spaces legible in one deep frame. Connect them with repeated household objects and multiple clearly adult task actions, and reserve a separate area for the immediate completion trace.",
+      "required_evidence_fields": [
+        "ottoman_access_sequence_phrase",
+        "ottoman_residential_complex_phrase",
+        "ottoman_adult_task_phrase",
+        "ottoman_task_linkage_phrase",
+        "ottoman_task_result_phrase"
+      ],
+      "evidence_requirements": {
+        "ottoman_access_sequence_phrase":{"min_content_words":12,"must_mention_any":["a controlled gate leads through a narrow passage or vestibule into the private courtyard"]},
+        "ottoman_residential_complex_phrase":{"min_content_words":12,"must_mention_any":["courtyard residences and at least two domestic service spaces remain visible in depth"]},
+        "ottoman_adult_task_phrase":{"min_content_words":14,"must_mention_any":["multiple adults are differentiated by concrete linen tableware textile or food-service tasks rather than costume rank"]},
+        "ottoman_task_linkage_phrase":{"min_content_words":13,"must_mention_any":["the same baskets trays textiles or vessels visibly travel across entrance courtyard and service rooms"]},
+        "ottoman_task_result_phrase":{"min_content_words":13,"must_mention_any":["empty carriers ordered shelves placed tableware or wet work surfaces show the household task result"]}
+      },
+      "render_gates": [
+        {"id":"vo_harem_ottoman_controlled_access","review_scale":"thumbnail","description":"A controlled outer threshold and narrow transition visibly lead into the private courtyard."},
+        {"id":"vo_harem_ottoman_multiroom_complex","review_scale":"both","description":"Courtyard residences and at least two distinct domestic service spaces remain readable together."},
+        {"id":"vo_harem_ottoman_adult_household_tasks","review_scale":"both","description":"Multiple adults perform differentiated household tasks expressed through actions and objects, not inferred rank."},
+        {"id":"vo_harem_ottoman_task_linkage_result","review_scale":"native","description":"Repeated task objects connect the spaces and leave one localized completion result."},
+        {"id":"vo_harem_ottoman_not_salon_status_claim","review_scale":"native","description":"An erotic salon, generic luxury room, public hall, spa, or appearance-based status claim does not substitute."}
+      ],
+      "reject_substitutes": [
+        "orientalist_erotic_salon",
+        "generic_middle_eastern_luxury_room",
+        "public_throne_audience_hall",
+        "hotel_spa_or_public_bath",
+        "appearance_based_historical_status_claim"
+      ]
+    },
+    {
+      "id": "mughal_zenana_courtyard_household",
+      "category": "historical_screened_courtyard_household_relation",
+      "activation": {
+        "exact_terms": [
+          "adult Mughal zenana courtyard household reconstruction",
+          "adult imperial zenana screened-courtyard residence reconstruction",
+          "성인 무굴 제나나 안뜰 생활 재현",
+          "성인 무굴 제국 제나나 차폐 주거 복합체 재현"
+        ],
+        "exclude_if_any_terms": [
+          "Ottoman harem",
+          "Orientalist odalisque",
+          "public darbar",
+          "harem pants",
+          "animal harem"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A historically framed Mughal zenana household reconstruction connects an offset private entrance, screened central courtyard, arcades and small rooms, portable household furnishings, multiple adult activities, and one prepared result. It remains region-specific and does not infer religion, ethnicity, status, seclusion history, or intimate relations from faces or clothing.",
+        "paraphrase_examples": [
+          "꺾인 사적 입구와 잘리 차폐를 지나 중앙 안뜰, 회랑과 작은 방들이 성인 가구 활동으로 연결되는 무굴 주거 재현",
+          "a screened Mughal residential courtyard where adults prepare textiles music or games across arcades and small rooms",
+          "공개 다르바르가 아니라 이동식 가구와 생활 과업 결과가 보이는 성인 제나나 안뜰 복합체"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "mughal_offset_private_entry",
+            "mughal_screened_courtyard_rooms",
+            "mughal_adult_household_activity",
+            "mughal_portable_activity_objects",
+            "mughal_prepared_activity_result"
+          ],
+          "groups": [
+            {"id":"mughal_offset_private_entry","any_terms":["an offset or bent private entrance blocks a direct public sight line into the residence","꺾이거나 비껴난 사적 입구가 공개 공간에서 주거 안쪽으로 향하는 직선 시야를 막음"]},
+            {"id":"mughal_screened_courtyard_rooms","any_terms":["a central courtyard with jali or equivalent screening connects arcades and multiple small rooms","중앙 안뜰의 잘리 또는 동등한 차폐가 회랑과 여러 작은 방을 연결함"]},
+            {"id":"mughal_adult_household_activity","any_terms":["multiple adults perform distinct textile music game or organizing actions around the same courtyard","여러 성인이 같은 안뜰에서 직물 음악 놀이 또는 정리 행동을 서로 다르게 수행함"]},
+            {"id":"mughal_portable_activity_objects","any_terms":["portable textiles low seating instruments boards or baskets connect the adults to one household activity","이동식 직물 낮은 좌석 악기 놀이판 또는 바구니가 성인들을 하나의 가구 활동에 연결함"]},
+            {"id":"mughal_prepared_activity_result","any_terms":["arranged textiles occupied seating or placed activity objects show the immediate prepared result","정돈된 직물 사용되는 좌석 또는 배치된 활동 물품이 즉시 준비 결과를 보임"]}
+          ]
+        },
+        "contrast_examples": [
+          "a public Mughal darbar or throne audience",
+          "a mosque courtyard",
+          "an Ottoman tile-room reconstruction",
+          "a tourist palace hotel",
+          "a costume-only fashion group"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "offset private entrance",
+          "screened central Mughal courtyard",
+          "arcades and small residential rooms",
+          "adult household activities",
+          "portable activity furnishings",
+          "prepared courtyard result"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": ["zenana", "harem", "concubine", "purdah"],
+        "runtime_forbidden_labels": ["zenana", "harem", "concubine", "purdah"]
+      },
+      "composition_instruction": "Frame the offset private entrance, its blocked public sight line, a screened central courtyard, surrounding arcades, and several small rooms in one coherent depth. Give clearly adult figures different household actions linked by portable furnishings, and make the prepared activity result visible without assigning cultural identity or rank from appearance.",
+      "required_evidence_fields": [
+        "mughal_private_entry_phrase",
+        "mughal_courtyard_room_phrase",
+        "mughal_adult_activity_phrase",
+        "mughal_activity_object_phrase",
+        "mughal_activity_result_phrase"
+      ],
+      "evidence_requirements": {
+        "mughal_private_entry_phrase":{"min_content_words":14,"must_mention_any":["an offset or bent private entrance blocks a direct public sight line into the residence"]},
+        "mughal_courtyard_room_phrase":{"min_content_words":13,"must_mention_any":["a central courtyard with jali or equivalent screening connects arcades and multiple small rooms"]},
+        "mughal_adult_activity_phrase":{"min_content_words":13,"must_mention_any":["multiple adults perform distinct textile music game or organizing actions around the same courtyard"]},
+        "mughal_activity_object_phrase":{"min_content_words":14,"must_mention_any":["portable textiles low seating instruments boards or baskets connect the adults to one household activity"]},
+        "mughal_activity_result_phrase":{"min_content_words":12,"must_mention_any":["arranged textiles occupied seating or placed activity objects show the immediate prepared result"]}
+      },
+      "render_gates": [
+        {"id":"vo_harem_mughal_offset_private_entry","review_scale":"thumbnail","description":"An offset private entrance visibly blocks a direct view from public space into the residence."},
+        {"id":"vo_harem_mughal_screened_courtyard_rooms","review_scale":"both","description":"A screened central courtyard, arcades, and multiple small rooms remain legible in depth."},
+        {"id":"vo_harem_mughal_adult_household_activity","review_scale":"both","description":"Several adults perform distinct household activities around the same courtyard without rank inference."},
+        {"id":"vo_harem_mughal_portable_objects_result","review_scale":"native","description":"Portable furnishings link the activities and show one immediate prepared result."},
+        {"id":"vo_harem_mughal_not_public_or_costume_only","review_scale":"native","description":"A public darbar, mosque courtyard, tourist hotel, Ottoman room, or costume-only group does not substitute."}
+      ],
+      "reject_substitutes": [
+        "public_mughal_darbar",
+        "mosque_courtyard",
+        "ottoman_tile_room",
+        "tourist_palace_hotel",
+        "costume_only_fashion_group"
+      ]
+    },
+    {
+      "id": "orientalist_harem_constructed_tableau",
+      "category": "constructed_art_historical_tableau",
+      "activation": {
+        "exact_terms": [
+          "all-adult nineteenth-century Orientalist harem studio tableau",
+          "all-adult Orientalist odalisque constructed studio tableau",
+          "성인만 등장하는 19세기 오리엔탈리즘 하렘 스튜디오 타블로",
+          "성인 오달리스크 회화풍 구성 세트 타블로"
+        ],
+        "exclude_if_any_terms": [
+          "historically accurate household documentary",
+          "Ottoman domestic complex",
+          "Mughal zenana",
+          "harem pants",
+          "animal harem"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An all-adult studio cast deliberately restages the visual grammar of nineteenth-century European Orientalist harem or odalisque art through overloaded imagined decor, static painterly poses, and a threshold observer angle, while visible set seams, light spill, or supports disclose construction. The scene is critical art-historical staging, never documentary evidence of a culture or a person's actual status.",
+        "paraphrase_examples": [
+          "과잉 직물과 낮은 소파 속 성인 출연진을 문턱 시점으로 배열하고 세트 이음선까지 보이는 오리엔탈리즘 비판적 재연",
+          "an adult painterly tableau that cites imagined European harem art while production edges reveal the studio fabrication",
+          "누드나 특정 외모가 아니라 정적 군상과 과잉 장식, 관찰 시점, 제작 표지로 성립하는 19세기 회화풍 사진"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "orientalist_all_adult_studio_cast",
+            "orientalist_overloaded_imagined_decor",
+            "orientalist_static_painterly_tableau",
+            "orientalist_threshold_observer_geometry",
+            "orientalist_visible_set_disclosure"
+          ],
+          "groups": [
+            {"id":"orientalist_all_adult_studio_cast","any_terms":["an explicitly all-adult studio cast performs the constructed art-historical scene","명시적으로 모두 성인인 스튜디오 출연진이 구성된 미술사 장면을 연기함"]},
+            {"id":"orientalist_overloaded_imagined_decor","any_terms":["layered textiles low furnishings ceramics and decorative surfaces form a deliberately overloaded imagined interior","겹친 직물 낮은 가구 도자기 장식 표면이 의도적으로 과잉된 상상 실내를 만듦"]},
+            {"id":"orientalist_static_painterly_tableau","any_terms":["reclining seated and turned adult poses lock into one static painterly group tableau","기대기 앉기 몸 돌리기의 성인 포즈가 하나의 정적 회화풍 군상으로 고정됨"]},
+            {"id":"orientalist_threshold_observer_geometry","any_terms":["an asymmetric doorway or threshold viewpoint looks inward across the staged group","비대칭 문간 또는 문턱 시점이 연출된 군상을 안쪽으로 바라봄"]},
+            {"id":"orientalist_visible_set_disclosure","any_terms":["a set seam light spill flat support or studio edge visibly discloses fabrication","세트 이음선 조명 유출 플랫 지지대 또는 스튜디오 가장자리가 제작임을 드러냄"]}
+          ]
+        },
+        "contrast_examples": [
+          "a historical household documentary reconstruction",
+          "a generic nude or glamour portrait",
+          "an ordinary bedroom fashion editorial",
+          "a hotel lounge with decorative tiles",
+          "an image claiming cultural authenticity from a performer's appearance"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "all-adult constructed studio cast",
+          "overloaded imagined Orientalist decor",
+          "static painterly group tableau",
+          "asymmetric threshold observer angle",
+          "visible set fabrication markers",
+          "critical staging not historical documentary"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["constructed nineteenth-century European Orientalist studio tableau"],
+        "forbidden_prompt_terms": ["authentic harem", "real odalisque", "actual concubine", "historical documentary"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Stage an explicitly all-adult painterly group inside an intentionally overloaded studio interior. Use an asymmetric threshold observer angle, keep reclining and seated poses static and mutually composed, and include at least one unmistakable production marker such as a set seam, light spill, flat support, or studio edge in the same frame.",
+      "required_evidence_fields": [
+        "orientalist_adult_cast_phrase",
+        "orientalist_overloaded_decor_phrase",
+        "orientalist_static_tableau_phrase",
+        "orientalist_observer_geometry_phrase",
+        "orientalist_set_disclosure_phrase"
+      ],
+      "evidence_requirements": {
+        "orientalist_adult_cast_phrase":{"min_content_words":11,"must_mention_any":["an explicitly all-adult studio cast performs the constructed art-historical scene"]},
+        "orientalist_overloaded_decor_phrase":{"min_content_words":13,"must_mention_any":["layered textiles low furnishings ceramics and decorative surfaces form a deliberately overloaded imagined interior"]},
+        "orientalist_static_tableau_phrase":{"min_content_words":12,"must_mention_any":["reclining seated and turned adult poses lock into one static painterly group tableau"]},
+        "orientalist_observer_geometry_phrase":{"min_content_words":12,"must_mention_any":["an asymmetric doorway or threshold viewpoint looks inward across the staged group"]},
+        "orientalist_set_disclosure_phrase":{"min_content_words":12,"must_mention_any":["a set seam light spill flat support or studio edge visibly discloses fabrication"]}
+      },
+      "render_gates": [
+        {"id":"vo_harem_orientalist_all_adult_constructed_cast","review_scale":"thumbnail","description":"An explicitly all-adult cast reads as one deliberately constructed painterly studio group."},
+        {"id":"vo_harem_orientalist_overloaded_imagined_set","review_scale":"both","description":"Layered textiles, low furnishings, ceramics, and decorative surfaces form an intentionally overloaded imagined interior."},
+        {"id":"vo_harem_orientalist_static_threshold_tableau","review_scale":"both","description":"Static reclining and seated poses are viewed through an asymmetric threshold-like observer angle."},
+        {"id":"vo_harem_orientalist_visible_fabrication","review_scale":"native","description":"A set seam, light spill, support, or studio edge visibly discloses fabrication."},
+        {"id":"vo_harem_orientalist_not_documentary_claim","review_scale":"native","description":"Historical documentary, ordinary glamour, hotel decor, or appearance-based cultural authenticity does not substitute."}
+      ],
+      "reject_substitutes": [
+        "historical_household_documentary_claim",
+        "generic_nude_or_glamour_portrait",
+        "ordinary_bedroom_fashion_editorial",
+        "decorative_hotel_lounge",
+        "appearance_based_cultural_authenticity_claim"
+      ]
+    },
+    {
+      "id": "adult_multi_interest_harem_ensemble_relation",
+      "category": "adult_multi_interest_relation_topology",
+      "activation": {
+        "exact_terms": [
+          "adult harem-romance ensemble scene",
+          "adult reverse-harem ensemble scene",
+          "성인 하렘물 다중 연애 구도",
+          "성인 역하렘물 다중 구애 장면"
+        ],
+        "exclude_if_any_terms": [
+          "harem pants",
+          "animal harem",
+          "fan crowd",
+          "established polyamorous relationship",
+          "minor characters"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One clearly central adult receives at least three distinct simultaneous invitations, offers, or help bids from separate adult potential partners. The center visibly manages the overlap, and the partners register one another's bids. This is a same-frame fictional relation topology, not proof of consent, sex, orientation, an established relationship, marriage, final choice, or gender role.",
+        "paraphrase_examples": [
+          "한 명의 중심 성인에게 세 명 이상의 성인 잠재 상대가 서로 다른 구체적 제안을 동시에 건네고 서로의 중첩을 알아차리는 장면",
+          "one adult center handles three different concurrent partner bids while every potential partner notices the others",
+          "성별 배치가 아니라 중심 허브와 세 개 이상의 행동선, 차례 조정 반응으로 읽히는 성인 다중 관심 군상"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "multi_interest_one_adult_center",
+            "multi_interest_three_adult_partners",
+            "multi_interest_distinct_center_bids",
+            "multi_interest_center_overlap_response",
+            "multi_interest_partner_cross_awareness"
+          ],
+          "groups": [
+            {"id":"multi_interest_one_adult_center","any_terms":["one clearly adult person is the common target and compositional center of every bid","한 명의 분명한 성인이 모든 제안의 공통 대상이자 구도 중심임"]},
+            {"id":"multi_interest_three_adult_partners","any_terms":["at least three separate clearly adult potential partners remain individually readable","서로 분리된 세 명 이상의 분명한 성인 잠재 상대가 각각 읽힘"]},
+            {"id":"multi_interest_distinct_center_bids","any_terms":["each potential partner directs a different concrete invitation help offer or proposal to the same center","각 잠재 상대가 같은 중심에게 서로 다른 구체적 초대 도움 또는 제안을 보냄"]},
+            {"id":"multi_interest_center_overlap_response","any_terms":["the central adult visibly pauses sequences or manages the simultaneous incoming bids","중심 성인이 동시에 들어온 제안 사이에서 멈추거나 순서를 조정함"]},
+            {"id":"multi_interest_partner_cross_awareness","any_terms":["cross-glances paused hands or spatial adjustments show that the partners notice the overlapping bids","교차 시선 멈춘 손 또는 공간 조정이 상대들이 제안 중첩을 알아차렸음을 보임"]}
+          ]
+        },
+        "contrast_examples": [
+          "a friend group facing the camera",
+          "a fan crowd around a celebrity",
+          "guards servants or a work retinue",
+          "a two-suitor love triangle",
+          "an established consensual multi-partner relationship inferred from a portrait"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one clearly adult central target",
+          "at least three distinct adult potential partners",
+          "different simultaneous center-directed bids",
+          "central turn-management response",
+          "cross-partner awareness",
+          "unresolved relationship state"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["adult multi-interest romance ensemble"],
+        "forbidden_prompt_terms": ["consensual harem", "polyamorous couple", "married group", "chosen partner", "harem ending"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Place one clearly adult center at the hub of at least three separated adult potential partners. Give each partner a different physical invitation, offer, or help action aimed at the same center; show the center managing concurrent bids and preserve cross-partner awareness through paused hands, eyelines, or spatial adjustments without choosing a winner.",
+      "required_evidence_fields": [
+        "multi_interest_center_phrase",
+        "multi_interest_partner_count_phrase",
+        "multi_interest_distinct_bid_phrase",
+        "multi_interest_center_response_phrase",
+        "multi_interest_cross_awareness_phrase"
+      ],
+      "evidence_requirements": {
+        "multi_interest_center_phrase":{"min_content_words":14,"must_mention_any":["one clearly adult person is the common target and compositional center of every bid"]},
+        "multi_interest_partner_count_phrase":{"min_content_words":11,"must_mention_any":["at least three separate clearly adult potential partners remain individually readable"]},
+        "multi_interest_distinct_bid_phrase":{"min_content_words":14,"must_mention_any":["each potential partner directs a different concrete invitation help offer or proposal to the same center"]},
+        "multi_interest_center_response_phrase":{"min_content_words":12,"must_mention_any":["the central adult visibly pauses sequences or manages the simultaneous incoming bids"]},
+        "multi_interest_cross_awareness_phrase":{"min_content_words":14,"must_mention_any":["cross-glances paused hands or spatial adjustments show that the partners notice the overlapping bids"]}
+      },
+      "render_gates": [
+        {"id":"vo_harem_modern_one_adult_center","review_scale":"thumbnail","description":"One clearly adult person reads as the common target and compositional center of all bids."},
+        {"id":"vo_harem_modern_three_adult_partners","review_scale":"thumbnail","description":"At least three distinct clearly adult potential partners remain individually readable."},
+        {"id":"vo_harem_modern_distinct_center_bids","review_scale":"both","description":"Every potential partner directs a different concrete invitation, offer, or help action to the center."},
+        {"id":"vo_harem_modern_overlap_response_awareness","review_scale":"native","description":"The center manages the overlap while partners visibly notice the competing or concurrent bids."},
+        {"id":"vo_harem_modern_not_group_or_relationship_claim","review_scale":"both","description":"A friend group, fan crowd, retinue, triangle, or inferred established multi-partner relationship does not substitute."}
+      ],
+      "reject_substitutes": [
+        "friend_group_facing_camera",
+        "fan_crowd_around_celebrity",
+        "guard_servant_or_work_retinue",
+        "two_suitor_love_triangle",
+        "inferred_established_multi_partner_relationship"
+      ]
+    },
+    {
+      "id": "adult_central_target_romantic_rivalry_event",
+      "category": "adult_competing_suitor_event_topology",
+      "activation": {
+        "exact_terms": [
+          "adult central-target romantic rivalry scene",
+          "adult multi-suitor limited-choice rivalry event",
+          "성인 히로인 레이스 경쟁 구도",
+          "성인 연애 쟁탈전 다중 후보 장면"
+        ],
+        "exclude_if_any_terms": [
+          "sports rivalry",
+          "business competition",
+          "ordinary queue",
+          "chosen partner ending",
+          "minor characters"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One central adult faces at least three clearly adult rivals whose incompatible invitations concern the same limited time, place, seat, or companion opportunity. The rivals react to one another, the center visibly postpones or manages the collision, and no winner is selected. The event does not establish private feelings, consent, an ongoing relationship, or a narrative ending.",
+        "paraphrase_examples": [
+          "한 명의 중심 성인 앞에서 세 명 이상의 성인 후보가 같은 시간과 동행 기회를 두고 양립 불가능한 초대를 내밀며 서로 반응하는 미결 장면",
+          "three adult rivals compete for the same central adult and one limited invitation slot while the decision remains visibly unresolved",
+          "질투 표정이 아니라 단일 선택점과 여러 제안선, 후보 간 반응, 중심 인물의 보류 행동으로 읽히는 연애 경쟁"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "romantic_rivalry_one_adult_target",
+            "romantic_rivalry_three_adult_rivals",
+            "romantic_rivalry_limited_incompatible_bids",
+            "romantic_rivalry_cross_reactions",
+            "romantic_rivalry_unresolved_result"
+          ],
+          "groups": [
+            {"id":"romantic_rivalry_one_adult_target","any_terms":["one clearly adult person is the common decision target at a single physical choice point","한 명의 분명한 성인이 하나의 물리적 선택점에서 공통 결정 대상임"]},
+            {"id":"romantic_rivalry_three_adult_rivals","any_terms":["at least three separate clearly adult rivals remain individually visible around the same target","세 명 이상의 분리된 분명한 성인 후보가 같은 대상 주위에서 각각 보임"]},
+            {"id":"romantic_rivalry_limited_incompatible_bids","any_terms":["each rival presents an invitation tied to the same limited time entrance seat or companion opportunity","각 후보가 같은 제한된 시간 입장 좌석 또는 동행 기회에 묶인 초대를 제시함"]},
+            {"id":"romantic_rivalry_cross_reactions","any_terms":["lateral gestures eyelines or blocked hands show that the adult rivals react to one another's bids","옆방향 제스처 시선 또는 막힌 손이 성인 후보들이 서로의 제안에 반응함을 보임"]},
+            {"id":"romantic_rivalry_unresolved_result","any_terms":["the central adult visibly holds or postpones the choice while all competing bids remain active","중심 성인이 선택을 보류하고 모든 경쟁 제안이 활성 상태로 남음"]}
+          ]
+        },
+        "contrast_examples": [
+          "a jealous solo portrait",
+          "a sports or business competition",
+          "an ordinary queue at one entrance",
+          "a two-person argument",
+          "a final chosen-partner or wedding scene"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one clearly adult decision target",
+          "at least three clearly adult rivals",
+          "same limited opportunity",
+          "mutually incompatible invitations",
+          "cross-rival reactions",
+          "unresolved same-frame result"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": ["adult central-target romantic rivalry"],
+        "forbidden_prompt_terms": ["jealous personality", "consent proven", "chosen partner", "winner", "harem ending"],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Anchor one clearly adult decision target at a single limited opportunity and arrange at least three separated adult rivals in converging lanes. Tie every physical invitation to the same time, place, entrance, seat, or companion opportunity; show cross-rival reactions and the center's hold gesture while leaving every bid unresolved.",
+      "required_evidence_fields": [
+        "romantic_rivalry_target_phrase",
+        "romantic_rivalry_count_phrase",
+        "romantic_rivalry_limited_bid_phrase",
+        "romantic_rivalry_cross_reaction_phrase",
+        "romantic_rivalry_unresolved_phrase"
+      ],
+      "evidence_requirements": {
+        "romantic_rivalry_target_phrase":{"min_content_words":14,"must_mention_any":["one clearly adult person is the common decision target at a single physical choice point"]},
+        "romantic_rivalry_count_phrase":{"min_content_words":13,"must_mention_any":["at least three separate clearly adult rivals remain individually visible around the same target"]},
+        "romantic_rivalry_limited_bid_phrase":{"min_content_words":14,"must_mention_any":["each rival presents an invitation tied to the same limited time entrance seat or companion opportunity"]},
+        "romantic_rivalry_cross_reaction_phrase":{"min_content_words":15,"must_mention_any":["lateral gestures eyelines or blocked hands show that the adult rivals react to one another's bids"]},
+        "romantic_rivalry_unresolved_phrase":{"min_content_words":14,"must_mention_any":["the central adult visibly holds or postpones the choice while all competing bids remain active"]}
+      },
+      "render_gates": [
+        {"id":"vo_harem_rivalry_one_adult_target","review_scale":"thumbnail","description":"One clearly adult person reads as the common decision target at one limited choice point."},
+        {"id":"vo_harem_rivalry_three_adult_rivals","review_scale":"thumbnail","description":"At least three distinct clearly adult rivals remain individually readable around the target."},
+        {"id":"vo_harem_rivalry_incompatible_limited_bids","review_scale":"both","description":"Every invitation visibly concerns the same limited time, entrance, seat, or companion opportunity."},
+        {"id":"vo_harem_rivalry_cross_reactions_unresolved","review_scale":"native","description":"Rivals react across lanes and the central adult visibly keeps every bid unresolved."},
+        {"id":"vo_harem_rivalry_not_generic_competition","review_scale":"both","description":"A jealous portrait, sports contest, queue, argument, or final chosen-partner scene does not substitute."}
+      ],
+      "reject_substitutes": [
+        "jealous_solo_portrait",
+        "sports_or_business_competition",
+        "ordinary_single_entrance_queue",
+        "two_person_argument",
+        "final_chosen_partner_scene"
+      ]
     }
   ]
 }
