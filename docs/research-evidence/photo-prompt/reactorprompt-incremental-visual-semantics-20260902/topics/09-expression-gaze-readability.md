@@ -23,7 +23,7 @@ status: proposed
 - 번역 자료 SHA-256: d2483fc1eefc941ddf2a51137ac2114cea0de61e8be3c152c00d49cfe5ce6586
 - 범위: 게시물 1,182개, 비어 있지 않은 프롬프트 924개, 고유 프롬프트 본문 904개, ID 1565–2746.
 - 연구 brief가 지정한 기준 스킬 revision: 8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab
-- 협업 작업 트리의 동시 변경과 섞이지 않도록 기존 authored source는 git show HEAD:path로 읽었다.
+- 협업 작업 트리의 동시 변경과 섞이지 않도록 기존 authored source는 해시가 고정된 snapshot commit `401f450e4c0ec32ef79c502e3c6a6666c9a106c4`에서 읽었다.
   - photo_prompt_visual_obligations.json: 64e73c97f12da099b18cb7be4e0086f0c51c66d63380c297ec7632709b4805bc
   - photo_prompt_tags.json: 5ae9ae8311f418875a011d7fd887804c9b974f26941689679af55a1499406b00
   - photo_prompt_quality_layers.json: 99597926d0f136bfabaf5f8be28597aae82f15bdbe8e3bfcfbbb774b3ac0541f

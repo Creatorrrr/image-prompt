@@ -1,0 +1,323 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "semantic_policy": {
+    "hard_activation": "Only narrow context-complete relation phrases in the visual-obligation registry create hard duties. Broad labels such as cafe aesthetic, alley mood, exhibition vibe, rooftop mood, station aesthetic, industrial aesthetic, or hanok aesthetic remain candidate-only.",
+    "visual_actuation": "A selected emotional-place relation must remain an observable same-frame structure: physical place anchor, human or object action, depth or source geometry, and an immediate material or state consequence. A location label, color grade, bokeh, costume, or generic mood alone is never evidence.",
+    "claim_boundary": "Pixels may support only visible architecture, path continuity, surface state, light ownership, viewing or browsing direction, transit state, retained material junctions, and inside-outside topology. They do not establish identity, ethnicity, nationality, social class, ownership, relationship, authenticity, historicity, destination, or personal memory.",
+    "reference_boundary": "A supplied portrait may guide only observable adult appearance, face proportions, hair, wardrobe, and framing. It never supplies identity, protected traits, personal history, cultural membership, or a place connection.",
+    "judgment_boundary": "Registry, routing, prompt, and request audits prove only data binding. A rendered arm passes only when all five profile gates are simultaneously visible; partial visibility is failure, and requesting-user judgment remains separate."
+  },
+  "visual_semantics": [
+    {
+      "id": "window_seat_daylight_activity_relation",
+      "primary_visual_proposition": "A physical window aperture, near seat or table, contacting small hand action, directional window-to-room gradient, and visible progress trace coexist in one frame.",
+      "hard_profile_ids": ["window_seat_daylight_activity_relation"],
+      "component_groups": ["physical window aperture", "near-window activity anchor", "hand-object contact", "directional daylight gradient", "action progress trace"],
+      "confusion_boundaries": ["bright rectangle backdrop", "studio softbox", "subject far from window", "unrelated cup", "exterior-only view"],
+      "candidate_ids": ["small_cafe_window_table", "ep_physical_aperture_near_far_relation", "ep_half_drawn_curtain_pause", "ep_curtain_half_drawn_light_change"]
+    },
+    {
+      "id": "architectural_threshold_frame_depth_relation",
+      "primary_visual_proposition": "A thick physical boundary joins readable near and far zones through coherent occlusion, a crossing or pause action, and one continuous floor or path.",
+      "hard_profile_ids": ["architectural_threshold_frame_depth_relation"],
+      "component_groups": ["physical boundary thickness", "near and far zones", "coherent occlusion", "threshold action", "continued floor or path"],
+      "confusion_boundaries": ["flat arch decor", "picture frame", "fantasy portal", "cropped doorway", "front-facing portrait"],
+      "candidate_ids": ["through_doorway_deep_frame", "pausing_before_threshold", "ep_threshold_dual_zone_depth"]
+    },
+    {
+      "id": "circulation_path_mid_action_depth_relation",
+      "primary_visual_proposition": "An uninterrupted walkable surface, edge rhythm, three depth positions, grounded mid-action, and a wayfinding anchor make movement through place legible.",
+      "hard_profile_ids": ["circulation_path_mid_action_depth_relation"],
+      "component_groups": ["continuous path", "edge rhythm or vanishing", "three depth positions", "grounded action", "wayfinding anchor"],
+      "confusion_boundaries": ["corridor wallpaper", "static fashion pose", "cropped stairs", "floating feet", "motion blur only"],
+      "candidate_ids": ["vanishing_point_corridor", "parking_garage_vanishing_point", "ep_walkable_path_three_depth_markers", "ep_mid_stride_path_progress"]
+    },
+    {
+      "id": "wet_surface_light_reflection_owner_relation",
+      "primary_visual_proposition": "A visibly wet surface receives a geometrically aligned reflection from an in-frame owner, with an occluding interruption and a wet-dry boundary.",
+      "hard_profile_ids": ["wet_surface_light_reflection_owner_relation"],
+      "component_groups": ["wet surface state", "visible reflection owner", "aligned reflection", "reflection interruption", "wet-dry boundary"],
+      "confusion_boundaries": ["dry polished floor", "composited double image", "ownerless neon", "generic bokeh", "mirror"],
+      "candidate_ids": ["rainy_neon_alley", "neon", "puddle_reflection_split_frame", "ep_wet_reflection_owner_alignment", "ep_wet_dry_boundary_footprint"]
+    },
+    {
+      "id": "overlook_edge_foreground_vista_relation",
+      "primary_visual_proposition": "A near elevated plane ends at a visible physical edge above a lower distant vista, with several depth cues and a view-oriented action.",
+      "hard_profile_ids": ["overlook_edge_foreground_vista_relation"],
+      "component_groups": ["physical edge or rail", "near elevated plane", "lower distant vista", "multiple depth cues", "view-oriented action"],
+      "confusion_boundaries": ["skyline backdrop", "edge absent", "floating subject", "flattened levels", "generic outdoor portrait"],
+      "candidate_ids": ["golden_hour_residential_rooftop", "leaning_on_balcony_rail", "ep_near_edge_lower_vista_relation"]
+    },
+    {
+      "id": "gallery_viewer_art_attention_relation",
+      "primary_visual_proposition": "A physically mounted artwork, viewer body and gaze orientation, clear sightline, credible viewing distance, and continuing gallery route coexist.",
+      "hard_profile_ids": ["gallery_viewer_art_attention_relation"],
+      "component_groups": ["mounted artwork", "viewer orientation", "unobstructed sightline", "credible viewing distance", "continuing gallery path"],
+      "confusion_boundaries": ["billboard", "blank wall", "camera-facing subject", "artwork wallpaper", "fabricated readable label"],
+      "candidate_ids": ["art_gallery_white_hall", "gallery_track_spotlight", "ep_artwork_viewer_sightline"]
+    },
+    {
+      "id": "retail_browse_source_selection_relation",
+      "primary_visual_proposition": "Repeated inventory, a partly removed item linked to its source slot, hand contact, aligned attention, and the resulting display gap show selection in progress.",
+      "hard_profile_ids": ["retail_browse_source_selection_relation"],
+      "component_groups": ["repeated display inventory", "item-source link", "hand-object contact", "body or gaze alignment", "selection-result gap"],
+      "confusion_boundaries": ["random held object", "staged product portrait", "empty shelf", "place-name inference", "readable brand or price"],
+      "candidate_ids": ["used_bookshop_aisle", "vintage_record_shop_aisle", "browsing_bookshop_shelf", "ep_display_source_selection_gap", "ep_source_slot_item_selection", "ep_shelf_selection_gap"]
+    },
+    {
+      "id": "transit_waiting_departure_relation",
+      "primary_visual_proposition": "A transit system boundary, visible vehicle state, anchored waiting or boarding action, path-aligned orientation, and immediate readiness consequence share the frame.",
+      "hard_profile_ids": ["transit_waiting_departure_relation"],
+      "component_groups": ["transit boundary", "arrival or departure state", "waiting anchor", "travel-path orientation", "state consequence"],
+      "confusion_boundaries": ["static fashion portrait", "generic terminal", "train wallpaper", "destination inference", "rail dispatch worker procedure"],
+      "candidate_ids": ["korean_train_platform", "train_platform_last_car", "waiting_old_bus_stop", "ep_transit_system_boundary_direction", "ep_transit_boundary_waiting_orientation", "ep_luggage_beside_waiting_position"]
+    },
+    {
+      "id": "adaptive_reuse_old_new_material_junction",
+      "primary_visual_proposition": "A retained industrial process or shell remnant physically joins a new public use, retaining wear while a current action follows the old circulation.",
+      "hard_profile_ids": ["adaptive_reuse_old_new_material_junction"],
+      "component_groups": ["original remnant", "new public use", "old-new junction", "retained wear or repair", "new action in old circulation"],
+      "confusion_boundaries": ["generic loft", "ruin", "active factory", "single rusty prop", "themed industrial decor"],
+      "candidate_ids": ["ep_old_new_use_junction_frame", "ep_retained_industrial_shell_new_use_junction"]
+    },
+    {
+      "id": "hanok_madang_maru_inside_outside_relation",
+      "primary_visual_proposition": "A bounded madang, raised timber maru, eaves-column junction, room-to-courtyard sightline, and small daily transition action make hanok topology visible.",
+      "hard_profile_ids": ["hanok_madang_maru_inside_outside_relation"],
+      "component_groups": ["bounded madang", "raised maru", "timber structure", "inside-outside axis", "daily transition action"],
+      "confusion_boundaries": ["generic East Asian pavilion", "palace stone courtyard", "hanbok-only scene", "isolated tiled roof", "undifferentiated veranda"],
+      "candidate_ids": ["hanok_inner_court", "ep_hanok_room_maru_madang_axis", "ep_maru_edge_daily_transition", "ep_raised_maru_courtyard_threshold"]
+    }
+  ],
+  "slots": {
+    "composition": [
+      {
+        "id": "ep_physical_aperture_near_far_relation",
+        "ko": "두께가 있는 창 개구부와 창가 행동, 먼 실내가 함께 보이는 관계 구도",
+        "en": "a relation frame showing a thick window aperture, near-window activity and receding room",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "window_seat_daylight_activity_relation", "composition"],
+        "aliases": ["창가 좌석의 작은 행동과 방향성 자연광", "window-seat quiet activity with directional daylight"],
+        "keywords": ["physical aperture", "near seat", "receding room", "daylight direction"],
+        "embedding_text": "a thick physical window aperture keeps a near seat or table, a contacting hand action, and receding room depth visible while directional daylight falls from the opening"
+      },
+      {
+        "id": "ep_threshold_dual_zone_depth",
+        "ko": "실제 문턱을 사이에 둔 가까운 공간과 먼 공간의 이중 깊이",
+        "en": "dual-zone depth across a physical architectural threshold",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "architectural_threshold_frame_depth_relation", "composition"],
+        "aliases": ["두 실제 공간을 잇는 건축 문턱 통과 장면", "physical doorway joining two real rooms with a crossing action"],
+        "keywords": ["wall thickness", "near zone", "far zone", "coherent occlusion"],
+        "embedding_text": "a thick wall doorway or column boundary joins readable near and far rooms through coherent occlusion, perspective, crossing action, and one physically continuous floor"
+      },
+      {
+        "id": "ep_walkable_path_three_depth_markers",
+        "ko": "연속 보행면에 출발·현재·다음 위치가 잡히는 세 깊이 표지",
+        "en": "a continuous walkable path with start, current and next-position depth markers",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "circulation_path_mid_action_depth_relation", "composition"],
+        "aliases": ["연속 골목길 위 중간 보폭과 세 깊이 표지", "continuous alley path with a grounded mid-stride action and three depth markers"],
+        "keywords": ["walkable continuity", "edge rhythm", "vanishing point", "destination marker"],
+        "embedding_text": "an uninterrupted alley corridor stair or platform surface preserves start current and next positions through edge rhythm, grounded movement, scale change, and a wayfinding anchor"
+      },
+      {
+        "id": "ep_wet_reflection_owner_alignment",
+        "ko": "실제 광원과 젖은 면의 반사가 위치·방향으로 정렬된 구도",
+        "en": "a wet-surface reflection geometrically aligned to its visible light or object owner",
+        "weight": 0.95,
+        "tags": ["emotional_place_visual_semantics", "wet_surface_light_reflection_owner_relation", "composition"],
+        "aliases": ["실제 간판 광원과 정렬된 젖은 노면 반사", "rain-wet pavement reflection aligned to its visible sign light owner"],
+        "keywords": ["owned reflection", "alignment", "wet surface", "interruption"],
+        "embedding_text": "a visible sign lamp window or object owns a geometrically aligned reflection on genuinely wet pavement while occlusion and a dry boundary interrupt the reflected shape"
+      },
+      {
+        "id": "ep_near_edge_lower_vista_relation",
+        "ko": "가까운 난간 또는 끝선과 낮고 먼 전망을 함께 읽는 구도",
+        "en": "a relation frame joining a near physical edge to a lower distant vista",
+        "weight": 0.93,
+        "tags": ["emotional_place_visual_semantics", "overlook_edge_foreground_vista_relation", "composition"],
+        "aliases": ["가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계", "physical rooftop parapet joining a near elevated plane to a lower distant city vista"],
+        "keywords": ["near edge", "elevated plane", "lower vista", "atmospheric depth"],
+        "embedding_text": "a visible rooftop parapet balcony rail or overlook edge separates a grounded near elevated plane from a lower distant city or landscape using scale occlusion and atmospheric depth"
+      },
+      {
+        "id": "ep_artwork_viewer_sightline",
+        "ko": "관람자의 몸·시선과 물리적으로 설치된 작품을 잇는 가시선 구도",
+        "en": "an unobstructed sightline linking a viewer's body orientation to a physically installed artwork",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "gallery_viewer_art_attention_relation", "composition"],
+        "aliases": ["설치된 작품과 관람자 시선을 잇는 갤러리 장면", "gallery viewer with an unobstructed sightline to a physically mounted artwork"],
+        "keywords": ["viewer orientation", "artwork anchor", "viewing distance", "gallery path"],
+        "embedding_text": "a physically mounted artwork and an adult viewer remain connected by body orientation gaze and a clean sightline at a credible distance with continuing gallery floor circulation"
+      },
+      {
+        "id": "ep_display_source_selection_gap",
+        "ko": "진열 원위치와 반쯤 꺼낸 대상, 손을 한 연결로 보여주는 선택 구도",
+        "en": "a selection frame linking a display source gap, partly removed item and contacting hand",
+        "weight": 0.95,
+        "tags": ["emotional_place_visual_semantics", "retail_browse_source_selection_relation", "composition"],
+        "aliases": ["진열 원위치와 반쯤 꺼낸 대상을 잇는 고르기 행동", "browsing action with a partly removed item still linked to its display source slot"],
+        "keywords": ["source slot", "selection gap", "hand contact", "repeated inventory"],
+        "embedding_text": "a hand partly removes one book record or item from repeated inventory while the source slot, displaced neighbors, body attention, and resulting gap remain contiguous and visible"
+      },
+      {
+        "id": "ep_transit_system_boundary_direction",
+        "ko": "교통 시스템 경계와 대기 위치, 차량 이동 방향을 연결한 구도",
+        "en": "a transit frame linking a system boundary, waiting position and vehicle direction",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "transit_waiting_departure_relation", "composition"],
+        "aliases": ["짐과 열차 상태가 연결된 승강장 대기 장면", "traveler waiting at a platform system boundary with luggage and a readable train state"],
+        "keywords": ["platform edge", "gate", "waiting position", "arrival direction"],
+        "embedding_text": "a platform edge gate curb or stop boundary shares one frame with an anchored waiting position, visible vehicle or door state, luggage, and the travel path direction"
+      },
+      {
+        "id": "ep_old_new_use_junction_frame",
+        "ko": "남겨진 산업 구조와 새로운 공공 사용의 물리 접합부를 중심에 둔 구도",
+        "en": "a frame centered on the physical junction between retained industrial fabric and a new public use",
+        "weight": 0.95,
+        "tags": ["emotional_place_visual_semantics", "adaptive_reuse_old_new_material_junction", "composition"],
+        "aliases": ["남겨진 산업 공정 흔적과 새 공공 사용의 물리 접합", "adaptive-reuse interior showing a retained industrial process remnant joined to a new public use"],
+        "keywords": ["retained shell", "new use", "material junction", "old circulation"],
+        "embedding_text": "a real junction between worn industrial shell or process equipment and new cafe gallery or workshop use remains central while current activity follows the retained circulation"
+      },
+      {
+        "id": "ep_hanok_room_maru_madang_axis",
+        "ko": "방 문턱·높인 마루·안마당이 한 시선축으로 이어지는 한옥 구도",
+        "en": "a hanok sightline axis connecting a room threshold, raised maru and bounded madang",
+        "weight": 0.96,
+        "tags": ["emotional_place_visual_semantics", "hanok_madang_maru_inside_outside_relation", "composition"],
+        "aliases": ["방 마루 마당이 이어지는 한옥 안팎 관계", "domestic hanok room-maru-madang inside-outside relation"],
+        "keywords": ["room", "raised maru", "madang", "eaves", "inside outside"],
+        "embedding_text": "a domestic hanok room threshold, raised timber maru, bounded madang surface, columns, and eaves remain connected along one legible inside-to-outside sightline with daily use"
+      }
+    ],
+    "action": [
+      {
+        "id": "ep_half_drawn_curtain_pause",
+        "ko": "커튼을 반쯤 당긴 채 창가 빛의 변화를 멈춰 보는",
+        "en": "pausing with a curtain half drawn while the window-light field visibly changes",
+        "weight": 0.91,
+        "tags": ["emotional_place_visual_semantics", "window_seat_daylight_activity_relation", "action"],
+        "requires_any_tags": ["window_seat_daylight_activity_relation"],
+        "aliases": ["커튼을 반쯤 여는 카페 창가 생활 장면", "cafe window seat with a half-drawn curtain and small hand action"],
+        "keywords": ["curtain contact", "half state", "light change"],
+        "embedding_text": "an adult hand remains visibly in contact with a half-drawn curtain while pausing near a window seat so the changed daylight field records unfinished action"
+      },
+      {
+        "id": "ep_source_slot_item_selection",
+        "ko": "책·음반·상품을 원래 진열 틈에서 반쯤 꺼내 고르는",
+        "en": "selecting a book, record or item while it remains partly connected to its source slot",
+        "weight": 0.93,
+        "tags": ["emotional_place_visual_semantics", "retail_browse_source_selection_relation", "action"],
+        "requires_any_tags": ["retail_browse_source_selection_relation"],
+        "aliases": ["손 접촉과 서가 빈틈이 보이는 책 고르기", "bookshop selection showing hand contact and the shelf gap"],
+        "keywords": ["selection", "source slot", "partly removed", "gaze contact"],
+        "embedding_text": "the adult selects one book record or object while it remains partly inside its original display slot and the contacting fingers, aligned attention, and neighbors stay readable"
+      },
+      {
+        "id": "ep_mid_stride_path_progress",
+        "ko": "연속 경로 위에서 발 접촉과 다음 위치가 보이는 중간 보폭",
+        "en": "moving mid-stride on a continuous path with grounded foot contact and a readable next position",
+        "weight": 0.92,
+        "tags": ["emotional_place_visual_semantics", "circulation_path_mid_action_depth_relation", "action"],
+        "requires_any_tags": ["circulation_path_mid_action_depth_relation"],
+        "aliases": ["출발 현재 다음 위치가 보이는 복도 이동 장면", "walkable corridor or stairs showing start current and next positions"],
+        "keywords": ["mid-stride", "ground contact", "path direction", "next position"],
+        "embedding_text": "one adult moves in a readable middle stride with the planted foot contacting a continuous path and body orientation aiming toward a visible next position and destination marker"
+      },
+      {
+        "id": "ep_transit_boundary_waiting_orientation",
+        "ko": "플랫폼·게이트·정류장 경계에서 차량 방향을 향해 기다리는",
+        "en": "waiting at a platform, gate or stop boundary with body and gaze oriented toward the travel path",
+        "weight": 0.93,
+        "tags": ["emotional_place_visual_semantics", "transit_waiting_departure_relation", "action"],
+        "requires_any_tags": ["transit_waiting_departure_relation"],
+        "aliases": ["다가오는 차량 경로를 향해 기다리는 정류장 행동", "bus-stop waiting action oriented toward an approaching vehicle path"],
+        "keywords": ["waiting", "system boundary", "travel-path orientation", "luggage anchor"],
+        "embedding_text": "the adult waits beside a platform gate curb or stop boundary with torso and gaze aligned toward the vehicle path while grounded luggage marks the personal waiting position"
+      },
+      {
+        "id": "ep_maru_edge_daily_transition",
+        "ko": "방과 마당 사이 마루 끝에서 신발·차·창호를 다루는 작은 전이 행동",
+        "en": "performing a small shoe, tea or door-panel action at the maru edge between room and courtyard",
+        "weight": 0.93,
+        "tags": ["emotional_place_visual_semantics", "hanok_madang_maru_inside_outside_relation", "action"],
+        "requires_any_tags": ["hanok_madang_maru_inside_outside_relation"],
+        "aliases": ["대청마루와 안마당, 방 문턱이 함께 보이는 한옥 생활 장면", "raised daechung maru connecting rooms to a bounded inner courtyard"],
+        "keywords": ["maru edge", "daily action", "inside outside", "level change"],
+        "embedding_text": "an adult handles shoes tea or a wooden door panel at the raised maru edge so one small daily transition physically connects the room threshold and bounded courtyard"
+      }
+    ],
+    "aftermath_trace": [
+      {
+        "id": "ep_curtain_half_drawn_light_change",
+        "ko": "반쯤 당겨진 커튼과 달라진 창가 광량 경계",
+        "en": "a half-drawn curtain leaving a changed boundary in the window-light field",
+        "weight": 0.91,
+        "tags": ["emotional_place_visual_semantics", "window_seat_daylight_activity_relation", "aftermath_trace"],
+        "requires_any_tags": ["window_seat_daylight_activity_relation"],
+        "aliases": ["반쯤 열린 커튼의 광량 변화 흔적", "half-drawn curtain light-change trace"],
+        "keywords": ["half state", "light boundary", "action result"],
+        "embedding_text": "the half-drawn curtain remains in an intermediate state and leaves a visibly changed band of daylight across the nearby seat table hand and receding room surfaces"
+      },
+      {
+        "id": "ep_shelf_selection_gap",
+        "ko": "반쯤 꺼낸 대상 뒤에 남은 진열 틈과 눌린 이웃",
+        "en": "a source gap and displaced neighbors left by a partly removed display item",
+        "weight": 0.92,
+        "tags": ["emotional_place_visual_semantics", "retail_browse_source_selection_relation", "aftermath_trace"],
+        "requires_any_tags": ["retail_browse_source_selection_relation"],
+        "aliases": ["선택 중 생긴 서가 원위치 틈", "source-slot gap from an item being selected"],
+        "keywords": ["source gap", "displaced neighbor", "selection result"],
+        "embedding_text": "a narrow source gap and slightly displaced neighboring inventory remain directly behind the partly removed item, proving selection from this exact shelf rather than a posed held prop"
+      },
+      {
+        "id": "ep_wet_dry_boundary_footprint",
+        "ko": "젖은 면과 마른 면의 경계 및 반사를 끊는 발자국",
+        "en": "a wet-dry surface boundary with a footprint interrupting the reflection",
+        "weight": 0.93,
+        "tags": ["emotional_place_visual_semantics", "wet_surface_light_reflection_owner_relation", "aftermath_trace"],
+        "requires_any_tags": ["wet_surface_light_reflection_owner_relation"],
+        "aliases": ["젖은 노면 반사를 끊는 발자국과 마른 경계", "footprint interruption at a wet-dry reflection boundary"],
+        "keywords": ["wet dry transition", "footprint", "reflection interruption"],
+        "embedding_text": "a footprint or small grounded object interrupts the owned reflection exactly where genuinely wet pavement transitions into a visibly drier protected or recently exposed surface"
+      },
+      {
+        "id": "ep_luggage_beside_waiting_position",
+        "ko": "대기 위치의 발 바로 옆에 놓여 이동을 준비한 짐",
+        "en": "luggage grounded immediately beside the waiting position as a visible readiness trace",
+        "weight": 0.92,
+        "tags": ["emotional_place_visual_semantics", "transit_waiting_departure_relation", "aftermath_trace"],
+        "requires_any_tags": ["transit_waiting_departure_relation"],
+        "aliases": ["대기자의 발 옆에 고정된 여행 짐", "travel luggage anchored beside the waiting adult"],
+        "keywords": ["luggage anchor", "waiting position", "readiness"],
+        "embedding_text": "a small unbranded suitcase or travel bag rests immediately beside the adult's feet at the waiting boundary and visibly connects readiness to the current vehicle or door state"
+      }
+    ],
+    "surface_material": [
+      {
+        "id": "ep_retained_industrial_shell_new_use_junction",
+        "ko": "마모된 산업 구조와 새 목재·유리·조명이 맞닿는 보존 접합면",
+        "en": "a material junction where a worn industrial shell meets new wood, glass or public-use lighting",
+        "weight": 0.94,
+        "tags": ["emotional_place_visual_semantics", "adaptive_reuse_old_new_material_junction", "surface_material"],
+        "requires_any_tags": ["adaptive_reuse_old_new_material_junction"],
+        "aliases": ["옛 작업장 동선이 보존된 카페 또는 예술 작업실", "old workshop circulation preserved inside a cafe or art workspace"],
+        "keywords": ["retained wear", "industrial shell", "new insertion", "junction line"],
+        "embedding_text": "worn brick steel concrete or process equipment meets a clearly newer wood glass or lighting insertion along a readable junction with retained repair marks and authentic thickness"
+      },
+      {
+        "id": "ep_raised_maru_courtyard_threshold",
+        "ko": "안마당의 돌·흙 면보다 높인 목재 마루와 방 문턱의 재료 전이",
+        "en": "a material and level transition from courtyard stone or earth to raised timber maru and room threshold",
+        "weight": 0.95,
+        "tags": ["emotional_place_visual_semantics", "hanok_madang_maru_inside_outside_relation", "surface_material"],
+        "requires_any_tags": ["hanok_madang_maru_inside_outside_relation"],
+        "aliases": ["높인 마루와 안마당의 재료·높이 전이", "raised maru courtyard material and level transition"],
+        "keywords": ["raised timber", "courtyard surface", "level transition", "room threshold"],
+        "embedding_text": "the bounded stone or earth madang sits visibly below a thick raised timber maru that meets a room threshold beneath posts and eaves with believable material joints"
+      }
+    ]
+  }
+}

@@ -27183,6 +27183,1696 @@
         "passive_reclining_without_action",
         "hidden_camera_doorway_view"
       ]
+    },
+    {
+      "id": "window_seat_daylight_activity_relation",
+      "category": "place_activity_light_relation",
+      "activation": {
+        "exact_terms": [
+          "window-seat quiet activity with directional daylight",
+          "cafe window seat with a half-drawn curtain and small hand action",
+          "창가 좌석의 작은 행동과 방향성 자연광",
+          "커튼을 반쯤 여는 카페 창가 생활 장면"
+        ],
+        "exclude_if_any_terms": [
+          "bright rectangle backdrop",
+          "studio softbox",
+          "subject far from window",
+          "unrelated cup",
+          "exterior-only view"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physical window aperture, near seat or table, contacting small hand action, directional window-to-room gradient, and visible progress trace coexist in one frame. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A physical window aperture, near seat or table, contacting small hand action, directional window-to-room gradient, and visible progress trace coexist in one frame.",
+        "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_window_aperture",
+            "near_window_seat_or_table",
+            "hand_object_unfinished_action",
+            "window_to_room_light_gradient",
+            "visible_action_progress_trace"
+          ],
+          "groups": [
+            {
+              "id": "physical_window_aperture",
+              "any_terms": [
+                "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "near_window_seat_or_table",
+              "any_terms": [
+                "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "hand_object_unfinished_action",
+              "any_terms": [
+                "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "window_to_room_light_gradient",
+              "any_terms": [
+                "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "visible_action_progress_trace",
+              "any_terms": [
+                "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "bright rectangle backdrop",
+          "studio softbox",
+          "subject far from window",
+          "unrelated cup",
+          "exterior-only view"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes physical window aperture as a physically coherent same-frame relation",
+          "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation",
+          "the frame visibly establishes hand-object contact as a physically coherent same-frame relation",
+          "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation",
+          "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "window-seat quiet activity with directional daylight",
+          "창가 좌석의 작은 행동과 방향성 자연광"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "physical_window_aperture_phrase",
+        "near_window_seat_or_table_phrase",
+        "hand_object_unfinished_action_phrase",
+        "window_to_room_light_gradient_phrase",
+        "visible_action_progress_trace_phrase"
+      ],
+      "evidence_requirements": {
+        "physical_window_aperture_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes physical window aperture as a physically coherent same-frame relation"
+          ]
+        },
+        "near_window_seat_or_table_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes near-window activity anchor as a physically coherent same-frame relation"
+          ]
+        },
+        "hand_object_unfinished_action_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+          ]
+        },
+        "window_to_room_light_gradient_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes directional daylight gradient as a physically coherent same-frame relation"
+          ]
+        },
+        "visible_action_progress_trace_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes action progress trace as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_window_physical_aperture",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes physical window aperture as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_window_near_activity_anchor",
+          "review_scale": "both",
+          "description": "The frame visibly establishes near-window activity anchor as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_window_hand_contact",
+          "review_scale": "native",
+          "description": "The frame visibly establishes hand-object contact as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_window_directional_gradient",
+          "review_scale": "both",
+          "description": "The frame visibly establishes directional daylight gradient as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_window_progress_trace",
+          "review_scale": "native",
+          "description": "The frame visibly establishes action progress trace as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "bright_rectangle_backdrop",
+        "studio_softbox",
+        "subject_far_from_window",
+        "unrelated_cup",
+        "exterior_only_view"
+      ]
+    },
+    {
+      "id": "architectural_threshold_frame_depth_relation",
+      "category": "architectural_visibility_relation",
+      "activation": {
+        "exact_terms": [
+          "physical doorway joining two real rooms with a crossing action",
+          "architectural threshold with near and far zones and a continuing floor",
+          "두 실제 공간을 잇는 건축 문턱 통과 장면",
+          "가까운 공간과 먼 공간이 이어지는 실제 문틀 구도"
+        ],
+        "exclude_if_any_terms": [
+          "flat arch decor",
+          "picture frame",
+          "fantasy portal",
+          "cropped doorway",
+          "unrelated front-facing portrait"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A thick physical boundary joins readable near and far zones through coherent occlusion, a crossing or pause action, and one continuous floor or path. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A thick physical boundary joins readable near and far zones through coherent occlusion, a crossing or pause action, and one continuous floor or path.",
+        "Show enough wall, door or column junction to prove a real boundary and keep both spatial zones legible through coherent occlusion."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_boundary_thickness",
+            "near_and_far_zones",
+            "coherent_occlusion_perspective",
+            "crossing_or_pause_action",
+            "continued_floor_or_path"
+          ],
+          "groups": [
+            {
+              "id": "physical_boundary_thickness",
+              "any_terms": [
+                "the frame visibly establishes physical boundary thickness as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "near_and_far_zones",
+              "any_terms": [
+                "the frame visibly establishes near and far zones as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "coherent_occlusion_perspective",
+              "any_terms": [
+                "the frame visibly establishes coherent occlusion as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "crossing_or_pause_action",
+              "any_terms": [
+                "the frame visibly establishes threshold action as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "continued_floor_or_path",
+              "any_terms": [
+                "the frame visibly establishes continued floor or path as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "flat arch decor",
+          "picture frame",
+          "fantasy portal",
+          "cropped doorway",
+          "unrelated front-facing portrait"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes physical boundary thickness as a physically coherent same-frame relation",
+          "the frame visibly establishes near and far zones as a physically coherent same-frame relation",
+          "the frame visibly establishes coherent occlusion as a physically coherent same-frame relation",
+          "the frame visibly establishes threshold action as a physically coherent same-frame relation",
+          "the frame visibly establishes continued floor or path as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "physical doorway joining two real rooms with a crossing action",
+          "두 실제 공간을 잇는 건축 문턱 통과 장면"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show enough wall, door or column junction to prove a real boundary and keep both spatial zones legible through coherent occlusion. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "physical_boundary_thickness_phrase",
+        "near_and_far_zones_phrase",
+        "coherent_occlusion_perspective_phrase",
+        "crossing_or_pause_action_phrase",
+        "continued_floor_or_path_phrase"
+      ],
+      "evidence_requirements": {
+        "physical_boundary_thickness_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes physical boundary thickness as a physically coherent same-frame relation"
+          ]
+        },
+        "near_and_far_zones_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes near and far zones as a physically coherent same-frame relation"
+          ]
+        },
+        "coherent_occlusion_perspective_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes coherent occlusion as a physically coherent same-frame relation"
+          ]
+        },
+        "crossing_or_pause_action_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes threshold action as a physically coherent same-frame relation"
+          ]
+        },
+        "continued_floor_or_path_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes continued floor or path as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_threshold_physical_boundary",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes physical boundary thickness as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_threshold_two_zones",
+          "review_scale": "both",
+          "description": "The frame visibly establishes near and far zones as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_threshold_occlusion",
+          "review_scale": "native",
+          "description": "The frame visibly establishes coherent occlusion as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_threshold_crossing_action",
+          "review_scale": "both",
+          "description": "The frame visibly establishes threshold action as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_threshold_continued_path",
+          "review_scale": "native",
+          "description": "The frame visibly establishes continued floor or path as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "flat_arch_decor",
+        "picture_frame",
+        "fantasy_portal",
+        "cropped_doorway",
+        "unrelated_front_facing_portrait"
+      ]
+    },
+    {
+      "id": "circulation_path_mid_action_depth_relation",
+      "category": "movement_space_relation",
+      "activation": {
+        "exact_terms": [
+          "continuous alley path with a grounded mid-stride action and three depth markers",
+          "walkable corridor or stairs showing start current and next positions",
+          "연속 골목길 위 중간 보폭과 세 깊이 표지",
+          "출발 현재 다음 위치가 보이는 복도 이동 장면"
+        ],
+        "exclude_if_any_terms": [
+          "corridor wallpaper",
+          "centered static fashion pose",
+          "cropped stairs",
+          "floating feet",
+          "motion blur only"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An uninterrupted walkable surface, edge rhythm, three depth positions, grounded mid-action, and a wayfinding anchor make movement through place legible. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "An uninterrupted walkable surface, edge rhythm, three depth positions, grounded mid-action, and a wayfinding anchor make movement through place legible.",
+        "Preserve an uninterrupted floor or path and at least three readable depth positions around a grounded action."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "continuous_walkable_surface",
+            "edge_rhythm_or_vanishing",
+            "three_depth_positions",
+            "grounded_stride_or_wait_orientation",
+            "environmental_wayfinding_anchor"
+          ],
+          "groups": [
+            {
+              "id": "continuous_walkable_surface",
+              "any_terms": [
+                "the frame visibly establishes continuous path as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "edge_rhythm_or_vanishing",
+              "any_terms": [
+                "the frame visibly establishes edge rhythm or vanishing as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "three_depth_positions",
+              "any_terms": [
+                "the frame visibly establishes three depth positions as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "grounded_stride_or_wait_orientation",
+              "any_terms": [
+                "the frame visibly establishes grounded action as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "environmental_wayfinding_anchor",
+              "any_terms": [
+                "the frame visibly establishes wayfinding anchor as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "corridor wallpaper",
+          "centered static fashion pose",
+          "cropped stairs",
+          "floating feet",
+          "motion blur only"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes continuous path as a physically coherent same-frame relation",
+          "the frame visibly establishes edge rhythm or vanishing as a physically coherent same-frame relation",
+          "the frame visibly establishes three depth positions as a physically coherent same-frame relation",
+          "the frame visibly establishes grounded action as a physically coherent same-frame relation",
+          "the frame visibly establishes wayfinding anchor as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "continuous alley path with a grounded mid-stride action and three depth markers",
+          "연속 골목길 위 중간 보폭과 세 깊이 표지"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Preserve an uninterrupted floor or path and at least three readable depth positions around a grounded action. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "continuous_walkable_surface_phrase",
+        "edge_rhythm_or_vanishing_phrase",
+        "three_depth_positions_phrase",
+        "grounded_stride_or_wait_orientation_phrase",
+        "environmental_wayfinding_anchor_phrase"
+      ],
+      "evidence_requirements": {
+        "continuous_walkable_surface_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes continuous path as a physically coherent same-frame relation"
+          ]
+        },
+        "edge_rhythm_or_vanishing_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes edge rhythm or vanishing as a physically coherent same-frame relation"
+          ]
+        },
+        "three_depth_positions_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes three depth positions as a physically coherent same-frame relation"
+          ]
+        },
+        "grounded_stride_or_wait_orientation_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes grounded action as a physically coherent same-frame relation"
+          ]
+        },
+        "environmental_wayfinding_anchor_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes wayfinding anchor as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_path_continuity",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes continuous path as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_path_depth_rhythm",
+          "review_scale": "both",
+          "description": "The frame visibly establishes edge rhythm or vanishing as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_path_three_positions",
+          "review_scale": "native",
+          "description": "The frame visibly establishes three depth positions as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_path_ground_contact",
+          "review_scale": "both",
+          "description": "The frame visibly establishes grounded action as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_path_wayfinding_anchor",
+          "review_scale": "native",
+          "description": "The frame visibly establishes wayfinding anchor as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "corridor_wallpaper",
+        "centered_static_fashion_pose",
+        "cropped_stairs",
+        "floating_feet",
+        "motion_blur_only"
+      ]
+    },
+    {
+      "id": "wet_surface_light_reflection_owner_relation",
+      "category": "weather_light_surface_relation",
+      "activation": {
+        "exact_terms": [
+          "rain-wet pavement reflection aligned to its visible sign light owner",
+          "wet alley with owned light reflections and a dry-wet boundary",
+          "실제 간판 광원과 정렬된 젖은 노면 반사",
+          "광원 소유자와 마른-젖은 경계가 보이는 비 온 골목"
+        ],
+        "exclude_if_any_terms": [
+          "dry polished floor",
+          "composited double image",
+          "ownerless neon",
+          "generic bokeh",
+          "mirror"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A visibly wet surface receives a geometrically aligned reflection from an in-frame owner, with an occluding interruption and a wet-dry boundary. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A visibly wet surface receives a geometrically aligned reflection from an in-frame owner, with an occluding interruption and a wet-dry boundary.",
+        "Include the reflection owner and receiving wet surface in one geometrically coherent frame with an interrupted reflection and a visible wet-dry transition."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "visible_wet_surface_state",
+            "traceable_light_or_object_owner",
+            "geometrically_aligned_reflection",
+            "reflection_interruption_or_occlusion",
+            "wet_dry_transition"
+          ],
+          "groups": [
+            {
+              "id": "visible_wet_surface_state",
+              "any_terms": [
+                "the frame visibly establishes wet surface state as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "traceable_light_or_object_owner",
+              "any_terms": [
+                "the frame visibly establishes visible reflection owner as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "geometrically_aligned_reflection",
+              "any_terms": [
+                "the frame visibly establishes aligned reflection as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "reflection_interruption_or_occlusion",
+              "any_terms": [
+                "the frame visibly establishes reflection interruption as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "wet_dry_transition",
+              "any_terms": [
+                "the frame visibly establishes wet-dry boundary as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "dry polished floor",
+          "composited double image",
+          "ownerless neon",
+          "generic bokeh",
+          "mirror"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes wet surface state as a physically coherent same-frame relation",
+          "the frame visibly establishes visible reflection owner as a physically coherent same-frame relation",
+          "the frame visibly establishes aligned reflection as a physically coherent same-frame relation",
+          "the frame visibly establishes reflection interruption as a physically coherent same-frame relation",
+          "the frame visibly establishes wet-dry boundary as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "rain-wet pavement reflection aligned to its visible sign light owner",
+          "실제 간판 광원과 정렬된 젖은 노면 반사"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Include the reflection owner and receiving wet surface in one geometrically coherent frame with an interrupted reflection and a visible wet-dry transition. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "visible_wet_surface_state_phrase",
+        "traceable_light_or_object_owner_phrase",
+        "geometrically_aligned_reflection_phrase",
+        "reflection_interruption_or_occlusion_phrase",
+        "wet_dry_transition_phrase"
+      ],
+      "evidence_requirements": {
+        "visible_wet_surface_state_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes wet surface state as a physically coherent same-frame relation"
+          ]
+        },
+        "traceable_light_or_object_owner_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes visible reflection owner as a physically coherent same-frame relation"
+          ]
+        },
+        "geometrically_aligned_reflection_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes aligned reflection as a physically coherent same-frame relation"
+          ]
+        },
+        "reflection_interruption_or_occlusion_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes reflection interruption as a physically coherent same-frame relation"
+          ]
+        },
+        "wet_dry_transition_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes wet-dry boundary as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_wet_surface_state",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes wet surface state as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_owner_visible",
+          "review_scale": "both",
+          "description": "The frame visibly establishes visible reflection owner as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_reflection_alignment",
+          "review_scale": "native",
+          "description": "The frame visibly establishes aligned reflection as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_reflection_interruption",
+          "review_scale": "both",
+          "description": "The frame visibly establishes reflection interruption as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_dry_boundary",
+          "review_scale": "native",
+          "description": "The frame visibly establishes wet-dry boundary as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "dry_polished_floor",
+        "composited_double_image",
+        "ownerless_neon",
+        "generic_bokeh",
+        "mirror"
+      ]
+    },
+    {
+      "id": "overlook_edge_foreground_vista_relation",
+      "category": "elevated_view_relation",
+      "activation": {
+        "exact_terms": [
+          "physical rooftop parapet joining a near elevated plane to a lower distant city vista",
+          "balcony edge with near-floor depth and a lower landscape view",
+          "가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계",
+          "발코니 끝선과 아래 풍경이 함께 보이는 전망 장면"
+        ],
+        "exclude_if_any_terms": [
+          "skyline backdrop",
+          "edge absent",
+          "floating subject",
+          "telephoto-flattened levels",
+          "generic outdoor portrait"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A near elevated plane ends at a visible physical edge above a lower distant vista, with several depth cues and a view-oriented action. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A near elevated plane ends at a visible physical edge above a lower distant vista, with several depth cues and a view-oriented action.",
+        "Keep the subject grounded on the near plane, the physical edge visible, and the vista lower or farther with scale and occlusion cues."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physical_edge_or_rail",
+            "near_elevated_plane",
+            "lower_or_distant_vista",
+            "multiple_depth_cues",
+            "view_oriented_action"
+          ],
+          "groups": [
+            {
+              "id": "physical_edge_or_rail",
+              "any_terms": [
+                "the frame visibly establishes physical edge or rail as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "near_elevated_plane",
+              "any_terms": [
+                "the frame visibly establishes near elevated plane as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "lower_or_distant_vista",
+              "any_terms": [
+                "the frame visibly establishes lower distant vista as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "multiple_depth_cues",
+              "any_terms": [
+                "the frame visibly establishes multiple depth cues as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "view_oriented_action",
+              "any_terms": [
+                "the frame visibly establishes view-oriented action as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "skyline backdrop",
+          "edge absent",
+          "floating subject",
+          "telephoto-flattened levels",
+          "generic outdoor portrait"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes physical edge or rail as a physically coherent same-frame relation",
+          "the frame visibly establishes near elevated plane as a physically coherent same-frame relation",
+          "the frame visibly establishes lower distant vista as a physically coherent same-frame relation",
+          "the frame visibly establishes multiple depth cues as a physically coherent same-frame relation",
+          "the frame visibly establishes view-oriented action as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "physical rooftop parapet joining a near elevated plane to a lower distant city vista",
+          "가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the subject grounded on the near plane, the physical edge visible, and the vista lower or farther with scale and occlusion cues. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "physical_edge_or_rail_phrase",
+        "near_elevated_plane_phrase",
+        "lower_or_distant_vista_phrase",
+        "multiple_depth_cues_phrase",
+        "view_oriented_action_phrase"
+      ],
+      "evidence_requirements": {
+        "physical_edge_or_rail_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes physical edge or rail as a physically coherent same-frame relation"
+          ]
+        },
+        "near_elevated_plane_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes near elevated plane as a physically coherent same-frame relation"
+          ]
+        },
+        "lower_or_distant_vista_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes lower distant vista as a physically coherent same-frame relation"
+          ]
+        },
+        "multiple_depth_cues_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes multiple depth cues as a physically coherent same-frame relation"
+          ]
+        },
+        "view_oriented_action_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes view-oriented action as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_overlook_edge",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes physical edge or rail as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_overlook_near_plane",
+          "review_scale": "both",
+          "description": "The frame visibly establishes near elevated plane as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_overlook_lower_vista",
+          "review_scale": "native",
+          "description": "The frame visibly establishes lower distant vista as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_overlook_depth_cues",
+          "review_scale": "both",
+          "description": "The frame visibly establishes multiple depth cues as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_overlook_oriented_action",
+          "review_scale": "native",
+          "description": "The frame visibly establishes view-oriented action as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "skyline_backdrop",
+        "edge_absent",
+        "floating_subject",
+        "telephoto_flattened_levels",
+        "generic_outdoor_portrait"
+      ]
+    },
+    {
+      "id": "gallery_viewer_art_attention_relation",
+      "category": "cultural_space_attention_relation",
+      "activation": {
+        "exact_terms": [
+          "gallery viewer with an unobstructed sightline to a physically mounted artwork",
+          "museum artwork viewer orientation and credible viewing distance",
+          "설치된 작품과 관람자 시선을 잇는 갤러리 장면",
+          "작품 크기에 맞는 관람 거리와 전시 동선"
+        ],
+        "exclude_if_any_terms": [
+          "billboard",
+          "blank wall",
+          "camera-facing subject",
+          "artwork wallpaper",
+          "fabricated readable label"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A physically mounted artwork, viewer body and gaze orientation, clear sightline, credible viewing distance, and continuing gallery route coexist. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A physically mounted artwork, viewer body and gaze orientation, clear sightline, credible viewing distance, and continuing gallery route coexist.",
+        "Frame the mounted work, viewer orientation, clean sightline and enough floor to read distance plus a continuing exhibit route."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "physically_anchored_artwork",
+            "viewer_body_and_gaze_orientation",
+            "unobstructed_sightline",
+            "credible_viewing_distance",
+            "continuing_gallery_path"
+          ],
+          "groups": [
+            {
+              "id": "physically_anchored_artwork",
+              "any_terms": [
+                "the frame visibly establishes mounted artwork as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "viewer_body_and_gaze_orientation",
+              "any_terms": [
+                "the frame visibly establishes viewer orientation as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "unobstructed_sightline",
+              "any_terms": [
+                "the frame visibly establishes unobstructed sightline as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "credible_viewing_distance",
+              "any_terms": [
+                "the frame visibly establishes credible viewing distance as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "continuing_gallery_path",
+              "any_terms": [
+                "the frame visibly establishes continuing gallery path as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "billboard",
+          "blank wall",
+          "camera-facing subject",
+          "artwork wallpaper",
+          "fabricated readable label"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes mounted artwork as a physically coherent same-frame relation",
+          "the frame visibly establishes viewer orientation as a physically coherent same-frame relation",
+          "the frame visibly establishes unobstructed sightline as a physically coherent same-frame relation",
+          "the frame visibly establishes credible viewing distance as a physically coherent same-frame relation",
+          "the frame visibly establishes continuing gallery path as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "gallery viewer with an unobstructed sightline to a physically mounted artwork",
+          "설치된 작품과 관람자 시선을 잇는 갤러리 장면"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Frame the mounted work, viewer orientation, clean sightline and enough floor to read distance plus a continuing exhibit route. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "physically_anchored_artwork_phrase",
+        "viewer_body_and_gaze_orientation_phrase",
+        "unobstructed_sightline_phrase",
+        "credible_viewing_distance_phrase",
+        "continuing_gallery_path_phrase"
+      ],
+      "evidence_requirements": {
+        "physically_anchored_artwork_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes mounted artwork as a physically coherent same-frame relation"
+          ]
+        },
+        "viewer_body_and_gaze_orientation_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes viewer orientation as a physically coherent same-frame relation"
+          ]
+        },
+        "unobstructed_sightline_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes unobstructed sightline as a physically coherent same-frame relation"
+          ]
+        },
+        "credible_viewing_distance_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes credible viewing distance as a physically coherent same-frame relation"
+          ]
+        },
+        "continuing_gallery_path_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes continuing gallery path as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_gallery_artwork_anchor",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes mounted artwork as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_gallery_viewer_orientation",
+          "review_scale": "both",
+          "description": "The frame visibly establishes viewer orientation as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_gallery_sightline",
+          "review_scale": "native",
+          "description": "The frame visibly establishes unobstructed sightline as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_gallery_viewing_distance",
+          "review_scale": "both",
+          "description": "The frame visibly establishes credible viewing distance as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_gallery_circulation",
+          "review_scale": "native",
+          "description": "The frame visibly establishes continuing gallery path as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "billboard",
+        "blank_wall",
+        "camera_facing_subject",
+        "artwork_wallpaper",
+        "fabricated_readable_label"
+      ]
+    },
+    {
+      "id": "retail_browse_source_selection_relation",
+      "category": "browse_interaction_relation",
+      "activation": {
+        "exact_terms": [
+          "browsing action with a partly removed item still linked to its display source slot",
+          "bookshop selection showing hand contact and the shelf gap",
+          "진열 원위치와 반쯤 꺼낸 대상을 잇는 고르기 행동",
+          "손 접촉과 서가 빈틈이 보이는 책 고르기"
+        ],
+        "exclude_if_any_terms": [
+          "random held object",
+          "staged product portrait",
+          "empty shelf",
+          "place-name inference",
+          "readable brand or price"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Repeated inventory, a partly removed item linked to its source slot, hand contact, aligned attention, and the resulting display gap show selection in progress. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "Repeated inventory, a partly removed item linked to its source slot, hand contact, aligned attention, and the resulting display gap show selection in progress.",
+        "Keep the hand, partly removed item and its source gap contiguous, with repeated inventory and body orientation readable."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "repeated_inventory_or_display",
+            "item_to_source_slot_link",
+            "hand_object_contact",
+            "gaze_or_body_alignment",
+            "selection_result_gap"
+          ],
+          "groups": [
+            {
+              "id": "repeated_inventory_or_display",
+              "any_terms": [
+                "the frame visibly establishes repeated display inventory as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "item_to_source_slot_link",
+              "any_terms": [
+                "the frame visibly establishes item-source link as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "hand_object_contact",
+              "any_terms": [
+                "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "gaze_or_body_alignment",
+              "any_terms": [
+                "the frame visibly establishes body or gaze alignment as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "selection_result_gap",
+              "any_terms": [
+                "the frame visibly establishes selection-result gap as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "random held object",
+          "staged product portrait",
+          "empty shelf",
+          "place-name inference",
+          "readable brand or price"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes repeated display inventory as a physically coherent same-frame relation",
+          "the frame visibly establishes item-source link as a physically coherent same-frame relation",
+          "the frame visibly establishes hand-object contact as a physically coherent same-frame relation",
+          "the frame visibly establishes body or gaze alignment as a physically coherent same-frame relation",
+          "the frame visibly establishes selection-result gap as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "browsing action with a partly removed item still linked to its display source slot",
+          "진열 원위치와 반쯤 꺼낸 대상을 잇는 고르기 행동"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Keep the hand, partly removed item and its source gap contiguous, with repeated inventory and body orientation readable. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "repeated_inventory_or_display_phrase",
+        "item_to_source_slot_link_phrase",
+        "hand_object_contact_phrase",
+        "gaze_or_body_alignment_phrase",
+        "selection_result_gap_phrase"
+      ],
+      "evidence_requirements": {
+        "repeated_inventory_or_display_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes repeated display inventory as a physically coherent same-frame relation"
+          ]
+        },
+        "item_to_source_slot_link_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes item-source link as a physically coherent same-frame relation"
+          ]
+        },
+        "hand_object_contact_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes hand-object contact as a physically coherent same-frame relation"
+          ]
+        },
+        "gaze_or_body_alignment_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes body or gaze alignment as a physically coherent same-frame relation"
+          ]
+        },
+        "selection_result_gap_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes selection-result gap as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_browse_display",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes repeated display inventory as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_browse_source_link",
+          "review_scale": "both",
+          "description": "The frame visibly establishes item-source link as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_browse_hand_contact",
+          "review_scale": "native",
+          "description": "The frame visibly establishes hand-object contact as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_browse_orientation",
+          "review_scale": "both",
+          "description": "The frame visibly establishes body or gaze alignment as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_browse_selection_gap",
+          "review_scale": "native",
+          "description": "The frame visibly establishes selection-result gap as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "random_held_object",
+        "staged_product_portrait",
+        "empty_shelf",
+        "place_name_inference",
+        "readable_brand_or_price"
+      ]
+    },
+    {
+      "id": "transit_waiting_departure_relation",
+      "category": "transit_state_relation",
+      "activation": {
+        "exact_terms": [
+          "traveler waiting at a platform system boundary with luggage and a readable train state",
+          "bus-stop waiting action oriented toward an approaching vehicle path",
+          "짐과 열차 상태가 연결된 승강장 대기 장면",
+          "다가오는 차량 경로를 향해 기다리는 정류장 행동"
+        ],
+        "exclude_if_any_terms": [
+          "static fashion portrait",
+          "generic terminal",
+          "train wallpaper",
+          "destination inference",
+          "rail dispatch worker procedure"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A transit system boundary, visible vehicle state, anchored waiting or boarding action, path-aligned orientation, and immediate readiness consequence share the frame. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A transit system boundary, visible vehicle state, anchored waiting or boarding action, path-aligned orientation, and immediate readiness consequence share the frame.",
+        "Show the system boundary, travel path and traveler waiting position together; anchor luggage or seating to the person and preserve the vehicle or door state."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "transit_system_boundary",
+            "arrival_or_departure_state",
+            "waiting_or_boarding_action_with_anchor",
+            "path_aligned_body_or_gaze",
+            "immediate_state_consequence"
+          ],
+          "groups": [
+            {
+              "id": "transit_system_boundary",
+              "any_terms": [
+                "the frame visibly establishes transit boundary as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "arrival_or_departure_state",
+              "any_terms": [
+                "the frame visibly establishes arrival or departure state as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "waiting_or_boarding_action_with_anchor",
+              "any_terms": [
+                "the frame visibly establishes waiting anchor as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "path_aligned_body_or_gaze",
+              "any_terms": [
+                "the frame visibly establishes travel-path orientation as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "immediate_state_consequence",
+              "any_terms": [
+                "the frame visibly establishes state consequence as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "static fashion portrait",
+          "generic terminal",
+          "train wallpaper",
+          "destination inference",
+          "rail dispatch worker procedure"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes transit boundary as a physically coherent same-frame relation",
+          "the frame visibly establishes arrival or departure state as a physically coherent same-frame relation",
+          "the frame visibly establishes waiting anchor as a physically coherent same-frame relation",
+          "the frame visibly establishes travel-path orientation as a physically coherent same-frame relation",
+          "the frame visibly establishes state consequence as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "traveler waiting at a platform system boundary with luggage and a readable train state",
+          "짐과 열차 상태가 연결된 승강장 대기 장면"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Show the system boundary, travel path and traveler waiting position together; anchor luggage or seating to the person and preserve the vehicle or door state. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "transit_system_boundary_phrase",
+        "arrival_or_departure_state_phrase",
+        "waiting_or_boarding_action_with_anchor_phrase",
+        "path_aligned_body_or_gaze_phrase",
+        "immediate_state_consequence_phrase"
+      ],
+      "evidence_requirements": {
+        "transit_system_boundary_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes transit boundary as a physically coherent same-frame relation"
+          ]
+        },
+        "arrival_or_departure_state_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes arrival or departure state as a physically coherent same-frame relation"
+          ]
+        },
+        "waiting_or_boarding_action_with_anchor_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes waiting anchor as a physically coherent same-frame relation"
+          ]
+        },
+        "path_aligned_body_or_gaze_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes travel-path orientation as a physically coherent same-frame relation"
+          ]
+        },
+        "immediate_state_consequence_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes state consequence as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_transit_boundary",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes transit boundary as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_transit_vehicle_state",
+          "review_scale": "both",
+          "description": "The frame visibly establishes arrival or departure state as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_transit_waiting_anchor",
+          "review_scale": "native",
+          "description": "The frame visibly establishes waiting anchor as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_transit_path_orientation",
+          "review_scale": "both",
+          "description": "The frame visibly establishes travel-path orientation as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_transit_state_consequence",
+          "review_scale": "native",
+          "description": "The frame visibly establishes state consequence as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "static_fashion_portrait",
+        "generic_terminal",
+        "train_wallpaper",
+        "destination_inference",
+        "rail_dispatch_worker_procedure"
+      ]
+    },
+    {
+      "id": "adaptive_reuse_old_new_material_junction",
+      "category": "adaptive_reuse_relation",
+      "activation": {
+        "exact_terms": [
+          "adaptive-reuse interior showing a retained industrial process remnant joined to a new public use",
+          "old workshop circulation preserved inside a cafe or art workspace",
+          "남겨진 산업 공정 흔적과 새 공공 사용의 물리 접합",
+          "옛 작업장 동선이 보존된 카페 또는 예술 작업실"
+        ],
+        "exclude_if_any_terms": [
+          "generic loft",
+          "ruin",
+          "active factory",
+          "single rusty prop",
+          "themed industrial decor"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A retained industrial process or shell remnant physically joins a new public use, retaining wear while a current action follows the old circulation. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A retained industrial process or shell remnant physically joins a new public use, retaining wear while a current action follows the old circulation.",
+        "Center a real old-new junction while retaining enough shell, equipment or circulation to read the former process and enough current use to read the adaptation."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "original_process_or_shell_remnant",
+            "new_public_use_element",
+            "readable_old_new_junction",
+            "retained_wear_or_repair_trace",
+            "new_action_within_old_circulation"
+          ],
+          "groups": [
+            {
+              "id": "original_process_or_shell_remnant",
+              "any_terms": [
+                "the frame visibly establishes original remnant as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "new_public_use_element",
+              "any_terms": [
+                "the frame visibly establishes new public use as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "readable_old_new_junction",
+              "any_terms": [
+                "the frame visibly establishes old-new junction as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "retained_wear_or_repair_trace",
+              "any_terms": [
+                "the frame visibly establishes retained wear or repair as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "new_action_within_old_circulation",
+              "any_terms": [
+                "the frame visibly establishes new action in old circulation as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "generic loft",
+          "ruin",
+          "active factory",
+          "single rusty prop",
+          "themed industrial decor"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes original remnant as a physically coherent same-frame relation",
+          "the frame visibly establishes new public use as a physically coherent same-frame relation",
+          "the frame visibly establishes old-new junction as a physically coherent same-frame relation",
+          "the frame visibly establishes retained wear or repair as a physically coherent same-frame relation",
+          "the frame visibly establishes new action in old circulation as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "adaptive-reuse interior showing a retained industrial process remnant joined to a new public use",
+          "남겨진 산업 공정 흔적과 새 공공 사용의 물리 접합"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Center a real old-new junction while retaining enough shell, equipment or circulation to read the former process and enough current use to read the adaptation. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "original_process_or_shell_remnant_phrase",
+        "new_public_use_element_phrase",
+        "readable_old_new_junction_phrase",
+        "retained_wear_or_repair_trace_phrase",
+        "new_action_within_old_circulation_phrase"
+      ],
+      "evidence_requirements": {
+        "original_process_or_shell_remnant_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes original remnant as a physically coherent same-frame relation"
+          ]
+        },
+        "new_public_use_element_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes new public use as a physically coherent same-frame relation"
+          ]
+        },
+        "readable_old_new_junction_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes old-new junction as a physically coherent same-frame relation"
+          ]
+        },
+        "retained_wear_or_repair_trace_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes retained wear or repair as a physically coherent same-frame relation"
+          ]
+        },
+        "new_action_within_old_circulation_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes new action in old circulation as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_reuse_original_remnant",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes original remnant as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_reuse_new_use",
+          "review_scale": "both",
+          "description": "The frame visibly establishes new public use as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_reuse_junction",
+          "review_scale": "native",
+          "description": "The frame visibly establishes old-new junction as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_reuse_age_trace",
+          "review_scale": "both",
+          "description": "The frame visibly establishes retained wear or repair as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_reuse_circulation_action",
+          "review_scale": "native",
+          "description": "The frame visibly establishes new action in old circulation as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_loft",
+        "ruin",
+        "active_factory",
+        "single_rusty_prop",
+        "themed_industrial_decor"
+      ]
+    },
+    {
+      "id": "hanok_madang_maru_inside_outside_relation",
+      "category": "hanok_spatial_topology",
+      "activation": {
+        "exact_terms": [
+          "domestic hanok room-maru-madang inside-outside relation",
+          "raised daechung maru connecting rooms to a bounded inner courtyard",
+          "방 마루 마당이 이어지는 한옥 안팎 관계",
+          "대청마루와 안마당, 방 문턱이 함께 보이는 한옥 생활 장면"
+        ],
+        "exclude_if_any_terms": [
+          "generic East Asian pavilion",
+          "palace stone courtyard",
+          "hanbok-only scene",
+          "isolated tiled roof",
+          "undifferentiated engawa substitute"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A bounded madang, raised timber maru, eaves-column junction, room-to-courtyard sightline, and small daily transition action make hanok topology visible. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "paraphrase_examples": [
+        "A bounded madang, raised timber maru, eaves-column junction, room-to-courtyard sightline, and small daily transition action make hanok topology visible.",
+        "Use an oblique or axial frame that preserves the courtyard surface, raised timber maru, room threshold, eaves and a small daily transition action."
+      ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "bounded_madang_and_building_wings",
+            "raised_maru_level_change",
+            "eaves_columns_timber_junction",
+            "room_maru_courtyard_sightline",
+            "maru_edge_daily_action"
+          ],
+          "groups": [
+            {
+              "id": "bounded_madang_and_building_wings",
+              "any_terms": [
+                "the frame visibly establishes bounded madang as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "raised_maru_level_change",
+              "any_terms": [
+                "the frame visibly establishes raised maru as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "eaves_columns_timber_junction",
+              "any_terms": [
+                "the frame visibly establishes timber structure as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "room_maru_courtyard_sightline",
+              "any_terms": [
+                "the frame visibly establishes inside-outside axis as a physically coherent same-frame relation"
+              ]
+            },
+            {
+              "id": "maru_edge_daily_action",
+              "any_terms": [
+                "the frame visibly establishes daily transition action as a physically coherent same-frame relation"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "generic East Asian pavilion",
+          "palace stone courtyard",
+          "hanbok-only scene",
+          "isolated tiled roof",
+          "undifferentiated engawa substitute"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "the frame visibly establishes bounded madang as a physically coherent same-frame relation",
+          "the frame visibly establishes raised maru as a physically coherent same-frame relation",
+          "the frame visibly establishes timber structure as a physically coherent same-frame relation",
+          "the frame visibly establishes inside-outside axis as a physically coherent same-frame relation",
+          "the frame visibly establishes daily transition action as a physically coherent same-frame relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "domestic hanok room-maru-madang inside-outside relation",
+          "방 마루 마당이 이어지는 한옥 안팎 관계"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Use an oblique or axial frame that preserves the courtyard surface, raised timber maru, room threshold, eaves and a small daily transition action. Keep all five observable relations in the same frame; a place name, mood label, color grade, blur, bokeh, costume, or isolated prop alone is not evidence.",
+      "required_evidence_fields": [
+        "bounded_madang_and_building_wings_phrase",
+        "raised_maru_level_change_phrase",
+        "eaves_columns_timber_junction_phrase",
+        "room_maru_courtyard_sightline_phrase",
+        "maru_edge_daily_action_phrase"
+      ],
+      "evidence_requirements": {
+        "bounded_madang_and_building_wings_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes bounded madang as a physically coherent same-frame relation"
+          ]
+        },
+        "raised_maru_level_change_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes raised maru as a physically coherent same-frame relation"
+          ]
+        },
+        "eaves_columns_timber_junction_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes timber structure as a physically coherent same-frame relation"
+          ]
+        },
+        "room_maru_courtyard_sightline_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes inside-outside axis as a physically coherent same-frame relation"
+          ]
+        },
+        "maru_edge_daily_action_phrase": {
+          "min_content_words": 8,
+          "must_mention_any": [
+            "the frame visibly establishes daily transition action as a physically coherent same-frame relation"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_place_hanok_bounded_madang",
+          "review_scale": "thumbnail",
+          "description": "The frame visibly establishes bounded madang as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_hanok_raised_maru",
+          "review_scale": "both",
+          "description": "The frame visibly establishes raised maru as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_hanok_timber_structure",
+          "review_scale": "native",
+          "description": "The frame visibly establishes timber structure as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_hanok_inside_outside_axis",
+          "review_scale": "both",
+          "description": "The frame visibly establishes inside-outside axis as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_hanok_daily_transition_action",
+          "review_scale": "native",
+          "description": "The frame visibly establishes daily transition action as a physically coherent same-frame relation."
+        }
+      ],
+      "reject_substitutes": [
+        "generic_east_asian_pavilion",
+        "palace_stone_courtyard",
+        "hanbok_only_scene",
+        "isolated_tiled_roof",
+        "undifferentiated_engawa_substitute"
+      ]
     }
   ]
 }

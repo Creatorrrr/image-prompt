@@ -1,0 +1,131 @@
+{
+  "schema_version": "photo-broad-label-root-review/v1",
+  "reviewed_at": "2026-09-02T21:31:39+09:00",
+  "reviewer": "root_agent_manual_pixel_review",
+  "policy": {
+    "partial_is_fail": true,
+    "unscored_is_not_quality_zero": true,
+    "technical_pixel_evidence_is_not_user_aesthetic_judgment": true
+  },
+  "frozen_contract": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/coordination/root_evaluation_contract.json",
+    "sha256": "8146a3df01c035dc1a65eeb04b420bd85b6b0faf33e6bbfcda55a40ddb341988",
+    "frozen_before_subagent_output_review": true
+  },
+  "reviewed_result": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/final.png",
+    "sha256": "98ad93acd4cf3206598c9848f52eaac8aca4b5e4343a3b1b8b6648d720d81f58",
+    "native_dimensions": [
+      1023,
+      1537
+    ],
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/thumbnail-340x512.png",
+    "thumbnail_sha256": "d0f50bcfa30e777a21c954fee027923f55403ee06602ad65949806b1ffb411fe",
+    "thumbnail_dimensions": [
+      340,
+      512
+    ]
+  },
+  "broad_meta_gates": {
+    "broad_adult_unambiguous": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": {
+        "native": "The sole principal subject has an unambiguously adult presentation, with no youthful or school-coded styling.",
+        "thumbnail": "The adult presentation remains immediate at 340x512."
+      }
+    },
+    "broad_nonexplicit_whole_scene": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "The thumbnail remains non-explicit and scene-led: face, raised-arm task, opaque layered clothing, full figure, bulb strand, greenhouse structure, tables, and rain are readable together."
+    },
+    "broad_self_directed_agency": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "Both raised hands visibly manipulate the overhead bulb cable, so the subject reads as performing a concrete self-directed task rather than posing passively."
+    },
+    "broad_indirect_visual_relation": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": {
+        "native": "The open wet beige raincoat alternately covers and frames the continuous opaque black satin dress. The raised-arm task pulls the two garment layers into different diagonals, making the adult visual tension a coverage-and-layer relation rather than exposed skin, gaze, or fitted clothing alone.",
+        "thumbnail": "The light outer layer wrapping one side of the dark covered silhouette remains the dominant readable garment boundary at 340x512."
+      }
+    },
+    "broad_physical_causality": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Raised arms visibly pull the sleeves and coat into diagonal folds; gravity drops the open coat panels; overlap shadows separate coat from dress; rain sheen and directional bulbs explain the material boundaries."
+    },
+    "broad_label_independent_read": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": {
+        "native": "Without metadata, the pixels describe an adult woman interrupted mid-task while fixing lights in a rain-wet after-hours greenhouse, with an open outer layer over an opaque satin dress and a backward glance.",
+        "thumbnail": "The same action, layered-clothing relation, rain, warm bulbs, and private after-hours context survive at thumbnail scale. This is a descriptive technical read, not proof of requester-perceived appeal."
+      }
+    }
+  },
+  "frozen_core_cross_check": {
+    "intent_core_concept_relational_cue_topology": {
+      "status": "pass",
+      "root_agrees_with_subagent": true,
+      "evidence": "Purposeful overhead action, layered opaque silhouette, wet material response, reciprocal glance, and emptied reception setting coexist in one frame and survive the thumbnail."
+    },
+    "intent_core_subject_clearly_adult_non_explicit": {
+      "status": "pass",
+      "root_agrees_with_subagent": true,
+      "evidence": "The principal subject reads as an adult and remains fully covered by an opaque midi dress and raincoat."
+    },
+    "intent_core_event_bulb_rehang_from_low_iron_step": {
+      "status": "fail",
+      "root_agrees_with_subagent": true,
+      "evidence": "The bulb-rehanging action is visible, but the support is a tall iron chair or chair-like seat, not the frozen low iron step. The event is only partially satisfied."
+    }
+  },
+  "additional_prompt_fidelity_cross_check": {
+    "reciprocal_glance_and_restrained_half_smile": {
+      "status": "fail",
+      "evidence": "The backward gaze reads clearly, but the mouth is neutral or softly parted rather than an unambiguous restrained half-smile, especially at thumbnail scale."
+    },
+    "waist_height_50mm_medium_full_hierarchy": {
+      "status": "fail",
+      "evidence": "The image is a near-full-length environmental portrait that includes shoes and the whole chair, rather than the frozen medium-full hierarchy."
+    },
+    "natural_shoulders_hands_and_believable_footing": {
+      "status": "fail",
+      "evidence": "Shoulders and hands are plausible, but high heels balanced on a narrow rain-wet chair seat do not satisfy believable footing; the compound check fails."
+    }
+  },
+  "layer_results": {
+    "package": {
+      "status": "pass",
+      "boundary": "Repository package checks passed; this does not inspect the prompt or pixels."
+    },
+    "prompt": {
+      "status": "pass_with_warnings",
+      "boundary": "Composed and exact runtime request audits passed. Three uncovered-intent warnings remained, and no exact visual-profile obligation was selected."
+    },
+    "generation": {
+      "status": "success",
+      "boundary": "One built-in image generation call returned a saved image; no retry or fallback occurred."
+    },
+    "pixels": {
+      "status": "fail",
+      "boundary": "All six broad meta gates passed, but one frozen intent-anchor hard gate and three compound prompt-fidelity checks failed. Under partial_is_fail, the saved image is not strictly qualified."
+    },
+    "user_judgment": {
+      "status": "pending",
+      "boundary": "The requester has not yet supplied an aesthetic acceptance judgment for this output."
+    }
+  },
+  "summary": {
+    "broad_meta_gate_score": "6/6 pass",
+    "frozen_intent_anchor_score": "2/3 pass",
+    "strict_pixel_qualification": "fail",
+    "bounded_keyword_result": "One independently authored observable interpretation is visible in the pixels, but the complete frozen concept is not strictly realized.",
+    "universal_definition_claimed": false,
+    "hard_exact_route_supported": false
+  }
+}

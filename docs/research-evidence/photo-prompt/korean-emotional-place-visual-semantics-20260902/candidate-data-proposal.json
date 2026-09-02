@@ -1,0 +1,825 @@
+{
+  "schema_version": "photo-emotional-place-research-proposal/v1",
+  "title": "Korean emotional-place photography visual semantics and candidate-pack proposal",
+  "reviewed_at": "2026-09-02",
+  "status": "runtime_bound_and_independently_render_tested",
+  "decision": "implemented_and_qualified_for_the_three_sampled_profiles",
+  "source_conversation": {
+    "id": "6a97fcfd-b730-83ee-bb51-a66ed1c44224",
+    "title": "감성 사진 장소 조사",
+    "role": "keyword-scope input, not external prevalence evidence",
+    "composition_formula": [
+      "recognizable place or facility",
+      "micro-location",
+      "small plausible action",
+      "time or weather",
+      "one or two lived-in props"
+    ]
+  },
+  "evidence_boundary": {
+    "verified": [
+      "the current shared tag asset contains 576 location candidates",
+      "the current asset already includes representative cafe, alley, lodging, gallery, shop, transit, hanok, greenhouse, convenience-store, laundromat, parking-garage and rooftop candidates",
+      "many relevant generic candidates have no aliases or keywords while several newer rows repeat only their display name in embedding_text",
+      "the repository has adjacent mirror, photobooth, practical-light, negative-space and private-window visual profiles but no dedicated owner for the ten proposed place relations",
+      "the public sources support separating global scene structure, architectural visibility, material and affordance attributes, human-object interaction, and culturally specific spatial topology",
+      "the source-owned emotional-place extension is merged by prompt_generator.py and contributes 10 visual-semantic clusters plus 21 relation candidates",
+      "the visual-obligation registry contains all 10 implemented five-component profiles; its generated index contains 333 profiles and 1707 exact terms",
+      "the semantic index was rebuilt to 8042 entries across 16 shards with gemini-embedding-2 at 768 dimensions",
+      "narrow exact routing, broad candidate-only routing, excluded substitutes, candidate merge, index freshness, BM25F candidate self-query retrieval, and three-arm fixture lineage pass the dedicated emotional-place regression test",
+      "three independently generated one-call arms replay their frozen v6 candidate packs byte-for-byte from the final source and pass composed-prompt plus runtime-request audits",
+      "the three sampled profiles pass all 15 of 15 required pixel gates at their specified thumbnail and native scales in both subagent and coordinator review"
+    ],
+    "not_verified": [
+      "broad natural-language retrieval ranking quality outside the tested exact, negative, and candidate self-query fixtures",
+      "rendered-pixel qualification for the seven implemented profiles not selected by the recorded random sample",
+      "user preference",
+      "platform-wide popularity or frequency of any place family"
+    ]
+  },
+  "implementation_evidence": {
+    "source_extension": "skills/photo-prompt-image-generator/assets/photo_prompt_emotional_place_extension.json",
+    "runtime_merge": "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+    "visual_registry": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "visual_profile_index": {
+      "profiles": 333,
+      "exact_terms": 1707
+    },
+    "semantic_index": {
+      "entries": 8042,
+      "shards": 16,
+      "model": "gemini-embedding-2",
+      "dimensions": 768
+    },
+    "regression_test": "tests/test_photo_emotional_place_visual_semantics.py",
+    "three_arm_fixture": "tests/fixtures/photo_prompt/emotional_place_three_arm_pixel_test_cases_v1.jsonl",
+    "render_run": "generated_images/emotional-place-three-agent-20260902",
+    "random_master_seed": 15537462851202376970,
+    "sampled_profiles": [
+      "hanok_madang_maru_inside_outside_relation",
+      "overlook_edge_foreground_vista_relation",
+      "architectural_threshold_frame_depth_relation"
+    ],
+    "image_calls": 3,
+    "retries": 0,
+    "fallbacks": 0,
+    "pixel_gates_passed": 15,
+    "pixel_gates_required": 15,
+    "partial_is_fail": true,
+    "user_judgment": "pending"
+  },
+  "observed_repository_baseline": {
+    "asset": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+    "slot_counts": {
+      "location": 576,
+      "prop": 559,
+      "action": 516,
+      "subject": 404,
+      "composition": 256,
+      "lighting": 143,
+      "surface_material": 141,
+      "capture_context": 76
+    },
+    "gap_summary": "high noun inventory, low density of place-structure-action-light-result relations"
+  },
+  "activation_policy": {
+    "hard_profile_eligible": "an exact narrow phrase that names the observable relation and is compatible with the frozen user intent",
+    "broad_place_noun": "candidate advisory only",
+    "broad_aesthetic_term": "clarify or candidate advisory only",
+    "bm25f_or_embedding_only": "optional candidate evidence only and never hard eligible",
+    "partial_is_fail": true,
+    "collision_rule": "one visible relation must have one primary owner; adjacent profiles may contribute only non-conflicting components",
+    "adult_subject_boundary": "when a person is visible, describe only observable adult appearance and action; do not infer identity, protected traits, health, attractiveness, occupation or relationship status"
+  },
+  "candidate_pack_policy": {
+    "shape": "array",
+    "required_fields": [
+      "candidate_id",
+      "source_candidate_ids",
+      "place_family",
+      "observable_contract",
+      "required_components",
+      "confounds",
+      "claim_boundary",
+      "source_ids"
+    ],
+    "lineage_fields": [
+      "core_hash",
+      "candidate_pack_hash",
+      "composed_prompt_hash",
+      "request_hash",
+      "image_hash",
+      "review_hash"
+    ],
+    "independence_rule": "render qualification arms freeze their own input and must not borrow candidates or repaired prompt text from another arm"
+  },
+  "nonvisual_claim_policy": [
+    {
+      "terms": ["감성", "인스타 감성", "aesthetic", "instagrammable"],
+      "runtime_treatment": "broad discovery metadata",
+      "permitted_visual_proxy": "an explicitly requested combination of structure, action, light, material and capture relation",
+      "forbidden_pixel_claim": "aesthetic quality, popularity or platform success"
+    },
+    {
+      "terms": ["핫플", "유명한", "요즘 뜨는", "trending", "popular"],
+      "runtime_treatment": "request provenance only",
+      "permitted_visual_proxy": null,
+      "forbidden_pixel_claim": "real popularity, visitor count or trend rank"
+    },
+    {
+      "terms": ["데이트", "친구 여행", "커플", "가족", "vacation", "homecoming"],
+      "runtime_treatment": "request-owned context with visible interaction candidates",
+      "permitted_visual_proxy": "shared task, spatial orientation, luggage or a transit boundary",
+      "forbidden_pixel_claim": "actual relationship, consent, destination or travel purpose"
+    },
+    {
+      "terms": ["럭셔리 호텔", "프라이빗 숙소", "historic", "authentic heritage"],
+      "runtime_treatment": "requested metadata plus visible material or spatial proxies",
+      "permitted_visual_proxy": "specific finish quality, controlled access cues or retained construction details",
+      "forbidden_pixel_claim": "price, service class, privacy, age or heritage authenticity"
+    },
+    {
+      "terms": ["비 온 뒤", "after rain", "막차", "last train"],
+      "runtime_treatment": "visible state plus unverified temporal label",
+      "permitted_visual_proxy": "wet-dry boundary, closed umbrella, sparse platform, departing vehicle cue",
+      "forbidden_pixel_claim": "the true preceding weather event or timetable state"
+    }
+  ],
+  "reuse_existing_candidates": [
+    {
+      "id": "small_cafe_window_table",
+      "slot": "location",
+      "proposed_aliases": ["카페 창가 자리", "창가 테이블", "cafe window seat"],
+      "proposed_keywords": ["window aperture", "near-window seat", "table edge", "daylight gradient", "quiet activity"],
+      "proposed_embedding_text": "a small cafe table physically adjoining a framed window, with a near-window seat, quiet hand activity and daylight falling from the aperture across the table into the room"
+    },
+    {
+      "id": "old_dabang_window",
+      "slot": "location",
+      "proposed_aliases": ["다방 창가", "오래된 찻집 창가", "old Korean tea-room window seat"],
+      "proposed_keywords": ["aged window frame", "vinyl seat", "table lamp", "street view", "lived-in patina"],
+      "proposed_embedding_text": "an aged Korean dabang window seat where a framed street view, worn table edge, seating and one quiet drink action remain spatially connected"
+    },
+    {
+      "id": "rainy_neon_alley",
+      "slot": "location",
+      "proposed_aliases": ["비 오는 네온 골목", "젖은 간판 골목", "rain-wet sign alley"],
+      "proposed_keywords": ["owned sign light", "wet asphalt", "aligned reflection", "dry-wet boundary", "narrow alley depth"],
+      "proposed_embedding_text": "a narrow night alley where visible sign or storefront lights own geometrically aligned reflections on wet asphalt, with puddle edges, interrupted reflections and a continuing walkable path"
+    },
+    {
+      "id": "art_gallery_white_hall",
+      "slot": "location",
+      "proposed_aliases": ["화이트 큐브 전시장", "미술관 흰 전시실", "white cube exhibition hall"],
+      "proposed_keywords": ["wall-mounted artwork", "viewer sightline", "viewing distance", "gallery circulation", "track light"],
+      "proposed_embedding_text": "a white-cube gallery with physically mounted artworks, unobstructed viewer sightlines, credible viewing distance, track lighting and a circulation path toward another exhibit"
+    },
+    {
+      "id": "used_bookshop_aisle",
+      "slot": "location",
+      "proposed_aliases": ["헌책방 통로", "중고서점 서가 사이", "used bookstore shelf aisle"],
+      "proposed_keywords": ["repeated shelves", "book-spine foreground", "selection gap", "narrow aisle", "hand contact"],
+      "proposed_embedding_text": "a narrow used-bookshop aisle with repeated shelves, a visible source slot and a partly removed book linked to a browsing hand, framed by book spines without readable titles"
+    },
+    {
+      "id": "vintage_record_shop_aisle",
+      "slot": "location",
+      "proposed_aliases": ["빈티지 음반 가게 통로", "LP 숍 빈 사이", "vintage vinyl-bin aisle"],
+      "proposed_keywords": ["vinyl bins", "source slot", "partly lifted sleeve", "tungsten pool", "unreadable cover"],
+      "proposed_embedding_text": "a vintage record-shop aisle with repeated vinyl bins, one blank sleeve partly lifted from its source slot, warm localized light and a clear hand-object selection relation"
+    },
+    {
+      "id": "korean_train_platform",
+      "slot": "location",
+      "proposed_aliases": ["한국 기차역 승강장", "점자블록 플랫폼", "Korean railway platform"],
+      "proposed_keywords": ["platform edge", "yellow tactile paving", "track direction", "waiting orientation", "door or train state"],
+      "proposed_embedding_text": "a Korean railway platform with tactile paving and a readable platform edge, track direction, waiting position and an arrival or departure state without asserting a destination"
+    },
+    {
+      "id": "train_platform_last_car",
+      "slot": "location",
+      "proposed_aliases": ["막차 승강장 끝", "늦은 플랫폼 끝", "late last-train platform end"],
+      "proposed_keywords": ["sparse platform", "end marker", "departing car", "luggage beside feet", "cool overhead light"],
+      "proposed_embedding_text": "a sparse late-night platform end with a system boundary, departing or waiting train state, cool overhead light and luggage anchored beside the traveler's waiting position"
+    },
+    {
+      "id": "hanok_inner_court",
+      "slot": "location",
+      "proposed_aliases": ["한옥 안마당", "한옥 채와 마당", "hanok madang court"],
+      "proposed_keywords": ["bounded madang", "raised maru", "room threshold", "eaves and columns", "inside-outside sightline"],
+      "proposed_embedding_text": "a domestic hanok inner court bounded by building wings, with a raised maru, eaves and timber columns visibly connecting a room threshold to the madang"
+    },
+    {
+      "id": "botanical_greenhouse",
+      "slot": "location",
+      "proposed_aliases": ["식물원 유리온실", "온실 데크", "botanical glasshouse"],
+      "proposed_keywords": ["glazed structural ribs", "plant bed", "walkable deck", "condensation", "diffused leaf light"],
+      "proposed_embedding_text": "a botanical greenhouse where glazed structural ribs, planted beds and a walkable deck remain distinct under diffused leaf-filtered light, with condensation owned by the glass enclosure"
+    },
+    {
+      "id": "coin_laundry_midnight",
+      "slot": "location",
+      "proposed_aliases": ["심야 코인 세탁소", "자정 셀프 빨래방", "midnight self-service laundromat"],
+      "proposed_keywords": ["repeated round doors", "machine state", "folding surface", "laundry basket", "fluorescent pool"],
+      "proposed_embedding_text": "a midnight self-service laundromat with repeated round machine doors, a visible cycle state, folding surface, basket and localized fluorescent light supporting a small laundry action"
+    },
+    {
+      "id": "midnight_convenience_store_aisle",
+      "slot": "location",
+      "proposed_aliases": ["자정 편의점 냉장고 통로", "심야 편의점 안", "midnight convenience-store refrigerator aisle"],
+      "proposed_keywords": ["refrigerator door", "repeated product rows", "selection gap", "cold top light", "unbranded packaging"],
+      "proposed_embedding_text": "a midnight convenience-store aisle with refrigerator-door depth, repeated unbranded product rows and one item visibly selected from its source gap under cold top light"
+    },
+    {
+      "id": "parking_garage_vanishing_point",
+      "slot": "location",
+      "proposed_aliases": ["소실점 긴 지하 주차장", "주차 램프 통로", "deep parking-garage aisle"],
+      "proposed_keywords": ["continuous drive aisle", "column rhythm", "ramp direction", "low ceiling light", "foot-floor contact"],
+      "proposed_embedding_text": "a parking garage with a continuous drive aisle, repeated column rhythm and deep vanishing point, preserving ramp direction, ceiling-light intervals and grounded movement"
+    },
+    {
+      "id": "golden_hour_residential_rooftop",
+      "slot": "location",
+      "proposed_aliases": ["골든아워 주택 옥상", "노을 옥상 난간", "residential rooftop overlook at golden hour"],
+      "proposed_keywords": ["parapet edge", "near roof plane", "lower city vista", "hair rim light", "wind direction"],
+      "proposed_embedding_text": "a residential rooftop with a physical parapet, near roof plane and lower distant city vista, with golden-hour edge light and a subject action oriented toward the view"
+    }
+  ],
+  "proposed_candidates": [
+    {
+      "id": "ep_physical_aperture_near_far_relation",
+      "slot": "composition",
+      "ko": "두께가 있는 창 개구부와 창가 행동, 먼 실내가 함께 보이는 관계 구도",
+      "en": "a relation frame showing a thick window aperture, near-window activity and receding room",
+      "keywords": ["physical aperture", "near seat", "receding room", "daylight direction"],
+      "confounds": ["bright rectangle", "softbox", "flat backdrop"]
+    },
+    {
+      "id": "ep_threshold_dual_zone_depth",
+      "slot": "composition",
+      "ko": "실제 문턱을 사이에 둔 가까운 공간과 먼 공간의 이중 깊이",
+      "en": "dual-zone depth across a physical architectural threshold",
+      "keywords": ["wall thickness", "near zone", "far zone", "coherent occlusion"],
+      "confounds": ["picture frame", "decorative arch", "fantasy portal"]
+    },
+    {
+      "id": "ep_walkable_path_three_depth_markers",
+      "slot": "composition",
+      "ko": "연속 보행면에 출발·현재·다음 위치가 잡히는 세 깊이 표지",
+      "en": "a continuous walkable path with start, current and next-position depth markers",
+      "keywords": ["walkable continuity", "edge rhythm", "vanishing point", "destination marker"],
+      "confounds": ["corridor wallpaper", "floating feet", "blur only"]
+    },
+    {
+      "id": "ep_wet_reflection_owner_alignment",
+      "slot": "composition",
+      "ko": "실제 광원과 젖은 면의 반사가 위치·방향으로 정렬된 구도",
+      "en": "a wet-surface reflection geometrically aligned to its visible light or object owner",
+      "keywords": ["owned reflection", "alignment", "wet surface", "interruption"],
+      "confounds": ["mirror", "dry polished floor", "ownerless neon"]
+    },
+    {
+      "id": "ep_near_edge_lower_vista_relation",
+      "slot": "composition",
+      "ko": "가까운 난간 또는 끝선과 낮고 먼 전망을 함께 읽는 구도",
+      "en": "a relation frame joining a near physical edge to a lower distant vista",
+      "keywords": ["near edge", "elevated plane", "lower vista", "atmospheric depth"],
+      "confounds": ["skyline backdrop", "floating subject", "flattened levels"]
+    },
+    {
+      "id": "ep_artwork_viewer_sightline",
+      "slot": "composition",
+      "ko": "관람자의 몸·시선과 물리적으로 설치된 작품을 잇는 가시선 구도",
+      "en": "an unobstructed sightline linking a viewer's body orientation to a physically installed artwork",
+      "keywords": ["viewer orientation", "artwork anchor", "viewing distance", "gallery path"],
+      "confounds": ["billboard", "blank wall", "camera-facing portrait"]
+    },
+    {
+      "id": "ep_display_source_selection_gap",
+      "slot": "composition",
+      "ko": "진열 원위치와 반쯤 꺼낸 대상, 손을 한 연결로 보여주는 선택 구도",
+      "en": "a selection frame linking a display source gap, partly removed item and contacting hand",
+      "keywords": ["source slot", "selection gap", "hand contact", "repeated inventory"],
+      "confounds": ["product pose", "random held item", "empty shelf"]
+    },
+    {
+      "id": "ep_transit_system_boundary_direction",
+      "slot": "composition",
+      "ko": "교통 시스템 경계와 대기 위치, 차량 이동 방향을 연결한 구도",
+      "en": "a transit frame linking a system boundary, waiting position and vehicle direction",
+      "keywords": ["platform edge", "gate", "waiting position", "arrival direction"],
+      "confounds": ["generic terminal", "rail-worker procedure", "train wallpaper"]
+    },
+    {
+      "id": "ep_old_new_use_junction_frame",
+      "slot": "composition",
+      "ko": "남겨진 산업 구조와 새로운 공공 사용의 물리 접합부를 중심에 둔 구도",
+      "en": "a frame centered on the physical junction between retained industrial fabric and a new public use",
+      "keywords": ["retained shell", "new use", "material junction", "old circulation"],
+      "confounds": ["generic loft", "ruin", "themed decor"]
+    },
+    {
+      "id": "ep_hanok_room_maru_madang_axis",
+      "slot": "composition",
+      "ko": "방 문턱·높인 마루·안마당이 한 시선축으로 이어지는 한옥 구도",
+      "en": "a hanok sightline axis connecting a room threshold, raised maru and bounded madang",
+      "keywords": ["room", "raised maru", "madang", "eaves", "inside outside"],
+      "confounds": ["palace stone court", "isolated tiled roof", "generic pavilion"]
+    },
+    {
+      "id": "ep_half_drawn_curtain_pause",
+      "slot": "action",
+      "ko": "커튼을 반쯤 당긴 채 창가 빛의 변화를 멈춰 보는",
+      "en": "pausing with a curtain half drawn while the window-light field visibly changes",
+      "keywords": ["curtain contact", "half state", "light change"],
+      "confounds": ["closed curtain", "decorative drape", "hand not touching"]
+    },
+    {
+      "id": "ep_source_slot_item_selection",
+      "slot": "action",
+      "ko": "책·음반·상품을 원래 진열 틈에서 반쯤 꺼내 고르는",
+      "en": "selecting a book, record or item while it remains partly connected to its source slot",
+      "keywords": ["selection", "source slot", "partly removed", "gaze contact"],
+      "confounds": ["already-held prop", "product presentation", "empty display"]
+    },
+    {
+      "id": "ep_mid_stride_path_progress",
+      "slot": "action",
+      "ko": "연속 경로 위에서 발 접촉과 다음 위치가 보이는 중간 보폭",
+      "en": "moving mid-stride on a continuous path with grounded foot contact and a readable next position",
+      "keywords": ["mid-stride", "ground contact", "path direction", "next position"],
+      "confounds": ["static pose", "floating foot", "motion blur only"]
+    },
+    {
+      "id": "ep_transit_boundary_waiting_orientation",
+      "slot": "action",
+      "ko": "플랫폼·게이트·정류장 경계에서 차량 방향을 향해 기다리는",
+      "en": "waiting at a platform, gate or stop boundary with body and gaze oriented toward the travel path",
+      "keywords": ["waiting", "system boundary", "travel-path orientation", "luggage anchor"],
+      "confounds": ["fashion pose", "staff dispatch", "destination inference"]
+    },
+    {
+      "id": "ep_maru_edge_daily_transition",
+      "slot": "action",
+      "ko": "방과 마당 사이 마루 끝에서 신발·차·창호를 다루는 작은 전이 행동",
+      "en": "performing a small shoe, tea or door-panel action at the maru edge between room and courtyard",
+      "keywords": ["maru edge", "daily action", "inside outside", "level change"],
+      "confounds": ["costume pose", "generic tea ceremony", "palace ritual"]
+    },
+    {
+      "id": "ep_curtain_half_drawn_light_change",
+      "slot": "aftermath_trace",
+      "ko": "반쯤 당겨진 커튼과 달라진 창가 광량 경계",
+      "en": "a half-drawn curtain leaving a changed boundary in the window-light field",
+      "keywords": ["half state", "light boundary", "action result"],
+      "confounds": ["static curtain", "uniform room light"]
+    },
+    {
+      "id": "ep_shelf_selection_gap",
+      "slot": "aftermath_trace",
+      "ko": "반쯤 꺼낸 대상 뒤에 남은 진열 틈과 눌린 이웃",
+      "en": "a source gap and displaced neighbors left by a partly removed display item",
+      "keywords": ["source gap", "displaced neighbor", "selection result"],
+      "confounds": ["empty shelf", "prearranged product gap"]
+    },
+    {
+      "id": "ep_wet_dry_boundary_footprint",
+      "slot": "aftermath_trace",
+      "ko": "젖은 면과 마른 면의 경계 및 반사를 끊는 발자국",
+      "en": "a wet-dry surface boundary with a footprint interrupting the reflection",
+      "keywords": ["wet dry transition", "footprint", "reflection interruption"],
+      "confounds": ["uniform gloss", "painted reflection"]
+    },
+    {
+      "id": "ep_luggage_beside_waiting_position",
+      "slot": "aftermath_trace",
+      "ko": "대기 위치의 발 바로 옆에 놓여 이동을 준비한 짐",
+      "en": "luggage grounded immediately beside the waiting position as a visible readiness trace",
+      "keywords": ["luggage anchor", "waiting position", "readiness"],
+      "confounds": ["background luggage", "staff equipment", "destination claim"]
+    },
+    {
+      "id": "ep_retained_industrial_shell_new_use_junction",
+      "slot": "surface_material",
+      "ko": "마모된 산업 구조와 새 목재·유리·조명이 맞닿는 보존 접합면",
+      "en": "a material junction where a worn industrial shell meets new wood, glass or public-use lighting",
+      "keywords": ["retained wear", "industrial shell", "new insertion", "junction line"],
+      "confounds": ["rust prop", "fake patina", "generic concrete"]
+    },
+    {
+      "id": "ep_raised_maru_courtyard_threshold",
+      "slot": "surface_material",
+      "ko": "안마당의 돌·흙 면보다 높인 목재 마루와 방 문턱의 재료 전이",
+      "en": "a material and level transition from courtyard stone or earth to raised timber maru and room threshold",
+      "keywords": ["raised timber", "courtyard surface", "level transition", "room threshold"],
+      "confounds": ["flat deck", "generic veranda", "stage platform"]
+    }
+  ],
+  "proposed_profiles": [
+    {
+      "id": "window_seat_daylight_activity_relation",
+      "category": "place_activity_light_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "window-seat quiet activity with directional daylight",
+        "cafe window seat with a half-drawn curtain and small hand action",
+        "창가 좌석의 작은 행동과 방향성 자연광",
+        "커튼을 반쯤 여는 카페 창가 생활 장면"
+      ],
+      "broad_terms_candidate_only": ["카페 감성", "창가", "cafe aesthetic", "window light"],
+      "required_component_groups": [
+        "physical_window_aperture",
+        "near_window_seat_or_table",
+        "hand_object_unfinished_action",
+        "window_to_room_light_gradient",
+        "visible_action_progress_trace"
+      ],
+      "composition_instruction": "Keep the aperture boundary, near seat or table, contacting hand and receding room in the same frame; preserve the source-to-receiver light gradient.",
+      "reject_substitutes": ["bright rectangle backdrop", "studio softbox", "subject far from window", "unrelated cup", "exterior-only view"],
+      "candidate_ids": ["small_cafe_window_table", "ep_physical_aperture_near_far_relation", "ep_half_drawn_curtain_pause", "ep_curtain_half_drawn_light_change"],
+      "render_gates": ["vo_place_window_physical_aperture", "vo_place_window_near_activity_anchor", "vo_place_window_hand_contact", "vo_place_window_directional_gradient", "vo_place_window_progress_trace"],
+      "source_ids": ["spatial_envelope_global_scene", "sun_scene_attributes", "still_image_action_interaction", "seoul_specialty_coffee_photo_zones"]
+    },
+    {
+      "id": "architectural_threshold_frame_depth_relation",
+      "category": "architectural_visibility_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "physical doorway joining two real rooms with a crossing action",
+        "architectural threshold with near and far zones and a continuing floor",
+        "두 실제 공간을 잇는 건축 문턱 통과 장면",
+        "가까운 공간과 먼 공간이 이어지는 실제 문틀 구도"
+      ],
+      "broad_terms_candidate_only": ["문틀 감성", "아치", "doorway", "threshold"],
+      "required_component_groups": ["physical_boundary_thickness", "near_and_far_zones", "coherent_occlusion_perspective", "crossing_or_pause_action", "continued_floor_or_path"],
+      "composition_instruction": "Show enough wall, door or column junction to prove a real boundary and keep both spatial zones legible through coherent occlusion.",
+      "reject_substitutes": ["flat arch decor", "picture frame", "fantasy portal", "cropped doorway", "unrelated front-facing portrait"],
+      "candidate_ids": ["through_doorway_deep_frame", "pausing_before_threshold", "ep_threshold_dual_zone_depth"],
+      "render_gates": ["vo_place_threshold_physical_boundary", "vo_place_threshold_two_zones", "vo_place_threshold_occlusion", "vo_place_threshold_crossing_action", "vo_place_threshold_continued_path"],
+      "source_ids": ["ucl_visibility_graph", "spatial_envelope_global_scene"]
+    },
+    {
+      "id": "circulation_path_mid_action_depth_relation",
+      "category": "movement_space_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "continuous alley path with a grounded mid-stride action and three depth markers",
+        "walkable corridor or stairs showing start current and next positions",
+        "연속 골목길 위 중간 보폭과 세 깊이 표지",
+        "출발 현재 다음 위치가 보이는 복도 이동 장면"
+      ],
+      "broad_terms_candidate_only": ["골목", "복도", "계단", "걷는 사진", "alley", "corridor"],
+      "required_component_groups": ["continuous_walkable_surface", "edge_rhythm_or_vanishing", "three_depth_positions", "grounded_stride_or_wait_orientation", "environmental_wayfinding_anchor"],
+      "composition_instruction": "Preserve an uninterrupted floor or path and at least three readable depth positions around a grounded action.",
+      "reject_substitutes": ["corridor wallpaper", "centered static fashion pose", "cropped stairs", "floating feet", "motion blur only"],
+      "candidate_ids": ["vanishing_point_corridor", "parking_garage_vanishing_point", "ep_walkable_path_three_depth_markers", "ep_mid_stride_path_progress"],
+      "render_gates": ["vo_place_path_continuity", "vo_place_path_depth_rhythm", "vo_place_path_three_positions", "vo_place_path_ground_contact", "vo_place_path_wayfinding_anchor"],
+      "source_ids": ["ucl_visibility_graph", "spatial_envelope_global_scene", "sun_scene_attributes"]
+    },
+    {
+      "id": "wet_surface_light_reflection_owner_relation",
+      "category": "weather_light_surface_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "rain-wet pavement reflection aligned to its visible sign light owner",
+        "wet alley with owned light reflections and a dry-wet boundary",
+        "실제 간판 광원과 정렬된 젖은 노면 반사",
+        "광원 소유자와 마른-젖은 경계가 보이는 비 온 골목"
+      ],
+      "broad_terms_candidate_only": ["비 오는 골목", "네온 감성", "wet street", "rainy night"],
+      "required_component_groups": ["visible_wet_surface_state", "traceable_light_or_object_owner", "geometrically_aligned_reflection", "reflection_interruption_or_occlusion", "wet_dry_transition"],
+      "composition_instruction": "Include the reflection owner and receiving wet surface in one geometrically coherent frame with an interrupted reflection and a visible wet-dry transition.",
+      "reject_substitutes": ["dry polished floor", "composited double image", "ownerless neon", "generic bokeh", "mirror"],
+      "candidate_ids": ["rainy_neon_alley", "neon", "puddle_reflection_split_frame", "ep_wet_reflection_owner_alignment", "ep_wet_dry_boundary_footprint"],
+      "render_gates": ["vo_place_wet_surface_state", "vo_place_wet_owner_visible", "vo_place_wet_reflection_alignment", "vo_place_wet_reflection_interruption", "vo_place_wet_dry_boundary"],
+      "source_ids": ["sun_scene_attributes", "seoul_film_camera_everyday_light"]
+    },
+    {
+      "id": "overlook_edge_foreground_vista_relation",
+      "category": "elevated_view_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "physical rooftop parapet joining a near elevated plane to a lower distant city vista",
+        "balcony edge with near-floor depth and a lower landscape view",
+        "가까운 옥상 난간과 낮고 먼 도시 전망의 고도 관계",
+        "발코니 끝선과 아래 풍경이 함께 보이는 전망 장면"
+      ],
+      "broad_terms_candidate_only": ["옥상 감성", "야경", "발코니", "rooftop", "city view"],
+      "required_component_groups": ["physical_edge_or_rail", "near_elevated_plane", "lower_or_distant_vista", "multiple_depth_cues", "view_oriented_action"],
+      "composition_instruction": "Keep the subject grounded on the near plane, the physical edge visible, and the vista lower or farther with scale and occlusion cues.",
+      "reject_substitutes": ["skyline backdrop", "edge absent", "floating subject", "telephoto-flattened levels", "generic outdoor portrait"],
+      "candidate_ids": ["golden_hour_residential_rooftop", "leaning_on_balcony_rail", "ep_near_edge_lower_vista_relation"],
+      "render_gates": ["vo_place_overlook_edge", "vo_place_overlook_near_plane", "vo_place_overlook_lower_vista", "vo_place_overlook_depth_cues", "vo_place_overlook_oriented_action"],
+      "source_ids": ["spatial_envelope_global_scene", "ucl_visibility_graph"]
+    },
+    {
+      "id": "gallery_viewer_art_attention_relation",
+      "category": "cultural_space_attention_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "gallery viewer with an unobstructed sightline to a physically mounted artwork",
+        "museum artwork viewer orientation and credible viewing distance",
+        "설치된 작품과 관람자 시선을 잇는 갤러리 장면",
+        "작품 크기에 맞는 관람 거리와 전시 동선"
+      ],
+      "broad_terms_candidate_only": ["전시회 감성", "미술관", "갤러리", "exhibition", "museum"],
+      "required_component_groups": ["physically_anchored_artwork", "viewer_body_and_gaze_orientation", "unobstructed_sightline", "credible_viewing_distance", "continuing_gallery_path"],
+      "composition_instruction": "Frame the mounted work, viewer orientation, clean sightline and enough floor to read distance plus a continuing exhibit route.",
+      "reject_substitutes": ["billboard", "blank wall", "camera-facing subject", "artwork wallpaper", "fabricated readable label"],
+      "candidate_ids": ["art_gallery_white_hall", "gallery_track_spotlight", "ep_artwork_viewer_sightline"],
+      "render_gates": ["vo_place_gallery_artwork_anchor", "vo_place_gallery_viewer_orientation", "vo_place_gallery_sightline", "vo_place_gallery_viewing_distance", "vo_place_gallery_circulation"],
+      "source_ids": ["museum_visibility_attention", "ucl_visibility_graph"]
+    },
+    {
+      "id": "retail_browse_source_selection_relation",
+      "category": "browse_interaction_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "browsing action with a partly removed item still linked to its display source slot",
+        "bookshop selection showing hand contact and the shelf gap",
+        "진열 원위치와 반쯤 꺼낸 대상을 잇는 고르기 행동",
+        "손 접촉과 서가 빈틈이 보이는 책 고르기"
+      ],
+      "broad_terms_candidate_only": ["서점 감성", "레코드숍", "소품숍", "browsing", "shopping"],
+      "required_component_groups": ["repeated_inventory_or_display", "item_to_source_slot_link", "hand_object_contact", "gaze_or_body_alignment", "selection_result_gap"],
+      "composition_instruction": "Keep the hand, partly removed item and its source gap contiguous, with repeated inventory and body orientation readable.",
+      "reject_substitutes": ["random held object", "staged product portrait", "empty shelf", "place-name inference", "readable brand or price"],
+      "candidate_ids": ["used_bookshop_aisle", "vintage_record_shop_aisle", "browsing_bookshop_shelf", "ep_display_source_selection_gap", "ep_source_slot_item_selection", "ep_shelf_selection_gap"],
+      "render_gates": ["vo_place_browse_display", "vo_place_browse_source_link", "vo_place_browse_hand_contact", "vo_place_browse_orientation", "vo_place_browse_selection_gap"],
+      "source_ids": ["still_image_action_interaction", "sun_scene_attributes"]
+    },
+    {
+      "id": "transit_waiting_departure_relation",
+      "category": "transit_state_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "traveler waiting at a platform system boundary with luggage and a readable train state",
+        "bus-stop waiting action oriented toward an approaching vehicle path",
+        "짐과 열차 상태가 연결된 승강장 대기 장면",
+        "다가오는 차량 경로를 향해 기다리는 정류장 행동"
+      ],
+      "broad_terms_candidate_only": ["역 감성", "기차 여행", "버스정류장", "airport aesthetic", "train station"],
+      "required_component_groups": ["transit_system_boundary", "arrival_or_departure_state", "waiting_or_boarding_action_with_anchor", "path_aligned_body_or_gaze", "immediate_state_consequence"],
+      "composition_instruction": "Show the system boundary, travel path and traveler waiting position together; anchor luggage or seating to the person and preserve the vehicle or door state.",
+      "reject_substitutes": ["static fashion portrait", "generic terminal", "train wallpaper", "destination inference", "rail dispatch worker procedure"],
+      "candidate_ids": ["korean_train_platform", "train_platform_last_car", "waiting_old_bus_stop", "ep_transit_system_boundary_direction", "ep_transit_boundary_waiting_orientation", "ep_luggage_beside_waiting_position"],
+      "render_gates": ["vo_place_transit_boundary", "vo_place_transit_vehicle_state", "vo_place_transit_waiting_anchor", "vo_place_transit_path_orientation", "vo_place_transit_state_consequence"],
+      "source_ids": ["ucl_visibility_graph", "still_image_action_interaction"]
+    },
+    {
+      "id": "adaptive_reuse_old_new_material_junction",
+      "category": "adaptive_reuse_relation",
+      "status": "implemented",
+      "exact_terms": [
+        "adaptive-reuse interior showing a retained industrial process remnant joined to a new public use",
+        "old workshop circulation preserved inside a cafe or art workspace",
+        "남겨진 산업 공정 흔적과 새 공공 사용의 물리 접합",
+        "옛 작업장 동선이 보존된 카페 또는 예술 작업실"
+      ],
+      "broad_terms_candidate_only": ["산업 감성", "힙한 공장", "문래 감성", "industrial aesthetic", "loft"],
+      "required_component_groups": ["original_process_or_shell_remnant", "new_public_use_element", "readable_old_new_junction", "retained_wear_or_repair_trace", "new_action_within_old_circulation"],
+      "composition_instruction": "Center a real old-new junction while retaining enough shell, equipment or circulation to read the former process and enough current use to read the adaptation.",
+      "reject_substitutes": ["generic loft", "ruin", "active factory", "single rusty prop", "themed industrial decor"],
+      "candidate_ids": ["ep_old_new_use_junction_frame", "ep_retained_industrial_shell_new_use_junction"],
+      "render_gates": ["vo_place_reuse_original_remnant", "vo_place_reuse_new_use", "vo_place_reuse_junction", "vo_place_reuse_age_trace", "vo_place_reuse_circulation_action"],
+      "source_ids": ["icomos_ticcih_dublin_principles", "seoul_mullae_adaptive_reuse_case"]
+    },
+    {
+      "id": "hanok_madang_maru_inside_outside_relation",
+      "category": "hanok_spatial_topology",
+      "status": "implemented",
+      "exact_terms": [
+        "domestic hanok room-maru-madang inside-outside relation",
+        "raised daechung maru connecting rooms to a bounded inner courtyard",
+        "방 마루 마당이 이어지는 한옥 안팎 관계",
+        "대청마루와 안마당, 방 문턱이 함께 보이는 한옥 생활 장면"
+      ],
+      "broad_terms_candidate_only": ["한옥 감성", "한옥", "전통 가옥", "Korean traditional house"],
+      "required_component_groups": ["bounded_madang_and_building_wings", "raised_maru_level_change", "eaves_columns_timber_junction", "room_maru_courtyard_sightline", "maru_edge_daily_action"],
+      "composition_instruction": "Use an oblique or axial frame that preserves the courtyard surface, raised timber maru, room threshold, eaves and a small daily transition action.",
+      "reject_substitutes": ["generic East Asian pavilion", "palace stone courtyard", "hanbok-only scene", "isolated tiled roof", "undifferentiated engawa substitute"],
+      "candidate_ids": ["hanok_inner_court", "ep_hanok_room_maru_madang_axis", "ep_maru_edge_daily_transition", "ep_raised_maru_courtyard_threshold"],
+      "render_gates": ["vo_place_hanok_bounded_madang", "vo_place_hanok_raised_maru", "vo_place_hanok_timber_structure", "vo_place_hanok_inside_outside_axis", "vo_place_hanok_daily_transition_action"],
+      "source_ids": ["national_hanok_center_spatial_relations"]
+    }
+  ],
+  "candidate_family_reference_policy": "underscore-delimited values are existing or proposed candidate IDs; natural-language values are descriptive concepts to resolve or add during implementation",
+  "candidate_families": [
+    {
+      "id": "emotional_place_cafe_bakery",
+      "status": "candidate_only",
+      "locations": ["small_cafe_window_table", "old_dabang_window"],
+      "micro_locations": ["framed window seat", "sheer-curtain edge", "end of a bar counter"],
+      "actions": ["ep_half_drawn_curtain_pause", "writing_notes", "wiping_cafe_counter_closing"],
+      "environments": ["soft side daylight", "rain-covered window", "late-afternoon backlight"],
+      "props": ["unbranded cup", "paperback_book_prop", "daisies_in_glass_jar"],
+      "compatible_profiles": ["window_seat_daylight_activity_relation"]
+    },
+    {
+      "id": "emotional_place_lodging_home_like",
+      "status": "candidate_only",
+      "locations": ["morning_bedroom_soft_window", "after_rain_apartment_balcony"],
+      "micro_locations": ["bed edge", "balcony threshold", "breakfast table"],
+      "actions": ["opening_curtains_morning", "leaning_on_balcony_rail"],
+      "environments": ["morning diffusion", "blue hour", "after-rain surface state"],
+      "props": ["unbranded morning mug", "plain room slippers", "small travel luggage"],
+      "compatible_profiles": ["window_seat_daylight_activity_relation", "architectural_threshold_frame_depth_relation", "overlook_edge_foreground_vista_relation"]
+    },
+    {
+      "id": "emotional_place_photo_facility",
+      "status": "candidate_only_existing_profile_owned",
+      "locations": ["korean_photobooth_booth", "gray_gradient_yearbook_studio"],
+      "micro_locations": ["booth curtain", "physical mirror", "paper-backdrop edge"],
+      "actions": ["pressing a shutter", "reviewing an unreadable strip"],
+      "environments": ["direct flash", "softbox spill"],
+      "props": ["simple camera body", "unreadable photo strip"],
+      "compatible_profiles": ["photobooth_four_cut_sequence", "mirror_selfie_reflection_device_topology"]
+    },
+    {
+      "id": "emotional_place_exhibition_gallery_popup",
+      "status": "candidate_only",
+      "locations": ["art_gallery_white_hall", "museum_gallery_after_hours"],
+      "micro_locations": ["artwork sightline", "gallery corner", "projection boundary"],
+      "actions": ["viewing one work", "folding an unreadable booklet"],
+      "environments": ["gallery track spotlight", "colored projection"],
+      "props": ["unreadable booklet"],
+      "compatible_profiles": ["gallery_viewer_art_attention_relation"]
+    },
+    {
+      "id": "emotional_place_browse_shops",
+      "status": "candidate_only",
+      "locations": ["used_bookshop_aisle", "vintage_record_shop_aisle", "retail_shelf_display"],
+      "micro_locations": ["shelf bay", "vinyl bin", "shop window"],
+      "actions": ["ep_source_slot_item_selection", "browsing_bookshop_shelf"],
+      "environments": ["low daylight", "localized tungsten pool"],
+      "props": ["paperback_book_prop", "vinyl_record_sleeve_blank_prop"],
+      "compatible_profiles": ["retail_browse_source_selection_relation"]
+    },
+    {
+      "id": "emotional_place_alley_residential_street",
+      "status": "candidate_only",
+      "locations": ["rainy_neon_alley", "autumn_ginkgo_alley", "apartment_door_threshold"],
+      "micro_locations": ["alley bend", "door threshold", "crosswalk edge"],
+      "actions": ["ep_mid_stride_path_progress", "pausing_before_threshold"],
+      "environments": ["after-rain night", "golden hour", "direct flash"],
+      "props": ["clear_umbrella", "unbranded bicycle", "plain shopping bag"],
+      "compatible_profiles": ["circulation_path_mid_action_depth_relation", "wet_surface_light_reflection_owner_relation", "architectural_threshold_frame_depth_relation"]
+    },
+    {
+      "id": "emotional_place_hanok_old_architecture",
+      "status": "candidate_only",
+      "locations": ["hanok_inner_court"],
+      "micro_locations": ["daechung maru edge", "inner madang", "wall-lined alley"],
+      "actions": ["ep_maru_edge_daily_transition"],
+      "environments": ["eave shadow", "side daylight"],
+      "props": ["small tea tray", "shoes beside the level change"],
+      "compatible_profiles": ["hanok_madang_maru_inside_outside_relation"]
+    },
+    {
+      "id": "emotional_place_waterfront",
+      "status": "candidate_only_reuse_natural_environment",
+      "locations": ["summer_beach_shoreline", "foggy_lake_boardwalk", "park_riverside_golden_hour"],
+      "micro_locations": ["breakwater end", "boardwalk edge", "wet shoreline stone"],
+      "actions": ["ep_mid_stride_path_progress", "tightening a coat against wind"],
+      "environments": ["wind", "fog", "sunset"],
+      "props": ["plain shoes", "small unbranded bag"],
+      "compatible_profiles": ["circulation_path_mid_action_depth_relation", "overlook_edge_foreground_vista_relation"]
+    },
+    {
+      "id": "emotional_place_garden_forest_greenhouse",
+      "status": "candidate_only_reuse_natural_environment",
+      "locations": ["botanical_greenhouse", "community_garden_late_summer"],
+      "micro_locations": ["greenhouse deck", "flower path", "forest edge"],
+      "actions": ["ep_mid_stride_path_progress", "arranging a small flower bundle"],
+      "environments": ["diffused backlight", "after-rain surface state"],
+      "props": ["clear_umbrella", "small flower bundle"],
+      "compatible_profiles": ["circulation_path_mid_action_depth_relation"]
+    },
+    {
+      "id": "emotional_place_park_picnic_leisure",
+      "status": "candidate_only",
+      "locations": ["park_riverside_golden_hour"],
+      "micro_locations": ["bench edge", "grass-path boundary", "bicycle deck"],
+      "actions": ["unfolding a mat", "taking one snack from a basket"],
+      "environments": ["late-afternoon sidelight", "visible breeze"],
+      "props": ["plain picnic mat", "woven picnic basket", "unbranded bicycle"],
+      "compatible_profiles": [],
+      "claim_boundary": "shared props and proximity do not prove friendship, romance or family relationship"
+    },
+    {
+      "id": "emotional_place_local_travel_market_rural",
+      "status": "candidate_only",
+      "locations": ["wet_market_auction_aisle", "rural_gas_station"],
+      "micro_locations": ["old bus stop", "market aisle", "rice-field road edge"],
+      "actions": ["waiting_old_bus_stop", "ep_source_slot_item_selection", "ep_mid_stride_path_progress"],
+      "environments": ["summer sunset", "market dawn"],
+      "props": ["small unbranded bag", "unlabelled fruit crate", "unbranded bicycle"],
+      "compatible_profiles": ["transit_waiting_departure_relation", "retail_browse_source_selection_relation", "circulation_path_mid_action_depth_relation"]
+    },
+    {
+      "id": "emotional_place_ordinary_service_industrial",
+      "status": "candidate_only",
+      "locations": ["midnight_convenience_store_aisle", "coin_laundry_midnight", "parking_garage_vanishing_point"],
+      "micro_locations": ["refrigerator door", "round washer row", "parking ramp aisle", "retained workshop bench"],
+      "actions": ["ep_source_slot_item_selection", "waiting_laundromat_machine", "folding_laundry", "ep_mid_stride_path_progress"],
+      "environments": ["cold LED", "fluorescent pool", "direct flash"],
+      "props": ["unbranded drink", "overflowing_laundry_basket_prop", "plain key set"],
+      "compatible_profiles": ["retail_browse_source_selection_relation", "circulation_path_mid_action_depth_relation", "adaptive_reuse_old_new_material_junction"]
+    }
+  ],
+  "regression_plan": {
+    "fixture": "routing-regression-proposal.jsonl",
+    "required_checks": [
+      "broad aesthetic and place terms activate zero hard profiles",
+      "each narrow exact phrase resolves to one primary owner",
+      "mirror reflection does not trigger wet-surface reflection",
+      "fantasy portal does not trigger architectural threshold",
+      "rail-dispatch work does not trigger traveler waiting",
+      "palace courtyard or costume-only hanok does not trigger domestic hanok topology",
+      "generic loft or rusty prop does not trigger adaptive reuse",
+      "missing any one required component fails the corresponding render contract",
+      "candidate IDs are unique and all existing reuse IDs resolve",
+      "candidate-pack arrays retain source, core, prompt, request, image and review lineage"
+    ]
+  },
+  "evaluation_contract": {
+    "source_and_schema": "required before merge",
+    "routing": "required after implementation",
+    "retrieval": "required after index rebuild",
+    "prompt": "required but insufficient for visual success",
+    "render": "five of five required gates per hard profile at thumbnail and native scale where specified",
+    "user_judgment": "separate final evidence layer"
+  },
+  "implementation_sequence": [
+    "add a source-owned emotional-place extension instead of directly editing generated shared data",
+    "reuse and enrich existing IDs before adding relation atoms",
+    "add only exact-term hard profiles whose five components have one stable owner",
+    "regenerate shared tags, visual-profile index and semantic search shards through the repository build path",
+    "add Korean and English positive, broad-negative, collision and component-ablation tests",
+    "run structural, routing and retrieval validation",
+    "freeze independent render arms and record full hash lineage",
+    "review rendered pixels and keep user judgment separate"
+  ],
+  "sources": [
+    {
+      "id": "spatial_envelope_global_scene",
+      "url": "https://people.csail.mit.edu/torralba/code/spatialenvelope_old/",
+      "supports": ["global naturalness", "openness", "roughness", "expansion", "ruggedness"],
+      "limitation": "a scene-recognition representation does not prescribe an aesthetic prompt taxonomy"
+    },
+    {
+      "id": "sun_scene_attributes",
+      "url": "https://cs.brown.edu/people/gmpatter/sunattributes.html",
+      "supports": ["materials", "surface properties", "lighting", "functions and affordances", "spatial envelope"],
+      "limitation": "dataset attributes are not a quality score and do not cover every culturally specific scene relation"
+    },
+    {
+      "id": "ucl_visibility_graph",
+      "url": "https://discovery.ucl.ac.uk/id/eprint/160/",
+      "supports": ["visibility", "accessibility", "configurational relationships", "wayfinding", "movement and space use"],
+      "limitation": "architectural graph properties do not by themselves prove a depicted action"
+    },
+    {
+      "id": "still_image_action_interaction",
+      "url": "https://openaccess.thecvf.com/content_CVPRW_2020/html/w23/Girish_Understanding_Action_Recognition_in_Still_Images_CVPRW_2020_paper.html",
+      "supports": ["person region", "object region", "interaction region", "union region", "same object with different interaction"],
+      "limitation": "a small action-recognition experiment is used only as a decomposition principle"
+    },
+    {
+      "id": "seoul_specialty_coffee_photo_zones",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0016718523000039",
+      "supports": ["Seoul specialty coffee-bar photo zones", "symbolic images of place", "Instagram go-along observations"],
+      "limitation": "17 female millennial participants are not a prevalence sample for Korea or all social-media users"
+    },
+    {
+      "id": "seoul_film_camera_everyday_light",
+      "url": "https://mediahub.seoul.go.kr/archives/2002521",
+      "supports": ["Euljiro alleys", "old railway and Sewoon examples", "ordinary traces", "good-light moments"],
+      "limitation": "a municipal lifestyle article is a local case source, not a platform-wide ranking"
+    },
+    {
+      "id": "museum_visibility_attention",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7062705/",
+      "supports": ["artwork visibility", "co-visibility", "visitor attention allocation"],
+      "limitation": "a still image cannot prove cognition, engagement quality or memory"
+    },
+    {
+      "id": "national_hanok_center_spatial_relations",
+      "url": "https://www.hanokdb.kr/theology/sub_03",
+      "supports": ["functional building wings", "courtyards between wings", "maru connecting rooms", "inside-outside extension"],
+      "limitation": "hanok forms vary by region, period, household and building type"
+    },
+    {
+      "id": "icomos_ticcih_dublin_principles",
+      "url": "https://admin.icomos.org/wp-content/uploads/2023/01/GA2011_ICOMOS_TICCIH_joint_principles_EN_FR_final_20120110.pdf",
+      "supports": ["significant materials and components", "patterns of circulation and activity", "age traces", "adaptive use"],
+      "limitation": "heritage conservation principles support decomposition but do not certify any generated space as authentic heritage"
+    },
+    {
+      "id": "seoul_mullae_adaptive_reuse_case",
+      "url": "https://mediahub.seoul.go.kr/archives/2006950",
+      "supports": ["old ironworks", "retained signs and tools", "rusted metal", "cafes and art uses in the same alley fabric"],
+      "limitation": "one Seoul neighborhood article is a case example rather than a general adaptive-reuse taxonomy"
+    }
+  ]
+}

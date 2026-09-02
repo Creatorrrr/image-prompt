@@ -21,7 +21,7 @@
 - manifest SHA-256: `0f4cdd97730a3009071c853b6006fbbf00e14cfe8541935663f35cf6a38f7732`
 - 범위: 게시물 1,182개, 이미지 4,908장, 비어 있지 않은 프롬프트 924개, 고유 프롬프트 본문 904개, ID 1565–2746.
 - 기준 스킬 revision: `8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab`
-- 기존 authored source는 협업 중 작업 트리 변경과 섞이지 않도록 모두 `git show HEAD:<path>`로 동결본을 읽었다.
+- 기존 authored source는 협업 중 작업 트리 변경과 섞이지 않도록 모두 해시가 고정된 snapshot commit `401f450e4c0ec32ef79c502e3c6a6666c9a106c4`의 `git show <commit>:<path>`로 읽었다.
   - `photo_prompt_tags.json`: `5ae9ae8311f418875a011d7fd887804c9b974f26941689679af55a1499406b00`
   - `photo_prompt_visual_obligations.json`: `64e73c97f12da099b18cb7be4e0086f0c51c66d63380c297ec7632709b4805bc`
   - `photo_prompt_quality_layers.json`: `99597926d0f136bfabaf5f8be28597aae82f15bdbe8e3bfcfbbb774b3ac0541f`
@@ -401,18 +401,18 @@
 ```bash
 # 동결 manifest와 authored source 확인
 shasum -a 256 generated/reactorprompt-export-20260902-incremental/manifest.json
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json | shasum -a 256
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json | shasum -a 256
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json | shasum -a 256
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json | shasum -a 256
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json | shasum -a 256
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json | shasum -a 256
 
 # 전체/고유 프롬프트 모수
 jq '[.[] | select((.prompt // "") != "")] | length' generated/reactorprompt-export-20260902-incremental/manifest.json
 jq -r '.[] | select((.prompt // "") != "") | .prompt' generated/reactorprompt-export-20260902-incremental/manifest.json | sort -u | wc -l
 
 # authored slot과 quality rule 검사 예시
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json \
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json \
   | jq '.slots | {lens, focus, camera_direction, camera_height, camera_type, shot_scale}'
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json \
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json \
   | jq '.. | objects | select(.id? == "close_camera_depth" or .id? == "frame_hierarchy" or .id? == "layered_depth_order" or .id? == "close_focus_priority" or .id? == "shot_intent")'
 ```
 

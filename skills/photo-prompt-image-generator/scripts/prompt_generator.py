@@ -109,6 +109,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_boundary_transition_extension.json",
     "photo_prompt_desire_extension.json",
     "photo_prompt_harem_extension.json",
+    "photo_prompt_emotional_place_extension.json",
     "photo_prompt_lighting_extension.json",
     "photo_prompt_violence_crime_extension.json",
     "photo_prompt_subculture_extension.json",

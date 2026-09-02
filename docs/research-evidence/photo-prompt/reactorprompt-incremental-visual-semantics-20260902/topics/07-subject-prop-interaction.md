@@ -456,7 +456,7 @@ jq '[.[] | select((.prompt // "") | length > 0)] | length' \
 jq -r '.[] | select(.id==1585 or .id==1609 or .id==1682 or .id==1922 or .id==1952 or .id==2191 or .id==2298 or .id==2340 or .id==2362 or .id==2383 or .id==2388 or .id==2422 or .id==2566 or .id==2673 or .id==2711) | [.id,.shortcode,.prompt_file,.images[0].local_file,.images[1].local_file] | @tsv' \
   generated/reactorprompt-export-20260902-incremental/manifest.json
 
-git show HEAD:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json | \
+git show 401f450e4c0ec32ef79c502e3c6a6666c9a106c4:skills/photo-prompt-image-generator/assets/photo_prompt_tags.json | \
   jq -r '["action","prop","relational_action","prop_direction","contact_point","hand_pose","duty_prop_state","procedure_step","transition_stage","narrative_phase"][] as $s | [$s, (.slots[$s] | length), ([.slots[$s][] | select(has("requires_primary_any_tags"))] | length)] | @tsv'
 
 rg -n 'RENDER_REPAIR_INTERACTION_STATES|RENDER_REPAIR_CONTACT_EXPECTATIONS|render_repair_target_gates|removal_relocation_concealment_or_transfer_is_not_repair' \

@@ -1,0 +1,59 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill": "photo-prompt-image-generator",
+    "scope": "Korean emotional-place visual semantics, candidate data, exact routing, and sampled rendered-pixel qualification"
+  },
+  "goal": "Turn broad place keywords into narrow observable place-structure-action-light-or-state relations while preserving broad terms as candidate-only signals.",
+  "evidence": {
+    "research": "source-research.md",
+    "candidate_design": "candidate-data-proposal.json",
+    "routing_fixture": "routing-regression-proposal.jsonl",
+    "runtime_extension": "skills/photo-prompt-image-generator/assets/photo_prompt_emotional_place_extension.json",
+    "registry": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+    "regression_test": "tests/test_photo_emotional_place_visual_semantics.py",
+    "render_review": "generated_images/emotional-place-three-agent-20260902/coordination/final-review.json"
+  },
+  "perceptual_contract": {
+    "profiles": 10,
+    "required_component_groups_per_profile": 5,
+    "render_gates_per_profile": 5,
+    "partial_is_fail": true,
+    "broad_terms": "candidate_only",
+    "reference_scope": "observable adult appearance only",
+    "user_judgment": "separate"
+  },
+  "baseline_mismatch": [
+    "The location inventory was large but many rows lacked searchable relation language.",
+    "Place nouns and mood labels did not own observable topology, action, light-source, or immediate-state obligations.",
+    "No dedicated five-gate owners existed for the ten researched emotional-place relations."
+  ],
+  "hypothesis": "A source-owned relation extension plus exact five-component visual profiles will make narrow place requests routable and will survive into pixels when each independent arm freezes its own complex scene around one forced relation anchor.",
+  "intervention": {
+    "visual_semantic_clusters_added": 10,
+    "candidate_atoms_added": 21,
+    "hard_profiles_added": 10,
+    "generated_visual_profile_count": 333,
+    "generated_exact_term_count": 1707,
+    "generated_semantic_entry_count": 8042,
+    "generated_semantic_shards": 16
+  },
+  "evaluation": {
+    "structural_and_routing": "pass",
+    "index_metadata_and_freshness": "pass",
+    "random_master_seed": 15537462851202376970,
+    "independent_arms": 3,
+    "image_calls": 3,
+    "retries": 0,
+    "fallbacks": 0,
+    "exact_final_source_pack_replays": 3,
+    "exact_final_source_pack_replay_failures": 0,
+    "subagent_pixel_gates": "15/15_pass",
+    "coordinator_pixel_gates": "15/15_pass",
+    "dedicated_regression": "9_passed_110_subtests_passed",
+    "surrounding_regression": "46_passed_7_pre_existing_unrelated_failures_328_subtests_passed",
+    "user_judgment": "pending",
+    "unsampled_profile_pixels": "not_tested_for_7_of_10_profiles"
+  },
+  "decision": "keep_the_runtime_data_and_profiles; sampled_visual_technical_qualification_passed; do_not_generalize_pixel_success_to_the_seven_unsampled_profiles_or_to_user_preference"
+}

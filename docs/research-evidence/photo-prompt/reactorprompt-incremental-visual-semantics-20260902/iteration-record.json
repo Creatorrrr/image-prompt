@@ -1,0 +1,255 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "새로 수집한 ReactorPrompt 이미지와 프롬프트를 10개 이상의 독립 주제로 분석하여 시각 의미 데이터와 후보팩을 강화할 연구 근거, 후보 계약, 혼동 경계, 게이트, 회귀 설계를 만든다."
+  },
+  "evidence": [
+    {
+      "id": "e-corpus-freeze",
+      "kind": "measurement",
+      "claim": "동결 증분 코퍼스는 게시물 1,182개, 이미지 4,908장, 비어 있지 않은 프롬프트 924개, 고유 본문 904개, 누락 프롬프트 258개이며 ID 범위는 1565–2746이다.",
+      "artifact": "generated/reactorprompt-export-20260902-incremental/summary.json and manifest.json; manifest sha256 0f4cdd97730a3009071c853b6006fbbf00e14cfe8541935663f35cf6a38f7732"
+    },
+    {
+      "id": "e-research-method",
+      "kind": "source-observation",
+      "claim": "각 주제는 924개 프롬프트 전수 스캔, 최소 12개 게시물·24개 이미지의 양성 및 근접대조 검토, authored-source 소유권 대조, prompt와 pixel 증거 분리, exact와 advisory 분리, thumbnail/native gate와 held-out 설계를 공통 방법으로 사용했다.",
+      "artifact": "docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902/coordination/research-brief.md"
+    },
+    {
+      "id": "e-topic-reports",
+      "kind": "measurement",
+      "claim": "16개 주제 보고서가 모두 프롬프트 924개를 전수 스캔했고, 합계 게시물 검토 301회와 이미지 검토 593회를 기록했다. 같은 게시물과 이미지는 여러 주제에서 반복 검토될 수 있어 합계는 고유 수가 아니다.",
+      "artifact": "docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902/topics/01-composition-framing.md through topics/16-nonportrait-domain-coverage.md"
+    },
+    {
+      "id": "e-corpus-pixel-observations",
+      "kind": "render-observation",
+      "claim": "전달된 코퍼스 픽셀 표본에서는 exact 문구의 부분 구현, 장비·렌즈·소재·감정 라벨과 실제 가시 효과의 분리, 크롭·가림으로 인한 관찰 불가, 긴 negative 목록과 결과 품질의 비결정성이 반복해서 관찰됐다. 이 관찰은 새 제안의 독립 렌더 자격 증거가 아니다.",
+      "artifact": "all 16 topic reports, pixel-side observations and evidence appendices"
+    },
+    {
+      "id": "e-baseline-ownership",
+      "kind": "source-observation",
+      "claim": "동결 authored data에는 이미 다수의 좁은 exact profile과 풍부한 후보가 있으며, 주요 공백은 새 명사 수보다 provenance, typed relation, single owner, observability, and evidence-layer separation이다. Generated indexes are derivative only.",
+      "artifact": "baseline revision 8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab; authored-source snapshot commit 401f450e4c0ec32ef79c502e3c6a6666c9a106c4; frozen visual obligations sha256 64e73c97f12da099b18cb7be4e0086f0c51c66d63380c297ec7632709b4805bc; tags sha256 5ae9ae8311f418875a011d7fd887804c9b974f26941689679af55a1499406b00; quality sha256 99597926d0f136bfabaf5f8be28597aae82f15bdbe8e3bfcfbbb774b3ac0541f"
+    },
+    {
+      "id": "e-cross-topic-synthesis",
+      "kind": "source-observation",
+      "claim": "Cross-topic synthesis recommends a shared photo-visual-relation/v1 metadata contract, exact-source activation guard, observability and proof budget, fixture lineage, and separate package, prompt, request, render, and user evidence before topic-specific promotion.",
+      "artifact": "docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902/synthesis.md and candidate-backlog.json"
+    },
+    {
+      "id": "e-worktree-boundary",
+      "kind": "repository-history",
+      "claim": "Unrelated pre-existing and concurrent working-tree changes outside the research directory were preserved and excluded from this study's baseline authority. This study intentionally made no target-skill runtime, generated-index, or test change.",
+      "artifact": "coordination/research-brief.md and path-scoped research deliverables under docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "각 선택된 시각 의미는 출처, 단일 소유자, 관찰 가능한 구성 관계, 혼동 음성, 가시성 자격, thumbnail/native gate를 함께 보존하고, exact 근거가 없는 검색 발견은 hard obligation이 되지 않아야 한다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-provenance-authority",
+        "statement": "정확 요청 또는 authored exact evidence만 request-scoped hard 의미를 만들 수 있고 BM25F, embedding, 빈도, 장르 연상은 advisory로 남는다.",
+        "evidence_ids": ["e-research-method", "e-baseline-ownership", "e-cross-topic-synthesis"],
+        "causal_controls": [
+          "exact positive and nearest-substitute pairs",
+          "retrieval method and selection-state lineage",
+          "requester-locked fields are immutable"
+        ]
+      },
+      {
+        "id": "inv-single-owned-relation",
+        "statement": "각 핵심 의미는 이름 목록이 아니라 actor, object, region, source, contact, vector, state, topology 또는 consequence 중 필요한 관계를 정확히 하나의 canonical owner 아래 가진다.",
+        "evidence_ids": ["e-topic-reports", "e-baseline-ownership", "e-cross-topic-synthesis"],
+        "causal_controls": [
+          "one owner axis per active relation",
+          "cross-slot IDs share entity and region identifiers",
+          "duplicate prose does not create duplicate obligations"
+        ]
+      },
+      {
+        "id": "inv-observability-before-score",
+        "statement": "필수 영역이 크롭, 가림, 해상도 또는 전달 부재로 판정 불가능하면 해당 축은 UNSCORED이며, 보이는 일부 구성만 구현되면 strict profile은 partial_is_fail이다.",
+        "evidence_ids": ["e-research-method", "e-corpus-pixel-observations", "e-cross-topic-synthesis"],
+        "causal_controls": [
+          "required visible regions",
+          "crop and occlusion policy",
+          "thumbnail and native review scales remain separate"
+        ]
+      },
+      {
+        "id": "inv-label-effect-separation",
+        "statement": "장비, 렌즈 수치, RAW, 브랜드, 소재명, 감정 및 장르 라벨은 요청 메타데이터나 advisory alias일 수 있으나 원근, 신호 응답, 표면 거동, 얼굴 동작 또는 관계 픽셀을 자동 증명하지 않는다.",
+        "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"],
+        "causal_controls": [
+          "preserve exact input label when requested",
+          "evaluate visible effects independently",
+          "do not infer nonvisual identity, material composition, relationship, or functional truth"
+        ]
+      },
+      {
+        "id": "inv-evidence-layers",
+        "statement": "프롬프트 관찰, package 구조, composed prompt, runtime request, 전달 픽셀, 새 independent render, 사용자 판단은 서로 교환할 수 없는 증거층이다.",
+        "evidence_ids": ["e-research-method", "e-corpus-pixel-observations", "e-worktree-boundary"],
+        "causal_controls": [
+          "separate status per evidence layer",
+          "corpus pixels do not qualify a new intervention",
+          "user judgment remains separate"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "aesthetic style not locked by the requester",
+      "incidental camera or lighting choices that preserve the owned relation",
+      "minor subject placement outside required anchors",
+      "advisory candidate ordering before explicit selection",
+      "domain-specific vocabulary that does not alter the shared relation contract"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-vocabulary-versus-ownership",
+      "scale": "global",
+      "axis": "semantic representation",
+      "source_state": "The corpus and baseline contain abundant style, place, wardrobe, camera, material, and expression vocabulary.",
+      "render_state": "Delivered corpus examples repeatedly vary or substitute the intended contact, topology, effect owner, consequence, or readable region despite that vocabulary.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations", "e-baseline-ownership"]
+    },
+    {
+      "id": "mismatch-input-label-versus-visible-effect",
+      "scale": "regional",
+      "axis": "camera material and capture claims",
+      "source_state": "Prompts frequently name focal length, aperture, device, RAW, film stock, CCD, fabric, or emotional labels.",
+      "render_state": "Exact numeric cause, device identity, fiber composition, and hidden affect are not recoverable from one image; only visible projection, focus, signal, surface, and facial-action relations can be scored.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"]
+    },
+    {
+      "id": "mismatch-negative-volume-versus-positive-proof",
+      "scale": "global",
+      "axis": "failure prevention",
+      "source_state": "Hundreds of prompts contain long and repeated negative directives for anatomy, text, style, skin, and artifacts.",
+      "render_state": "Negative wording does not prove positive subject survival, local relation correctness, or texture preservation, and some named artifacts are intentionally requested effects.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"]
+    },
+    {
+      "id": "mismatch-detail-duty-versus-frame-eligibility",
+      "scale": "local",
+      "axis": "observability",
+      "source_state": "Prompts may request feet, contact, pores, strands, eye direction, material weave, text, or topology as detailed evidence.",
+      "render_state": "Crop, occlusion, distance, blur, panel size, or delivery role can make those regions unscoreable even when the broad scene remains attractive.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-typed-relation-owner",
+      "stage": "representation",
+      "statement": "A shared provenance and ownership envelope plus topic-specific typed IRs will reduce contradictory or scattered component selection without installing one monolithic visual slot.",
+      "evidence_ids": ["e-topic-reports", "e-baseline-ownership", "e-cross-topic-synthesis"],
+      "falsifier": "The implemented composer already preserves one owner, source span, shared entity IDs, relation topology, and confusion boundaries for every held-out topic without the proposed metadata."
+    },
+    {
+      "id": "h-observability-guard",
+      "stage": "prompt-interaction",
+      "statement": "Required-region and review-scale metadata will prevent close crops, occlusion, and low-resolution outputs from being scored as successful detailed semantics or generic quality failure.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"],
+      "falsifier": "Held-out close, wide, occluded, and panel cases receive correct PASS, FAIL, and UNSCORED states without any explicit observability metadata."
+    },
+    {
+      "id": "h-positive-first-failure-policy",
+      "stage": "representation",
+      "statement": "Positive invariants plus profile-local false substitutes and term-level conflict metadata will prevent more failures than copying long corpus negative footers into global defaults.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations", "e-cross-topic-synthesis"],
+      "falsifier": "Matched held-out tests show that blanket negative import consistently preserves requested artifacts and outperforms positive owned relations without suppressing valid modes."
+    },
+    {
+      "id": "h-clause-ledger",
+      "stage": "prompt-priority",
+      "statement": "Per-clause provenance, scope, polarity, requirement mode, priority, variant, and gate mapping will distinguish real contradictions from valid regional, panel, actor, or negative-context differences.",
+      "evidence_ids": ["e-topic-reports", "e-cross-topic-synthesis"],
+      "falsifier": "Lexical pair detection alone resolves option inventories, bilingual duplication, panel ownership, non-image payloads, and exact-versus-advisory provenance across held-outs without false conflict."
+    },
+    {
+      "id": "h-domain-neutral-budget",
+      "stage": "representation",
+      "statement": "A domain-neutral subject relation budget will preserve product, food, architecture, nature, system, and documentary evidence propositions without importing portrait-first hierarchy.",
+      "evidence_ids": ["e-topic-reports", "e-corpus-pixel-observations"],
+      "falsifier": "Independent non-portrait held-outs retain domain subject priority, state, support, scale, path, and evidence reference under the current portrait-oriented routing without a domain-neutral budget."
+    }
+  ],
+  "intervention": {
+    "status": "proposed",
+    "target_layers": ["module", "reference", "policy", "test"],
+    "general_rule": "Add shared provenance, single-owner relation, observability, exact-activation, fixture-lineage, and evidence-layer contracts first; then qualify topic-specific advisory IRs and only narrow request-scoped exact profiles with causal and held-out tests.",
+    "generalization_basis": "The same ownership, observability, provenance, and evidence-separation gaps recur independently across composition, pose, optics, lighting, color, environment, interaction, multi-subject, face, wardrobe, human surface, capture, timing, failure prevention, prompt architecture, and non-portrait domains.",
+    "hypothesis_ids": [
+      "h-typed-relation-owner",
+      "h-observability-guard",
+      "h-positive-first-failure-policy",
+      "h-clause-ledger",
+      "h-domain-neutral-budget"
+    ],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "not-run", "evidence_ids": []},
+    "prompt": {"status": "not-run", "evidence_ids": []},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "holdout-portrait-relations",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["composition", "pose", "gaze", "multi-subject", "observability"],
+        "evidence_ids": ["e-topic-reports"]
+      },
+      {
+        "id": "holdout-camera-light-material",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["optics", "lighting", "color", "capture", "material response"],
+        "evidence_ids": ["e-topic-reports"]
+      },
+      {
+        "id": "holdout-action-and-failure",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["object interaction", "event timing", "failure prevention", "prompt clause ownership"],
+        "evidence_ids": ["e-topic-reports"]
+      },
+      {
+        "id": "holdout-nonportrait-domains",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["product", "food", "architecture", "nature", "system", "documentary evidence"],
+        "evidence_ids": ["e-topic-reports"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "proposed",
+    "claim_scope": "structural",
+    "rationale": "The frozen corpus and 16 independent topic reports support a bounded cross-topic representation and validation backlog, but no target-skill implementation, package or prompt evaluation, independent candidate render, or user judgment has occurred.",
+    "evidence_ids": [
+      "e-corpus-freeze",
+      "e-research-method",
+      "e-topic-reports",
+      "e-corpus-pixel-observations",
+      "e-baseline-ownership",
+      "e-cross-topic-synthesis",
+      "e-worktree-boundary"
+    ]
+  }
+}

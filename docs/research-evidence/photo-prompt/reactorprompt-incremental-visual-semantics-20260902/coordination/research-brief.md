@@ -5,6 +5,7 @@
 - Request: analyze the newly collected images and prompts to research stronger visual-semantics data and candidate-pack content across at least ten independently delegated topics.
 - Mode: research/design only. Do not edit runtime assets, generated indexes, tests, or the target skill in this study.
 - Target skill baseline: `skills/photo-prompt-image-generator` at Git revision `8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab` with unrelated pre-existing working-tree changes preserved.
+- Frozen authored-source snapshot commit: `401f450e4c0ec32ef79c502e3c6a6666c9a106c4`. The source hashes below resolve exactly to this commit and remain stable if `HEAD` moves.
 - Evidence layers must remain separate: prompt text inspection, delivered corpus-pixel observation, repository/package inspection, external research, and user judgment.
 - No image generation is authorized or required. Corpus images are already delivered source artifacts, so direct inspection of them is pixel evidence about this corpus only.
 
@@ -64,3 +65,10 @@
 15. Prompt language architecture, clause ownership, redundancy, translation drift, and evidence budgeting
 16. Non-portrait coverage: product, food, architecture, nature, systems, and documentary evidence scenes
 
+## Execution result
+
+- All 16 scoped topic reports were completed.
+- The work used 13 distinct subagent identities, exceeding the requested minimum of ten separately researched topics. After the concurrent thread ceiling was reached, three agents that had completed their first reports accepted one additional isolated topic each.
+- Every topic retained its own full-corpus scan, pixel sample, authored-source comparison, proposal, gates, tests, limitations, and report file.
+- The topic-level sample totals are 301 post-review events and 593 image-review events. These totals include cross-topic reuse and are not unique corpus counts.
+- Root synthesis, machine-readable backlog, and the iteration record were authored only after the topic reports were delivered.

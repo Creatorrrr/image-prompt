@@ -1,0 +1,384 @@
+{
+  "schema_version": "reactorprompt-visual-semantics-backlog/v1",
+  "status": "proposed",
+  "research_only": true,
+  "target_skill": "skills/photo-prompt-image-generator",
+  "baseline_revision": "8380c8aa0a3e501aaf5bb29fd3ca79c8896ddfab",
+  "authored_source_snapshot_commit": "401f450e4c0ec32ef79c502e3c6a6666c9a106c4",
+  "frozen_corpus": {
+    "path": "generated/reactorprompt-export-20260902-incremental",
+    "posts": 1182,
+    "images": 4908,
+    "nonempty_prompts": 924,
+    "unique_prompt_bodies": 904,
+    "missing_prompts": 258,
+    "post_id_min": 1565,
+    "post_id_max": 2746,
+    "manifest_sha256": "0f4cdd97730a3009071c853b6006fbbf00e14cfe8541935663f35cf6a38f7732",
+    "gallery_sha256": "35142b192966bd01eefa7c7cfdc05e7ca83a2f1c2ac43a7e34e6e693689cc64f",
+    "translations_sha256": "d2483fc1eefc941ddf2a51137ac2114cea0de61e8be3c152c00d49cfe5ce6586"
+  },
+  "frozen_authored_sources": {
+    "visual_obligations_sha256": "64e73c97f12da099b18cb7be4e0086f0c51c66d63380c297ec7632709b4805bc",
+    "tags_candidates_sha256": "5ae9ae8311f418875a011d7fd887804c9b974f26941689679af55a1499406b00",
+    "quality_layers_sha256": "99597926d0f136bfabaf5f8be28597aae82f15bdbe8e3bfcfbbb774b3ac0541f",
+    "generated_visual_profile_index_sha256": "4d674dc00cfa05897f837a7b53410d18766edb8556b1378190523e6e4d1b6626",
+    "generated_index_is_authored_source": false
+  },
+  "evidence_policy": {
+    "hard_activation_authority": [
+      "request_exact",
+      "authorial_core",
+      "existing_exact_visual_profile"
+    ],
+    "advisory_only_authority": [
+      "bm25f_hit",
+      "embedding_hit",
+      "corpus_frequency",
+      "genre_implication",
+      "incidental_pixel_presence"
+    ],
+    "strict_gate_policy": "partial_is_fail",
+    "ineligible_visibility_status": "UNSCORED",
+    "separate_evidence_layers": [
+      "source_or_prompt",
+      "package",
+      "composed_prompt",
+      "runtime_request",
+      "delivered_pixels",
+      "user_judgment"
+    ]
+  },
+  "cross_cutting_work_items": [
+    {
+      "id": "VS-P0-001",
+      "priority": "P0",
+      "title": "Typed relation provenance and single ownership",
+      "status": "proposed",
+      "target_layers": ["module", "reference", "policy", "test"],
+      "proposal": "Define photo-visual-relation/v1 metadata shared by topic-specific IRs: source kind, literal evidence, priority, one owner axis, entities or visible regions, relations, observable effects, confusion negatives, invariant fields, and flexible fields.",
+      "acceptance_before_implementation": [
+        "Every active relation has exactly one canonical owner.",
+        "Request-locked fields cannot be overwritten by post-core candidates.",
+        "Advisory retrieval cannot create hard gates before explicit selection."
+      ]
+    },
+    {
+      "id": "VS-P0-002",
+      "priority": "P0",
+      "title": "Observability and proof budget",
+      "status": "proposed",
+      "target_layers": ["module", "policy", "test"],
+      "proposal": "Attach required_visible_regions, minimum_review_scale, crop policy, occlusion policy, and visibility eligibility to relations and exact obligations.",
+      "acceptance_before_implementation": [
+        "Invisible required regions produce UNSCORED rather than PASS or quality zero.",
+        "Thumbnail and native gates remain separate.",
+        "All required components must coexist in one evaluated result."
+      ]
+    },
+    {
+      "id": "VS-P0-003",
+      "priority": "P0",
+      "title": "Exact versus advisory activation guard",
+      "status": "proposed",
+      "target_layers": ["policy", "tool", "test"],
+      "proposal": "Require literal request or authored exact evidence for new hard profiles and retain BM25F or embedding-only discoveries as optional candidates.",
+      "acceptance_before_implementation": [
+        "Narrow positive exact terms activate only their intended profile.",
+        "Bare labels and nearest substitutes remain negative controls.",
+        "Corpus frequency never installs a global default."
+      ]
+    },
+    {
+      "id": "VS-P0-004",
+      "priority": "P0",
+      "title": "Corpus fixture ledger and human relation graph",
+      "status": "proposed",
+      "target_layers": ["tool", "test"],
+      "proposal": "Preserve corpus post ID, prompt hash, image hash, pair-alignment status, review scale, human-verified relation graph, and confusion role for every motivating or held-out fixture.",
+      "acceptance_before_implementation": [
+        "Duplicate prompt text with divergent pixels is not silently accepted as an aligned pair.",
+        "Motivating and held-out fixtures are explicitly separated.",
+        "Image lineage remains reproducible from the frozen manifest."
+      ]
+    },
+    {
+      "id": "VS-P0-005",
+      "priority": "P0",
+      "title": "Evidence-layer result schema",
+      "status": "proposed",
+      "target_layers": ["reference", "policy", "test"],
+      "proposal": "Report package, prompt, runtime request, render, and user results independently; do not promote from an aggregate score.",
+      "acceptance_before_implementation": [
+        "Prompt or package PASS cannot be reported as pixel PASS.",
+        "Blocked or missing output remains UNSCORED.",
+        "User judgment remains a separate final layer."
+      ]
+    },
+    {
+      "id": "VS-P0-006",
+      "priority": "P0",
+      "title": "Generated-index lineage",
+      "status": "proposed",
+      "target_layers": ["tool", "test"],
+      "proposal": "Regenerate semantic and visual-profile indexes only from authored registries and candidate sources, and verify source hashes in check mode.",
+      "acceptance_before_implementation": [
+        "Generated indexes are never edited as semantic authority.",
+        "Check mode fails on source or shard mismatch.",
+        "Unrelated working-tree changes are not staged or rewritten."
+      ]
+    }
+  ],
+  "topic_work_items": [
+    {
+      "topic_id": "T01",
+      "title": "Composition, framing, crop, negative space, attention hierarchy",
+      "report": "topics/01-composition-framing.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 20, "images": 40},
+      "candidate_contracts": ["crop boundary anchor metadata", "panel topology metadata"],
+      "exact_profile_candidates": [
+        {"id": "crop_boundary_anchor_integrity", "status": "qualify_before_implementation"},
+        {"id": "multi_panel_count_layout_sequence", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["12 existing exact composition profiles"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T02",
+      "title": "Pose, body mechanics, support, and contact",
+      "report": "topics/02-pose-body-mechanics.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 16, "images": 32},
+      "candidate_contracts": [
+        "single_support_backward_flexed_free_leg",
+        "forward_torso_lean_close_crop",
+        "fingertip_contact_visible_target_non_support",
+        "pose_mechanics.observability"
+      ],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["contrapposto_weight_shift", "figura_serpentinata_spiral_pose", "tribhanga_three_bend_pose"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T03",
+      "title": "Camera viewpoint, optics, depth of field, and focus",
+      "report": "topics/03-camera-optics-focus.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 17, "images": 34},
+      "candidate_contracts": ["photo-camera-optics/v1", "optical_coherence"],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["concept-specific optics visual obligations", "frame_hierarchy", "close_focus_priority"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T04",
+      "title": "Lighting, exposure, shadow ownership, and material response",
+      "report": "topics/04-lighting-exposure-material-response.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 20, "images": 40},
+      "candidate_contracts": ["lighting_causal_axes", "source-relative causal advisory records"],
+      "exact_profile_candidates": [
+        {"id": "patterned_cast_shadow_receiver_continuity", "status": "qualify_before_implementation"},
+        {"id": "daylight_fill_flash_balance_relation", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["hard and soft shadow edge", "key and fill", "negative fill", "rim", "rolloff", "volumetric", "mixed practical"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T05",
+      "title": "Color palette, white balance, tone, and grading",
+      "report": "topics/05-color-palette-tone-grading.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 12, "images": 24},
+      "candidate_contracts": ["color_effect_contract"],
+      "exact_profile_candidates": [
+        {"id": "palette_role_hierarchy_relation", "status": "qualify_before_implementation"},
+        {"id": "selective_color_same_surface_exception_relation", "status": "qualify_before_implementation"},
+        {"id": "low_chroma_preserved_color_separation", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["mixed_illuminant_white_balance_relation", "highlight_rolloff_tone_response", "high and low key", "film halation"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T06",
+      "title": "Environment, depth, atmosphere, and weather",
+      "report": "topics/06-environment-depth-atmosphere.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 32, "images": 47},
+      "candidate_contracts": ["subject_environment_role", "depth_cue", "weather consequence chain"],
+      "exact_profile_candidates": [
+        {"id": "foreground_midground_background_environmental_depth_chain", "status": "qualify_before_implementation"},
+        {"id": "weather_atmosphere_material_subject_consequence_chain", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["natural-environment exact profiles", "lived-in location candidates"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T07",
+      "title": "Subject and prop interaction",
+      "report": "topics/07-subject-prop-interaction.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 15, "images": 30},
+      "candidate_contracts": ["photo-object-interaction/v1", "coordinated interaction bundles"],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["narrow object interaction profiles", "photo-request-lineage/v2 repair invariants"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T08",
+      "title": "Multi-subject staging and relation topology",
+      "report": "topics/08-multi-subject-staging-relations.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 23, "images": 43},
+      "candidate_contracts": ["relation_graph", "neutral actor-target-response primitives"],
+      "exact_profile_candidates": [
+        {"id": "cropped_companion_visible_contact_relation", "status": "qualify_before_implementation"},
+        {"id": "foreground_background_two_actor_occlusion_relation", "status": "qualify_before_implementation"},
+        {"id": "two_adult_shared_target_handoff", "status": "qualify_before_implementation"},
+        {"id": "focused_group_shared_access_formation", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["relationship_blocking family", "existing context-specific relation profiles"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T09",
+      "title": "Facial display, gaze, head direction, and readability",
+      "report": "topics/09-expression-gaze-readability.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 18, "images": 36},
+      "candidate_contracts": ["photo-facial-display/v1", "facial_display_readability"],
+      "exact_profile_candidates": [
+        {"id": "head_eye_counterorientation_relation", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["context-bound expression obligations", "look_motion_room_direction_relation"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T10",
+      "title": "Wardrobe construction, material, texture, and drape",
+      "report": "topics/10-wardrobe-material-drape.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 14, "images": 28},
+      "candidate_contracts": ["photo-wardrobe-material-relation/v1"],
+      "exact_profile_candidates": [
+        {"id": "satin_directional_luster_drape_surface", "status": "qualify_before_implementation"},
+        {"id": "velvet_pile_nap_direction_surface", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["existing garment construction and optical layering profiles", "wardrobe and material candidate slots"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T11",
+      "title": "Hair, makeup, skin surface, and beauty capture",
+      "report": "topics/11-hair-makeup-skin-beauty-capture.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 15, "images": 30},
+      "candidate_contracts": ["hair_motion_state", "skin_microtexture", "human_surface_response", "native-detail visibility eligibility"],
+      "exact_profile_candidates": [
+        {"id": "wind_displaced_hair_coherence", "status": "qualify_before_implementation"}
+      ],
+      "reuse_existing": ["makeup component slots", "skin and makeup exact profiles"],
+      "do_not_add": ["blanket anti-plastic negative lists"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T12",
+      "title": "Capture medium and processing response",
+      "report": "topics/12-capture-medium-processing.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 25, "images": 50},
+      "candidate_contracts": ["capture_response", "label-to-effect candidate metadata", "front-camera low-light advisory bundle"],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["early_2000s_compact_digicam_social_repost", "direct_on_camera_flash_snapshot_signature", "rolloff", "mixed white balance", "halation"],
+      "do_not_add": ["hard front-camera low-light profile without more evidence", "brand or RAW derived pixel claims"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T13",
+      "title": "Narrative event timing and visible consequence",
+      "report": "topics/13-narrative-event-timing.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 16, "images": 29},
+      "candidate_contracts": [
+        "precontact_readiness_visible_gap",
+        "locomotion_counterturn_midphase",
+        "source_to_receiver_liquid_transfer_midphase",
+        "tool_contact_active_process_phase",
+        "postcontact_release_continuing_trajectory",
+        "visible_mishap_repair_phase",
+        "untouched_target_preuse_threshold",
+        "settling_aftereffect_trace_phase"
+      ],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["peak_action_event_phase", "decisive_moment quality dimension"],
+      "do_not_add": ["duplicate decisive-moment exact profile", "hard pixel claims for invisible story causes"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T14",
+      "title": "Negative constraints and failure prevention",
+      "report": "topics/14-negative-constraints-failure-modes.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 21, "images": 42},
+      "candidate_contracts": [
+        "photo-failure-prevention/v1",
+        "photo-negative-term-policy/v1",
+        "surface-local text mode",
+        "conditional fp quality gates"
+      ],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["photo-negative-intent-guard/v1", "existing profile-local reject_substitutes", "existing exact artifact and relation profiles"],
+      "do_not_add": ["broad bad-anatomy visual profile", "global AI-artifact profile", "corpus blanket negative footer"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T15",
+      "title": "Prompt language architecture",
+      "report": "topics/15-prompt-language-architecture.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 14, "images": 28},
+      "candidate_contracts": [
+        "photo-prompt-clause-ledger/v1",
+        "photo-prompt-clause-consistency/v1",
+        "photo-corpus-prompt-lineage/v1",
+        "photo-authorial-prompt-budget/v2 diagnostics revision"
+      ],
+      "exact_profile_candidates": [],
+      "reuse_existing": ["existing exact visual-obligation registry", "requester envelope and frozen authorial core"],
+      "do_not_add": ["global writing-style default", "language-only duplicate visual profile", "hard conflict from lexical co-occurrence alone"],
+      "decision": "proposed"
+    },
+    {
+      "topic_id": "T16",
+      "title": "Non-portrait domain coverage",
+      "report": "topics/16-nonportrait-domain-coverage.md",
+      "prompt_records_scanned": 924,
+      "pixel_sample": {"posts": 23, "images": 60},
+      "candidate_contracts": ["nonportrait_subject_relation_budget"],
+      "exact_profile_candidates": [
+        {"id": "product_surface_support_hierarchy", "status": "qualify_before_implementation"},
+        {"id": "food_material_state_vessel_relation", "status": "qualify_before_implementation"},
+        {"id": "architecture_enclosure_circulation_scale", "status": "revise_before_implementation"},
+        {"id": "nature_habitat_subject_state", "status": "qualify_with_mode_split"},
+        {"id": "bounded_system_input_path_output", "status": "qualify_visual_gates_function_truth_unscored"},
+        {"id": "documentary_evidence_target_reference_state", "status": "revise_before_implementation"}
+      ],
+      "reuse_existing": ["forensic documentation profiles", "natural-environment profiles", "subject-domain routing"],
+      "do_not_add": ["portrait-first default for non-portrait scenes", "functional truth claim from a readable diagram alone"],
+      "decision": "proposed"
+    }
+  ],
+  "promotion_requirements": {
+    "package": "authored schema validation, generated-index check mode, focused and adjacent regression tests",
+    "prompt": "exact/advisory causal pairs plus composed-prompt ownership and contradiction audits",
+    "render": "independent held-out arms with frozen inputs, one recorded generation per arm, thumbnail and native all-of gates",
+    "user": "separate explicit user judgment",
+    "current_status": {
+      "package": "not-run",
+      "prompt": "not-run",
+      "render": "UNSCORED",
+      "user": "UNSCORED"
+    }
+  }
+}

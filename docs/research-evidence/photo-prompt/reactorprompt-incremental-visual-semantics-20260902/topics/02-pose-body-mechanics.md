@@ -258,6 +258,7 @@
 
 따라서 이번 결정은 다음과 같다.
 
+- bounded status: **`proposed`**
 - 새 exact visual-obligation 프로필: **추가하지 않음**
 - broad/advisory 후보: **3개 제안**
 - legacy 후보 의미 보강: **7개 제안**

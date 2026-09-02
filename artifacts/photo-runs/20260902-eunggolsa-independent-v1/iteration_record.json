@@ -1,0 +1,227 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": ".agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "c0da6e796d32ce850f3156d93afa5e54e54cc47d",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Independently author and render one random complex concept focused on 은꼴사, then test whether its observable interpretation and frozen scene relations are present in the generated pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-frozen-core",
+      "kind": "source-observation",
+      "claim": "The independent authorial core froze a clearly adult, non-explicit relational interpretation plus a low-step bulb-rehanging event before project retrieval.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/authorial_core.json sha256=c1f2435b13d3236b4bcf38103cd7f0700e07fd95ae75eb13914f25a2f38579ec"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The broad-slang non-hard regression test passed, and dictionary metadata plus the 323-profile visual index validated before the run.",
+      "artifact": "pytest tests/test_generate_candidate_pack_contract.py::test_broad_slanga_genres_and_single_cues_remain_nonhard => 1 passed in 98.861s; dictionary metadata valid; visual profile index ok with 323 profiles and 1667 exact terms"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "The v6 composed prompt and exact runtime request audits passed; three uncovered-intent warnings remained and no exact visual-profile obligation was selected.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/composed_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "One built-in image generation call produced the saved 1023x1537 image with no retry or fallback.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/run_manifest.json image_sha256=98ad93acd4cf3206598c9848f52eaac8aca4b5e4343a3b1b8b6648d720d81f58"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Root inspection found all six broad meta gates visible, but the low-step event, half-smile, medium-full hierarchy, and believable footing did not all survive; strict pixel qualification failed.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v1/coordination/root_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "One saved image must show the independently frozen clearly adult, non-explicit relational proposition and all three intent anchors, including bulb rehanging from a low iron step, at their declared review scales.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "invariant-broad-relation",
+        "statement": "The requested broad-label interpretation must be supported by visible action, garment-layer or material-boundary relations, physical causality, and scene context rather than the label or skin exposure alone.",
+        "evidence_ids": [
+          "e-frozen-core"
+        ],
+        "causal_controls": [
+          "self-directed unfinished action",
+          "opaque coat-over-dress coverage relation",
+          "gravity and task-driven fabric response",
+          "after-hours environmental context"
+        ]
+      },
+      {
+        "id": "invariant-adult-nonexplicit",
+        "statement": "The sole principal subject must read unambiguously as an adult and the whole scene must remain non-explicit.",
+        "evidence_ids": [
+          "e-frozen-core"
+        ],
+        "causal_controls": [
+          "explicit adult wording",
+          "opaque recognizable garments",
+          "scene-led framing"
+        ]
+      },
+      {
+        "id": "invariant-complete-event",
+        "statement": "Both the bulb-rehanging action and the low iron step support must be visible in the same saved image; partial event satisfaction is failure.",
+        "evidence_ids": [
+          "e-frozen-core"
+        ],
+        "causal_controls": [
+          "both hands contacting bulb cable",
+          "low iron step geometry",
+          "believable foot-to-support contact"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "minor background object placement",
+      "exact rain droplet distribution",
+      "nonessential greenhouse plant species",
+      "small variations in color temperature"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-support-geometry",
+      "scale": "regional",
+      "axis": "support topology",
+      "source_state": "A low iron step supports the subject while she rehanges the bulb strand.",
+      "render_state": "The feet stand on the wet seat of a tall iron chair or chair-like support.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-expression",
+      "scale": "local",
+      "axis": "mouth expression at thumbnail scale",
+      "source_state": "A restrained knowing half-smile accompanies the over-shoulder glance.",
+      "render_state": "The gaze is visible, but the mouth reads neutral or softly parted rather than an unambiguous half-smile.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-framing",
+      "scale": "global",
+      "axis": "shot hierarchy",
+      "source_state": "A waist-height 50 mm medium-full portrait preserves face, raised hands, and the low step.",
+      "render_state": "A near-full-length environmental portrait includes the shoes and entire tall chair, weakening the authored hierarchy.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-footing",
+      "scale": "regional",
+      "axis": "physical plausibility",
+      "source_state": "Footing on the low step is believable and stable.",
+      "render_state": "High heels balance on a narrow rain-wet chair seat, which does not read as believable footing.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-support-prior",
+      "stage": "generator-response",
+      "statement": "The generator satisfied the generic elevated-support action but substituted a visually familiar tall chair for the lower and more specific iron-step topology.",
+      "evidence_ids": [
+        "e-render"
+      ],
+      "falsifier": "A controlled repeat with identical frozen inputs consistently produces a low step without changing the support description or composition controls."
+    },
+    {
+      "id": "hypothesis-framing-interaction",
+      "stage": "prompt-interaction",
+      "statement": "Keeping raised hands, face, feet, and the entire support visible in a vertical frame competed with the medium-full instruction and drove a near-full-length composition.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render"
+      ],
+      "falsifier": "A controlled render preserves all requested landmarks while remaining unambiguously medium-full under the same framing language."
+    },
+    {
+      "id": "hypothesis-expression-priority",
+      "stage": "prompt-priority",
+      "statement": "The subtle half-smile had lower rendered salience than the overhead task, reciprocal gaze, and environmental lighting, so it did not survive thumbnail scale.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render"
+      ],
+      "falsifier": "A controlled render using the same prompt reliably shows the half-smile at 340x512 without stronger expression wording or crop changes."
+    }
+  ],
+  "intervention": {
+    "status": "none",
+    "target_layers": [],
+    "general_rule": "No repository rule is changed from this single render; preserve the observed failure and causal hypotheses before proposing a generalized repair.",
+    "generalization_basis": "One independent sample can diagnose mismatches but cannot establish a transferable correction or justify a hard route for a broad shorthand.",
+    "hypothesis_ids": [],
+    "changed_paths": [],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-independent-render",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "broad observable relation",
+          "adult non-explicit presentation",
+          "support topology",
+          "framing hierarchy",
+          "expression salience",
+          "physical footing"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The broad observable interpretation survived all six frozen meta gates, but the complete frozen concept did not pass strict pixel qualification. No skill or data intervention is promoted from this single failed render, and requester aesthetic judgment remains unscored.",
+    "evidence_ids": [
+      "e-prompt",
+      "e-generation",
+      "e-render"
+    ]
+  }
+}

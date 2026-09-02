@@ -1,0 +1,119 @@
+{
+  "schema_version": "photo-pixel-review/v1",
+  "reviewed_at": "2026-09-02T21:22:00+09:00",
+  "policy": {
+    "partial_is_fail": true,
+    "unscored_is_not_quality_zero": true,
+    "technical_pixel_evidence_is_not_user_aesthetic_judgment": true
+  },
+  "result": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/final.png",
+    "sha256": "98ad93acd4cf3206598c9848f52eaac8aca4b5e4343a3b1b8b6648d720d81f58",
+    "native_dimensions": {
+      "width": 1023,
+      "height": 1537
+    },
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/thumbnail-340x512.png",
+    "thumbnail_sha256": "d0f50bcfa30e777a21c954fee027923f55403ee06602ad65949806b1ffb411fe",
+    "thumbnail_dimensions": {
+      "width": 340,
+      "height": 512
+    },
+    "native_detail_crops": [
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/native-upper-crop.png",
+      "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/native-footing-crop.png"
+    ]
+  },
+  "contract_binding": {
+    "pack_id": "3ee26db0dbedd511",
+    "source_authorial_core_sha256": "c1f2435b13d3236b4bcf38103cd7f0700e07fd95ae75eb13914f25a2f38579ec",
+    "source_intent_lock_sha256": "c125e68ba52f12afcf1ced0077c9afd082645dbd8247c7dcbac1940113e0f5fb",
+    "effective_visual_contract_sha256": null,
+    "selected_visual_concept_ids": [],
+    "profile_derived_hard_gate_ids": [],
+    "intent_anchor_gate_ids": [
+      "intent_core_concept_relational_cue_topology",
+      "intent_core_subject_clearly_adult_non_explicit",
+      "intent_core_event_bulb_rehang_from_low_iron_step"
+    ]
+  },
+  "hard_gates": {
+    "intent_core_concept_relational_cue_topology": {
+      "source": "intent_lock.semantic_anchor.core_concept",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": {
+        "native": "One frame simultaneously shows the useful overhead bulb task, a covered black-dress silhouette, diagonal wet raincoat folds, long rain-damp hair, a backward reciprocal gaze, and an emptied rain-soaked reception setting.",
+        "thumbnail": "The overhead action, elongated covered silhouette, backward gaze, warm bulbs, wet glass, and after-hours tables remain jointly readable at 340x512. This establishes the observable cue topology only, not whether the requester experiences the intended charge."
+      }
+    },
+    "intent_core_subject_clearly_adult_non_explicit": {
+      "source": "intent_lock.semantic_anchor.core_subject",
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": {
+        "native": "The subject has an unmistakably adult presentation and wears an opaque midi dress and opaque raincoat throughout; the image is non-explicit.",
+        "thumbnail": "Adult presentation and full opaque coverage remain immediately legible."
+      }
+    },
+    "intent_core_event_bulb_rehang_from_low_iron_step": {
+      "source": "intent_lock.semantic_anchor.core_event",
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": {
+        "native": "Both hands visibly manipulate the fallen bulb cable overhead, but her heels stand on the seat of a tall iron chair or chair-like structure, not a low iron step. Under partial_is_fail, the support mismatch fails the complete event gate.",
+        "thumbnail": "The bulb-rehanging action survives, while the support still reads as a chair rather than a low step."
+      }
+    }
+  },
+  "prompt_fidelity_checks": {
+    "opaque_satin_dress_and_beige_raincoat": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "A black satin midi dress and wet light-beige raincoat are distinct, opaque, and materially legible."
+    },
+    "reciprocal_glance_and_restrained_half_smile": {
+      "review_scale": "both",
+      "status": "fail",
+      "evidence": "The backward gaze is clear at both scales, but the mouth reads neutral or softly parted rather than an unambiguous restrained half-smile at thumbnail scale. The compound cue therefore fails."
+    },
+    "public_event_polish_vs_after_hours_disarray": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Wine glasses, programs, tables, displaced chairs, wet floor, condensation, and city lights make the reception-remnant versus after-hours contrast visible."
+    },
+    "waist_height_50mm_medium_full_hierarchy": {
+      "review_scale": "thumbnail",
+      "status": "fail",
+      "evidence": "The output reads as a nearly full-length environmental portrait including shoes and the entire chair, not the authored medium-full hierarchy."
+    },
+    "natural_shoulders_hands_and_believable_footing": {
+      "review_scale": "native",
+      "status": "fail",
+      "evidence": "Shoulders and overlapping hands are anatomically plausible in the upper crop, but high heels balanced on a narrow wet chair seat do not provide the requested believable footing. The compound gate fails."
+    },
+    "photorealistic_texture_and_warm_cool_light": {
+      "review_scale": "both",
+      "status": "pass",
+      "evidence": "Wet glass, raincoat sheen, satin, skin texture, warm bulbs, and cool city spill remain photographically coherent at both scales."
+    },
+    "appearance_reference_scope_only": {
+      "review_scale": "native",
+      "status": "pass",
+      "evidence": "The output visibly carries balanced adult facial proportions, long dark wavy hair, and natural skin texture. This check makes no identity, same-person, biometric, protected-trait, health, attractiveness, personality, occupation, ethnicity, nationality, or relationship inference."
+    }
+  },
+  "pixel_qualification": {
+    "status": "fail",
+    "reason": "At least one intent-anchor hard gate failed, and partial satisfaction is treated as failure. Additional framing, expression, and footing checks also failed.",
+    "passed_hard_gate_count": 2,
+    "failed_hard_gate_count": 1,
+    "unscored_hard_gate_count": 0
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "aesthetic_acceptance": "pending",
+    "evidence": ""
+  },
+  "scope_statement": "This single render is evidence about one frozen concept realization. It does not universally define the Korean shorthand or establish requester preference."
+}
