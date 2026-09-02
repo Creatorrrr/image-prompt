@@ -1,0 +1,57 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Test MZ 항공샷, the optional 0.5배샷 lens candidate, 드레이핑 블러셔, and the optional 탕후루 립 family in one randomized rooftop telescope-repair scene with no food props.",
+  "subject": "one clearly adult woman whose visible facial proportions and long dark wavy hair use the supplied portrait only as an appearance reference, without an identity claim",
+  "setting": "a rooftop telescope-repair table at blue hour, marked by deck boards, a low parapet, warm work bulbs, and a folded route map",
+  "event": "while crouched, she sorts translucent route tokens with one hand and raises another token toward the close overhead camera as she looks up",
+  "visual_priorities": [
+    "the camera is close and steeply above the subject with a readable rooftop ground plane",
+    "0.5x near-field scale enlarges the raised token and hand while coherent top-down foreshortening links the body and setting",
+    "blush forms a bilateral continuous high-cheek-to-temple path with tapered soft edges",
+    "the lips show curved wet specular bands and real texture without literal candy or food imagery"
+  ],
+  "baseline_prompt_en": "Photorealistic vertical smartphone photograph at a rooftop telescope-repair table during blue hour. Treat Image 1 solely as a visible adult appearance reference: one clearly adult woman with long dark wavy hair and the supplied portrait's visible natural facial proportions, without asserting identity. The smartphone camera is close above her and points steeply downward as she crouches among deck boards, a low parapet, a folded blank route map, translucent calibration tokens, and a small telescope. She sorts tokens with one hand and raises one translucent token toward the elevated camera while looking up. The readable rooftop plane surrounds her; the near token and hand are conspicuously enlarged, while head, torso, bent limbs, table edge, and distant parapet follow coherent top-down foreshortening and rapid 0.5x near-to-far scale change. Cosmetic rose pigment begins visibly on both high cheekbones and continues upward-outward toward both temples, with soft tapered edges and a stable hue distinct from contour or cast shadow. Her lips retain natural ridges beneath a continuous glossy film with clean curved wet highlights and slightly richer inner color, without candy, fruit, syrup, or food props. Direct compact flash mixes with warm work bulbs and cool blue-hour ambient light; one unfinished sorting action keeps the scene candid.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "researched Korean emotional-photo terms",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+      "basis": "request_context",
+      "resolution": "This arm operationalizes MZ 항공샷 as a close elevated camera-ground-subject relation, keeps 0.5배샷 as a lens candidate, defines draping blush by a pigment path, and treats tanghulu lip as an optional gloss family rather than literal food.",
+      "sources": []
+    },
+    {
+      "term": "randomized complex concept",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "Seed 2635116469 assigned a rooftop telescope-repair table, translucent route-token sorting, folded map, direct flash, and warm bulbs; a food-action draw was rejected by the recorded anti-literalization rule.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "rooftop telescope-repair table during blue hour"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "one clearly adult woman with long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여", "dimension": "event", "prompt_evidence": "sorts tokens with one hand and raises one translucent token toward the elevated camera"},
+      {"anchor_id": "reference_use", "source_text": "첨부한 이미지를 활용하여", "dimension": "reference_use", "prompt_evidence": "Treat Image 1 solely as a visible adult appearance reference"},
+      {"anchor_id": "tested_meaning", "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트", "dimension": "composition", "prompt_evidence": "camera is close above her and points steeply downward"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "reference_use", "composition"],
+    "open_dimensions": ["framing", "color", "material", "atmosphere", "lighting"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic_social_portrait",
+    "family": "blue-hour rooftop 0.5x overhead snapshot",
+    "evidence": ["steep close overhead smartphone view", "direct flash mixed with warm bulbs", "coherent near-field scale recession"]
+  },
+  "variation_key": "seed-2635116469-arm-02-rooftop-overhead"
+}

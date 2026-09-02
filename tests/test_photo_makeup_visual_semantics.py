@@ -41,6 +41,7 @@ PROFILE_IDS = {
 MODULAR_SLOT_IDS = {
     "complexion_coverage": {
         "sheer_translucent_complexion_coverage",
+        "sheer_complexion_texture_preservation",
         "light_selective_complexion_evening",
         "medium_buildable_complexion_coverage",
         "full_opaque_complexion_coverage",

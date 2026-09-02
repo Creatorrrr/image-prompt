@@ -1,0 +1,114 @@
+{
+  "contract_version": "photo-root-three-arm-pixel-review/v1",
+  "reviewer": "root independent native-and-thumbnail pixel reviewer",
+  "reviewed_at": "2026-09-02",
+  "strict_rule": "pass only when fully observable; partial or missing is fail; an absent render is not quality zero and remains not evaluated",
+  "reference_scope": {
+    "role": "appearance_reference",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "allowed": [
+      "visible clearly adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ],
+    "identity_or_same_person_claim": false
+  },
+  "arms": [
+    {
+      "arm_id": "arm-01-planetarium-mirror",
+      "generation_status": "success",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-01-planetarium-mirror/final.png",
+      "image_sha256": "c581ed5764527004de2171abe2a47b1cbb3ea641de62b9991db0bada5f541e9d",
+      "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-01-planetarium-mirror/thumbnail.png",
+      "native_and_thumbnail_inspected": true,
+      "hard_gate_summary": {
+        "passed": 13,
+        "failed": 0,
+        "not_evaluated": 0,
+        "total": 13,
+        "verdict": "pass"
+      },
+      "root_evidence": [
+        "A metal-edged mirror seam and repeated corridor depth establish a physical reflective plane at thumbnail scale.",
+        "The clearly adult subject, gripped phone, reflected gaze, and facial overlap coexist coherently inside that reflected room.",
+        "Bilateral muted rose pigment sits immediately beneath both lower lids with clean eye margins and soft cosmetic edges.",
+        "Native face pixels retain pores, small speckles, fine texture, and local color variation beneath light tone correction; phone-flash shine is separately readable."
+      ],
+      "optional_observations": {
+        "good_vibe_lived_in_social_snapshot": {
+          "status": "supported",
+          "evidence": "The unfinished radio adjustment, notebook, narrow service corridor, direct phone flash, and imperfect reflection framing form a coherent lived-in social snapshot; final aesthetic preference remains user-owned."
+        }
+      }
+    },
+    {
+      "arm_id": "arm-02-rooftop-overhead",
+      "generation_status": "safety_block",
+      "moderation_stage": "output",
+      "moderation_category": "sexual",
+      "request_id": "7b97f5af-2616-484a-87c5-a9f662c1fa91",
+      "image_path": null,
+      "native_and_thumbnail_inspected": false,
+      "hard_gate_summary": {
+        "passed": 0,
+        "failed": 0,
+        "not_evaluated": 9,
+        "total": 9,
+        "verdict": "not_qualified_no_render"
+      },
+      "root_evidence": [
+        "The composed-prompt and serialized render-request audits passed before generation.",
+        "The only permitted image call was blocked at output moderation, so no pixel evidence exists for close overhead geometry, draping blush, 0.5x recession, or glossy lip film.",
+        "No retry or fallback was performed; not evaluated is not a zero-quality score."
+      ],
+      "optional_observations": {
+        "zero_point_five_x_recession": {"status": "not_evaluated"},
+        "continuous_glossy_lip_film": {"status": "not_evaluated"}
+      }
+    },
+    {
+      "arm_id": "arm-03-greenhouse-occlusion",
+      "generation_status": "success",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-03-greenhouse-occlusion/final.png",
+      "image_sha256": "4cafa6ec3628e576d45e311f4c5624c26d3488ecda4f27615f51db3b5b0b62a4",
+      "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-korean-emotional-semantics-three-arm-v1/arm-03-greenhouse-occlusion/thumbnail.png",
+      "native_and_thumbnail_inspected": true,
+      "hard_gate_summary": {
+        "passed": 5,
+        "failed": 0,
+        "not_evaluated": 0,
+        "total": 5,
+        "verdict": "pass"
+      },
+      "root_evidence": [
+        "One clearly adult subject remains legible through hair, jaw, lips, hands, clothing, posture, and frontal orientation.",
+        "A broad pressed fern held by the raised hand physically overlaps both eyes and the nose bridge while surrounding head structure remains visible.",
+        "The other hand holds a blank envelope at an open specimen drawer; drawers, hanging plants, and rain-wet glass establish an unfinished greenhouse seed-library action.",
+        "Sharp exposure and a fully framed head show that the occlusion is caused by the fern rather than crop, focus failure, blur, or silhouette."
+      ],
+      "optional_observations": {
+        "adult_first_love_nostalgia": "partial",
+        "clear_serene_softness": "supported",
+        "airy_delicate_styling_without_body_inference": "partial",
+        "soft_milky_low_contrast_grading": "partial",
+        "single_photodump_member_feeling": "partial"
+      }
+    }
+  ],
+  "aggregate": {
+    "image_calls": 3,
+    "successful_renders": 2,
+    "blocked_renders": 1,
+    "retries": 0,
+    "fallbacks": 0,
+    "cross_arm_inputs_used": false,
+    "requested_hard_gates": 27,
+    "evaluated_hard_gates": 18,
+    "passed_hard_gates": 18,
+    "failed_hard_gates": 0,
+    "not_evaluated_hard_gates": 9,
+    "rendered_arm_qualification": "2/2 rendered arms passed all hard gates",
+    "three_arm_suite_verdict": "incomplete_due_to_one_generation_block",
+    "user_aesthetic_judgment": "pending"
+  }
+}
