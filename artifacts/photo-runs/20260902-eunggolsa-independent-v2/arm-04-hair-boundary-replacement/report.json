@@ -1,0 +1,101 @@
+{
+  "contract_version": "photo-independent-arm-report/v2",
+  "arm_id": "arm-04-hair-boundary-replacement",
+  "overall_status": "fail",
+  "status_boundaries": {
+    "frozen_input_hashes": "pass",
+    "v6_candidate_pack": "pass",
+    "composed_prompt_audit": "pass",
+    "exact_runtime_request_audit": "pass",
+    "built_in_image_generation": "success",
+    "strict_pixel_qualification": "fail",
+    "requesting_user_judgment": "not_yet_received"
+  },
+  "concept": "An unmistakably adult evening-fashion subject gathers long dark wavy hair into an unfinished low twist at a rain-softened riverside art-center loggia, intending the hair motion to reveal one bounded upper-back and outer-shoulder interval above a fully opaque bronze silk-crepe dress.",
+  "random_seed": 15041038298135350933,
+  "candidate_pack_version": "v6",
+  "pack_id": "10a1d91f173d0270",
+  "authorial_core_sha256": "f158d4c71aa5c955bb8e3d2370c41bbed9a89e1b62a740ca602aa3a035271637",
+  "intent_lock_sha256": "74c467083a547bca43948cddb79f961b2554d16fbc3618f4b1d653f21dc7f42e",
+  "visual_intent_sha256": "f9eed0567c39c0f0ecb6634c0654a364d0eaebaa47cf50d7d34a79a9e20de8bd",
+  "effective_visual_contract_sha256": "1c9489f78ccf5ef2653cd8107589539089c4027d8e0ccb0cb6407e20cb29087e",
+  "assigned_profile": "adult_everyday_controlled_reveal_moment",
+  "runtime_label_policy": {
+    "broad_request_label_absent": true,
+    "registry_labels_absent": true,
+    "verified_by": "render_request_audit.json"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "allowed_scope": [
+      "visible adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ],
+    "inference_boundary": "No identity, same-person, biometric, protected-trait, health, attractiveness, personality, occupation, ethnicity, nationality, or relationship inference was made."
+  },
+  "image_generation": {
+    "tool": "builtin_image_gen",
+    "call_count": 1,
+    "retry_count": 0,
+    "fallback_used": false,
+    "reference_attached": true,
+    "runtime_prompt_id": "685e46a4653b609f",
+    "default_output_path": "/Users/chasoik/.codex/generated_images/01a062a1-2508-75f0-81f6-b6723259a4e2/exec-a9178565-2642-4482-af00-820f727b1ddd.png",
+    "final_image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-04-hair-boundary-replacement/final.png",
+    "final_image_sha256": "d5b3f7dce88e9f2baa0f109a23710665a9fcf823f50de422b8aad7546d9e61d6",
+    "final_dimensions": {
+      "width": 1054,
+      "height": 1492
+    },
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-04-hair-boundary-replacement/thumbnail.png",
+    "thumbnail_sha256": "2e2e3a5114fcc93e510264a7f35dee8bd7ac0a8b372466f5bcb608632ecf9b3d",
+    "thumbnail_dimensions": {
+      "width": 271,
+      "height": 384
+    }
+  },
+  "pixel_gate_tally": {
+    "total": 9,
+    "pass": 7,
+    "fail": 2,
+    "partial_or_missing_counted_as_fail": true
+  },
+  "failed_profile_gates": [
+    {
+      "gate_id": "vo_everyday_reveal_action_boundary_causality",
+      "reason": "The right hand holds hair, but the second hand is hidden and the opaque dress edge is already open; the pixels do not fully prove that the hand action changes the exact boundary."
+    },
+    {
+      "gate_id": "vo_everyday_reveal_counterfactual_necessity",
+      "reason": "The broad open-back dress remains a strong fashion proposition if the held hair is released, so the controlled reveal is not uniquely necessary."
+    }
+  ],
+  "supplemental_input_constraint_failures": [
+    {
+      "constraint": "both visible hands gather the long hair",
+      "reason": "Only the right hand is visibly resolved; the left forearm is visible but the left hand is occluded behind the head and hair."
+    }
+  ],
+  "preflight_warnings": [
+    "The 406-word final prompt exceeds the 360-word concise recommendation but remains below the 428-word evidence-adjusted recommendation and the absolute 640-word limit.",
+    "Four mandatory intent anchors were preserved by literal free description; the auditor reports these as non-blocking uncovered-intent notices."
+  ],
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "source_snapshot_sha256": "cf87f8ac42c40a3dbd26f5dede3c7127c6bb90d8d9443425fbe8680bda7b3415",
+    "image_call_count": 1
+  },
+  "audit_artifacts": {
+    "composed_prompt": "composed_prompt.json",
+    "composed_audit": "composed_audit.json",
+    "render_request": "render_request.json",
+    "render_request_audit": "render_request_audit.json",
+    "render_review": "render_review.json",
+    "render_review_audit": "render_review_audit.json",
+    "run_manifest": "run_manifest.json",
+    "run_ledger": "image_runs.ndjson"
+  }
+}

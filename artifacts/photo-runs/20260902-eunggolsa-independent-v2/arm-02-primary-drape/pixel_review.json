@@ -1,0 +1,93 @@
+{
+  "schema_version": "photo-independent-pixel-review/v1",
+  "arm_id": "arm-02-primary-drape",
+  "pack_id": "b007486abea99000",
+  "effective_visual_contract_sha256": "44bcdf3697eb9988ecb9746fa7967184cdc2a4905fd43427f832a59b04e076ad",
+  "profile_id": "strategic_coverage_figure_study",
+  "render_status": "safety_block",
+  "technical_pixel_verdict": "UNSCORED",
+  "verdict_reason": "The sole image-generation call returned no image because output moderation blocked it. There are no native pixels or derived thumbnail pixels to inspect.",
+  "result_image_path": null,
+  "result_image_sha256": null,
+  "native_review": {
+    "status": "not_run_no_pixels",
+    "dimensions": null
+  },
+  "thumbnail_review": {
+    "status": "not_run_no_pixels",
+    "required_max_long_edge_px": 384,
+    "path": null,
+    "sha256": null,
+    "dimensions": null
+  },
+  "hard_gates": [
+    {
+      "id": "vo_figure_coverage_adult_holistic",
+      "review_scale": "both",
+      "description": "One unmistakably adult figure remains the complete study subject without youthful coding.",
+      "status": "unscored",
+      "evidence": "No rendered native or thumbnail pixels exist; this gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_primary_carrier",
+      "review_scale": "both",
+      "description": "One opaque drape, wrap, limb, hair mass, or physically integrated foreground form is the primary visible carrier of continuous non-explicit coverage.",
+      "status": "unscored",
+      "evidence": "No rendered native or thumbnail pixels exist; this gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_stable_opaque_path",
+      "review_scale": "both",
+      "description": "One continuous opaque coverage path remains stable over non-explicit anatomy at thumbnail and native scale.",
+      "status": "unscored",
+      "evidence": "No rendered native or thumbnail pixels exist; this gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_nonredundant_necessity",
+      "review_scale": "both",
+      "description": "No separate fully opaque full-body garment already supplies the same coverage; removing the primary carrier would erase the strategic-coverage proposition.",
+      "status": "unscored",
+      "evidence": "No rendered native or thumbnail pixels exist; this gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_contour_continuity",
+      "review_scale": "native",
+      "description": "Body contour continues plausibly around both edges of the occluding form rather than disappearing behind a pasted blocker.",
+      "status": "unscored",
+      "evidence": "No rendered native pixels exist; this native-scale gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_light_negative_space",
+      "review_scale": "thumbnail",
+      "description": "Directional light and continuous body-bounded negative space model three-dimensional form.",
+      "status": "unscored",
+      "evidence": "No thumbnail pixels exist; this thumbnail-scale gate was not evaluated and is not counted as a failure."
+    },
+    {
+      "id": "vo_figure_coverage_complete_pose",
+      "review_scale": "both",
+      "description": "Head, torso, support, limbs, and pose remain readable together without a fragmented body-part crop.",
+      "status": "unscored",
+      "evidence": "No rendered native or thumbnail pixels exist; this gate was not evaluated and is not counted as a failure."
+    }
+  ],
+  "gate_tally": {
+    "total": 7,
+    "scored": 0,
+    "pass": 0,
+    "fail": 0,
+    "unscored": 7
+  },
+  "verdict_rule": {
+    "one_saved_image_is_the_scoring_unit": true,
+    "all_required_gates_must_pass_for_pixel_pass": true,
+    "partial_or_missing_component_in_a_returned_image": "fail",
+    "blocked_or_no_image": "unscored",
+    "unscored_is_not_zero": true,
+    "prompt_or_runtime_pass_is_not_pixel_pass": true
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  }
+}

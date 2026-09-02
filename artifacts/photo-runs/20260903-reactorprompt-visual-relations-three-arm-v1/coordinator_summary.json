@@ -1,0 +1,83 @@
+{
+  "schema_version": "photo-independent-three-arm-summary/v1",
+  "run_id": "20260903-reactorprompt-visual-relations-three-arm-v1",
+  "source_revision": "6ceb5087c47cc3b8f17ebff8db313755cdda9c9e",
+  "request_sha256": "d5f8e25596cfbbab7ac268adfe8a4659b417001c5e0bdb26820038ce64a46486",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "scope": "visible adult appearance only"
+  },
+  "isolation": {
+    "independent_subagent_count": 3,
+    "authorial_core_frozen_before_project_pack": true,
+    "generation_calls_per_arm": 1,
+    "retry_count_per_arm": 0,
+    "fallback_count_per_arm": 0,
+    "cross_arm_inputs_used": false
+  },
+  "verdict_policy": {
+    "all_required_gates_same_saved_image": true,
+    "partial_is_fail": true,
+    "invisible_required_region": "UNSCORED",
+    "user_judgment": "PENDING"
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "profile_id": "patterned_cast_shadow_receiver_continuity",
+      "concept": "Rain-cleared lighthouse Fresnel service gallery with a perforated-screen prismatic lattice crossing wall, adult, carriage, and wet floor",
+      "pack_id": "ea3eb69c78170488",
+      "canonical_core_sha256": "6b621b99277fbf021d7e4e0e28479883a4403fe632fbe944dd5f93a00f3bc534",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/final.png",
+      "image_sha256": "d02c27a7737c8985dcae3e9a8ce65dfc7abd1b32c0e00e06869adc6864421d75",
+      "passed_gate_count": 5,
+      "required_gate_count": 5,
+      "verdict": "PASS"
+    },
+    {
+      "arm_id": "arm-b",
+      "profile_id": "two_adult_shared_target_handoff",
+      "concept": "Blue-hour subterranean reservoir with two separate adults transferring one lit amber hurricane lantern across a water gap",
+      "pack_id": "91558cffadf78cd9",
+      "canonical_core_sha256": "ea9c4729f9c71c31e177980b4157869832c58d4a917089dff5a82ac58d55924b",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-b/final.png",
+      "image_sha256": "6e63da6d476095d7b6da94cd67541781cf8afdbd31f6f3e96e0485a7a798c111",
+      "passed_gate_count": 3,
+      "required_gate_count": 5,
+      "failed_gate_ids": [
+        "vo_handoff_giver_release",
+        "vo_handoff_receiver_alignment"
+      ],
+      "failure": "The rendered giver and receiver direction is reversed and the frozen overlapping release contact is absent.",
+      "verdict": "FAIL"
+    },
+    {
+      "arm_id": "arm-c",
+      "profile_id": "satin_directional_luster_drape_surface",
+      "concept": "Predawn moving car-ferry fashion portrait with a copper-red silk-satin mantle gown loaded by a crosswind",
+      "pack_id": "9f86c5bea0dc8e56",
+      "canonical_core_sha256": "46c6807449a81aa1993e911a72f763ee24a8be2bb261e6fa98804cd8b96aa04e",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-c/final.png",
+      "image_sha256": "be8447739bbc40d677306f61f0c648e7495043dd3533c121cab8008270f3d2f7",
+      "passed_gate_count": 5,
+      "required_gate_count": 5,
+      "verdict": "PASS"
+    }
+  ],
+  "aggregate": {
+    "passed_gate_count": 13,
+    "required_gate_count": 15,
+    "all_of_profile_pass_count": 2,
+    "profile_count": 3,
+    "render_fidelity": "FAIL",
+    "decision": "REVISE_HANDOFF_ROLE_SALIENCE_AND_REQUALIFY"
+  },
+  "evidence_layers": {
+    "package": "PASS",
+    "prompt": "PASS",
+    "generation": "PASS",
+    "render": "FAIL",
+    "requesting_user_judgment": "UNSCORED"
+  }
+}

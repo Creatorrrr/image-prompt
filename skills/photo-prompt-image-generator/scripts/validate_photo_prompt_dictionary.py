@@ -15,6 +15,7 @@ from prompt_generator import (
     RESEARCH_EXTENSION_FILENAMES as TAXONOMY_EXTENSION_FILENAMES,
     VALID_PRESET_DOMAINS,
     VALID_SUBJECT_CATEGORIES,
+    VISUAL_RELATION_CONTRACT_VERSION,
     load_json,
     load_visual_obligation_registry,
     load_visual_profile_index,
@@ -2814,13 +2815,149 @@ def validate_slot_applicability(data: dict[str, Any], errors: list[str]) -> None
                 errors.append(f"slot_applicability.slots.{slot}.{key}: must be a boolean")
 
 
+def validate_visual_relation_contract(
+    relation: Any,
+    label: str,
+    errors: list[str],
+) -> None:
+    if not isinstance(relation, dict):
+        errors.append(f"{label}: must be an object")
+        return
+    allowed_keys = {
+        "schema_version",
+        "status",
+        "source",
+        "owner_axis",
+        "entities",
+        "visible_regions",
+        "relations",
+        "observable_effects",
+        "confusion_negatives",
+        "observability",
+        "activation",
+        "invariant_fields",
+        "flexible_fields",
+    }
+    unknown = sorted(set(relation) - allowed_keys)
+    if unknown:
+        errors.append(f"{label}: unknown keys {unknown}")
+    if relation.get("schema_version") != VISUAL_RELATION_CONTRACT_VERSION:
+        errors.append(
+            f"{label}.schema_version: expected {VISUAL_RELATION_CONTRACT_VERSION!r}"
+        )
+    if relation.get("status") not in {"request_scoped", "advisory"}:
+        errors.append(f"{label}.status: must be request_scoped or advisory")
+    if re.fullmatch(r"[a-z][a-z0-9_]+", str(relation.get("owner_axis") or "")) is None:
+        errors.append(f"{label}.owner_axis: must be one stable snake_case owner")
+
+    source = relation.get("source")
+    if not isinstance(source, dict) or set(source) != {
+        "kind",
+        "literal_evidence",
+        "priority",
+        "confidence",
+    }:
+        errors.append(
+            f"{label}.source: keys must be kind, literal_evidence, priority, confidence"
+        )
+    else:
+        if source.get("kind") not in {
+            "request_exact",
+            "authorial_core",
+            "reference_observation",
+            "advisory_candidate",
+        }:
+            errors.append(f"{label}.source.kind: invalid source kind")
+        if source.get("priority") not in {"P0", "P1", "P2"}:
+            errors.append(f"{label}.source.priority: invalid priority")
+        if source.get("confidence") not in {"high", "medium", "low"}:
+            errors.append(f"{label}.source.confidence: invalid confidence")
+        if not normalize_list(source.get("literal_evidence")):
+            errors.append(f"{label}.source.literal_evidence: must be non-empty")
+
+    for key in (
+        "entities",
+        "visible_regions",
+        "relations",
+        "observable_effects",
+        "confusion_negatives",
+        "invariant_fields",
+        "flexible_fields",
+    ):
+        values = normalize_list(relation.get(key))
+        if not values or len(set(values)) != len(values):
+            errors.append(f"{label}.{key}: must be non-empty and distinct")
+
+    observability = relation.get("observability")
+    expected_observability_keys = {
+        "required_visible_regions",
+        "minimum_review_scale",
+        "crop_policy",
+        "occlusion_policy",
+        "proof_budget",
+        "ineligible_state",
+    }
+    if not isinstance(observability, dict) or set(observability) != expected_observability_keys:
+        errors.append(
+            f"{label}.observability: keys must be {sorted(expected_observability_keys)}"
+        )
+    else:
+        required_regions = normalize_list(
+            observability.get("required_visible_regions")
+        )
+        visible_regions = set(normalize_list(relation.get("visible_regions")))
+        if not required_regions or not set(required_regions) <= visible_regions:
+            errors.append(
+                f"{label}.observability.required_visible_regions: must be a non-empty subset of visible_regions"
+            )
+        if observability.get("minimum_review_scale") not in {
+            "thumbnail",
+            "native",
+            "both",
+        }:
+            errors.append(f"{label}.observability.minimum_review_scale: invalid value")
+        for key in ("crop_policy", "occlusion_policy"):
+            if len(str(observability.get(key) or "").split()) < 4:
+                errors.append(f"{label}.observability.{key}: must be concrete")
+        proof_budget = observability.get("proof_budget")
+        if not isinstance(proof_budget, dict) or set(proof_budget) != {
+            "thumbnail",
+            "native",
+        }:
+            errors.append(
+                f"{label}.observability.proof_budget: must declare thumbnail and native"
+            )
+        elif any(
+            len(str(proof_budget.get(key) or "").split()) < 3
+            for key in ("thumbnail", "native")
+        ):
+            errors.append(
+                f"{label}.observability.proof_budget: both scales must be concrete"
+            )
+        if observability.get("ineligible_state") != "UNSCORED":
+            errors.append(f"{label}.observability.ineligible_state: must be UNSCORED")
+
+    activation = relation.get("activation")
+    expected_activation_keys = {
+        "hard_only_from_exact_source",
+        "embedding_only_is_advisory",
+        "all_required_components_coexist",
+    }
+    if not isinstance(activation, dict) or set(activation) != expected_activation_keys:
+        errors.append(
+            f"{label}.activation: keys must be {sorted(expected_activation_keys)}"
+        )
+    elif any(activation.get(key) is not True for key in expected_activation_keys):
+        errors.append(f"{label}.activation: every guard must be true")
+
+
 def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
     if not path.exists():
         errors.append(f"visual obligation registry missing: {path}")
         return
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        payload = load_visual_obligation_registry(path)
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
         errors.append(f"visual obligation registry is not valid JSON: {exc}")
         return
     if not isinstance(payload, dict):
@@ -2837,6 +2974,13 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
             errors.append(
                 f"visual obligation registry.{field}: expected {expected!r}"
             )
+    if payload.get("relation_contract_version") not in {
+        None,
+        VISUAL_RELATION_CONTRACT_VERSION,
+    }:
+        errors.append(
+            "visual obligation registry.relation_contract_version: invalid value"
+        )
     precedence = normalize_list(payload.get("precedence"))
     if not precedence or len(set(precedence)) != len(precedence):
         errors.append("visual obligation registry.precedence: must be non-empty and distinct")
@@ -2928,6 +3072,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         "evidence_requirements",
         "render_gates",
         "reject_substitutes",
+        "visual_relation",
     }
     for index, profile in enumerate(profiles):
         label = f"visual obligation registry.profiles[{index}]"
@@ -3327,6 +3472,12 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         rejects = normalize_list(profile.get("reject_substitutes"))
         if not rejects or len(set(rejects)) != len(rejects):
             errors.append(f"{label}.reject_substitutes: must be non-empty and distinct")
+        if "visual_relation" in profile:
+            validate_visual_relation_contract(
+                profile.get("visual_relation"),
+                f"{label}.visual_relation",
+                errors,
+            )
 
     thigh_profile = next(
         (

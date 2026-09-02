@@ -1,0 +1,74 @@
+{
+  "schema_version": "photo-coordinator-pixel-review/v1",
+  "arm_id": "arm-b",
+  "profile_id": "two_adult_shared_target_handoff",
+  "reviewer": "root coordinator independent pixel review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-b/final.png",
+  "result_sha256": "6e63da6d476095d7b6da94cd67541781cf8afdbd31f6f3e96e0485a7a798c111",
+  "inspection_artifacts": {
+    "native": {
+      "width": 1536,
+      "height": 1024
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-b/thumbnail.png",
+      "sha256": "990483b33c43841a8a9d3ac7f659584bf4746cb797078b7dae8dd97dc5c717b8",
+      "width": 512,
+      "height": 341
+    }
+  },
+  "review_policy": {
+    "all_required_gates_same_saved_image": true,
+    "partial_is_fail": true,
+    "invisible_required_region": "UNSCORED"
+  },
+  "hard_gates": [
+    {
+      "id": "vo_handoff_two_adults_separate",
+      "status": "pass",
+      "scale": "both",
+      "evidence": "Two separately legible adults occupy opposite sides with distinct hair, clothing, silhouettes, and unobstructed faces and torsos."
+    },
+    {
+      "id": "vo_handoff_one_shared_object",
+      "status": "pass",
+      "scale": "both",
+      "evidence": "Exactly one complete lit hurricane lantern is centered between the adults and is the sole target of both actors' attention."
+    },
+    {
+      "id": "vo_handoff_giver_release",
+      "status": "fail",
+      "scale": "native",
+      "evidence": "The right adult still pinches the lantern bail and supports its base, while the reference-guided left adult merely reaches toward empty space; the specified left giver's fingertips are not releasing the shared object and overlapping transfer contact is absent."
+    },
+    {
+      "id": "vo_handoff_receiver_alignment",
+      "status": "fail",
+      "scale": "both",
+      "evidence": "The frozen receiver is the right adult, but that adult already holds the bail and supports the base while the left adult reaches toward the object; the specified receiver alignment and visible left-to-right response are reversed."
+    },
+    {
+      "id": "vo_handoff_hand_ownership",
+      "status": "pass",
+      "scale": "native",
+      "evidence": "All visible hands and wrists remain anatomically attributable to one of the two adults, without ownerless or fused hands."
+    }
+  ],
+  "overall_profile_verdict": "FAIL",
+  "passed_gate_count": 3,
+  "required_gate_count": 5,
+  "locked_event_verdict": {
+    "status": "fail",
+    "evidence": "The frozen left-to-right giver-receiver mapping is reversed: the right adult presents and supports the lantern while the left adult reaches to receive it."
+  },
+  "appearance_reference_observation": {
+    "scope": "visible adult appearance only",
+    "status": "pass",
+    "evidence": "The left adult visibly carries long dark wavy hair, a near-center part, dark eyes, and a black upper garment from the supplied appearance cues; the second adult remains visually distinct.",
+    "prohibited_inferences_made": []
+  },
+  "user_judgment": {
+    "status": "PENDING",
+    "source": "not_yet_received"
+  }
+}

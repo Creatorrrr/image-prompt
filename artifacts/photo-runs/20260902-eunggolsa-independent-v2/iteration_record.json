@@ -1,0 +1,289 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": ".agents/skills/photo-prompt-image-generator",
+    "baseline_revision": "c0da6e796d32ce850f3156d93afa5e54e54cc47d",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Improve the visual semantics and candidate-pack behavior that previously produced no visible subtle adult controlled-reveal effect, then create and strictly test three new independently authored images."
+  },
+  "evidence": [
+    {
+      "id": "e-user-motivating",
+      "kind": "user-judgment",
+      "claim": "The requesting user judged the prior generated image as having no visible 은꼴 element.",
+      "artifact": "requesting-user message: 만들어진 이미지에 은꼴 요소는 뭐야? 그런 부분이 없어보이는데"
+    },
+    {
+      "id": "e-source-fix",
+      "kind": "source-observation",
+      "claim": "The controlled-reveal profile now requires bounded target, action-boundary causality, thumbnail dual salience and counterfactual necessity; strategic coverage now requires a primary nonredundant carrier; focal uncovered meaning fails closed before rendering.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json sha256=0afb5ef87c0fb727df9cbf4b9c769fd01963f4740ebda1f96dfc9ce01bc493e9 and skills/photo-prompt-image-generator/SKILL.md sha256=3fd5c0c0a1a4c2307483c45e93385b2e792d4536199a038a2b4f35cb1a7df860"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Dictionary validation, registry-bound visual index validation and all 12 focused suggestive-editorial tests passed after rebuilding the semantic and visual indexes.",
+      "artifact": "validate_photo_prompt_dictionary.py => valid; build_visual_profile_index.py --check => 333 profiles and 1707 exact terms; tests.test_photo_suggestive_editorial_visual_semantics => 12 tests OK"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All four independent attempts produced one v6 pack with active request-scoped hard visual obligations and passed composed and exact runtime request audits; advisory word-count or uncovered-intent notices remained separate.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-*/composed_audit.json and render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "Three independent one-call arms returned saved images and one primary-drape arm was output-moderation-blocked as sexual with no pixels; no retry or fallback occurred.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/coordination/root_pixel_review.json attempt_summary"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "Root native and thumbnail review qualified arm-01 at 14/14, failed arm-03 at 12/14 and arm-04 at 7/9, and kept arm-02 unscored at 0/0/7.",
+      "artifact": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/coordination/root_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Each delivered image must visibly realize every active narrow adult non-explicit relation at its declared native or thumbnail scale; the action must cause the exact salient boundary and the focal proposition must fail if that boundary is removed.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "invariant-adult-nonexplicit",
+        "statement": "Every subject reads unmistakably adult and every image remains non-explicit and fashion-led.",
+        "evidence_ids": [
+          "e-source-fix",
+          "e-render"
+        ],
+        "causal_controls": [
+          "explicit adult actor",
+          "opaque recognizable garments",
+          "holistic face-action-context framing"
+        ]
+      },
+      {
+        "id": "invariant-causal-boundary",
+        "statement": "A visible self-directed action changes or holds the exact bounded coverage edge rather than occurring beside an existing opening.",
+        "evidence_ids": [
+          "e-source-fix"
+        ],
+        "causal_controls": [
+          "visible hand-to-boundary contact",
+          "bounded target relation",
+          "counterfactual closure or removal check"
+        ]
+      },
+      {
+        "id": "invariant-evidence-boundaries",
+        "statement": "Prompt and runtime PASS, returned pixels, technical pixel gates and requesting-user preference remain separate evidence layers.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-generation",
+          "e-render"
+        ],
+        "causal_controls": [
+          "hash-bound pack and audits",
+          "native and thumbnail review",
+          "user judgment pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "setting",
+      "weather and time",
+      "garment color",
+      "ordinary secondary prop",
+      "lens and camera height"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-arm03-salience",
+      "scale": "global",
+      "axis": "thumbnail focal hierarchy",
+      "source_state": "Face and the hand-changed jacket boundary are the first two readable thumbnail relations.",
+      "render_state": "The bright ivory foundation panel reads before the smaller hand-changed waist boundary.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-arm03-construction",
+      "scale": "local",
+      "axis": "layer construction",
+      "source_state": "Foundation straps, hems, lapels, closures and intersections remain physically traceable.",
+      "render_state": "The foundation top is strapless or its straps are hidden, so the complete declared construction cannot be verified.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    {
+      "id": "mismatch-arm04-causality",
+      "scale": "regional",
+      "axis": "action-boundary causality and necessity",
+      "source_state": "Both hands gather hair and thereby create a boundary whose removal erases the controlled-reveal proposition.",
+      "render_state": "Only one hand is resolved and the already-open back of the dress remains a strong proposition without the hair action.",
+      "evidence_ids": [
+        "e-render"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hypothesis-old-contract-underconstrained",
+      "stage": "representation",
+      "statement": "The prior false positive was enabled because stable edge and exposure evidence did not require a bounded target, causal action, thumbnail salience or counterfactual necessity.",
+      "evidence_ids": [
+        "e-user-motivating",
+        "e-source-fix"
+      ],
+      "falsifier": "The old five-gate contract consistently rejects opaque-over-opaque ordinary portraits and redundant coverage without any new causality or necessity gates."
+    },
+    {
+      "id": "hypothesis-generator-collapses-causality",
+      "stage": "generator-response",
+      "statement": "Even with literal causal evidence, the image generator may preserve an attractive opening while weakening the visible action that uniquely creates it.",
+      "evidence_ids": [
+        "e-generation",
+        "e-render"
+      ],
+      "falsifier": "Fresh independent arms consistently show the exact action-created boundary and pass the counterfactual gate without changing the contract."
+    },
+    {
+      "id": "hypothesis-strategic-coverage-moderation",
+      "stage": "external",
+      "statement": "The primary-drape figure-study wording can trigger output moderation before any pixel qualification, independent of prompt and runtime audit success.",
+      "evidence_ids": [
+        "e-generation"
+      ],
+      "falsifier": "The same frozen permitted prompt returns pixels on repeated independent one-call trials without semantic or safety-language changes."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "Keep broad labels advisory, but require a focal request to bind one fully observable narrow profile before render; require causal boundary, thumbnail salience and counterfactual necessity, and reject redundant coverage carriers.",
+    "generalization_basis": "The rules target observable relations and counterfactual false substitutes rather than one Korean label, one outfit or one test prompt, and are paired with negative-control tests and independent pixel arms.",
+    "hypothesis_ids": [
+      "hypothesis-old-contract-underconstrained",
+      "hypothesis-generator-collapses-causality",
+      "hypothesis-strategic-coverage-moderation"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/SKILL.md",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "tests/test_photo_suggestive_editorial_visual_semantics.py",
+      "docs/analysis/2026-09-02-suggestive-editorial-visual-semantics.md"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-prior-user-rejection",
+        "case_role": "motivating",
+        "status": "fail",
+        "covered_axes": [
+          "requesting-user visible subtle appeal judgment"
+        ],
+        "evidence_ids": [
+          "e-user-motivating"
+        ]
+      },
+      {
+        "id": "heldout-arm01-action-boundary",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "action-boundary causality",
+          "bounded target",
+          "thumbnail salience",
+          "private-room light and material relation"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      },
+      {
+        "id": "heldout-arm03-layer-intersection",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "thumbnail focal hierarchy",
+          "two-layer construction"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      },
+      {
+        "id": "heldout-arm04-hair-boundary",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "hair-action causality",
+          "counterfactual necessity"
+        ],
+        "evidence_ids": [
+          "e-render"
+        ]
+      },
+      {
+        "id": "heldout-arm02-primary-drape",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": [
+          "primary nonredundant coverage carrier",
+          "output moderation boundary"
+        ],
+        "evidence_ids": [
+          "e-generation"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The structural fix and focal-intent binding worked and one new image passed every active gate, but two of three delivered images still lost required causal or construction relations and the strategic-coverage arm produced no pixels. Keep the improvement, do not promote broad render-fidelity success, and await direct user judgment of the three images.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-render"
+    ]
+  }
+}
