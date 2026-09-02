@@ -1,0 +1,82 @@
+{
+  "contract_version": "photo-independent-arm-result/v1",
+  "arm_id": "arm-03-layered-mirror",
+  "seed": 980534469,
+  "concept": "A midnight-blue boutique-hotel dressing-room fashion editorial with one clearly adult fictional subject, an opaque structured satin foundation, a separate crossed charcoal tuxedo layer with a visible toggle, and a fully bounded physical mirror containing the subject, her gripping hand, and one phone in a coherent reflection.",
+  "independence": {
+    "cross_arm_inputs_used": false,
+    "other_arm_files_read": false,
+    "other_arm_messages_used": false,
+    "other_arm_prompts_used": false,
+    "other_arm_images_used": false
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "allowed_scope": [
+      "visible adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ]
+  },
+  "precore": {
+    "authorial_core_file_sha256": "7fcba11889bc52397834adccf0663bdc60b552e5a4afe33ab63d75d314649cf5",
+    "authorial_core_canonical_sha256": "834dd126aab23cdfb7a33dccb1c733935b6ff511d89b1a173a3a2b9a657faf28",
+    "intent_lock_sha256": "56b0c783302bd85f2519f9c2deff1495d164267dc8f65edf292dcbef5c0bafbf",
+    "baseline_word_count": 260,
+    "schema_only_correction": {
+      "initial_file_sha256": "e1ea88319a9c245a2fcbb81a98068484e09d221f1f2fe20daa1a46590dc9067c",
+      "generator_error": "authorial core intent_lock contains unknown dimensions: appearance_reference",
+      "change": "Renamed only the intent-lock dimension key from appearance_reference to reference_use; source request, interpreted meaning, baseline prompt, evidence phrases, and reference scope were unchanged."
+    }
+  },
+  "postcore": {
+    "candidate_pack_version": "v6",
+    "pack_id": "7fab8befa6aca249",
+    "visual_intent_canonical_sha256": "e1bdfc215de8d4c4094b2ba2121ae76a1a70f927d53ac4ce7030c260fc1d8936",
+    "profiles": [
+      "underwear_as_outerwear_layer_system",
+      "mirror_selfie_reflection_device_topology"
+    ],
+    "selected_optional_visual_concepts": [],
+    "selected_creative_candidates": [],
+    "composed_prompt_audit_status": "pass",
+    "runtime_request_audit_status": "pass",
+    "effective_visual_contract_sha256": "5f73dec421a33b2b32aebdb3d6ae24bda3c56359c40f33d214860e65e1f9c604"
+  },
+  "generation": {
+    "tool": "builtin_image_gen",
+    "call_count": 1,
+    "status": "safety_block_no_output",
+    "request_id": "bfeb05e2-4c83-43c3-9193-d63a7e5f5dab",
+    "error_code": "moderation_blocked",
+    "moderation_stage": "input",
+    "moderation_categories": [
+      "sexual"
+    ],
+    "retry_performed": false,
+    "fallback_used": false,
+    "preview_available": false,
+    "final_image_path": null,
+    "thumbnail_path": null
+  },
+  "gate_summary": {
+    "pass_count": 0,
+    "total_count": 10,
+    "fail_count": 0,
+    "unscored_count": 10,
+    "pixel_status": "UNSCORED"
+  },
+  "overall_arm_status": "FAIL",
+  "failure_class": "generation_safety_block",
+  "major_failures": [
+    "The only authorized built-in image generation call was blocked by input moderation before pixels were produced.",
+    "No final.png or thumbnail.png could be truthfully created.",
+    "All ten required visual gates remain UNSCORED; prompt/runtime PASS is not pixel PASS."
+  ],
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}

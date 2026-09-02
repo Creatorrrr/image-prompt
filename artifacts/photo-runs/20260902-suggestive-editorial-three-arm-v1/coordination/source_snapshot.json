@@ -1,0 +1,62 @@
+{
+  "schema_version": "suggestive-editorial-three-arm-source-snapshot/v1",
+  "baseline_revision": "401f450e4c0ec32ef79c502e3c6a6666c9a106c4",
+  "candidate_revision": "working-tree",
+  "request_sha256": "4e68ecbe87c19987be80de87e848e243d14d5c82cf95de6b77f6ce2d70a1b706",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "allowed_scope": [
+      "visible adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ],
+    "forbidden_claims": [
+      "identity",
+      "same-person status",
+      "biometrics",
+      "protected traits",
+      "attractiveness",
+      "personality",
+      "occupation",
+      "ethnicity",
+      "nationality",
+      "relationship"
+    ]
+  },
+  "skill_sha256": "430c10d4b6dab80f70d4758dac9af27e34f33d9a0eb61df2b1ed79b215b9badc",
+  "data_sha256": {
+    "photo_prompt_tags": "998f04d6a4a5ad4c5800a47994e8c8856dca2475a1cf383bc28251faa459c069",
+    "photo_prompt_visual_obligations": "6b19b40368fce62bf16a79ee7aff56b210da5f0623f886f88b18bb7a94a643c2",
+    "photo_prompt_visual_profile_index": "90b10cb1879e47ba85c8cd2e8a7dfbe0f5e80d223ce1d2f7646993ba309870c9",
+    "photo_prompt_semantic_index_manifest": "24ab747a856a74c4f4545b4d0130fd38d5c126eeae0aca63cc746a1672231e5e"
+  },
+  "arms": {
+    "arm-01-window-reveal": {
+      "profile_ids": [
+        "adult_everyday_controlled_reveal_moment",
+        "soft_window_private_room_adult_portrait"
+      ]
+    },
+    "arm-02-figure-coverage": {
+      "profile_ids": ["strategic_coverage_figure_study"]
+    },
+    "arm-03-layered-mirror": {
+      "profile_ids": [
+        "underwear_as_outerwear_layer_system",
+        "mirror_selfie_reflection_device_topology"
+      ]
+    }
+  },
+  "generation_policy": {
+    "independent_arm": true,
+    "single_generation_call": true,
+    "retry_allowed": false,
+    "fallback_allowed": false,
+    "cross_arm_inputs_allowed": false,
+    "partial_or_missing_gate": "fail",
+    "blocked_generation": "unscored",
+    "user_aesthetic_judgment": "pending"
+  }
+}

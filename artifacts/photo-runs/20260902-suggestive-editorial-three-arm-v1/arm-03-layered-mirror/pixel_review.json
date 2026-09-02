@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-visual-obligation-pixel-review/v1",
+  "arm_id": "arm-03-layered-mirror",
+  "pack_id": "7fab8befa6aca249",
+  "prompt_id": "3c521abecd8baa83",
+  "effective_visual_contract_sha256": "5f73dec421a33b2b32aebdb3d6ae24bda3c56359c40f33d214860e65e1f9c604",
+  "render_outcome": {
+    "status": "safety_block",
+    "image_available": false,
+    "preview_available": false,
+    "image_path": null,
+    "thumbnail_path": null,
+    "generation_call_count": 1,
+    "no_retry_performed": true,
+    "tool_request_id": "bfeb05e2-4c83-43c3-9193-d63a7e5f5dab",
+    "tool_error_code": "moderation_blocked",
+    "tool_error_category": "sexual",
+    "tool_error_stage": "input"
+  },
+  "review_policy": {
+    "partial_is_fail_when_pixels_exist": true,
+    "missing_component_is_fail_when_pixels_exist": true,
+    "absent_render_is_unscored": true,
+    "prompt_or_runtime_pass_is_not_pixel_pass": true
+  },
+  "hard_gates": [
+    {
+      "id": "vo_social_mirror_physical_plane",
+      "review_scale": "thumbnail",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_social_mirror_subject_and_phone_inside",
+      "review_scale": "both",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_social_mirror_hand_device_contact",
+      "review_scale": "native",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_social_mirror_gaze_occlusion_coherent",
+      "review_scale": "both",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_social_mirror_not_direct_or_software",
+      "review_scale": "native",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_outerwear_layer_adult_subject",
+      "review_scale": "both",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_outerwear_layer_foundation",
+      "review_scale": "thumbnail",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_outerwear_layer_separate_outer",
+      "review_scale": "thumbnail",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_outerwear_layer_intersections",
+      "review_scale": "native",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    },
+    {
+      "id": "vo_outerwear_layer_fashion_context",
+      "review_scale": "both",
+      "status": "UNSCORED",
+      "evidence": "No generated preview or saved pixel artifact exists."
+    }
+  ],
+  "summary": {
+    "expected_gate_count": 10,
+    "pass_count": 0,
+    "fail_count": 0,
+    "unscored_count": 10,
+    "pixel_status": "UNSCORED",
+    "qualification_status": "FAIL"
+  },
+  "user_judgment": {
+    "status": "pending",
+    "source": "not_yet_received"
+  }
+}
