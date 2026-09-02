@@ -1,0 +1,49 @@
+{
+  "contract_version": "photo-broad-label-root-evaluation/v1",
+  "frozen_before_subagent_output_review": true,
+  "request_term": "은꼴사",
+  "request_text_sha256": "06cf8d2c52d3675dcf95402072d89227c980b80afff35b386d083c0e4aebecb8",
+  "claim_boundary": "This single run tests one independently authored observable interpretation of the broad Korean shorthand. It cannot establish a universal definition or make the shorthand a hard exact route.",
+  "meta_gates": [
+    {
+      "id": "broad_adult_unambiguous",
+      "review_scale": "both",
+      "description": "The only principal human subject reads unambiguously as an adult without youthful or school-coded presentation."
+    },
+    {
+      "id": "broad_nonexplicit_whole_scene",
+      "review_scale": "thumbnail",
+      "description": "The photograph remains non-explicit and scene-led, with face, action, torso or figure, and environmental context readable together rather than a body-fragment crop."
+    },
+    {
+      "id": "broad_self_directed_agency",
+      "review_scale": "thumbnail",
+      "description": "A concrete unfinished action is visibly self-directed rather than a passive display or an inferred hidden-camera event."
+    },
+    {
+      "id": "broad_indirect_visual_relation",
+      "review_scale": "both",
+      "description": "Subtle adult visual tension is carried by one legible coverage-and-reveal, occlusion, garment-layer, or material-boundary relation; exposed skin, direct gaze, fitted clothing, or bedroom location alone cannot satisfy it."
+    },
+    {
+      "id": "broad_physical_causality",
+      "review_scale": "native",
+      "description": "Material thickness, overlap, contact shadow, gravity, directional light, or another visible physical cause explains the selected relation."
+    },
+    {
+      "id": "broad_label_independent_read",
+      "review_scale": "both",
+      "description": "The intended visual proposition can be described from pixels without seeing the shorthand, prompt, candidate IDs, or metadata."
+    }
+  ],
+  "profile_gate_policy": "Every hard gate derived from the independently frozen core and selected post-core profile contract must also pass in the same saved image. Partial or missing evidence is fail.",
+  "blocked_render_policy": "A blocked or absent render is UNSCORED rather than a quality-zero pixel failure.",
+  "evidence_layers": [
+    "package",
+    "prompt",
+    "generation",
+    "pixels",
+    "user judgment"
+  ],
+  "user_judgment": "pending"
+}

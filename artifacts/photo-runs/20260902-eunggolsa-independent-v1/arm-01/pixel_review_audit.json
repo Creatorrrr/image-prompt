@@ -1,0 +1,35 @@
+{
+  "schema_version": "photo-pixel-review-audit/v1",
+  "pack_id": "3ee26db0dbedd511",
+  "review_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/pixel_review.json",
+  "reviewed_image_sha256": "98ad93acd4cf3206598c9848f52eaac8aca4b5e4343a3b1b8b6648d720d81f58",
+  "record_validation_status": "pass",
+  "pixel_qualification_status": "fail",
+  "partial_is_fail": true,
+  "all_intent_anchor_gates_recorded": true,
+  "profile_derived_hard_gate_count": 0,
+  "unscored_hard_gate_count": 0,
+  "applicable_project_review_auditor": null,
+  "auditor_applicability": [
+    {
+      "auditor": "audit_moe_render_review.py",
+      "applicable": false,
+      "reason": "The pack contains neither an enabled moe_response contract nor an effective visual-obligation contract; chosen_visual_concept_ids is empty."
+    },
+    {
+      "auditor": "audit_image_render_review.py",
+      "applicable": false,
+      "reason": "The pack and core contain no render_repair contract."
+    }
+  ],
+  "checks": {
+    "result_path_exists": true,
+    "result_sha256_matches": true,
+    "thumbnail_path_exists": true,
+    "thumbnail_sha256_matches": true,
+    "native_and_thumbnail_evidence_present_for_every_both_scale_gate": true,
+    "hard_gate_status_vocabulary_is_pass_or_fail_only": true,
+    "user_judgment_source_is_not_yet_received": true
+  },
+  "boundary": "No repository review script applies to a pack without moe_response, effective visual obligations, or render_repair. This audit checks record completeness and provenance only; the recorded pixel observations remain manual evidence and requester aesthetic judgment remains pending."
+}

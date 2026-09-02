@@ -1,0 +1,63 @@
+{
+  "contract_version": "photo-independent-source-snapshot/v1",
+  "run_id": "20260902-eunggolsa-independent-v1",
+  "baseline_revision": "c0da6e796d32ce850f3156d93afa5e54e54cc47d",
+  "worktree_note": "Unrelated untracked research files were present and are excluded from this run.",
+  "request": {
+    "request_envelope_path": "artifacts/photo-runs/20260902-eunggolsa-independent-v1/arm-01/request_envelope.json",
+    "request_envelope_file_sha256": "4d48f2029e4c0ccecfd4ee4601780fcf3e1bd94af26547d77475ee05f71acf0e",
+    "request_text_sha256": "06cf8d2c52d3675dcf95402072d89227c980b80afff35b386d083c0e4aebecb8"
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "provenance": "user_supplied_in_immediately_preceding_test_request",
+    "allowed_scope": [
+      "visible adult facial proportions",
+      "long dark wavy hair",
+      "visible natural skin texture"
+    ],
+    "forbidden_claims": [
+      "identity",
+      "same-person status",
+      "biometrics",
+      "protected traits",
+      "health",
+      "attractiveness",
+      "personality",
+      "occupation",
+      "ethnicity",
+      "nationality",
+      "relationship"
+    ]
+  },
+  "implementation_snapshot": {
+    "skill_sha256": "430c10d4b6dab80f70d4758dac9af27e34f33d9a0eb61df2b1ed79b215b9badc",
+    "tags_sha256": "998f04d6a4a5ad4c5800a47994e8c8856dca2475a1cf383bc28251faa459c069",
+    "visual_obligations_sha256": "6b19b40368fce62bf16a79ee7aff56b210da5f0623f886f88b18bb7a94a643c2",
+    "visual_profile_index_sha256": "90b10cb1879e47ba85c8cd2e8a7dfbe0f5e80d223ce1d2f7646993ba309870c9",
+    "semantic_index_manifest_sha256": "24ab747a856a74c4f4545b4d0130fd38d5c126eeae0aca63cc746a1672231e5e"
+  },
+  "independence_policy": {
+    "subagent_count": 1,
+    "precore_allowed_inputs": [
+      "request envelope",
+      "supplied appearance reference",
+      "photo-prompt-image-generator SKILL.md",
+      "imagegen SKILL.md",
+      "general knowledge and independent visual reasoning",
+      "operating-system entropy"
+    ],
+    "precore_forbidden_inputs": [
+      "project assets, references, scripts, registries, indexes, tests, and fixtures",
+      "artifacts from 20260902-suggestive-editorial-three-arm-v1",
+      "any previous composed prompt, candidate pack, image, review, or agent message"
+    ],
+    "postcore_policy": "After freezing the authorial core, the agent may use the current project registry and candidate workflow but may not inspect prior run artifacts.",
+    "image_call_budget": 1,
+    "retry_allowed": false,
+    "fallback_allowed": false,
+    "blocked_render_policy": "UNSCORED, not quality zero"
+  }
+}
