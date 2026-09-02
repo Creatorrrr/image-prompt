@@ -1,0 +1,69 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "bba9810fcee58e55",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "codex-agent-arm-01",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-harem-three-arm-reference-v1/arm-01-multi-interest/final.png",
+  "result_sha256": "6e7bb34f3557601ad4d1e4cc78011ad2de35ba8a903d9c0594928a5744608c70",
+  "review_method": {
+    "source_comparison": "view_image original-detail comparison limited to the specified visible adult appearance axes; no identity or same-person claim",
+    "native_review": "view_image original-detail review of the 1536x1024 final image",
+    "thumbnail_review": "view_image original-detail review of the 384x256 derivative thumbnail",
+    "partial_is_fail": true
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "adult_appearance_reference_no_identity_claim"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-harem-three-arm-reference-v1/arm-01-multi-interest/review-thumbnail.png",
+    "sha256": "250e5e24adf212ba8cac4b9822a1689631b0af8ff8252217c3920a2837862e69",
+    "width": 384,
+    "height": 256
+  },
+  "native_dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "hard_gates": {
+    "vo_harem_modern_one_adult_center": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At thumbnail size, one adult woman is isolated at the visual hub while all three offered objects and all three surrounding adults converge toward her."
+    },
+    "vo_harem_modern_three_adult_partners": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "Three separate adult men remain individually readable around the center, each with a distinct face, body, hand position, and approach side."
+    },
+    "vo_harem_modern_distinct_center_bids": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "The left adult holds an open umbrella over the center, the inner-right adult extends a hot drink with a scarf, and the outer-right adult extends a ticket and route paper toward her."
+    },
+    "vo_harem_modern_overlap_response_awareness": {
+      "status": "fail",
+      "review_scale": "native",
+      "evidence": "The center clearly raises a wait-or-sequence palm, but all three partners look only toward her; no cross-partner glance, paused reaction to another bid, or active mutual spacing adjustment is unambiguously visible."
+    },
+    "vo_harem_modern_not_group_or_relationship_claim": {
+      "status": "pass",
+      "review_scale": "both",
+      "evidence": "Three different object bids converge on the center during her sequencing gesture; the frame does not reduce to a camera-facing friend group, fan crowd, work retinue, two-person triangle, or visibly settled multi-partner bond."
+    }
+  },
+  "technical_gate_summary": {
+    "passed": 4,
+    "failed": 1,
+    "status": "fail"
+  },
+  "appearance_observation": "All four foreground people read as adults. The specified long dark wavy hair, near-center part, dark eyes, natural makeup, and frontal facial proportions appear together only on the central lead; the three partners have short hair and oblique profiles. This is a visible-appearance comparison only, with no identity, same-person, protected-trait, relationship, attractiveness, or occupation inference.",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No direct requesting-user aesthetic or semantic judgment has been received."
+  }
+}

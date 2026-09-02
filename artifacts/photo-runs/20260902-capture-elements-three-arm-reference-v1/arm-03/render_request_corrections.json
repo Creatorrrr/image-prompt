@@ -1,0 +1,58 @@
+{
+  "contract_version": "photo-render-request-correction-ledger/v1",
+  "arm_id": "arm-03",
+  "image_call_count_during_corrections": 0,
+  "attempts": [
+    {
+      "audit_attempt": 1,
+      "status": "fail",
+      "runtime_prompt_id": "c7f0fcf363dc89fa",
+      "reference_count": 0,
+      "failures": [
+        "schema_version",
+        "runtime_negative_binding",
+        "audit_boundary",
+        "composed_prompt_audit_status",
+        "runtime_prompt_audit_status",
+        "audit_inheritance",
+        "references"
+      ],
+      "correction": "Renamed contract_version to schema_version, appended the exact pack negative after an Avoid: prefix in runtime_prompt_en, introduced audit_boundary, and renamed reference_images to references."
+    },
+    {
+      "audit_attempt": 2,
+      "status": "fail",
+      "runtime_prompt_id": "0095611759949865",
+      "reference_count": 1,
+      "negative_matches_pack": true,
+      "failures": [
+        "composed_prompt_audit_status",
+        "runtime_prompt_audit_status",
+        "audit_inheritance"
+      ],
+      "correction": "Moved the audit state declarations into audit_boundary, but the provisional key names were not the canonical schema keys."
+    },
+    {
+      "audit_attempt": 3,
+      "status": "fail",
+      "runtime_prompt_id": "0095611759949865",
+      "reference_count": 1,
+      "negative_matches_pack": true,
+      "failures": [
+        "composed_prompt_audit_status",
+        "runtime_prompt_audit_status",
+        "audit_inheritance"
+      ],
+      "correction": "Replace the provisional boundary keys with composed_prompt_audit_status, runtime_prompt_audit_status, and inherits_composed_prompt_pass."
+    }
+  ],
+  "final_canonical_request": {
+    "audit_status": "pass",
+    "runtime_prompt_id": "ecae4f6f8ae3d936",
+    "negative_matches_pack": true,
+    "reference_count": 1,
+    "effective_visual_contract_sha256": "7476b9df8b188fdd8add0bde6ddc425c9e9f68a3e6c97af525933ea65a550164",
+    "image_call_count_after_final_pass": 1
+  },
+  "boundary": "All attempts were read-only pre-generation audits. No image tool was called and no generated image existed during these corrections."
+}

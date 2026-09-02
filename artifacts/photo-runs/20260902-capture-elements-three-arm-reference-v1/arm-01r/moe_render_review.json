@@ -1,0 +1,53 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "122b8269fba3b4a0",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "arm-01r agent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r/generated_images/quiet-archival-mechanism/arm-01r.png",
+  "result_sha256": "91ebf30df80f0a5fda36bd97afe56c2e2c10e697ab171320578fbde382b0863e",
+  "inspection_scales": {
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r/generated_images/quiet-archival-mechanism/arm-01r-thumbnail.png",
+      "sha256": "c7f7ca65f73f4ed80e83f653c58bb5e465173b34f95bd95749824305af648111",
+      "dimensions": "384x288"
+    },
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r/generated_images/quiet-archival-mechanism/arm-01r.png",
+      "sha256": "91ebf30df80f0a5fda36bd97afe56c2e2c10e697ab171320578fbde382b0863e",
+      "dimensions": "1448x1086"
+    }
+  },
+  "hard_gates": {
+    "vo_capture_pan_tracked_core_readable": {
+      "status": "pass",
+      "evidence": "At the 384-pixel thumbnail, the adult subject's face, hairline, torso, hands, and trolley-mounted mechanism remain readable while the archive wall is motion-softened."
+    },
+    "vo_capture_pan_parallel_background_streaks": {
+      "status": "pass",
+      "evidence": "At thumbnail and 1448-by-1086 native scale, the shelves and wall lights stretch mainly in parallel horizontal bands along the implied left-to-right trolley travel."
+    },
+    "vo_capture_pan_secondary_motion_plausible": {
+      "status": "fail",
+      "evidence": "At both scales, the ribbon, brass gears, trolley wheels, hair, and hands are largely frozen or depth-softened; no clearly directional local or rotational blur is independently readable."
+    },
+    "vo_capture_pan_single_motion_vector": {
+      "status": "fail",
+      "evidence": "At native scale, the background supplies a left-to-right streak vector, but the missing secondary-part blur leaves no independent local motion cue to confirm that same vector."
+    },
+    "vo_capture_pan_not_shake_zoom_or_speed_lines": {
+      "status": "pass",
+      "evidence": "At native scale, the face and apparatus are comparatively sharp against directional environmental smear; the pattern is neither uniform shake nor radial zoom, and no decorative speed lines appear."
+    }
+  },
+  "supplemental_observations": {
+    "package_prompt_pixel_boundary": "The prompt and runtime audits pass, but two required pixel gates fail in the only generated image; no retry is permitted.",
+    "reference_scope": "The source portrait was used only for the allowed visible adult facial and hair features; this review makes no identity or same-person claim."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "No requesting-user judgment has been received."
+  }
+}

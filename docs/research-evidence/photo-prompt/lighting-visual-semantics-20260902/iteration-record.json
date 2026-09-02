@@ -1,0 +1,378 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "986ef4f452ce7efe39818690e19b4e3cd095e292+pre-existing-and-concurrent-working-tree",
+    "candidate_revision": "working-tree-lighting-visual-semantics-implemented-and-evaluated"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "참조 대화에서 조사한 사진 조명 키워드를 바탕으로 시각 의미 데이터와 후보팩을 실제로 강화하고, 첨부 portrait를 보이는 성인 외형 참고로만 사용해 세 독립 arm에서 서로 다른 복합 컨셉을 생성한 뒤 strict pixel gate로 반영 여부를 검증한다."
+  },
+  "evidence": [
+    {
+      "id": "lighting_reference_conversation",
+      "kind": "source-observation",
+      "claim": "참조 대화는 광원, 광질, 방향, 조명 역할, 인물 패턴, 그림자, 하이라이트, 명암 미학, 색온도, 색 품질, 필터, modifier, 자연광, 렌즈 효과, 후보정, 필름 룩과 조합 예시를 포함하는 24개 어휘 범주를 제공했다.",
+      "artifact": "ChatGPT conversation 6a977d64-2230-83ee-bca1-12754c285b5f and docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/source-research.md"
+    },
+    {
+      "id": "lighting_external_research",
+      "kind": "external-research",
+      "claim": "ARRI, Profoto, Nikon, Rosco, CIE, EBU, SMPTE, IES, Adobe, Kodak, ZEISS, National Gallery, BFI, ASC, PhotoPills, NASA, NOAA 출처를 교차검토하여 광질, 역할, 인물 패턴, 톤 미학, 혼합광, 측정 메타데이터, 플레어, 할레이션, 자연 시간대의 관찰 가능 관계와 비주장 경계를 정리했다.",
+      "artifact": "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/source-research.md and evidence.jsonl"
+    },
+    {
+      "id": "lighting_repository_snapshot",
+      "kind": "source-observation",
+      "claim": "조사 스냅샷은 lighting 143, light_direction 18, light_type 76, light_intensity 16, light_shape 90, color 54, color_grading 7, film_emulation 18 후보와 275개 visual profile을 보였다. 작업 중 공유 파일에 있던 Rembrandt, clamshell, negative-fill 프로필은 이 조사 소유가 아니므로 재사용·감사 대상으로만 분류했다.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json and photo_prompt_visual_obligations.json; snapshot hashes recorded in candidate-data-proposal.json"
+    },
+    {
+      "id": "lighting_research_package_validation",
+      "kind": "package-check",
+      "claim": "제안 JSON과 25개 승인 evidence JSONL 행이 파싱되고, 22개 제안 프로필은 각각 정확히 5개 component group과 최소 5개 reject substitute를 가지며, 12개 cluster의 84개 후보 개념과 모든 source ID가 원장에 연결된다. iteration record 자체도 전용 validator를 통과한다.",
+      "artifact": "jq syntax, count, component, reject-substitute, source-reference checks and .agents/skills/image-prompt-skill-improver/scripts/validate_iteration_record.py"
+    },
+    {
+      "id": "lighting_runtime_implementation_validation",
+      "kind": "package-check",
+      "claim": "22개 신규 hard profile과 12개 cluster의 84개 후보가 runtime source에 병합되고, visual index 300 profiles/1,568 exact terms와 semantic index 7,974 entries/768 dimensions/16 shards가 재생성됐으며 focused 10개와 관련 21개, 총 31개 회귀가 통과했다.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json, photo_prompt_lighting_extension.json, generated indexes, tests/test_photo_lighting_visual_semantics.py, related visual-semantics tests"
+    },
+    {
+      "id": "lighting_prompt_runtime_evaluation",
+      "kind": "prompt-evaluation",
+      "claim": "세 독립 arm의 composed-prompt audit와 runtime-request audit는 모두 통과했고, 각 hard profile과 다섯 required gate는 public candidate pack에 노출됐다.",
+      "artifact": "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-*/composed*_audit.json and render_request*_audit.json"
+    },
+    {
+      "id": "lighting_candidate_surface_failure",
+      "kind": "prompt-evaluation",
+      "claim": "세 public v6 candidate pack 모두에서 요청한 신규 cluster ID와 forced anchor candidate ID의 exact occurrence가 0이어서 agent composer의 직접 선택 가능성을 증명하지 못했다.",
+      "artifact": "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-*/arm_result.json"
+    },
+    {
+      "id": "lighting_three_arm_generation_outcome",
+      "kind": "generation-outcome",
+      "claim": "동결된 서로 다른 복합 컨셉 세 arm에서 native imagegen을 각각 한 번 호출해 이미지 세 장을 저장했으며 retry, fallback, cross-arm input은 모두 0이었다.",
+      "artifact": "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-*/image_runs.ndjson and run_manifest.json"
+    },
+    {
+      "id": "lighting_three_arm_pixel_review",
+      "kind": "render-observation",
+      "claim": "독립 에이전트 판정과 root native/thumbnail 교차검토가 일치했다. Arm A 5/5, Arm B 1/5, Arm C 5/5로 전체 11/15 strict gate를 통과했으며 partial_is_fail에 따라 render layer는 실패다.",
+      "artifact": "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/aggregate_report.md and shared/root_pixel_cross_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "각 조명 의미는 이름이나 분위기가 아니라 광원 방향, 그림자 경계와 형태, 하이라이트·톤·색의 공간 관계로 반증 가능해야 하며, 장비·측정값·후보정·장르 어휘는 그 관계를 대신해 hard 활성화하지 않아야 한다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "lighting_five_component_observability",
+        "statement": "모든 제안 hard profile은 다섯 관찰 가능 구성요소를 소유하고, 구현 시 다섯 evidence field와 다섯 strict render gate로 대응하며, 하나라도 누락되면 실패다.",
+        "evidence_ids": [
+          "lighting_external_research",
+          "lighting_research_package_validation"
+        ],
+        "causal_controls": [
+          "partial_is_fail",
+          "exact and context-complete activation only",
+          "close visual substitutes remain explicit negative controls"
+        ]
+      },
+      {
+        "id": "lighting_evidence_lane_separation",
+        "statement": "장면 조명, 카메라 광학 반응, 톤·색 재현, 후보정·필름 룩, 장비·측정 메타데이터는 서로 다른 소유권 차선이며 서로의 증거를 대신하지 않는다.",
+        "evidence_ids": [
+          "lighting_external_research",
+          "lighting_repository_snapshot"
+        ],
+        "causal_controls": [
+          "CRI TLCI SSI SPD and exact Kelvin are metadata only",
+          "fixture and modifier names do not prove pixels",
+          "postprocess controls cannot satisfy a scene-light component"
+        ]
+      },
+      {
+        "id": "lighting_confusion_boundary_ownership",
+        "statement": "Rembrandt와 loop, butterfly와 clamshell, rim과 silhouette, high-key와 clipping, low-key와 underexposure, halation과 flare는 각자 다른 필수 관계와 reject substitute를 가진다.",
+        "evidence_ids": [
+          "lighting_external_research",
+          "lighting_research_package_validation"
+        ],
+        "causal_controls": [
+          "paired positive and close-negative routing cases",
+          "bare style words stay advisory",
+          "thumbnail and native review gates remain separate"
+        ]
+      },
+      {
+        "id": "lighting_candidate_cluster_coherence",
+        "statement": "후보팩은 서로 독립적인 명사 모음이 아니라 조명, 방향, 광원 유형, 상대 세기, 광형, 색, 마감이 하나의 primary tag 아래 인과적으로 맞물리는 cluster다.",
+        "evidence_ids": [
+          "lighting_reference_conversation",
+          "lighting_external_research",
+          "lighting_research_package_validation"
+        ],
+        "causal_controls": [
+          "twelve primary-tag clusters",
+          "six required slots plus one finish slot",
+          "cross-cluster contradictory candidates are held-out negatives"
+        ]
+      },
+      {
+        "id": "lighting_evidence_layer_boundary",
+        "statement": "출처 연구와 JSON 구조 통과는 런타임 라우팅, 후보 검색, composed prompt, 이미지 생성, 렌더 픽셀, 사용자 판단의 성공으로 대체할 수 없다.",
+        "evidence_ids": [
+          "lighting_research_package_validation"
+        ],
+        "causal_controls": [
+          "prompt evaluation remains unscored",
+          "render evaluation remains unscored",
+          "user evaluation remains unscored"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "subject identity appearance and wardrobe",
+      "camera framing and focal treatment that preserve the light relation",
+      "specific fixture or modifier when explicitly requested",
+      "location and era",
+      "palette details inside the owned spatial color relation",
+      "requester definitions that explicitly override a registry default"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "lighting_vocabulary_breadth_vs_visual_ownership",
+      "scale": "global",
+      "axis": "term taxonomy",
+      "source_state": "참조 어휘는 광원, 장비, 측정, 광학 현상, 미술사, 장르, 후보정과 감성 표현을 같은 목록에 포함한다.",
+      "render_state": "hard visual profile은 단일 프레임에서 반증 가능한 그림자·하이라이트·톤·공간 관계만 소유하고, 나머지는 candidate 또는 metadata 차선에 남아야 한다.",
+      "evidence_ids": [
+        "lighting_reference_conversation",
+        "lighting_external_research"
+      ]
+    },
+    {
+      "id": "lighting_candidate_names_vs_complete_relations",
+      "scale": "regional",
+      "axis": "current candidate data",
+      "source_state": "현재 사전에는 Rembrandt, butterfly, clamshell, chiaroscuro, golden hour, prism flare 등 폭넓은 후보가 있으나 다수는 한 줄 표현이다.",
+      "render_state": "각 좁은 의미에는 다섯 구성요소, confusion boundary, strict gate가 필요하고 후보는 cluster 단위로 함께 움직여야 한다.",
+      "evidence_ids": [
+        "lighting_repository_snapshot",
+        "lighting_external_research"
+      ]
+    },
+    {
+      "id": "lighting_physical_cause_vs_pixel_look",
+      "scale": "local",
+      "axis": "equipment and metrics",
+      "source_state": "softbox, Fresnel, CTO, 3200 K, CRI 95, SSI와 같은 용어는 물리 장비나 측정 조건을 가리킨다.",
+      "render_state": "제안은 사용자가 명시한 메타데이터를 보존하되 생성 픽셀에서 실제 장비, 필터, 온도, 품질 지수를 역추론하지 않는다.",
+      "evidence_ids": [
+        "lighting_external_research"
+      ]
+    },
+    {
+      "id": "lighting_close_effect_substitution",
+      "scale": "local",
+      "axis": "optical and tonal confusion",
+      "source_state": "어두움, 따뜻한 색, glow, contrast, color grade는 low-key, golden hour, halation, chiaroscuro와 표면적으로 비슷해 보일 수 있다.",
+      "render_state": "각 profile은 공간 방향, source anchor, edge morphology, tone detail과 unaffected comparison region을 요구해 단순 색·밝기 대체를 거부한다.",
+      "evidence_ids": [
+        "lighting_external_research",
+        "lighting_research_package_validation"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "lighting_relation_profiles_reduce_label_substitution",
+      "stage": "representation",
+      "statement": "조명 이름을 다섯 관찰 관계로 바꾸면 생성기가 분위기, 검은 배경, warm grade, blur만으로 의미를 대체하는 비율이 줄어들 것이다.",
+      "evidence_ids": [
+        "lighting_external_research"
+      ],
+      "falsifier": "좁은 exact 요청의 composed prompt가 필수 관계를 하나라도 누락하거나 close substitute가 같은 hard profile을 활성화한다."
+    },
+    {
+      "id": "lighting_lane_separation_reduces_false_physical_claims",
+      "stage": "prompt-interaction",
+      "statement": "장비·측정값·후보정 차선을 시각 계약과 분리하면 픽셀만으로 CRI, Kelvin, modifier, film process를 주장하는 오류가 줄어들 것이다.",
+      "evidence_ids": [
+        "lighting_external_research"
+      ],
+      "falsifier": "장비명이나 품질 지수만 있는 query가 hard visual profile을 활성화하거나 generated prompt가 실제 장비·수치를 검증된 사실처럼 기술한다."
+    },
+    {
+      "id": "lighting_cluster_coherence_reduces_cross_slot_conflict",
+      "stage": "prompt-priority",
+      "statement": "하나의 primary tag에 여섯 조명 slot과 한 마감 slot을 묶으면 soft key와 crisp hard shadow처럼 인과적으로 충돌하는 후보 조합이 줄어들 것이다.",
+      "evidence_ids": [
+        "lighting_reference_conversation",
+        "lighting_research_package_validation"
+      ],
+      "falsifier": "대표 cluster query에서 핵심 slot이 함께 검색되지 않거나 다른 cluster의 상충 항목이 선택 팩에 침투한다."
+    },
+    {
+      "id": "lighting_paired_negatives_improve_semantic_ownership",
+      "stage": "representation",
+      "statement": "가까운 개념을 쌍으로 회귀하면 Rembrandt-loop, high-key-clipping, halation-flare와 같은 ownership 경계가 bare label보다 안정적으로 유지될 것이다.",
+      "evidence_ids": [
+        "lighting_external_research",
+        "lighting_research_package_validation"
+      ],
+      "falsifier": "paired negative가 양성 프로필을 hard 활성화하거나 양성 문맥이 인접 프로필을 동시에 활성화한다."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "reference",
+      "module",
+      "test"
+    ],
+    "general_rule": "광질, 패턴, 톤, 광학 현상을 이름이 아닌 반증 가능한 공간·경계·형태 관계로 소유시키고, 장비·측정·후보정은 별도 차선에 두며, 후보는 source-bound primary-tag cluster로 묶는다.",
+    "generalization_basis": "같은 source-direction, edge-transfer, shadow-ownership, tone-detail, spatial-color 방법은 인물 조명, 자연광, 실내 practical, 광학 flare, 필름 룩에 적용할 수 있으면서 각 개념의 close substitute를 독립적으로 통제한다.",
+    "hypothesis_ids": [
+      "lighting_relation_profiles_reduce_label_substitution",
+      "lighting_lane_separation_reduces_false_physical_claims",
+      "lighting_cluster_coherence_reduces_cross_slot_conflict",
+      "lighting_paired_negatives_improve_semantic_ownership"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/source-research.md",
+      "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/candidate-data-proposal.json",
+      "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/iteration-record.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/29ae9e1ecf255add/",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_lighting_visual_semantics.py",
+      "tests/fixtures/photo_prompt/lighting_three_arm_pixel_test_cases_v1.jsonl",
+      "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "lighting_research_package_validation",
+        "lighting_runtime_implementation_validation"
+      ]
+    },
+    "prompt": {
+      "status": "fail",
+      "evidence_ids": [
+        "lighting_prompt_runtime_evaluation",
+        "lighting_candidate_surface_failure"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "lighting_three_arm_pixel_review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "lighting_exact_and_context_routing",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "twenty-two proposed hard profiles",
+          "three reuse-and-audit profiles",
+          "bilingual narrow exact terms"
+        ],
+        "evidence_ids": [
+          "lighting_runtime_implementation_validation"
+        ]
+      },
+      {
+        "id": "lighting_close_visual_substitutes",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "Rembrandt versus loop",
+          "butterfly versus clamshell",
+          "rim versus silhouette",
+          "high-key versus clipping",
+          "low-key versus underexposure",
+          "halation versus flare"
+        ],
+        "evidence_ids": [
+          "lighting_runtime_implementation_validation"
+        ]
+      },
+      {
+        "id": "lighting_equipment_metric_and_postprocess_boundaries",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "modifier names",
+          "Kelvin and exposure ratios",
+          "CRI TLCI SSI SPD",
+          "LUT and film-process look"
+        ],
+        "evidence_ids": [
+          "lighting_runtime_implementation_validation"
+        ]
+      },
+      {
+        "id": "lighting_candidate_cluster_coherence",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "twelve bilingual queries",
+          "eighty-four candidate concepts",
+          "cross-cluster conflict rejection"
+        ],
+        "evidence_ids": [
+          "lighting_candidate_surface_failure"
+        ]
+      },
+      {
+        "id": "lighting_three_arm_pixel_fidelity",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "motivated practical mixed interior",
+          "volumetric occluded light shafts",
+          "film halation highlight edge",
+          "thumbnail and native strict gates"
+        ],
+        "evidence_ids": [
+          "lighting_three_arm_pixel_review"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "22개 hard profile과 12개 cluster/84개 후보의 병합·인덱스·focused 회귀는 통과했고 세 composed/runtime audit도 통과했다. 그러나 신규 cluster와 anchor candidate ID가 세 public v6 pack 모두에서 노출되지 않았고, Arm B의 volumetric shaft는 1/5 gate만 통과해 전체 픽셀 결과가 11/15였다. 따라서 구현은 보존하되 공개 후보 선택 경로와 volumetric component 전달을 수정한 뒤 새 동결 arm으로 재검증해야 하며, 사용자 판단도 아직 없다.",
+    "evidence_ids": [
+      "lighting_reference_conversation",
+      "lighting_external_research",
+      "lighting_repository_snapshot",
+      "lighting_research_package_validation",
+      "lighting_runtime_implementation_validation",
+      "lighting_prompt_runtime_evaluation",
+      "lighting_candidate_surface_failure",
+      "lighting_three_arm_generation_outcome",
+      "lighting_three_arm_pixel_review"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "contract_version": "photo-postcore-binding-amendments/v1",
+  "authorial_core_changed": false,
+  "intent_lock_changed": false,
+  "amendments": [
+    {
+      "sequence": 1,
+      "artifact": "visual_intent.json",
+      "reason": "The visual-obligation schema reported that the initial pan_tracked_core_phrase had 8 content words while the assigned profile requires at least 10.",
+      "change_scope": "Extend each assigned panning evidence phrase with same-component scene detail so all minimum-content checks remain robust.",
+      "meaning_change": false,
+      "profile_id": "panning_subject_tracking_motion_relation"
+    },
+    {
+      "sequence": 2,
+      "artifact": "visual_intent.json",
+      "reason": "The v6 generator accepts agent_postcore_interpretation source_text only from its enumerated governing core fields; variation_key is frozen but is not in that accepted schema lane.",
+      "change_scope": "Map source_text to the byte-exact first visual_priorities field, which already governs readable subject-operation relations in the same frozen scene.",
+      "meaning_change": false,
+      "profile_id": "panning_subject_tracking_motion_relation"
+    }
+  ]
+}

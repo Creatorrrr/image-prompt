@@ -1,0 +1,76 @@
+{
+  "contract_version": "photo-domain-render-test-cases/v1",
+  "attempt_policy": {
+    "built_in_image_generation_calls_per_arm": 1,
+    "semantic_retries": 0,
+    "fallback": "none unless the requesting user separately authorizes it",
+    "partial_or_missing_required_gate": "fail",
+    "blocked_or_missing_image": "unscored_generation_outcome"
+  },
+  "common_gates": [
+    "Every represented person is clearly adult.",
+    "The designated lead adult uses only the reference image's visible hair, eyes, makeup, and facial-proportion cues.",
+    "A single coherent photograph keeps the concept-defining people, actions, objects, and spatial relations readable.",
+    "Text labels, inferred identity, inferred ethnicity, inferred rank, inferred consent, and inferred relationship status are not used as proof.",
+    "The saved image, prompt, request, hashes, generation outcome, and review remain arm-local and auditable."
+  ],
+  "arms": [
+    {
+      "arm_id": "arm-01-multi-interest",
+      "profile_id": "adult_multi_interest_harem_ensemble_relation",
+      "complex_concept": "Rain-stalled night arts-festival travelers in a glass-roof railway concourse, with one central reference-guided adult receiving three different simultaneous practical-romantic bids.",
+      "required_gate_ids": [
+        "vo_harem_modern_one_adult_center",
+        "vo_harem_modern_three_adult_partners",
+        "vo_harem_modern_distinct_center_bids",
+        "vo_harem_modern_overlap_response_awareness",
+        "vo_harem_modern_not_group_or_relationship_claim"
+      ],
+      "precommitted_pixel_questions": [
+        "Does one clearly adult person read as the common target and compositional center?",
+        "Are at least three separate clearly adult potential partners individually readable?",
+        "Does each potential partner direct a different concrete offer to that same center?",
+        "Does the center manage the overlap while the partners visibly notice one another's bids?",
+        "Does the first read avoid collapsing into a friend group, fan crowd, retinue, two-suitor triangle, or established-relationship portrait?"
+      ]
+    },
+    {
+      "arm_id": "arm-02-orientalist-tableau",
+      "profile_id": "orientalist_harem_constructed_tableau",
+      "complex_concept": "A contemporary museum soundstage critically restages an all-adult nineteenth-century European Orientalist tableau while exposing its fabricated set construction.",
+      "required_gate_ids": [
+        "vo_harem_orientalist_all_adult_constructed_cast",
+        "vo_harem_orientalist_overloaded_imagined_set",
+        "vo_harem_orientalist_static_threshold_tableau",
+        "vo_harem_orientalist_visible_fabrication",
+        "vo_harem_orientalist_not_documentary_claim"
+      ],
+      "precommitted_pixel_questions": [
+        "Does an explicitly all-adult cast read as one deliberately constructed painterly studio group?",
+        "Do layered textiles, low furnishings, ceramics, and decorative surfaces create an intentionally overloaded imagined interior?",
+        "Do static reclining, seated, and turned poses read through an asymmetric threshold-like observer angle?",
+        "Is at least one set seam, light spill, support brace, or studio edge unmistakably visible?",
+        "Does the first read remain critical studio staging rather than historical documentary, ordinary glamour, or hotel decor?"
+      ]
+    },
+    {
+      "arm_id": "arm-03-mughal-zenana",
+      "profile_id": "mughal_zenana_courtyard_household",
+      "complex_concept": "An all-adult Mughal screened-courtyard household prepares a monsoon-evening textile, music, and game gathering through one connected task chain.",
+      "required_gate_ids": [
+        "vo_harem_mughal_offset_private_entry",
+        "vo_harem_mughal_screened_courtyard_rooms",
+        "vo_harem_mughal_adult_household_activity",
+        "vo_harem_mughal_portable_objects_result",
+        "vo_harem_mughal_not_public_or_costume_only"
+      ],
+      "precommitted_pixel_questions": [
+        "Does an offset private entrance visibly block a direct public sight line?",
+        "Are the screened central courtyard, arcades, and multiple small rooms readable in depth?",
+        "Do several adults perform distinct household activities around the same courtyard?",
+        "Do portable textiles, seating, music or game objects link the actions and leave an immediate prepared result?",
+        "Does the first read avoid a public darbar, mosque courtyard, tourist hotel, Ottoman room, or costume-only fashion group?"
+      ]
+    }
+  ]
+}

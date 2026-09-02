@@ -1,0 +1,216 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "986ef4f452ce7efe39818690e19b4e3cd095e292",
+    "candidate_revision": "working-tree-20260902-capture-elements-visual-semantics"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply researched photographic capture keywords to visual-semantic and candidate-pack data, then use three independent randomized complex reference-image arms to test whether selected meanings survive into pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The requester requires data changes, three independent complex concepts, reference-image prompts, real image generation, and rendered-pixel verification.",
+      "artifact": "conversation request SHA-256 4e68ecbe87c19987be80de87e848e243d14d5c82cf95de6b77f6ce2d70a1b706"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Primary photography, optics, lighting, and image-processing sources support observable geometry, focus, motion, light, diffusion, white-balance, and tone-response relations while equipment labels alone remain insufficient.",
+      "artifact": "docs/research-evidence/photo-prompt/capture-elements-visual-semantics-20260902/source-research.md"
+    },
+    {
+      "id": "e-runtime-data",
+      "kind": "source-observation",
+      "claim": "Fourteen narrow capture-element profiles were added, each with five required component groups, five literal prompt-evidence fields, five same-image pixel gates, optional score-free candidate terms, and adjacent-substitute boundaries.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json and tests/test_photo_capture_elements_visual_semantics.py"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The current shared dictionary, visual index, and semantic index validate at 300 profiles, 1,568 exact terms, and 7,974 semantic entries. Those totals include concurrent unrelated lighting work; this capture intervention claims only its fourteen profiles.",
+      "artifact": "validate_photo_prompt_dictionary.py reported valid; build_visual_profile_index.py --check reported 300 profiles and 1568 exact terms; eval_semantic.py --check-index reported status ok, dictionary hash 29ae9e1ecf255addf3490631949d8ef2490f5ad5927a7901e024202b32a3315f, and 7974 entries"
+    },
+    {
+      "id": "e-focused-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Eight focused tests pass profile completeness, narrow exact routing, broad and adjacent negative controls, optional-only semantic discovery, generated-index coverage, research boundaries, and a hash-bound three-arm pixel fixture.",
+      "artifact": ".venv/bin/python -m unittest tests.test_photo_capture_elements_visual_semantics -v => 8 passed"
+    },
+    {
+      "id": "e-retrieval-regression",
+      "kind": "prompt-evaluation",
+      "claim": "The existing visual-profile retrieval suite passes against the current registry and semantic indexes, preserving the boundary that BM25F and embeddings remain advisory until explicit selection.",
+      "artifact": ".venv/bin/python -m unittest tests.test_photo_visual_profile_retrieval -v"
+    },
+    {
+      "id": "e-three-arm-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All three included v6 packs contain exactly the assigned hard profile and five-gate contract; all three composed prompts and exact reference-bound runtime requests independently re-audit PASS.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r, arm-02, and arm-03 candidate_pack.json, composed_prompt.json, image_render_request.json, and audit files"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The three included arms each made exactly one built-in image-generation call with zero retries and zero fallbacks and saved one hash-bound image; manifests record cross_arm_inputs_used false.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r, arm-02, and arm-03 run_manifest.json and arm-local ledgers"
+    },
+    {
+      "id": "e-render-panning",
+      "kind": "render-observation",
+      "claim": "The panning archive render passes readable tracked core, parallel background streaks, and non-shake/non-zoom boundary, but fails independently readable secondary-part motion and therefore fails corroborated single-vector consistency: 3/5 gates, overall FAIL.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-01r/generated_images/quiet-archival-mechanism/arm-01r.png and moe_render_review.json"
+    },
+    {
+      "id": "e-render-rembrandt",
+      "kind": "render-observation",
+      "claim": "The rain-transit portrait is carried by broad frontal beauty illumination rather than an elevated side key, joined nose-cheek shadow, bounded far-cheek triangle, modeled shadow-side eye, or substitute-resistant Rembrandt structure: 0/5 gates, overall FAIL.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-02/render.png and self_review.json"
+    },
+    {
+      "id": "e-render-rolloff",
+      "kind": "render-observation",
+      "claim": "The coastal salvage render passes the near-white anchor, gradual bright steps, small confined clip core, surviving texture-hue-midtones, and non-flat/non-glow/non-HDR boundary. Exact white occupies 0.0134 percent and the largest four-connected white component is 14 pixels: 5/5 gates, overall PASS.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-03/render.png, review-highlight crops, and self_review.json"
+    },
+    {
+      "id": "e-root-review",
+      "kind": "render-observation",
+      "claim": "Root independently inspected thumbnail and native images after generation and agreed with all fifteen subagent gate statuses: one of three arms and eight of fifteen gates pass under partial-is-fail.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/coordinator/final_summary.md and tests/fixtures/photo_prompt/capture_elements_three_arm_pixel_test_cases_v1.jsonl"
+    },
+    {
+      "id": "e-integrity",
+      "kind": "measurement",
+      "claim": "The original first arm was excluded before image generation after a cross-arm snippet exposure and replaced cleanly. The included arms used no sibling prompt, pack, image, or review; arm-02 nevertheless retains a stricter post-core diagnostic-read protocol deviation, and arm-02/03 preserve post-assignment schema-only normalization boundaries.",
+      "artifact": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/coordinator/execution_integrity.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For each selected profile, every authoritative hard gate must coexist in the same independently generated image and remain distinguishable from its nearest visual substitutes.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-relation",
+        "statement": "A label or equipment name never substitutes for the observable relation defined by component groups and pixel gates.",
+        "evidence_ids": ["e-request", "e-research", "e-runtime-data"],
+        "causal_controls": ["profile-specific geometry or light relation", "adjacent substitute rejection"]
+      },
+      {
+        "id": "appearance-reference-boundary",
+        "statement": "The supplied portrait contributes visible adult appearance anchors only; scene, action, light, and camera treatment may vary without identity or sensitive-trait inference.",
+        "evidence_ids": ["e-request"],
+        "causal_controls": ["visible face structure continuity", "adult age continuity", "separate scene variables"]
+      },
+      {
+        "id": "strict-same-image-gates",
+        "statement": "Partial, missing, uninspectable, or cross-attempt evidence fails; prompt and runtime audits do not count as pixel evidence.",
+        "evidence_ids": ["e-request", "e-research"],
+        "causal_controls": ["one saved image per arm", "zero retries", "native and thumbnail review"]
+      }
+    ],
+    "flexible_dimensions": ["random scene concept", "wardrobe", "location", "action details", "framing within appearance legibility", "non-target photographic craft"]
+  },
+  "mismatches": [
+    {
+      "id": "m-label-only",
+      "scale": "global",
+      "axis": "capture-keyword visual semantics",
+      "source_state": "Research distinguishes visible spatial, focus, motion, lighting, diffusion, color, and tone relations from equipment labels.",
+      "render_state": "The implemented profiles now bind literal relations and strict gates rather than relying on labels.",
+      "evidence_ids": ["e-research", "e-runtime-data", "e-focused-tests"]
+    },
+    {
+      "id": "m-panning-secondary-motion",
+      "scale": "regional",
+      "axis": "local motion corroboration inside a tracked pan",
+      "source_state": "Ribbon tabs, wheel, hair, or another secondary moving part must show plausible local or rotational blur aligned with the pan vector.",
+      "render_state": "The subject and background establish a pan, but ribbon, gears, wheels, hair, and hands remain frozen or merely depth-softened.",
+      "evidence_ids": ["e-render-panning", "e-root-review"]
+    },
+    {
+      "id": "m-rembrandt-shadow-geometry",
+      "scale": "local",
+      "axis": "face-light topology",
+      "source_state": "An elevated off-axis key must join nose and cheek shadow while leaving a bounded triangle under the far eye and a readable modeled shadow-side eye.",
+      "render_state": "Broad frontal fill flattens the face and removes the joined shadow mass and bounded far-cheek triangle.",
+      "evidence_ids": ["e-render-rembrandt", "e-root-review"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-relational-profile",
+      "stage": "representation",
+      "statement": "Encoding each concept as required component groups, evidence phrases, confusion negatives, and strict render gates will prevent label-only or single-cue substitutes from passing package and prompt checks.",
+      "evidence_ids": ["e-research", "e-focused-tests"],
+      "falsifier": "A focused mutation or adjacent negative passes while omitting a defining component or the generated pack omits the selected profile gates."
+    },
+    {
+      "id": "h-independent-pixels",
+      "stage": "prompt-priority",
+      "statement": "A post-core explicit visual-intent binding and literal evidence phrases should make the assigned relation salient enough to inspect in one random complex scene without revising the frozen scene meaning.",
+      "evidence_ids": ["e-request", "e-three-arm-prompt"],
+      "falsifier": "The composed audit rejects the binding or any defining hard gate is partial, missing, or visually replaced in the saved render."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["policy", "test"],
+    "general_rule": "Represent photographic capture terms as narrow observable relations with five component groups, five literal evidence fields, five strict pixel gates, and explicit substitute boundaries; keep broad labels optional and score-free.",
+    "generalization_basis": "The profiles describe camera-space, focus-space, temporal, lighting, optical, and tonal relations independent of one subject, location, or supplied portrait.",
+    "hypothesis_ids": ["h-relational-profile", "h-independent-pixels"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "tests/test_photo_capture_elements_visual_semantics.py",
+      "tests/fixtures/photo_prompt/capture_elements_three_arm_pixel_test_cases_v1.jsonl",
+      "docs/research-evidence/photo-prompt/capture-elements-visual-semantics-20260902/source-research.md"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package", "e-focused-tests"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-focused-tests", "e-retrieval-regression", "e-three-arm-prompt"]},
+    "render": {"status": "fail", "evidence_ids": ["e-render-panning", "e-render-rembrandt", "e-render-rolloff", "e-root-review"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "heldout-capture-exact-and-negative-routing",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["fourteen narrow exact routes", "broad equipment labels remain non-hard", "adjacent visual substitutes fail closed"],
+        "evidence_ids": ["e-focused-tests", "e-retrieval-regression"]
+      },
+      {
+        "id": "heldout-panning-archive-render",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["tracked readable core", "parallel environmental streaks", "secondary-part local motion", "single motion vector", "not shake zoom or speed-line substitute"],
+        "evidence_ids": ["e-render-panning", "e-root-review"]
+      },
+      {
+        "id": "heldout-rembrandt-transit-render",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": ["elevated off-axis key", "joined nose-cheek shadow", "bounded far-cheek triangle", "readable modeled shadow eye", "not frontal split butterfly or ring substitute"],
+        "evidence_ids": ["e-render-rembrandt", "e-root-review"]
+      },
+      {
+        "id": "heldout-highlight-rolloff-coast-render",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["near-white anchor", "gradual bright steps", "confined clip core", "surviving texture hue and midtones", "not flat glow or local-HDR substitute"],
+        "evidence_ids": ["e-render-rolloff", "e-root-review"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The fourteen source-backed profiles, current indexes, focused routing and negative controls, three retained v6 packs, and all three composed and runtime audits pass. Render promotion is not justified: the no-retry panning arm lacks secondary-part motion and corroborated vector evidence, while the Rembrandt arm collapses into flat frontal beauty light; only highlight rolloff passes all five gates. The implementation remains useful at structural and prompt layers, but render fidelity is 1/3 arms and 8/15 gates under partial-is-fail. A new independent qualification should revise only those two failed visible relations. The other eleven new profiles have no pixel evidence, and requesting-user aesthetic judgment remains unscored.",
+    "evidence_ids": ["e-research", "e-runtime-data", "e-package", "e-focused-tests", "e-retrieval-regression", "e-three-arm-prompt", "e-generation", "e-render-panning", "e-render-rembrandt", "e-render-rolloff", "e-root-review", "e-integrity"]
+  }
+}

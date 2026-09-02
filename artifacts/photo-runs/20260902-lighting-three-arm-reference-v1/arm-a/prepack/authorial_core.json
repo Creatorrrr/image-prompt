@@ -1,0 +1,98 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently conceived, complex, photorealistic test scene for Arm A that can later reveal whether a post-core visual keyword is actually rendered, while using the supplied image only to guide the visible adult face, hair, general complexion, and facial features.",
+  "subject": "An unmistakably adult woman whose visible face, hair, general complexion, and facial features are guided only by the supplied appearance reference, performing fine hand bookbinding at a workbench.",
+  "setting": "A temporary bookbinding studio inside a decommissioned mountaintop cable-car signal cabin during a sleet storm, with a visible practical desk lamp and severe weather seen through the broad window.",
+  "event": "The woman holds folded indigo paper signatures in a wooden sewing cradle with one hand while pulling waxed crimson linen thread through a punched sewing station with the other, visibly tightening one stitch in a palm-sized accordion weather diary.",
+  "visual_priorities": [
+    "Unambiguous hand-to-paper-to-thread contact and a readable bookbinding step",
+    "The simultaneous visibility of the indoor practical lamp and diagonal sleet beyond the window",
+    "Visible adult face and hair continuity limited to the supplied appearance reference",
+    "Tactile, credible materials and grounded photographic realism"
+  ],
+  "baseline_prompt_en": "Create a photorealistic editorial photograph set in a temporary bookbinding studio inside a decommissioned mountaintop cable-car signal cabin during a sleet storm. An unmistakably adult woman sits at a scarred workbench; her visible adult face, hair length, hair color, hair texture, hair part, general complexion, and facial features follow the supplied appearance reference. She hand-sews a palm-sized accordion weather diary: her left hand pins the folded indigo paper signatures against a wooden sewing cradle while her right hand pulls waxed crimson linen thread through a punched sewing station, leaving a clearly visible tightening stitch. A lit green-shaded brass desk lamp is visibly present beside the tools. Through the cabin's broad window, diagonal sleet and cloud-swallowed cable towers are plainly visible. Include a bone folder, awl, thread spool, damp gloves, obsolete cable gauges, and a small brass barometer as believable working evidence. Emphasize precise hand-to-tool contact, a readable craft sequence, the contrast between delicate binding work and severe alpine weather, tactile paper fibers, wet glass, and grounded photographic realism.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "full_request",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Arm A should independently freeze one distinct complex photographic concept, write a complete prompt using the attached image only for visible adult appearance guidance, and leave later candidate-pack, generation, and rendered-image evaluation to post-core phases.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "An unusual but physically plausible alpine cable-car signal cabin repurposed as a bookbinding workspace, combining a precise manual sewing step, a visible practical lamp, and sleet outside the window.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied image only for visible adult face, hair length, hair color, hair texture, hair part, general complexion, and facial-feature continuity; it supplies no identity, biography, personality, occupation, relationship, nationality, ethnicity, or other protected-trait claim.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a temporary bookbinding studio inside a decommissioned mountaintop cable-car signal cabin during a sleet storm"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "An unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "her right hand pulls waxed crimson linen thread through a punched sewing station"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "her visible adult face, hair length, hair color, hair texture, hair part, general complexion, and facial features follow the supplied appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "style"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic editorial craft photography",
+    "family": "observational alpine workshop realism",
+    "evidence": [
+      "precise hand-to-tool contact",
+      "tactile paper fibers, wet glass, and grounded photographic realism"
+    ]
+  },
+  "variation_key": "lighting-three-arm-20260902-arm-a-signal-cabin-bookbinding"
+}

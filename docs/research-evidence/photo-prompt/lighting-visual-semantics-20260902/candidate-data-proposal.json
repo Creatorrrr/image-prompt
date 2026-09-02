@@ -1,0 +1,866 @@
+{
+  "schema_version": "photo-lighting-visual-semantics-research-proposal/v1",
+  "title": "사진 조명 시각 의미 및 후보팩 강화 제안",
+  "reviewed_at": "2026-09-02",
+  "status": "implemented_and_three_arm_render_evaluated_revise",
+  "source_conversation": {
+    "conversation_id": "6a977d64-2230-83ee-bca1-12754c285b5f",
+    "title": "사진 조명 용어 조사",
+    "keyword_families": [
+      "light_source",
+      "light_quality",
+      "light_direction",
+      "lighting_role",
+      "portrait_pattern",
+      "intensity_and_falloff",
+      "shadow_and_shading",
+      "highlight_response",
+      "contrast_and_tonal_range",
+      "high_key_low_key_chiaroscuro_tenebrism_noir",
+      "cct_white_balance_tint",
+      "color_attributes_and_harmony",
+      "source_color_quality_metrics",
+      "correction_and_effect_filters",
+      "light_modifiers_and_control",
+      "cinematic_motivation",
+      "natural_light_time",
+      "atmospheric_light_pattern",
+      "lens_optical_effect",
+      "color_correction_and_grading",
+      "film_response_and_processing_look",
+      "affective_descriptors",
+      "color_style",
+      "lighting_color_style_combinations"
+    ]
+  },
+  "observed_repository_baseline": {
+    "revision": "986ef4f452ce7efe39818690e19b4e3cd095e292+pre-existing-and-concurrent-working-tree",
+    "candidate_slot_counts": {
+      "lighting": 143,
+      "light_direction": 18,
+      "light_type": 76,
+      "light_intensity": 16,
+      "light_shape": 90,
+      "color": 54,
+      "color_grading": 7,
+      "film_emulation": 18
+    },
+    "visual_profile_count": 275,
+    "current_worktree_lighting_profiles_to_reuse": [
+      "rembrandt_face_light_pattern",
+      "clamshell_dual_source_portrait_light",
+      "negative_fill_shadow_deepening_relation"
+    ],
+    "snapshot_sha256": {
+      "photo_prompt_tags.json": "f635685b36b900f000a49181f03e3d797d0d36a39ed8b3458b9857dc82be3b40",
+      "photo_prompt_visual_obligations.json": "017a9c3feb2764a20237106ba731a265b49444bc54dcd59205ef4217414aee53"
+    },
+    "provenance_limit": "The visual-obligation source was already modified by other work. The 275-profile count and hashes remain a read-only research snapshot; the later implementation appended only the lighting profiles owned by this task and regenerated indexes without claiming unrelated concurrent changes."
+  },
+  "evidence_model": {
+    "lanes": [
+      {
+        "id": "scene_light_interaction",
+        "owns": ["direction", "shadow_geometry", "shadow_edge_transfer", "specular_diffuse_relation", "subject_background_separation"],
+        "never_infers": ["fixture_brand", "fixture_wattage", "exact_lux", "exact_ratio"]
+      },
+      {
+        "id": "camera_optical_response",
+        "owns": ["flare_ghost_alignment", "veiling_contrast_loss", "diffraction_shape", "defocus_morphology"],
+        "never_infers": ["lens_model", "exact_aperture", "actual_filter_product"]
+      },
+      {
+        "id": "tone_and_color_rendering",
+        "owns": ["clipping_state", "tonal_distribution", "spatial_color_zone", "color_separation"],
+        "never_infers": ["exact_kelvin", "cri", "tlci", "ssi", "spd"]
+      },
+      {
+        "id": "postprocess_and_film_look",
+        "owns": ["tone_curve_look", "shadow_midtone_highlight_tint", "grain_look", "halation_look", "bleach_bypass_look"],
+        "never_infers": ["actual_film_stock", "actual_lab_process", "actual_lut_file"]
+      }
+    ]
+  },
+  "activation_policy": {
+    "hard_activation_requires": [
+      "narrow_exact_or_context_complete_term",
+      "all_required_component_groups_placeable",
+      "one_unambiguous_profile_owner",
+      "no_negated_or_close_substitute_term",
+      "no_equipment_or_metric_only_claim"
+    ],
+    "advisory_only": [
+      "bare_mood_or_genre_term",
+      "modifier_or_fixture_name_only",
+      "measurement_or_color_quality_metric",
+      "bm25f_only_hit",
+      "embedding_only_hit",
+      "component_paraphrase_without_exact_context"
+    ],
+    "broad_terms_forbidden_from_hard_activation": [
+      "soft",
+      "hard",
+      "harsh",
+      "dramatic",
+      "moody",
+      "cinematic",
+      "noir",
+      "warm",
+      "cool",
+      "glow",
+      "bloom",
+      "빛",
+      "조명",
+      "분위기 있는 조명",
+      "영화 같은 조명"
+    ],
+    "retrieval_precedence": [
+      "safety_and_subject_constraints",
+      "narrow_exact_visual_relation",
+      "existing_specific_profile",
+      "context_complete_component_relation",
+      "coherent_candidate_cluster",
+      "broad_alias_advisory",
+      "bm25f_or_embedding_advisory"
+    ],
+    "partial_is_fail": true
+  },
+  "reuse_existing_profiles": [
+    {
+      "id": "rembrandt_face_light_pattern",
+      "disposition": "reuse_and_audit",
+      "required_audits": [
+        "loop_pattern_cross_negative",
+        "split_pattern_cross_negative",
+        "cheek_triangle_thumbnail_salience",
+        "shadow_side_eye_native_readability"
+      ]
+    },
+    {
+      "id": "clamshell_dual_source_portrait_light",
+      "disposition": "reuse_and_audit",
+      "required_audits": [
+        "single_butterfly_key_cross_negative",
+        "ring_light_disk_cross_negative",
+        "theatrical_underlight_cross_negative",
+        "high_low_catchlight_native_visibility"
+      ]
+    },
+    {
+      "id": "negative_fill_shadow_deepening_relation",
+      "disposition": "reuse_and_audit",
+      "required_audits": [
+        "global_underexposure_cross_negative",
+        "crushed_post_contrast_cross_negative",
+        "dark_wardrobe_cross_negative",
+        "avoid_mandatory_visible_flag_overfit"
+      ]
+    }
+  ],
+  "proposed_hard_profiles": [
+    {
+      "id": "hard_light_shadow_edge_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["hard-light shadow-edge relation", "crisp cast-shadow geometry", "하드라이트 선명 그림자 경계 관계", "짧은 반그림자 직접광"],
+      "definition": "A relatively small acting source creates one coherent direction, crisp cast-shadow boundaries, short penumbrae, decisive form shadows, and localized specular response without requiring darkness or clipping.",
+      "component_groups": [
+        "one coherent source direction links highlights form shadows and cast shadows",
+        "cast-shadow edges remain crisp with a short visible penumbra",
+        "shadow shapes correspond to the occluding subject or object geometry",
+        "specular highlights are comparatively compact and directionally owned",
+        "lit surfaces and shadow structure remain exposed rather than clipped or crushed"
+      ],
+      "reject_substitutes": ["dark_image_only", "contrast_grade_only", "oversharpened_edges", "black_background_only", "blown_highlights"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_profoto_direct_flash_signature"]
+    },
+    {
+      "id": "soft_light_shadow_edge_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["soft-light broad shadow-transition relation", "large-source soft wrap relation", "소프트라이트 넓은 그림자 전이 관계", "대형 광원 부드러운 랩 조명"],
+      "definition": "A relatively large acting source keeps one readable direction while producing broad shadow-edge transitions, gradual form modeling, broad specular response, and open but still shaped shadows.",
+      "component_groups": [
+        "one readable source direction survives instead of becoming flat ambient wash",
+        "cast and form shadow edges cross a broad gradual transition",
+        "curved forms move progressively from light through midtone into shadow",
+        "specular response spreads broadly across compatible glossy surfaces",
+        "shadow detail remains open while contours and volume stay legible"
+      ],
+      "reject_substitutes": ["global_blur", "skin_smoothing", "fog_only", "flat_shadowless_fill", "low_contrast_grade_only"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer"]
+    },
+    {
+      "id": "loop_face_light_pattern",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["loop nose-shadow portrait pattern", "separate loop face light", "루프 코 그림자 인물 조명", "볼 그림자와 분리된 루프 조명"],
+      "definition": "An elevated off-axis key creates a short nose shadow that falls down and slightly sideways but remains visibly separated from the cheek shadow, preserving modeled cheeks and a readable far eye.",
+      "component_groups": [
+        "one elevated off-axis key owns the face lighting",
+        "the nose shadow falls downward and slightly toward the shadow side",
+        "the nose shadow remains clearly separated from the cheek shadow mass",
+        "both cheeks retain modeled light-to-shadow structure and the far eye remains readable",
+        "the geometry excludes a Rembrandt triangle split midline and centered butterfly shadow"
+      ],
+      "reject_substitutes": ["rembrandt_joined_shadow", "split_half_face", "centered_butterfly_shadow", "flat_frontal_light", "generic_side_light"],
+      "source_ids": ["lighting_profoto_portrait_pattern_geometry"]
+    },
+    {
+      "id": "butterfly_face_light_pattern",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["butterfly centered nose-shadow portrait pattern", "Paramount face light pattern", "버터플라이 중앙 코 그림자 조명", "파라마운트 인물 조명 패턴"],
+      "definition": "A high near-frontal key creates a compact centered shadow directly beneath the nose with largely symmetrical cheek illumination and upper catchlights, without the lower-return evidence that defines clamshell light.",
+      "component_groups": [
+        "one dominant key sits high and close to the camera axis",
+        "a compact shadow falls directly beneath the nose near the facial centerline",
+        "left and right cheek illumination remains broadly symmetrical",
+        "upper catchlights and gentle cheek-jaw modeling remain visible",
+        "the dominant upper single-key geometry remains distinct from lower-return or high-low catchlight-pair patterns"
+      ],
+      "reject_substitutes": ["clamshell_lower_return", "ring_light_disk", "theatrical_underlight", "loop_side_shadow", "flat_on_camera_flash"],
+      "source_ids": ["lighting_profoto_portrait_pattern_geometry"]
+    },
+    {
+      "id": "split_face_light_pattern",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["split half-face light pattern", "ninety-degree side split portrait", "스플릿 반면 인물 조명", "얼굴 중앙 경계 측면광"],
+      "definition": "A near-side key produces a clear face-center division so one half is illuminated and the other half remains modeled shadow, while the head contour and shadow-side structure stay readable enough to distinguish the pattern from silhouette.",
+      "component_groups": [
+        "one side key approaches a lateral ninety-degree relation to the face",
+        "the principal light-shadow boundary tracks the nose and face center region",
+        "one face half is decisively illuminated while the other is decisively shadowed",
+        "the shadow half preserves eye contour cheek and jaw structure",
+        "the face remains a two-sided modeled subject rather than a solid silhouette or broad-light turn"
+      ],
+      "reject_substitutes": ["solid_silhouette", "broad_lighting", "rembrandt_triangle", "generic_dark_cheek", "post_split_tone_mask"],
+      "source_ids": ["lighting_profoto_portrait_pattern_geometry"]
+    },
+    {
+      "id": "broad_face_light_orientation_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["broad face-light orientation relation", "camera-broad-side illuminated portrait", "브로드 얼굴 방향 조명 관계", "카메라에 넓게 보이는 면 조명"],
+      "definition": "A turned face presents one visibly broader cheek plane to the camera and that broader visible plane receives the dominant light, while the narrower far plane carries the primary shadow.",
+      "component_groups": [
+        "the head turn makes one cheek plane visibly broader to the camera",
+        "the camera-broad cheek plane receives the dominant key illumination",
+        "the narrower far plane carries the primary modeled shadow",
+        "nose cheek eye and jaw cues preserve both face orientation and light ownership",
+        "the relation is defined by camera-facing area rather than fixed left or right side"
+      ],
+      "reject_substitutes": ["short_lighting", "split_lighting", "front_flat_light", "left_right_label_only", "unreadable_face_turn"],
+      "source_ids": ["lighting_profoto_broad_face_orientation"]
+    },
+    {
+      "id": "short_face_light_orientation_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["short face-light orientation relation", "camera-narrow-side illuminated portrait", "쇼트 얼굴 방향 조명 관계", "카메라에 좁게 보이는 면 조명"],
+      "definition": "A turned face presents one narrow far cheek plane to the camera and that narrow plane receives the dominant light, leaving the broader camera-facing cheek in modeled shadow.",
+      "component_groups": [
+        "the head turn makes one cheek plane narrow and the opposite cheek broad to the camera",
+        "the camera-narrow cheek plane receives the dominant key illumination",
+        "the broad near cheek carries the primary modeled shadow",
+        "face contour eye line and nose direction remain readable through the shadow",
+        "the relation is defined by camera-facing area rather than fixed left or right side"
+      ],
+      "reject_substitutes": ["broad_lighting", "split_lighting", "backlit_rim_only", "left_right_label_only", "solid_shadow_face"],
+      "source_ids": ["lighting_profoto_broad_face_orientation"]
+    },
+    {
+      "id": "key_fill_separation_background_roles",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["key fill separation background lighting roles", "functional three-point subject lighting relation", "키 필 분리 배경광 역할 관계", "기능적 3점 인물 조명"],
+      "definition": "A primary key models the subject, a subordinate fill opens the key-owned shadows without a second opposing shadow, a rear or side edge separates the subject, and background illumination supports rather than erases that hierarchy.",
+      "component_groups": [
+        "one primary key direction owns the subject form and principal shadow",
+        "a weaker broad fill opens that same shadow without creating an opposing double shadow",
+        "a controlled rear or side edge separates at least one subject contour from the background",
+        "background light supplies texture color or directional support without flattening the subject",
+        "the four roles remain hierarchically distinct rather than becoming even omnidirectional illumination"
+      ],
+      "reject_substitutes": ["three_visible_lamps_only", "double_opposing_shadows", "flat_even_wash", "rim_only", "bright_background_only"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer"]
+    },
+    {
+      "id": "backlit_rim_edge_separation_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["backlit rim edge-separation relation", "contour rim with readable front", "역광 림 엣지 분리 관계", "전면 디테일이 남는 윤곽광"],
+      "definition": "A rear or rear-side source creates a narrow coherent luminous contour along selected subject edges while front or side modeling remains readable and the contour visibly separates the subject from the background.",
+      "component_groups": [
+        "a rear or rear-side source direction is consistent across illuminated edges",
+        "a narrow rim follows actual hair shoulder object or material contours",
+        "the front or side of the subject retains readable form and detail",
+        "the bright edge creates local separation from a darker or similar-toned background",
+        "the contour remains selective and plausible rather than a uniform cutout halo"
+      ],
+      "reject_substitutes": ["solid_silhouette", "uniform_ai_cutout_halo", "front_key_only", "random_glow_outline", "bright_background_without_rim"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer"]
+    },
+    {
+      "id": "backlit_silhouette_mass_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["backlit silhouette mass relation", "dark subject against bright field", "역광 실루엣 덩어리 관계", "밝은 배경 앞 어두운 윤곽"],
+      "definition": "A bright field behind the subject leaves the subject as a predominantly dark connected mass whose outer contour and pose are immediately readable while internal front detail is intentionally minimal.",
+      "component_groups": [
+        "a bright background or source field clearly sits behind the subject",
+        "the subject reads as one predominantly dark connected mass",
+        "the outer contour pose and major negative spaces remain immediately legible",
+        "internal front-facing texture and facial detail stay intentionally minimal",
+        "a thin rim or merely dark exposure does not substitute for the mass-background relation"
+      ],
+      "reject_substitutes": ["rim_lighting_with_front_detail", "global_underexposure", "black_clothing_only", "cutout_graphic_overlay", "dark_subject_on_dark_background"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer"]
+    },
+    {
+      "id": "high_key_tonal_distribution",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["high-key detailed-light tonal distribution", "bright open-shadow high-key scene", "하이키 밝은 톤 분포 관계", "디테일이 남는 밝은 조명 장면"],
+      "definition": "Most of the frame occupies light tonal regions with open shallow shadows, preserved white and highlight detail, a low-to-moderate key-fill difference, and enough edge or color separation to keep the subject distinct.",
+      "component_groups": [
+        "light tones occupy most of the frame without erasing the principal subject",
+        "shadows remain shallow open and visibly shaped rather than absent",
+        "white surfaces and bright highlights preserve texture below clipping",
+        "key and fill differ modestly while one modeling direction remains readable",
+        "subject edges stay separated by contour tone or color within the bright field"
+      ],
+      "reject_substitutes": ["global_overexposure", "white_clipping", "white_background_only", "shadowless_flat_render", "washed_out_low_contrast_grade"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_adobe_tone_color_postprocess_lanes"]
+    },
+    {
+      "id": "low_key_selective_illumination",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["low-key selective illumination relation", "dark-field selective subject light", "로우키 선택적 조명 관계", "어두운 장면의 국소 피사체 조명"],
+      "definition": "Dark tonal regions dominate, but selected subject planes receive deliberate readable illumination, shadow structure remains differentiated, highlights retain detail, and the frame hierarchy cannot be explained by global underexposure.",
+      "component_groups": [
+        "dark tonal regions dominate the frame by deliberate spatial design",
+        "selected face object or material planes receive coherent directional light",
+        "shadow regions retain more than one density and preserve structural clues",
+        "small highlights remain controlled and detailed rather than clipped",
+        "correctly exposed lit regions prove selective illumination rather than global underexposure"
+      ],
+      "reject_substitutes": ["global_underexposure", "crushed_blacks", "black_background_only", "dark_wardrobe_only", "vignette_only"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_adobe_tone_color_postprocess_lanes"]
+    },
+    {
+      "id": "chiaroscuro_form_modeling_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["chiaroscuro form-modeling light relation", "directional light-dark volume modeling", "키아로스쿠로 형태 모델링 관계", "명암으로 입체를 만드는 조명"],
+      "definition": "Directional light and connected shadow masses model three-dimensional volume through diffused values, specular accents, form shadows, and transitional midtones, making contrast serve shape rather than darkness alone.",
+      "component_groups": [
+        "one dominant direction organizes illuminated and shadowed planes",
+        "light-dark boundaries follow three-dimensional face object or drapery form",
+        "diffuse value specular accent and form shadow remain distinguishable",
+        "midtone transitions connect selected highlights to deep but structured shadows",
+        "the composition uses alternating light and dark masses to guide form and attention"
+      ],
+      "reject_substitutes": ["contrast_slider_only", "black_background_only", "solid_silhouette", "random_spotlights", "crushed_shadow_grade"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_national_gallery_chiaroscuro"]
+    },
+    {
+      "id": "tenebrist_dark_field_isolation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["tenebrist dark-field isolated light", "tenebrism spotlight hierarchy", "테네브리즘 암흑장 고립광", "어둠 속 강한 선택광"],
+      "definition": "A predominantly dark field contains one or a few abruptly isolated coherent pools of illumination whose protected local detail and sparse peripheral clues create a concentrated hierarchy more extreme than ordinary low-key light.",
+      "component_groups": [
+        "a continuous dark field dominates the background and much of the subject environment",
+        "one or a few coherent light pools isolate the principal action or form",
+        "light-to-dark transition is abrupt enough to create a concentrated hierarchy",
+        "the isolated lit area preserves color texture and highlight detail",
+        "sparse peripheral clues maintain spatial context without filling the dark field"
+      ],
+      "reject_substitutes": ["generic_low_key", "global_vignette", "global_underexposure", "single_bright_object", "crushed_black_background"],
+      "source_ids": ["lighting_national_gallery_tenebrism"]
+    },
+    {
+      "id": "direct_on_camera_flash_snapshot_signature",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["direct on-camera flash snapshot signature", "near-axis hard flash relation", "직광 온카메라 플래시 스냅 관계", "카메라축 하드 플래시 사진"],
+      "definition": "A small near-camera-axis flash makes the near subject abruptly bright with compact specular hotspots and a hard shadow close behind, while ambient distance falls darker or remains separately exposed.",
+      "component_groups": [
+        "the dominant flash direction stays close to the camera viewing axis",
+        "a crisp cast shadow falls close behind the near subject on available surfaces",
+        "skin glossy fabric or objects show compact frontal specular hotspots",
+        "the near subject is much brighter than a more distant ambient background",
+        "some ambient or spatial background evidence remains instead of a white clipped void"
+      ],
+      "reject_substitutes": ["off_camera_studio_key", "global_overexposure", "soft_bounced_flash", "contrast_grade_only", "dark_background_without_flash_shadow"],
+      "source_ids": ["lighting_profoto_direct_flash_signature", "lighting_ies_inverse_square_scope"]
+    },
+    {
+      "id": "motivated_practical_mixed_interior_relation",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["motivated visible-practical mixed interior light", "warm practical cool ambient ownership relation", "동기화된 프랙티컬 혼합광 실내", "따뜻한 실내등과 차가운 주변광 관계"],
+      "definition": "A visible practical source owns a nearby pool whose direction and color continue onto the subject, while a distinct ambient zone remains spatially coherent and all major shadows can be assigned without contradiction.",
+      "component_groups": [
+        "at least one plausible practical source is visible within the scene",
+        "a nearby brightness and color pool falls off outward from that source",
+        "light reaching the subject matches the practical's plausible direction and color family",
+        "a second ambient zone remains spatially distinct in color brightness or direction",
+        "cast and form shadows have coherent source ownership without teal-orange grade substitution"
+      ],
+      "reject_substitutes": ["teal_orange_lut_only", "visible_unlit_lamp", "colored_ambient_without_source", "contradictory_shadow_directions", "warm_material_color_only"],
+      "source_ids": ["lighting_nikon_white_balance_mixed_source", "lighting_asc_practical_motivation_boundary", "lighting_asc_visible_practical_augmentation"]
+    },
+    {
+      "id": "volumetric_occluded_light_shafts",
+      "priority": "P0",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["volumetric occluded light-shaft relation", "source occluder haze beam geometry", "볼류메트릭 차폐 광선 관계", "광원 장애물 매질 표면 빛기둥"],
+      "definition": "A coherent source direction passes through or around identifiable occluders into a scattering medium, forming separated shafts that continue to visible receiving surfaces and shadow gaps.",
+      "component_groups": [
+        "one coherent source direction anchors every visible shaft",
+        "a window cloud foliage architecture or gobo provides identifiable occlusion gaps",
+        "haze dust mist or atmosphere makes the light path visible within volume",
+        "separate bright shafts and darker gaps preserve the occluder's pattern",
+        "at least one shaft lands plausibly on a subject floor wall or atmospheric layer"
+      ],
+      "reject_substitutes": ["lens_flare_streak", "fog_only", "painted_beam_overlay", "random_god_rays", "glow_without_occluder"],
+      "source_ids": ["lighting_nasa_crepuscular_scattering"]
+    },
+    {
+      "id": "golden_hour_low_sun_relation",
+      "priority": "P1",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["golden-hour low-sun spatial relation", "low warm backlight with long shadow", "골든아워 낮은 태양 공간 관계", "낮은 따뜻한 역광과 긴 그림자"],
+      "definition": "A low horizon-side warm direct source creates long shadows and grazing or rim highlights while cooler or neutral open-sky fill preserves the shadow side; color alone does not establish the relation.",
+      "component_groups": [
+        "the dominant direct source arrives from a visibly low horizon-side direction",
+        "cast shadows extend long across readable ground or architecture",
+        "warm grazing backlight or rim light traces selected contours and textures",
+        "cooler or neutral open-sky fill preserves readable shadow-side information",
+        "spatial direction and shadow length distinguish the look from a global warm grade"
+      ],
+      "reject_substitutes": ["warm_grade_only", "warm_indoor_practical", "high_midday_sun", "orange_material_palette", "sunset_background_without_subject_relation"],
+      "source_ids": ["lighting_photopills_golden_blue_hour_relations", "lighting_noaa_long_path_scattering"]
+    },
+    {
+      "id": "blue_hour_ambient_practical_balance",
+      "priority": "P1",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["blue-hour twilight practical balance", "cool twilight warm city-practical relation", "블루아워 주변광 실내등 균형", "차가운 황혼과 따뜻한 도시 조명 관계"],
+      "definition": "Cool twilight sky ambient remains bright enough to reveal environment and subject contours while localized warm practical pools are visible and balanced, with no direct sun and no substitution by a cyan night grade.",
+      "component_groups": [
+        "a cool twilight sky or open ambient field remains visibly luminous",
+        "cool twilight ambient and localized warm practicals own the scene instead of a direct sun disk or hard high-sun shadow",
+        "warm practical sources create localized pools on streets windows or subjects",
+        "ambient and practical exposure remain balanced so neither becomes a blank field",
+        "architecture and subject contours preserve cool-warm spatial separation"
+      ],
+      "reject_substitutes": ["cyan_night_grade", "daylight_scene_with_blue_filter", "warm_lights_on_black_background", "direct_sunset_sun", "teal_orange_lut_only"],
+      "source_ids": ["lighting_photopills_golden_blue_hour_relations", "lighting_nikon_white_balance_mixed_source"]
+    },
+    {
+      "id": "lens_ghosting_flare_alignment",
+      "priority": "P1",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["lens ghosting flare alignment relation", "internal-reflection ghost chain", "렌즈 고스팅 플레어 정렬 관계", "광원과 정렬된 내부 반사 고스트"],
+      "definition": "A strong source near or inside the frame generates one or more secondary translucent ghost shapes whose positions, scale changes, and optical repetition align coherently with the source and lens axis.",
+      "component_groups": [
+        "one strong source near or inside the frame anchors the optical effect",
+        "one or more secondary translucent ghost shapes are spatially displaced from the source",
+        "the ghost sequence follows a coherent source-to-frame-center or lens-axis alignment",
+        "ghost scale color and opacity vary as related internal-reflection images rather than random stickers",
+        "scene detail outside the ghost path remains distinct enough to separate ghosting from veiling haze"
+      ],
+      "reject_substitutes": ["prism_rainbow", "light_leak_overlay", "painted_orbs", "global_bloom", "veiling_flare_only"],
+      "source_ids": ["lighting_zeiss_internal_reflection_flare"]
+    },
+    {
+      "id": "veiling_flare_contrast_loss_relation",
+      "priority": "P1",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["veiling-flare localized contrast-loss relation", "source-side optical haze wash", "베일링 플레어 국소 대비 저하 관계", "광원 쪽 렌즈 헤이즈 워시"],
+      "definition": "A strong source near or inside the frame spreads a broad optical veil that lowers black density and local contrast more strongly toward the source while preserving a directional gradient across the scene.",
+      "component_groups": [
+        "one bright source near or inside the frame plausibly drives the veil",
+        "a broad translucent haze spreads from the source-side region",
+        "black density and local edge contrast decrease within that region",
+        "the contrast loss follows a directional gradient instead of covering the frame uniformly",
+        "some unaffected reference region remains for comparison against fog or low-contrast grading"
+      ],
+      "reject_substitutes": ["scene_wide_fog", "low_contrast_grade_only", "lens_ghost_orbs_only", "global_bloom", "soft_focus_filter_only"],
+      "source_ids": ["lighting_zeiss_internal_reflection_flare"]
+    },
+    {
+      "id": "film_halation_highlight_edge_relation",
+      "priority": "P1",
+      "runtime_mode": "definition_with_optional_label",
+      "activation_terms": ["film-halation highlight-edge relation", "localized warm highlight halo", "필름 할레이션 하이라이트 경계 관계", "고휘도 주변 국소 적색 헤일로"],
+      "definition": "Very bright highlight boundaries carry a thin localized warm or red-biased halo just outside the exposed edge, while the highlight core and surrounding nonhighlight detail remain sufficiently structured to reject global glow and flare.",
+      "component_groups": [
+        "one or more genuinely high-luminance edges anchor the effect",
+        "a thin warm or red-biased halo sits immediately outside those edges",
+        "halo width and intensity fall off locally rather than covering the frame",
+        "highlight core shape and adjacent nonhighlight detail remain readable",
+        "aligned ghost orbs broad veiling haze and chromatic edge pairs remain visibly distinct from the thin local halo"
+      ],
+      "reject_substitutes": ["global_glow", "bloom_everywhere", "chromatic_aberration", "lens_ghost_orbs", "red_color_grade"],
+      "source_ids": ["lighting_kodak_antihalation_and_halo", "lighting_zeiss_internal_reflection_flare"]
+    }
+  ],
+  "candidate_pack_policy": {
+    "cluster_rule": "Every cluster owns a primary tag and one candidate in each required slot. Individual entries may be omitted only when the requesting profile supplies the same owned relation; cross-cluster substitutions are not allowed.",
+    "required_slots": ["lighting", "light_direction", "light_type", "light_intensity", "light_shape", "color"],
+    "one_of_finish_slots": ["color_grading", "film_emulation"],
+    "entry_requirements": [
+      "stable_id",
+      "ko_and_en_phrase",
+      "one_primary_cluster_tag",
+      "requires_primary_any_tags",
+      "source_ids",
+      "semantic_text_describing_pixel_effect",
+      "no_equipment_or_metric_claim_unless_explicit_setup"
+    ]
+  },
+  "candidate_clusters": [
+    {
+      "id": "clean_beauty_clamshell",
+      "primary_tag": "lighting_cluster_clean_beauty_clamshell",
+      "profile_ids": ["clamshell_dual_source_portrait_light", "soft_light_shadow_edge_relation"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_profoto_portrait_pattern_geometry"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_clean_clamshell_beauty","ko":"상부 소프트 키와 약한 하부 리턴의 클린 뷰티 조명","en":"clean beauty light with an upper soft key and weaker lower return"},
+        {"slot":"light_direction","id":"lit_clean_vertical_frontal_axis","ko":"얼굴 위아래로 정렬된 정면 광축","en":"vertically aligned upper-and-lower frontal light axis"},
+        {"slot":"light_type","id":"lit_clean_large_soft_key_return","ko":"큰 소프트 키와 반사판형 하부 필","en":"large soft key with reflector-like lower fill"},
+        {"slot":"light_intensity","id":"lit_clean_low_ratio_open_shadow","ko":"그림자가 남는 낮은 키-필 차이","en":"low key-fill difference with shadows still present"},
+        {"slot":"light_shape","id":"lit_clean_vertical_catchlight_pair","ko":"눈에 수직으로 보이는 상하 캐치라이트","en":"vertical high-low catchlight evidence"},
+        {"slot":"color","id":"lit_clean_warm_neutral_balance","ko":"피부색을 보존하는 따뜻한 중립 밸런스","en":"warm-neutral balance with preserved natural color"},
+        {"slot":"color_grading","id":"lit_clean_beauty_tone_finish","ko":"흰색 디테일과 중간톤이 깨끗한 뷰티 톤","en":"clean beauty tone with detailed whites and clear midtones"}
+      ],
+      "reject_substitutes": ["ring_light_disk", "shadowless_skin_retouch", "strong_underlight"]
+    },
+    {
+      "id": "soft_window_open_shadows",
+      "primary_tag": "lighting_cluster_soft_window_open_shadows",
+      "profile_ids": ["soft_light_shadow_edge_relation"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_nikon_white_balance_mixed_source"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_window_large_soft_source","ko":"큰 창면에서 들어오는 부드러운 방향광","en":"large-window soft directional light"},
+        {"slot":"light_direction","id":"lit_window_side_front_wrap","ko":"창 쪽 측정면에서 감싸는 방향","en":"side-front window direction with gentle wrap"},
+        {"slot":"light_type","id":"lit_window_diffused_daylight_field","ko":"확산된 넓은 주광면","en":"broad diffused daylight field"},
+        {"slot":"light_intensity","id":"lit_window_open_shadow_falloff","ko":"암부가 열려 있고 배경으로 점진 감쇠","en":"open shadows with gradual falloff into the room"},
+        {"slot":"light_shape","id":"lit_window_broad_transition_rectangle","ko":"직사각 창 반사와 넓은 그림자 전이","en":"broad shadow transition with plausible window-shaped reflection"},
+        {"slot":"color","id":"lit_window_neutral_daylight_balance","ko":"중립 주광과 재질색 보존","en":"neutral daylight balance preserving material color"},
+        {"slot":"color_grading","id":"lit_window_gentle_low_contrast_finish","ko":"검정이 뜨지 않는 부드러운 저대비 톤","en":"gentle low-contrast finish without milky blacks"}
+      ],
+      "reject_substitutes": ["flat_studio_wash", "blue_tint_only", "global_soft_focus"]
+    },
+    {
+      "id": "rembrandt_studio_drama",
+      "primary_tag": "lighting_cluster_rembrandt_studio_drama",
+      "profile_ids": ["rembrandt_face_light_pattern", "low_key_selective_illumination"],
+      "source_ids": ["lighting_profoto_portrait_pattern_geometry", "lighting_national_gallery_chiaroscuro"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_rembrandt_cheek_triangle_key","ko":"그림자 볼에 삼각광을 남기는 렘브란트 키","en":"Rembrandt key preserving a contained shadow-cheek triangle"},
+        {"slot":"light_direction","id":"lit_rembrandt_elevated_off_axis","ko":"높은 비축 측정면 방향","en":"elevated off-axis side-front direction"},
+        {"slot":"light_type","id":"lit_rembrandt_controlled_directional_source","ko":"스필이 제어된 방향성 광원","en":"controlled directional source with limited spill"},
+        {"slot":"light_intensity","id":"lit_rembrandt_low_fill_readable_eye","ko":"먼 눈은 읽히고 그림자는 연결되는 낮은 필","en":"low fill that keeps the far eye readable and the shadow joined"},
+        {"slot":"light_shape","id":"lit_rembrandt_joined_shadow_triangle","ko":"연결된 코-볼 그림자와 제한된 삼각광","en":"joined nose-cheek shadow around a contained light triangle"},
+        {"slot":"color","id":"lit_rembrandt_restrained_warm_neutral","ko":"절제된 따뜻한 중립 색","en":"restrained warm-neutral color"},
+        {"slot":"color_grading","id":"lit_rembrandt_deep_detailed_tone","ko":"깊지만 디테일이 남는 암부 톤","en":"deep but detailed shadows with protected highlights"}
+      ],
+      "reject_substitutes": ["generic_side_light", "split_half_face", "loop_shadow"]
+    },
+    {
+      "id": "hard_side_editorial",
+      "primary_tag": "lighting_cluster_hard_side_editorial",
+      "profile_ids": ["hard_light_shadow_edge_relation", "short_face_light_orientation_relation"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_editorial_hard_side_key","ko":"조형적인 하드 측면 키","en":"sculptural hard side key"},
+        {"slot":"light_direction","id":"lit_editorial_raking_side_direction","ko":"표면을 스치는 레이킹 측면 방향","en":"raking lateral direction across surface relief"},
+        {"slot":"light_type","id":"lit_editorial_small_controlled_source","ko":"작고 스필이 제어된 직접 광원","en":"small controlled direct source"},
+        {"slot":"light_intensity","id":"lit_editorial_high_local_contrast","ko":"하이라이트가 클리핑되지 않는 높은 국소 대비","en":"high local contrast with unclipped lit planes"},
+        {"slot":"light_shape","id":"lit_editorial_crisp_graphic_shadow","ko":"짧은 반그림자의 그래픽 캐스트 섀도","en":"graphic cast shadow with a short penumbra"},
+        {"slot":"color","id":"lit_editorial_neutral_selective_accent","ko":"중립 베이스와 선택적 색 포인트","en":"neutral base with one selective color accent"},
+        {"slot":"color_grading","id":"lit_editorial_punchy_structured_finish","ko":"블랙 디테일이 남는 펀치 있는 편집 톤","en":"punchy editorial finish with structured blacks"}
+      ],
+      "reject_substitutes": ["contrast_grade_only", "oversharpening", "global_underexposure"]
+    },
+    {
+      "id": "luxury_controlled_specular",
+      "primary_tag": "lighting_cluster_luxury_controlled_specular",
+      "profile_ids": ["chiaroscuro_form_modeling_relation", "negative_fill_shadow_deepening_relation"],
+      "source_ids": ["lighting_arri_quality_roles_shadow_transfer", "lighting_national_gallery_chiaroscuro"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_luxury_specular_hierarchy","ko":"재질별 스페큘러를 계층화한 럭셔리 조명","en":"luxury lighting with a controlled material-specific specular hierarchy"},
+        {"slot":"light_direction","id":"lit_luxury_three_quarter_edge_control","ko":"정면 3/4 키와 절제된 엣지 분리","en":"three-quarter key with restrained edge separation"},
+        {"slot":"light_type","id":"lit_luxury_large_directional_soft_source","ko":"방향성이 유지되는 큰 소프트 광원","en":"large directional soft source retaining shape"},
+        {"slot":"light_intensity","id":"lit_luxury_deep_detailed_black_ratio","ko":"검정 재질 디테일이 남는 깊은 명암","en":"deep contrast that preserves black-material detail"},
+        {"slot":"light_shape","id":"lit_luxury_selected_specular_edges","ko":"금속 유리 가죽에 선택적으로 잡히는 하이라이트","en":"selected specular edges across metal glass and leather"},
+        {"slot":"color","id":"lit_luxury_rich_material_separation","ko":"금색 검정 보석색이 섞이지 않는 풍부한 색 분리","en":"rich separation among gilt black and jewel colors"},
+        {"slot":"color_grading","id":"lit_luxury_rich_black_finish","ko":"하이라이트 롤오프와 풍부한 블랙 톤","en":"rich-black finish with gentle highlight rolloff"}
+      ],
+      "reject_substitutes": ["random_gold_glare", "crushed_black", "flat_catalog_light"]
+    },
+    {
+      "id": "motivated_warm_practical_cool_ambient",
+      "primary_tag": "lighting_cluster_motivated_warm_practical_cool_ambient",
+      "profile_ids": ["motivated_practical_mixed_interior_relation"],
+      "source_ids": ["lighting_nikon_white_balance_mixed_source", "lighting_asc_practical_motivation_boundary", "lighting_asc_visible_practical_augmentation"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_practical_motivated_mixed_interior","ko":"보이는 실내등에 동기화된 따뜻한-차가운 혼합광","en":"warm-cool mixed interior light motivated by a visible practical"},
+        {"slot":"light_direction","id":"lit_practical_source_owned_direction","ko":"보이는 광원에서 피사체로 이어지는 방향","en":"direction continuing plausibly from the visible practical to the subject"},
+        {"slot":"light_type","id":"lit_practical_augmented_visible_source","ko":"보이는 프랙티컬을 자연스럽게 증강한 광","en":"visually augmented practical source"},
+        {"slot":"light_intensity","id":"lit_practical_pool_ambient_balance","ko":"광원 주변 밝은 풀과 주변광의 균형","en":"balanced practical pool and ambient field"},
+        {"slot":"light_shape","id":"lit_practical_local_falloff_pool","ko":"광원에서 멀어질수록 약해지는 국소 빛의 풀","en":"localized pool with source-centered falloff"},
+        {"slot":"color","id":"lit_practical_warm_cool_spatial_zones","ko":"따뜻한 프랙티컬과 차가운 주변광의 공간 분리","en":"spatial separation of warm practical and cool ambient zones"},
+        {"slot":"color_grading","id":"lit_practical_natural_mixed_finish","ko":"색 경계를 지우지 않는 자연스러운 혼합광 마감","en":"natural mixed-source finish preserving spatial color boundaries"}
+      ],
+      "reject_substitutes": ["teal_orange_lut_only", "unlit_visible_lamp", "contradictory_shadow_ownership"]
+    },
+    {
+      "id": "noir_gobo_silhouette",
+      "primary_tag": "lighting_cluster_noir_gobo_silhouette",
+      "profile_ids": ["low_key_selective_illumination", "backlit_silhouette_mass_relation", "tenebrist_dark_field_isolation"],
+      "source_ids": ["lighting_national_gallery_tenebrism", "lighting_bfi_noir_nonlighting_boundary"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_noir_selective_gobo_pool","ko":"어두운 장면을 가르는 선택적 고보 빛의 풀","en":"selective gobo light pool cutting through a dark field"},
+        {"slot":"light_direction","id":"lit_noir_hard_side_back_direction","ko":"하드 측후면 방향과 선택적 역광","en":"hard side-back direction with selective backlight"},
+        {"slot":"light_type","id":"lit_noir_flagged_pattern_source","ko":"플래그와 패턴이 제어된 작은 광원","en":"small flagged and patterned source"},
+        {"slot":"light_intensity","id":"lit_noir_sparse_highlight_low_fill","ko":"필은 낮고 하이라이트가 희소한 명암","en":"sparse highlights with very low fill"},
+        {"slot":"light_shape","id":"lit_noir_blind_or_gobo_shadow","ko":"블라인드 또는 고보의 선명한 빛-그림자 패턴","en":"crisp blind or gobo light-shadow pattern"},
+        {"slot":"color","id":"lit_noir_monochrome_or_restrained_palette","ko":"단색 또는 극도로 절제된 팔레트","en":"monochrome or severely restrained palette"},
+        {"slot":"color_grading","id":"lit_noir_deep_detailed_black_finish","ko":"세부가 남는 깊은 블랙과 선택적 흰색","en":"deep detailed blacks with protected selective whites"}
+      ],
+      "reject_substitutes": ["noir_label_only", "costume_stereotype", "global_underexposure"]
+    },
+    {
+      "id": "golden_hour_backlit_portrait",
+      "primary_tag": "lighting_cluster_golden_hour_backlit_portrait",
+      "profile_ids": ["golden_hour_low_sun_relation", "backlit_rim_edge_separation_relation"],
+      "source_ids": ["lighting_photopills_golden_blue_hour_relations", "lighting_noaa_long_path_scattering"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_golden_low_sun_backlight","ko":"낮은 태양의 따뜻한 역광","en":"warm low-sun backlight"},
+        {"slot":"light_direction","id":"lit_golden_horizon_side_back_direction","ko":"지평선 쪽 측후면 태양 방향","en":"horizon-side rear three-quarter sun direction"},
+        {"slot":"light_type","id":"lit_golden_direct_sun_open_sky_fill","ko":"낮은 직사광과 열린 하늘 필","en":"low direct sunlight with open-sky fill"},
+        {"slot":"light_intensity","id":"lit_golden_long_shadow_open_face","ko":"긴 그림자와 얼굴 정보가 남는 노출 균형","en":"long-shadow exposure with readable front-side detail"},
+        {"slot":"light_shape","id":"lit_golden_rim_grazing_highlight","ko":"머리와 표면을 스치는 따뜻한 림 하이라이트","en":"warm rim and grazing highlights along contours and texture"},
+        {"slot":"color","id":"lit_golden_warm_direct_cool_sky","ko":"따뜻한 직사광과 중립-차가운 하늘 필","en":"warm direct light separated from neutral-cool sky fill"},
+        {"slot":"color_grading","id":"lit_golden_protected_warm_rolloff","ko":"따뜻함을 유지하며 하이라이트가 부드럽게 감기는 톤","en":"warm finish with protected highlight rolloff"}
+      ],
+      "reject_substitutes": ["warm_grade_only", "orange_palette_only", "high_midday_sun"]
+    },
+    {
+      "id": "blue_hour_city_practical",
+      "primary_tag": "lighting_cluster_blue_hour_city_practical",
+      "profile_ids": ["blue_hour_ambient_practical_balance", "motivated_practical_mixed_interior_relation"],
+      "source_ids": ["lighting_photopills_golden_blue_hour_relations", "lighting_nikon_white_balance_mixed_source"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_blue_twilight_city_practicals","ko":"푸른 황혼 주변광과 켜진 도시 조명","en":"cool twilight ambient balanced with illuminated city practicals"},
+        {"slot":"light_direction","id":"lit_blue_sky_fill_local_practical","ko":"하늘의 넓은 필과 국소 실내등 방향","en":"broad sky fill with localized practical directions"},
+        {"slot":"light_type","id":"lit_blue_twilight_available_mixed","ko":"황혼 가용광과 인공광의 혼합","en":"mixed twilight available light and artificial practicals"},
+        {"slot":"light_intensity","id":"lit_blue_ambient_practical_exposure_balance","ko":"하늘과 실내등이 모두 디테일을 갖는 노출","en":"exposure balance preserving both sky and practical detail"},
+        {"slot":"light_shape","id":"lit_blue_window_street_pool_pattern","ko":"창과 가로등 주변의 국소 빛의 풀","en":"localized window and street-lamp pools"},
+        {"slot":"color","id":"lit_blue_cool_ambient_warm_practical","ko":"차가운 주변광과 따뜻한 실내등의 공간 대비","en":"spatial contrast of cool ambient and warm practical light"},
+        {"slot":"color_grading","id":"lit_blue_twilight_not_cyan_night","ko":"청록 밤 필터가 아닌 황혼 색 분리","en":"twilight color separation without a cyan-night wash"}
+      ],
+      "reject_substitutes": ["cyan_night_grade", "black_night_with_warm_lamps", "daylight_blue_filter"]
+    },
+    {
+      "id": "direct_flash_y2k_snapshot",
+      "primary_tag": "lighting_cluster_direct_flash_y2k_snapshot",
+      "profile_ids": ["direct_on_camera_flash_snapshot_signature", "hard_light_shadow_edge_relation"],
+      "source_ids": ["lighting_profoto_direct_flash_signature", "lighting_ies_inverse_square_scope"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_direct_flash_snapshot","ko":"피사체를 정면에서 갑자기 밝히는 직광 플래시","en":"direct-flash snapshot with abrupt near-subject brightness"},
+        {"slot":"light_direction","id":"lit_direct_flash_camera_axis","ko":"카메라 렌즈축에 가까운 정면 방향","en":"near-camera-axis frontal flash direction"},
+        {"slot":"light_type","id":"lit_direct_flash_small_speedlight","ko":"작은 스피드라이트형 직접광","en":"small speedlight-like direct source"},
+        {"slot":"light_intensity","id":"lit_direct_flash_near_far_drop","ko":"가까운 피사체와 먼 배경의 급격한 밝기 차","en":"rapid near-subject to far-background brightness drop"},
+        {"slot":"light_shape","id":"lit_direct_flash_crisp_close_shadow","ko":"피사체 바로 뒤의 선명한 그림자와 작은 핫스폿","en":"crisp close-behind shadow with compact frontal hotspots"},
+        {"slot":"color","id":"lit_direct_flash_neutral_cool_balance","ko":"중립 또는 약간 차가운 플래시 밸런스","en":"neutral to slightly cool flash balance"},
+        {"slot":"color_grading","id":"lit_direct_flash_glossy_snapshot_finish","ko":"광택 하이라이트가 선명한 스냅 톤","en":"glossy snapshot finish with protected flash hotspots"}
+      ],
+      "reject_substitutes": ["studio_strobe_label", "soft_bounced_flash", "global_overexposure"]
+    },
+    {
+      "id": "filmic_muted_halation",
+      "primary_tag": "lighting_cluster_filmic_muted_halation",
+      "profile_ids": ["film_halation_highlight_edge_relation"],
+      "source_ids": ["lighting_kodak_antihalation_and_halo", "lighting_adobe_tone_color_postprocess_lanes"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_filmic_protected_highlight_source","ko":"헤일로 기준이 되는 보호된 고휘도 광원","en":"protected high-luminance source edges suitable for localized halation"},
+        {"slot":"light_direction","id":"lit_filmic_selective_edge_light","ko":"선택적 경계를 만드는 측면 또는 역광","en":"selective side or back edge light"},
+        {"slot":"light_type","id":"lit_filmic_practical_or_backlight_anchor","ko":"헤일로를 국소화하는 실내등 또는 역광 기준","en":"practical or backlight anchor localizing the halo"},
+        {"slot":"light_intensity","id":"lit_filmic_highlight_without_clip","ko":"코어 형태가 남는 강한 하이라이트","en":"strong highlights retaining core shape below destructive clipping"},
+        {"slot":"light_shape","id":"lit_filmic_thin_warm_edge_halo","ko":"고휘도 경계 바깥의 얇고 따뜻한 헤일로","en":"thin localized warm halo just outside bright edges"},
+        {"slot":"color","id":"lit_filmic_muted_color_separation","ko":"채도는 절제되고 색 분리는 남는 팔레트","en":"muted saturation with preserved color separation"},
+        {"slot":"film_emulation","id":"lit_filmic_grain_rolloff_halation","ko":"그레인과 부드러운 롤오프를 동반한 할레이션 룩","en":"filmic grain gentle rolloff and localized halation look"}
+      ],
+      "reject_substitutes": ["global_bloom", "vintage_preset_name", "lens_ghost_orbs"]
+    },
+    {
+      "id": "volumetric_haze_shafts",
+      "primary_tag": "lighting_cluster_volumetric_haze_shafts",
+      "profile_ids": ["volumetric_occluded_light_shafts"],
+      "source_ids": ["lighting_nasa_crepuscular_scattering"],
+      "slot_concepts": [
+        {"slot":"lighting","id":"lit_volume_occluded_shafts","ko":"장애물을 통과해 나뉘는 볼류메트릭 광선","en":"volumetric shafts divided by identifiable occluders"},
+        {"slot":"light_direction","id":"lit_volume_single_source_axis","ko":"모든 광선을 소유하는 단일 광원 축","en":"single coherent source axis owning every shaft"},
+        {"slot":"light_type","id":"lit_volume_collimated_haze_source","ko":"헤이즈에서 경로가 보이는 집중광","en":"focused source whose path is visible in haze"},
+        {"slot":"light_intensity","id":"lit_volume_beam_gap_separation","ko":"광선과 어두운 틈이 분리되는 세기","en":"beam intensity preserving separation from dark gaps"},
+        {"slot":"light_shape","id":"lit_volume_occluder_pattern_shafts","ko":"창 잎 고보 패턴을 따르는 빛기둥","en":"shafts preserving a window foliage or gobo occlusion pattern"},
+        {"slot":"color","id":"lit_volume_source_owned_color","ko":"광원과 표면에서 일관된 제한 색","en":"restrained source-owned color continuing onto receiving surfaces"},
+        {"slot":"color_grading","id":"lit_volume_detailed_haze_finish","ko":"검정과 광선 내부 디테일이 남는 헤이즈 톤","en":"haze finish preserving black density and beam detail"}
+      ],
+      "reject_substitutes": ["fog_only", "flare_streak", "random_painted_god_rays"]
+    }
+  ],
+  "candidate_or_metadata_only_terms": {
+    "fixtures_and_sources": ["softbox", "octabox", "stripbox", "umbrella", "beauty dish", "lantern", "Fresnel", "optical snoot", "LED", "COB", "HMI", "tungsten", "fluorescent", "speedlight", "strobe"],
+    "control_tools": ["grid", "barn doors", "snoot", "flag", "cutter", "gobo", "scrim", "reflector", "V-flat", "bounce board"],
+    "quantitative_capture_metadata": ["lux", "foot-candle", "EV", "stop", "exact lighting ratio", "beam angle degrees", "Kelvin", "mired", "Duv"],
+    "color_quality_metrics": ["CRI", "Ra", "R9", "TLCI", "SSI", "SPD", "full spectrum", "green spike", "metamerism"],
+    "filters": ["CTO", "CTB", "CTS", "plusgreen", "minusgreen", "ND", "product gel code"],
+    "rule": "Preserve explicit requester metadata and offer a bounded visible-effect translation, but never create a hard profile or infer the actual device, metric, or product from generated pixels."
+  },
+  "postprocess_lane": {
+    "terms": ["tone curve", "RGB curve", "lift gamma gain", "offset", "HSL", "color mixer", "color wheels", "split toning", "selective color", "LUT", "film emulation", "print emulation", "grain", "bleach bypass look", "cross-process look", "fade", "gate weave look", "global bloom", "diffusion filter look"],
+    "rule": "Postprocess candidates may combine with a lighting cluster, but they cannot satisfy or replace a scene-light component group. Process names must be labeled as looks unless the requester supplies capture or lab metadata."
+  },
+  "regression_plan": {
+    "structural_assertions": [
+      "every hard profile has at least five component groups",
+      "every hard profile has one-to-one required evidence and render gates when implemented",
+      "every hard profile lists at least five close substitutes",
+      "all exact terms are narrow bilingual context phrases",
+      "candidate clusters cover six required slots and one finish slot",
+      "every candidate has exactly one primary cluster tag and source binding",
+      "equipment and metric terms own no hard visual profile"
+    ],
+    "routing_pairs": [
+      {"positive":"Rembrandt joined nose-cheek shadow and far-cheek triangle","negative":"loop shadow remains separate"},
+      {"positive":"butterfly centered under-nose shadow","negative":"clamshell lower return and high-low catchlights"},
+      {"positive":"broad camera-visible cheek lit","negative":"short camera-narrow cheek lit"},
+      {"positive":"rim edge with readable front","negative":"silhouette connected dark mass"},
+      {"positive":"high-key detailed whites and open shadows","negative":"global overexposure and clipping"},
+      {"positive":"low-key selective correctly exposed planes","negative":"global underexposure and crushed black"},
+      {"positive":"chiaroscuro form modeling","negative":"contrast grade and black background"},
+      {"positive":"tenebrist isolated light pool","negative":"generic low-key"},
+      {"positive":"motivated visible practical relation","negative":"teal-orange LUT with no source ownership"},
+      {"positive":"golden low-sun geometry","negative":"warm midday grade"},
+      {"positive":"blue twilight and warm practical balance","negative":"cyan night grade"},
+      {"positive":"aligned lens ghost chain","negative":"prism rainbow and light leak"},
+      {"positive":"localized film-halation edge halo","negative":"veiling flare global glow and chromatic aberration"}
+    ],
+    "candidate_cluster_queries": [
+      "clean clamshell beauty portrait / 클린 클램셸 뷰티",
+      "soft window open shadows / 부드러운 창문빛 열린 암부",
+      "Rembrandt dramatic studio portrait / 렘브란트 스튜디오 드라마",
+      "hard side editorial / 하드 측면 에디토리얼",
+      "controlled specular luxury advertisement / 스페큘러가 제어된 럭셔리 광고",
+      "motivated warm practical cool ambient interior / 따뜻한 실내등 차가운 주변광",
+      "noir gobo silhouette / 누아르 고보 실루엣",
+      "golden-hour backlit portrait / 골든아워 역광 인물",
+      "blue-hour city practical / 블루아워 도시 조명",
+      "direct-flash Y2K snapshot / 직광 플래시 Y2K 스냅",
+      "muted film halation / 절제된 필름 할레이션",
+      "volumetric haze shafts / 볼류메트릭 헤이즈 빛기둥"
+    ],
+    "render_arms_after_implementation": [
+      "rembrandt_vs_loop",
+      "butterfly_vs_clamshell",
+      "rim_vs_silhouette",
+      "high_key_vs_clipped_exposure",
+      "low_key_vs_underexposure",
+      "halation_vs_ghosting_vs_veiling_flare"
+    ],
+    "render_policy": [
+      "freeze independent inputs per arm",
+      "one recorded generation per arm",
+      "no hidden retry or cross-arm input reuse",
+      "missing output is UNSCORED not quality zero",
+      "partial_is_fail",
+      "thumbnail and native gates remain separate",
+      "prompt pass is not pixel pass",
+      "user judgment remains separate"
+    ]
+  },
+  "implementation_sequence": [
+    {"phase":"P0-1","profiles":["hard_light_shadow_edge_relation","soft_light_shadow_edge_relation","loop_face_light_pattern","butterfly_face_light_pattern","split_face_light_pattern","broad_face_light_orientation_relation","short_face_light_orientation_relation"]},
+    {"phase":"P0-2","profiles":["key_fill_separation_background_roles","backlit_rim_edge_separation_relation","backlit_silhouette_mass_relation","high_key_tonal_distribution","low_key_selective_illumination"]},
+    {"phase":"P0-3","profiles":["chiaroscuro_form_modeling_relation","tenebrist_dark_field_isolation","direct_on_camera_flash_snapshot_signature","motivated_practical_mixed_interior_relation","volumetric_occluded_light_shafts"]},
+    {"phase":"P1","profiles":["golden_hour_low_sun_relation","blue_hour_ambient_practical_balance","lens_ghosting_flare_alignment","veiling_flare_contrast_loss_relation","film_halation_highlight_edge_relation"]},
+    {"phase":"candidate-extension","clusters":12},
+    {"phase":"generated-indexes","rule":"regenerate only after source and focused tests pass"},
+    {"phase":"prompt-evaluation","rule":"run exact negation close-substitute candidate-coherence and leakage tests"},
+    {"phase":"render-evaluation","rule":"run independent frozen arms with strict gates"}
+  ],
+  "implementation_result": {
+    "visual_profiles": {
+      "new_hard_profiles": 22,
+      "reused_existing_profiles": 3,
+      "registry_profile_count_after_merge": 300,
+      "visual_index_exact_terms": 1568
+    },
+    "candidate_extension": {
+      "clusters": 12,
+      "candidates": 84,
+      "slots": ["lighting", "light_direction", "light_type", "light_intensity", "light_shape", "color", "color_grading", "film_emulation"],
+      "semantic_index_entries_after_merge": 7974,
+      "semantic_index_dimensions": 768,
+      "semantic_index_shards": 16
+    },
+    "regression": {
+      "focused_tests_passed": 10,
+      "related_tests_passed": 21,
+      "bm25f_cluster_result": "all seven candidates in each of twelve clusters appear within top fourteen for its complete component query"
+    },
+    "three_arm_evaluation": {
+      "native_image_calls": 3,
+      "retries": 0,
+      "fallbacks": 0,
+      "cross_arm_inputs": 0,
+      "prompt_audits_passed": 3,
+      "runtime_request_audits_passed": 3,
+      "pixel_gates_passed": 11,
+      "pixel_gates_total": 15,
+      "technically_qualified_arms": ["arm-a", "arm-c"],
+      "technically_failed_arms": ["arm-b"],
+      "public_candidate_surface_result": "fail in all three arms because target cluster and forced anchor ids were absent from the public v6 pack",
+      "artifact": "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/aggregate_report.md"
+    }
+  },
+  "claim_boundary": {
+    "verified_now": [
+      "source-backed terminology distinctions",
+      "current repository inventory snapshot",
+      "proposal JSON syntax and internal source references",
+      "research evidence JSONL syntax",
+      "twenty-two new hard visual profiles parse and route with exact bilingual terms",
+      "negation close-substitute and equipment-metadata boundaries in focused regression",
+      "twelve clusters and eighty-four candidates merge into the runtime dictionary and semantic index",
+      "BM25F retrieval places all seven candidates per cluster within top fourteen for complete component queries",
+      "three independent candidate-pack prompt and runtime-request audits",
+      "three single-call image generations with eleven of fifteen strict pixel gates passing",
+      "public v6 candidate packs expose all three hard profiles but none of the requested cluster or forced-anchor ids"
+    ],
+    "design_inference": [
+      "exact five-component wording",
+      "profile priority",
+      "candidate cluster slot composition",
+      "candidate ids and bilingual phrases"
+    ],
+    "not_verified": [
+      "pixel fidelity for the nineteen new hard profiles not rendered in this run",
+      "complete candidate selection causality because target candidate ids were not exposed on the public v6 pack surface",
+      "volumetric shaft success under the frozen arm-b concept",
+      "embedding quality beyond index construction and the focused regression scope",
+      "full-suite regression outside the focused and related test modules",
+      "user judgment"
+    ]
+  }
+}

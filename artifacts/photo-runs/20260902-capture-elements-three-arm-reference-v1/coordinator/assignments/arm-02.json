@@ -1,0 +1,14 @@
+{
+  "schema_version": "photo-postcore-profile-assignment/v1",
+  "arm_id": "arm-02",
+  "profile_id": "rembrandt_face_light_pattern",
+  "required_gate_ids": [
+    "vo_capture_rembrandt_elevated_side_key",
+    "vo_capture_rembrandt_joined_nose_cheek_shadow",
+    "vo_capture_rembrandt_contained_far_cheek_triangle",
+    "vo_capture_rembrandt_readable_shadow_eye",
+    "vo_capture_rembrandt_not_split_butterfly_or_ring"
+  ],
+  "activation": "Bind this exact profile through photo-visual-intent/v1 with source agent_postcore_interpretation and source_text byte-equal to one frozen authorial-core field. Do not revise the core meaning.",
+  "verdict_rule": {"all_required_gates_same_image": true, "partial_or_missing": "fail"}
+}

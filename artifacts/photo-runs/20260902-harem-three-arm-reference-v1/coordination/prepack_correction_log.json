@@ -1,0 +1,38 @@
+{
+  "contract_version": "photo-prepack-correction-log/v1",
+  "corrections": [
+    {
+      "arm_id": "arm-03-mughal-zenana",
+      "stage": "authorial_core_prepack_validation",
+      "image_call_count_before_correction": 0,
+      "candidate_pack_created_before_correction": false,
+      "classification": "literal_binding_only_no_semantic_change",
+      "field": "intent_lock.semantic_anchors[1].prompt_evidence",
+      "before": "central adult coordinator and several clearly adult household participants",
+      "after": "clearly adult coordinator and several clearly adult household participants",
+      "reason": "The corrected phrase is already a contiguous literal substring of the frozen baseline prompt; concept, subject, setting, event, priorities, appearance cues, and locked/open dimensions are unchanged."
+    },
+    {
+      "arm_id": "arm-03-mughal-zenana",
+      "stage": "visual_intent_prepack_validation",
+      "image_call_count_before_correction": 0,
+      "qualified_candidate_pack_created_before_correction": false,
+      "classification": "runtime_safe_definition_only_no_semantic_change",
+      "fields": [
+        "interpreted_intent",
+        "baseline_prompt_en",
+        "intent_lock.semantic_anchors[0].prompt_evidence"
+      ],
+      "before_label": "Mughal zenana courtyard household reconstruction",
+      "after_definition": "Mughal screened-courtyard private household reconstruction",
+      "reason": "The selected profile requires definition-only runtime expression and forbids the label zenana on baseline, final, and runtime prompt surfaces. The same architecture, adult activities, objects, and result remain locked."
+    },
+    {
+      "scope": "all_arms",
+      "stage": "visual_intent_prepack_binding",
+      "image_call_count_before_correction": 0,
+      "classification": "request_scoped_profile_binding",
+      "reason": "The requester delegated random selection from previously researched keywords, so the chosen narrow profile names do not appear in the current raw request. Each visual_intent binds the coordinator-selected profile to its governing frozen interpreted_intent and five observable evidence fields without treating agent-authored baseline text as direct requester exact evidence."
+    }
+  ]
+}

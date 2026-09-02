@@ -1,0 +1,113 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independently invented, visibly testable complex photographic scenario using the attached adult appearance reference, with the randomized variation seed interpreted as a wind-driven coastal salvage operation.",
+  "subject": "An unmistakably adult woman whose visible face structure, eye shape and spacing, face length, lower-face and jaw width, hairline, and hair follow the supplied appearance-only reference.",
+  "setting": "A storm-battered tidal salvage platform beside a half-flooded skiff, with layered working debris, rock pools, sea stacks, and a distant leaning beacon.",
+  "event": "The woman braces a salvage tarp with one boot while hauling a rope that lifts a barnacle-covered brass ship's bell and tangled blue glass floats from the skiff.",
+  "visual_priorities": [
+    "The rope-hauling action and recovered bell remain immediately legible as one connected physical event.",
+    "Wind-aligned hair, cloth, paper, ribbons, surf, and layered coastal planes make the complex scene visually testable."
+  ],
+  "baseline_prompt_en": "A photorealistic scene of an unmistakably adult woman with a softly tapered oval face, wide-set almond-shaped dark eyes, a long lower face and narrow jaw, a centered slightly peaked hairline, and long dark wavy hair in a wind-driven coastal salvage operation. On a storm-battered tidal platform, she braces a weathered orange salvage tarp with one boot and hauls a salt-stiffened rope, lifting a barnacle-covered brass ship's bell and tangled blue glass floats from a half-flooded skiff. Her hair, torn sailcloth, loose chart sheets, and red survey ribbons stream toward the same offshore direction. Wet rope and a clipped carabiner occupy the near plane; the woman, bell, and listing skiff form the middle plane; a leaning beacon, black sea stacks, and circling gulls establish the far plane. Reflective rock pools, white foam channels, and dark cliff recesses create clear depth and clearly separable and verifiable visual relationships.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "basis": "request_context",
+      "resolution": "The generated photograph should expose clearly separable, verifiable visible relationships suitable for checking whether the requested visual semantics survive composition and rendering.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "The concrete scene is an agent-general-knowledge interpretation of the exact requester span, realized independently as a wind-driven coastal salvage operation; the phrase 'wind-driven coastal salvage' is coordinator-authored randomized variation material, not requester-supplied scene text.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied image only as an appearance reference for visible adult facial structure, eye shape and spacing, face length, lower-face and jaw width, hairline, and hair.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_evaluation_goal",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+        "dimension": "viewer_outcome",
+        "prompt_evidence": "clearly separable and verifiable visual relationships"
+      },
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a wind-driven coastal salvage operation"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "hauls a salt-stiffened rope"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "a softly tapered oval face, wide-set almond-shaped dark eyes, a long lower face and narrow jaw, a centered slightly peaked hairline, and long dark wavy hair"
+      },
+      {
+        "anchor_id": "reference_visible_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "wide-set almond-shaped dark eyes"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "viewer_outcome",
+      "reference_use",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "camera",
+      "lighting",
+      "framing",
+      "composition",
+      "timing",
+      "color",
+      "material",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic environmental narrative photography",
+    "family": "coastal salvage realism",
+    "evidence": [
+      "weathered working materials",
+      "layered tidal environment"
+    ]
+  },
+  "variation_key": "wind-driven coastal salvage"
+}
