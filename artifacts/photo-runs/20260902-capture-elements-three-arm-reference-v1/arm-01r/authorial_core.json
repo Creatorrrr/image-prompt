@@ -1,0 +1,87 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently authored, random, complex reference-assisted photographic test case whose visible subject, action, mechanism, setting, and material relations can be judged directly in the rendered image.",
+  "subject": "An unmistakably adult woman operating a tactile analog cataloging apparatus, with the attached portrait controlling only the permitted visible facial and hair features.",
+  "setting": "A circular underground archive at blue hour, lined with concentric specimen drawers beneath a narrow overhead oculus.",
+  "event": "The adult subject feeds a translucent catalog ribbon through a hand-cranked brass sorter while steadying a numbered glass cylinder that holds one pressed fern, as index tabs lift in a coordinated wave.",
+  "visual_priorities": [
+    "The gear-to-ribbon-to-cylinder-to-filed-specimen chain and the subject's two-handed operation remain legible in one frame.",
+    "The adult subject's face is unobstructed and follows only the permitted visible appearance features from the reference portrait.",
+    "Warm brass reflections, cool stone ambience, drifting dust, and restrained motion in the ribbon create a tactile but hushed archival atmosphere."
+  ],
+  "baseline_prompt_en": "Create a cinematic surreal editorial photograph of an unmistakably adult woman inside a circular underground archive at blue hour. She operates a quiet archival mechanism: one hand feeds a translucent catalog ribbon through a hand-cranked brass sorter while the other steadies a numbered glass cylinder containing a single pressed fern. Concentric drawers stand open behind her; tiny paper index tabs lift in a coordinated wave, and a narrow beam from an overhead oculus catches drifting dust and the moving ribbon. The mechanism's deliberate chain of gear, ribbon, cylinder, and filed specimen must read clearly in one frame. Match only the reference portrait's visible facial structure, eye shape and spacing, face length, lower-face and jaw width, hairline, and long dark wavy hair. Frame a three-quarter environmental portrait with the face unobstructed, hands and mechanism fully visible, cool ambient stone balanced by warm brass reflections, crisp tactile detail, restrained motion blur only on the ribbon and index tabs, and a hushed, precise atmosphere.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "visual semantics and candidate-pack application",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+      "basis": "request_context",
+      "resolution": "Represent the test meaning through observable, separately judgeable subject-action-mechanism relations rather than through labels alone.",
+      "sources": []
+    },
+    {
+      "term": "independent random complex reference render test",
+      "source_text": "그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Author an independent complex photographic tableau, use the attached portrait only for permitted visible adult appearance, generate it, and judge the requested visible elements in the pixels.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "semantic_visibility",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "The mechanism's deliberate chain of gear, ribbon, cylinder, and filed specimen must read clearly in one frame."
+      },
+      {
+        "anchor_id": "random_complex_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a quiet archival mechanism"
+      },
+      {
+        "anchor_id": "reference_assisted_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult woman"
+      },
+      {
+        "anchor_id": "visible_render_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "one hand feeds a translucent catalog ribbon through a hand-cranked brass sorter while the other steadies a numbered glass cylinder containing a single pressed fern"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "cinematic surreal editorial photography",
+    "family": "tactile analog archival tableau",
+    "evidence": [
+      "hand-cranked brass sorter and translucent catalog ribbon",
+      "numbered glass specimen cylinder and coordinated paper index tabs"
+    ]
+  },
+  "variation_key": "quiet archival mechanism"
+}

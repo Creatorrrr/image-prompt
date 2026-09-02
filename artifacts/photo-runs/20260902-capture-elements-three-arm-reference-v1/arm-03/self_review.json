@@ -1,0 +1,58 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "contract_version": "photo-visual-obligations/v1",
+  "pack_id": "b8dd7975e1eec422",
+  "reviewer": "Codex arm-03 agent pixel reviewer",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-03/render.png",
+  "result_sha256": "069d9475763b7b2f1d3bfab0966928e13cb464b3abd884c6a034b77aafea437c",
+  "reviewed_at": "2026-09-02T11:23:17+09:00",
+  "review_scales": [
+    {
+      "scale": "thumbnail",
+      "artifact_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-03/render-thumb.png",
+      "artifact_sha256": "a26c2c55e4aac3d422803c376111db126edd7f51293ed748bb769fd40ba51a2a",
+      "dimensions": "340x512"
+    },
+    {
+      "scale": "native",
+      "artifact_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/arm-03/render.png",
+      "artifact_sha256": "069d9475763b7b2f1d3bfab0966928e13cb464b3abd884c6a034b77aafea437c",
+      "dimensions": "1023x1537"
+    }
+  ],
+  "hard_gates": {
+    "vo_capture_rolloff_clear_near_white_anchor": {
+      "status": "pass",
+      "evidence": "At thumbnail scale, the sunlit cloud opening beside the beacon is an immediate near-white diffuse anchor, reinforced by the bell and foam speculars."
+    },
+    "vo_capture_rolloff_gradual_bright_steps": {
+      "status": "pass",
+      "evidence": "At thumbnail and native scales, the cloud opening progresses through multiple visible white, warm-gray, and gray steps; the bell reflection likewise grades from a small hot point through gold highlights into bronze midtones."
+    },
+    "vo_capture_rolloff_small_confined_clip_core": {
+      "status": "pass",
+      "evidence": "Native-pixel analysis finds only 210 exact-white pixels out of 1,572,351 (0.0134%); the largest four-connected exact-white component is 14 pixels, so full clipping is confined to tiny specular cores rather than a broad featureless region."
+    },
+    "vo_capture_rolloff_texture_hue_midtones_survive": {
+      "status": "pass",
+      "evidence": "At both scales, wet bronze patina and scratches, blue glass color, orange sail texture, gray cloud structure, white foam detail, black clothing folds, and dark cliff separation remain visible around the brightest regions."
+    },
+    "vo_capture_rolloff_not_flat_glow_or_hdr": {
+      "status": "pass",
+      "evidence": "At native scale, deep clothing and cliff tones remain distinct, highlights are not uniformly gray, and the beacon, bell, rope, cloud, and foam edges show no local HDR outlines or generalized glow replacing the tonal transition."
+    }
+  },
+  "supplemental_observations": [
+    "The same saved image was used for all five gate decisions; no evidence was borrowed from another attempt.",
+    "The source portrait was used only for visible adult facial structure, eye shape and spacing, face length, lower-face and jaw width, hairline, and hair; this review makes no identity or same-person claim.",
+    "The rope pull, bell, skiff, wind-driven cloth and hair, near/middle/far depth, and coastal salvage setting remain legible in the rendered pixels."
+  ],
+  "technical_verdict": "pass",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": ""
+  }
+}

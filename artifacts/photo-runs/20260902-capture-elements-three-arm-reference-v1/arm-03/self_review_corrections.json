@@ -1,0 +1,25 @@
+{
+  "contract_version": "photo-render-review-correction-ledger/v1",
+  "arm_id": "arm-03",
+  "initial_review_audit": {
+    "status": "fail",
+    "reason": "The first record used descriptive local field names instead of the canonical moe-render-review/v1 schema, so the auditor treated every required gate as missing.",
+    "pixel_verdict_changed": false,
+    "recorded_gate_observations_changed": false
+  },
+  "schema_corrections": [
+    "Use schema_version moe-render-review/v1.",
+    "Bind contract_version to the active photo-visual-obligations/v1 qualification contract.",
+    "Add a named agent pixel reviewer, result_image, and result_sha256.",
+    "Represent hard_gates as an object keyed by the exact five derived gate IDs.",
+    "Represent pending user judgment with baseline_available, genuinely_moe, better_than_baseline, source, and evidence."
+  ],
+  "final_review_audit": {
+    "qualification_status": "visual_technical_qualified_user_judgment_pending",
+    "technical_qualified": true,
+    "representative_eligible": false,
+    "required_hard_gate_count": 5,
+    "failed_hard_gates": [],
+    "schema_failures": []
+  }
+}

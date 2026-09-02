@@ -1,0 +1,99 @@
+{
+  "schema_version": "photo-lighting-root-pixel-cross-review/v1",
+  "reviewed_at": "2026-09-02",
+  "reviewer_role": "root independent cross-review after three isolated arm reviews",
+  "policy": {
+    "partial_or_unclear_is_fail": true,
+    "all_required_gates_must_coexist_in_one_saved_image": true,
+    "thumbnail_and_native_scale_are_distinct_evidence": true,
+    "prompt_or_runtime_pass_does_not_imply_pixel_pass": true,
+    "requesting_user_judgment_is_separate": true
+  },
+  "reference_scope": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/shared/reference.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "allowed": "visible adult appearance only",
+    "disallowed_claims": [
+      "identity",
+      "same-person status",
+      "biometrics",
+      "protected traits",
+      "nationality or ethnicity",
+      "personality or occupation"
+    ]
+  },
+  "arms": [
+    {
+      "arm_id": "arm-a",
+      "concept": "Sleet-storm signal-cabin bookbinding",
+      "profile_id": "motivated_practical_mixed_interior_relation",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-a/final.png",
+      "image_sha256": "ab0e993d0b61b051405dab36f0c1364b1e9e0e5d0933bda27649d32e6c40b7ec",
+      "agent_gate_count": {"pass": 5, "fail": 0},
+      "root_gate_count": {"pass": 5, "fail": 0},
+      "root_verdict": "pass",
+      "root_evidence": [
+        "The green-shaded practical is visible and spatially owns the warm pool across the binding bench and hands.",
+        "The sleet-filled window establishes a separate cool ambient zone.",
+        "Warm and cool regions preserve a readable boundary instead of collapsing into a global grade.",
+        "Illumination direction and falloff remain plausible from the visible lamp.",
+        "Shadow ownership remains coherent without an unexplained competing source."
+      ],
+      "candidate_public_pack_surface": "fail_target_cluster_and_anchor_not_exposed_or_selectable"
+    },
+    {
+      "arm_id": "arm-b",
+      "concept": "Nautical-dawn fog-harvester repair",
+      "profile_id": "volumetric_occluded_light_shafts",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-b/final.png",
+      "image_sha256": "0938e702cf58f939ac1d1677b102ac07a802f68018f403a98f74488a8e5d646b",
+      "agent_gate_count": {"pass": 1, "fail": 4},
+      "root_gate_count": {"pass": 1, "fail": 4},
+      "root_verdict": "fail",
+      "root_evidence": [
+        "Cloud gaps and mesh apertures are identifiable occluders, satisfying only the occluder-evidence gate.",
+        "The bright dawn source and general haze do not form discrete source-anchored shafts at thumbnail scale.",
+        "No bounded light path is visible through the atmospheric volume.",
+        "Bright shaft bands do not alternate with darker gaps in an occluder-preserving pattern.",
+        "No bounded shaft visibly lands on the subject, mesh, path, or another receiving layer."
+      ],
+      "candidate_public_pack_surface": "fail_target_cluster_and_anchor_not_exposed_or_selectable"
+    },
+    {
+      "arm_id": "arm-c",
+      "concept": "Mirror Gong Laboratory",
+      "profile_id": "film_halation_highlight_edge_relation",
+      "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/arm-c/final.png",
+      "image_sha256": "ddc19fe154c401d983daa2e3f2864cb4f9f9704f69998775f5f86ea21139c59e",
+      "agent_gate_count": {"pass": 5, "fail": 0},
+      "root_gate_count": {"pass": 5, "fail": 0},
+      "root_verdict": "pass",
+      "root_evidence": [
+        "The circular membrane rim and central reflection form clear high-luminance edges.",
+        "A thin warm red-orange halo sits immediately outside the white rim.",
+        "The halo remains local and falls off before the surrounding black field, avoiding global glow.",
+        "The highlight core, ripple grooves, hand edge, and chrome hardware retain detail.",
+        "No ghost-orb chain, broad veiling haze, or paired chromatic fringe substitutes for the local halo."
+      ],
+      "candidate_public_pack_surface": "fail_target_cluster_and_anchor_not_exposed_or_selectable"
+    }
+  ],
+  "aggregate": {
+    "independent_arms": 3,
+    "native_image_calls": 3,
+    "retries": 0,
+    "fallbacks": 0,
+    "cross_arm_inputs": 0,
+    "prompt_audits_passed": 3,
+    "runtime_request_audits_passed": 3,
+    "pixel_gates_passed": 11,
+    "pixel_gates_total": 15,
+    "technically_qualified_arms": 2,
+    "technically_failed_arms": 1,
+    "hard_profile_exposure_passed": 3,
+    "target_candidate_public_pack_surface_passed": 0,
+    "target_candidate_public_pack_surface_failed": 3,
+    "requesting_user_judgment": "pending",
+    "overall": "revise"
+  }
+}

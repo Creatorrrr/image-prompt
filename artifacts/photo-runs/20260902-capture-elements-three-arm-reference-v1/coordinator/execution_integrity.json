@@ -1,0 +1,68 @@
+{
+  "schema_version": "photo-independent-arm-execution-integrity/v1",
+  "experiment_id": "20260902-capture-elements-three-arm-reference-v1",
+  "selection_manifest": {
+    "path": "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/coordinator/experiment_manifest.json",
+    "sha256": "5c77e96e872c926453a3a7fd93aad6c7cc34f9bd03105e6abbe059792fedc730"
+  },
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "events": [
+    {
+      "sequence": 1,
+      "arm_id": "arm-01",
+      "stage": "after_core_and_pack_freeze_before_image_generation",
+      "event": "an overly broad read-only search exposed snippets and paths from sibling arms and prior experiments",
+      "cross_arm_content_used_in_core_pack_or_prompt": false,
+      "image_call_count": 0,
+      "disposition": "disqualified_and_excluded_from_the_three_result_set"
+    },
+    {
+      "sequence": 2,
+      "arm_id": "arm-01r",
+      "stage": "replacement",
+      "event": "clean replacement froze its concept and authorial core before opening its profile assignment and never inspected sibling arms or prior experiments",
+      "cross_arm_inputs_used": false,
+      "image_call_count": 1,
+      "disposition": "included"
+    },
+    {
+      "sequence": 3,
+      "arm_id": "arm-02",
+      "stage": "postcore_prepack_schema_preflight",
+      "event": "schema-label normalization occurred after assignment access without changing the frozen scene or evidence text; the agent later read shared generator implementation while diagnosing the schema",
+      "cross_arm_inputs_used": false,
+      "shared_implementation_read_protocol_deviation": true,
+      "image_call_count": 1,
+      "disposition": "included_with_protocol_deviation_disclosed"
+    },
+    {
+      "sequence": 4,
+      "arm_id": "arm-03",
+      "stage": "postcore_prepack_schema_preflight",
+      "event": "schema-label normalization occurred after assignment access; original and final hashes plus the byte-stable scene and evidence text are preserved",
+      "cross_arm_inputs_used": false,
+      "image_call_count": 1,
+      "disposition": "included_with_phase_boundary_disclosed"
+    },
+    {
+      "sequence": 5,
+      "arm_id": "arm-01r",
+      "stage": "prepack_shared_index_wait",
+      "event": "the replacement waited for a concurrently running official semantic-index rebuild and did not overwrite shared assets or fabricate vectors",
+      "cross_arm_inputs_used": false,
+      "image_call_count_before_resolution": 0,
+      "disposition": "resumed_after_current_index_validation"
+    }
+  ],
+  "included_arms": ["arm-01r", "arm-02", "arm-03"],
+  "aggregate": {
+    "included_image_calls": 3,
+    "included_retries": 0,
+    "included_fallbacks": 0,
+    "included_cross_arm_inputs": 0,
+    "strict_clean_replacement_count": 1,
+    "protocol_deviation_count": 1,
+    "schema_only_postassignment_normalization_count": 2
+  },
+  "conclusion": "All three included concepts and authorial cores were independently invented before profile content was applied and no included arm consumed a sibling prompt, pack, image, or review. Arm-02 nevertheless deviated from the stricter diagnostic-read protocol, so that limitation is retained rather than hidden."
+}

@@ -1,0 +1,97 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independent, genuinely complex random photographic test concept that uses the supplied image only for visible adult appearance continuity, then leaves authorial image-making dimensions available for later prompt enrichment and render evaluation. Arm B realizes this as a believable nautical-dawn repair and measurement operation at a coastal fog-harvesting station.",
+  "subject": "One visibly adult field technician whose visible face, hair, complexion, and general appearance follow the supplied appearance reference without any identity or protected-trait claim.",
+  "setting": "A working coastal fog-harvesting station on a misty cliff terrace at nautical dawn, with a roofless service bay, staggered mesh collectors, a service track, pale cliffs, and the ocean horizon.",
+  "event": "The technician tightens a torn fog-collector mesh panel with a hand tensioning tool while guiding newly collected condensate into a graduated glass cylinder.",
+  "visual_priorities": [
+    "The purposeful repair-and-measurement action is immediately readable through the technician's hands, tensioning tool, condensate tube, and collecting cylinder.",
+    "Foreground droplets, the midground technician and service bay, receding collector rows, cliffs, mist, and ocean create clearly separated environmental and atmospheric depth.",
+    "The visibly adult face, hair, complexion, and general visible appearance remain clear and continuous with the supplied appearance reference only."
+  ],
+  "baseline_prompt_en": "A photorealistic environmental documentary photograph at a working coastal fog-harvesting station at nautical dawn. One visibly adult field technician stands inside a roofless service bay between towering dew-beaded mesh collectors. Their visible adult face, hair, complexion, and general appearance are visually continuous with the supplied appearance reference. The technician tightens a torn mesh panel with a hand tensioning tool while guiding fresh condensate into a graduated glass cylinder, making the repair-and-measurement purpose unmistakable. In the foreground, close-focus droplets and a coiled translucent hose hold crisp detail; behind the subject, staggered rows of dark mesh frames fade through wind-driven sea mist toward pale cliffs, a narrow service track, and the first strip of ocean horizon. Low cloud shreds, suspended spray, and warmer haze near the horizon form distinct atmospheric layers while the hands, tool, tube, and collecting vessel remain legible. Natural fabric, damp metal, believable water behavior, weathered fasteners, and restrained documentary color keep the scene convincingly real.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "full_request",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The complete active request calls for an independently selected random complex concept, a prompt using the attached image, image generation, and later visual verification; this pre-core freezes only Arm B's independent concept and appearance-scoped baseline.",
+      "sources": []
+    },
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "agent_general_knowledge",
+      "resolution": "A surprising but physically plausible nautical-dawn maintenance scene at a coastal fog-harvesting station, combining a concrete mesh repair, condensate measurement, layered sea mist, and long environmental depth.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied reference only for the visibly adult subject's face, hair, complexion, and general visible appearance, consistent with the supplied reference manifest; do not infer identity or any protected trait.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "a working coastal fog-harvesting station at nautical dawn"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "subject",
+        "prompt_evidence": "One visibly adult field technician"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "The technician tightens a torn mesh panel with a hand tensioning tool while guiding fresh condensate into a graduated glass cylinder"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "Their visible adult face, hair, complexion, and general appearance are visually continuous with the supplied appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "style"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental documentary photography",
+    "family": "observational coastal fieldwork realism",
+    "evidence": [
+      "believable water behavior and functional maintenance tools",
+      "weathered mesh collectors receding through naturally layered sea mist"
+    ]
+  },
+  "variation_key": "arm-b-nautical-dawn-fog-harvest-repair"
+}

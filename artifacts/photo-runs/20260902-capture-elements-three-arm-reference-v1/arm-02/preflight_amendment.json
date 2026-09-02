@@ -1,0 +1,67 @@
+{
+  "contract_version": "photo-preflight-amendment/v1",
+  "arm_id": "arm-02",
+  "reason": "The independently authored scene and baseline were frozen before assignment access, but the first local hash was computed over the unnormalized input object. Normal generator preflight then identified four unsupported dimension labels. Only schema labels were normalized; locked meaning and all photographic prose remain unchanged.",
+  "initial_freeze": {
+    "authorial_core_input_canonical_sha256": "a18cca2815fc2b53fd16e03d7d2cfdc1147e1efa431034227cb3b29856aac383",
+    "authorial_core_file_sha256": "76cd2e0e1d5b2cb456f8cc593fa167353f6d418e81e9b3fe17f2970685a51e3e",
+    "intent_lock_input_canonical_sha256": "80852cc8623877d2d11fc940e65b38e00ebe7d4c716d592001d784a81082306e",
+    "baseline_prompt_file_sha256": "68d6cefdf38d7eff779a751c4954ed84918363cd613bc8716c3cc41a1c9b8154",
+    "baseline_word_count": 115
+  },
+  "assignment_timing": {
+    "assignment_opened_after_initial_freeze": true,
+    "assignment_opened_before_schema_normalization": true,
+    "assignment_profile_id_seen": "rembrandt_face_light_pattern",
+    "effect_on_amendment": "none; lighting was open in the initial and normalized intent locks"
+  },
+  "normal_preflight_rejection": {
+    "status": "fail",
+    "exception_type": "ValueError",
+    "message": "authorial core intent_lock contains unknown dimensions: appearance_reference, motion_rendering, tone, validation_objective"
+  },
+  "schema_only_mappings": [
+    {
+      "location": "intent_lock semantic anchor reference_appearance and locked_dimensions",
+      "from": "appearance_reference",
+      "to": "reference_use"
+    },
+    {
+      "location": "intent_lock semantic anchor visual_semantics_validation",
+      "from": "validation_objective",
+      "to": "concept",
+      "additional_change": "removed validation_objective from locked_dimensions because the concept dimension already owns this anchor"
+    },
+    {
+      "location": "intent_lock open_dimensions",
+      "from": "tone",
+      "to": "atmosphere"
+    },
+    {
+      "location": "intent_lock open_dimensions",
+      "from": "motion_rendering",
+      "to": "timing"
+    }
+  ],
+  "unchanged_semantics": [
+    "source_request",
+    "interpreted_intent",
+    "subject",
+    "setting",
+    "event",
+    "visual_priorities",
+    "baseline_prompt_en",
+    "all semantic anchor source_text values",
+    "all semantic anchor prompt_evidence values",
+    "lighting remained open"
+  ],
+  "final_preflight": {
+    "status": "pass",
+    "request_envelope_canonical_sha256": "d2a9e2e0493cb1f81684e6ae39dfeed595faa35a8447eb0c22ffc32594daf5fd",
+    "authorial_core_generator_normalized_sha256": "21704bbc4538896cd52b90380b77c6fd0a185d99906092874cff1b45c69e0bf5",
+    "authorial_core_file_sha256": "c9739bf1572992c9b7a94e3aacd633f4bed6fce94b7ef7147de0a136a731bd52",
+    "intent_lock_generator_normalized_sha256": "9307f9c0887c443019147f9c59696672637072380e5cbf0bf15e529e03f88d10",
+    "intent_lock_file_sha256": "70ea6839fe7d7a5877027dc616b127d49d9b83bd079a1f492c19732120763663"
+  },
+  "no_further_core_changes": true
+}

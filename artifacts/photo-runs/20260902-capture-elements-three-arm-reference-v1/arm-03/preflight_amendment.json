@@ -1,0 +1,101 @@
+{
+  "contract_version": "photo-arm-preflight-amendment/v1",
+  "arm_id": "arm-03",
+  "reason": "The first normal-generator preflight rejected unsupported intent-lock dimension labels before emitting a candidate pack. The correction maps existing locked and open evidence to the generator's supported dimension vocabulary without changing source_request, interpreted intent, subject, setting, event, visual priorities, baseline prompt, provenance, or scene meaning.",
+  "assignment_opened_before_schema_mapping": true,
+  "original_precore_record": {
+    "recorded_authorial_core_sha256": "3b583eec7f13b7d6a3cf22dac43967b251e6cf17902c1e70eaf3b9d320d5670a",
+    "hash_method": "SHA-256 over the original input JSON object serialized as UTF-8 with ensure_ascii=false, sorted keys, and compact separators; the generator normalizer did not reach canonical hash emission because it rejected the dimension vocabulary.",
+    "original_authorial_core_file_sha256": "45eb76daf1dd42477a5cbccb7368d2b3900f0489b7318dff440228985017c066",
+    "baseline_word_count": 146
+  },
+  "rejected_preflights": [
+    {
+      "stage": "authorial_core_intent_lock_validation",
+      "exit_code": 1,
+      "candidate_pack_emitted": false,
+      "error": "Error: authorial core intent_lock contains unknown dimensions: color_palette, evaluation_goal, motion_rendering, reference_appearance, tone, wardrobe"
+    },
+    {
+      "stage": "visual_intent_binding_validation",
+      "exit_code": 1,
+      "candidate_pack_emitted": false,
+      "error": "Error: visual intent obligation 0 binding 'rolloff_anchor_phrase' has 10 content words but requires at least 13; extend the same component evidence before candidate-pack generation",
+      "core_changed": false
+    },
+    {
+      "stage": "visual_intent_source_binding_validation",
+      "exit_code": 1,
+      "candidate_pack_emitted": false,
+      "error": "Error: visual intent profile 'highlight_rolloff_tone_response' source_text must exactly match a requesting-user source or its governing frozen authorial field",
+      "resolution": "Rebound source_text byte-for-byte to the frozen authorial_core.interpreted_intent field, which is one of the generator's accepted governing authorial fields.",
+      "core_changed": false
+    }
+  ],
+  "schema_only_mapping": [
+    {
+      "from": "evaluation_goal",
+      "to": "viewer_outcome",
+      "preserved_anchor_id": "core_evaluation_goal",
+      "preserved_prompt_evidence": "clearly separable and verifiable visual relationships"
+    },
+    {
+      "from": "reference_appearance",
+      "to": "reference_use",
+      "preserved_anchor_id": "reference_appearance",
+      "preserved_prompt_evidence": "a softly tapered oval face, wide-set almond-shaped dark eyes, a long lower face and narrow jaw, a centered slightly peaked hairline, and long dark wavy hair"
+    },
+    {
+      "from": "color_palette",
+      "to": "color",
+      "scope": "open"
+    },
+    {
+      "from": "motion_rendering",
+      "to": "timing",
+      "scope": "open"
+    },
+    {
+      "from": "tone",
+      "to": "atmosphere",
+      "scope": "open"
+    },
+    {
+      "from": "wardrobe",
+      "to": "material",
+      "scope": "open"
+    }
+  ],
+  "schema_only_additions": [
+    {
+      "dimension": "appearance",
+      "scope": "locked",
+      "anchor_id": "reference_visible_appearance",
+      "source_text": "첨부한 이미지를 활용하여",
+      "prompt_evidence": "wide-set almond-shaped dark eyes",
+      "note": "Explicit supported-dimension coverage using a literal subphrase already present in the frozen baseline."
+    },
+    {
+      "dimension": "style",
+      "scope": "open",
+      "note": "Keeps unspecified photographic styling available to the post-core authorial pass."
+    }
+  ],
+  "unchanged_semantic_fields": [
+    "source_request",
+    "interpreted_intent",
+    "subject",
+    "setting",
+    "event",
+    "visual_priorities",
+    "baseline_prompt_en",
+    "interpretation_provenance",
+    "variation_key"
+  ],
+  "final_normalized_record": {
+    "authorial_core_canonical_sha256": "527b4075420a1763f82b1559c7ad1fc42a8c187e5cfb28a80088f3b71b28cc1b",
+    "intent_lock_canonical_sha256": "494579d3b931ceae300ffb321b4e63da4ca44b3f058d6d111bd33408119a866c",
+    "authorial_core_file_sha256": "1fdea4dc366784a26d605232600b341064226f47d2190484171c7be78d9a515d",
+    "intent_lock_file_sha256": "c603bd9a075cbe3a644ec38eb299ac7ff4d56aed34554afb21ebd62741e885e9"
+  }
+}

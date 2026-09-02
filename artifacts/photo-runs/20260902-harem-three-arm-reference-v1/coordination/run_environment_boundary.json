@@ -1,0 +1,44 @@
+{
+  "contract_version": "photo-run-environment-boundary/v1",
+  "recorded_at": "2026-09-02T11:23:14+09:00",
+  "run_source_ref": "git:986ef4f452ce7efe39818690e19b4e3cd095e292;working-tree-dirty;rule-mode-run-local-index",
+  "skill_sha256": "9b069efb5d7a57472ad8f7c7b2c5466567b28340792cdae3167024f65df88ed6",
+  "reference_sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+  "pack_generation_boundary": {
+    "selection_mode": "rule",
+    "global_visual_profile_index_used": false,
+    "run_local_nonexistent_index_path_forced": true,
+    "reason": "A concurrent unrelated task changed the global visual registry before its derived index was synchronized. Rule mode therefore built exact and BM25F lookup material in memory from the live registry and did not use embedding vectors.",
+    "retained_qualified_pack_count_per_arm": 1,
+    "image_call_count_per_arm": 1,
+    "semantic_retry_count": 0
+  },
+  "validated_checkpoint": {
+    "harem_focused_regression": "13_of_13_pass",
+    "dictionary_metadata": "pass",
+    "visual_profile_index": "pass_278_profiles_1480_exact_terms",
+    "semantic_index": "pass_7890_entries",
+    "composed_audits": "3_of_3_pass",
+    "runtime_audits": "3_of_3_pass",
+    "ledger_manifest_consistency": "3_of_3_pass"
+  },
+  "later_concurrent_change_boundary": {
+    "observed_registry_profile_count": 300,
+    "unrelated_paths_present": [
+      "artifacts/photo-runs/20260902-capture-elements-three-arm-reference-v1/",
+      "artifacts/photo-runs/20260902-lighting-three-arm-reference-v1/",
+      "docs/research-evidence/photo-prompt/capture-elements-visual-semantics-20260902/",
+      "docs/research-evidence/photo-prompt/lighting-visual-semantics-20260902/",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json",
+      "tests/test_photo_capture_elements_visual_semantics.py",
+      "tests/test_photo_lighting_visual_semantics.py"
+    ],
+    "adjacent_regression_during_transition": {
+      "tests_started": 40,
+      "failures": 2,
+      "errors": 1,
+      "cause": "Unrelated new lighting evidence field names failed shared registry validation and the registry changed ahead of its generated visual-profile index during the run."
+    },
+    "action": "preserved_and_not_modified_by_this_task"
+  }
+}

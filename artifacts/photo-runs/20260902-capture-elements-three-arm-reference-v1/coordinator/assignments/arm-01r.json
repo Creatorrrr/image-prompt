@@ -1,0 +1,17 @@
+{
+  "schema_version": "photo-postcore-profile-assignment/v1",
+  "arm_id": "arm-01r",
+  "profile_id": "panning_subject_tracking_motion_relation",
+  "required_gate_ids": [
+    "vo_capture_pan_tracked_core_readable",
+    "vo_capture_pan_parallel_background_streaks",
+    "vo_capture_pan_secondary_motion_plausible",
+    "vo_capture_pan_single_motion_vector",
+    "vo_capture_pan_not_shake_zoom_or_speed_lines"
+  ],
+  "activation": "Bind this exact profile through photo-visual-intent/v1 with source agent_postcore_interpretation and source_text byte-equal to one frozen authorial-core field. Do not revise the core meaning.",
+  "verdict_rule": {
+    "all_required_gates_same_image": true,
+    "partial_or_missing": "fail"
+  }
+}

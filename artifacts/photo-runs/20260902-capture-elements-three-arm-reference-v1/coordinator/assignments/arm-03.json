@@ -1,0 +1,14 @@
+{
+  "schema_version": "photo-postcore-profile-assignment/v1",
+  "arm_id": "arm-03",
+  "profile_id": "highlight_rolloff_tone_response",
+  "required_gate_ids": [
+    "vo_capture_rolloff_clear_near_white_anchor",
+    "vo_capture_rolloff_gradual_bright_steps",
+    "vo_capture_rolloff_small_confined_clip_core",
+    "vo_capture_rolloff_texture_hue_midtones_survive",
+    "vo_capture_rolloff_not_flat_glow_or_hdr"
+  ],
+  "activation": "Bind this exact profile through photo-visual-intent/v1 with source agent_postcore_interpretation and source_text byte-equal to one frozen authorial-core field. Do not revise the core meaning.",
+  "verdict_rule": {"all_required_gates_same_image": true, "partial_or_missing": "fail"}
+}

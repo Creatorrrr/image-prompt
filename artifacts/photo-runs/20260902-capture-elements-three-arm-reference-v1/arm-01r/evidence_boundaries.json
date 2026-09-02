@@ -1,0 +1,48 @@
+{
+  "contract_version": "photo-arm-evidence-boundaries/v1",
+  "arm_id": "arm-01r",
+  "package_evidence": {
+    "status": "pass",
+    "candidate_pack_version": "photo-candidate-pack/v6",
+    "pack_id": "122b8269fba3b4a0",
+    "assigned_profile": "panning_subject_tracking_motion_relation",
+    "creativity": 0.5
+  },
+  "prompt_evidence": {
+    "status": "pass",
+    "quality_status": "warn",
+    "failures": 0,
+    "warning_boundary": "The 215-word prompt exceeds the 180-word concise target but remains under the 218-word evidence-adjusted ceiling and the 320-word absolute limit."
+  },
+  "runtime_evidence": {
+    "status": "pass",
+    "failures": 0,
+    "native_image_call_count": 1,
+    "retry_count": 0,
+    "fallback_count": 0,
+    "explicit_api_call_count": 0,
+    "reference_count": 1,
+    "reference_role": "appearance_only"
+  },
+  "pixel_evidence": {
+    "status": "fail",
+    "qualification_status": "failed_technical_hard_gates",
+    "required_gate_count": 5,
+    "passed_gate_count": 3,
+    "failed_gate_count": 2,
+    "failed_gate_ids": [
+      "vo_capture_pan_secondary_motion_plausible",
+      "vo_capture_pan_single_motion_vector"
+    ],
+    "partial_is_fail": true,
+    "inspected_scales": [
+      "384x288 thumbnail",
+      "1448x1086 native"
+    ]
+  },
+  "user_evidence": {
+    "source": "not_yet_received",
+    "status": "pending",
+    "agent_did_not_infer_user_preference": true
+  }
+}
