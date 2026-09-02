@@ -1,0 +1,120 @@
+{
+  "schema_version": "photo-visual-obligation-test-case/v1",
+  "case_id": "arm-a-patterned-cast-shadow-receiver-continuity-v1",
+  "run_id": "20260903-reactorprompt-visual-relations-three-arm-v1",
+  "arm_id": "arm-a",
+  "profile_id": "patterned_cast_shadow_receiver_continuity",
+  "frozen_inputs": {
+    "request_envelope_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/prepack/request_envelope.json",
+    "request_sha256": "d5f8e25596cfbbab7ac268adfe8a4659b417001c5e0bdb26820038ce64a46486",
+    "authorial_core_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/prepack/authorial_core.json",
+    "authorial_core_raw_sha256": "50f387cb46a673bd571c378fa9b4ab3c6a61fcb1975a976029107d8e2c960e87",
+    "authorial_core_canonical_sha256": "6b621b99277fbf021d7e4e0e28479883a4403fe632fbe944dd5f93a00f3bc534",
+    "intent_lock_canonical_sha256": "6dca4119a4cec2903d45d5f867c94da5b722573d1c4467dea377b39248d932bc",
+    "visual_intent_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/visual_intent.json",
+    "visual_intent_file_sha256": "7c9f19efb3085c6b4b5bdcb976f5e222b3c962666e01566832039b626ea81558",
+    "visual_intent_canonical_sha256": "9a9856abda374de0a190e2ef9736860601de11c6c5f725d7c150e1c35b45b7d6"
+  },
+  "candidate_pack": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/candidate_pack.json",
+    "file_sha256": "e250a3921dd5054d6286473aa7dc93fc60c56b7a3bcccdc859fbd04cb2864b09",
+    "contract_version": "photo-candidate-pack/v6",
+    "pack_id": "ea3eb69c78170488",
+    "creativity": 0.5,
+    "n": 1,
+    "forced_slots": {
+      "light_shape": "patterned_cast_shadow_receiver_continuity"
+    }
+  },
+  "active_obligation": {
+    "activation_source": "agent_postcore_interpretation",
+    "activation_path": "visual_intent",
+    "optional_visual_concept_selection": "not_selected_because_target_is_already_an_active_hard_obligation",
+    "bindings": {
+      "pattern_source_phrase": "one coherent directional source defines the shadow direction across the entire connected scene",
+      "pattern_occluder_phrase": "an identifiable leaf or slat occluder grammar shapes the cast pattern throughout the room",
+      "pattern_structure_phrase": "alternating bright and dark cast bands remain distinct throughout the connected scene",
+      "pattern_deformation_phrase": "the pattern bends with surface curvature and depth as spacing and scale change coherently",
+      "pattern_receivers_phrase": "the same cast pattern continues across two connected receiver regions within one photograph"
+    }
+  },
+  "composition_and_runtime": {
+    "composed_prompt_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/composed_prompt.json",
+    "composed_prompt_file_sha256": "2e19684d5815364494913a6395fda8f28be33590699769091e3e36284dd1b7ef",
+    "composed_audit_status": "pass",
+    "runtime_request_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/render_request.json",
+    "runtime_request_file_sha256": "230202db169d6e9e3160c81fe04fcdd88b63627388949f6e630e5969cdfe2afa",
+    "runtime_audit_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/render_request_audit.json",
+    "runtime_audit_file_sha256": "6c154542161f78f0b1f344ea7adf7ca8411d43ac85f40acabdaa214d94f3969c",
+    "runtime_audit_status": "pass",
+    "runtime_prompt_id": "b058dc482a826ea8"
+  },
+  "generation": {
+    "tool": "built_in_image_gen",
+    "image_call_count": 1,
+    "retry_count": 0,
+    "fallback_used": false,
+    "independent_no_cross_arm_inputs": true,
+    "reference": {
+      "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+      "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+      "role": "appearance_reference"
+    }
+  },
+  "recording": {
+    "ledger_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/image_runs.ndjson",
+    "manifest_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/run_manifest.json",
+    "manifest_contract_version": "photo-independent-run-manifest/v2",
+    "ledger_run_id": "1e54eaa6fe3d74b0",
+    "ledger_prompt_id": "bb00285b2f4755c8",
+    "cross_arm_inputs_used": false,
+    "image_call_count": 1
+  },
+  "required_gates": [
+    {
+      "id": "vo_pattern_shadow_source_direction",
+      "review_scale": "both",
+      "pass_condition": "One readable illumination direction owns the complete cast-shadow field."
+    },
+    {
+      "id": "vo_pattern_shadow_occluder_grammar",
+      "review_scale": "thumbnail",
+      "pass_condition": "The repeating cast pattern reads as one lattice occluder grammar beside the main subject."
+    },
+    {
+      "id": "vo_pattern_shadow_bright_dark_structure",
+      "review_scale": "both",
+      "pass_condition": "Alternating bright and shadow regions remain separated with source-owned edges."
+    },
+    {
+      "id": "vo_pattern_shadow_surface_deformation",
+      "review_scale": "native",
+      "pass_condition": "Pattern edge, spacing, and scale deform coherently with curvature, folds, and depth."
+    },
+    {
+      "id": "vo_pattern_shadow_connected_receivers",
+      "review_scale": "both",
+      "pass_condition": "The same cast grammar continues across at least two connected visible receiver regions in the one saved image."
+    }
+  ],
+  "verdict_rule": {
+    "all_required_gates_must_pass_in_one_image": true,
+    "partial_is_fail": true,
+    "invisible_required_region": "UNSCORED",
+    "unscored_is_not_all_gates_pass": true,
+    "user_judgment": "PENDING",
+    "user_judgment_source": "not_yet_received"
+  },
+  "result": {
+    "image_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/final.png",
+    "image_sha256": "d02c27a7737c8985dcae3e9a8ce65dfc7abd1b32c0e00e06869adc6864421d75",
+    "image_width": 1122,
+    "image_height": 1402,
+    "image_bytes": 2324316,
+    "thumbnail_path": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/thumbnail.png",
+    "thumbnail_sha256": "ade0d5a8182dd28ee6a9434088e6f36f17304d06e00478bf84b6cf6acfd9848a",
+    "thumbnail_width": 409,
+    "thumbnail_height": 512,
+    "thumbnail_bytes": 360375
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "contract_version": "photo-root-pixel-review/v2",
+  "reviewer": "root_agent",
+  "review_scales": [
+    "native",
+    "thumbnail_long_edge_384px"
+  ],
+  "verdict_rules": {
+    "partial_or_missing": "fail",
+    "blocked_without_pixels": "unscored_not_zero",
+    "prompt_runtime_pass_is_pixel_pass": false,
+    "requesting_user_judgment": "pending"
+  },
+  "attempt_summary": {
+    "independent_attempts": 4,
+    "images_returned": 3,
+    "technical_pass": 1,
+    "technical_fail": 2,
+    "pixel_unscored": 1
+  },
+  "delivered_images": [
+    {
+      "arm_id": "arm-01-action-boundary",
+      "image_path": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-01-action-boundary/final.png",
+      "image_sha256": "6d98239814914a9abd96df95223f7265224b0960dfec8e4ef9051e64c8eef951",
+      "gate_tally": {
+        "pass": 14,
+        "fail": 0,
+        "total": 14
+      },
+      "technical_verdict": "pass",
+      "root_agrees_with_arm_verdict": true,
+      "observable_target_relation": "The visible hand grips the same moss-green wrap edge that bounds a cream opaque foundation layer and collarbone interval; face and changed edge remain the first two readable relations at thumbnail scale.",
+      "user_appeal_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-03-layer-intersection",
+      "image_path": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-03-layer-intersection/final.png",
+      "image_sha256": "f792c4d4026c857585c884c6ae0dc50edad9e67b91e154d306f906f4584fe75f",
+      "gate_tally": {
+        "pass": 12,
+        "fail": 2,
+        "total": 14
+      },
+      "technical_verdict": "fail",
+      "root_agrees_with_arm_verdict": true,
+      "observable_target_relation": "A formal navy blazer, bright ivory foundation top, hand-pulled lower jacket edge, and bounded waist interval are visible, but the foundation panel outranks the changed edge at thumbnail scale and the required straps are absent.",
+      "failed_gate_ids": [
+        "vo_everyday_reveal_thumbnail_dual_salience",
+        "vo_outerwear_layer_intersections"
+      ],
+      "user_appeal_judgment": "pending"
+    },
+    {
+      "arm_id": "arm-04-hair-boundary-replacement",
+      "image_path": "artifacts/photo-runs/20260902-eunggolsa-independent-v2/arm-04-hair-boundary-replacement/final.png",
+      "image_sha256": "d5b3f7dce88e9f2baa0f109a23710665a9fcf823f50de422b8aad7546d9e61d6",
+      "gate_tally": {
+        "pass": 7,
+        "fail": 2,
+        "total": 9
+      },
+      "technical_verdict": "fail",
+      "root_agrees_with_arm_verdict": true,
+      "observable_target_relation": "The raised-arm hair-gathering pose, bright upper back, outer shoulder, and opaque bronze open-back dress read immediately, but only one hand is resolved and the already-open dress remains a strong proposition without the hair action.",
+      "failed_gate_ids": [
+        "vo_everyday_reveal_action_boundary_causality",
+        "vo_everyday_reveal_counterfactual_necessity"
+      ],
+      "supplemental_failure": "The arm input required both hands to remain visibly resolved; the left hand is hidden.",
+      "user_appeal_judgment": "pending"
+    }
+  ],
+  "blocked_attempt": {
+    "arm_id": "arm-02-primary-drape",
+    "concept": "Basalt basin smoke-violet primary-drape figure study",
+    "image_path": null,
+    "generation_status": "output_moderation_blocked_sexual",
+    "gate_tally": {
+      "pass": 0,
+      "fail": 0,
+      "unscored": 7,
+      "total": 7
+    },
+    "technical_verdict": "unscored",
+    "root_agrees_with_arm_verdict": true
+  },
+  "overall": {
+    "status": "revise",
+    "reason": "The strengthened data and focal-intent guard prevented the prior false-positive pattern and one of three delivered images passed all active gates. Two delivered images still lost causal or construction relations in pixels, and the strategic-coverage arm returned no pixels. Direct requesting-user judgment of the intended subtle appeal remains pending."
+  }
+}

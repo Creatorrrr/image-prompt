@@ -1,0 +1,92 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "e79f7cca07c6441a",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "Codex arm-01 independent pixel reviewer",
+  "result_image": "final.png",
+  "result_sha256": "6d98239814914a9abd96df95223f7265224b0960dfec8e4ef9051e64c8eef951",
+  "review_policy": "Inspect native pixels and a 288x384 thumbnail; any partial, ambiguous, or missing gate is FAIL.",
+  "inspection_artifacts": {
+    "native": {
+      "path": "final.png",
+      "width": 1086,
+      "height": 1448,
+      "sha256": "6d98239814914a9abd96df95223f7265224b0960dfec8e4ef9051e64c8eef951"
+    },
+    "thumbnail": {
+      "path": "thumbnail.png",
+      "width": 288,
+      "height": 384,
+      "sha256": "73e43976fbc811c7ed2634e999ca3dc682d8b5a5dd7ab2b0d9e63eb85cccab8b"
+    }
+  },
+  "hard_gates": {
+    "vo_everyday_reveal_adult_actor": {
+      "status": "pass",
+      "evidence": "At native and thumbnail scales, one visibly adult woman is the sole actor; adult facial and torso proportions and ordinary adult fashion styling remain clear."
+    },
+    "vo_everyday_reveal_self_directed_action": {
+      "status": "pass",
+      "evidence": "At 288x384, her raised right hand visibly pinches the blouse's attached upper edge/loop while the wrap remains partway open, reading as her own unfinished fastening action."
+    },
+    "vo_everyday_reveal_single_boundary": {
+      "status": "pass",
+      "evidence": "Both scales show one continuous moss-green wrap edge forming a traceable V-shaped coverage boundary against the cream foundation layer."
+    },
+    "vo_everyday_reveal_bounded_target": {
+      "status": "pass",
+      "evidence": "The held edge bounds a small non-explicit collarbone interval and a clearly distinct cream opaque foundation layer; the relation survives thumbnail reduction."
+    },
+    "vo_everyday_reveal_action_boundary_causality": {
+      "status": "pass",
+      "evidence": "Her thumb and fingers visibly contact and draw the attached dark inner edge/loop inward at the same point where the neckline boundary changes, at both scales."
+    },
+    "vo_everyday_reveal_holistic_context": {
+      "status": "pass",
+      "evidence": "The thumbnail simultaneously retains her face, fastening hand, mid-torso, curtained window, chair, and bed, so the frame is not a body fragment."
+    },
+    "vo_everyday_reveal_material_physics": {
+      "status": "pass",
+      "evidence": "Native pixels show doubled wrap-edge thickness, pulled folds under the fingers, a narrow overlap shadow, cloth weight, and downward drape."
+    },
+    "vo_everyday_reveal_thumbnail_dual_salience": {
+      "status": "pass",
+      "evidence": "At 288x384 the face reads first, followed immediately by the bright cream-and-green neckline boundary plus the touching hand; the boundary is not incidental."
+    },
+    "vo_everyday_reveal_counterfactual_necessity": {
+      "status": "pass",
+      "evidence": "At both scales the controlled reveal depends on the partway-held V edge; reading it as closed would remove the visible cream-layer and collarbone transition that carries the proposition."
+    },
+    "vo_private_window_adult_actor": {
+      "status": "pass",
+      "evidence": "Native and thumbnail views show one unmistakably adult portrait actor standing upright and operating her own garment."
+    },
+    "vo_private_window_room_context": {
+      "status": "pass",
+      "evidence": "The thumbnail clearly retains bedroom depth through the visible bed, headboard, chair, draped scarf, window, and curtain."
+    },
+    "vo_private_window_diffused_source": {
+      "status": "pass",
+      "evidence": "Both scales show the window and translucent linen curtain as the source of a broad left-to-right facial and fabric light gradient with soft-edged shadows."
+    },
+    "vo_private_window_self_directed_action": {
+      "status": "pass",
+      "evidence": "At thumbnail scale the upright subject visibly continues fastening the wrap blouse with her own raised hand rather than passively reclining."
+    },
+    "vo_private_window_material_relation": {
+      "status": "pass",
+      "evidence": "Native inspection shows the garment edge's thickness, layered overlap, contact shadow, finger tension, folds, and gravity-driven drape."
+    }
+  },
+  "supplemental_observations": {
+    "reference_scope": "The result uses only visible adult facial proportions, long dark wavy hair, and natural skin texture as appearance cues; no identity or other inference is claimed.",
+    "prompt_pixel_boundary": "Composed and runtime audits passed before generation; the gate decisions above come only from the returned pixels at the declared scales."
+  },
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "not_applicable",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "This arm evaluates two visual profiles; no requesting-user quality judgment has been received for the generated candidate."
+  }
+}

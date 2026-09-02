@@ -1,0 +1,291 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "6ceb5087c47cc3b8f17ebff8db313755cdda9c9e",
+    "candidate_revision": null
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "ReactorPrompt 증분 조사에서 얻은 관찰 가능한 시각 관계를 시각 의미 데이터와 후보팩에 반영하고, 첨부 성인 외형 참조를 사용한 서로 다른 무작위 복합 컨셉 3개를 독립 arm에서 생성해 실제 픽셀 반영을 검증한다."
+  },
+  "evidence": [
+    {
+      "id": "e-source-boundary",
+      "kind": "source-observation",
+      "claim": "첨부 파일에서는 긴 짙은 웨이브 머리, 중앙에 가까운 가르마, 어두운 눈, 검은 상의와 작은 금색 목걸이 같은 보이는 성인 외형만 참조했으며 신원, 동일인 여부, 생체정보, 보호 특성, 건강, 매력, 성격, 직업, 민족, 국적 또는 관계를 추론하지 않았다.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "16개 주제별 독립 조사와 종합 결과는 공통 provenance와 single owner를 유지하고, 관찰 가능한 source, entities, regions, relations, effects, confusions, observability를 명시하며 exact user/core evidence만 hard activation으로 사용하고 BM25F, embedding, frequency는 advisory로 제한해야 한다고 결론지었다.",
+      "artifact": "docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902/synthesis.md; candidate-backlog.json; topic-*.md"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "3개 narrow request-scoped hard profile과 21개 slot의 advisory candidate 41개가 로더, 타입 검증, 생성 인덱스에 통합되었다. dictionary validation, visual-profile index check, scene-expression audit와 신규 focused test 7건이 통과했고 레지스트리는 336 profiles와 1722 exact terms, semantic index는 8083 entries와 16 shards로 일치한다.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json; photo_prompt_reactorprompt_visual_relations_extension.json; tests/test_photo_reactorprompt_visual_relations.py; .venv/bin/python -m unittest -v tests.test_photo_reactorprompt_visual_relations => Ran 7 tests OK"
+    },
+    {
+      "id": "e-baseline-suite",
+      "kind": "repository-history",
+      "claim": "75개 통합 회귀 묶음은 67 pass, 6 fail, 1 error, 1 skip이었다. 6개 yandere routing 실패는 baseline의 clinical_nursing_duty_system exact term nurse 충돌로 이미 문서화된 기존 실패다. embedding-only fixture의 1 error도 baseline HEAD가 이미 요구하는 48-word authorial core에 비해 해당 fixture 문장이 짧아서 normalize 단계에서 발생한다. 둘 다 이번 ReactorPrompt extension에서 추가한 세 profile이나 41개 advisory candidate가 만든 회귀가 아니다.",
+      "artifact": ".venv/bin/python -m unittest -v tests.test_photo_reactorprompt_visual_relations tests.test_photo_visual_obligations tests.test_photo_visual_profile_retrieval tests.test_photo_bm25f_retrieval tests.test_photo_prepack_isolation_v5 tests.test_photo_authorial_core_v6 => Ran 75 tests, failures=6, errors=1, skipped=1; docs/research-evidence/photo-prompt/rare-photo-visual-semantics-20260902/iteration-record.json evidence e-baseline-suite; tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl; tests/test_photo_visual_profile_retrieval.py test_embedding_only_paraphrase_projects_optional_candidate_from_one_resolution; git show 6ceb5087c47cc3b8f17ebff8db313755cdda9c9e:skills/photo-prompt-image-generator/scripts/prompt_generator.py authorial core 48-word baseline constraint"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "서로의 결과를 보지 않는 세 arm은 프로젝트 pack을 보기 전에 authorial core를 고정했고, 각각 한 개의 다른 hard profile과 다섯 gate를 받은 뒤 composed prompt와 exact render request audit에서 blocking failure 0으로 통과했다.",
+      "artifact": "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/composed_audit.json; arm-a/render_request_audit.json; arm-b/composed_prompt_audit.json; arm-b/render_request_audit.json; arm-c/composed_prompt_audit.json; arm-c/render_request_audit.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "세 독립 arm은 첨부 외형 참조 하나만 사용해 built-in image generation을 각각 정확히 한 번 호출했고 retry, fallback, cross-arm input 없이 결과 이미지를 저장했다.",
+      "artifact": "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/coordinator_contract.json; arm-a/run_manifest.json; arm-b/run_manifest.json; arm-c/run_manifest.json"
+    },
+    {
+      "id": "e-render-shadow",
+      "kind": "render-observation",
+      "claim": "arm A의 등대 Fresnel 서비스 갤러리 이미지는 광원 방향, 타공 스크린 문법, 명암 반복, 표면 곡률에 따른 패턴 변형, 벽·성인·장치·젖은 바닥 사이의 연결된 receiver를 같은 저장 이미지의 native와 thumbnail에서 모두 보여 5/5 hard gate PASS다.",
+      "artifact": "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-a/final.png sha256=d02c27a7737c8985dcae3e9a8ce65dfc7abd1b32c0e00e06869adc6864421d75; arm-a/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-render-handoff",
+      "kind": "render-observation",
+      "claim": "arm B의 지하 저수지 랜턴 인계 이미지는 두 성인 분리, 한 개 공유 물체, 손 소유권은 보였지만 오른쪽 성인이 이미 손잡이와 바닥을 잡고 왼쪽 성인은 접촉하지 않아 고정된 왼쪽 giver에서 오른쪽 receiver로의 release와 alignment가 반대로 렌더되었다. partial_is_fail 규칙에 따라 3/5 hard gate FAIL이며 재시도하지 않았다.",
+      "artifact": "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-b/final.png sha256=6e63da6d476095d7b6da94cd67541781cf8afdbd31f6f3e96e0485a7a798c111; arm-b/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-render-satin",
+      "kind": "render-observation",
+      "claim": "arm C의 새벽 카페리 이미지에서 구리빛 적색 새틴 의상은 하나의 연속 표면, 바람을 따르는 일관된 주름 방향, 주름을 따라가는 하이라이트, 연결된 암부 면, 명확한 가장자리와 봉제선 소유권을 같은 저장 이미지에 보여 5/5 hard gate PASS다.",
+      "artifact": "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1/arm-c/final.png sha256=be8447739bbc40d677306f61f0c648e7495043dd3533c121cab8008270f3d2f7; arm-c/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-fixture",
+      "kind": "measurement",
+      "claim": "고정 fixture는 세 arm의 raw와 canonical core hash, pack id, reference와 result hash, exact gate ids, 1회 생성 정책, agent와 coordinator verdict를 보존한다. 총 15개 gate 중 13개가 통과했고 전체 profile all-of 기준은 2/3 PASS다.",
+      "artifact": "tests/fixtures/photo_prompt/reactorprompt_visual_relations_three_arm_pixel_cases_v1.jsonl"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "각 활성 profile이 소유한 다섯 필수 관계 gate가 복잡한 장면과 외형 참조 속에서도 같은 저장 이미지에 모두 읽혀야 하며 하나라도 partial 또는 누락이면 해당 profile은 실패다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-observable-typed-relation",
+        "statement": "Hard profile은 관찰 가능한 source, entities, regions, relations, effects, confusions, observability와 활성화 provenance를 한 owner 아래 둔다.",
+        "evidence_ids": [
+          "e-research",
+          "e-package"
+        ],
+        "causal_controls": [
+          "typed photo-visual-relation/v1 contract",
+          "exact user or frozen-core activation only",
+          "advisory retrieval does not hard-activate profiles"
+        ]
+      },
+      {
+        "id": "inv-independent-one-shot",
+        "statement": "각 arm은 프로젝트 pack 전에 core를 동결하고 서로 다른 profile을 받으며 한 번만 생성하고 서로의 입력이나 결과를 사용하지 않는다.",
+        "evidence_ids": [
+          "e-prompt",
+          "e-generation",
+          "e-fixture"
+        ],
+        "causal_controls": [
+          "three fresh independent subagents",
+          "one generation call per arm",
+          "zero retry and zero fallback",
+          "cross-arm input forbidden"
+        ]
+      },
+      {
+        "id": "inv-evidence-layers",
+        "statement": "Package validation, prompt audit, generation completion, saved-pixel review와 requesting-user judgment는 서로 대체할 수 없는 별도 증거 층이다.",
+        "evidence_ids": [
+          "e-package",
+          "e-prompt",
+          "e-generation",
+          "e-render-shadow",
+          "e-render-handoff",
+          "e-render-satin"
+        ],
+        "causal_controls": [
+          "native and thumbnail review",
+          "all gates on the same saved image",
+          "user judgment remains pending"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "venue and narrative premise",
+      "time of day and weather",
+      "adult-safe wardrobe and props",
+      "camera and color treatment that preserve required geometry",
+      "incidental environmental detail"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-handoff-role-direction",
+      "scale": "local",
+      "axis": "actor-role and contact topology",
+      "source_state": "The frozen event requires the reference-guided left adult to be the releasing giver and the right adult to align as receiver during an overlapping lantern transfer.",
+      "render_state": "The right adult already owns the lantern bail and base while the left adult reaches without contact, reversing giver and receiver and omitting the release overlap.",
+      "evidence_ids": [
+        "e-render-handoff"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-typed-relations-transfer",
+      "stage": "representation",
+      "statement": "Research atoms represented as owned typed relations with exact hard gates and separate advisory candidates will transfer into unrelated complex authorial concepts without turning broad similarity into a hard obligation.",
+      "evidence_ids": [
+        "e-research",
+        "e-package"
+      ],
+      "falsifier": "Broad or confounded terms hard-activate a profile, a candidate silently becomes a hard duty, or a typed relation loses its source, region, effect, confusion, or observability bindings during pack projection."
+    },
+    {
+      "id": "h-five-gates-preserve-pixels",
+      "stage": "generator-response",
+      "statement": "Five explicit profile-owned gates in an audited one-shot runtime request are sufficient for the intended relation to survive a complex concept and one adult appearance reference.",
+      "evidence_ids": [
+        "e-generation",
+        "e-render-shadow",
+        "e-render-handoff",
+        "e-render-satin"
+      ],
+      "falsifier": "Any required gate is absent, reversed, or only partially legible in the saved pixels despite passing prompt and runtime audits."
+    },
+    {
+      "id": "h-handoff-needs-role-salience",
+      "stage": "prompt-priority",
+      "statement": "A two-person handoff needs stronger actor-indexed role and simultaneous contact/release salience than generic shared-object ownership, even when both people and the object render correctly.",
+      "evidence_ids": [
+        "e-prompt",
+        "e-render-handoff"
+      ],
+      "falsifier": "A new frozen one-shot handoff arm using the unchanged representation reliably preserves left-giver release, right-receiver alignment, and overlapping contact without stronger role binding."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "reference",
+      "test"
+    ],
+    "general_rule": "관찰 가능한 시각 관계는 typed hard profile로 소유하되 exact user 또는 frozen-core evidence만 강제하고, 유사한 연구 원자는 별도 candidate extension에서 advisory로 유지하며 negative footer나 비시각 주장을 후보로 만들지 않는다.",
+    "generalization_basis": "세 hard profile은 서로 다른 조명 패턴, 다인 상호작용, 재질 반응을 공통 관계 스키마와 다섯 gate로 표현하고, 41개 후보는 구도, 포즈, 카메라, 조명, 색, 환경, 물체, 다인 관계, 표정, 재질, 캡처 반응, 서사 시점 등 21개 slot에 분리되어 있다.",
+    "hypothesis_ids": [
+      "h-typed-relations-transfer",
+      "h-five-gates-preserve-pixels",
+      "h-handoff-needs-role-salience"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_reactorprompt_visual_relations_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/d13bad3c521c703e",
+      "tests/test_photo_reactorprompt_visual_relations.py",
+      "tests/fixtures/photo_prompt/reactorprompt_visual_relations_three_arm_pixel_cases_v1.jsonl",
+      "artifacts/photo-runs/20260903-reactorprompt-visual-relations-three-arm-v1",
+      "docs/research-evidence/photo-prompt/reactorprompt-incremental-visual-semantics-20260902/implementation-iteration-record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-baseline-suite"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-shadow",
+        "e-render-handoff",
+        "e-render-satin",
+        "e-fixture"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-patterned-shadow",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "source and occluder grammar",
+          "curved receiver deformation",
+          "multi-receiver continuity"
+        ],
+        "evidence_ids": [
+          "e-render-shadow"
+        ]
+      },
+      {
+        "id": "holdout-two-adult-handoff",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "two-adult separation",
+          "single shared object",
+          "giver release and receiver alignment"
+        ],
+        "evidence_ids": [
+          "e-render-handoff"
+        ]
+      },
+      {
+        "id": "holdout-satin-luster",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "continuous garment surface",
+          "fold-directed highlight",
+          "dark-plane and edge ownership"
+        ],
+        "evidence_ids": [
+          "e-render-satin"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "데이터, 로더, 검증, 후보팩, 프롬프트와 1회 생성 실행은 완료됐고 shadow와 satin profile은 각각 5/5를 통과했다. 그러나 handoff profile은 frozen actor direction과 접촉 위상이 반대로 렌더되어 3/5였으므로 전체 render-fidelity는 13/15 gates와 2/3 all-of profiles에서 멈춘다. 구현과 실패 fixture를 보존하고 giver/receiver role salience를 보강한 새 독립 arm으로 재자격화하기 전에는 전체 렌더 성공으로 승격하지 않는다. 사용자 미감 판단도 아직 unscored다.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-generation",
+      "e-render-shadow",
+      "e-render-handoff",
+      "e-render-satin",
+      "e-fixture",
+      "e-baseline-suite"
+    ]
+  }
+}

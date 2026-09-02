@@ -26534,20 +26534,24 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "One unmistakably adult subject continues a concrete self-directed everyday action while one stable garment, sheet, hair, forearm, or frame-edge boundary creates a controlled reveal-and-coverage relation. Face, action, setting, material edge, and gravity remain legible together; exposure amount, a body crop, or an apparently covert viewpoint cannot establish the meaning.",
+        "definition": "One unmistakably adult subject continues a concrete self-directed everyday action that visibly changes or holds one exact stable garment boundary. That boundary reveals or re-covers one bounded, non-explicit target relation such as a shoulder or collarbone area, a side or back interval, or a clearly separate foundation layer. Face, action, setting, target, material edge, and gravity remain legible together, and the boundary is salient enough that closing or removing it would erase the controlled-reveal proposition. Exposure amount, generic opaque-over-opaque layering, an unrelated gesture, a body crop, or an apparently covert viewpoint cannot establish the meaning.",
         "paraphrase_examples": [
           "an adult fastening a cuff beside a window while one overlapping shirt edge and its contact shadow remain physically traceable",
           "성인 인물이 머리를 묶는 일상 동작을 계속하는 동안 한 개의 안정된 직물 가림 경계와 장소가 함께 읽힘",
           "the frame preserves face action room context and a single material reveal boundary instead of isolating body fragments"
         ],
         "component_semantics": {
-          "minimum_component_groups": 5,
+          "minimum_component_groups": 9,
           "required_group_ids": [
             "everyday_reveal_adult_subject",
             "everyday_reveal_self_directed_action",
             "everyday_reveal_single_stable_boundary",
+            "everyday_reveal_bounded_target_relation",
+            "everyday_reveal_action_boundary_causality",
             "everyday_reveal_holistic_context",
-            "everyday_reveal_material_physics"
+            "everyday_reveal_material_physics",
+            "everyday_reveal_thumbnail_salience",
+            "everyday_reveal_counterfactual_necessity"
           ],
           "groups": [
             {
@@ -26572,6 +26576,20 @@
               ]
             },
             {
+              "id": "everyday_reveal_bounded_target_relation",
+              "any_terms": [
+                "the boundary reveals a bounded shoulder collarbone side back or clearly distinct foundation-layer relation",
+                "경계가 어깨 쇄골 옆선 등선 또는 명확히 분리된 기반층 중 하나의 한정된 관계를 드러냄"
+              ]
+            },
+            {
+              "id": "everyday_reveal_action_boundary_causality",
+              "any_terms": [
+                "the visible hand action physically changes or holds that exact garment boundary",
+                "보이는 손동작이 바로 그 의복 경계를 물리적으로 바꾸거나 유지함"
+              ]
+            },
+            {
               "id": "everyday_reveal_holistic_context",
               "any_terms": [
                 "face action torso and environmental context remain readable in one holistic frame",
@@ -26584,11 +26602,29 @@
                 "fabric weight overlap contact shadow and gravity explain the coverage relation",
                 "직물 무게 겹침 접촉 그림자와 중력이 가림 관계를 설명함"
               ]
+            },
+            {
+              "id": "everyday_reveal_thumbnail_salience",
+              "any_terms": [
+                "face and the changed boundary are the first two readable focal relations at thumbnail scale",
+                "축소 화면에서 얼굴과 변화된 경계가 가장 먼저 읽히는 두 초점 관계임"
+              ]
+            },
+            {
+              "id": "everyday_reveal_counterfactual_necessity",
+              "any_terms": [
+                "closing or removing that boundary would erase the controlled reveal proposition from the photograph",
+                "그 경계를 닫거나 제거하면 사진의 조절된 가림-드러남 명제가 사라짐"
+              ]
             }
           ]
         },
         "contrast_examples": [
           "an ordinary lifestyle portrait with no controlled material boundary",
+          "a generic opaque outer garment over another opaque garment with no bounded target relation",
+          "an unrelated hand gesture beside a pre-existing opening",
+          "a tiny incidental edge that disappears at thumbnail scale",
+          "a photograph whose ordinary fashion meaning survives closing the boundary",
           "exposed skin or fitted clothing without a self-directed action",
           "a headless torso crop",
           "a hidden-camera or doorway-peeking viewpoint",
@@ -26600,8 +26636,12 @@
           "unmistakably adult self-directed actor",
           "unfinished everyday dressing or grooming action",
           "one stable coverage-and-reveal edge",
+          "one bounded non-explicit target relation",
+          "visible action physically changes that exact edge",
           "face action and room context together",
           "fabric overlap contact shadow and gravity",
+          "face and changed boundary survive thumbnail reduction",
+          "closing the boundary erases the proposition",
           "not body-fragment or covert-observer framing"
         ]
       },
@@ -26621,13 +26661,17 @@
           "성인 일상형 조절된 가림 드러남"
         ]
       },
-      "composition_instruction": "Keep one unmistakably adult subject, one concrete self-directed everyday action, one stable coverage-and-reveal edge, the subject's face and surrounding room, and physically coherent material overlap in the same frame. Let the action and material boundary carry the relation; exposed skin, fitted clothing, a body-only crop, or a covert-observer viewpoint cannot substitute.",
+      "composition_instruction": "Keep one unmistakably adult subject, one concrete self-directed everyday action, one stable coverage-and-reveal edge, one bounded non-explicit target relation, the subject's face and surrounding room, and physically coherent material overlap in the same frame. Make the visible hand action physically change or hold that exact edge. At thumbnail scale, face and changed boundary must be the first two readable focal relations; if the edge were fully closed or removed, the controlled-reveal proposition must disappear. Exposed skin, fitted clothing, generic opaque-over-opaque layering, an unrelated gesture, a body-only crop, or a covert-observer viewpoint cannot substitute.",
       "required_evidence_fields": [
         "everyday_reveal_adult_phrase",
         "everyday_reveal_action_phrase",
         "everyday_reveal_boundary_phrase",
+        "everyday_reveal_target_phrase",
+        "everyday_reveal_causality_phrase",
         "everyday_reveal_context_phrase",
-        "everyday_reveal_material_phrase"
+        "everyday_reveal_material_phrase",
+        "everyday_reveal_salience_phrase",
+        "everyday_reveal_necessity_phrase"
       ],
       "evidence_requirements": {
         "everyday_reveal_adult_phrase": {
@@ -26642,6 +26686,14 @@
           "min_content_words": 11,
           "must_mention_any": ["one stable opaque or layered edge creates a traceable reveal-and-coverage boundary"]
         },
+        "everyday_reveal_target_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["the boundary reveals a bounded shoulder collarbone side back or clearly distinct foundation-layer relation"]
+        },
+        "everyday_reveal_causality_phrase": {
+          "min_content_words": 10,
+          "must_mention_any": ["the visible hand action physically changes or holds that exact garment boundary"]
+        },
         "everyday_reveal_context_phrase": {
           "min_content_words": 11,
           "must_mention_any": ["face action torso and environmental context remain readable in one holistic frame"]
@@ -26649,6 +26701,14 @@
         "everyday_reveal_material_phrase": {
           "min_content_words": 10,
           "must_mention_any": ["fabric weight overlap contact shadow and gravity explain the coverage relation"]
+        },
+        "everyday_reveal_salience_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["face and the changed boundary are the first two readable focal relations at thumbnail scale"]
+        },
+        "everyday_reveal_necessity_phrase": {
+          "min_content_words": 12,
+          "must_mention_any": ["closing or removing that boundary would erase the controlled reveal proposition from the photograph"]
         }
       },
       "render_gates": [
@@ -26668,6 +26728,16 @@
           "description": "One stable opaque or layered edge creates a traceable coverage-and-reveal boundary."
         },
         {
+          "id": "vo_everyday_reveal_bounded_target",
+          "review_scale": "both",
+          "description": "The boundary reveals or re-covers one bounded, non-explicit shoulder, collarbone, side, back, or clearly distinct foundation-layer relation; generic opaque-over-opaque layering does not pass."
+        },
+        {
+          "id": "vo_everyday_reveal_action_boundary_causality",
+          "review_scale": "both",
+          "description": "The visible hand action physically changes or holds that exact boundary rather than merely occurring beside a pre-existing opening."
+        },
+        {
           "id": "vo_everyday_reveal_holistic_context",
           "review_scale": "thumbnail",
           "description": "Face, action, torso, and environmental context remain legible together without a headless or body-fragment crop."
@@ -26676,11 +26746,25 @@
           "id": "vo_everyday_reveal_material_physics",
           "review_scale": "native",
           "description": "Fabric weight, overlap, contact shadow, and gravity physically explain the coverage relation."
+        },
+        {
+          "id": "vo_everyday_reveal_thumbnail_dual_salience",
+          "review_scale": "thumbnail",
+          "description": "Face and the changed coverage boundary are the first two readable focal relations after thumbnail reduction; the boundary is not incidental."
+        },
+        {
+          "id": "vo_everyday_reveal_counterfactual_necessity",
+          "review_scale": "both",
+          "description": "If the visible boundary were read as fully closed or absent, the controlled-reveal proposition would disappear; setting, gaze, ordinary clothing, or exposure alone cannot carry it."
         }
       ],
       "reject_substitutes": [
         "ordinary_lifestyle_without_reveal_boundary",
         "exposure_or_fitted_clothing_only",
+        "generic_opaque_over_opaque_layering",
+        "unrelated_gesture_beside_preexisting_opening",
+        "thumbnail_incidental_boundary",
+        "ordinary_fashion_survives_boundary_removal",
         "headless_body_fragment_crop",
         "covert_observer_or_hidden_camera_view",
         "pasted_prop_anatomy_block"
@@ -26700,17 +26784,19 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "An unmistakably adult figure study uses a stable opaque drape, limb, hair mass, or foreground form to maintain continuous non-explicit coverage while the surrounding body contour, light-to-form transition, and body-bounded negative space remain readable. The result is a holistic study of form rather than explicit anatomy, a censor-bar effect, a black cutout, or a fragmented body crop.",
+        "definition": "An unmistakably adult figure study uses one stable opaque drape, wrapped textile, limb, hair mass, or physically integrated foreground form as the primary visible carrier of continuous non-explicit coverage while the surrounding body contour, light-to-form transition, and body-bounded negative space remain readable. No separate fully opaque full-body garment may make that carrier redundant: removing the carrier must erase the strategic-coverage proposition. The result is a holistic study of form rather than explicit anatomy, an already fully covered figure behind a decorative panel, a censor-bar effect, a black cutout, or a fragmented body crop.",
         "paraphrase_examples": [
           "an adult figure remains holistically framed while one opaque drape follows a continuous coverage path and side light models the surrounding form",
           "성인 인체의 가림 경로와 그 주변 윤곽이 끊기지 않고 빛과 네거티브 스페이스가 형태를 설명함",
           "coverage remains physically stable at native scale instead of relying on a pasted foreground object"
         ],
         "component_semantics": {
-          "minimum_component_groups": 5,
+          "minimum_component_groups": 7,
           "required_group_ids": [
             "figure_coverage_adult_subject",
+            "figure_coverage_primary_carrier",
             "figure_coverage_stable_opaque_path",
+            "figure_coverage_nonredundant_necessity",
             "figure_coverage_contour_continuity",
             "figure_coverage_light_negative_space",
             "figure_coverage_holistic_frame"
@@ -26724,10 +26810,24 @@
               ]
             },
             {
+              "id": "figure_coverage_primary_carrier",
+              "any_terms": [
+                "one opaque drape wrap or integrated form is the primary visible carrier of non-explicit coverage",
+                "하나의 불투명 드레이프 랩 또는 통합된 형태가 비노골적 가림의 주된 시각 운반체임"
+              ]
+            },
+            {
               "id": "figure_coverage_stable_opaque_path",
               "any_terms": [
                 "one stable opaque coverage path remains continuous over non-explicit anatomy",
                 "한 개의 안정된 불투명 가림 경로가 비노골적 해부학 영역 위에서 연속됨"
+              ]
+            },
+            {
+              "id": "figure_coverage_nonredundant_necessity",
+              "any_terms": [
+                "no separate fully opaque full-body garment makes that coverage carrier visually redundant",
+                "별도의 완전 불투명 전신 의복이 그 가림 운반체를 시각적으로 중복되게 만들지 않음"
               ]
             },
             {
@@ -26756,6 +26856,8 @@
         "contrast_examples": [
           "explicit anatomy",
           "a sticker or censor bar pasted over the body",
+          "a fully opaque bodysuit or dress already covers the figure behind a decorative screen",
+          "a coverage prop whose removal leaves the same fully covered fashion image",
           "an unstable hand that fails to provide coverage",
           "a featureless black silhouette",
           "a disconnected body-part crop"
@@ -26764,7 +26866,9 @@
       "concept_candidate": {
         "concept_terms": [
           "unmistakably adult holistic figure study",
+          "one primary opaque coverage carrier",
           "continuous stable opaque coverage path",
+          "no redundant full-body garment behind the carrier",
           "body contour continuity around the occluder",
           "directional light and body-bounded negative space",
           "head torso support limbs and pose together",
@@ -26787,10 +26891,12 @@
           "성인 전략적 가림 피겨 스터디"
         ]
       },
-      "composition_instruction": "Frame one unmistakably adult figure holistically. Maintain one continuous opaque coverage path, preserve plausible contour continuity around its edges, use directional light and body-bounded negative space to model form, and keep head, torso, support, limbs, and pose readable together. Explicit anatomy, pasted blockers, black cutouts, and fragmented crops cannot substitute.",
+      "composition_instruction": "Frame one unmistakably adult figure holistically. Make one opaque drape, wrap, limb, hair mass, or physically integrated foreground form the primary visible carrier of continuous non-explicit coverage; do not place it in front of a separately fully opaque full-body garment that already supplies the same coverage. Preserve plausible contour continuity around its edges, use directional light and body-bounded negative space to model form, and keep head, torso, support, limbs, and pose readable together. Removing the primary carrier must erase the strategic-coverage proposition. Explicit anatomy, redundant decorative screens, pasted blockers, black cutouts, and fragmented crops cannot substitute.",
       "required_evidence_fields": [
         "figure_coverage_adult_phrase",
+        "figure_coverage_carrier_phrase",
         "figure_coverage_path_phrase",
+        "figure_coverage_necessity_phrase",
         "figure_coverage_contour_phrase",
         "figure_coverage_light_phrase",
         "figure_coverage_frame_phrase"
@@ -26800,9 +26906,17 @@
           "min_content_words": 8,
           "must_mention_any": ["one unmistakably adult figure is the complete study subject"]
         },
+        "figure_coverage_carrier_phrase": {
+          "min_content_words": 13,
+          "must_mention_any": ["one opaque drape wrap or integrated form is the primary visible carrier of non-explicit coverage"]
+        },
         "figure_coverage_path_phrase": {
           "min_content_words": 11,
           "must_mention_any": ["one stable opaque coverage path remains continuous over non-explicit anatomy"]
+        },
+        "figure_coverage_necessity_phrase": {
+          "min_content_words": 11,
+          "must_mention_any": ["no separate fully opaque full-body garment makes that coverage carrier visually redundant"]
         },
         "figure_coverage_contour_phrase": {
           "min_content_words": 10,
@@ -26824,9 +26938,19 @@
           "description": "One unmistakably adult figure remains the complete study subject without youthful coding."
         },
         {
+          "id": "vo_figure_coverage_primary_carrier",
+          "review_scale": "both",
+          "description": "One opaque drape, wrap, limb, hair mass, or physically integrated foreground form is the primary visible carrier of continuous non-explicit coverage."
+        },
+        {
           "id": "vo_figure_coverage_stable_opaque_path",
           "review_scale": "both",
           "description": "One continuous opaque coverage path remains stable over non-explicit anatomy at thumbnail and native scale."
+        },
+        {
+          "id": "vo_figure_coverage_nonredundant_necessity",
+          "review_scale": "both",
+          "description": "No separate fully opaque full-body garment already supplies the same coverage; removing the primary carrier would erase the strategic-coverage proposition."
         },
         {
           "id": "vo_figure_coverage_contour_continuity",
@@ -26847,6 +26971,8 @@
       "reject_substitutes": [
         "explicit_anatomy",
         "pasted_censor_bar_or_sticker",
+        "redundant_full_coverage_garment_behind_occluder",
+        "decorative_screen_removal_leaves_same_image",
         "unstable_hand_cover",
         "featureless_black_silhouette",
         "disconnected_body_part_crop"

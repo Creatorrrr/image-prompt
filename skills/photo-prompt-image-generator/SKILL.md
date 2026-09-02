@@ -217,6 +217,8 @@ Omit `profile_id` when the source text contains one unique direct registry meani
 
 Do not construct visual intent merely because project data offers an attractive interpretation. Direct request semantics and requester definitions govern activation. Strong indirect component similarity may expose an optional visual concept, but cannot silently create a hard duty.
 
+If the requester explicitly makes a perceptual effect focal (for example, asks to focus on it or make it unmistakable), fail closed before rendering when that focal meaning is still uncovered and has neither a required typed assertion nor an active hard visual obligation. A broad label, an embedding hit, or an optional candidate is not coverage. Bind an `agent_postcore_interpretation` visual intent only when one exact frozen core field already decomposes the focal effect into all observable components required by one profile; otherwise stop for clarification or rebuild the core. Record this focal-coverage check separately from prompt, runtime, and pixel status.
+
 On a lineage-bound retry, a parent hard obligation is not a new inference when its governing dimensions are explicitly preserved. Rebind it through `agent_postcore_interpretation` to an exact current core field and retain the parent profile ID; record the parent hash in `request_lineage`. Retrieval remains advisory and is never the source of the carried duty.
 
 ## Phase 3 — Clarify, Enrich, and Add the Authorial Pass

@@ -98,9 +98,17 @@ LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
 VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
+VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
+    "photo_prompt_visual_obligations_reactorprompt.json",
+)
+VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
+    "photo-visual-obligation-registry-extension/v1"
+)
+VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
     RESEARCH_EXTENSION_FILENAME,
+    "photo_prompt_reactorprompt_visual_relations_extension.json",
     "photo_prompt_natural_environment_extension.json",
     "photo_prompt_imaginal_extension.json",
     "photo_prompt_mythology_extension.json",
@@ -2567,7 +2575,8 @@ def default_visual_obligation_registry_path(tags_path: str | Path) -> Path:
 
 
 def load_visual_obligation_registry(path: str | Path) -> JsonDict:
-    payload = load_json(path)
+    registry_path = Path(path)
+    payload = load_json(registry_path)
     if payload.get("schema_version") != VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION:
         raise ValueError(
             "visual obligation registry schema_version must be "
@@ -2591,6 +2600,50 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
     profiles = payload.get("profiles")
     if not isinstance(profiles, list) or not profiles:
         raise ValueError("visual obligation registry requires a non-empty profiles list")
+    existing_ids = {
+        str(profile.get("id") or "")
+        for profile in profiles
+        if isinstance(profile, dict)
+    }
+    for extension_filename in VISUAL_OBLIGATION_EXTENSION_FILENAMES:
+        extension_path = registry_path.with_name(extension_filename)
+        if not extension_path.exists():
+            continue
+        extension = load_json(extension_path)
+        if (
+            extension.get("schema_version")
+            != VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION
+        ):
+            raise ValueError(
+                "visual obligation extension schema_version must be "
+                f"{VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION!r}"
+            )
+        if (
+            extension.get("relation_contract_version")
+            != VISUAL_RELATION_CONTRACT_VERSION
+        ):
+            raise ValueError(
+                "visual obligation extension relation_contract_version must be "
+                f"{VISUAL_RELATION_CONTRACT_VERSION!r}"
+            )
+        extension_profiles = extension.get("profiles")
+        if not isinstance(extension_profiles, list) or not extension_profiles:
+            raise ValueError(
+                f"visual obligation extension {extension_filename} requires profiles"
+            )
+        for profile in extension_profiles:
+            if not isinstance(profile, dict) or not str(profile.get("id") or ""):
+                raise ValueError(
+                    f"visual obligation extension {extension_filename} has invalid profile"
+                )
+            profile_id = str(profile["id"])
+            if profile_id in existing_ids:
+                raise ValueError(
+                    f"visual obligation extension duplicate profile id {profile_id}"
+                )
+            profiles.append(copy.deepcopy(profile))
+            existing_ids.add(profile_id)
+        payload["relation_contract_version"] = VISUAL_RELATION_CONTRACT_VERSION
     return payload
 
 
@@ -12609,6 +12662,8 @@ def candidate_pack_visual_profile_obligation(
             if str(value).strip()
         ],
     }
+    if isinstance(profile.get("visual_relation"), dict):
+        obligation["visual_relation"] = copy.deepcopy(profile["visual_relation"])
     if bindings:
         obligation["bindings"] = copy.deepcopy(bindings)
     return obligation

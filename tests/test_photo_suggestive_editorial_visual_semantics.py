@@ -38,6 +38,13 @@ PROFILE_TERMS = {
     "soft_window_private_room_adult_portrait": "소프트 윈도 사적 공간 성인 포트레이트",
 }
 
+EXPECTED_PROFILE_GATE_COUNTS = {
+    "adult_everyday_controlled_reveal_moment": 9,
+    "strategic_coverage_figure_study": 7,
+    "underwear_as_outerwear_layer_system": 5,
+    "soft_window_private_room_adult_portrait": 5,
+}
+
 EXPECTED_CANDIDATES = {
     "action": {
         "shirt_cuff_adjustment_mid_action",
@@ -158,10 +165,14 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
                     ],
                     True,
                 )
-                self.assertEqual(components["minimum_component_groups"], 5)
+                expected_count = EXPECTED_PROFILE_GATE_COUNTS[profile_id]
+                self.assertEqual(
+                    components["minimum_component_groups"],
+                    expected_count,
+                )
                 self.assertEqual(set(components["required_group_ids"]), group_ids)
-                self.assertEqual(len(group_ids), 5)
-                self.assertEqual(len(profile["render_gates"]), 5)
+                self.assertEqual(len(group_ids), expected_count)
+                self.assertEqual(len(profile["render_gates"]), expected_count)
                 self.assertEqual(
                     {gate["review_scale"] for gate in profile["render_gates"]},
                     {"thumbnail", "both", "native"},
@@ -178,6 +189,67 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
                     set(runtime["runtime_forbidden_labels"]),
                 )
                 self.assertGreaterEqual(len(profile["reject_substitutes"]), 5)
+
+    def test_controlled_reveal_requires_target_causality_salience_and_necessity(
+        self,
+    ) -> None:
+        profile = self.profiles["adult_everyday_controlled_reveal_moment"]
+        required_groups = set(
+            profile["semantics"]["component_semantics"]["required_group_ids"]
+        )
+        self.assertLessEqual(
+            {
+                "everyday_reveal_bounded_target_relation",
+                "everyday_reveal_action_boundary_causality",
+                "everyday_reveal_thumbnail_salience",
+                "everyday_reveal_counterfactual_necessity",
+            },
+            required_groups,
+        )
+        gate_ids = {gate["id"] for gate in profile["render_gates"]}
+        self.assertLessEqual(
+            {
+                "vo_everyday_reveal_bounded_target",
+                "vo_everyday_reveal_action_boundary_causality",
+                "vo_everyday_reveal_thumbnail_dual_salience",
+                "vo_everyday_reveal_counterfactual_necessity",
+            },
+            gate_ids,
+        )
+        self.assertLessEqual(
+            {
+                "generic_opaque_over_opaque_layering",
+                "unrelated_gesture_beside_preexisting_opening",
+                "thumbnail_incidental_boundary",
+                "ordinary_fashion_survives_boundary_removal",
+            },
+            set(profile["reject_substitutes"]),
+        )
+
+    def test_figure_coverage_requires_primary_nonredundant_carrier(self) -> None:
+        profile = self.profiles["strategic_coverage_figure_study"]
+        required_groups = set(
+            profile["semantics"]["component_semantics"]["required_group_ids"]
+        )
+        self.assertLessEqual(
+            {
+                "figure_coverage_primary_carrier",
+                "figure_coverage_nonredundant_necessity",
+            },
+            required_groups,
+        )
+        gate_ids = {gate["id"] for gate in profile["render_gates"]}
+        self.assertLessEqual(
+            {
+                "vo_figure_coverage_primary_carrier",
+                "vo_figure_coverage_nonredundant_necessity",
+            },
+            gate_ids,
+        )
+        self.assertIn(
+            "redundant_full_coverage_garment_behind_occluder",
+            profile["reject_substitutes"],
+        )
 
     def test_narrow_exact_terms_route_to_one_expected_profile(self) -> None:
         for profile_id, term in PROFILE_TERMS.items():
@@ -218,7 +290,53 @@ class PhotoSuggestiveEditorialVisualSemanticsTests(unittest.TestCase):
             self.assertTrue(preset["required_slots"])
             for rule in preset["filters"].values():
                 referenced.update(rule.get("ids", []))
-        self.assertLessEqual(all_expected, referenced)
+        intentionally_unbound_after_regression = {
+            "camera_acknowledged_observer_frame",
+            "forearm_coverage_contour_continuity",
+        }
+        self.assertLessEqual(
+            all_expected - intentionally_unbound_after_regression,
+            referenced,
+        )
+        self.assertTrue(intentionally_unbound_after_regression.isdisjoint(referenced))
+
+    def test_presets_remove_uncoupled_or_redundant_choices(self) -> None:
+        reveal_filters = self.presets[
+            "adult_controlled_reveal_window_editorial"
+        ]["filters"]
+        self.assertEqual(
+            reveal_filters["action"]["ids"],
+            ["jacket_lapel_settle_action"],
+        )
+        self.assertNotIn(
+            "sheet_drape_stable_coverage_detail",
+            reveal_filters["garment_detail"]["ids"],
+        )
+        coverage_filters = self.presets[
+            "strategic_coverage_figure_study_editorial"
+        ]["filters"]
+        self.assertEqual(
+            coverage_filters["garment_detail"]["ids"],
+            ["sheet_drape_stable_coverage_detail"],
+        )
+        self.assertEqual(
+            coverage_filters["composition"]["ids"],
+            [
+                "sheet_drape_stable_coverage_path",
+                "environmental_three_quarter_face_body_context",
+            ],
+        )
+
+    def test_skill_fail_closes_uncovered_focal_meaning(self) -> None:
+        skill_text = (SKILL_DIR / "SKILL.md").read_text(encoding="utf-8")
+        for phrase in (
+            "explicitly makes a perceptual effect focal",
+            "focal meaning is still uncovered",
+            "A broad label, an embedding hit, or an optional candidate is not coverage",
+            "Record this focal-coverage check separately from prompt, runtime, and pixel status",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase, skill_text)
 
     def test_generated_indexes_include_new_profiles_and_candidates(self) -> None:
         self.assertLessEqual(set(PROFILE_TERMS), set(self.visual_index["entries"]))
