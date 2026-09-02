@@ -37,7 +37,9 @@ def valid_core() -> dict:
         "baseline_prompt_en": (
             "An airy hand-shaped bread loaf rests on a pale bakery counter while soft steam rises, "
             "fine crumbs settle beside it, quiet morning light reveals the porous structure, and a "
-            "restrained editorial frame keeps every tactile detail calm and legible."
+            "restrained editorial frame keeps every tactile detail calm and legible. Fine-grained "
+            "surface cues, coherent depth, controlled highlights, and quiet shadow detail keep the "
+            "completed photographic hierarchy specific, balanced, natural, and visually unambiguous."
         ),
         "user_definitions": [],
         "interpretation_provenance": [
@@ -181,7 +183,9 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
                 "An unmistakably adult woman stands in a quiet neutral fashion studio, bringing "
                 "her legs close in a balanced self-directed pose while a narrow background opening "
                 "between the upper inner-thigh contours becomes deliberate focal geometry under "
-                "clean soft light and restrained editorial framing."
+                "clean soft light and restrained editorial framing. Fine-grained surface cues, "
+                "coherent depth, controlled highlights, and quiet shadow detail keep the completed "
+                "photographic hierarchy specific, balanced, natural, and visually unambiguous."
             ),
             "user_definitions": [],
             "interpretation_provenance": [

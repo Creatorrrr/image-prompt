@@ -621,14 +621,14 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             over_recommended["baseline_prompt_en"]
         )
         over_recommended["baseline_prompt_en"] += " " + " ".join(
-            ["detail"] * (181 - baseline_count)
+            ["detail"] * (361 - baseline_count)
         )
         normalized_over_recommended = self.normalize(over_recommended)
         self.assertEqual(
             audit_composed_prompt.english_prompt_word_count(
                 normalized_over_recommended["baseline_prompt_en"]
             ),
-            181,
+            361,
         )
 
         too_long = core()
@@ -636,9 +636,9 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             too_long["baseline_prompt_en"]
         )
         too_long["baseline_prompt_en"] += " " + " ".join(
-            ["detail"] * (321 - too_long_count)
+            ["detail"] * (641 - too_long_count)
         )
-        with self.assertRaisesRegex(ValueError, "24 to 320 English words"):
+        with self.assertRaisesRegex(ValueError, "48 to 640 English words"):
             self.normalize(too_long)
 
         data = self.runtime_data()
@@ -665,7 +665,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         )
         prompt_count = audit_composed_prompt.english_prompt_word_count(BASELINE)
         advisory_prompt = BASELINE + " " + " ".join(
-            ["detail"] * (181 - prompt_count)
+            ["detail"] * (361 - prompt_count)
         )
         binding = {
             "source_authorial_core_sha256": normalized["canonical_sha256"],
@@ -709,9 +709,9 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             for row in warnings
             if row["check"] == "authorial_prompt_recommended_budget"
         )
-        self.assertEqual(advisory_warning["actual_words"], 181)
-        self.assertEqual(advisory_warning["recommended_maximum_words"], 180)
-        self.assertEqual(advisory_warning["absolute_maximum_words"], 320)
+        self.assertEqual(advisory_warning["actual_words"], 361)
+        self.assertEqual(advisory_warning["recommended_maximum_words"], 360)
+        self.assertEqual(advisory_warning["absolute_maximum_words"], 640)
         self.assertIn(
             "authorial_prompt_optional_prose_budget",
             {row["check"] for row in warnings},
@@ -731,12 +731,35 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             if row["check"] == "authorial_core_prompt_budget"
         )
         self.assertEqual(legacy_budget_failure["maximum_words"], 180)
-        self.assertEqual(legacy_budget_failure["actual_words"], 181)
+        self.assertEqual(legacy_budget_failure["actual_words"], 361)
+
+        legacy_v1_pack = copy.deepcopy(pack)
+        legacy_v1_pack["authorial_composition"]["prompt_budget"] = (
+            audit_composed_prompt.legacy_authorial_prompt_budget_contract()
+        )
+        legacy_v1_prompt = BASELINE + " " + " ".join(
+            ["detail"] * (181 - prompt_count)
+        )
+        legacy_v1_warnings = []
+        legacy_v1_failures = audit_composed_prompt.audit_authorial_core_v5(
+            legacy_v1_pack,
+            {"authorial_core_binding": binding},
+            legacy_v1_prompt,
+            legacy_v1_warnings,
+        )
+        self.assertNotIn(
+            "authorial_prompt_budget_contract",
+            {row["check"] for row in legacy_v1_failures},
+        )
+        self.assertIn(
+            "authorial_prompt_recommended_budget",
+            {row["check"] for row in legacy_v1_warnings},
+        )
 
         mutated_pack = copy.deepcopy(pack)
         mutated_pack["authorial_composition"]["prompt_budget"][
             "recommended_maximum_words"
-        ] = 200
+        ] = 400
         mutated_failures = audit_composed_prompt.audit_authorial_core_v5(
             mutated_pack,
             {"authorial_core_binding": binding},
@@ -749,7 +772,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         )
 
         absolute_prompt = BASELINE + " " + " ".join(
-            ["detail"] * (321 - prompt_count)
+            ["detail"] * (641 - prompt_count)
         )
         failures = audit_composed_prompt.audit_authorial_core_v5(
             pack,
@@ -762,13 +785,13 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             for row in failures
             if row["check"] == "authorial_core_prompt_budget"
         )
-        self.assertEqual(budget_failure["actual_words"], 321)
-        self.assertEqual(budget_failure["absolute_maximum_words"], 320)
+        self.assertEqual(budget_failure["actual_words"], 641)
+        self.assertEqual(budget_failure["absolute_maximum_words"], 640)
 
     def test_authorial_budget_expands_advisory_ceiling_for_required_evidence(self):
-        required_phrase = " ".join(f"required{index}" for index in range(150))
+        required_phrase = " ".join(f"required{index}" for index in range(300))
         prompt = required_phrase + " " + " ".join(
-            f"optional{index}" for index in range(70)
+            f"optional{index}" for index in range(140)
         )
         pack = {
             "authorial_core": {
@@ -784,10 +807,10 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             {},
             prompt,
         )
-        self.assertEqual(metrics["actual_words"], 220)
-        self.assertEqual(metrics["required_evidence_words"], 150)
-        self.assertEqual(metrics["optional_prose_words"], 70)
-        self.assertEqual(metrics["effective_recommended_maximum_words"], 230)
+        self.assertEqual(metrics["actual_words"], 440)
+        self.assertEqual(metrics["required_evidence_words"], 300)
+        self.assertEqual(metrics["optional_prose_words"], 140)
+        self.assertEqual(metrics["effective_recommended_maximum_words"], 460)
 
     def test_blanket_negative_rewrite_is_rejected_before_core_freeze(self):
         payload = core()

@@ -1,0 +1,56 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent complex test photograph about a rain-dark ferry pier signal run, with an off-center thirds anchor, visibly greater travel space ahead of the runner, and exactly one amber exception inside a repeated row of blue pier lamps.",
+  "subject": "one adult woman whose visible appearance is referenced from the supplied portrait",
+  "setting": "a rain-dark ferry pier at night",
+  "event": "she runs from camera left toward camera right carrying a small signal flag toward a departing ferry",
+  "visual_priorities": [
+    "off-center adult runner with clear directional travel",
+    "more wet pier and ferry approach visible ahead than behind",
+    "a stable repeated row of at least four blue pier lamps with one amber exception",
+    "rain, spray, and reflective pavement remain physically coherent"
+  ],
+  "baseline_prompt_en": "Photorealistic nighttime documentary editorial on a rain-dark ferry pier. Treat Image 1 solely as a visible adult appearance reference: one adult woman with long dark wavy hair, natural adult facial proportions, and a dark weatherproof coat. She runs from camera left toward camera right carrying a small signal flag toward a departing ferry, her full action origin still visible. Place her low and left of center with a broad stretch of wet pier open ahead of her. At least five identical blue pier lamps repeat along the railing; one amber lamp near her destination is the only local exception. Wind drives rain and coat fabric in the same direction, ferry lights remain distant, and reflections stretch along the boards. Medium-wide horizontal photo, crisp face and hands, realistic rain spray, urgent but readable travel.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "a rain-dark ferry pier signal run selected by the recorded stratified random draw",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "the supplied portrait controls only observable adult appearance in the generated scene",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "rain-dark ferry pier"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "one adult woman with long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여", "dimension": "event", "prompt_evidence": "runs from camera left toward camera right carrying a small signal flag"},
+      {"anchor_id": "reference_use", "source_text": "첨부한 이미지를 활용하여", "dimension": "reference_use", "prompt_evidence": "Treat Image 1 solely as a visible adult appearance reference"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "reference_use"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color", "material", "timing", "atmosphere"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "documentary_editorial_photo",
+    "family": "rain-soaked maritime action realism",
+    "evidence": ["wet reflective pier boards", "wind-driven rain and distant ferry lights"]
+  },
+  "variation_key": "arm-02-harbor-signal"
+}

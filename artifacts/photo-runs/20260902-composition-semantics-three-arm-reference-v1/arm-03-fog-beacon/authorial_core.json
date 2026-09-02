@@ -1,0 +1,56 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create an independent complex test photograph about a fog observatory beacon crossing, with a large intentional low-detail fog field, an off-center adult subject counterweighted by a small bright beacon, and visibly greater bridge space ahead of her movement.",
+  "subject": "one adult woman whose visible appearance is referenced from the supplied portrait",
+  "setting": "a high-altitude radio observatory footbridge in dense dawn fog",
+  "event": "she walks from lower left toward a small red maintenance beacon across the suspended bridge",
+  "visual_priorities": [
+    "a broad continuous fog field with subtle tonal texture",
+    "clean separation around the adult subject's dark silhouette",
+    "unequal balance between the large off-center subject and the small red beacon",
+    "a clear forward walking vector with more bridge visible ahead"
+  ],
+  "baseline_prompt_en": "Photorealistic atmospheric editorial at a high-altitude radio observatory in dense dawn fog. Treat Image 1 solely as a visible adult appearance reference: one adult woman with long dark wavy hair, natural adult facial proportions, and a dark technical coat. She walks from the lower-left side toward a small red maintenance beacon across a suspended metal footbridge. A broad continuous fog field occupies most of the frame, retaining faint layered gray texture around her clean dark silhouette. Her larger off-center form is balanced across the open field by the tiny bright beacon. The bridge direction and her step point toward camera right, with substantially more bridge and fog visible ahead than behind. Sparse antenna shapes dissolve softly in the distance. Wide horizontal photo, restrained color, damp metal detail, natural adult proportions, quiet physical realism.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "a fog observatory beacon crossing selected by the recorded stratified random draw",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지 활용",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "the supplied portrait controls only observable adult appearance in the generated scene",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {"anchor_id": "core_concept", "source_text": "랜덤한 복잡한 컨셉", "dimension": "concept", "prompt_evidence": "high-altitude radio observatory in dense dawn fog"},
+      {"anchor_id": "core_subject", "source_text": "첨부한 이미지를 활용하여", "dimension": "subject", "prompt_evidence": "one adult woman with long dark wavy hair"},
+      {"anchor_id": "core_event", "source_text": "프롬프트 작성하고 이미지 생성하도록 하여", "dimension": "event", "prompt_evidence": "walks from the lower-left side toward a small red maintenance beacon"},
+      {"anchor_id": "reference_use", "source_text": "첨부한 이미지를 활용하여", "dimension": "reference_use", "prompt_evidence": "Treat Image 1 solely as a visible adult appearance reference"}
+    ],
+    "locked_dimensions": ["concept", "subject", "event", "reference_use"],
+    "open_dimensions": ["framing", "composition", "lighting", "camera", "color", "material", "timing", "atmosphere"]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "atmospheric_editorial_photo",
+    "family": "minimal high-altitude infrastructure realism",
+    "evidence": ["continuous textured fog field", "damp metal and restrained red beacon"]
+  },
+  "variation_key": "arm-03-fog-beacon"
+}

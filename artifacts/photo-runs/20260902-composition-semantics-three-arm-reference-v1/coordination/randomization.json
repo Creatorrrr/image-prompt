@@ -1,0 +1,46 @@
+{
+  "contract_version": "photo-composition-randomization/v1",
+  "algorithm": "stratified-python-random-mt19937-one-draw-per-fixed-stratum",
+  "seed": 16495771412272955302,
+  "draw_policy": "one draw from each predeclared semantic stratum; no redraw after concept selection",
+  "strata": {
+    "structured_interior": ["conservatory_axis", "archive_center"],
+    "dynamic_exterior": ["rooftop_release", "harbor_signal"],
+    "environmental_direction": ["fog_beacon", "market_chain"]
+  },
+  "selected": [
+    {
+      "arm_id": "arm-01-archive-center",
+      "stratum": "structured_interior",
+      "concept_id": "archive_center",
+      "concept": "flooded archive map rescue",
+      "profile_ids": [
+        "centered_primary_anchor_relation",
+        "primary_secondary_figure_ground_hierarchy",
+        "frame_within_frame_boundary_relation"
+      ]
+    },
+    {
+      "arm_id": "arm-02-harbor-signal",
+      "stratum": "dynamic_exterior",
+      "concept_id": "harbor_signal",
+      "concept": "rain-dark ferry pier signal run",
+      "profile_ids": [
+        "third_grid_focal_anchor_relation",
+        "look_motion_room_direction_relation",
+        "pattern_break_focal_exception"
+      ]
+    },
+    {
+      "arm_id": "arm-03-fog-beacon",
+      "stratum": "environmental_direction",
+      "concept_id": "fog_beacon",
+      "concept": "fog observatory beacon crossing",
+      "profile_ids": [
+        "subject_field_negative_space_relation",
+        "asymmetric_counterbalance_relation",
+        "look_motion_room_direction_relation"
+      ]
+    }
+  ]
+}
