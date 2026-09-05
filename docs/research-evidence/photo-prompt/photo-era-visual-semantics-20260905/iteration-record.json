@@ -1,0 +1,227 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "c94563b-clean-worktree-before-research",
+    "candidate_revision": "research-proposal-only-photo-era-visual-semantics-20260905"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "참조 대화에서 조사한 사진 촬영 시대별 키워드를 근거로 시각 의미 데이터와 후보팩 데이터를 충분히 강화하기 위한 상세 연구와 구현 가능한 제안 데이터를 만든다."
+  },
+  "evidence": [
+    {
+      "id": "era_reference_conversation",
+      "kind": "source-observation",
+      "claim": "참조 대화는 1820년대 초기 공정부터 2020년대 계산사진과 디카 리바이벌까지 공정, 필름·센서 반응, 조명, 광학, 구도, 출력, 열화, 플랫폼, 국내 장면 단서를 폭넓게 제시했다.",
+      "artifact": "ChatGPT conversation 6a9a7c73-fb08-83e8-8a72-c3d7c3f0e75b and report-source.md section 2"
+    },
+    {
+      "id": "era_external_research",
+      "kind": "external-research",
+      "claim": "V&A, Canadian Conservation Institute, Library of Congress, Art Institute of Chicago, Metropolitan Museum, Kodak, Smithsonian, NIST, NARA, Google Research, Apple, Sony, Meta, 국가기록원의 25개 공개 자료를 대조해 공정·물질·장르·출력·열화·계산사진·국내 장면 prior의 관찰 가능 범위와 비주장 경계를 정리했다.",
+      "artifact": "report-source.md and evidence.jsonl"
+    },
+    {
+      "id": "era_repository_snapshot",
+      "kind": "source-observation",
+      "claim": "기준선은 111개 슬롯, 575개 프리셋, 333개 visual profile이며 인접한 print-scan, compact-digicam repost, contact-sheet, four-cut profile을 이미 포함한다. 시대 인접 후보는 많지만 공정, 출력, 열화, 재현의 소유권이 충분히 분리되지 않았다.",
+      "artifact": "candidate-data-proposal.json observed_repository_baseline and current shared asset SHA-256 values"
+    },
+    {
+      "id": "era_package_validation",
+      "kind": "package-check",
+      "claim": "연구 패키지의 Markdown, proposal JSON, 27행 evidence JSONL, 71행 routing JSONL이 존재하고 파싱된다. 제안 profile 18개는 각각 구성요소, reject substitute, render gate를 정확히 5개씩 가지며, 후보 60개·family 23개·source 27개의 ID와 상호 참조가 고유하고 모두 연결된다.",
+      "artifact": "jq syntax, count, uniqueness, five-part profile, source-reference, candidate-reference, profile-reference checks and validate_iteration_record.py"
+    },
+    {
+      "id": "era_runtime_boundary",
+      "kind": "repository-history",
+      "claim": "이번 연구 intervention이 소유한 변경은 docs/research-evidence 아래 다섯 산출물뿐이다. 작업 도중 별도의 동시 변경이 skill 문서·generator·tests에 나타났으나 건드리거나 이 연구의 구현 증거로 계산하지 않았고, 공유 tags·obligation registry·profile index·semantic index도 이 intervention에서 수정하지 않았다.",
+      "artifact": "intervention.changed_paths ownership list, initial clean status observation, and final git status showing isolated research directory plus unowned concurrent changes"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "사진 시대 어휘를 연도나 무드 라벨로 치환하지 않고, 같은 프레임에서 반증 가능한 공정·지지체·이미지층·촬영 반응·장르 행동·출력 컨테이너·열화 관계로 분해하며 비시각 연대와 provenance 주장을 별도 메타데이터로 유지한다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "era_evidence_lane_separation",
+        "statement": "촬영 당시 공정, 출력·재생산, 보존 열화, 후대 레트로 재현, 사건 연대는 서로의 증거를 대신하지 않는다.",
+        "evidence_ids": ["era_reference_conversation", "era_external_research"],
+        "causal_controls": ["eight explicit evidence lanes", "dual-time record", "metadata-only provenance fields"]
+      },
+      {
+        "id": "era_five_component_observability",
+        "statement": "각 제안 hard profile은 다섯 관찰 가능한 구성요소와 다섯 close reject, 다섯 render gate를 가지며 한 항목이라도 누락되면 실패다.",
+        "evidence_ids": ["era_external_research", "era_package_validation"],
+        "causal_controls": ["exact context-complete activation", "component-ablation regressions", "partial_is_fail"]
+      },
+      {
+        "id": "era_broad_term_nonactivation",
+        "statement": "시대명, 연도, vintage, retro, old photo, film, 상표, 모델, stock, 프로젝트명, 플랫폼명은 후보 발견만 허용하고 단독 hard 활성화하지 않는다.",
+        "evidence_ids": ["era_external_research", "era_repository_snapshot"],
+        "causal_controls": ["seventeen broad and metadata boundary cases", "zero-hard expectation", "brand and project metadata lane"]
+      },
+      {
+        "id": "era_primary_owner_collisions",
+        "statement": "다게레오타입과 은경화, 칼로타입과 종이 오버레이, Autochrome과 RGB 픽셀, 즉석 인화물과 가짜 테두리, 계산 HDR과 과장 필터는 각각 다른 primary owner와 반례를 가진다.",
+        "evidence_ids": ["era_external_research", "era_package_validation"],
+        "causal_controls": ["eighteen close-confound cases", "six explicit collision cases", "one owner per visible relation"]
+      },
+      {
+        "id": "era_reuse_and_public_surface_boundary",
+        "statement": "기존 print-scan, digicam repost, contact-sheet, four-cut 소유자를 재사용하고, 연구 패키지 구조 통과를 런타임 검색·후보팩 노출·프롬프트·렌더 성공으로 보고하지 않는다.",
+        "evidence_ids": ["era_repository_snapshot", "era_runtime_boundary"],
+        "causal_controls": ["reuse-before-add map", "runtime registry assets unchanged by this intervention", "prompt render and user layers unscored"]
+      }
+    ],
+    "flexible_dimensions": [
+      "subject identity and visible appearance",
+      "location and event compatible with the selected process",
+      "period scene props that do not contradict availability metadata",
+      "camera framing that preserves all material-object boundaries",
+      "color and contrast variation within the source-backed process range",
+      "explicit user definitions that override candidate-family defaults after clarification"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "era_year_label_vs_overlap",
+      "scale": "global",
+      "axis": "chronology",
+      "source_state": "참조 대화는 대표 연도와 매체를 시대별 목록으로 연결한다.",
+      "render_state": "실제 데이터는 공정 가용 시기, 지역 보급, 사건 연대, 열화 시간, 후대 재현 시간을 분리하고 공존하는 매체를 후보군으로 유지해야 한다.",
+      "evidence_ids": ["era_reference_conversation", "era_external_research"]
+    },
+    {
+      "id": "era_label_inventory_vs_relational_density",
+      "scale": "regional",
+      "axis": "candidate data",
+      "source_state": "현재 저장소에는 sepia, film grain, instant, disposable, CCD, Super 8, archive scan 등 많은 시대 인접 라벨이 있다.",
+      "render_state": "지지체, 이미지층, 광학 반응, 출력 컨테이너, 열화와 비교 영역을 source-bound family로 함께 제시해야 한다.",
+      "evidence_ids": ["era_repository_snapshot", "era_external_research"]
+    },
+    {
+      "id": "era_capture_vs_deterioration",
+      "scale": "local",
+      "axis": "material trace ownership",
+      "source_state": "황변, 균열, 은색 광택, 퇴색은 흔히 오래된 사진의 분위기로 한 묶음 처리된다.",
+      "render_state": "은경화, acetate channeling, chromogenic dye fade는 촬영 당시 룩이 아닌 별도 열화 profile이며 연대를 증명하지 않는다.",
+      "evidence_ids": ["era_external_research"]
+    },
+    {
+      "id": "era_product_name_vs_visible_result",
+      "scale": "local",
+      "axis": "device stock and algorithm",
+      "source_state": "Kodachrome, Tri-X, Instamatic, 110, Polaroid, CCD, Smart HDR 같은 이름은 강한 시대 연상을 만든다.",
+      "render_state": "이름은 메타데이터 또는 bounded look 후보이고, hard profile은 물리 객체나 다섯 관찰 결과만 소유한다.",
+      "evidence_ids": ["era_external_research"]
+    },
+    {
+      "id": "era_korea_prior_vs_representativeness",
+      "scale": "regional",
+      "axis": "Korean scene priors",
+      "source_state": "참조 대화는 국내 1950s부터 2020s까지 복식·가전·플랫폼·촬영 관습을 묶는다.",
+      "render_state": "국내 단서는 가용성이 확인된 optional scene prior이며 시대·계층·지역 전체의 전형이나 촬영 공정을 주장하지 않는다.",
+      "evidence_ids": ["era_reference_conversation", "era_external_research"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "era_lane_separation_reduces_false_history",
+      "stage": "representation",
+      "statement": "공정, 출력, 열화, 후대 재현, 사건 연대를 별도 차선으로 저장하면 세피아나 손상만으로 실제 옛 사진과 연도를 주장하는 오류가 줄어들 것이다.",
+      "evidence_ids": ["era_external_research"],
+      "falsifier": "broad old-photo 또는 deterioration-only 입력이 촬영 시대 hard profile을 활성화하거나 generated prompt가 진품·연대를 사실로 단정한다."
+    },
+    {
+      "id": "era_source_bound_families_improve_coherence",
+      "stage": "prompt-priority",
+      "statement": "source-bound family가 공정·객체·반응·출력 후보를 함께 묶으면 상충하는 세대 효과의 무작위 누적이 줄어들 것이다.",
+      "evidence_ids": ["era_reference_conversation", "era_external_research"],
+      "falsifier": "대표 family query에서 핵심 후보가 함께 노출되지 않거나 다른 공정의 상충 후보가 primary selection에 들어간다."
+    },
+    {
+      "id": "era_paired_confounds_improve_ownership",
+      "stage": "representation",
+      "statement": "각 profile에 가장 가까운 시각 대체물을 붙이면 다게레오타입-은경화, Autochrome-RGB, instant-border, HDR-halo 충돌이 단일 이름 라우팅보다 안정적으로 분리될 것이다.",
+      "evidence_ids": ["era_external_research", "era_package_validation"],
+      "falsifier": "close-confound row가 대상 hard profile을 활성화하거나 좁은 양성이 둘 이상의 primary owner로 동시에 라우팅된다."
+    },
+    {
+      "id": "era_dual_time_prevents_retro_provenance_collapse",
+      "stage": "prompt-interaction",
+      "statement": "현재 장면 시간과 재현 대상 룩 시간을 별도 필드로 동결하면 디카 리바이벌 이미지를 실제 2000년대 원본으로 오인하는 프롬프트 오류가 줄어들 것이다.",
+      "evidence_ids": ["era_reference_conversation", "era_external_research"],
+      "falsifier": "dual-time query의 composed prompt가 present scene time을 버리거나 simulated look을 provenance로 바꾼다."
+    }
+  ],
+  "intervention": {
+    "status": "proposed",
+    "target_layers": ["reference", "module", "test"],
+    "general_rule": "사진 시대 어휘를 하나의 룩으로 고정하지 말고 공정·물질 객체·촬영 반응·장르 관습·출력 컨테이너·열화·후대 재현·장면 prior로 분해하며 좁은 다섯 구성요소 관계만 hard profile이 소유하게 한다.",
+    "generalization_basis": "support-binder-image, source-response-output, damaged-versus-unaffected comparison, and exact-versus-broad routing은 초기 판 사진부터 디지털 계산사진까지 같은 증거 구조를 적용하면서도 공정별 가까운 대체물을 독립적으로 통제한다.",
+    "hypothesis_ids": [
+      "era_lane_separation_reduces_false_history",
+      "era_source_bound_families_improve_coherence",
+      "era_paired_confounds_improve_ownership",
+      "era_dual_time_prevents_retro_provenance_collapse"
+    ],
+    "changed_paths": [
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/report-source.md",
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/candidate-data-proposal.json",
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/evidence.jsonl",
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/routing-regression-proposal.jsonl",
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/iteration-record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["era_package_validation"]
+    },
+    "prompt": {
+      "status": "not-run",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "era_structure_and_reference_integrity",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": ["profile five-part structure", "candidate source linkage", "family candidate and profile references", "evidence and routing JSONL integrity"],
+        "evidence_ids": ["era_package_validation"]
+      },
+      {
+        "id": "era_runtime_routing_holdout",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["bilingual exact routing", "broad nonactivation", "component ablation", "collision ownership"],
+        "evidence_ids": []
+      },
+      {
+        "id": "era_independent_pixel_holdout",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["physical-process arm", "computational-look arm", "deterioration arm", "thumbnail and native strict gates"],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "decision": {
+    "status": "proposed",
+    "claim_scope": "structural",
+    "rationale": "상세 리서치와 구현 가능한 18개 profile, 60개 candidate, 23개 family, 27개 evidence, 71개 회귀 제안은 구조적으로 검증되었다. 그러나 공유 런타임 데이터·인덱스·라우팅을 변경하지 않았고 프롬프트·렌더·사용자 평가도 하지 않았으므로 구현 또는 성능 향상을 주장하지 않는다.",
+    "evidence_ids": ["era_reference_conversation", "era_external_research", "era_repository_snapshot", "era_package_validation", "era_runtime_boundary"]
+  }
+}

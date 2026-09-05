@@ -9,9 +9,11 @@ Understand the requester first. Write a complete standalone photographic prompt 
 
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
+User instructions and existing session authorization take precedence over this skill's procedural defaults, subject to system, developer, and image-tool requirements. Continue work already authorized; do not ask the user to approve the same action or API cost again. Ask only when a required decision or authorization is actually missing.
+
 ## Non-Negotiable Phase Boundary
 
-Before `baseline_prompt_en` and its `photo-authorial-core/v3` hash are frozen, use only:
+For an initial request, before `baseline_prompt_en` and its `photo-authorial-core/v3` hash are frozen, use only:
 
 - the current user conversation, including definitions, exclusions, modifiers, references, and corrections;
 - the model's general knowledge and independent visual reasoning;
@@ -26,7 +28,9 @@ During that pre-core phase, do not open, search, quote, or infer from:
 - tests, fixtures, evaluation cases, snapshots, rendered attempts, or maintenance evidence;
 - private routing, another experiment arm, or a previous prompt produced from project-local knowledge.
 
-The `SKILL.md` procedure is the only project-local material available before the core. This file intentionally contains no maintained definition for any particular keyword. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
+The `SKILL.md` procedure is the only project-local material available before the core. This initial-request rule includes the neutral schemas below; retries have only the explicit exception in the next paragraph. This file intentionally contains no maintained definition for any particular keyword. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
+
+A retry has one narrow exception: inspect the named parent request/core/intent-lock hashes, frozen fields and evidence for dimensions the requester preserves, the effective hard obligations governing those dimensions, and the reported defect relevant to the repair. A previously selected opt-in obligation is part of that effective hard contract. Read only those fields from the parent artifacts; candidate inventories, unselected concepts, previous optional prose, other arms, and maintenance examples remain unavailable. This exception carries an existing obligation and never supplies fresh inspiration. If selective reading is impractical, use a coordinator-created whitelist extract bound to the parent artifact hashes.
 
 ## Phase 0 — Resolve Meaning Independently
 
@@ -39,6 +43,8 @@ Use this decision order:
 3. If a niche term appears to have one stable public meaning but you are not confident, research that meaning using authoritative or primary public sources. Research only the meaning needed to understand the request; do not search for candidate-pack-like visual inspiration.
 4. If two or more plausible meanings would materially change subject identity, age, count, pose, body geometry, expression, event, setting, relationship, or exclusions, ask the requester which meaning they intend and wait for the answer.
 5. If focused research still leaves a material ambiguity, ask. Do not freeze a guess.
+
+Unspecified creative choices are not unresolved meaning. Decide framing, lighting, or other genuinely open dimensions within the request. A mismatched optional retrieval candidate is rejected later; its presence alone never requires a question.
 
 The requesting user's intended meaning has highest priority. System and image-tool policy still applies. This workflow changes knowledge timing; it does not add a new adult/safety classifier or routing policy.
 
@@ -134,7 +140,8 @@ Freeze it as:
 Rules:
 
 - `source_request` must byte-equal the envelope's complete `request_text`; the generator derives and hash-binds `request_binding`.
-- Every active span needs both semantic-origin coverage (`user_definitions` or `interpretation_provenance`) and at least one intent anchor. Every locked dimension needs an anchor with substantive requester source text and its own distinct literal baseline evidence phrase. `concept`, `subject`, and `event` are always locked; lock any other user-specified dimension as well. Open and locked dimensions are disjoint.
+- Every active span needs both semantic-origin coverage (`user_definitions` or `interpretation_provenance`) and at least one intent anchor. Every locked dimension needs an anchor with substantive requester source text and its own distinct literal baseline evidence phrase. `concept`, `subject`, and `event` are always locked; lock any other user-specified dimension as well. Open and locked dimensions are disjoint. V6 permits zero or one open dimension for precise requests or local repairs; write `open_dimensions: []` explicitly when none are open, and never invent freedom to satisfy a creativity quota.
+- Use only these v3 dimension names: `concept`, `subject`, `identity`, `count`, `age`, `role`, `species`, `appearance`, `pose`, `body_geometry`, `expression`, `action`, `event`, `setting`, `relationship`, `sexual_tone`, `style`, `reference_use`, `viewer_outcome`, `text`, `format`, `framing`, `composition`, `lighting`, `camera`, `color`, `material`, `timing`, `atmosphere`, `character_response`.
 - Put an actual requester definition or answer to a clarification question in `user_definitions`. Its `source_text` must equal a complete active span and cannot be only the term itself. A bare term is an agent interpretation, not proof that the requester supplied a definition.
 - Use `interpretation_provenance` for material agent/context/web interpretations, not for requester-owned definitions. Web-based entries require at least one source URL; URLs do not enter the retrieval query.
 - `unresolved_ambiguities` is mandatory and must be empty. If it is not empty, ask or research before continuing.
@@ -145,7 +152,7 @@ Rules:
 - Treat a named character or relationship archetype whose meaning depends on behavior as a required visible `character_response`, even when the requester calls it a concept or also specifies a costume, role, facial expression, or prop. Lock `character_response` and make the baseline show an unmistakably adult actor, one identifiable relationship target or repeated marker of that same target, one concrete target-directed action, one affect leak, and one already-visible consequence in a single frame. An adjective, intense gaze, smile, role outfit, weapon, medical tool, or other prop alone never satisfies this contract; reference-image appearance never activates personality.
 - Every required non-`character_response` assertion is compiled into `photo-semantic-assertion-obligations/v1`. When that block exists, copy its exact frozen evidence into `semantic_assertion_evidence.evidence.<assertion_id>`, bind `source_contract_sha256`, and keep every phrase literal in the final prompt. Retrieval cannot supply or replace any of those hard phrases.
 - For a required visible character response, lock `character_response`, add its own semantic anchor, and write one `character_response` assertion with the generic axes `surface_affect`, `underlying_affiliation`, `relationship_target`, `primary_action`, `affect_leak_timing`, `affect_leak_channels`, and `event_phase`. Select exactly one primary leak channel. When the meaning depends on a relation rather than isolated attributes, encode bounded generic `relations` using `same_target`, `contrasts`, and/or `temporal_order`; do not leave the relation to a named label. Every relation member must be a declared generic axis or causal role, and every `same_target` relation must include `relationship_target`. For a named affection-control archetype, bind the affection surface or care, primary action, and immediate consequence to that same target; an affect leak may support this vector but cannot replace the consequence. Bind `actor_phrase`, `baseline_phrase`, `trigger_phrase`, `target_phrase`, `primary_action_phrase`, `affective_leak_phrase`, `visible_response_phrase`, `immediate_consequence_phrase`, and `continuity_phrase` to literal baseline text. Values are authored from the request; never route a named archetype to fixed gaze, face, pose, or story geometry.
-- `request_lineage` is `null` for an initial request. On a retry it hash-binds the parent request/core and separates preserved dimensions from the explicitly allowed changes; the two sets are non-empty and disjoint. Inspect the parent pack before freezing the retry. If `concept` or `character_response` is preserved and the parent had a hard visual obligation, recreate that same obligation as a hash-bound post-core `photo-visual-intent/v1` sourced from an exact current frozen core field. Do not let an elliptical retry phrase demote a preserved hard obligation into an unselected embedding candidate, and do not carry the obligation when the requester changed or excluded the governing meaning.
+- `request_lineage` is `null` for an initial request. On a retry it hash-binds the parent request/core and separates preserved dimensions from the explicitly allowed changes; the two sets are non-empty and disjoint. Inspect only the parent fields allowed by the retry exception above before freezing the retry. If `concept` or `character_response` is preserved and the parent had a hard visual obligation, recreate that same obligation as a hash-bound post-core `photo-visual-intent/v1` sourced from an exact current frozen core field. Do not let an elliptical retry phrase demote a preserved hard obligation into an unselected embedding candidate, and do not carry the obligation when the requester changed or excluded the governing meaning.
 - A fidelity complaint about a meaningful interactive prop is not permission to remove, relocate, conceal, or transfer it. On such a retry, use `photo-request-lineage/v2` and one object-agnostic `repair_targets` row. Freeze actor, object, interaction state, expected contact, protected locked dimensions, positive interaction and recognition phrases, and only the local repair axes that may change. Use `relation_origin: parent_preserved` when the parent relation remains intended and `relation_origin: requester_corrected` when the requester explicitly corrects an evasive parent relation. Bind both phrases through one required action assertion in the baseline. Decorative background objects and non-action-bearing ornaments do not need repair targets.
 - Every multi-arm run shares the immutable raw requester text but freezes a separate, exact-span-bound envelope and core for each arm before any arm sees project-local data.
 
@@ -178,81 +185,49 @@ Generate exactly one pack:
   --emit-candidate-pack --n 1
 ```
 
-The retrieval query is derived from the exact active requester spans, with true requester exclusions redacted, plus interpreted intent, subject, setting, event, visual priorities, baseline prompt, requester definitions, interpretation resolutions, and optional style evidence. Runtime-forbidden labels stay in retrieval. The pack must not define the baseline after the fact. `--concept-lock` is normally omitted and safely derived; if supplied, every value must byte-equal the active spans in order. V6 additionally projects those already-frozen fields into a versioned BM25F query. Tokenization is NFKC/casefolded and boundary-aware: conservative Korean suffix stripping may recognize an inflected whole term, while an unrelated word containing the same characters cannot activate it.
+The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. `--concept-lock` is normally omitted; if supplied, every value must byte-equal the active spans in order. The pack must not define the baseline after the fact.
 
 Candidate-pack v6 separates three jobs:
 
-- `semantic_assertions` and the baseline are the governing meaning. The v3 core is required and non-revisable inside the pack run; a material correction stops the run and requires requester input plus a rebuilt envelope/core/pack.
+- `semantic_assertions` and the baseline are the governing meaning. The v3 core is required and non-revisable inside the pack run. A material correction requires a rebuilt envelope/core/pack; use an already supplied requester correction without asking again, and ask only when requester meaning remains unresolved.
 - `semantic_clarification` and BM25F/embedding retrieval are post-core assistance. Exact request-scoped profile terms may retain their declared hard meaning. BM25F-only, embedding-only, and fused approximate hits are optional and can never create an assertion, required evidence phrase, or render gate.
 - `creative_augmentation` is sampled only after hard applicability, conflict, identity/species/no-people, safety, negative, and requester-exclusion filters. Creativity `0..0.25` permits `near`, `0.25..0.75` permits `near + adjacent`, and `0.75..1` also permits `lateral`; seed selects within the allowed range. Every transformed choice declares `affected_dimensions`, which must all be open and subordinate to the locked meaning.
 
-V6 character-response compilation never calls the legacy raw-text moe router. It copies the typed axes and frozen evidence into `photo-character-response/v1`, permits one primary action and one primary affect-leak channel, and exposes score-free advisory candidates only after the core is frozen. Character-response meanings, multilingual paraphrases, abstract axis classes, semantic relations, confounders, and optional mechanism-node links live in `photo-character-mechanism-graph/v2`; they are projected into the existing semantic index rather than a second meaning store. BM25F admits a concept profile only when its document outranks every matching confounder declared by that profile, then limits behavior support to the profile's linked nodes. Profile consistency is advisory, a requester definition supersedes it, and neither a match nor a `consistent` result may revise the core or create hard evidence. A composer may reject every candidate. It may not substitute taxonomy labels for the assertion, add retrieved hard evidence, or introduce an unrequested relationship or emotion. The v5 downstream-default/regex path remains compatibility-only.
+V6 compiles frozen character-response axes and evidence through `photo-character-response/v1`, and other required assertions through `photo-semantic-assertion-obligations/v1`. It never calls the legacy raw-text moe router. The composed audit recomputes these contracts from the core. Retrieval consistency, labels, scores, and array order never create hard evidence or revise a frozen meaning; every creative candidate may be rejected. Consult `references/retrieval-contract.md` only for retrieval diagnostics or implementation details.
 
-All other required typed meanings use the topic-neutral `photo-semantic-assertion-obligations/v1` compiler. The composed audit recomputes this contract from the core, rejects a missing or mutated pack block, and requires a byte-identical assertion/evidence map whose phrases remain literal in `prompt_en`.
+Read the compact composition view before loading full optional candidate details:
 
-Visual-profile retrieval is a deterministic substep of semantic clarification. One generated index contains boundary-aware exact lookup rows, a fielded BM25F derivation, and one embedding vector per profile, all derived from the single authored registry and rejected when its registry hash, BM25F recipe/policy, or semantic text recipe is stale. Exact request terms may retain their existing request-scoped hard meaning. A profile found only by BM25F, embedding similarity, or reciprocal-rank fusion is always an optional `visual_concept_candidate`: it creates no prompt duty or render gate unless the composer explicitly selects it. The same private resolution is projected into `visual_obligations`, `visual_concept_candidates`, and `semantic_clarification`; scores, vectors, matched terms, and rank remain private. This lookup is independent of creativity and seed.
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/scripts/compose_pack_view.py \
+  --pack candidate_pack.json --output composer_view.json
+```
 
-Candidate order is never preference. Every creative candidate remains optional material.
+The view binds the unchanged source pack and presents requirements plus a candidate catalog. Use repeatable `--candidate-id <id>` to read full details for candidates under consideration. Review every mandatory requirement, retrieve a selected candidate's complete constraints before using it, and keep the original pack as the audit input. The view is a reading aid, not a replacement or mutable pack.
 
 ### Optional post-core visual intent
 
-If the requester supplied an exact, non-substitutable visual definition or binding, create `photo-visual-intent/v1` only after the authorial core is frozen:
+For an exact, non-substitutable requester definition or a preserved parent hard obligation, read `references/retrieval-contract.md` and construct `photo-visual-intent/v1` only after the core is frozen. Its evidence must already belong to the requester definition or one exact frozen core field. Exact resolution may bind a hard profile; approximate retrieval remains optional. Do not construct visual intent merely because a candidate offers an attractive interpretation.
 
-```json
-{
-  "contract_version": "photo-visual-intent/v1",
-  "provenance": "agent_prepack",
-  "obligations": [
-    {
-      "source": "requesting_user_definition",
-      "scope": "request_only",
-      "source_text": "<exact normalized requesting-user source>",
-      "bindings": {"<required evidence field>": "<literal English prompt phrase>"}
-    }
-  ]
-}
-```
-
-Omit `profile_id` when the source text contains one unique direct registry meaning; the generator resolves it through the index's exact lane after the core exists. Embedding similarity never supplies an omitted hard profile ID. Zero or multiple exact matches fail closed. An explicit profile ID remains supported for post-core maintenance or replay. For an agent-owned frozen field, use `agent_postcore_interpretation` and make `source_text` exactly equal that field.
-
-Do not construct visual intent merely because project data offers an attractive interpretation. Direct request semantics and requester definitions govern activation. Strong indirect component similarity may expose an optional visual concept, but cannot silently create a hard duty.
-
-If the requester explicitly makes a perceptual effect focal (for example, asks to focus on it or make it unmistakable), fail closed before rendering when that focal meaning is still uncovered and has neither a required typed assertion nor an active hard visual obligation. A broad label, an embedding hit, or an optional candidate is not coverage. Bind an `agent_postcore_interpretation` visual intent only when one exact frozen core field already decomposes the focal effect into all observable components required by one profile; otherwise stop for clarification or rebuild the core. Record this focal-coverage check separately from prompt, runtime, and pixel status.
-
-On a lineage-bound retry, a parent hard obligation is not a new inference when its governing dimensions are explicitly preserved. Rebind it through `agent_postcore_interpretation` to an exact current core field and retain the parent profile ID; record the parent hash in `request_lineage`. Retrieval remains advisory and is never the source of the carried duty.
+Before rendering, an explicitly focal perceptual meaning needs a required typed assertion or an active hard visual obligation. A broad label, optional candidate, or embedding hit does not provide coverage. If coverage is missing, rebuild from the clear requester meaning; ask only if that meaning is still ambiguous. Record focal coverage separately from prompt, runtime, and pixel status.
 
 ## Phase 3 — Clarify, Enrich, and Add the Authorial Pass
 
-Compose one final English prompt from the core and the pack. The core stays primary; candidate material may clarify, strengthen, contrast, or deepen it.
+Read `references/composition-contract.md` for the composed shape and active conditional fields. Compose one final English prompt from the core and the pack; optional candidates may clarify or deepen it only within permitted dimensions.
 
 For every semantic clarification, record exactly one decision:
 
 - Apply a fitting clarification and bind literal prompt evidence.
 - Reject a context-mismatched or gated clarification.
 
-Never supersede a v2 core or requester definition. Never silently rewrite the core. If pack data suggests a materially different meaning, stop; do not compose or render until the requester resolves it and a new envelope, core, and pack are built. `superseded_by_revision` exists only for auditing legacy v1 evidence.
+Never supersede a v2/v3 core or requester definition. Reject optional candidates that suggest a different meaning and continue with the frozen core. If an actual requester ambiguity or a conflict in required evidence prevents faithful composition, stop that run and resolve it before rebuilding the envelope, core, and pack. A clear requester correction already authorizes that rebuild. `superseded_by_revision` exists only for auditing legacy v1 evidence.
 
 For creative candidates, decide each as `transformed` or `rejected`. Rejecting all is valid. Transform at most three, declare `affected_dimensions`, keep them within `intent_lock.open_dimensions`, and add a new relation, cause, material behavior, framing, light, omission, or timing decision instead of copying source terms.
 
-The composed JSON must include the exact pack ID and negative, candidate choices, all clarification decisions, creative decisions, and:
+Bind the exact pack ID, negative, core hash, intent-lock hash, anchor IDs, preserved evidence, candidate choices, all clarification decisions, and creative decisions in the composed object. Set `composer` to `agent`.
 
-```json
-{
-  "authorial_core_binding": {
-    "source_authorial_core_sha256": "<exact core hash>",
-    "source_intent_lock_sha256": "<exact intent-lock hash>",
-    "preserved_anchor_ids": ["<every semantic anchor id exactly once>"],
-    "preserved_evidence": ["<baseline phrase one>", "<two>", "<three>"],
-    "authorial_decisions": [
-      {"dimension": "framing", "decision": "<new decision>", "rationale": "<reason>"},
-      {"dimension": "lighting", "decision": "<new decision>", "rationale": "<reason>"}
-    ]
-  },
-  "composer": "agent"
-}
-```
+Preserve every anchor's literal evidence plus at least three substantive literal baseline phrases, and keep requester exclusions and runtime-only labels absent. New v6 packs expose `authorial_composition.authorship_policy` (`photo-authorial-authorship-policy/v1`): make at least `min(2, len(open_dimensions))` substantive decisions on distinct open dimensions. With zero open dimensions, use an empty `authorial_decisions` list and preserve the requested realization. With one, make one decision. Do not add freedom or alter locked evidence to meet this count. Serialized packs without the policy retain their recorded legacy minimum of two.
 
-Preserve every anchor's literal evidence plus at least three substantive literal baseline phrases, keep requester exclusions and runtime-only labels absent, and make at least two new authorial decisions only in open dimensions. Keep the complete English `prompt_en` within the absolute 48–640 word bounds and aim for no more than 360 words by default. Exceeding 360 is an audit warning, not a failure. The evidence-adjusted advisory ceiling is the larger of 360 words or the prompt words covered by literal hard evidence plus 160 words of connective and optional prose, capped at 640; exceeding that advisory ceiling adds a separate optional-prose warning. When hard duties create pressure, remove optional candidate, styling, camera, and explanatory prose before dropping requester meaning or literal evidence. In newly generated packs, the compatibility moe range of 100–240 words is also advisory and does not override the absolute bounds; serialized legacy packs retain their recorded hard range during replay. The final pass should produce one coherent photograph, not a list of adopted keywords. Requester meaning outranks generic character, moe, viewer-response, style, and creative contracts; those contracts may realize the locked intent but cannot replace it. Do not reintroduce blanket negative directives during this final pass, including ones copied from a profile, recipe, safety note, coordinator brief, or candidate explanation. Preserve only the guard-approved `negative_en` emitted by the pack.
+Keep `prompt_en` within 48–640 English words and aim for at most 360. The evidence-adjusted advisory ceiling is the larger of 360 or hard-evidence words plus 160, capped at 640; exceeding either advisory ceiling produces a warning. Remove optional material before dropping requester meaning or literal evidence. Compatible evidence may share a natural clause. The final result must read as one coherent photograph. Requester meaning outranks generic character, moe, viewer, style, and creative defaults. Preserve only the guard-approved pack `negative_en`, and keep blanket negative directives out of the positive prompt. Recorded legacy prompt budgets remain authoritative during replay.
 
 When hard visual obligations are active, supply every required evidence field as an identifiable literal phrase in `prompt_en`, preserve request-scoped bindings byte-for-byte, and keep all declared runtime-forbidden labels absent. Compatible evidence phrases may overlap inside one natural clause; do not duplicate prose solely to satisfy the budget ledger. Selected optional visual concepts promote their entire opt-in obligation and render gates; unselected concepts add no duty.
 
@@ -277,6 +252,7 @@ If image generation was requested, read `references/image-runtime.md`, copy `sou
 All references below are post-core only. Load only what the frozen request and returned pack require:
 
 - Candidate composition, audit, hard obligations, and quality fields: `references/composition-contract.md`
+- Retrieval internals, indexes, and diagnostic boundaries: `references/retrieval-contract.md`
 - Candidate idea routes and composable adult-appeal axes: `references/hybrid-augmentation-contract.md`
 - High-creativity proposals and authorial selection: `references/creative-direction-contract.md`
 - Viewer response or commercial communication outcomes: `references/viewer-experience-contract.md`

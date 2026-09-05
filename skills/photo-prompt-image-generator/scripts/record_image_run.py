@@ -201,7 +201,6 @@ def build_independent_manifest(
         "skill_sha256": args.skill_sha256,
         "source_ref": args.source_ref,
         "candidate_pack_version": args.candidate_pack_version,
-        "reference_sha256": list(args.reference_sha256 or []),
         "image_call_count": args.image_call_count,
     }
     is_modern = args.candidate_pack_version in {"v5", "v6"}
@@ -249,6 +248,9 @@ def build_independent_manifest(
     manifest: dict[str, object] = {
         "contract_version": contract_version,
         **required_values,
+        # A text-only generation has no reference inputs. Keep that fact explicit
+        # without treating an empty list as missing independent-run provenance.
+        "reference_sha256": list(args.reference_sha256 or []),
         "cross_arm_inputs_used": False,
         "ledger_run_id": entry["run_id"],
         "pack_id": entry.get("pack_id"),
