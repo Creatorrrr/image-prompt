@@ -2,6 +2,12 @@
 
 Maintenance-only. Never read this file while resolving a live request or writing its basic prompt. Maintained keyword meanings belong in structured runtime data and their tests; they must not be copied into `SKILL.md` or used as pre-core agent knowledge.
 
+User instructions and existing session authorization govern maintenance and evaluation scope. A requested edit or render test does not need a second confirmation merely because this reference describes it. Preserve the initial-request isolation boundary and the narrow retry-only parent whitelist in `SKILL.md`; neither research evidence nor a compact pack view is pre-core meaning input.
+
+New v6 packs use `authorial_composition.authorship_policy` (`photo-authorial-authorship-policy/v1`) to bind the permitted dimensions and `min(2, len(open_dimensions))` authorial-decision minimum to the frozen core. Test zero, one, and multiple open dimensions, locked-dimension mutations, policy tampering, and replay without the policy. V2–v5 cannot opt into the new policy; existing serialized packs keep the prior two-decision minimum. Keep all semantic anchors and three preserved baseline phrases mandatory.
+
+`scripts/compose_pack_view.py` is a deterministic reading projection over the unchanged v6 pack. Its compact requirements and candidate catalog must preserve source identity and every mandatory duty; on-demand candidate detail must bind the same source hash and expose the full selected contract. Audits continue to consume the full source pack. Test that the view cannot bypass pack mutation detection or conceal a hard obligation, and keep optional candidates optional. Named legacy moe geometry belongs only in `moe-response-legacy.md`, never in normal typed v6 composition, viewer, or runtime guidance.
+
 ## Before Editing Data
 
 Prefer extending existing entries with aliases, keywords, facets, and embedding text before adding slots or near-duplicate presets. Keep weights moderate and use filters plus facets for specificity.

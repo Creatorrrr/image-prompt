@@ -39,6 +39,44 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    from photo_contracts import (
+        AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
+        AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
+        AUTHORIAL_CORE_CONTRACT_VERSION,
+        AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS,
+        AUTHORIAL_CORE_V3_CONTRACT_VERSION,
+        AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS,
+        AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS,
+        AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS,
+        AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
+        AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
+        AUTHORIAL_PROMPT_MIN_WORDS,
+        AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
+        AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
+        CHARACTER_RESPONSE_CONTRACT_VERSION,
+        CHARACTER_RESPONSE_RELATION_MEMBERS,
+        CHARACTER_RESPONSE_REQUIRED_AXES,
+        CHARACTER_RESPONSE_REQUIRED_EVIDENCE,
+        DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
+        INTENT_LOCK_CONTRACT_VERSION,
+        INTENT_LOCK_DIMENSIONS,
+        INTENT_PRESERVATION_CONTRACT_VERSION,
+        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
+        NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
+        RENDER_REPAIR_ALLOWED_AXES,
+        RENDER_REPAIR_CONTACT_EXPECTATIONS,
+        RENDER_REPAIR_CONTRACT_VERSION,
+        RENDER_REPAIR_DIMENSION_AXES,
+        RENDER_REPAIR_IMPORTANCE_VALUES,
+        RENDER_REPAIR_INTERACTION_STATES,
+        RENDER_REPAIR_RELATION_ORIGINS,
+        REQUEST_BINDING_CONTRACT_VERSION,
+        REQUEST_ENVELOPE_CONTRACT_VERSION,
+        REQUEST_LINEAGE_V2_CONTRACT_VERSION,
+        REQUIRED_INTENT_LOCK_DIMENSIONS,
+        SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION,
+        canonical_json_sha256,
+    )
     from bm25f_retrieval import (
         build_bm25f_index,
         normalize_bm25f_text,
@@ -137,22 +175,6 @@ CHARACTER_RESPONSE_RELATION_FIELDS = {
     "same_target": {"operator", "members"},
     "temporal_order": {"operator", "first", "then"},
 }
-CHARACTER_RESPONSE_RELATION_MEMBERS = {
-    "actor",
-    "baseline",
-    "surface_affect",
-    "underlying_affiliation",
-    "relationship_target",
-    "target",
-    "primary_action",
-    "affect_leak",
-    "affect_leak_timing",
-    "trigger",
-    "visible_response",
-    "immediate_consequence",
-    "continuity",
-    "event_phase",
-}
 CHARACTER_CONCEPT_EVIDENCE_ROLES = {
     "baseline",
     "relationship_target",
@@ -208,174 +230,6 @@ CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
 AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
-LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
-AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
-AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
-AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v2"
-AUTHORIAL_PROMPT_MIN_WORDS = 48
-AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 360
-AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 640
-AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 160
-AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS = {
-    AUTHORIAL_CORE_CONTRACT_VERSION,
-    AUTHORIAL_CORE_V3_CONTRACT_VERSION,
-}
-CHARACTER_RESPONSE_CONTRACT_VERSION = "photo-character-response/v1"
-SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION = (
-    "photo-semantic-assertion-obligations/v1"
-)
-REQUEST_LINEAGE_V2_CONTRACT_VERSION = "photo-request-lineage/v2"
-RENDER_REPAIR_CONTRACT_VERSION = "photo-render-repair/v1"
-RENDER_REPAIR_IMPORTANCE_VALUES = {"primary", "supporting"}
-RENDER_REPAIR_INTERACTION_STATES = {
-    "held",
-    "wielded",
-    "used",
-    "handed_off",
-    "carried",
-    "worn",
-    "sheathed",
-    "mounted",
-    "resting",
-    "other",
-}
-RENDER_REPAIR_CONTACT_EXPECTATIONS = {
-    "required",
-    "transitional",
-    "absent",
-    "unspecified",
-}
-RENDER_REPAIR_RELATION_ORIGINS = {
-    "parent_preserved",
-    "requester_corrected",
-}
-RENDER_REPAIR_ALLOWED_AXES = {
-    "object_geometry",
-    "contact_geometry",
-    "local_pose",
-    "camera",
-    "framing",
-    "lighting",
-    "material",
-    "occlusion",
-}
-RENDER_REPAIR_DIMENSION_AXES = {
-    "camera": "camera",
-    "framing": "framing",
-    "lighting": "lighting",
-    "material": "material",
-}
-CHARACTER_RESPONSE_REQUIRED_AXES = {
-    "surface_affect",
-    "underlying_affiliation",
-    "relationship_target",
-    "primary_action",
-    "affect_leak_timing",
-    "affect_leak_channels",
-    "event_phase",
-}
-CHARACTER_RESPONSE_REQUIRED_EVIDENCE = {
-    "actor_phrase",
-    "baseline_phrase",
-    "trigger_phrase",
-    "target_phrase",
-    "primary_action_phrase",
-    "affective_leak_phrase",
-    "visible_response_phrase",
-    "immediate_consequence_phrase",
-    "continuity_phrase",
-}
-REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
-REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
-INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
-INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
-DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION = (
-    "photo-downstream-intent-precedence/v1"
-)
-NEGATIVE_INTENT_GUARD_CONTRACT_VERSION = "photo-negative-intent-guard/v1"
-INTENT_LOCK_DIMENSIONS = {
-    "concept",
-    "subject",
-    "identity",
-    "count",
-    "age",
-    "role",
-    "species",
-    "appearance",
-    "pose",
-    "body_geometry",
-    "expression",
-    "action",
-    "event",
-    "setting",
-    "relationship",
-    "sexual_tone",
-    "style",
-    "reference_use",
-    "viewer_outcome",
-    "text",
-    "format",
-    "framing",
-    "composition",
-    "lighting",
-    "camera",
-    "color",
-    "material",
-    "timing",
-    "atmosphere",
-}
-AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS = INTENT_LOCK_DIMENSIONS | {
-    "character_response",
-}
-REQUIRED_INTENT_LOCK_DIMENSIONS = {"concept", "subject", "event"}
-
-# Normal v5/v6 authorial runs keep automatic negative prompts deliberately
-# narrow.  These phrases describe photographic/rendering defects rather than
-# deleting a subject, relationship, action, emotion, prop, count, or genre
-# signal.  Requester-owned exclusions and identity-preservation controls are
-# admitted separately by ``authorial_negative_term_allowed``.
-AUTHORIAL_INTENT_NEUTRAL_NEGATIVE_TERMS = {
-    "3d render look",
-    "awkward animal anatomy",
-    "body distortion",
-    "broken facial features",
-    "broken window geometry",
-    "cartoon style",
-    "cgi look",
-    "digital illustration",
-    "distorted fingers",
-    "excessive hdr",
-    "fake-looking background",
-    "flat collage look",
-    "illustration look",
-    "impossible perspective",
-    "inaccurate reflections",
-    "inconsistent shadows",
-    "low resolution",
-    "obvious cutout edges",
-    "over-processed retouching",
-    "overly smooth fur",
-    "plastic-looking food texture",
-    "plastic-looking skin",
-    "unmatched lighting",
-    "unrealistic hands",
-    "unrealistic steam",
-    "warped product geometry",
-    "warped walls",
-}
-
-# These terms are not generic safety or taste defaults.  They are permitted
-# only when the caller has explicitly enabled identity-reference preservation,
-# where they protect the requested source identity from structural drift.
-AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
-    "de-aged identity",
-    "dollified facial proportions",
-    "duplicate primary subject",
-    "enlarged or rounder eyes than the identity reference",
-    "narrowed jaw compared with the identity reference",
-    "second full recipient face",
-    "shortened face compared with the identity reference",
-}
 
 # These maps describe semantic impact, not topic meaning.  They let the v5
 # request lock govern downstream defaults without special-casing any named
@@ -2645,16 +2499,6 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
             existing_ids.add(profile_id)
         payload["relation_contract_version"] = VISUAL_RELATION_CONTRACT_VERSION
     return payload
-
-
-def canonical_json_sha256(payload: Any) -> str:
-    canonical = json.dumps(
-        payload,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-    ).encode("utf-8")
-    return hashlib.sha256(canonical).hexdigest()
 
 
 def character_response_relation_signature(
@@ -8533,6 +8377,7 @@ def normalize_intent_lock(
     envelope: JsonDict,
     baseline_prompt_en: str,
     allowed_dimensions: Set[str] = INTENT_LOCK_DIMENSIONS,
+    minimum_open_dimensions: int = 2,
 ) -> JsonDict:
     if not isinstance(payload, dict):
         raise ValueError("authorial core intent_lock must be one JSON object")
@@ -8555,6 +8400,12 @@ def normalize_intent_lock(
         )
     if payload.get("priority") != "requesting_user":
         raise ValueError("authorial core intent_lock priority must be 'requesting_user'")
+    if minimum_open_dimensions == 0 and not isinstance(
+        payload.get("open_dimensions"), list
+    ):
+        raise ValueError(
+            "authorial core intent_lock requires an explicit open_dimensions list; use [] when no variation is permitted"
+        )
 
     locked_dimensions = [
         str(item).strip()
@@ -8568,10 +8419,12 @@ def normalize_intent_lock(
     ]
     if not locked_dimensions or len(set(locked_dimensions)) != len(locked_dimensions):
         raise ValueError("authorial core intent_lock requires distinct locked_dimensions")
-    if len(open_dimensions) < 2 or len(set(open_dimensions)) != len(open_dimensions):
+    if len(open_dimensions) < minimum_open_dimensions:
         raise ValueError(
             "authorial core intent_lock requires at least two distinct open_dimensions"
         )
+    if len(set(open_dimensions)) != len(open_dimensions):
+        raise ValueError("authorial core intent_lock requires distinct open_dimensions")
     unknown_dimensions = sorted(
         (set(locked_dimensions) | set(open_dimensions)) - allowed_dimensions
     )
@@ -9449,6 +9302,9 @@ def normalize_authorial_core(
                 AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
                 if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION
                 else INTENT_LOCK_DIMENSIONS
+            ),
+            minimum_open_dimensions=(
+                0 if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION else 2
             ),
         )
         leaked_runtime_labels = [
@@ -16300,6 +16156,29 @@ def candidate_pack_project_v6(
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
         raise ValueError("v6 candidate pack requires photo-authorial-core/v3")
     projected = candidate_pack_project_v5(projected, private_relevance)
+    intent_lock = core["intent_lock"]
+    open_dimensions = copy.deepcopy(intent_lock["open_dimensions"])
+    authorship_policy: JsonDict = {
+        "contract_version": AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
+        "allowed_dimensions": open_dimensions,
+        "minimum_authorial_decisions": min(2, len(open_dimensions)),
+        "minimum_preserved_evidence_phrases": 3,
+        "dimension_policy": "distinct_open_dimensions_only",
+        "insufficient_freedom_policy": "do_not_invent_open_dimensions",
+    }
+    authorship_policy["canonical_sha256"] = canonical_json_sha256(authorship_policy)
+    projected["authorial_composition"]["authorship_policy"] = authorship_policy
+    projected["authorial_composition"]["core_binding_contract"].update(
+        {
+            "contract_version": AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
+            "source_authorship_policy_sha256": authorship_policy["canonical_sha256"],
+            "minimum_authorial_decisions": authorship_policy[
+                "minimum_authorial_decisions"
+            ],
+        }
+    )
     projected.pop("moe_response", None)
     provenance = (
         projected.get("provenance")

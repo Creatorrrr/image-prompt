@@ -24,6 +24,17 @@ REVIEW_SCHEMA_VERSION = "moe-render-review/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 USER_JUDGMENT_VALUES = {"accepted", "rejected", "pending", "not_applicable"}
 USER_JUDGMENT_SOURCES = {"requesting_user", "not_yet_received"}
+CHARACTER_RESPONSE_CAUSAL_ROLES = (
+    ("actor", "actor_phrase"),
+    ("baseline", "baseline_phrase"),
+    ("trigger", "trigger_phrase"),
+    ("target", "target_phrase"),
+    ("primary_action", "primary_action_phrase"),
+    ("affect_leak", "affective_leak_phrase"),
+    ("visible_response", "visible_response_phrase"),
+    ("immediate_consequence", "immediate_consequence_phrase"),
+    ("continuity", "continuity_phrase"),
+)
 
 
 def load_json_arg(raw: str) -> Any:
@@ -64,6 +75,80 @@ def resolve_result_path(result_image: str, review_path: Path | None) -> Path:
     return candidate.resolve()
 
 
+def derive_character_response_render_gates(
+    pack: dict[str, Any],
+    composed: dict[str, Any] | None,
+) -> tuple[dict[str, Any] | None, list[str], list[dict[str, Any]]]:
+    """Bind typed gates to the complete audited pack and frozen causal evidence.
+
+    V1 has nine generic causal roles. Reconstruct its gate rows independently
+    so deleting a gate and rehashing the pack cannot shrink the review duty.
+    Neither advisory candidates nor named character labels supply gates.
+    """
+
+    core = pack.get("authorial_core")
+    core = core if isinstance(core, dict) else {}
+    assertions = core.get("semantic_assertions")
+    assertions = assertions if isinstance(assertions, list) else []
+    required = [
+        row
+        for row in assertions
+        if isinstance(row, dict)
+        and row.get("dimension") == "character_response"
+        and row.get("polarity") == "required"
+    ]
+    raw_contract = pack.get("character_response")
+    if not required and not (
+        isinstance(raw_contract, dict) and raw_contract.get("enabled") is True
+    ):
+        return None, [], []
+    contract = raw_contract if isinstance(raw_contract, dict) else {}
+    failures: list[dict[str, Any]] = []
+    if (
+        pack.get("contract_version") != "photo-candidate-pack/v6"
+        or core.get("contract_version")
+        != audit_composed_prompt.AUTHORIAL_CORE_V3_CONTRACT_VERSION
+    ):
+        failures.append(
+            {
+                "check": "character_response_contract",
+                "reason": "typed character-response render review requires an original v6 pack and v3 core",
+            }
+        )
+    if not isinstance(composed, dict):
+        failures.append(
+            {
+                "check": "character_response.composed_prompt",
+                "reason": "typed character-response review requires the complete audited composed prompt",
+            }
+        )
+    else:
+        inherited = audit_composed_prompt.audit_composed_prompt(pack, composed)
+        failures.extend(
+            {
+                **failure,
+                "check": f"composed_prompt.{failure.get('check')}",
+            }
+            for failure in inherited["failures"]
+        )
+    expected_rows = [
+        {
+            "id": f"character_response_{role}",
+            "evidence_field": field,
+            "criterion": "visible_and_literal",
+        }
+        for role, field in CHARACTER_RESPONSE_CAUSAL_ROLES
+    ]
+    if contract.get("render_gates") != expected_rows:
+        failures.append(
+            {
+                "check": "character_response.render_gates",
+                "reason": "typed render gates must exactly cover the frozen v1 causal evidence roles",
+            }
+        )
+    return contract, [row["id"] for row in expected_rows], failures
+
+
 def audit_moe_render_review(
     pack: dict[str, Any],
     review: dict[str, Any],
@@ -99,6 +184,28 @@ def audit_moe_render_review(
         for value in qualification.get("required_hard_gates") or []
         if isinstance(value, str) and value.strip()
     ]
+    character_contract, character_gates, character_failures = (
+        derive_character_response_render_gates(pack, composed)
+    )
+    has_character_contract = character_contract is not None
+    schema_failures.extend(character_failures)
+    character_contract_sha256 = (
+        str(character_contract.get("canonical_sha256") or "")
+        if has_character_contract
+        else None
+    )
+    if (
+        has_character_contract
+        and "source_character_response_contract_sha256" in review
+        and review["source_character_response_contract_sha256"]
+        != character_contract_sha256
+    ):
+        schema_failures.append(
+            {
+                "check": "source_character_response_contract_sha256",
+                "reason": "render review character-response hash differs from the audited pack contract",
+            }
+        )
     effective_visual_contract, visual_selection_failures = (
         audit_composed_prompt.derive_effective_visual_obligation_contract(
             pack,
@@ -123,17 +230,19 @@ def audit_moe_render_review(
         if isinstance(value, str) and value.strip()
     ]
     has_visual_contract = bool(effective_visual_gates)
-    if not has_moe_contract and not has_visual_contract:
+    if not has_moe_contract and not has_character_contract and not has_visual_contract:
         schema_failures.append(
             {
                 "check": "render_qualification_contract",
                 "reason": (
-                    "candidate pack contains neither an enabled moe_response contract "
-                    "nor an effective visual-obligations gate set"
+                    "candidate pack contains no enabled moe-response or typed character-response "
+                    "contract and no effective visual-obligations gate set"
                 ),
             }
         )
-    required_gates = list(dict.fromkeys(base_required_gates + effective_visual_gates))
+    required_gates = list(
+        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates)
+    )
     if not required_gates:
         schema_failures.append(
             {
@@ -159,6 +268,8 @@ def audit_moe_render_review(
     expected_review_contract_version = (
         str(contract.get("contract_version") or "")
         if has_moe_contract
+        else audit_composed_prompt.CHARACTER_RESPONSE_CONTRACT_VERSION
+        if has_character_contract
         else str((effective_visual_contract or {}).get("contract_version") or "")
     )
     if str(review.get("contract_version") or "") != expected_review_contract_version:
@@ -166,8 +277,8 @@ def audit_moe_render_review(
             {
                 "check": "contract_version",
                 "reason": (
-                    "render review contract_version differs from the active moe-response "
-                    "or visual-obligations qualification contract"
+                    "render review contract_version differs from the active moe-response, "
+                    "typed character-response, or visual-obligations qualification contract"
                 ),
             }
         )
@@ -242,7 +353,7 @@ def audit_moe_render_review(
                     "missing": missing_from_qualification,
                 }
             )
-    if (
+    if has_character_contract or (
         isinstance(effective_visual_contract, dict)
         and effective_visual_contract.get("strict_gate_set") is True
     ):
@@ -253,7 +364,7 @@ def audit_moe_render_review(
                 {
                     "check": "hard_gates",
                     "reason": (
-                        "strict visual-obligation reviews must exactly equal the effective "
+                        "strict character-response or visual-obligation reviews must exactly equal the effective "
                         "pack-plus-composed hard-gate set; supplemental observations belong outside hard_gates"
                     ),
                     "missing": missing_review_gates,
@@ -383,6 +494,8 @@ def audit_moe_render_review(
         qualification_status = "rejected_by_requesting_user"
     elif representative_eligible:
         qualification_status = "representative_eligible"
+    elif has_character_contract and not has_moe_contract:
+        qualification_status = "character_response_technical_qualified_user_judgment_pending"
     elif not has_moe_contract:
         qualification_status = "visual_technical_qualified_user_judgment_pending"
     else:
@@ -396,6 +509,8 @@ def audit_moe_render_review(
         "technical_qualified": technical_qualified,
         "representative_eligible": representative_eligible,
         "required_hard_gate_count": len(required_gates),
+        "required_hard_gates": required_gates,
+        "source_character_response_contract_sha256": character_contract_sha256,
         "effective_visual_contract_sha256": (
             audit_composed_prompt.effective_visual_obligation_sha256(
                 effective_visual_contract
@@ -432,8 +547,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--composed",
         help=(
-            "Audited composed-prompt JSON; required when the pack exposes optional "
-            "visual concept candidates"
+            "Audited composed-prompt JSON; required for typed v6 character response "
+            "or when the pack exposes optional visual concept candidates"
         ),
     )
     parser.add_argument("--review", required=True, help="Render-review JSON path or inline JSON")
