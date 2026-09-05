@@ -1,0 +1,317 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "b12b8ca599f108729b412c719ffa513c2c0bed7f",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Improve source-relative position and lighting/shading fidelity after a result preserved the broad direction but changed foreground/background placement, light-to-form distribution, and final-prompt tone ownership."
+  },
+  "evidence": [
+    {
+      "id": "e-user-judgment",
+      "kind": "user-judgment",
+      "claim": "The user judged the latest direction as substantially improved, then asked for analysis and skill improvement focused on position and lighting/shading.",
+      "artifact": "Conversation requests on 2026-08-27"
+    },
+    {
+      "id": "e-source-render-observation",
+      "kind": "render-observation",
+      "claim": "The motivating render keeps an oblique low-angle foreground direction but moves the foreground head lower in the frame, changes which large printed-face fragments remain near it, and changes the foreground/background proximity and overlap reading. Its face and exposed surface also read warmer and more evenly lifted, with different shadow-zone, transition, and dark-material separation than the source.",
+      "artifact": "source generated_images/independent-reverse-20260827-grTkmJ/source.jpg frame=969x1280 sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; render /Users/chasoik/Downloads/ChatGPT Image 2026년 8월 27일 오후 01_10_04.png frame=1091x1442 sha256=e29c30e5b9288e7e2aec53d5f81a33c2734a3a070752aa7316821b18bc95b3f2"
+    },
+    {
+      "id": "e-baseline-plan-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The motivating plan represented foreground-head versus printed-face placement as a cross-component direction that referenced the frame rather than the printed region and recorded no proximity, overlap, visibility, or direction-held displacement check. The prompt also added a long gradient clause and warm surface-tone clause outside the single Light/Form control, while skin surface was marked not-material and no Color/Tone contract existed.",
+      "artifact": "generated_images/independent-reverse-standalone-20260827/plan.json sha256=51f64c2dbaaa86d44745cebb46a1e87a3d5dd29af9190ef692d68d15b537885c; prompt.txt sha256=f00906def301b2d17947afc238e3285a7530f6496593bd24a306c39ad6952443"
+    },
+    {
+      "id": "e-baseline-validator-gap",
+      "kind": "prompt-evaluation",
+      "claim": "Before this correction, the official salience-plan audit returned status ok for the motivating plan and prompt because it checked expected excerpt presence but not cross-component reference type, degenerate directional satisfaction, Light/Form subregion anchors, or unowned final semantic residue.",
+      "artifact": "Pre-correction command recorded in the 2026-08-27 task: python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/independent-reverse-standalone-20260827/plan.json --prompt generated_images/independent-reverse-standalone-20260827/prompt.txt => status ok"
+    },
+    {
+      "id": "e-corrected-motivating-audit",
+      "kind": "prompt-evaluation",
+      "claim": "The corrected audit rejects the unchanged motivating bundle for using a frame reference on cross-component orientation, omitting direction-axis and degeneracy records, and leaving semantic text outside all owned controls or qualified summaries.",
+      "artifact": "python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/independent-reverse-standalone-20260827/plan.json --prompt generated_images/independent-reverse-standalone-20260827/prompt.txt => failed with cross-component reference, placement_axes, degeneracy-risk, decision-link, and unowned-semantic-text errors"
+    },
+    {
+      "id": "e-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Source-neutral fixtures pass for distinct frame and cross-component relation types, closed placement contracts, direction-held proximity/overlap drift, declared Light/Form subregions with exact anchors, and complete authored-prompt ownership; counterfactual variants fail when any required relation, residual axis, anchor, or semantic owner is removed.",
+      "artifact": "python3 skills/reverse-image-prompt/tests/test_salience_plan.py => 151 tests passed"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The reverse-image-prompt source, generated manifest and compiled profiles, module and lane budgets, Python syntax, skill packaging, improvement record, and full test suite pass after the revision.",
+      "artifact": "reverse-image-prompt unittest discovery => 263 tests run, 20 skipped, zero failures; validate_modules.py => 37 modules, 6 lanes, 16798 runtime words, 3745 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check, quick_validate.py, validate_iteration_record.py, compileall, and git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A source-derived prompt must preserve both components' frame placement, their material inter-region proximity/overlap/visibility relation, and the observed regional light-to-form and tone behavior without adding unowned semantic controls during final composition.",
+    "user_appeal": "Keep the improved directional pose while making the foreground/background position and the lighting/shading distribution more faithful to the source.",
+    "invariants": [
+      {
+        "id": "inv-closed-placement",
+        "statement": "A material cross-component direction cannot stand in for either region's frame position or for independently material proximity, overlap, and surviving visibility.",
+        "evidence_ids": [
+          "e-user-judgment",
+          "e-source-render-observation",
+          "e-baseline-plan-prompt",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "subject-to-frame relation",
+          "reference-to-frame relation",
+          "inter-region direction and residual axes",
+          "direction-held displacement counterfactual"
+        ]
+      },
+      {
+        "id": "inv-regional-light-form",
+        "statement": "When one coarse region contains materially different main plane, shadow zone, transition, or material mass, the Light/Form relation retains source-derived subregions and exact prompt anchors for both sides.",
+        "evidence_ids": [
+          "e-source-render-observation",
+          "e-baseline-plan-prompt",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "Light/Form subregion ownership",
+          "target/reference aggregate effect",
+          "exact regional prompt anchors"
+        ]
+      },
+      {
+        "id": "inv-complete-prompt-ownership",
+        "statement": "Every semantic span in an audited authored prompt is an exact owned generic, Color/Tone, or Light/Form control or a qualified emitted summary; section labels and punctuation are the only owner-free residue.",
+        "evidence_ids": [
+          "e-baseline-plan-prompt",
+          "e-baseline-validator-gap",
+          "e-corrected-motivating-audit",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "complete owned-span mask",
+          "Color/Tone route-or-remove",
+          "Light/Form ledger reconciliation"
+        ]
+      },
+      {
+        "id": "inv-no-case-default",
+        "statement": "Runtime instructions contain no motivating body part, background fragment, direction, color, tone, coordinate, numeric threshold, or generator-specific workaround.",
+        "evidence_ids": [
+          "e-prompt-tests",
+          "e-package"
+        ],
+        "causal_controls": [
+          "source-derived region ids and anchors",
+          "generic placement axes",
+          "held-out human and non-human fixtures"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "the source-supported direction and actual region names",
+      "whether proximity, overlap, or visibility is material",
+      "which Light/Form subregions are necessary",
+      "whether Color/Tone is routed or the draft phrase is removed",
+      "generator response and delivered pixels pending a controlled post-change generation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-degenerate-position",
+      "scale": "global",
+      "axis": "foreground/background placement closure",
+      "source_state": "The foreground and printed background have both frame-relative placement and a close source-specific inter-region visibility and overlap relation.",
+      "render_state": "The broad directional relation remains recognizable, but foreground frame position and the nearby printed fragments change enough to alter the composition.",
+      "evidence_ids": [
+        "e-source-render-observation",
+        "e-baseline-plan-prompt"
+      ]
+    },
+    {
+      "id": "m-light-tone-ownership",
+      "scale": "regional",
+      "axis": "light-to-form, tone response, and dark-material separation",
+      "source_state": "Broad planes, localized shadows, a transition, and near-black material masses retain distinct spatial and tone behavior.",
+      "render_state": "The face and exposed surface shift warmer and more evenly lifted, while transition and dark-detail separation differ; the motivating prompt contains related tone and gradient prose outside its owned controls.",
+      "evidence_ids": [
+        "e-source-render-observation",
+        "e-baseline-plan-prompt"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-direction-degeneracy",
+      "stage": "representation",
+      "statement": "A direction-only cross-component relation can remain literally satisfied after a generator materially changes separation, overlap, visibility, or either component's frame placement.",
+      "evidence_ids": [
+        "e-source-render-observation",
+        "e-baseline-plan-prompt"
+      ],
+      "falsifier": "Held-out direction-preserving displacement cases remain materially equivalent, or a closed placement contract cannot distinguish them from preserved variants."
+    },
+    {
+      "id": "h-coarse-light-region",
+      "stage": "representation",
+      "statement": "A single coarse foreground-versus-background light relation cannot reliably carry independently drifting plane, shadow-zone, transition, and dark-material results within the foreground.",
+      "evidence_ids": [
+        "e-source-render-observation",
+        "e-baseline-plan-prompt"
+      ],
+      "falsifier": "Held-out coarse-region fixtures preserve all material internal lighting relations without subregion ownership, or declared subregions fail to distinguish missing anchors."
+    },
+    {
+      "id": "h-positive-only-ledger-gap",
+      "stage": "prompt-interaction",
+      "statement": "Checking that expected controls appear does not prove that final composition added no unowned generator-active tone, light, shadow, gradient, material, negative, or settings prose.",
+      "evidence_ids": [
+        "e-baseline-plan-prompt",
+        "e-baseline-validator-gap",
+        "e-corrected-motivating-audit"
+      ],
+      "falsifier": "A presence-only audit rejects the unchanged motivating extras, or the complete ownership audit cannot distinguish owned controls from one extra semantic clause."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Use spatial-orientation/v6 to keep frame placement and cross-component relations distinct. Mark direction relations for degeneracy, close high-risk placement through both frame relations plus material proximity/overlap/visibility axes, and test direction-held drift. Split only source-material Light/Form subregions and retain their exact anchors. Finally, reject all semantic prompt residue outside owned controls or qualified summaries and route Color/Tone prose or remove it.",
+    "generalization_basis": "The correction is parameterized by arbitrary source regions, relation axes, degeneracy checks, lighting roles, and exact owned spans. Source-neutral fixtures cover human and non-human spatial contracts, missing residual axes, unknown frame relations, missing light anchors, unowned tone/light clauses, and allowed structural punctuation. No motivating direction, color, anatomy, coordinate, or numeric value enters runtime policy.",
+    "hypothesis_ids": [
+      "h-direction-degeneracy",
+      "h-coarse-light-region",
+      "h-positive-only-ledger-gap"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/modules/medium.photographic-capture.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/color-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/references/lighting-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/tools/anchor_catalog.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-27-relational-placement-light-ownership-v1.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-corrected-motivating-audit",
+        "e-prompt-tests"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-position-light-bundle",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "cross-component reference type",
+          "direction-only placement",
+          "unowned tone and gradient prose"
+        ],
+        "evidence_ids": [
+          "e-baseline-plan-prompt",
+          "e-corrected-motivating-audit"
+        ]
+      },
+      {
+        "id": "heldout-closed-placement",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "subject frame position",
+          "reference frame position",
+          "direction-held proximity and overlap drift"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-light-subregions",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "major plane",
+          "shadow zone",
+          "exact target and reference anchors"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-complete-prompt-ownership",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "owned controls",
+          "extra color and tone prose",
+          "extra Light/Form gradient prose",
+          "structural labels and punctuation"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The known representation and authored-prompt gaps are now blocked by source-neutral structural and prompt-behavior checks, and the unchanged motivating bundle fails for the expected reasons. This supports a bounded claim that the skill now expresses and validates position and lighting ownership more precisely. No post-change prompt was independently authored by a clean-context run, no new image was generated, and no post-change pixels or user judgment were evaluated, so render fidelity and user-aesthetic improvement remain unscored.",
+    "evidence_ids": [
+      "e-user-judgment",
+      "e-baseline-plan-prompt",
+      "e-corrected-motivating-audit",
+      "e-prompt-tests",
+      "e-package"
+    ]
+  }
+}

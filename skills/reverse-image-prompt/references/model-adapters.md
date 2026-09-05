@@ -11,7 +11,7 @@ Official references:
 
 ### Prompt
 
-- Use a skimmable order: scene/background, subject, key details, constraints.
+- Keep the core output contract's P0/P1 and causal dependency order. Use skimmable blocks within that order; scene/background leads only when it carries the source signature.
 - Use short labeled segments or line breaks for complex prompts.
 - Describe framing, viewpoint, placement, interaction, medium, lighting, and only the quality cues that matter.
 - Treat detailed camera specifications as high-level visual cues, not exact physical simulation.

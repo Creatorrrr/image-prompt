@@ -1,0 +1,531 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.subject-appearance",
+  "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1",
+  "source_artifact": {
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "frame": "969x1280"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "context_note": "Coordinator context; prior lane report and draft remain in context. No independence claimed."
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "subject.human",
+      "version": 22
+    },
+    {
+      "id": "detail.human-body-form",
+      "version": 8
+    },
+    {
+      "id": "detail.human-face-likeness",
+      "version": 13
+    },
+    {
+      "id": "detail.clothing-fashion",
+      "version": 9
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "subject-role",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:human-role"
+      ]
+    },
+    {
+      "topic": "visible-form",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face-geometry",
+        "lane.subject-appearance:hair-boundary",
+        "lane.subject-appearance:garment-silhouette",
+        "lane.subject-appearance:displayed-skin"
+      ]
+    },
+    {
+      "topic": "appearance-drift-risk",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face-geometry",
+        "lane.subject-appearance:hair-boundary",
+        "lane.subject-appearance:garment-silhouette"
+      ]
+    },
+    {
+      "topic": "intrinsic-induced-confounds",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face-geometry",
+        "lane.subject-appearance:garment-silhouette",
+        "lane.subject-appearance:displayed-skin"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.subject-appearance:human-role",
+      "owner_key": "human-role",
+      "scale": "regional",
+      "axis": "hierarchy",
+      "observation": "One adult-presenting photographic person dominates the foreground, while the large drawn figure is a secondary image layer. No external identity context was supplied.",
+      "source_evidence": [
+        "One adult-presenting photographic person dominates the foreground, while the large drawn figure is a secondary image layer. No external identity context was supplied."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:human-role:adult-role",
+          "axis": "hierarchy",
+          "visible_result": "The foreground subject has adult feminine presentation and remains the sole photographic person.",
+          "result_direction": "The foreground subject has adult feminine presentation and remains the sole photographic person.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "subject-role",
+          "source_evidence": [
+            "The foreground subject has adult feminine presentation and remains the sole photographic person."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:face-geometry",
+      "owner_key": "face-geometry",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "The readable but relatively small face has an oval outline tapering to the chin, elongated dark-lined eyes partly bordered by the fringe, a narrow projecting nose, and full softly separated lips.",
+      "source_evidence": [
+        "The readable but relatively small face has an oval outline tapering to the chin, elongated dark-lined eyes partly bordered by the fringe, a narrow projecting nose, and full softly separated lips."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Visible nose underside belongs to low viewpoint rather than intrinsic nose anatomy.",
+        "Softness limits microtexture and exact small feature spacing."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:face-geometry:outline",
+          "axis": "form",
+          "visible_result": "The oval face narrows through the jaw to a tapered chin.",
+          "result_direction": "The oval face narrows through the jaw to a tapered chin.",
+          "subject_or_region_ids": [
+            "head"
+          ],
+          "relation_kind": "face-contour",
+          "source_evidence": [
+            "The oval face narrows through the jaw to a tapered chin."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Visible nose underside belongs to low viewpoint rather than intrinsic nose anatomy.",
+            "Softness limits microtexture and exact small feature spacing."
+          ]
+        },
+        {
+          "id": "lane.subject-appearance:face-geometry:eyes",
+          "axis": "form",
+          "visible_result": "Elongated eyes have dark upper eyeliner, with the upper brow area partly hidden by blunt bangs.",
+          "result_direction": "Elongated eyes have dark upper eyeliner, with the upper brow area partly hidden by blunt bangs.",
+          "subject_or_region_ids": [
+            "head",
+            "hair"
+          ],
+          "relation_kind": "eyes-to-fringe",
+          "source_evidence": [
+            "Elongated eyes have dark upper eyeliner, with the upper brow area partly hidden by blunt bangs."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Visible nose underside belongs to low viewpoint rather than intrinsic nose anatomy.",
+            "Softness limits microtexture and exact small feature spacing."
+          ]
+        },
+        {
+          "id": "lane.subject-appearance:face-geometry:nose",
+          "axis": "form",
+          "visible_result": "The narrow nose projects above softly parted full lips.",
+          "result_direction": "The narrow nose projects above softly parted full lips.",
+          "subject_or_region_ids": [
+            "head"
+          ],
+          "relation_kind": "feature-relation",
+          "source_evidence": [
+            "The narrow nose projects above softly parted full lips."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Visible nose underside belongs to low viewpoint rather than intrinsic nose anatomy.",
+            "Softness limits microtexture and exact small feature spacing."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:hair-boundary",
+      "owner_key": "hair-boundary",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "Dense blunt bangs span the forehead and long straight hair forms two narrow descending side masses, extending below the torso crop.",
+      "source_evidence": [
+        "Dense blunt bangs span the forehead and long straight hair forms two narrow descending side masses, extending below the torso crop."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:hair-boundary:bangs",
+          "axis": "form",
+          "visible_result": "Blunt dense bangs cover the forehead but leave the eyes visible.",
+          "result_direction": "Blunt dense bangs cover the forehead but leave the eyes visible.",
+          "subject_or_region_ids": [
+            "head",
+            "hair"
+          ],
+          "relation_kind": "hair-to-face-occlusion",
+          "source_evidence": [
+            "Blunt dense bangs cover the forehead but leave the eyes visible."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:hair-boundary:length",
+          "axis": "form",
+          "visible_result": "Straight hair falls along both sides of the torso, extending to the low crop.",
+          "result_direction": "Straight hair falls along both sides of the torso, extending to the low crop.",
+          "subject_or_region_ids": [
+            "hair",
+            "torso"
+          ],
+          "relation_kind": "hair-length-and-mass",
+          "source_evidence": [
+            "Straight hair falls along both sides of the torso, extending to the low crop."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:garment-silhouette",
+      "owner_key": "garment-silhouette",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "An opaque fitted long-sleeve top follows a broad rounded chest silhouette that narrows toward the lower torso; the visible form is influenced by close upward perspective and fabric fit.",
+      "source_evidence": [
+        "An opaque fitted long-sleeve top follows a broad rounded chest silhouette that narrows toward the lower torso; the visible form is influenced by close upward perspective and fabric fit."
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "No body measurements or hidden anatomy follow from the visible clothed projection.",
+        "Exact textile weave and garment construction behind hair are unresolved."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:garment-silhouette:contour",
+          "axis": "form",
+          "visible_result": "The clothed chest forms one broad rounded projection above a narrower lower torso.",
+          "result_direction": "The clothed chest forms one broad rounded projection above a narrower lower torso.",
+          "subject_or_region_ids": [
+            "torso",
+            "garment"
+          ],
+          "relation_kind": "garment-shaped-contour",
+          "source_evidence": [
+            "The clothed chest forms one broad rounded projection above a narrower lower torso."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "No body measurements or hidden anatomy follow from the visible clothed projection.",
+            "Exact textile weave and garment construction behind hair are unresolved."
+          ]
+        },
+        {
+          "id": "lane.subject-appearance:garment-silhouette:coverage",
+          "axis": "topology",
+          "visible_result": "The viewer-right shoulder is bare above a low asymmetric neckline while the sleeve stays around the upper arm.",
+          "result_direction": "The viewer-right shoulder is bare above a low asymmetric neckline while the sleeve stays around the upper arm.",
+          "subject_or_region_ids": [
+            "person",
+            "garment"
+          ],
+          "relation_kind": "skin-garment-boundary",
+          "source_evidence": [
+            "The viewer-right shoulder is bare above a low asymmetric neckline while the sleeve stays around the upper arm."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "No body measurements or hidden anatomy follow from the visible clothed projection.",
+            "Exact textile weave and garment construction behind hair are unresolved."
+          ]
+        },
+        {
+          "id": "lane.subject-appearance:garment-silhouette:band",
+          "axis": "topology",
+          "visible_result": "A diagonal band crosses the upper chest toward the base of the neck, separate from the lower neckline, leaving a triangular opening.",
+          "result_direction": "A diagonal band crosses the upper chest toward the base of the neck, separate from the lower neckline, leaving a triangular opening.",
+          "subject_or_region_ids": [
+            "person",
+            "garment"
+          ],
+          "relation_kind": "band-opening-boundary",
+          "source_evidence": [
+            "A diagonal band crosses the upper chest toward the base of the neck, separate from the lower neckline, leaving a triangular opening."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "No body measurements or hidden anatomy follow from the visible clothed projection.",
+            "Exact textile weave and garment construction behind hair are unresolved."
+          ]
+        },
+        {
+          "id": "lane.subject-appearance:garment-silhouette:hem",
+          "axis": "topology",
+          "visible_result": "The top ends above a narrow midriff strip and a partially cropped dark lower waistband.",
+          "result_direction": "The top ends above a narrow midriff strip and a partially cropped dark lower waistband.",
+          "subject_or_region_ids": [
+            "torso",
+            "garment"
+          ],
+          "relation_kind": "hem-midriff-boundary",
+          "source_evidence": [
+            "The top ends above a narrow midriff strip and a partially cropped dark lower waistband."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "No body measurements or hidden anatomy follow from the visible clothed projection.",
+            "Exact textile weave and garment construction behind hair are unresolved."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:displayed-skin",
+      "owner_key": "displayed-skin",
+      "scale": "regional",
+      "axis": "surface",
+      "observation": "Face, neck and exposed shoulder show light displayed skin with soft texture; visible warmth and shadows vary by region.",
+      "source_evidence": [
+        "Face, neck and exposed shoulder show light displayed skin with soft texture; visible warmth and shadows vary by region."
+      ],
+      "confidence": "high",
+      "causal_origin": "lighting-shadow",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Observed lightness and hue are displayed-image results mixed with illumination, exposure and cosmetics; no demographic inference is supported."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:displayed-skin:skin",
+          "axis": "surface",
+          "visible_result": "Keep the face, neck and bare shoulder exposed with softly resolved surface texture.",
+          "result_direction": "Keep the face, neck and bare shoulder exposed with softly resolved surface texture.",
+          "subject_or_region_ids": [
+            "head",
+            "shoulder"
+          ],
+          "relation_kind": "displayed-skin-surface",
+          "source_evidence": [
+            "Keep the face, neck and bare shoulder exposed with softly resolved surface texture."
+          ],
+          "confidence": "high",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Observed lightness and hue are displayed-image results mixed with illumination, exposure and cosmetics; no demographic inference is supported."
+          ]
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "priority": "P1",
+      "requirement": "Retain face outline and feature groups at the existing small head scale; do not create a facial close-up."
+    },
+    {
+      "priority": "P1",
+      "requirement": "Keep garment opening, separate diagonal band, bare shoulder and sleeve as distinct boundaries; do not use the shoulder exposure to infer pose."
+    },
+    {
+      "priority": "P2",
+      "requirement": "Small pale NOIR letters at the lower viewer-right shirt are literal visible text, not verified brand identity; keep subordinate or omit if needed."
+    }
+  ],
+  "omission_checks": [
+    {
+      "tested_change": "Replace blunt bangs and long straight side masses with an open forehead and short hair while holding camera fixed.",
+      "verdict": "material-drift",
+      "source_evidence": [
+        "Bangs and long dark side masses delimit the face and torso."
+      ]
+    },
+    {
+      "tested_change": "Make the asymmetric top an ordinary symmetric crew neck while retaining figure silhouette.",
+      "verdict": "material-drift",
+      "source_evidence": [
+        "Bare viewer-right shoulder and separate diagonal band are prominent."
+      ]
+    },
+    {
+      "tested_change": "Omit evaluative person adjectives while retaining literal face, hair, garment and pose controls.",
+      "verdict": "preserved",
+      "source_evidence": [
+        "Visible geometry and boundaries already state the scene without attractiveness, identity or story."
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "target": "color-light-material",
+      "requirement": "Own displayed skin color, black garment/hair, highlight-shadows and soft surface visibility. Do not derive ethnic or intrinsic skin categories."
+    }
+  ],
+  "conflicts": [],
+  "human_appearance_decisions": [
+    {
+      "schema_version": "human-appearance/v3",
+      "subject_id": "person",
+      "frame_prominence": "primary",
+      "fidelity_salience": "supporting",
+      "face_visibility": "readable",
+      "identity_context": {
+        "disposition": "absent",
+        "context_use": "none",
+        "prompt_disposition": "omit",
+        "viewer_priority": "not-material"
+      },
+      "person_prior": {
+        "disposition": "uncertain",
+        "candidate_support": "uncertain",
+        "confidence": "medium",
+        "default_drift_risk": "uncertain",
+        "local_geometry_sufficiency": "uncertain",
+        "residual_risk": "No generator response evidence establishes that a broad face prior would improve the source-specific geometry; use literal geometry and record possible generic-face drift."
+      },
+      "appearance_gestalt": {
+        "disposition": "omit",
+        "scope": "person-aesthetic",
+        "candidate_support": "unsupported",
+        "viewer_priority": "not-material",
+        "non_emission_reason": "No evaluative person label is needed to state the observed silhouette, hair, gaze or garment boundaries.",
+        "protected_dimensions": [
+          "identity-context",
+          "age-presentation",
+          "scale-crop",
+          "pose-occlusion",
+          "garment-coverage",
+          "displayed-skin",
+          "light-form",
+          "capture-treatment"
+        ]
+      },
+      "skin_surface": {
+        "disposition": "material",
+        "viewer_priority": "P1",
+        "observation_scope": "source-visible",
+        "semantic_use": "displayed-surface",
+        "coverage": "exposed",
+        "region_ids": [
+          "skin"
+        ],
+        "descriptor_disposition": "omit",
+        "descriptor_non_emission_reason": "Use literal displayed value/chroma/hue under observed light; no composite label or demographic proxy."
+      },
+      "binding_note": "Evidence handoff; final claim/control IDs are supplied only by integrator."
+    }
+  ]
+}

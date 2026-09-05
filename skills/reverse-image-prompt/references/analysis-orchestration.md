@@ -11,11 +11,11 @@ Resolve `reverse-image-analysis-route/v2` with `tools/route_resolver.py --analys
 
 Do not enter `audited` merely because a human, readable face, complicated scene, or routed detail module is present. Escalate only when the task requires audited evidence or the compact profile reports one unresolved P0/P1 conflict that cannot be represented honestly.
 
-Both profiles use the same routed set of three to five material lanes for an ordinary image. `lane.global-composition` is always required. A non-core module that reaches no lane is a visible route failure.
+Both profiles use the same source-routed lane set (currently three to six lanes). `lane.global-composition` is always required. A non-core module that reaches no lane is a visible route failure.
 
 ## 2. Run one isolated lane wave
 
-When clean-context delegation is available and permitted, run all required lanes concurrently. Each read-only worker receives only:
+When clean-context delegation is available and permitted, run all required lanes concurrently. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
 
 - the same source artifact and SHA-256;
 - raw request and resolved intent;
@@ -27,6 +27,7 @@ Do not pass another lane's result, a preferred conclusion, previous prompt/rende
 
 If delegation is unavailable, freeze each report before starting the next and mark `sequential-fallback`; do not claim independence. Do not rerun a successful lane to seek more detail. A missing or malformed report may be retried once for that lane only; source/hash mismatch or an actual route gap may restart the affected route once.
 
+<!-- profile:prompt -->
 ## 3. Compact prompt report
 
 In `prompt`, each lane returns `reverse-image-analysis-lane-report/compact-v2`:
@@ -55,6 +56,7 @@ In `prompt`, each lane returns `reverse-image-analysis-lane-report/compact-v2`:
       "control_requirement": "causal requirement, not final prompt prose",
       "summary_adequacy": null,
       "aggregate_descriptor_candidate": {
+        "scope": "human-appearance",
         "phrase": "optional current-source aggregate reading",
         "candidate_source": {
           "kind": "source-visible-approximation",
@@ -86,7 +88,7 @@ Use the smallest causally sufficient evidence set. Detail P0 and P1; compress P2
 
 Set `representation` to `atomic` when the observation is already one independently drifting result. Set it to `macro-summary` when one compact pose, topology, lighting, surface, or capture read compresses several source-visible relations. Every macro summary carries `summary_adequacy.verdict = sufficient | lossy | uncertain`. A sufficient summary has no residuals. A lossy or uncertain summary lists only P0/P1 `at_risk_relations`, each with source-relative subject/region ids, relation kind, visible result, evidence, confidence, control requirement, causal owner lane, and any material dependencies. This is a lightweight loss audit, not an atomic ledger: do not enumerate relations the summary already preserves.
 
-`aggregate_descriptor_candidate` is optional and case-bound. Include it only when the phrase itself carries a P0/P1 gestalt not preserved by detail alone; its decomposition requirements remain separately owned. A human aggregate additionally declares intended and protected dimensions, always protecting identity context. Exact identity context uses a separate provenance-bound integration handoff (`user-supplied` or `trusted-metadata`, external reference, viewer priority, no pixel inference). Never fill either field from a preferred vocabulary. Split a compact finding only when two visible results can drift independently and both are P0/P1. Otherwise keep the causal result together. Compact reports do not create exhaustive atomic obligations, full color/light ledgers, `spatial-orientation/v6`, or `human-appearance/v3`.
+`aggregate_descriptor_candidate` is optional and case-bound. New candidates name `scope: general | human-appearance`. When scope is absent in an older report, assignment of `subject.human` requires the human effect budget; an explicit general candidate in a mixed lane remains a general claim, and the critic checks whether that scope is truthful. Validate any supplied budget even for general candidates. Include it only when the phrase itself carries a P0/P1 gestalt not preserved by detail alone; its decomposition requirements remain separately owned. A human aggregate additionally declares intended and protected dimensions, always protecting identity context. Exact identity context uses a separate provenance-bound integration handoff (`user-supplied` or `trusted-metadata`, external reference, viewer priority, no pixel inference). Never fill either field from a preferred vocabulary. Split a compact finding only when two visible results can drift independently and both are P0/P1. Otherwise keep the causal result together. Compact reports do not create exhaustive atomic obligations, full color/light ledgers, `spatial-orientation/v6`, or `human-appearance/v3`.
 
 After the lane wave, close every structured P0/P1 handoff before integration. A lane-to-lane handoff names its source finding or residual ids, target lane, required routed module, reason, and `route_required: true`. The target lane must be present and the required module must be assigned to it. An absent target or owner is `route-gap`, not an ignorable advisory; use the existing one-reroute budget to refine the facet map, then rerun only the affected route. A provenance note intended only for the integrator sets `route_required: false` and does not invent a lane dependency. When tool execution is available, validate the temporary or persisted set with:
 
@@ -104,6 +106,8 @@ python tools/compact_reports.py COMPACT_SET.json
 ```
 
 The checker validates schema, source/route binding, summary residual shape, module assignment, and handoff closure. It does not validate the visual interpretation.
+
+<!-- /profile -->
 
 ## 4. Viewer-first integration
 
@@ -148,6 +152,7 @@ The critic returns `pass`, `targeted-repair`, or `blocked`, with exact affected 
 
 When runtime telemetry is available, the orchestrator records route, lane-wall, integration, critic, and repair durations plus report sizes. Lane workers do not spend analysis time estimating their own timing.
 
+<!-- profile:audited -->
 ## 6. Audited profile
 
 In `audited`, each lane returns `reverse-image-analysis-lane-report/v2`. Every required topic is individually disposed as `analyzed`, `not-material`, `uncertain`, or `blocked`; each material finding is split into independently drifting atomic visible-result obligations. Integrate them into `reverse-image-analysis-bundle/v2`, dispose every finding and obligation once, bind retained obligations through `source_obligation_ids`, and preserve role and causal ownership.
@@ -159,7 +164,9 @@ python tools/analysis_bundle.py ANALYSIS_BUNDLE.json
 python tools/salience_plan.py PLAN.json --prompt PROMPT.txt
 ```
 
-The audited critic binds to source, route, reports, obligations, plan hash, and the literal prompt. It reads the prompt once more without the source or analysis context and blocks unresolved external reference language or unowned semantic residue even when every expected ledger excerpt is present. It may request one targeted integration repair and one verification pass. Only a route gap or source-artifact mismatch may rerun an affected lane. If the repair budget is exhausted, report `blocked`; never start an open-ended refinement loop.
+The audited critic binds to source, route, reports, obligations, plan hash, and the literal prompt. It checks the prompt for unresolved external reference language or unowned semantic residue even when every expected ledger excerpt is present. Run the source-free text checker separately; do not describe a source-aware critic's reread as physically isolated. It may request one targeted integration repair and one verification pass. Only a route gap or source-artifact mismatch may rerun an affected lane. If the repair budget is exhausted, report `blocked`; never start an open-ended refinement loop.
+
+<!-- /profile -->
 
 ## 7. Evidence boundary
 

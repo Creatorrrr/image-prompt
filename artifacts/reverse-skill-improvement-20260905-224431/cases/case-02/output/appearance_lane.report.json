@@ -1,0 +1,537 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.subject-appearance",
+  "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+  "source_artifact": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/source.jpg",
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "frame": "399x623"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "reason": "Actual fresh appearance-lane spawn was rejected: agent thread limit reached. Integrator context already contains earlier lane reports."
+  },
+  "status": "complete",
+  "intent_mode": "faithful",
+  "analysis_profile": "audited",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "subject.human",
+      "version": 22
+    },
+    {
+      "id": "detail.clothing-fashion",
+      "version": 9
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.subject-appearance:hair",
+      "owner_key": "subject.human",
+      "scale": "regional",
+      "axis": "form",
+      "priority": "P1",
+      "observation": "Long dark hair is arranged into two distinct braids over the chest, with a rounded crown, uneven short fringe and loose side wisps.",
+      "source_evidence": [
+        "Dark rounded hair mass touches top border.",
+        "Two thick segmented braids descend separately over the blue top, viewer-left braid reaching lower.",
+        "Fine fringe above phone and loose hair beside its edges are irregular and softly resolved."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:hair:two-braids",
+          "axis": "form",
+          "visible_result": "Two separate long braids hang over the chest.",
+          "result_direction": "Retain the two-braid count and substantial braided shape.",
+          "subject_or_region_ids": [
+            "hair",
+            "torso"
+          ],
+          "relation_kind": "hair-shape",
+          "source_evidence": [
+            "Dark rounded hair mass touches top border.",
+            "Two thick segmented braids descend separately over the blue top, viewer-left braid reaching lower.",
+            "Fine fringe above phone and loose hair beside its edges are irregular and softly resolved."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:hair:fringe",
+          "axis": "form",
+          "visible_result": "Short uneven fringe and loose side wisps remain around the phone-obscured face.",
+          "result_direction": "Preserve irregular short fringe and soft loose side strands without inventing visible eyes.",
+          "subject_or_region_ids": [
+            "hair",
+            "phone",
+            "face"
+          ],
+          "relation_kind": "hair-boundary",
+          "source_evidence": [
+            "Dark rounded hair mass touches top border.",
+            "Two thick segmented braids descend separately over the blue top, viewer-left braid reaching lower.",
+            "Fine fringe above phone and loose hair beside its edges are irregular and softly resolved."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:hair:unequal-lengths",
+          "axis": "hierarchy",
+          "visible_result": "The viewer-left braid reaches lower toward the waist than the viewer-right braid.",
+          "result_direction": "Preserve the projected unequal hanging lengths.",
+          "subject_or_region_ids": [
+            "hair",
+            "torso"
+          ],
+          "relation_kind": "length-relation",
+          "source_evidence": [
+            "Dark rounded hair mass touches top border.",
+            "Two thick segmented braids descend separately over the blue top, viewer-left braid reaching lower.",
+            "Fine fringe above phone and loose hair beside its edges are irregular and softly resolved."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:top",
+      "owner_key": "detail.clothing-fashion",
+      "scale": "regional",
+      "axis": "form",
+      "priority": "P1",
+      "observation": "The inner top is opaque and fitted, sleeveless with narrow shoulder straps, a curved scoop neckline and a hem above the shorts.",
+      "source_evidence": [
+        "Blue torso panel follows the chest and waist with shallow horizontal folds.",
+        "Rounded neckline exposes the upper chest; both shoulder caps remain bare.",
+        "Lower hem stops above the shorts waistband, leaving a narrow midriff strip."
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:top:neckline-straps",
+          "axis": "form",
+          "visible_result": "A scoop neckline and narrow sleeveless shoulder straps define the inner top.",
+          "result_direction": "Keep the rounded opening and sleeveless strap geometry.",
+          "subject_or_region_ids": [
+            "top",
+            "shoulders"
+          ],
+          "relation_kind": "garment-opening",
+          "source_evidence": [
+            "Blue torso panel follows the chest and waist with shallow horizontal folds.",
+            "Rounded neckline exposes the upper chest; both shoulder caps remain bare.",
+            "Lower hem stops above the shorts waistband, leaving a narrow midriff strip."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:top:fit",
+          "axis": "form",
+          "visible_result": "The torso panel fits close, with shallow horizontal fabric wrinkles.",
+          "result_direction": "Preserve fitted opaque fabric without turning it into rigid structured clothing or sheer fabric.",
+          "subject_or_region_ids": [
+            "top",
+            "torso"
+          ],
+          "relation_kind": "garment-fit",
+          "source_evidence": [
+            "Blue torso panel follows the chest and waist with shallow horizontal folds.",
+            "Rounded neckline exposes the upper chest; both shoulder caps remain bare.",
+            "Lower hem stops above the shorts waistband, leaving a narrow midriff strip."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:top:hem-gap",
+          "axis": "topology",
+          "visible_result": "The cropped top hem leaves a narrow band of bare midriff above the shorts.",
+          "result_direction": "Retain the small hem-to-waistband gap rather than exposing a large abdomen or covering it entirely.",
+          "subject_or_region_ids": [
+            "top",
+            "midriff",
+            "shorts"
+          ],
+          "relation_kind": "coverage-boundary",
+          "source_evidence": [
+            "Blue torso panel follows the chest and waist with shallow horizontal folds.",
+            "Rounded neckline exposes the upper chest; both shoulder caps remain bare.",
+            "Lower hem stops above the shorts waistband, leaving a narrow midriff strip."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:cardigan",
+      "owner_key": "detail.clothing-fashion",
+      "scale": "regional",
+      "axis": "form",
+      "priority": "P1",
+      "observation": "An open knitted outer garment is lowered below both shoulders, with long loose sleeves and ribbed cuffs.",
+      "source_evidence": [
+        "Broad pale sleeve bunches on viewer right between elbow area and raised wrist.",
+        "Ribbed raised cuff ends just below gripping hand.",
+        "Viewer-left sleeve hangs down to the small hand fragment near sink."
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:cardigan:open-dropped",
+          "axis": "topology",
+          "visible_result": "The cardigan stays open and off both shoulder caps.",
+          "result_direction": "Keep central top visible and shoulder caps exposed.",
+          "subject_or_region_ids": [
+            "cardigan",
+            "top",
+            "shoulders"
+          ],
+          "relation_kind": "coverage-boundary",
+          "source_evidence": [
+            "Broad pale sleeve bunches on viewer right between elbow area and raised wrist.",
+            "Ribbed raised cuff ends just below gripping hand.",
+            "Viewer-left sleeve hangs down to the small hand fragment near sink."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:cardigan:volume-cuff",
+          "axis": "form",
+          "visible_result": "Large loose cardigan folds gather on the raised-arm side above a long ribbed cuff.",
+          "result_direction": "Retain the broad rounded sleeve mass and ribbed wrist cuff.",
+          "subject_or_region_ids": [
+            "cardigan",
+            "phone-arm"
+          ],
+          "relation_kind": "garment-volume",
+          "source_evidence": [
+            "Broad pale sleeve bunches on viewer right between elbow area and raised wrist.",
+            "Ribbed raised cuff ends just below gripping hand.",
+            "Viewer-left sleeve hangs down to the small hand fragment near sink."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:cardigan:hanging-side",
+          "axis": "form",
+          "visible_result": "The opposite sleeve descends loosely along the lowered arm.",
+          "result_direction": "Retain asymmetric long drape down toward the counter.",
+          "subject_or_region_ids": [
+            "cardigan",
+            "lowered-arm"
+          ],
+          "relation_kind": "garment-drape",
+          "source_evidence": [
+            "Broad pale sleeve bunches on viewer right between elbow area and raised wrist.",
+            "Ribbed raised cuff ends just below gripping hand.",
+            "Viewer-left sleeve hangs down to the small hand fragment near sink."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:shorts",
+      "owner_key": "detail.clothing-fashion",
+      "scale": "regional",
+      "axis": "form",
+      "priority": "P1",
+      "observation": "Loose dark athletic-style shorts have a central hanging drawstring, pale curved piping and rounded leg openings.",
+      "source_evidence": [
+        "Soft folds gather below the waistband.",
+        "Thin pale trim follows the lower edges and viewer-right outer side.",
+        "Loose gray tie descends near center."
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:shorts:loose-shape",
+          "axis": "form",
+          "visible_result": "Loose shorts broaden around the hips with rounded hems over the upper thighs.",
+          "result_direction": "Preserve soft roomy shorts silhouette.",
+          "subject_or_region_ids": [
+            "shorts",
+            "hips"
+          ],
+          "relation_kind": "garment-shape",
+          "source_evidence": [
+            "Soft folds gather below the waistband.",
+            "Thin pale trim follows the lower edges and viewer-right outer side.",
+            "Loose gray tie descends near center."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:shorts:drawstring-piping",
+          "axis": "information",
+          "visible_result": "A center drawstring and thin pale edge piping distinguish the shorts.",
+          "result_direction": "Retain understated tie and curved trim without adding logos.",
+          "subject_or_region_ids": [
+            "shorts"
+          ],
+          "relation_kind": "garment-detail",
+          "source_evidence": [
+            "Soft folds gather below the waistband.",
+            "Thin pale trim follows the lower edges and viewer-right outer side.",
+            "Loose gray tie descends near center."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:skin",
+      "owner_key": "subject.human",
+      "scale": "regional",
+      "axis": "surface",
+      "priority": "P2",
+      "observation": "Only exposed shoulders, arms, neck/upper chest, hand, a small midriff band and upper thighs provide skin evidence; facial features are unreadable.",
+      "source_evidence": [
+        "Exposed regions show subdued warm beige-pink displayed midtones.",
+        "Fine surface detail is softened and low contrast.",
+        "No readable eyes, nose or mouth remain around the phone and hand."
+      ],
+      "confidence": "medium",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Lighting, exposure, source resolution and processing affect displayed skin."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:skin:displayed-surface",
+          "axis": "surface",
+          "visible_result": "Exposed skin retains low-detail natural unevenness and gentle matte appearance.",
+          "result_direction": "Keep modest surface detail without adding pores, shine, smoothing or cosmetics beyond the observed capture.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-surface",
+          "source_evidence": [
+            "Exposed regions show subdued warm beige-pink displayed midtones.",
+            "Fine surface detail is softened and low contrast.",
+            "No readable eyes, nose or mouth remain around the phone and hand."
+          ],
+          "confidence": "medium",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Lighting, exposure, source resolution and processing affect displayed skin."
+          ]
+        }
+      ]
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "subject-role",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:top"
+      ]
+    },
+    {
+      "topic": "visible-form",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:top",
+        "lane.subject-appearance:cardigan",
+        "lane.subject-appearance:shorts"
+      ]
+    },
+    {
+      "topic": "appearance-drift-risk",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:top",
+        "lane.subject-appearance:cardigan",
+        "lane.subject-appearance:shorts",
+        "lane.subject-appearance:skin"
+      ]
+    },
+    {
+      "topic": "intrinsic-induced-confounds",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:skin",
+        "lane.subject-appearance:top",
+        "lane.subject-appearance:cardigan"
+      ]
+    }
+  ],
+  "control_requirements": [
+    "Preserve hair braid count, fringe boundary and projected length difference.",
+    "Give garment geometry and coverage stronger priority than small seam or knit detail.",
+    "Describe only the visible silhouette; do not infer anatomical measurements or hidden face.",
+    "Keep shoulder exposure and narrow midriff band at observed extent."
+  ],
+  "omission_checks": [
+    "Unbraided or single-braid hair changes the subject silhouette.",
+    "A closed or conventionally worn cardigan removes central coverage and sleeve asymmetry.",
+    "A straight high neckline, short sleeves or long shirt hem changes clothing structure.",
+    "Replacing soft drawstring shorts with fitted bottoms changes the lower silhouette."
+  ],
+  "handoffs": [
+    {
+      "target": "lane.color-light-material",
+      "requirement": "Own the blue top, pale neutral cardigan, dark shorts, dark hair, displayed skin hues/values and lighting confounds; no protected identity use."
+    },
+    {
+      "target": "integration",
+      "requirement": "Bind this appearance evidence through human-appearance/v3; omit face likeness and unsupported broad appearance labels."
+    }
+  ],
+  "conflicts": [],
+  "human_appearance_handoff": {
+    "schema_version": "human-appearance/v3",
+    "identity_context": {
+      "disposition": "absent",
+      "context_use": "none",
+      "prompt_disposition": "omit",
+      "viewer_priority": "not-material"
+    },
+    "face_visibility": "not-visible",
+    "frame_prominence": "primary",
+    "fidelity_salience": "primary",
+    "person_prior": {
+      "disposition": "omit",
+      "reason": "Face is occluded; visible hair and garment geometry define the non-identifying subject sufficiently.",
+      "omission_counterfactual": "preserved"
+    },
+    "appearance_gestalt": {
+      "disposition": "omit",
+      "scope": "person-aesthetic",
+      "viewer_priority": "not-material",
+      "reason": "No evaluative appearance term is needed; mechanisms preserve the read.",
+      "effect_budget": {
+        "intended_dimensions": [],
+        "protected_dimensions": [
+          "identity-context",
+          "age-presentation",
+          "pose-occlusion",
+          "scale-crop",
+          "garment-coverage",
+          "displayed-skin",
+          "light-form",
+          "color-tone",
+          "capture-treatment"
+        ]
+      }
+    },
+    "skin_surface": {
+      "disposition": "material",
+      "viewer_priority": "P2",
+      "observation_scope": "source-visible",
+      "semantic_use": "displayed-surface",
+      "coverage": "exposed",
+      "confidence": "medium",
+      "region_ids": [
+        "skin"
+      ],
+      "descriptor_disposition": "omit",
+      "reason": "Literal captured surface and color axes suffice; no friendly label or demographic meaning."
+    }
+  }
+}

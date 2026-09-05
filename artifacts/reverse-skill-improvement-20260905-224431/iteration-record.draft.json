@@ -1,0 +1,204 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "draft": true,
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "b2f0adb652f8f2908494bdd37f8f95acf2673126",
+    "candidate_revision": "runtime-snapshot-sha256:440ba78440ba5ad281bef81e7a45239927a6691b2989f2faa7e9e1e98a805309"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Improve the reverse-image-prompt skill using the current OpenAI latest-model guidance, then independently extract prompts and generate text-only reconstructions for three historical source images."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The full candidate suite passes 310 tests and 267 subtests after repairing audited route reconstruction; generated manifests and whitespace checks pass.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/validator-migration-v2.json"
+    },
+    {
+      "id": "e-context",
+      "kind": "measurement",
+      "claim": "Entrypoint body words decrease 3492 to 1146. In the fixed five-lane fixture shared instruction body words decrease 5311 to 3988 for prompt and 4081 for audited. These are structural words, not tokenizer counts or elapsed time.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/structural-context-metrics.json"
+    },
+    {
+      "id": "e-route-reproduction",
+      "kind": "package-check",
+      "claim": "All three real audited case routes fail under the v1 validator and pass under v2 with unchanged visual instruction bytes and route fingerprints.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/validator-migration-v2.json"
+    },
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "Three exact historical user inputs were restored and inspected; source-specific review invariants were recorded before any generated pixels were available.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/source-render-review-contract.json"
+    },
+    {
+      "id": "e-provenance",
+      "kind": "repository-history",
+      "claim": "Selection records identify original historical user-message images, dimensions and exact source hashes; prior extracted prompts and renders were withheld from case agents.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/source-selection.json"
+    },
+    {
+      "id": "e-guidance",
+      "kind": "external-research",
+      "claim": "The current latest-model guide supports auditing contradictory skill instructions, explicit delegation policy and calibrated verification. Analysis harness settings are distinct from image generator settings.",
+      "artifact": "https://developers.openai.com/api/docs/guides/latest-model; checked 2026-09-05; references/analysis-runtime.md"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Select only the requested analysis contract while preserving all shared visible-evidence controls; keep prompt conformance, actual generation, visual fidelity and user judgment separately evidenced.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "profile-scope",
+        "statement": "Explicit profile selection changes the instruction view without heuristically dropping shared rules.",
+        "evidence_ids": [
+          "e-package",
+          "e-context"
+        ],
+        "causal_controls": [
+          "explicit profile blocks",
+          "fail-closed complete reads",
+          "source and view hashes"
+        ]
+      },
+      {
+        "id": "render-source-contract",
+        "statement": "Each text-only reconstruction is assessed against its exact historical source for composition, appearance geometry, topology, light, color and capture rather than a generic attractive replacement.",
+        "evidence_ids": [
+          "e-source"
+        ],
+        "causal_controls": [
+          "case-specific source contracts stored outside runtime",
+          "frozen prompt bytes",
+          "no image references supplied to generation"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "Non-material incidental scene microdetail",
+      "Unexposed runtime settings recorded as unavailable, never invented"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "audited-route-default",
+      "scale": "global",
+      "axis": "execution-profile",
+      "source_state": "Real routes declare audited analysis and bind audited report schemas and instruction views.",
+      "render_state": "Before the fix the bundle validator reconstructs the default prompt route and rejects the real audited route; generation had not yet occurred.",
+      "evidence_ids": [
+        "e-route-reproduction"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "profile-separation",
+      "stage": "representation",
+      "statement": "Explicit selected-profile views and a smaller entrypoint reduce irrelevant instruction text while preserving shared constraints. This may reduce instruction conflicts; runtime speed and fidelity require separate empirical evidence.",
+      "evidence_ids": [
+        "e-context",
+        "e-guidance"
+      ],
+      "falsifier": "Shared required rules disappear from a selected view, or unrelated sections are removed by heuristic filtering."
+    },
+    {
+      "id": "route-profile-binding",
+      "stage": "external",
+      "statement": "Reconstructing a route with its declared profile resolves the deterministic rejection without relaxing exact equality or allowing evidence to be rebound by profile tampering.",
+      "evidence_ids": [
+        "e-route-reproduction"
+      ],
+      "falsifier": "A valid audited route still fails, or changing only the profile can reuse a mismatched route/report fingerprint."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Separate execution profiles with explicit views, preserve source/view hashes and complete-input failures, keep salience ordering authoritative across adapters, validate optional aggregate claims at their data boundary, expose a plan-free standalone prompt check, and reconstruct audited routes with their declared profile.",
+    "generalization_basis": "Changes apply to file/profile boundaries, schema fields and route integrity; none installs one historical image, appearance term, garment, pose, color or composition as a runtime default.",
+    "hypothesis_ids": [
+      "profile-separation",
+      "route-profile-binding"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/analysis-runtime.md",
+      "skills/reverse-image-prompt/references/integration-contract.md",
+      "skills/reverse-image-prompt/references/model-adapters.md",
+      "skills/reverse-image-prompt/tests/test_analysis_bundle.py",
+      "skills/reverse-image-prompt/tests/test_compact_reports.py",
+      "skills/reverse-image-prompt/tests/test_profile_context.py",
+      "skills/reverse-image-prompt/tests/test_prompt_lint.py",
+      "skills/reverse-image-prompt/tests/test_route_resolver.py",
+      "skills/reverse-image-prompt/tools/analysis_bundle.py",
+      "skills/reverse-image-prompt/tools/compact_reports.py",
+      "skills/reverse-image-prompt/tools/compile_skill.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tools/profile_context.py",
+      "skills/reverse-image-prompt/tools/prompt_lint.py",
+      "skills/reverse-image-prompt/tools/route_resolver.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/validate_modules.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-route-reproduction"
+      ]
+    },
+    "prompt": {
+      "status": "not-run",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": []
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "Structural implementation and regression checks pass. The three historical replay results will be recorded separately; no comparative speed, render-fidelity or user-aesthetic promotion is claimed.",
+    "evidence_ids": [
+      "e-package",
+      "e-context",
+      "e-route-reproduction"
+    ]
+  },
+  "updated_at": "2026-09-05T14:34:56.027613+00:00"
+}

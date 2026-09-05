@@ -1,0 +1,89 @@
+{
+  "schema_version": "reverse-image-forward-root-review/v1",
+  "reviewed_at": "2026-09-05T15:16:25.456068+00:00",
+  "reviewer": "root",
+  "method": "Manual source/render inspection against source-render-review-contract.json. Actual source and delivered render pixels were viewed; no numerical similarity or identity-matching model was used.",
+  "decision_rule": "Any material invariant drift is an overall fidelity fail; partial reproduction is not promoted to pass. Delivery and prompt conformance are separate.",
+  "independence": "Three extraction/generation coordinators had separate fresh conversations and case directories. Root is a shared reviewer across cases and also reviewed their prompts; this is not a blind perceptual study or separate OS sandbox.",
+  "user_judgment": "unscored",
+  "cases": [
+    {
+      "case_id": "case-01",
+      "source_path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/inputs/case-01.jpg",
+      "render_path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-01/output/render.png",
+      "source_sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "render_sha256": "d286e6035699e035c1fbcad6563624af480aaba5d4a9fee413d1170257d49f82",
+      "source_dimensions": [
+        1085,
+        608
+      ],
+      "render_dimensions": [
+        1672,
+        941
+      ],
+      "render_mode": "RGB",
+      "aspect_ratio_relative_error": 0.004318378820452828,
+      "overall": "fail",
+      "summary_ko": "부분 재현. 가로 구도, 오른쪽을 향한 옆모습, 노란 헤드폰과 역광은 유지됐다. 얼굴과 이어컵의 비중이 커지고 머리카락·피부·윤곽이 더 선명하며 원본의 밝고 씻긴 톤이 약해졌다.",
+      "axes": {
+        "frame": "pass-with-drift",
+        "appearance": "partial-fail",
+        "light-color": "partial-fail",
+        "capture": "fail",
+        "crop": "pass-with-drift"
+      },
+      "material_mismatches": [
+        "The head/earcup occupy a stronger visual share and the bob has more distinct curled locks.",
+        "Hair shadows and local contrast are stronger; the original pale low-contrast veil is reduced.",
+        "Facial and hair boundaries and surface detail are more sharply resolved than the source."
+      ]
+    },
+    {
+      "case_id": "case-02",
+      "source_path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/inputs/case-02.jpg",
+      "render_path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/output/render.png",
+      "source_sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+      "render_sha256": "a787e2f758a73358ec052bf5be0622a8b3c34bc0a6b85825e03a051209e6961a",
+      "source_dimensions": [
+        399,
+        623
+      ],
+      "render_dimensions": [
+        1006,
+        1564
+      ],
+      "render_mode": "RGB",
+      "aspect_ratio_relative_error": 0.004329878404450982,
+      "overall": "fail",
+      "summary_ko": "부분 재현. 얼굴을 가린 휴대전화, 두 갈래 땋은 머리, 내려온 카디건과 세면대는 유지됐다. 몸의 대각선이 약해지고 카디건은 더 두껍고 거친 니트로 바뀌었다. 복부 노출 간격과 세부 선명도도 원본보다 커졌다.",
+      "axes": {
+        "reflection-occlusion": "pass",
+        "appearance": "partial-fail",
+        "pose-contact": "partial-fail",
+        "frame-layout": "partial-fail",
+        "capture": "fail"
+      },
+      "material_mismatches": [
+        "The body is more upright/central and the original upper-to-lower lateral displacement is reduced.",
+        "The cardigan becomes thick, highly articulated knit rather than the source softer, smoother drape.",
+        "The top-to-shorts gap exposes a broader midriff, and garment and skin detail are more legible than in the source."
+      ],
+      "supporting_mismatches": [
+        "The wall note is smaller and darker relative to the frame."
+      ]
+    },
+    {
+      "case_id": "case-03",
+      "overall": "blocked",
+      "generation_status": "blocked",
+      "pixel_status": "unscored",
+      "render_path": null,
+      "summary_ko": "추출·검증은 통과했으나 생성 결과 검사에서 차단되어 이미지가 전달되지 않았다.",
+      "failure": {
+        "attempt_1": "No delivery; exact failure cause unavailable.",
+        "attempt_2": "HTTP 400 moderation_blocked; moderation_stage=output; categories=[sexual]; request_id=871b9fa1-88ec-4c5c-adf7-49dde4a72615"
+      },
+      "axes": {}
+    }
+  ]
+}

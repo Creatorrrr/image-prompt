@@ -1,0 +1,266 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "58c1392-pre-standalone-boundary-working-tree-20260827",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Prevent internal source-relative analysis language from leaking into the standalone production prompt and causing a downstream image generator or orchestrator to request an unavailable reference image."
+  },
+  "evidence": [
+    {
+      "id": "e-user-contract",
+      "kind": "user-judgment",
+      "claim": "The user reports that the delivered prompt triggered a request to attach a reference image and asks whether the skill instructed that behavior, then authorizes a skill improvement.",
+      "artifact": "Conversation requests on 2026-08-27"
+    },
+    {
+      "id": "e-motivating-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The exact production prompt contains the internal phrase 'source-relative' in a foreground-person appearance clause even though the skill promises a standalone prompt.",
+      "artifact": "generated_images/independent-reverse-20260827-grTkmJ/prompt.txt; 3490 bytes; SHA-256 8e6c3ba5c2f789cf550b32e9c21d3447931da00c5907a55b2824dc9010c85d26"
+    },
+    {
+      "id": "e-baseline-validator-gap",
+      "kind": "prompt-evaluation",
+      "claim": "Before this correction, the official salience-plan validator returned status ok for the motivating prompt because it reconciled literal ledger excerpts but did not audit unresolved external-reference language.",
+      "artifact": "python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/independent-reverse-20260827-grTkmJ/plan.json --prompt generated_images/independent-reverse-20260827-grTkmJ/prompt.txt => status ok before correction"
+    },
+    {
+      "id": "e-repository-history",
+      "kind": "repository-history",
+      "claim": "The committed skill already prohibited mentioning the source image, while the pre-correction working tree introduced literal source-relative and source-specific prompt fixtures and no deterministic standalone-output audit.",
+      "artifact": "git blame and working-tree inspection at HEAD 58c139282f24d686d058ecd941afcdaaba538e9c for SKILL.md, modules/subject.human.md, tests/test_salience_plan.py, and tools/salience_plan.py"
+    },
+    {
+      "id": "e-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "The corrected audit rejects the motivating source-relative phrase, other internal provenance labels, unavailable reference/original/source instructions, and source-side placeholders while accepting physical light-source language and self-contained keep, preserve, remain, and stay clauses.",
+      "artifact": "python3 -m unittest skills.reverse-image-prompt.tests.test_salience_plan => 146 passed; motivating salience_plan.py command => failed with one internal provenance label error as expected"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Source modules, generated artifacts, skill packaging, improver validation, Python syntax, diff hygiene, and the complete reverse-image-prompt test suite pass after regeneration.",
+      "artifact": "reverse-image-prompt suite => 258 tests run, 20 skipped, zero failures; validate_modules.py => 37 modules, 6 lanes, 16683 runtime words, 3790 Tier-0 words; gen_manifest.py --check => pass; skill-creator quick_validate.py => pass; image-prompt-skill-improver suite => 12 passed; compileall and git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A production prompt remains directly usable after the source image, analysis records, and conversation disappear; internal comparison vocabulary selects the target but never substitutes for stating it.",
+    "user_appeal": "The generated prompt should be pasteable into a new image-generation context without eliciting a request for the original or reference image.",
+    "invariants": [
+      {
+        "id": "inv-internal-provenance",
+        "statement": "Source-relative, source-visible, source-specific, source-supported, and current-source semantics remain available inside analysis and ledgers but are compiled out of final prompt prose.",
+        "evidence_ids": [
+          "e-motivating-prompt",
+          "e-repository-history",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "entrypoint compilation rule",
+          "pre-emit standalone read",
+          "authored-prompt boundary audit"
+        ]
+      },
+      {
+        "id": "inv-literal-target",
+        "statement": "Every retained final clause names the actual visible direction, relation, value, coverage, topology, material response, or capture result rather than an unavailable comparison artifact.",
+        "evidence_ids": [
+          "e-user-contract",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "literal standalone fixture excerpts",
+          "unavailable-artifact patterns",
+          "independent critic output-boundary check"
+        ]
+      },
+      {
+        "id": "inv-no-broad-word-ban",
+        "statement": "Physical uses such as light source and self-contained keep, preserve, retain, remain, or stay clauses remain valid when their subject and state are named in the prompt.",
+        "evidence_ids": [
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "narrow semantic-boundary patterns",
+          "allowed-language counterexample test"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "the literal self-contained target wording selected for each source",
+      "physical scene uses of the noun source",
+      "whether a self-contained state verb is needed",
+      "generator response and rendered pixels pending a new controlled generation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-standalone-output",
+      "scale": "global",
+      "axis": "production prompt dependency boundary",
+      "source_state": "The requested and documented output is a standalone text-to-image prompt whose visual target is fully stated in its own text.",
+      "render_state": "No new render was evaluated; the authored prompt instead contained 'source-relative', causing an outer generation workflow to request an unavailable reference image.",
+      "evidence_ids": [
+        "e-user-contract",
+        "e-motivating-prompt",
+        "e-baseline-validator-gap"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-compilation-boundary",
+      "stage": "prompt-interaction",
+      "statement": "The source-relative contract is valid internally, but emitting its provenance label instead of its literal visual value makes the prompt externally deictic and can trigger reference-image routing.",
+      "evidence_ids": [
+        "e-user-contract",
+        "e-motivating-prompt",
+        "e-repository-history"
+      ],
+      "falsifier": "The motivating and held-out provenance phrases remain accepted after the correction, or an equivalent self-contained literal target is rejected."
+    },
+    {
+      "id": "h-validator-boundary",
+      "stage": "prompt-interaction",
+      "statement": "Ledger reconciliation alone cannot prove standalone usability; adding a narrow literal-text boundary audit will reject unresolved artifact dependencies without banning physical source language or self-contained state verbs.",
+      "evidence_ids": [
+        "e-baseline-validator-gap",
+        "e-prompt-tests"
+      ],
+      "falsifier": "The audit either still passes the known deictic cases or fails the held-out physical light-source and self-contained-state cases."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Keep source comparison and provenance inside analysis, compile it into literal generator-facing visual state, and reject common unresolved internal labels or missing-artifact instructions at the authored-prompt boundary while allowing physical scene uses and self-contained state verbs.",
+    "generalization_basis": "The correction is defined by the output dependency boundary rather than one portrait, pose, lighting value, aesthetic label, generator, or case-specific adjective. The motivating phrase is retained only as a regression fixture and unrelated provenance, artifact, physical-source, and state-verb cases exercise the rule.",
+    "hypothesis_ids": [
+      "h-compilation-boundary",
+      "h-validator-boundary"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-27-standalone-prompt-output-boundary-v1.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-tests"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "motivating-source-relative-clause",
+        "case_role": "motivating",
+        "status": "pass",
+        "covered_axes": [
+          "internal provenance leakage",
+          "person-aesthetic clause",
+          "known prompt hash"
+        ],
+        "evidence_ids": [
+          "e-motivating-prompt",
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-provenance-labels",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "source-visible",
+          "source-specific",
+          "source-supported",
+          "current-source"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-missing-artifacts",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "reference instruction",
+          "original-state instruction",
+          "attached image",
+          "source-side placeholder"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-allowed-scene-language",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "physical light source",
+          "keep",
+          "preserve",
+          "remain",
+          "standalone crop and pose state"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The known prompt-actuation regression is now blocked by both skill instructions and deterministic literal-text validation, while unrelated allowed-language cases pass and the package remains structurally valid. This supports a bounded claim that standalone prompt behavior improved. No new full prompt was independently authored with the revised skill, no image was generated, and no pixels or post-change user judgment were evaluated, so render fidelity and user-aesthetic improvement remain unscored.",
+    "evidence_ids": [
+      "e-user-contract",
+      "e-motivating-prompt",
+      "e-prompt-tests",
+      "e-package"
+    ]
+  }
+}

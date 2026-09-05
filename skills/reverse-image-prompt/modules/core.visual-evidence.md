@@ -1,6 +1,6 @@
 ---
 id: core.visual-evidence
-version: 10
+version: 11
 priority: 110
 type: core
 tier: 0
@@ -39,7 +39,11 @@ Always.
 - Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
 - Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing.
 - In the default `prompt` profile, keep only P0/P1 viewer-material results, compress P2 support, and group P3 or non-material evidence instead of enumerating it.
+
+<!-- profile:audited -->
 - In `audited`, preserve independently drifting material results as atomic obligations; uncertain attribution never erases a supported direction.
+<!-- /profile -->
+
 
 ## Prompt contribution
 

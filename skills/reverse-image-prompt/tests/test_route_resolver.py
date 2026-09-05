@@ -23,6 +23,28 @@ class RouteResolverTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.manifest = load_manifest(ROOT)
 
+    def test_route_binds_actual_profile_instruction_views(self) -> None:
+        facets = {"subjects": ["human"], "medium": ["photographic"]}
+        prompt = resolve_analysis_route(facets, self.manifest, "prompt")
+        audited = resolve_analysis_route(facets, self.manifest, "audited")
+        prompt_inputs = {item["path"]: item for item in prompt["shared_instruction_inputs"]}
+        audited_inputs = {item["path"]: item for item in audited["shared_instruction_inputs"]}
+        path = "references/integration-contract.md"
+        self.assertEqual(prompt_inputs[path]["source_sha256"], audited_inputs[path]["source_sha256"])
+        self.assertNotEqual(prompt_inputs[path]["view_sha256"], audited_inputs[path]["view_sha256"])
+        self.assertLess(prompt_inputs[path]["view_words"], audited_inputs[path]["view_words"])
+        self.assertNotEqual(prompt["route_fingerprint"], audited["route_fingerprint"])
+        for lane in prompt["lanes"]:
+            self.assertEqual(len(lane["module_inputs"]), len(lane["module_ids"]))
+            self.assertNotIn("content", lane["instruction_input"])
+
+    def test_stale_manifest_content_is_not_an_instruction_snapshot(self) -> None:
+        from copy import deepcopy
+        manifest = deepcopy(self.manifest)
+        module_map(manifest)["core.visual-evidence"]["content_sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "stale manifest content"):
+            resolve_analysis_route({"subjects": ["generic-object"]}, manifest)
+
     def test_capture_quality_can_select_photo_medium(self) -> None:
         modules = resolve_modules(
             {

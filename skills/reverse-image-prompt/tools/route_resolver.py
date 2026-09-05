@@ -11,6 +11,8 @@ import re
 import sys
 from typing import Any
 
+from profile_context import read_profile_files
+
 from module_metadata import (
     ROOT,
     expand_dependencies,
@@ -260,11 +262,33 @@ def resolve_analysis_route(
             "analysis lane coverage missing for routed module(s): " + ", ".join(missing)
         )
 
+    context_files = list(dict.fromkeys(
+        ["SKILL.md", "references/analysis-orchestration.md", "references/integration-contract.md"]
+        + [modules[mid]["file"] for mid in resolved_modules]
+        + [lane["file"] for lane in lane_entries]
+    ))
+    context = read_profile_files(context_files, profile, root=ROOT)
+    context_by_path = {
+        item["path"]: {key: value for key, value in item.items() if key != "content"}
+        for item in context["files"]
+    }
+    for module_id in resolved_modules:
+        meta = modules[module_id]
+        expected_sha = meta.get("content_sha256")
+        if expected_sha and context_by_path[meta["file"]]["source_sha256"] != expected_sha:
+            raise ValueError(f"stale manifest content for {module_id}; regenerate manifest")
+    for lane in lane_entries:
+        expected_sha = lane.get("content_sha256")
+        if expected_sha and context_by_path[lane["file"]]["source_sha256"] != expected_sha:
+            raise ValueError(f"stale manifest content for {lane['id']}; regenerate manifest")
+
     lanes = [
         {
             "id": lane["id"],
             "version": lane["version"],
             "instruction_file": lane["file"],
+            "instruction_input": context_by_path[lane["file"]],
+            "module_inputs": [context_by_path[modules[mid]["file"]] for mid in lane["module_ids"]],
             "analysis_depth": "compact" if profile == "prompt" else "audited",
             "report_schema": (
                 PROMPT_REPORT_SCHEMA if profile == "prompt" else AUDITED_REPORT_SCHEMA
@@ -279,6 +303,7 @@ def resolve_analysis_route(
         "schema_version": "reverse-image-analysis-route/v2",
         "analysis_profile": profile,
         "execution_budget": execution_budget,
+        "shared_instruction_inputs": [context_by_path[path] for path in context_files[:3]],
         "normalized_facets": _canonical_facets(facets),
         "resolved_modules": resolved_modules,
         "required_lane_ids": [lane["id"] for lane in lanes],

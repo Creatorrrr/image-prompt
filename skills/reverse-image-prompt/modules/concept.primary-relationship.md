@@ -1,6 +1,6 @@
 ---
 id: concept.primary-relationship
-version: 11
+version: 12
 priority: 106
 type: concept
 tier: 0
@@ -53,7 +53,11 @@ Form internally:
 2. Record the direct appeal reading separately before deciding actuation. In generation, retain it once only as high-confidence P0/P1 source evidence whose omission causes material drift; immediately follow with visible mechanisms. Otherwise emit only the mechanisms.
 3. The dominant fidelity axis and smallest causal cue set.
 4. Rank visible effects by a viewer counterfactual: `P0` changes the source signature, `P1` changes structural identity, `P2` supports the read, and `P3` is incidental. Face, skin presentation, space, clothing, pose, topology, light, color, or capture may occupy any level; category and module count do not set priority.
-5. Separate aesthetic invariants from flexible dimensions before drafting. An invariant would materially weaken or change the proposition if altered; a flexible dimension may vary without losing it. In `prompt`, retain only the smallest P0/P1 causal set and merge P2 support. In `audited`, build the full ledger. Build an invariant salience ledger. Bind retained atomic obligations.
+5. Separate aesthetic invariants from flexible dimensions before drafting. An invariant would materially weaken or change the proposition if altered; a flexible dimension may vary without losing it. In `prompt`, retain only the smallest P0/P1 causal set and merge P2 support.
+<!-- profile:audited -->
+In `audited` only, build the full ledger: Build an invariant salience ledger. Bind retained atomic obligations.
+<!-- /profile -->
+
 6. For relationship-led or mixed images, the stable zones and each critical pair's side, containment, contact, support, depth, occlusion, and boundary crossing.
 7. One to three likely failures, including a category default replacing source-specific evidence.
 

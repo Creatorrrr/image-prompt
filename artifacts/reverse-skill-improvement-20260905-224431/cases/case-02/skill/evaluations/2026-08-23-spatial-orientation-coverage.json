@@ -1,0 +1,184 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "ec198d7bf95d55f84a2644e3f6444d135613dd03 plus the prior 2026-08-23 working-tree interventions",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Prevent material pose and direction degrees of freedom from being omitted or causally duplicated, without installing a centered, offset, frontal, profile, mirrored, human-specific, or case-specific target."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The motivating source makes frame placement, viewpoint, principal subject axis, head-to-body relation, shoulder line, attention direction, and cross-layer orientation jointly material.",
+      "artifact": "/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/120A03AF-63A5-498A-ABC0-A49BE74B7A5B/1-사진-1.jpg; sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; 969x1280"
+    },
+    {
+      "id": "e-prior-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The prior independent plan represented a frame-zone relation and low viewpoint but omitted an explicit disposition ledger for principal axis, head-to-body relation, shoulder line, and attention direction; its prompt combined viewpoint, chin, neck, nostril, and gaze cues without one cross-slot causal-axis owner.",
+      "artifact": "generated_images/reverse-image-prompt-independent-v2-20260823/plan.json sha256=072f0fe8cb7d72ea70c8548f49015b5e73bb5f6ab400711a8af0daf5523cf708; prompt.txt sha256=a2fd14b7114fcf4c349e34c6388a89a38aa626abc27d4e1104ed272734730723"
+    },
+    {
+      "id": "e-prior-render",
+      "kind": "render-observation",
+      "claim": "The prior delivered render remains more centered and frontal than the source, despite carrying the intended low-angle hierarchy.",
+      "artifact": "generated_images/reverse-image-prompt-independent-v2-20260823/attempt-01.png; sha256=98fa14b40fd801da3f4516e555242b02f65b525748f79c71c0e216bf18070b66; 1086x1448"
+    },
+    {
+      "id": "e-user",
+      "kind": "user-judgment",
+      "claim": "The user judges that the pose and direction still point toward a centered frontal result, while face impression and regional shading also remain imperfect.",
+      "artifact": "Conversation feedback on 2026-08-23"
+    },
+    {
+      "id": "e-regression",
+      "kind": "package-check",
+      "claim": "The new validator rejects the prior routed-human plan specifically because a frame-zone relation alone does not prove pose/orientation coverage. Ten direction-neutral regression cases cover missing readable-human decisions, invariant and non-emitted paths, causal-axis duplication, centered and opposite offsets, non-human axes, cross-component alignment and offset, and pose-owned versus intrinsic form.",
+      "artifact": "python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/reverse-image-prompt-independent-v2-20260823/plan.json --prompt generated_images/reverse-image-prompt-independent-v2-20260823/prompt.txt; python3 -m unittest skills/reverse-image-prompt/tests/test_salience_plan.py"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All 154 reverse-image-prompt tests pass; module validation reports 37 modules, 16956 runtime words, 3789 Tier-0 words, and 0.0014 duplicate ratio; generated module metadata and compiled profiles are current.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python3 skills/reverse-image-prompt/tools/validate_modules.py; python3 skills/reverse-image-prompt/tools/gen_manifest.py --check"
+    },
+    {
+      "id": "e-cleanroom-generation",
+      "kind": "generation-outcome",
+      "claim": "A clean-room subagent authored and structurally validated one 2426-byte prompt, froze SHA-256 40b6e29ab1273c5117fcae625616017650249092ee1fa6d5c6fb48bde32397a0, and invoked built-in image generation three times with the same prompt and settings; all three were blocked at output moderation with category sexual, so no pixels were delivered or scored.",
+      "artifact": "generated_images/reverse-image-prompt-cleanroom-v3-20260823/structural-audit.json; generated_images/reverse-image-prompt-cleanroom-v3-20260823/attempts.ndjson; settings sha256=06f51efb999a229508177df73c08e7a6c2dc50e28faf967a7cb0a220fe84858e"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every material spatial degree of freedom receives an explicit source-supported disposition and every invariant reaches one causal relation/effect/claim/control path without selecting a preferred direction.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-coverage",
+        "statement": "Frame placement, principal axis, viewpoint, part-whole orientation, attention direction, and cross-component orientation cannot become orphan dimensions.",
+        "evidence_ids": ["e-source", "e-prior-prompt", "e-user"],
+        "causal_controls": ["spatial disposition", "component relation", "exact prompt-control path"]
+      },
+      {
+        "id": "inv-causal-axis",
+        "statement": "Camera, pose, face, body, clothing, composition, and lighting cannot emit the same spatial control axis under different semantic slots.",
+        "evidence_ids": ["e-prior-prompt", "e-prior-render"],
+        "causal_controls": ["control_axis_id", "causal_origin", "cross-ledger merge"]
+      },
+      {
+        "id": "inv-direction-neutrality",
+        "statement": "The structural contract accepts centered, offset, opposite, and mirrored values plus human and non-human subjects without making any value a runtime default.",
+        "evidence_ids": ["e-regression", "e-package"],
+        "causal_controls": ["source-relative observation", "generic dimension family", "non-emission reason"]
+      }
+    ],
+    "flexible_dimensions": [
+      "actual direction and offset value",
+      "subject category and medium",
+      "whether a degree of freedom is invariant or non-material",
+      "case-local region and control identifiers",
+      "generator wording and sampling outcome"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-orphan-pose",
+      "scale": "global",
+      "axis": "pose and orientation coverage",
+      "source_state": "Several independent spatial relations jointly establish a non-neutral source reading.",
+      "render_state": "The prior plan records placement and viewpoint but leaves other material pose relations without an explicit invariant or flexible disposition.",
+      "evidence_ids": ["e-source", "e-prior-prompt", "e-prior-render", "e-user"]
+    },
+    {
+      "id": "m-causal-amplification",
+      "scale": "regional",
+      "axis": "viewpoint versus head and facial appearance",
+      "source_state": "Camera elevation, head pose, gaze, and perspective-induced facial appearance are separable causes and effects.",
+      "render_state": "The prior prompt can amplify one low-angle reading through several differently named clauses without an explicit shared-axis audit.",
+      "evidence_ids": ["e-prior-prompt", "e-prior-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-coverage-omission",
+      "stage": "representation",
+      "statement": "Validating only relations that happen to be present cannot detect omitted pose or orientation dimensions.",
+      "evidence_ids": ["e-prior-prompt", "e-regression"],
+      "falsifier": "A pre-intervention clean-room plan is rejected when a material human orientation dimension is absent even though no coverage ledger exists."
+    },
+    {
+      "id": "h-causal-duplication",
+      "stage": "prompt-interaction",
+      "statement": "Camera, pose, and induced appearance clauses can cumulatively strengthen one direction when their shared control axis is not represented and merged.",
+      "evidence_ids": ["e-prior-prompt", "e-prior-render", "e-user"],
+      "falsifier": "Held-out audits show that duplicated spatial causes are already merged across semantic slots or that merging has no effect on prompt hierarchy."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Require a direction-neutral spatial/orientation disposition ledger and a single causal control owner for every invariant spatial degree of freedom; forbid emitted paths for flexible, non-material, non-visible, or uncertain decisions.",
+    "generalization_basis": "The schema names degrees of freedom, dispositions, causal origins, and local ids rather than motivating coordinates, directions, body values, garments, adjectives, or generator workarounds. Tests exercise opposite values, mirrored values, human visibility limits, and non-human subjects.",
+    "hypothesis_ids": ["h-coverage-omission", "h-causal-duplication"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.human-body-form.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-23-spatial-orientation-coverage.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-regression", "e-package"]},
+    "prompt": {"status": "unscored", "evidence_ids": []},
+    "render": {"status": "blocked", "evidence_ids": ["e-cleanroom-generation"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "holdout-direction-neutral-values",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["centered and opposite offsets", "mirrored direction", "non-human principal axis"],
+        "evidence_ids": ["e-regression", "e-package"]
+      },
+      {
+        "id": "holdout-causal-separation",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["camera elevation versus head pitch", "pose-owned versus intrinsic appearance", "cross-component alignment"],
+        "evidence_ids": ["e-regression", "e-package"]
+      },
+      {
+        "id": "motivating-clean-room-render",
+        "case_role": "motivating",
+        "status": "blocked",
+        "covered_axes": ["pose", "direction", "face impression", "regional light-to-form"],
+        "evidence_ids": ["e-cleanroom-generation"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The package now detects the specific omission class and duplicated causal ownership while retaining direction-neutral, visibility-aware, human and non-human behavior. The requested clean-room render reached the three-attempt ceiling with unchanged bytes but was output-moderation blocked, so pixel improvement remains unscored.",
+    "evidence_ids": ["e-regression", "e-package", "e-cleanroom-generation"]
+  }
+}

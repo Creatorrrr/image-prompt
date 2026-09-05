@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 from anchor_catalog import ANCHORS
+from profile_context import render_profile_text
 from module_metadata import (
     ROOT,
     build_manifest,
@@ -121,6 +122,7 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         try:
             fm, body = parse_frontmatter(path)
+            body = render_profile_text(body, "combined")
         except ValueError as exc:
             errors.append(str(exc))
             continue
@@ -186,6 +188,7 @@ def main() -> int:
         rel = path.relative_to(ROOT).as_posix()
         try:
             fm, body = parse_frontmatter(path)
+            body = render_profile_text(body, "combined")
         except ValueError as exc:
             errors.append(str(exc))
             continue

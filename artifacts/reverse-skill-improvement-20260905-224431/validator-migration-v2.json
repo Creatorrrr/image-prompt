@@ -1,0 +1,68 @@
+{
+  "candidate_v1": "9445d5e2d6437115d8865ec5f559c6d6922117327b3224f3b4d267fd26c84c6f",
+  "candidate_v2": "440ba78440ba5ad281bef81e7a45239927a6691b2989f2faa7e9e1e98a805309",
+  "changed_paths": [
+    "tests/test_analysis_bundle.py",
+    "tools/analysis_bundle.py"
+  ],
+  "reason": "Live audited routes were incorrectly reconstructed with the default prompt profile. Reconstruct with the declared profile, retaining exact deterministic equality and fingerprint binding.",
+  "instructions_unchanged": true,
+  "tests": {
+    "passed": 310,
+    "subtests_passed": 267,
+    "elapsed_seconds": 8.29
+  },
+  "actual_case_route_checks": [
+    {
+      "case": "case-01",
+      "v1": {
+        "errors": [
+          "route must exactly match the deterministic analysis route"
+        ],
+        "actual_profile": "audited",
+        "reconstructed_profile": "prompt",
+        "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a"
+      },
+      "v2": {
+        "errors": [],
+        "actual_profile": "audited",
+        "reconstructed_profile": "audited",
+        "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a"
+      }
+    },
+    {
+      "case": "case-02",
+      "v1": {
+        "errors": [
+          "route must exactly match the deterministic analysis route"
+        ],
+        "actual_profile": "audited",
+        "reconstructed_profile": "prompt",
+        "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975"
+      },
+      "v2": {
+        "errors": [],
+        "actual_profile": "audited",
+        "reconstructed_profile": "audited",
+        "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975"
+      }
+    },
+    {
+      "case": "case-03",
+      "v1": {
+        "errors": [
+          "route must exactly match the deterministic analysis route"
+        ],
+        "actual_profile": "audited",
+        "reconstructed_profile": "prompt",
+        "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1"
+      },
+      "v2": {
+        "errors": [],
+        "actual_profile": "audited",
+        "reconstructed_profile": "audited",
+        "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1"
+      }
+    }
+  ]
+}

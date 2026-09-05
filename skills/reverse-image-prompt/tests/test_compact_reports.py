@@ -26,13 +26,16 @@ class CompactReportTests(unittest.TestCase):
         cls.modules = module_map(cls.manifest)
         cls.source = {"sha256": "a" * 64, "frame": "800x1000"}
 
-    def route(self, *, lighting: bool = False) -> dict:
-        risks = ["face-detail"]
+    def route(
+        self, *, lighting: bool = False, subjects: list[str] | None = None
+    ) -> dict:
+        subjects = ["human"] if subjects is None else subjects
+        risks = ["face-detail"] if "human" in subjects else []
         if lighting:
             risks.append("lighting-fidelity")
         return resolve_analysis_route(
             {
-                "subjects": ["human"],
+                "subjects": subjects,
                 "medium": ["photographic"],
                 "relationships": ["ordinary"],
                 "detail_risks": risks,
@@ -126,6 +129,307 @@ class CompactReportTests(unittest.TestCase):
                 "at_risk_relations": residuals,
             },
         }
+
+    def candidate(self, *, human: bool = True) -> dict:
+        candidate = {
+            "scope": "human-appearance" if human else "general",
+            "phrase": "An independently supported aggregate reading.",
+            "candidate_source": {
+                "kind": "source-visible-approximation",
+                "reference": self.source["sha256"],
+            },
+            "confidence": "medium",
+            "viewer_priority": "P1",
+            "omission_counterfactual": "material-drift",
+            "decomposition_requirements": [
+                "Preserve the separately owned visible form requirement."
+            ],
+        }
+        if human:
+            candidate["effect_budget"] = {
+                "intended_dimensions": ["face-form"],
+                "protected_dimensions": ["identity-context", "pose-occlusion"],
+            }
+        return candidate
+
+    def finding_errors(
+        self,
+        finding: dict,
+        *,
+        route: dict | None = None,
+        lane_id: str = "lane.subject-appearance",
+    ) -> list[str]:
+        route = self.route() if route is None else route
+        lane = next(item for item in route["lanes"] if item["id"] == lane_id)
+        report = self.report(route, lane, findings=[finding])
+        return validate_compact_set(
+            self.compact_set(route, replacements={lane_id: report}), self.manifest
+        )
+
+    def candidate_finding(self, representation: str = "atomic") -> dict:
+        finding = self.macro_finding("lane.subject-appearance")
+        finding["representation"] = representation
+        if representation == "atomic":
+            finding["summary_adequacy"] = None
+        finding["aggregate_descriptor_candidate"] = self.candidate()
+        return finding
+
+    def test_aggregate_candidate_is_optional_for_atomic_and_macro_findings(
+        self,
+    ) -> None:
+        for representation in ("atomic", "macro-summary"):
+            with self.subTest(representation=representation):
+                finding = self.candidate_finding(representation)
+                del finding["aggregate_descriptor_candidate"]
+                self.assertEqual(self.finding_errors(finding), [])
+
+    def test_valid_aggregate_provenance_for_atomic_and_macro_findings(self) -> None:
+        for representation in ("atomic", "macro-summary"):
+            for kind, reference in (
+                ("source-visible-approximation", self.source["sha256"]),
+                ("user-supplied", "raw-request:appearance-reading"),
+                ("versioned-vocabulary", "task-vocabulary/v1:entry-a"),
+            ):
+                for confidence, priority in (("high", "P0"), ("medium", "P1")):
+                    with self.subTest(
+                        representation=representation,
+                        kind=kind,
+                        confidence=confidence,
+                    ):
+                        finding = self.candidate_finding(representation)
+                        candidate = finding["aggregate_descriptor_candidate"]
+                        candidate["candidate_source"] = {
+                            "kind": kind,
+                            "reference": reference,
+                        }
+                        candidate["confidence"] = confidence
+                        candidate["viewer_priority"] = priority
+                        self.assertEqual(self.finding_errors(finding), [])
+
+    def test_candidate_object_is_required_when_present(self) -> None:
+        for representation in ("atomic", "macro-summary"):
+            for candidate in (None, "unbounded descriptor", 4, [], True):
+                with self.subTest(representation=representation, candidate=candidate):
+                    finding = self.candidate_finding(representation)
+                    finding["aggregate_descriptor_candidate"] = candidate
+                    errors = self.finding_errors(finding)
+                    self.assertTrue(
+                        any(
+                            "aggregate_descriptor_candidate must be an object" in e
+                            for e in errors
+                        ),
+                        errors,
+                    )
+
+    def test_candidate_required_fields_reject_missing_and_malformed_values(
+        self,
+    ) -> None:
+        invalid_values = {
+            "phrase": (None, "", " ", []),
+            "candidate_source": (None, "source", []),
+            "confidence": (None, "low", "uncertain", []),
+            "viewer_priority": (None, "P2", "P3", []),
+            "omission_counterfactual": (None, "preserved", "uncertain", {}),
+            "decomposition_requirements": (None, "form", [], [" "], [{}]),
+        }
+        for representation in ("atomic", "macro-summary"):
+            for field, values in invalid_values.items():
+                for missing, value in [(True, None)] + [
+                    (False, value) for value in values
+                ]:
+                    with self.subTest(
+                        representation=representation,
+                        field=field,
+                        missing=missing,
+                        value=value,
+                    ):
+                        finding = self.candidate_finding(representation)
+                        candidate = finding["aggregate_descriptor_candidate"]
+                        if missing:
+                            del candidate[field]
+                        else:
+                            candidate[field] = value
+                        errors = self.finding_errors(finding)
+                        self.assertTrue(
+                            any(
+                                f"aggregate_descriptor_candidate.{field}" in e
+                                for e in errors
+                            ),
+                            errors,
+                        )
+
+    def test_candidate_provenance_requires_allowed_kind_and_reference(self) -> None:
+        for representation in ("atomic", "macro-summary"):
+            for source, expected_field in (
+                ({"reference": "observation-a"}, "kind"),
+                ({"kind": "preferred-label", "reference": "observation-a"}, "kind"),
+                ({"kind": [], "reference": "observation-a"}, "kind"),
+                ({"kind": "source-visible-approximation"}, "reference"),
+                ({"kind": "user-supplied", "reference": " "}, "reference"),
+                ({"kind": "versioned-vocabulary", "reference": {}}, "reference"),
+            ):
+                with self.subTest(representation=representation, source=source):
+                    finding = self.candidate_finding(representation)
+                    finding["aggregate_descriptor_candidate"][
+                        "candidate_source"
+                    ] = source
+                    errors = self.finding_errors(finding)
+                    self.assertTrue(
+                        any(f"candidate_source.{expected_field}" in e for e in errors),
+                        errors,
+                    )
+
+    def test_candidate_scope_rejects_unknown_and_malformed_values(self) -> None:
+        for scope in (None, "human", "preferred-appearance", [], {}):
+            with self.subTest(scope=scope):
+                finding = self.candidate_finding()
+                finding["aggregate_descriptor_candidate"]["scope"] = scope
+                errors = self.finding_errors(finding)
+                self.assertTrue(
+                    any("aggregate_descriptor_candidate.scope" in e for e in errors)
+                )
+
+    def test_legacy_human_candidate_requires_effect_budget(self) -> None:
+        for representation in ("atomic", "macro-summary"):
+            with self.subTest(representation=representation):
+                finding = self.candidate_finding(representation)
+                candidate = finding["aggregate_descriptor_candidate"]
+                del candidate["scope"]
+                self.assertEqual(self.finding_errors(finding), [])
+                del candidate["effect_budget"]
+                errors = self.finding_errors(finding)
+                self.assertTrue(
+                    any("effect_budget must be an object" in e for e in errors)
+                )
+
+    def test_explicit_human_scope_requires_budget_without_human_lane_modules(
+        self,
+    ) -> None:
+        route = self.route(subjects=["product"])
+        finding = self.candidate_finding()
+        self.assertEqual(self.finding_errors(finding, route=route), [])
+        del finding["aggregate_descriptor_candidate"]["effect_budget"]
+        errors = self.finding_errors(finding, route=route)
+        self.assertTrue(any("effect_budget must be an object" in e for e in errors))
+
+    def test_human_budget_requires_valid_intended_and_protected_dimensions(
+        self,
+    ) -> None:
+        invalid_budgets = (
+            (None, "effect_budget must be an object"),
+            ("form", "effect_budget must be an object"),
+            ({}, "intended_dimensions"),
+            (
+                {
+                    "intended_dimensions": [],
+                    "protected_dimensions": ["identity-context"],
+                },
+                "intended_dimensions",
+            ),
+            (
+                {
+                    "intended_dimensions": [" "],
+                    "protected_dimensions": ["identity-context"],
+                },
+                "intended_dimensions",
+            ),
+            (
+                {
+                    "intended_dimensions": [{}],
+                    "protected_dimensions": ["identity-context"],
+                },
+                "intended_dimensions",
+            ),
+            (
+                {
+                    "intended_dimensions": ["face-form"],
+                    "protected_dimensions": "identity-context",
+                },
+                "protected_dimensions",
+            ),
+            (
+                {"intended_dimensions": ["face-form"], "protected_dimensions": []},
+                "must include identity-context",
+            ),
+            (
+                {
+                    "intended_dimensions": ["face-form"],
+                    "protected_dimensions": ["pose-occlusion"],
+                },
+                "must include identity-context",
+            ),
+            (
+                {
+                    "intended_dimensions": ["identity-context"],
+                    "protected_dimensions": ["pose-occlusion"],
+                },
+                "cannot control identity-context",
+            ),
+            (
+                {
+                    "intended_dimensions": ["face-form"],
+                    "protected_dimensions": ["identity-context", "face-form"],
+                },
+                "both intend and protect",
+            ),
+            (
+                {
+                    "intended_dimensions": ["face-form", "face-form"],
+                    "protected_dimensions": ["identity-context"],
+                },
+                "contains duplicates",
+            ),
+            (
+                {
+                    "intended_dimensions": ["face-form"],
+                    "protected_dimensions": ["identity-context", "identity-context"],
+                },
+                "contains duplicates",
+            ),
+        )
+        for representation in ("atomic", "macro-summary"):
+            for budget, expected_error in invalid_budgets:
+                with self.subTest(representation=representation, budget=budget):
+                    finding = self.candidate_finding(representation)
+                    finding["aggregate_descriptor_candidate"]["effect_budget"] = budget
+                    errors = self.finding_errors(finding)
+                    self.assertTrue(any(expected_error in e for e in errors), errors)
+
+    def test_explicit_general_candidate_in_mixed_subject_lane_needs_no_human_budget(
+        self,
+    ) -> None:
+        route = self.route(subjects=["human", "product"])
+        for representation in ("atomic", "macro-summary"):
+            with self.subTest(representation=representation):
+                finding = self.candidate_finding(representation)
+                finding["aggregate_descriptor_candidate"] = self.candidate(human=False)
+                self.assertEqual(self.finding_errors(finding, route=route), [])
+                finding["aggregate_descriptor_candidate"]["effect_budget"] = {
+                    "intended_dimensions": ["object-silhouette"],
+                    "protected_dimensions": ["frame-placement"],
+                }
+                self.assertEqual(self.finding_errors(finding, route=route), [])
+
+    def test_legacy_nonhuman_candidate_needs_no_human_budget(self) -> None:
+        route = self.route(subjects=["product"])
+        finding = self.candidate_finding()
+        finding["aggregate_descriptor_candidate"] = self.candidate(human=False)
+        del finding["aggregate_descriptor_candidate"]["scope"]
+        self.assertEqual(self.finding_errors(finding, route=route), [])
+
+    def test_general_candidate_validates_any_supplied_budget(self) -> None:
+        finding = self.candidate_finding()
+        finding["aggregate_descriptor_candidate"] = self.candidate(human=False)
+        for budget in (
+            None,
+            "budget",
+            {},
+            {"intended_dimensions": ["form"], "protected_dimensions": ["form"]},
+        ):
+            with self.subTest(budget=budget):
+                finding["aggregate_descriptor_candidate"]["effect_budget"] = budget
+                errors = self.finding_errors(finding)
+                self.assertTrue(any("effect_budget" in e for e in errors), errors)
 
     def test_valid_sufficient_summary_needs_no_residuals(self) -> None:
         route = self.route()

@@ -1,6 +1,6 @@
 ---
 id: core.frame-coordinates
-version: 14
+version: 15
 priority: 108
 type: core
 tier: 0
@@ -49,7 +49,9 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 In `prompt`, emit one P0/P1 macro plus decisive residuals. Placement proves no orientation. Treat alignment wording as positive control and enumerate every affected axis.
 
+<!-- profile:audited -->
 In `audited`, disposition every axis. `flexible` or `not-material` needs isolated neutralization; uncertain evidence stays uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block unowned spatial pulls.
+<!-- /profile -->
 
 ## Relational coordinate frames
 

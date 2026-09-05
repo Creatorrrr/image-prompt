@@ -1,0 +1,35 @@
+{
+  "candidate_v2": "440ba78440ba5ad281bef81e7a45239927a6691b2989f2faa7e9e1e98a805309",
+  "candidate_v3": "bc56620bf236ffd979a97e6feaa48087798ae8aa1a3691ee94e5b8c3dffe3d42",
+  "changed_paths": [
+    "tests/test_salience_plan.py",
+    "tools/salience_plan.py"
+  ],
+  "reason": "Existing behavior-evaluation.md line 439 declares independent displayed-skin priority. Removed the contradictory skin-priority-to-whole-person-salience equality, retaining descriptor priority, region, ownership and source-scope validation.",
+  "instructions_unchanged": true,
+  "tests": {
+    "passed": 311,
+    "subtests_passed": 267,
+    "elapsed_seconds": 7.38
+  },
+  "case_01_plan_canonical_sha256": "c37fab969833af3f6c7c0bfdf6e666adf852a6c63b7902e2c3402804948afde0",
+  "case_01_prompt_sha256": "91acd00e0e05a7e542261a14d1f74d27362c01bda5bbde74635c84e137b3fc7a",
+  "actual_case_plan_checks": {
+    "v2": {
+      "exit_code": 1,
+      "result": {
+        "status": "failed",
+        "errors": [
+          "human_appearance_decisions[0].skin_surface viewer priority must match fidelity_salience"
+        ]
+      }
+    },
+    "v3": {
+      "exit_code": 0,
+      "result": {
+        "status": "ok",
+        "errors": []
+      }
+    }
+  }
+}

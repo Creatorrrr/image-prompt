@@ -113,7 +113,9 @@ def _validate_route(route: Any, manifest: dict[str, Any]) -> tuple[list[str], di
     if not isinstance(facets, dict):
         return ["route.normalized_facets must be an object"], route
     try:
-        expected = resolve_analysis_route(facets, manifest)
+        expected = resolve_analysis_route(
+            facets, manifest, analysis_profile=route.get("analysis_profile", "prompt")
+        )
     except (KeyError, TypeError, ValueError) as exc:
         return [f"route cannot be reconstructed: {exc}"], route
     if route != expected:

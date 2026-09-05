@@ -1,0 +1,288 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "ec198d7bf95d55f84a2644e3f6444d135613dd03+pre-existing-working-tree-at-turn-start",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Make source-visible human appearance and skin-surface intent reach the prompt through explicit decisions and controlled composite language, without hardcoding a race, skin value, adjective, or motivating-case combination."
+  },
+  "evidence": [
+    {
+      "id": "e-user-judgment",
+      "kind": "user-judgment",
+      "claim": "The user judges that the prior render differs materially in lighting, broad regional-appearance reading, and skin color, and asks why the earlier abstract composite-label mechanism did not actuate.",
+      "artifact": "Conversation feedback on 2026-08-23; comparative visual judgment, not a factual identity classification."
+    },
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The motivating source visibly contains one adult human with a readable profile, exposed facial and leg skin, and illumination-dependent displayed surface color.",
+      "artifact": "/tmp/codex-remote-attachments/01a02eba-abf4-7652-a65e-1b7ad496ca98/A06837B2-31B8-4FEC-858C-FB160910782D/1-사진-1.jpg; sha256=5cd468f3320deb985ea8670690ac3bfa292070752cdaeec7f5bf306fcde91497; 1024x1280"
+    },
+    {
+      "id": "e-baseline-plan",
+      "kind": "prompt-inspection",
+      "claim": "The persisted routed-human plan contains no generation prior, no surface_color_language record, no appearance metaphor, and Color/Tone regions for background, tulle, and hair but not skin; its authored prompt consequently contains no broad person prior or controlled skin descriptor.",
+      "artifact": "generated_images/reverse-image-prompt-eval-20260823T222756+0900/plan.json sha256=3ffcf93c7d7cbca9f9dea45539a8f6c6cf548c5b4aeba71d124e391646cf993a; prompt.txt sha256=76e1a38b1224464325c5582c38c0eb0b7e9d7e7d5623f7bd820594b1576a372a"
+    },
+    {
+      "id": "e-settings-boundary",
+      "kind": "generation-outcome",
+      "claim": "The motivating run was standalone text generation with no image reference, an unexposed actual built-in model identifier, and a frozen prompt; model-specific response calibration was unavailable.",
+      "artifact": "generated_images/reverse-image-prompt-eval-20260823T222756+0900/settings.json sha256=1f88a60e17ebda504c4ba4b5df38a5181e3b53150d9856801e96f578bf2a8f8a"
+    },
+    {
+      "id": "e-baseline-package",
+      "kind": "package-check",
+      "claim": "Before this intervention, the inherited working tree passed 154 reverse-image-prompt tests with 20 skips and module validation at 37 modules, 16956 runtime words, 3789 Tier-0 words, and 0.0014 duplicate ratio.",
+      "artifact": "Turn-start unittest discovery and validate_modules.py results at baseline revision plus pre-existing working tree."
+    },
+    {
+      "id": "e-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Held-out fixtures verify exact prompt actuation for a current-axis descriptor, phrase changes under different value and undertone evidence, fail-closed behavior on unresolved axes, explicit human omission paths, broad-prior geometry linkage, and rejection of phrase or axis-owner tampering.",
+      "artifact": "skills/reverse-image-prompt/tests/test_color_language.py and test_salience_plan.py; candidate unittest discovery"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The candidate passes 163 reverse-image-prompt tests with 20 skips; module validation reports 37 modules, 16926 runtime words, 3796 Tier-0 words, and 0.0014 duplicate ratio; generated files, Python compilation, and whitespace checks pass.",
+      "artifact": "python -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python skills/reverse-image-prompt/tools/validate_modules.py; python skills/reverse-image-prompt/tools/gen_manifest.py --check; python -m py_compile; git diff --check"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A routed human cannot silently lose material broad appearance or skin-surface intent: each path is explicitly emitted, omitted, or marked uncertain, and emitted surface language is reconstructed from current-source axes with exact control ownership.",
+    "user_appeal": "Preserve the source-visible person reading and skin color in language the image generator can understand, while avoiding a reusable identity or preferred-color preset.",
+    "invariants": [
+      {
+        "id": "inv-person-prior",
+        "statement": "A material broad person cue is non-identifying, source-relative, provenance-bearing, and subordinate to separately actuated visible geometry.",
+        "evidence_ids": [
+          "e-user-judgment",
+          "e-baseline-plan"
+        ],
+        "causal_controls": [
+          "explicit person-prior disposition",
+          "person-gestalt generation-prior provenance",
+          "separate geometry claim and prompt-control links"
+        ]
+      },
+      {
+        "id": "inv-skin-surface",
+        "statement": "Material visible skin is represented as named source-visible Color/Tone regions with coverage and independent value-depth, chroma, undertone, and optional finish evidence.",
+        "evidence_ids": [
+          "e-source",
+          "e-baseline-plan"
+        ],
+        "causal_controls": [
+          "skin-surface disposition",
+          "coverage state",
+          "same-region literal color axes"
+        ]
+      },
+      {
+        "id": "inv-no-default",
+        "statement": "No motivating race, ethnicity, skin value, undertone, finish, surface term, or composite phrase becomes a runtime target.",
+        "evidence_ids": [
+          "e-user-judgment",
+          "e-prompt-tests"
+        ],
+        "causal_controls": [
+          "current-source classification",
+          "deterministic axis serialization",
+          "explicit non-emission reasons"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "the current-source broad person cue or its omission",
+      "value-depth, chroma, undertone, and finish terms",
+      "human and non-human surface term",
+      "exposed, through-sheer, or mixed coverage",
+      "generator-specific friendly labels and calibration"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-person-omission",
+      "scale": "regional",
+      "axis": "person gestalt",
+      "source_state": "The routed readable human may carry a material non-identifying broad appearance cue.",
+      "render_state": "The persisted baseline plan made the optional cue disappear without an explicit emit, omit, or uncertain decision.",
+      "evidence_ids": [
+        "e-user-judgment",
+        "e-baseline-plan"
+      ]
+    },
+    {
+      "id": "m-skin-omission",
+      "scale": "regional",
+      "axis": "skin surface color",
+      "source_state": "Visible skin can require source-relative value, chroma, undertone, coverage, and finish handling.",
+      "render_state": "The baseline Color/Tone contract did not include a skin region or surface-language path.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-plan"
+      ]
+    },
+    {
+      "id": "m-label-dead-end",
+      "scale": "local",
+      "axis": "prompt actuation",
+      "source_state": "Reliable axes should be expressible as one generator-readable composite without adding a preferred category.",
+      "render_state": "The baseline tool classified axes and reviewed only externally supplied friendly labels, but deliberately emitted no prompt prose and the plan had no required actuation decision.",
+      "evidence_ids": [
+        "e-baseline-plan",
+        "e-baseline-package"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-optional-human-path",
+      "stage": "representation",
+      "statement": "Optional person-gestalt guidance can be silently skipped because routed humans previously had no completeness record for broad-prior and skin-surface decisions.",
+      "evidence_ids": [
+        "e-baseline-plan",
+        "e-baseline-package"
+      ],
+      "falsifier": "The baseline validator rejects a routed-human plan that lacks explicit person-prior and skin-surface dispositions."
+    },
+    {
+      "id": "h-external-label-only",
+      "stage": "prompt-priority",
+      "statement": "The earlier surface-language path can classify evidence yet produce no usable composite when no external friendly-label candidate and exact model calibration are available.",
+      "evidence_ids": [
+        "e-baseline-plan",
+        "e-settings-boundary"
+      ],
+      "falsifier": "The baseline tool can deterministically compose current axes without inventing a friendly label, and the plan requires a reviewed emission decision with exact prompt linkage."
+    },
+    {
+      "id": "h-unowned-composite",
+      "stage": "prompt-interaction",
+      "statement": "Adding a free composite phrase without axis ownership could duplicate or contradict literal color controls, so safe composition must wrap rather than repeat them.",
+      "evidence_ids": [
+        "e-baseline-package",
+        "e-prompt-tests"
+      ],
+      "falsifier": "Held-out prompt tests show that arbitrary or misowned composite wording is accepted without adding cross-axis ambiguity."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "For each routed human, require explicit source-relative person-prior and skin-surface decisions. Compose a controlled surface descriptor only from the current value-depth, chroma, undertone, and optional finish classifications; emit it only as one exact wrapper around separately owned prompt-control excerpts.",
+    "generalization_basis": "The rule operates on per-subject dispositions, confidence, evidence, regions, coverage, generic classified axes, and control IDs. It contains no named demographic target, preferred skin class, motivating phrase, source coordinate, or generator workaround, and held-out tests vary the axis values and non-emission paths.",
+    "hypothesis_ids": [
+      "h-optional-human-path",
+      "h-external-label-only",
+      "h-unowned-composite"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/references/surface-color-language.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/color-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/tools/color_language.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/anchor_catalog.py",
+      "skills/reverse-image-prompt/tests/test_color_language.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-23-human-appearance-controlled-descriptor.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-tests"
+      ]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-axis-variation",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "value-depth variation",
+          "undertone variation",
+          "unresolved-axis fail-closed behavior",
+          "non-human surface naming"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "heldout-human-dispositions",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "explicit omission",
+          "readability gate",
+          "generation-prior geometry linkage",
+          "skin-region ownership"
+        ],
+        "evidence_ids": [
+          "e-prompt-tests"
+        ]
+      },
+      {
+        "id": "motivating-source-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": [
+          "broad person reading",
+          "skin surface color",
+          "lighting interaction"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The missing-decision and dead-end-composition paths are now mechanically rejected, and held-out prompt fixtures show axis-sensitive, fail-closed actuation without a preferred demographic or color target. No candidate render or post-change user judgment was collected, so render and aesthetic promotion remain unscored.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt-tests",
+      "e-baseline-plan"
+    ]
+  }
+}

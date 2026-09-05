@@ -5,177 +5,95 @@ description: Reverse engineer a standalone English text-to-image prompt from a p
 
 # Reverse Image Prompt
 
-## Purpose
+## Purpose and task scope
 
-Turn one provided image into a standalone text-to-image prompt that preserves its primary perceptual proposition: the visible concept or appeal that makes the image itself rather than merely a collection of matching objects. Preserve the source-specific composition, form, surface, light, hierarchy, crop, subject, pose, major-component relationships, color, medium, and meaningful artifacts that causally create that proposition.
+Turn one image into a standalone English text-to-image prompt preserving its primary perceptual proposition, composition, visible relationships, form, surface, light, color, medium, crop, and meaningful imperfections. Default to faithful reconstruction.
 
-Default to **faithful** reconstruction. Preserve awkward, soft, cropped, partial, compressed, or mixed-media evidence instead of silently beautifying or completing it.
+First distinguish image work from maintenance of this skill. For structure review or revision, inspect the requested files and `references/behavior-evaluation.md`; an image is required only for an image-dependent test. For image work, inspect the exact attached/local source. Ask for a missing source only when the requested result depends on it. Process multiple images independently unless the user asks to combine them. User instructions determine the task scope and take precedence over skill defaults.
 
-## Intent mode
+## Intent and analysis profile
 
-Infer one mode from the request. Ask only when the modes would materially change the result and intent is genuinely unclear.
+Infer intent from the request; clarify only when materially different outcomes cannot be resolved from context:
 
 - `faithful` (default): preserve visible composition, relationships, and imperfections.
-- `semantic`: extract the transferable concept, composition, and style without incidental defects.
-- `polished-fidelity`: preserve concept and composition while removing only defects the user asks to improve.
-- `diagnostic`: explain the evidence, uncertainties, and likely reproduction limits instead of pretending to provide a production-ready prompt.
+- `semantic`: extract transferable concept/composition/style, omitting incidental defects.
+- `polished-fidelity`: improve only the requested defects while retaining concept and composition.
+- `diagnostic`: explain visible evidence, uncertainty, and reproduction limits.
 
-## Analysis profile
+Choose analysis depth separately:
 
-- `prompt` (default): keep the routed 3–5 lane architecture, but have each lane return compact-v2 viewer-material P0/P1 evidence, compressed P2 support, and grouped P3/non-material topics. A coupled macro records whether it is sufficient, lossy, or uncertain and emits only at-risk residual relations. Use one lane wave, one integration, one independent critic, and at most one targeted repair.
-- `audited`: use full atomic obligations and versioned ledgers for actual generation evidence, source/render or measured fidelity evaluation, skill evaluation, or an explicit audit request. Do not choose it merely because the image contains a person, readable face, or complicated scene.
+- `prompt` (default for extraction or diagnosis): one routed lane wave, compact-v2 P0/P1 evidence, compressed P2, grouped P3, one critic, at most one targeted repair.
+- `audited`: actual generation, source/render or measured fidelity evaluation, or an explicit evidence audit. Use complete atomic obligations and versioned ledgers. Skill structure review alone does not start an image audit.
 
-The route and report contracts live in `references/analysis-orchestration.md`. A compact report may request audited escalation only for an unresolved P0/P1 conflict that cannot be represented honestly; detail-seeking alone is not a reason.
+A human, readable face, complicated scene, or desire for more detail does not itself require `audited`. A compact analysis may escalate for an unresolved P0/P1 conflict that cannot be represented honestly.
 
-## Required module loading
+## Read only the selected execution contract
 
-Always read the complete Tier 0 core:
+Tier 0 always applies: `core.visual-evidence`, `core.frame-coordinates`, `concept.primary-relationship`, `core.fidelity-discipline`, `core.background-color`, `core.pre-emit-gate`, and `core.output-contract` in `modules/`.
 
-- `modules/core.visual-evidence.md`
-- `modules/core.frame-coordinates.md`
-- `modules/concept.primary-relationship.md`
-- `modules/core.fidelity-discipline.md`
-- `modules/core.background-color.md`
-- `modules/core.pre-emit-gate.md`
-- `modules/core.output-contract.md`
+When tools are available, read the complete **selected-profile view** of assigned files:
 
-Then resolve only the applicable routed modules from `manifest.json` or `modules/_registry.md`. When tools are available, run `tools/route_resolver.py --analysis-route --analysis-profile prompt` unless `audited` is required, so unsupported facets, over-budget module sets, and uncovered lanes fail visibly. Read `references/analysis-orchestration.md` and every selected lane file.
+```bash
+python3 tools/profile_context.py --analysis-profile prompt --files modules/core.visual-evidence.md modules/core.frame-coordinates.md modules/concept.primary-relationship.md modules/core.fidelity-discipline.md modules/core.background-color.md modules/core.pre-emit-gate.md modules/core.output-contract.md references/analysis-orchestration.md
+```
 
-Each lane analyst reads the full contents of its assigned modules before reporting. The main integrator reads Tier 0 plus compact lane reports and only reopens a non-core module for a declared conflict or audit; do not make one context absorb every routed detail module by default. If sibling files cannot be read, use the smallest matching compiled profile; use `SKILL.compiled.all.md` only as the final fallback.
+Use `audited` instead when selected. The reader preserves all shared text and excludes only explicit other-profile blocks; it fails if an input is unreadable or a marker is malformed. Do not heuristically skip paragraphs. The returned source/view hashes identify the instructions actually read. Without execution tools, read the files fully and respect the explicit profile boundaries. If sibling files are unavailable, use the smallest matching `SKILL.compiled.*.md` fallback; the all-module bundle is the final fallback and carries both profiles.
 
-If the target generator is known, read `references/model-adapters.md` and apply only that generator's adapter.
+Resolve facets through `manifest.json` or `modules/_registry.md`. Every lane reads its lane file plus its complete assigned module views. The integrator reads Tier 0, the selected orchestration/integration views and lane reports; reopen other modules only for a declared conflict or audit.
 
-When `detail.color-tone-fidelity` is selected and the request requires measured color fidelity, source/render comparison, actual generation, or controlled color revision, also read `references/color-reproduction-evaluation.md`. Keep ordinary incidental-color prompt extraction on the shorter module path.
+Conditional references:
 
-When measured surface color must be converted into controlled human-readable classes, an axis-composed surface descriptor, or a friendly appearance label, also read `references/surface-color-language.md`. Use its versioned policy only as source-visible vocabulary translation, never as biological color truth or a demographic proxy. A controlled descriptor deterministically combines current-source axes but does not decide emission. A candidate may be user-supplied, come from an explicitly versioned task vocabulary, or be a provenance-bound aggregate reading of the current source. Do not install a preferred list or choose a label before observing the image.
+- Named downstream generator: `references/model-adapters.md`. It owns supported tool settings and formatting, while core salience and causal order remain authoritative.
+- Analysis harness/model binding or execution telemetry: `references/analysis-runtime.md`. Analysis configuration is separate from generator settings and never enters the production prompt.
+- Selected color or lighting fidelity with measurement, controlled revision, generation, or source/render comparison: `references/color-reproduction-evaluation.md` or `references/lighting-reproduction-evaluation.md`.
+- Measured surface vocabulary or a surface descriptor/label: `references/surface-color-language.md`. Composite/friendly lighting language: `references/lighting-language.md`. Use current-source axes and explicit provenance; never start from a preferred label or demographic proxy.
+- Skill evaluation/revision: `references/behavior-evaluation.md`.
 
-When `detail.light-form-fidelity` is selected and the request requires measured lighting fidelity, source/render comparison, actual generation, or controlled lighting revision, also read `references/lighting-reproduction-evaluation.md`. Keep ordinary incidental lighting on the shorter medium-module path.
+## Route and analyze
 
-When source-visible lighting must be translated into a compact human-readable composite or a friendly lighting label is considered, also read `references/lighting-language.md`. Classify the lighting axes and global lighting gestalt independently before composing a summary. A candidate may be user-supplied, versioned-vocabulary, or a provenance-bound aggregate reading of the current source. Do not install a preferred named-lighting list or select a label before observing the image.
+Inspect visible evidence before domain conclusions. Never infer identity, protected categories, metadata, artists, cameras, lenses, brands, or hidden content from appearance. Keep externally supplied context separate. In final prose describe visible ambiguity (`indistinct`, `partially obscured`, `soft-edged`) rather than repeated epistemic qualifiers.
 
-When evaluating or revising this skill, also read `references/behavior-evaluation.md`. Do not load that evaluation protocol for an ordinary one-image prompt request.
-
-## Workflow
-
-1. Inspect only the provided image.
-   - Use the attached image directly or inspect the exact local file.
-   - If no image is available, ask for it.
-   - Process multiple images independently unless the user clearly requests a combined prompt.
-
-2. Use visible evidence only.
-   - Do not identify people, characters, brands, artists, cameras, lenses, film stocks, or private identities from appearance. Do not infer race, ethnicity, nationality, religion, or another protected identity category from pixels. User-stated or trusted context may be used only as separately sourced intent, never as visual evidence.
-   - Keep uncertainty internal during analysis. In the final generation prompt, describe the visible ambiguity itself with terms such as `indistinct`, `partially obscured`, `low-legibility`, or `soft-edged`; avoid weakening commands with repeated `likely` or `appears`.
-
-3. Build and resolve this preliminary facet map before making domain conclusions:
+Build a source-supported facet map:
 
 ```yaml
 detected_facets:
-  subjects: []        # human, animal, product, food, architecture, landscape, vehicle, document/data, generic-object
-  medium: []          # photographic, screenshot-ui, non-photographic, unspecified
-  relationships: []   # ordinary, occlusion, replacement, reflection, screen-frame-within-frame, scale-miniature, mixed-media
-  capture_quality: [] # low-quality, compressed, underexposed, motion-blurred, flash, casual-phone
-  detail_risks: []    # face-detail, body-form, skin-surface, color-tone, lighting-fidelity, clothing, hands, text-logo, ui, and other visible routed risks
-  style: []           # a visible narrow risk only
+  subjects: []
+  medium: []
+  relationships: []
+  capture_quality: []
+  detail_risks: []
+  style: []
 ```
 
-4. Run the routed analysis lanes before building the salience plan.
-   - When clean-context delegation is available and permitted, run every required lane concurrently as one read-only wave. Give each the same source bytes/hash, raw request, intent, route fingerprint, analysis profile, lane file, assigned modules, and report schema—never another lane's result, a preferred conclusion, a prior prompt/render, or draft prose. Workers do not write files, author the final prompt, generate, or delegate again.
-   - Otherwise complete the same lane contracts sequentially, freezing each report before the next and marking `sequential-fallback`; do not claim independent analysis.
-   - In `prompt`, each lane details only P0/P1 findings, compresses P2, groups P3/non-material topics, and avoids exhaustive atomic, orientation, appearance, color, or light ledgers. A macro finding must declare summary adequacy; `lossy` or `uncertain` retains only independently drifting P0/P1 relations the macro loses. In `audited`, split material findings into independently drifting atomic obligations and bind retained obligations through `source_obligation_ids`.
-   - Before integration, close every P0/P1 lane handoff against the selected target lane and required module. An absent causal owner is `route-gap`; use the one-reroute budget to refine the facet map rather than dropping the finding. When tools are available, validate the route-bound compact set with `tools/compact_reports.py`.
-   - Integrate by owner key and visible effect, not prose concatenation. Give one independent critic the source, route, reports, priority map, and draft without the main transcript. In `prompt`, it checks blocking P0/P1 loss, hidden macro residuals, dangling handoffs, generic-lighting replacement, pose neutralization, or salience inversion and may name one targeted repair; P2/P3 completeness is advisory and triggers no rerun. Do not rerun successful lanes for more detail. Only a route gap or source/hash mismatch may rerun an affected lane once.
-
-5. Integrate the lane reports with an adaptive hierarchy:
-   1. Record the direct, source-supported appeal separately from the render contract. State it plainly in diagnostic mode. When an aggregate appeal term is itself a high-confidence P0/P1 source invariant and omission would materially change the reading, retain it once in the generation prompt as a bounded semantic anchor, immediately followed by its visible causal controls. Otherwise keep it diagnostic or translate it without emission.
-   2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
-   3. Rank cross-lane evidence by viewer effect: `P0 source signature`, `P1 structural identity`, `P2 supporting`, `P3 incidental`. Any source-specific face, skin presentation, space, clothing, pose, topology, light, color, or capture cue may be P0/P1. Record the smallest causal cue set; module count and raw detail do not set prompt weight.
-   4. In `prompt`, preserve one macro spatial result, then hold viewpoint and crop fixed and test whether it carries the source-visible placement, facing, depth-order, pose, topology, support/contact, occlusion, and completion relations that jointly create the read. Mark it sufficient, lossy, or uncertain and retain only decisive P0/P1 at-risk residuals; group the rest. Treat alignment-style wording as positive multi-axis actuation rather than a neutral default, and inspect every exact spatial clause for all explicit and implicit axes it controls. Keep subject-to-frame placement separate from component-to-component orientation. When the latter is material, record not only direction but any independently material proximity, overlap, or surviving-visibility relation; direction alone may remain literally true after an extreme displacement. In `audited`, build `spatial-orientation/v6`, dispose every required axis, require an isolated per-axis neutralization test before declaring an axis flexible or not-material, run both human counterfactuals, retain coupled-effect summary coverage, and bind every emitted spatial control to a source-consistent prompt-effect audit exactly as specified by the selected modules and evaluation reference.
-   5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. Record only material component relations: region-to-region or region-to-frame reference, relation kind, source-relative observation, evidence, and role. A frame-placement relation must terminate at the frame; a cross-component relation must terminate at another named region. If a cross-component direction can be satisfied while materially changing distance, overlap, or visibility, close the placement triangle with separate subject-to-frame, reference-to-frame, and inter-region relations, then test a direction-held displacement counterfactual. When one invariant spans multiple regions or visible boundary components, preserve the region-to-region boundary topology instead of collapsing it to a category or one broad edge. When partial visibility matters, record the surviving fragments, cropped or hidden counterparts, and completion risk. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
-   6. Analyze each material human through four independent decisions. First, retain exact race, ethnicity, nationality, or other identity context only when supplied by the user or trusted metadata and P0/P1 for the requested generation; pixels never establish it. Second, decide whether a non-identifying broad person prior is needed to resist model-default drift and immediately correct it with visible geometry. Third, describe displayed skin only as source-visible value/chroma/undertone/finish under the observed capture, with its own priority and region scope. Fourth, when a person-aesthetic or attractiveness reading is itself P0/P1 and omission-sensitive, state one bounded aggregate anchor and immediately decompose only its declared intended dimensions while protecting identity, pose, crop, age presentation, garment coverage, light, color, and polish unless those dimensions are separately source-supported and intentionally owned. In `audited`, create `human-appearance/v3` with provenance, priority, effect budget, claim/control binding, and skin-region handling. Never install a motivating label or surface combination as a default.
-   7. Before treating shape, scale, color, surface, or definition as intrinsic, separate effects caused by pose/deformation, perspective, lighting/shadow, material interaction or occlusion, and capture/processing.
-   8. When color/tone is material, `prompt` records only the decisive regional axes, displayed result, protected relation, and uncertainty. Build the full Color/Tone Contract only in `audited`, measured color work, or source/render evaluation. If the draft names displayed key level, shadow floor, highlight rolloff, microcontrast, surface value, chroma, hue, cast, exposure, or processing, route that phrase to an owned Color/Tone control or remove it; a Light/Form or generic clause cannot donate tone ownership.
-   9. When light/form is material, `prompt` records one macro visible result before any rig hypothesis, then only independently drifting P0/P1 regional relations the macro loses: target/reference region, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, background spill, and pose dependency. Split a coarse major region into named Light/Form subregions when one surface contains materially different main plane, shadow zone, transition, or material mass. Give each emitted regional relation exact prompt anchors for both sides. This is a source-driven vocabulary, not a checklist. Build the full Light/Form Contract only in `audited`, measured lighting work, or source/render evaluation.
-   10. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
-
-   In `prompt`, a priority map plus compact findings is sufficient. In `audited`, use this sparse internal map and leave irrelevant fields empty rather than completing a checklist:
-
-```yaml
-direct_appeal_read: ""  # diagnostic explanation only; never copied verbatim into render instructions
-render_contract:
-  mode: relationship-led | appearance-led | information-led | mixed
-  perceptual_proposition: ""
-  invariants:
-    - id: ""
-      axis: form | surface | light-to-form | color | sharpness | hierarchy | topology | information
-      role: primary | supporting
-      observation: ""
-      causal_origin: intrinsic | pose-deformation | perspective | lighting-shadow | material-interaction | processing | spatial-relation | layout
-      target_strength: subtle | moderate | strong
-      source_evidence: []
-      clause_owner: ""
-  flexible_dimensions: []
-  major_regions: []     # relative area, tonal/material role, edge contact, legibility, attention
-  component_relations: []  # material region/frame relation, evidence, and optional partial-visibility budget
-  placement_closures: [] # only when direction can stay true after material proximity, overlap, or visibility drift
-  spatial_orientation_coverage:  # required for routed humans and other material orientation-bearing subjects
-    schema_version: spatial-orientation/v6
-    subjects: []        # material orientation-bearing subject id, kind, visibility, major-region id, evidence
-    evidence_cues: []   # subject-owned visible cue family, observation, evidence, confounders
-    counterfactual_checks: [] # per human: whole orientation plus viewpoint-held residual alignment
-    decisions: []       # decomposed dimension, disposition, cue ids, owner, emitted path or isolated dimension-neutralization evidence
-    coupled_effects: [] # one aggregate control; macro summary first, then only source-visible residual member relations the summary loses
-    prompt_effect_audits: [] # exact spatial clause plus every explicit/implicit affected decision; only source-consistent invariant ownership may emit
-  human_appearance_decisions: [] # human-appearance/v3: external identity context, broad prior, bounded appearance gestalt, displayed skin, and owned/protected dimensions
-  candidate_claims: []  # evidence candidates from modules; not automatic prompt sentences
-  aggregate_effects: [] # non-color/non-light source-relative effects after cross-slot merge
-  emitted_controls: []  # exact final-prompt excerpts for the generic emitted claims
-  prior_clusters: []    # broad aesthetic/capture/genre shorthand provenance, source qualification or calibration, and literal decomposition
-  color_tone_contract: {}  # when material: observation scope, causal effects, then exact post-draft emitted_controls
-  light_form_contract: {}  # when material: observed result, confidence-rated cause, spatial effects, then exact emitted_controls
+```bash
+python3 tools/route_resolver.py --facets '<JSON>' --analysis-route --analysis-profile prompt
 ```
 
-6. Treat selected modules as evidence contributors, not prose entitlements. Merge by owner key, visible effect, direction, region/subject, and causal owner. In `prompt`, retain P0/P1 once, fold P2 into an owned control, and omit P3; only audited work needs complete atomic-obligation and exact-ledger reconciliation. Resolve conflicts and allocate prompt weight in this order:
-   1. Visible-evidence and safety limits.
-   2. P0 source signature and perceptual proposition.
-   3. P1 source-specific appearance, topology, space, information hierarchy, crop, pose, light, color, or capture controls.
-   4. P2 support that can be expressed without competing with P0/P1.
-   5. Omit P3, flexible inventory, and generic shorthand unless requested.
+Choose subject and medium, all material visible relationships, and only material detail/style risks. Readable/prominent faces route `face-detail`; body-form, color-tone, and lighting fidelity route only when first-order or explicitly prioritized. Ordinary relationships, cropped edges, and small props are core-handled. The normal non-core module maximum is eight. If all excess risks are material, report the coverage limit rather than silently dropping one. The resolved route is authoritative for lane count; currently three to six lanes may activate.
 
-7. Draft the smallest prompt that carries P0/P1, then only useful P2 support. Put the source-specific signature near the beginning and let order reflect what a viewer notices and would miss first. Use **retain-and-decompose** for material aggregate language: state one evidence-qualified abstract descriptor, then immediately unpack it into owned form, surface, light, color, spatial, hierarchy, or capture controls. Do not use abstraction without controls, and do not assume detailed controls preserve the same global meaning when the omission counterfactual says otherwise. When pose and illumination jointly shape the visible form, order the causal passage as proposition, camera/crop, macro spatial result, at-risk spatial residuals, pose-bound Light/Form relations, surface or garment response, then background/capture; later prose must not normalize an earlier relation. Audit each exact spatial clause as a whole: semantic classes equivalent to centered, frontal, upright, vertical, straight, balanced, or aligned can alter several axes even when only one is named. List those effects as explicit or implicit, and rewrite or remove the clause if any affected axis lacks invariant or coupled ownership. For a human, place material user/trusted identity context once before the appearance passage, keep a broad person prior next to correcting geometry, and let one bounded person-aesthetic anchor lead only its contiguous owned decomposition. State each aggregate once, remove competing normalization instead of adding counter-negatives, and never let incidental inventory or an aesthetic anchor change protected skin, makeup, garment coverage, pose, crop, lighting, or polish. Terms such as `source-relative`, `source-visible`, `source-specific`, `source-supported`, and `current-source` are analysis/provenance vocabulary only. Compile each one into the literal visible target—such as viewer-left placement, a three-quarter head/torso relation, broad highlight coverage, or a named surface value—before it enters `PROMPT:`. In `audited`, additionally reconcile every atomic obligation and exact generic, Color/Tone, and Light/Form control ledger according to the selected modules. The authored `PROMPT:`, `NEGATIVE PROMPT:`, and settings text may contain only exact owned controls or qualified summaries plus structural labels and punctuation; do not add free semantic bridge prose after ledger reconciliation.
+When clean-context delegation is available and permitted, run required lanes as one read-only wave, concurrently up to available capacity. Queued lanes still receive fresh contexts. Each receives the same source bytes/hash, raw request, intent, route/profile/budget, its lane file and assigned module views, and report schema. Do not supply another lane's conclusions, prior prompts/renders, or preferred wording. Workers do not write files, generate, author final prompts, or delegate again.
 
-8. Apply the profile-aware pre-emit gate. Read `PROMPT:` with the image, plan, reports, and conversation hidden. Reject any clause that still asks the generator to match, preserve, or infer an absent source/reference/original instead of stating the target itself. Run one independent compact critic in `prompt`; apply at most one targeted repair and stop. If a P0/P1 conflict remains unresolved without guessing, report the limitation rather than opening another analysis cycle.
+If isolated delegation is unavailable, freeze each sequential report and mark `sequential-fallback`; do not claim independence. A malformed lane may be retried once; a route gap/source mismatch may reroute the affected work once. Never rerun a successful lane for extra detail. Use a compact report's structured P0/P1 handoff to close an absent causal owner, lane, or required module before integration.
 
-9. For actual generation or source/render evaluation, use `audited` and persist the validated bundle, reconciled `plan.json`, exact `prompt.txt` and SHA-256, settings, reference handling, and attempt log. Run `tools/analysis_bundle.py` and `tools/salience_plan.py` before freezing; the latter must prove complete semantic ownership of the authored text, not merely the presence of expected excerpts. Ordinary prompt-only extraction needs neither persisted ledgers nor v6 processing.
+## Integrate, check, and emit
 
-## Routing rules
+Read the selected view of `references/integration-contract.md`. Preserve the smallest P0/P1 causal cue set, merge useful P2, omit P3. Integrate by owner and visible effect, never by report length or prose concatenation. One supported aggregate descriptor may lead its immediately owned decomposition; it cannot introduce an unowned appearance, pose, crop, light, color, or polish change.
 
-- Always load Tier 0.
-- Select at least one subject and one medium; use the generic/unspecified fallbacks only when evidence is unclear.
-- Load every visible Tier 1 relationship module, including both photographic and non-photographic medium modules for genuine mixed media.
-- Load Tier 3 and Tier 4 modules only for visible, material risks.
-- For a prominent or clearly readable human face, add `face-detail`; for a small, blurred, shadowed, or heavily occluded face, keep only scale-appropriate human evidence and do not invent micro-features.
-- Add a human body-form risk only when visible proportion, contour/tissue, muscle definition, skin surface, tension, or body-region hierarchy is first-order. Do not route it merely because a person or torso is visible.
-- Add `detail.color-tone-fidelity` only when color or tonal behavior is first-order, the user explicitly prioritizes tone fidelity, or confusion among intrinsic color, illumination, cast, exposure, and processing would materially change the image. Do not route it for ordinary incidental color.
-- Add `detail.light-form-fidelity` only when lighting, shadow topology, light-induced form, material response, or background spill is first-order; when the user explicitly prioritizes lighting fidelity; or when a source/render comparison identifies lighting as a material residual, including lost regional value separation across the same material. Do not route it for ordinary incidental lighting already handled by the selected medium module.
-- Treat the spatial topology of major components as Tier 0 evidence, but let the dominant fidelity axis determine its prompt weight. Do not force ordinary topology to outrank appearance or information invariants.
-- Treat adaptive aesthetic analysis as Tier 0 evidence, not as a style preset. Do not load extra style modules merely to fill an aesthetic checklist.
-- Module selection controls what must be checked, not how many words it receives. A routed detail module may contribute no standalone sentence when its evidence is already owned by a primary invariant.
-- Keep the normal route within 3-8 non-core modules. Refine an over-budget facet map instead of loading every plausible module.
-- Treat `ordinary`, `cropped-edges`, and `small-props` as core-handled observations unless another visible risk requires a dedicated module.
-- Do not use a broad label merely because it is familiar or desirable. Retain one when the current source independently supports it as P0/P1, omission causes material drift, provenance is explicit, and adjacent literal controls prevent normalization; otherwise omit it.
+The output contract owns semantic order: source signature and structural identity first, with camera/crop and pose before dependent Light/Form. Generator formatting cannot move background or incidental inventory ahead of those controls. Compile source-relative analysis vocabulary into literal viewer-relative placement, geometry, displayed surface, and lighting targets.
 
-## Output selection
+Validate compact reports with `tools/compact_reports.py`. Run one source-aware critic as specified in the orchestration contract and apply at most one targeted repair. Independently check the exact production text with:
 
-Always write the production prompt in English. Match the response language for diagnostic explanation unless the user asks otherwise.
+```bash
+python3 tools/prompt_lint.py PROMPT.txt
+```
 
-- Always emit `PROMPT:` for generation requests.
-- Emit `NEGATIVE PROMPT:` only when the user requests it or the named downstream generator supports a separate negative prompt.
-- Emit `RECOMMENDED SETTINGS:` only when requested, when a target generator is known, or when source dimensions require a model-specific target-size explanation.
-- For `diagnostic` mode, first name the visible core appeal or perceptual proposition directly, then explain the causal form, surface, lighting, color, hierarchy, spatial, and capture evidence. Distinguish invariants from pose or placement differences that would not destroy the aesthetic. Include a candidate prompt only if useful.
-- Keep unsupported, unbounded, or merely preferred appeal language in the explanation layer. A source-visible P0/P1 aggregate descriptor may enter the production prompt once through the retain-and-decompose path; its adjacent controls, source fidelity ceiling, and anti-polish boundaries remain authoritative.
-- Essential crop, relationship, occlusion, high-salience aesthetic, and medium constraints must remain in `PROMPT:` even when optional sections are present.
+This narrow text check needs no plan/image and does not prove semantic or visual fidelity. The source-aware critic also evaluates standalone meaning; a same-context reread is not a claim that the critic has forgotten the image. Report unresolved P0/P1 limitations rather than starting another refinement cycle.
 
-Do not mention or depend on the attached, source, reference, input, provided, or original image inside the generated prompt. `Keep`, `preserve`, `retain`, `remain`, and `stay` are allowed only when the same prompt names the visible state or relation they govern; they may not point outside the prompt.
+For `audited`, persist the validated bundle, reconciled plan, exact production prompt/hash, settings/reference handling, and attempt log before generation. Run `tools/analysis_bundle.py` and `tools/salience_plan.py PLAN.json --prompt PROMPT.txt`. Apply full obligation, spatial-orientation/v6, human-appearance/v3, Color/Tone and Light/Form checks where required; only audited work reconciles every literal control and qualified summary. Freeze after successful validation and critic review. Ordinary prompt-only extraction needs no full ledgers.
+
+Always produce English `PROMPT:` for generation requests. Emit `NEGATIVE PROMPT:` only when requested or separately supported by the generator; emit settings only when requested or needed for a known generator/size handoff. Essential crop, topology, occlusion, medium, hierarchy and fidelity constraints belong in the positive prompt. Diagnostic explanation follows the user's language and names the visible proposition before causal details.
+
+The prompt must stand alone after the image, analysis, conversation, and optional sections disappear. `Keep`, `preserve`, `retain`, `remain`, and `stay` may govern a fully named visible state; they cannot refer outside the prompt. Keep package validity, prompt fidelity, delivered pixels, pixel fidelity, and user judgment separate.
 
 
 ---
@@ -195,11 +113,11 @@ Resolve `reverse-image-analysis-route/v2` with `tools/route_resolver.py --analys
 
 Do not enter `audited` merely because a human, readable face, complicated scene, or routed detail module is present. Escalate only when the task requires audited evidence or the compact profile reports one unresolved P0/P1 conflict that cannot be represented honestly.
 
-Both profiles use the same routed set of three to five material lanes for an ordinary image. `lane.global-composition` is always required. A non-core module that reaches no lane is a visible route failure.
+Both profiles use the same source-routed lane set (currently three to six lanes). `lane.global-composition` is always required. A non-core module that reaches no lane is a visible route failure.
 
 ## 2. Run one isolated lane wave
 
-When clean-context delegation is available and permitted, run all required lanes concurrently. Each read-only worker receives only:
+When clean-context delegation is available and permitted, run all required lanes concurrently. Respect available worker capacity: lanes in the same logical wave may queue, but each starts with a fresh context. Queueing is not a retry or another analysis wave; never reuse a previous lane's transcript. Each read-only worker receives only:
 
 - the same source artifact and SHA-256;
 - raw request and resolved intent;
@@ -211,6 +129,7 @@ Do not pass another lane's result, a preferred conclusion, previous prompt/rende
 
 If delegation is unavailable, freeze each report before starting the next and mark `sequential-fallback`; do not claim independence. Do not rerun a successful lane to seek more detail. A missing or malformed report may be retried once for that lane only; source/hash mismatch or an actual route gap may restart the affected route once.
 
+<!-- profile:prompt -->
 ## 3. Compact prompt report
 
 In `prompt`, each lane returns `reverse-image-analysis-lane-report/compact-v2`:
@@ -239,6 +158,7 @@ In `prompt`, each lane returns `reverse-image-analysis-lane-report/compact-v2`:
       "control_requirement": "causal requirement, not final prompt prose",
       "summary_adequacy": null,
       "aggregate_descriptor_candidate": {
+        "scope": "human-appearance",
         "phrase": "optional current-source aggregate reading",
         "candidate_source": {
           "kind": "source-visible-approximation",
@@ -270,7 +190,7 @@ Use the smallest causally sufficient evidence set. Detail P0 and P1; compress P2
 
 Set `representation` to `atomic` when the observation is already one independently drifting result. Set it to `macro-summary` when one compact pose, topology, lighting, surface, or capture read compresses several source-visible relations. Every macro summary carries `summary_adequacy.verdict = sufficient | lossy | uncertain`. A sufficient summary has no residuals. A lossy or uncertain summary lists only P0/P1 `at_risk_relations`, each with source-relative subject/region ids, relation kind, visible result, evidence, confidence, control requirement, causal owner lane, and any material dependencies. This is a lightweight loss audit, not an atomic ledger: do not enumerate relations the summary already preserves.
 
-`aggregate_descriptor_candidate` is optional and case-bound. Include it only when the phrase itself carries a P0/P1 gestalt not preserved by detail alone; its decomposition requirements remain separately owned. A human aggregate additionally declares intended and protected dimensions, always protecting identity context. Exact identity context uses a separate provenance-bound integration handoff (`user-supplied` or `trusted-metadata`, external reference, viewer priority, no pixel inference). Never fill either field from a preferred vocabulary. Split a compact finding only when two visible results can drift independently and both are P0/P1. Otherwise keep the causal result together. Compact reports do not create exhaustive atomic obligations, full color/light ledgers, `spatial-orientation/v6`, or `human-appearance/v3`.
+`aggregate_descriptor_candidate` is optional and case-bound. New candidates name `scope: general | human-appearance`. When scope is absent in an older report, assignment of `subject.human` requires the human effect budget; an explicit general candidate in a mixed lane remains a general claim, and the critic checks whether that scope is truthful. Validate any supplied budget even for general candidates. Include it only when the phrase itself carries a P0/P1 gestalt not preserved by detail alone; its decomposition requirements remain separately owned. A human aggregate additionally declares intended and protected dimensions, always protecting identity context. Exact identity context uses a separate provenance-bound integration handoff (`user-supplied` or `trusted-metadata`, external reference, viewer priority, no pixel inference). Never fill either field from a preferred vocabulary. Split a compact finding only when two visible results can drift independently and both are P0/P1. Otherwise keep the causal result together. Compact reports do not create exhaustive atomic obligations, full color/light ledgers, `spatial-orientation/v6`, or `human-appearance/v3`.
 
 After the lane wave, close every structured P0/P1 handoff before integration. A lane-to-lane handoff names its source finding or residual ids, target lane, required routed module, reason, and `route_required: true`. The target lane must be present and the required module must be assigned to it. An absent target or owner is `route-gap`, not an ignorable advisory; use the existing one-reroute budget to refine the facet map, then rerun only the affected route. A provenance note intended only for the integrator sets `route_required: false` and does not invent a lane dependency. When tool execution is available, validate the temporary or persisted set with:
 
@@ -288,6 +208,8 @@ python tools/compact_reports.py COMPACT_SET.json
 ```
 
 The checker validates schema, source/route binding, summary residual shape, module assignment, and handoff closure. It does not validate the visual interpretation.
+
+<!-- /profile -->
 
 ## 4. Viewer-first integration
 
@@ -332,6 +254,7 @@ The critic returns `pass`, `targeted-repair`, or `blocked`, with exact affected 
 
 When runtime telemetry is available, the orchestrator records route, lane-wall, integration, critic, and repair durations plus report sizes. Lane workers do not spend analysis time estimating their own timing.
 
+<!-- profile:audited -->
 ## 6. Audited profile
 
 In `audited`, each lane returns `reverse-image-analysis-lane-report/v2`. Every required topic is individually disposed as `analyzed`, `not-material`, `uncertain`, or `blocked`; each material finding is split into independently drifting atomic visible-result obligations. Integrate them into `reverse-image-analysis-bundle/v2`, dispose every finding and obligation once, bind retained obligations through `source_obligation_ids`, and preserve role and causal ownership.
@@ -343,11 +266,92 @@ python tools/analysis_bundle.py ANALYSIS_BUNDLE.json
 python tools/salience_plan.py PLAN.json --prompt PROMPT.txt
 ```
 
-The audited critic binds to source, route, reports, obligations, plan hash, and the literal prompt. It reads the prompt once more without the source or analysis context and blocks unresolved external reference language or unowned semantic residue even when every expected ledger excerpt is present. It may request one targeted integration repair and one verification pass. Only a route gap or source-artifact mismatch may rerun an affected lane. If the repair budget is exhausted, report `blocked`; never start an open-ended refinement loop.
+The audited critic binds to source, route, reports, obligations, plan hash, and the literal prompt. It checks the prompt for unresolved external reference language or unowned semantic residue even when every expected ledger excerpt is present. Run the source-free text checker separately; do not describe a source-aware critic's reread as physically isolated. It may request one targeted integration repair and one verification pass. Only a route gap or source-artifact mismatch may rerun an affected lane. If the repair budget is exhausted, report `blocked`; never start an open-ended refinement loop.
+
+<!-- /profile -->
 
 ## 7. Evidence boundary
 
 Route validity, package validity, lane coverage, prompt behavior, delivered pixels, and user judgment are separate evidence layers. A compact prompt can be useful without claiming audited completeness, and an audited bundle can be valid without proving visual fidelity.
+
+
+---
+
+# Integration and prompt actuation
+
+Read after the lane wave. Use the selected profile view through `tools/profile_context.py`; the shared rules retain visible meaning, while the audited block defines the persisted plan. The core output contract owns order; generator adapters may format controls but cannot reorder their salience or causal dependencies.
+
+5. Integrate the lane reports with an adaptive hierarchy:
+   1. Record the direct, source-supported appeal separately from the render contract. State it plainly in diagnostic mode. When an aggregate appeal term is itself a high-confidence P0/P1 source invariant and omission would materially change the reading, retain it once in the generation prompt as a bounded semantic anchor, immediately followed by its visible causal controls. Otherwise keep it diagnostic or translate it without emission.
+   2. Classify the dominant fidelity axis as `relationship-led`, `appearance-led`, `information-led`, or `mixed`.
+   3. Rank cross-lane evidence by viewer effect: `P0 source signature`, `P1 structural identity`, `P2 supporting`, `P3 incidental`. Any source-specific face, skin presentation, space, clothing, pose, topology, light, color, or capture cue may be P0/P1. Record the smallest causal cue set; module count and raw detail do not set prompt weight.
+   4. In `prompt`, preserve one macro spatial result, then hold viewpoint and crop fixed and test whether it carries the source-visible placement, facing, depth-order, pose, topology, support/contact, occlusion, and completion relations that jointly create the read. Mark it sufficient, lossy, or uncertain and retain only decisive P0/P1 at-risk residuals; group the rest. Treat alignment-style wording as positive multi-axis actuation rather than a neutral default, and inspect every exact spatial clause for all explicit and implicit axes it controls. Keep subject-to-frame placement separate from component-to-component orientation. When the latter is material, record not only direction but any independently material proximity, overlap, or surviving-visibility relation; direction alone may remain literally true after an extreme displacement.
+<!-- profile:audited -->
+In `audited`, build `spatial-orientation/v6`, dispose every required axis, require an isolated per-axis neutralization test before declaring an axis flexible or not-material, run both human counterfactuals, retain coupled-effect summary coverage, and bind every emitted spatial control to a source-consistent prompt-effect audit exactly as specified by the selected modules and evaluation reference.
+<!-- /profile -->
+
+   5. Map the few largest coherent image regions by relative area, tonal role, edge contact, legibility, and attention. Record only material component relations: region-to-region or region-to-frame reference, relation kind, source-relative observation, evidence, and role. A frame-placement relation must terminate at the frame; a cross-component relation must terminate at another named region. If a cross-component direction can be satisfied while materially changing distance, overlap, or visibility, close the placement triangle with separate subject-to-frame, reference-to-frame, and inter-region relations, then test a direction-held displacement counterfactual. When one invariant spans multiple regions or visible boundary components, preserve the region-to-region boundary topology instead of collapsing it to a category or one broad edge. When partial visibility matters, record the surviving fragments, cropped or hidden counterparts, and completion risk. For relationship-led or mixed images, map major-component topology, contact/support, containment, boundary crossing, occlusion, and negative space. For appearance-led images, map form, surface, light-to-form, color, material roles, and subject/environment hierarchy first. For information-led images, map layout, reading order, legibility, and container hierarchy first.
+   6. Analyze each material human through four independent decisions. First, retain exact race, ethnicity, nationality, or other identity context only when supplied by the user or trusted metadata and P0/P1 for the requested generation; pixels never establish it. Second, decide whether a non-identifying broad person prior is needed to resist model-default drift and immediately correct it with visible geometry. Third, describe displayed skin only as source-visible value/chroma/undertone/finish under the observed capture, with its own priority and region scope. Fourth, when a person-aesthetic or attractiveness reading is itself P0/P1 and omission-sensitive, state one bounded aggregate anchor and immediately decompose only its declared intended dimensions while protecting identity, pose, crop, age presentation, garment coverage, light, color, and polish unless those dimensions are separately source-supported and intentionally owned.
+<!-- profile:audited -->
+In `audited`, create `human-appearance/v3` with provenance, priority, effect budget, claim/control binding, and skin-region handling.
+<!-- /profile -->
+ Never install a motivating label or surface combination as a default.
+   7. Before treating shape, scale, color, surface, or definition as intrinsic, separate effects caused by pose/deformation, perspective, lighting/shadow, material interaction or occlusion, and capture/processing.
+   8. When color/tone is material, `prompt` records only the decisive regional axes, displayed result, protected relation, and uncertainty. Build the full Color/Tone Contract only in `audited`, measured color work, or source/render evaluation. If the draft names displayed key level, shadow floor, highlight rolloff, microcontrast, surface value, chroma, hue, cast, exposure, or processing, route that phrase to an owned Color/Tone control or remove it; a Light/Form or generic clause cannot donate tone ownership.
+   9. When light/form is material, `prompt` records one macro visible result before any rig hypothesis, then only independently drifting P0/P1 regional relations the macro loses: target/reference region, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, background spill, and pose dependency. Split a coarse major region into named Light/Form subregions when one surface contains materially different main plane, shadow zone, transition, or material mass. Give each emitted regional relation exact prompt anchors for both sides. This is a source-driven vocabulary, not a checklist. Build the full Light/Form Contract only in `audited`, measured lighting work, or source/render evaluation.
+   10. Add only materially important pose, camera/perspective, focus, lighting, background, medium, texture, artifact, UI, and text evidence.
+
+<!-- profile:audited -->
+   In `prompt`, a priority map plus compact findings is sufficient. In `audited`, use this sparse internal map and leave irrelevant fields empty rather than completing a checklist:
+
+```yaml
+direct_appeal_read: ""  # diagnostic explanation only; never copied verbatim into render instructions
+render_contract:
+  mode: relationship-led | appearance-led | information-led | mixed
+  perceptual_proposition: ""
+  invariants:
+    - id: ""
+      axis: form | surface | light-to-form | color | sharpness | hierarchy | topology | information
+      role: primary | supporting
+      observation: ""
+      causal_origin: intrinsic | pose-deformation | perspective | lighting-shadow | material-interaction | processing | spatial-relation | layout
+      target_strength: subtle | moderate | strong
+      source_evidence: []
+      clause_owner: ""
+  flexible_dimensions: []
+  major_regions: []     # relative area, tonal/material role, edge contact, legibility, attention
+  component_relations: []  # material region/frame relation, evidence, and optional partial-visibility budget
+  placement_closures: [] # only when direction can stay true after material proximity, overlap, or visibility drift
+  spatial_orientation_coverage:  # required for routed humans and other material orientation-bearing subjects
+    schema_version: spatial-orientation/v6
+    subjects: []        # material orientation-bearing subject id, kind, visibility, major-region id, evidence
+    evidence_cues: []   # subject-owned visible cue family, observation, evidence, confounders
+    counterfactual_checks: [] # per human: whole orientation plus viewpoint-held residual alignment
+    decisions: []       # decomposed dimension, disposition, cue ids, owner, emitted path or isolated dimension-neutralization evidence
+    coupled_effects: [] # one aggregate control; macro summary first, then only source-visible residual member relations the summary loses
+    prompt_effect_audits: [] # exact spatial clause plus every explicit/implicit affected decision; only source-consistent invariant ownership may emit
+  human_appearance_decisions: [] # human-appearance/v3: external identity context, broad prior, bounded appearance gestalt, displayed skin, and owned/protected dimensions
+  candidate_claims: []  # evidence candidates from modules; not automatic prompt sentences
+  aggregate_effects: [] # non-color/non-light source-relative effects after cross-slot merge
+  emitted_controls: []  # exact final-prompt excerpts for the generic emitted claims
+  prior_clusters: []    # broad aesthetic/capture/genre shorthand provenance, source qualification or calibration, and literal decomposition
+  color_tone_contract: {}  # when material: observation scope, causal effects, then exact post-draft emitted_controls
+  light_form_contract: {}  # when material: observed result, confidence-rated cause, spatial effects, then exact emitted_controls
+```
+
+<!-- /profile -->
+
+6. Treat selected modules as evidence contributors, not prose entitlements. Merge by owner key, visible effect, direction, region/subject, and causal owner. In `prompt`, retain P0/P1 once, fold P2 into an owned control, and omit P3; only audited work needs complete atomic-obligation and exact-ledger reconciliation. Resolve conflicts and allocate prompt weight in this order:
+   1. Visible-evidence and safety limits.
+   2. P0 source signature and perceptual proposition.
+   3. P1 source-specific appearance, topology, space, information hierarchy, crop, pose, light, color, or capture controls.
+   4. P2 support that can be expressed without competing with P0/P1.
+   5. Omit P3, flexible inventory, and generic shorthand unless requested.
+
+7. Draft the smallest prompt that carries P0/P1, then only useful P2 support. Put the source-specific signature near the beginning and let order reflect what a viewer notices and would miss first. Use **retain-and-decompose** for material aggregate language: state one evidence-qualified abstract descriptor, then immediately unpack it into owned form, surface, light, color, spatial, hierarchy, or capture controls. Do not use abstraction without controls, and do not assume detailed controls preserve the same global meaning when the omission counterfactual says otherwise. When pose and illumination jointly shape the visible form, order the causal passage as proposition, camera/crop, macro spatial result, at-risk spatial residuals, pose-bound Light/Form relations, surface or garment response, then background/capture; later prose must not normalize an earlier relation. Audit each exact spatial clause as a whole: semantic classes equivalent to centered, frontal, upright, vertical, straight, balanced, or aligned can alter several axes even when only one is named. List those effects as explicit or implicit, and rewrite or remove the clause if any affected axis lacks invariant or coupled ownership. For a human, place material user/trusted identity context once before the appearance passage, keep a broad person prior next to correcting geometry, and let one bounded person-aesthetic anchor lead only its contiguous owned decomposition. State each aggregate once, remove competing normalization instead of adding counter-negatives, and never let incidental inventory or an aesthetic anchor change protected skin, makeup, garment coverage, pose, crop, lighting, or polish. Terms such as `source-relative`, `source-visible`, `source-specific`, `source-supported`, and `current-source` are analysis/provenance vocabulary only. Compile each one into the literal visible target—such as viewer-left placement, a three-quarter head/torso relation, broad highlight coverage, or a named surface value—before it enters `PROMPT:`.
+<!-- profile:audited -->
+In `audited`, additionally reconcile every atomic obligation and exact generic, Color/Tone, and Light/Form control ledger according to the selected modules. The authored `PROMPT:`, `NEGATIVE PROMPT:`, and settings text may contain only exact owned controls or qualified summaries plus structural labels and punctuation; do not add free semantic bridge prose after ledger reconciliation.
+<!-- /profile -->
 
 
 ---
@@ -531,7 +535,11 @@ Always.
 - Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
 - Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing.
 - In the default `prompt` profile, keep only P0/P1 viewer-material results, compress P2 support, and group P3 or non-material evidence instead of enumerating it.
+
+<!-- profile:audited -->
 - In `audited`, preserve independently drifting material results as atomic obligations; uncertain attribution never erases a supported direction.
+<!-- /profile -->
+
 
 ## Prompt contribution
 
@@ -572,7 +580,9 @@ Preserve region-share hierarchy when flexible pose, viewpoint, or placement chan
 
 In `prompt`, emit one P0/P1 macro plus decisive residuals. Placement proves no orientation. Treat alignment wording as positive control and enumerate every affected axis.
 
+<!-- profile:audited -->
 In `audited`, disposition every axis. `flexible` or `not-material` needs isolated neutralization; uncertain evidence stays uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block unowned spatial pulls.
+<!-- /profile -->
 
 ## Relational coordinate frames
 
@@ -631,7 +641,11 @@ Form internally:
 2. Record the direct appeal reading separately before deciding actuation. In generation, retain it once only as high-confidence P0/P1 source evidence whose omission causes material drift; immediately follow with visible mechanisms. Otherwise emit only the mechanisms.
 3. The dominant fidelity axis and smallest causal cue set.
 4. Rank visible effects by a viewer counterfactual: `P0` changes the source signature, `P1` changes structural identity, `P2` supports the read, and `P3` is incidental. Face, skin presentation, space, clothing, pose, topology, light, color, or capture may occupy any level; category and module count do not set priority.
-5. Separate aesthetic invariants from flexible dimensions before drafting. An invariant would materially weaken or change the proposition if altered; a flexible dimension may vary without losing it. In `prompt`, retain only the smallest P0/P1 causal set and merge P2 support. In `audited`, build the full ledger. Build an invariant salience ledger. Bind retained atomic obligations.
+5. Separate aesthetic invariants from flexible dimensions before drafting. An invariant would materially weaken or change the proposition if altered; a flexible dimension may vary without losing it. In `prompt`, retain only the smallest P0/P1 causal set and merge P2 support.
+<!-- profile:audited -->
+In `audited` only, build the full ledger: Build an invariant salience ledger. Bind retained atomic obligations.
+<!-- /profile -->
+
 6. For relationship-led or mixed images, the stable zones and each critical pair's side, containment, contact, support, depth, occlusion, and boundary crossing.
 7. One to three likely failures, including a category default replacing source-specific evidence.
 
@@ -792,6 +806,7 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 - Keep global tonal range and local form contrast as separate effects.
 - Give every material shadow event a source-supported owner or mark it mixed or uncertain.
 
+<!-- profile:audited -->
 ## Audited-only ledger checks
 
 Apply this section only in `audited`, measured fidelity, or source/render evaluation:
@@ -799,6 +814,8 @@ Apply this section only in `audited`, measured fidelity, or source/render evalua
 - For color/tone, verify each aggregate source-relative target and causal contribution. Trace every required intrinsic axis through same-region/same-axis effect, claim, and axis-control; reconcile each exact excerpt with its layer and full effect budget.
 - For Light/Form, verify each target and emitted causal contribution, then reconcile every exact excerpt with one owner and complete effect list.
 - Before generation, validate appearance, spatial counterfactuals, exact effect audits, obligation binding, and ledger separation. Mask every owned control or qualified summary in the complete prompt; after structural labels and punctuation, reject semantic residue. Expected excerpts alone do not prove ownership.
+
+<!-- /profile -->
 
 ## Final checks
 
@@ -837,7 +854,7 @@ Write a standalone English prompt ordered first by viewer importance, then by th
 - Put P0 source-signature controls first, followed by P1 structural identity.
 - Merge P2 support into an owned clause or one short later cue; omit P3 unless the user requests it.
 
-- Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
+- Begin with the perceptual proposition and its material frame shape, medium, and fidelity ceiling; supporting background does not precede P0/P1.
 - **Relationship-led:** crop, major zones, topology, interaction, then appearance.
 - **Appearance-led:** causal form, surface, light, color, hierarchy, then flexible pose or inventory.
 - **Information-led:** layout, reading order, hierarchy, legibility, then decoration.
@@ -1040,7 +1057,11 @@ For each important region:
 - record role, relation to another region, confidence, and uncertainty;
 - separate intrinsic surface from illumination, global cast/palette, exposure/tone curve, and processing.
 
+
+<!-- profile:audited -->
 In the full contract: For every intrinsic value, chroma, or hue axis, record `role`, `evidence_scope`, and `emission`. Use `required` only when the axis materially needs a final prompt control. Use `diagnostic-only` with a concrete non-emission reason when an axis is low-confidence, incidental, or already unsupported at prompt precision. Link every required intrinsic axis to exactly one same-region, same-axis aggregate effect.
+<!-- /profile -->
+
 
 Assign every material color or tone observation to intrinsic surface, illumination, global cast or palette shift, exposure or tone curve, or processing.
 
@@ -1062,6 +1083,7 @@ Treat a possible neutral as a calibration anchor only with visible evidence and 
 
 Without a reliable neutral, preserve relative relationships and mark global-cast uncertainty. Translate photographic cast into white-balance/capture language and non-photographic cast into palette/rendering language.
 
+<!-- profile:audited -->
 When measurement is justified, use multiple representative patches, robust summaries, profile status, and disclosed display-space assumptions.
 
 Classify auxiliary references as `calibrated-color-target`, `color-managed-reference`, `uncalibrated-vocabulary-chart`, or `photographic-example`. Only the first two establish numeric targets; inconsistent labels remain vocabulary.
@@ -1080,6 +1102,8 @@ Use measurements as diagnostic evidence, never as proof of intrinsic color. The 
 
 Estimate the shared Lab movement from contextual groups, then subtract it from each target group's movement to expose the target-local residual. Without an explicit tolerance policy, report the decomposition as unscored.
 
+<!-- /profile -->
+
 ## Cross-layer effect budget
 
 Merge color and tone claims by their shared perceptual effect across causal layers, not only by semantic-slot name.
@@ -1093,7 +1117,11 @@ Give each material effect a source-relative identifier covering region, axis, di
 
 ## Final prompt control ledger
 
-In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. After reconciliation, remove any final-prompt phrase about displayed key, shadow floor, highlight rolloff, microcontrast, surface value/chroma/hue, cast, exposure, or processing that is absent from the Color/Tone ledger; it cannot survive as generic bridge prose or borrow ownership from Light/Form. In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
+
+<!-- profile:audited -->
+In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. After reconciliation, remove any final-prompt phrase about displayed key, shadow floor, highlight rolloff, microcontrast, surface value/chroma/hue, cast, exposure, or processing that is absent from the Color/Tone ledger; it cannot survive as generic bridge prose or borrow ownership from Light/Form.
+<!-- /profile -->
+ In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
 
 When a draft over-pulls an axis, replace or remove its positive control rather than appending an opposing negative.
 
@@ -1200,7 +1228,7 @@ Official references:
 
 ### Prompt
 
-- Use a skimmable order: scene/background, subject, key details, constraints.
+- Keep the core output contract's P0/P1 and causal dependency order. Use skimmable blocks within that order; scene/background leads only when it carries the source signature.
 - Use short labeled segments or line breaks for complex prompts.
 - Describe framing, viewpoint, placement, interaction, medium, lighting, and only the quality cues that matter.
 - Treat detailed camera specifications as high-level visual cues, not exact physical simulation.

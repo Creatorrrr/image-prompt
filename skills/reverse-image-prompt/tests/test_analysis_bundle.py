@@ -17,7 +17,7 @@ from module_metadata import ROOT, load_manifest, module_map
 from route_resolver import resolve_analysis_route
 
 
-def valid_bundle() -> dict:
+def valid_bundle(analysis_profile: str = "prompt") -> dict:
     manifest = load_manifest(ROOT)
     modules = module_map(manifest)
     route = resolve_analysis_route(
@@ -27,6 +27,7 @@ def valid_bundle() -> dict:
             "relationships": ["ordinary"],
         },
         manifest,
+        analysis_profile=analysis_profile,
     )
     source = {"sha256": "a" * 64, "frame": "1200x900"}
     reports = []
@@ -183,6 +184,25 @@ def valid_bundle() -> dict:
 class AnalysisBundleTests(unittest.TestCase):
     def test_valid_delegated_bundle_passes(self) -> None:
         self.assertEqual(validate_bundle(valid_bundle()), [])
+
+    def test_valid_audited_bundle_preserves_profile_when_reconstructing_route(self) -> None:
+        bundle = valid_bundle("audited")
+        self.assertEqual(bundle["route"]["analysis_profile"], "audited")
+        self.assertEqual(validate_bundle(bundle), [])
+
+    def test_profile_tampering_does_not_rebind_existing_evidence(self) -> None:
+        bundle = valid_bundle("audited")
+        bundle["route"]["analysis_profile"] = "prompt"
+        self.assertTrue(
+            any("deterministic analysis route" in error for error in validate_bundle(bundle))
+        )
+
+    def test_unknown_profile_cannot_be_reconstructed(self) -> None:
+        bundle = valid_bundle("audited")
+        bundle["route"]["analysis_profile"] = "unknown"
+        self.assertTrue(
+            any("route cannot be reconstructed" in error for error in validate_bundle(bundle))
+        )
 
     def test_missing_required_lane_fails(self) -> None:
         bundle = valid_bundle()

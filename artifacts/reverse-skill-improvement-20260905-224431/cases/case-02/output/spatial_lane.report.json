@@ -1,0 +1,952 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.spatial-topology",
+  "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+  "source_artifact": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/source.jpg",
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "frame": "399x623",
+    "verification": "SHA256 matched; dimensions independently verified; original pixels inspected."
+  },
+  "intent_mode": "faithful",
+  "analysis_profile": "audited",
+  "execution": {
+    "mode": "delegated",
+    "independent_context": true
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.frame-coordinates",
+      "version": 15
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "concept.occlusion-replacement",
+      "version": 4
+    },
+    {
+      "id": "concept.reflection-mirror",
+      "version": 4
+    },
+    {
+      "id": "subject.human",
+      "version": 22
+    },
+    {
+      "id": "detail.pose-hands-gesture",
+      "version": 7
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "orientation-coverage",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:frame",
+        "lane.spatial-topology:orientation"
+      ]
+    },
+    {
+      "topic": "component-relations",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:phone",
+        "lane.spatial-topology:limbs-and-overlays",
+        "lane.spatial-topology:wall"
+      ]
+    },
+    {
+      "topic": "contact-and-occlusion",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:phone",
+        "lane.spatial-topology:counter"
+      ]
+    },
+    {
+      "topic": "completion-risk",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:frame",
+        "lane.spatial-topology:phone",
+        "lane.spatial-topology:counter"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.spatial-topology:frame",
+      "owner_key": "spatial-orientation.frame",
+      "scale": "global",
+      "axis": "hierarchy",
+      "observation": "A narrow portrait frame contains one dominant mirror reflection, with the crown meeting the top edge and the sink interrupting the lower body.",
+      "source_evidence": [
+        "399x623 source",
+        "One person and one phone",
+        "Crown cropped at top",
+        "Broad counter occupies bottom foreground"
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The mirror border is outside the visible field."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:frame:ratio",
+          "axis": "hierarchy",
+          "visible_result": "A narrow vertical frame with the verified 399:623 source ratio.",
+          "result_direction": "Retain the tall narrow composition without widening.",
+          "subject_or_region_ids": [
+            "frame"
+          ],
+          "relation_kind": "aspect-ratio",
+          "source_evidence": [
+            "Verified pixel dimensions: 399 by 623"
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.spatial-topology:frame:single-reflection",
+          "axis": "topology",
+          "visible_result": "One reflected person dominates the frame; the phone back faces the mirror.",
+          "result_direction": "Preserve the single mirror-selfie layer without adding a separate direct-view person or complete duplicate.",
+          "subject_or_region_ids": [
+            "person-1",
+            "phone",
+            "mirror-field"
+          ],
+          "relation_kind": "reflection-layer",
+          "source_evidence": [
+            "Phone rear camera housing visible",
+            "Only one human figure appears"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "No mirror edge is visible."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:frame:head-scale-position",
+          "axis": "hierarchy",
+          "visible_result": "The hair-covered head occupies the upper central region and remains narrower than the visible shoulder span.",
+          "result_direction": "Keep the head subordinate to the upper-body crop rather than enlarging it into a close portrait.",
+          "subject_or_region_ids": [
+            "head-hair",
+            "shoulders",
+            "frame"
+          ],
+          "relation_kind": "region-to-frame-scale",
+          "source_evidence": [
+            "Head lies above the exposed shoulders",
+            "Torso, shorts, upper thighs, wall and sink remain visible"
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Hair obscures the anatomical head boundary."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:frame:crown-crop",
+          "axis": "topology",
+          "visible_result": "The upper hair outline is cut by the top frame edge.",
+          "result_direction": "Retain the clipped crown and minimal headroom.",
+          "subject_or_region_ids": [
+            "head-hair",
+            "frame-top"
+          ],
+          "relation_kind": "frame-intersection",
+          "source_evidence": [
+            "Dark crown contour continues into the top border"
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:orientation",
+      "owner_key": "spatial-orientation.person-1",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "The visible front torso is asymmetric: its upper region is displaced toward frame left relative to the waist and hips, and the frame-right shoulder is higher.",
+      "source_evidence": [
+        "Chest front is visible",
+        "Upper torso lies left of lower torso",
+        "Frame-right bare shoulder cap is markedly above the frame-left cap"
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Precise three-dimensional rotation is confounded by pose, camera projection, hair, clothing and phone occlusion."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:orientation:front-surface",
+          "axis": "topology",
+          "visible_result": "The front chest and abdomen surfaces dominate the visible torso.",
+          "result_direction": "Retain readable front torso surfaces without prescribing perfectly square shoulders or exact torso yaw.",
+          "subject_or_region_ids": [
+            "torso-front"
+          ],
+          "relation_kind": "visible-plane",
+          "source_evidence": [
+            "Front neckline, chest panel and abdomen-facing lower edge are visible"
+          ],
+          "confidence": "high",
+          "causal_origin": "perspective",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Fine yaw is not isolated by these cues."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:orientation:torso-diagonal",
+          "axis": "topology",
+          "visible_result": "The projected upper torso is offset toward frame left of the waist and hips.",
+          "result_direction": "Retain the diagonal upper-to-lower torso relationship instead of a vertical centered trunk.",
+          "subject_or_region_ids": [
+            "upper-torso",
+            "waist",
+            "hips"
+          ],
+          "relation_kind": "projected-action-line",
+          "source_evidence": [
+            "Chest center lies left of the lower torso and shorts center"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Actual torso roll, lateral lean and camera rotation cannot be separated exactly."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:orientation:head-offset",
+          "axis": "topology",
+          "visible_result": "The head-hair mass remains toward frame left of the lower-body center.",
+          "result_direction": "Keep the head-to-hips lateral offset without imposing a head yaw, chin angle or gaze.",
+          "subject_or_region_ids": [
+            "head-hair",
+            "hips"
+          ],
+          "relation_kind": "inter-region-lateral-offset",
+          "source_evidence": [
+            "Hair crown center is left of the shorts and hip center"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "The head-to-upper-torso offset is smaller and less certain than the head-to-hips offset."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:orientation:shoulder-slope",
+          "axis": "topology",
+          "visible_result": "The frame-right shoulder cap sits higher than the frame-left shoulder cap.",
+          "result_direction": "Preserve the conspicuous unequal shoulder heights.",
+          "subject_or_region_ids": [
+            "shoulder-frame-right",
+            "shoulder-frame-left"
+          ],
+          "relation_kind": "image-plane-height-order",
+          "source_evidence": [
+            "Frame-right cap is near the lower face height",
+            "Frame-left cap starts lower beside the chest"
+          ],
+          "confidence": "high",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Raised arm, torso lean and projection contribute jointly; shoulder depth order is unresolved."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:phone",
+      "owner_key": "contact-occlusion-support.phone-face-hand",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "An upright phone and its gripping hand occupy the central face area, hiding readable facial features.",
+      "source_evidence": [
+        "Phone extends from fringe level through the face region",
+        "Fingers cross its lower back",
+        "Eyes, nose and mouth are not readable"
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Some phone edges are hidden by the hand.",
+        "Hair covers adjacent facial margins."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:phone:footprint",
+          "axis": "topology",
+          "visible_result": "The upright phone occupies the upper central image, over the face, from fringe level to the lower face region.",
+          "result_direction": "Keep its large facial overlap and near-vertical orientation; do not move it aside, shrink it or raise it into a forehead-only overlap.",
+          "subject_or_region_ids": [
+            "phone",
+            "face-region",
+            "frame"
+          ],
+          "relation_kind": "footprint-and-placement",
+          "source_evidence": [
+            "Phone body lies approximately within x 187–254 and y 60–191 in the 399x623 source, with lower edges partly hidden"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "The hand prevents exact recovery of the full phone polygon."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:phone:face-visibility",
+          "axis": "information",
+          "visible_result": "The combined phone, hand and adjacent hair leave no readable eyes, nose or mouth.",
+          "result_direction": "Maintain facial occlusion; preserve fringe, side hair and visible neck without reconstructing hidden features.",
+          "subject_or_region_ids": [
+            "phone",
+            "gripping-hand",
+            "face-region",
+            "head-hair",
+            "neck"
+          ],
+          "relation_kind": "occlusion-and-surviving-visibility",
+          "source_evidence": [
+            "Opaque phone crosses the facial feature region",
+            "Hand overlaps its lower portion",
+            "Hair remains visible above and beside the occluder"
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "A narrow skin margin does not provide enough facial information for likeness or gaze."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:phone:grip",
+          "axis": "topology",
+          "visible_result": "The hand entering from frame right grips the phone, with several fingers fanning diagonally across its lower back and a long finger following its right edge.",
+          "result_direction": "Retain hand-in-front-of-phone overlap, edge contact and the spread grip.",
+          "subject_or_region_ids": [
+            "gripping-hand",
+            "phone"
+          ],
+          "relation_kind": "grip-contact-and-depth-order",
+          "source_evidence": [
+            "Visible fingers cross the phone surface",
+            "Palm joins the raised sleeved wrist at lower right"
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Exact hidden digit configuration and anatomical handedness are not established."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:limbs-and-overlays",
+      "owner_key": "component-topology.person-1",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "The arms, braids and draped garment create distinct asymmetric paths over and beside the torso.",
+      "source_evidence": [
+        "Phone-side arm bends upward",
+        "Opposite arm descends toward lower left",
+        "Two braids lie over the front torso",
+        "Both shoulder caps remain exposed"
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Loose sleeves conceal exact elbow and wrist geometry."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:limbs-and-overlays:arm-asymmetry",
+          "axis": "topology",
+          "visible_result": "The frame-right arm bends upward toward the phone; the opposite arm descends toward the lower-left counter area.",
+          "result_direction": "Retain the opposed arm paths and raised wrist below the phone rather than matching or swapping the arms.",
+          "subject_or_region_ids": [
+            "phone-side-arm",
+            "lowered-arm",
+            "phone",
+            "counter"
+          ],
+          "relation_kind": "limb-path",
+          "source_evidence": [
+            "Raised cuff meets the gripping hand below the face",
+            "Exposed opposite upper arm leads into a hanging sleeve toward lower left"
+          ],
+          "confidence": "high",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Exact elbow centers and hidden joint angles are unresolved."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:limbs-and-overlays:braid-placement",
+          "axis": "topology",
+          "visible_result": "Two separate braids descend over the front of the torso, flanking its central visible panel.",
+          "result_direction": "Keep both braids in front, separated and unequal in projected path rather than placing them behind the shoulders.",
+          "subject_or_region_ids": [
+            "braid-frame-left",
+            "braid-frame-right",
+            "torso-front"
+          ],
+          "relation_kind": "overlay-and-separation",
+          "source_evidence": [
+            "Frame-left braid runs beside the exposed upper arm and chest",
+            "Frame-right braid crosses the opposite chest side"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair appearance and exact endpoint treatment belong to the appearance owner."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:limbs-and-overlays:garment-boundaries",
+          "axis": "topology",
+          "visible_result": "The outer garment is open and dropped below the shoulder caps, with sleeves following the raised and lowered arms.",
+          "result_direction": "Preserve exposed shoulder caps, the open central torso and the asymmetric hanging garment boundaries.",
+          "subject_or_region_ids": [
+            "outer-garment",
+            "shoulders",
+            "phone-side-arm",
+            "lowered-arm",
+            "torso-front"
+          ],
+          "relation_kind": "coverage-and-drape-topology",
+          "source_evidence": [
+            "Bare shoulder caps above the outer garment",
+            "Raised sleeve cuff just below gripping hand",
+            "Opposite sleeve extends toward the counter"
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Fabric obscures hidden anatomy; garment styling must not determine unsupported joint angles."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:counter",
+      "owner_key": "contact-occlusion-support.counter",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "The broad sink counter forms the bottom foreground boundary; the person remains behind it, and only a small part of the lowered hand survives near its left side.",
+      "source_evidence": [
+        "Counter extends across the bottom",
+        "Upper thighs disappear behind its rear edge",
+        "Small exposed hand fragment near the lower-left sleeve"
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The floor and feet are outside the view.",
+        "The lowered hand's exact contact patch is indistinct."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:counter:body-boundary",
+          "axis": "topology",
+          "visible_result": "The sink counter spans the bottom foreground and occludes the body below the visible upper thighs.",
+          "result_direction": "Keep the person's main mass behind the sink boundary and retain the upper-thigh cutoff without revealing knees, feet or a support surface.",
+          "subject_or_region_ids": [
+            "counter",
+            "person-1",
+            "upper-thighs",
+            "frame-bottom"
+          ],
+          "relation_kind": "foreground-occlusion-and-boundary-side",
+          "source_evidence": [
+            "Continuous pale counter edge crosses below shorts and visible thigh strips",
+            "Lower legs are not visible"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Standing versus another hidden lower-body support configuration is not directly verified."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:counter:partial-lowered-hand",
+          "axis": "topology",
+          "visible_result": "Only a small portion of the lowered hand remains visible near the lower-left sleeve and counter edge.",
+          "result_direction": "Keep this hand fragment small and partly obscured; do not turn it into a fully displayed hand or a pronounced weight-bearing grip.",
+          "subject_or_region_ids": [
+            "lowered-hand",
+            "lowered-sleeve",
+            "counter-left"
+          ],
+          "relation_kind": "partial-visibility-and-proximity",
+          "source_evidence": [
+            "Small skin fragment beside the cuff near the lower-left counter boundary"
+          ],
+          "confidence": "medium",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Physical contact, finger count and applied load cannot be resolved."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:wall",
+      "owner_key": "component-topology.wall-anchors",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "Small wall elements establish the left-side context without competing with the person.",
+      "source_evidence": [
+        "Small note in upper-left wall",
+        "Towel rail and hanging towel below it behind the lowered-arm side"
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Background detail is soft and partly occluded."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:wall:note",
+          "axis": "topology",
+          "visible_result": "A small note occupies the upper-left wall beside the head, separated from the hair by a visible wall gap.",
+          "result_direction": "Keep the note in the upper-left region at roughly upper-face height, left of and separate from the head.",
+          "subject_or_region_ids": [
+            "wall-note",
+            "head-hair",
+            "frame"
+          ],
+          "relation_kind": "frame-placement-direction-proximity",
+          "source_evidence": [
+            "Note near upper-left corner",
+            "Clear wall strip between note and hair"
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Text content and legibility belong to another owner."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:wall:towel-rail",
+          "axis": "topology",
+          "visible_result": "The towel rail and hanging towel occupy the left middle background behind the lowered-arm side.",
+          "result_direction": "Keep the fixture lower than the note, beside the torso and partially obscured by the person.",
+          "subject_or_region_ids": [
+            "towel-rail",
+            "hanging-towel",
+            "lowered-arm",
+            "wall-note",
+            "frame"
+          ],
+          "relation_kind": "frame-placement-and-depth-order",
+          "source_evidence": [
+            "Dark rail behind left shoulder/arm region",
+            "Hanging towel visible between fixture and person"
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Occlusion prevents complete fixture reconstruction."
+          ]
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "scope": "frame and reflection",
+      "explicit_effects": [
+        "Narrow ratio",
+        "Single reflected person",
+        "Upper-body frame share",
+        "Clipped crown",
+        "Sink foreground cutoff"
+      ],
+      "implicit_effects_to_allow": [
+        "Incomplete mirror field with border outside the crop"
+      ],
+      "effects_to_block": [
+        "Adding mirror borders or a second person",
+        "Expanding to full-body framing",
+        "Enlarging the face"
+      ]
+    },
+    {
+      "scope": "projected upper-body geometry",
+      "explicit_effects": [
+        "Front torso surface visibility",
+        "Upper torso left of hips",
+        "Head left of hips",
+        "Frame-right shoulder higher"
+      ],
+      "implicit_effects_to_allow": [
+        "An asymmetric projected silhouette"
+      ],
+      "effects_to_block": [
+        "Exact three-dimensional yaw, pitch or roll",
+        "Level shoulders",
+        "Direct gaze",
+        "A prescribed chin angle",
+        "Anatomical left/right inferred through reflection"
+      ]
+    },
+    {
+      "scope": "phone, hand and arm",
+      "explicit_effects": [
+        "Upper-central upright phone footprint",
+        "Face occlusion",
+        "Hand in front of phone",
+        "Spread grip",
+        "Raised phone-side arm",
+        "Opposite lowered arm"
+      ],
+      "implicit_effects_to_allow": [
+        "Hidden facial features and hidden joint portions remain unresolved"
+      ],
+      "effects_to_block": [
+        "Face-revealing phone displacement",
+        "Additional fingers",
+        "Exact hidden elbow placement",
+        "Unsupported contact pressure"
+      ]
+    },
+    {
+      "scope": "garment, hair and counter relationships",
+      "explicit_effects": [
+        "Braids over torso front",
+        "Dropped shoulder coverage",
+        "Asymmetric sleeve paths",
+        "Person behind counter",
+        "Small partial lowered hand"
+      ],
+      "implicit_effects_to_allow": [
+        "Occluded anatomy stays incomplete"
+      ],
+      "effects_to_block": [
+        "Supported body weight inferred from hand proximity",
+        "Sitting on or crossing the counter",
+        "Reconstructed lower limbs"
+      ]
+    },
+    {
+      "scope": "background anchors",
+      "explicit_effects": [
+        "Note upper-left beside head with a gap",
+        "Rail lower-left behind lowered-arm side"
+      ],
+      "implicit_effects_to_allow": [
+        "Subordinate partially occluded background"
+      ],
+      "effects_to_block": [
+        "Direction-only placement permitting large vertical displacement",
+        "Enlarged readable note",
+        "Completed hidden fixture"
+      ]
+    }
+  ],
+  "omission_checks": [
+    {
+      "test": "whole-orientation-neutralization",
+      "held": [
+        "Person count",
+        "Phone",
+        "Braids",
+        "Garments",
+        "Sink",
+        "Wall objects"
+      ],
+      "change": "Center an upright torso, level both shoulders, align head over hips and make the arm arrangement symmetric.",
+      "result": "Material loss: the distinctive diagonal silhouette and opposing arm paths disappear although the object inventory remains.",
+      "priority": "P1"
+    },
+    {
+      "test": "viewpoint-held-residual-alignment",
+      "held": [
+        "Reflection viewpoint",
+        "399:623 framing",
+        "Head and torso scale",
+        "Phone-face occlusion",
+        "Sink crop"
+      ],
+      "change": "Neutralize torso diagonal and shoulder-height asymmetry while preserving the generic mirror-selfie action.",
+      "result": "Material loss persists; mirror-selfie shorthand is insufficient.",
+      "macro_adequacy": "lossy",
+      "retained_residuals": [
+        "Torso diagonal",
+        "Head-to-hips lateral offset",
+        "Unequal shoulder heights",
+        "Opposed arm paths"
+      ]
+    },
+    {
+      "test": "phone-direction-held",
+      "held": [
+        "Phone upright",
+        "Phone above chest",
+        "Same general upper-central region"
+      ],
+      "change": "Shrink or slide the phone upward, retaining those directions.",
+      "result": "The lower face can reappear. Footprint, overlap and surviving visibility require independent controls."
+    },
+    {
+      "test": "note-direction-held",
+      "held": [
+        "Note left of head"
+      ],
+      "change": "Move the note substantially downward or farther away.",
+      "result": "The direction remains true while the upper-left wall composition changes. Retain both frame anchors and the source-visible separation."
+    },
+    {
+      "test": "rail-direction-held",
+      "held": [
+        "Rail left of person"
+      ],
+      "change": "Move the fixture to the upper-left corner or in front of the arm.",
+      "result": "Leftward direction alone fails; mid-height frame placement, lower-than-note order and background depth must survive."
+    },
+    {
+      "test": "counter-direction-held",
+      "held": [
+        "Torso above counter"
+      ],
+      "change": "Raise the counter to the waist or move the person onto its front side.",
+      "result": "The directional statement survives but crop and physical topology change. Preserve upper-thigh interruption and the person's rear-side placement."
+    },
+    {
+      "test": "isolated-discarded-axis-neutralization",
+      "result": "No flexible or not-material orientation axes are asserted. Ambiguous or hidden axes remain uncertain or not-visible, with the supported projected joint effects retained."
+    }
+  ],
+  "handoffs": [
+    {
+      "target_schema": "spatial-orientation/v6",
+      "subject_id": "person-1",
+      "priority": "P1",
+      "macro_adequacy": "lossy",
+      "axis_decisions": [
+        {
+          "axis": "torso-yaw",
+          "decision": "uncertain",
+          "evidence": "Front torso surface is visible, but exact yaw is not isolated.",
+          "retained_obligation": "lane.spatial-topology:orientation:front-surface"
+        },
+        {
+          "axis": "torso-pitch",
+          "decision": "uncertain",
+          "evidence": "No reliable floor or lateral torso depth cue; clothing and projection confound forward lean."
+        },
+        {
+          "axis": "torso-roll",
+          "decision": "uncertain",
+          "evidence": "The projected diagonal is clear; its three-dimensional decomposition is not.",
+          "retained_obligation": "lane.spatial-topology:orientation:torso-diagonal"
+        },
+        {
+          "axis": "head-to-body-yaw",
+          "decision": "uncertain",
+          "evidence": "Phone and hair hide facial orientation landmarks."
+        },
+        {
+          "axis": "head-to-body-pitch",
+          "decision": "uncertain",
+          "evidence": "Chin and facial plane are occluded."
+        },
+        {
+          "axis": "head-to-body-roll",
+          "decision": "uncertain",
+          "evidence": "Clipped crown, irregular hair and occluded facial landmarks do not establish a precise roll."
+        },
+        {
+          "axis": "head-to-upper-torso-lateral-offset",
+          "decision": "uncertain",
+          "evidence": "The smaller local offset is obscured by hair and phone; do not substitute the stronger head-to-hips relation."
+        },
+        {
+          "axis": "head-to-hips-lateral-offset",
+          "decision": "invariant",
+          "evidence": "Head-hair center is left of the hip center.",
+          "retained_obligation": "lane.spatial-topology:orientation:head-offset"
+        },
+        {
+          "axis": "shoulder-image-plane-slope",
+          "decision": "invariant",
+          "evidence": "Frame-right shoulder cap is higher.",
+          "retained_obligation": "lane.spatial-topology:orientation:shoulder-slope"
+        },
+        {
+          "axis": "shoulder-depth-order",
+          "decision": "uncertain",
+          "evidence": "Height difference does not establish which shoulder is nearer."
+        },
+        {
+          "axis": "attention-direction",
+          "decision": "not-visible",
+          "evidence": "Eyes are occluded; phone use does not establish gaze."
+        },
+        {
+          "axis": "visible-action",
+          "decision": "invariant",
+          "evidence": "One hand grips the face-obscuring phone; the opposite arm descends."
+        },
+        {
+          "axis": "phone-arm-path",
+          "decision": "invariant",
+          "evidence": "Raised wrist below phone and bent sleeved arm at frame right."
+        },
+        {
+          "axis": "exact-elbow-and-wrist-angles",
+          "decision": "uncertain",
+          "evidence": "Loose sleeve and cuff conceal joint centers."
+        },
+        {
+          "axis": "finger-topology",
+          "decision": "invariant",
+          "evidence": "Spread fingers overlap the phone; exact hidden digit arrangement remains uncertain."
+        },
+        {
+          "axis": "pelvis-rotation",
+          "decision": "uncertain",
+          "evidence": "Shorts, oblique projection and lower crop confound three-dimensional rotation."
+        },
+        {
+          "axis": "visible-upper-thigh-placement",
+          "decision": "invariant",
+          "evidence": "Short upper-thigh portions remain above and behind the sink boundary."
+        },
+        {
+          "axis": "knees-feet-floor-support",
+          "decision": "not-visible",
+          "evidence": "Lower body and floor are outside the visible evidence."
+        },
+        {
+          "axis": "lowered-hand-support-load",
+          "decision": "uncertain",
+          "evidence": "Small hand fragment near the counter does not resolve contact pressure or weight transfer."
+        }
+      ],
+      "coupled_obligation_group": {
+        "members": [
+          "lane.spatial-topology:orientation:torso-diagonal",
+          "lane.spatial-topology:orientation:head-offset",
+          "lane.spatial-topology:orientation:shoulder-slope",
+          "lane.spatial-topology:limbs-and-overlays:arm-asymmetry"
+        ],
+        "invariant_joint_result": "An upper-body silhouette displaced leftward above the hips, with a higher frame-right shoulder and opposed raised/lowered arm paths.",
+        "causal_limit": "Preserve the projected result without resolving uncertain rotation axes or assigning a unique biomechanical cause."
+      },
+      "integration_requirement": "Bind each final literal spatial excerpt to the retained obligations and audit every explicit and implicit effect. Reject frontal, upright, aligned, looking-at-camera or weight-bearing language when it actuates unresolved axes."
+    },
+    {
+      "target": "appearance, garment, color, text and capture owners",
+      "handoff": "Determine appearance and rendering properties independently. Preserve this lane's phone occlusion, frame share, projected pose, braid overlays, shoulder coverage, sleeve paths, wall anchors and incomplete lower-body evidence. Text legibility must not enlarge or reposition the wall note."
+    }
+  ],
+  "conflicts": []
+}

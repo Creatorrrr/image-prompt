@@ -1,0 +1,431 @@
+{
+  "schema_version": "reverse-image-analysis-route/v2",
+  "analysis_profile": "audited",
+  "execution_budget": {
+    "lane_waves": 1,
+    "malformed_lane_retries": 1,
+    "critic_passes": 2,
+    "targeted_repairs": 1,
+    "max_full_reroutes": 1,
+    "full_reroute_on": [
+      "route-gap",
+      "source-artifact-mismatch"
+    ],
+    "detail_policy": "audited-obligation-completeness",
+    "non_material_topics": "individual-disposition",
+    "full_precision_ledgers": true
+  },
+  "shared_instruction_inputs": [
+    {
+      "path": "SKILL.md",
+      "source_sha256": "46960da7710e212b2c65a9628b2eaf1c99a646b50100a9ce64640368176ff0b3",
+      "view_sha256": "46960da7710e212b2c65a9628b2eaf1c99a646b50100a9ce64640368176ff0b3",
+      "source_words": 1191,
+      "view_words": 1191
+    },
+    {
+      "path": "references/analysis-orchestration.md",
+      "source_sha256": "e40b6dc3670e25f414ecbf4dc287eb79832adac52c791a468904f38300def427",
+      "view_sha256": "fd38174a0554b02375a4832b3eef3d9d25fabca192d089df68d5b86be1c6fa27",
+      "source_words": 1922,
+      "view_words": 1302
+    },
+    {
+      "path": "references/integration-contract.md",
+      "source_sha256": "2c381f572e396027c0ac99622c34e6b0bf91fb022ab3035805218216c41daf92",
+      "view_sha256": "64b7cb830640094b1305341565ceaf5f43347dbdad484d5d57c96bf9380f33e1",
+      "source_words": 1657,
+      "view_words": 1633
+    }
+  ],
+  "normalized_facets": {
+    "capture-quality": [
+      "haze",
+      "soft-focus"
+    ],
+    "detail-risk": [
+      "accessories",
+      "color-tone",
+      "face-detail",
+      "lighting-fidelity"
+    ],
+    "medium": [
+      "photographic"
+    ],
+    "subject": [
+      "human"
+    ]
+  },
+  "resolved_modules": [
+    "core.visual-evidence",
+    "core.frame-coordinates",
+    "concept.primary-relationship",
+    "core.fidelity-discipline",
+    "core.background-color",
+    "core.pre-emit-gate",
+    "core.output-contract",
+    "subject.human",
+    "medium.photographic-capture",
+    "detail.human-face-likeness",
+    "detail.color-tone-fidelity",
+    "detail.light-form-fidelity",
+    "detail.clothing-fashion",
+    "detail.low-quality-artifacts"
+  ],
+  "required_lane_ids": [
+    "lane.global-composition",
+    "lane.spatial-topology",
+    "lane.subject-appearance",
+    "lane.color-light-material",
+    "lane.medium-aesthetic-capture"
+  ],
+  "lanes": [
+    {
+      "id": "lane.global-composition",
+      "version": 4,
+      "instruction_file": "lanes/lane.global-composition.md",
+      "instruction_input": {
+        "path": "lanes/lane.global-composition.md",
+        "source_sha256": "fa260b7d75a34863d3889d68d94b8e6be7b7c1c2a81b63b81ae388c8de2aa8a3",
+        "view_sha256": "fa260b7d75a34863d3889d68d94b8e6be7b7c1c2a81b63b81ae388c8de2aa8a3",
+        "source_words": 212,
+        "view_words": 212
+      },
+      "module_inputs": [
+        {
+          "path": "modules/core.visual-evidence.md",
+          "source_sha256": "5cc01540a1b5fbed8234e7b412b63d872d9422256816ee5dd4f3f18cd8b990aa",
+          "view_sha256": "e38dd0bce6e67a0d84d663a81135466a192b186ccffcb68c62e65f65b5fec856",
+          "source_words": 422,
+          "view_words": 416
+        },
+        {
+          "path": "modules/core.frame-coordinates.md",
+          "source_sha256": "b8cebf9eae169e5d0c21fd3c59323799eb0707d61d34f96a642bdabb391749b7",
+          "view_sha256": "1f480e7587eeaa6d026d4f6a2b0cddf103b090c8d8b784ba6b07d332b4a80332",
+          "source_words": 519,
+          "view_words": 513
+        },
+        {
+          "path": "modules/concept.primary-relationship.md",
+          "source_sha256": "0e44ee6f8ecd67b08a5bc4e69ed1a94ef1f8dd86bc72729a9df79ad18b000412",
+          "view_sha256": "62a51bc5b46f379e14cbf4df074ce29cb5143f9daf9d6cf3f321c359639c4532",
+          "source_words": 629,
+          "view_words": 623
+        },
+        {
+          "path": "modules/core.fidelity-discipline.md",
+          "source_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "view_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "source_words": 605,
+          "view_words": 605
+        },
+        {
+          "path": "modules/core.background-color.md",
+          "source_sha256": "510c0957a4091b966fdea3691b285c0b7d3f80885467a54b4444a9da2d943b0b",
+          "view_sha256": "510c0957a4091b966fdea3691b285c0b7d3f80885467a54b4444a9da2d943b0b",
+          "source_words": 398,
+          "view_words": 398
+        },
+        {
+          "path": "modules/core.pre-emit-gate.md",
+          "source_sha256": "f8389fbba4c97bc8c75e519ff1ce2296fb428d53d88ccb3f32a5b98499387f44",
+          "view_sha256": "347e5a88a9bb5b37505ce921b3c464695dda8c0b8391f4c834e18c9475b0d20e",
+          "source_words": 802,
+          "view_words": 796
+        },
+        {
+          "path": "modules/core.output-contract.md",
+          "source_sha256": "705a1238899c06c8c12499489a64dcabf0afc7cb0a12a361ccfa0626cb94f530",
+          "view_sha256": "705a1238899c06c8c12499489a64dcabf0afc7cb0a12a361ccfa0626cb94f530",
+          "source_words": 772,
+          "view_words": 772
+        }
+      ],
+      "analysis_depth": "audited",
+      "report_schema": "reverse-image-analysis-lane-report/v2",
+      "module_ids": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "concept.primary-relationship",
+        "core.fidelity-discipline",
+        "core.background-color",
+        "core.pre-emit-gate",
+        "core.output-contract"
+      ],
+      "owns_sections": [
+        "direct-appeal",
+        "global-composition",
+        "major-region-hierarchy"
+      ],
+      "required_topics": [
+        "perceptual-proposition",
+        "frame-and-crop",
+        "major-regions",
+        "fidelity-mode"
+      ]
+    },
+    {
+      "id": "lane.spatial-topology",
+      "version": 7,
+      "instruction_file": "lanes/lane.spatial-topology.md",
+      "instruction_input": {
+        "path": "lanes/lane.spatial-topology.md",
+        "source_sha256": "94a0fe22af11ddc58a35d5f20a35e90a794ef23c2057afe921f30dfb755f23e4",
+        "view_sha256": "94a0fe22af11ddc58a35d5f20a35e90a794ef23c2057afe921f30dfb755f23e4",
+        "source_words": 345,
+        "view_words": 345
+      },
+      "module_inputs": [
+        {
+          "path": "modules/core.visual-evidence.md",
+          "source_sha256": "5cc01540a1b5fbed8234e7b412b63d872d9422256816ee5dd4f3f18cd8b990aa",
+          "view_sha256": "e38dd0bce6e67a0d84d663a81135466a192b186ccffcb68c62e65f65b5fec856",
+          "source_words": 422,
+          "view_words": 416
+        },
+        {
+          "path": "modules/core.frame-coordinates.md",
+          "source_sha256": "b8cebf9eae169e5d0c21fd3c59323799eb0707d61d34f96a642bdabb391749b7",
+          "view_sha256": "1f480e7587eeaa6d026d4f6a2b0cddf103b090c8d8b784ba6b07d332b4a80332",
+          "source_words": 519,
+          "view_words": 513
+        },
+        {
+          "path": "modules/core.fidelity-discipline.md",
+          "source_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "view_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "source_words": 605,
+          "view_words": 605
+        },
+        {
+          "path": "modules/subject.human.md",
+          "source_sha256": "bfbeece68c4c923edb9da836a1554ab2194ad4d902b0957a2c9973c8fd5ce5ce",
+          "view_sha256": "bfbeece68c4c923edb9da836a1554ab2194ad4d902b0957a2c9973c8fd5ce5ce",
+          "source_words": 1263,
+          "view_words": 1263
+        }
+      ],
+      "analysis_depth": "audited",
+      "report_schema": "reverse-image-analysis-lane-report/v2",
+      "module_ids": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "core.fidelity-discipline",
+        "subject.human"
+      ],
+      "owns_sections": [
+        "spatial-orientation",
+        "component-topology",
+        "contact-occlusion-support"
+      ],
+      "required_topics": [
+        "orientation-coverage",
+        "component-relations",
+        "contact-and-occlusion",
+        "completion-risk"
+      ]
+    },
+    {
+      "id": "lane.subject-appearance",
+      "version": 6,
+      "instruction_file": "lanes/lane.subject-appearance.md",
+      "instruction_input": {
+        "path": "lanes/lane.subject-appearance.md",
+        "source_sha256": "0781db9cb4320cd810ac401ba95ea3ab993218deb8ee7f7b1ac35f551a3058ee",
+        "view_sha256": "0781db9cb4320cd810ac401ba95ea3ab993218deb8ee7f7b1ac35f551a3058ee",
+        "source_words": 335,
+        "view_words": 335
+      },
+      "module_inputs": [
+        {
+          "path": "modules/core.visual-evidence.md",
+          "source_sha256": "5cc01540a1b5fbed8234e7b412b63d872d9422256816ee5dd4f3f18cd8b990aa",
+          "view_sha256": "e38dd0bce6e67a0d84d663a81135466a192b186ccffcb68c62e65f65b5fec856",
+          "source_words": 422,
+          "view_words": 416
+        },
+        {
+          "path": "modules/core.fidelity-discipline.md",
+          "source_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "view_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "source_words": 605,
+          "view_words": 605
+        },
+        {
+          "path": "modules/subject.human.md",
+          "source_sha256": "bfbeece68c4c923edb9da836a1554ab2194ad4d902b0957a2c9973c8fd5ce5ce",
+          "view_sha256": "bfbeece68c4c923edb9da836a1554ab2194ad4d902b0957a2c9973c8fd5ce5ce",
+          "source_words": 1263,
+          "view_words": 1263
+        },
+        {
+          "path": "modules/detail.human-face-likeness.md",
+          "source_sha256": "cb23f807380a3d8e1b4cb41c872c95d47ddc2d3a55c9823b640dbb1949bb8f70",
+          "view_sha256": "cb23f807380a3d8e1b4cb41c872c95d47ddc2d3a55c9823b640dbb1949bb8f70",
+          "source_words": 1044,
+          "view_words": 1044
+        },
+        {
+          "path": "modules/detail.clothing-fashion.md",
+          "source_sha256": "ccbecefccff9d7c04ae00a2798978a725aa501a1a5723ff5257703f229b0737f",
+          "view_sha256": "ccbecefccff9d7c04ae00a2798978a725aa501a1a5723ff5257703f229b0737f",
+          "source_words": 584,
+          "view_words": 584
+        }
+      ],
+      "analysis_depth": "audited",
+      "report_schema": "reverse-image-analysis-lane-report/v2",
+      "module_ids": [
+        "core.visual-evidence",
+        "core.fidelity-discipline",
+        "subject.human",
+        "detail.human-face-likeness",
+        "detail.clothing-fashion"
+      ],
+      "owns_sections": [
+        "subject-form",
+        "human-appearance-evidence",
+        "person-prior-candidate",
+        "skin-visibility-evidence"
+      ],
+      "required_topics": [
+        "subject-role",
+        "visible-form",
+        "appearance-drift-risk",
+        "intrinsic-induced-confounds"
+      ]
+    },
+    {
+      "id": "lane.color-light-material",
+      "version": 5,
+      "instruction_file": "lanes/lane.color-light-material.md",
+      "instruction_input": {
+        "path": "lanes/lane.color-light-material.md",
+        "source_sha256": "4c9383acc9f964f4f4953ca209a341e7ac5539fc79dc212d5e4c8c04b4f9a836",
+        "view_sha256": "4c9383acc9f964f4f4953ca209a341e7ac5539fc79dc212d5e4c8c04b4f9a836",
+        "source_words": 325,
+        "view_words": 325
+      },
+      "module_inputs": [
+        {
+          "path": "modules/core.visual-evidence.md",
+          "source_sha256": "5cc01540a1b5fbed8234e7b412b63d872d9422256816ee5dd4f3f18cd8b990aa",
+          "view_sha256": "e38dd0bce6e67a0d84d663a81135466a192b186ccffcb68c62e65f65b5fec856",
+          "source_words": 422,
+          "view_words": 416
+        },
+        {
+          "path": "modules/core.fidelity-discipline.md",
+          "source_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "view_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "source_words": 605,
+          "view_words": 605
+        },
+        {
+          "path": "modules/core.background-color.md",
+          "source_sha256": "510c0957a4091b966fdea3691b285c0b7d3f80885467a54b4444a9da2d943b0b",
+          "view_sha256": "510c0957a4091b966fdea3691b285c0b7d3f80885467a54b4444a9da2d943b0b",
+          "source_words": 398,
+          "view_words": 398
+        },
+        {
+          "path": "modules/detail.color-tone-fidelity.md",
+          "source_sha256": "c1f62006f302b30a8281de71e98ff1f15d81d6973a51d2336f98a6fa819cfb97",
+          "view_sha256": "e647d42ab8425578956b128ee633805eda2d1c36c9808beedd5a06b72fc6a785",
+          "source_words": 1340,
+          "view_words": 1322
+        },
+        {
+          "path": "modules/detail.light-form-fidelity.md",
+          "source_sha256": "1e83e8ccc1b38a5b280881d125ba8823e5b5e3f12dec52530928b585484aad20",
+          "view_sha256": "6a430a1cd315b2fc63116d078d1977c7eac2e6d3a7df6896f0cbc6a98db33dee",
+          "source_words": 1289,
+          "view_words": 1283
+        }
+      ],
+      "analysis_depth": "audited",
+      "report_schema": "reverse-image-analysis-lane-report/v2",
+      "module_ids": [
+        "core.visual-evidence",
+        "core.fidelity-discipline",
+        "core.background-color",
+        "detail.color-tone-fidelity",
+        "detail.light-form-fidelity"
+      ],
+      "owns_sections": [
+        "color-tone",
+        "light-form",
+        "material-response"
+      ],
+      "required_topics": [
+        "intrinsic-color",
+        "displayed-tone-scope",
+        "illumination-and-shadow",
+        "material-response"
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture",
+      "version": 6,
+      "instruction_file": "lanes/lane.medium-aesthetic-capture.md",
+      "instruction_input": {
+        "path": "lanes/lane.medium-aesthetic-capture.md",
+        "source_sha256": "2588f70ab1f5eb10f7f5956e83b6ccebe90034d50071f6983e9a85bcee3bdab2",
+        "view_sha256": "2588f70ab1f5eb10f7f5956e83b6ccebe90034d50071f6983e9a85bcee3bdab2",
+        "source_words": 272,
+        "view_words": 272
+      },
+      "module_inputs": [
+        {
+          "path": "modules/core.visual-evidence.md",
+          "source_sha256": "5cc01540a1b5fbed8234e7b412b63d872d9422256816ee5dd4f3f18cd8b990aa",
+          "view_sha256": "e38dd0bce6e67a0d84d663a81135466a192b186ccffcb68c62e65f65b5fec856",
+          "source_words": 422,
+          "view_words": 416
+        },
+        {
+          "path": "modules/core.fidelity-discipline.md",
+          "source_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "view_sha256": "7e9597c4c594c17dd920ad069bc29c851a8ee497d568d273b853c77b326637e2",
+          "source_words": 605,
+          "view_words": 605
+        },
+        {
+          "path": "modules/medium.photographic-capture.md",
+          "source_sha256": "04345361fe5fe7e0f93d508a32ad5a407ff0a1afc6a4fd42b615bc17f0bb5c9d",
+          "view_sha256": "04345361fe5fe7e0f93d508a32ad5a407ff0a1afc6a4fd42b615bc17f0bb5c9d",
+          "source_words": 902,
+          "view_words": 902
+        },
+        {
+          "path": "modules/detail.low-quality-artifacts.md",
+          "source_sha256": "2748ff1b50ea0e9f44af74cdeebd9c7a1853a900905617108532ebc09ae4d00c",
+          "view_sha256": "2748ff1b50ea0e9f44af74cdeebd9c7a1853a900905617108532ebc09ae4d00c",
+          "source_words": 383,
+          "view_words": 383
+        }
+      ],
+      "analysis_depth": "audited",
+      "report_schema": "reverse-image-analysis-lane-report/v2",
+      "module_ids": [
+        "core.visual-evidence",
+        "core.fidelity-discipline",
+        "medium.photographic-capture",
+        "detail.low-quality-artifacts"
+      ],
+      "owns_sections": [
+        "medium-evidence",
+        "capture-character",
+        "portrait-production-aesthetic"
+      ],
+      "required_topics": [
+        "medium-and-process",
+        "capture-fidelity-ceiling",
+        "production-aesthetic",
+        "artifact-preservation"
+      ]
+    }
+  ],
+  "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a"
+}

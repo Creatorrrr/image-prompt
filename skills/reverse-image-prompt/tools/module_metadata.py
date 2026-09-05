@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -167,6 +168,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
             "id": meta["id"],
             "version": int(meta["version"]),
             "file": rel,
+            "content_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             "type": meta["type"],
             "tier": int(meta["tier"]),
             "facet": meta["facet"],
@@ -189,6 +191,7 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
                 "id": meta["id"],
                 "version": int(meta["version"]),
                 "file": path.relative_to(root).as_posix(),
+                "content_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
                 "priority": int(meta["priority"]),
                 "activation": meta["activation"],
                 "select_types": list(meta.get("select_types", [])),
@@ -205,9 +208,9 @@ def build_manifest(root: Path = ROOT) -> dict[str, Any]:
     return {
         "name": "reverse-image-prompt",
         "architecture": "distributed modular facet router",
-        "version": "3.7.0-compact-residual-closure",
+        "version": "3.8.0-profile-context-and-prompt-boundary",
         "entrypoint": "SKILL.md",
-        "source": "generated from modules/*.md and lanes/*.md frontmatter by tools/gen_manifest.py",
+        "source": "generated from module/lane frontmatter and content hashes by tools/gen_manifest.py",
         "analysis_orchestration": {
             "route_schema": "reverse-image-analysis-route/v2",
             "default_profile": "prompt",

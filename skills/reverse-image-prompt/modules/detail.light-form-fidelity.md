@@ -1,6 +1,6 @@
 ---
 id: detail.light-form-fidelity
-version: 10
+version: 11
 priority: 79
 type: detail
 tier: 3
@@ -114,7 +114,11 @@ Literal lighting controls remain authoritative. Emit a current-source label once
 
 ## Final prompt control ledger
 
-In `audited`: Copy every exact lighting excerpt into the ledger with one claim, owner, complete effects, and declared regional anchors. Final composition adds no lighting, shadow, gradient, or material-response prose. In `prompt`, retain one owner and decisive visible effect without a ledger. In either profile, split cross-owner compounds and replace overstrong controls rather than appending counter-negatives.
+
+<!-- profile:audited -->
+In `audited`: Copy every exact lighting excerpt into the ledger with one claim, owner, complete effects, and declared regional anchors. Final composition adds no lighting, shadow, gradient, or material-response prose.
+<!-- /profile -->
+ In `prompt`, retain one owner and decisive visible effect without a ledger. In either profile, split cross-owner compounds and replace overstrong controls rather than appending counter-negatives.
 
 When measured comparison is warranted, read `references/lighting-reproduction-evaluation.md`. Use only analyst-selected regions and profiles, retain source/profile uncertainty, and never convert diagnostic measurements directly into prompt wording.
 

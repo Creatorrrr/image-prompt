@@ -3397,6 +3397,24 @@ class SaliencePlanTests(unittest.TestCase):
             )
         )
 
+    def test_primary_person_can_have_independently_supporting_skin_priority(self) -> None:
+        plan = with_material_skin_descriptor(valid_color_plan())
+        decision = plan["render_contract"]["human_appearance_decisions"][0]
+        self.assertEqual(decision["fidelity_salience"], "primary")
+        decision["skin_surface"]["viewer_priority"] = "P1"
+        self.assertEqual(audit_plan(plan, authored_prompt_text(plan)), [])
+
+        invalid = deepcopy(plan)
+        invalid["render_contract"]["human_appearance_decisions"][0][
+            "skin_surface"
+        ]["region_ids"] = ["missing-skin-region"]
+        self.assertTrue(
+            any(
+                "require matching Color/Tone regions" in error
+                for error in audit_plan(invalid)
+            )
+        )
+
     def test_controlled_descriptor_rejects_hardcoded_or_misowned_axes(self) -> None:
         phrase_tamper = with_material_skin_descriptor(valid_color_plan())
         descriptor = phrase_tamper["render_contract"]["color_tone_contract"][

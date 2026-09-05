@@ -1,6 +1,6 @@
 ---
 id: core.pre-emit-gate
-version: 29
+version: 30
 priority: 100
 type: core
 tier: 0
@@ -73,6 +73,7 @@ Always. Apply immediately before the final answer as a rewrite pass, not an appe
 - Keep global tonal range and local form contrast as separate effects.
 - Give every material shadow event a source-supported owner or mark it mixed or uncertain.
 
+<!-- profile:audited -->
 ## Audited-only ledger checks
 
 Apply this section only in `audited`, measured fidelity, or source/render evaluation:
@@ -80,6 +81,8 @@ Apply this section only in `audited`, measured fidelity, or source/render evalua
 - For color/tone, verify each aggregate source-relative target and causal contribution. Trace every required intrinsic axis through same-region/same-axis effect, claim, and axis-control; reconcile each exact excerpt with its layer and full effect budget.
 - For Light/Form, verify each target and emitted causal contribution, then reconcile every exact excerpt with one owner and complete effect list.
 - Before generation, validate appearance, spatial counterfactuals, exact effect audits, obligation binding, and ledger separation. Mask every owned control or qualified summary in the complete prompt; after structural labels and punctuation, reject semantic residue. Expected excerpts alone do not prove ownership.
+
+<!-- /profile -->
 
 ## Final checks
 

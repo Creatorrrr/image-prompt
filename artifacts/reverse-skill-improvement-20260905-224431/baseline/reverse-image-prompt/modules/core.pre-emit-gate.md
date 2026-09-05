@@ -1,0 +1,90 @@
+---
+id: core.pre-emit-gate
+version: 29
+priority: 100
+type: core
+tier: 0
+facet: core
+facet_values:
+  - pre-emit-gate
+  - final-output-gate
+triggers:
+  - any image
+avoid_when: []
+dependencies:
+  - core.visual-evidence
+  - core.frame-coordinates
+  - concept.primary-relationship
+conflicts: []
+provides_anchors:
+  - coordinate_contradictions
+  - secondary_detail_budget
+  - output_gate
+  - prompt_only_limits
+  - semantic_salience_amplification
+  - semantic_claim_merge
+  - net_salience_audit
+  - replacement_correction
+  - cross_slot_perceptual_effect_audit
+  - color_tone_causal_consistency
+  - unowned_appearance_claim_audit
+  - causal_color_phrase_scope
+  - final_color_control_ledger
+  - intrinsic_axis_emission_coverage
+  - axis_control_separability
+  - light_form_causal_consistency
+  - unowned_lighting_claim_audit
+  - global_local_contrast_separation
+  - shadow_owner_coverage
+  - final_light_control_ledger
+---
+
+# Core: pre-emit gate
+
+## When to load
+
+Always. Apply immediately before the final answer as a rewrite pass, not an appended checklist.
+
+## Viewer-first gate
+
+- Confirm that `PROMPT:` contains the primary visual concept and that every P0/P1 effect has one early causal control.
+- Merge candidate claims by semantic slot before writing prose; each emitted slot has one clause owner.
+- Merge P2 into an owned control or one short supporting clause; delete P3 unless requested.
+- Check whether a secondary element receives more words than its visible importance supports; compress it when it competes with P0/P1.
+- Audit semantic salience amplification across exact repeats, synonyms, paraphrases, labels, negatives, and settings; a repeatedly described dimension gains visual priority even when no sentence is duplicated verbatim.
+- Compare each slot's aggregate direction and strength with its source target. Generic beauty, style, quality, or demographic-looking shorthand cannot replace source-specific appearance, geometry, skin presentation, space, clothing, pose, light, or color.
+- Correct an overstrong draft by replacing or deleting the amplifying language, not by appending a negative counterweight.
+- Reject unresolved provenance labels and missing-artifact comparisons; allow physical `light source` and self-contained state verbs.
+- Audit coordinate contradictions. In `prompt`, a coupled macro is `sufficient`, `lossy`, or `uncertain`; only supported P0/P1 at-risk residuals survive. A missing owner or module is `route-gap`. In `audited`, validate the full spatial contract.
+- Treat alignment prose as multi-axis control. Record each exact clause's explicit and implicit effects; rewrite it if any affected spatial axis is unowned. Negatives cannot repair the conflict.
+- Frame placement uses a frame reference; cross-component placement uses a region. If direction survives material displacement, require both frame relations plus the inter-region relation and protect proximity, overlap, or visibility.
+- For a material human, verify external identity provenance and output use, displayed-skin scope and priority, and one bounded appearance gestalt. Exact external identity context precedes the gestalt; a broad person prior stays contiguous with correcting geometry.
+- Retained human or general aggregate descriptors require provenance, P0/P1 materiality, a material-drift omission check, intended/protected dimensions, and adjacent owned decomposition. Beauty and skin wording cannot act as likeness or demographic evidence.
+
+## Causal ownership
+
+- Audit shared perceptual effects across semantic slots, causal layers, paragraphs, negatives, and settings.
+- Keep form, surface, light, color, material, and hierarchy causally consistent; do not encode induced effects as intrinsic.
+- Assign every appearance-changing color or tone phrase to one causal layer. A qualified aggregate may lead its axes once; rewrite or remove other free-floating mood or color adjectives.
+- Split an ambiguous color phrase when one modifier could silently control intrinsic surface, illumination, exposure, or processing at the same time.
+- Give an axis-control one region and one perceptual axis. Split a compound that would silently change several material axes.
+- Assign every lighting-changing phrase to one Light/Form owner. Keep the visible result authoritative when physical cause is uncertain.
+- Do not let a compact lighting summary replace an at-risk regional or pose-dependent Light/Form relation.
+- Keep global tonal range and local form contrast as separate effects.
+- Give every material shadow event a source-supported owner or mark it mixed or uncertain.
+
+## Audited-only ledger checks
+
+Apply this section only in `audited`, measured fidelity, or source/render evaluation:
+
+- For color/tone, verify each aggregate source-relative target and causal contribution. Trace every required intrinsic axis through same-region/same-axis effect, claim, and axis-control; reconcile each exact excerpt with its layer and full effect budget.
+- For Light/Form, verify each target and emitted causal contribution, then reconcile every exact excerpt with one owner and complete effect list.
+- Before generation, validate appearance, spatial counterfactuals, exact effect audits, obligation binding, and ledger separation. Mask every owned control or qualified summary in the complete prompt; after structural labels and punctuation, reject semantic residue. Expected excerpts alone do not prove ownership.
+
+## Final checks
+
+- Preserve major-region area and attention order, partial visibility, fidelity ceiling, and scale-appropriate detail.
+- Remove unsupported camera, lens, identity, brand, artist, hidden-content, and quality assumptions.
+- When pose and light jointly shape form, keep camera/crop, spatial macro and residuals, then pose-bound Light/Form; later clauses must not neutralize that relation.
+- Report prompt-only limits honestly. Package validity, prompt quality, pixels, and user judgment remain separate.
+- If the prompt reads as a checklist, rewrite around the proposition and its smallest causal cue set.

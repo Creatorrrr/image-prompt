@@ -1,6 +1,6 @@
 ---
 id: core.output-contract
-version: 24
+version: 25
 priority: 98
 type: core
 tier: 0
@@ -52,7 +52,7 @@ Write a standalone English prompt ordered first by viewer importance, then by th
 - Put P0 source-signature controls first, followed by P1 structural identity.
 - Merge P2 support into an owned clause or one short later cue; omit P3 unless the user requests it.
 
-- Begin with frame shape, medium, fidelity ceiling, and the perceptual proposition.
+- Begin with the perceptual proposition and its material frame shape, medium, and fidelity ceiling; supporting background does not precede P0/P1.
 - **Relationship-led:** crop, major zones, topology, interaction, then appearance.
 - **Appearance-led:** causal form, surface, light, color, hierarchy, then flexible pose or inventory.
 - **Information-led:** layout, reading order, hierarchy, legibility, then decoration.

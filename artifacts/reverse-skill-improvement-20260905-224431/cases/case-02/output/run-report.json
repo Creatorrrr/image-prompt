@@ -1,0 +1,430 @@
+{
+  "case": "case-02",
+  "raw_request": "이 이미지에서 충실한 독립형 영문 이미지 생성 프롬프트를 추출하고, 그 프롬프트만으로 이미지를 한 장 생성해줘.",
+  "outcome": "one image delivered from the exact frozen standalone English prompt",
+  "started_utc": "2026-09-05T14:05:14.218Z",
+  "ended_utc": "2026-09-05T15:18:48.961862+00:00",
+  "observed_case_wall_seconds": 4414.744,
+  "isolation": "Case-only source and snapshot work; no sibling/parent artifacts, repo history or memory retrieval. Current exact case session tool events and helper final payloads were used for provenance.",
+  "instruction_provenance": "v1 source analysis and unchanged module/lane views; final validations with skill-v3. v1/v2/v3 snapshots and observed transitions preserved.",
+  "route": {
+    "profile": "audited",
+    "fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+    "required_lanes": [
+      "lane.global-composition",
+      "lane.spatial-topology",
+      "lane.subject-appearance",
+      "lane.color-light-material",
+      "lane.medium-aesthetic-capture"
+    ],
+    "timing": {
+      "start_utc": "2026-09-05T14:07:47.460742+00:00",
+      "end_utc": "2026-09-05T14:07:47.613149+00:00",
+      "exit_code": 0,
+      "stderr": ""
+    }
+  },
+  "lane_execution": {
+    "mode": "mixed",
+    "independence_claimed_for_all": false,
+    "lanes": [
+      {
+        "lane": "global_lane",
+        "execution_mode": "delegated",
+        "independent_context": true,
+        "started_utc": "2026-09-05T14:09:07.129Z",
+        "ended_utc": "2026-09-05T14:16:04.354Z",
+        "observed_wall_seconds": 417.225,
+        "time_scope": "spawn through received final report",
+        "findings": 6,
+        "atomic_obligations": 15,
+        "raw_report_sha256": "6686fff343ed744165dcf9630244ce0973bb83e61a6e58b6311dfd4cbd08f11f"
+      },
+      {
+        "lane": "spatial_lane",
+        "execution_mode": "delegated",
+        "independent_context": true,
+        "started_utc": "2026-09-05T14:16:59.550Z",
+        "ended_utc": "2026-09-05T14:29:00.734Z",
+        "observed_wall_seconds": 721.184,
+        "time_scope": "spawn through received final report",
+        "findings": 6,
+        "atomic_obligations": 18,
+        "raw_report_sha256": "01d87e51828767bca298b742b49a0f59ea0ea6bf98089b02b6f929c003635a8d"
+      },
+      {
+        "lane": "appearance_lane",
+        "execution_mode": "sequential-fallback",
+        "independent_context": false,
+        "started_utc": "2026-09-05T14:30:08.774Z",
+        "ended_utc": "2026-09-05T14:32:46.286865+00:00",
+        "observed_wall_seconds": 157.513,
+        "time_scope": "instruction view tool call start through report freeze, includes reading/authoring/serialization",
+        "findings": 5,
+        "atomic_obligations": 12,
+        "raw_report_sha256": "53a939859b0dd8d5a89ba916a18df04c9a8e9ff7e516b933bf090277c9be56fc"
+      },
+      {
+        "lane": "color_lane",
+        "execution_mode": "sequential-fallback",
+        "independent_context": false,
+        "started_utc": "2026-09-05T14:33:14.194Z",
+        "ended_utc": "2026-09-05T14:36:15.353012+00:00",
+        "observed_wall_seconds": 181.159,
+        "time_scope": "instruction view tool call start through report freeze, includes reading/authoring/serialization",
+        "findings": 5,
+        "atomic_obligations": 20,
+        "raw_report_sha256": "497a43301d919e3f869dbd1271f0dfff83394b99078da293c5119a2f309497a5"
+      },
+      {
+        "lane": "capture_lane",
+        "execution_mode": "sequential-fallback",
+        "independent_context": false,
+        "started_utc": "2026-09-05T14:36:13.461Z",
+        "ended_utc": "2026-09-05T14:37:16.799462+00:00",
+        "observed_wall_seconds": 63.338,
+        "time_scope": "instruction view tool call start through report freeze, includes reading/authoring/serialization",
+        "findings": 3,
+        "atomic_obligations": 4,
+        "raw_report_sha256": "c8fd4641e8845e8267e63ca5ebe4bf8d55c306b000be36c3b1c795adfd80b4c1"
+      }
+    ],
+    "failed_fresh_lane_spawns": 1,
+    "failed_spawn_evidence": "delegation-limit-events.json"
+  },
+  "integration": {
+    "findings": 25,
+    "atomic_obligations": 69,
+    "invariants": 40,
+    "observed_events": [
+      {
+        "timestamp": "2026-09-05T14:46:16.003Z",
+        "call_id": "call_g9UZUSoGoeHX4gm7fWZA7aNG",
+        "scope": "first plan authoring file write"
+      },
+      {
+        "timestamp": "2026-09-05T14:51:02.739Z",
+        "call_id": "call_RdAZv1lphLrvShnw1h03HXT0",
+        "scope": "obligation reconciliation file write"
+      }
+    ],
+    "review_packet_completed_utc": "2026-09-05T14:51:04.681884+00:00",
+    "full_authoring_duration_seconds": null,
+    "duration_limitation": "Only write dispatch and saved packet timestamps are directly observable; model authoring preceded the writes."
+  },
+  "critic": {
+    "status": "pass",
+    "reviewer": "root",
+    "independence_disclosure": "Independent of the case integrator conversation and reasoning transcript; root is the common reviewer across cases, not a newly spawned empty context. Prior extracted prompts and rendered results were not supplied.",
+    "passes": 1,
+    "reviewed_at": "2026-09-05T14:59:08.337688+00:00",
+    "started_at": null,
+    "wall_seconds": null,
+    "timing_limitation": "Reviewer completion time supplied; critic start not exposed.",
+    "raw_sha256": "95e1fa5dba5c6ed07868b5aae9abd05a851b80a2a2c605532e29619595e7d1ef"
+  },
+  "validation": {
+    "pre_generation_status": "ok",
+    "checks": [
+      {
+        "label": "bundle-validation-critic-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:55.844414+00:00",
+        "ended_utc": "2026-09-05T15:01:56.031988+00:00",
+        "result": {
+          "status": "ok"
+        }
+      },
+      {
+        "label": "plan-validation-critic-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:56.032889+00:00",
+        "ended_utc": "2026-09-05T15:01:56.209706+00:00",
+        "result": {
+          "status": "ok",
+          "errors": []
+        }
+      },
+      {
+        "label": "prompt-lint-critic-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:56.210431+00:00",
+        "ended_utc": "2026-09-05T15:01:56.321710+00:00",
+        "result": {
+          "status": "ok",
+          "errors": []
+        }
+      },
+      {
+        "label": "bundle-validation-frozen-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:56.326887+00:00",
+        "ended_utc": "2026-09-05T15:01:56.469449+00:00",
+        "result": {
+          "status": "ok"
+        }
+      },
+      {
+        "label": "plan-validation-frozen-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:56.471483+00:00",
+        "ended_utc": "2026-09-05T15:01:56.713171+00:00",
+        "result": {
+          "status": "ok",
+          "errors": []
+        }
+      },
+      {
+        "label": "prompt-lint-frozen-v3",
+        "exit_code": 0,
+        "started_utc": "2026-09-05T15:01:56.714958+00:00",
+        "ended_utc": "2026-09-05T15:01:56.895014+00:00",
+        "result": {
+          "status": "ok",
+          "errors": []
+        }
+      }
+    ],
+    "source_aware_standalone_review": "pass",
+    "initial_route_failure": "route-validation-v1.json",
+    "initial_plan_errors": "plan-validation-draft.json",
+    "pending_critic_expected_failure": "bundle-validation-before-critic.json",
+    "regression_tests": "Not rerun here. Parent reported v3 311 tests + 267 subtests; tests are not pixel evidence."
+  },
+  "freeze": {
+    "frozen_utc": "2026-09-05T15:01:56.326878+00:00",
+    "prompt_file": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/output/prompt.txt",
+    "prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9",
+    "prompt_utf8_bytes": 3713,
+    "prompt_characters": 3713,
+    "prompt_words": 597,
+    "plan_file_sha256": "0a19815899f84c938f8885286b41f9b04076faad8737a39c430568bced75093a",
+    "plan_canonical_sha256": "7d75d7725a9c57400fc28631fcbc4d0bfa1ada3319bf06019fdb772d62b5f4f2",
+    "critic_file_sha256": "95e1fa5dba5c6ed07868b5aae9abd05a851b80a2a2c605532e29619595e7d1ef",
+    "source_sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "policy": "Copy of exactly reviewed UTF-8 production text, no augmentation, no source conditioning."
+  },
+  "source": {
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "dimensions": [
+      399,
+      623
+    ]
+  },
+  "render": {
+    "copied_utc": "2026-09-05T15:07:16.454155+00:00",
+    "original_returned_path": "/Users/chasoik/.codex/generated_images/01a071e3-3cc7-7c60-bd5e-5d0f19160672/exec-b0c8fd18-d11c-4d81-a294-dc757ef9a530.png",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/output/render.png",
+    "sha256": "a787e2f758a73358ec052bf5be0622a8b3c34bc0a6b85825e03a051209e6961a",
+    "dimensions": [
+      1006,
+      1564
+    ],
+    "format": "PNG",
+    "mode": "RGB",
+    "bytes": 2023733,
+    "icc_profile_present": false,
+    "returned_path_and_copy_identical": true
+  },
+  "request": {
+    "tool": "image_gen__imagegen",
+    "fields": [
+      "prompt"
+    ],
+    "conditioning": "text-only; both image reference fields omitted",
+    "prompt_bytes_match_frozen": true,
+    "raw_request_sha256": "e1b4e42d1cc16f7d8be33cbb7f15aa41038a4e1657b48bbfd13e0e74a1c3a511",
+    "model": "not-exposed/unsupported",
+    "size": "not-exposed/unsupported",
+    "quality": "not-exposed/unsupported"
+  },
+  "generation": {
+    "prepared_utc": "2026-09-05T15:01:56.897843+00:00",
+    "status": "delivered",
+    "tool": "image_gen__imagegen",
+    "prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9",
+    "request_fields": [
+      "prompt"
+    ],
+    "image_conditioning_fields": "both omitted",
+    "attempt_count": 2,
+    "transport_retry_count": 1,
+    "quality_retry_count": 0,
+    "attempt_budget": 1,
+    "identical_byte_no_delivery_retry_budget": 1,
+    "controls": {
+      "exact_model": "not-exposed/unsupported",
+      "size": "not-exposed/unsupported",
+      "quality": "not-exposed/unsupported"
+    },
+    "started_utc": "2026-09-05T15:02:59.040308+00:00",
+    "attempts": [
+      {
+        "index": 1,
+        "kind": "initial",
+        "event_id": "exec-078ae80e-f22d-4e9e-ab80-ecd592867ef9",
+        "started_at_ms": 1788620579056,
+        "completed_at_ms": 1788620623763,
+        "wall_seconds": 44.707,
+        "status": "failed-no-delivery",
+        "failure": null,
+        "returned_image": null,
+        "tool_event_raw_sha256": "293017439c284b7918f8c3904063535c76cbb022e75e2c02d09744673f576671",
+        "actual_tool_prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9"
+      },
+      {
+        "index": 2,
+        "kind": "identical-byte-no-delivery-retry",
+        "event_id": "exec-b0c8fd18-d11c-4d81-a294-dc757ef9a530",
+        "started_at_ms": 1788620712249,
+        "completed_at_ms": 1788620760198,
+        "wall_seconds": 47.949,
+        "status": "completed",
+        "failure": null,
+        "returned_image": "/Users/chasoik/.codex/generated_images/01a071e3-3cc7-7c60-bd5e-5d0f19160672/exec-b0c8fd18-d11c-4d81-a294-dc757ef9a530.png",
+        "tool_event_raw_sha256": "0abf4eb8f3f1e4ac54b06318537e28389c3af54defef8141e00c7a4faa7ca5a2",
+        "actual_tool_prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9"
+      }
+    ],
+    "first_error_wrapper_limitation": "Initial catch serialized undefined name/message as an empty object. Actual Extension failure/result fields are preserved separately.",
+    "retry_started_utc": "2026-09-05T15:05:12.237499+00:00",
+    "completed_utc": "2026-09-05T15:06:00.201Z",
+    "successful_images": 1,
+    "prompt_unchanged": true
+  },
+  "frame_delivery": {
+    "source_dimensions": [
+      399,
+      623
+    ],
+    "delivered_dimensions": [
+      1006,
+      1564
+    ],
+    "source_ratio": 0.6404494382022472,
+    "delivered_ratio": 0.6432225063938619,
+    "relative_ratio_error": 0.004329878404451044,
+    "dimension_control": "not-exposed/unsupported",
+    "requested_size_argument": null,
+    "theoretical_adapter_note": "size-adapter-before-generation.json evaluates an unavailable model-specific setting only; it was not applied and is not a generator identity claim.",
+    "frame_composition_evidence": "render-observations.json",
+    "acceptance_status": "unscored; no justified numerical tolerance"
+  },
+  "color_evaluation": {
+    "status": "unscored",
+    "comparison_scope": "assumed-display-space-relative",
+    "policy": null,
+    "source_and_render_icc_profiles": "Both missing; assumed display-space relative measurements only.",
+    "sampling": "Manual semantic correspondences, independent bounds, separate target midtone and context flat/shadow groups; retained medians/dispersion in color-probe.json.",
+    "measured_garment_delta_L": {
+      "cardigan-midtone": -16.109,
+      "shorts-midtone": -3.847,
+      "tank-midtone": -8.34
+    },
+    "dominant_residual_axis": "none",
+    "drift_class": "inconclusive",
+    "interpretation": "Selected cardigan and tank patches are darker in delivered displayed pixels. Knit/fold, global response and low chroma make a calibrated intrinsic-color diagnosis unsupported. Hue angle movement is not interpreted as reliable at low chroma.",
+    "no_controls_changed": true,
+    "not_a_pass": true
+  },
+  "pixel_evaluation": {
+    "observation_mode": "Analyst inspected actual delivered PNG pixels with view_image at original resolution, alongside the original JPEG; no validator or test used as visual proof.",
+    "source_path": "../source.jpg",
+    "render_path": "render.png",
+    "inspection_clock_observed_utc": "2026-09-05T15:07:43Z",
+    "source_observations": [
+      "A narrow, dim and soft bathroom mirror selfie has one adult-presenting figure whose eyes, nose and mouth are hidden behind an upright black phone and splayed holding fingers.",
+      "The crown intersects the top edge; the head and upper torso project to viewer-left of hips which crowd the right edge. The viewer-right shoulder is higher. A shallow sink/counter band intersects the upper thighs at the bottom.",
+      "Two long dark braids and an uneven fringe surround the obscured face; the viewer-left braid hangs lower.",
+      "A pale muted blue fitted cropped tank, a relatively smooth fine knitted pale cardigan dropped below both shoulders, and dark loose piped shorts establish the clothing silhouette.",
+      "The high left note is a comparatively large pale yellow square. The towel rail has dark detailed hardware; counter toiletries are cropped at lower left. The right background is near black."
+    ],
+    "delivered_render_observations": [
+      "One adult-presenting figure holds an upright dark phone with splayed fingers concealing the eyes, nose and mouth. Two dark braids, an uneven fringe, a raised viewer-right arm and a lowered opposite arm are visible.",
+      "The pale blue cropped tank, dropped cardigan, dark piped drawstring shorts, towel at left, small wall note, dark right background and partial foreground basin are recognizable.",
+      "The figure is more centered and upright; the projected head/upper-torso to hips offset is smaller, with more gap between hips and the right edge. The crown has a small amount of visible headroom instead of the source clip.",
+      "The cardigan is a bulkier, highly textured knit with prominent stitches. Hair strands, clothing texture and skin detail are more resolved, with an added visible grain pattern.",
+      "The note is smaller and darker, and towel-rail hardware is simplified. The tank and cardigan are dimmer and grayer in displayed value. The midriff gap is larger and the navel is visible."
+    ],
+    "retained_relations": [
+      "Phone/finger facial occlusion",
+      "Two separate braids across the chest",
+      "Asymmetric raised and lowered arms with cardigan below both shoulders",
+      "Tall upper-body/upper-thigh mirror crop with foreground sink",
+      "Left wall note/towel and near-black right background"
+    ],
+    "remaining_fidelity_limitations": [
+      "Reduced torso diagonal and right-biased hip placement",
+      "Crown crop drift",
+      "Bulkier cardigan weave and sharper image detail",
+      "Smaller, darker wall note and simplified supporting hardware",
+      "Darker garment displayed colors and larger midriff gap"
+    ],
+    "assessment": "Partial visual correspondence with material composition, texture and color differences; no overall fidelity PASS claimed.",
+    "hidden_or_unscored": [
+      "Hidden face and exact obscured joint geometry",
+      "Faint note wording",
+      "Identity and biological or demographic color claims",
+      "Calibrated color accuracy",
+      "Generator-version response calibration and user judgment"
+    ],
+    "revision_action": "None. Production text remained frozen; no quality-based generation retry."
+  },
+  "event_counts": {
+    "scope": "Current exact case session observed before this report completes; functions wrappers and native completed events count separately, not summed.",
+    "tool_dispatches_by_name": {
+      "exec": 74,
+      "spawn_agent": 3,
+      "list_agents": 2,
+      "send_message": 10,
+      "wait_agent": 2,
+      "sleep": 1
+    },
+    "completed_command_events": 80,
+    "image_generation_events": 2,
+    "nonzero_command_events": 4,
+    "logical_lane_waves": 1,
+    "successful_fresh_context_lanes": 2,
+    "sequential_fallback_lanes": 3,
+    "malformed_lane_retries": 0,
+    "full_reroutes": 0,
+    "schema_reconciliations": 1,
+    "critic_requested_repairs": 0,
+    "generation_calls": 2,
+    "generation_no_delivery_failures": 1,
+    "identical_byte_transport_retries": 1,
+    "quality_retries": 0,
+    "delivered_images": 1
+  },
+  "integrity": {
+    "checked_utc": "2026-09-05T15:18:48.884701+00:00",
+    "source_sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9",
+    "render_sha256": "a787e2f758a73358ec052bf5be0622a8b3c34bc0a6b85825e03a051209e6961a",
+    "source_unchanged": true,
+    "prompt_identical_to_critic_and_both_tool_calls": true,
+    "raw_response_binary_equals_render": true,
+    "snapshot_checks": [
+      {
+        "directory": "skill",
+        "file_count": 113,
+        "mismatches": [],
+        "unexpected_files": []
+      },
+      {
+        "directory": "skill-v2",
+        "file_count": 113,
+        "mismatches": [],
+        "unexpected_files": []
+      },
+      {
+        "directory": "skill-v3",
+        "file_count": 113,
+        "mismatches": [],
+        "unexpected_files": []
+      }
+    ],
+    "status": "ok"
+  },
+  "user_judgment": "unscored"
+}

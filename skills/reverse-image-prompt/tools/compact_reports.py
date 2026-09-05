@@ -28,6 +28,14 @@ VALID_DRIFT_RISK = {"high", "medium", "low", "uncertain"}
 VALID_REPRESENTATIONS = {"atomic", "macro-summary"}
 VALID_ADEQUACY = {"sufficient", "lossy", "uncertain"}
 
+VALID_AGGREGATE_SCOPES = {"general", "human-appearance"}
+VALID_AGGREGATE_SOURCES = {
+    "user-supplied",
+    "source-visible-approximation",
+    "versioned-vocabulary",
+}
+VALID_AGGREGATE_CONFIDENCE = {"high", "medium"}
+
 
 def _nonempty_string(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
@@ -39,6 +47,87 @@ def _string_list(value: Any, *, nonempty: bool = False) -> bool:
         and (bool(value) or not nonempty)
         and all(_nonempty_string(item) for item in value)
     )
+
+
+def _validate_aggregate_candidate(
+    candidate: Any, label: str, *, human_lane: bool
+) -> list[str]:
+    """Check optional aggregate evidence without interpreting its phrase."""
+
+    if not isinstance(candidate, dict):
+        return [f"{label} must be an object"]
+
+    errors: list[str] = []
+    scope = candidate.get("scope")
+    if "scope" in candidate and (
+        not _nonempty_string(scope) or scope not in VALID_AGGREGATE_SCOPES
+    ):
+        errors.append(f"{label}.scope must be general or human-appearance")
+    human_aggregate = scope == "human-appearance" or (
+        "scope" not in candidate and human_lane
+    )
+    if not _nonempty_string(candidate.get("phrase")):
+        errors.append(f"{label}.phrase must be non-empty")
+    source = candidate.get("candidate_source")
+    if not isinstance(source, dict):
+        errors.append(f"{label}.candidate_source must be an object")
+    else:
+        source_kind = source.get("kind")
+        if (
+            not _nonempty_string(source_kind)
+            or source_kind not in VALID_AGGREGATE_SOURCES
+        ):
+            errors.append(f"{label}.candidate_source.kind is invalid")
+        if not _nonempty_string(source.get("reference")):
+            errors.append(f"{label}.candidate_source.reference must be non-empty")
+    confidence = candidate.get("confidence")
+    if not _nonempty_string(confidence) or confidence not in VALID_AGGREGATE_CONFIDENCE:
+        errors.append(f"{label}.confidence must be high or medium")
+    priority = candidate.get("viewer_priority")
+    if not _nonempty_string(priority) or priority not in VALID_PRIORITIES:
+        errors.append(f"{label}.viewer_priority must be P0 or P1")
+    if candidate.get("omission_counterfactual") != "material-drift":
+        errors.append(f"{label}.omission_counterfactual must be material-drift")
+    if not _string_list(candidate.get("decomposition_requirements"), nonempty=True):
+        errors.append(f"{label}.decomposition_requirements must be non-empty")
+
+    if "effect_budget" not in candidate and not human_aggregate:
+        return errors
+    budget = candidate.get("effect_budget")
+    budget_label = f"{label}.effect_budget"
+    if not isinstance(budget, dict):
+        errors.append(f"{budget_label} must be an object")
+        return errors
+    intended = budget.get("intended_dimensions")
+    protected = budget.get("protected_dimensions")
+    if not _string_list(intended, nonempty=True):
+        errors.append(f"{budget_label}.intended_dimensions must be non-empty")
+        intended = []
+    if not _string_list(protected):
+        errors.append(f"{budget_label}.protected_dimensions must be a list of strings")
+        protected = []
+    intended_set = set(intended)
+    protected_set = set(protected)
+    if len(intended) != len(intended_set):
+        errors.append(f"{budget_label}.intended_dimensions contains duplicates")
+    if len(protected) != len(protected_set):
+        errors.append(f"{budget_label}.protected_dimensions contains duplicates")
+    overlap = sorted(intended_set & protected_set)
+    if overlap:
+        errors.append(
+            f"{budget_label} cannot both intend and protect dimensions: "
+            + ", ".join(overlap)
+        )
+    if human_aggregate:
+        if "identity-context" in intended_set:
+            errors.append(
+                f"{budget_label}.intended_dimensions cannot control identity-context"
+            )
+        if "identity-context" not in protected_set:
+            errors.append(
+                f"{budget_label}.protected_dimensions must include identity-context"
+            )
+    return errors
 
 
 def _validate_route(
@@ -220,6 +309,15 @@ def validate_compact_set(
                 errors.append(f"{finding_label}.default_drift_risk is invalid")
             if not _nonempty_string(finding.get("control_requirement")):
                 errors.append(f"{finding_label}.control_requirement must be non-empty")
+
+            if "aggregate_descriptor_candidate" in finding:
+                errors.extend(
+                    _validate_aggregate_candidate(
+                        finding["aggregate_descriptor_candidate"],
+                        f"{finding_label}.aggregate_descriptor_candidate",
+                        human_lane="subject.human" in expected_modules,
+                    )
+                )
 
             adequacy = finding.get("summary_adequacy")
             if representation == "atomic":

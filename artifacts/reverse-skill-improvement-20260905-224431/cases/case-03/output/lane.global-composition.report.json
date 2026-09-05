@@ -1,0 +1,728 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.global-composition",
+  "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1",
+  "source_artifact": {
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "frame": "969x1280"
+  },
+  "execution": {
+    "mode": "delegated",
+    "independent_context": true
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.frame-coordinates",
+      "version": 15
+    },
+    {
+      "id": "concept.primary-relationship",
+      "version": 12
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "core.background-color",
+      "version": 7
+    },
+    {
+      "id": "core.pre-emit-gate",
+      "version": 30
+    },
+    {
+      "id": "core.output-contract",
+      "version": 25
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "perceptual-proposition",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:upward-view",
+        "lane.global-composition:region-hierarchy"
+      ]
+    },
+    {
+      "topic": "frame-and-crop",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:frame-crop",
+        "lane.global-composition:upward-view"
+      ]
+    },
+    {
+      "topic": "major-regions",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:region-hierarchy",
+        "lane.global-composition:backdrop-zones"
+      ]
+    },
+    {
+      "topic": "fidelity-mode",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:fidelity-ceiling"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.global-composition:proposition",
+      "owner_key": "global.perceptual-proposition",
+      "scale": "global",
+      "axis": "hierarchy",
+      "observation": "The primary read is a close, upward-looking photographic portrait of an adult person with long dark hair and a black asymmetric top, placed in front of an oversized pink-haired illustration. The photographic foreground supplies first attention; the enlarged illustrated backdrop supplies a distinct contextual counterpoint. Dominant fidelity is appearance-led, with the foreground/background medium distinction and ordinary occlusion retained as structural invariants.",
+      "source_evidence": [
+        "The foreground face, straight dark hair, exposed shoulder, and black-clad torso have photographic shading and surface detail.",
+        "Behind the person is a much larger, visibly drawn face with pink hair and a pale garment.",
+        "The foreground person's head and torso cover the central portion of the illustration."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [
+        "Photographic appearance does not establish whether the image originated as a camera photograph or a generated image.",
+        "The backdrop's physical medium cannot be distinguished confidently from the pixels."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:proposition:medium-distinction",
+          "axis": "surface",
+          "visible_result": "A photographically rendered foreground person remains visibly different in medium from the flat, anime-style illustrated figure behind them.",
+          "result_direction": "Preserve the photographic-versus-drawn distinction without translating both figures into one medium.",
+          "subject_or_region_ids": [
+            "subject.foreground-person",
+            "region.illustrated-backdrop"
+          ],
+          "relation_kind": "foreground-background-medium-contrast",
+          "source_evidence": [
+            "Photographic facial modeling and hair strands stand in front of broad illustrated facial and hair shapes."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Do not infer the physical display or printing process."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.global-composition:frame-crop",
+      "owner_key": "global.frame-and-crop",
+      "scale": "global",
+      "axis": "hierarchy",
+      "observation": "The verified frame is 969 by 1280 pixels, a portrait rectangle close to 3:4. It contains the complete foreground crown and face, substantial torso, and only a narrow lower-edge glimpse beneath the garment hem. The screen-right arm intersects the right edge. The image is neither a facial close-up nor a full-body composition.",
+      "source_evidence": [
+        "The source file hash and 969 by 1280 dimensions were verified directly.",
+        "A shallow region of illustrated backdrop remains above the foreground crown.",
+        "The foreground chin and all principal facial features are inside the frame.",
+        "The lower edge cuts through the lower torso area, with a narrow strip beneath the black top and a small dark lower-garment glimpse.",
+        "The screen-right sleeve and arm continue outside the right edge; hands are not visible."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "The visible hem and lower-edge fragments do not establish hidden lower-body clothing or pose."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:frame-crop:aspect",
+          "axis": "hierarchy",
+          "visible_result": "A portrait frame retains the verified 969:1280 width-to-height relationship.",
+          "result_direction": "Keep the near-3:4 portrait shape rather than widening or substantially elongating the frame.",
+          "subject_or_region_ids": [
+            "frame"
+          ],
+          "relation_kind": "frame-aspect-ratio",
+          "source_evidence": [
+            "The source dimensions are 969 by 1280 pixels."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:frame-crop:head-visibility",
+          "axis": "hierarchy",
+          "visible_result": "The complete foreground crown and face remain inside the upper part of the frame, with a shallow strip of illustrated backdrop above the hair.",
+          "result_direction": "Preserve the small headroom and uncropped foreground head without enlarging the face into a close-up.",
+          "subject_or_region_ids": [
+            "subject.foreground-head",
+            "frame.top",
+            "region.illustrated-backdrop"
+          ],
+          "relation_kind": "head-to-frame-crop-and-headroom",
+          "source_evidence": [
+            "The upper hair outline is fully visible below the top edge.",
+            "The eyes, nose, mouth, and chin remain fully inside the frame."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:frame-crop:lower-limit",
+          "axis": "hierarchy",
+          "visible_result": "The framing extends to the black top's lower hem and only a narrow glimpse beneath it before the body leaves the bottom edge.",
+          "result_direction": "Keep the substantial torso inclusion and abrupt lower crop, without expanding to the hips or legs.",
+          "subject_or_region_ids": [
+            "subject.foreground-torso",
+            "region.garment-hem",
+            "frame.bottom"
+          ],
+          "relation_kind": "torso-to-bottom-crop",
+          "source_evidence": [
+            "The black top occupies most of the lower frame.",
+            "A narrow skin-colored strip and a small dark lower-garment fragment appear at the bottom."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "The hidden lower body must not be reconstructed from the small visible fragment."
+          ]
+        },
+        {
+          "id": "lane.global-composition:frame-crop:right-edge",
+          "axis": "topology",
+          "visible_result": "The foreground person's screen-right upper arm and sleeve intersect the right boundary while the hand remains outside the visible image.",
+          "result_direction": "Preserve the right-edge truncation instead of shrinking or centering the body to reveal the whole arm.",
+          "subject_or_region_ids": [
+            "subject.foreground-right-arm",
+            "frame.right"
+          ],
+          "relation_kind": "arm-to-frame-edge-crossing",
+          "source_evidence": [
+            "The screen-right shoulder approaches the content boundary and its sleeve continues off the right edge.",
+            "No hand is visible."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "The direction or position of the hidden hand is unknown."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.global-composition:upward-view",
+      "owner_key": "global.viewpoint",
+      "scale": "global",
+      "axis": "form",
+      "observation": "A pronounced low viewpoint looks upward past the large foreground torso toward the raised face. The underside of the chin and nose are visible, and the neck rises away from the camera. These image-wide apparent proportions must not be attributed wholly to intrinsic anatomy.",
+      "source_evidence": [
+        "The underside of the chin is clearly exposed above the long visible neck.",
+        "The nostril openings are visible from below.",
+        "The torso forms a large near foreground mass beneath the more distant head."
+      ],
+      "confidence": "high",
+      "causal_origin": "perspective",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [
+        "Head lift and camera elevation jointly determine the visible underplanes.",
+        "Intrinsic body form, fitted fabric, pose, and perspective jointly influence the apparent torso silhouette.",
+        "No focal length or lens type is recoverable confidently."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:upward-view:underplanes",
+          "axis": "form",
+          "visible_result": "The viewer sees upward-facing evidence beneath the chin and nose, with the face held above the viewing position.",
+          "result_direction": "Retain the upward perspective and raised-chin read rather than normalizing to an eye-level portrait.",
+          "subject_or_region_ids": [
+            "subject.foreground-face",
+            "subject.foreground-neck",
+            "viewpoint"
+          ],
+          "relation_kind": "viewer-to-face-elevation",
+          "source_evidence": [
+            "The chin underside and nostril openings are visible.",
+            "The neck extends upward from the foreground neckline to the raised head."
+          ],
+          "confidence": "high",
+          "causal_origin": "perspective",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Camera elevation and head pose cannot be fully separated from this single image."
+          ]
+        },
+        {
+          "id": "lane.global-composition:upward-view:torso-head-scale",
+          "axis": "form",
+          "visible_result": "The near torso has a broad, large projection below the smaller and higher head.",
+          "result_direction": "Preserve the torso-to-head apparent scale relationship induced by the close upward view.",
+          "subject_or_region_ids": [
+            "subject.foreground-torso",
+            "subject.foreground-head"
+          ],
+          "relation_kind": "perspective-relative-scale",
+          "source_evidence": [
+            "The black-clad torso spans a broad lower area while the face occupies a much smaller upper region."
+          ],
+          "confidence": "high",
+          "causal_origin": "perspective",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Intrinsic proportions, garment fit, and pose also contribute to the visible projection."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.global-composition:region-hierarchy",
+      "owner_key": "global.major-region-hierarchy",
+      "scale": "global",
+      "axis": "hierarchy",
+      "observation": "A broad dark foreground torso occupies most of the lower field, with long dark hair enclosing the upper body. The face sits near the upper center, slightly to the right of the frame center, and the pale exposed screen-right shoulder forms another prominent light region. The illustrated backdrop survives above and along both sides, providing substantial context while remaining behind the photographic subject.",
+      "source_evidence": [
+        "The black garment is the largest coherent foreground region.",
+        "The face lies high in the image above the dark torso mass.",
+        "The screen-right shoulder forms a broad pale patch beside the neck.",
+        "Pink, pale facial, and gray illustrated areas remain visible around the foreground silhouette."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Light and garment darkness contribute to attention order; this finding owns regional area and placement rather than local lighting.",
+        "The slight head offset is weaker evidence than its upper-central placement."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:region-hierarchy:foreground-area",
+          "axis": "hierarchy",
+          "visible_result": "The foreground person remains large in the frame, with the dark torso supplying the dominant lower region and the head remaining high above it.",
+          "result_direction": "Keep torso inclusion and foreground dominance instead of reducing the person to show more surroundings.",
+          "subject_or_region_ids": [
+            "subject.foreground-person",
+            "subject.foreground-torso",
+            "subject.foreground-head",
+            "frame"
+          ],
+          "relation_kind": "foreground-to-frame-area-and-vertical-order",
+          "source_evidence": [
+            "The black top extends across most of the lower image.",
+            "The head is positioned near the upper center."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "A slight horizontal shift alone has lower materiality than a change in frame share or vertical ordering."
+          ]
+        },
+        {
+          "id": "lane.global-composition:region-hierarchy:backdrop-visible-share",
+          "axis": "hierarchy",
+          "visible_result": "The illustrated backdrop retains broad visible areas over the crown and beside the foreground silhouette, including recognizable illustrated face and hair fragments.",
+          "result_direction": "Preserve enough surrounding illustration to remain a major contextual region without making it compete equally with the foreground person.",
+          "subject_or_region_ids": [
+            "region.illustrated-backdrop",
+            "subject.foreground-person",
+            "frame.top",
+            "frame.left",
+            "frame.right"
+          ],
+          "relation_kind": "background-to-frame-share-and-surviving-visibility",
+          "source_evidence": [
+            "The enlarged drawn face remains visible above and screen-left of the foreground head.",
+            "Pink hair and pale garment or skin-shaped masses survive down the side regions."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:region-hierarchy:depth-order",
+          "axis": "topology",
+          "visible_result": "The photographic head, hair, shoulders, and torso form an uninterrupted foreground silhouette occluding the enlarged illustration.",
+          "result_direction": "Maintain person-in-front depth order and ordinary overlap, without blending facial parts, placing illustrated marks over the person, or implying a reflection.",
+          "subject_or_region_ids": [
+            "subject.foreground-person",
+            "region.illustrated-backdrop"
+          ],
+          "relation_kind": "foreground-occlusion-and-depth-order",
+          "source_evidence": [
+            "The foreground hair and body hide the central drawn face and torso.",
+            "The illustration is visible only outside the foreground silhouette."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Image-plane overlap does not establish physical contact with the backdrop."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.global-composition:backdrop-zones",
+      "owner_key": "global.background-zoning",
+      "scale": "regional",
+      "axis": "hierarchy",
+      "observation": "The illustrated figure is enlarged beyond the frame. Its pale cropped face and small smiling mouth occupy the upper-left and upper-central background, pink hair spreads into both upper side regions, and pale gray clothing remains exposed chiefly beside the foreground person's screen-left side. The illustrated head is much larger than the foreground head.",
+      "source_evidence": [
+        "The illustration's face extends beyond the top edge and is partially hidden by the foreground hair.",
+        "A drawn smiling mouth is visible screen-left of the foreground crown.",
+        "Long muted pink illustrated hair occupies the upper-left and upper-right background.",
+        "A broad pale gray illustrated garment region remains at the left side."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Displayed pink and gray colors may be affected by illumination, exposure, and processing.",
+        "No wall, display frame, printed-paper surface, or physical support plane is established clearly."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:backdrop-zones:enlargement-and-crop",
+          "axis": "hierarchy",
+          "visible_result": "The illustrated head remains oversized relative to the foreground head, with its upper part outside the frame and much of its center hidden behind the person.",
+          "result_direction": "Keep the giant cropped illustration scale rather than replacing it with a small complete poster or a second life-sized person.",
+          "subject_or_region_ids": [
+            "region.illustrated-face",
+            "subject.foreground-head",
+            "frame.top"
+          ],
+          "relation_kind": "relative-scale-and-background-crop",
+          "source_evidence": [
+            "The drawn face spans a broad upper background area and extends through the top edge.",
+            "The foreground head covers only part of the much larger illustrated head."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:backdrop-zones:spatial-zoning",
+          "axis": "hierarchy",
+          "visible_result": "The partial drawn face stays above and screen-left of the foreground head, illustrated hair fills upper side regions, and a pale garment region survives down the left side.",
+          "result_direction": "Preserve the broad background zone arrangement without completing the hidden illustrated figure.",
+          "subject_or_region_ids": [
+            "region.illustrated-face",
+            "region.illustrated-hair",
+            "region.illustrated-garment",
+            "subject.foreground-head",
+            "subject.foreground-torso"
+          ],
+          "relation_kind": "background-zone-placement",
+          "source_evidence": [
+            "The smiling drawn mouth is above and screen-left of the foreground head.",
+            "Illustrated hair remains visible on both sides of the upper foreground silhouette.",
+            "The pale gray garment is most exposed along the left background."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Small internal contours of the illustration are lower-priority than these broad regions."
+          ]
+        },
+        {
+          "id": "lane.global-composition:backdrop-zones:displayed-palette",
+          "axis": "color",
+          "visible_result": "Muted pink illustrated hair and pale gray clothing provide the principal background color regions around the dark foreground person.",
+          "result_direction": "Retain the subdued pink-and-pale-gray background relationship without replacing it with neutral scenery or highly saturated decoration.",
+          "subject_or_region_ids": [
+            "region.illustrated-hair",
+            "region.illustrated-garment",
+            "region.illustrated-backdrop"
+          ],
+          "relation_kind": "displayed-background-palette",
+          "source_evidence": [
+            "The drawn hair is visibly muted pink across multiple background regions.",
+            "The illustrated clothing is a low-chroma pale gray."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "These are displayed regional color targets; physical surface color, illumination, and processing cannot be separated confidently.",
+            "No global white-balance correction follows from the pale gray area."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.global-composition:fidelity-ceiling",
+      "owner_key": "global.fidelity-ceiling",
+      "scale": "global",
+      "axis": "sharpness",
+      "observation": "Faithful treatment should retain the image's modest fine-detail sharpness and secondary backdrop legibility. The foreground face and hair are readable, but the image does not support an upgraded crisp studio finish. The black torso contains subdued, partly obscured detail rather than uniformly recovered texture.",
+      "source_evidence": [
+        "Fine facial and garment details have slightly soft edges at the original frame size.",
+        "The illustration has broad, comparatively soft edges and limited local detail.",
+        "Large black garment regions remain dark, with only selected folds and tonal transitions visible."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Optical focus, resizing, compression, and generation or retouching cannot be distinguished reliably.",
+        "The dark garment's low legibility also depends on lighting, exposure, and material."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:fidelity-ceiling:fine-detail",
+          "axis": "sharpness",
+          "visible_result": "Readable foreground features retain slightly soft fine detail and ordinary image clarity.",
+          "result_direction": "Cap fine-detail crispness at the visible level rather than upgrading skin, hair, and fabric into uniformly sharp microtexture.",
+          "subject_or_region_ids": [
+            "subject.foreground-person",
+            "frame"
+          ],
+          "relation_kind": "global-detail-ceiling",
+          "source_evidence": [
+            "The face and garment are readable without extremely crisp fine texture.",
+            "Hair edges vary in definition instead of remaining uniformly razor-sharp."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "The capture or processing mechanism is unknown."
+          ]
+        },
+        {
+          "id": "lane.global-composition:fidelity-ceiling:background-legibility",
+          "axis": "sharpness",
+          "visible_result": "The enlarged illustration remains recognizable as broad facial, hair, and garment regions with softer detail than the foreground subject.",
+          "result_direction": "Preserve secondary background legibility without recovering precise illustrated microdetail or adding environmental information.",
+          "subject_or_region_ids": [
+            "region.illustrated-backdrop",
+            "subject.foreground-person"
+          ],
+          "relation_kind": "foreground-background-detail-hierarchy",
+          "source_evidence": [
+            "The backdrop's broad smiling face and pink hair are readable, while smaller illustrated details remain indistinct."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Depth, image reproduction, and capture processing may jointly produce the softness."
+          ]
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "owner_key": "global.perceptual-proposition",
+      "requirement": "Use one appearance-led proposition owner for the close upward photographic portrait against an oversized illustration. Keep the medium distinction explicit and do not introduce identity, character identity, nationality, occupation, or a story.",
+      "finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:upward-view"
+      ]
+    },
+    {
+      "owner_key": "global.frame-and-crop",
+      "requirement": "Keep source dimensions separate from generator target size. Bind aspect ratio, upper head visibility, lower crop, and screen-right arm truncation independently.",
+      "finding_ids": [
+        "lane.global-composition:frame-crop"
+      ]
+    },
+    {
+      "owner_key": "global.spatial-axis-disposition",
+      "requirement": "Material axes are portrait aspect, subject scale, high head placement, substantial lower torso inclusion, upward viewpoint, right-edge arm truncation, oversized backdrop scale, backdrop upper and side visibility, and person-in-front occlusion. Small horizontal centering variations and exact illustrated micro-contour placement are lower-materiality provided these relations remain intact. Physical person-to-backdrop contact and support are uncertain and must not be asserted.",
+      "finding_ids": [
+        "lane.global-composition:frame-crop",
+        "lane.global-composition:upward-view",
+        "lane.global-composition:region-hierarchy",
+        "lane.global-composition:backdrop-zones"
+      ]
+    },
+    {
+      "owner_key": "global.major-region-hierarchy",
+      "requirement": "Preserve the dark torso as the largest lower region, the face high in the composition, and the broad surviving illustration around the foreground silhouette. Do not let face detail or background inventory cause tighter cropping or subject shrinkage.",
+      "finding_ids": [
+        "lane.global-composition:region-hierarchy"
+      ]
+    },
+    {
+      "owner_key": "global.background-zoning",
+      "requirement": "Treat the pink and gray targets as displayed background-region colors. Consolidate any matching downstream color controls under one owner rather than repeating the palette as a global grade.",
+      "finding_ids": [
+        "lane.global-composition:backdrop-zones"
+      ]
+    },
+    {
+      "owner_key": "global.fidelity-ceiling",
+      "requirement": "Retain fine-detail softness and secondary background legibility. Do not infer a camera, lens, printing method, studio setup, or retouching process.",
+      "finding_ids": [
+        "lane.global-composition:fidelity-ceiling"
+      ]
+    }
+  ],
+  "omission_checks": [
+    {
+      "id": "lane.global-composition:omission:viewpoint-counterfactual",
+      "finding_ids": [
+        "lane.global-composition:upward-view",
+        "lane.global-composition:frame-crop"
+      ],
+      "counterfactual": "Hold the person's visible appearance and clothing constant, but substitute an eye-level view or facial close-up.",
+      "result": "Material drift: the raised-chin underplanes, dominant torso projection, and surrounding illustration share change. Viewpoint and crop require independent controls."
+    },
+    {
+      "id": "lane.global-composition:omission:appearance-counterfactual",
+      "finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:region-hierarchy"
+      ],
+      "counterfactual": "Hold the low viewpoint, crop, and backdrop constant, but replace the foreground hair silhouette and asymmetric dark garment with generic portrait styling.",
+      "result": "Material drift remains, confirming appearance-led fidelity. Detailed human and garment controls require their assigned owners; the global framing controls cannot substitute for them."
+    },
+    {
+      "id": "lane.global-composition:omission:background-counterfactual",
+      "finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:backdrop-zones"
+      ],
+      "counterfactual": "Hold the foreground person and crop constant, but replace the backdrop with a plain wall or a small complete illustration.",
+      "result": "Material drift: the enlarged drawn-face context and photographic-versus-illustrated contrast disappear."
+    },
+    {
+      "id": "lane.global-composition:omission:centering-neutralization",
+      "finding_ids": [
+        "lane.global-composition:region-hierarchy"
+      ],
+      "counterfactual": "Apply a small isolated horizontal head-position change while holding torso frame share, upper placement, right-arm crop, and surviving illustration regions constant.",
+      "result": "Lower materiality than the retained scale and crop relations. Do not spend an exact numeric anchor on the slight horizontal offset."
+    },
+    {
+      "id": "lane.global-composition:omission:minor-regions",
+      "finding_ids": [
+        "lane.global-composition:frame-crop",
+        "lane.global-composition:fidelity-ceiling"
+      ],
+      "counterfactual": "Neutralize tiny garment lettering, narrow near-black outer edge strips, and minor illustrated contours while preserving all major regions and the source aspect ratio.",
+      "result": "These do not carry the primary proposition. Group as secondary faithful details; do not enlarge them or let their description dominate."
+    },
+    {
+      "id": "lane.global-composition:omission:fidelity-counterfactual",
+      "finding_ids": [
+        "lane.global-composition:fidelity-ceiling"
+      ],
+      "counterfactual": "Keep scene inventory and framing but replace the visible softness and subdued detail with uniformly crisp, brightly recovered studio detail.",
+      "result": "Material fidelity drift: capture appearance and foreground/background detail hierarchy change despite unchanged objects."
+    }
+  ],
+  "handoffs": [
+    {
+      "target": "assigned human-appearance and pose owner",
+      "finding_ids": [
+        "lane.global-composition:upward-view",
+        "lane.global-composition:region-hierarchy"
+      ],
+      "requirement": "Resolve scale-appropriate facial geometry, long straight dark hair and fringe, head direction, and garment silhouette from this same source. Preserve the low viewpoint and avoid treating all apparent torso or neck projection as intrinsic anatomy."
+    },
+    {
+      "target": "assigned garment owner",
+      "finding_ids": [
+        "lane.global-composition:frame-crop",
+        "lane.global-composition:region-hierarchy"
+      ],
+      "requirement": "Retain the asymmetric neckline, exposed screen-right shoulder, diagonal dark neckline element, fitted dark torso, and visible hem at their existing frame share. Small light garment lettering remains subordinate; the global lane does not assign brand identity."
+    },
+    {
+      "target": "assigned light and color owner",
+      "finding_ids": [
+        "lane.global-composition:region-hierarchy",
+        "lane.global-composition:backdrop-zones",
+        "lane.global-composition:fidelity-ceiling"
+      ],
+      "requirement": "Own the bright face and exposed shoulder versus dark torso relationship, local shadows, and garment-detail visibility. Keep those causal effects separate from area hierarchy. Reconcile the background's displayed muted pink and pale gray targets without assuming intrinsic color or a neutral reference."
+    },
+    {
+      "target": "coordinator",
+      "finding_ids": [
+        "lane.global-composition:frame-crop",
+        "lane.global-composition:backdrop-zones"
+      ],
+      "requirement": "The source dimensions and SHA256 match the assignment. No reroute or retry is needed. Preserve all independently drifting frame and background obligations when compiling the standalone prompt; no final prompt or render was produced by this lane."
+    }
+  ],
+  "conflicts": []
+}

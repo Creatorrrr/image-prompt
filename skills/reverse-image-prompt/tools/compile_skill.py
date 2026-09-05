@@ -80,6 +80,9 @@ def compile_skill(module_ids: list[str], output: Path) -> None:
             "\n\n---\n\n# Distributed analysis orchestration reference\n\n"
             + orchestration_reference.read_text(encoding="utf-8").rstrip()
         )
+    integration_reference = ROOT / "references" / "integration-contract.md"
+    if integration_reference.exists():
+        parts.append("\n\n---\n\n" + integration_reference.read_text(encoding="utf-8").rstrip())
     for lane in resolve_analysis_lanes(module_ids, manifest):
         path = ROOT / lane["file"]
         parts.append(

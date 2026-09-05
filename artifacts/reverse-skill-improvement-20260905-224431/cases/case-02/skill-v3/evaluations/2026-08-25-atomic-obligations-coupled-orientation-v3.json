@@ -1,0 +1,236 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "1c11532f7e8d6cf68d53011bac3f7c669a249577",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Apply the approved general improvement plan so material pose direction, boundary topology, face geometry, and regional light-to-form relations cannot be retained only in broad prose and then disappear or become neutral in the final prompt, without installing the motivating person, direction, garment, palette, lighting value, or generator workaround as a default."
+  },
+  "evidence": [
+    {
+      "id": "e-user-judgment",
+      "kind": "user-judgment",
+      "claim": "Across repeated generations, the user judges that the subject still becomes centered and frontal, the face remains somewhat different, and the source-visible regional shading remains weaker than the original.",
+      "artifact": "Conversation feedback and approved improvement plan through 2026-08-25"
+    },
+    {
+      "id": "e-source-render",
+      "kind": "render-observation",
+      "claim": "The motivating source and the latest delivered clean-room render are both available; the render preserves the low viewpoint, subject inventory, mixed-media background, and some garment shading, while the user's comparison identifies remaining orientation and shading drift.",
+      "artifact": "source=/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/120A03AF-63A5-498A-ABC0-A49BE74B7A5B/1-사진-1.jpg sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; render=generated_images/cleanroom-faithful-8d966c3d-5841-4227-b035-c4f55fd1b679/final.png sha256=4f264dec122724ba1017a7a01b8c761686803ea77767f21dbd0132805b36ac11"
+    },
+    {
+      "id": "e-baseline-plan",
+      "kind": "prompt-inspection",
+      "claim": "The exact prior plan used one neutralization check dominated by low viewpoint and head pitch, had no coupled orientation effect, retained shallow near-frontal torso/head decisions, and allowed a multi-region material invariant without a region-to-region boundary relation.",
+      "artifact": "generated_images/cleanroom-faithful-8d966c3d-5841-4227-b035-c4f55fd1b679/plan.json; baseline schema spatial-orientation/v2"
+    },
+    {
+      "id": "e-baseline-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The exact prior prompt placed a broad person prior before camera and pose controls, explicitly emitted near-vertical and near-frontal orientation, represented one asymmetric garment band rather than complete boundary topology, and placed the primary garment Light/Form relation after repeated dark-value and shadow-floor controls.",
+      "artifact": "generated_images/cleanroom-faithful-8d966c3d-5841-4227-b035-c4f55fd1b679/prompt.txt sha256=5384149c7785dc7b1182a5dc85acb66a23a8ecd7a1c9b34bbf0338e133b58423"
+    },
+    {
+      "id": "e-baseline-rejection",
+      "kind": "package-check",
+      "claim": "The candidate validator rejects the exact prior plan/prompt for missing v3 whole and residual counterfactuals, missing coupled-effects ledger, collapsed multi-region topology, unprotected Light/Form interactions and reversed order, and a person prior separated from its local geometry by spatial controls.",
+      "artifact": "PYTHONDONTWRITEBYTECODE=1 python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/cleanroom-faithful-8d966c3d-5841-4227-b035-c4f55fd1b679/plan.json --prompt generated_images/cleanroom-faithful-8d966c3d-5841-4227-b035-c4f55fd1b679/prompt.txt; expected nonzero exit with twelve actionable errors"
+    },
+    {
+      "id": "e-behavior-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Source-neutral fixtures now reject missing atomic obligations, obligation direction loss, missing obligation-to-invariant binding, missing whole/residual pose counterfactuals, incomplete viewpoint fixation, duplicated coupled member controls, coupled result-direction drift, incomplete net-effect coverage, wrong pose order, collapsed multi-region boundaries, separated face prior/geometry, and tone controls that bury a protected primary Light/Form result.",
+      "artifact": "skills/reverse-image-prompt/tests/test_analysis_bundle.py and skills/reverse-image-prompt/tests/test_salience_plan.py; focused 131 tests passed"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All 214 reverse-image-prompt tests pass with 20 skips. Module validation passes for 37 modules and 6 lanes at 16860 runtime words, 3796 Tier-0 words, and 0.0014 duplicate ratio. Generated manifest, registry, and compiled profiles are current.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python3 skills/reverse-image-prompt/tools/validate_modules.py; python3 skills/reverse-image-prompt/tools/gen_manifest.py --check"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every independently drifting material visible relation survives analysis and integration, and the final prompt has one source-consistent net control hierarchy in which viewpoint cannot hide residual pose, broad priors cannot replace geometry, boundary components cannot collapse, and global tone cannot bury primary regional light-to-form.",
+    "user_appeal": "Preserve the source's non-neutral pose and direction, face impression, multi-edge garment construction, and upper-versus-lower regional shading rather than converging on a centered frontal portrait.",
+    "invariants": [
+      {
+        "id": "inv-atomic-continuity",
+        "statement": "Each independently drifting visible result becomes an atomic obligation and remains hash-bound through integration and critic review.",
+        "evidence_ids": ["e-user-judgment", "e-baseline-plan", "e-baseline-rejection"],
+        "causal_controls": ["lane atomic obligations", "obligation dispositions", "source_obligation_ids", "critic obligation coverage"]
+      },
+      {
+        "id": "inv-residual-coupling",
+        "statement": "Human orientation is tested both as a whole and with viewpoint fixed; individually weak but jointly material pose cues emit once as a coupled source-relative result.",
+        "evidence_ids": ["e-baseline-plan", "e-baseline-prompt", "e-behavior-tests"],
+        "causal_controls": ["spatial-orientation/v3", "whole-orientation counterfactual", "residual-alignment counterfactual", "coupled effect", "net-effect audit"]
+      },
+      {
+        "id": "inv-topology-order",
+        "statement": "Multi-region material/topology invariants retain region-to-region boundary relations, pose precedes dependent appearance, face priors stay adjacent to geometry, and protected primary light results precede overlapping tone controls.",
+        "evidence_ids": ["e-baseline-prompt", "e-baseline-rejection", "e-behavior-tests"],
+        "causal_controls": ["boundary relation gate", "prompt order gate", "face prior adjacency", "protected_light_effect_ids"]
+      },
+      {
+        "id": "inv-no-case-default",
+        "statement": "Runtime rules contain no preferred pose, side, angle, demographic category, garment, palette, lighting direction, target strength, case threshold, negative blacklist, or generator-specific workaround.",
+        "evidence_ids": ["e-behavior-tests", "e-package"],
+        "causal_controls": ["source-relative directions", "generic degrees of freedom", "human and non-human holdouts", "case literals confined to evidence"]
+      }
+    ],
+    "flexible_dimensions": [
+      "actual source orientation and mirrored direction",
+      "whether one axis or a coupled set is material",
+      "subject, object, garment, interface, or architectural boundary type",
+      "broad person prior emission or omission when evidence gates permit",
+      "surface value and light-to-form direction or strength",
+      "generator wording and stochastic pixels"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-parent-finding-loss",
+      "scale": "global",
+      "axis": "analysis-to-plan continuity",
+      "source_state": "One material finding may contain several visible relations whose directions can drift independently.",
+      "render_state": "Retaining the parent finding and one invariant did not prove that every subordinate pose, boundary, face, or light relation reached the prompt.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-prompt", "e-user-judgment"]
+    },
+    {
+      "id": "m-viewpoint-masks-pose",
+      "scale": "global",
+      "axis": "human orientation",
+      "source_state": "A strong low viewpoint coexists with a subtler joint torso, head, shoulder, silhouette, and depth reading.",
+      "render_state": "One combined neutralization test was satisfied by camera and pitch while residual alignment remained near-frontal and centered.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-prompt", "e-user-judgment"]
+    },
+    {
+      "id": "m-topology-priority",
+      "scale": "regional",
+      "axis": "boundary, face, and light ordering",
+      "source_state": "Multiple boundary components, local face geometry, and regional light separation each carry distinct source-visible structure.",
+      "render_state": "A broad garment band, early broad person prior, and late light clause allowed category/default and dark-value controls to dominate.",
+      "evidence_ids": ["e-baseline-prompt", "e-user-judgment"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-obligation-granularity",
+      "stage": "representation",
+      "statement": "Finding-level retention is too coarse because one final invariant can satisfy a composite finding while independently drifting result directions disappear.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-rejection"],
+      "falsifier": "Unrelated analyses preserve every subordinate visible result without atomic obligations or obligation-to-invariant binding."
+    },
+    {
+      "id": "h-residual-pose",
+      "stage": "representation",
+      "statement": "A whole neutralization counterfactual dominated by viewpoint cannot determine whether residual pose remains material after camera variables are held fixed.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-prompt", "e-user-judgment"],
+      "falsifier": "Matched held-out cases show that whole-only neutralization reliably preserves subtle joint pose direction under strong viewpoint changes."
+    },
+    {
+      "id": "h-prompt-net-order",
+      "stage": "prompt-interaction",
+      "statement": "Correct individual clauses can still produce a neutral or weak result when their aggregate direction, topology, adjacency, and order are not validated.",
+      "evidence_ids": ["e-baseline-prompt", "e-baseline-rejection", "e-user-judgment"],
+      "falsifier": "Matched prompt arms show no systematic difference when coupled pose, local geometry, boundary relations, and primary Light/Form controls are separated, reversed, or buried."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "policy", "tool", "test"],
+    "general_rule": "Use v2 lane/bundle schemas with atomic visible-result obligations; use spatial-orientation/v3 with whole and viewpoint-held residual counterfactuals, coupled orientation effects, explicit result direction versus physical attribution, and a net-effect/order audit; require multi-region topology relations, contiguous person-prior/local-geometry blocks, and protected Light/Form-before-tone interactions.",
+    "generalization_basis": "The implementation operates on source-relative axes, subject/region relations, causal ownership, confidence, dispositions, obligation lineage, and prompt control ids. Tests accept frontal, either oblique/mirrored direction, human and non-human subjects, unrelated boundary domains, and both uniform and regionally varying light. No motivating target value enters runtime defaults.",
+    "hypothesis_ids": ["h-obligation-granularity", "h-residual-pose", "h-prompt-net-order"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.global-composition.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/lanes/lane.color-light-material.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.information-layout.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-body-form.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.clothing-fashion.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/lighting-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/tools/analysis_bundle.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tests/test_analysis_bundle.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-25-atomic-obligations-coupled-orientation-v3.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-baseline-rejection", "e-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-behavior-tests"]},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "heldout-orientation-values",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["centered frontal", "centered oblique", "off-center frontal", "opposite mirrored directions", "camera elevation versus head pitch"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-coupled-pose",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["whole orientation", "viewpoint-held residual alignment", "individually weak joint cues", "single aggregate control", "net prompt order"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-topology-and-appearance",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["generic multi-region topology", "region-to-region boundary", "partial non-human layers", "person prior adjacency", "local geometry authority"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-light-tone-interaction",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["primary regional Light/Form", "intrinsic value", "displayed key", "protected light effects", "prompt order reversal"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "motivating-cleanroom-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["centered-frontal drift", "face impression", "boundary topology", "regional garment shading"],
+        "evidence_ids": ["e-user-judgment", "e-source-render", "e-baseline-plan", "e-baseline-prompt"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The candidate now rejects the exact motivating omission/order pattern and passes source-neutral prompt fixtures across orientation, coupling, topology, appearance, and lighting interactions. No post-change independent prompt or image was generated in this apply-only turn, so rendered fidelity and user preference remain unscored and the change is not promoted beyond implementation.",
+    "evidence_ids": ["e-baseline-rejection", "e-behavior-tests", "e-package"]
+  }
+}

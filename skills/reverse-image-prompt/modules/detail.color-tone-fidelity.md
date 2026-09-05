@@ -1,6 +1,6 @@
 ---
 id: detail.color-tone-fidelity
-version: 11
+version: 12
 priority: 79
 type: detail
 tier: 3
@@ -72,7 +72,11 @@ For each important region:
 - record role, relation to another region, confidence, and uncertainty;
 - separate intrinsic surface from illumination, global cast/palette, exposure/tone curve, and processing.
 
+
+<!-- profile:audited -->
 In the full contract: For every intrinsic value, chroma, or hue axis, record `role`, `evidence_scope`, and `emission`. Use `required` only when the axis materially needs a final prompt control. Use `diagnostic-only` with a concrete non-emission reason when an axis is low-confidence, incidental, or already unsupported at prompt precision. Link every required intrinsic axis to exactly one same-region, same-axis aggregate effect.
+<!-- /profile -->
+
 
 Assign every material color or tone observation to intrinsic surface, illumination, global cast or palette shift, exposure or tone curve, or processing.
 
@@ -94,6 +98,7 @@ Treat a possible neutral as a calibration anchor only with visible evidence and 
 
 Without a reliable neutral, preserve relative relationships and mark global-cast uncertainty. Translate photographic cast into white-balance/capture language and non-photographic cast into palette/rendering language.
 
+<!-- profile:audited -->
 When measurement is justified, use multiple representative patches, robust summaries, profile status, and disclosed display-space assumptions.
 
 Classify auxiliary references as `calibrated-color-target`, `color-managed-reference`, `uncalibrated-vocabulary-chart`, or `photographic-example`. Only the first two establish numeric targets; inconsistent labels remain vocabulary.
@@ -112,6 +117,8 @@ Use measurements as diagnostic evidence, never as proof of intrinsic color. The 
 
 Estimate the shared Lab movement from contextual groups, then subtract it from each target group's movement to expose the target-local residual. Without an explicit tolerance policy, report the decomposition as unscored.
 
+<!-- /profile -->
+
 ## Cross-layer effect budget
 
 Merge color and tone claims by their shared perceptual effect across causal layers, not only by semantic-slot name.
@@ -125,7 +132,11 @@ Give each material effect a source-relative identifier covering region, axis, di
 
 ## Final prompt control ledger
 
-In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. After reconciliation, remove any final-prompt phrase about displayed key, shadow floor, highlight rolloff, microcontrast, surface value/chroma/hue, cast, exposure, or processing that is absent from the Color/Tone ledger; it cannot survive as generic bridge prose or borrow ownership from Light/Form. In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
+
+<!-- profile:audited -->
+In `audited`, copy every color/tone excerpt into `emitted_controls` with one claim, layer, region, axis, and effect list. Overlapping value/tone controls list `protected_light_effect_ids` and follow the primary light result. A required intrinsic axis needs its own intrinsic axis-control; compounds cannot satisfy it. After reconciliation, remove any final-prompt phrase about displayed key, shadow floor, highlight rolloff, microcontrast, surface value/chroma/hue, cast, exposure, or processing that is absent from the Color/Tone ledger; it cannot survive as generic bridge prose or borrow ownership from Light/Form.
+<!-- /profile -->
+ In `prompt`, ownership and protected relations are sufficient without duplicating the excerpt in a ledger.
 
 When a draft over-pulls an axis, replace or remove its positive control rather than appending an opposing negative.
 

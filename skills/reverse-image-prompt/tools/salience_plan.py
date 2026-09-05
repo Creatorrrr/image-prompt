@@ -21,6 +21,10 @@ from lighting_language import (
 from lighting_language import (
     review_candidates as review_lighting_candidates,
 )
+from prompt_lint import (
+    STANDALONE_PROMPT_BOUNDARY_PATTERNS,
+    audit_standalone_prompt_text,
+)
 
 VALID_MODES = {"relationship-led", "appearance-led", "information-led", "mixed"}
 VALID_AXES = {
@@ -52,59 +56,6 @@ VALID_SOURCE_KINDS = {
     "translated-causal-control",
     "diagnostic-appeal",
 }
-STANDALONE_PROMPT_BOUNDARY_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
-    (
-        "internal provenance label",
-        re.compile(
-            r"\b(?:current[-\s]+source|source[-\s]+(?:relative|visible|specific|"
-            r"supported|derived|based|qualified|matching|evidence[-\s]+qualified))\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "unavailable image artifact",
-        re.compile(
-            r"\b(?:attached|source|reference|input|provided|original)[-\s]+"
-            r"(?:image|photo(?:graph)?|picture|render|frame|attachment)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "unresolved comparison target",
-        re.compile(
-            r"\b(?:match(?:es|ed|ing)?|reproduc(?:e|es|ed|ing)|"
-            r"reconstruct(?:s|ed|ing)?|cop(?:y|ies|ied|ying)|mirror(?:s|ed|ing)?|"
-            r"preserv(?:e|es|ed|ing)|retain(?:s|ed|ing)?|keep(?:s|ing)?|kept|"
-            r"maintain(?:s|ed|ing)?)\s+(?:the\s+)?(?:source|reference|original)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "unresolved source placeholder",
-        re.compile(
-            r"\bsource[-\s]+(?:side|subject|components?|placement|pose|orientation|"
-            r"relation|appearance|reading|aesthetic|silhouette|topology|axis|"
-            r"viewpoint|crop|garment|hair|face|body)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "unresolved original-state placeholder",
-        re.compile(
-            r"\boriginal[-\s]+(?:composition|pose|appearance|lighting|colou?rs?|"
-            r"geometry|crop|framing|layout|proportions?|silhouette)\b",
-            re.IGNORECASE,
-        ),
-    ),
-    (
-        "deictic image instruction",
-        re.compile(
-            r"\b(?:as|exactly\s+as)\s+(?:shown|seen|pictured|depicted)\s+"
-            r"(?:in|on)\s+(?:the\s+)?(?:source|reference|image|photo|picture|attachment)\b",
-            re.IGNORECASE,
-        ),
-    ),
-)
 VALID_REGION_ROLES = {"dominant", "supporting", "edge-frame", "low-legibility"}
 VALID_RELATIVE_AREAS = {"small", "medium", "large"}
 VALID_ATTENTION = {"primary", "secondary", "background"}
@@ -586,33 +537,6 @@ def _nonempty_strings(value: Any) -> bool:
 
 def _nonempty_string(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
-
-
-def audit_standalone_prompt_text(prompt_text: Any) -> list[str]:
-    """Reject literal prompt text that still depends on unavailable evidence.
-
-    This is intentionally a narrow output-boundary check rather than a style
-    linter. Physical scene language such as ``light source`` and self-contained
-    state verbs such as ``remains outside the frame`` are valid.
-    """
-
-    if not isinstance(prompt_text, str):
-        return ["authored prompt text must be a string"]
-
-    errors: list[str] = []
-    occupied_spans: list[tuple[int, int]] = []
-    for category, pattern in STANDALONE_PROMPT_BOUNDARY_PATTERNS:
-        for match in pattern.finditer(prompt_text):
-            span = match.span()
-            if any(span[0] < end and start < span[1] for start, end in occupied_spans):
-                continue
-            occupied_spans.append(span)
-            errors.append(
-                "authored prompt is not standalone: "
-                f"{category} {match.group(0)!r}; replace it with the literal visible "
-                "target state or relation"
-            )
-    return errors
 
 
 def _string_list(value: Any) -> bool:
@@ -3385,14 +3309,9 @@ def _audit_human_appearance_decisions(
             errors.append(
                 f"{label}.skin_surface material evidence requires a concrete viewer priority"
             )
-        if skin_priority in {"P0", "P1"}:
-            expected_fidelity = (
-                "primary" if skin_priority == "P0" else "supporting"
-            )
-            if fidelity_salience != expected_fidelity:
-                errors.append(
-                    f"{label}.skin_surface viewer priority must match fidelity_salience"
-                )
+        # Displayed skin is an independently prioritized surface decision.
+        # Its priority cannot promote or demote the person's overall appearance
+        # salience; its own materiality, region and descriptor gates apply below.
         if skin.get("coverage") not in VALID_SKIN_COVERAGE:
             errors.append(f"{label}.skin_surface.coverage is invalid")
         if not region_ids:

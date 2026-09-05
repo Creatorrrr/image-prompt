@@ -1,0 +1,94 @@
+{
+  "status": "ok",
+  "checks": [
+    {
+      "label": "bundle-validation-critic-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/analysis_bundle.py",
+        "output/bundle.critic-passed.json"
+      ],
+      "started_utc": "2026-09-05T15:01:55.844414+00:00",
+      "ended_utc": "2026-09-05T15:01:56.031988+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "plan-validation-critic-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/salience_plan.py",
+        "output/plan.review.json",
+        "--prompt",
+        "output/prompt.review.txt"
+      ],
+      "started_utc": "2026-09-05T15:01:56.032889+00:00",
+      "ended_utc": "2026-09-05T15:01:56.209706+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\",\n  \"errors\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "prompt-lint-critic-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/prompt_lint.py",
+        "output/prompt.review.txt"
+      ],
+      "started_utc": "2026-09-05T15:01:56.210431+00:00",
+      "ended_utc": "2026-09-05T15:01:56.321710+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\",\n  \"errors\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "bundle-validation-frozen-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/analysis_bundle.py",
+        "output/bundle.json"
+      ],
+      "started_utc": "2026-09-05T15:01:56.326887+00:00",
+      "ended_utc": "2026-09-05T15:01:56.469449+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "plan-validation-frozen-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/salience_plan.py",
+        "output/plan.json",
+        "--prompt",
+        "output/prompt.txt"
+      ],
+      "started_utc": "2026-09-05T15:01:56.471483+00:00",
+      "ended_utc": "2026-09-05T15:01:56.713171+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\",\n  \"errors\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "label": "prompt-lint-frozen-v3",
+      "validator_snapshot": "skill-v3",
+      "argv": [
+        "python3",
+        "skill-v3/tools/prompt_lint.py",
+        "output/prompt.txt"
+      ],
+      "started_utc": "2026-09-05T15:01:56.714958+00:00",
+      "ended_utc": "2026-09-05T15:01:56.895014+00:00",
+      "exit_code": 0,
+      "stdout": "{\n  \"status\": \"ok\",\n  \"errors\": []\n}\n",
+      "stderr": ""
+    }
+  ],
+  "evidence_scope": "Route, bundle, plan and literal/standalone structure only; not visual fidelity evidence."
+}
