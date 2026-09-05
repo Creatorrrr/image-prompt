@@ -1,0 +1,254 @@
+{
+  "case": "case-03",
+  "raw_request": "이 이미지에서 충실한 독립형 영문 이미지 생성 프롬프트를 추출하고, 그 프롬프트만으로 이미지를 한 장 생성해줘.",
+  "intent": "faithful",
+  "overall_outcome": "extraction-complete-generation-blocked",
+  "source": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-03/source.jpg",
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "bytes": 123823,
+    "dimensions": [
+      969,
+      1280
+    ]
+  },
+  "prompt": {
+    "status": "frozen",
+    "observed_at": "2026-09-05T15:06:12.438719+00:00",
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-03/output/prompt.txt",
+    "sha256": "ba9fd39c8c4efad409bdcc252bc0bf2bbf9f42c7813364112cd755a79f45eb32",
+    "bytes": 3189,
+    "characters": 3189,
+    "line_count": 7,
+    "plan_canonical_sha256": "cdd34a2e4551c32ccc4bc976bf396e67928d15f7efc8299843f8660533986f62",
+    "source_sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "critic_report_sha256": "7edf276853c5f221a989cf8683db070864740dcccc997c3f2a053d5df9adae1b",
+    "exact_draft_bytes": true,
+    "encoding": "UTF-8",
+    "final_newline": true,
+    "generation_input_keys": [
+      "prompt"
+    ],
+    "omitted_reference_arguments": [
+      "referenced_image_paths",
+      "num_last_images_to_include"
+    ],
+    "model": "not-exposed",
+    "size_parameter": "unsupported/not-exposed",
+    "aspect_ratio_instruction": "near 3:4 in prompt only; no applied size parameter"
+  },
+  "render": {
+    "status": "blocked-no-delivery",
+    "image_path": null,
+    "sha256": null,
+    "dimensions": null,
+    "bytes": null,
+    "reason": "The final built-in image generation invocation returned HTTP 400 moderation_blocked at output safety stage. No image or local render path was delivered.",
+    "pixel_inspection": "not-performed: no delivered pixels",
+    "fidelity": "unscored",
+    "no_placeholder_image_created": true,
+    "generation_invocations": 2,
+    "logical_generation_attempts": 1,
+    "identical_byte_no_delivery_retries": 1,
+    "user_judgment": "unscored: no image delivered or user image assessment received"
+  },
+  "checks": {
+    "route": {
+      "status": "ok",
+      "errors": [],
+      "artifact": "route-validation-v3.json",
+      "artifact_sha256": "369e515612c2e5b9a3aef9aebd4a0e1826ac4a5c918ddbe21c597541eb85a127",
+      "validator_snapshot": "skill-v3"
+    },
+    "bundle": {
+      "status": "ok",
+      "errors": [],
+      "artifact": "bundle-validation.final.json",
+      "artifact_sha256": "d37208a9be5dfe712a7ee54fdce2f1b0a006ec021754f2c3b70e2d55d6fb585e",
+      "validator_snapshot": "skill-v3"
+    },
+    "plan": {
+      "status": "ok",
+      "errors": [],
+      "artifact": "plan-validation.final.json",
+      "artifact_sha256": "25206e2e0651ab5fdd3e6d8075ef440230ba8df17190c4de5d3d9fba110d8af0",
+      "validator_snapshot": "skill-v3"
+    },
+    "standalone": {
+      "status": "ok",
+      "errors": [],
+      "artifact": "prompt-lint.final.json",
+      "artifact_sha256": "25206e2e0651ab5fdd3e6d8075ef440230ba8df17190c4de5d3d9fba110d8af0",
+      "validator_snapshot": "skill-v3"
+    },
+    "critic": {
+      "status": "pass",
+      "artifact": "critic-root.json",
+      "artifact_sha256": "7edf276853c5f221a989cf8683db070864740dcccc997c3f2a053d5df9adae1b",
+      "reviewer_context": "Independent of the case integrator conversation and reasoning transcript; root is a common source-aware reviewer across cases, not a newly spawned empty context. Prior extracted prompts and prior renders were not supplied.",
+      "finding_count": 25,
+      "obligation_count": 61,
+      "invariant_count": 39
+    },
+    "frozen_prompt_binding": {
+      "status": "ok",
+      "sha256": "ba9fd39c8c4efad409bdcc252bc0bf2bbf9f42c7813364112cd755a79f45eb32",
+      "request1_matches": true,
+      "request2_matches": true,
+      "source_reference_keys_absent": true
+    },
+    "source_bytes_unchanged": {
+      "status": "ok",
+      "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9"
+    },
+    "pixels": {
+      "status": "unavailable-unscored",
+      "reason": "Image delivery blocked; no render."
+    },
+    "user_judgment": {
+      "status": "unscored",
+      "reason": "No image was delivered; no user assessment is claimed."
+    }
+  },
+  "timing": {
+    "first_recorded_start_utc": "2026-09-05T14:06:39.540385+00:00",
+    "actual_task_start_utc": null,
+    "start_limitation": "First recorded execution timestamp; source view and skill read preceded this record.",
+    "end_recorded_utc": "2026-09-05T15:15:23.960576+00:00",
+    "observed_span_seconds": 4124.420191,
+    "route": {
+      "event": "route",
+      "started_at": "2026-09-05T14:07:43.148423+00:00",
+      "ended_at": "2026-09-05T14:07:43.362486+00:00",
+      "exit_code": 0
+    },
+    "lanes": [
+      {
+        "lane": "global-composition",
+        "mode": "delegated",
+        "dispatch_observed_at": "2026-09-05T14:08:14+00:00",
+        "report_saved_observed_at": "2026-09-05T14:22:55.449834+00:00",
+        "active_analysis_duration_seconds": null,
+        "note": "Save time is observable; exact worker completion time not separately captured."
+      },
+      {
+        "lane": "spatial-topology",
+        "mode": "sequential-fallback",
+        "start_observed_at": null,
+        "end_observed_at": "2026-09-05T14:32:17.735601+00:00",
+        "note": "Earlier rounded start was corrected to unknown in events.jsonl."
+      },
+      {
+        "lane": "subject-appearance",
+        "mode": "sequential-fallback",
+        "start_observed_at": "2026-09-05T14:32:44+00:00",
+        "end_observed_at": "2026-09-05T14:34:37.243765+00:00"
+      },
+      {
+        "lane": "color-light-material",
+        "mode": "sequential-fallback",
+        "start_observed_at": "2026-09-05T14:34:37+00:00",
+        "end_observed_at": "2026-09-05T14:37:11.736548+00:00"
+      },
+      {
+        "lane": "medium-aesthetic-capture",
+        "mode": "sequential-fallback",
+        "start_observed_at": "2026-09-05T14:37:11+00:00",
+        "end_observed_at": "2026-09-05T14:38:04.957679+00:00"
+      }
+    ],
+    "integration": {
+      "start_clock_observation": "2026-09-05T14:38:04+00:00",
+      "draft_completed_at": "2026-09-05T14:59:53.334921+00:00",
+      "note": "Includes provider-capacity recovery; not measured uninterrupted analysis time."
+    },
+    "critic": {
+      "packet_ready_at": "2026-09-05T14:59:53.334921+00:00",
+      "reviewed_at": "2026-09-05T15:04:35.174567+00:00",
+      "actual_review_start": null,
+      "note": "Readiness-to-review interval includes queue time; reviewer start is unavailable."
+    },
+    "freeze_at": "2026-09-05T15:06:12.438719+00:00",
+    "imagegen_calls": [
+      {
+        "attempt": 1,
+        "start_observed_utc": "2026-09-05T15:07:38.041Z",
+        "end_observed_utc": "2026-09-05T15:08:11.669Z",
+        "elapsed_observed_seconds": 33.628,
+        "status": "failed-no-delivery"
+      },
+      {
+        "attempt": 2,
+        "start_observed_utc": "2026-09-05T15:10:23.054Z",
+        "end_observed_utc": "2026-09-05T15:11:01.798Z",
+        "elapsed_observed_seconds": 38.744,
+        "status": "blocked-by-output-safety-system"
+      }
+    ]
+  },
+  "counts": {
+    "event_records": 24,
+    "logical_lane_waves": 1,
+    "helper_dispatches": 2,
+    "independent_lane_reports": 1,
+    "failed_helper_dispatches": 1,
+    "sequential_fallback_lane_reports": 4,
+    "completed_lane_reports": 5,
+    "malformed_report_retries": 0,
+    "route_reroutes": 0,
+    "profile_changes": 0,
+    "critic_passes": 1,
+    "critic_targeted_repairs": 0,
+    "generation_logical_requests": 1,
+    "generation_invocations": 2,
+    "identical_byte_no_delivery_retries": 1,
+    "quality_rewrites_or_retries": 0,
+    "render_deliveries": 0
+  },
+  "execution": {
+    "mode": "mixed",
+    "independence_claimed": false,
+    "analysis_model_override": null,
+    "analysis_model_change": false,
+    "actual_analysis_backend_model": "not-exposed-in-case-artifacts",
+    "generator_tool": "functions image_gen__imagegen",
+    "generator_model": "not-exposed",
+    "generator_size_parameter": "unsupported/not-exposed",
+    "reference_conditioning": false,
+    "critic_context": "Independent of the case integrator conversation and reasoning transcript; root is a common source-aware reviewer across cases, not a newly spawned empty context. Prior extracted prompts and prior renders were not supplied."
+  },
+  "snapshot_provenance": {
+    "observation_instructions": "skill v1; module/manifest/route bytes unchanged in v2/v3",
+    "validation_tools": "skill-v3",
+    "v1_failure": "route-validation.json",
+    "v2_route_validation": "route-validation-v2.json",
+    "v3_route_validation": "route-validation-v3.json",
+    "changes": "Parent-supplied v2 route reconstruction fix, followed by v3 independent skin-priority validation fix. No local validator edits or profile substitution.",
+    "immutability": "Existing files in source/skill/v2/v3 unchanged. One early additional v1 __pycache__/analysis_bundle.cpython-312.pyc remains recorded; v2/v3 have no additional files."
+  },
+  "limitations": [
+    "No generated image was delivered, so reproduction fidelity and pixel dimensions/hash are unavailable.",
+    "Final service failure is an output safety rejection; the case does not infer that the benign adult portrait request itself violates policy.",
+    "First generation exception raw value was not preserved because the catch expected Error properties; all absent fields and the lack of response are disclosed. The second exception raw string is preserved exactly.",
+    "One fresh-context lane completed; four lanes used declared same-context sequential fallback after a provider-capacity failure.",
+    "The independent-of-integrator root critic is shared across cases, not a newly spawned empty context.",
+    "The source-view and first skill read preceded the first recorded timestamp; exact start and some worker timings are unavailable.",
+    "A broad collaboration inventory accidentally exposed sibling status summaries; no sibling artifacts or previous prompts/renders were opened, and the summaries were not used for image analysis.",
+    "The global lane report content is unchanged with JSON whitespace normalization recorded; no original message-byte equivalence is claimed.",
+    "Source-visible tiny hem lettering and narrow outer border strips were omitted as incidental P3 detail.",
+    "Exact source lens/rig, physical skin reflectance and a calibrated color/tone pipeline are unknown."
+  ],
+  "artifacts": {
+    "prompt": "prompt.txt",
+    "plan": "plan.json",
+    "bundle": "analysis-bundle.json",
+    "critic": "critic-root.json",
+    "source_observations": "source-observations.json",
+    "render_observations": "render-observations.json",
+    "request": "generation-input.json",
+    "attempt_log": "generation-attempts.json",
+    "failure_raw": "generation-response.attempt-02.raw.txt",
+    "checks": "checks.json",
+    "events": "events.jsonl"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-09-05T14:10:14.551244+00:00",
+  "validator": "skill/tools/analysis_bundle.py::_validate_route",
+  "actual_profile": "audited",
+  "actual_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+  "reconstructed_profile": "prompt",
+  "reconstructed_fingerprint": "fe49b6ebd88618006a3a1cde2cada7a66a50b9c33399a750aec39deefabce4b3",
+  "errors": [
+    "route must exactly match the deterministic analysis route"
+  ],
+  "code_observation": "analysis_bundle._validate_route calls resolve_analysis_route(facets, manifest) without analysis_profile; resolver default is prompt while actual generation requires audited."
+}

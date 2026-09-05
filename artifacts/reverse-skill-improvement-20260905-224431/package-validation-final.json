@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-09-05T15:28:03.607813+00:00",
+  "candidate_snapshot_sha256": "bc56620bf236ffd979a97e6feaa48087798ae8aa1a3691ee94e5b8c3dffe3d42",
+  "status": "pass",
+  "suite": {
+    "status": "pass",
+    "passed": 311,
+    "subtests_passed": 267,
+    "elapsed_seconds": 7.38,
+    "evidence": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/validator-migration-v3.json",
+    "rerun_during_finalization": false
+  },
+  "structural_checks": [
+    {
+      "command": "python3 skills/reverse-image-prompt/tools/validate_modules.py",
+      "exit_code": 0,
+      "result": {
+        "modules": 37,
+        "lanes": 6,
+        "runtime_module_words": 16808,
+        "tier_0_words": 3755
+      }
+    },
+    {
+      "command": "python3 skills/reverse-image-prompt/tools/gen_manifest.py --check",
+      "exit_code": 0,
+      "result": "generated files ok"
+    },
+    {
+      "command": "python3 tools/check_coverage.py --compiled SKILL.compiled.all.md --scenario-matrix tests/routing_scenarios.yaml",
+      "exit_code": 0,
+      "result": "125 required anchors; 23 scenarios"
+    },
+    {
+      "command": "skill-creator/scripts/quick_validate.py skills/reverse-image-prompt",
+      "exit_code": 0,
+      "result": "Skill is valid!"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "no output"
+    }
+  ],
+  "structural_check_provenance": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/package-validation.json",
+  "scope_note": "The structural checks were observed on candidate v1. v2/v3 change only the two identified validators and their tests; instruction, compiled, module, manifest and lane bytes remain unchanged. The full 311-test suite was observed after v3. Finalization rechecked exact snapshot files and frozen replay artifacts, not the full suite again.",
+  "final_frozen_artifact_checks": {
+    "status": "pass",
+    "count": 9,
+    "snapshot_files_per_root": 113,
+    "roots": 4,
+    "evidence": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/final-integrity.json"
+  },
+  "evidence_boundary": "Package and binding checks are not visual fidelity evidence."
+}

@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-09-05T14:08:37.554145+00:00",
+  "kind": "observed-command-results",
+  "checks": [
+    {
+      "command": "/opt/homebrew/anaconda3/bin/python3 -m pytest -q skills/reverse-image-prompt/tests",
+      "exit_code": 0,
+      "result": "307 passed, 267 subtests passed in 6.69s"
+    },
+    {
+      "command": "python3 skills/reverse-image-prompt/tools/validate_modules.py",
+      "exit_code": 0,
+      "result": {
+        "modules": 37,
+        "lanes": 6,
+        "runtime_module_words": 16808,
+        "tier_0_words": 3755
+      }
+    },
+    {
+      "command": "python3 skills/reverse-image-prompt/tools/gen_manifest.py --check",
+      "exit_code": 0,
+      "result": "generated files ok"
+    },
+    {
+      "command": "python3 tools/check_coverage.py --compiled SKILL.compiled.all.md --scenario-matrix tests/routing_scenarios.yaml",
+      "exit_code": 0,
+      "result": "125 required anchors; 23 scenarios"
+    },
+    {
+      "command": "skill-creator/scripts/quick_validate.py skills/reverse-image-prompt",
+      "exit_code": 0,
+      "result": "Skill is valid!"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "no output"
+    }
+  ],
+  "evidence_boundary": "No package result establishes visual fidelity."
+}

@@ -1,0 +1,52 @@
+---
+id: core.visual-evidence
+version: 11
+priority: 110
+type: core
+tier: 0
+facet: core
+facet_values:
+  - visual-evidence
+triggers:
+  - any image
+avoid_when: []
+dependencies: []
+conflicts: []
+provides_anchors:
+  - standalone_reference_ban
+  - visible_evidence_only
+  - causal_origin_attribution
+---
+
+# Core: visual evidence
+
+## When to load
+
+Always.
+
+## Rules
+
+- Never refer to the source image in the final prompt.
+- Compile `source-*` and `current-source` provenance labels into literal visible targets before emission.
+- Describe visible evidence only; do not invent hidden structure or context.
+- Do not assert identity, nationality, race, exact ethnicity, religion, personality, measurements, metadata, brands, artists, cameras, lenses, or film stocks from appearance. Exact demographic or nationality context may enter only from a user statement or trusted metadata and remains externally sourced; pixels support non-identifying form, hair, displayed-surface, and aesthetic evidence rather than a protected-category claim.
+- Distinguish absence from uncertainty. Use `absent` only when the frame supports it; otherwise use visual descriptions such as `hidden`, `cropped out`, `indistinct`, `shadow-obscured`, or `low-legibility`.
+- Keep epistemic qualifiers in analysis. In the final prompt, describe the visible ambiguity rather than repeatedly saying `appears`, `likely`, or `possibly`.
+- In `faithful` mode, preserve visible softness, compression, blur, exposure problems, asymmetry, awkward crop, partial elements, and edge artifacts.
+- In `semantic` mode, retain concept-defining imperfections but omit incidental capture defects.
+- In `polished-fidelity` mode, improve only the dimensions requested by the user; do not silently alter crop, pose, relationships, identity-relevant appearance, or geometry.
+- Give partial elements a visibility budget: what remains visible, how large it is, where it touches the frame, and whether it stays secondary or low-detail.
+- Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
+- Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing.
+- In the default `prompt` profile, keep only P0/P1 viewer-material results, compress P2 support, and group P3 or non-material evidence instead of enumerating it.
+
+- In `audited`, preserve independently drifting material results as atomic obligations; uncertain attribution never erases a supported direction.
+
+
+## Prompt contribution
+
+Put the fidelity ceiling near the beginning only when it materially defines the image. State partial or incomplete evidence affirmatively: `only a narrow cropped strip remains visible`, `the lower half stays outside the frame`, or `the text remains small and indistinct`.
+
+## Optional negative contribution
+
+Reject only likely evidence drift: invented hidden content, completed crops, cleaner relighting, upgraded sharpness, or aesthetic normalization.

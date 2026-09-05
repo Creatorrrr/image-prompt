@@ -1,0 +1,242 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "1c11532f7e8d6cf68d53011bac3f7c669a249577+preexisting-working-tree-2026-08-25",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Make source-faithful abstract descriptions such as skin-value families, attractiveness, and atmosphere available from any source image without per-user memory: retain the abstract direction together with detailed controls instead of suppressing it or replacing it with decomposition alone."
+  },
+  "evidence": [
+    {
+      "id": "e-user-contract",
+      "kind": "user-judgment",
+      "claim": "The user requires direct, source-faithful language for visibly different skin presentations, attractiveness, and atmosphere, and explicitly judges abstract direction plus detailed description to be more faithful than detail-only substitution.",
+      "artifact": "Conversation feedback and implementation authorization on 2026-08-25"
+    },
+    {
+      "id": "e-motivating-source",
+      "kind": "source-observation",
+      "claim": "The motivating source is a portrait whose user-identified invariants include very light milky-looking skin, a model or idol-like attractive facial gestalt, strong light-dark separation, and a mysterious or fantastical overall reading.",
+      "artifact": "/Users/chasoik/Downloads/Codex image 2026-08-25 04_12_04.jpg; sha256 5cd468f3320deb985ea8670690ac3bfa292070752cdaeec7f5bf306fcde91497; observation wording includes user judgment"
+    },
+    {
+      "id": "e-baseline-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The inspected baseline prompt omitted direct attractiveness, milky-light surface, mysterious, and ethereal aggregate language; it instead left intrinsic biological value unspecified and used only narrower causal clauses.",
+      "artifact": "generated_images/reverse-image-prompt-distributed-v3-20260824-Ag409H/prompt.txt; sha256 3960fa54d2248a8cb0f708913b68f09ffb82b1546eb48dd7a9c01c1797336858"
+    },
+    {
+      "id": "e-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Generic held-out prompt fixtures now retain source-visible surface, lighting, attractiveness, and aesthetic aggregate descriptors once before owned decomposition, while rejecting low-confidence, P2, preserved-counterfactual, incompatible, unprovenanced, or reversed-order cases.",
+      "artifact": ".venv/bin/python -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py' => 233 tests OK, skipped=20; focused new cases in test_color_language.py, test_lighting_language.py, and test_salience_plan.py"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Source modules, derived profiles, manifest, registry, reverse-skill tests, and improver-skill tests are internally consistent after the intervention.",
+      "artifact": "validate_modules.py => 37 modules, 6 lanes, 17000 runtime words, 3681 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => generated files ok; reverse tests => 233 OK, skipped=20; improver tests => 12 OK"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "When an abstract property is a high-confidence P0/P1 current-source invariant and removing it would materially change the image reading, the prompt states that aggregate property once and immediately follows it with source-specific literal controls; otherwise the aggregate stays diagnostic or omitted.",
+    "user_appeal": "Preserve the large semantic direction carried by plain descriptions of skin presentation, attractiveness, and mysterious or fantastical atmosphere, while retaining the detailed evidence that makes those terms source-specific.",
+    "invariants": [
+      {
+        "id": "inv-retain-and-decompose",
+        "statement": "Aggregate source meaning and causal details are non-substitutable when both are material: one aggregate anchor leads one owned decomposition.",
+        "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+        "causal_controls": ["source provenance", "P0/P1 viewer priority", "material-drift omission counterfactual", "adjacent literal controls"]
+      },
+      {
+        "id": "inv-human-attractiveness",
+        "statement": "A source-visible attractiveness reading may be retained as a non-identifying generation prior but never replaces face/body geometry or authorizes retouching, idealization, relighting, recropping, or demographic inference.",
+        "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+        "causal_controls": ["generation_prior scope attractiveness", "source-visible-approximation provenance", "geometry_claim_ids", "prompt adjacency"]
+      },
+      {
+        "id": "inv-surface-and-light-language",
+        "statement": "Surface and lighting labels may originate from the current source after independent axis observation and compatibility review, not only from external vocabulary.",
+        "evidence_ids": ["e-motivating-source", "e-prompt-tests"],
+        "causal_controls": ["candidate_source provenance", "axis compatibility", "source-evidence-qualified status", "one-time emission"]
+      },
+      {
+        "id": "inv-calibration-boundary",
+        "statement": "Exact model/version calibration evaluates response effectiveness and leakage; it is not the sole permission to state high-confidence visible evidence.",
+        "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+        "causal_controls": ["source-evidence-qualified path", "separate model-calibrated path", "render layer remains unscored"]
+      },
+      {
+        "id": "inv-no-preferred-default",
+        "statement": "Runtime instructions contain no motivating label list, preferred skin value, beauty preset, mood preset, lighting combination, person category, or generator workaround.",
+        "evidence_ids": ["e-package"],
+        "causal_controls": ["case-neutral qualification fields", "motivating literals confined to evaluation and tests", "current-source provenance"]
+      }
+    ],
+    "flexible_dimensions": [
+      "which aggregate descriptor, if any, the current source supports",
+      "whether the material invariant concerns a human, non-human surface, lighting, capture, genre, or atmosphere",
+      "the literal detailed controls required by that source",
+      "generator-specific effectiveness and rendered-pixel fidelity",
+      "wording when evidence is ambiguous or the omission counterfactual is preserved"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-calibration-permission-gate",
+      "scale": "global",
+      "axis": "aggregate semantic actuation",
+      "source_state": "A visible aggregate property may carry the image's primary reading even before generator-response calibration exists.",
+      "render_state": "The prior contract allowed current-source aggregate appearance, lighting, and aesthetic labels to influence production only after exact model calibration, so detail-only wording could lose their global direction.",
+      "evidence_ids": ["e-user-contract", "e-baseline-prompt"]
+    },
+    {
+      "id": "m-attractiveness-downgrade",
+      "scale": "regional",
+      "axis": "human facial gestalt",
+      "source_state": "The overall attractiveness reading can be P0/P1 independently of any one local feature.",
+      "render_state": "The prior runtime rules forced attractiveness to supporting-only status even when the omission counterfactual was material drift.",
+      "evidence_ids": ["e-user-contract", "e-baseline-prompt"]
+    },
+    {
+      "id": "m-current-source-provenance-gap",
+      "scale": "local",
+      "axis": "surface and lighting language",
+      "source_state": "The current image itself can support a plain aggregate surface or lighting descriptor after axis review.",
+      "render_state": "The language tools accepted only user-supplied or versioned-vocabulary candidates, excluding the analyst's provenance-bound current-source observation.",
+      "evidence_ids": ["e-motivating-source", "e-baseline-prompt"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-retain-decompose",
+      "stage": "prompt-priority",
+      "statement": "Keeping one material aggregate descriptor immediately before its literal decomposition preserves global semantic direction without letting the label replace causal evidence.",
+      "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+      "falsifier": "Unrelated prompt evaluations show that qualified aggregate-plus-detail blocks are less source-faithful than detail-only controls, or that the aggregate repeatedly overrides its decomposition."
+    },
+    {
+      "id": "h-source-qualification",
+      "stage": "representation",
+      "statement": "Explicit provenance, confidence, P0/P1 priority, and omission counterfactual distinguish material current-source language from preferred or speculative labels without a fixed vocabulary.",
+      "evidence_ids": ["e-prompt-tests", "e-package"],
+      "falsifier": "Held-out cases admit low-confidence, non-material, preserved-counterfactual, or incompatible labels, or reject an otherwise qualified direction solely because it lacks a preset vocabulary entry."
+    },
+    {
+      "id": "h-calibration-separation",
+      "stage": "representation",
+      "statement": "Separating source-description qualification from generator-response calibration prevents observation loss while keeping render-effectiveness claims model/version scoped.",
+      "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+      "falsifier": "The uncalibrated qualified path is reported as proven render fidelity, or model-specific response evidence leaks into universal source semantics."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Use retain-and-decompose: a provenance-bound current-source abstract descriptor may emit once when confidence is high or medium, viewer priority is P0/P1, omission causes material drift, compatibility passes where applicable, and already-owned literal controls immediately follow. Human attractiveness uses the existing non-identifying generation-prior path. Model calibration remains a separate effectiveness path.",
+    "generalization_basis": "The gate is driven by current-source evidence, importance, counterfactual loss, ownership, and adjacency. It chooses no skin value, beauty level, demographic, mood, lighting style, subject, or generator response in advance.",
+    "hypothesis_ids": ["h-retain-decompose", "h-source-qualification", "h-calibration-separation"],
+    "changed_paths": [
+      "skills/image-prompt-skill-improver/SKILL.md",
+      "skills/image-prompt-skill-improver/references/improvement-method.md",
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.fidelity-discipline.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/color-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/references/lighting-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/references/model-adapters.md",
+      "skills/reverse-image-prompt/references/surface-color-language.md",
+      "skills/reverse-image-prompt/references/lighting-language.md",
+      "skills/reverse-image-prompt/tools/anchor_catalog.py",
+      "skills/reverse-image-prompt/tools/color_language.py",
+      "skills/reverse-image-prompt/tools/lighting_language.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_color_language.py",
+      "skills/reverse-image-prompt/tests/test_lighting_language.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-25-retain-and-decompose-aggregate-descriptors.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt-tests"]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-surface-directions",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["current-source surface provenance", "compatible value-depth direction", "low-confidence and P2 rejection", "aggregate-before-detail order"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-lighting-directions",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["current-source lighting provenance", "independent axis compatibility", "qualified emission", "immediate decomposition"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-human-attractiveness",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["source-visible attractiveness prior", "non-identifying provenance", "local face geometry", "prompt adjacency", "no calibration permission gate"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-aesthetic-atmosphere",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["source-visible aesthetic summary", "P0 importance", "material-drift omission", "literal decomposition", "model calibration separation"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "motivating-portrait",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["milky-light skin reading", "attractive idol or model-like gestalt", "strong figure-ground lighting contrast", "mysterious or fantastical atmosphere"],
+        "evidence_ids": ["e-user-contract", "e-motivating-source", "e-baseline-prompt"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The source rules, validators, compiled profiles, and generic held-out prompt fixtures now implement retain-and-decompose across human attractiveness, surface language, lighting language, and aesthetic or atmosphere summaries without installing the motivating labels as runtime defaults. The motivating portrait has not been rerun through a fresh independent reverse-prompt execution or generator after this change, so render fidelity and post-change user judgment remain unscored and the change is not promoted beyond prompt behavior.",
+    "evidence_ids": ["e-user-contract", "e-baseline-prompt", "e-prompt-tests", "e-package"]
+  }
+}

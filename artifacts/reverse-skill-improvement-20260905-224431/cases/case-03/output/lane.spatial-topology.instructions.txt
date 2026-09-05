@@ -1,0 +1,438 @@
+---
+id: lane.spatial-topology
+version: 7
+priority: 90
+activation: matched
+select_types:
+  - concept
+select_facets: []
+select_module_ids:
+  - subject.human
+  - detail.pose-hands-gesture
+  - detail.tight-selfie-hierarchy
+  - detail.accessory-torso-budget
+  - detail.face-hand-gesture
+required_common_modules:
+  - core.visual-evidence
+  - core.frame-coordinates
+  - core.fidelity-discipline
+owns_sections:
+  - spatial-orientation
+  - component-topology
+  - contact-occlusion-support
+required_topics:
+  - orientation-coverage
+  - component-relations
+  - contact-and-occlusion
+  - completion-risk
+---
+
+# Analysis lane: spatial topology
+
+## Role
+
+Own source-visible orientation, component topology, contact, support, occlusion, and completion risk. Use the assigned modules as the sole domain instructions.
+
+## Input boundary
+
+Read only the raw request, intent mode, exact source artifact and hash, route fingerprint, this lane contract, and assigned modules. Do not receive appearance conclusions or prompt wording.
+
+## Output contract
+
+In `prompt`, return `reverse-image-analysis-lane-report/compact-v2`. First decide whether orientation or topology is P0/P1. If so, report one macro, then hold viewpoint and crop while testing its source-visible component, frame, facing/gaze, depth, support/contact, boundary, occlusion, and completion relations. Inspect only current-source evidence. Mark the macro `sufficient`, `lossy`, or `uncertain`; retain only decisive P0/P1 residuals. Distinguish region-to-frame position from inter-region direction. Separately disposition material proximity, overlap, and surviving visibility; if direction survives extreme displacement, hand off both frame relations, the inter-region relation, and a direction-held counterfactual. Treat alignment phrases as positive controls over every explicit or implicit axis. Hand off appearance, color, and capture questions structurally.
+
+In `audited`, return `reverse-image-analysis-lane-report/v2`, split independently drifting results into atomic obligations, retain confounded directions, and close every high-degeneracy cross-component placement.
+
+## Completion gate
+
+Dispose every required topic at the profile's depth. In `prompt`, run at most the counterfactual needed to establish P0/P1 materiality and the lightweight viewpoint-held summary-adequacy check above; a concise macro pose or topology plus only at-risk residual relations is sufficient. In `audited`, require an isolated per-axis neutralization test for each `flexible` or `not-material` decision, whole-orientation and viewpoint-held residual-alignment counterfactuals, full coupled-obligation handling, and an exact explicit/implicit effect audit for every emitted spatial clause. Low-confidence or wholly confounded axes become `uncertain` unless an invariant coupled effect preserves the joint result. Surface, garment, and boundary cues may corroborate but never replace source geometry. Never normalize ambiguous axes or complete hidden structure.
+
+
+---
+id: core.visual-evidence
+version: 11
+priority: 110
+type: core
+tier: 0
+facet: core
+facet_values:
+  - visual-evidence
+triggers:
+  - any image
+avoid_when: []
+dependencies: []
+conflicts: []
+provides_anchors:
+  - standalone_reference_ban
+  - visible_evidence_only
+  - causal_origin_attribution
+---
+
+# Core: visual evidence
+
+## When to load
+
+Always.
+
+## Rules
+
+- Never refer to the source image in the final prompt.
+- Compile `source-*` and `current-source` provenance labels into literal visible targets before emission.
+- Describe visible evidence only; do not invent hidden structure or context.
+- Do not assert identity, nationality, race, exact ethnicity, religion, personality, measurements, metadata, brands, artists, cameras, lenses, or film stocks from appearance. Exact demographic or nationality context may enter only from a user statement or trusted metadata and remains externally sourced; pixels support non-identifying form, hair, displayed-surface, and aesthetic evidence rather than a protected-category claim.
+- Distinguish absence from uncertainty. Use `absent` only when the frame supports it; otherwise use visual descriptions such as `hidden`, `cropped out`, `indistinct`, `shadow-obscured`, or `low-legibility`.
+- Keep epistemic qualifiers in analysis. In the final prompt, describe the visible ambiguity rather than repeatedly saying `appears`, `likely`, or `possibly`.
+- In `faithful` mode, preserve visible softness, compression, blur, exposure problems, asymmetry, awkward crop, partial elements, and edge artifacts.
+- In `semantic` mode, retain concept-defining imperfections but omit incidental capture defects.
+- In `polished-fidelity` mode, improve only the dimensions requested by the user; do not silently alter crop, pose, relationships, identity-relevant appearance, or geometry.
+- Give partial elements a visibility budget: what remains visible, how large it is, where it touches the frame, and whether it stays secondary or low-detail.
+- Do not complete hidden anatomy, objects, clothing, text, reflections, or background fragments.
+- Before treating an observed contour, scale, color, surface, or definition as intrinsic, separate effects caused by pose or deformation, perspective, lighting or shadow, material interaction or occlusion, and capture or processing.
+- In the default `prompt` profile, keep only P0/P1 viewer-material results, compress P2 support, and group P3 or non-material evidence instead of enumerating it.
+
+- In `audited`, preserve independently drifting material results as atomic obligations; uncertain attribution never erases a supported direction.
+
+
+## Prompt contribution
+
+Put the fidelity ceiling near the beginning only when it materially defines the image. State partial or incomplete evidence affirmatively: `only a narrow cropped strip remains visible`, `the lower half stays outside the frame`, or `the text remains small and indistinct`.
+
+## Optional negative contribution
+
+Reject only likely evidence drift: invented hidden content, completed crops, cleaner relighting, upgraded sharpness, or aesthetic normalization.
+
+
+---
+id: core.frame-coordinates
+version: 15
+priority: 108
+type: core
+tier: 0
+facet: core
+facet_values:
+  - frame-coordinates
+  - aspect-ratio
+  - coordinates
+  - crop
+triggers:
+  - any image
+avoid_when: []
+dependencies:
+  - core.visual-evidence
+conflicts: []
+provides_anchors:
+  - aspect_ratio_drift_major
+  - normalized_coordinates
+  - subject_environment_balance
+  - major_region_hierarchy
+---
+
+# Core: frame, crop, and spatial anchors
+
+## When to load
+
+Always.
+
+## Source frame
+
+- Record exact source dimensions when available.
+- Treat aspect-ratio drift as a major fidelity failure.
+- Keep source dimensions separate from target size; do not assume generator support.
+- Preserve measured ratio in plain language; add a decimal only to distinguish nearby shapes.
+- Do not invent exact dimensions from a viewer preview.
+- Put frame shape, crop, and edge interactions first. Lock subject frame share and negative-space share before adding face or object micro-detail.
+- Describe which evidence occupies the frame zones, including any material source-visible axis offset.
+
+## Major-region hierarchy
+
+Map the few largest visually coherent regions as a major-region hierarchy before local detail. Record relative area, role, attention, legibility, and frame contact without fixed percentages.
+
+Preserve region-share hierarchy when flexible pose, viewpoint, or placement changes; exact coordinates may move.
+
+## Spatial language
+
+In `prompt`, emit one P0/P1 macro plus decisive residuals. Placement proves no orientation. Treat alignment wording as positive control and enumerate every affected axis.
+
+In `audited`, disposition every axis. `flexible` or `not-material` needs isolated neutralization; uncertain evidence stays uncertain unless coupled. Run both human counterfactuals, merge joint effects once, and block unowned spatial pulls.
+
+## Relational coordinate frames
+
+- Frame placement references the frame. Cross-component placement references another region and separates direction, proximity, overlap, and surviving visibility.
+- If direction survives material displacement, close subject-to-frame, reference-to-frame, and inter-region relations, then test residual drift with direction held.
+- Use frame-relative directions for composition and scene-relative zones for physical relations. Qualify viewpoint-dependent sides.
+- Establish a visible support plane only when it disambiguates the scene.
+- Separate 2D overlap from contact, containment, support, and depth order.
+- Prefer stable natural language; coordinates lock frame position, not physical topology.
+
+Use normalized coordinates only for concept-critical anchors.
+
+- Use no more than five numeric anchors in a normal prompt.
+- Reserve them for seams, screen corners, occluder boundaries, UI bands, reflection joins, replacement zones, or unusual scale relationships that natural language cannot lock clearly.
+- Use approximate ranges rather than false precision.
+- Do not repeat the same coordinate in prose, negative prompt, and settings.
+- When coordinates and natural-language placement disagree, keep the visible relationship and revise or remove the numeric estimate.
+
+## Crop and completion
+
+- Separate hair/head-outline cropping from facial-feature cropping.
+- Name which important features remain fully inside the frame and which regions are hidden, occluded, or outside it.
+- Preserve unusual headroom, edge bias, negative space, or full-frame scale.
+- Prevent a salient face, hand, product, or text mark from being enlarged when that would erase source-visible context.
+
+## Target-size handoff
+
+If settings are requested, report the source frame as metadata and the validated target size separately. Prefer `auto` without a valid deterministic adapter, and disclose ratio-preserving adjustments.
+
+
+---
+id: core.fidelity-discipline
+version: 12
+priority: 104
+type: core
+tier: 0
+facet: core
+facet_values:
+  - fidelity-discipline
+  - anti-polish
+  - anti-normalization
+triggers:
+  - any image
+avoid_when: []
+dependencies:
+  - core.visual-evidence
+conflicts: []
+provides_anchors:
+  - anti_polish
+  - broad_label_discipline
+  - fidelity_ceiling
+  - aesthetic_salience_gate
+  - aesthetic_signature_early
+  - detail_not_sharpness
+  - attractiveness_polish_separation
+  - aesthetic_causal_signature
+  - direct_perceptual_appeal
+  - aggregate_prior_cluster_audit
+  - broad_color_descriptor_discipline
+  - color_metaphor_decomposition
+---
+
+# Core: fidelity discipline and anti-normalization
+
+## When to load
+
+Always. Prevent cleaner, more generic, more plausible, or more category-normalized drift.
+
+## Rules
+
+- Cap generated polish to the source. Preserve visible roughness, softness, asymmetry, color cast, retouching level, ordinary capture, and medium imperfections.
+- Treat subject attractiveness and image polish as separate controls. Treat any broader person aesthetic the same way: declare intended and protected dimensions, lead its owned visible controls once, and do not imply unowned skin cleanup, symmetry, makeup, garment exposure, crop, pose, lighting, or editorial finish.
+- Preserve visible illusion, mismatch, mixed-media layering, scale incongruity, low fidelity, or awkward capture above plausibility.
+- Weaken broad portrait, fashion, garment, product, genre, and body-region labels when they pull toward cleaner styling, expanded crop, completion, or beautification. Put evidence before shorthand.
+- Treat source fidelity ceiling as an affirmative requirement: do not exceed visible sharpness, cleanliness, glamour, lighting balance, readability, symmetry, or plausibility unless requested.
+
+## Aesthetic salience gate
+
+Decide whether changing visible form, surface, light, color, or hierarchy while retaining objects would change the image's identity or appeal.
+
+In diagnostic mode, name the source-supported perceptual appeal directly before its visible mechanisms; do not infer motive, identity, or story.
+
+An evaluative term is neither automatically valid nor disposable. When an aggregate appeal reading is high-confidence P0/P1 source evidence and its omission causes material drift, retain it once and immediately constrain it with visible controls. Otherwise keep it diagnostic.
+
+Build a sparse Aesthetic Causal Signature from only the form, surface, light-to-form, color, sharpness, and hierarchy axes that materially create the image's perceptual proposition.
+
+- **Form:** silhouette, proportion, contour rhythm, tension, softness, or rigidity.
+- **Surface:** texture, finish, translucency, sheen, grain, or processing.
+- **Light-to-form:** flattening, soft revelation, separation, or hard sculpture.
+- **Color/tone:** palette, cast, saturation, range, and local contrast.
+- **Hierarchy:** dominant shapes, material roles, subject/environment balance, and first attention.
+
+Select only causal axes. Use three to six mutually supporting look anchors only when the source aesthetic is high-salience; otherwise use one or two ordinary cues. Describe ambiguity instead of invoking presets.
+
+Treat descriptive detail and rendered sharpness as independent controls. Detail must not raise sharpness, scale, polish, or priority.
+
+For a material evaluative or mood term, retain the aggregate once, then immediately unpack visible mechanisms. Neither abstraction nor detail substitutes for the other.
+
+Treat a broad color descriptor as a hypothesis about one causal layer, not as shorthand for hue, value, chroma, lighting, mood, and processing at once. Replace overload with source-supported axes.
+
+Decompose an appearance metaphor into observable color axes, surface behavior, and illumination before using it once as a non-directional summary. Current-source emission requires provenance, high/medium confidence, P0/P1 priority, material-drift omission, compatibility, and immediate owned controls. Calibration remains separate effectiveness evidence; the descriptor adds no second direction.
+
+Audit prior-heavy cues as a combined cluster, not only as isolated labels. Ignore subject nouns temporarily; rewrite unsupported quality, lighting, surface, framing, or style defaults from evidence without a universal blacklist.
+
+## Prompt additions
+
+State the fidelity ceiling early when the image is casual, degraded, stylized, awkward, or illusion-dependent.
+
+When the source differs from a clean default, place a compact Aesthetic Signature early; add at most one highest-risk boundary.
+
+## Optional negative contribution
+
+Reject only likely beautification, relighting, sharpening, style upgrade, symmetry, scene-normalization, crop, or category-default drift.
+
+
+---
+id: concept.mixed-media-illusion
+version: 5
+priority: 84
+type: concept
+tier: 1
+facet: relationship
+facet_values:
+  - mixed-media
+  - illusion
+  - sticker-overlay
+  - decal
+  - collage
+  - medium-contrast
+triggers:
+  - flat sticker, decal, graphic overlay, collage, medium contrast illusion, inserted graphic surface
+avoid_when:
+  - single coherent medium with no mixed-media contrast
+dependencies:
+  - concept.primary-relationship
+  - core.frame-coordinates
+conflicts: []
+provides_anchors: []
+---
+
+# Concept: mixed media, flat overlays, and illusion fidelity
+
+## When to load
+
+Load when the image combines different media or realism levels, such as a flat sticker on a photo, cel-shaded graphic over a real subject, printed insert, collage panel, stylized overlay, or composited element whose contrast is visually important.
+
+## Detection cues
+
+- Hard simplified contours, outline style, color blocks, or limited shading against a photographic subject.
+- Inserted element has different resolution, lighting, perspective, grain, or material behavior.
+- The source depends on the mismatch rather than seamless realism.
+
+## Prompt additions
+
+- Describe the element's visual role first: flat graphic overlay, sticker, decal, printed mark, cel-shaded insert, collage fragment, or stylized overlay.
+- Lock simplified contour, outline weight, shape count, color-block treatment, limited shading, flatness, and exact overlap with the real subject.
+- When the secondary layer is cropped or partial, name only one to three source-salient visible fragments, their frame or foreground overlap, and the counterpart parts that stay cropped, hidden, or indistinct. Preserve its source-visible offset and completion budget; do not turn a partial layer into a complete centered subject.
+- If related stems, labels, marks, leaves, symbols, or secondary shapes share the same graphic treatment, treat them as part of the same overlay family.
+- Preserve the coherence ceiling: do not make the mixed-media element physically plausible, seamlessly 3D, or material-matched unless the source is visibly that way.
+
+## Optional negative contribution
+
+Reject conversion into realistic physical props, botanical objects, jewelry, polished 3D accessories, clean product graphics, seamless CG, or fully integrated realistic objects when the source depends on medium contrast.
+
+## Optional settings contribution
+
+- Coherence/realism ceiling locks: preserve medium mismatch and source-level implausibility.
+- Style/rendering target: specify each medium layer separately when needed.
+
+
+---
+id: subject.human
+version: 22
+priority: 82
+type: subject
+tier: 2
+facet: subject
+facet_values:
+  - human
+  - person
+  - portrait
+  - face
+  - body
+  - human-like
+triggers:
+  - visible person
+  - visible human face, hair, skin, body silhouette, or portrait/body crop
+avoid_when:
+  - no human subject or human-like figure
+dependencies:
+  - core.visual-evidence
+  - core.frame-coordinates
+  - core.fidelity-discipline
+conflicts: []
+provides_anchors:
+  - face_fidelity
+  - aesthetic_upgrade
+  - symmetric_large_body_lock
+  - symmetric_moderate_body_lock
+  - face_exposure_budget
+  - broad_person_gestalt_anchor
+---
+
+# Subject: human fidelity
+
+## When to load
+
+Load whenever a real or fictional person is visibly present. Add `detail.human-face-likeness` only when facial features are prominent or clearly readable.
+
+## Human hierarchy
+
+In `prompt`, record only P0/P1 entries from this hierarchy before micro-detail; group the rest. In `audited`, dispose every listed axis:
+
+- number of people and primary/secondary roles
+- each person's frame share, crop, depth plane, and overlap order
+- head position and scale relative to the frame and body
+- independently dispose of torso yaw/pitch/roll; head-to-body yaw/pitch/roll and lateral offset; shoulder image-plane slope and depth order; attention direction; and visible action as invariant, flexible, not-material, not-visible, or uncertain
+- the visible floor/seat/support region, which side of any nearby boundary contains the person's main mass, and which body parts contact or cross it
+- which face, hair, limbs, clothing, or accessories are cropped, hidden, soft, or outside the frame
+
+Allocate detail by legibility; keep distant, blurred, reflected, screen-contained, or background people simple.
+
+In `prompt`, preserve one macro pose result and decisive residuals when pose is P0/P1. Alignment semantics can jointly actuate torso, head/body, shoulder, attention, placement, and viewpoint; inspect every clause's explicit and implicit effects. In `audited`, link decisions to cues/confounders, test each discarded axis in isolation, compare whole with viewpoint-held residual neutralization, cover coupled members, and reject clauses affecting non-invariant or uncertain axes.
+
+Before appearance prose, build a compact appearance signature in `prompt`; create one `human-appearance/v3` decision per spatial human only in `audited`. Distinguish occlusion from crop in either profile.
+
+## Visible appearance
+
+Describe each non-identifying fictional person coarse-to-fine: use one compact broad person-gestalt anchor when it materially reduces ambiguity, then constrain it with visible geometry and source-specific corrections.
+
+For `prompt`, decide four lanes independently: externally sourced identity context, optional non-identifying person prior, displayed-skin surface, and optional appearance gestalt. A field earns detail only when it is P0/P1 or has high model-default drift.
+
+### Broad person-gestalt anchor
+
+- Frame prominence measures image size/attention; fidelity salience measures reconstruction impact. A readable secondary figure may be fidelity-primary.
+- Keep exact race, ethnicity, nationality, or other identity context `user-supplied`, `trusted-metadata`, or `absent`. Emit externally sourced context once only when its viewer priority is P0/P1; never derive or corroborate it from pixels, skin, hair, face geometry, or aesthetic reading.
+- Set the non-identifying person prior to `emit`, `omit`, or `uncertain`. Record support, default-drift risk, geometry sufficiency, and one omission counterfactual. Omit only when emitted form geometry is sufficient, drift risk is low, and the source reading survives; never force a protected-category guess.
+- An emitted person prior carries provenance and matching human/face/body-form controls. Keep them contiguous so visible geometry corrects the anchor; skin and identity context cannot justify it.
+- Decide a separate appearance gestalt for attractiveness or another broad person aesthetic. Emit one high/medium-confidence P0/P1 anchor only when omission causes material drift. Declare intended and protected dimensions, then immediately decompose every intended dimension into an owner-correct face, body, hair, expression, displayed-skin, garment, pose, scale, capture, light, or color control. Identity context is always protected; unowned dimensions cannot change.
+- Keep the appearance anchor source-relative in analysis but emit only the visible presentation; never emit `source-relative` or a missing-image comparison. It cannot silently idealize, retouch, relight, reveal clothing, change cosmetics, alter pose/crop/scale/age presentation, or upgrade capture; those directions require their own source evidence and ownership.
+
+After the optional anchor, prioritize source-specific corrections:
+
+- Describe broad apparent age presentation or gender presentation only when visually important and sufficiently supported.
+- Treat hair first as silhouette and occlusion: hairline, part, fringe, side masses, length, texture group, volume, flyaways, and which facial regions it covers.
+- Set displayed skin to `material`, `not-material`, `not-visible`, or `uncertain` with its own P0-P3 priority. When material, name its Color/Tone regions, observation scope, and `exposed`, `through-sheer`, or `mixed` coverage. Describe stable visible value, chroma, undertone, finish, texture, marks, makeup, facial hair, and retouching as captured surface output, never identity or biological color.
+
+Prevent the generated person from drifting into a different visible face type.
+Check portrait prompts for aesthetic-upgrade drift.
+
+## Body and silhouette
+
+Describe only visible image-plane structure shaped by pose, crop, clothing, lens perspective, light, shadow, blur, and occlusion. Do not infer hidden anatomy.
+
+- First decide whether visible body form is a primary aesthetic invariant, a structural connector, or secondary support. Do not allocate detail merely because a body region is large in the crop.
+- Preserve visible shoulder span, torso length, waist and hip placement, limb thickness, contour rhythm, stance, and clothing-shaped silhouette. Compare them source-relatively in analysis but state actual proportions and relations in final prose. A garment boundary neither proves nor erases pose supported by independent contours or depth cues.
+- Separate anatomical proportion from near-camera enlargement, foreshortening, pose compression, garment pressure, and light/shadow shaping. Do not convert a bright edge or dark groove into unsupported anatomy.
+- Keep the torso, pelvis, and center of mass in the source-visible spatial zone; do not let a contact pose silently relocate the person across a barrier, edge, opening, or support surface.
+- Preserve a clearly visible large-scale body silhouette without exaggeration or reduction.
+- Keep a moderate or obscured body silhouette secondary rather than promoting it.
+- If age is unclear or the person is not clearly adult, use neutral, non-sexual silhouette and clothing language.
+- Keep secondary or cropped body regions subordinate to a dominant face, action, prop, or relationship.
+- Lock the person's frame share and environmental context before facial detail. Do not let a detailed face passage enlarge the subject or convert an environmental portrait into a close beauty portrait.
+
+## Module handoff
+
+- Add `detail.human-face-likeness` for a prominent or clearly readable face.
+- Add `detail.human-body-form` when visible proportion, contour, tissue character, muscle definition, skin surface, or body-region hierarchy is a first-order part of the image's identity or appeal.
+- Add `detail.pose-hands-gesture` when hand shape, grip, contact, limb mechanics, or pose landmarks matter.
+- Add `detail.clothing-fashion` when garment boundaries, fit, seams, straps, or coverage affect the visible silhouette.
+- Add `detail.tight-selfie-hierarchy` for a close phone selfie whose face/hair hierarchy and edge crop are first-order.
+- Add `style.stylized-character-maturity` only for a stylized human-like subject with maturity drift risk.
+
+## Prompt contribution
+
+Order human controls by cross-lane priority while preserving dependencies: scale/crop and camera; material pose; one P0/P1 external identity context; any broad person prior with correcting geometry; one appearance gestalt with its contiguous owned decomposition; then remaining displayed skin, hair, expression, garment, light/color, and capture controls. In `audited`, coupled pose controls retain the macro summary and only `partial` or `lost` residuals, and every spatial control carries a complete explicit/implicit effect audit against the final literal excerpt. Placement stays positional and appearance inherits pose.
+
+For multiple people, describe each person separately by frame role and do not blend their face, hair, clothing, pose, or lighting anchors.
+
+## Optional negative contribution
+
+Reject unsupported identity claims or broad-anchor prototype drift, generic model-face drift, beauty retouching, changed apparent age presentation, different face silhouette, altered feature spacing, changed expression or gaze, hairline and hair-mass drift, invented hidden anatomy, mirrored pose, completed cropped regions, and lighting changes that alter visible facial or body structure. Keep exclusions proportional to what is readable.

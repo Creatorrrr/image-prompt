@@ -1,0 +1,59 @@
+{
+  "status": "blocked-no-image-delivered",
+  "generation_attempt_count": 2,
+  "transport_retry_count": 1,
+  "maximum_generation_attempts": 1,
+  "identical_byte_transport_retry_allowed": 1,
+  "quality_retry_allowed": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "failed-no-delivery",
+      "observed_immediately_before_call_utc": "2026-09-05T15:07:38.027680+00:00",
+      "tool": "functions image_gen__imagegen",
+      "input_artifact": "generation-input.json",
+      "input_keys": [
+        "prompt"
+      ],
+      "prompt_sha256": "ba9fd39c8c4efad409bdcc252bc0bf2bbf9f42c7813364112cd755a79f45eb32",
+      "reference_images": 0,
+      "model": "not-exposed",
+      "size_parameter": "unsupported/not-exposed",
+      "tool_call_observed_utc": "2026-09-05T15:07:38.041Z",
+      "ended_at": "2026-09-05T15:08:11.669Z",
+      "response_artifact": "generation-response.attempt-01.json",
+      "elapsed_observed_seconds": 33.628,
+      "request_artifact": "generation-request.attempt-01.json"
+    },
+    {
+      "attempt": 2,
+      "status": "blocked-by-output-safety-system",
+      "observed_immediately_before_call_utc": "2026-09-05T15:10:23.039653+00:00",
+      "tool": "functions image_gen__imagegen",
+      "input_artifact": "generation-input.json",
+      "input_keys": [
+        "prompt"
+      ],
+      "prompt_sha256": "ba9fd39c8c4efad409bdcc252bc0bf2bbf9f42c7813364112cd755a79f45eb32",
+      "identical_byte_retry_of": 1,
+      "reference_images": 0,
+      "model": "not-exposed",
+      "size_parameter": "unsupported/not-exposed",
+      "tool_call_observed_utc": "2026-09-05T15:10:23.054Z",
+      "ended_at": "2026-09-05T15:11:01.798Z",
+      "response_artifact": "generation-response.attempt-02.json",
+      "raw_response_artifact": "generation-response.attempt-02.raw.txt",
+      "http_status": 400,
+      "error_code": "moderation_blocked",
+      "moderation_stage": "output",
+      "categories": [
+        "sexual"
+      ],
+      "request_id": "871b9fa1-88ec-4c5c-adf7-49dde4a72615",
+      "image_delivered": false,
+      "elapsed_observed_seconds": 38.744,
+      "request_artifact": "generation-request.attempt-02.json"
+    }
+  ],
+  "render_deliveries": 0
+}

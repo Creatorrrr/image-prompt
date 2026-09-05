@@ -1,0 +1,197 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "d2693ea345f983379c21d5303d4c24180f5a85b9",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Prevent centered-frontal pose normalization by representing visible human orientation at independent degrees of freedom, without installing the motivating direction, placement, person, clothing, or camera angle as a default."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The motivating source is near the frame center but does not read as axially neutral: head, torso, shoulder, side-visibility, and depth cues jointly create an asymmetric source-relative pose and direction.",
+      "artifact": "/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/120A03AF-63A5-498A-ABC0-A49BE74B7A5B/1-사진-1.jpg; sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; 969x1280"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "The delivered motivating render stacks the face, neck, torso, and bilateral hair mass close to the central vertical axis and reads more frontal and symmetric than the source.",
+      "artifact": "User-attached image in the 2026-08-24 conversation, named ChatGPT Image 2026년 8월 23일 오후 10_48_27.png; the reported Downloads path was no longer present during implementation, so no local hash is asserted."
+    },
+    {
+      "id": "e-user",
+      "kind": "user-judgment",
+      "claim": "The user reports that the latest result still points toward the center and front, and asks for a pose-focused correction that avoids overfitting and hardcoding.",
+      "artifact": "Conversation feedback and design request on 2026-08-24"
+    },
+    {
+      "id": "e-prior-plan",
+      "kind": "prompt-inspection",
+      "claim": "The prior plan made frame placement invariant as centered, treated body orientation as one flexible coarse field, treated shoulder line as one non-material coarse field, and inferred near-frontal azimuth partly from both eyes and shoulders being visible. The prompt then emitted centered placement and an upright torso before local face, hair, and garment controls.",
+      "artifact": "generated_images/reverse-image-prompt-cleanroom-v3-20260823/plan.json sha256=f3d27c8c8ca9d2766f096a6e95a3d8387314adbe8cbd027e65d3b362fc5ede09; prompt.txt sha256=40b6e29ab1273c5117fcae625616017650249092ee1fa6d5c6fb48bde32397a0"
+    },
+    {
+      "id": "e-old-plan-rejection",
+      "kind": "package-check",
+      "claim": "The v2 validator rejects the prior plan for a missing schema version, missing structured cues and neutralization checks, three legacy coarse human-pose dimensions, and nine uncovered decomposed pose axes.",
+      "artifact": "python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/reverse-image-prompt-cleanroom-v3-20260823/plan.json --prompt generated_images/reverse-image-prompt-cleanroom-v3-20260823/prompt.txt; expected nonzero exit"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All 172 reverse-image-prompt tests pass with 20 skips. Module validation passes for 37 modules at 16940 runtime words, 3800 Tier-0 words, and 0.0014 duplicate ratio; generated metadata and compiled profiles are current, Python compilation passes, and the diff has no whitespace errors.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python3 skills/reverse-image-prompt/tools/validate_modules.py; python3 skills/reverse-image-prompt/tools/gen_manifest.py --check; python3 -m py_compile skills/reverse-image-prompt/tools/salience_plan.py skills/reverse-image-prompt/tests/test_salience_plan.py; git diff --check"
+    },
+    {
+      "id": "e-causal-pairs",
+      "kind": "package-check",
+      "claim": "Regression tests cover independent yaw, pitch, roll, lateral-offset, shoulder-slope, shoulder-depth, and attention decisions; cue ownership and confounders; material and non-material neutralization; and direction-neutral causal pairs where mirrored oblique poses and truly frontal head-body alignment are both valid.",
+      "artifact": "skills/reverse-image-prompt/tests/test_salience_plan.py; python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Frame placement cannot silently neutralize an independently material human pose; every visible pose degree of freedom is either source-supported and actuated once or explicitly bounded as non-emitted.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-placement-orientation-separation",
+        "statement": "Centered, offset, or edge placement controls frame position only and never implies frontal, oblique, aligned, or opposed orientation.",
+        "evidence_ids": ["e-source", "e-render", "e-user", "e-prior-plan"],
+        "causal_controls": ["frame-placement owner", "independent pose owners", "orientation-specific cue evidence"]
+      },
+      {
+        "id": "inv-decomposed-pose",
+        "statement": "Torso, head-to-body, shoulder, and attention relations remain independently decidable instead of collapsing into coarse pose labels.",
+        "evidence_ids": ["e-source", "e-prior-plan", "e-old-plan-rejection"],
+        "causal_controls": ["decomposed human pose axes", "subject-owned cue ids", "confounder-aware dispositions"]
+      },
+      {
+        "id": "inv-neutralization",
+        "statement": "Replacing the observed relation with neutral axial alignment is an explicit counterfactual whose material visible changes require at least one invariant pose control.",
+        "evidence_ids": ["e-render", "e-user", "e-prior-plan", "e-causal-pairs"],
+        "causal_controls": ["neutralization verdict", "changed and preserved relations", "affirmative pose actuation"]
+      },
+      {
+        "id": "inv-direction-neutrality",
+        "statement": "The rules accept either oblique direction, mirrored evidence, and genuinely frontal alignment without preferring the motivating value.",
+        "evidence_ids": ["e-causal-pairs", "e-package"],
+        "causal_controls": ["source-relative observations", "causal-pair tests", "no case-specific defaults"]
+      }
+    ],
+    "flexible_dimensions": [
+      "actual placement and orientation values",
+      "whether each decomposed axis is invariant or non-emitted",
+      "subject identity, appearance, garment, background, and medium",
+      "camera and pose split when source evidence cannot identify it",
+      "generator phrasing and sampling outcome"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-centered-frontal-normalization",
+      "scale": "global",
+      "axis": "human pose relative to frame and camera",
+      "source_state": "Near-center placement coexists with an asymmetric head, torso, shoulder, and depth reading.",
+      "render_state": "The subject reads centered, frontal, and axially stacked.",
+      "evidence_ids": ["e-source", "e-render", "e-user"]
+    },
+    {
+      "id": "m-coarse-pose-disposition",
+      "scale": "regional",
+      "axis": "independent human pose degrees of freedom",
+      "source_state": "Several part relations may remain material even when garments or hair obscure one landmark.",
+      "render_state": "The prior plan made coarse body orientation flexible and coarse shoulder line non-material, allowing local appearance inventory to settle into a neutral pose.",
+      "evidence_ids": ["e-source", "e-prior-plan", "e-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-representation-collapse",
+      "stage": "representation",
+      "statement": "Coarse body, head-body, and shoulder fields allow one visible subaxis to hide unexamined yaw, roll, lateral-offset, slope, or depth-order evidence.",
+      "evidence_ids": ["e-prior-plan", "e-old-plan-rejection"],
+      "falsifier": "Independent held-out audits show that coarse dispositions always preserve every material subaxis and reject missing ones."
+    },
+    {
+      "id": "h-frame-pose-coupling",
+      "stage": "prompt-priority",
+      "statement": "An early centered-placement instruction plus weak or non-emitted orientation controls creates a neutral axial attractor even though placement and pose are logically independent.",
+      "evidence_ids": ["e-prior-plan", "e-render", "e-user"],
+      "falsifier": "Matched repeated renders preserve source-relative obliqueness when only centered placement is strong and material pose relations remain omitted."
+    },
+    {
+      "id": "h-appearance-neutralization",
+      "stage": "prompt-interaction",
+      "statement": "Face, hair, and garment inventory can reinforce bilateral symmetry or substitute for pose when the material head/torso/shoulder relation is absent or ordered too late.",
+      "evidence_ids": ["e-prior-plan", "e-render"],
+      "falsifier": "Held-out prompt and render pairs show no normalization difference when material pose is actuated before versus omitted beneath local appearance inventory."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Use a versioned, direction-neutral spatial ledger that decomposes human pose axes, links each decision to subject-owned source cues and confounders, requires a neutral-alignment counterfactual, separates placement from orientation, and emits material pose before dependent appearance inventory.",
+    "generalization_basis": "The implementation encodes degrees of freedom, evidence families, counterfactual outcomes, and ownership rather than any target direction, angle, coordinate, body, garment, face type, or generator workaround. Causal-pair tests accept mirrored obliqueness and true frontal alignment equally.",
+    "hypothesis_ids": ["h-representation-collapse", "h-frame-pose-coupling", "h-appearance-neutralization"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.human-body-form.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-24-spatial-orientation-neutralization-v2.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-old-plan-rejection", "e-package", "e-causal-pairs"]},
+    "prompt": {"status": "unscored", "evidence_ids": []},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "holdout-mirrored-oblique-pair",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["opposite torso yaw", "opposite head-body yaw", "opposite shoulder slope", "mirrored cue observations"],
+        "evidence_ids": ["e-causal-pairs", "e-package"]
+      },
+      {
+        "id": "holdout-valid-frontal-alignment",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["frontal head-body yaw", "not-material neutralization", "counterfactual preservation"],
+        "evidence_ids": ["e-causal-pairs", "e-package"]
+      },
+      {
+        "id": "motivating-centered-frontal-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["frame placement versus pose", "head-body axes", "shoulder axes", "appearance neutralization"],
+        "evidence_ids": ["e-source", "e-render", "e-user", "e-prior-plan"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The package now rejects the prior omission pattern and covers independent pose axes, cue/confounder provenance, neutralization, prompt order, and direction-neutral counterexamples. No post-intervention prompt or render was produced in this apply-only turn, so prompt behavior and pixel fidelity remain unscored and the change is not promoted beyond structural implementation.",
+    "evidence_ids": ["e-old-plan-rejection", "e-package", "e-causal-pairs"]
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.medium-aesthetic-capture",
+  "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1",
+  "source_artifact": {
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "frame": "969x1280"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "context_note": "Coordinator context; prior lane report and draft remain in context. No independence claimed."
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "medium.photographic-capture",
+      "version": 13
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "medium-and-process",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:medium-separation"
+      ]
+    },
+    {
+      "topic": "capture-fidelity-ceiling",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:capture-softness"
+      ]
+    },
+    {
+      "topic": "production-aesthetic",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:capture-softness",
+        "lane.medium-aesthetic-capture:surface-and-makeup"
+      ]
+    },
+    {
+      "topic": "artifact-preservation",
+      "disposition": "not-material",
+      "finding_ids": [],
+      "reason": "Narrow black lateral strips and tiny lettering are P2/P3 details; no concept-critical motion blur, UI, bloom, or compression pattern is visible. Ordinary fine-detail softness is already retained in capture-fidelity-ceiling."
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.medium-aesthetic-capture:medium-separation",
+      "owner_key": "medium-separation",
+      "scale": "regional",
+      "axis": "surface",
+      "observation": "Foreground facial shading, hair strands and fabric gradients read photographically; the giant backdrop has simplified drawn outlines and flat colored regions.",
+      "source_evidence": [
+        "Foreground facial shading, hair strands and fabric gradients read photographically; the giant backdrop has simplified drawn outlines and flat colored regions."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [
+        "The pixels do not prove the original image-making process or physical backdrop medium."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:medium-separation:photo",
+          "axis": "surface",
+          "visible_result": "The foreground person has photographic rendering while the backdrop remains an anime-style drawing.",
+          "result_direction": "The foreground person has photographic rendering while the backdrop remains an anime-style drawing.",
+          "subject_or_region_ids": [
+            "person",
+            "illustration"
+          ],
+          "relation_kind": "medium-contrast",
+          "source_evidence": [
+            "The foreground person has photographic rendering while the backdrop remains an anime-style drawing."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "The pixels do not prove the original image-making process or physical backdrop medium."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture:capture-softness",
+      "owner_key": "capture-softness",
+      "scale": "regional",
+      "axis": "sharpness",
+      "observation": "The foreground face and hair are readable but softly resolved, and the enlarged illustration is softer and lower in fine-detail legibility.",
+      "source_evidence": [
+        "The foreground face and hair are readable but softly resolved, and the enlarged illustration is softer and lower in fine-detail legibility."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Optical focus, scaling, compression and processing cannot be separated."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:capture-softness:foreground",
+          "axis": "sharpness",
+          "visible_result": "Keep modest photographic fine-detail softness across face, hair and fabric.",
+          "result_direction": "Keep modest photographic fine-detail softness across face, hair and fabric.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "capture-ceiling",
+          "source_evidence": [
+            "Keep modest photographic fine-detail softness across face, hair and fabric."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Optical focus, scaling, compression and processing cannot be separated."
+          ]
+        },
+        {
+          "id": "lane.medium-aesthetic-capture:capture-softness:background",
+          "axis": "sharpness",
+          "visible_result": "The illustrated backdrop remains softer and less detailed than the foreground person.",
+          "result_direction": "The illustrated backdrop remains softer and less detailed than the foreground person.",
+          "subject_or_region_ids": [
+            "illustration"
+          ],
+          "relation_kind": "detail-hierarchy",
+          "source_evidence": [
+            "The illustrated backdrop remains softer and less detailed than the foreground person."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Optical focus, scaling, compression and processing cannot be separated."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture:surface-and-makeup",
+      "owner_key": "surface-and-makeup",
+      "scale": "regional",
+      "axis": "surface",
+      "observation": "Skin has smoothly resolved soft surface detail, dark eyeliner is visible, and there is no evidence for adding heavier makeup, glassy skin or uniformly crisp studio detail.",
+      "source_evidence": [
+        "Skin has smoothly resolved soft surface detail, dark eyeliner is visible, and there is no evidence for adding heavier makeup, glassy skin or uniformly crisp studio detail."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Retouching cannot be proven from apparent smoothness; local sheen belongs to observed lighting."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:surface-and-makeup:skin-finish",
+          "axis": "surface",
+          "visible_result": "Face and exposed shoulder retain soft surface detail without a glossy wet finish.",
+          "result_direction": "Face and exposed shoulder retain soft surface detail without a glossy wet finish.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "skin-detail-ceiling",
+          "source_evidence": [
+            "Face and exposed shoulder retain soft surface detail without a glossy wet finish."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Retouching cannot be proven from apparent smoothness; local sheen belongs to observed lighting."
+          ]
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "requirement": "Do not assert a specific camera, lens, film, studio, image-making origin or physical poster support."
+    },
+    {
+      "requirement": "Fine-detail softness is separate from displayed shadow floor and light-to-form. Avoid cinematic, professional, beauty-shot or high-resolution defaults."
+    },
+    {
+      "requirement": "Narrow black lateral edge strips may remain as a brief supporting crop artifact; do not enlarge them."
+    }
+  ],
+  "omission_checks": [
+    {
+      "tested_change": "Render all layers as equally crisp polished studio imagery.",
+      "verdict": "material-drift",
+      "source_evidence": [
+        "Foreground modest softness and softer flat drawing are visibly different."
+      ]
+    },
+    {
+      "tested_change": "Omit a broad production genre label while keeping explicit softness and medium distinction.",
+      "verdict": "preserved",
+      "source_evidence": [
+        "No verified genre context exists beyond the image rendering."
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "target": "color-light-material",
+      "requirement": "Own compressed lower-shirt shadows, modeled highlights, crown sheen and face/neck shadow relations. Capture wording must not duplicate them."
+    }
+  ],
+  "conflicts": []
+}

@@ -1,0 +1,629 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.color-light-material",
+  "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1",
+  "source_artifact": {
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "frame": "969x1280"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "context_note": "Coordinator context; prior lane report and draft remain in context. No independence claimed."
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "core.background-color",
+      "version": 7
+    },
+    {
+      "id": "detail.color-tone-fidelity",
+      "version": 12
+    },
+    {
+      "id": "detail.light-form-fidelity",
+      "version": 11
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "intrinsic-color",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:dark-material-values",
+        "lane.color-light-material:skin-color",
+        "lane.color-light-material:background-palette"
+      ]
+    },
+    {
+      "topic": "displayed-tone-scope",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:displayed-tone"
+      ]
+    },
+    {
+      "topic": "illumination-and-shadow",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:facial-and-shoulder-light"
+      ]
+    },
+    {
+      "topic": "material-response",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:material-light-response"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.color-light-material:dark-material-values",
+      "owner_key": "dark-material-values",
+      "scale": "regional",
+      "axis": "color",
+      "observation": "Hair and fitted top form the darkest large regions. Crown strands have localized sheen; much of the lower garment is near black with little visible chroma.",
+      "source_evidence": [
+        "Hair and fitted top form the darkest large regions. Crown strands have localized sheen; much of the lower garment is near black with little visible chroma."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Lighting, exposure and processing contribute to displayed black levels; no physical reflectance claim is supported."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:dark-material-values:hair-value",
+          "axis": "color",
+          "visible_result": "Hair is displayed near-black in value.",
+          "result_direction": "Hair is displayed near-black in value.",
+          "subject_or_region_ids": [
+            "hair"
+          ],
+          "relation_kind": "displayed-value",
+          "source_evidence": [
+            "Hair is displayed near-black in value."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Lighting, exposure and processing contribute to displayed black levels; no physical reflectance claim is supported."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:dark-material-values:shirt-value",
+          "axis": "color",
+          "visible_result": "The top is displayed near-black in value.",
+          "result_direction": "The top is displayed near-black in value.",
+          "subject_or_region_ids": [
+            "garment"
+          ],
+          "relation_kind": "displayed-value",
+          "source_evidence": [
+            "The top is displayed near-black in value."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Lighting, exposure and processing contribute to displayed black levels; no physical reflectance claim is supported."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:dark-material-values:dark-chroma",
+          "axis": "color",
+          "visible_result": "Hair and garment have very low visible chroma.",
+          "result_direction": "Hair and garment have very low visible chroma.",
+          "subject_or_region_ids": [
+            "hair",
+            "garment"
+          ],
+          "relation_kind": "displayed-chroma",
+          "source_evidence": [
+            "Hair and garment have very low visible chroma."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Lighting, exposure and processing contribute to displayed black levels; no physical reflectance claim is supported."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:skin-color",
+      "owner_key": "skin-color",
+      "scale": "regional",
+      "axis": "color",
+      "observation": "Face, neck and exposed shoulder display light, subdued warm beige skin, with pinker lips; skin planes differ strongly with shading.",
+      "source_evidence": [
+        "Face, neck and exposed shoulder display light, subdued warm beige skin, with pinker lips; skin planes differ strongly with shading."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "This is displayed surface under captured light, not biological color or identity.",
+        "No reliable neutral or color profile calibration has been established."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:skin-color:value",
+          "axis": "color",
+          "visible_result": "Exposed skin has light displayed midtone value.",
+          "result_direction": "Exposed skin has light displayed midtone value.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-value",
+          "source_evidence": [
+            "Exposed skin has light displayed midtone value."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "This is displayed surface under captured light, not biological color or identity.",
+            "No reliable neutral or color profile calibration has been established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:skin-color:chroma",
+          "axis": "color",
+          "visible_result": "Exposed skin has subdued chroma rather than saturated orange or pink.",
+          "result_direction": "Exposed skin has subdued chroma rather than saturated orange or pink.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-chroma",
+          "source_evidence": [
+            "Exposed skin has subdued chroma rather than saturated orange or pink."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "This is displayed surface under captured light, not biological color or identity.",
+            "No reliable neutral or color profile calibration has been established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:skin-color:hue",
+          "axis": "color",
+          "visible_result": "Exposed skin midtones are warm beige.",
+          "result_direction": "Exposed skin midtones are warm beige.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-hue",
+          "source_evidence": [
+            "Exposed skin midtones are warm beige."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "This is displayed surface under captured light, not biological color or identity.",
+            "No reliable neutral or color profile calibration has been established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:skin-color:lips",
+          "axis": "color",
+          "visible_result": "Lips have a subdued rose color.",
+          "result_direction": "Lips have a subdued rose color.",
+          "subject_or_region_ids": [
+            "lips"
+          ],
+          "relation_kind": "displayed-hue",
+          "source_evidence": [
+            "Lips have a subdued rose color."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "This is displayed surface under captured light, not biological color or identity.",
+            "No reliable neutral or color profile calibration has been established."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:background-palette",
+      "owner_key": "background-palette",
+      "scale": "regional",
+      "axis": "color",
+      "observation": "The illustration has muted dusty pink-mauve hair and pale low-chroma gray clothing around the dark foreground.",
+      "source_evidence": [
+        "The illustration has muted dusty pink-mauve hair and pale low-chroma gray clothing around the dark foreground."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Print or display illumination and capture processing may shift the observed palette."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:background-palette:pink-hue",
+          "axis": "color",
+          "visible_result": "Illustrated hair is dusty pink-mauve.",
+          "result_direction": "Illustrated hair is dusty pink-mauve.",
+          "subject_or_region_ids": [
+            "illustrated-hair"
+          ],
+          "relation_kind": "displayed-hue",
+          "source_evidence": [
+            "Illustrated hair is dusty pink-mauve."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Print or display illumination and capture processing may shift the observed palette."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:background-palette:pink-chroma",
+          "axis": "color",
+          "visible_result": "The illustrated pink hair remains muted in chroma.",
+          "result_direction": "The illustrated pink hair remains muted in chroma.",
+          "subject_or_region_ids": [
+            "illustrated-hair"
+          ],
+          "relation_kind": "displayed-chroma",
+          "source_evidence": [
+            "The illustrated pink hair remains muted in chroma."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Print or display illumination and capture processing may shift the observed palette."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:background-palette:gray",
+          "axis": "color",
+          "visible_result": "Illustrated clothing is pale gray with little chroma.",
+          "result_direction": "Illustrated clothing is pale gray with little chroma.",
+          "subject_or_region_ids": [
+            "illustrated-clothing"
+          ],
+          "relation_kind": "displayed-value-and-chroma",
+          "source_evidence": [
+            "Illustrated clothing is pale gray with little chroma."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Print or display illumination and capture processing may shift the observed palette."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:facial-and-shoulder-light",
+      "owner_key": "facial-and-shoulder-light",
+      "scale": "regional",
+      "axis": "light-to-form",
+      "observation": "Nose and cheek planes and the bare shoulder receive illumination, while the eye area and underside of jaw into neck are shaded. The shoulder forms a broad bright plane; neck transitions retain visible local modeling.",
+      "source_evidence": [
+        "Nose and cheek planes and the bare shoulder receive illumination, while the eye area and underside of jaw into neck are shaded. The shoulder forms a broad bright plane; neck transitions retain visible local modeling."
+      ],
+      "confidence": "high",
+      "causal_origin": "lighting-shadow",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Several physical rigs could yield the same image-space pattern.",
+        "Raised chin and low camera jointly affect visible illuminated and shaded planes."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:facial-and-shoulder-light:face-neck",
+          "axis": "light-to-form",
+          "visible_result": "The nose and cheek planes are more illuminated than the jaw underside and neck.",
+          "result_direction": "The nose and cheek planes are more illuminated than the jaw underside and neck.",
+          "subject_or_region_ids": [
+            "face-plane",
+            "neck-shadow"
+          ],
+          "relation_kind": "local-form-contrast",
+          "source_evidence": [
+            "The nose and cheek planes are more illuminated than the jaw underside and neck."
+          ],
+          "confidence": "high",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Several physical rigs could yield the same image-space pattern.",
+            "Raised chin and low camera jointly affect visible illuminated and shaded planes."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:facial-and-shoulder-light:shoulder",
+          "axis": "light-to-form",
+          "visible_result": "The exposed shoulder is one broad illuminated plane.",
+          "result_direction": "The exposed shoulder is one broad illuminated plane.",
+          "subject_or_region_ids": [
+            "shoulder"
+          ],
+          "relation_kind": "bright-plane-coverage",
+          "source_evidence": [
+            "The exposed shoulder is one broad illuminated plane."
+          ],
+          "confidence": "high",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Several physical rigs could yield the same image-space pattern.",
+            "Raised chin and low camera jointly affect visible illuminated and shaded planes."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:facial-and-shoulder-light:brow",
+          "axis": "light-to-form",
+          "visible_result": "Bangs shade the eye area without obscuring the eyes.",
+          "result_direction": "Bangs shade the eye area without obscuring the eyes.",
+          "subject_or_region_ids": [
+            "head"
+          ],
+          "relation_kind": "shadow-topology",
+          "source_evidence": [
+            "Bangs shade the eye area without obscuring the eyes."
+          ],
+          "confidence": "high",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Several physical rigs could yield the same image-space pattern.",
+            "Raised chin and low camera jointly affect visible illuminated and shaded planes."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:material-light-response",
+      "owner_key": "material-light-response",
+      "scale": "regional",
+      "axis": "light-to-form",
+      "observation": "Hair crown catches narrow sheen streaks; the top shows a broad, shallow gradient over the curved upper chest and only subtle lower folds.",
+      "source_evidence": [
+        "Hair crown catches narrow sheen streaks; the top shows a broad, shallow gradient over the curved upper chest and only subtle lower folds."
+      ],
+      "confidence": "high",
+      "causal_origin": "material-interaction",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "No specific fabric composition, gloss coating, camera or lamp is established."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:material-light-response:hair-sheen",
+          "axis": "light-to-form",
+          "visible_result": "Narrow sheen streaks separate strands at the hair crown while side lengths remain dark masses.",
+          "result_direction": "Narrow sheen streaks separate strands at the hair crown while side lengths remain dark masses.",
+          "subject_or_region_ids": [
+            "hair"
+          ],
+          "relation_kind": "material-response",
+          "source_evidence": [
+            "Narrow sheen streaks separate strands at the hair crown while side lengths remain dark masses."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "No specific fabric composition, gloss coating, camera or lamp is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:material-light-response:shirt-gradient",
+          "axis": "light-to-form",
+          "visible_result": "The upper chest of the shirt carries a broad shallow light-to-dark gradient following the fabric curve.",
+          "result_direction": "The upper chest of the shirt carries a broad shallow light-to-dark gradient following the fabric curve.",
+          "subject_or_region_ids": [
+            "garment"
+          ],
+          "relation_kind": "gradient-extent",
+          "source_evidence": [
+            "The upper chest of the shirt carries a broad shallow light-to-dark gradient following the fabric curve."
+          ],
+          "confidence": "high",
+          "causal_origin": "material-interaction",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "No specific fabric composition, gloss coating, camera or lamp is established."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:displayed-tone",
+      "owner_key": "displayed-tone",
+      "scale": "regional",
+      "axis": "color",
+      "observation": "The lower shirt has a deep partly compressed shadow floor; face and shoulder highlights remain visibly modeled rather than flat clipped white. Fine surface microcontrast is subdued by modest image softness.",
+      "source_evidence": [
+        "The lower shirt has a deep partly compressed shadow floor; face and shoulder highlights remain visibly modeled rather than flat clipped white. Fine surface microcontrast is subdued by modest image softness."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Exposure, processing and illumination jointly contribute.",
+        "Exact tone curve and clipping statistics have not been measured."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:displayed-tone:shadow-floor",
+          "axis": "color",
+          "visible_result": "The lower shirt stays deep in shadow with only faint fold detail.",
+          "result_direction": "The lower shirt stays deep in shadow with only faint fold detail.",
+          "subject_or_region_ids": [
+            "lower-shirt"
+          ],
+          "relation_kind": "shadow-floor",
+          "source_evidence": [
+            "The lower shirt stays deep in shadow with only faint fold detail."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Exposure, processing and illumination jointly contribute.",
+            "Exact tone curve and clipping statistics have not been measured."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:displayed-tone:rolloff",
+          "axis": "color",
+          "visible_result": "Face and shoulder highlights retain tonal modeling rather than clipping to flat white.",
+          "result_direction": "Face and shoulder highlights retain tonal modeling rather than clipping to flat white.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "highlight-rolloff",
+          "source_evidence": [
+            "Face and shoulder highlights retain tonal modeling rather than clipping to flat white."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Exposure, processing and illumination jointly contribute.",
+            "Exact tone curve and clipping statistics have not been measured."
+          ]
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "requirement": "Use result-space-only lighting actuation; source position, size, count and fill remain uncertain physical hypotheses."
+    },
+    {
+      "requirement": "Keep Color/Tone value/chroma/hue and shadow-floor/highlight response separately owned from Light/Form coverage, contrast, gradient and sheen."
+    },
+    {
+      "requirement": "Create a face-plane versus neck-shadow pair, a shoulder plane, and a lower-shirt tone scope; broad lighting prose cannot erase these local relationships."
+    },
+    {
+      "requirement": "No global white-balance correction is justified by the illustrated gray clothing; preserve regional color relationships."
+    }
+  ],
+  "omission_checks": [
+    {
+      "tested_change": "Keep all shapes but uniformly brighten the face, neck, hair and lower shirt.",
+      "verdict": "material-drift",
+      "source_evidence": [
+        "Eye/jaw/neck shadow and nearly black lower shirt are visible."
+      ]
+    },
+    {
+      "tested_change": "Keep global darkness but remove the broad illuminated shoulder or hair crown sheen.",
+      "verdict": "material-drift",
+      "source_evidence": [
+        "The broad bare shoulder is a distinct light plane and crown streaks articulate hair."
+      ]
+    },
+    {
+      "tested_change": "Change the physical rig while retaining every visible regional result.",
+      "verdict": "preserved",
+      "source_evidence": [
+        "Single-image evidence establishes the spatial result rather than unique lamp parameters."
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "target": "integrator",
+      "requirement": "All surface-color statements are source-visible displayed targets. Record exact prompt clauses and separate final pixel observations; no numeric tolerance policy or PASS is justified."
+    }
+  ],
+  "conflicts": []
+}

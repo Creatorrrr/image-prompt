@@ -1,0 +1,713 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.color-light-material",
+  "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+  "source_artifact": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/source.jpg",
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "frame": "399x623"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "reason": "Actual fresh appearance-lane spawn was rejected: agent thread limit reached. Integrator context already contains earlier lane reports."
+  },
+  "status": "complete",
+  "intent_mode": "faithful",
+  "analysis_profile": "audited",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "core.background-color",
+      "version": 7
+    },
+    {
+      "id": "detail.color-tone-fidelity",
+      "version": 12
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.color-light-material:garments",
+      "owner_key": "detail.color-tone-fidelity",
+      "scale": "regional",
+      "axis": "color",
+      "priority": "P1",
+      "observation": "The garment palette distinguishes a muted light blue inner top, a light warm neutral cardigan and much darker low-chroma shorts.",
+      "source_evidence": [
+        "Central top has an unmistakable blue hue at subdued saturation.",
+        "Cardigan is lighter and warmer/less chromatic than the top.",
+        "Shorts are dark gray with a slight brown/olive cast in this capture."
+      ],
+      "confidence": "medium",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:garments:top-hue",
+          "axis": "color",
+          "visible_result": "The inner top is blue.",
+          "result_direction": "Keep the blue hue family.",
+          "subject_or_region_ids": [
+            "top"
+          ],
+          "relation_kind": "surface-hue",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:top-value",
+          "axis": "color",
+          "visible_result": "The inner top is mid-light in displayed value.",
+          "result_direction": "Keep its body panel lighter than shorts and darker than brightest cardigan planes.",
+          "subject_or_region_ids": [
+            "top"
+          ],
+          "relation_kind": "surface-value",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:top-chroma",
+          "axis": "color",
+          "visible_result": "The blue top is muted in saturation.",
+          "result_direction": "Avoid a vivid cyan or electric-blue top.",
+          "subject_or_region_ids": [
+            "top"
+          ],
+          "relation_kind": "surface-chroma",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:cardigan-hue",
+          "axis": "color",
+          "visible_result": "The cardigan is a warm gray-beige neutral.",
+          "result_direction": "Keep its warm neutral hue family.",
+          "subject_or_region_ids": [
+            "cardigan"
+          ],
+          "relation_kind": "surface-hue",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:cardigan-value",
+          "axis": "color",
+          "visible_result": "The cardigan is light in displayed value.",
+          "result_direction": "Preserve the large light outer-garment mass.",
+          "subject_or_region_ids": [
+            "cardigan"
+          ],
+          "relation_kind": "surface-value",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:cardigan-chroma",
+          "axis": "color",
+          "visible_result": "The cardigan has very low color saturation.",
+          "result_direction": "Keep it close to neutral.",
+          "subject_or_region_ids": [
+            "cardigan"
+          ],
+          "relation_kind": "surface-chroma",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:shorts-value",
+          "axis": "color",
+          "visible_result": "The shorts remain dark gray, with readable folds rather than a featureless void.",
+          "result_direction": "Keep the shorts dark.",
+          "subject_or_region_ids": [
+            "shorts"
+          ],
+          "relation_kind": "surface-value",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:garments:shorts-chroma-hue",
+          "axis": "color",
+          "visible_result": "The shorts have a near-neutral gray hue with a subdued warm cast.",
+          "result_direction": "Preserve near-neutral gray rather than a strong colored garment.",
+          "subject_or_region_ids": [
+            "shorts"
+          ],
+          "relation_kind": "surface-hue-chroma",
+          "source_evidence": [
+            "Central top has an unmistakable blue hue at subdued saturation.",
+            "Cardigan is lighter and warmer/less chromatic than the top.",
+            "Shorts are dark gray with a slight brown/olive cast in this capture."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Displayed colors mix surface, illumination, reflection, exposure and JPEG processing; no intrinsic reflectance measurement is established."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:skin-color",
+      "owner_key": "detail.color-tone-fidelity",
+      "scale": "regional",
+      "axis": "color",
+      "priority": "P2",
+      "observation": "The exposed skin is subdued beige-pink at middle-to-light displayed value, with low saturation.",
+      "source_evidence": [
+        "Shoulder and arm planes carry muted beige-pink midtones.",
+        "Shaded chest and thighs are lower in value than upper shoulder planes."
+      ],
+      "confidence": "medium",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "The source lacks a trustworthy neutral anchor and embedded color profile.",
+        "Skin is a displayed surface only; lighting and capture affect every observed axis."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:skin-color:value",
+          "axis": "color",
+          "visible_result": "Exposed skin midtones remain middle-to-light in displayed value.",
+          "result_direction": "Keep natural midtone skin planes without bright porcelain whitening or deep artificial tanning.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-surface-value",
+          "source_evidence": [
+            "Shoulder and arm planes carry muted beige-pink midtones.",
+            "Shaded chest and thighs are lower in value than upper shoulder planes."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "The source lacks a trustworthy neutral anchor and embedded color profile.",
+            "Skin is a displayed surface only; lighting and capture affect every observed axis."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:skin-color:hue",
+          "axis": "color",
+          "visible_result": "Exposed skin midtones have a beige-pink hue under the captured conditions.",
+          "result_direction": "Preserve the displayed beige-pink direction without identity or biological claims.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-surface-hue",
+          "source_evidence": [
+            "Shoulder and arm planes carry muted beige-pink midtones.",
+            "Shaded chest and thighs are lower in value than upper shoulder planes."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "The source lacks a trustworthy neutral anchor and embedded color profile.",
+            "Skin is a displayed surface only; lighting and capture affect every observed axis."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:skin-color:chroma",
+          "axis": "color",
+          "visible_result": "Exposed skin remains low in saturation.",
+          "result_direction": "Avoid strongly orange or pink skin saturation.",
+          "subject_or_region_ids": [
+            "skin"
+          ],
+          "relation_kind": "displayed-surface-chroma",
+          "source_evidence": [
+            "Shoulder and arm planes carry muted beige-pink midtones.",
+            "Shaded chest and thighs are lower in value than upper shoulder planes."
+          ],
+          "confidence": "medium",
+          "causal_origin": "intrinsic",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "The source lacks a trustworthy neutral anchor and embedded color profile.",
+            "Skin is a displayed surface only; lighting and capture affect every observed axis."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:scene-palette",
+      "owner_key": "detail.color-tone-fidelity",
+      "scale": "regional",
+      "axis": "color",
+      "priority": "P2",
+      "observation": "The left wall is dim gray-brown, the right background is near-black, and a small muted yellow note and pale counter provide secondary accents.",
+      "source_evidence": [
+        "Left wall retains gray-brown texture.",
+        "Right background is much darker with faint vertical seams.",
+        "Yellow note is small and isolated high at left.",
+        "Bottom counter and containers are pale warm gray."
+      ],
+      "confidence": "medium",
+      "causal_origin": "lighting-shadow",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Surface value, exposure and illumination are inseparable in shadowed regions."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:scene-palette:left-wall",
+          "axis": "color",
+          "visible_result": "The left wall has a dim gray-brown tone.",
+          "result_direction": "Preserve the subdued warm-gray wall.",
+          "subject_or_region_ids": [
+            "left-wall"
+          ],
+          "relation_kind": "displayed-region-color",
+          "source_evidence": [
+            "Left wall retains gray-brown texture.",
+            "Right background is much darker with faint vertical seams.",
+            "Yellow note is small and isolated high at left.",
+            "Bottom counter and containers are pale warm gray."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Surface value, exposure and illumination are inseparable in shadowed regions."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:scene-palette:right-dark",
+          "axis": "color",
+          "visible_result": "The right background remains near-black and darker than the left wall.",
+          "result_direction": "Keep its dark floor and sparse detail.",
+          "subject_or_region_ids": [
+            "right-bg",
+            "left-wall"
+          ],
+          "relation_kind": "regional-value-hierarchy",
+          "source_evidence": [
+            "Left wall retains gray-brown texture.",
+            "Right background is much darker with faint vertical seams.",
+            "Yellow note is small and isolated high at left.",
+            "Bottom counter and containers are pale warm gray."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Surface value, exposure and illumination are inseparable in shadowed regions."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:scene-palette:note",
+          "axis": "color",
+          "visible_result": "The small note is muted yellow.",
+          "result_direction": "Retain the small warm yellow accent.",
+          "subject_or_region_ids": [
+            "note"
+          ],
+          "relation_kind": "surface-color",
+          "source_evidence": [
+            "Left wall retains gray-brown texture.",
+            "Right background is much darker with faint vertical seams.",
+            "Yellow note is small and isolated high at left.",
+            "Bottom counter and containers are pale warm gray."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Surface value, exposure and illumination are inseparable in shadowed regions."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:scene-palette:counter",
+          "axis": "color",
+          "visible_result": "The counter and cropped bottles remain pale warm gray.",
+          "result_direction": "Preserve the light foreground tone without bright white cleanup.",
+          "subject_or_region_ids": [
+            "counter",
+            "clutter"
+          ],
+          "relation_kind": "displayed-region-color",
+          "source_evidence": [
+            "Left wall retains gray-brown texture.",
+            "Right background is much darker with faint vertical seams.",
+            "Yellow note is small and isolated high at left.",
+            "Bottom counter and containers are pale warm gray."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Surface value, exposure and illumination are inseparable in shadowed regions."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:scene-palette:hair-phone",
+          "axis": "color",
+          "visible_result": "Hair and phone remain almost black with only restrained reflected highlights.",
+          "result_direction": "Preserve their deep near-neutral masses.",
+          "subject_or_region_ids": [
+            "hair",
+            "phone"
+          ],
+          "relation_kind": "displayed-region-value",
+          "source_evidence": [
+            "Left wall retains gray-brown texture.",
+            "Right background is much darker with faint vertical seams.",
+            "Yellow note is small and isolated high at left.",
+            "Bottom counter and containers are pale warm gray."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Surface value, exposure and illumination are inseparable in shadowed regions."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:tone-response",
+      "owner_key": "detail.color-tone-fidelity",
+      "scale": "regional",
+      "axis": "color",
+      "priority": "P1",
+      "observation": "The overall displayed image is low in key with deep background shadows, restrained unclipped highlights and subdued microcontrast.",
+      "source_evidence": [
+        "Dark wall, hair and shorts occupy much of the frame.",
+        "Pale clothes and skin are readable but not glaring.",
+        "Fine surfaces and texture transitions are compressed and soft."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The source does not isolate exposure from tone mapping or resizing."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:tone-response:key",
+          "axis": "color",
+          "visible_result": "The whole image remains dim in displayed key.",
+          "result_direction": "Keep the low-key exposure rather than evenly bright rendering.",
+          "subject_or_region_ids": [
+            "global"
+          ],
+          "relation_kind": "displayed-key-level",
+          "source_evidence": [
+            "Dark wall, hair and shorts occupy much of the frame.",
+            "Pale clothes and skin are readable but not glaring.",
+            "Fine surfaces and texture transitions are compressed and soft."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "The source does not isolate exposure from tone mapping or resizing."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:tone-response:microcontrast",
+          "axis": "color",
+          "visible_result": "Fine local contrast is subdued across the image.",
+          "result_direction": "Keep low microcontrast without making major boundaries unreadable.",
+          "subject_or_region_ids": [
+            "global"
+          ],
+          "relation_kind": "microcontrast",
+          "source_evidence": [
+            "Dark wall, hair and shorts occupy much of the frame.",
+            "Pale clothes and skin are readable but not glaring.",
+            "Fine surfaces and texture transitions are compressed and soft."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "The source does not isolate exposure from tone mapping or resizing."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.color-light-material:local-light",
+      "owner_key": "medium.photographic-capture",
+      "scale": "regional",
+      "axis": "light-to-form",
+      "priority": "P2",
+      "observation": "Exposed shoulders and cardigan folds are rounded by soft transitions; the neck beneath the phone/hair and garment recesses remain locally shaded.",
+      "source_evidence": [
+        "Shoulder planes roll gradually into shadow.",
+        "Fold valleys on the large raised sleeve are darker than its broad outward planes.",
+        "Hair and phone overlap the darker neck area."
+      ],
+      "confidence": "medium",
+      "causal_origin": "lighting-shadow",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Physical source direction, source count and exact lamp size cannot be established.",
+        "Capture softness contributes to shadow-edge appearance."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.color-light-material:local-light:soft-form",
+          "axis": "light-to-form",
+          "visible_result": "Soft-edged tonal transitions round the exposed shoulders and broad cardigan folds.",
+          "result_direction": "Keep gentle form modeling without hard flash edges.",
+          "subject_or_region_ids": [
+            "skin",
+            "cardigan"
+          ],
+          "relation_kind": "local-form-contrast",
+          "source_evidence": [
+            "Shoulder planes roll gradually into shadow.",
+            "Fold valleys on the large raised sleeve are darker than its broad outward planes.",
+            "Hair and phone overlap the darker neck area."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Physical source direction, source count and exact lamp size cannot be established.",
+            "Capture softness contributes to shadow-edge appearance."
+          ]
+        },
+        {
+          "id": "lane.color-light-material:local-light:occlusion-shade",
+          "axis": "light-to-form",
+          "visible_result": "Neck below the phone/hair and deep sleeve folds retain localized shade.",
+          "result_direction": "Preserve small occlusion/fold shadow zones without relighting them evenly.",
+          "subject_or_region_ids": [
+            "skin",
+            "hair",
+            "phone",
+            "cardigan"
+          ],
+          "relation_kind": "shadow-topology",
+          "source_evidence": [
+            "Shoulder planes roll gradually into shadow.",
+            "Fold valleys on the large raised sleeve are darker than its broad outward planes.",
+            "Hair and phone overlap the darker neck area."
+          ],
+          "confidence": "medium",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "Physical source direction, source count and exact lamp size cannot be established.",
+            "Capture softness contributes to shadow-edge appearance."
+          ]
+        }
+      ]
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "intrinsic-color",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:garments",
+        "lane.color-light-material:skin-color",
+        "lane.color-light-material:scene-palette"
+      ]
+    },
+    {
+      "topic": "displayed-tone-scope",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:tone-response",
+        "lane.color-light-material:skin-color",
+        "lane.color-light-material:scene-palette"
+      ]
+    },
+    {
+      "topic": "illumination-and-shadow",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:local-light",
+        "lane.color-light-material:tone-response"
+      ]
+    },
+    {
+      "topic": "material-response",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.color-light-material:local-light",
+        "lane.color-light-material:garments"
+      ]
+    }
+  ],
+  "control_requirements": [
+    "Use source-visible display scope, no exact RGB or scene reflectance claims.",
+    "Keep garment hue/value/chroma and global key/microcontrast separately owned.",
+    "Do not force a uniform global warm grade from uncertain neutral evidence.",
+    "Keep soft local form transitions separate from the global exposure target."
+  ],
+  "omission_checks": [
+    "Vivid blue or bright white clothing would alter the subdued garment palette.",
+    "Brightened shadows and crisp fine contrast would remove the dim capture signature.",
+    "Warm skin wording alone cannot authorize a global orange cast."
+  ],
+  "handoffs": [
+    {
+      "target": "integration",
+      "contract": "Color/Tone plus supporting Light/Form",
+      "requirement": "Split axes into owned controls; dominant garment axes primary, skin and background colors supporting. Preserve dark-right/left-wall hierarchy; no calibrated tolerance or color PASS is claimed."
+    },
+    {
+      "target": "human-appearance/v3",
+      "region": "skin",
+      "priority": "P2",
+      "scope": "source-visible",
+      "coverage": "exposed",
+      "descriptor": "omit",
+      "confounds": "captured surface only"
+    }
+  ],
+  "conflicts": []
+}

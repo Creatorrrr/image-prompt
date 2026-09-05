@@ -1,0 +1,738 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.global-composition",
+  "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+  "source_artifact": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/source.jpg",
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "frame": "399x623"
+  },
+  "execution": {
+    "mode": "delegated",
+    "independent_context": true
+  },
+  "status": "complete",
+  "intent_mode": "faithful",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.frame-coordinates",
+      "version": 15
+    },
+    {
+      "id": "concept.primary-relationship",
+      "version": 12
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "core.background-color",
+      "version": 7
+    },
+    {
+      "id": "core.pre-emit-gate",
+      "version": 30
+    },
+    {
+      "id": "core.output-contract",
+      "version": 25
+    }
+  ],
+  "primary_viewer_read": "A dim, softly resolved bathroom mirror selfie: one adult woman fills the narrow upright frame, her face concealed by a black upright phone and its holding hand, while long dark braids and loosely draped light clothing define the upper-body silhouette above dark shorts and a foreground sink.",
+  "dominant_fidelity_axis": "appearance-led",
+  "direct_appeal": {
+    "reading": "The distinctive read comes from the face-obscuring phone, relaxed clothing silhouette, large figure, and subdued ordinary bathroom capture.",
+    "disposition": "mechanisms-only",
+    "reason": "No evaluative attractiveness or personality description is needed to preserve the visible proposition."
+  },
+  "findings": [
+    {
+      "id": "lane.global-composition:proposition",
+      "owner_key": "global.primary-proposition",
+      "scale": "global",
+      "axis": "topology",
+      "priority": "P0",
+      "observation": "The central subject is shown through a mirror-selfie presentation, with a portrait-oriented black phone and fingers masking the face rather than presenting a visible facial portrait.",
+      "source_evidence": [
+        "The back of an upright dark phone occupies the middle of the head region.",
+        "The holding hand spreads across the lower phone and the remaining lower-face area.",
+        "Dark hair and the head outline remain visible around this occlusion."
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Mirror presentation is supported by the phone back and scene arrangement; the mirror boundary itself is outside the crop.",
+        "Facial anatomy and expression behind the phone cannot be recovered."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:proposition:phone-face-occlusion",
+          "axis": "topology",
+          "visible_result": "The upright black phone and its holding fingers conceal the central face, leaving the hair and surrounding head outline readable.",
+          "result_direction": "Maintain face-obscuring overlap; do not shift the phone beside the face or expose a completed face.",
+          "subject_or_region_ids": [
+            "subject.head",
+            "subject.phone",
+            "subject.holding-hand"
+          ],
+          "relation_kind": "foreground-occlusion",
+          "source_evidence": [
+            "Phone runs from the brow area to the lower face; fingers overlap its lower half."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "The exact concealed facial boundaries are unknown."
+          ]
+        },
+        {
+          "id": "lane.global-composition:proposition:single-reflected-figure",
+          "axis": "hierarchy",
+          "visible_result": "One dominant adult figure supplies the selfie silhouette; there is no separately visible camera operator or second figure.",
+          "result_direction": "Keep a single coherent mirror-selfie figure.",
+          "subject_or_region_ids": [
+            "subject",
+            "scene"
+          ],
+          "relation_kind": "subject-count-and-representation",
+          "source_evidence": [
+            "A single continuous head, torso, arm, shorts, and upper-leg arrangement fills the scene."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "Keeping the person and clothing while moving the phone away from the face would replace the strongest selfie-specific configuration with a visible-face portrait.",
+        "drift_with_other_axes_held": "Retaining the phone's vertical orientation while reducing its overlap would still materially change the image; orientation alone is insufficient."
+      }
+    },
+    {
+      "id": "lane.global-composition:frame",
+      "owner_key": "global.frame-and-crop",
+      "scale": "global",
+      "axis": "hierarchy",
+      "priority": "P1",
+      "observation": "The 399 by 623 image is a narrow portrait frame with virtually no headroom. It contains the figure from the slightly clipped crown through the shorts and partial upper thighs, ending with a sink band.",
+      "source_evidence": [
+        "The crown meets and is slightly cut by the upper frame.",
+        "Both shorts legs and portions of the upper thighs remain visible.",
+        "A pale counter and basin cut across the lower frame.",
+        "The hips approach the right edge while the head remains nearer the horizontal center."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The visible crown clipping is slight and softened by dark hair against a dark upper region.",
+        "No claim about the lens or physical camera distance is supported."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:frame:aspect-ratio",
+          "axis": "hierarchy",
+          "visible_result": "The image remains a narrow upright rectangle matching the source ratio of 399:623.",
+          "result_direction": "Preserve the approximately 0.64 width-to-height ratio.",
+          "subject_or_region_ids": [
+            "frame"
+          ],
+          "relation_kind": "frame-proportion",
+          "source_evidence": [
+            "Supplied source frame is 399x623."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Source dimensions do not establish a supported generator output size."
+          ]
+        },
+        {
+          "id": "lane.global-composition:frame:upper-boundary",
+          "axis": "hierarchy",
+          "visible_result": "The hair crown touches the upper boundary with a small amount clipped and essentially no empty headroom.",
+          "result_direction": "Keep the tight crown crop.",
+          "subject_or_region_ids": [
+            "subject.hair",
+            "frame.top"
+          ],
+          "relation_kind": "edge-contact-and-crop",
+          "source_evidence": [
+            "Dark hair reaches the top image edge."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair softness makes the exact clipped contour indistinct."
+          ]
+        },
+        {
+          "id": "lane.global-composition:frame:lower-body-extent",
+          "axis": "hierarchy",
+          "visible_result": "The shorts remain wholly readable with partial upper thighs below; the lower legs stay outside the frame and behind the foreground counter boundary.",
+          "result_direction": "Maintain the head-to-upper-thigh framing without tightening to the torso or widening to a full body.",
+          "subject_or_region_ids": [
+            "subject.shorts",
+            "subject.upper-legs",
+            "foreground.counter",
+            "frame.bottom"
+          ],
+          "relation_kind": "visible-extent",
+          "source_evidence": [
+            "Dark shorts and two upper-leg portions end at the counter's upper contour."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "The counter hides the continuation of the body."
+          ]
+        },
+        {
+          "id": "lane.global-composition:frame:horizontal-distribution",
+          "axis": "hierarchy",
+          "visible_result": "The head lies near the frame center while the torso and hips occupy more of the right half, retaining a broader strip of visible wall on the left.",
+          "result_direction": "Preserve the lower figure's rightward bias and the larger left background opening.",
+          "subject_or_region_ids": [
+            "subject.head",
+            "subject.torso",
+            "subject.hips",
+            "background.left-wall",
+            "frame"
+          ],
+          "relation_kind": "frame-placement",
+          "source_evidence": [
+            "The left shoulder is well inside the frame; the right hip comes close to the right edge.",
+            "The yellow wall note occupies unobstructed space left of the head."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Pose and garment drape both influence the visible centerline; this does not establish intrinsic body asymmetry."
+          ]
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "Adding conventional headroom or framing only the upper torso would remove the source's tight, long vertical figure-and-sink arrangement.",
+        "drift_with_other_axes_held": "Preserving the portrait ratio while moving the whole figure to a symmetric center would narrow the left wall opening and change the arrangement independently of scale."
+      }
+    },
+    {
+      "id": "lane.global-composition:figure-hierarchy",
+      "owner_key": "global.subject-region-hierarchy",
+      "scale": "global",
+      "axis": "hierarchy",
+      "priority": "P1",
+      "observation": "The person is the largest coherent foreground mass. The readable silhouette is divided into a dark head and braids, a light blue central torso, a broad pale cardigan mass chiefly on the right and extending down the left arm, and dark shorts below.",
+      "source_evidence": [
+        "The light blue fitted top remains visible between the two dark hanging braids and pale cardigan edges.",
+        "Both shoulders are exposed above the dropped cardigan.",
+        "The right cardigan sleeve makes a broad rounded pale shape; the left sleeve descends toward the lower-left sink area.",
+        "Dark shorts anchor the lower figure."
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The apparent body contour is affected by pose, fitted fabric, cardigan drape, and dim lighting.",
+        "Local garment construction belongs to the appearance or clothing analysis."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:figure-hierarchy:subject-frame-share",
+          "axis": "hierarchy",
+          "visible_result": "The figure fills most of the image height and much of its central and right width, while both the left wall opening and bottom sink remain visible.",
+          "result_direction": "Keep the large figure and its surrounding context in this balance.",
+          "subject_or_region_ids": [
+            "subject",
+            "background.left-wall",
+            "foreground.sink"
+          ],
+          "relation_kind": "area-and-attention-hierarchy",
+          "source_evidence": [
+            "The person runs from the top edge to the counter, with the bathroom visible mainly beside and below."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:figure-hierarchy:open-garment-silhouette",
+          "axis": "topology",
+          "visible_result": "The cardigan hangs off both shoulders and borders an exposed central fitted top; its two hanging sides remain visibly asymmetric in bulk and height.",
+          "result_direction": "Preserve the open, lowered garment arrangement rather than closing it over the torso or raising it onto the shoulders.",
+          "subject_or_region_ids": [
+            "subject.cardigan",
+            "subject.top",
+            "subject.shoulders",
+            "subject.arms"
+          ],
+          "relation_kind": "coverage-and-adjacency",
+          "source_evidence": [
+            "Bare shoulders sit above the pale cardigan's upper edges.",
+            "A broad sleeve surrounds the raised forearm on the right; the other drapes downward on the left."
+          ],
+          "confidence": "high",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Fabric volume is pose dependent rather than evidence of intrinsic body size."
+          ]
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "Keeping the same clothing categories but wearing the cardigan conventionally would change the major silhouette and exposed central region.",
+        "drift_with_other_axes_held": "Keeping cardigan coverage while making both sides equally narrow would remove the visible mass imbalance caused by the raised phone arm."
+      }
+    },
+    {
+      "id": "lane.global-composition:background-zones",
+      "owner_key": "global.background-region-hierarchy",
+      "scale": "global",
+      "axis": "hierarchy",
+      "priority": "P1",
+      "observation": "The background separates into a dim gray-brown left wall and a much darker vertical region on the right. A small yellow paper on the upper-left wall provides the only conspicuous isolated warm-color accent.",
+      "source_evidence": [
+        "The left side retains a visible wall plane behind a dark rail and hanging gray fabric.",
+        "The region behind and right of the head and shoulder is nearly black.",
+        "A small pale yellow rectangular note sits high on the left wall, with faint writing."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Darkness on the right could combine surface color, illumination, and exposure; a specific physical material is not established.",
+        "The note's exact wording is not reliably needed for this composition lane."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:background-zones:left-opening",
+          "axis": "hierarchy",
+          "visible_result": "A substantial but subordinate dim wall opening remains on the left of the figure, with low-detail dark rail and gray hanging-fabric shapes below the note.",
+          "result_direction": "Retain the left-side background opening and its low-information bathroom massing.",
+          "subject_or_region_ids": [
+            "background.left-wall",
+            "background.rail-and-fabric",
+            "subject"
+          ],
+          "relation_kind": "negative-space-and-background-priority",
+          "source_evidence": [
+            "The wall is exposed continuously beside the head and upper arm; the rail and fabric are partly hidden by the figure."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": [
+            "The lower-left fixtures are shadowed and partially occluded."
+          ]
+        },
+        {
+          "id": "lane.global-composition:background-zones:right-dark-mass",
+          "axis": "color",
+          "visible_result": "The right background is substantially darker than the left wall and remains a low-detail vertical mass behind the head, shoulder, and arm.",
+          "result_direction": "Preserve this right-versus-left value difference without opening bright new room detail on the right.",
+          "subject_or_region_ids": [
+            "background.right-dark-region",
+            "background.left-wall"
+          ],
+          "relation_kind": "regional-value-hierarchy",
+          "source_evidence": [
+            "The right edge contains a nearly black plane with only faint vertical boundaries."
+          ],
+          "confidence": "high",
+          "causal_origin": "lighting-shadow",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "strong",
+          "confounders": [
+            "Intrinsic surface value and exposure cannot be separated from illumination."
+          ]
+        },
+        {
+          "id": "lane.global-composition:background-zones:small-note",
+          "axis": "hierarchy",
+          "visible_result": "The yellow paper remains a small, separate rectangle in the upper-left wall opening, with faint handwriting subordinate to the person.",
+          "result_direction": "Keep its placement, small scale, and low text legibility.",
+          "subject_or_region_ids": [
+            "background.note",
+            "background.left-wall",
+            "subject.head"
+          ],
+          "relation_kind": "secondary-accent-placement-and-legibility",
+          "source_evidence": [
+            "A pale yellow rectangle lies left of the head and above the rail, with indistinct dark marks."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "subtle",
+          "confounders": [
+            "Exact wording is not established here."
+          ]
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "An evenly bright or uniformly blank bathroom background would remove the left opening and right dark mass that organize the figure.",
+        "drift_with_other_axes_held": "Keeping the dark background split while enlarging the yellow note would give a small supporting accent excessive attention."
+      }
+    },
+    {
+      "id": "lane.global-composition:foreground",
+      "owner_key": "global.foreground-band",
+      "scale": "regional",
+      "axis": "topology",
+      "priority": "P1",
+      "observation": "A pale bathroom counter and basin form a cropped foreground band across the bottom; a few pale containers and dark faucet-like fragments cluster at the lower-left edge.",
+      "source_evidence": [
+        "The counter's upper edge passes in front of the upper thighs.",
+        "Part of a curved basin is visible along the bottom.",
+        "Pale cylindrical containers are clipped along the lower-left frame."
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "The exact identity and full geometry of the cropped containers and dark hardware are not visible.",
+        "The lowered hand is near the sink area, but its exact support contact is obscured."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:foreground:counter-band",
+          "axis": "topology",
+          "visible_result": "The pale counter and partial basin cross the lower foreground in front of the legs and remain cut by the bottom and side edges.",
+          "result_direction": "Retain the shallow lower band and its front-to-back ordering without expanding the sink into the main subject.",
+          "subject_or_region_ids": [
+            "foreground.counter",
+            "foreground.sink",
+            "subject.upper-legs",
+            "frame.bottom"
+          ],
+          "relation_kind": "foreground-occlusion-and-edge-contact",
+          "source_evidence": [
+            "The light horizontal counter interrupts the lower figure; the basin continues beyond the image."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.global-composition:foreground:partial-clutter",
+          "axis": "information",
+          "visible_result": "Small pale container shapes and dark hardware remain partially cropped and softly resolved at the lower-left edge.",
+          "result_direction": "Keep only this bounded clutter mass; avoid completing, labeling, or prominently detailing the objects.",
+          "subject_or_region_ids": [
+            "foreground.left-containers",
+            "foreground.dark-hardware",
+            "frame.left",
+            "frame.bottom"
+          ],
+          "relation_kind": "partial-visibility-budget",
+          "source_evidence": [
+            "Several pale curved and cylindrical fragments touch the lower-left boundaries."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "subtle",
+          "confounders": [
+            "Labels and full object forms are not legible."
+          ]
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "Removing the counter would change both the lower crop logic and the bathroom mirror context.",
+        "drift_with_other_axes_held": "Keeping the counter but restoring complete, crisp containers would alter the source's incidental foreground treatment."
+      }
+    },
+    {
+      "id": "lane.global-composition:fidelity",
+      "owner_key": "global.fidelity-ceiling",
+      "scale": "global",
+      "axis": "sharpness",
+      "priority": "P1",
+      "observation": "The source is a dim, softly resolved photograph with visible grainy texture and subdued background information. It does not support a polished, sharply lit editorial treatment.",
+      "source_evidence": [
+        "Hair, skin, cloth, and fixtures have softened fine edges.",
+        "Dark background regions contain sparse detail.",
+        "Fine mottling is visible across the wall and darker surfaces."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "The relative contributions of capture noise, resizing, compression, mirror surface, and focus are uncertain.",
+        "Softness should not be exaggerated into heavy defocus."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.global-composition:fidelity:soft-detail",
+          "axis": "sharpness",
+          "visible_result": "The person and environment retain soft, low-resolution detail while broad garment edges, braids, and phone remain identifiable.",
+          "result_direction": "Cap fine-detail crispness near the observed softly resolved photograph.",
+          "subject_or_region_ids": [
+            "whole-image"
+          ],
+          "relation_kind": "fidelity-ceiling",
+          "source_evidence": [
+            "Fine hair strands and fabric textures are indistinct despite readable large forms."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Focus, resizing, and compression contributions are inseparable."
+          ]
+        },
+        {
+          "id": "lane.global-composition:fidelity:surface-irregularity",
+          "axis": "surface",
+          "visible_result": "Faint grainy and mottled capture texture remains visible across the ordinary scene.",
+          "result_direction": "Retain modest image texture without adding a named film stock or heavy stylistic grain.",
+          "subject_or_region_ids": [
+            "whole-image"
+          ],
+          "relation_kind": "capture-surface-ceiling",
+          "source_evidence": [
+            "The wall and shadow areas are uneven at fine scale."
+          ],
+          "confidence": "medium",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "subtle",
+          "confounders": [
+            "Some mottling may come from reflected surfaces or illumination rather than digital noise."
+          ]
+        }
+      ],
+      "counterfactuals": {
+        "neutralization": "Replacing the softened, dim snapshot finish with smooth high-detail editorial rendering would change the capture character despite preserving objects.",
+        "drift_with_other_axes_held": "Keeping dim exposure while sharpening skin, hair, text, and background would independently exceed the fidelity ceiling."
+      }
+    }
+  ],
+  "spatial_axis_dispositions": [
+    {
+      "axis": "frame-aspect",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Preserve 399:623 portrait proportion."
+    },
+    {
+      "axis": "subject-scale",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Large head-to-upper-thigh figure with a surviving bottom counter band."
+    },
+    {
+      "axis": "horizontal-position",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Head near center, lower torso and hips biased right, larger wall opening left."
+    },
+    {
+      "axis": "vertical-position",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Crown contacts top; upper thighs meet foreground counter below."
+    },
+    {
+      "axis": "phone-orientation",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Portrait-oriented phone in the face region."
+    },
+    {
+      "axis": "face-phone-overlap",
+      "disposition": "analyzed",
+      "materiality": "P0",
+      "control": "Phone and fingers conceal face."
+    },
+    {
+      "axis": "foreground-depth-order",
+      "disposition": "analyzed",
+      "materiality": "P1",
+      "control": "Counter in front of legs; background behind figure."
+    },
+    {
+      "axis": "body-orientation-and-pose",
+      "disposition": "uncertain",
+      "materiality": "P1",
+      "control": "Retain visible asymmetric silhouette; detailed body orientation belongs to the pose lane.",
+      "reason": "Frame position does not independently establish anatomical rotation."
+    },
+    {
+      "axis": "camera-angle-and-focal-length",
+      "disposition": "uncertain",
+      "materiality": "uncertain",
+      "control": "Use visible framing and size relationships.",
+      "reason": "No reliable lens or physical camera-angle measurement is available."
+    },
+    {
+      "axis": "lowered-hand-support-contact",
+      "disposition": "uncertain",
+      "materiality": "P2",
+      "control": "Keep the hand near the lower-left sink region with partial visibility.",
+      "reason": "Sleeve, counter clutter, and crop obscure the exact contact."
+    },
+    {
+      "axis": "minor-fixture-exact-placement",
+      "disposition": "not-material",
+      "materiality": "P3",
+      "control": "Preserve coarse left-background and lower-left-foreground masses only.",
+      "reason": "Small shifts confined to those same low-detail masses would not materially change the proposition; enlarging or clarifying them would."
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "perceptual-proposition",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:figure-hierarchy"
+      ]
+    },
+    {
+      "topic": "frame-and-crop",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:frame",
+        "lane.global-composition:foreground"
+      ]
+    },
+    {
+      "topic": "major-regions",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:figure-hierarchy",
+        "lane.global-composition:background-zones",
+        "lane.global-composition:foreground"
+      ]
+    },
+    {
+      "topic": "fidelity-mode",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.global-composition:fidelity"
+      ]
+    }
+  ],
+  "control_requirements": [
+    "Give the frame ratio, large figure, tight crown crop, face-covering phone, and faithful snapshot ceiling early ownership.",
+    "Keep placement separate from body orientation: centered head and right-biased hips do not establish an intrinsic asymmetry.",
+    "Preserve the cardigan's major open silhouette; let the clothing lane own construction and material details.",
+    "Treat the yellow note, rail, hanging fabric, containers, and hardware as subordinate masses with bounded legibility.",
+    "Let the global hierarchy own the right-versus-left background value difference; avoid duplicating that direction in separate mood, illumination, and surface-color controls.",
+    "Do not create a mirror border, readable hidden face, full lower body, complete basin, or completed foreground containers.",
+    "Keep source ratio metadata separate from any validated generator target size."
+  ],
+  "omission_checks": [
+    "Phone shifted aside: changes the primary face-obscuring configuration.",
+    "Added headroom or a torso-only crop: loses the tall tightly framed silhouette.",
+    "Symmetrically centered lower body: reduces the distinctive left wall opening.",
+    "Cardigan raised onto shoulders or closed: changes central coverage and side masses.",
+    "Bright recovered right background: removes the major dark region.",
+    "Removed sink band: changes foreground ordering and lower crop context.",
+    "Large sharp note or detailed completed toiletries: amplifies supporting information.",
+    "High-detail polish: exceeds the observed capture ceiling."
+  ],
+  "handoffs": [
+    {
+      "target_scope": "human-appearance",
+      "requirement": "Analyze only visible hair, skin, and body presentation at this scale; facial anatomy and expression remain hidden. Preserve the two hanging braids as silhouette contributors.",
+      "related_finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:figure-hierarchy"
+      ]
+    },
+    {
+      "target_scope": "pose-and-contact",
+      "requirement": "Resolve the raised phone arm, lowered opposite arm, and garment drape from visible evidence. Keep the lower hand's exact sink support contact uncertain unless independently visible.",
+      "related_finding_ids": [
+        "lane.global-composition:figure-hierarchy",
+        "lane.global-composition:foreground"
+      ]
+    },
+    {
+      "target_scope": "color-and-light",
+      "requirement": "Own surface hue, displayed skin, and illumination controls without inferring an exact global white balance. Respect the global dark-right/light-left hierarchy and subdued exposure.",
+      "related_finding_ids": [
+        "lane.global-composition:background-zones",
+        "lane.global-composition:fidelity"
+      ]
+    },
+    {
+      "target_scope": "integration",
+      "requirement": "Compile literal visual targets into standalone English. No source references, hidden-face completion, unsupported camera metadata, demographic inference, or evaluative attractiveness anchor is supported by this lane.",
+      "related_finding_ids": [
+        "lane.global-composition:proposition",
+        "lane.global-composition:fidelity"
+      ]
+    }
+  ],
+  "conflicts": []
+}

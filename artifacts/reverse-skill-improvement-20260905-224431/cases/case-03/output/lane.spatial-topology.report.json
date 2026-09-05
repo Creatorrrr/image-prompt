@@ -1,0 +1,633 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.spatial-topology",
+  "route_fingerprint": "59ef681821276f20748e3ba2d63de13731b74b84b8755a5ff96a4e83f99c70b1",
+  "source_artifact": {
+    "sha256": "a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9",
+    "frame": "969x1280"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "context_note": "Coordinator context; prior lane report and draft remain in context. No independence claimed."
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.frame-coordinates",
+      "version": 15
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "concept.mixed-media-illusion",
+      "version": 5
+    },
+    {
+      "id": "subject.human",
+      "version": 22
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "orientation-coverage",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:upward-projection",
+        "lane.spatial-topology:pose-residuals",
+        "lane.spatial-topology:frame-crop"
+      ]
+    },
+    {
+      "topic": "component-relations",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:frame-crop",
+        "lane.spatial-topology:illustration-overlap"
+      ]
+    },
+    {
+      "topic": "contact-and-occlusion",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:illustration-overlap",
+        "lane.spatial-topology:completion-boundary"
+      ]
+    },
+    {
+      "topic": "completion-risk",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.spatial-topology:frame-crop",
+        "lane.spatial-topology:completion-boundary"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.spatial-topology:upward-projection",
+      "owner_key": "upward-projection",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "The low close viewpoint projects a broad near torso beneath the high smaller head; nose and chin undersides and an extended neck are visible.",
+      "source_evidence": [
+        "The low close viewpoint projects a broad near torso beneath the high smaller head; nose and chin undersides and an extended neck are visible."
+      ],
+      "confidence": "high",
+      "causal_origin": "perspective",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [
+        "Intrinsic form, head lift and camera position contribute jointly; exact lens and angles are unknown."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:upward-projection:low-view",
+          "axis": "form",
+          "visible_result": "The camera looks strongly upward from below the face.",
+          "result_direction": "The camera looks strongly upward from below the face.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "viewpoint-elevation",
+          "source_evidence": [
+            "The camera looks strongly upward from below the face."
+          ],
+          "confidence": "high",
+          "causal_origin": "perspective",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Intrinsic form, head lift and camera position contribute jointly; exact lens and angles are unknown."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:upward-projection:scale",
+          "axis": "form",
+          "visible_result": "The nearer clothed torso projects much wider than the more distant head.",
+          "result_direction": "The nearer clothed torso projects much wider than the more distant head.",
+          "subject_or_region_ids": [
+            "torso",
+            "head"
+          ],
+          "relation_kind": "relative-projected-scale",
+          "source_evidence": [
+            "The nearer clothed torso projects much wider than the more distant head."
+          ],
+          "confidence": "high",
+          "causal_origin": "perspective",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Intrinsic form, head lift and camera position contribute jointly; exact lens and angles are unknown."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:pose-residuals",
+      "owner_key": "pose-residuals",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "The chin rises above the neckline, the face turns slightly toward viewer-left, the eyes look downward, and the exposed viewer-right shoulder sits higher in the image than the partly hidden viewer-left shoulder.",
+      "source_evidence": [
+        "The chin rises above the neckline, the face turns slightly toward viewer-left, the eyes look downward, and the exposed viewer-right shoulder sits higher in the image than the partly hidden viewer-left shoulder."
+      ],
+      "confidence": "medium",
+      "causal_origin": "pose-deformation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [
+        "Hair and asymmetric garment obscure the viewer-left shoulder; physical shoulder depth and exact torso rotation cannot be resolved."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:pose-residuals:chin",
+          "axis": "form",
+          "visible_result": "The chin is lifted with the front of the neck extended.",
+          "result_direction": "The chin is lifted with the front of the neck extended.",
+          "subject_or_region_ids": [
+            "head",
+            "torso"
+          ],
+          "relation_kind": "head-to-body-pitch",
+          "source_evidence": [
+            "The chin is lifted with the front of the neck extended."
+          ],
+          "confidence": "medium",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair and asymmetric garment obscure the viewer-left shoulder; physical shoulder depth and exact torso rotation cannot be resolved."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:pose-residuals:head-yaw",
+          "axis": "form",
+          "visible_result": "The nose and face turn slightly toward viewer-left relative to the broad chest plane.",
+          "result_direction": "The nose and face turn slightly toward viewer-left relative to the broad chest plane.",
+          "subject_or_region_ids": [
+            "head",
+            "torso"
+          ],
+          "relation_kind": "head-to-body-yaw",
+          "source_evidence": [
+            "The nose and face turn slightly toward viewer-left relative to the broad chest plane."
+          ],
+          "confidence": "medium",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair and asymmetric garment obscure the viewer-left shoulder; physical shoulder depth and exact torso rotation cannot be resolved."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:pose-residuals:gaze",
+          "axis": "form",
+          "visible_result": "The eyes look downward toward the low viewing position.",
+          "result_direction": "The eyes look downward toward the low viewing position.",
+          "subject_or_region_ids": [
+            "head"
+          ],
+          "relation_kind": "attention-direction",
+          "source_evidence": [
+            "The eyes look downward toward the low viewing position."
+          ],
+          "confidence": "medium",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair and asymmetric garment obscure the viewer-left shoulder; physical shoulder depth and exact torso rotation cannot be resolved."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:pose-residuals:shoulder-slope",
+          "axis": "form",
+          "visible_result": "The shoulder line rises toward viewer-right, with the bare viewer-right shoulder higher in the image.",
+          "result_direction": "The shoulder line rises toward viewer-right, with the bare viewer-right shoulder higher in the image.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "shoulder-image-slope",
+          "source_evidence": [
+            "The shoulder line rises toward viewer-right, with the bare viewer-right shoulder higher in the image."
+          ],
+          "confidence": "medium",
+          "causal_origin": "pose-deformation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Hair and asymmetric garment obscure the viewer-left shoulder; physical shoulder depth and exact torso rotation cannot be resolved."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:frame-crop",
+      "owner_key": "frame-crop",
+      "scale": "regional",
+      "axis": "hierarchy",
+      "observation": "The full crown is visible with shallow headroom, face high near center, torso extending to a thin midriff glimpse at the bottom, right arm cut by the right edge, and neither hand visible.",
+      "source_evidence": [
+        "The full crown is visible with shallow headroom, face high near center, torso extending to a thin midriff glimpse at the bottom, right arm cut by the right edge, and neither hand visible."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:frame-crop:head",
+          "axis": "hierarchy",
+          "visible_result": "The complete crown and face sit high near the center below a small top margin.",
+          "result_direction": "The complete crown and face sit high near the center below a small top margin.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "frame-position",
+          "source_evidence": [
+            "The complete crown and face sit high near the center below a small top margin."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.spatial-topology:frame-crop:torso",
+          "axis": "hierarchy",
+          "visible_result": "The large torso continues to the bottom edge, exposing only a narrow strip below the top hem.",
+          "result_direction": "The large torso continues to the bottom edge, exposing only a narrow strip below the top hem.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "lower-crop",
+          "source_evidence": [
+            "The large torso continues to the bottom edge, exposing only a narrow strip below the top hem."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.spatial-topology:frame-crop:arm",
+          "axis": "topology",
+          "visible_result": "The viewer-right sleeve and arm cross the right edge while both hands stay outside the frame.",
+          "result_direction": "The viewer-right sleeve and arm cross the right edge while both hands stay outside the frame.",
+          "subject_or_region_ids": [
+            "person"
+          ],
+          "relation_kind": "edge-crossing",
+          "source_evidence": [
+            "The viewer-right sleeve and arm cross the right edge while both hands stay outside the frame."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:illustration-overlap",
+      "owner_key": "illustration-overlap",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "The photographic person forms an uninterrupted foreground silhouette over the center and lower portions of the much larger flat illustrated figure; a smiling illustrated mouth is visible above and left of the real head, with broad illustrated hair and clothing fragments beside the person.",
+      "source_evidence": [
+        "The photographic person forms an uninterrupted foreground silhouette over the center and lower portions of the much larger flat illustrated figure; a smiling illustrated mouth is visible above and left of the real head, with broad illustrated hair and clothing fragments beside the person."
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "priority": "P0",
+      "confounders": [
+        "Overlap is image-plane evidence; it does not establish physical contact or the backdrop support."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:illustration-overlap:depth",
+          "axis": "topology",
+          "visible_result": "The photographic head, hair and torso occlude the center of the flat illustration.",
+          "result_direction": "The photographic head, hair and torso occlude the center of the flat illustration.",
+          "subject_or_region_ids": [
+            "person",
+            "illustration"
+          ],
+          "relation_kind": "layer-order",
+          "source_evidence": [
+            "The photographic head, hair and torso occlude the center of the flat illustration."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Overlap is image-plane evidence; it does not establish physical contact or the backdrop support."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:illustration-overlap:size",
+          "axis": "hierarchy",
+          "visible_result": "The illustrated face is much larger than the foreground head and its upper part is cut by the top edge.",
+          "result_direction": "The illustrated face is much larger than the foreground head and its upper part is cut by the top edge.",
+          "subject_or_region_ids": [
+            "illustration",
+            "head"
+          ],
+          "relation_kind": "scale-and-crop",
+          "source_evidence": [
+            "The illustrated face is much larger than the foreground head and its upper part is cut by the top edge."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Overlap is image-plane evidence; it does not establish physical contact or the backdrop support."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:illustration-overlap:direction",
+          "axis": "topology",
+          "visible_result": "The illustrated smiling mouth remains visible above and viewer-left of the foreground head.",
+          "result_direction": "The illustrated smiling mouth remains visible above and viewer-left of the foreground head.",
+          "subject_or_region_ids": [
+            "person",
+            "illustration"
+          ],
+          "relation_kind": "cross-component-direction",
+          "source_evidence": [
+            "The illustrated smiling mouth remains visible above and viewer-left of the foreground head."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Overlap is image-plane evidence; it does not establish physical contact or the backdrop support."
+          ]
+        },
+        {
+          "id": "lane.spatial-topology:illustration-overlap:visibility",
+          "axis": "topology",
+          "visible_result": "Illustrated hair and pale clothing remain broadly visible above and along the foreground silhouette, especially down viewer-left.",
+          "result_direction": "Illustrated hair and pale clothing remain broadly visible above and along the foreground silhouette, especially down viewer-left.",
+          "subject_or_region_ids": [
+            "person",
+            "illustration"
+          ],
+          "relation_kind": "surviving-visibility",
+          "source_evidence": [
+            "Illustrated hair and pale clothing remain broadly visible above and along the foreground silhouette, especially down viewer-left."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "strong",
+          "confounders": [
+            "Overlap is image-plane evidence; it does not establish physical contact or the backdrop support."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.spatial-topology:completion-boundary",
+      "owner_key": "completion-boundary",
+      "scale": "regional",
+      "axis": "topology",
+      "observation": "Only the upper body and portions of the enormous illustration are visible; floor, seat, hands, legs and any physical contact with the background are outside the view or hidden.",
+      "source_evidence": [
+        "Only the upper body and portions of the enormous illustration are visible; floor, seat, hands, legs and any physical contact with the background are outside the view or hidden."
+      ],
+      "confidence": "high",
+      "causal_origin": "layout",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "high",
+      "priority": "P1",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.spatial-topology:completion-boundary:limits",
+          "axis": "topology",
+          "visible_result": "Keep hands, lower body and the hidden central parts of the illustration outside the image or occluded.",
+          "result_direction": "Keep hands, lower body and the hidden central parts of the illustration outside the image or occluded.",
+          "subject_or_region_ids": [
+            "person",
+            "illustration"
+          ],
+          "relation_kind": "partial-visibility",
+          "source_evidence": [
+            "Keep hands, lower body and the hidden central parts of the illustration outside the image or occluded."
+          ],
+          "confidence": "high",
+          "causal_origin": "layout",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "dimension": "frame-placement",
+      "disposition": "invariant",
+      "observation": "Head high near center; torso fills lower frame."
+    },
+    {
+      "dimension": "subject-principal-axis",
+      "disposition": "uncertain",
+      "observation": "Crop, hair and asymmetric neckline do not uniquely establish a whole-body axis."
+    },
+    {
+      "dimension": "viewpoint-elevation",
+      "disposition": "invariant",
+      "observation": "Visible chin and nostril underplanes corroborate a distinctly low view."
+    },
+    {
+      "dimension": "viewpoint-azimuth",
+      "disposition": "uncertain",
+      "observation": "Camera azimuth and subject yaw are confounded in the mildly asymmetric face projection."
+    },
+    {
+      "dimension": "viewpoint-roll",
+      "disposition": "uncertain",
+      "observation": "No dependable architectural horizon or gravity reference is visible."
+    },
+    {
+      "dimension": "viewpoint-distance-foreshortening",
+      "disposition": "invariant",
+      "observation": "Large near torso below the smaller high head."
+    },
+    {
+      "dimension": "human-torso-yaw",
+      "disposition": "uncertain",
+      "observation": "Long hair hides the viewer-left shoulder and asymmetric neckline confounds torso rotation."
+    },
+    {
+      "dimension": "human-torso-pitch",
+      "disposition": "uncertain",
+      "observation": "Lower body is absent; camera elevation cannot be separated from any torso pitch."
+    },
+    {
+      "dimension": "human-torso-roll",
+      "disposition": "uncertain",
+      "observation": "A sloped shoulder image line is visible, but exact torso roll is confounded by crop and pose."
+    },
+    {
+      "dimension": "human-head-body-yaw",
+      "disposition": "invariant",
+      "observation": "Face and nose turn mildly toward viewer-left relative to the chest projection."
+    },
+    {
+      "dimension": "human-head-body-pitch",
+      "disposition": "invariant",
+      "observation": "Chin raised and neck extended above the neckline."
+    },
+    {
+      "dimension": "human-head-body-roll",
+      "disposition": "uncertain",
+      "observation": "Small apparent eye-line slope is confounded by perspective and asymmetric eyelid visibility."
+    },
+    {
+      "dimension": "human-head-body-lateral-offset",
+      "disposition": "not-material",
+      "observation": "Small horizontal head offset is subordinate if upper placement, crop and torso scale are held."
+    },
+    {
+      "dimension": "human-shoulder-image-slope",
+      "disposition": "invariant",
+      "observation": "Viewer-right bare shoulder is visibly higher in the image than the hidden-side shoulder region."
+    },
+    {
+      "dimension": "human-shoulder-depth-order",
+      "disposition": "uncertain",
+      "observation": "The bare shoulder is visible but no unique near/far ordering of both shoulders is supported."
+    },
+    {
+      "dimension": "human-attention-direction",
+      "disposition": "invariant",
+      "observation": "Eyes look down toward the low viewing position."
+    },
+    {
+      "dimension": "cross-component-orientation",
+      "disposition": "invariant",
+      "observation": "The giant illustrated mouth is above-left of the foreground head while the two figures overlap substantially."
+    }
+  ],
+  "omission_checks": [
+    {
+      "scope": "whole-orientation",
+      "tested_change": "Replace the close low view and raised head with an eye-level neutral portrait.",
+      "verdict": "material",
+      "changed_relations": [
+        "Chin/nose underplanes disappear.",
+        "Torso-head projected scale changes."
+      ],
+      "source_evidence": [
+        "Visible underplanes and large foreground torso."
+      ]
+    },
+    {
+      "scope": "residual-alignment",
+      "tested_change": "Hold low viewpoint and crop, lower chin and square the shoulder line.",
+      "verdict": "material",
+      "changed_relations": [
+        "Extended-neck read and high viewer-right shoulder are lost."
+      ],
+      "source_evidence": [
+        "Raised chin and sloping shoulder line."
+      ]
+    },
+    {
+      "scope": "single-dimension-with-adjacent-spatial-relations-held",
+      "dimension": "human-head-body-lateral-offset",
+      "tested_change": "Move the head a small amount horizontally while retaining high placement, low viewpoint, gaze, chin lift, shoulder slope and illustration overlap.",
+      "verdict": "preserved",
+      "preserved_relations": [
+        "Low-angle projection, full head visibility and large torso remain."
+      ],
+      "changed_relations": [],
+      "source_evidence": [
+        "The modest horizontal offset is weaker than the crop and scale relations."
+      ]
+    },
+    {
+      "scope": "direction-held-displacement",
+      "tested_change": "Move the illustration far upward-left while keeping its mouth technically above-left.",
+      "verdict": "material-drift",
+      "changed_relations": [
+        "The mouth or surrounding hair would leave the frame; giant-face overlap and broad side fragments disappear."
+      ],
+      "protected_axes": [
+        "frame-position",
+        "frame-share",
+        "direction",
+        "overlap",
+        "visibility-budget"
+      ],
+      "source_evidence": [
+        "Large illustrated face intersects top and lies directly behind the foreground hair."
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "target": "integrator",
+      "requirement": "Compile camera and crop before pose, then preserve every emitted explicit and implicit axis; uncertain physical axes have no isolated directive. Bind the high-risk illustration direction with subject/frame, illustration/frame and overlap/visibility relations."
+    }
+  ],
+  "conflicts": []
+}

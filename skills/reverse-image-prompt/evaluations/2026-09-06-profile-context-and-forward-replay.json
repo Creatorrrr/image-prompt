@@ -1,0 +1,329 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "draft": false,
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "b2f0adb652f8f2908494bdd37f8f95acf2673126",
+    "candidate_revision": "runtime-snapshot-sha256:bc56620bf236ffd979a97e6feaa48087798ae8aa1a3691ee94e5b8c3dffe3d42"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Improve the reverse-image-prompt skill using the current OpenAI latest-model guidance, then independently extract prompts and generate text-only reconstructions for three historical source images."
+  },
+  "evidence": [
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The v3 candidate suite passes 311 tests and 267 subtests. Module, manifest, compiled coverage and skill-format checks pass; final binding checks validate all three exact prompts, plans and bundles.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/package-validation-final.json"
+    },
+    {
+      "id": "e-context",
+      "kind": "measurement",
+      "claim": "Entrypoint body words decrease 3492 to 1146. In the fixed five-lane fixture shared instruction body words decrease 5311 to 3988 for prompt and 4081 for audited. These are structural words, not tokenizer counts or elapsed time.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/structural-context-metrics.json"
+    },
+    {
+      "id": "e-route-reproduction",
+      "kind": "package-check",
+      "claim": "All three real audited case routes fail under the v1 validator and pass under v2 with unchanged visual instruction bytes and route fingerprints.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/validator-migration-v2.json"
+    },
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "Three exact historical user inputs were restored and inspected; source-specific review invariants were recorded before any generated pixels were available.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/source-render-review-contract.json"
+    },
+    {
+      "id": "e-provenance",
+      "kind": "repository-history",
+      "claim": "Selection records identify original historical user-message images, dimensions and exact source hashes; prior extracted prompts and renders were withheld from case agents.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/source-selection.json"
+    },
+    {
+      "id": "e-guidance",
+      "kind": "external-research",
+      "claim": "The current latest-model guide supports auditing contradictory skill instructions, explicit delegation policy and calibrated verification. Analysis harness settings are distinct from image generator settings.",
+      "artifact": "https://developers.openai.com/api/docs/guides/latest-model; checked 2026-09-05; references/analysis-runtime.md"
+    },
+    {
+      "id": "e-skin-priority",
+      "kind": "package-check",
+      "claim": "The unchanged case-01 plan fails solely on a contradictory coupling of displayed-skin priority to whole-person salience under v2 and passes under v3. Existing requirements declare these priorities independently; region and descriptor checks remain enforced.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/validator-migration-v3.json"
+    },
+    {
+      "id": "e-integrity",
+      "kind": "package-check",
+      "claim": "All 113 pinned files match in the working skill and each of the three v3 copies; exact source bytes, critic plan/prompt hashes, saved request bodies and all nine frozen bundle/plan/lint checks match.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/final-integrity.json"
+    },
+    {
+      "id": "e-prompt-replays",
+      "kind": "prompt-evaluation",
+      "claim": "All three historical cases completed audited extraction, exact-text standalone checks and a source-aware critic before generation. This is per-case conformance evidence, not a baseline comparison or proof of pixel fidelity.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/final-integrity.json"
+    },
+    {
+      "id": "e-render-replays",
+      "kind": "render-observation",
+      "claim": "Two delivered images were inspected against source contracts frozen before generation. Both preserve broad scenes but materially drift in capture, displayed surface, shape or pose; both are partial reproductions and overall fidelity failures.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/root-render-reviews.json"
+    },
+    {
+      "id": "e-generation-block",
+      "kind": "generation-outcome",
+      "claim": "Case-03 produced no delivered image: initial failure cause is unavailable, then an identical-byte retry was rejected at output moderation. Pixels and user judgment remain unscored; no substitution or bypass was attempted.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-03/output/report.json"
+    },
+    {
+      "id": "e-generation-deliveries",
+      "kind": "generation-outcome",
+      "claim": "Case-01 delivered once in one call; case-02 delivered once after one identical-byte no-delivery retry. No quality retries were made and image-reference fields were omitted.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/report.md"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Select only the requested analysis contract while preserving all shared visible-evidence controls; keep prompt conformance, actual generation, visual fidelity and user judgment separately evidenced.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "profile-scope",
+        "statement": "Explicit profile selection changes the instruction view without heuristically dropping shared rules.",
+        "evidence_ids": [
+          "e-package",
+          "e-context"
+        ],
+        "causal_controls": [
+          "explicit profile blocks",
+          "fail-closed complete reads",
+          "source and view hashes"
+        ]
+      },
+      {
+        "id": "render-source-contract",
+        "statement": "Each text-only reconstruction is assessed against its exact historical source for composition, appearance geometry, topology, light, color and capture rather than a generic attractive replacement.",
+        "evidence_ids": [
+          "e-source"
+        ],
+        "causal_controls": [
+          "case-specific source contracts stored outside runtime",
+          "frozen prompt bytes",
+          "no image references supplied to generation"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "Non-material incidental scene microdetail",
+      "Unexposed runtime settings recorded as unavailable, never invented"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "audited-route-default",
+      "scale": "global",
+      "axis": "execution-profile",
+      "source_state": "Real routes declare audited analysis and bind audited report schemas and instruction views.",
+      "render_state": "Before the fix the bundle validator reconstructs the default prompt route and rejects the real audited route; generation had not yet occurred.",
+      "evidence_ids": [
+        "e-route-reproduction"
+      ]
+    },
+    {
+      "id": "skin-priority-coupling",
+      "scale": "regional",
+      "axis": "displayed-surface-priority",
+      "source_state": "Displayed skin and whole-person appearance have independently supported priorities in the existing evaluation contract.",
+      "render_state": "The v2 validator rejected a valid P1 skin decision for a primary person before generation; v3 removes only that contradictory equality.",
+      "evidence_ids": [
+        "e-skin-priority"
+      ]
+    },
+    {
+      "id": "delivered-capture-drift",
+      "scale": "global",
+      "axis": "capture-and-visible-form",
+      "source_state": "Historical sources include low contrast, soft boundaries, specific garment drape and source-specific subject proportions/pose.",
+      "render_state": "The two delivered images strengthen fine detail or material articulation; case-01 changes head/earcup share and case-02 weakens the body diagonal and thickens knit.",
+      "evidence_ids": [
+        "e-source",
+        "e-render-replays"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "profile-separation",
+      "stage": "representation",
+      "statement": "Explicit selected-profile views and a smaller entrypoint reduce irrelevant instruction text while preserving shared constraints. This may reduce instruction conflicts; runtime speed and fidelity require separate empirical evidence.",
+      "evidence_ids": [
+        "e-context",
+        "e-guidance"
+      ],
+      "falsifier": "Shared required rules disappear from a selected view, or unrelated sections are removed by heuristic filtering."
+    },
+    {
+      "id": "route-profile-binding",
+      "stage": "representation",
+      "statement": "Reconstructing a route with its declared profile resolves the deterministic rejection without relaxing exact equality or allowing evidence to be rebound by profile tampering.",
+      "evidence_ids": [
+        "e-route-reproduction"
+      ],
+      "falsifier": "A valid audited route still fails, or changing only the profile can reuse a mismatched route/report fingerprint."
+    },
+    {
+      "id": "independent-skin-priority",
+      "stage": "representation",
+      "statement": "Removing the incompatible whole-person equality permits independently evidenced skin salience while retaining all region, descriptor, ownership and identity guards.",
+      "evidence_ids": [
+        "e-skin-priority"
+      ],
+      "falsifier": "A missing skin region, wrong descriptor ownership, or an unsupported identity claim becomes valid after the change."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Separate execution profiles with explicit views, preserve source/view hashes and complete-input failures, keep salience ordering authoritative across adapters, validate optional aggregate claims at their data boundary, expose a plan-free standalone prompt check, and reconstruct audited routes with their declared profile. Preserve the independently evidenced priority of displayed skin rather than equating it to whole-person salience.",
+    "generalization_basis": "Changes apply to file/profile boundaries, schema fields and route integrity; none installs one historical image, appearance term, garment, pose, color or composition as a runtime default.",
+    "hypothesis_ids": [
+      "profile-separation",
+      "route-profile-binding",
+      "independent-skin-priority"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/analysis-runtime.md",
+      "skills/reverse-image-prompt/references/integration-contract.md",
+      "skills/reverse-image-prompt/references/model-adapters.md",
+      "skills/reverse-image-prompt/tests/test_analysis_bundle.py",
+      "skills/reverse-image-prompt/tests/test_compact_reports.py",
+      "skills/reverse-image-prompt/tests/test_profile_context.py",
+      "skills/reverse-image-prompt/tests/test_prompt_lint.py",
+      "skills/reverse-image-prompt/tests/test_route_resolver.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/tools/analysis_bundle.py",
+      "skills/reverse-image-prompt/tools/compact_reports.py",
+      "skills/reverse-image-prompt/tools/compile_skill.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tools/profile_context.py",
+      "skills/reverse-image-prompt/tools/prompt_lint.py",
+      "skills/reverse-image-prompt/tools/route_resolver.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/validate_modules.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-route-reproduction",
+        "e-skin-priority",
+        "e-integrity"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt-replays"
+      ],
+      "scope": "Conformance of these three extracted prompts; no comparative prompt-quality claim."
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-replays"
+      ],
+      "scope": "Both delivered historical replays have material drift. The third has no pixels and remains blocked/unscored, not a perceptual failure."
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [],
+    "historical_replays": [
+      {
+        "case_id": "case-01",
+        "prompt_status": "pass",
+        "generation_status": "delivered",
+        "pixel_status": "fail",
+        "user_status": "unscored",
+        "attempt_count": 1,
+        "quality_retry_count": 0,
+        "prompt_sha256": "91acd00e0e05a7e542261a14d1f74d27362c01bda5bbde74635c84e137b3fc7a",
+        "report": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-01/output/result.json"
+      },
+      {
+        "case_id": "case-02",
+        "prompt_status": "pass",
+        "generation_status": "delivered",
+        "pixel_status": "fail",
+        "user_status": "unscored",
+        "attempt_count": 2,
+        "quality_retry_count": 0,
+        "prompt_sha256": "01054302bf49e31ab2e7ca615ca814c3af666d17cdf93ef23a79f845919ccbd9",
+        "report": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/output/run-report.json"
+      },
+      {
+        "case_id": "case-03",
+        "prompt_status": "pass",
+        "generation_status": "blocked",
+        "pixel_status": "unscored",
+        "user_status": "unscored",
+        "attempt_count": 2,
+        "quality_retry_count": 0,
+        "prompt_sha256": "ba9fd39c8c4efad409bdcc252bc0bf2bbf9f42c7813364112cd755a79f45eb32",
+        "report": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-03/output/report.json"
+      }
+    ],
+    "limitations": [
+      "Three historically seen human-image regressions, no new holdout or nonhuman coverage.",
+      "No baseline re-generation arm; no comparative fidelity or elapsed-time improvement is established.",
+      "Fresh case coordinator contexts and separate case directories share one OS. Available fresh lane workers were 1/2/1; remaining lanes used declared same-context fallback after capacity limits.",
+      "Root critic and pixel reviewer are common across cases, independent of case integrator transcripts but not blind or newly empty contexts.",
+      "Case-03 accidentally saw sibling status summaries from a collaboration inventory; no sibling artifacts or previous prompts/renders were opened or used.",
+      "The v1/v2/v3 visual instruction bytes are identical. v2/v3 repair deterministic validators; failed original snapshots and outcomes are retained.",
+      "Observed case spans include audited ledger authoring, waiting, provider recovery and reporting. Exact backend model, tool size/quality controls and some worker timings were not exposed.",
+      "Formal calibrated color/light and user aesthetic judgments remain unscored."
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "Structural changes and regression fixes are implemented and validated. Three genuine historical forward replays were attempted with frozen text-only requests: two deliveries both exhibit material fidelity drift, and one output is blocked. No comparative speed, render fidelity or user-aesthetic promotion is claimed.",
+    "evidence_ids": [
+      "e-package",
+      "e-context",
+      "e-route-reproduction",
+      "e-skin-priority",
+      "e-integrity",
+      "e-render-replays",
+      "e-generation-block"
+    ]
+  },
+  "updated_at": "2026-09-05T15:28:03.712819+00:00"
+}

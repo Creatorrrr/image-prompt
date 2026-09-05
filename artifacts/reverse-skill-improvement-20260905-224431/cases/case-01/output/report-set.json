@@ -1,0 +1,2684 @@
+[
+  {
+    "schema_version": "reverse-image-analysis-lane-report/v2",
+    "lane_id": "lane.global-composition",
+    "lane_version": 4,
+    "analysis_profile": "audited",
+    "intent_mode": "faithful",
+    "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+    "source_artifact": {
+      "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "frame": "1085x608"
+    },
+    "source_verification": {
+      "pixels_inspected": true,
+      "sha256_verified": true,
+      "dimensions_verified": true,
+      "color_mode": "RGB"
+    },
+    "execution": {
+      "mode": "delegated",
+      "independent_context": true
+    },
+    "status": "complete",
+    "reviewed_modules": [
+      {
+        "id": "core.visual-evidence",
+        "version": 11
+      },
+      {
+        "id": "core.frame-coordinates",
+        "version": 15
+      },
+      {
+        "id": "concept.primary-relationship",
+        "version": 12
+      },
+      {
+        "id": "core.fidelity-discipline",
+        "version": 12
+      },
+      {
+        "id": "core.background-color",
+        "version": 7
+      },
+      {
+        "id": "core.pre-emit-gate",
+        "version": 30
+      },
+      {
+        "id": "core.output-contract",
+        "version": 25
+      }
+    ],
+    "primary_viewer_read": {
+      "observation": "A large foreground head in right-facing profile, distinguished by a loose bob, conspicuous yellow headphones, and a bright hair outline, occupies the left-center of a wide, softly rendered street scene. The blurred environment continues into substantial space ahead of the face.",
+      "dominant_fidelity_axis": "appearance-led",
+      "classification_reason": "The head silhouette, headphone accent, luminous hair separation, softened rendering, and subject-to-environment hierarchy carry the signature. Profile and crop remain material structural constraints, but no unusual interaction, containment, or information structure is co-primary.",
+      "direct_appeal_disposition": "Keep the perceptual reading diagnostic; the visible mechanisms provide the required controls without an evaluative person descriptor.",
+      "identity_context": "No identity or demographic context is supplied or inferred."
+    },
+    "topic_dispositions": [
+      {
+        "topic": "perceptual-proposition",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.global-composition:primary-hierarchy",
+          "lane.global-composition:fidelity-ceiling"
+        ]
+      },
+      {
+        "topic": "frame-and-crop",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.global-composition:frame-shape",
+          "lane.global-composition:placement-scale",
+          "lane.global-composition:crop-boundaries"
+        ]
+      },
+      {
+        "topic": "major-regions",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.global-composition:primary-hierarchy",
+          "lane.global-composition:placement-scale",
+          "lane.global-composition:background-zoning"
+        ]
+      },
+      {
+        "topic": "fidelity-mode",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.global-composition:fidelity-ceiling"
+        ]
+      }
+    ],
+    "findings": [
+      {
+        "id": "lane.global-composition:primary-hierarchy",
+        "owner_key": "global-composition.primary-hierarchy",
+        "scale": "global",
+        "axis": "hierarchy",
+        "observation": "One foreground head, including its face, bob, and headphones, forms the principal coherent attention region. The yellow headphone assembly is conspicuous within that region, while the street and multiple blurred people remain secondary.",
+        "source_evidence": [
+          "The foreground head has a large continuous silhouette and much more readable facial and hair structure than any background figure.",
+          "The yellow earcup and band stand out within the darker hair rather than appearing as a separate displayed product.",
+          "The surrounding people are dispersed, indistinct silhouettes with no competing readable face."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Local color contrast and hair illumination also contribute to attention; their causal controls belong to the color and light lane."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:primary-hierarchy:foreground-dominance",
+            "axis": "hierarchy",
+            "visible_result": "The foreground head remains the single dominant readable subject region against a subordinate populated environment.",
+            "result_direction": "Keep foreground attention substantially above every background figure without deleting the environmental context.",
+            "subject_or_region_ids": [
+              "foreground-head",
+              "background-street-crowd"
+            ],
+            "relation_kind": "relative-attention",
+            "source_evidence": [
+              "The bob, headphones, and facial profile are immediately readable; background people remain soft and dispersed."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P0",
+            "confounders": [
+              "Sharpness and local light contrast reinforce the hierarchy."
+            ]
+          },
+          {
+            "id": "lane.global-composition:primary-hierarchy:headphone-accent",
+            "axis": "hierarchy",
+            "visible_result": "The headphones remain a conspicuous but smaller subregion integrated into the foreground head.",
+            "result_direction": "Retain the headphone accent's immediate visibility while keeping its scale subordinate to the whole head and bob.",
+            "subject_or_region_ids": [
+              "headphones",
+              "foreground-head"
+            ],
+            "relation_kind": "subregion-salience-and-scale",
+            "source_evidence": [
+              "A prominent rounded yellow earcup and broad band are visible against the hair, while the surrounding head remains the larger coherent mass."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P0",
+            "confounders": [
+              "The exact hue and chroma are independently owned color results.",
+              "Headphone contact and component geometry require spatial-lane ownership."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lane.global-composition:frame-shape",
+        "owner_key": "global-composition.frame-shape",
+        "scale": "global",
+        "axis": "form",
+        "observation": "The source is a wide landscape frame, 1085 by 608 pixels, with a measured ratio of approximately 1.785:1.",
+        "source_evidence": [
+          "The exact file dimensions are 1085x608.",
+          "The broad horizontal frame accommodates the large head and a substantial right-side environmental field."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:frame-shape:landscape-ratio",
+            "axis": "form",
+            "visible_result": "The image retains a broad landscape shape close to 16:9.",
+            "result_direction": "Preserve the approximately 1.78:1 width-to-height relationship rather than narrowing the frame around the portrait.",
+            "subject_or_region_ids": [
+              "image-frame"
+            ],
+            "relation_kind": "frame-aspect-ratio",
+            "source_evidence": [
+              "Verified dimensions are 1085x608."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.global-composition:placement-scale",
+        "owner_key": "global-composition.placement-scale",
+        "scale": "global",
+        "axis": "hierarchy",
+        "observation": "The large head sits left of frame center as a mass, while the facial profile projects toward the center-right. There is considerably more background between the face and the right edge than between the rear hair outline and the left edge.",
+        "source_evidence": [
+          "The principal head silhouette occupies roughly half the image width and most of its upper height.",
+          "The rear bob leaves a relatively narrow background margin on the left.",
+          "The nose ends well inside the frame, followed by a broad field of blurred street activity to the right."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Flyaway strands extend beyond the denser silhouette and should not define the subject's solid area.",
+          "Frame placement does not independently establish head yaw or gaze."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:placement-scale:head-frame-share",
+            "axis": "hierarchy",
+            "visible_result": "The head remains a large close foreground presence, with its bob occupying much of the frame height and roughly half the width.",
+            "result_direction": "Keep the head large enough to dominate while retaining the broad visible street field.",
+            "subject_or_region_ids": [
+              "foreground-head",
+              "image-frame"
+            ],
+            "relation_kind": "frame-share",
+            "source_evidence": [
+              "The crown is near the top boundary, the bob ends above the lower shoulder region, and the head spans a substantial left-central horizontal band."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "The loose hair halo has low-density extensions beyond the main head mass."
+            ]
+          },
+          {
+            "id": "lane.global-composition:placement-scale:left-biased-head",
+            "axis": "hierarchy",
+            "visible_result": "The coherent head mass remains left of the frame's horizontal center.",
+            "result_direction": "Preserve the left-biased head placement instead of centering the entire silhouette.",
+            "subject_or_region_ids": [
+              "foreground-head",
+              "image-frame"
+            ],
+            "relation_kind": "horizontal-frame-placement",
+            "source_evidence": [
+              "The bob and earcup concentrate the foreground mass on the left-center; the face projects farther right than that mass."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "priority": "P1",
+            "confounders": [
+              "Do not translate this placement constraint into a body or head orientation claim."
+            ]
+          },
+          {
+            "id": "lane.global-composition:placement-scale:forward-environment-space",
+            "axis": "hierarchy",
+            "visible_result": "A broad environmental field survives between the forward facial outline and the right frame edge.",
+            "result_direction": "Keep the forward clearance substantially wider than the rear hair-to-left-edge clearance, with blurred scene content occupying that space.",
+            "subject_or_region_ids": [
+              "facial-profile",
+              "rear-hair-outline",
+              "right-background-field",
+              "image-frame"
+            ],
+            "relation_kind": "asymmetric-frame-clearance",
+            "source_evidence": [
+              "The area right of the nose contains a wide expanse of blurred architecture and pedestrians.",
+              "The left margin behind the bob is much narrower."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "This is populated low-detail space, not an empty studio backdrop.",
+              "Its relation to the face depends on retaining the independently owned right-facing profile."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lane.global-composition:crop-boundaries",
+        "owner_key": "global-composition.crop-boundaries",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "The crop gives the crown very little headroom, leaves the visible facial profile inside the frame, and cuts through the lower neck-and-shoulder region at the bottom. Fine upper hair strands interact with the top edge.",
+        "source_evidence": [
+          "Bright loose strands reach the upper boundary and the crown lies immediately below it.",
+          "The visible eye, nose, lips, and chin remain away from the outer frame edges.",
+          "The neck and bare upper shoulder extend to the bottom boundary with a thin strap visible; the rest of the body stays outside the frame."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Strong brightness and fine strands make exact continuation of the outermost hair at the top uncertain.",
+          "Hair occlusion within the face is different from facial-feature cropping."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:crop-boundaries:tight-crown-headroom",
+            "axis": "form",
+            "visible_result": "The crown stays close to the upper boundary, with loose bright strands reaching or crossing that edge.",
+            "result_direction": "Preserve very tight headroom without replacing it with generous empty space or a substantial cut through the main head.",
+            "subject_or_region_ids": [
+              "crown",
+              "upper-flyaway-hair",
+              "top-frame-edge"
+            ],
+            "relation_kind": "upper-edge-proximity-and-partial-visibility",
+            "source_evidence": [
+              "The dense crown is represented near the top and fine bright strands intersect the image boundary."
+            ],
+            "confidence": "medium",
+            "causal_origin": "layout",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "Bright haze limits certainty about the outermost fine hair contour."
+            ]
+          },
+          {
+            "id": "lane.global-composition:crop-boundaries:visible-face-contained",
+            "axis": "form",
+            "visible_result": "The source-visible eye, nose, lips, and chin stay inside the image boundaries.",
+            "result_direction": "Retain the visible facial profile without cropping its features or increasing face scale until the surrounding bob and scene disappear.",
+            "subject_or_region_ids": [
+              "visible-facial-profile",
+              "image-frame"
+            ],
+            "relation_kind": "feature-frame-containment",
+            "source_evidence": [
+              "The visible facial features lie in the interior of the image, despite the tight crown headroom."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "This obligation does not authorize completing the hidden side of the face."
+            ]
+          },
+          {
+            "id": "lane.global-composition:crop-boundaries:lower-shoulder-truncation",
+            "axis": "form",
+            "visible_result": "Only the neck and upper shoulder region below the head are shown, continuing out through the bottom edge.",
+            "result_direction": "Keep the lower crop tight at the upper body rather than expanding to a fuller torso or adding lower-body anatomy.",
+            "subject_or_region_ids": [
+              "neck",
+              "upper-shoulder",
+              "bottom-frame-edge"
+            ],
+            "relation_kind": "lower-edge-truncation",
+            "source_evidence": [
+              "The bare shoulder and narrow strap meet the bottom crop, while the remainder of the torso is outside the image."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "The crop does not establish the unseen garment construction or complete body pose."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lane.global-composition:background-zoning",
+        "owner_key": "major-region-hierarchy.background",
+        "scale": "global",
+        "axis": "information",
+        "observation": "The background is a continuous low-legibility street field, with broad vertical built-environment masses above and dispersed pedestrian silhouettes below. It remains visibly populated, including cropped soft fragments at the outer edges.",
+        "source_evidence": [
+          "The upper background contains indistinct vertical architectural and sign-like color blocks without readable content.",
+          "The lower and right background contain blurred heads, bodies, and gaps of bright ground.",
+          "The far-right edge contains a broad, very soft cropped figure-like fragment that stays secondary."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "The blur prevents reliable identification of individual businesses, signs, people, or precise street geometry.",
+          "The physical depth of the far-right fragment cannot be established from its blur alone."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:background-zoning:coarse-street-massing",
+            "axis": "hierarchy",
+            "visible_result": "The environmental field retains broad vertical built masses above and a loosely populated pedestrian band below and to the right.",
+            "result_direction": "Keep coarse street activity across the visible background without converting it into an empty or tidily simplified setting.",
+            "subject_or_region_ids": [
+              "upper-background-masses",
+              "lower-background-crowd",
+              "right-background-field"
+            ],
+            "relation_kind": "coarse-region-zoning",
+            "source_evidence": [
+              "Vertical blurred structures occupy the upper field; multiple soft human silhouettes and bright intervening gaps occupy the lower field."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "supporting",
+            "target_strength": "moderate",
+            "priority": "P2",
+            "confounders": [
+              "Individual background forms are too indistinct to support a detailed inventory."
+            ]
+          },
+          {
+            "id": "lane.global-composition:background-zoning:low-legibility-ceiling",
+            "axis": "information",
+            "visible_result": "The background communicates an occupied street through soft masses, not readable faces, lettering, or architectural detail.",
+            "result_direction": "Keep background information substantially below foreground-head legibility while preserving the surviving silhouettes and color blocks.",
+            "subject_or_region_ids": [
+              "background-street-crowd",
+              "foreground-head"
+            ],
+            "relation_kind": "relative-legibility",
+            "source_evidence": [
+              "No background person has a clearly readable face, and no background sign supplies reliable readable text."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P1",
+            "confounders": [
+              "Optical defocus, haze, and processing cannot be separated conclusively from this image.",
+              "Reduced legibility must not erase the populated background massing."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "lane.global-composition:fidelity-ceiling",
+        "owner_key": "global-composition.fidelity-ceiling",
+        "scale": "global",
+        "axis": "sharpness",
+        "observation": "The image is photographically rendered but visibly soft, with luminous fine hair and a hazy, gently resolved foreground rather than crisp commercial-detail rendering.",
+        "source_evidence": [
+          "The face, earcup edges, shoulder, and dense hair have softened detail even though the foreground remains recognizable.",
+          "Fine hair is visibly bright and diffuse rather than uniformly razor-sharp.",
+          "The background is considerably more diffuse than the foreground."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "The respective contributions of optical focus, diffusion, illumination, and processing cannot be determined.",
+          "A particular camera, lens, film stock, filter, or era is not evidenced."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.global-composition:fidelity-ceiling:foreground-softness",
+            "axis": "sharpness",
+            "visible_result": "The main subject remains recognizable but gently resolved, with soft fine detail and diffuse luminous hair edges.",
+            "result_direction": "Cap foreground crispness at the observed soft photographic level instead of upgrading facial, hair, skin, or headphone detail.",
+            "subject_or_region_ids": [
+              "foreground-head",
+              "upper-shoulder"
+            ],
+            "relation_kind": "rendered-detail-ceiling",
+            "source_evidence": [
+              "Foreground features are readable at broad scale while fine skin, hair, and object boundaries remain softened."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "strong",
+            "priority": "P0",
+            "confounders": [
+              "Do not equate descriptive completeness with sharper rendering.",
+              "Preserve the observed result without asserting an unsupported optical or processing mechanism."
+            ]
+          }
+        ]
+      }
+    ],
+    "control_requirements": [
+      {
+        "id": "lane.global-composition:control:primary-hierarchy",
+        "owner_key": "global-composition.primary-hierarchy",
+        "obligation_ids": [
+          "lane.global-composition:primary-hierarchy:foreground-dominance",
+          "lane.global-composition:primary-hierarchy:headphone-accent"
+        ],
+        "requirement": "Establish the foreground head-and-headphone attention hierarchy early. Keep the headphone accent integrated into head scale; merge its exact appearance with the appropriate appearance and color owners."
+      },
+      {
+        "id": "lane.global-composition:control:frame",
+        "owner_key": "global-composition.frame-shape",
+        "obligation_ids": [
+          "lane.global-composition:frame-shape:landscape-ratio"
+        ],
+        "requirement": "Preserve the broad landscape ratio in the image description. Keep verified source dimensions separate from any generator target-size selection."
+      },
+      {
+        "id": "lane.global-composition:control:placement",
+        "owner_key": "global-composition.placement-scale",
+        "obligation_ids": [
+          "lane.global-composition:placement-scale:head-frame-share",
+          "lane.global-composition:placement-scale:left-biased-head",
+          "lane.global-composition:placement-scale:forward-environment-space"
+        ],
+        "requirement": "Use one coherent framing control to retain large head scale, left-biased head mass, and the wider populated space in front of the face. Audit these three results separately even when expressed together."
+      },
+      {
+        "id": "lane.global-composition:control:crop",
+        "owner_key": "global-composition.crop-boundaries",
+        "obligation_ids": [
+          "lane.global-composition:crop-boundaries:tight-crown-headroom",
+          "lane.global-composition:crop-boundaries:visible-face-contained",
+          "lane.global-composition:crop-boundaries:lower-shoulder-truncation"
+        ],
+        "requirement": "Distinguish top hair-edge interaction, facial-feature containment, and lower shoulder truncation. Do not let a generic portrait crop substitute for these results."
+      },
+      {
+        "id": "lane.global-composition:control:background",
+        "owner_key": "major-region-hierarchy.background",
+        "obligation_ids": [
+          "lane.global-composition:background-zoning:coarse-street-massing",
+          "lane.global-composition:background-zoning:low-legibility-ceiling"
+        ],
+        "requirement": "Retain the street as coarse populated massing with low information density. Compress its supporting inventory and consolidate blur wording with the capture owner."
+      },
+      {
+        "id": "lane.global-composition:control:fidelity",
+        "owner_key": "global-composition.fidelity-ceiling",
+        "obligation_ids": [
+          "lane.global-composition:fidelity-ceiling:foreground-softness"
+        ],
+        "requirement": "Place the material softness ceiling early and give it one emitted owner after reconciliation with the capture lane. Additional detail descriptions must not silently increase sharpness or polish."
+      }
+    ],
+    "omission_checks": [
+      {
+        "id": "lane.global-composition:omission:hierarchy",
+        "finding_id": "lane.global-composition:primary-hierarchy",
+        "counterfactual": "Retain the street and person categories but equalize background-face legibility with the foreground.",
+        "result": "material-drift",
+        "reason": "The image becomes a crowd scene with competing attention instead of a concentrated foreground profile.",
+        "priority": "P0"
+      },
+      {
+        "id": "lane.global-composition:omission:headphone-accent",
+        "obligation_id": "lane.global-composition:primary-hierarchy:headphone-accent",
+        "counterfactual": "Retain head position, crop, and hair silhouette while making the headphones inconspicuous or removing them.",
+        "result": "material-drift",
+        "reason": "A defining immediately visible accent is lost.",
+        "priority": "P0"
+      },
+      {
+        "id": "lane.global-composition:omission:aspect-ratio",
+        "finding_id": "lane.global-composition:frame-shape",
+        "counterfactual": "Keep the same head size but narrow the frame to a conventional vertical portrait.",
+        "result": "material-drift",
+        "reason": "The broad forward environmental field cannot survive.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:horizontal-placement",
+        "obligation_id": "lane.global-composition:placement-scale:left-biased-head",
+        "counterfactual": "Keep head scale and right-facing profile while centering the coherent head mass.",
+        "result": "material-drift",
+        "reason": "The unequal rear and forward clearances become materially weaker.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:scale",
+        "obligation_id": "lane.global-composition:placement-scale:head-frame-share",
+        "counterfactual": "Keep left bias and right-facing direction but substantially shrink or enlarge the head.",
+        "result": "material-drift",
+        "reason": "Shrinking weakens the foreground presence; enlarging removes the retained street context and changes the crop.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:forward-space",
+        "obligation_id": "lane.global-composition:placement-scale:forward-environment-space",
+        "counterfactual": "Preserve right-facing direction while tightening the frame immediately ahead of the nose.",
+        "result": "material-drift",
+        "reason": "Direction alone does not preserve the broad right-side scene.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:crop",
+        "finding_id": "lane.global-composition:crop-boundaries",
+        "counterfactual": "Replace the crop with generous crown headroom, a close facial-feature crop, or an expanded torso view.",
+        "result": "material-drift",
+        "reason": "Each independently changes a visible boundary condition. Vertical placement, scale, and lower crop are coupled and must be reconciled rather than independently normalized.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:background",
+        "finding_id": "lane.global-composition:background-zoning",
+        "counterfactual": "Keep the foreground but substitute either a blank smooth backdrop or a sharply readable street.",
+        "result": "material-drift",
+        "reason": "The first removes the populated environmental layer; the second exceeds its information and attention budget.",
+        "priority": "P1"
+      },
+      {
+        "id": "lane.global-composition:omission:softness",
+        "finding_id": "lane.global-composition:fidelity-ceiling",
+        "counterfactual": "Keep objects, crop, and orientation while making the foreground exceptionally crisp and clean.",
+        "result": "material-drift",
+        "reason": "The soft photographic signature is lost even though semantic content remains.",
+        "priority": "P0"
+      }
+    ],
+    "axis_dispositions": [
+      {
+        "axis": "frame-aspect-ratio",
+        "disposition": "material",
+        "owner_key": "global-composition.frame-shape"
+      },
+      {
+        "axis": "foreground-frame-share",
+        "disposition": "material",
+        "owner_key": "global-composition.placement-scale"
+      },
+      {
+        "axis": "horizontal-frame-placement",
+        "disposition": "material",
+        "owner_key": "global-composition.placement-scale"
+      },
+      {
+        "axis": "vertical-frame-placement",
+        "disposition": "material-coupled",
+        "owner_key": "global-composition.crop-boundaries",
+        "reason": "Tight crown headroom and lower shoulder truncation jointly constrain vertical placement at the retained scale."
+      },
+      {
+        "axis": "forward-and-rear-clearance",
+        "disposition": "material",
+        "owner_key": "global-composition.placement-scale"
+      },
+      {
+        "axis": "head-yaw-pitch-roll-and-gaze",
+        "disposition": "handoff",
+        "owner_lane": "lane.spatial-topology",
+        "reason": "Global placement establishes none of these axes; the visible right-facing profile is a material dependency requiring independent spatial analysis."
+      },
+      {
+        "axis": "body-orientation-and-camera-viewpoint",
+        "disposition": "handoff",
+        "owner_lane": "lane.spatial-topology",
+        "reason": "Only a partial neck-and-shoulder region is visible; do not infer complete posture or viewpoint from head placement."
+      }
+    ],
+    "partial_element_budget": [
+      {
+        "region_id": "upper-flyaway-hair",
+        "disposition": "material",
+        "budget": "Fine, low-density bright strands at the top boundary; retain edge interaction without reconstructing off-frame strand paths."
+      },
+      {
+        "region_id": "lower-body",
+        "disposition": "material",
+        "budget": "Only the neck and upper shoulder remain visible before the bottom crop; unseen anatomy and garment structure stay outside the described evidence."
+      },
+      {
+        "region_id": "outer-background-fragments",
+        "disposition": "supporting",
+        "budget": "Soft cropped figure fragments stay embedded in the background massing, especially at the right edge; no recovered face, complete body, or competing focal role."
+      }
+    ],
+    "handoffs": [
+      {
+        "to_lane": "lane.spatial-topology",
+        "subject_or_region_ids": [
+          "foreground-head",
+          "facial-profile",
+          "neck",
+          "upper-shoulder",
+          "headphones"
+        ],
+        "source_observation": "The profile points screen-right; the earcup and band sit within the head silhouette, and a partial neck-and-shoulder region continues through the bottom crop.",
+        "required_resolution": "Own head and body orientation, gaze, component contact, surviving facial visibility, and the human spatial counterfactuals. Preserve the global framing constraints without treating left placement as proof of orientation."
+      },
+      {
+        "to_lane": "lane.subject-appearance",
+        "subject_or_region_ids": [
+          "foreground-head",
+          "headphones",
+          "upper-shoulder"
+        ],
+        "source_observation": "The bob-and-headphone silhouette and the visible facial profile are large enough to carry source-specific form. The shoulder is only partially shown.",
+        "required_resolution": "Own scale-appropriate visible appearance and garment coverage. Keep the head large but avoid enlarging the face, completing hidden features, or expanding the body crop."
+      },
+      {
+        "to_lane": "lane.color-light-material",
+        "subject_or_region_ids": [
+          "headphones",
+          "hair-outline",
+          "facial-profile",
+          "background-street-crowd"
+        ],
+        "source_observation": "The yellow headphones provide a strong local accent; the outer hair is markedly luminous while the face and blurred street are more gently resolved and lower in local contrast.",
+        "required_resolution": "Own exact regional color directions, displayed tone, the luminous hair boundary, facial light-to-form relationships, and causal uncertainty. Retain those source-signature results without converting them into unspecified global warmth or uniform brighter skin."
+      },
+      {
+        "to_lane": "lane.medium-aesthetic-capture",
+        "subject_or_region_ids": [
+          "foreground-head",
+          "background-street-crowd"
+        ],
+        "source_observation": "The foreground is softly photographic and the background is much more diffuse; brightness around fine hair contributes to a hazy impression.",
+        "required_resolution": "Reconcile foreground softness and background legibility with one capture control owner. Preserve the visible fidelity ceiling without asserting a camera, lens, film stock, or historical process."
+      },
+      {
+        "to_lane": "integrator",
+        "required_resolution": "Bind each material atomic obligation, merge shared color/light/capture observations with their independent lane owners, and audit the complete emitted control set for repeated salience. Keep source dimensions separate from a supported target-size choice. This lane has produced analysis and proposed controls only."
+      }
+    ],
+    "conflicts": []
+  },
+  {
+    "schema_version": "reverse-image-analysis-lane-report/v2",
+    "lane_id": "lane.spatial-topology",
+    "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+    "source_artifact": {
+      "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "frame": "1085x608"
+    },
+    "execution": {
+      "mode": "sequential-fallback",
+      "independent_context": false,
+      "context_disclosure": "Integrator previously inspected source and global report; no claim of independence."
+    },
+    "status": "complete",
+    "reviewed_modules": [
+      {
+        "id": "core.visual-evidence",
+        "version": 11
+      },
+      {
+        "id": "core.frame-coordinates",
+        "version": 15
+      },
+      {
+        "id": "core.fidelity-discipline",
+        "version": 12
+      },
+      {
+        "id": "subject.human",
+        "version": 22
+      }
+    ],
+    "findings": [
+      {
+        "id": "lane.spatial-topology:profile",
+        "owner_key": "spatial.profile",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "The near face is shown in right-facing side profile; its nose projects well to the right of the near eye.",
+        "source_evidence": [
+          "One near eye, a projecting nose, lips and chin form the readable right-hand outline; the far eye is hidden."
+        ],
+        "confidence": "high",
+        "causal_origin": "perspective",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.spatial-topology:profile:right-facing",
+            "axis": "form",
+            "visible_result": "Right-facing side-profile face with only the near eye readable.",
+            "result_direction": "Right-facing side-profile face with only the near eye readable.",
+            "subject_or_region_ids": [
+              "person",
+              "face"
+            ],
+            "relation_kind": "viewpoint-azimuth",
+            "source_evidence": [
+              "Near eye is behind the rightward-projecting nose; far face stays hidden."
+            ],
+            "confidence": "high",
+            "causal_origin": "perspective",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.spatial-topology:profile:off-camera-gaze",
+            "axis": "form",
+            "visible_result": "The visible eye looks toward the right-hand environmental field, away from the viewer.",
+            "result_direction": "The visible eye looks toward the right-hand environmental field, away from the viewer.",
+            "subject_or_region_ids": [
+              "person",
+              "face"
+            ],
+            "relation_kind": "attention-direction",
+            "source_evidence": [
+              "The visible iris and eyelid open toward screen-right; no direct camera contact."
+            ],
+            "confidence": "high",
+            "causal_origin": "perspective",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.spatial-topology:pitch",
+        "owner_key": "spatial.pitch",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "The chin is slightly raised above the slender visible neck, with a gently upward facial outline.",
+        "source_evidence": [
+          "Nose tip and chin project forward; the underside of chin is partly exposed above the neck."
+        ],
+        "confidence": "high",
+        "causal_origin": "pose-deformation",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.spatial-topology:pitch:chin-lift",
+            "axis": "form",
+            "visible_result": "A slight chin lift remains; the face is neither bowed downward nor thrown far back.",
+            "result_direction": "A slight chin lift remains; the face is neither bowed downward nor thrown far back.",
+            "subject_or_region_ids": [
+              "person",
+              "face",
+              "neck-shoulder"
+            ],
+            "relation_kind": "head-to-body-pitch",
+            "source_evidence": [
+              "The chin sits forward and just above the soft under-chin-to-neck transition."
+            ],
+            "confidence": "medium",
+            "causal_origin": "pose-deformation",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.spatial-topology:frame",
+        "owner_key": "spatial.frame",
+        "scale": "regional",
+        "axis": "hierarchy",
+        "observation": "Large head at left-center, close upper-body crop, more clearance before the nose than behind the bob.",
+        "source_evidence": [
+          "Hair mass fills much of the image height, shoulder is cut at bottom, and the right street field is broad."
+        ],
+        "confidence": "high",
+        "causal_origin": "layout",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.spatial-topology:frame:placement",
+            "axis": "hierarchy",
+            "visible_result": "Large head mass stays left-center with broad forward space to screen-right.",
+            "result_direction": "Large head mass stays left-center with broad forward space to screen-right.",
+            "subject_or_region_ids": [
+              "person",
+              "background"
+            ],
+            "relation_kind": "frame-placement",
+            "source_evidence": [
+              "Dense bob is left-center; nose remains interior; right field survives."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.spatial-topology:frame:distance-crop",
+            "axis": "form",
+            "visible_result": "Close head-and-upper-shoulder scale, with tight crown headroom and facial features fully inside the frame.",
+            "result_direction": "Close head-and-upper-shoulder scale, with tight crown headroom and facial features fully inside the frame.",
+            "subject_or_region_ids": [
+              "person"
+            ],
+            "relation_kind": "viewpoint-distance",
+            "source_evidence": [
+              "Crown is near top; upper shoulder continues beyond bottom; full torso is outside the crop."
+            ],
+            "confidence": "high",
+            "causal_origin": "layout",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.spatial-topology:wearing",
+        "owner_key": "spatial.wearing",
+        "scale": "regional",
+        "axis": "topology",
+        "observation": "A broad band crosses the crown and connects to one near-side earcup over the ear, partly embedded in the hair mass.",
+        "source_evidence": [
+          "Visible earcup touches hair at the side of the head; the headband rises over the crown."
+        ],
+        "confidence": "high",
+        "causal_origin": "material-interaction",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.spatial-topology:wearing:cup-contact",
+            "axis": "topology",
+            "visible_result": "The single visible earcup sits directly over the near ear among the hair.",
+            "result_direction": "The single visible earcup sits directly over the near ear among the hair.",
+            "subject_or_region_ids": [
+              "headphones",
+              "hair"
+            ],
+            "relation_kind": "contact-occlusion",
+            "source_evidence": [
+              "Rounded cup lies against head side and covers the near ear."
+            ],
+            "confidence": "high",
+            "causal_origin": "material-interaction",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.spatial-topology:wearing:band-connection",
+            "axis": "topology",
+            "visible_result": "The broad headphone band arches over the crown and joins the visible earcup.",
+            "result_direction": "The broad headphone band arches over the crown and joins the visible earcup.",
+            "subject_or_region_ids": [
+              "headphones",
+              "hair"
+            ],
+            "relation_kind": "support-continuity",
+            "source_evidence": [
+              "Band and earcup form a connected assembly conforming to the head."
+            ],
+            "confidence": "high",
+            "causal_origin": "material-interaction",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.spatial-topology:completion",
+        "owner_key": "spatial.completion",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "Hair hides the ear and much of the far face; only neck, shoulder and a little upper back remain beneath the head.",
+        "source_evidence": [
+          "Near ear is under the cup, far facial side is not visible, and the shoulder/back strip exits the bottom edge."
+        ],
+        "confidence": "high",
+        "causal_origin": "spatial-relation",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [],
+        "atomic_obligations": [
+          {
+            "id": "lane.spatial-topology:completion:body-visibility",
+            "axis": "form",
+            "visible_result": "Only the neck, rounded near shoulder and a sliver of upper back are visible below the bob; the rest of the body stays cropped out.",
+            "result_direction": "Only the neck, rounded near shoulder and a sliver of upper back are visible below the bob; the rest of the body stays cropped out.",
+            "subject_or_region_ids": [
+              "person",
+              "neck-shoulder"
+            ],
+            "relation_kind": "partial-visibility",
+            "source_evidence": [
+              "Bare shoulder/back fragments and thin strap meet bottom boundary."
+            ],
+            "confidence": "high",
+            "causal_origin": "spatial-relation",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.spatial-topology:completion:hair-face-overlap",
+            "axis": "topology",
+            "visible_result": "Loose fringe covers part of the forehead and temple, leaving the near eye, nose, mouth and chin readable.",
+            "result_direction": "Loose fringe covers part of the forehead and temple, leaving the near eye, nose, mouth and chin readable.",
+            "subject_or_region_ids": [
+              "hair",
+              "face"
+            ],
+            "relation_kind": "overlap",
+            "source_evidence": [
+              "Fringe falls in front of the temple and touches the brow/eye-side boundary."
+            ],
+            "confidence": "high",
+            "causal_origin": "spatial-relation",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      }
+    ],
+    "topic_dispositions": [
+      {
+        "topic": "orientation-coverage",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.spatial-topology:profile",
+          "lane.spatial-topology:pitch",
+          "lane.spatial-topology:frame"
+        ]
+      },
+      {
+        "topic": "component-relations",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.spatial-topology:wearing",
+          "lane.spatial-topology:completion"
+        ]
+      },
+      {
+        "topic": "contact-and-occlusion",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.spatial-topology:wearing",
+          "lane.spatial-topology:completion"
+        ]
+      },
+      {
+        "topic": "completion-risk",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.spatial-topology:completion",
+          "lane.spatial-topology:frame"
+        ]
+      }
+    ],
+    "control_requirements": [
+      {
+        "owner_key": "spatial.profile",
+        "requirement": "Camera/crop precede profile and slight chin lift; keep attention direction distinct from placement."
+      },
+      {
+        "owner_key": "spatial.wearing",
+        "requirement": "Earcup/head contact and band connection are physical wearing relations, not arbitrary separated directional labels."
+      },
+      {
+        "owner_key": "spatial.completion",
+        "requirement": "Do not complete hidden face, ear, far shoulder, unseen body or headphone counterpart."
+      }
+    ],
+    "omission_checks": [
+      {
+        "scope": "whole-orientation",
+        "tested_change": "Replace the facial profile and slight lift with neutral frontal alignment.",
+        "verdict": "material",
+        "changed_relations": [
+          "One-eye side profile becomes a two-eye view",
+          "Nose no longer projects screen-right",
+          "Gaze becomes viewer-facing"
+        ],
+        "preserved_relations": [
+          "Headphone category"
+        ],
+        "source_evidence": [
+          "Readable near eye and nose-to-mouth side contour."
+        ]
+      },
+      {
+        "scope": "residual-alignment",
+        "tested_change": "Hold the lateral viewpoint and frame fixed, remove only the small chin lift and straighten the face down onto the neck.",
+        "verdict": "material",
+        "changed_relations": [
+          "Under-chin exposure and gentle upward face direction weaken"
+        ],
+        "preserved_relations": [
+          "Right-facing side view",
+          "head size",
+          "left-center placement"
+        ],
+        "source_evidence": [
+          "Visible under-chin-to-neck transition and slightly raised forward chin."
+        ]
+      }
+    ],
+    "handoffs": [
+      {
+        "to_lane": "integrator",
+        "required_resolution": "Build v6 coverage with all 17 dimensions, preserve uncertain axes without independent controls, bind the two human counterfactuals, and audit literal spatial effects."
+      },
+      {
+        "to_lane": "lane.subject-appearance",
+        "required_resolution": "Own face outline and bob/fringe form; spatial lane only supplies direction, crop and overlap."
+      }
+    ],
+    "conflicts": [],
+    "axis_dispositions": [
+      {
+        "dimension": "frame-placement",
+        "disposition": "invariant",
+        "observation": "Left-center head; substantial screen-right clearance."
+      },
+      {
+        "dimension": "subject-principal-axis",
+        "disposition": "uncertain",
+        "observation": "The neck inclines toward the head, but overall body axis is cropped.",
+        "visibility_limit": "No torso centerline below the shoulder."
+      },
+      {
+        "dimension": "viewpoint-elevation",
+        "disposition": "uncertain",
+        "observation": "Near-lateral view; slight chin lift confounds exact camera elevation.",
+        "visibility_limit": "No reliable horizon and limited underside geometry."
+      },
+      {
+        "dimension": "viewpoint-azimuth",
+        "disposition": "invariant",
+        "observation": "Lateral view of a right-facing facial profile."
+      },
+      {
+        "dimension": "viewpoint-roll",
+        "disposition": "not-material",
+        "observation": "No material camera roll signature.",
+        "neutralization_test": {
+          "tested_change": "Neutralize only a small possible camera roll while keeping head placement, profile, pitch, crop and scale fixed.",
+          "verdict": "preserved",
+          "preserved_relations": [
+            "Right-facing profile",
+            "large left-center head",
+            "forward background clearance"
+          ],
+          "changed_relations": [],
+          "source_evidence": [
+            "Background vertical masses remain near vertical, though defocused."
+          ]
+        }
+      },
+      {
+        "dimension": "viewpoint-distance-foreshortening",
+        "disposition": "invariant",
+        "observation": "Close head-and-shoulder distance without wide-angle facial enlargement."
+      },
+      {
+        "dimension": "human-torso-yaw",
+        "disposition": "uncertain",
+        "observation": "Near shoulder and upper-back strip are visible; full torso yaw is not recoverable.",
+        "visibility_limit": "Only one shoulder and upper crop survive."
+      },
+      {
+        "dimension": "human-torso-pitch",
+        "disposition": "not-visible",
+        "observation": "Torso pitch is cropped.",
+        "visibility_limit": "No complete torso axis."
+      },
+      {
+        "dimension": "human-torso-roll",
+        "disposition": "not-visible",
+        "observation": "Torso roll is cropped.",
+        "visibility_limit": "No bilateral torso landmarks."
+      },
+      {
+        "dimension": "human-head-body-yaw",
+        "disposition": "uncertain",
+        "observation": "Face points right, but yaw relative to torso cannot be separated from the partial lateral camera view.",
+        "visibility_limit": "Far shoulder and chest plane hidden or cropped."
+      },
+      {
+        "dimension": "human-head-body-pitch",
+        "disposition": "invariant",
+        "observation": "Slight chin lift above visible neck; exact angle unmeasured."
+      },
+      {
+        "dimension": "human-head-body-roll",
+        "disposition": "uncertain",
+        "observation": "No reliable bilateral landmarks for independent head roll.",
+        "visibility_limit": "Side profile and hair conceal the far side."
+      },
+      {
+        "dimension": "human-head-body-lateral-offset",
+        "disposition": "uncertain",
+        "observation": "Head-neck screen displacement is apparent but torso center is cropped.",
+        "visibility_limit": "Head position cannot be measured relative to an unseen torso axis."
+      },
+      {
+        "dimension": "human-shoulder-image-slope",
+        "disposition": "not-visible",
+        "observation": "One rounded shoulder contour survives.",
+        "visibility_limit": "No complete two-shoulder line."
+      },
+      {
+        "dimension": "human-shoulder-depth-order",
+        "disposition": "uncertain",
+        "observation": "Near shoulder visible, counterpart hidden; precise order beyond visibility is not recoverable.",
+        "visibility_limit": "Far shoulder is cropped or self-occluded."
+      },
+      {
+        "dimension": "human-attention-direction",
+        "disposition": "invariant",
+        "observation": "Gaze directed screen-right, away from camera."
+      },
+      {
+        "dimension": "cross-component-orientation",
+        "disposition": "uncertain",
+        "observation": "Headphone contact is definite, but no independent face-to-external-target orientation can be inferred.",
+        "visibility_limit": "No readable target of attention; headphones handled through contact/overlap."
+      }
+    ]
+  },
+  {
+    "schema_version": "reverse-image-analysis-lane-report/v2",
+    "lane_id": "lane.subject-appearance",
+    "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+    "source_artifact": {
+      "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "frame": "1085x608"
+    },
+    "execution": {
+      "mode": "sequential-fallback",
+      "independent_context": false,
+      "context_disclosure": "Same integrator context after global and spatial reports."
+    },
+    "status": "complete",
+    "reviewed_modules": [
+      {
+        "id": "core.visual-evidence",
+        "version": 11
+      },
+      {
+        "id": "core.fidelity-discipline",
+        "version": 12
+      },
+      {
+        "id": "subject.human",
+        "version": 22
+      },
+      {
+        "id": "detail.human-face-likeness",
+        "version": 13
+      },
+      {
+        "id": "detail.clothing-fashion",
+        "version": 9
+      }
+    ],
+    "findings": [
+      {
+        "id": "lane.subject-appearance:face",
+        "owner_key": "appearance.face",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "One adult feminine-presenting face has a narrow side silhouette with gentle cheek-to-jaw curvature, a projecting nose, a narrow visible eye and parted lips.",
+        "source_evidence": [
+          "Near eye, nose, mouth and chin are readable, while the far face is hidden."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "medium",
+        "confounders": [
+          "Profile projection, lighting and softness affect apparent contour and surface."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.subject-appearance:face:contour",
+            "axis": "form",
+            "visible_result": "The face has a gently rounded cheek and soft tapering jaw ending in a short rounded chin.",
+            "result_direction": "The face has a gently rounded cheek and soft tapering jaw ending in a short rounded chin.",
+            "subject_or_region_ids": [
+              "face"
+            ],
+            "relation_kind": "visible-contour",
+            "source_evidence": [
+              "Cheek transitions softly toward the small curved chin rather than a sharp square jaw."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.subject-appearance:face:eye",
+            "axis": "form",
+            "visible_result": "The visible eye is narrow beneath a defined upper lid, with the brow partly screened by fringe.",
+            "result_direction": "The visible eye is narrow beneath a defined upper lid, with the brow partly screened by fringe.",
+            "subject_or_region_ids": [
+              "face"
+            ],
+            "relation_kind": "feature-shape",
+            "source_evidence": [
+              "The near eye opening is elongated and relatively narrow, with dark upper-lid definition."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.subject-appearance:face:nose",
+            "axis": "form",
+            "visible_result": "The nose has a smooth projecting bridge and a softly rounded tip.",
+            "result_direction": "The nose has a smooth projecting bridge and a softly rounded tip.",
+            "subject_or_region_ids": [
+              "face"
+            ],
+            "relation_kind": "feature-projection",
+            "source_evidence": [
+              "The nose projects clearly beyond the mouth, with a smooth bridge-to-tip contour."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.subject-appearance:face:mouth",
+            "axis": "form",
+            "visible_result": "Small lips are gently parted with a slightly fuller lower lip and no broad smile.",
+            "result_direction": "Small lips are gently parted with a slightly fuller lower lip and no broad smile.",
+            "subject_or_region_ids": [
+              "face"
+            ],
+            "relation_kind": "expression",
+            "source_evidence": [
+              "A slim dark opening separates the lips; mouth corners are relaxed."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.subject-appearance:hair",
+        "owner_key": "appearance.hair",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "A voluminous chin-to-nape bob forms a rounded irregular mass with loose bent ends, long side fringe and fine flyaways.",
+        "source_evidence": [
+          "Hair covers the near ear around the cup, curves under toward the nape, and sweeps down in front of the temple."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "medium",
+        "confounders": [
+          "Profile projection, lighting and softness affect apparent contour and surface."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.subject-appearance:hair:bob",
+            "axis": "form",
+            "visible_result": "The bob is full and rounded, ending around chin-to-nape level with uneven loose bends at its lower edge.",
+            "result_direction": "The bob is full and rounded, ending around chin-to-nape level with uneven loose bends at its lower edge.",
+            "subject_or_region_ids": [
+              "hair"
+            ],
+            "relation_kind": "silhouette",
+            "source_evidence": [
+              "Dense rounded back hair and lightly curling lower ends frame the neck."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.subject-appearance:hair:fringe",
+            "axis": "form",
+            "visible_result": "Long side fringe sweeps over part of the forehead and temple, with separated wisps beside the cheek.",
+            "result_direction": "Long side fringe sweeps over part of the forehead and temple, with separated wisps beside the cheek.",
+            "subject_or_region_ids": [
+              "hair",
+              "face"
+            ],
+            "relation_kind": "hair-face-boundary",
+            "source_evidence": [
+              "A loose front section descends beside the visible eye toward the cheek."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.subject-appearance:hair:flyaways",
+            "axis": "form",
+            "visible_result": "Fine irregular flyaway strands extend around the crown and rear of the bob.",
+            "result_direction": "Fine irregular flyaway strands extend around the crown and rear of the bob.",
+            "subject_or_region_ids": [
+              "hair"
+            ],
+            "relation_kind": "surface-boundary",
+            "source_evidence": [
+              "Numerous thin hairs rise and arc outside the dense outline."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.subject-appearance:headphones",
+        "owner_key": "appearance.headphones",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "The accessory consists of a broad flat headband and a large softly rounded padded earcup; no readable brand is visible.",
+        "source_evidence": [
+          "Broad band crosses the head, and the near cup has rounded panel contours."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "medium",
+        "confounders": [
+          "Profile projection, lighting and softness affect apparent contour and surface."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.subject-appearance:headphones:silhouette",
+            "axis": "form",
+            "visible_result": "A broad flat headphone band and one rounded padded earcup keep simple substantial shapes.",
+            "result_direction": "A broad flat headphone band and one rounded padded earcup keep simple substantial shapes.",
+            "subject_or_region_ids": [
+              "headphones"
+            ],
+            "relation_kind": "accessory-form",
+            "source_evidence": [
+              "The cup is thick and smooth with softly rounded corners; band is broad and flat."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.subject-appearance:strap",
+        "owner_key": "appearance.strap",
+        "scale": "regional",
+        "axis": "form",
+        "observation": "A single thin shoulder strap lies over the otherwise bare upper shoulder; most clothing is cropped out.",
+        "source_evidence": [
+          "Thin strap follows a curved diagonal along shoulder into the lower frame."
+        ],
+        "confidence": "high",
+        "causal_origin": "spatial-relation",
+        "materiality": "material",
+        "proposed_role": "supporting",
+        "default_drift_risk": "medium",
+        "confounders": [
+          "Profile projection, lighting and softness affect apparent contour and surface."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.subject-appearance:strap:coverage",
+            "axis": "form",
+            "visible_result": "Only one thin strap is visible over the bare shoulder, with the rest of the garment below the bottom crop.",
+            "result_direction": "Only one thin strap is visible over the bare shoulder, with the rest of the garment below the bottom crop.",
+            "subject_or_region_ids": [
+              "neck-shoulder",
+              "strap"
+            ],
+            "relation_kind": "garment-visibility",
+            "source_evidence": [
+              "Narrow strap is visible; no complete neckline or bodice can be read."
+            ],
+            "confidence": "high",
+            "causal_origin": "spatial-relation",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "supporting",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.subject-appearance:skin",
+        "owner_key": "appearance.skin",
+        "scale": "regional",
+        "axis": "surface",
+        "observation": "Displayed face and shoulder skin is softly resolved and gently varied, without hard specular shine or readable pore detail.",
+        "source_evidence": [
+          "Cheek and shoulder show broad softly graded surfaces; fine detail is limited by haze."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "supporting",
+        "default_drift_risk": "medium",
+        "confounders": [
+          "Profile projection, lighting and softness affect apparent contour and surface."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.subject-appearance:skin:finish",
+            "axis": "surface",
+            "visible_result": "Displayed skin has a soft mostly matte finish with natural faint tonal variation, capped by the photographic softness.",
+            "result_direction": "Displayed skin has a soft mostly matte finish with natural faint tonal variation, capped by the photographic softness.",
+            "subject_or_region_ids": [
+              "face",
+              "neck-shoulder"
+            ],
+            "relation_kind": "displayed-finish",
+            "source_evidence": [
+              "There are gentle variations on cheek and shoulder, not glossy highlights or crisp pore detail."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "supporting",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      }
+    ],
+    "topic_dispositions": [
+      {
+        "topic": "subject-role",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.subject-appearance:face",
+          "lane.subject-appearance:hair",
+          "lane.subject-appearance:headphones"
+        ]
+      },
+      {
+        "topic": "visible-form",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.subject-appearance:face",
+          "lane.subject-appearance:hair",
+          "lane.subject-appearance:headphones",
+          "lane.subject-appearance:strap",
+          "lane.subject-appearance:skin"
+        ]
+      },
+      {
+        "topic": "appearance-drift-risk",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.subject-appearance:face",
+          "lane.subject-appearance:hair",
+          "lane.subject-appearance:strap"
+        ]
+      },
+      {
+        "topic": "intrinsic-induced-confounds",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.subject-appearance:skin",
+          "lane.subject-appearance:face"
+        ]
+      }
+    ],
+    "control_requirements": [
+      {
+        "owner_key": "appearance.face",
+        "requirement": "Use compact profile-specific geometry, not an imagined frontal face or an attractive/model-like prior."
+      },
+      {
+        "owner_key": "appearance.hair",
+        "requirement": "Keep the irregular bob and fringe overlap at observed softness; detail descriptions must not sharpen every strand."
+      },
+      {
+        "owner_key": "appearance.strap",
+        "requirement": "The narrow strap is a compressed supporting cue and must not expand to a complete outfit."
+      }
+    ],
+    "omission_checks": [
+      {
+        "finding_id": "lane.subject-appearance:face",
+        "verdict": "material-drift",
+        "tested_change": "Keep headphones and crop while substituting a square jaw, broad open eye or wide smile.",
+        "source_evidence": [
+          "Rounded lower face, narrow eye and small parted mouth differ visibly."
+        ]
+      },
+      {
+        "finding_id": "lane.subject-appearance:hair",
+        "verdict": "material-drift",
+        "tested_change": "Replace bob with long straight hair or a sleek tucked hairstyle.",
+        "source_evidence": [
+          "Round short hair mass and flyaway edge define the head silhouette."
+        ]
+      }
+    ],
+    "handoffs": [
+      {
+        "to_lane": "lane.color-light-material",
+        "required_resolution": "Own displayed skin value/chroma/hue, muted hair body color, warm hair rim and headphone yellow independently. Do not interpret displayed skin as ethnicity or innate pigmentation."
+      },
+      {
+        "to_lane": "integrator",
+        "required_resolution": "Bind the human-appearance/v3 decisions to actual emitted geometry and Color/Tone region IDs; preserve unresolved text-only likeness risk."
+      }
+    ],
+    "conflicts": [],
+    "human_appearance_analysis": {
+      "schema_version": "human-appearance/v3",
+      "subject_id": "person",
+      "face_visibility": "readable",
+      "frame_prominence": "primary",
+      "fidelity_salience": "primary",
+      "identity_context": {
+        "disposition": "absent",
+        "context_use": "none",
+        "prompt_disposition": "omit",
+        "viewer_priority": "not-material"
+      },
+      "person_prior": {
+        "disposition": "uncertain",
+        "confidence": "medium",
+        "candidate_support": "uncertain",
+        "default_drift_risk": "uncertain",
+        "local_geometry_sufficiency": "uncertain",
+        "source_evidence": [
+          "Only one profile is available and no exact identity context is supplied."
+        ],
+        "non_emission_reason": "Use literal visible geometry without installing a broad face archetype.",
+        "omission_counterfactual": {
+          "verdict": "uncertain",
+          "source_evidence": [
+            "Text-only likeness reliability has not been calibrated."
+          ]
+        },
+        "residual_risk": "Literal profile controls cannot establish exact personal likeness from a single view."
+      },
+      "appearance_gestalt": {
+        "scope": "person-aesthetic",
+        "disposition": "omit",
+        "confidence": "high",
+        "candidate_support": "unsupported",
+        "viewer_priority": "not-material",
+        "default_drift_risk": "low",
+        "source_evidence": [
+          "Visible hairstyle, feature contour and expression sufficiently describe the presentation."
+        ],
+        "decomposition_control_ids": [],
+        "effect_budget": {
+          "intended_dimensions": [],
+          "protected_dimensions": [
+            "identity-context",
+            "pose",
+            "crop",
+            "face-form",
+            "skin-surface",
+            "lighting",
+            "color-tone",
+            "capture-polish"
+          ],
+          "source_evidence": [
+            "No evaluative person descriptor is needed to describe the source."
+          ]
+        },
+        "omission_counterfactual": {
+          "verdict": "preserved",
+          "source_evidence": [
+            "The bob, headphones, profile and softened capture remain expressible without a beauty label."
+          ]
+        },
+        "non_emission_reason": "No omission-sensitive evaluative gestalt is supported."
+      },
+      "skin_surface": {
+        "disposition": "material",
+        "viewer_priority": "P1",
+        "observation_scope": "source-visible",
+        "semantic_use": "displayed-surface",
+        "confidence": "high",
+        "source_evidence": [
+          "Visible cheek, neck and shoulder provide a sizable softly lit displayed surface."
+        ],
+        "region_ids": [
+          "face-skin",
+          "shoulder-skin"
+        ],
+        "coverage": "exposed",
+        "descriptor_disposition": "emit"
+      }
+    }
+  },
+  {
+    "schema_version": "reverse-image-analysis-lane-report/v2",
+    "lane_id": "lane.color-light-material",
+    "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+    "source_artifact": {
+      "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "frame": "1085x608"
+    },
+    "execution": {
+      "mode": "sequential-fallback",
+      "independent_context": false,
+      "context_disclosure": "Same integrator context after prior lane reports."
+    },
+    "status": "complete",
+    "reviewed_modules": [
+      {
+        "id": "core.visual-evidence",
+        "version": 11
+      },
+      {
+        "id": "core.fidelity-discipline",
+        "version": 12
+      },
+      {
+        "id": "core.background-color",
+        "version": 7
+      },
+      {
+        "id": "detail.color-tone-fidelity",
+        "version": 12
+      },
+      {
+        "id": "detail.light-form-fidelity",
+        "version": 11
+      }
+    ],
+    "findings": [
+      {
+        "id": "lane.color-light-material:headphone-color",
+        "owner_key": "color-light.headphone-color",
+        "scale": "regional",
+        "axis": "color",
+        "observation": "The headphones form the most saturated local accent, with a golden-yellow surface of moderately high displayed value.",
+        "source_evidence": [
+          "Near earcup is conspicuously yellow against subdued olive-brown hair."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:headphone-color:hue",
+            "axis": "color",
+            "visible_result": "The headphone surface is golden yellow.",
+            "result_direction": "The headphone surface is golden yellow.",
+            "subject_or_region_ids": [
+              "headphones"
+            ],
+            "relation_kind": "intrinsic-hue",
+            "source_evidence": [
+              "Band and cup share yellow body color."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:headphone-color:chroma",
+            "axis": "color",
+            "visible_result": "The headphones have stronger color saturation than the hair, skin and blurred street.",
+            "result_direction": "The headphones have stronger color saturation than the hair, skin and blurred street.",
+            "subject_or_region_ids": [
+              "headphones"
+            ],
+            "relation_kind": "intrinsic-chroma",
+            "source_evidence": [
+              "Yellow cup stands out from surrounding muted regions."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:headphone-color:value",
+            "axis": "color",
+            "visible_result": "The headphone body is moderately light, without becoming pale cream or fluorescent white.",
+            "result_direction": "The headphone body is moderately light, without becoming pale cream or fluorescent white.",
+            "subject_or_region_ids": [
+              "headphones"
+            ],
+            "relation_kind": "intrinsic-value",
+            "source_evidence": [
+              "The cup stays distinctly darker than the brightest hair rim."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.color-light-material:hair-color",
+        "owner_key": "color-light.hair-color",
+        "scale": "regional",
+        "axis": "color",
+        "observation": "The dense hair body is subdued ashy olive-brown beneath its bright warm rim.",
+        "source_evidence": [
+          "Inner bob has grayish brown-green midtones and darker strands; outer hairs are much lighter."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:hair-color:hue",
+            "axis": "color",
+            "visible_result": "The dense hair body has an ashy olive-brown hue.",
+            "result_direction": "The dense hair body has an ashy olive-brown hue.",
+            "subject_or_region_ids": [
+              "hair-body"
+            ],
+            "relation_kind": "intrinsic-hue",
+            "source_evidence": [
+              "Inner hair is brown with a muted greenish cast."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:hair-color:chroma",
+            "axis": "color",
+            "visible_result": "The dense hair body remains low in chroma.",
+            "result_direction": "The dense hair body remains low in chroma.",
+            "subject_or_region_ids": [
+              "hair-body"
+            ],
+            "relation_kind": "intrinsic-chroma",
+            "source_evidence": [
+              "Hair mass is much less saturated than the yellow headphones."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:hair-color:value",
+            "axis": "color",
+            "visible_result": "The dense hair body remains medium-dark rather than deep black.",
+            "result_direction": "The dense hair body remains medium-dark rather than deep black.",
+            "subject_or_region_ids": [
+              "hair-body"
+            ],
+            "relation_kind": "intrinsic-value",
+            "source_evidence": [
+              "Interior hair strands remain readable in lifted darker midtones."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.color-light-material:skin-color",
+        "owner_key": "color-light.skin-color",
+        "scale": "regional",
+        "axis": "color",
+        "observation": "The displayed face, neck and shoulder have light, restrained warm peach-beige tones.",
+        "source_evidence": [
+          "Cheek and shoulder are light peach-tan under the pale warm capture; lip color is a small muted pink-brown accent."
+        ],
+        "confidence": "high",
+        "causal_origin": "intrinsic",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:skin-color:value",
+            "axis": "color",
+            "visible_result": "Displayed facial skin and shoulder skin are light in value, below the luminous hair highlights.",
+            "result_direction": "Displayed facial skin and shoulder skin are light in value, below the luminous hair highlights.",
+            "subject_or_region_ids": [
+              "face-skin",
+              "shoulder-skin"
+            ],
+            "relation_kind": "intrinsic-displayed-value",
+            "source_evidence": [
+              "Cheek/shoulder remain brighter than hair interior but not as bright as rim."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:skin-color:chroma",
+            "axis": "color",
+            "visible_result": "Displayed facial skin and shoulder skin have restrained saturation.",
+            "result_direction": "Displayed facial skin and shoulder skin have restrained saturation.",
+            "subject_or_region_ids": [
+              "face-skin",
+              "shoulder-skin"
+            ],
+            "relation_kind": "intrinsic-displayed-chroma",
+            "source_evidence": [
+              "Skin reads muted rather than strongly orange or rosy."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:skin-color:hue",
+            "axis": "color",
+            "visible_result": "Displayed facial skin and shoulder skin have a warm peach-beige hue.",
+            "result_direction": "Displayed facial skin and shoulder skin have a warm peach-beige hue.",
+            "subject_or_region_ids": [
+              "face-skin",
+              "shoulder-skin"
+            ],
+            "relation_kind": "intrinsic-displayed-hue",
+            "source_evidence": [
+              "Cheek and shoulder contain peach and beige warmth under the observed light."
+            ],
+            "confidence": "high",
+            "causal_origin": "intrinsic",
+            "attribution_status": "resolved",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.color-light-material:palette",
+        "owner_key": "color-light.palette",
+        "scale": "regional",
+        "axis": "color",
+        "observation": "The environment is predominantly muted sage/teal-green and gray, with scattered tan and warm brown areas.",
+        "source_evidence": [
+          "The right background is green-teal, with light tan silhouettes and warmer high-background patches."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "supporting",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:palette:background-hue",
+            "axis": "color",
+            "visible_result": "The blurred street palette is predominantly sage and teal-gray with scattered tan-brown patches.",
+            "result_direction": "The blurred street palette is predominantly sage and teal-gray with scattered tan-brown patches.",
+            "subject_or_region_ids": [
+              "background"
+            ],
+            "relation_kind": "displayed-palette",
+            "source_evidence": [
+              "Cool greenish masses contrast against yellow headphone and peach skin."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "supporting",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:palette:background-chroma",
+            "axis": "color",
+            "visible_result": "Background colors stay subdued.",
+            "result_direction": "Background colors stay subdued.",
+            "subject_or_region_ids": [
+              "background"
+            ],
+            "relation_kind": "displayed-chroma",
+            "source_evidence": [
+              "Neither building nor pedestrian color patches rival the headphone saturation."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "supporting",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.color-light-material:tone",
+        "owner_key": "color-light.tone",
+        "scale": "global",
+        "axis": "color",
+        "observation": "A pale luminous veil softens the image, lifts dark tones, and suppresses fine contrast while preserving the strong hair-boundary separation.",
+        "source_evidence": [
+          "Dark hair and distant figures remain open, brightest hair strands bloom, and facial microtexture is subdued."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:tone:shadow-floor",
+            "axis": "color",
+            "visible_result": "Global shadow tones remain lifted and open rather than black.",
+            "result_direction": "Global shadow tones remain lifted and open rather than black.",
+            "subject_or_region_ids": [
+              "global"
+            ],
+            "relation_kind": "shadow-floor",
+            "source_evidence": [
+              "Dark background clothing and inner hair carry green-gray detail."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:tone:microcontrast",
+            "axis": "color",
+            "visible_result": "The image has subdued microcontrast.",
+            "result_direction": "The image has subdued microcontrast.",
+            "subject_or_region_ids": [
+              "global"
+            ],
+            "relation_kind": "microcontrast",
+            "source_evidence": [
+              "Fine facial and background edge contrast is suppressed."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:tone:highlights",
+            "axis": "color",
+            "visible_result": "Bright hair highlights have a pale blooming, compressed rolloff, with the finest top strands partly washed together.",
+            "result_direction": "Bright hair highlights have a pale blooming, compressed rolloff, with the finest top strands partly washed together.",
+            "subject_or_region_ids": [
+              "hair-rim"
+            ],
+            "relation_kind": "highlight-rolloff",
+            "source_evidence": [
+              "Upper and rear rim becomes near-cream and softly merged at its brightest."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:tone:veil",
+            "axis": "color",
+            "visible_result": "A pale luminous haze is visible across the photograph without erasing the profile.",
+            "result_direction": "A pale luminous haze is visible across the photograph without erasing the profile.",
+            "subject_or_region_ids": [
+              "global"
+            ],
+            "relation_kind": "displayed-exposure-veil",
+            "source_evidence": [
+              "Foreground and background share a lightly washed, soft luminous appearance."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.color-light-material:light",
+        "owner_key": "color-light.light",
+        "scale": "regional",
+        "axis": "light-to-form",
+        "observation": "A strong luminous rim runs around the crown and rear bob while the face interior is lit much more softly; the cheek and jaw retain gentle modeling.",
+        "source_evidence": [
+          "Top-left crown and rear/outer hair are intensely lit; near cheek and neck have broad low-contrast gradients."
+        ],
+        "confidence": "high",
+        "causal_origin": "lighting-shadow",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Single displayed JPEG has no embedded ICC profile or reliable neutral anchor; physical causes are not unique."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.color-light-material:light:rim",
+            "axis": "light-to-form",
+            "visible_result": "Bright backlight outlines the crown and rear of the bob and catches the fine flyaways.",
+            "result_direction": "Bright backlight outlines the crown and rear of the bob and catches the fine flyaways.",
+            "subject_or_region_ids": [
+              "hair-rim",
+              "hair-body"
+            ],
+            "relation_kind": "rim-to-body-separation",
+            "source_evidence": [
+              "The outer hair is much brighter than the dense inner mass."
+            ],
+            "confidence": "high",
+            "causal_origin": "lighting-shadow",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:light:face-model",
+            "axis": "light-to-form",
+            "visible_result": "The cheek remains broadly lit with gentle local modeling, softer than the bright hair rim.",
+            "result_direction": "The cheek remains broadly lit with gentle local modeling, softer than the bright hair rim.",
+            "subject_or_region_ids": [
+              "face",
+              "hair-rim"
+            ],
+            "relation_kind": "local-form-contrast",
+            "source_evidence": [
+              "Face plane is softly illuminated without a hard split shadow."
+            ],
+            "confidence": "high",
+            "causal_origin": "lighting-shadow",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:light:neck-transition",
+            "axis": "light-to-form",
+            "visible_result": "A shallow soft shadow beneath the raised chin grades into the neck.",
+            "result_direction": "A shallow soft shadow beneath the raised chin grades into the neck.",
+            "subject_or_region_ids": [
+              "under-chin",
+              "neck-shoulder"
+            ],
+            "relation_kind": "shadow-gradient",
+            "source_evidence": [
+              "The underside of jaw darkens gradually toward the upper neck."
+            ],
+            "confidence": "high",
+            "causal_origin": "lighting-shadow",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.color-light-material:light:headphone-response",
+            "axis": "light-to-form",
+            "visible_result": "The earcup has a broad diffuse highlight and restrained surface shine.",
+            "result_direction": "The earcup has a broad diffuse highlight and restrained surface shine.",
+            "subject_or_region_ids": [
+              "headphones"
+            ],
+            "relation_kind": "material-response",
+            "source_evidence": [
+              "Cup surface has rounded soft shading, not a hard mirror highlight."
+            ],
+            "confidence": "high",
+            "causal_origin": "lighting-shadow",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      }
+    ],
+    "topic_dispositions": [
+      {
+        "topic": "intrinsic-color",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.color-light-material:headphone-color",
+          "lane.color-light-material:hair-color",
+          "lane.color-light-material:skin-color"
+        ]
+      },
+      {
+        "topic": "displayed-tone-scope",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.color-light-material:tone",
+          "lane.color-light-material:palette",
+          "lane.color-light-material:skin-color"
+        ]
+      },
+      {
+        "topic": "illumination-and-shadow",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.color-light-material:light",
+          "lane.color-light-material:tone"
+        ]
+      },
+      {
+        "topic": "material-response",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.color-light-material:light"
+        ]
+      }
+    ],
+    "control_requirements": [
+      {
+        "requirement": "Keep headphone value/chroma/hue as separate owned axes; hair body and skin likewise use region-specific controls."
+      },
+      {
+        "requirement": "Place profile and chin relation before the pose-bound rim/face/neck light results, and put overlapping tone controls after light controls."
+      },
+      {
+        "requirement": "Do not replace the regional rim-to-hair and cheek-to-rim relationships with a generic warm/vintage/beautiful-light label."
+      }
+    ],
+    "omission_checks": [
+      {
+        "finding_id": "lane.color-light-material:light",
+        "verdict": "material-drift",
+        "tested_change": "Keep average exposure but light the face frontally and remove the hair rim.",
+        "source_evidence": [
+          "Halo-like hair boundary and softer front plane create the source signature."
+        ]
+      },
+      {
+        "finding_id": "lane.color-light-material:headphone-color",
+        "verdict": "material-drift",
+        "tested_change": "Keep headphone shape but make it neutral gray.",
+        "source_evidence": [
+          "Golden yellow is the strongest localized color accent."
+        ]
+      },
+      {
+        "finding_id": "lane.color-light-material:tone",
+        "verdict": "material-drift",
+        "tested_change": "Keep pose and colors but deepen blacks and increase fine contrast.",
+        "source_evidence": [
+          "The captured appearance is visibly pale and softened with open dark tones."
+        ]
+      }
+    ],
+    "handoffs": [
+      {
+        "to_lane": "integrator",
+        "required_resolution": "Build separate Color/Tone and Light/Form ledgers; preserve the bright hair versus soft cheek and under-chin gradient while changing no uncertain physical rig dimensions."
+      },
+      {
+        "to_lane": "lane.medium-aesthetic-capture",
+        "required_resolution": "Merge image haze/softness evidence without duplicate global tone adjectives; capture owns optical detail ceiling, color owns shadow floor/microcontrast/rolloff."
+      }
+    ],
+    "conflicts": [],
+    "source_hypothesis": {
+      "model_type": "physical-light",
+      "source_count": "one-dominant",
+      "camera_axis_offset": "strong",
+      "elevation": "high",
+      "front_side_back_relation": "Main bright light is behind and toward screen-left relative to the head.",
+      "apparent_angular_size": "uncertain",
+      "fill_structure": "moderate",
+      "confidence": "medium",
+      "actuation": "physical-plus-result",
+      "source_evidence": [
+        "Crown, rear hair and fine outer strands light much more strongly than frontal cheek."
+      ]
+    },
+    "scope_notes": {
+      "observation_scope": "source-visible",
+      "profile_status": "no embedded ICC; assumed displayed space",
+      "neutral_anchor_status": "unavailable",
+      "uncertainty_note": "No reliable neutral surface establishes a unique white balance; preserved relative palette rather than numeric reflectance.",
+      "displayed_skin_semantics": "Only captured surface appearance, not biological or demographic color.",
+      "measurement_status": "No color measurements performed before prompt drafting; literal directions from inspected pixels."
+    }
+  },
+  {
+    "schema_version": "reverse-image-analysis-lane-report/v2",
+    "lane_id": "lane.medium-aesthetic-capture",
+    "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+    "source_artifact": {
+      "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+      "frame": "1085x608"
+    },
+    "execution": {
+      "mode": "sequential-fallback",
+      "independent_context": false,
+      "context_disclosure": "Same integrator context after previous lane reports."
+    },
+    "status": "complete",
+    "reviewed_modules": [
+      {
+        "id": "core.visual-evidence",
+        "version": 11
+      },
+      {
+        "id": "core.fidelity-discipline",
+        "version": 12
+      },
+      {
+        "id": "medium.photographic-capture",
+        "version": 13
+      },
+      {
+        "id": "detail.low-quality-artifacts",
+        "version": 4
+      }
+    ],
+    "findings": [
+      {
+        "id": "lane.medium-aesthetic-capture:photography",
+        "owner_key": "capture.photography",
+        "scale": "global",
+        "axis": "surface",
+        "observation": "The medium reads as a photographic capture with continuous texture, coherent light, and depth-dependent detail.",
+        "source_evidence": [
+          "Hair strands, rounded skin surfaces and progressively defocused street forms share coherent capture behavior."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Exact camera, lens, sensor, film, filter and processing cannot be identified."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.medium-aesthetic-capture:photography:medium",
+            "axis": "surface",
+            "visible_result": "Photographic rendering retains naturally continuous surfaces rather than painted outlines or CG surfaces.",
+            "result_direction": "Photographic rendering retains naturally continuous surfaces rather than painted outlines or CG surfaces.",
+            "subject_or_region_ids": [
+              "person",
+              "background"
+            ],
+            "relation_kind": "medium",
+            "source_evidence": [
+              "Hair strands, rounded skin surfaces and progressively defocused street forms share coherent capture behavior."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.medium-aesthetic-capture:softness",
+        "owner_key": "capture.softness",
+        "scale": "global",
+        "axis": "sharpness",
+        "observation": "Foreground remains softly resolved while background is substantially more defocused.",
+        "source_evidence": [
+          "The eye and earcup are readable but their edges are gentle; street figures lack facial detail."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Exact camera, lens, sensor, film, filter and processing cannot be identified."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.medium-aesthetic-capture:softness:foreground",
+            "axis": "sharpness",
+            "visible_result": "The main face, hair and headphones stay softly resolved rather than razor sharp.",
+            "result_direction": "The main face, hair and headphones stay softly resolved rather than razor sharp.",
+            "subject_or_region_ids": [
+              "person"
+            ],
+            "relation_kind": "focus-ceiling",
+            "source_evidence": [
+              "The eye and earcup are readable but their edges are gentle; street figures lack facial detail."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          },
+          {
+            "id": "lane.medium-aesthetic-capture:softness:background",
+            "axis": "sharpness",
+            "visible_result": "The street and pedestrian figures remain heavily defocused with no readable lettering or faces.",
+            "result_direction": "The street and pedestrian figures remain heavily defocused with no readable lettering or faces.",
+            "subject_or_region_ids": [
+              "background"
+            ],
+            "relation_kind": "depth-focus-hierarchy",
+            "source_evidence": [
+              "The eye and earcup are readable but their edges are gentle; street figures lack facial detail."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      },
+      {
+        "id": "lane.medium-aesthetic-capture:bloom",
+        "owner_key": "capture.bloom",
+        "scale": "global",
+        "axis": "surface",
+        "observation": "Fine bright hair has diffuse blooming edges and the photo carries a subtle fine texture.",
+        "source_evidence": [
+          "The brightest flyaway strands spread softly into surrounding tones; smooth areas retain faint small-scale texture."
+        ],
+        "confidence": "high",
+        "causal_origin": "processing",
+        "materiality": "material",
+        "proposed_role": "primary",
+        "default_drift_risk": "high",
+        "confounders": [
+          "Exact camera, lens, sensor, film, filter and processing cannot be identified."
+        ],
+        "atomic_obligations": [
+          {
+            "id": "lane.medium-aesthetic-capture:bloom:bloom",
+            "axis": "surface",
+            "visible_result": "A soft diffuse bloom survives around the brightest fine hair.",
+            "result_direction": "A soft diffuse bloom survives around the brightest fine hair.",
+            "subject_or_region_ids": [
+              "hair-rim"
+            ],
+            "relation_kind": "optical-bloom",
+            "source_evidence": [
+              "The brightest flyaway strands spread softly into surrounding tones; smooth areas retain faint small-scale texture."
+            ],
+            "confidence": "high",
+            "causal_origin": "processing",
+            "attribution_status": "confounded",
+            "materiality": "material",
+            "proposed_role": "primary",
+            "target_strength": "moderate",
+            "confounders": []
+          }
+        ]
+      }
+    ],
+    "topic_dispositions": [
+      {
+        "topic": "medium-and-process",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.medium-aesthetic-capture:photography"
+        ]
+      },
+      {
+        "topic": "capture-fidelity-ceiling",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.medium-aesthetic-capture:softness"
+        ]
+      },
+      {
+        "topic": "production-aesthetic",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.medium-aesthetic-capture:photography",
+          "lane.medium-aesthetic-capture:softness",
+          "lane.medium-aesthetic-capture:bloom"
+        ]
+      },
+      {
+        "topic": "artifact-preservation",
+        "disposition": "analyzed",
+        "finding_ids": [
+          "lane.medium-aesthetic-capture:softness",
+          "lane.medium-aesthetic-capture:bloom"
+        ]
+      }
+    ],
+    "control_requirements": [
+      {
+        "requirement": "Place photographic softness ceiling early. Preserve relative foreground/background resolution without reusing a general sharpness upgrade."
+      },
+      {
+        "requirement": "One owner for hair bloom; keep its luminous rolloff distinct from detailed hair geometry and backlight placement."
+      }
+    ],
+    "omission_checks": [
+      {
+        "scope": "capture",
+        "verdict": "material-drift",
+        "tested_change": "Render the same subject as a crisp commercial portrait with a clean studio-grade background.",
+        "source_evidence": [
+          "Both source subject softness and blurred occupied street would be lost."
+        ]
+      }
+    ],
+    "handoffs": [
+      {
+        "to_lane": "integrator",
+        "required_resolution": "Merge repeated global, appearance and capture softness/bloom findings by causal owner. Keep microscopic grain and processing origin uncertain rather than inventing a film preset."
+      }
+    ],
+    "conflicts": [],
+    "artifact_dispositions": {
+      "haze": "material, handoff to Color/Tone veil ownership",
+      "highlight_bloom": "material, merge with Color/Tone highlight rolloff or a single generic surface owner",
+      "foreground_softness": "material",
+      "background_defocus": "material",
+      "JPEG_blocking": "not-material; file format alone does not establish conspicuous visual blocks",
+      "motion_smear": "not-material; no stable dominant directional smear observed",
+      "fine_grain": "uncertain; faint texture cannot establish film grain or sensor origin",
+      "retouching": "uncertain; optical softness prevents confident inference",
+      "cosmetics": "uncertain; dark upper lid is visible but exact makeup process is not identifiable",
+      "production_label": "omit; no era, film stock, named artist or fashion genre required"
+    }
+  }
+]

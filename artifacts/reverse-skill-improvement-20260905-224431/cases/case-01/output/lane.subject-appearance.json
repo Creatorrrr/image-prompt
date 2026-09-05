@@ -1,0 +1,506 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.subject-appearance",
+  "route_fingerprint": "674fd5df29b89d99517e2aa7d8cff767873a77b1ddfc9295756fddea1041915a",
+  "source_artifact": {
+    "sha256": "cf1cd9cd11ccc5748e03f75e6d9c6b01943728d03651712c1d84f3f13a75874d",
+    "frame": "1085x608"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "context_disclosure": "Same integrator context after global and spatial reports."
+  },
+  "status": "complete",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "subject.human",
+      "version": 22
+    },
+    {
+      "id": "detail.human-face-likeness",
+      "version": 13
+    },
+    {
+      "id": "detail.clothing-fashion",
+      "version": 9
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.subject-appearance:face",
+      "owner_key": "appearance.face",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "One adult feminine-presenting face has a narrow side silhouette with gentle cheek-to-jaw curvature, a projecting nose, a narrow visible eye and parted lips.",
+      "source_evidence": [
+        "Near eye, nose, mouth and chin are readable, while the far face is hidden."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Profile projection, lighting and softness affect apparent contour and surface."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:face:contour",
+          "axis": "form",
+          "visible_result": "The face has a gently rounded cheek and soft tapering jaw ending in a short rounded chin.",
+          "result_direction": "The face has a gently rounded cheek and soft tapering jaw ending in a short rounded chin.",
+          "subject_or_region_ids": [
+            "face"
+          ],
+          "relation_kind": "visible-contour",
+          "source_evidence": [
+            "Cheek transitions softly toward the small curved chin rather than a sharp square jaw."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:face:eye",
+          "axis": "form",
+          "visible_result": "The visible eye is narrow beneath a defined upper lid, with the brow partly screened by fringe.",
+          "result_direction": "The visible eye is narrow beneath a defined upper lid, with the brow partly screened by fringe.",
+          "subject_or_region_ids": [
+            "face"
+          ],
+          "relation_kind": "feature-shape",
+          "source_evidence": [
+            "The near eye opening is elongated and relatively narrow, with dark upper-lid definition."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:face:nose",
+          "axis": "form",
+          "visible_result": "The nose has a smooth projecting bridge and a softly rounded tip.",
+          "result_direction": "The nose has a smooth projecting bridge and a softly rounded tip.",
+          "subject_or_region_ids": [
+            "face"
+          ],
+          "relation_kind": "feature-projection",
+          "source_evidence": [
+            "The nose projects clearly beyond the mouth, with a smooth bridge-to-tip contour."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:face:mouth",
+          "axis": "form",
+          "visible_result": "Small lips are gently parted with a slightly fuller lower lip and no broad smile.",
+          "result_direction": "Small lips are gently parted with a slightly fuller lower lip and no broad smile.",
+          "subject_or_region_ids": [
+            "face"
+          ],
+          "relation_kind": "expression",
+          "source_evidence": [
+            "A slim dark opening separates the lips; mouth corners are relaxed."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:hair",
+      "owner_key": "appearance.hair",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "A voluminous chin-to-nape bob forms a rounded irregular mass with loose bent ends, long side fringe and fine flyaways.",
+      "source_evidence": [
+        "Hair covers the near ear around the cup, curves under toward the nape, and sweeps down in front of the temple."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Profile projection, lighting and softness affect apparent contour and surface."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:hair:bob",
+          "axis": "form",
+          "visible_result": "The bob is full and rounded, ending around chin-to-nape level with uneven loose bends at its lower edge.",
+          "result_direction": "The bob is full and rounded, ending around chin-to-nape level with uneven loose bends at its lower edge.",
+          "subject_or_region_ids": [
+            "hair"
+          ],
+          "relation_kind": "silhouette",
+          "source_evidence": [
+            "Dense rounded back hair and lightly curling lower ends frame the neck."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:hair:fringe",
+          "axis": "form",
+          "visible_result": "Long side fringe sweeps over part of the forehead and temple, with separated wisps beside the cheek.",
+          "result_direction": "Long side fringe sweeps over part of the forehead and temple, with separated wisps beside the cheek.",
+          "subject_or_region_ids": [
+            "hair",
+            "face"
+          ],
+          "relation_kind": "hair-face-boundary",
+          "source_evidence": [
+            "A loose front section descends beside the visible eye toward the cheek."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        },
+        {
+          "id": "lane.subject-appearance:hair:flyaways",
+          "axis": "form",
+          "visible_result": "Fine irregular flyaway strands extend around the crown and rear of the bob.",
+          "result_direction": "Fine irregular flyaway strands extend around the crown and rear of the bob.",
+          "subject_or_region_ids": [
+            "hair"
+          ],
+          "relation_kind": "surface-boundary",
+          "source_evidence": [
+            "Numerous thin hairs rise and arc outside the dense outline."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:headphones",
+      "owner_key": "appearance.headphones",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "The accessory consists of a broad flat headband and a large softly rounded padded earcup; no readable brand is visible.",
+      "source_evidence": [
+        "Broad band crosses the head, and the near cup has rounded panel contours."
+      ],
+      "confidence": "high",
+      "causal_origin": "intrinsic",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Profile projection, lighting and softness affect apparent contour and surface."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:headphones:silhouette",
+          "axis": "form",
+          "visible_result": "A broad flat headphone band and one rounded padded earcup keep simple substantial shapes.",
+          "result_direction": "A broad flat headphone band and one rounded padded earcup keep simple substantial shapes.",
+          "subject_or_region_ids": [
+            "headphones"
+          ],
+          "relation_kind": "accessory-form",
+          "source_evidence": [
+            "The cup is thick and smooth with softly rounded corners; band is broad and flat."
+          ],
+          "confidence": "high",
+          "causal_origin": "intrinsic",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:strap",
+      "owner_key": "appearance.strap",
+      "scale": "regional",
+      "axis": "form",
+      "observation": "A single thin shoulder strap lies over the otherwise bare upper shoulder; most clothing is cropped out.",
+      "source_evidence": [
+        "Thin strap follows a curved diagonal along shoulder into the lower frame."
+      ],
+      "confidence": "high",
+      "causal_origin": "spatial-relation",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Profile projection, lighting and softness affect apparent contour and surface."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:strap:coverage",
+          "axis": "form",
+          "visible_result": "Only one thin strap is visible over the bare shoulder, with the rest of the garment below the bottom crop.",
+          "result_direction": "Only one thin strap is visible over the bare shoulder, with the rest of the garment below the bottom crop.",
+          "subject_or_region_ids": [
+            "neck-shoulder",
+            "strap"
+          ],
+          "relation_kind": "garment-visibility",
+          "source_evidence": [
+            "Narrow strap is visible; no complete neckline or bodice can be read."
+          ],
+          "confidence": "high",
+          "causal_origin": "spatial-relation",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.subject-appearance:skin",
+      "owner_key": "appearance.skin",
+      "scale": "regional",
+      "axis": "surface",
+      "observation": "Displayed face and shoulder skin is softly resolved and gently varied, without hard specular shine or readable pore detail.",
+      "source_evidence": [
+        "Cheek and shoulder show broad softly graded surfaces; fine detail is limited by haze."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [
+        "Profile projection, lighting and softness affect apparent contour and surface."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.subject-appearance:skin:finish",
+          "axis": "surface",
+          "visible_result": "Displayed skin has a soft mostly matte finish with natural faint tonal variation, capped by the photographic softness.",
+          "result_direction": "Displayed skin has a soft mostly matte finish with natural faint tonal variation, capped by the photographic softness.",
+          "subject_or_region_ids": [
+            "face",
+            "neck-shoulder"
+          ],
+          "relation_kind": "displayed-finish",
+          "source_evidence": [
+            "There are gentle variations on cheek and shoulder, not glossy highlights or crisp pore detail."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "subject-role",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face",
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:headphones"
+      ]
+    },
+    {
+      "topic": "visible-form",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face",
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:headphones",
+        "lane.subject-appearance:strap",
+        "lane.subject-appearance:skin"
+      ]
+    },
+    {
+      "topic": "appearance-drift-risk",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:face",
+        "lane.subject-appearance:hair",
+        "lane.subject-appearance:strap"
+      ]
+    },
+    {
+      "topic": "intrinsic-induced-confounds",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.subject-appearance:skin",
+        "lane.subject-appearance:face"
+      ]
+    }
+  ],
+  "control_requirements": [
+    {
+      "owner_key": "appearance.face",
+      "requirement": "Use compact profile-specific geometry, not an imagined frontal face or an attractive/model-like prior."
+    },
+    {
+      "owner_key": "appearance.hair",
+      "requirement": "Keep the irregular bob and fringe overlap at observed softness; detail descriptions must not sharpen every strand."
+    },
+    {
+      "owner_key": "appearance.strap",
+      "requirement": "The narrow strap is a compressed supporting cue and must not expand to a complete outfit."
+    }
+  ],
+  "omission_checks": [
+    {
+      "finding_id": "lane.subject-appearance:face",
+      "verdict": "material-drift",
+      "tested_change": "Keep headphones and crop while substituting a square jaw, broad open eye or wide smile.",
+      "source_evidence": [
+        "Rounded lower face, narrow eye and small parted mouth differ visibly."
+      ]
+    },
+    {
+      "finding_id": "lane.subject-appearance:hair",
+      "verdict": "material-drift",
+      "tested_change": "Replace bob with long straight hair or a sleek tucked hairstyle.",
+      "source_evidence": [
+        "Round short hair mass and flyaway edge define the head silhouette."
+      ]
+    }
+  ],
+  "handoffs": [
+    {
+      "to_lane": "lane.color-light-material",
+      "required_resolution": "Own displayed skin value/chroma/hue, muted hair body color, warm hair rim and headphone yellow independently. Do not interpret displayed skin as ethnicity or innate pigmentation."
+    },
+    {
+      "to_lane": "integrator",
+      "required_resolution": "Bind the human-appearance/v3 decisions to actual emitted geometry and Color/Tone region IDs; preserve unresolved text-only likeness risk."
+    }
+  ],
+  "conflicts": [],
+  "human_appearance_analysis": {
+    "schema_version": "human-appearance/v3",
+    "subject_id": "person",
+    "face_visibility": "readable",
+    "frame_prominence": "primary",
+    "fidelity_salience": "primary",
+    "identity_context": {
+      "disposition": "absent",
+      "context_use": "none",
+      "prompt_disposition": "omit",
+      "viewer_priority": "not-material"
+    },
+    "person_prior": {
+      "disposition": "uncertain",
+      "confidence": "medium",
+      "candidate_support": "uncertain",
+      "default_drift_risk": "uncertain",
+      "local_geometry_sufficiency": "uncertain",
+      "source_evidence": [
+        "Only one profile is available and no exact identity context is supplied."
+      ],
+      "non_emission_reason": "Use literal visible geometry without installing a broad face archetype.",
+      "omission_counterfactual": {
+        "verdict": "uncertain",
+        "source_evidence": [
+          "Text-only likeness reliability has not been calibrated."
+        ]
+      },
+      "residual_risk": "Literal profile controls cannot establish exact personal likeness from a single view."
+    },
+    "appearance_gestalt": {
+      "scope": "person-aesthetic",
+      "disposition": "omit",
+      "confidence": "high",
+      "candidate_support": "unsupported",
+      "viewer_priority": "not-material",
+      "default_drift_risk": "low",
+      "source_evidence": [
+        "Visible hairstyle, feature contour and expression sufficiently describe the presentation."
+      ],
+      "decomposition_control_ids": [],
+      "effect_budget": {
+        "intended_dimensions": [],
+        "protected_dimensions": [
+          "identity-context",
+          "pose",
+          "crop",
+          "face-form",
+          "skin-surface",
+          "lighting",
+          "color-tone",
+          "capture-polish"
+        ],
+        "source_evidence": [
+          "No evaluative person descriptor is needed to describe the source."
+        ]
+      },
+      "omission_counterfactual": {
+        "verdict": "preserved",
+        "source_evidence": [
+          "The bob, headphones, profile and softened capture remain expressible without a beauty label."
+        ]
+      },
+      "non_emission_reason": "No omission-sensitive evaluative gestalt is supported."
+    },
+    "skin_surface": {
+      "disposition": "material",
+      "viewer_priority": "P1",
+      "observation_scope": "source-visible",
+      "semantic_use": "displayed-surface",
+      "confidence": "high",
+      "source_evidence": [
+        "Visible cheek, neck and shoulder provide a sizable softly lit displayed surface."
+      ],
+      "region_ids": [
+        "face-skin",
+        "shoulder-skin"
+      ],
+      "coverage": "exposed",
+      "descriptor_disposition": "emit"
+    }
+  }
+}

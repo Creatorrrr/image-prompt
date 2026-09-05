@@ -1,0 +1,301 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "58c139282f24d686d058ecd941afcdaaba538e9c",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Prevent reverse-image prompts from normalizing a source-relative pose toward centered or frontal alignment when individual pose axes were discarded with weak evidence or when a seemingly neutral spatial clause implicitly actuates additional axes."
+  },
+  "evidence": [
+    {
+      "id": "e-user-pose-failure",
+      "kind": "user-judgment",
+      "claim": "After the previous skill improvement and a new generation, the user still judged the subject pose as centered and frontal and questioned whether the skill had actually improved.",
+      "artifact": "Conversation feedback on 2026-08-26: 이번에도 여전히 자세는 가운데 정면인 것 같은데"
+    },
+    {
+      "id": "e-motivating-source",
+      "kind": "source-observation",
+      "claim": "The motivating source contains a low-view human whose visible head, torso, shoulder, and side-depth relations must be assessed jointly rather than replaced by an assumed neutral alignment.",
+      "artifact": "/tmp/reverse-image-independent.Wh2cdC/source.jpg sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9 frame=969x1280"
+    },
+    {
+      "id": "e-delivered-render",
+      "kind": "render-observation",
+      "claim": "The delivered post-improvement render presents the human with a strongly centered, near-frontal global pose, matching the user's reported failure.",
+      "artifact": "generated_images/reverse-faithful-a3e2b2dc-KkgJ3w/generated-attempt-1.png sha256=281c732ffdeead992187dd1f80eed035784e77a6cd5d5fcc1e476ca3d896ea20 frame=1090x1443"
+    },
+    {
+      "id": "e-frozen-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The exact delivered prompt positively actuates centered, upper-center, almost-vertical, and nearly-frontal alignment even though the source-relative turn is expressed only as slight. Those clauses jointly pull placement, principal-axis, torso, head/body, and shoulder relations.",
+      "artifact": "generated_images/reverse-faithful-a3e2b2dc-KkgJ3w/prompt.txt sha256=7ab6883ba3f221f747044ecb54f856f94ea9b4a2e032aebcfec7ead82a391cc6 lines 5 and 7"
+    },
+    {
+      "id": "e-plan-disposition",
+      "kind": "prompt-inspection",
+      "claim": "The motivating plan classified torso yaw, torso roll, head/body lateral offset, and shoulder slope as not-material, recorded no coupled spatial effect, and still bound prompt controls containing positive neutral-alignment language.",
+      "artifact": "/tmp/reverse-image-independent.Wh2cdC/plan.json decisions and emitted controls; motivating source-bound analysis artifact"
+    },
+    {
+      "id": "e-prior-structural-boundary",
+      "kind": "repository-history",
+      "claim": "The preceding compact pose/light improvement claimed only structural implementation and explicitly left prompt, render, and user layers unscored; the new user judgment therefore revises any inferred render-level success rather than contradicting its bounded package claim.",
+      "artifact": "skills/reverse-image-prompt/evaluations/2026-08-26-compact-pose-light-residual-closure-v2.json"
+    },
+    {
+      "id": "e-v5-package",
+      "kind": "package-check",
+      "claim": "The spatial-orientation/v5 validator and source-neutral fixtures pass for isolated non-emission evidence, low-confidence and confounded handling, coupled ownership, exact prompt-effect audit coverage, implicit non-invariant actuation rejection, genuinely centered invariants, opposite and mirrored directions, and compiled package consistency.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p test_*.py => 254 passed; validate_modules.py => 37 modules, 6 lanes, 16596 runtime words, 3748 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => pass; git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A final spatial clause may not pull the subject toward any alignment that lacks source-owned invariant or coupled evidence, and a pose axis may not be discarded merely because its individual cue is weak or confounded.",
+    "user_appeal": "Preserve the source's particular off-axis pose relationship instead of returning another centered, frontal result.",
+    "invariants": [
+      {
+        "id": "inv-isolated-neutralization",
+        "statement": "Every flexible or not-material spatial axis passes a structured single-dimension neutralization test with adjacent relations held fixed and names what remains preserved.",
+        "evidence_ids": [
+          "e-plan-disposition",
+          "e-v5-package"
+        ],
+        "causal_controls": [
+          "dimension-neutralization test scope",
+          "held-fixed spatial decision ids",
+          "decision-owned evidence cues",
+          "preserved relation verdict"
+        ]
+      },
+      {
+        "id": "inv-confounded-coupling",
+        "statement": "Low-confidence or wholly confounded axes become uncertain unless one invariant coupled effect owns their joint visible result.",
+        "evidence_ids": [
+          "e-motivating-source",
+          "e-plan-disposition",
+          "e-v5-package"
+        ],
+        "causal_controls": [
+          "cue confidence",
+          "cue confounders",
+          "coupled member ownership"
+        ]
+      },
+      {
+        "id": "inv-complete-clause-effects",
+        "statement": "Every exact emitted spatial control declares both explicit and implicit affected decisions, includes its individual owner or all coupled members, and emits only with a source-consistent verdict.",
+        "evidence_ids": [
+          "e-frozen-prompt",
+          "e-v5-package"
+        ],
+        "causal_controls": [
+          "exact prompt excerpt",
+          "explicit decision ids",
+          "implicit decision ids",
+          "source-consistent actuation verdict"
+        ]
+      },
+      {
+        "id": "inv-direction-neutrality",
+        "statement": "Centered, offset, frontal, oblique, opposed, and either mirrored direction remain valid only when the current source supports and owns them; none is installed as a runtime default.",
+        "evidence_ids": [
+          "e-v5-package"
+        ],
+        "causal_controls": [
+          "source-relative decision ids",
+          "generic semantic effect classes",
+          "no adjective blacklist or preferred pose"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "the source-supported direction or degree of every spatial axis",
+      "whether an effect is individually resolved or coupled",
+      "the literal spatial wording after complete effect audit",
+      "human and non-human orientation-bearing subjects",
+      "downstream generator variation after the validated prompt"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-neutral-alignment-overwrite",
+      "scale": "global",
+      "axis": "joint human pose orientation",
+      "source_state": "The source-visible pose depends on interacting low-view, torso, head/body, shoulder, and side-depth relations whose individual physical attribution may be weak.",
+      "render_state": "The delivered render reads as centered and frontal after the prompt explicitly reinforced centered, vertical, upright, and nearly-frontal alignment.",
+      "evidence_ids": [
+        "e-user-pose-failure",
+        "e-motivating-source",
+        "e-delivered-render",
+        "e-frozen-prompt",
+        "e-plan-disposition"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-shallow-axis-disposal",
+      "stage": "representation",
+      "statement": "Free-form non-emission reasons let weak or confounded pose axes be labeled not-material without testing whether neutralizing that one axis changes adjacent visible relations.",
+      "evidence_ids": [
+        "e-plan-disposition",
+        "e-prior-structural-boundary"
+      ],
+      "falsifier": "Held-out plans with structured isolated neutralization behave no differently from shallow non-emission prose across weak, confounded, and genuinely non-material axes."
+    },
+    {
+      "id": "h-implicit-alignment-actuation",
+      "stage": "prompt-interaction",
+      "statement": "Alignment-style prose that looks compositional can positively actuate several pose and viewpoint axes, so checking only its declared owner permits a later clause to normalize unsupported relations.",
+      "evidence_ids": [
+        "e-frozen-prompt",
+        "e-delivered-render",
+        "e-user-pose-failure"
+      ],
+      "falsifier": "Unrelated prompt comparisons show that clauses with the same declared owner but different implicit spatial effects produce no systematic axis pull and never override source-relative pose controls."
+    },
+    {
+      "id": "h-layer-boundary",
+      "stage": "user-contract",
+      "statement": "Package and route validity cannot establish prompt, pixel, or user-level fidelity; the prior structural intervention needed post-generation user evidence before any stronger success claim.",
+      "evidence_ids": [
+        "e-user-pose-failure",
+        "e-prior-structural-boundary"
+      ],
+      "falsifier": "Structural validation alone reliably predicts the user's pose judgment on unrelated delivered renders without prompt or pixel evaluation."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "policy",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Use spatial-orientation/v5. A flexible or not-material axis requires a preserved single-dimension neutralization test with adjacent decisions held fixed. Low-confidence or wholly confounded axes become uncertain unless one invariant coupled effect preserves their joint result. Every exact spatial control audits all explicit and implicit affected decisions and emits only when each is individually invariant or coupled and the net verdict is source-consistent.",
+    "generalization_basis": "The intervention is parameterized only by generic spatial dimensions, source-owned cue ids, confidence, confounders, decision ownership, coupled membership, and exact prompt excerpts. It encodes no motivating side, angle, garment, body configuration, coordinate, adjective ban, or preferred centered versus off-center outcome, and held-out fixtures exercise centered, opposite, mirrored, individual, coupled, and non-human cases.",
+    "hypothesis_ids": [
+      "h-shallow-axis-disposal",
+      "h-implicit-alignment-actuation",
+      "h-layer-boundary"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-26-spatial-normalization-actuation-guard-v3.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-v5-package"
+      ]
+    },
+    "prompt": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-genuine-centered-invariant",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "source-supported centered principal axis",
+          "source-supported frontal head/body alignment"
+        ],
+        "evidence_ids": [
+          "e-v5-package"
+        ]
+      },
+      {
+        "id": "heldout-opposite-and-mirrored-directions",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "opposite principal-axis offsets",
+          "mirrored head/body yaw",
+          "non-human principal axis"
+        ],
+        "evidence_ids": [
+          "e-v5-package"
+        ]
+      },
+      {
+        "id": "heldout-discard-and-implicit-actuation",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "missing isolated neutralization evidence",
+          "low-confidence disposal",
+          "confounded coupled ownership",
+          "implicit non-invariant prompt actuation",
+          "missing exact prompt-effect audit"
+        ],
+        "evidence_ids": [
+          "e-v5-package"
+        ]
+      },
+      {
+        "id": "motivating-postchange-pose",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": [
+          "low-view human coupled orientation",
+          "neutral-alignment overwrite",
+          "post-change prompt and render behavior"
+        ],
+        "evidence_ids": [
+          "e-user-pose-failure",
+          "e-motivating-source",
+          "e-delivered-render",
+          "e-frozen-prompt",
+          "e-plan-disposition"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The earliest observed failure is now guarded at both non-emission representation and final spatial-clause actuation. Source-neutral package fixtures pass and the preceding structural change is explicitly revised at the untested render/user boundary. No independent post-change prompt extraction, new render, or post-change user review was performed in this turn, so the result is implemented structurally rather than promoted as prompt or pixel fidelity.",
+    "evidence_ids": [
+      "e-user-pose-failure",
+      "e-frozen-prompt",
+      "e-plan-disposition",
+      "e-prior-structural-boundary",
+      "e-v5-package"
+    ]
+  }
+}

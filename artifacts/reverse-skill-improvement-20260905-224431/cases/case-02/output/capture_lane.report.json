@@ -1,0 +1,246 @@
+{
+  "schema_version": "reverse-image-analysis-lane-report/v2",
+  "lane_id": "lane.medium-aesthetic-capture",
+  "route_fingerprint": "822687b7c91719dff3964c9ab4e7a12db7dcae540fd98ec8cdf198cc31177975",
+  "source_artifact": {
+    "path": "/Users/chasoik/Projects/image-prompt/artifacts/reverse-skill-improvement-20260905-224431/cases/case-02/source.jpg",
+    "sha256": "9f22a88255115bd33062593568a9773626ccb23f8e482824752a09b91f20fc71",
+    "frame": "399x623"
+  },
+  "execution": {
+    "mode": "sequential-fallback",
+    "independent_context": false,
+    "reason": "Actual fresh appearance-lane spawn was rejected: agent thread limit reached. Integrator context already contains earlier lane reports."
+  },
+  "status": "complete",
+  "intent_mode": "faithful",
+  "analysis_profile": "audited",
+  "reviewed_modules": [
+    {
+      "id": "core.visual-evidence",
+      "version": 11
+    },
+    {
+      "id": "core.fidelity-discipline",
+      "version": 12
+    },
+    {
+      "id": "medium.photographic-capture",
+      "version": 13
+    },
+    {
+      "id": "detail.low-quality-artifacts",
+      "version": 4
+    }
+  ],
+  "findings": [
+    {
+      "id": "lane.medium-aesthetic-capture:photograph",
+      "owner_key": "medium.photographic-capture",
+      "scale": "regional",
+      "axis": "surface",
+      "priority": "P1",
+      "observation": "The image has photographic bathroom mirror-snapshot rendering with imperfect, ordinary capture rather than illustration or polished studio staging.",
+      "source_evidence": [
+        "Continuous tonal transitions over skin and textile folds.",
+        "Soft camera-like edges, reflected phone and ordinary bathroom fragments."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:photograph:photo",
+          "axis": "surface",
+          "visible_result": "The scene reads as an ordinary photograph.",
+          "result_direction": "Retain photographic texture and tonal continuity without stylized illustration or glossy editorial production.",
+          "subject_or_region_ids": [
+            "global"
+          ],
+          "relation_kind": "medium",
+          "source_evidence": [
+            "Continuous tonal transitions over skin and textile folds.",
+            "Soft camera-like edges, reflected phone and ordinary bathroom fragments."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture:softness",
+      "owner_key": "medium.photographic-capture",
+      "scale": "regional",
+      "axis": "sharpness",
+      "priority": "P1",
+      "observation": "Fine edges are soft throughout the subject and room; the phone silhouette, braids and garment edges remain identifiable without a sharp subject against strong bokeh.",
+      "source_evidence": [
+        "Fine hair strands merge.",
+        "Fabric weave and small background marks remain indistinct.",
+        "Whole source has low-resolution soft edges."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "primary",
+      "default_drift_risk": "high",
+      "confounders": [
+        "Optical focus, resizing, compression and low-light noise contributions cannot be separated."
+      ],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:softness:global-softness",
+          "axis": "sharpness",
+          "visible_result": "Global low-resolution softness reduces fine detail while retaining broad contours.",
+          "result_direction": "Preserve moderate softness; avoid either crisp high detail or heavy defocus.",
+          "subject_or_region_ids": [
+            "global"
+          ],
+          "relation_kind": "sharpness-ceiling",
+          "source_evidence": [
+            "Fine hair strands merge.",
+            "Fabric weave and small background marks remain indistinct.",
+            "Whole source has low-resolution soft edges."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Optical focus, resizing, compression and low-light noise contributions cannot be separated."
+          ]
+        },
+        {
+          "id": "lane.medium-aesthetic-capture:softness:texture",
+          "axis": "surface",
+          "visible_result": "Faint grain and mottling are visible in flat wall and shadow regions.",
+          "result_direction": "Preserve modest distributed capture texture without exaggerated film grain.",
+          "subject_or_region_ids": [
+            "global"
+          ],
+          "relation_kind": "capture-texture",
+          "source_evidence": [
+            "Fine hair strands merge.",
+            "Fabric weave and small background marks remain indistinct.",
+            "Whole source has low-resolution soft edges."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "confounded",
+          "materiality": "material",
+          "proposed_role": "primary",
+          "target_strength": "moderate",
+          "confounders": [
+            "Optical focus, resizing, compression and low-light noise contributions cannot be separated."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lane.medium-aesthetic-capture:secondary-detail",
+      "owner_key": "detail.low-quality-artifacts",
+      "scale": "regional",
+      "axis": "information",
+      "priority": "P2",
+      "observation": "Small wall writing and cropped bathroom objects remain low in legibility and visually subordinate.",
+      "source_evidence": [
+        "Note marks are faint and softened.",
+        "Towel rail edges, containers and hardware are partly occluded or clipped."
+      ],
+      "confidence": "high",
+      "causal_origin": "processing",
+      "materiality": "material",
+      "proposed_role": "supporting",
+      "default_drift_risk": "medium",
+      "confounders": [],
+      "atomic_obligations": [
+        {
+          "id": "lane.medium-aesthetic-capture:secondary-detail:low-legibility",
+          "axis": "information",
+          "visible_result": "Text and secondary bathroom fragments remain soft and indistinct.",
+          "result_direction": "Keep only observed low-detail marks and partial objects without clean labels, complete geometry or expanded background.",
+          "subject_or_region_ids": [
+            "note",
+            "clutter",
+            "left-wall"
+          ],
+          "relation_kind": "legibility-ceiling",
+          "source_evidence": [
+            "Note marks are faint and softened.",
+            "Towel rail edges, containers and hardware are partly occluded or clipped."
+          ],
+          "confidence": "high",
+          "causal_origin": "processing",
+          "attribution_status": "resolved",
+          "materiality": "material",
+          "proposed_role": "supporting",
+          "target_strength": "moderate",
+          "confounders": []
+        }
+      ]
+    }
+  ],
+  "topic_dispositions": [
+    {
+      "topic": "medium-and-process",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:photograph"
+      ]
+    },
+    {
+      "topic": "capture-fidelity-ceiling",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:softness",
+        "lane.medium-aesthetic-capture:secondary-detail"
+      ]
+    },
+    {
+      "topic": "production-aesthetic",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:photograph",
+        "lane.medium-aesthetic-capture:softness"
+      ]
+    },
+    {
+      "topic": "artifact-preservation",
+      "disposition": "analyzed",
+      "finding_ids": [
+        "lane.medium-aesthetic-capture:softness",
+        "lane.medium-aesthetic-capture:secondary-detail"
+      ]
+    }
+  ],
+  "control_requirements": [
+    "Put photographic low-resolution soft capture early.",
+    "Do not invent a lens, film stock, camera brand or studio lighting rig.",
+    "Preserve subdued detail without cinematic finish, clear text or depth-of-field exaggeration."
+  ],
+  "omission_checks": [
+    "Making the same arrangement crisp and noise-free changes the visible capture identity.",
+    "Using strong portrait bokeh while sharpening the person changes the source-wide softness relation."
+  ],
+  "handoffs": [
+    {
+      "target": "integration",
+      "requirement": "Merge duplicate global softness, grain and background-legibility controls by owner; no additional aesthetic adjective is necessary."
+    },
+    {
+      "target": "lane.color-light-material",
+      "requirement": "Global displayed key and microcontrast stay Color/Tone owned; ordinary local shading remains supporting, so no first-order lighting route gap is asserted."
+    }
+  ],
+  "conflicts": []
+}
