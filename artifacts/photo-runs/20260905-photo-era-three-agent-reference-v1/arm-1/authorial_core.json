@@ -1,0 +1,106 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create and render one independently randomized, materially complex photographic test scene in which the supplied portrait guides only visible adult appearance and a mounted historical photographic object makes its layered print process inspectable in saved pixels.",
+  "subject": "One clearly adult person, using only the supplied portrait's visible appearance cues, presents a mounted historical photograph on a conservation easel.",
+  "setting": "A traveling theatre prop vault during a controlled blackout, with stacked painted scenery, specimen drawers, and an emergency lantern.",
+  "event": "The adult balances the mounted photograph on a small conservation easel and turns a hinged raking-light panel toward its surface while dust motes cross the vault.",
+  "visual_priorities": [
+    "Readable physical separation between the photographic paper, its image-layer sheen, and the thicker card mount",
+    "Fine native-scale historical image detail plus minute surface texture without sacrificing the complete mount perimeter",
+    "Faithful use of only the portrait's visible adult appearance cues inside a complex environmental composition"
+  ],
+  "baseline_prompt_en": "Create a low seated environmental portrait inside a traveling theatre prop vault during a controlled blackout. One clearly adult person sits immediately behind the artifact and balances the mounted photograph on a small conservation easel and turns a hinged raking-light panel toward its surface. The attached portrait guides only this visible adult appearance: long dark wavy hair, brown eyes, a neutral expression, a black blouse, and a small gold necklace. Dust motes cross a single emergency lantern beam among stacked painted scenery, open specimen drawers, rope coils, and faded stage flats.\n\nThe artifact is large in the near foreground and depicts a portable darkroom beside an archaeological trench, with tiny excavation tools, canvas folds, numbered stakes, glass bottles, and distant workers resolved as fine photographic detail. Construct it as a thin photographic paper sheet visibly attached to a distinctly thicker cream card mount. The image sheet carries a smooth, softly semi-gloss albumen surface, revealed by a narrow grazing highlight confined to the photographic layer while the surrounding card remains matte. Fine photographic detail remains crisp inside the trench scene. The complete print-to-card boundary is visible on all four sides, including an oblique edge that reveals the two different thicknesses. Across the whole image layer, an overall veil of extremely fine crackle and microscopic paper fibers remains visible through the albumen layer. The texture is minute, continuous, and subordinate to the image rather than dramatic damage.\n\nUse a low seated portrait with the artifact on a small easel in the near foreground and the adult immediately behind it. Keep the adult face readable, the mounted photograph dominant, and the entire card contained within the frame. Let the examination light disclose material differences, microtexture, and intricate archaeological imagery while the theatrical vault remains spatially legible.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex image-render test using the attached image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "An independently seeded complex photographic scene must use the attachment only for visible adult appearance and must be rendered and judged from saved pixels.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a low seated environmental portrait inside a traveling theatre prop vault during a controlled blackout"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "One clearly adult person sits immediately behind the artifact"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "balances the mounted photograph on a small conservation easel and turns a hinged raking-light panel toward its surface"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "setting",
+        "prompt_evidence": "Dust motes cross a single emergency lantern beam among stacked painted scenery, open specimen drawers, rope coils, and faded stage flats"
+      },
+      {
+        "anchor_id": "core_material",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "material",
+        "prompt_evidence": "a thin photographic paper sheet visibly attached to a distinctly thicker cream card mount"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "appearance",
+        "prompt_evidence": "long dark wavy hair, brown eyes, a neutral expression, a black blouse, and a small gold necklace"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "The attached portrait guides only this visible adult appearance"
+      },
+      {
+        "anchor_id": "core_composition",
+        "source_text": "각각 서로 다른 컨셉으로",
+        "dimension": "composition",
+        "prompt_evidence": "a low seated portrait with the artifact on a small easel in the near foreground and the adult immediately behind it"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "material",
+      "appearance",
+      "reference_use",
+      "composition"
+    ],
+    "open_dimensions": [
+      "lighting"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic material-conservation editorial",
+    "family": "cinematic backstage archive portrait",
+    "evidence": [
+      "a low seated environmental portrait",
+      "a hinged raking-light panel"
+    ]
+  },
+  "variation_key": "arm-1-seed-2233817968197903254-process-object"
+}

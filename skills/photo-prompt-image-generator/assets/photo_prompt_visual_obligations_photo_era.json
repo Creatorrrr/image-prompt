@@ -1,0 +1,3043 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Photo-era process, physical-output, capture-response, photographic-practice, and localized deterioration visual contracts.",
+  "profiles": [
+    {
+      "id": "daguerreotype_reflective_cased_plate_object",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "reflective cased daguerreotype plate object",
+          "거울성 케이스 다게레오타입 판 객체"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which silvered metallic plate surface, view-angle-dependent reflection and positive-negative tonal shift, fine image detail without paper-fiber texture, complete plate boundary and physical depth, and protective mat glass or case topology coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "은도금 금속판의 전체 경계와 깊이, 보호 매트·유리·케이스가 보이고 비스듬한 시점에서 반사와 양음 명암이 바뀌며 종이 섬유 없이 미세한 초상이 남은 다게레오타입 객체",
+          "A photographic rendering that keeps silvered metallic plate surface visibly connected to view-angle-dependent reflection and positive-negative tonal shift while fine image detail without paper-fiber texture, complete plate boundary and physical depth, and protective mat glass or case topology remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "silvered_metal_plate",
+            "angle_dependent_reflection",
+            "fine_nonpaper_detail",
+            "complete_plate_depth",
+            "protective_case_topology"
+          ],
+          "groups": [
+            {
+              "id": "silvered_metal_plate",
+              "any_terms": [
+                "silvered metallic plate surface",
+                "silvered metal plate"
+              ]
+            },
+            {
+              "id": "angle_dependent_reflection",
+              "any_terms": [
+                "view-angle-dependent reflection and positive-negative tonal shift",
+                "angle dependent reflection"
+              ]
+            },
+            {
+              "id": "fine_nonpaper_detail",
+              "any_terms": [
+                "fine image detail without paper-fiber texture",
+                "fine nonpaper detail"
+              ]
+            },
+            {
+              "id": "complete_plate_depth",
+              "any_terms": [
+                "complete plate boundary and physical depth",
+                "complete plate depth"
+              ]
+            },
+            {
+              "id": "protective_case_topology",
+              "any_terms": [
+                "protective mat glass or case topology",
+                "protective case topology"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "sepia paper print",
+          "tintype dark plate",
+          "ordinary mirror portrait",
+          "silver-mirroring deterioration",
+          "random scratch overlay"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "silvered metallic plate surface",
+          "view-angle-dependent reflection and positive-negative tonal shift",
+          "fine image detail without paper-fiber texture",
+          "complete plate boundary and physical depth",
+          "protective mat glass or case topology"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "reflective cased daguerreotype plate object"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where silvered metallic plate surface, view-angle-dependent reflection and positive-negative tonal shift, fine image detail without paper-fiber texture, complete plate boundary and physical depth, and protective mat glass or case topology coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "silvered_metal_plate_phrase",
+        "angle_dependent_reflection_phrase",
+        "fine_nonpaper_detail_phrase",
+        "complete_plate_depth_phrase",
+        "protective_case_topology_phrase"
+      ],
+      "evidence_requirements": {
+        "silvered_metal_plate_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "silvered metallic plate surface",
+            "silvered metal plate"
+          ]
+        },
+        "angle_dependent_reflection_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "view-angle-dependent reflection and positive-negative tonal shift",
+            "angle dependent reflection"
+          ]
+        },
+        "fine_nonpaper_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "fine image detail without paper-fiber texture",
+            "fine nonpaper detail"
+          ]
+        },
+        "complete_plate_depth_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete plate boundary and physical depth",
+            "complete plate depth"
+          ]
+        },
+        "protective_case_topology_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "protective mat glass or case topology",
+            "protective case topology"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_daguerreotype_reflective_cased_plate_object_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes full plate and case silhouette is legible at thumbnail clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_daguerreotype_reflective_cased_plate_object_2",
+          "review_scale": "both",
+          "description": "The saved image makes metallic reflection remains surface-owned clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_daguerreotype_reflective_cased_plate_object_3",
+          "review_scale": "native",
+          "description": "The saved image makes angle-dependent tonal reading is distinct from glare clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_daguerreotype_reflective_cased_plate_object_4",
+          "review_scale": "native",
+          "description": "The saved image makes native detail lacks paper-fiber overlay clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_daguerreotype_reflective_cased_plate_object_5",
+          "review_scale": "both",
+          "description": "The saved image makes none of the five close substitutes dominates clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "sepia paper print",
+        "tintype dark plate",
+        "ordinary mirror portrait",
+        "silver-mirroring deterioration",
+        "random scratch overlay"
+      ]
+    },
+    {
+      "id": "calotype_salted_paper_fiber_image_relation",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "calotype salted-paper fiber image relation",
+          "칼로타입 염지 종이 섬유 이미지 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which matte paper support, paper fibers cross both light and dark image regions, image material appears embedded in upper paper fibers, continuous but softly resolved detail, and complete paper-object edge coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete matte salted-paper photograph whose visible fibers cross highlights shadows and subject edges, with the image embedded in the upper paper layer and continuous but softly resolved detail",
+          "A photographic rendering that keeps matte paper support visibly connected to paper fibers cross both light and dark image regions while image material appears embedded in upper paper fibers, continuous but softly resolved detail, and complete paper-object edge remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "matte_paper",
+            "cross_region_fibers",
+            "embedded_image_layer",
+            "soft_continuous_detail",
+            "complete_paper_edge"
+          ],
+          "groups": [
+            {
+              "id": "matte_paper",
+              "any_terms": [
+                "matte paper support",
+                "matte paper"
+              ]
+            },
+            {
+              "id": "cross_region_fibers",
+              "any_terms": [
+                "paper fibers cross both light and dark image regions",
+                "cross region fibers"
+              ]
+            },
+            {
+              "id": "embedded_image_layer",
+              "any_terms": [
+                "image material appears embedded in upper paper fibers",
+                "embedded image layer"
+              ]
+            },
+            {
+              "id": "soft_continuous_detail",
+              "any_terms": [
+                "continuous but softly resolved detail",
+                "soft continuous detail"
+              ]
+            },
+            {
+              "id": "complete_paper_edge",
+              "any_terms": [
+                "complete paper-object edge",
+                "complete paper edge"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "paper texture overlay",
+          "uniform Gaussian blur",
+          "albumen gloss",
+          "canvas painting",
+          "digital noise"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "matte paper support",
+          "paper fibers cross both light and dark image regions",
+          "image material appears embedded in upper paper fibers",
+          "continuous but softly resolved detail",
+          "complete paper-object edge"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "calotype salted-paper fiber image relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where matte paper support, paper fibers cross both light and dark image regions, image material appears embedded in upper paper fibers, continuous but softly resolved detail, and complete paper-object edge coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "matte_paper_phrase",
+        "cross_region_fibers_phrase",
+        "embedded_image_layer_phrase",
+        "soft_continuous_detail_phrase",
+        "complete_paper_edge_phrase"
+      ],
+      "evidence_requirements": {
+        "matte_paper_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "matte paper support",
+            "matte paper"
+          ]
+        },
+        "cross_region_fibers_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "paper fibers cross both light and dark image regions",
+            "cross region fibers"
+          ]
+        },
+        "embedded_image_layer_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "image material appears embedded in upper paper fibers",
+            "embedded image layer"
+          ]
+        },
+        "soft_continuous_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "continuous but softly resolved detail",
+            "soft continuous detail"
+          ]
+        },
+        "complete_paper_edge_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete paper-object edge",
+            "complete paper edge"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_calotype_salted_paper_fiber_image_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes paper object is complete clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_calotype_salted_paper_fiber_image_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes fiber follows support rather than canvas-wide effect clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_calotype_salted_paper_fiber_image_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes fiber crosses depicted edges without becoming brushwork clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_calotype_salted_paper_fiber_image_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes detail remains photographic and continuous clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_calotype_salted_paper_fiber_image_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes gloss and digital artifacts do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "paper texture overlay",
+        "uniform Gaussian blur",
+        "albumen gloss",
+        "canvas painting",
+        "digital noise"
+      ]
+    },
+    {
+      "id": "wet_collodion_glass_plate_coating_trace",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "wet-collodion glass plate coating trace",
+          "습판 콜로디온 유리판 도포 흔적"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which glass plate edge and thickness, crisp high-detail image with little grain, localized hand-poured coating edge, one coherent flow streak or uneven coating zone, and isolated dust pinholes or chemistry spots owned by the plate coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "유리판 전체 경계와 두께가 보이고 결함 밖에서는 매우 선명하며 한쪽 손도포 가장자리, 이어지는 흐름 자국, 유제에 붙은 흰 먼지 핀홀이 국소적으로 남은 습판 콜로디온 네거티브",
+          "A photographic rendering that keeps glass plate edge and thickness visibly connected to crisp high-detail image with little grain while localized hand-poured coating edge, one coherent flow streak or uneven coating zone, and isolated dust pinholes or chemistry spots owned by the plate remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "glass_plate_support",
+            "crisp_detail",
+            "pour_edge",
+            "coherent_flow_streak",
+            "localized_pinholes"
+          ],
+          "groups": [
+            {
+              "id": "glass_plate_support",
+              "any_terms": [
+                "glass plate edge and thickness",
+                "glass plate support"
+              ]
+            },
+            {
+              "id": "crisp_detail",
+              "any_terms": [
+                "crisp high-detail image with little grain",
+                "crisp detail"
+              ]
+            },
+            {
+              "id": "pour_edge",
+              "any_terms": [
+                "localized hand-poured coating edge",
+                "pour edge"
+              ]
+            },
+            {
+              "id": "coherent_flow_streak",
+              "any_terms": [
+                "one coherent flow streak or uneven coating zone",
+                "coherent flow streak"
+              ]
+            },
+            {
+              "id": "localized_pinholes",
+              "any_terms": [
+                "isolated dust pinholes or chemistry spots owned by the plate",
+                "localized pinholes"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "global grunge",
+          "film light leak",
+          "cracked glass prop",
+          "full-frame dust overlay",
+          "film-strip border"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "glass plate edge and thickness",
+          "crisp high-detail image with little grain",
+          "localized hand-poured coating edge",
+          "one coherent flow streak or uneven coating zone",
+          "isolated dust pinholes or chemistry spots owned by the plate"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "wet-collodion glass plate coating trace"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where glass plate edge and thickness, crisp high-detail image with little grain, localized hand-poured coating edge, one coherent flow streak or uneven coating zone, and isolated dust pinholes or chemistry spots owned by the plate coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "glass_plate_support_phrase",
+        "crisp_detail_phrase",
+        "pour_edge_phrase",
+        "coherent_flow_streak_phrase",
+        "localized_pinholes_phrase"
+      ],
+      "evidence_requirements": {
+        "glass_plate_support_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "glass plate edge and thickness",
+            "glass plate support"
+          ]
+        },
+        "crisp_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "crisp high-detail image with little grain",
+            "crisp detail"
+          ]
+        },
+        "pour_edge_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "localized hand-poured coating edge",
+            "pour edge"
+          ]
+        },
+        "coherent_flow_streak_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "one coherent flow streak or uneven coating zone",
+            "coherent flow streak"
+          ]
+        },
+        "localized_pinholes_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "isolated dust pinholes or chemistry spots owned by the plate",
+            "localized pinholes"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_wet_collodion_glass_plate_coating_trace_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes glass support is physically legible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_wet_collodion_glass_plate_coating_trace_2",
+          "review_scale": "both",
+          "description": "The saved image makes crisp detail survives away from defects clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_wet_collodion_glass_plate_coating_trace_3",
+          "review_scale": "native",
+          "description": "The saved image makes pour edge remains localized clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_wet_collodion_glass_plate_coating_trace_4",
+          "review_scale": "native",
+          "description": "The saved image makes streak and pinholes belong to emulsion clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_wet_collodion_glass_plate_coating_trace_5",
+          "review_scale": "both",
+          "description": "The saved image makes global destruction does not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "global grunge",
+        "film light leak",
+        "cracked glass prop",
+        "full-frame dust overlay",
+        "film-strip border"
+      ]
+    },
+    {
+      "id": "albumen_card_mount_print_material_relation",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "albumen card-mount print material relation",
+          "알부민 카드 마운트 인화 재료 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which thin photographic paper attached to thicker card, smooth or semi-gloss albumen surface, fine image detail, complete print-to-card boundary, and overall fine crackle or microscopic paper fiber visible through the albumen layer coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete thin photographic paper layer attached to a thicker card mount, with a smooth semi-gloss albumen surface, fine image detail, a visible print-to-card boundary, and overall fine crackle",
+          "A photographic rendering that keeps thin photographic paper attached to thicker card visibly connected to smooth or semi-gloss albumen surface while fine image detail, complete print-to-card boundary, and overall fine crackle or microscopic paper fiber visible through the albumen layer remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "thin_print_thick_card",
+            "albumen_gloss",
+            "fine_detail",
+            "complete_mount_boundary",
+            "fine_overall_crackle"
+          ],
+          "groups": [
+            {
+              "id": "thin_print_thick_card",
+              "any_terms": [
+                "thin photographic paper attached to thicker card",
+                "thin print thick card"
+              ]
+            },
+            {
+              "id": "albumen_gloss",
+              "any_terms": [
+                "smooth or semi-gloss albumen surface",
+                "albumen gloss"
+              ]
+            },
+            {
+              "id": "fine_detail",
+              "any_terms": [
+                "fine image detail",
+                "fine detail"
+              ]
+            },
+            {
+              "id": "complete_mount_boundary",
+              "any_terms": [
+                "complete print-to-card boundary",
+                "complete mount boundary"
+              ]
+            },
+            {
+              "id": "fine_overall_crackle",
+              "any_terms": [
+                "overall fine crackle or microscopic paper fiber visible through the albumen layer",
+                "fine overall crackle"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "brown color grade",
+          "rough matte salted paper",
+          "uncoated card illustration",
+          "fake vintage border",
+          "large drying-crack effect"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "thin photographic paper attached to thicker card",
+          "smooth or semi-gloss albumen surface",
+          "fine image detail",
+          "complete print-to-card boundary",
+          "overall fine crackle or microscopic paper fiber visible through the albumen layer"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "albumen card-mount print material relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where thin photographic paper attached to thicker card, smooth or semi-gloss albumen surface, fine image detail, complete print-to-card boundary, and overall fine crackle or microscopic paper fiber visible through the albumen layer coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "thin_print_thick_card_phrase",
+        "albumen_gloss_phrase",
+        "fine_detail_phrase",
+        "complete_mount_boundary_phrase",
+        "fine_overall_crackle_phrase"
+      ],
+      "evidence_requirements": {
+        "thin_print_thick_card_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "thin photographic paper attached to thicker card",
+            "thin print thick card"
+          ]
+        },
+        "albumen_gloss_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "smooth or semi-gloss albumen surface",
+            "albumen gloss"
+          ]
+        },
+        "fine_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "fine image detail",
+            "fine detail"
+          ]
+        },
+        "complete_mount_boundary_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete print-to-card boundary",
+            "complete mount boundary"
+          ]
+        },
+        "fine_overall_crackle_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "overall fine crackle or microscopic paper fiber visible through the albumen layer",
+            "fine overall crackle"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_albumen_card_mount_print_material_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes print and mount are two readable layers clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_albumen_card_mount_print_material_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes surface gloss is bounded to image layer clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_albumen_card_mount_print_material_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes fine photographic detail survives clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_albumen_card_mount_print_material_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes mount perimeter is complete clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_albumen_card_mount_print_material_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes fine crackle is not coarse global damage clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "brown color grade",
+        "rough matte salted paper",
+        "uncoated card illustration",
+        "fake vintage border",
+        "large drying-crack effect"
+      ]
+    },
+    {
+      "id": "cyanotype_contact_print_prussian_blue_relation",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "cyanotype contact-print Prussian-blue relation",
+          "시아노타입 접촉 인화 프러시안 블루 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which Prussian-blue image field, white to pale-blue contacted-object silhouettes, tonal variation follows object opacity, overlap and contact-edge fidelity, and complete paper support boundary coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "종이 전체 경계 안의 프러시안 블루 바탕 위에 직접 닿은 식물의 흰색·옅은 청색 실루엣과 투명도별 톤, 겹침과 날카로운 접촉 경계가 보이는 시아노타입",
+          "A photographic rendering that keeps Prussian-blue image field visibly connected to white to pale-blue contacted-object silhouettes while tonal variation follows object opacity, overlap and contact-edge fidelity, and complete paper support boundary remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "prussian_blue_field",
+            "contact_silhouette",
+            "opacity_tones",
+            "overlap_edges",
+            "paper_boundary"
+          ],
+          "groups": [
+            {
+              "id": "prussian_blue_field",
+              "any_terms": [
+                "Prussian-blue image field",
+                "prussian blue field"
+              ]
+            },
+            {
+              "id": "contact_silhouette",
+              "any_terms": [
+                "white to pale-blue contacted-object silhouettes",
+                "contact silhouette"
+              ]
+            },
+            {
+              "id": "opacity_tones",
+              "any_terms": [
+                "tonal variation follows object opacity",
+                "opacity tones"
+              ]
+            },
+            {
+              "id": "overlap_edges",
+              "any_terms": [
+                "overlap and contact-edge fidelity",
+                "overlap edges"
+              ]
+            },
+            {
+              "id": "paper_boundary",
+              "any_terms": [
+                "complete paper support boundary",
+                "paper boundary"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "blue monochrome photograph",
+          "blueprint line drawing",
+          "x-ray image",
+          "white cutout composite",
+          "cyan color grade"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Prussian-blue image field",
+          "white to pale-blue contacted-object silhouettes",
+          "tonal variation follows object opacity",
+          "overlap and contact-edge fidelity",
+          "complete paper support boundary"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "cyanotype contact-print Prussian-blue relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where Prussian-blue image field, white to pale-blue contacted-object silhouettes, tonal variation follows object opacity, overlap and contact-edge fidelity, and complete paper support boundary coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "prussian_blue_field_phrase",
+        "contact_silhouette_phrase",
+        "opacity_tones_phrase",
+        "overlap_edges_phrase",
+        "paper_boundary_phrase"
+      ],
+      "evidence_requirements": {
+        "prussian_blue_field_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "Prussian-blue image field",
+            "prussian blue field"
+          ]
+        },
+        "contact_silhouette_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "white to pale-blue contacted-object silhouettes",
+            "contact silhouette"
+          ]
+        },
+        "opacity_tones_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "tonal variation follows object opacity",
+            "opacity tones"
+          ]
+        },
+        "overlap_edges_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "overlap and contact-edge fidelity",
+            "overlap edges"
+          ]
+        },
+        "paper_boundary_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete paper support boundary",
+            "paper boundary"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_cyanotype_contact_print_prussian_blue_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes blue field and paper object are both legible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_cyanotype_contact_print_prussian_blue_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes silhouettes read as direct contact clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_cyanotype_contact_print_prussian_blue_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes opacity creates bounded tonal steps clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_cyanotype_contact_print_prussian_blue_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes overlaps remain physically plausible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_cyanotype_contact_print_prussian_blue_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes line art and global grading do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "blue monochrome photograph",
+        "blueprint line drawing",
+        "x-ray image",
+        "white cutout composite",
+        "cyan color grade"
+      ]
+    },
+    {
+      "id": "autochrome_glass_transparency_color_screen",
+      "category": "photo_era_capture_process_material_object",
+      "activation": {
+        "exact_terms": [
+          "Autochrome glass transparency color-screen object",
+          "오토크롬 유리 투명판 색소 스크린 객체"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture process and physical photographic object in which transparent glass plate, transmitted or backlit viewing, fine red green and blue-violet starch mosaic in even regions, restrained color rides on a monochrome luminance image, and complete plate edge coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete transparent glass color plate viewed by transmitted light, with a fine red green and blue-violet starch mosaic in even areas and restrained color carried by a continuous monochrome luminance image",
+          "A photographic rendering that keeps transparent glass plate visibly connected to transmitted or backlit viewing while fine red green and blue-violet starch mosaic in even regions, restrained color rides on a monochrome luminance image, and complete plate edge remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "glass_transparency",
+            "transmitted_light",
+            "starch_mosaic",
+            "restrained_color_luminance",
+            "complete_plate_edge"
+          ],
+          "groups": [
+            {
+              "id": "glass_transparency",
+              "any_terms": [
+                "transparent glass plate",
+                "glass transparency"
+              ]
+            },
+            {
+              "id": "transmitted_light",
+              "any_terms": [
+                "transmitted or backlit viewing",
+                "transmitted light"
+              ]
+            },
+            {
+              "id": "starch_mosaic",
+              "any_terms": [
+                "fine red green and blue-violet starch mosaic in even regions",
+                "starch mosaic"
+              ]
+            },
+            {
+              "id": "restrained_color_luminance",
+              "any_terms": [
+                "restrained color rides on a monochrome luminance image",
+                "restrained color luminance"
+              ]
+            },
+            {
+              "id": "complete_plate_edge",
+              "any_terms": [
+                "complete plate edge"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "digital RGB pixel grid",
+          "ordinary color-film grain",
+          "pointillist painting",
+          "pastel filter",
+          "paper print"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "transparent glass plate",
+          "transmitted or backlit viewing",
+          "fine red green and blue-violet starch mosaic in even regions",
+          "restrained color rides on a monochrome luminance image",
+          "complete plate edge"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "Autochrome glass transparency color-screen object"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where transparent glass plate, transmitted or backlit viewing, fine red green and blue-violet starch mosaic in even regions, restrained color rides on a monochrome luminance image, and complete plate edge coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "glass_transparency_phrase",
+        "transmitted_light_phrase",
+        "starch_mosaic_phrase",
+        "restrained_color_luminance_phrase",
+        "complete_plate_edge_phrase"
+      ],
+      "evidence_requirements": {
+        "glass_transparency_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "transparent glass plate",
+            "glass transparency"
+          ]
+        },
+        "transmitted_light_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "transmitted or backlit viewing",
+            "transmitted light"
+          ]
+        },
+        "starch_mosaic_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "fine red green and blue-violet starch mosaic in even regions",
+            "starch mosaic"
+          ]
+        },
+        "restrained_color_luminance_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "restrained color rides on a monochrome luminance image",
+            "restrained color luminance"
+          ]
+        },
+        "complete_plate_edge_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete plate edge"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_autochrome_glass_transparency_color_screen_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes glass plate and backlight are visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_autochrome_glass_transparency_color_screen_2",
+          "review_scale": "both",
+          "description": "The saved image makes mosaic is fine and material-owned clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_autochrome_glass_transparency_color_screen_3",
+          "review_scale": "native",
+          "description": "The saved image makes color remains restrained without becoming pixel art clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_autochrome_glass_transparency_color_screen_4",
+          "review_scale": "native",
+          "description": "The saved image makes luminance detail remains continuous clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_autochrome_glass_transparency_color_screen_5",
+          "review_scale": "both",
+          "description": "The saved image makes paper and screen substitutes are absent clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "digital RGB pixel grid",
+        "ordinary color-film grain",
+        "pointillist painting",
+        "pastel filter",
+        "paper print"
+      ]
+    },
+    {
+      "id": "integral_instant_print_object_relation",
+      "category": "photo_era_material_object_output_container",
+      "activation": {
+        "exact_terms": [
+          "integral instant-print physical object relation",
+          "일체형 즉석 인화물 물리 객체 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by physical photographic object and output container in which complete physical print perimeter, near-square image area inside an asymmetric outer margin, print thickness or cast shadow, depicted image is contained inside the material object, and localized development variation or handling trace coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "탁자 위에 놓인 일체형 즉석 인화물의 전체 외곽, 거의 정사각인 이미지와 비대칭 여백, 종이 두께와 그림자, 테두리 안에 담긴 사진, 국소 현상 얼룩이 함께 보인다",
+          "A photographic rendering that keeps complete physical print perimeter visibly connected to near-square image area inside an asymmetric outer margin while print thickness or cast shadow, depicted image is contained inside the material object, and localized development variation or handling trace remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "complete_print",
+            "near_square_asymmetric_margin",
+            "object_depth",
+            "image_inside_object",
+            "localized_development_trace"
+          ],
+          "groups": [
+            {
+              "id": "complete_print",
+              "any_terms": [
+                "complete physical print perimeter",
+                "complete print"
+              ]
+            },
+            {
+              "id": "near_square_asymmetric_margin",
+              "any_terms": [
+                "near-square image area inside an asymmetric outer margin",
+                "near square asymmetric margin"
+              ]
+            },
+            {
+              "id": "object_depth",
+              "any_terms": [
+                "print thickness or cast shadow",
+                "object depth"
+              ]
+            },
+            {
+              "id": "image_inside_object",
+              "any_terms": [
+                "depicted image is contained inside the material object",
+                "image inside object"
+              ]
+            },
+            {
+              "id": "localized_development_trace",
+              "any_terms": [
+                "localized development variation or handling trace",
+                "localized development trace"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "white border graphic",
+          "square crop",
+          "smartphone screen",
+          "four-cut photobooth strip",
+          "peel-apart instant print"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "complete physical print perimeter",
+          "near-square image area inside an asymmetric outer margin",
+          "print thickness or cast shadow",
+          "depicted image is contained inside the material object",
+          "localized development variation or handling trace"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "integral instant-print physical object relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where complete physical print perimeter, near-square image area inside an asymmetric outer margin, print thickness or cast shadow, depicted image is contained inside the material object, and localized development variation or handling trace coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "complete_print_phrase",
+        "near_square_asymmetric_margin_phrase",
+        "object_depth_phrase",
+        "image_inside_object_phrase",
+        "localized_development_trace_phrase"
+      ],
+      "evidence_requirements": {
+        "complete_print_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete physical print perimeter",
+            "complete print"
+          ]
+        },
+        "near_square_asymmetric_margin_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "near-square image area inside an asymmetric outer margin",
+            "near square asymmetric margin"
+          ]
+        },
+        "object_depth_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "print thickness or cast shadow",
+            "object depth"
+          ]
+        },
+        "image_inside_object_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "depicted image is contained inside the material object",
+            "image inside object"
+          ]
+        },
+        "localized_development_trace_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "localized development variation or handling trace",
+            "localized development trace"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_integral_instant_print_object_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes entire print silhouette is visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_integral_instant_print_object_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes image and asymmetric margin remain distinct clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_integral_instant_print_object_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes object depth is legible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_integral_instant_print_object_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes variation stays localized to print clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_integral_instant_print_object_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes digital border and four-cut formats do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "white border graphic",
+        "square crop",
+        "smartphone screen",
+        "four-cut photobooth strip",
+        "peel-apart instant print"
+      ]
+    },
+    {
+      "id": "mounted_slide_transparency_object_relation",
+      "category": "photo_era_material_object_output_container",
+      "activation": {
+        "exact_terms": [
+          "mounted photographic slide transparency object",
+          "마운트된 사진 슬라이드 투명 원고 객체"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by physical photographic object and output container in which transparent film frame, cardboard or plastic mount, transmitted-light viewing, image contained within mount aperture, and film edge density or thickness coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete cardboard-mounted color slide with transparent film thickness, a photograph contained inside the mount aperture, and transmitted backlight passing through the image",
+          "A photographic rendering that keeps transparent film frame visibly connected to cardboard or plastic mount while transmitted-light viewing, image contained within mount aperture, and film edge density or thickness remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "transparent_film",
+            "physical_mount",
+            "transmitted_light",
+            "image_in_aperture",
+            "film_edge_density"
+          ],
+          "groups": [
+            {
+              "id": "transparent_film",
+              "any_terms": [
+                "transparent film frame",
+                "transparent film"
+              ]
+            },
+            {
+              "id": "physical_mount",
+              "any_terms": [
+                "cardboard or plastic mount",
+                "physical mount"
+              ]
+            },
+            {
+              "id": "transmitted_light",
+              "any_terms": [
+                "transmitted-light viewing",
+                "transmitted light"
+              ]
+            },
+            {
+              "id": "image_in_aperture",
+              "any_terms": [
+                "image contained within mount aperture",
+                "image in aperture"
+              ]
+            },
+            {
+              "id": "film_edge_density",
+              "any_terms": [
+                "film edge density or thickness",
+                "film edge density"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "photo on a screen",
+          "fake slide UI",
+          "paper print",
+          "negative strip",
+          "saturated image alone"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "transparent film frame",
+          "cardboard or plastic mount",
+          "transmitted-light viewing",
+          "image contained within mount aperture",
+          "film edge density or thickness"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "mounted photographic slide transparency object"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where transparent film frame, cardboard or plastic mount, transmitted-light viewing, image contained within mount aperture, and film edge density or thickness coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "transparent_film_phrase",
+        "physical_mount_phrase",
+        "transmitted_light_phrase",
+        "image_in_aperture_phrase",
+        "film_edge_density_phrase"
+      ],
+      "evidence_requirements": {
+        "transparent_film_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "transparent film frame",
+            "transparent film"
+          ]
+        },
+        "physical_mount_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "cardboard or plastic mount",
+            "physical mount"
+          ]
+        },
+        "transmitted_light_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "transmitted-light viewing",
+            "transmitted light"
+          ]
+        },
+        "image_in_aperture_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "image contained within mount aperture",
+            "image in aperture"
+          ]
+        },
+        "film_edge_density_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "film edge density or thickness",
+            "film edge density"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_mounted_slide_transparency_object_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes mount silhouette is complete clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_mounted_slide_transparency_object_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes film remains translucent clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_mounted_slide_transparency_object_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes backlight passes through image clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_mounted_slide_transparency_object_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes aperture contains rather than overlays image clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_mounted_slide_transparency_object_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes screen and paper substitutes are absent clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "photo on a screen",
+        "fake slide UI",
+        "paper print",
+        "negative strip",
+        "saturated image alone"
+      ]
+    },
+    {
+      "id": "pictorialist_handworked_print_relation",
+      "category": "photo_era_genre_practice_output_container",
+      "activation": {
+        "exact_terms": [
+          "Pictorialist hand-worked photographic print relation",
+          "픽토리얼리즘 손작업 사진 인화 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by photographic practice and physical output in which selective soft focus with one retained focus reference, large organized tonal masses, visible photographic print surface, localized pigment photogravure or gum-work variation, and complete artwork and mount relation coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "한 기준 초점은 남기고 선택적으로 부드러워진 사진, 큰 명암 덩어리, 보이는 인화지 표면, 국소적인 gum 안료 손작업 변화, 작품과 마운트 전체가 함께 보이는 픽토리얼리즘 인화",
+          "A photographic rendering that keeps selective soft focus with one retained focus reference visibly connected to large organized tonal masses while visible photographic print surface, localized pigment photogravure or gum-work variation, and complete artwork and mount relation remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "selective_soft_focus",
+            "tonal_masses",
+            "print_surface",
+            "localized_handwork",
+            "artwork_mount"
+          ],
+          "groups": [
+            {
+              "id": "selective_soft_focus",
+              "any_terms": [
+                "selective soft focus with one retained focus reference",
+                "selective soft focus"
+              ]
+            },
+            {
+              "id": "tonal_masses",
+              "any_terms": [
+                "large organized tonal masses",
+                "tonal masses"
+              ]
+            },
+            {
+              "id": "print_surface",
+              "any_terms": [
+                "visible photographic print surface",
+                "print surface"
+              ]
+            },
+            {
+              "id": "localized_handwork",
+              "any_terms": [
+                "localized pigment photogravure or gum-work variation",
+                "localized handwork"
+              ]
+            },
+            {
+              "id": "artwork_mount",
+              "any_terms": [
+                "complete artwork and mount relation",
+                "artwork mount"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "uniform Gaussian blur",
+          "fog alone",
+          "modern glow filter",
+          "ordinary painting",
+          "sharp documentary photograph"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "selective soft focus with one retained focus reference",
+          "large organized tonal masses",
+          "visible photographic print surface",
+          "localized pigment photogravure or gum-work variation",
+          "complete artwork and mount relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "Pictorialist hand-worked photographic print relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where selective soft focus with one retained focus reference, large organized tonal masses, visible photographic print surface, localized pigment photogravure or gum-work variation, and complete artwork and mount relation coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "selective_soft_focus_phrase",
+        "tonal_masses_phrase",
+        "print_surface_phrase",
+        "localized_handwork_phrase",
+        "artwork_mount_phrase"
+      ],
+      "evidence_requirements": {
+        "selective_soft_focus_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "selective soft focus with one retained focus reference",
+            "selective soft focus"
+          ]
+        },
+        "tonal_masses_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "large organized tonal masses",
+            "tonal masses"
+          ]
+        },
+        "print_surface_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "visible photographic print surface",
+            "print surface"
+          ]
+        },
+        "localized_handwork_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "localized pigment photogravure or gum-work variation",
+            "localized handwork"
+          ]
+        },
+        "artwork_mount_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete artwork and mount relation",
+            "artwork mount"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_pictorialist_handworked_print_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes subject remains photographically legible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_pictorialist_handworked_print_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes softness is selective clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_pictorialist_handworked_print_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes tonal masses retain hierarchy clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_pictorialist_handworked_print_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes hand-worked variation belongs to print surface clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_pictorialist_handworked_print_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes global blur or fog does not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "uniform Gaussian blur",
+        "fog alone",
+        "modern glow filter",
+        "ordinary painting",
+        "sharp documentary photograph"
+      ]
+    },
+    {
+      "id": "new_vision_modernist_camera_geometry",
+      "category": "photo_era_genre_practice_composition",
+      "activation": {
+        "exact_terms": [
+          "New Vision modernist camera geometry",
+          "뉴 비전 모더니즘 카메라 기하"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by photographic practice and camera composition in which extreme high or low camera position, dominant diagonal structural rhythm, scale or orientation defamiliarization, sharp graphic light-shadow organization, and real industrial urban or object geometry anchors the abstraction coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "an extreme overhead camera position turns real industrial stairs into dominant diagonals, reverses familiar scale, and organizes sharp light and shadow into a modernist geometric abstraction",
+          "A photographic rendering that keeps extreme high or low camera position visibly connected to dominant diagonal structural rhythm while scale or orientation defamiliarization, sharp graphic light-shadow organization, and real industrial urban or object geometry anchors the abstraction remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "extreme_viewpoint",
+            "structural_diagonals",
+            "scale_defamiliarization",
+            "graphic_light_shadow",
+            "real_geometry_anchor"
+          ],
+          "groups": [
+            {
+              "id": "extreme_viewpoint",
+              "any_terms": [
+                "extreme high or low camera position",
+                "extreme viewpoint"
+              ]
+            },
+            {
+              "id": "structural_diagonals",
+              "any_terms": [
+                "dominant diagonal structural rhythm",
+                "structural diagonals"
+              ]
+            },
+            {
+              "id": "scale_defamiliarization",
+              "any_terms": [
+                "scale or orientation defamiliarization",
+                "scale defamiliarization"
+              ]
+            },
+            {
+              "id": "graphic_light_shadow",
+              "any_terms": [
+                "sharp graphic light-shadow organization",
+                "graphic light shadow"
+              ]
+            },
+            {
+              "id": "real_geometry_anchor",
+              "any_terms": [
+                "real industrial urban or object geometry anchors the abstraction",
+                "real geometry anchor"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "Dutch-angle selfie",
+          "wide-angle face distortion",
+          "Bauhaus decor props",
+          "generic high-contrast monochrome",
+          "post-capture rotation only"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "extreme high or low camera position",
+          "dominant diagonal structural rhythm",
+          "scale or orientation defamiliarization",
+          "sharp graphic light-shadow organization",
+          "real industrial urban or object geometry anchors the abstraction"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "New Vision modernist camera geometry"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where extreme high or low camera position, dominant diagonal structural rhythm, scale or orientation defamiliarization, sharp graphic light-shadow organization, and real industrial urban or object geometry anchors the abstraction coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "extreme_viewpoint_phrase",
+        "structural_diagonals_phrase",
+        "scale_defamiliarization_phrase",
+        "graphic_light_shadow_phrase",
+        "real_geometry_anchor_phrase"
+      ],
+      "evidence_requirements": {
+        "extreme_viewpoint_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "extreme high or low camera position",
+            "extreme viewpoint"
+          ]
+        },
+        "structural_diagonals_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "dominant diagonal structural rhythm",
+            "structural diagonals"
+          ]
+        },
+        "scale_defamiliarization_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "scale or orientation defamiliarization",
+            "scale defamiliarization"
+          ]
+        },
+        "graphic_light_shadow_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "sharp graphic light-shadow organization",
+            "graphic light shadow"
+          ]
+        },
+        "real_geometry_anchor_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "real industrial urban or object geometry anchors the abstraction",
+            "real geometry anchor"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_new_vision_modernist_camera_geometry_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes camera position is extreme and readable clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_new_vision_modernist_camera_geometry_2",
+          "review_scale": "both",
+          "description": "The saved image makes diagonals arise from scene structure clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_new_vision_modernist_camera_geometry_3",
+          "review_scale": "native",
+          "description": "The saved image makes scale relation becomes unfamiliar clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_new_vision_modernist_camera_geometry_4",
+          "review_scale": "native",
+          "description": "The saved image makes light and shadow reinforce geometry clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_new_vision_modernist_camera_geometry_5",
+          "review_scale": "both",
+          "description": "The saved image makes decor and rotation alone do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "Dutch-angle selfie",
+        "wide-angle face distortion",
+        "Bauhaus decor props",
+        "generic high-contrast monochrome",
+        "post-capture rotation only"
+      ]
+    },
+    {
+      "id": "press_flash_newsprint_reproduction_relation",
+      "category": "photo_era_capture_response_genre_practice_output_container",
+      "activation": {
+        "exact_terms": [
+          "press-flash newsprint reproduction relation",
+          "보도 직광 플래시 신문 복제 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture response, photographic practice, and printed output in which near-axis direct flash, near-plane specular highlights, rapid background falloff with hard shadow, urgent asymmetric crop or action, and visible newsprint paper and halftone reproduction coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "광축 가까운 직광이 사건의 가까운 인물에 반사 하이라이트를 만들고 배경은 하드 그림자와 함께 급격히 어두워지며, 진행 중 행동을 비대칭으로 자른 사진이 실제 신문지 망점으로 복제되어 있다",
+          "A photographic rendering that keeps near-axis direct flash visibly connected to near-plane specular highlights while rapid background falloff with hard shadow, urgent asymmetric crop or action, and visible newsprint paper and halftone reproduction remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "near_axis_flash",
+            "specular_near_plane",
+            "falloff_hard_shadow",
+            "urgent_crop_action",
+            "newsprint_halftone"
+          ],
+          "groups": [
+            {
+              "id": "near_axis_flash",
+              "any_terms": [
+                "near-axis direct flash",
+                "near axis flash"
+              ]
+            },
+            {
+              "id": "specular_near_plane",
+              "any_terms": [
+                "near-plane specular highlights",
+                "specular near plane"
+              ]
+            },
+            {
+              "id": "falloff_hard_shadow",
+              "any_terms": [
+                "rapid background falloff with hard shadow",
+                "falloff hard shadow"
+              ]
+            },
+            {
+              "id": "urgent_crop_action",
+              "any_terms": [
+                "urgent asymmetric crop or action",
+                "urgent crop action"
+              ]
+            },
+            {
+              "id": "newsprint_halftone",
+              "any_terms": [
+                "visible newsprint paper and halftone reproduction",
+                "newsprint halftone"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "1990s party flash",
+          "clean studio strobe",
+          "dark background alone",
+          "halftone filter alone",
+          "clean digital press image"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "near-axis direct flash",
+          "near-plane specular highlights",
+          "rapid background falloff with hard shadow",
+          "urgent asymmetric crop or action",
+          "visible newsprint paper and halftone reproduction"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "press-flash newsprint reproduction relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where near-axis direct flash, near-plane specular highlights, rapid background falloff with hard shadow, urgent asymmetric crop or action, and visible newsprint paper and halftone reproduction coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "near_axis_flash_phrase",
+        "specular_near_plane_phrase",
+        "falloff_hard_shadow_phrase",
+        "urgent_crop_action_phrase",
+        "newsprint_halftone_phrase"
+      ],
+      "evidence_requirements": {
+        "near_axis_flash_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "near-axis direct flash",
+            "near axis flash"
+          ]
+        },
+        "specular_near_plane_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "near-plane specular highlights",
+            "specular near plane"
+          ]
+        },
+        "falloff_hard_shadow_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "rapid background falloff with hard shadow",
+            "falloff hard shadow"
+          ]
+        },
+        "urgent_crop_action_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "urgent asymmetric crop or action",
+            "urgent crop action"
+          ]
+        },
+        "newsprint_halftone_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "visible newsprint paper and halftone reproduction",
+            "newsprint halftone"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_press_flash_newsprint_reproduction_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes direct-flash geometry reads at thumbnail clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_press_flash_newsprint_reproduction_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes background falloff and shadow coexist clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_press_flash_newsprint_reproduction_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes event crop remains coherent clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_press_flash_newsprint_reproduction_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes paper and halftone belong to output clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_press_flash_newsprint_reproduction_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes party or filter-only substitute is absent clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "1990s party flash",
+        "clean studio strobe",
+        "dark background alone",
+        "halftone filter alone",
+        "clean digital press image"
+      ]
+    },
+    {
+      "id": "late_century_minilab_flash_print_relation",
+      "category": "photo_era_capture_response_output_container",
+      "activation": {
+        "exact_terms": [
+          "late-century minilab direct-flash print relation",
+          "20세기 후반 미니랩 직광 인화물 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture response and physical output in which complete glossy or resin-coated consumer print, near-axis direct flash, close background shadow, casual crop with an in-progress social action, and print boundary on an album page table or scan surface coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete glossy consumer print on an album page contains an in-progress family action lit by near-axis flash, with a close wall shadow and casual off-center crop",
+          "A photographic rendering that keeps complete glossy or resin-coated consumer print visibly connected to near-axis direct flash while close background shadow, casual crop with an in-progress social action, and print boundary on an album page table or scan surface remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "consumer_print_object",
+            "near_axis_flash",
+            "close_background_shadow",
+            "casual_action_crop",
+            "album_or_table_context"
+          ],
+          "groups": [
+            {
+              "id": "consumer_print_object",
+              "any_terms": [
+                "complete glossy or resin-coated consumer print",
+                "consumer print object"
+              ]
+            },
+            {
+              "id": "near_axis_flash",
+              "any_terms": [
+                "near-axis direct flash",
+                "near axis flash"
+              ]
+            },
+            {
+              "id": "close_background_shadow",
+              "any_terms": [
+                "close background shadow"
+              ]
+            },
+            {
+              "id": "casual_action_crop",
+              "any_terms": [
+                "casual crop with an in-progress social action",
+                "casual action crop"
+              ]
+            },
+            {
+              "id": "album_or_table_context",
+              "any_terms": [
+                "print boundary on an album page table or scan surface",
+                "album or table context"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "screen capture",
+          "studio portrait",
+          "fake Polaroid border",
+          "date caption alone",
+          "extreme vintage damage"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "complete glossy or resin-coated consumer print",
+          "near-axis direct flash",
+          "close background shadow",
+          "casual crop with an in-progress social action",
+          "print boundary on an album page table or scan surface"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "late-century minilab direct-flash print relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where complete glossy or resin-coated consumer print, near-axis direct flash, close background shadow, casual crop with an in-progress social action, and print boundary on an album page table or scan surface coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "consumer_print_object_phrase",
+        "near_axis_flash_phrase",
+        "close_background_shadow_phrase",
+        "casual_action_crop_phrase",
+        "album_or_table_context_phrase"
+      ],
+      "evidence_requirements": {
+        "consumer_print_object_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "complete glossy or resin-coated consumer print",
+            "consumer print object"
+          ]
+        },
+        "near_axis_flash_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "near-axis direct flash",
+            "near axis flash"
+          ]
+        },
+        "close_background_shadow_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "close background shadow"
+          ]
+        },
+        "casual_action_crop_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "casual crop with an in-progress social action",
+            "casual action crop"
+          ]
+        },
+        "album_or_table_context_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "print boundary on an album page table or scan surface",
+            "album or table context"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_late_century_minilab_flash_print_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes consumer print object is complete clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_late_century_minilab_flash_print_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes near-axis flash is spatially owned clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_late_century_minilab_flash_print_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes background shadow remains close clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_late_century_minilab_flash_print_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes action reads as a snapshot clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_late_century_minilab_flash_print_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes date text and fake borders do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "screen capture",
+        "studio portrait",
+        "fake Polaroid border",
+        "date caption alone",
+        "extreme vintage damage"
+      ]
+    },
+    {
+      "id": "smartphone_ultrawide_near_far_perspective_relation",
+      "category": "photo_era_capture_response_composition",
+      "activation": {
+        "exact_terms": [
+          "smartphone ultra-wide near-far perspective relation",
+          "스마트폰 초광각 근원근 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by capture response and camera composition in which very broad field of view, near foreground is relatively enlarged, edge-directed stretching, stable central perspective anchor, and phone-close camera position or a foreground-to-distance action path coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "몸 가까운 스마트폰 초광각 시점에서 손은 크게, 먼 거리와 건물은 작게 벌어지고 가장자리 늘어남이 증가하지만 중앙 소실점은 안정적으로 유지되는 넓은 장면",
+          "A photographic rendering that keeps very broad field of view visibly connected to near foreground is relatively enlarged while edge-directed stretching, stable central perspective anchor, and phone-close camera position or a foreground-to-distance action path remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "broad_field",
+            "near_enlargement",
+            "edge_stretch",
+            "central_anchor",
+            "phone_close_position"
+          ],
+          "groups": [
+            {
+              "id": "broad_field",
+              "any_terms": [
+                "very broad field of view",
+                "broad field"
+              ]
+            },
+            {
+              "id": "near_enlargement",
+              "any_terms": [
+                "near foreground is relatively enlarged",
+                "near enlargement"
+              ]
+            },
+            {
+              "id": "edge_stretch",
+              "any_terms": [
+                "edge-directed stretching",
+                "edge stretch"
+              ]
+            },
+            {
+              "id": "central_anchor",
+              "any_terms": [
+                "stable central perspective anchor",
+                "central anchor"
+              ]
+            },
+            {
+              "id": "phone_close_position",
+              "any_terms": [
+                "phone-close camera position or a foreground-to-distance action path",
+                "phone close position"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "circular fisheye",
+          "panorama stitching",
+          "ordinary wide room",
+          "face distortion alone",
+          "vertical crop alone"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "very broad field of view",
+          "near foreground is relatively enlarged",
+          "edge-directed stretching",
+          "stable central perspective anchor",
+          "phone-close camera position or a foreground-to-distance action path"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "smartphone ultra-wide near-far perspective relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where very broad field of view, near foreground is relatively enlarged, edge-directed stretching, stable central perspective anchor, and phone-close camera position or a foreground-to-distance action path coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "broad_field_phrase",
+        "near_enlargement_phrase",
+        "edge_stretch_phrase",
+        "central_anchor_phrase",
+        "phone_close_position_phrase"
+      ],
+      "evidence_requirements": {
+        "broad_field_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "very broad field of view",
+            "broad field"
+          ]
+        },
+        "near_enlargement_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "near foreground is relatively enlarged",
+            "near enlargement"
+          ]
+        },
+        "edge_stretch_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "edge-directed stretching",
+            "edge stretch"
+          ]
+        },
+        "central_anchor_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "stable central perspective anchor",
+            "central anchor"
+          ]
+        },
+        "phone_close_position_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "phone-close camera position or a foreground-to-distance action path",
+            "phone close position"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_smartphone_ultrawide_near_far_perspective_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes broad field and central anchor coexist clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_smartphone_ultrawide_near_far_perspective_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes near-far scale expansion is obvious clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_smartphone_ultrawide_near_far_perspective_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes stretch grows toward edges clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_smartphone_ultrawide_near_far_perspective_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes capture position is plausible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_smartphone_ultrawide_near_far_perspective_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes fisheye and crop-only substitutes are absent clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "circular fisheye",
+        "panorama stitching",
+        "ordinary wide room",
+        "face distortion alone",
+        "vertical crop alone"
+      ]
+    },
+    {
+      "id": "computational_hdr_local_tone_balance_look",
+      "category": "photo_era_capture_response",
+      "activation": {
+        "exact_terms": [
+          "computational multi-frame HDR local-tone balance look",
+          "계산사진 다중프레임 HDR 국소 톤 균형 룩"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by visible capture response in which scene contains strong real brightness contrast, bright-region detail is retained, shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a genuinely high-contrast window interior retains texture outside the bright window and readable low-noise structure in the dark room, with local contrast preserved and moving hand edges coherently merged",
+          "A photographic rendering that keeps scene contains strong real brightness contrast visibly connected to bright-region detail is retained while shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "real_brightness_contrast",
+            "highlight_detail",
+            "clean_shadow_detail",
+            "local_tone_structure",
+            "coherent_motion_edges"
+          ],
+          "groups": [
+            {
+              "id": "real_brightness_contrast",
+              "any_terms": [
+                "scene contains strong real brightness contrast",
+                "real brightness contrast"
+              ]
+            },
+            {
+              "id": "highlight_detail",
+              "any_terms": [
+                "bright-region detail is retained",
+                "highlight detail"
+              ]
+            },
+            {
+              "id": "clean_shadow_detail",
+              "any_terms": [
+                "shadow detail is clean enough to read",
+                "clean shadow detail"
+              ]
+            },
+            {
+              "id": "local_tone_structure",
+              "any_terms": [
+                "local tone transitions avoid global flattening",
+                "local tone structure"
+              ]
+            },
+            {
+              "id": "coherent_motion_edges",
+              "any_terms": [
+                "moving boundaries remain coherent or show only localized merge residue",
+                "coherent motion edges"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "aggressive HDR halo",
+          "globally flat exposure",
+          "shadow lift alone",
+          "oversharpening",
+          "claim of a specific phone or algorithm"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "scene contains strong real brightness contrast",
+          "bright-region detail is retained",
+          "shadow detail is clean enough to read",
+          "local tone transitions avoid global flattening",
+          "moving boundaries remain coherent or show only localized merge residue"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "computational multi-frame HDR local-tone balance look"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where scene contains strong real brightness contrast, bright-region detail is retained, shadow detail is clean enough to read, local tone transitions avoid global flattening, and moving boundaries remain coherent or show only localized merge residue coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "real_brightness_contrast_phrase",
+        "highlight_detail_phrase",
+        "clean_shadow_detail_phrase",
+        "local_tone_structure_phrase",
+        "coherent_motion_edges_phrase"
+      ],
+      "evidence_requirements": {
+        "real_brightness_contrast_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "scene contains strong real brightness contrast",
+            "real brightness contrast"
+          ]
+        },
+        "highlight_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "bright-region detail is retained",
+            "highlight detail"
+          ]
+        },
+        "clean_shadow_detail_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "shadow detail is clean enough to read",
+            "clean shadow detail"
+          ]
+        },
+        "local_tone_structure_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "local tone transitions avoid global flattening",
+            "local tone structure"
+          ]
+        },
+        "coherent_motion_edges_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "moving boundaries remain coherent or show only localized merge residue",
+            "coherent motion edges"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_computational_hdr_local_tone_balance_look_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes high-contrast scene is genuine clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_hdr_local_tone_balance_look_2",
+          "review_scale": "both",
+          "description": "The saved image makes highlight and shadow detail both survive clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_hdr_local_tone_balance_look_3",
+          "review_scale": "native",
+          "description": "The saved image makes local contrast stays structured clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_hdr_local_tone_balance_look_4",
+          "review_scale": "native",
+          "description": "The saved image makes motion edges remain coherent clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_hdr_local_tone_balance_look_5",
+          "review_scale": "both",
+          "description": "The saved image makes algorithm identity is not inferred clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "aggressive HDR halo",
+        "globally flat exposure",
+        "shadow lift alone",
+        "oversharpening",
+        "claim of a specific phone or algorithm"
+      ]
+    },
+    {
+      "id": "computational_low_light_multiframe_look",
+      "category": "photo_era_capture_response",
+      "activation": {
+        "exact_terms": [
+          "computational low-light multi-frame look",
+          "계산사진 저조도 다중프레임 룩"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by visible capture response in which visible low-light source anchors, bright sources are not broadly clipped, dark surfaces retain color and structure, random noise is restrained rather than erased, and human hand vehicle or foliage edges remain temporally coherent coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "실제 작은 야간 광원이 보이고 광원 주변이 넓게 날아가지 않으며 어두운 벽의 색과 구조, 절제된 노이즈, 걷는 사람의 손과 발 경계가 중복 없이 유지되는 계산사진 저조도 룩",
+          "A photographic rendering that keeps visible low-light source anchors visibly connected to bright sources are not broadly clipped while dark surfaces retain color and structure, random noise is restrained rather than erased, and human hand vehicle or foliage edges remain temporally coherent remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "low_light_sources",
+            "controlled_source_clipping",
+            "dark_color_structure",
+            "restrained_noise",
+            "motion_edge_coherence"
+          ],
+          "groups": [
+            {
+              "id": "low_light_sources",
+              "any_terms": [
+                "visible low-light source anchors",
+                "low light sources"
+              ]
+            },
+            {
+              "id": "controlled_source_clipping",
+              "any_terms": [
+                "bright sources are not broadly clipped",
+                "controlled source clipping"
+              ]
+            },
+            {
+              "id": "dark_color_structure",
+              "any_terms": [
+                "dark surfaces retain color and structure",
+                "dark color structure"
+              ]
+            },
+            {
+              "id": "restrained_noise",
+              "any_terms": [
+                "random noise is restrained rather than erased",
+                "restrained noise"
+              ]
+            },
+            {
+              "id": "motion_edge_coherence",
+              "any_terms": [
+                "human hand vehicle or foliage edges remain temporally coherent",
+                "motion edge coherence"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "day scene darkened in post",
+          "light trails alone",
+          "flash-lit foreground",
+          "noiseless CGI night",
+          "night label alone"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "visible low-light source anchors",
+          "bright sources are not broadly clipped",
+          "dark surfaces retain color and structure",
+          "random noise is restrained rather than erased",
+          "human hand vehicle or foliage edges remain temporally coherent"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "computational low-light multi-frame look"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where visible low-light source anchors, bright sources are not broadly clipped, dark surfaces retain color and structure, random noise is restrained rather than erased, and human hand vehicle or foliage edges remain temporally coherent coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "low_light_sources_phrase",
+        "controlled_source_clipping_phrase",
+        "dark_color_structure_phrase",
+        "restrained_noise_phrase",
+        "motion_edge_coherence_phrase"
+      ],
+      "evidence_requirements": {
+        "low_light_sources_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "visible low-light source anchors",
+            "low light sources"
+          ]
+        },
+        "controlled_source_clipping_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "bright sources are not broadly clipped",
+            "controlled source clipping"
+          ]
+        },
+        "dark_color_structure_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "dark surfaces retain color and structure",
+            "dark color structure"
+          ]
+        },
+        "restrained_noise_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "random noise is restrained rather than erased",
+            "restrained noise"
+          ]
+        },
+        "motion_edge_coherence_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "human hand vehicle or foliage edges remain temporally coherent",
+            "motion edge coherence"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_computational_low_light_multiframe_look_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes low-light source ownership is visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_low_light_multiframe_look_2",
+          "review_scale": "both",
+          "description": "The saved image makes source cores and adjacent detail coexist clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_low_light_multiframe_look_3",
+          "review_scale": "native",
+          "description": "The saved image makes dark regions remain readable clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_low_light_multiframe_look_4",
+          "review_scale": "native",
+          "description": "The saved image makes noise and texture remain plausible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_computational_low_light_multiframe_look_5",
+          "review_scale": "both",
+          "description": "The saved image makes moving edges avoid broad ghost duplication clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "day scene darkened in post",
+        "light trails alone",
+        "flash-lit foreground",
+        "noiseless CGI night",
+        "night label alone"
+      ]
+    },
+    {
+      "id": "silver_mirroring_surface_region_relation",
+      "category": "photo_era_deterioration",
+      "activation": {
+        "exact_terms": [
+          "silver-mirroring photographic surface region",
+          "사진 은경화 표면 영역 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by localized physical photographic deterioration in which physical silver-gelatin print or negative support, bluish metallic sheen concentrates in dense dark image regions, surface-reflective appearance, unaffected comparison region, and damage follows image-layer boundaries coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete silver-gelatin print whose dense dark image regions carry localized bluish metallic surface sheen, while a lighter unaffected region remains readable and the sheen follows image-layer boundaries",
+          "A photographic rendering that keeps physical silver-gelatin print or negative support visibly connected to bluish metallic sheen concentrates in dense dark image regions while surface-reflective appearance, unaffected comparison region, and damage follows image-layer boundaries remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "silver_photo_support",
+            "dense_region_sheen",
+            "surface_reflection",
+            "unaffected_region",
+            "image_layer_boundary"
+          ],
+          "groups": [
+            {
+              "id": "silver_photo_support",
+              "any_terms": [
+                "physical silver-gelatin print or negative support",
+                "silver photo support"
+              ]
+            },
+            {
+              "id": "dense_region_sheen",
+              "any_terms": [
+                "bluish metallic sheen concentrates in dense dark image regions",
+                "dense region sheen"
+              ]
+            },
+            {
+              "id": "surface_reflection",
+              "any_terms": [
+                "surface-reflective appearance",
+                "surface reflection"
+              ]
+            },
+            {
+              "id": "unaffected_region",
+              "any_terms": [
+                "unaffected comparison region",
+                "unaffected region"
+              ]
+            },
+            {
+              "id": "image_layer_boundary",
+              "any_terms": [
+                "damage follows image-layer boundaries",
+                "image layer boundary"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "daguerreotype plate-wide mirror",
+          "glass glare",
+          "cool color grade",
+          "silver picture frame",
+          "lens flare"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "physical silver-gelatin print or negative support",
+          "bluish metallic sheen concentrates in dense dark image regions",
+          "surface-reflective appearance",
+          "unaffected comparison region",
+          "damage follows image-layer boundaries"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "silver-mirroring photographic surface region"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where physical silver-gelatin print or negative support, bluish metallic sheen concentrates in dense dark image regions, surface-reflective appearance, unaffected comparison region, and damage follows image-layer boundaries coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "silver_photo_support_phrase",
+        "dense_region_sheen_phrase",
+        "surface_reflection_phrase",
+        "unaffected_region_phrase",
+        "image_layer_boundary_phrase"
+      ],
+      "evidence_requirements": {
+        "silver_photo_support_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "physical silver-gelatin print or negative support",
+            "silver photo support"
+          ]
+        },
+        "dense_region_sheen_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "bluish metallic sheen concentrates in dense dark image regions",
+            "dense region sheen"
+          ]
+        },
+        "surface_reflection_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "surface-reflective appearance",
+            "surface reflection"
+          ]
+        },
+        "unaffected_region_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "unaffected comparison region",
+            "unaffected region"
+          ]
+        },
+        "image_layer_boundary_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "damage follows image-layer boundaries",
+            "image layer boundary"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_silver_mirroring_surface_region_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes photographic support is visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_silver_mirroring_surface_region_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes sheen clusters in dense image regions clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_silver_mirroring_surface_region_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes reflection stays on surface clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_silver_mirroring_surface_region_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes comparison region remains readable clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_silver_mirroring_surface_region_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes plate mirror and glare do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "daguerreotype plate-wide mirror",
+        "glass glare",
+        "cool color grade",
+        "silver picture frame",
+        "lens flare"
+      ]
+    },
+    {
+      "id": "acetate_channeling_shrinkage_relation",
+      "category": "photo_era_deterioration",
+      "activation": {
+        "exact_terms": [
+          "acetate film channeling and shrinkage relation",
+          "아세테이트 필름 채널링 수축 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by localized physical photographic deterioration in which plastic film support, support and emulsion shrink at different rates, curving connected channel or wrinkle network, image distortion or delamination follows the network, and less-damaged edge comparison coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "플라스틱 필름 전체 가장자리가 보이고 지지체와 유제의 수축 차로 굽은 채널 망이 이어지며 그 망을 따라 이미지가 주름지고 박리되고 가장자리에 덜 손상된 비교 영역이 남은 네거티브",
+          "A photographic rendering that keeps plastic film support visibly connected to support and emulsion shrink at different rates while curving connected channel or wrinkle network, image distortion or delamination follows the network, and less-damaged edge comparison remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "plastic_film_support",
+            "differential_shrinkage",
+            "channel_network",
+            "image_delamination",
+            "less_damaged_edge"
+          ],
+          "groups": [
+            {
+              "id": "plastic_film_support",
+              "any_terms": [
+                "plastic film support"
+              ]
+            },
+            {
+              "id": "differential_shrinkage",
+              "any_terms": [
+                "support and emulsion shrink at different rates",
+                "differential shrinkage"
+              ]
+            },
+            {
+              "id": "channel_network",
+              "any_terms": [
+                "curving connected channel or wrinkle network",
+                "channel network"
+              ]
+            },
+            {
+              "id": "image_delamination",
+              "any_terms": [
+                "image distortion or delamination follows the network",
+                "image delamination"
+              ]
+            },
+            {
+              "id": "less_damaged_edge",
+              "any_terms": [
+                "less-damaged edge comparison",
+                "less damaged edge"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "paper crackle",
+          "dry mud texture",
+          "water ripple filter",
+          "cracked glass",
+          "random scratches"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "plastic film support",
+          "support and emulsion shrink at different rates",
+          "curving connected channel or wrinkle network",
+          "image distortion or delamination follows the network",
+          "less-damaged edge comparison"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "acetate film channeling and shrinkage relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where plastic film support, support and emulsion shrink at different rates, curving connected channel or wrinkle network, image distortion or delamination follows the network, and less-damaged edge comparison coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "plastic_film_support_phrase",
+        "differential_shrinkage_phrase",
+        "channel_network_phrase",
+        "image_delamination_phrase",
+        "less_damaged_edge_phrase"
+      ],
+      "evidence_requirements": {
+        "plastic_film_support_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "plastic film support"
+          ]
+        },
+        "differential_shrinkage_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "support and emulsion shrink at different rates",
+            "differential shrinkage"
+          ]
+        },
+        "channel_network_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "curving connected channel or wrinkle network",
+            "channel network"
+          ]
+        },
+        "image_delamination_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "image distortion or delamination follows the network",
+            "image delamination"
+          ]
+        },
+        "less_damaged_edge_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "less-damaged edge comparison",
+            "less damaged edge"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_acetate_channeling_shrinkage_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes film support edge is visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_acetate_channeling_shrinkage_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes channel network has material continuity clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_acetate_channeling_shrinkage_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes image deforms with the network clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_acetate_channeling_shrinkage_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes edge comparison remains clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_acetate_channeling_shrinkage_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes paper and glass textures do not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "paper crackle",
+        "dry mud texture",
+        "water ripple filter",
+        "cracked glass",
+        "random scratches"
+      ]
+    },
+    {
+      "id": "chromogenic_dye_fade_covered_edge_relation",
+      "category": "photo_era_deterioration",
+      "activation": {
+        "exact_terms": [
+          "chromogenic dye-fade covered-edge relation",
+          "크로모제닉 염료 퇴색 가림 경계 관계"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A photographic visual relation owned by localized physical photographic deterioration in which physical color print or transparency, unequal channel-specific dye loss, reduced density and contrast, change aligns with a light-exposure or storage boundary, and covered or less-damaged comparison region coexist as evidence in one physical image.",
+        "paraphrase_examples": [
+          "a complete physical color print shows unequal channel-specific dye loss and reduced density only across a light-exposed region, while a previously covered edge preserves stronger color and contrast",
+          "A photographic rendering that keeps physical color print or transparency visibly connected to unequal channel-specific dye loss while reduced density and contrast, change aligns with a light-exposure or storage boundary, and covered or less-damaged comparison region remain separately legible."
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 5,
+          "required_group_ids": [
+            "color_photo_object",
+            "channel_specific_loss",
+            "density_contrast_loss",
+            "exposure_boundary",
+            "covered_comparison_edge"
+          ],
+          "groups": [
+            {
+              "id": "color_photo_object",
+              "any_terms": [
+                "physical color print or transparency",
+                "color photo object"
+              ]
+            },
+            {
+              "id": "channel_specific_loss",
+              "any_terms": [
+                "unequal channel-specific dye loss",
+                "channel specific loss"
+              ]
+            },
+            {
+              "id": "density_contrast_loss",
+              "any_terms": [
+                "reduced density and contrast",
+                "density contrast loss"
+              ]
+            },
+            {
+              "id": "exposure_boundary",
+              "any_terms": [
+                "change aligns with a light-exposure or storage boundary",
+                "exposure boundary"
+              ]
+            },
+            {
+              "id": "covered_comparison_edge",
+              "any_terms": [
+                "covered or less-damaged comparison region",
+                "covered comparison edge"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "warm color grade",
+          "tungsten illumination",
+          "expired-film capture cast",
+          "sepia",
+          "global desaturation"
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "physical color print or transparency",
+          "unequal channel-specific dye loss",
+          "reduced density and contrast",
+          "change aligns with a light-exposure or storage boundary",
+          "covered or less-damaged comparison region"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "chromogenic dye-fade covered-edge relation"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "composition_instruction": "Compose one photograph where physical color print or transparency, unequal channel-specific dye loss, reduced density and contrast, change aligns with a light-exposure or storage boundary, and covered or less-damaged comparison region coexist and remain separately legible at thumbnail and native review scales.",
+      "required_evidence_fields": [
+        "color_photo_object_phrase",
+        "channel_specific_loss_phrase",
+        "density_contrast_loss_phrase",
+        "exposure_boundary_phrase",
+        "covered_comparison_edge_phrase"
+      ],
+      "evidence_requirements": {
+        "color_photo_object_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "physical color print or transparency",
+            "color photo object"
+          ]
+        },
+        "channel_specific_loss_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "unequal channel-specific dye loss",
+            "channel specific loss"
+          ]
+        },
+        "density_contrast_loss_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "reduced density and contrast",
+            "density contrast loss"
+          ]
+        },
+        "exposure_boundary_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "change aligns with a light-exposure or storage boundary",
+            "exposure boundary"
+          ]
+        },
+        "covered_comparison_edge_phrase": {
+          "min_content_words": 2,
+          "must_mention_any": [
+            "covered or less-damaged comparison region",
+            "covered comparison edge"
+          ]
+        }
+      },
+      "render_gates": [
+        {
+          "id": "vo_era_chromogenic_dye_fade_covered_edge_relation_1",
+          "review_scale": "thumbnail",
+          "description": "The saved image makes color photographic object is visible clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_chromogenic_dye_fade_covered_edge_relation_2",
+          "review_scale": "both",
+          "description": "The saved image makes dye loss is channel-specific clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_chromogenic_dye_fade_covered_edge_relation_3",
+          "review_scale": "native",
+          "description": "The saved image makes density loss follows a boundary clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_chromogenic_dye_fade_covered_edge_relation_4",
+          "review_scale": "native",
+          "description": "The saved image makes comparison region preserves different color clearly verifiable in one frame."
+        },
+        {
+          "id": "vo_era_chromogenic_dye_fade_covered_edge_relation_5",
+          "review_scale": "both",
+          "description": "The saved image makes global grade does not substitute clearly verifiable in one frame."
+        }
+      ],
+      "reject_substitutes": [
+        "warm color grade",
+        "tungsten illumination",
+        "expired-film capture cast",
+        "sepia",
+        "global desaturation"
+      ]
+    }
+  ]
+}

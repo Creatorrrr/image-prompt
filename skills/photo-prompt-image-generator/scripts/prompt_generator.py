@@ -138,6 +138,7 @@ VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
 VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_reactorprompt.json",
+    "photo_prompt_visual_obligations_photo_era.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -157,6 +158,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_harem_extension.json",
     "photo_prompt_emotional_place_extension.json",
     "photo_prompt_lighting_extension.json",
+    "photo_prompt_photo_era_extension.json",
     "photo_prompt_violence_crime_extension.json",
     "photo_prompt_subculture_extension.json",
     "photo_prompt_worldbuilding_extension.json",

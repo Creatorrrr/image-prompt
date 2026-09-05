@@ -1,0 +1,374 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "290d4271edb30396418bbc84f8940186bc05ed25",
+    "candidate_revision": "working-tree-20260905-photo-era-visual-semantics"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "Apply the researched photographic-era keywords to visual-semantic and candidate-pack data, then use three independent randomized complex reference-image arms to test whether the selected meanings survive into saved pixels."
+  },
+  "evidence": [
+    {
+      "id": "e-request",
+      "kind": "source-observation",
+      "claim": "The requester requires data changes, three independent complex concepts, use of the supplied portrait, real image generation, and rendered-pixel verification.",
+      "artifact": "three frozen request envelopes under artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1"
+    },
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Twenty-seven cited museum, archive, conservation, standards, camera, and imaging sources support observable process, object, capture-response, output, and deterioration boundaries without treating an era label as visual proof.",
+      "artifact": "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/report-source.md and evidence.jsonl"
+    },
+    {
+      "id": "e-runtime-data",
+      "kind": "source-observation",
+      "claim": "Eighteen narrow profiles were added with five component groups, evidence fields, pixel gates, and reject substitutes each; fifty-nine new optional candidates plus the corrected no-age-claim sepia entry cover sixty proposed candidate changes across twenty-three families.",
+      "artifact": "photo_prompt_visual_obligations_photo_era.json, photo_prompt_photo_era_extension.json, photo_prompt_tags.json, and candidate-data-proposal.json"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The merged dictionary and current indexes validate at 354 profiles, 1,758 exact terms, and 8,142 semantic entries; current scene expression passes 112 of 112 routes.",
+      "artifact": "validate_photo_prompt_dictionary.py; build_visual_profile_index.py --check; eval_semantic.py --check-index dictionary hash 7b892ae82b33f86d15c3c9cb64ffc6f45547cf5e7afd12b3e398584dce968c8a; audit_scene_expression.py --current"
+    },
+    {
+      "id": "e-focused-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Eight focused tests and 214 subtests pass complete profile contracts, bilingual ownership, runtime resolution, sixty candidate registrations, sepia boundary, seventy-one positive and negative routing cases, generated-index coverage, and hash-bound three-arm fixtures.",
+      "artifact": ".venv/bin/python -m pytest -q tests/test_photo_era_visual_semantics.py => 8 passed, 214 subtests passed"
+    },
+    {
+      "id": "e-semantic-regression",
+      "kind": "prompt-evaluation",
+      "claim": "Existing semantic checks pass 2,118 contradiction generations with zero violations, 79 generalization cases, 24 original holdouts, 6 domain holdouts, and 22 preset-free retrieval holdouts.",
+      "artifact": "eval_semantic.py contradiction, generalization, holdout, domain-holdout-v2, and retrieval-holdout checks"
+    },
+    {
+      "id": "e-baseline-failures",
+      "kind": "package-check",
+      "claim": "A wider related maintenance subset reports 93 passes, 7 failures, 1 skip, and 465 passing subtests. Clean baseline revision 290d4271 separately reproduces the five nurse-to-yandere routing collisions and the legacy short-core 48-word error; the remaining top-level yandere failure is downstream of that same extra clinical profile.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/coordinator/validation_summary.json; the temporary baseline worktree was removed after inspection"
+    },
+    {
+      "id": "e-three-arm-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "All three v6 packs contain exactly the assigned hard profile and five-gate contract; all three composed prompts and exact appearance-reference-bound runtime requests independently re-audit PASS.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/arm-1, arm-2, and arm-3 candidate packs, composed prompts, render requests, and audits"
+    },
+    {
+      "id": "e-candidate-exposure",
+      "kind": "prompt-evaluation",
+      "claim": "None of eight requested newly registered candidate atoms entered the public v6 candidate surfaces of the three randomized complex requests, so optional candidate exposure fails even though hard visual profiles activate.",
+      "artifact": "three candidate_exposure or arm_result records and coordinator/execution_integrity.json"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "The three independent arms each made exactly one built-in image-generation call with zero image retries and zero fallbacks, saved one hash-bound image, and recorded cross_arm_inputs_used false.",
+      "artifact": "three image_runs.ndjson files, run_manifest.json files, and coordinator/execution_integrity.json"
+    },
+    {
+      "id": "e-render-albumen",
+      "kind": "render-observation",
+      "claim": "The albumen-card render passes readable print and mount layers, fine inner photographic detail, and a complete mount perimeter, but fails image-layer-owned gloss and visible overall fine crackle or microscopic fiber: 3 of 5 gates, overall FAIL.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/arm-1/final.png, crops, pixel_review.json, and arm_result.json"
+    },
+    {
+      "id": "e-render-minilab",
+      "kind": "render-observation",
+      "claim": "The minilab print render passes complete consumer print, near-axis flash ownership, close background shadow, in-progress social snapshot action, and no date-text or fake-border substitute: 5 of 5 gates, PASS.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/arm-2/final.png, thumbnail.png, pixel_review.json, and arm_result.json"
+    },
+    {
+      "id": "e-render-ultrawide",
+      "kind": "render-observation",
+      "claim": "The smartphone ultra-wide render passes broad field plus central anchor, near-far expansion, edge-growing stretch, plausible camera-close action path, and non-fisheye non-crop-only boundary: 5 of 5 gates, PASS.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/arm-3/final.png, final.thumbnail.png, pixel_review.json, and arm_result.json"
+    },
+    {
+      "id": "e-root-review",
+      "kind": "render-observation",
+      "claim": "The coordinator independently inspected all native images and thumbnails and agreed with all fifteen subagent gate statuses: two of three profiles and thirteen of fifteen gates pass under partial-is-fail.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/coordinator/coordinator_pixel_review.json"
+    },
+    {
+      "id": "e-integrity",
+      "kind": "measurement",
+      "claim": "The included arms used disjoint output directories and no sibling prompts, packs, images, or reviews. Arm 1 preserves one rejected pre-pack validation invocation before its only emitted pack; its frozen core and seed did not change.",
+      "artifact": "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1/coordinator/execution_integrity.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For each selected photo-era profile, every authoritative hard gate must coexist in the same independently generated image and remain distinguishable from its nearest substitutes; requested optional candidate atoms must separately appear on the public candidate surface before they can be claimed as candidate-pack evidence.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "observable-era-relation",
+        "statement": "An era name, date caption, sepia grade, fake border, equipment label, or generic damage never substitutes for the profile's observable component relation.",
+        "evidence_ids": [
+          "e-research",
+          "e-runtime-data",
+          "e-focused-tests"
+        ],
+        "causal_controls": [
+          "five component groups",
+          "five reject substitutes",
+          "broad and confound negatives"
+        ]
+      },
+      {
+        "id": "appearance-reference-boundary",
+        "statement": "The supplied portrait contributes visible adult appearance anchors only; no identity, same-person, biometric, protected-trait, health, attractiveness, personality, occupation, ethnicity, nationality, or allegiance claim is made.",
+        "evidence_ids": [
+          "e-request",
+          "e-generation"
+        ],
+        "causal_controls": [
+          "visible appearance scope",
+          "separate scene and era variables"
+        ]
+      },
+      {
+        "id": "strict-evidence-layers",
+        "statement": "Package, prompt and runtime audits do not count as pixel evidence; partial or missing gates fail, and requesting-user judgment remains separate.",
+        "evidence_ids": [
+          "e-three-arm-prompt",
+          "e-root-review"
+        ],
+        "causal_controls": [
+          "one saved image per arm",
+          "native and thumbnail review",
+          "zero image retries"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "random complex scene",
+      "location",
+      "event",
+      "wardrobe within reference continuity",
+      "non-target photographic craft",
+      "format when left open by the frozen core"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-candidate-public-surface",
+      "scale": "global",
+      "axis": "candidate-pack exposure",
+      "source_state": "The new optional candidates are registered, merged, and present in the semantic index.",
+      "render_state": "Zero of eight requested related candidates appeared on the public v6 candidate surfaces of the three randomized complex requests.",
+      "evidence_ids": [
+        "e-runtime-data",
+        "e-package",
+        "e-candidate-exposure"
+      ]
+    },
+    {
+      "id": "m-albumen-gloss-ownership",
+      "scale": "regional",
+      "axis": "albumen image-layer surface ownership",
+      "source_state": "The highlight must prove a smooth or semi-gloss surface confined to the thin albumen image layer.",
+      "render_state": "The bright diagonal bands cross both the image and cream mount, so the gloss is not independently owned by the image layer.",
+      "evidence_ids": [
+        "e-render-albumen",
+        "e-root-review"
+      ]
+    },
+    {
+      "id": "m-albumen-fine-crackle",
+      "scale": "local",
+      "axis": "fine process-surface deterioration",
+      "source_state": "A hair-fine overall crackle network or microscopic fiber must remain visibly distinct through the albumen layer without becoming coarse global damage.",
+      "render_state": "Native review and crops show no separately legible fine crackle network or microscopic fiber on the image layer.",
+      "evidence_ids": [
+        "e-render-albumen",
+        "e-root-review"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-era-profile-contract",
+      "stage": "representation",
+      "statement": "Encoding each photo-era concept as five observable component groups, evidence fields, confusion negatives, and pixel gates will prevent label-only substitutes from passing package and prompt checks.",
+      "evidence_ids": [
+        "e-research",
+        "e-focused-tests",
+        "e-semantic-regression"
+      ],
+      "falsifier": "A broad era label or adjacent substitute becomes hard eligible, or an active pack omits a required component or gate."
+    },
+    {
+      "id": "h-candidate-exposure",
+      "stage": "representation",
+      "statement": "The newly registered candidate atoms should enter public v6 candidate surfaces when a complex core contains the matching process, output, or capture-response evidence.",
+      "evidence_ids": [
+        "e-runtime-data",
+        "e-candidate-exposure"
+      ],
+      "falsifier": "Matching candidates remain absent from all randomized public surfaces despite being registered and indexed."
+    },
+    {
+      "id": "h-independent-pixels",
+      "stage": "prompt-priority",
+      "statement": "A post-core explicit visual-intent binding should make every assigned relation legible in a single no-retry reference-image render without changing the random core.",
+      "evidence_ids": [
+        "e-three-arm-prompt",
+        "e-render-albumen",
+        "e-render-minilab",
+        "e-render-ultrawide"
+      ],
+      "falsifier": "Any mandatory same-image gate is partial, missing, or visually replaced in the saved render."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "policy",
+      "module",
+      "test"
+    ],
+    "general_rule": "Represent photographic-era terms as narrow observable process, object, capture-response, output, or deterioration relations; keep time labels optional, keep sepia free of age claims, and require five same-image gates for hard visual qualification.",
+    "generalization_basis": "The profiles and candidates span early photographic processes, physical print and transparency objects, photographic practices, computational capture responses, and material deterioration independently of one subject or location.",
+    "hypothesis_ids": [
+      "h-era-profile-contract",
+      "h-candidate-exposure",
+      "h-independent-pixels"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photo_era.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/7b892ae82b33f86d",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_era_visual_semantics.py",
+      "tests/fixtures/photo_prompt/photo_era_three_arm_pixel_test_cases_v1.jsonl",
+      "artifacts/photo-runs/20260905-photo-era-three-agent-reference-v1",
+      "docs/research-evidence/photo-prompt/photo-era-visual-semantics-20260905/implementation-iteration-record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package",
+        "e-focused-tests",
+        "e-semantic-regression",
+        "e-baseline-failures"
+      ]
+    },
+    "prompt": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-three-arm-prompt",
+        "e-candidate-exposure"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "e-render-albumen",
+        "e-render-minilab",
+        "e-render-ultrawide",
+        "e-root-review"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-photo-era-routing-and-boundaries",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "eighteen bilingual narrow routes",
+          "eighteen component ablations",
+          "broad metadata and confound negatives",
+          "sixty registered candidates"
+        ],
+        "evidence_ids": [
+          "e-focused-tests",
+          "e-semantic-regression"
+        ]
+      },
+      {
+        "id": "heldout-albumen-card-vault-render",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "two physical layers",
+          "image-layer gloss ownership",
+          "fine photographic detail",
+          "complete mount perimeter",
+          "fine non-coarse crackle"
+        ],
+        "evidence_ids": [
+          "e-render-albumen",
+          "e-root-review"
+        ]
+      },
+      {
+        "id": "heldout-minilab-party-render",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "complete consumer print",
+          "near-axis flash",
+          "close background shadow",
+          "in-progress social action",
+          "non-caption non-fake-border boundary"
+        ],
+        "evidence_ids": [
+          "e-render-minilab",
+          "e-root-review"
+        ]
+      },
+      {
+        "id": "heldout-smartphone-ultrawide-vault-render",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "broad field and central anchor",
+          "near-far scale expansion",
+          "edge-growing stretch",
+          "plausible phone-close path",
+          "non-fisheye non-crop-only boundary"
+        ],
+        "evidence_ids": [
+          "e-render-ultrawide",
+          "e-root-review"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "The source-backed data, merged dictionary, indexes, focused routing cases, semantic regressions, active hard profiles, and all three composed and runtime audits pass. Promotion is not justified: zero of eight requested new optional candidates surfaced in the three public v6 packs, and the albumen arm fails two mandatory saved-pixel gates. Only two of three selected profiles and thirteen of fifteen gates pass under partial-is-fail. The other fifteen new profiles have no independent pixel evidence, and requesting-user judgment remains unscored. Preserve the no-retry images and revise candidate exposure plus albumen surface ownership and fine-crackle salience before a new independent qualification.",
+    "evidence_ids": [
+      "e-research",
+      "e-runtime-data",
+      "e-package",
+      "e-focused-tests",
+      "e-semantic-regression",
+      "e-baseline-failures",
+      "e-three-arm-prompt",
+      "e-candidate-exposure",
+      "e-generation",
+      "e-render-albumen",
+      "e-render-minilab",
+      "e-render-ultrawide",
+      "e-root-review",
+      "e-integrity"
+    ]
+  }
+}

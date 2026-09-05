@@ -1,0 +1,86 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "1bcd984b11cfdbfc",
+  "contract_version": "photo-visual-obligations/v1",
+  "reviewer": "arm-1-agent-direct-pixel-review",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated_images/photo-era-three-agent-20260905/arm-1/final.png",
+  "result_sha256": "61e31f5d8fbc494924c42f55f53d0c4d73162894ac5512bcea4ed13019ed460b",
+  "review_method": {
+    "native_review": "view_image original-detail review of the saved 1086x1448 final image plus original-detail inspection crops derived from that same file",
+    "thumbnail_review": "view_image original-detail review of a 240x320 derivative thumbnail",
+    "partial_is_fail": true,
+    "evidence_boundary": "Prompt and runtime audits are preflight only; every status below is based on the saved pixels."
+  },
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "appearance_reference",
+    "appearance_scope": "visible adult presentation only"
+  },
+  "thumbnail": {
+    "path": "/Users/chasoik/Projects/image-prompt/generated_images/photo-era-three-agent-20260905/arm-1/review-thumbnail.png",
+    "sha256": "e355f42a51cfcb0bf71a9d720557e1a0285af1e14af2e6bc110c6bbbd1d801aa",
+    "width": 240,
+    "height": 320
+  },
+  "native_dimensions": {
+    "width": 1086,
+    "height": 1448
+  },
+  "supplemental_review_artifacts": [
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated_images/photo-era-three-agent-20260905/arm-1/review-artifact-native-crop.png",
+      "sha256": "a76106e9a4ff3b70e051d71e588bec23dc9a9d1f49b6f1cff5cc5359c6f2033d",
+      "width": 700,
+      "height": 600,
+      "source": "pixel-exact crop of final.png"
+    },
+    {
+      "path": "/Users/chasoik/Projects/image-prompt/generated_images/photo-era-three-agent-20260905/arm-1/review-print-native-crop.png",
+      "sha256": "d7dfda389838c2ba28c99a5484d44d7a07cda221f3e204269de13134b35ae68e",
+      "width": 560,
+      "height": 440,
+      "source": "pixel-exact crop of final.png"
+    }
+  ],
+  "hard_gates": {
+    "vo_era_albumen_card_mount_print_material_relation_1": {
+      "status": "pass",
+      "review_scale": "thumbnail",
+      "evidence": "At 240x320, the dark sepia photographic rectangle and the broad cream card mount remain separately readable as two nested layers, with the inner image boundary and outer card edge both visible."
+    },
+    "vo_era_albumen_card_mount_print_material_relation_2": {
+      "status": "fail",
+      "review_scale": "both",
+      "evidence": "At thumbnail and native scales, the strongest diagonal bright bands continue across the sepia image and the cream mount. The pixels do not clearly establish a smooth or semi-gloss reflection confined to the image layer rather than illumination falling across both layers."
+    },
+    "vo_era_albumen_card_mount_print_material_relation_3": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native inspection resolves tent seams, the portable camera or darkroom apparatus, excavation cuts, tools, stakes, rubble texture, and multiple distant workers inside the historical photograph."
+    },
+    "vo_era_albumen_card_mount_print_material_relation_4": {
+      "status": "pass",
+      "review_scale": "native",
+      "evidence": "Native inspection shows the inner print-to-card boundary as an uninterrupted rectangle on the left, top, right, and bottom; the easel clamp, hand, and support rail remain outside that inner perimeter."
+    },
+    "vo_era_albumen_card_mount_print_material_relation_5": {
+      "status": "fail",
+      "review_scale": "both",
+      "evidence": "Neither the thumbnail nor the native print crop shows an overall hair-fine crackle network or microscopic paper fiber visibly passing through the albumen image layer. The visible fine variation reads as scene detail or ordinary grain, so the mandatory fine-crackle component is absent; strict partial_is_fail applies."
+    }
+  },
+  "technical_gate_summary": {
+    "passed": 3,
+    "failed": 2,
+    "status": "fail"
+  },
+  "appearance_observation": "The saved result visibly presents an adult with long dark wavy hair, brown eyes, a neutral expression, a black blouse, and a small gold necklace. This is only an observable appearance comparison and makes no identity, same-person, biometric, protected-trait, health, attractiveness, personality, or occupation claim.",
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "pending",
+    "better_than_baseline": "not_applicable",
+    "source": "not_yet_received",
+    "evidence": "Requesting-user visual acceptance has not yet been received."
+  }
+}
