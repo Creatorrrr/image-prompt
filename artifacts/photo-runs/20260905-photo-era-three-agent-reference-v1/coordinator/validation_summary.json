@@ -1,0 +1,95 @@
+{
+  "schema_version": "photo-era-validation-summary/v1",
+  "package_checks": {
+    "dictionary": {
+      "status": "pass",
+      "message": "photo prompt dictionary metadata is valid"
+    },
+    "scene_expression": {
+      "status": "pass",
+      "route_count": 112,
+      "pass_count": 112,
+      "fail_count": 0
+    },
+    "visual_profile_index": {
+      "status": "pass",
+      "profile_count": 354,
+      "exact_term_count": 1758
+    },
+    "semantic_index": {
+      "status": "pass",
+      "dictionary_hash": "7b892ae82b33f86d15c3c9cb64ffc6f45547cf5e7afd12b3e398584dce968c8a",
+      "embedding_model": "gemini-embedding-2",
+      "dimensions": 768,
+      "entry_count": 8142,
+      "shard_count": 16
+    },
+    "iteration_record": {
+      "status": "pass"
+    },
+    "git_diff_check": {
+      "status": "pass"
+    }
+  },
+  "photo_era_focused_tests": {
+    "status": "pass",
+    "test_count": 8,
+    "subtest_count": 214,
+    "command": ".venv/bin/python -m pytest -q tests/test_photo_era_visual_semantics.py"
+  },
+  "semantic_regressions": {
+    "contradiction": {
+      "status": "pass",
+      "preset_count": 706,
+      "runs_per_preset": 3,
+      "generated": 2118,
+      "violation_count": 0
+    },
+    "generalization": {
+      "status": "pass",
+      "case_count": 79,
+      "failed_case_count": 0
+    },
+    "holdout": {
+      "status": "pass",
+      "case_count": 24,
+      "failed_case_count": 0
+    },
+    "domain_holdout_v2": {
+      "status": "pass",
+      "case_count": 6,
+      "failed_case_count": 0
+    },
+    "retrieval_holdout_v4": {
+      "status": "pass",
+      "case_count": 22,
+      "failed_case_count": 0
+    }
+  },
+  "wider_related_maintenance_subset": {
+    "status": "preexisting_failures_present",
+    "passed_tests": 93,
+    "failed_tests": 7,
+    "skipped_tests": 1,
+    "passed_subtests": 465,
+    "duration_seconds": 1657.1,
+    "failure_causes": [
+      {
+        "count": 5,
+        "cause": "Existing clinical_nursing_duty_system exact nurse route adds an unwanted hard profile to yandere fixture cases.",
+        "baseline_revision_reproduction": "confirmed in five fixture cases"
+      },
+      {
+        "count": 1,
+        "cause": "The top-level yandere composition test receives the same unwanted clinical profile and therefore requires extra evidence and gates.",
+        "baseline_revision_reproduction": "same underlying baseline route confirmed"
+      },
+      {
+        "count": 1,
+        "cause": "A legacy visual-profile retrieval test supplies a baseline prompt shorter than the current 48-word minimum.",
+        "baseline_revision_reproduction": "confirmed with the same ValueError"
+      }
+    ],
+    "scope_decision": "Do not modify unrelated nursing, yandere, or legacy retrieval fixtures as part of the photo-era intervention."
+  }
+}
