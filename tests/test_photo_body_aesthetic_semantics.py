@@ -137,8 +137,9 @@ class PhotoBodyAestheticSemanticsTests(unittest.TestCase):
         )
         for broad_term in ("attractive thighs", "shapely thighs", "각선미 강조"):
             self.assertNotIn(broad_term, profile["semantics"]["paraphrase_examples"])
+        claim_limits = " ".join(profile["semantics"]["claim_limits"])
         for inference in ("health", "weight", "body fat", "fertility", "gender", "value"):
-            self.assertIn(inference, profile["semantics"]["definition"])
+            self.assertIn(inference, claim_limits)
 
     def test_candidate_pack_separates_landmarks_contours_pose_and_composition(self):
         expected_by_slot = {

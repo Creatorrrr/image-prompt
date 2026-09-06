@@ -1,0 +1,270 @@
+{
+  "contract_version": "photo-composer-view/v1",
+  "mode": "candidate_details",
+  "source_pack_id": "5080eed2cbe98b02",
+  "source_pack_sha256": "4be7c95f213aa6c7bfbfc7da1df0611d31f66a3c63cc3deb566198b24f3cc5f0",
+  "candidates": [
+    {
+      "id": "bundle:clean_beauty_clamshell",
+      "source_pointer": "/candidate_bundles/candidates/0",
+      "candidate": {
+        "id": "bundle:clean_beauty_clamshell",
+        "source_sha256": "1765d1d39c69f929d8bc26fc2fb17539421976e6671f5e5240446556ee4b86fc",
+        "associated_profile_ids": [
+          "clamshell_dual_source_portrait_light",
+          "soft_light_shadow_edge_relation"
+        ],
+        "components": [
+          {
+            "id": "component_1",
+            "concept_units": [
+              "clean beauty light with an upper soft key and weaker lower return"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_2",
+            "concept_units": [
+              "vertically aligned upper-and-lower frontal light axis"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_3",
+            "concept_units": [
+              "large soft key with reflector-like lower fill"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_4",
+            "concept_units": [
+              "low key-fill difference with shadows still present"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_5",
+            "concept_units": [
+              "vertical high-low catchlight evidence"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_6",
+            "concept_units": [
+              "warm-neutral balance with preserved natural color"
+            ],
+            "minimum_realizations": 1
+          },
+          {
+            "id": "component_7",
+            "concept_units": [
+              "clean beauty tone with detailed whites and clear midtones"
+            ],
+            "minimum_realizations": 1
+          }
+        ],
+        "member_candidates": [
+          {
+            "id": "slot:lighting:lit_clean_clamshell_beauty",
+            "slot": "lighting",
+            "entry_id": "lit_clean_clamshell_beauty",
+            "concept_units": [
+              "upper soft key",
+              "weaker lower return"
+            ],
+            "relations": [
+              {
+                "id": "key_above_return",
+                "type": "above",
+                "subject": "key",
+                "object": "lower return"
+              },
+              {
+                "id": "return_weaker_than_key",
+                "type": "weaker_than",
+                "subject": "lower return",
+                "object": "key"
+              }
+            ],
+            "affected_dimensions": [
+              "lighting"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:light_direction:lit_clean_vertical_frontal_axis",
+            "slot": "light_direction",
+            "entry_id": "lit_clean_vertical_frontal_axis",
+            "concept_units": [
+              "vertically aligned upper-and-lower frontal light axis"
+            ],
+            "relations": [],
+            "affected_dimensions": [
+              "lighting"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:light_type:lit_clean_large_soft_key_return",
+            "slot": "light_type",
+            "entry_id": "lit_clean_large_soft_key_return",
+            "concept_units": [
+              "large soft key",
+              "reflector-like lower fill"
+            ],
+            "relations": [
+              {
+                "id": "fill_below_key",
+                "type": "below",
+                "subject": "fill",
+                "object": "key"
+              }
+            ],
+            "affected_dimensions": [
+              "lighting"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:light_intensity:lit_clean_low_ratio_open_shadow",
+            "slot": "light_intensity",
+            "entry_id": "lit_clean_low_ratio_open_shadow",
+            "concept_units": [
+              "small key-fill brightness difference",
+              "retained facial shadow detail"
+            ],
+            "relations": [
+              {
+                "id": "key_fill_small_difference",
+                "type": "small_brightness_difference",
+                "subject": "key",
+                "object": "fill"
+              }
+            ],
+            "affected_dimensions": [
+              "lighting"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:light_shape:lit_clean_vertical_catchlight_pair",
+            "slot": "light_shape",
+            "entry_id": "lit_clean_vertical_catchlight_pair",
+            "concept_units": [
+              "vertical high-low catchlight pair"
+            ],
+            "relations": [
+              {
+                "id": "catchlights_vertical_pair",
+                "type": "above",
+                "subject": "upper catchlight",
+                "object": "lower catchlight"
+              }
+            ],
+            "affected_dimensions": [
+              "lighting"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:color:lit_clean_warm_neutral_balance",
+            "slot": "color",
+            "entry_id": "lit_clean_warm_neutral_balance",
+            "concept_units": [
+              "warm-neutral balance with preserved natural color"
+            ],
+            "relations": [],
+            "affected_dimensions": [
+              "color"
+            ],
+            "adoption": "optional"
+          },
+          {
+            "id": "slot:color_grading:lit_clean_beauty_tone_finish",
+            "slot": "color_grading",
+            "entry_id": "lit_clean_beauty_tone_finish",
+            "concept_units": [
+              "clean beauty tone with detailed whites and clear midtones"
+            ],
+            "relations": [],
+            "affected_dimensions": [
+              "color"
+            ],
+            "adoption": "optional"
+          }
+        ],
+        "confusion_boundaries": [
+          "ring light disk",
+          "shadowless skin retouch",
+          "strong underlight"
+        ],
+        "relations": [
+          {
+            "id": "key_above_return",
+            "type": "above",
+            "subject": "key",
+            "object": "lower return"
+          },
+          {
+            "id": "return_weaker_than_key",
+            "type": "weaker_than",
+            "subject": "lower return",
+            "object": "key"
+          }
+        ],
+        "adoption": "optional",
+        "profile_activation": "independent_request_evidence_only",
+        "source_contract_sha256": "f3aac81340ef7c5b7b8ee29c3346fc8078076166c1cbac9901e49b8d7f00d62c",
+        "joint_admission": {
+          "contract_version": "photo-candidate-joint-admission/v1",
+          "context_policy": "self_contained_bundle_guards_only",
+          "source_authorial_core_sha256": "3678f5d454b2fb978460756a45a78ced4d1fa0feee64152c6db18230fc762718",
+          "source_intent_lock_sha256": "d571d0f93ea2afd326d1388e26a298b9522bd84579e0bea6fcf88dc4177c60fd",
+          "source_dictionary_sha256": "eee8429be02df7ce755073da89474883fb4e068c21228b97561d80e2f5484506",
+          "source_quality_policy_sha256": "070a41e2d8e5d825b90d0cf464aa968ce1f795ce031cc38bfb93f7ba25243ca8",
+          "all_member_guards_satisfied": true,
+          "external_context_assumed": false
+        },
+        "member_selection": "bundle_only_unless_already_eligible_standalone",
+        "content_form": "unordered_inspiration_terms",
+        "semantic_surface_version": "photo-candidate-semantic-surface/v1",
+        "concept_units": [
+          "clean beauty light with an upper soft key and weaker lower return",
+          "vertically aligned upper-and-lower frontal light axis",
+          "large soft key with reflector-like lower fill",
+          "low key-fill difference with shadows still present",
+          "vertical high-low catchlight evidence",
+          "warm-neutral balance with preserved natural color",
+          "clean beauty tone with detailed whites and clear midtones"
+        ],
+        "concept_terms": [
+          "clean beauty light with an upper soft key and weaker lower return",
+          "vertically aligned upper-and-lower frontal light axis",
+          "large soft key with reflector-like lower fill",
+          "low key-fill difference with shadows still present",
+          "vertical high-low catchlight evidence",
+          "warm-neutral balance with preserved natural color",
+          "clean beauty tone with detailed whites and clear midtones"
+        ],
+        "affected_dimensions": [
+          "color",
+          "lighting"
+        ],
+        "conflicts_with": [],
+        "applicability": {
+          "status": "eligible",
+          "source": "source_recomputed_joint_adoption"
+        },
+        "selection_contract": {
+          "component_evidence": "every_component_id_to_literal_final_prompt_phrase",
+          "relation_evidence": "every_relation_id_to_literal_final_prompt_phrase",
+          "scope": "one_coherent_realization",
+          "associated_profiles_are_not_promoted": true
+        }
+      }
+    }
+  ],
+  "view_sha256": "47b8a9e660c3e46c52c4f48f6c5a3afe6c6e16cbfc24ffdee5638c6092c8abc9"
+}

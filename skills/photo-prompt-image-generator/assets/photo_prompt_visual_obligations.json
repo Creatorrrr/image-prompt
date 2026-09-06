@@ -57,16 +57,16 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "A pose- and camera-dependent pocket of continuous visible background bounded by the actual upper inner-thigh contours while both feet touch or nearly touch and the straight legs remain close. It is visual geometry, not evidence of health, weight, body fat, fertility, age, gender, or personal value.",
+        "definition": "A pose- and camera-dependent pocket of continuous visible background bounded by the actual upper inner-thigh contours while both feet touch or nearly touch and the straight legs remain close.",
         "paraphrase_examples": [
           "허벅지 사이 공간",
           "허벅지 사이의 공간",
           "모은 다리의 허벅지 사이로 비치는 빈 공간",
           "두 발을 붙이고 곧게 선 다리 사이의 연속된 배경",
-          "건강이나 체형 가치와 무관한 자세·카메라 의존적 음영 공간",
           "continuous background between straight close legs with both feet touching",
-          "a stance-dependent upper-inner-thigh opening without body-value inference",
-          "a narrow opening between close upper inner thighs"
+          "a narrow opening between close upper inner thighs",
+          "자세와 카메라에 따라 위쪽 허벅지 안쪽 사이에 남는 배경 공간",
+          "a stance-dependent upper-inner-thigh opening"
         ],
         "component_semantics": {
           "minimum_component_groups": 2,
@@ -128,8 +128,11 @@
           "wide stance space below separated knees",
           "an accidental opening made by crossed legs",
           "a skirt or coat opening mistaken for body-bounded negative space",
-          "a dark garment seam or shadow",
-          "a health, weight, body-fat, fertility, age, gender, or value claim"
+          "a dark garment seam or shadow"
+        ],
+        "claim_limits": [
+          "This visible geometry does not establish health, weight, body fat, fertility, age, gender, or personal value.",
+          "Appeal is evaluated only when the requester asks for it."
         ]
       },
       "concept_candidate": {
@@ -143,8 +146,7 @@
           "inverted triangle",
           "narrow background opening",
           "deliberate negative-space composition",
-          "thumbnail crop",
-          "false-gap exclusion"
+          "thumbnail crop"
         ]
       },
       "runtime_expression": {
@@ -235,7 +237,7 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "A simultaneous comic overwhelmed expression composed from upward or slightly asymmetric pupils, relaxed brows, a small rounded open mouth, a centered tongue tip beyond the lips, subtle blush, and a tired release rather than a contemptuous smirk.",
+        "definition": "A simultaneous comic overwhelmed expression composed from upward or slightly asymmetric pupils, relaxed brows, a small rounded open mouth, a centered tongue tip beyond the lips, subtle blush, and a tired release.",
         "paraphrase_examples": [
           "우스운 멍한 표정",
           "정신이 잠깐 풀린 표정",
@@ -290,6 +292,10 @@
           "a contemptuous smug tongue-out taunt",
           "ordinary eye contact with a neutral smile",
           "an expression described only by a sensitive shorthand label"
+        ],
+        "claim_limits": [
+          "Facial configuration alone does not establish an event, sexual activity, consent, wardrobe, or a medical or psychological state.",
+          "Scene and wardrobe constraints come from the requester and governing platform policy, independently of this expression profile."
         ]
       },
       "concept_candidate": {
@@ -300,9 +306,7 @@
           "small rounded open mouth",
           "centered external tongue tip",
           "subtle cheek blush",
-          "slightly fatigued release",
-          "no contemptuous smirk",
-          "fully clothed adult context"
+          "slightly fatigued release"
         ]
       },
       "runtime_expression": {
@@ -321,7 +325,7 @@
           "アヘ顔"
         ]
       },
-      "composition_instruction": "Translate the named expression into simultaneous, nonsexual facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, a centered tongue tip visibly crossing the outer lip boundary, subtle cheek blush, and a slightly fatigued release, without a contemptuous smirk.",
+      "composition_instruction": "Realize the named expression through simultaneous facial components on an unmistakably adult subject: asymmetric upward eye drift, relaxed brows, a small symmetric rounded-open mouth, a centered tongue tip visibly crossing the outer lip boundary, subtle cheek blush, and a slightly fatigued release. Preserve the requester's separate event, wardrobe, and scene choices.",
       "required_evidence_fields": [
         "adult_safe_context_phrase",
         "eye_configuration_phrase",
@@ -376,7 +380,7 @@
         {
           "id": "vo_overwhelmed_adult_safe_context",
           "review_scale": "both",
-          "description": "The subject is unmistakably adult and the scene remains fully clothed, nonsexual, and nonexplicit."
+          "description": "The visible fictional subject is unmistakably adult, as required by this profile applicability condition."
         },
         {
           "id": "vo_overwhelmed_eye_configuration",
@@ -414,8 +418,7 @@
         "ordinary_side_eye",
         "asymmetric_mocking_smirk",
         "tongue_wholly_inside_mouth",
-        "closed_mouth_with_tongue",
-        "sexual_act_or_orgasm_context"
+        "closed_mouth_with_tongue"
       ]
     },
     {
@@ -596,7 +599,39 @@
           "겨드랑이 봉제선",
           "겨드랑이 절개"
         ],
-        "requires_adult_character": true
+        "requires_adult_character": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_underarm_salience",
+              "any_terms": [
+                "underarm emphasis",
+                "armpit emphasis",
+                "underarm close-up",
+                "armpit close-up",
+                "emphasizing the underarm",
+                "emphasize the underarm",
+                "emphasizing the armpit",
+                "emphasize the armpit",
+                "focus on the underarm",
+                "focus on the armpit",
+                "underarm as the focal point",
+                "armpit as the focal point",
+                "겨드랑이 강조",
+                "겨드랑이를 강조",
+                "겨드랑이를 부각",
+                "겨드랑이 클로즈업",
+                "겨드랑이에 초점",
+                "겨드랑이를 주 피사체",
+                "腋を強調",
+                "腋の強調",
+                "腋のクローズアップ",
+                "腋に焦点"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "A deliberately posed and photographed natural hollow beneath a raised arm, kept anatomically plausible and visually salient in the same focal plane as the face.",
@@ -648,6 +683,9 @@
           "an underarm garment seam or gusset",
           "a prop hiding the raised-arm anatomy",
           "a loose full-body crop where the region is not salient"
+        ],
+        "claim_limits": [
+          "A product-use label or incidental body-area detail does not establish that the requester wants an overhead pose or deliberate body-area salience."
         ]
       },
       "concept_candidate": {
@@ -657,8 +695,7 @@
           "face and raised-arm focal plane",
           "thumbnail salience",
           "anatomically plausible shoulder line",
-          "crop and light emphasis",
-          "no prop substitution"
+          "crop and light emphasis"
         ]
       },
       "runtime_expression": {
@@ -992,10 +1029,31 @@
             "実際の患者"
           ]
         },
-        "requires_adult_character": true
+        "requires_adult_character": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_contained_affect_interpretation",
+              "any_terms": [
+                "contained affect self-presentation",
+                "contained affect leak",
+                "controlled social surface",
+                "interrupted self-regulation",
+                "interrupted self-soothing gesture",
+                "통제된 사회적 표면",
+                "작은 감정 누출",
+                "절제된 감정 누출",
+                "중단된 자기조절",
+                "抑制された感情の漏れ",
+                "中断された自己調整"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
-        "definition": "An adult fictional character whose carefully controlled social presentation remains intact while a small contained affect leak and one interrupted self-regulation or connection gesture become simultaneously visible, without treating a label as a diagnosis or reducing the concept to sadness, fashion, or a fixed prop.",
+        "definition": "An adult fictional character keeps a controlled social presentation while a small contained affect leak and one interrupted self-regulation or connection gesture become simultaneously visible.",
         "paraphrase_examples": [
           "겉은 단정하게 유지하지만 미세한 감정 누출과 멈칫한 자기조절 동작이 함께 보이는 성인 캐릭터",
           "차분한 사회적 표면 아래 유리처럼 젖은 눈과 중단된 손동작이 동시에 드러나는 인물",
@@ -1059,6 +1117,14 @@
           "sad eyes or tears alone",
           "a phone, flower, mirror, ribbon, or pastel palette used as the whole meaning",
           "acute crisis, medicalized distress, or self-harm symbolism"
+        ],
+        "interpretation_scope": {
+          "kind": "project_visual_interpretation",
+          "description": "A bounded authored interpretation for a fictional adult portrait requesting contained affect and controlled self-presentation. It is not a general definition of menhera, a medical claim, or the only visual reading of that label."
+        },
+        "claim_limits": [
+          "A fictional visual style or expression is not a diagnosis or evidence about the reference person's personality or health.",
+          "This interpretation does not require a particular occupation, wardrobe, prop, or color palette."
         ]
       },
       "concept_candidate": {
@@ -1070,9 +1136,7 @@
           "glassy lower eyelids or restrained mouth tension",
           "interrupted self-regulation or connection gesture",
           "all three cues coexist in one quiet moment",
-          "requested role and style remain intact",
-          "no diagnosis or crisis shorthand",
-          "no fixed prop requirement"
+          "requested role and style remain intact"
         ]
       },
       "runtime_expression": {
@@ -1092,7 +1156,7 @@
           "メンヘラ"
         ]
       },
-      "composition_instruction": "Translate the requested concept into simultaneous external evidence on an unmistakably adult, dignified fictional character: preserve a carefully controlled social surface, show one restrained affect leak around the eyes, mouth, or breath, and make one interrupted self-regulation or connection gesture readable in the same moment. Keep the requested role and fashion intact; do not substitute a diagnosis, acute crisis, self-harm symbol, or mandatory phone, flower, mirror, ribbon, or palette.",
+      "composition_instruction": "When this bounded interpretation is requested or selected, preserve a controlled social surface, show one restrained affect leak around the eyes, mouth, or breath, and make one interrupted self-regulation or connection gesture readable in the same moment on an adult fictional character. Keep the separately requested role, style, and reference use intact.",
       "required_evidence_fields": [
         "adult_dignified_subject_phrase",
         "controlled_surface_phrase",
@@ -1127,7 +1191,7 @@
         {
           "id": "vo_contained_affect_adult_dignity",
           "review_scale": "both",
-          "description": "The fictional subject is unmistakably adult, dignified, fully clothed, and not framed as a patient or crisis victim."
+          "description": "The fictional subject is visibly adult and retains the identity and role supplied by the requester."
         },
         {
           "id": "vo_contained_affect_controlled_surface",
@@ -1158,11 +1222,6 @@
           "id": "vo_contained_affect_requested_identity_preserved",
           "review_scale": "both",
           "description": "The user's requested role, fashion, and reference-face use remain intact and are not replaced by the affective profile."
-        },
-        {
-          "id": "vo_contained_affect_no_crisis_substitute",
-          "review_scale": "native",
-          "description": "No diagnosis text, acute crisis staging, medicalized distress, self-harm cue, or sexualized vulnerability substitutes for the requested meaning."
         }
       ],
       "reject_substitutes": [
@@ -1170,9 +1229,6 @@
         "sad_gaze_or_tears_only",
         "phone_flower_mirror_or_ribbon_only",
         "fixed_pastel_or_black_palette_only",
-        "acute_crisis_or_medical_symbolism",
-        "self_harm_or_bandaged_wrist_cue",
-        "sexualized_vulnerability",
         "yandere_surveillance_or_possession",
         "reference_face_treated_as_personality_evidence"
       ]
@@ -1385,7 +1441,8 @@
             "キャラクターコンセプト",
             "写真プロンプト",
             "看護師",
-            "メイド"
+            "メイド",
+            "adult fictional"
           ],
           "exclude_if_any_terms": [
             "explain the word",
@@ -1409,17 +1466,12 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "An adult fictional character's sincere but obsessive love toward one identifiable adult counterpart becomes a possessive target-directed action that crosses a personal boundary or appropriates access, with one visible consequence for that same counterpart. For first-look outward legibility, the character herself dominates the frame while affection, target-locked attention, and visibly ecstatic or barely controlled instability coexist on her face, posture, and action. Non-graphic blood, a weapon, a syringe, or horror lighting may amplify this direct character reading when requested, but none can replace the obsessive-love relationship.",
+        "definition": "An adult fictional character's sincere but obsessive affection toward one identifiable adult counterpart becomes a possessive target-directed action that crosses a personal boundary or appropriates access, with an already-visible consequence for that same counterpart. Affection, controlling action, and consequence remain causally legible together in one frame.",
         "paraphrase_examples": [
-          "같은 성인 상대에게 다정하게 돌봄을 보이면서 그 사람의 출입과 일정을 자기 손에 두려는 장면",
-          "한 사람만 향한 부드러운 애정과 그 사람의 사적 경계를 이미 넘은 행동이 동시에 보이는 성인 캐릭터",
-          "다정한 얼굴 신호와 눈·머리·몸이 한 상대에게 수렴하는 과집중이 함께 보이지만 핵심은 같은 상대의 선택을 바꾼 소유 행동인 인물",
-          "devoted adult care for one identifiable counterpart turns into possessive monitoring with a visible access consequence",
-          "devoted care toward the same adult counterpart takes control of the schedule and visibly narrows that counterpart's choice while soft affection contrasts with overfocused attention",
-          "a tender social surface, target-locked eye-head-body attention, and one possessive or threatening boundary-crossing action point to the same adult affection target",
-          "the adult character fills the frame with feverish devotion, an ecstatic unstable smile, and a visible threat aimed at keeping the same beloved close",
-          "the same adult target's reaching hand is visible while one mouth corner is frozen partway through a fractional deepening and the precisely fixed eyes remain unchanged",
-          "피 묻은 장갑이나 주사기 같은 위협 단서는 인물의 다정한 집착과 광기 어린 표정을 강화하지만 그 의미를 대신하지 않는다",
+          "같은 성인 상대에게 다정한 애정을 보이면서 그 사람의 선택을 자기 뜻대로 바꾸는 행동과 결과가 함께 보이는 장면",
+          "한 사람을 향한 애정과 그 사람의 사적 경계를 이미 넘은 소유적 행동이 동시에 보이는 성인 캐릭터",
+          "devoted adult care for one identifiable counterpart becomes possessive control with an already-visible consequence for that same person",
+          "tenderness toward the same adult counterpart coexists with a boundary-crossing action that visibly narrows that counterpart's choice",
           "一人の成人相手への優しい世話が、その人のアクセスや選択を自分の側へ取り込む行動に変わる"
         ],
         "component_semantics": {
@@ -1484,158 +1536,35 @@
                 "選択肢がすでに狭まり",
                 "アクセス物が手元を移った"
               ]
-            },
-            {
-              "id": "supporting_affiliative_outward_signal",
-              "any_terms": [
-                "부드럽고 다정한 입매",
-                "미세한 비대칭 미소",
-                "옅고 자연스러운 홍조",
-                "부드러워진 눈썹과 뺨",
-                "soft affectionate mouth",
-                "slightly asymmetric tender smile",
-                "subtle natural flush",
-                "softened brow and cheek",
-                "優しく愛情のある口元",
-                "自然で淡い紅潮"
-              ]
-            },
-            {
-              "id": "supporting_target_fixation_signal",
-              "any_terms": [
-                "눈·머리·몸이 같은 상대에게 수렴",
-                "같은 상대를 놓치지 않는 지속 시선",
-                "애정 대상에 과집중된 주의",
-                "이탈 움직임을 따라가는 굳은 주의",
-                "eyes head and body converge on the same counterpart",
-                "sustained tracking of the same adult counterpart",
-                "overfocused attention toward the same affection target",
-                "unusually still attention to the same adult counterpart",
-                "目と頭と身体が同じ相手へ収束",
-                "同じ成人相手を追い続ける注意"
-              ]
-            },
-            {
-              "id": "direct_obsessive_madness_display",
-              "any_terms": [
-                "집착적 사랑과 광기가 얼굴과 자세에 함께 드러남",
-                "황홀하지만 통제 직전의 불안정한 미소",
-                "눈물 맺힌 넓은 눈과 열에 들뜬 애정",
-                "정확히 상대를 향하지만 광채가 죽은 눈과 다정한 입매",
-                "인물을 중심으로 직접 보이는 사랑의 광기",
-                "obsessive love and barely controlled frenzy coexist on the face",
-                "feverish devotion and ecstatic instability dominate the expression",
-                "tear-bright widened eyes beneath an adoring crooked smile",
-                "precisely target-locked yet unnervingly lifeless eyes above a tender mouth",
-                "dim physically coherent catchlights and flattened low-contrast irises",
-                "the character-centered face and posture directly show loving madness",
-                "執着的な愛と抑えきれない恍惚が顔と姿勢に同時に現れる",
-                "相手を正確に見つめながら光を失った目と優しい口元",
-                "涙を帯びた見開いた目と熱に浮かされた愛情の笑み"
-              ]
-            },
-            {
-              "id": "supporting_face_mode_sweet_threat_mismatch",
-              "any_terms": [
-                "다정한 입매와 과집중된 긴장된 눈의 불일치",
-                "작게 다문 비대칭 미소와 변하지 않는 상대 고정 시선",
-                "거의 수직인 머리와 미동 없는 눈 아래에서 한쪽 입꼬리가 아주 조금 깊어지는 도중에 멈춤",
-                "warm mouth against an overfocused tense gaze",
-                "small closed-lip asymmetric smile against unchanged target-locked eyes",
-                "nearly upright head while one tender mouth corner is frozen partway through a fractional deepening",
-                "優しい口元と過集中した緊張した目の不一致"
-              ]
-            },
-            {
-              "id": "supporting_target_triggered_face_mismatch",
-              "any_terms": [
-                "같은 상대의 뻗은 손이 보이고 한쪽 입꼬리는 아주 조금 깊어지는 도중에 멈춰 있으며 눈은 그대로 고정됨",
-                "상대의 움직임과 미완의 입 변화가 한 프레임에 있고 과집중된 눈은 변하지 않음",
-                "the same target's reaching hand is visible while one mouth corner is frozen partway through a fractional deepening and the eyes remain fixed",
-                "the beloved's movement and an unfinished one-corner mouth change share the frame while the overfocused eyes stay fixed",
-                "同じ相手の動きに口元だけがわずかに反応し過集中した目は変わらない"
-              ]
-            },
-            {
-              "id": "supporting_meso_scale_facial_mechanics",
-              "any_terms": [
-                "홍채 질감만이 아니라 눈꺼풀 긴장, 고요한 눈썹, 거의 수직인 머리, 한쪽 입꼬리의 미완 변화가 함께 보임",
-                "옅은 홍채만으로 끝나지 않고 얼굴 중간 규모 구조가 친근한 뷰티 표정을 깨뜨림",
-                "lid tension, still brow, near-upright head, and an unfinished one-corner mouth change coexist beyond iris texture",
-                "meso-scale facial mechanics break the friendly beauty read rather than relying on pale irises alone",
-                "虹彩の質感だけでなく瞼の緊張、静かな眉、ほぼ垂直な頭、片方の口角の未完変化が共存する"
-              ]
-            },
-            {
-              "id": "supporting_face_mode_dead_eye_devotion",
-              "any_terms": [
-                "정확한 상대 고정과 흐린 광채와 낮은 홍채 대비",
-                "precise target lock with dim catchlights and low-contrast irises",
-                "正確な対象固定と弱いキャッチライトと低コントラストの虹彩"
-              ]
-            },
-            {
-              "id": "supporting_face_mode_ecstatic_face_cradle",
-              "any_terms": [
-                "양손으로 뺨과 턱을 감싸며 같은 상대를 향한 황홀한 시선",
-                "both palms cradle cheeks and jaw beneath same-target adoration",
-                "両手で頬と顎を包み同じ相手へ恍惚とした視線を向ける"
-              ]
-            },
-            {
-              "id": "supporting_face_mode_manic_possessive",
-              "any_terms": [
-                "넓은 흰자와 작은 동공이 다정한 집착을 위험하게 증폭",
-                "wide sclera and tiny pupils amplify a loving possessive threat",
-                "広い白目と小さな瞳孔が愛情ある所有の脅威を増幅する"
-              ]
-            },
-            {
-              "id": "supporting_face_mode_abandonment_fracture",
-              "any_terms": [
-                "떠나는 같은 상대를 따라가는 젖은 눈과 굳어지는 입매",
-                "moist eyes and a tightening mouth track the withdrawing beloved",
-                "離れていく同じ相手を追う潤んだ目と強張る口元"
-              ]
             }
           ]
         },
         "contrast_examples": [
-          "an attractive nurse holding a syringe with an intense gaze but no affection target or boundary action",
+          "a role portrait with an intense gaze but no affection target or boundary action",
           "generic jealousy, sadness, or horror styling with no same-target possessive consequence",
-          "professional surveillance with no sincere affection toward the observed person",
-          "a photo wall, red string, phone, weapon, blood, fixed stare, or smile used as the whole meaning",
-          "a restrained or captive victim used to prove possession",
-          "a gentle affectionate portrait whose expression never becomes visibly obsessive or unstable",
-          "an adult beauty portrait with a warm smile, uncanny facial distortion, or a reality glitch but no identifiable affection target, same-target boundary action, or visible consequence"
+          "professional monitoring with no affection toward the observed person",
+          "a weapon, costume, fixed stare, or smile used as the entire relation",
+          "affection aimed at one person while the controlling action changes a different person's options"
+        ],
+        "interpretation_scope": {
+          "kind": "observable_relation",
+          "description": "Visible realization of the yandere concept profile in photo_prompt_character_moe_extension.json: affection toward one target, a boundary-crossing act, and a consequence for that same target. The requester owns role, gender, intensity, framing, and facial realization."
+        },
+        "claim_limits": [
+          "Fictional behavior does not establish a diagnosis, personality, or behavior of any person in a reference image.",
+          "A weapon, costume, fixed gaze, smile, or profession alone does not establish the affection-control relation.",
+          "Facial intensity and props are request-conditioned realizations; they are not universal requirements of the relation."
         ]
       },
       "concept_candidate": {
         "concept_terms": [
-          "unmistakably adult fictional character",
+          "adult fictional character",
           "one identifiable adult affection target",
           "genuine tenderness or devoted care",
           "same-target possessive boundary action",
           "visible access or choice consequence",
-          "an affiliative face signal such as a soft mouth, subtle natural flush, or softened brow",
-          "target-locked eye-head-body attention toward the same adult counterpart",
-          "one coherent primary facial mode rather than stacked contradictory eye effects",
-          "sweet-threat mismatch between a warm mouth and overfocused tense eyes",
-          "single-frame target-triggered mismatch with the reaching hand visible, one tender mouth corner frozen mid-change, and the precisely fixed eyes unchanged",
-          "small closed-lip asymmetric smile, nearly upright head, slightly elevated upper lids, taut lower lids, and an almost motionless brow",
-          "meso-scale lid tension, brow stillness, head verticality, and mouth asymmetry remain jointly legible because iris texture alone is insufficient",
-          "pale matte low-contrast irises with one tiny dim scene-coherent catchlight per eye",
-          "dead-eye devotion with dim coherent catchlights, low-contrast irises, precise target lock, and a tender mouth",
-          "ecstatic cheek-and-jaw cradle with both palms, blush, and beloved-directed adoration",
-          "manic possessive escalation with widened sclera and tiny pupils as a danger amplifier rather than love proof",
-          "abandonment fracture with moist eyes and a tightening mouth caused by the same target withdrawing",
-          "pupil size, iris scale, catchlight state, iris contrast, and gaze focus treated as independent variables",
-          "warmth, overfocus, and visible instability readable together on the character",
-          "character-centered close framing that makes obsessive love and madness immediate",
-          "role-correct grooming preserved",
-          "relationship behavior rather than costume or prop shorthand",
-          "non-graphic blood or a visible weapon as an optional amplifier rather than a substitute",
-          "fictional threat staging without graphic injury or active injection"
+          "affection and controlling action coexist",
+          "single-frame causal continuity"
         ]
       },
       "runtime_expression": {
@@ -1654,16 +1583,13 @@
           "ヤンデレ"
         ]
       },
-      "composition_instruction": "Preserve the requested adult fictional identity, role, and styling. Make the character the dominant first-look subject. In one still, connect one identifiable adult affection target or repeated marker of that same target to genuine tenderness, one concrete possessive or threatening action that crosses a personal boundary or appropriates access, and one already-visible consequence that changes that same target's access or choices. Make three outward channels coexist directly on the character: an affiliative face signal; target-locked eye-head-body attention; and one coherent primary face mode. Choose exactly one of these modes: sweet-threat mismatch (a small closed-lip asymmetric tender smile against overfocused tense eyes, with a nearly upright head; keep the same target's reaching or withdrawing movement visible and freeze one mouth corner partway through a fractional deepening while the eyes remain fixed and unchanged), dead-eye devotion (precise target lock, dim physically coherent catchlights, flattened low-contrast irises, and a tender mouth), ecstatic face cradle (both palms support the cheeks and jaw beneath flushed same-target adoration), manic possessiveness (wide sclera and tiny pupils used only as a danger amplifier), or abandonment fracture (moist eyes and a tightening mouth track the same withdrawing beloved). Treat pupil size, iris scale, catchlight state, iris contrast, gaze focus, eyelid tension, brow motion, head angle, and mouth change as independent controls. Preserve meso-scale lid tension, brow stillness, head verticality, and mouth asymmetry together; changing iris texture alone is insufficient. For a low-contrast or dead-eye mode, preserve one tiny dim scene-coherent catchlight per eye rather than beauty-style sparkle. A vacant unfocused gaze is not target lock, and a photorealistic eye must retain catchlights coherent with scene lighting. Direct camera gaze is appropriate when the camera is the beloved's point of view. Non-graphic blood, a visible weapon, a syringe, red clinical light, or a heart motif may amplify the requested intensity and must not be automatically suppressed, but no facial cue, pose, prop, or styling cue may substitute for obsessive love toward the same target. Permit fictional threat without graphic wounds, gore, dismemberment, active injection or penetration, self-harm, sexualized vulnerability, real-person stalking, or instructional wrongdoing.",
+      "composition_instruction": "Preserve the requested adult fictional subject, role, gender, appearance, intensity, and framing. In one still, connect an identifiable adult affection target or a repeated marker of that same target to genuine tenderness, a concrete possessive action that crosses a personal boundary or appropriates access, and an already-visible consequence that changes that same target's access or choices. Make the relationship readable through the requested action and expression. Use any chosen facial mode or prop as support for this same-target relation.",
       "required_evidence_fields": [
         "adult_fictional_subject_phrase",
         "specific_affection_target_phrase",
         "affectionate_surface_phrase",
         "boundary_intrusion_action_phrase",
         "visible_choice_consequence_phrase",
-        "outward_affection_signal_phrase",
-        "target_fixation_signal_phrase",
-        "direct_obsessive_madness_phrase",
         "single_frame_coexistence_phrase"
       ],
       "evidence_requirements": {
@@ -1672,9 +1598,7 @@
           "must_mention_any": [
             "adult fictional character",
             "unmistakably adult character",
-            "adult fictional nurse",
-            "adult fictional subject",
-            "unmistakably adult female nurse"
+            "adult fictional subject"
           ],
           "must_not_contain": [
             "girl",
@@ -1699,7 +1623,7 @@
             "devoted care",
             "tender outward cue",
             "soft affectionate mouth",
-            "blood-spotted love letter"
+            "affection toward the same target"
           ]
         },
         "boundary_intrusion_action_phrase": {
@@ -1710,7 +1634,7 @@
             "possessive monitoring",
             "takes control of the schedule",
             "keeps the only access object",
-            "blocks the doorway while raising a syringe as a warning"
+            "interrupts the same target's departure"
           ]
         },
         "visible_choice_consequence_phrase": {
@@ -1720,54 +1644,7 @@
             "departure option visibly interrupted",
             "another option physically excluded",
             "schedule is already altered",
-            "choice has visibly narrowed",
-            "keycard is pinned beneath her shoe",
-            "they cannot leave"
-          ]
-        },
-        "outward_affection_signal_phrase": {
-          "min_content_words": 3,
-          "must_mention_any": [
-            "soft affectionate mouth",
-            "restrained warm smile",
-            "subtle natural flush",
-            "softened brow and cheek",
-            "slightly asymmetric tender smile",
-            "tender outward face signal",
-            "tender smile fractures into visible, unrestrained madness"
-          ]
-        },
-        "target_fixation_signal_phrase": {
-          "min_content_words": 4,
-          "must_mention_any": [
-            "eyes head and body converge on the same adult counterpart",
-            "target-locked eye-head-body attention",
-            "gaze head and torso converge on the patient",
-            "precisely target-locked yet unnervingly lifeless",
-            "sustained tracking of the same adult counterpart",
-            "overfocused attention toward the same affection target",
-            "unusually still attention to the same adult counterpart",
-            "feverishly possessive stare locks directly onto that target"
-          ]
-        },
-        "direct_obsessive_madness_phrase": {
-          "min_content_words": 5,
-          "must_mention_any": [
-            "obsessive love and barely controlled frenzy coexist on her face",
-            "feverish devotion and ecstatic instability dominate her expression",
-            "tear-bright widened eyes beneath an adoring crooked smile",
-            "precisely target-locked yet unnervingly lifeless",
-            "dim physically coherent catchlights and flattened low-contrast irises",
-            "warm mouth against an overfocused tense gaze",
-            "her smile deepens by a fraction while her eyes remain unchanged",
-            "small closed-lip asymmetric smile against unchanged target-locked eyes",
-            "one mouth corner is frozen partway through a fractional deepening while the eyes remain fixed",
-            "both palms cradle her cheeks and jaw beneath an adoring flushed gaze",
-            "wide sclera and tiny pupils beneath a loving crooked smile",
-            "moist eyes and a tightening mouth track the withdrawing beloved",
-            "the character-centered face and posture directly show loving madness",
-            "obsessive love and ecstatic menace coexist in her face and posture",
-            "obsessive love and madness are immediately legible"
+            "choice has visibly narrowed"
           ]
         },
         "single_frame_coexistence_phrase": {
@@ -1776,8 +1653,7 @@
             "same moment",
             "coexist in one frame",
             "simultaneously visible",
-            "one still connects",
-            "through her face, gaze, posture, and target-directed action, with the nurse dominant in frame"
+            "one still connects"
           ]
         }
       },
@@ -1805,62 +1681,22 @@
         {
           "id": "vo_yandere_same_target_consequence",
           "review_scale": "both",
-          "description": "One harmless but legible consequence already changes the same counterpart's access, schedule, option, or personal boundary."
-        },
-        {
-          "id": "vo_yandere_two_channel_outward_supports",
-          "review_scale": "both",
-          "description": "An affiliative facial signal and target-locked eye-head-body attention are both visibly readable toward the same adult counterpart; neither a pleasant face nor a fixed stare alone is accepted."
-        },
-        {
-          "id": "vo_yandere_direct_obsessive_madness",
-          "review_scale": "thumbnail",
-          "description": "The character dominates the first read, and one coherent primary face mode makes obsessive love plus instability simultaneously visible with the same-target action rather than inferred only from props or backstory."
-        },
-        {
-          "id": "vo_yandere_face_mode_not_generic",
-          "review_scale": "both",
-          "description": "The selected face mode remains bound to same-target affection, fixation, control, and consequence. For sweet-threat mismatch, the same target's movement is visible and one tender mouth corner is frozen partway through a fractional deepening while eye target-lock stays fixed. Pale irises or dim catchlights alone do not pass when relaxed lids, a friendly symmetric mouth, or a playful head tilt preserves the generic beauty read; bright detailed beauty irises and a broad friendly smile also fail. Dead eyes, pupil size, tears, a grin, or the face-cradle pose alone do not pass."
-        },
-        {
-          "id": "vo_yandere_eye_physics_and_target_lock",
-          "review_scale": "native",
-          "description": "Gaze focus is visibly aligned to the beloved, pupil size is not treated as proof of love, and the selected mode's eyelid tension, iris contrast, catchlights, and eye moisture remain physically coherent with the scene lighting. When low-contrast or dead-eye support is selected, each eye keeps one tiny dim scene-coherent catchlight and matte iris detail rather than large sparkling beauty highlights."
+          "description": "One visible consequence already changes the same counterpart's access, schedule, option, or personal boundary in the frame."
         },
         {
           "id": "vo_yandere_not_role_prop_horror",
           "review_scale": "thumbnail",
-          "description": "A syringe, weapon, non-graphic blood, red light, photo wall, red string, or heart motif may visibly amplify the scene, but the primary evidence remains the character's same-target obsessive love, fixation, and madness."
-        },
-        {
-          "id": "vo_yandere_non_graphic_fictional_intensity",
-          "review_scale": "both",
-          "description": "Non-graphic blood traces and a visible weapon or medical threat are allowed; no graphic wound, gore, dismemberment, active injection or penetration, self-harm, sexualized vulnerability, real-person stalking, or instructional wrongdoing appears."
+          "description": "The affection target, boundary action, and consequence remain readable together; role, facial styling, and props support this relation."
         }
       ],
       "reject_substitutes": [
-        "syringe_weapon_blood_or_red_light_only",
-        "pretty_role_portrait_or_intense_gaze_only",
-        "manic_expression_without_obsessive_love_target",
-        "affection_and_fixation_without_direct_visible_madness",
+        "role_prop_or_styling_only",
+        "intense_gaze_or_facial_mode_without_affection_target",
         "generic_jealousy_without_same_target_action",
         "routine_professional_care_only",
-        "surveillance_without_affection",
-        "photo_wall_red_string_phone_or_schedule_prop_only",
-        "heart_or_spiral_pupil_symbol_only",
-        "single_affiliative_face_or_fixed_stare_only",
-        "dead_eye_or_missing_catchlight_without_affection_target",
-        "pupil_size_used_as_love_or_possession_proof",
-        "face_cradle_pose_without_same_target_control_relation",
-        "vacant_gaze_claimed_as_target_lock",
-        "incompatible_dead_eye_tear_bright_tiny_pupil_mode_stack",
-        "photoreal_catchlights_inconsistent_with_scene_light",
-        "sparkling_beauty_irises_or_large_catchlights_erasing_selected_face_mode",
-        "broad_friendly_smile_or_playful_head_tilt_erasing_eye_mouth_contradiction",
-        "target_reaction_changes_mouth_and_eyes_together",
-        "static_symmetric_beauty_smile_without_visible_unfinished_mouth_transition",
-        "pale_iris_texture_only_while_lids_head_and_mouth_remain_friendly",
-        "visible_restrained_or_harmed_victim",
+        "monitoring_without_affection",
+        "affection_and_control_directed_at_different_targets",
+        "implied_backstory_without_visible_consequence",
         "reference_face_treated_as_personality_evidence"
       ]
     },
@@ -3082,7 +2918,8 @@
             "비행 계기",
             "조종간",
             "활주로",
-            "항공기 운항"
+            "항공기 운항",
+            "조종석 체크리스트"
           ],
           "exclude_if_any_terms": [
             "television episode",
@@ -3098,7 +2935,43 @@
             "메카 코스프레"
           ]
         },
-        "requires_adult_character": true
+        "requires_adult_character": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_aircraft_operation",
+              "any_terms": [
+                "operating the aircraft",
+                "piloting the aircraft",
+                "flying the aircraft",
+                "operating flight controls",
+                "hands on the flight controls",
+                "hands on the yoke",
+                "controlling the aircraft",
+                "cockpit checklist",
+                "preflight checklist",
+                "pre-flight checklist",
+                "flight control check",
+                "preflight inspection",
+                "pre-flight inspection",
+                "항공기를 조종",
+                "비행기를 조종",
+                "조종간을 잡",
+                "조종간 조작",
+                "비행 계기를 확인",
+                "비행 전 점검",
+                "이륙 전 점검",
+                "조종석 체크리스트",
+                "항공기 운항 수행",
+                "航空機を操縦",
+                "操縦桿を握",
+                "飛行前点検",
+                "操縦チェックリスト"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult operator visibly responsible for flying an aircraft, proven by a coherent relationship among the pilot station, primary flight controls or checklist work, and an instrument or outside-flight state that matches the depicted phase of operation.",
@@ -3162,6 +3035,9 @@
           "a cabin attendant standing in an airplane aisle",
           "a mecha or racing costume whose wearer does not operate an aircraft",
           "a television pilot, trial program, ship pilot, or pilot light"
+        ],
+        "claim_limits": [
+          "A pilot's occupational identity or cockpit location alone does not establish that an aircraft operation is in progress."
         ]
       },
       "concept_candidate": {
@@ -3327,7 +3203,42 @@
             "식당 서버"
           ]
         },
-        "requires_adult_character": true
+        "requires_adult_character": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_cabin_safety_procedure",
+              "any_terms": [
+                "safety demonstration",
+                "demonstrating safety",
+                "exit arming cross-check",
+                "cabin cross-check",
+                "cross-checking an aircraft exit",
+                "emergency equipment inspection",
+                "inspecting emergency equipment",
+                "checking the aircraft exit",
+                "cabin secure check",
+                "securing the cabin",
+                "safety procedure",
+                "안전 시연",
+                "안전시연",
+                "안전 절차를 수행",
+                "비상 장비 점검",
+                "비상 장비를 점검",
+                "출입문 크로스체크",
+                "도어 크로스체크",
+                "비상구를 점검",
+                "객실 안전 점검",
+                "安全実演",
+                "安全装備の点検",
+                "非常装備を点検",
+                "ドアクロスチェック",
+                "客室安全確認"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult aircraft cabin-safety professional whose role is made visible through a coherent relationship among cabin identity, one normal or emergency safety procedure, and the exit, equipment, passenger, or secured-cabin consequence governed by that procedure.",
@@ -3394,6 +3305,9 @@
           "a restaurant server or hotel attendant",
           "a train or ship crew member",
           "generic travel fashion inside an airplane set"
+        ],
+        "claim_limits": [
+          "Cabin-crew identity alone does not require an on-camera safety procedure. This profile governs a safety procedure only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -3403,8 +3317,7 @@
           "exit arming cross-check",
           "passenger safety demonstration",
           "cabin secure procedure",
-          "professional non-branded uniform",
-          "service as one optional branch rather than the whole identity"
+          "professional non-branded uniform"
         ]
       },
       "runtime_expression": {
@@ -5433,21 +5346,72 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult body-build relation with consistently narrow transverse volume through torso and limbs, shown independently of height, bust prominence, hip dominance, muscle definition, health, or attractiveness.",
-        "paraphrase_examples": ["성인 몸통과 팔다리의 가로 볼륨이 전반적으로 가늘게 이어지는 선형 체형", "narrow transverse torso and limb volume with coherent joint transitions", "slenderness separated from stature and muscular definition"],
+        "definition": "An adult body-build relation with consistently narrow transverse volume through torso and limbs, retaining coherent joint transitions across the visible full body.",
+        "paraphrase_examples": [
+          "성인 몸통과 팔다리의 가로 볼륨이 전반적으로 가늘게 이어지는 선형 체형",
+          "narrow transverse torso and limb volume with coherent joint transitions",
+          "slenderness separated from stature and muscular definition"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_full_body_read", "narrow_torso_volume", "narrow_limb_volume", "owner_separation"],
+          "required_group_ids": [
+            "adult_full_body_read",
+            "narrow_torso_volume",
+            "narrow_limb_volume",
+            "owner_separation"
+          ],
           "groups": [
-            {"id": "adult_full_body_read", "any_terms": ["adult head-to-feet body read", "torso and both limbs remain comparable", "성인 전신의 몸통과 팔다리가 함께 보임"]},
-            {"id": "narrow_torso_volume", "any_terms": ["consistently narrow transverse torso volume", "restrained ribcage waist and pelvic breadth", "몸통의 가로 볼륨이 일관되게 좁음"]},
-            {"id": "narrow_limb_volume", "any_terms": ["slender arm and leg volumes", "longitudinal limb axes dominate transverse thickness", "팔다리의 세로축이 가로 두께보다 우세"]},
-            {"id": "owner_separation", "any_terms": ["height muscle bust and hips declared separately", "no health weight or attractiveness inference", "신장 근육 가슴 골반 가치판단과 분리"]}
+            {
+              "id": "adult_full_body_read",
+              "any_terms": [
+                "adult head-to-feet body read",
+                "torso and both limbs remain comparable",
+                "성인 전신의 몸통과 팔다리가 함께 보임"
+              ]
+            },
+            {
+              "id": "narrow_torso_volume",
+              "any_terms": [
+                "consistently narrow transverse torso volume",
+                "restrained ribcage waist and pelvic breadth",
+                "몸통의 가로 볼륨이 일관되게 좁음"
+              ]
+            },
+            {
+              "id": "narrow_limb_volume",
+              "any_terms": [
+                "slender arm and leg volumes",
+                "longitudinal limb axes dominate transverse thickness",
+                "팔다리의 세로축이 가로 두께보다 우세"
+              ]
+            },
+            {
+              "id": "owner_separation",
+              "any_terms": [
+                "torso and limbs share narrow transverse proportions in the same view",
+                "ribcage waist pelvis and limb transitions remain comparable",
+                "같은 화면에서 몸통과 팔다리의 가로 비율과 관절 전환이 함께 보임"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["a tall person whose transverse build is broad", "a lean athletic body defined only by muscle grooves", "wide-angle stretching or dark clothing that only makes the body appear narrower"]
+        "contrast_examples": [
+          "a tall person whose transverse build is broad",
+          "a lean athletic body defined only by muscle grooves",
+          "wide-angle stretching or dark clothing that only makes the body appear narrower"
+        ],
+        "claim_limits": [
+          "This geometric relation does not establish health, weight, attractiveness, or personal value.",
+          "Height, bust prominence, hip dominance, and muscular definition are separate appearance dimensions."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult full-body relation", "narrow transverse torso volume", "narrow limb volume", "coherent joint transitions", "height owned separately", "muscle definition owned separately", "neutral geometry"]},
+      "concept_candidate": {"concept_terms": [
+        "adult full-body relation",
+        "narrow transverse torso volume",
+        "narrow limb volume",
+        "coherent joint transitions",
+        "neutral geometry"
+      ]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["slender linear adult build"], "forbidden_prompt_terms": ["underweight", "healthy weight", "ideal body"], "runtime_forbidden_labels": []},
       "composition_instruction": "Use a neutral adult head-to-feet view with the torso and limbs readable at one scale, preserving consistently narrow transverse volumes while separating stature, muscle definition, garment compression, pose, and lens effects.",
       "required_evidence_fields": ["adult_full_body_phrase", "narrow_torso_phrase", "narrow_limb_phrase", "owner_separation_phrase"],
@@ -5474,21 +5438,72 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult soft-tissue build relation with substantial continuous volume across multiple torso and limb regions, without assuming a particular waist shape, clothing size, body weight, health state, attractiveness, or sexual availability.",
-        "paraphrase_examples": ["성인 몸통과 팔다리 여러 구간에 부드러운 볼륨이 연속되는 풍부한 체형", "substantial soft volume distributed across torso hips upper arms and thighs", "fullness shown without forcing an hourglass silhouette"],
+        "definition": "An adult soft-tissue build relation with substantial continuous volume across multiple torso and limb regions, with smooth transitions across the ribcage, waist, abdomen, hips, upper arms, and thighs.",
+        "paraphrase_examples": [
+          "성인 몸통과 팔다리 여러 구간에 부드러운 볼륨이 연속되는 풍부한 체형",
+          "substantial soft volume distributed across torso hips upper arms and thighs",
+          "fullness shown without forcing an hourglass silhouette"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_multiregion_read", "torso_soft_volume", "limb_soft_volume", "neutral_separation"],
+          "required_group_ids": [
+            "adult_multiregion_read",
+            "torso_soft_volume",
+            "limb_soft_volume",
+            "neutral_separation"
+          ],
           "groups": [
-            {"id": "adult_multiregion_read", "any_terms": ["adult torso arms hips and thighs remain readable", "multiple body regions share the build relation", "성인 몸통 팔 골반 허벅지가 함께 보임"]},
-            {"id": "torso_soft_volume", "any_terms": ["substantial continuous soft torso volume", "ribcage waist abdomen and hip transitions remain smooth", "몸통의 부드러운 볼륨 전환"]},
-            {"id": "limb_soft_volume", "any_terms": ["full upper-arm and thigh volume", "soft tissue continues through limb transitions", "위팔과 허벅지의 풍부한 볼륨"]},
-            {"id": "neutral_separation", "any_terms": ["waist shape clothing size and weight declared separately", "no health attractiveness or sexual inference", "허리형 크기 건강 매력 판단과 분리"]}
+            {
+              "id": "adult_multiregion_read",
+              "any_terms": [
+                "adult torso arms hips and thighs remain readable",
+                "multiple body regions share the build relation",
+                "성인 몸통 팔 골반 허벅지가 함께 보임"
+              ]
+            },
+            {
+              "id": "torso_soft_volume",
+              "any_terms": [
+                "substantial continuous soft torso volume",
+                "ribcage waist abdomen and hip transitions remain smooth",
+                "몸통의 부드러운 볼륨 전환"
+              ]
+            },
+            {
+              "id": "limb_soft_volume",
+              "any_terms": [
+                "full upper-arm and thigh volume",
+                "soft tissue continues through limb transitions",
+                "위팔과 허벅지의 풍부한 볼륨"
+              ]
+            },
+            {
+              "id": "neutral_separation",
+              "any_terms": [
+                "torso and limb volumes remain comparable across one coherent view",
+                "visible waist contour remains distinct within the continuous soft volume",
+                "한 화면의 연속된 부드러운 볼륨 안에서 허리 윤곽과 팔다리 비율이 함께 읽힘"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["a padded coat creating volume without readable body contours", "large bust alone with otherwise unrelated body volumes", "a body-size or beauty judgment replacing observable geometry"]
+        "contrast_examples": [
+          "a padded coat creating volume without readable body contours",
+          "large bust alone with otherwise unrelated body volumes",
+          "a body-size or beauty judgment replacing observable geometry"
+        ],
+        "claim_limits": [
+          "The visible volume does not establish clothing size, body weight, health, attractiveness, sexual availability, or personal value.",
+          "A specific waist silhouette is a separate request-owned dimension."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult multiregion body read", "substantial soft torso volume", "full upper arms", "full thighs", "smooth transitions", "waist shape separate", "neutral non-valuative description"]},
+      "concept_candidate": {"concept_terms": [
+        "adult multiregion body read",
+        "substantial soft torso volume",
+        "full upper arms",
+        "full thighs",
+        "smooth transitions"
+      ]},
       "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["육덕", "voluptuous", "sexually attractive", "ideal full figure"], "runtime_forbidden_labels": ["육덕", "voluptuous"]},
       "composition_instruction": "Show the adult torso, upper arms, hips, and thighs together under neutral form light so substantial soft volume and smooth transitions remain visible, while keeping clothing size, weight, waist shape, health, and attractiveness outside the visual claim.",
       "required_evidence_fields": ["adult_multiregion_phrase", "torso_soft_volume_phrase", "limb_soft_volume_phrase", "neutral_separation_phrase"],
@@ -5556,21 +5571,71 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult body-build relation with readable but non-exaggerated muscle planes and tendon transitions across several regions, separated from sports skill, leanness, body-fat estimates, health, strength, or performance claims.",
-        "paraphrase_examples": ["성인 어깨 팔 몸통 허벅지에서 절제된 근육 면과 힘줄 전환이 이어지는 체형", "restrained muscular definition visible across several body regions", "athletic-looking geometry without a performance or health claim"],
+        "definition": "An adult body-build relation with readable, restrained muscle planes and tendon transitions across several upper- and lower-body regions.",
+        "paraphrase_examples": [
+          "성인 어깨 팔 몸통 허벅지에서 절제된 근육 면과 힘줄 전환이 이어지는 체형",
+          "restrained muscular definition visible across several body regions",
+          "coherent muscle planes and tendon transitions across the visible adult body"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_multiregion_read", "upper_muscle_planes", "lower_muscle_planes", "performance_separation"],
+          "required_group_ids": [
+            "adult_multiregion_read",
+            "upper_muscle_planes",
+            "lower_muscle_planes",
+            "performance_separation"
+          ],
           "groups": [
-            {"id": "adult_multiregion_read", "any_terms": ["adult shoulders arms torso and thighs remain visible", "several regions share the muscular build", "성인 상하체 여러 구간이 함께 보임"]},
-            {"id": "upper_muscle_planes", "any_terms": ["restrained shoulder arm and torso muscle planes", "form light reveals coherent upper-body definition", "어깨 팔 몸통의 절제된 근육 면"]},
-            {"id": "lower_muscle_planes", "any_terms": ["coherent thigh and calf muscle transitions", "lower-limb definition follows anatomy", "허벅지와 종아리의 해부학적 근육 전환"]},
-            {"id": "performance_separation", "any_terms": ["sport skill strength health and body fat declared separately", "definition is not painted contrast or dehydration", "경기력 건강 체지방과 분리"]}
+            {
+              "id": "adult_multiregion_read",
+              "any_terms": [
+                "adult shoulders arms torso and thighs remain visible",
+                "several regions share the muscular build",
+                "성인 상하체 여러 구간이 함께 보임"
+              ]
+            },
+            {
+              "id": "upper_muscle_planes",
+              "any_terms": [
+                "restrained shoulder arm and torso muscle planes",
+                "form light reveals coherent upper-body definition",
+                "어깨 팔 몸통의 절제된 근육 면"
+              ]
+            },
+            {
+              "id": "lower_muscle_planes",
+              "any_terms": [
+                "coherent thigh and calf muscle transitions",
+                "lower-limb definition follows anatomy",
+                "허벅지와 종아리의 해부학적 근육 전환"
+              ]
+            },
+            {
+              "id": "performance_separation",
+              "any_terms": [
+                "muscle planes and tendon transitions remain anatomically coherent across upper and lower regions",
+                "light follows visible muscular surface transitions",
+                "상하체의 근육 면과 힘줄 전환을 따라 빛이 해부학적으로 이어짐"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["sports equipment or uniform without visible muscle structure", "extreme painted shadows imitating definition", "a slender build with no readable muscle planes"]
+        "contrast_examples": [
+          "sports equipment or uniform without visible muscle structure",
+          "extreme painted shadows imitating definition",
+          "a slender build with no readable muscle planes"
+        ],
+        "claim_limits": [
+          "Visible definition does not establish sports skill, body-fat level, health, strength, or physical performance."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult multiregion physique", "restrained shoulder muscle planes", "arm tendon transitions", "torso form light", "defined thighs and calves", "performance separate", "health and body fat separate"]},
+      "concept_candidate": {"concept_terms": [
+        "adult multiregion physique",
+        "restrained shoulder muscle planes",
+        "arm tendon transitions",
+        "torso form light",
+        "defined thighs and calves"
+      ]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["toned muscular adult build"], "forbidden_prompt_terms": ["healthy body fat", "elite athlete", "physically strong"], "runtime_forbidden_labels": []},
       "composition_instruction": "Frame the adult shoulders, arms, torso, thighs, and calves under restrained form light so muscle and tendon planes read across multiple regions, while sports props, painted contrast, strength, performance, health, and body-fat claims remain separate.",
       "required_evidence_fields": ["adult_multiregion_phrase", "upper_muscle_phrase", "lower_muscle_phrase", "performance_separation_phrase"],
@@ -5597,21 +5662,73 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult regional relation in which bilateral breast volume projects visibly from the ribcage and reads relative to the natural waist, without defining the whole-body silhouette, clothing size, attractiveness, fertility, or sexual availability.",
-        "paraphrase_examples": ["성인 양측 가슴 볼륨이 흉곽 기준으로 앞과 옆으로 돌출되고 자연 허리와 비교되는 관계", "bilateral bust projection anchored to the ribcage rather than a generic upper-torso crop", "regional bust prominence kept separate from curvy or hourglass labels"],
+        "definition": "An adult regional relation in which bilateral breast volume projects visibly from the ribcage and reads relative to the natural waist, with coherent front and side projection.",
+        "paraphrase_examples": [
+          "성인 양측 가슴 볼륨이 흉곽 기준으로 앞과 옆으로 돌출되고 자연 허리와 비교되는 관계",
+          "bilateral bust projection anchored to the ribcage rather than a generic upper-torso crop",
+          "regional bust prominence kept separate from curvy or hourglass labels"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_bilateral_upper_torso", "ribcage_reference", "bust_projection", "whole_body_separation"],
+          "required_group_ids": [
+            "adult_bilateral_upper_torso",
+            "ribcage_reference",
+            "bust_projection",
+            "whole_body_separation"
+          ],
           "groups": [
-            {"id": "adult_bilateral_upper_torso", "any_terms": ["adult bilateral upper torso remains visible", "both bust contours and the natural waist remain readable", "성인 상체 양측과 자연 허리가 함께 보임"]},
-            {"id": "ribcage_reference", "any_terms": ["ribcage breadth and depth remain the reference", "shoulders and thorax anchor the regional volume", "흉곽의 폭과 깊이가 기준으로 보임"]},
-            {"id": "bust_projection", "any_terms": ["bilateral bust volume projects from the ribcage", "front and side projection remain coherent", "양측 가슴 볼륨의 앞옆 돌출"]},
-            {"id": "whole_body_separation", "any_terms": ["waist hips size and attractiveness declared separately", "no fertility or sexual-availability inference", "허리 골반 크기 매력 성적 판단과 분리"]}
+            {
+              "id": "adult_bilateral_upper_torso",
+              "any_terms": [
+                "adult bilateral upper torso remains visible",
+                "both bust contours and the natural waist remain readable",
+                "성인 상체 양측과 자연 허리가 함께 보임"
+              ]
+            },
+            {
+              "id": "ribcage_reference",
+              "any_terms": [
+                "ribcage breadth and depth remain the reference",
+                "shoulders and thorax anchor the regional volume",
+                "흉곽의 폭과 깊이가 기준으로 보임"
+              ]
+            },
+            {
+              "id": "bust_projection",
+              "any_terms": [
+                "bilateral bust volume projects from the ribcage",
+                "front and side projection remain coherent",
+                "양측 가슴 볼륨의 앞옆 돌출"
+              ]
+            },
+            {
+              "id": "whole_body_separation",
+              "any_terms": [
+                "ribcage bust waist and hip contours remain separately readable",
+                "the regional projection stays anchored to visible ribcage and natural waist landmarks",
+                "흉곽 가슴 허리 골반의 윤곽이 각각 구분되며 지역 돌출의 기준이 보임"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["a sculpture or head-and-shoulders portrait bust", "padded clothing with no readable ribcage relation", "automatic inference of curvy or hourglass whole-body shape"]
+        "contrast_examples": [
+          "a sculpture or head-and-shoulders portrait bust",
+          "padded clothing with no readable ribcage relation",
+          "automatic inference of curvy or hourglass whole-body shape"
+        ],
+        "claim_limits": [
+          "A regional volume does not establish clothing size, attractiveness, fertility, sexual availability, or personal value.",
+          "The whole-body silhouette and waist-to-hip relationship remain separate dimensions."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult bilateral upper torso", "ribcage reference", "bilateral breast volume", "front and side projection", "natural waist relation", "whole-body silhouette separate", "neutral regional geometry"]},
+      "concept_candidate": {"concept_terms": [
+        "adult bilateral upper torso",
+        "ribcage reference",
+        "bilateral breast volume",
+        "front and side projection",
+        "natural waist relation",
+        "neutral regional geometry"
+      ]},
       "runtime_expression": {"default_mode": "definition_only", "prompt_label_terms": [], "forbidden_prompt_terms": ["거유", "busty", "sexually available", "fertile figure"], "runtime_forbidden_labels": ["거유", "busty"]},
       "composition_instruction": "Use an adult front or restrained three-quarter upper-torso view with both bust contours, ribcage, shoulders, and natural waist readable, while garment support, padding, whole-body shape, attractiveness, fertility, and sexual implications remain separate.",
       "required_evidence_fields": ["adult_upper_torso_phrase", "ribcage_reference_phrase", "bust_projection_phrase", "whole_body_separation_phrase"],
@@ -5884,21 +6001,72 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult torso relation in which central abdominal and waist width or sagittal depth forms a broad rounded volume between upper torso and pelvis, with weak waist indentation and no inference about pregnancy, pathology, weight, health, or attractiveness.",
-        "paraphrase_examples": ["성인 흉곽과 골반 사이 중앙 복부와 허리의 폭 또는 깊이가 둥글게 넓어지고 허리 함몰이 약한 관계", "broad rounded central-torso volume visible in both frontal width and oblique depth", "oval relation separated from pregnancy or health interpretation"],
+        "definition": "An adult torso relation in which central abdominal and waist width or sagittal depth forms a broad rounded volume between upper torso and pelvis, with weak waist indentation and gradual contour transitions.",
+        "paraphrase_examples": [
+          "성인 흉곽과 골반 사이 중앙 복부와 허리의 폭 또는 깊이가 둥글게 넓어지고 허리 함몰이 약한 관계",
+          "broad rounded central-torso volume visible in both frontal width and oblique depth",
+          "a rounded central torso contour with gradual upper and lower transitions"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_oblique_torso_view", "upper_lower_anchors", "rounded_central_volume", "weak_waist_indentation"],
+          "required_group_ids": [
+            "adult_oblique_torso_view",
+            "upper_lower_anchors",
+            "rounded_central_volume",
+            "weak_waist_indentation"
+          ],
           "groups": [
-            {"id": "adult_oblique_torso_view", "any_terms": ["adult front and restrained oblique torso evidence", "central width and sagittal depth remain readable", "성인 중앙 몸통의 정면 폭과 사선 깊이가 함께 보임"]},
-            {"id": "upper_lower_anchors", "any_terms": ["ribcage and pelvis anchor the central comparison", "upper and lower torso landmarks remain visible", "흉곽과 골반이 중앙 볼륨의 기준"]},
-            {"id": "rounded_central_volume", "any_terms": ["broad rounded abdominal and waist volume", "central torso expands in width or sagittal depth", "중앙 복부와 허리의 둥근 폭 또는 깊이"]},
-            {"id": "weak_waist_indentation", "any_terms": ["natural waist indentation remains weak", "central contour changes gradually rather than pinching inward", "자연 허리 함몰이 약하고 완만함"]}
+            {
+              "id": "adult_oblique_torso_view",
+              "any_terms": [
+                "adult front and restrained oblique torso evidence",
+                "central width and sagittal depth remain readable",
+                "성인 중앙 몸통의 정면 폭과 사선 깊이가 함께 보임"
+              ]
+            },
+            {
+              "id": "upper_lower_anchors",
+              "any_terms": [
+                "ribcage and pelvis anchor the central comparison",
+                "upper and lower torso landmarks remain visible",
+                "흉곽과 골반이 중앙 볼륨의 기준"
+              ]
+            },
+            {
+              "id": "rounded_central_volume",
+              "any_terms": [
+                "broad rounded abdominal and waist volume",
+                "central torso expands in width or sagittal depth",
+                "중앙 복부와 허리의 둥근 폭 또는 깊이"
+              ]
+            },
+            {
+              "id": "weak_waist_indentation",
+              "any_terms": [
+                "natural waist indentation remains weak",
+                "central contour changes gradually rather than pinching inward",
+                "자연 허리 함몰이 약하고 완만함"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["pregnancy or a medical condition inferred from abdominal projection", "a frontal garment bulge with no side-depth evidence", "diamond shape whose central maximum clearly tapers both upward and downward"]
+        "contrast_examples": [
+          "pregnancy or a medical condition inferred from abdominal projection",
+          "a frontal garment bulge with no side-depth evidence",
+          "diamond shape whose central maximum clearly tapers both upward and downward"
+        ],
+        "claim_limits": [
+          "Visible central torso geometry does not establish pregnancy, pathology, weight, health, attractiveness, or personal value."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult front-oblique torso read", "ribcage and pelvis anchors", "rounded central abdominal volume", "central width and sagittal depth", "weak natural-waist indentation", "gradual transitions", "no medical inference"]},
+      "concept_candidate": {"concept_terms": [
+        "adult front-oblique torso read",
+        "ribcage and pelvis anchors",
+        "rounded central abdominal volume",
+        "central width and sagittal depth",
+        "weak natural-waist indentation",
+        "gradual transitions"
+      ]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["oval central-torso silhouette relation"], "forbidden_prompt_terms": ["unhealthy apple shape", "pregnant-looking", "obese body"], "runtime_forbidden_labels": []},
       "composition_instruction": "Use an adult restrained three-quarter torso view that preserves ribcage, natural waist, abdomen, and pelvis, showing central frontal width and sagittal depth plus weak waist indentation while explicitly excluding pregnancy, pathology, weight, and health inference.",
       "required_evidence_fields": ["adult_oblique_view_phrase", "upper_lower_anchor_phrase", "rounded_central_volume_phrase", "weak_waist_indentation_phrase"],
@@ -5925,21 +6093,73 @@
         "requires_adult_character": true
       },
       "semantics": {
-        "definition": "An adult bilateral and oblique torso relation in which the central waist-abdomen region forms the widest or deepest torso zone and visibly tapers toward both the upper torso and pelvis, without literal geometry, fixed thresholds, or health and value inference.",
-        "paraphrase_examples": ["성인 중앙 허리와 복부가 몸통에서 가장 넓거나 깊게 보이고 상체와 골반 양쪽으로 가늘어지는 관계", "central-torso maximum with visible upward and downward taper", "diamond relation distinguished from the more rounded gradual oval transition"],
+        "definition": "An adult bilateral and oblique torso relation in which the central waist-abdomen region forms the widest or deepest torso zone and visibly tapers toward both the upper torso and pelvis.",
+        "paraphrase_examples": [
+          "성인 중앙 허리와 복부가 몸통에서 가장 넓거나 깊게 보이고 상체와 골반 양쪽으로 가늘어지는 관계",
+          "central-torso maximum with visible upward and downward taper",
+          "diamond relation distinguished from the more rounded gradual oval transition"
+        ],
         "component_semantics": {
           "minimum_component_groups": 4,
-          "required_group_ids": ["adult_bilateral_oblique_view", "central_maximum", "upward_taper", "downward_taper"],
+          "required_group_ids": [
+            "adult_bilateral_oblique_view",
+            "central_maximum",
+            "upward_taper",
+            "downward_taper"
+          ],
           "groups": [
-            {"id": "adult_bilateral_oblique_view", "any_terms": ["adult bilateral and restrained oblique torso evidence", "central width and depth remain comparable", "성인 몸통 양측 폭과 사선 깊이가 함께 보임"]},
-            {"id": "central_maximum", "any_terms": ["waist-abdomen region forms the central maximum", "central torso is widest or deepest", "허리 복부가 중앙 최대 폭 또는 깊이"]},
-            {"id": "upward_taper", "any_terms": ["central volume tapers toward upper torso and shoulders", "upper contour narrows away from the central maximum", "중앙에서 상체 방향으로 가늘어짐"]},
-            {"id": "downward_taper", "any_terms": ["central volume tapers toward pelvis and outer hips", "lower contour narrows away from the central maximum", "중앙에서 골반 방향으로 가늘어짐"]}
+            {
+              "id": "adult_bilateral_oblique_view",
+              "any_terms": [
+                "adult bilateral and restrained oblique torso evidence",
+                "central width and depth remain comparable",
+                "성인 몸통 양측 폭과 사선 깊이가 함께 보임"
+              ]
+            },
+            {
+              "id": "central_maximum",
+              "any_terms": [
+                "waist-abdomen region forms the central maximum",
+                "central torso is widest or deepest",
+                "허리 복부가 중앙 최대 폭 또는 깊이"
+              ]
+            },
+            {
+              "id": "upward_taper",
+              "any_terms": [
+                "central volume tapers toward upper torso and shoulders",
+                "upper contour narrows away from the central maximum",
+                "중앙에서 상체 방향으로 가늘어짐"
+              ]
+            },
+            {
+              "id": "downward_taper",
+              "any_terms": [
+                "central volume tapers toward pelvis and outer hips",
+                "lower contour narrows away from the central maximum",
+                "중앙에서 골반 방향으로 가늘어짐"
+              ]
+            }
           ]
         },
-        "contrast_examples": ["oval shape with broad rounded volume but no clear two-direction taper", "a diamond-pattern garment or jewelry motif", "one-sided abdominal projection caused only by pose or lens distortion"]
+        "contrast_examples": [
+          "oval shape with broad rounded volume but no clear two-direction taper",
+          "a diamond-pattern garment or jewelry motif",
+          "one-sided abdominal projection caused only by pose or lens distortion"
+        ],
+        "claim_limits": [
+          "The shape name does not require a literal polygon or fixed measurement thresholds.",
+          "Visible torso shape does not establish health or personal value."
+        ]
       },
-      "concept_candidate": {"concept_terms": ["adult bilateral-oblique torso read", "central waist-abdomen maximum", "frontal width and sagittal depth", "upward taper", "downward taper", "oval boundary", "no literal geometry"]},
+      "concept_candidate": {"concept_terms": [
+        "adult bilateral-oblique torso read",
+        "central waist-abdomen maximum",
+        "frontal width and sagittal depth",
+        "upward taper",
+        "downward taper",
+        "oval boundary"
+      ]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["diamond central-torso silhouette relation"], "forbidden_prompt_terms": ["unhealthy diamond body", "perfect diamond outline"], "runtime_forbidden_labels": []},
       "composition_instruction": "Use an adult front-to-restrained-oblique torso view with both contours, ribcage, central waist-abdomen, and pelvis readable, showing a central maximum plus upward and downward taper while separating clothing patterns, posture, lens effects, and health inference.",
       "required_evidence_fields": ["adult_bilateral_oblique_phrase", "central_maximum_phrase", "upward_taper_phrase", "downward_taper_phrase"],
@@ -13073,7 +13293,9 @@
             "활력 징후",
             "간호 인계",
             "간호 기록",
-            "스크럽 제복"
+            "스크럽 제복",
+            "vital-sign assessment",
+            "bedside handover"
           ],
           "exclude_if_any_terms": [
             "costume party",
@@ -13085,7 +13307,31 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "checks patient identifier",
+                "patient identifier check",
+                "vital-sign assessment",
+                "vital signs assessment",
+                "assesses vital signs",
+                "bedside handover",
+                "medication handover",
+                "care documentation",
+                "documents patient care",
+                "간호 인계",
+                "환자 식별 정보를 확인",
+                "활력 징후를 확인",
+                "활력 징후 평가",
+                "간호 기록을 작성"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult clinical nurse whose professional identity is proved by a coherent washable duty-uniform system, one patient-linked assessment or handover action, and a visible documented care state or immediate safe-care consequence.",
@@ -13139,6 +13385,9 @@
           "a fashion portrait in nurse-inspired clothing without a patient-linked clinical task",
           "a doctor laboratory worker or caregiver whose actual role is not visually established",
           "a stethoscope badge or hospital corridor used as the only evidence"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -13281,7 +13530,27 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "directs pedestrians",
+                "traffic control",
+                "controls traffic",
+                "public safety perimeter control",
+                "perimeter control",
+                "공공 안전 통제",
+                "교통 통제",
+                "보행자 동선을 지시",
+                "무전으로 안전 지시",
+                "통제 구역 확보"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult police officer whose role is visible through one coherent fictional or non-identifying duty-uniform variant, a public-safety control task, a governed person route or perimeter target, and an immediate orderly consequence.",
@@ -13335,6 +13604,9 @@
           "a police-inspired fashion costume with no governed public-safety target",
           "a private security guard at an access desk",
           "a weapon badge patrol car or flashing lights used as the only proof"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -13477,7 +13749,30 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "checks the breathing apparatus",
+                "breathing-apparatus inspection",
+                "equipment inspection",
+                "connects a hose",
+                "connects the hose",
+                "checks the pressure",
+                "rescue tool deployment",
+                "공기호흡기 압력과 결합",
+                "공기호흡기를 점검",
+                "장비 점검",
+                "구조 도구를 연결",
+                "호스를 연결",
+                "출동 장비를 점검"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult firefighter whose response role is proved by a coordinated protective ensemble covering head body hands and feet, one hazard-matched equipment action, and a visible ready checked or controlled response state.",
@@ -13531,6 +13826,9 @@
           "a person holding a firefighter helmet in ordinary clothes",
           "a heroic station portrait without equipment interaction",
           "industrial workwear or military tactical gear without fire-response coherence"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -13673,7 +13971,29 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "patient assessment",
+                "assesses breathing",
+                "secures the stretcher",
+                "stretcher restraint check",
+                "preparing monitored transport",
+                "paramedic transport care",
+                "환자 평가",
+                "호흡을 확인",
+                "들것 고정 장치를 체결",
+                "들것을 고정",
+                "모니터링하며 이송",
+                "이송 처치"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult out-of-hospital emergency clinician whose role is made visible by coherent high-visibility clinical workwear, one patient assessment or packaging action, transport equipment contact, and a clearly safer ready-for-transfer state.",
@@ -13727,6 +14047,9 @@
           "a uniformed person beside an ambulance without patient assessment or transport relation",
           "a hospital nurse or firefighter whose role is not out-of-hospital transport care",
           "medical equipment scattered as dramatic props"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -13871,7 +14194,27 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "pays out a rescue line",
+                "deploys a rescue line",
+                "secures a lifebuoy",
+                "recovery sling",
+                "해상 구조 중",
+                "구조 로프를 풀",
+                "구조 로프를 연결",
+                "구명부환을 연결",
+                "구명부환을 던",
+                "구조 슬링"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult maritime-safety officer whose role is visible through coherent weather-ready duty clothing and personal flotation, one rescue-appliance or line action, a concrete person vessel or marker target, and a controlled recovery consequence on water.",
@@ -13925,6 +14268,9 @@
           "a naval-style fashion portrait on a dock",
           "a traffic-police scene with a rescue rope",
           "a lifebuoy boat or uniform used without a water target and recovery relation"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -14067,7 +14413,28 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "train driver operating the cab",
+                "traction controller operation",
+                "brake check",
+                "checks the departure indication",
+                "controlled platform departure",
+                "제동 점검",
+                "주간 제어기를 조작",
+                "출발 표시를 확인",
+                "열차를 운전",
+                "열차를 출발",
+                "제동기를 조작"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult train driver visibly responsible for one active cab, proved by control contact, agreement among cab indication route signal and outside track state, and an operational consequence appropriate to the current phase.",
@@ -14122,6 +14489,9 @@
           "a passenger or uniformed portrait inside a cab set",
           "station dispatch staff standing on the platform",
           "generic control-room screens with no train or route-state agreement"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -14265,7 +14635,28 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "door clearance check",
+                "scans every door",
+                "checks door clearance",
+                "dispatch signal",
+                "ready-to-start signal",
+                "dispatches the train",
+                "출입문 안전 확인",
+                "발차 신호",
+                "출발 신호",
+                "발차 무전",
+                "발차 확인"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult rail dispatch worker whose role is visible at the platform-train interface through coherent staff uniform, a full door and passenger-clearance check, one authorized dispatch signal or radio action, and a safe departure consequence.",
@@ -14319,6 +14710,9 @@
           "a romantic conductor offering a saved ticket",
           "a station portrait holding a punch tool with no door-clearance task",
           "a train driver inside the cab or a generic traveler on the platform"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -14461,7 +14855,28 @@
           ]
         },
         "requires_adult_character": true,
-        "semantic_discovery_requires_component_evidence": true
+        "semantic_discovery_requires_component_evidence": true,
+        "hard_activation": {
+          "contract_version": "photo-visual-hard-activation/v1",
+          "required_any_groups": [
+            {
+              "id": "requested_operational_action",
+              "any_terms": [
+                "credential verification",
+                "compares one visitor credential",
+                "scans the badge",
+                "checks the approved entry list",
+                "authorization decision",
+                "출입증을 확인",
+                "방문자 신분증을 대조",
+                "출입 승인 판단",
+                "접근 승인 판단",
+                "방문자 신분증 확인",
+                "출입 리더기에 스캔"
+              ]
+            }
+          ]
+        }
       },
       "semantics": {
         "definition": "An adult private-security worker whose role is visible through a site-specific non-police uniform, credential-to-reader verification, a logged authorize or deny decision, and a controlled-entry consequence at one facility boundary.",
@@ -14515,6 +14930,9 @@
           "a police officer or military guard at a public checkpoint",
           "a dark-suit fashion portrait beside surveillance monitors",
           "a badge camera or earpiece without credential verification and entry consequence"
+        ],
+        "claim_limits": [
+          "An occupational title, uniform, location, or on-duty status alone does not request this specific operational action and consequence. The action contract applies only when requested or explicitly selected."
         ]
       },
       "concept_candidate": {
@@ -18497,15 +18915,57 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "This profile applies when the authorial core explicitly declares a specific victim to be under eighteen and names a concrete criminal act directed at that minor. The scene must show the offender-to-minor targeting relation, the act or coercive mechanism, and an immediate consequence or intervention trace. Pixels alone do not prove age, and body size, clothing, school setting, or facial appearance must not be the sole basis for minor status.",
-        "paraphrase_examples": ["사용자 서사에서 미성년자로 명시된 피해자에게 성인 가해자가 구체적 비성적 범죄 행위를 가하고 보호자의 개입 흔적이 같은 사건을 잇는다", "a requester-declared minor is specifically targeted by an adult offender's named nonsexual crime and a same-event escape protection or consequence trace remains visible"],
-        "component_semantics": {"minimum_component_groups": 4, "required_group_ids": ["declared_minor_status", "specific_offender", "concrete_crime_act", "minor_target_consequence"], "groups": [
-          {"id": "declared_minor_status", "any_terms": ["the authorial core explicitly declares the victim under eighteen without deriving age from appearance alone"]},
-          {"id": "specific_offender", "any_terms": ["one identifiable adult offender or organized actor specifically targets that declared minor"]},
-          {"id": "concrete_crime_act", "any_terms": ["a named assault abduction forced labor trafficking theft coercion confinement or other concrete crime is visibly underway"]},
-          {"id": "minor_target_consequence", "any_terms": ["escape attempt protective intervention displaced possession confinement or immediate harm trace belongs to the same minor-targeted event"]}
-        ]},
-        "contrast_examples": ["ordinary caregiving", "a school safety drill", "a child alone in a dramatic setting", "age guessed from a small adult's appearance"]
+        "definition": "A requester-declared minor is the specific target of a named criminal act. The scene shows one offender-to-target relation, a concrete act or coercive mechanism, and an immediate consequence or intervention trace belonging to that same event.",
+        "paraphrase_examples": [
+          "사용자 서사에서 미성년자로 명시된 피해자에게 성인 가해자가 구체적 범죄 행위를 가하고 보호자의 개입 흔적이 같은 사건을 잇는다",
+          "a requester-declared minor is specifically targeted by an adult offender's named crime and a same-event escape protection or consequence trace remains visible"
+        ],
+        "component_semantics": {
+          "minimum_component_groups": 4,
+          "required_group_ids": [
+            "declared_minor_status",
+            "specific_offender",
+            "concrete_crime_act",
+            "minor_target_consequence"
+          ],
+          "groups": [
+            {
+              "id": "declared_minor_status",
+              "any_terms": [
+                "the requester explicitly declares the targeted character under eighteen",
+                "사용자가 범죄의 대상 인물을 미성년자로 명시함"
+              ]
+            },
+            {
+              "id": "specific_offender",
+              "any_terms": [
+                "one identifiable adult offender or organized actor specifically targets that declared minor"
+              ]
+            },
+            {
+              "id": "concrete_crime_act",
+              "any_terms": [
+                "a named assault abduction forced labor trafficking theft coercion confinement or other concrete crime is visibly underway"
+              ]
+            },
+            {
+              "id": "minor_target_consequence",
+              "any_terms": [
+                "escape attempt protective intervention displaced possession confinement or immediate harm trace belongs to the same minor-targeted event"
+              ]
+            }
+          ]
+        },
+        "contrast_examples": [
+          "ordinary caregiving",
+          "a school safety drill",
+          "a child alone in a dramatic setting",
+          "age guessed from a small adult's appearance"
+        ],
+        "claim_limits": [
+          "Minor status must be explicitly supplied by the requester; pixels, body size, clothing, school setting, or facial appearance alone cannot prove age.",
+          "Platform constraints are enforced independently of positive meaning retrieval and are not evidence that a crime relation exists."
+        ]
       },
       "concept_candidate": {"concept_terms": ["request-declared under-eighteen victim", "specific adult offender", "named concrete crime", "same-event consequence or intervention"]},
       "runtime_expression": {"default_mode": "label_plus_definition", "prompt_label_terms": ["crime targeting a requester-declared minor"], "forbidden_prompt_terms": [], "runtime_forbidden_labels": []},
@@ -21287,7 +21747,7 @@
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A distant camera viewpoint and long field of view make separated depth planes appear closer together, enlarge background structures relative to the subject, reduce visible convergence, and preserve readable layer identities. The relation is not proven by blur, a narrow crop, or the mere mention of a focal length.",
+        "definition": "A distant camera viewpoint and narrow field of view make separated depth planes appear closer together, enlarge background structures relative to the subject, reduce visible convergence, and preserve readable layer identities. The relation is not proven by blur, a narrow crop, or the mere mention of a focal length.",
         "paraphrase_examples": ["a distant subject appears backed closely by a mountain or building that is physically much farther away", "멀리 떨어진 인물과 원경 구조물이 화면에서는 가까이 포개져 보이는 망원 원근", "large background forms and weak line convergence flatten visible depth while distinct planes remain readable"],
         "component_semantics": {
           "minimum_component_groups": 5,
@@ -21416,46 +21876,167 @@
       "id": "split_diopter_dual_focus_planes",
       "category": "capture_focus_split_diopter_dual_plane",
       "activation": {
-        "exact_terms": ["split-diopter dual-focus planes", "split-field dual-focus composition", "스플릿 디옵터 이중 초점면", "분할 렌즈 근경 원경 동시 초점"],
-        "exclude_if_any_terms": ["focus stack", "deep focus", "split screen", "collage"],
+        "exact_terms": [
+          "split-diopter dual-focus planes",
+          "split-field dual-focus composition",
+          "스플릿 디옵터 이중 초점면",
+          "분할 렌즈 근경 원경 동시 초점"
+        ],
+        "exclude_if_any_terms": [
+          "focus stack",
+          "deep focus",
+          "split screen",
+          "collage"
+        ],
         "requires_adult_character": false,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A split-field optical arrangement holds one very near plane and one much farther plane sharp at the same time while an intervening depth band or optical transition remains softer. Both anchors belong to one continuous shot, and the selective two-zone signature differs from deep focus, focus stacking, a collage, or a split-screen composite.",
-        "paraphrase_examples": ["a close foreground object and a distant person are simultaneously crisp while the middle distance stays visibly softer", "아주 가까운 전경과 먼 배경 두 초점 구역 사이에 부드러운 중간 심도 띠가 남는 단일 쇼트", "two separated sharp zones share one frame with a restrained split-field transition"],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": ["diopter_near_plane", "diopter_far_plane", "diopter_soft_middle_band", "diopter_single_shot_continuity", "diopter_not_stack_or_split_screen"],
-          "groups": [
-            {"id":"diopter_near_plane","any_terms":["one very near foreground anchor is critically sharp","하나의 매우 가까운 전경 기준물이 임계 선명도를 가짐"]},
-            {"id":"diopter_far_plane","any_terms":["one clearly distant subject or background anchor is simultaneously critically sharp","분명히 먼 피사체나 배경 기준물이 동시에 임계 선명도를 가짐"]},
-            {"id":"diopter_soft_middle_band","any_terms":["an intervening middle-depth band or restrained optical transition remains visibly softer","그 사이의 중간 깊이 띠나 절제된 광학 전환이 눈에 띄게 더 부드러움"]},
-            {"id":"diopter_single_shot_continuity","any_terms":["lighting perspective and occlusion prove both focus zones share one continuous shot","조명 원근과 가림 관계가 두 초점 구역이 하나의 연속 쇼트임을 증명함"]},
-            {"id":"diopter_not_stack_or_split_screen","any_terms":["only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen","균일한 딥 포커스 포커스 스택 콜라주나 분할 화면이 아니라 두 분리 초점 구역만 강조됨"]}
-          ]
-        },
-        "contrast_examples": ["uniform deep focus", "a clean focus stack", "a vertical split-screen collage", "picture-in-picture", "one sharp subject reflected in a mirror"]
+        "definition": "A split-field visual arrangement holds one very near plane and one much farther plane sharp at the same time while an intervening depth band or optical transition remains softer. Shared lighting, perspective, and occlusion make the selective two-zone arrangement read as one continuous scene.",
+        "paraphrase_examples": [
+          "a close foreground object and a distant person are simultaneously crisp while the middle distance stays visibly softer",
+          "아주 가까운 전경과 먼 배경 두 초점 구역 사이에 부드러운 중간 심도 띠가 남는 연속된 장면",
+          "two separated sharp zones share one frame with a restrained split-field transition"
+        ],
+        "contrast_examples": [
+          "uniform deep focus",
+          "a clean focus stack",
+          "a vertical split-screen collage",
+          "picture-in-picture",
+          "one sharp subject reflected in a mirror"
+        ],
+        "claim_limits": [
+          "Visible continuity and two focus zones cannot prove the optical equipment, number of exposures, editing history, or actual production process."
+        ]
       },
-      "concept_candidate": {"concept_terms":["critically sharp very-near anchor", "simultaneously sharp distant anchor", "softer intervening depth band", "single-shot light and perspective continuity", "two-zone split-field signature"]},
-      "runtime_expression": {"default_mode":"definition_with_optional_label","prompt_label_terms":["split-diopter dual focus"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
-      "composition_instruction": "Place one important anchor very near the lens and another clearly far away, keep both critically sharp, and preserve a softer middle-depth band or restrained optical transition. Maintain shared lighting, perspective, and occlusion so the image reads as one split-field shot, not a stack or split-screen collage.",
-      "required_evidence_fields": ["diopter_near_plane_phrase", "diopter_far_plane_phrase", "diopter_middle_band_phrase", "diopter_continuity_phrase", "diopter_boundary_phrase"],
-      "evidence_requirements": {
-        "diopter_near_plane_phrase":{"min_content_words":8,"must_mention_any":["one very near foreground anchor is critically sharp"]},
-        "diopter_far_plane_phrase":{"min_content_words":11,"must_mention_any":["one clearly distant subject or background anchor is simultaneously critically sharp"]},
-        "diopter_middle_band_phrase":{"min_content_words":11,"must_mention_any":["an intervening middle-depth band or restrained optical transition remains visibly softer"]},
-        "diopter_continuity_phrase":{"min_content_words":11,"must_mention_any":["lighting perspective and occlusion prove both focus zones share one continuous shot"]},
-        "diopter_boundary_phrase":{"min_content_words":16,"must_mention_any":["only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen"]}
+      "concept_candidate": {
+        "concept_terms": [
+          "critically sharp very-near anchor",
+          "simultaneously sharp distant anchor",
+          "softer intervening depth band",
+          "continuous light and perspective across both zones",
+          "two-zone split-field signature"
+        ]
       },
-      "render_gates": [
-        {"id":"vo_capture_diopter_near_plane_sharp","review_scale":"thumbnail","description":"One very-near foreground anchor is unmistakably critically sharp."},
-        {"id":"vo_capture_diopter_far_plane_sharp","review_scale":"thumbnail","description":"One clearly distant anchor is simultaneously critically sharp."},
-        {"id":"vo_capture_diopter_soft_middle_band","review_scale":"both","description":"An intervening middle-depth band remains visibly softer than both anchors."},
-        {"id":"vo_capture_diopter_single_shot_continuity","review_scale":"native","description":"Shared lighting, perspective, and occlusion prove one continuous shot."},
-        {"id":"vo_capture_diopter_not_stack_or_split_screen","review_scale":"native","description":"Uniform deep focus, focus stacking, collage, and split screen do not substitute."}
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "split-diopter dual focus"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "uniform_deep_focus",
+        "focus_stack_composite",
+        "split_screen_collage",
+        "picture_in_picture",
+        "single_plane_mirror_reflection"
       ],
-      "reject_substitutes": ["uniform_deep_focus", "focus_stack_composite", "split_screen_collage", "picture_in_picture", "single_plane_mirror_reflection"]
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "diopter_near_plane",
+            "match_terms": [
+              "one very near foreground anchor is critically sharp",
+              "하나의 매우 가까운 전경 기준물이 임계 선명도를 가짐",
+              "a critically sharp very-near foreground anchor"
+            ],
+            "evidence_field": "diopter_near_plane_phrase",
+            "evidence_terms": [
+              "one very near foreground anchor is critically sharp",
+              "a critically sharp very-near foreground anchor"
+            ],
+            "min_content_words": 5,
+            "instruction": "One very-near foreground anchor is unmistakably critically sharp.",
+            "render_gate": {
+              "id": "vo_capture_diopter_near_plane_sharp",
+              "review_scale": "thumbnail",
+              "description": "One very-near foreground anchor is unmistakably critically sharp."
+            }
+          },
+          {
+            "id": "diopter_far_plane",
+            "match_terms": [
+              "one clearly distant subject or background anchor is simultaneously critically sharp",
+              "분명히 먼 피사체나 배경 기준물이 동시에 임계 선명도를 가짐",
+              "a distant anchor stays critically sharp at the same time"
+            ],
+            "evidence_field": "diopter_far_plane_phrase",
+            "evidence_terms": [
+              "one clearly distant subject or background anchor is simultaneously critically sharp",
+              "a distant anchor stays critically sharp at the same time"
+            ],
+            "min_content_words": 6,
+            "instruction": "One clearly distant anchor is simultaneously critically sharp.",
+            "render_gate": {
+              "id": "vo_capture_diopter_far_plane_sharp",
+              "review_scale": "thumbnail",
+              "description": "One clearly distant anchor is simultaneously critically sharp."
+            }
+          },
+          {
+            "id": "diopter_soft_middle_band",
+            "match_terms": [
+              "an intervening middle-depth band or restrained optical transition remains visibly softer",
+              "그 사이의 중간 깊이 띠나 절제된 광학 전환이 눈에 띄게 더 부드러움",
+              "a softer middle-depth band separates the sharp anchors"
+            ],
+            "evidence_field": "diopter_middle_band_phrase",
+            "evidence_terms": [
+              "an intervening middle-depth band or restrained optical transition remains visibly softer",
+              "a softer middle-depth band separates the sharp anchors"
+            ],
+            "min_content_words": 6,
+            "instruction": "An intervening middle-depth band remains visibly softer than both anchors.",
+            "render_gate": {
+              "id": "vo_capture_diopter_soft_middle_band",
+              "review_scale": "both",
+              "description": "An intervening middle-depth band remains visibly softer than both anchors."
+            }
+          },
+          {
+            "id": "diopter_single_shot_continuity",
+            "match_terms": [
+              "lighting perspective and occlusion remain visually continuous across both focus zones",
+              "조명 원근과 가림 관계가 두 초점 구역을 가로질러 시각적으로 연속됨",
+              "consistent light perspective and occlusion across the focus zones"
+            ],
+            "evidence_field": "diopter_continuity_phrase",
+            "evidence_terms": [
+              "lighting perspective and occlusion remain visually continuous across both focus zones",
+              "consistent light perspective and occlusion across the focus zones"
+            ],
+            "min_content_words": 6,
+            "instruction": "Lighting, perspective, and occlusion remain visually continuous across both focus zones.",
+            "render_gate": {
+              "id": "vo_capture_diopter_single_shot_continuity",
+              "review_scale": "native",
+              "description": "Lighting, perspective, and occlusion remain visually continuous across both focus zones."
+            }
+          },
+          {
+            "id": "diopter_not_stack_or_split_screen",
+            "match_terms": [
+              "two separated sharp zones with a softer intervening band",
+              "분리된 두 선명 구역 사이에 더 부드러운 깊이 띠가 남음"
+            ],
+            "evidence_field": "diopter_boundary_phrase",
+            "evidence_terms": [
+              "only two separated focus zones are emphasized rather than uniform deep focus a focus stack collage or split screen",
+              "two separated sharp zones with a softer intervening band"
+            ],
+            "min_content_words": 6,
+            "instruction": "Uniform deep focus, focus stacking, collage, and split screen do not substitute.",
+            "render_gate": {
+              "id": "vo_capture_diopter_not_stack_or_split_screen",
+              "review_scale": "native",
+              "description": "Uniform deep focus, focus stacking, collage, and split screen do not substitute."
+            }
+          }
+        ]
+      }
     },
     {
       "id": "panning_subject_tracking_motion_relation",
@@ -21596,91 +22177,350 @@
       "id": "rembrandt_face_light_pattern",
       "category": "capture_lighting_rembrandt_face_pattern",
       "activation": {
-        "exact_terms": ["Rembrandt face-light pattern", "Rembrandt triangle portrait light", "렘브란트 얼굴 조명 패턴", "그림자 볼 삼각광 인물 조명"],
-        "exclude_if_any_terms": ["split lighting", "butterfly lighting", "ring light", "flat frontal light"],
+        "exact_terms": [
+          "Rembrandt face-light pattern",
+          "Rembrandt triangle portrait light",
+          "렘브란트 얼굴 조명 패턴",
+          "그림자 볼 삼각광 인물 조명"
+        ],
+        "exclude_if_any_terms": [
+          "split lighting",
+          "butterfly lighting",
+          "ring light",
+          "flat frontal light"
+        ],
         "requires_adult_character": true,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "An upper side key lights the near side of an adult face while the nose shadow joins the far cheek shadow, leaving one contained inverted triangle of light beneath the far eye. The far side remains modeled, the eye stays readable, and controlled fill or reflection preserves the pattern without turning it into split light, butterfly light, or generic side illumination.",
-        "paraphrase_examples": ["one adult face carries a small illuminated triangle under the shadow-side eye where the nose and cheek shadows meet", "성인 얼굴의 그림자 쪽 눈 아래에 코 그림자와 볼 그림자 사이 삼각광이 남는 조명", "an elevated off-axis key produces the characteristic cheek triangle while preserving a readable shadow-side eye"],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": ["rembrandt_upper_side_key", "rembrandt_joined_nose_cheek_shadow", "rembrandt_far_cheek_triangle", "rembrandt_readable_far_eye", "rembrandt_not_generic_side_light"],
-          "groups": [
-            {"id":"rembrandt_upper_side_key","any_terms":["one elevated off-axis key illuminates the near side of the adult face","하나의 높은 비축 키라이트가 성인 얼굴의 가까운 쪽을 비춤"]},
-            {"id":"rembrandt_joined_nose_cheek_shadow","any_terms":["the nose shadow connects into the shadow-side cheek mass","코 그림자가 그림자 쪽 볼의 큰 그림자와 연결됨"]},
-            {"id":"rembrandt_far_cheek_triangle","any_terms":["one contained inverted triangle of light remains beneath the far eye","먼 쪽 눈 아래에 하나의 제한된 역삼각형 빛이 남음"]},
-            {"id":"rembrandt_readable_far_eye","any_terms":["the shadow-side eye and facial structure remain readable without flattening the shadows","그림자 쪽 눈과 얼굴 구조가 그림자를 평평하게 만들지 않고 읽히게 남음"]},
-            {"id":"rembrandt_not_generic_side_light","any_terms":["the joined shadow and cheek triangle distinguish the setup from split butterfly ring or generic side light","연결된 그림자와 볼 삼각광이 분할 버터플라이 링 또는 일반 측면광과 구별됨"]}
-          ]
-        },
-        "contrast_examples": ["half the face divided by split light", "a centered butterfly shadow below the nose", "ring-light catchlights", "flat frontal beauty light", "generic moody side light without a cheek triangle"]
+        "definition": "An elevated off-axis key joins the nose shadow to the shadow-side cheek, leaving one contained triangle of light beneath the shadow-side eye. The key-facing side is illuminated and the shadow-side eye remains readable. Camera-near and camera-far orientation are independent of this pattern, so broad or short orientation can be chosen separately.",
+        "paraphrase_examples": [
+          "one adult face carries a small illuminated triangle under the shadow-side eye where the nose and cheek shadows meet",
+          "성인 얼굴의 그림자 쪽 눈 아래에 코 그림자와 볼 그림자 사이 삼각광이 남는 조명",
+          "an elevated off-axis key produces the characteristic cheek triangle while preserving a readable shadow-side eye"
+        ],
+        "contrast_examples": [
+          "half the face divided by split light",
+          "a centered butterfly shadow below the nose",
+          "ring-light catchlights",
+          "flat frontal beauty light",
+          "generic moody side light without a cheek triangle"
+        ]
       },
-      "concept_candidate": {"concept_terms":["elevated off-axis key", "joined nose and cheek shadow", "contained light triangle under far eye", "readable modeled shadow-side eye", "Rembrandt geometry beyond generic side light"]},
-      "runtime_expression": {"default_mode":"definition_with_optional_label","prompt_label_terms":["Rembrandt portrait lighting"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
-      "composition_instruction": "Light one clearly adult face with an elevated off-axis key. Join the nose shadow to the far cheek shadow while preserving one contained inverted light triangle beneath the far eye, keep that eye readable, and hold fill low enough that the defining shadow geometry survives.",
-      "required_evidence_fields": ["rembrandt_key_phrase", "rembrandt_joined_shadow_phrase", "rembrandt_triangle_phrase", "rembrandt_far_eye_phrase", "rembrandt_boundary_phrase"],
-      "evidence_requirements": {
-        "rembrandt_key_phrase":{"min_content_words":11,"must_mention_any":["one elevated off-axis key illuminates the near side of the adult face"]},
-        "rembrandt_joined_shadow_phrase":{"min_content_words":9,"must_mention_any":["the nose shadow connects into the shadow-side cheek mass"]},
-        "rembrandt_triangle_phrase":{"min_content_words":11,"must_mention_any":["one contained inverted triangle of light remains beneath the far eye"]},
-        "rembrandt_far_eye_phrase":{"min_content_words":12,"must_mention_any":["the shadow-side eye and facial structure remain readable without flattening the shadows"]},
-        "rembrandt_boundary_phrase":{"min_content_words":14,"must_mention_any":["the joined shadow and cheek triangle distinguish the setup from split butterfly ring or generic side light"]}
+      "concept_candidate": {
+        "concept_terms": [
+          "elevated off-axis key",
+          "joined nose and cheek shadow",
+          "contained light triangle under shadow-side eye",
+          "readable modeled shadow-side eye",
+          "independent camera-side face orientation"
+        ]
       },
-      "render_gates": [
-        {"id":"vo_capture_rembrandt_elevated_side_key","review_scale":"thumbnail","description":"An elevated off-axis key clearly models the near side of one adult face."},
-        {"id":"vo_capture_rembrandt_joined_nose_cheek_shadow","review_scale":"both","description":"The nose shadow visibly connects into the far cheek shadow mass."},
-        {"id":"vo_capture_rembrandt_contained_far_cheek_triangle","review_scale":"both","description":"One contained inverted light triangle survives beneath the far eye."},
-        {"id":"vo_capture_rembrandt_readable_shadow_eye","review_scale":"native","description":"The shadow-side eye and face structure remain readable without flattened fill."},
-        {"id":"vo_capture_rembrandt_not_split_butterfly_or_ring","review_scale":"native","description":"Split, butterfly, ring, flat frontal, and generic side light do not substitute."}
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "Rembrandt portrait lighting"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "split_lighting_half_face",
+        "butterfly_nose_shadow",
+        "ring_light_catchlights",
+        "flat_frontal_beauty_light",
+        "generic_side_light_without_triangle"
       ],
-      "reject_substitutes": ["split_lighting_half_face", "butterfly_nose_shadow", "ring_light_catchlights", "flat_frontal_beauty_light", "generic_side_light_without_triangle"]
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "rembrandt_upper_side_key",
+            "match_terms": [
+              "one elevated off-axis key illuminates the key-facing side of the adult face",
+              "하나의 높은 비축 키라이트가 성인 얼굴의 키라이트를 향한 쪽을 비춤",
+              "an elevated off-axis key models the light-facing side"
+            ],
+            "evidence_field": "rembrandt_key_phrase",
+            "evidence_terms": [
+              "one elevated off-axis key illuminates the key-facing side of the adult face",
+              "an elevated off-axis key models the light-facing side"
+            ],
+            "min_content_words": 6,
+            "instruction": "An elevated off-axis key clearly models the key-facing side of one adult face.",
+            "render_gate": {
+              "id": "vo_capture_rembrandt_elevated_side_key",
+              "review_scale": "thumbnail",
+              "description": "An elevated off-axis key clearly models the key-facing side of one adult face."
+            }
+          },
+          {
+            "id": "rembrandt_joined_nose_cheek_shadow",
+            "match_terms": [
+              "the nose shadow connects into the shadow-side cheek mass",
+              "코 그림자가 그림자 쪽 볼의 큰 그림자와 연결됨",
+              "nose and shadow-side cheek shadows visibly join"
+            ],
+            "evidence_field": "rembrandt_joined_shadow_phrase",
+            "evidence_terms": [
+              "the nose shadow connects into the shadow-side cheek mass",
+              "nose and shadow-side cheek shadows visibly join"
+            ],
+            "min_content_words": 5,
+            "instruction": "The nose shadow visibly connects into the shadow-side cheek shadow mass.",
+            "render_gate": {
+              "id": "vo_capture_rembrandt_joined_nose_cheek_shadow",
+              "review_scale": "both",
+              "description": "The nose shadow visibly connects into the shadow-side cheek shadow mass."
+            }
+          },
+          {
+            "id": "rembrandt_far_cheek_triangle",
+            "match_terms": [
+              "one contained inverted triangle of light remains beneath the shadow-side eye",
+              "그림자 쪽 눈 아래에 하나의 제한된 역삼각형 빛이 남음",
+              "a contained light triangle beneath the shadow-side eye"
+            ],
+            "evidence_field": "rembrandt_triangle_phrase",
+            "evidence_terms": [
+              "one contained inverted triangle of light remains beneath the shadow-side eye",
+              "a contained light triangle beneath the shadow-side eye"
+            ],
+            "min_content_words": 6,
+            "instruction": "One contained inverted light triangle survives beneath the shadow-side eye.",
+            "render_gate": {
+              "id": "vo_capture_rembrandt_contained_far_cheek_triangle",
+              "review_scale": "both",
+              "description": "One contained inverted light triangle survives beneath the shadow-side eye."
+            }
+          },
+          {
+            "id": "rembrandt_readable_far_eye",
+            "match_terms": [
+              "the shadow-side eye and facial structure remain readable without flattening the shadows",
+              "그림자 쪽 눈과 얼굴 구조가 그림자를 평평하게 만들지 않고 읽히게 남음",
+              "readable shadow-side eye within retained facial shadows"
+            ],
+            "evidence_field": "rembrandt_far_eye_phrase",
+            "evidence_terms": [
+              "the shadow-side eye and facial structure remain readable without flattening the shadows",
+              "readable shadow-side eye within retained facial shadows"
+            ],
+            "min_content_words": 5,
+            "instruction": "The shadow-side eye and face structure remain readable without flattened fill.",
+            "render_gate": {
+              "id": "vo_capture_rembrandt_readable_shadow_eye",
+              "review_scale": "native",
+              "description": "The shadow-side eye and face structure remain readable without flattened fill."
+            }
+          },
+          {
+            "id": "rembrandt_not_generic_side_light",
+            "match_terms": [
+              "joined nose-cheek shadows enclose the cheek triangle",
+              "연결된 코와 볼 그림자가 볼의 삼각광을 둘러쌈"
+            ],
+            "evidence_field": "rembrandt_boundary_phrase",
+            "evidence_terms": [
+              "the joined shadow and cheek triangle distinguish the setup from split butterfly ring or generic side light",
+              "joined nose-cheek shadows enclose the cheek triangle"
+            ],
+            "min_content_words": 5,
+            "instruction": "Split, butterfly, ring, flat frontal, and generic side light do not substitute.",
+            "render_gate": {
+              "id": "vo_capture_rembrandt_not_split_butterfly_or_ring",
+              "review_scale": "native",
+              "description": "Split, butterfly, ring, flat frontal, and generic side light do not substitute."
+            }
+          }
+        ]
+      }
     },
     {
       "id": "clamshell_dual_source_portrait_light",
       "category": "capture_lighting_clamshell_dual_source",
       "activation": {
-        "exact_terms": ["clamshell dual-source portrait light", "upper-key lower-fill clamshell portrait", "클램셸 상부 키 하부 필 조명", "상하 이중 광원 클램셸 인물 조명"],
-        "exclude_if_any_terms": ["ring light", "butterfly light only", "flat frontal flash", "underlighting"],
+        "exact_terms": [
+          "clamshell dual-source portrait light",
+          "upper-key lower-fill clamshell portrait",
+          "클램셸 상부 키 하부 필 조명",
+          "상하 이중 광원 클램셸 인물 조명"
+        ],
+        "exclude_if_any_terms": [
+          "ring light",
+          "butterfly light only",
+          "flat frontal flash",
+          "underlighting"
+        ],
         "requires_adult_character": true,
         "semantic_discovery_requires_component_evidence": true
       },
       "semantics": {
-        "definition": "A large frontal source above an adult face and a weaker frontal source or reflector below it form a vertical clamshell. High and low catchlight evidence, lifted chin and eye-socket shadows, and still-dimensional facial modeling distinguish the setup from a ring light, single butterfly key, flat flash, or theatrical underlight.",
-        "paraphrase_examples": ["an upper frontal soft source and weaker lower fill create paired vertical catchlights and gently open the chin shadow", "성인 얼굴 위 큰 소프트 키와 아래 약한 필이 세로로 마주 보며 눈 밑과 턱 그림자를 부드럽게 엶", "even beauty illumination retains dimensional nose and cheek modeling instead of a flat ring-light disk"],
-        "component_semantics": {
-          "minimum_component_groups": 5,
-          "required_group_ids": ["clam_upper_key", "clam_lower_fill", "clam_vertical_catchlights", "clam_lifted_lower_shadows", "clam_dimensional_not_ring"],
-          "groups": [
-            {"id":"clam_upper_key","any_terms":["one large frontal source above the adult face provides the dominant soft key","성인 얼굴 위의 큰 정면 광원이 지배적인 소프트 키를 제공함"]},
-            {"id":"clam_lower_fill","any_terms":["a weaker frontal source or reflector below the face returns controlled upward fill","얼굴 아래의 약한 정면 광원이나 반사판이 절제된 상향 필을 되돌림"]},
-            {"id":"clam_vertical_catchlights","any_terms":["upper and lower catchlight evidence aligns vertically within the eyes","눈 안에 위아래 캐치라이트 증거가 수직으로 정렬됨"]},
-            {"id":"clam_lifted_lower_shadows","any_terms":["eye-socket nose and chin shadows are lifted without disappearing completely","눈구멍 코와 턱 그림자가 완전히 사라지지 않은 채 완화됨"]},
-            {"id":"clam_dimensional_not_ring","any_terms":["cheek nose and jaw modeling remain dimensional rather than becoming a ring-light disk flat flash or theatrical underlight","볼 코 턱 모델링이 링라이트 원형 평면 플래시나 극적 하부광이 아니라 입체적으로 남음"]}
-          ]
-        },
-        "contrast_examples": ["one circular ring-light reflection", "single butterfly key with no lower return", "flat on-camera flash", "strong horror underlight", "shadowless beauty retouching"]
+        "definition": "A large frontal source above an adult face and a weaker frontal source or reflector below it form a vertical clamshell. Lower fill lifts chin and eye-socket shadows while preserving dimensional facial modeling. When the eyes are visible, high and low catchlights can provide supporting evidence of the arrangement.",
+        "paraphrase_examples": [
+          "an upper frontal soft source and weaker lower fill gently open the eye and chin shadows while preserving facial dimension",
+          "성인 얼굴 위 큰 소프트 키와 아래 약한 필이 세로로 마주 보며 눈 밑과 턱 그림자를 부드럽게 엶",
+          "even beauty illumination retains dimensional nose and cheek modeling with a weaker lower frontal return"
+        ],
+        "contrast_examples": [
+          "one circular ring-light reflection",
+          "single butterfly key with no lower return",
+          "flat on-camera flash",
+          "strong horror underlight",
+          "shadowless beauty retouching"
+        ]
       },
-      "concept_candidate": {"concept_terms":["large upper frontal soft key", "weaker lower frontal return", "vertical high-low catchlights", "lifted eye and chin shadows", "dimensional beauty light not ring light"]},
-      "runtime_expression": {"default_mode":"definition_with_optional_label","prompt_label_terms":["clamshell portrait lighting"],"forbidden_prompt_terms":[],"runtime_forbidden_labels":[]},
-      "composition_instruction": "Place one large soft key above and just in front of a clearly adult face, add a weaker lower frontal fill or reflector, and preserve vertically paired catchlight evidence. Lift eye-socket and chin shadows while retaining cheek, nose, and jaw dimension so the result cannot collapse into ring light or flat flash.",
-      "required_evidence_fields": ["clam_upper_key_phrase", "clam_lower_fill_phrase", "clam_catchlight_phrase", "clam_shadow_lift_phrase", "clam_boundary_phrase"],
-      "evidence_requirements": {
-        "clam_upper_key_phrase":{"min_content_words":12,"must_mention_any":["one large frontal source above the adult face provides the dominant soft key"]},
-        "clam_lower_fill_phrase":{"min_content_words":12,"must_mention_any":["a weaker frontal source or reflector below the face returns controlled upward fill"]},
-        "clam_catchlight_phrase":{"min_content_words":10,"must_mention_any":["upper and lower catchlight evidence aligns vertically within the eyes"]},
-        "clam_shadow_lift_phrase":{"min_content_words":10,"must_mention_any":["eye-socket nose and chin shadows are lifted without disappearing completely"]},
-        "clam_boundary_phrase":{"min_content_words":17,"must_mention_any":["cheek nose and jaw modeling remain dimensional rather than becoming a ring-light disk flat flash or theatrical underlight"]}
+      "concept_candidate": {
+        "concept_terms": [
+          "large upper frontal soft key",
+          "weaker lower frontal return",
+          "vertical high-low catchlights when eyes are visible",
+          "lifted eye and chin shadows",
+          "dimensional facial modeling"
+        ]
       },
-      "render_gates": [
-        {"id":"vo_capture_clam_dominant_upper_soft_key","review_scale":"thumbnail","description":"A dominant large soft key reads above and in front of the adult face."},
-        {"id":"vo_capture_clam_weaker_lower_return","review_scale":"both","description":"A weaker lower frontal return visibly opens underside shadows."},
-        {"id":"vo_capture_clam_vertical_catchlight_pair","review_scale":"native","description":"High and low catchlight evidence aligns vertically in the eyes."},
-        {"id":"vo_capture_clam_lifted_but_present_shadows","review_scale":"both","description":"Eye, nose, and chin shadows are lifted but do not vanish."},
-        {"id":"vo_capture_clam_not_ring_flat_or_underlight","review_scale":"native","description":"Ring light, flat flash, single butterfly key, and theatrical underlight do not substitute."}
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [
+          "clamshell portrait lighting"
+        ],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "ring_light_disk",
+        "single_butterfly_key",
+        "flat_on_camera_flash",
+        "theatrical_underlight",
+        "shadowless_retouching"
       ],
-      "reject_substitutes": ["ring_light_disk", "single_butterfly_key", "flat_on_camera_flash", "theatrical_underlight", "shadowless_retouching"]
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "clam_upper_key",
+            "match_terms": [
+              "one large frontal source above the adult face provides the dominant soft key",
+              "성인 얼굴 위의 큰 정면 광원이 지배적인 소프트 키를 제공함",
+              "a dominant large soft key above the face"
+            ],
+            "evidence_field": "clam_upper_key_phrase",
+            "evidence_terms": [
+              "one large frontal source above the adult face provides the dominant soft key",
+              "a dominant large soft key above the face"
+            ],
+            "min_content_words": 5,
+            "instruction": "A dominant large soft key reads above and in front of the adult face.",
+            "render_gate": {
+              "id": "vo_capture_clam_dominant_upper_soft_key",
+              "review_scale": "thumbnail",
+              "description": "A dominant large soft key reads above and in front of the adult face."
+            }
+          },
+          {
+            "id": "clam_lower_fill",
+            "match_terms": [
+              "a weaker frontal source or reflector below the face returns controlled upward fill",
+              "얼굴 아래의 약한 정면 광원이나 반사판이 절제된 상향 필을 되돌림",
+              "weaker lower frontal fill returns light beneath the face"
+            ],
+            "evidence_field": "clam_lower_fill_phrase",
+            "evidence_terms": [
+              "a weaker frontal source or reflector below the face returns controlled upward fill",
+              "weaker lower frontal fill returns light beneath the face"
+            ],
+            "min_content_words": 6,
+            "instruction": "A weaker lower frontal return visibly opens underside shadows.",
+            "render_gate": {
+              "id": "vo_capture_clam_weaker_lower_return",
+              "review_scale": "both",
+              "description": "A weaker lower frontal return visibly opens underside shadows."
+            }
+          },
+          {
+            "id": "clam_vertical_catchlights",
+            "match_terms": [
+              "upper and lower catchlight evidence aligns vertically within the eyes",
+              "눈 안에 위아래 캐치라이트 증거가 수직으로 정렬됨",
+              "a vertical pair of high and low catchlights"
+            ],
+            "evidence_field": "clam_catchlight_phrase",
+            "evidence_terms": [
+              "upper and lower catchlight evidence aligns vertically within the eyes",
+              "a vertical pair of high and low catchlights"
+            ],
+            "min_content_words": 6,
+            "instruction": "High and low catchlight evidence aligns vertically in the eyes.",
+            "render_gate": {
+              "id": "vo_capture_clam_vertical_catchlight_pair",
+              "review_scale": "native",
+              "description": "High and low catchlight evidence aligns vertically in the eyes."
+            },
+            "applicability": {
+              "omit_if_any_terms": [
+                "eyes closed",
+                "closed eyes",
+                "closed eyelids",
+                "눈을 감은",
+                "눈을 감고",
+                "눈 감은",
+                "目を閉じ",
+                "閉じた目"
+              ],
+              "retain_if_requested_any_terms": [
+                "paired catchlights",
+                "catchlight pair",
+                "vertical catchlights",
+                "high-low catchlights",
+                "high and low catchlights",
+                "캐치라이트 쌍",
+                "상하 캐치라이트",
+                "세로 캐치라이트",
+                "キャッチライトのペア"
+              ]
+            }
+          },
+          {
+            "id": "clam_lifted_lower_shadows",
+            "match_terms": [
+              "eye-socket nose and chin shadows are lifted without disappearing completely",
+              "눈구멍 코와 턱 그림자가 완전히 사라지지 않은 채 완화됨",
+              "lifted eye-socket nose and chin shadows retain visible shape"
+            ],
+            "evidence_field": "clam_shadow_lift_phrase",
+            "evidence_terms": [
+              "eye-socket nose and chin shadows are lifted without disappearing completely",
+              "lifted eye-socket nose and chin shadows retain visible shape"
+            ],
+            "min_content_words": 6,
+            "instruction": "Eye, nose, and chin shadows are lifted but do not vanish.",
+            "render_gate": {
+              "id": "vo_capture_clam_lifted_but_present_shadows",
+              "review_scale": "both",
+              "description": "Eye, nose, and chin shadows are lifted but do not vanish."
+            }
+          },
+          {
+            "id": "clam_dimensional_not_ring",
+            "match_terms": [
+              "cheek nose and jaw modeling retains visible dimension",
+              "볼 코 턱의 모델링이 뚜렷한 입체감을 유지함"
+            ],
+            "evidence_field": "clam_boundary_phrase",
+            "evidence_terms": [
+              "cheek nose and jaw modeling remain dimensional rather than becoming a ring-light disk flat flash or theatrical underlight",
+              "cheek nose and jaw modeling retains visible dimension"
+            ],
+            "min_content_words": 6,
+            "instruction": "Ring light, flat flash, single butterfly key, and theatrical underlight do not substitute.",
+            "render_gate": {
+              "id": "vo_capture_clam_not_ring_flat_or_underlight",
+              "review_scale": "native",
+              "description": "Ring light, flat flash, single butterfly key, and theatrical underlight do not substitute."
+            }
+          }
+        ]
+      }
     },
     {
       "id": "negative_fill_shadow_deepening_relation",

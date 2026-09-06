@@ -1,0 +1,663 @@
+{
+  "scope": "Authored data and deterministic retrieval probes; raw search ranks precede applicability; no render acceptance claim.",
+  "dictionary_sha256": "eee8429be02df7ce755073da89474883fb4e068c21228b97561d80e2f5484506",
+  "registry_sha256": "0250df61f931557249b340599b8088c404f8a93cb8f6a700da5c79ef31c6c093",
+  "counts": {
+    "profiles": 354,
+    "candidate_bundles": 102,
+    "slot_candidates": 7400,
+    "authored_component_profiles": 3,
+    "profiles_with_claim_limits": 23,
+    "single_literal_rules": 975,
+    "candidates_with_public_process_tags": 0
+  },
+  "activation_probes": [
+    {
+      "case_id": "cabin_rest",
+      "source_rows": [
+        {
+          "source": "user_requirement",
+          "text": "An adult flight attendant is resting in an aircraft cabin.",
+          "polarity": "required"
+        },
+        {
+          "source": "authorial_core_baseline",
+          "text": "An adult flight attendant sits in an aircraft cabin and reads a paperback during a quiet break.",
+          "polarity": "advisory"
+        }
+      ],
+      "before": [
+        {
+          "profile_id": "cabin_crew_safety_role",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:9c715304910b7537"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:9c715304910b7537",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "profile_id": "cabin_crew_safety_role",
+          "match_basis": "exact",
+          "applicability_status": "requires_explicit_mechanism",
+          "hard_eligible": false,
+          "optional_eligible": true,
+          "source_intent_ids": [
+            "user_requirement:9c715304910b7537"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:9c715304910b7537",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "pilot_rest",
+      "source_rows": [
+        {
+          "source": "user_requirement",
+          "text": "An adult aircraft pilot rests in the aircraft cockpit.",
+          "polarity": "required"
+        },
+        {
+          "source": "authorial_core_baseline",
+          "text": "An adult aircraft pilot rests in the aircraft cockpit with hands folded and eyes closed.",
+          "polarity": "advisory"
+        }
+      ],
+      "before": [
+        {
+          "profile_id": "aircraft_pilot_operation",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:d96507553b0d2444"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:d96507553b0d2444",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "profile_id": "aircraft_pilot_operation",
+          "match_basis": "exact",
+          "applicability_status": "requires_explicit_mechanism",
+          "hard_eligible": false,
+          "optional_eligible": true,
+          "source_intent_ids": [
+            "user_requirement:d96507553b0d2444"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:d96507553b0d2444",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "underarm_secondary",
+      "source_rows": [
+        {
+          "source": "user_requirement",
+          "text": "An adult runner with a small underarm tattoo ties her shoes.",
+          "polarity": "required"
+        },
+        {
+          "source": "authorial_core_baseline",
+          "text": "The adult runner bends forward to tie her shoes; her underarm tattoo is a minor detail.",
+          "polarity": "advisory"
+        }
+      ],
+      "before": [
+        {
+          "profile_id": "deliberate_underarm_salience",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:3808512132d0b8cf"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:3808512132d0b8cf",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "profile_id": "deliberate_underarm_salience",
+          "match_basis": "exact",
+          "applicability_status": "requires_explicit_mechanism",
+          "hard_eligible": false,
+          "optional_eligible": true,
+          "source_intent_ids": [
+            "user_requirement:3808512132d0b8cf"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:3808512132d0b8cf",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "underarm_product",
+      "source_rows": [
+        {
+          "source": "user_requirement",
+          "text": "An adult hand holds an underarm deodorant bottle.",
+          "polarity": "required"
+        },
+        {
+          "source": "authorial_core_baseline",
+          "text": "An adult hand holds a capped underarm deodorant bottle against a plain tabletop.",
+          "polarity": "advisory"
+        }
+      ],
+      "before": [
+        {
+          "profile_id": "deliberate_underarm_salience",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:4f498099e6a60c6d"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:4f498099e6a60c6d",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "profile_id": "deliberate_underarm_salience",
+          "match_basis": "exact",
+          "applicability_status": "requires_explicit_mechanism",
+          "hard_eligible": false,
+          "optional_eligible": true,
+          "source_intent_ids": [
+            "user_requirement:4f498099e6a60c6d"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:4f498099e6a60c6d",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "rembrandt_short",
+      "source_rows": [
+        {
+          "source": "user_requirement",
+          "text": "An adult portrait with Rembrandt triangle portrait light and short face-light orientation relation.",
+          "polarity": "required"
+        },
+        {
+          "source": "authorial_core_baseline",
+          "text": "An adult face turns toward an elevated side key; the narrow far cheek is lit while a small light triangle remains on the broad near shadow cheek.",
+          "polarity": "advisory"
+        }
+      ],
+      "before": [
+        {
+          "profile_id": "rembrandt_face_light_pattern",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:25da0471a2c314fd"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:25da0471a2c314fd",
+              "source": "user_requirement"
+            }
+          ]
+        },
+        {
+          "profile_id": "short_face_light_orientation_relation",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:25da0471a2c314fd"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:25da0471a2c314fd",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ],
+      "after": [
+        {
+          "profile_id": "rembrandt_face_light_pattern",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:25da0471a2c314fd"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:25da0471a2c314fd",
+              "source": "user_requirement"
+            }
+          ]
+        },
+        {
+          "profile_id": "short_face_light_orientation_relation",
+          "match_basis": "exact",
+          "applicability_status": "required",
+          "hard_eligible": true,
+          "optional_eligible": false,
+          "source_intent_ids": [
+            "user_requirement:25da0471a2c314fd"
+          ],
+          "source_records": [
+            {
+              "source_intent_id": "user_requirement:25da0471a2c314fd",
+              "source": "user_requirement"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "raw_bm25f_probes": [
+    {
+      "query_fields": {
+        "active_request": "health weight fertility"
+      },
+      "before": [
+        {
+          "document_id": "inner_thigh_negative_space",
+          "score": 54.440022318396,
+          "matched_terms": [
+            "fertility",
+            "health",
+            "weight"
+          ]
+        },
+        {
+          "document_id": "soft_full_figure_volume",
+          "score": 37.989294612575,
+          "matched_terms": [
+            "health",
+            "weight"
+          ]
+        },
+        {
+          "document_id": "oval_central_torso_silhouette_relation",
+          "score": 35.644880461121,
+          "matched_terms": [
+            "health",
+            "weight"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "document_id": "contrapposto_weight_shift",
+          "score": 20.356951004696,
+          "matched_terms": [
+            "weight"
+          ]
+        },
+        {
+          "document_id": "axial_bilateral_symmetry_relation",
+          "score": 19.114962933305,
+          "matched_terms": [
+            "weight"
+          ]
+        },
+        {
+          "document_id": "curvilinear_figure_relation",
+          "score": 18.508488724167,
+          "matched_terms": [
+            "weight"
+          ]
+        },
+        {
+          "document_id": "two_block_disconnected_cut",
+          "score": 17.934438237937,
+          "matched_terms": [
+            "weight"
+          ]
+        },
+        {
+          "document_id": "triangle_lower_body_dominant_relation",
+          "score": 16.481020124108,
+          "matched_terms": [
+            "weight"
+          ]
+        }
+      ]
+    },
+    {
+      "query_fields": {
+        "active_request": "fully clothed nonsexual"
+      },
+      "before": [
+        {
+          "document_id": "declared_minor_targeted_crime_relation",
+          "score": 22.803107804637,
+          "matched_terms": [
+            "nonsexual"
+          ]
+        },
+        {
+          "document_id": "composite_overwhelmed_expression",
+          "score": 21.267259074214,
+          "matched_terms": [
+            "clothed",
+            "fully"
+          ]
+        },
+        {
+          "document_id": "strategic_coverage_figure_study",
+          "score": 18.30654192188,
+          "matched_terms": [
+            "fully"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "document_id": "strategic_coverage_figure_study",
+          "score": 18.790264997445,
+          "matched_terms": [
+            "fully"
+          ]
+        },
+        {
+          "document_id": "fictional_human_remains_inert_dignity",
+          "score": 16.91107156341,
+          "matched_terms": [
+            "fully"
+          ]
+        },
+        {
+          "document_id": "face_pareidolia_embedded_nonface_pattern",
+          "score": 16.465060078331,
+          "matched_terms": [
+            "fully"
+          ]
+        },
+        {
+          "document_id": "ghost_ship_former_vessel_breach",
+          "score": 15.56013667602,
+          "matched_terms": [
+            "fully"
+          ]
+        },
+        {
+          "document_id": "eva_spacewalk_work_system",
+          "score": 15.072868417275,
+          "matched_terms": [
+            "fully"
+          ]
+        }
+      ]
+    }
+  ],
+  "mutation_results": [
+    {
+      "probe": "dangling_profile",
+      "status": "rejected",
+      "error": "candidate bundle earth_diver_first_land_creation references unknown visual profiles: ['audit_nonexistent_profile']"
+    },
+    {
+      "probe": "bundle_hash_binding",
+      "status": "pass"
+    },
+    {
+      "probe": "unknown_runtime_key",
+      "status": "rejected",
+      "error": "research extension has unsupported runtime keys: ['unrecognized_runtime_policy']"
+    }
+  ],
+  "public_semantic_examples": [
+    {
+      "slot": "light_type",
+      "entry_id": "lit_clean_large_soft_key_return",
+      "surface": {
+        "concept_units": [
+          "large soft key",
+          "reflector-like lower fill"
+        ],
+        "relations": [
+          {
+            "id": "fill_below_key",
+            "type": "below",
+            "subject": "fill",
+            "object": "key"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional"
+      }
+    },
+    {
+      "slot": "light_intensity",
+      "entry_id": "lit_clean_low_ratio_open_shadow",
+      "surface": {
+        "concept_units": [
+          "small key-fill brightness difference",
+          "retained facial shadow detail"
+        ],
+        "relations": [
+          {
+            "id": "key_fill_small_difference",
+            "type": "small_brightness_difference",
+            "subject": "key",
+            "object": "fill"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional"
+      }
+    },
+    {
+      "slot": "light_shape",
+      "entry_id": "lit_clean_vertical_catchlight_pair",
+      "surface": {
+        "concept_units": [
+          "vertical high-low catchlight pair"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ],
+        "adoption": "optional"
+      }
+    }
+  ],
+  "same_slot_exact_label_duplicates": [
+    {
+      "slot": "genre",
+      "label": "street photography",
+      "ids": [
+        "street",
+        "street_photography"
+      ]
+    }
+  ],
+  "source_files": [
+    {
+      "path": "skills/photo-prompt-image-generator/assets/concept_recipes.json",
+      "sha256": "8de3e32b6cd3022c3dae98d7f0ff1aaed7920032a265c67208e0ddbdbfa43a6c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_boundary_transition_extension.json",
+      "sha256": "0ebaa35472f22209aa69ac6d3f4bd5c6823e82d464ad34fee1e88e511cd282aa"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_character_moe_extension.json",
+      "sha256": "556af41df96a7cc88a4902fad3acad9903e7987094c5ea1b3297e85fd4284357"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_cjk_worldbuilding_extension.json",
+      "sha256": "70597d53dabb0523562cadb90682adcb685badb54a4cf83af76f23b8fe9d5c96"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_desire_extension.json",
+      "sha256": "f94853c626acb9bed64d27a3155d3dc44c4d5f03e3be6bfabbf0c7d3beb3df98"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_emotional_place_extension.json",
+      "sha256": "a42fdee55f06e514a6b96667ba97b1acc9095aed38bbdbaf6612dfb972449679"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_harem_extension.json",
+      "sha256": "2808f98c9e1fd438ee2058d9df8e5e40a47a564cfdbfdf22e7a6917591f9a527"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_imaginal_extension.json",
+      "sha256": "005d4602bd16aff437eb3b0218255144defd1a20db4d2c7790b93eca1792dd59"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_legend_extension.json",
+      "sha256": "a4427473a01f2311b8c61d06bf5d9b0b544c559e38a9c5128e1ad97d933194a4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_lighting_extension.json",
+      "sha256": "bcb945a9c904cfefccae90f2cef80f81be7e5a81dfe56096182fc4e13310ff9b"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_mythology_extension.json",
+      "sha256": "ac7799e81853dc4242747f17f5619e6fcaa53f9de32497439a08c61b5cea5499"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_natural_environment_extension.json",
+      "sha256": "98ec22aca12188f95fa87a0e69cd722c9089101c88873750efd4d19228f101ba"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_photo_era_extension.json",
+      "sha256": "954b58adb296dcb52f5a8b78425d505843798039d12d64f3fab4a1742d950c79"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_punk_aesthetics_extension.json",
+      "sha256": "4aea86649638ba147613a752ef19ecf3d0e93d6e48a8a8154188846ab03c9199"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json",
+      "sha256": "99597926d0f136bfabaf5f8be28597aae82f15bdbe8e3bfcfbbb774b3ac0541f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_reactorprompt_visual_relations_extension.json",
+      "sha256": "91ef383da9a14b81c33fd5b94b783cf20ae7b9edc92e08014bd63ea1563f41f0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_research_extension.json",
+      "sha256": "6627c23e1aa7dadfb1f33a815c0534e4c278d01839a01f874e6281244f942619"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_character_moe.json",
+      "sha256": "c34ed2a7bb6f7da82cc7c799281bb6e352d5dcf68fba5c413a713fd18c20e3a0"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_cjk.json",
+      "sha256": "efbeb9c5985267c26047c8f1be7fe49d0d7929ec7fe2e33f876eed35d48d37ef"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_extension.json",
+      "sha256": "b872ac633da410820c50e5c6d68469b996ed1c5dddffc98f61f414627d7e4e08"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_scene_expression_worldbuilding.json",
+      "sha256": "b24507532e50f9c3b4f877c3ef5532d606b9e767436bc559ccec36c348ee47cc"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "sha256": "ad87d3aafeff4a190643402a77803728c0ddddba5ecbe169a1ff435c05516a50"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_space_extension.json",
+      "sha256": "8aee362e4c538d5fc2bb52662e7f4d33fb819312f121878b07b756be7422a33f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_subculture_extension.json",
+      "sha256": "32976ff84dc7c6376dc415a9447ea07e5219d664da3920fd75b670c31fdd0c21"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "sha256": "30ece1938fe78f57abb9944196320528ddb8d79bfeb33a28bb03d89b729ae639"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_violence_crime_extension.json",
+      "sha256": "69eef9a5b197463029da35450d56bed56e4b2f08d4fb89a73780fda10ae19292"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "sha256": "29cc0da90b357e990a64f716654f6e3ec327fa60c344a82c813c0320cc4ba2fc"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photo_era.json",
+      "sha256": "5b3f9391e3e8a54dfaf82023c088ebd3def69bbeb0cf7adcd246a719124d4760"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_reactorprompt.json",
+      "sha256": "f296921fba0187d85570fb87d12d90db9b32c80e27ad1b06b81898a30e7154d5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "sha256": "9dd376df62a796c8e5018b95baabbdad937f786d09fec032982f852e967d162c"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_worldbuilding_extension.json",
+      "sha256": "d9e19203903003f03c3e78bf3ce7030995af1da5df3d93aad7142b2e64e59cc5"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/run_ledger.schema.json",
+      "sha256": "0cdf4d98f5fce0b2e6c7a53328fa7c0aa3948ead6f0e8dd44f96da39ba7594ab"
+    }
+  ]
+}

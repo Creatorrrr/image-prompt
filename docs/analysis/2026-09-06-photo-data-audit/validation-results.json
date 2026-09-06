@@ -1,0 +1,68 @@
+{
+  "git_head": "0330d8118398d9dabc6c11ba39fdb54a8d2e6235",
+  "scope": "maintenance diagnosis only; no runtime edits or generated images",
+  "checks": [
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py",
+      "exit_code": 0,
+      "output": "photo prompt dictionary metadata is valid",
+      "record_source": "captured tool result from this session"
+    },
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/build_visual_profile_index.py --check",
+      "exit_code": 0,
+      "output": "visual profile index ok: 354 profiles, 1758 exact terms",
+      "record_source": "captured tool result from this session"
+    },
+    {
+      "command": ".venv/bin/python skills/photo-prompt-image-generator/scripts/eval_semantic.py --check-index",
+      "exit_code": 0,
+      "result": {
+        "status": "ok",
+        "dictionary_hash": "7b892ae82b33f86d15c3c9cb64ffc6f45547cf5e7afd12b3e398584dce968c8a",
+        "policy_schema_version": 1,
+        "semantic_policy_hash": "e875c52bb3ad35e7",
+        "semantic_text_recipe": "semantic-text-v4",
+        "embedding_model": "gemini-embedding-2",
+        "embedding_dimensions": 768,
+        "entry_count": 8142
+      },
+      "record_source": "captured tool result from this session"
+    },
+    {
+      "entrypoint": "audit_scene_expression.build_inventory(recorded_at=\"2026-09-06\", current=True)",
+      "result_file": "scene-expression-summary.json",
+      "pass_count": 112,
+      "fail_count": 0
+    },
+    {
+      "command": ".venv/bin/python -m unittest tests.test_photo_bm25f_retrieval tests.test_photo_visual_profile_retrieval tests.test_photo_capture_elements_visual_semantics tests.test_photo_lighting_visual_semantics -v",
+      "exit_code": 1,
+      "tests_run": 36,
+      "passed": 35,
+      "errors": 1,
+      "failures": 0,
+      "elapsed_seconds": 247.748,
+      "log_file": "focused-tests.log",
+      "error_test": "tests.test_photo_visual_profile_retrieval.PhotoVisualProfileRetrievalTests.test_embedding_only_paraphrase_projects_optional_candidate_from_one_resolution",
+      "error": "ValueError: authorial core baseline_prompt_en must contain 48 to 640 English words; 360 is the recommended maximum",
+      "fixture_baseline_words": 31,
+      "minimum_required_words": 48,
+      "failure_stage": "fixture core normalization, before embedding retrieval assertion",
+      "fixture_was_modified": false
+    }
+  ],
+  "top_level_asset_json_snapshot_file_count": 32,
+  "changed_snapshot_files": [],
+  "existing_tracked_runtime_or_test_diff": [],
+  "full_test_suite": "not_run",
+  "image_generation": "not_run",
+  "pixel_validation": "not_run",
+  "api_calls_for_generation_or_embeddings": 0,
+  "documentation_checks": {
+    "invalid_local_links": [],
+    "trailing_whitespace": [],
+    "all_report_json_parsed": true,
+    "asset_hash_changes": []
+  }
+}

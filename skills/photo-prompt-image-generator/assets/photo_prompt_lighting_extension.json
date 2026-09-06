@@ -1,11 +1,9 @@
 {
   "schema_version": "photo-prompt-research-extension/v1",
-  "semantic_policy": {
-    "hard_activation": "Only narrow exact or context-complete visual-obligation phrases create hard lighting duties. Bare mood, genre, fixture, modifier, color-quality metric, and BM25F or embedding-only hits remain advisory.",
-    "visual_actuation": "A selected lighting cluster must remain coherent across lighting, direction, source type, relative intensity, light shape, color, and one grading or film finish. A postprocess look cannot replace a scene-light component.",
-    "claim_boundary": "Pixels may support visible direction, shadow-edge transfer, form modeling, source-owned color zones, highlight morphology, tonal distribution, and optical response. They do not establish fixture brand, wattage, exact lux, exact ratio, CCT, CRI, TLCI, SSI, SPD, lens model, film stock, or lab process.",
-    "reference_boundary": "A supplied portrait may guide only visible adult appearance, face and hair continuity, and requested framing. It never activates lighting meaning, personality, identity, protected traits, occupation, relationship, ethnicity, or nationality.",
-    "judgment_boundary": "Dictionary, index, routing, prompt, generation delivery, rendered pixels, and requesting-user judgment are separate evidence layers. Every hard gate must pass in the same frame; partial visibility is failure."
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "photo_prompt_lighting_extension",
+    "sha256": "13076c0346f15f99930a8192fdfdc9201ffe768036bde020c6a1f89a1074d769"
   },
   "visual_semantics": [
     {
@@ -37,6 +35,20 @@
         "lit_clean_vertical_catchlight_pair",
         "lit_clean_warm_neutral_balance",
         "lit_clean_beauty_tone_finish"
+      ],
+      "relations": [
+        {
+          "id": "key_above_return",
+          "type": "above",
+          "subject": "key",
+          "object": "lower return"
+        },
+        {
+          "id": "return_weaker_than_key",
+          "type": "weaker_than",
+          "subject": "lower return",
+          "object": "key"
+        }
       ]
     },
     {
@@ -80,7 +92,7 @@
         "Rembrandt key preserving a contained shadow-cheek triangle",
         "elevated off-axis side-front direction",
         "controlled directional source with limited spill",
-        "low fill that keeps the far eye readable and the shadow joined",
+        "low fill that keeps the shadow-side eye readable and the shadow joined",
         "joined nose-cheek shadow around a contained light triangle",
         "restrained warm-neutral color",
         "deep but detailed shadows with protected highlights"
@@ -400,7 +412,25 @@
           "clamshell",
           "beauty"
         ],
-        "embedding_text": "clean beauty light with an upper soft key and weaker lower return; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight"
+        "embedding_text": "clean beauty light with an upper soft key and weaker lower return; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "upper soft key",
+          "weaker lower return"
+        ],
+        "relations": [
+          {
+            "id": "key_above_return",
+            "type": "above",
+            "subject": "key",
+            "object": "lower return"
+          },
+          {
+            "id": "return_weaker_than_key",
+            "type": "weaker_than",
+            "subject": "lower return",
+            "object": "key"
+          }
+        ]
       },
       {
         "id": "lit_window_large_soft_source",
@@ -1046,7 +1076,19 @@
           "beauty",
           "clamshell"
         ],
-        "embedding_text": "large soft key with reflector-like lower fill; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight"
+        "embedding_text": "large soft key with reflector-like lower fill; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "large soft key",
+          "reflector-like lower fill"
+        ],
+        "relations": [
+          {
+            "id": "fill_below_key",
+            "type": "below",
+            "subject": "fill",
+            "object": "key"
+          }
+        ]
       },
       {
         "id": "lit_window_diffused_daylight_field",
@@ -1394,7 +1436,19 @@
           "beauty",
           "clamshell"
         ],
-        "embedding_text": "low key-fill difference with shadows still present; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight"
+        "embedding_text": "low key-fill difference with shadows still present; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "small key-fill brightness difference",
+          "retained facial shadow detail"
+        ],
+        "relations": [
+          {
+            "id": "key_fill_small_difference",
+            "type": "small_brightness_difference",
+            "subject": "key",
+            "object": "fill"
+          }
+        ]
       },
       {
         "id": "lit_window_open_shadow_falloff",
@@ -1427,7 +1481,7 @@
       {
         "id": "lit_rembrandt_low_fill_readable_eye",
         "ko": "먼 눈은 읽히고 그림자는 연결되는 낮은 필",
-        "en": "low fill that keeps the far eye readable and the shadow joined",
+        "en": "low fill that keeps the shadow-side eye readable and the shadow joined",
         "weight": 0.72,
         "tags": [
           "lighting_visual_semantics",
@@ -1439,7 +1493,7 @@
         ],
         "aliases": [
           "먼 눈은 읽히고 그림자는 연결되는 낮은 필",
-          "low fill that keeps the far eye readable and the shadow joined"
+          "low fill that keeps the shadow-side eye readable and the shadow joined"
         ],
         "keywords": [
           "lit",
@@ -1451,7 +1505,7 @@
           "studio",
           "drama"
         ],
-        "embedding_text": "low fill that keeps the far eye readable and the shadow joined; part of the rembrandt studio drama lighting cluster; remains source-owned and rejects generic side light, split half face, loop shadow"
+        "embedding_text": "low fill that keeps the shadow-side eye readable and the shadow joined; part of the rembrandt studio drama lighting cluster; remains source-owned and rejects generic side light, split half face, loop shadow"
       },
       {
         "id": "lit_editorial_high_local_contrast",
@@ -1741,7 +1795,18 @@
           "beauty",
           "clamshell"
         ],
-        "embedding_text": "vertical high-low catchlight evidence; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight"
+        "embedding_text": "vertical high-low catchlight evidence; part of the clean beauty clamshell lighting cluster; remains source-owned and rejects ring light disk, shadowless skin retouch, strong underlight",
+        "concept_units": [
+          "vertical high-low catchlight pair"
+        ],
+        "relations": [
+          {
+            "id": "catchlights_vertical_pair",
+            "type": "above",
+            "subject": "upper catchlight",
+            "object": "lower catchlight"
+          }
+        ]
       },
       {
         "id": "lit_window_broad_transition_rectangle",
