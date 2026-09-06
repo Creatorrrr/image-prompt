@@ -39,6 +39,11 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    import photo_candidate_semantics
+    from visual_profile_contracts import (
+        compile_visual_profile,
+        hard_activation_is_supported,
+    )
     from photo_contracts import (
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
@@ -76,6 +81,10 @@ try:
         REQUIRED_INTENT_LOCK_DIMENSIONS,
         SEMANTIC_ASSERTION_OBLIGATIONS_CONTRACT_VERSION,
         canonical_json_sha256,
+    )
+    from photo_visual_retrieval import (
+        positive_visual_profile_fields,
+        positive_visual_profile_text,
     )
     from bm25f_retrieval import (
         build_bm25f_index,
@@ -128,9 +137,9 @@ LLM_POLISH_MODES = ("off", "strict")
 SEMANTIC_PROVIDER = "gemini"
 DEFAULT_SEMANTIC_DIMENSIONS = 768
 SEMANTIC_MODEL_ID = "gemini-embedding-2"
-SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v4"
-SEMANTIC_BM25F_POLICY_VERSION = "photo-semantic-bm25f-policy/v2"
-VISUAL_PROFILE_BM25F_POLICY_VERSION = "photo-visual-profile-bm25f-policy/v1"
+SEMANTIC_TEXT_RECIPE_VERSION = "semantic-text-v5"
+SEMANTIC_BM25F_POLICY_VERSION = "photo-semantic-bm25f-policy/v3"
+VISUAL_PROFILE_BM25F_POLICY_VERSION = "photo-visual-profile-bm25f-policy/v2"
 GENERATOR_VERSION = "2026.06.0"
 LIKENESS_MODES = ("off", "inspired")
 QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
@@ -288,7 +297,7 @@ CREATIVE_AUGMENTATION_CONTRACT_VERSION = "photo-creative-augmentation/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_OBLIGATION_REGISTRY_SCHEMA_VERSION = "photo-visual-obligation-registry/v3"
 VISUAL_PROFILE_INDEX_SCHEMA_VERSION = "photo-visual-profile-index/v2"
-VISUAL_PROFILE_TEXT_RECIPE_VERSION = "photo-visual-profile-text/v1"
+VISUAL_PROFILE_TEXT_RECIPE_VERSION = "photo-visual-profile-text/v2"
 VISUAL_PROFILE_RESOLUTION_CONTRACT_VERSION = "photo-visual-profile-resolution/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -305,6 +314,7 @@ SEMANTIC_BM25F_POLICY: JsonDict = {
         "definition": {"weight": 3.0, "b": 0.65},
         "paraphrases": {"weight": 2.25, "b": 0.7},
         "semantic_relations": {"weight": 2.5, "b": 0.55},
+        "concept_units": {"weight": 2.0, "b": 0.55},
         "manifestations": {"weight": 0.75, "b": 0.7},
         "keywords": {"weight": 1.5, "b": 0.6},
         "slot_context": {"weight": 0.35, "b": 0.2},
@@ -1512,6 +1522,7 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
         raise ValueError(
             f"Unsupported research extension schema: {extension.get('schema_version')!r}"
         )
+    photo_candidate_semantics.validate_extension_keys(extension)
 
     def append_unique_id_entries(target: list[Any], additions: Any, label: str) -> None:
         incoming = additions if isinstance(additions, list) else []
@@ -1798,6 +1809,7 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
                 )
             target_policy[str(key)] = value
 
+    photo_candidate_semantics.compile_extension_bundles(data, extension)
     return data
 
 
@@ -2400,6 +2412,12 @@ def load_json(path: str | Path) -> JsonDict:
     with p.open("r", encoding="utf-8") as f:
         data = json.load(f)
     if p.name == "photo_prompt_tags.json":
+        candidate_policy = data.get("candidate_semantic_policy") or {}
+        photo_candidate_semantics.validate_semantic_policy(candidate_policy, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
+        required_extensions = candidate_policy.get("required_extensions") or []
+        missing_extensions = [name for name in required_extensions if not p.with_name(name).is_file()]
+        if missing_extensions:
+            raise ValueError(f"required candidate extensions are missing: {missing_extensions}")
         for extension_filename in RESEARCH_EXTENSION_FILENAMES:
             extension_path = p.with_name(extension_filename)
             if not extension_path.exists():
@@ -2408,6 +2426,10 @@ def load_json(path: str | Path) -> JsonDict:
                 extension = json.load(f)
             data = merge_research_extension(data, extension)
         validate_character_mechanism_graph(data)
+        photo_candidate_semantics.validate_candidate_entries(data, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
+        if data.get("candidate_bundles"):
+            registry = load_visual_obligation_registry(default_visual_obligation_registry_path(p))
+            photo_candidate_semantics.validate_bundle_references(data, registry.get("profiles") or [])
     return data
 
 
@@ -2500,6 +2522,7 @@ def load_visual_obligation_registry(path: str | Path) -> JsonDict:
             profiles.append(copy.deepcopy(profile))
             existing_ids.add(profile_id)
         payload["relation_contract_version"] = VISUAL_RELATION_CONTRACT_VERSION
+    payload["profiles"] = [compile_visual_profile(profile) for profile in profiles]
     return payload
 
 
@@ -2568,109 +2591,13 @@ def visual_profile_exact_term_rows(registry: JsonDict) -> List[JsonDict]:
 
 
 def visual_profile_semantic_text(profile: JsonDict) -> str:
-    """Create one positive semantic prototype without using control/exclusion prose."""
-
-    semantics = (
-        profile.get("semantics")
-        if isinstance(profile.get("semantics"), dict)
-        else {}
-    )
-    activation = (
-        profile.get("activation")
-        if isinstance(profile.get("activation"), dict)
-        else {}
-    )
-    concept = (
-        profile.get("concept_candidate")
-        if isinstance(profile.get("concept_candidate"), dict)
-        else {}
-    )
-    component_semantics = (
-        semantics.get("component_semantics")
-        if isinstance(semantics.get("component_semantics"), dict)
-        else {}
-    )
-    parts: List[str] = []
-
-    def add(value: Any) -> None:
-        text = clean_spaces(str(value or ""))
-        if text and text.casefold() not in {item.casefold() for item in parts}:
-            parts.append(text)
-
-    add(semantics.get("definition"))
-    add(profile.get("category"))
-    for field in ("paraphrase_examples", "visual_components"):
-        for value in semantics.get(field) or []:
-            add(value)
-    for group in component_semantics.get("groups") or []:
-        if not isinstance(group, dict):
-            continue
-        add(str(group.get("id") or "").replace("_", " "))
-        for value in group.get("any_terms") or []:
-            add(value)
-    for value in concept.get("concept_terms") or []:
-        add(value)
-    if not parts:
-        add(profile.get("composition_instruction"))
-    return " | ".join(parts)
+    """Create a positive prototype from the shared authored-field allowlist."""
+    return positive_visual_profile_text(profile)
 
 
 def visual_profile_bm25f_fields(profile: JsonDict) -> JsonDict:
-    """Project one authored visual profile into generic lexical fields."""
-
-    activation = (
-        profile.get("activation")
-        if isinstance(profile.get("activation"), dict)
-        else {}
-    )
-    semantics = (
-        profile.get("semantics")
-        if isinstance(profile.get("semantics"), dict)
-        else {}
-    )
-    component_semantics = (
-        semantics.get("component_semantics")
-        if isinstance(semantics.get("component_semantics"), dict)
-        else {}
-    )
-    concept = (
-        profile.get("concept_candidate")
-        if isinstance(profile.get("concept_candidate"), dict)
-        else {}
-    )
-    visual_components: List[str] = [
-        clean_spaces(str(value))
-        for value in semantics.get("visual_components") or []
-        if clean_spaces(str(value))
-    ]
-    for group in component_semantics.get("groups") or []:
-        if not isinstance(group, dict):
-            continue
-        visual_components.extend(
-            clean_spaces(str(value))
-            for value in group.get("any_terms") or []
-            if clean_spaces(str(value))
-        )
-    return {
-        "aliases": [
-            clean_spaces(str(value))
-            for field in ("exact_terms", "project_glossary_aliases")
-            for value in activation.get(field) or []
-            if clean_spaces(str(value))
-        ],
-        "definition": [clean_spaces(str(semantics.get("definition") or ""))],
-        "paraphrases": [
-            clean_spaces(str(value))
-            for value in semantics.get("paraphrase_examples") or []
-            if clean_spaces(str(value))
-        ],
-        "visual_components": visual_components,
-        "support_cues": [
-            clean_spaces(str(value))
-            for value in concept.get("concept_terms") or []
-            if clean_spaces(str(value))
-        ],
-    }
+    """Use the same positive meaning fields as vector retrieval."""
+    return positive_visual_profile_fields(profile)
 
 
 def visual_profile_bm25f_documents(registry: JsonDict) -> Dict[str, JsonDict]:
@@ -4161,7 +4088,7 @@ def candidate_pack_public_tags(data: JsonDict, entry: JsonDict) -> List[str]:
         lowered = tag.lower()
         if not tag or tag in private:
             continue
-        if any(marker in lowered for marker in ("provenance_scope", "moe_review")):
+        if photo_candidate_semantics.maintenance_tag(lowered):
             continue
         if lowered.startswith("character_") and lowered.endswith("_scene_atomic_scene"):
             continue
@@ -10740,6 +10667,7 @@ def resolve_visual_profile_hits(
         and str(row.get("source") or "") in trigger_sources
         and str(row.get("polarity") or "") != "excluded"
     ]
+    requesting_user_text = " ".join(str(row.get("text") or "") for row in trigger_rows)
     context_text = " ".join(
         str(row.get("text") or "")
         for row in source_rows
@@ -10809,13 +10737,23 @@ def resolve_visual_profile_hits(
             (profile.get("activation") or {}).get("requires_adult_character") is True
         )
         user_override = profile_id in user_override_ids
+        mechanism_supported = hard_activation_is_supported(
+            profile,
+            requesting_user_text,
+            matches=intent_alias_matches,
+            is_negated=candidate_pack_intent_term_is_negated,
+        )
         hard_eligible = bool(
-            not user_override and (not requires_adult or adult_context)
+            not user_override
+            and (not requires_adult or adult_context)
+            and mechanism_supported
         )
         if user_override:
             status = "user_definition_override"
         elif requires_adult and not adult_context:
             status = "requires_existing_adult_context"
+        elif not mechanism_supported:
+            status = "requires_explicit_mechanism"
         else:
             status = "required"
         hits.append(
@@ -10824,7 +10762,11 @@ def resolve_visual_profile_hits(
                 "match_basis": "exact",
                 "applicability_status": status,
                 "hard_eligible": hard_eligible,
-                "optional_eligible": False,
+                "optional_eligible": bool(
+                    not mechanism_supported
+                    and not user_override
+                    and (not requires_adult or adult_context)
+                ),
                 "source_intent_ids": [
                     str(item.get("source_intent_id") or "")
                     for item in matched_sources
@@ -12329,8 +12271,20 @@ def candidate_pack_auto_visual_concept_matches(
 ) -> Dict[str, List[JsonDict]]:
     """Return indirect concept eligibility; never return hard activation."""
 
-    matches: Dict[str, List[JsonDict]] = {}
-    hard_matches = candidate_pack_auto_visual_obligation_matches(registry, source_rows)
+    resolution = resolve_visual_profile_hits(registry, source_rows, adult_context=True)
+    matches: Dict[str, List[JsonDict]] = {
+        str(hit["profile_id"]): [
+            {**copy.deepcopy(source), "match_kind": "request_scoped_related_concept"}
+            for source in hit.get("source_records") or []
+        ]
+        for hit in resolution.get("hits") or []
+        if hit.get("optional_eligible") is True
+    }
+    hard_matches = {
+        str(hit["profile_id"])
+        for hit in resolution.get("hits") or []
+        if hit.get("hard_eligible") is True
+    }
     for profile in registry.get("profiles") or []:
         if not isinstance(profile, dict):
             continue
@@ -12354,7 +12308,7 @@ def candidate_pack_auto_visual_concept_matches(
                 }
             )
         if profile_matches:
-            matches[profile_id] = profile_matches
+            matches.setdefault(profile_id, []).extend(profile_matches)
     return matches
 
 
@@ -12465,9 +12419,17 @@ def candidate_pack_visual_profile_obligation(
     activation_source: str,
     source_intent_ids: Sequence[str],
     bindings: Optional[JsonDict] = None,
+    context_text: str = "",
+    request_text: str = "",
 ) -> JsonDict:
     """Materialize one profile into the same auditable obligation shape."""
 
+    profile = compile_visual_profile(
+        profile,
+        context_text=context_text,
+        request_text=request_text,
+        matches=intent_alias_matches,
+    )
     render_gates = [
         copy.deepcopy(gate)
         for gate in profile.get("render_gates") or []
@@ -12681,6 +12643,13 @@ def candidate_pack_visual_obligations(
                 if explicit is not None and isinstance(explicit.get("bindings"), dict)
                 else None
             ),
+            context_text=" ".join(str(row.get("text") or "") for row in source_rows),
+            request_text=" ".join(
+                str(row.get("text") or "") for row in source_rows
+                if str(row.get("source") or "") in {
+                    "concept_lock", "user_requirement", "additional_requirement", "intent"
+                }
+            ),
         )
         required_hard_gates.extend(
             str(gate.get("id") or "")
@@ -12801,6 +12770,13 @@ def candidate_pack_visual_concept_candidates(
             registry,
             activation_source="composer_opt_in",
             source_intent_ids=[],
+            context_text=" ".join(str(row.get("text") or "") for row in source_rows),
+            request_text=" ".join(
+                str(row.get("text") or "") for row in source_rows
+                if str(row.get("source") or "") in {
+                    "concept_lock", "user_requirement", "additional_requirement", "intent"
+                }
+            ),
         )
         candidates.append(
             {
@@ -16157,7 +16133,27 @@ def candidate_pack_project_v6(
     )
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
         raise ValueError("v6 candidate pack requires photo-authorial-core/v3")
+    semantic_sources: Dict[str, JsonDict] = {}
+
+    def capture_semantic_sources(value: Any) -> None:
+        if isinstance(value, list):
+            for item in value:
+                capture_semantic_sources(item)
+        elif isinstance(value, dict):
+            candidate_id = str(value.get("id") or value.get("candidate_id") or "")
+            source = value.pop("_v6_semantic_source", None)
+            if source is None and candidate_id and value.get("label_en"):
+                source = photo_candidate_semantics.semantic_source(value, str(value.get("slot") or ""))
+                if source:
+                    semantic_sources.setdefault(candidate_id, source)
+            elif candidate_id and source:
+                semantic_sources[candidate_id] = source
+            for item in value.values():
+                capture_semantic_sources(item)
+
+    capture_semantic_sources(projected)
     projected = candidate_pack_project_v5(projected, private_relevance)
+    photo_candidate_semantics.apply_public_semantics(projected, semantic_sources)
     intent_lock = core["intent_lock"]
     open_dimensions = copy.deepcopy(intent_lock["open_dimensions"])
     authorship_policy: JsonDict = {
@@ -16232,6 +16228,17 @@ def candidate_pack_project(pack: JsonDict, version: str) -> JsonDict:
         projected = candidate_pack_project_v5(projected, private_relevance)
     elif contract_version == CANDIDATE_PACK_CONTRACT_V6:
         projected = candidate_pack_project_v6(projected, private_relevance)
+    # This private source is carried only until modern projection. Old pack
+    # versions retain their established unordered-token public representation.
+    def remove_private_semantic_sources(value: Any) -> None:
+        if isinstance(value, dict):
+            value.pop("_v6_semantic_source", None)
+            for item in value.values():
+                remove_private_semantic_sources(item)
+        elif isinstance(value, list):
+            for item in value:
+                remove_private_semantic_sources(item)
+    remove_private_semantic_sources(projected)
     return candidate_pack_recompute_id(projected)
 
 
@@ -16300,6 +16307,66 @@ def candidate_pack_ensure_species_policy_candidates(
             candidate_entries[candidate["id"]] = ("slot", str(slot), source_entry)
             existing_ids.add(entry_id)
         payload["candidate_count"] = max(int(payload.get("candidate_count") or 0), len(candidates))
+
+
+def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict:
+    """Admit self-contained optional bundles without exposing sampler choices.
+
+    A bundle's internal dependencies may be satisfied by joint adoption. Any
+    prerequisite requiring an unproven external context fails closed. The same
+    calculation is run by the composition auditor from the frozen core and the
+    original dictionary snapshot, so an eligibility assertion is not authority.
+    """
+    core = pack.get("authorial_core") or {}
+    policy = (data.get("candidate_semantic_policy") or {}).get("joint_adoption") or {}
+    if not policy:
+        return photo_candidate_semantics.public_bundles(data, pack)
+    query, _ = authorial_core_retrieval_text(core)
+    query_tokens = candidate_pack_v5_relevance_tokens(query)
+    exclusions = [candidate_pack_v5_relevance_tokens(value) for value in core.get("user_exclusions") or []]
+    opened = set((core.get("intent_lock") or {}).get("open_dimensions") or [])
+    constraints = {
+        "subject_category": "generic", "preset_domains": [],
+        "adult_allowed": candidate_pack_visual_obligation_adult_context([{"text": query}], None),
+        "intent_constraints": authorial_core_generation_constraints(core),
+    }
+    admissions: JsonDict = {}
+    for bundle in data.get("candidate_bundles") or []:
+        members = bundle["member_candidates"]
+        dimensions = {dimension for member in members for dimension in member.get("affected_dimensions") or []}
+        if (len(members) > policy["maximum_members_per_bundle"]
+                or len({member["slot"] for member in members}) != len(members)
+                or any(not member.get("affected_dimensions") for member in members)
+                or not dimensions.issubset(opened)):
+            continue
+        units = [unit for member in members for unit in member.get("concept_units") or []]
+        tokens = candidate_pack_v5_relevance_tokens(" ".join(units))
+        if (len(tokens & query_tokens) < policy["minimum_shared_content_words"]
+                or not any(len(candidate_pack_v5_relevance_tokens(unit)) >= 2 and intent_alias_matches(query, unit) for unit in units)
+                or any(exclusion and exclusion.issubset(tokens) for exclusion in exclusions)):
+            continue
+        picked = {member["slot"]: candidate_pack_slot_entry_by_id(data, member["slot"], member["entry_id"]) for member in members}
+        if any(entry is None for entry in picked.values()):
+            continue
+        if any(
+            slot_block_reason(data, slot, constraints)
+            or entry_block_reason(entry, slot, constraints)
+            or not compatible_with_facet_guards(entry, {}, picked)
+            or not compatible_with_slot_context(slot, entry, picked, data)
+            for slot, entry in picked.items()
+        ):
+            continue
+        admissions[bundle["id"]] = {
+            "contract_version": "photo-candidate-joint-admission/v1",
+            "context_policy": policy["context_policy"],
+            "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+            "source_intent_lock_sha256": str((core.get("intent_lock") or {}).get("canonical_sha256") or ""),
+            "source_dictionary_sha256": dictionary_hash(data),
+            "source_quality_policy_sha256": canonical_json_sha256(candidate_pack_quality_layers(data)),
+            "all_member_guards_satisfied": True,
+            "external_context_assumed": False,
+        }
+    return photo_candidate_semantics.public_bundles(data, pack, admissions)
 
 
 def build_candidate_pack(
@@ -16690,6 +16757,13 @@ def build_candidate_pack(
         CANDIDATE_PACK_CONTRACT_V6,
     }:
         pack["_v5_candidate_relevance"] = candidate_pack_v5_private_relevance(pack)
+    if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6:
+        for slot, payload in (pack.get("slots") or {}).items():
+            for candidate in payload.get("candidates") or []:
+                entry = candidate_pack_slot_entry_by_id(data, slot, str(candidate.get("entry_id") or ""))
+                if entry:
+                    candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(entry, slot, data.get("candidate_semantic_policy"))
+        pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
     candidate_pack_recompute_id(pack)
     return candidate_pack_project(pack, candidate_pack_version)
 
@@ -16727,6 +16801,8 @@ def dictionary_hash(data: JsonDict) -> str:
         "slots": data.get("slots", {}),
         "facet_vocab": data.get("facet_vocab", {}),
         "character_mechanism_graph": data.get("character_mechanism_graph", {}),
+        "candidate_bundles": data.get("candidate_bundles", []),
+        "candidate_semantic_policy": data.get("candidate_semantic_policy", {}),
     }
     payload = json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
@@ -16826,6 +16902,14 @@ def semantic_axis_routed_families_for_slot(source: Optional[JsonDict], slot: str
 
 def semantic_relation_texts(entry: Entry) -> List[str]:
     texts: List[str] = []
+    for relation in entry.get("relations") or []:
+        if not isinstance(relation, dict):
+            continue
+        subject = clean_spaces(str(relation.get("subject") or ""))
+        relation_type = clean_spaces(str(relation.get("type") or "").replace("_", " "))
+        target = clean_spaces(str(relation.get("object") or ""))
+        if subject and relation_type and target:
+            texts.append(f"{subject} {relation_type} {target}")
     for relation in entry.get("required_relations") or []:
         if not isinstance(relation, dict):
             continue
@@ -16886,6 +16970,9 @@ def semantic_text_for_entry(
             parts.append(f"{key}: {', '.join(values)}.")
     if slot:
         parts.append(f"slot: {slot}.")
+    concept_units = normalize_list(entry.get("concept_units"))
+    if concept_units:
+        parts.append("visual concepts: " + "; ".join(concept_units) + ".")
     relations = semantic_relation_texts(entry)
     if relations:
         parts.append("semantic relations: " + "; ".join(relations) + ".")
@@ -16944,6 +17031,11 @@ def semantic_bm25f_fields_for_entry(
             if clean_spaces(str(value))
         ],
         "semantic_relations": semantic_relation_texts(entry),
+        "concept_units": [
+            clean_spaces(str(value))
+            for value in normalize_list(entry.get("concept_units"))
+            if clean_spaces(str(value))
+        ],
         "manifestations": [
             clean_spaces(str(value))
             for value in normalize_list(entry.get("manifestations"))

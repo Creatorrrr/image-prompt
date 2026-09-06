@@ -24,10 +24,12 @@ OPTIONAL_PATHS = (
     ("visual_concept_candidates", "candidates"),
     ("creative_augmentation", "candidates"),
     ("character_response", "advisory_retrieval", "candidates"),
+    ("candidate_bundles", "candidates"),
 )
 SUMMARY_FIELDS = (
     "concept_terms", "applicability", "conflicts_with", "affected_dimensions",
     "slot", "axis", "semantic_band", "hard_eligible", "semantic_consistency",
+    "concept_units", "relations", "adoption", "semantic_surface_version",
 )
 
 
@@ -126,7 +128,7 @@ def build_view(payload: Any, candidate_ids: list[str] | None = None) -> dict[str
             "mode": "composition_overview",
             **binding,
             "audit_input": "original_candidate_pack_only",
-            "selection_rule": "Read full details before selecting a deferred candidate. Every selected visual concept brings its entire opt-in obligation and render gates.",
+            "selection_rule": "Read full details before selecting a deferred candidate. Every selected visual concept brings its entire opt-in obligation and render gates." + (" A selected bundle requires all component and relation evidence; associated profile IDs remain advisory." if pack.get("candidate_bundles") else ""),
             "requirements": projection,
             "candidate_catalog": catalog,
         }

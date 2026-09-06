@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from visual_profile_contracts import compile_visual_profile, validate_hard_activation
+
 from prompt_generator import (
     DEFAULT_FACET_VOCAB,
     RESEARCH_EXTENSION_FILENAMES as TAXONOMY_EXTENSION_FILENAMES,
@@ -3073,6 +3075,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         "render_gates",
         "reject_substitutes",
         "visual_relation",
+        "authored_components",
     }
     for index, profile in enumerate(profiles):
         label = f"visual obligation registry.profiles[{index}]"
@@ -3088,6 +3091,11 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
         elif profile_id in profile_ids:
             errors.append(f"{label}.id: duplicate {profile_id}")
         profile_ids.add(profile_id)
+        if "authored_components" in profile:
+            try:
+                compile_visual_profile(profile)
+            except ValueError as exc:
+                errors.append(f"{label}.authored_components: {exc}")
         if not str(profile.get("category") or "").strip():
             errors.append(f"{label}.category: must be non-empty")
         if len(str(profile.get("composition_instruction") or "").split()) < 8:
@@ -3105,10 +3113,16 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                     "context_disambiguation",
                     "requires_adult_character",
                     "semantic_discovery_requires_component_evidence",
+                    "hard_activation",
                 }
             )
             if unknown_activation:
                 errors.append(f"{label}.activation: unknown keys {unknown_activation}")
+            if "hard_activation" in activation:
+                try:
+                    validate_hard_activation(activation["hard_activation"])
+                except ValueError as exc:
+                    errors.append(f"{label}.activation.hard_activation: {exc}")
             terms = normalize_list(activation.get("exact_terms"))
             if not terms or len({term.lower() for term in terms}) != len(terms):
                 errors.append(f"{label}.activation.exact_terms: must be non-empty and distinct")
@@ -3221,12 +3235,24 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                         "paraphrase_examples",
                         "contrast_examples",
                         "component_semantics",
+                        "claim_limits",
+                        "interpretation_scope",
                     }
                 )
                 if unknown_semantic_keys:
                     errors.append(
                         f"{label}.semantics: unknown keys {unknown_semantic_keys}"
                     )
+                if "claim_limits" in semantics:
+                    limits = normalize_list(semantics["claim_limits"])
+                    if not limits or len({value.casefold() for value in limits}) != len(limits):
+                        errors.append(f"{label}.semantics.claim_limits: must be non-empty and distinct")
+                if "interpretation_scope" in semantics:
+                    scope = semantics["interpretation_scope"]
+                    if not isinstance(scope, dict) or set(scope) != {"kind", "description"}:
+                        errors.append(f"{label}.semantics.interpretation_scope: requires kind and description")
+                    elif scope["kind"] not in {"project_visual_interpretation", "observable_relation"} or not str(scope["description"]).strip():
+                        errors.append(f"{label}.semantics.interpretation_scope: invalid kind or description")
                 if len(str(semantics.get("definition") or "").split()) < 8:
                     errors.append(f"{label}.semantics.definition: must be concrete")
                 for semantic_key in ("paraphrase_examples", "contrast_examples"):
@@ -3552,9 +3578,7 @@ def main() -> int:
     parser.add_argument("--skill-doc", default=Path(__file__).resolve().parents[1] / "SKILL.md")
     args = parser.parse_args()
 
-    data = load_json(args.tags)
     errors: list[str] = []
-    vocab = merged_facet_vocab(data)
 
     tags_path = Path(args.tags)
     runtime_asset_paths = [tags_path] + [
@@ -3562,6 +3586,15 @@ def main() -> int:
     ]
     validate_runtime_process_metadata(runtime_asset_paths, errors)
     validate_retired_runtime_metadata(runtime_asset_paths, errors)
+
+    try:
+        data = load_json(args.tags)
+    except (OSError, ValueError) as exc:
+        errors.append(f"{tags_path.name}: cannot load dictionary: {exc}")
+        for error in errors:
+            print(error, file=sys.stderr)
+        return 1
+    vocab = merged_facet_vocab(data)
 
     validate_filter_ids(data, errors)
     validate_selection_contracts(data, errors)

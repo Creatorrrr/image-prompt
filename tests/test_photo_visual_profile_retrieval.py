@@ -63,7 +63,10 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
                 "baseline_prompt_en": (
                     "A self-possessed adult woman stands in a quiet neutral fashion studio, "
                     "keeping her legs close while a narrow pocket of background between the "
-                    "actual upper inner-thigh contours becomes deliberate focal geometry."
+                    "actual upper inner-thigh contours becomes deliberate focal geometry. "
+                    "Soft side lighting separates the visible leg contours from the neutral "
+                    "background, while an eye-level camera preserves natural proportions and "
+                    "keeps the silhouette clearly readable in a composed editorial photograph."
                 ),
                 "user_definitions": [],
                 "interpretation_provenance": [
@@ -459,7 +462,7 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
         eligible_rows = [
             {
                 "source": "concept_lock",
-                "text": "성인 고스로리 멘헤라 캐릭터 사진",
+                "text": "성인 고스로리 멘헤라 캐릭터의 contained affect leak 사진",
                 "polarity": "required",
             },
             {
@@ -671,11 +674,11 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
     def test_role_and_garment_exact_terms_require_their_visual_context(self):
         positives = {
             "aircraft_pilot_operation": (
-                "파일럿",
+                "비행 전 점검 중인 파일럿",
                 "adult aircraft pilot in an aircraft cockpit with flight controls, instrument panel, and runway state",
             ),
             "cabin_crew_safety_role": (
-                "스튜어디스",
+                "비상 장비를 점검하는 스튜어디스",
                 "adult cabin crew in an aircraft cabin performing a cabin-safety check at the emergency exit",
             ),
             "school_uniform_institutional_system": (

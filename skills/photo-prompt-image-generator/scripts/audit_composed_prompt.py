@@ -18,6 +18,8 @@ _SCRIPTS_IMPORT_DIR_ADDED = _SCRIPTS_IMPORT_DIR not in sys.path
 if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
+    import photo_candidate_semantics
+    import prompt_generator as candidate_semantics_generator
     from photo_contracts import (
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
@@ -782,6 +784,9 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
     for candidate in creative_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
             ids.add(str(candidate["id"]))
+    for candidate in (pack.get("candidate_bundles") or {}).get("candidates") or []:
+        if isinstance(candidate, dict) and candidate.get("id"):
+            ids.add(str(candidate["id"]))
     return ids
 
 
@@ -858,6 +863,9 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
             candidates[str(candidate["id"])] = candidate
     for candidate in creative_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
+            candidates[str(candidate["id"])] = candidate
+    for candidate in (pack.get("candidate_bundles") or {}).get("candidates") or []:
+        if isinstance(candidate, dict) and candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
     return candidates
 
@@ -5400,6 +5408,108 @@ def audit_japanese_subculture_photo(
     return failures
 
 
+def audit_candidate_semantic_contracts(
+    pack: dict[str, Any], prompt_en: str, chosen: set[str],
+    candidates: dict[str, dict[str, Any]], interpretations: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Bind optional semantic units to full adopted component/relationship evidence."""
+    version = pack.get("candidate_semantic_surface_version")
+    bundles = pack.get("candidate_bundles")
+    if version is None and bundles is None:
+        return []  # Immutable legacy v4/v5/v6 surfaces retain their contract.
+    failures: list[dict[str, Any]] = []
+
+    def fail(candidate_id: str, reason: str) -> None:
+        failures.append({"check": "candidate_semantic_contract", "candidate_id": candidate_id, "reason": reason})
+
+    if pack.get("contract_version") != "photo-candidate-pack/v6" or version != photo_candidate_semantics.SURFACE_VERSION:
+        fail("", "semantic-unit candidates require the declared modern v6 surface version")
+        return failures
+    if not isinstance(bundles, dict) or bundles.get("contract_version") != photo_candidate_semantics.BUNDLE_VERSION or bundles.get("adoption") != "optional" or bundles.get("candidate_order") != "seed_shuffled_non_preferential":
+        fail("", "candidate bundles require their versioned optional non-ranked contract")
+        return failures
+    # Load from this auditor's skill snapshot, never a path asserted by a pack.
+    # Recompute admission instead of trusting its published hash or booleans.
+    try:
+        assets = Path(__file__).resolve().parents[1] / "assets"
+        source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
+        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = candidate_semantics_generator.load_quality_layers(assets / "photo_prompt_quality_layers.json")
+        expected_bundles = candidate_semantics_generator.candidate_pack_candidate_bundles(source_data, pack)
+        if bundles != expected_bundles:
+            fail("", "candidate bundle contents or joint admission differ from the same source snapshot and frozen core")
+    except (OSError, TypeError, ValueError, KeyError) as exc:
+        fail("", f"candidate bundle source recomputation failed: {exc}")
+    open_dimensions = set(((pack.get("authorial_core") or {}).get("intent_lock") or {}).get("open_dimensions") or [])
+    ordinary = {str(row.get("id") or ""): row for payload in (pack.get("slots") or {}).values()
+                for row in payload.get("candidates") or [] if isinstance(row, dict)}
+    bundle_rows = bundles.get("candidates") or []
+    bundle_ids = [str(row.get("id") or "") for row in bundle_rows if isinstance(row, dict)]
+    if len(bundle_ids) != len(bundle_rows) or len(bundle_ids) != len(set(bundle_ids)):
+        fail("", "candidate bundles require unique object IDs")
+    for bundle in bundle_rows:
+        if not isinstance(bundle, dict):
+            continue
+        candidate_id = str(bundle.get("id") or "")
+        if (bundle.get("source_contract_sha256") != photo_candidate_semantics.digest(photo_candidate_semantics.bundle_source_material(bundle))
+                or bundle.get("adoption") != "optional"
+                or bundle.get("profile_activation") != "independent_request_evidence_only"
+                or (bundle.get("selection_contract") or {}).get("associated_profiles_are_not_promoted") is not True):
+            fail(candidate_id, "bundle source contract changed or associated profiles acquired automatic authority")
+        members = bundle.get("member_candidates") or []
+        member_ids = {str(member.get("id") or "") for member in members if isinstance(member, dict)}
+        dimensions = {dimension for member in members if isinstance(member, dict) for dimension in member.get("affected_dimensions") or []}
+        joint_admission = bundle.get("joint_admission")
+        if (len(member_ids) != len(members) or not member_ids
+                or any(not member.get("affected_dimensions") for member in members)
+                or dimensions != set(bundle.get("affected_dimensions") or [])
+                or not dimensions.issubset(open_dimensions)
+                or (not joint_admission and (not member_ids.issubset(ordinary) or any((ordinary.get(member_id, {}).get("applicability") or {}).get("status") != "eligible" for member_id in member_ids)))
+                or any(member_ids.intersection(ordinary.get(member_id, {}).get("conflicts_with") or []) for member_id in member_ids)):
+            fail(candidate_id, "all bundle members must remain individually eligible, conflict-free and scoped to open dimensions")
+        components = bundle.get("components") or []
+        component_ids = [str(component.get("id") or "") for component in components if isinstance(component, dict)]
+        if (not components or len(component_ids) != len(components) or len(component_ids) != len(set(component_ids))
+                or any(not component.get("concept_units") or component.get("minimum_realizations") != 1 for component in components)):
+            fail(candidate_id, "bundle component groups must retain every authored alternative group")
+        inherited_conflicts = {conflict for member_id in member_ids for conflict in ordinary.get(member_id, {}).get("conflicts_with") or []}
+        if inherited_conflicts != set(bundle.get("conflicts_with") or []):
+            fail(candidate_id, "bundle must preserve every member conflict")
+        if candidate_id in chosen:
+            expanded_chosen = set(chosen)
+            for other in bundle_rows:
+                if isinstance(other, dict) and other.get("id") in chosen:
+                    expanded_chosen.update(member["id"] for member in other.get("member_candidates") or [])
+            if inherited_conflicts.intersection(expanded_chosen):
+                fail(candidate_id, "selected bundle conflicts with another selected candidate or bundle member")
+
+    by_id = {str(row.get("candidate_id") or ""): row for row in interpretations}
+    for candidate_id, candidate in candidates.items():
+        if candidate.get("semantic_surface_version") != photo_candidate_semantics.SURFACE_VERSION:
+            continue
+        if not candidate.get("concept_units") or candidate.get("concept_terms") != candidate.get("concept_units") or candidate.get("adoption") != "optional":
+            fail(candidate_id, "semantic-unit candidates must preserve their unordered authored units and optional adoption")
+        relations = candidate.get("relations") or []
+        relation_ids = [str(relation.get("id") or "") for relation in relations if isinstance(relation, dict)]
+        if (len(relation_ids) != len(relations) or len(relation_ids) != len(set(relation_ids))
+                or any(not all(str(relation.get(key) or "").strip() for key in ("id", "type", "subject", "object")) for relation in relations)):
+            fail(candidate_id, "candidate relations require unique IDs and explicit direction, subject and object")
+        if candidate_id not in chosen:
+            continue
+        interpretation = by_id.get(candidate_id, {})
+        for field, expected_ids in (
+            ("component_evidence", {str(component["id"]) for component in candidate.get("components") or []}),
+            ("relation_evidence", set(relation_ids)),
+        ):
+            evidence = interpretation.get(field)
+            if not expected_ids and evidence is None:
+                continue
+            if (not isinstance(evidence, dict) or set(evidence) != expected_ids
+                    or any(not isinstance(value, str) or not value.strip() or not text_contains_term(prompt_en, value)
+                           for value in evidence.values())):
+                fail(candidate_id, f"{field} must cover the entire selected contract with literal final-prompt phrases")
+    return failures
+
+
 def audit_candidate_interpretations(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -5441,6 +5551,9 @@ def audit_candidate_interpretations(
     ]
     row_ids = [str(row.get("candidate_id") or "") for row in rows]
     failures: list[dict[str, Any]] = []
+    semantic_evidence_rows = rows + [row for row in augmentation_brief.get("decisions") or []
+                                     if isinstance(row, dict) and row.get("decision") == "transformed"]
+    failures.extend(audit_candidate_semantic_contracts(pack, prompt_en, chosen, candidate_objects, semantic_evidence_rows))
     if len(row_ids) != len(set(row_ids)):
         failures.append(
             {

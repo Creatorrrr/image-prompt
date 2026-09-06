@@ -40,6 +40,17 @@ PROFILE_ROUTES = {
 
 PROFILE_IDS = set(PROFILE_ROUTES.values())
 
+REQUESTED_PROCEDURES = {
+    "clinical_nursing_duty_system": "성인 간호사가 환자 식별 정보를 확인하고 활력 징후를 확인한다",
+    "police_public_safety_duty_system": "성인 경찰관이 보행자 동선을 지시하며 교통 통제를 한다",
+    "firefighter_protective_response_system": "성인 소방관이 공기호흡기를 점검하고 호스를 연결한다",
+    "emergency_medical_transport_system": "성인 응급구조사가 환자 평가 후 들것 고정 장치를 체결한다",
+    "maritime_safety_coast_guard_role": "성인 해양경찰이 구조 로프를 풀어 수면의 구조 대상에게 연결한다",
+    "rail_driver_operation": "성인 철도 기관사가 제동 점검 후 열차를 출발시킨다",
+    "rail_platform_dispatch_operation": "성인 플랫폼 역무원이 출입문 안전 확인 후 발차 신호를 보낸다",
+    "private_security_access_control": "성인 보안요원이 방문자 신분증을 대조하고 출입 승인 판단을 한다",
+}
+
 EXPECTED_BY_SLOT = {
     "costume_style": {
         "clinical_nursing_scrub_duty_system",
@@ -184,6 +195,10 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
         cls.profiles = {
             str(profile["id"]): profile for profile in cls.registry["profiles"]
         }
+        cls.role_registry = {
+            **cls.registry,
+            "profiles": [p for p in cls.registry["profiles"] if p["id"] in PROFILE_IDS],
+        }
         cls.by_slot = {
             slot: {str(row["id"]): row for row in rows}
             for slot, rows in cls.tags["slots"].items()
@@ -193,7 +208,7 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
     def hard_visual_matches(self, text: str) -> set[str]:
         return set(
             prompt_generator.candidate_pack_auto_visual_obligation_matches(
-                self.registry,
+                self.role_registry,
                 [
                     {
                         "source": "concept_lock",
@@ -241,11 +256,20 @@ class WomensProfessionalUniformVisualSemanticsTests(unittest.TestCase):
                 gate_ids.extend(str(gate["id"]) for gate in profile["render_gates"])
         self.assertEqual(len(gate_ids), len(set(gate_ids)))
 
-    def test_direct_professional_terms_route_to_only_the_intended_new_profile(self):
+    def test_professional_names_are_advisory_and_requested_procedures_are_hard(self):
         for term, profile_id in PROFILE_ROUTES.items():
             with self.subTest(term=term):
                 self.assertEqual(
                     self.hard_visual_matches(term) & PROFILE_IDS,
+                    set(),
+                )
+                related = prompt_generator.candidate_pack_auto_visual_concept_matches(
+                    self.role_registry,
+                    [{"source": "concept_lock", "text": term, "polarity": "required"}],
+                )
+                self.assertIn(profile_id, related)
+                self.assertEqual(
+                    self.hard_visual_matches(REQUESTED_PROCEDURES[profile_id]) & PROFILE_IDS,
                     {profile_id},
                 )
 

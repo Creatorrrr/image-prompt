@@ -156,6 +156,26 @@ Rules:
 - A fidelity complaint about a meaningful interactive prop is not permission to remove, relocate, conceal, or transfer it. On such a retry, use `photo-request-lineage/v2` and one object-agnostic `repair_targets` row. Freeze actor, object, interaction state, expected contact, protected locked dimensions, positive interaction and recognition phrases, and only the local repair axes that may change. Use `relation_origin: parent_preserved` when the parent relation remains intended and `relation_origin: requester_corrected` when the requester explicitly corrects an evasive parent relation. Bind both phrases through one required action assertion in the baseline. Decorative background objects and non-action-bearing ornaments do not need repair targets.
 - Every multi-arm run shares the immutable raw requester text but freezes a separate, exact-span-bound envelope and core for each arm before any arm sees project-local data.
 
+### Neutral assertion wire shape
+
+The following is schema information only; every value and evidence phrase is authored independently before retrieval.
+
+```json
+{
+  "assertion_id": "<unique alphanumeric, underscore or hyphen ID; at most 64 characters>",
+  "dimension": "<one v3 dimension>",
+  "polarity": "required | advisory | excluded",
+  "source_span_ids": ["<active envelope span ID>"],
+  "affected_dimensions": ["<v3 dimension governed by this assertion>"],
+  "axes": {"<lowercase_snake_case axis>": "<authored value or list of values>"},
+  "evidence": {"<lowercase_snake_case evidence key>": "<literal baseline phrase>"}
+}
+```
+
+There are at most 16 assertions, 1–16 axes per assertion, at most 8 distinct values per axis, and at most 16 evidence fields. Required assertions have at least one evidence phrase, each with at least two content words. Values are strings or string lists; evidence values are strings. A required `character_response` uses the seven axes and nine evidence keys listed above, exactly one `primary_action`, and a one-item list for `affect_leak_channels`.
+
+Only `character_response` may add `relations`, a list of 1–8 objects with exactly one of these shapes: `{"operator":"same_target","members":["<member>","relationship_target"]}`, `{"operator":"contrasts","left":"<member>","right":"<member>"}`, or `{"operator":"temporal_order","first":"<member>","then":"<member>"}`. Members are `actor`, `baseline`, `surface_affect`, `underlying_affiliation`, `relationship_target`, `target`, `primary_action`, `affect_leak`, `affect_leak_timing`, `trigger`, `visible_response`, `immediate_consequence`, `continuity`, or `event_phase`. Use distinct members and no duplicate relations. Non-character assertions omit `relations`; they may describe their observable relations through authored axes and literal evidence.
+
 ### Negative-intent firewall
 
 Write `baseline_prompt_en` as positive visual realization. Do not embed instruction-shaped blanket negatives such as `No X, Y, or Z`, `Do not ...`, `Avoid ...`, `Exclude ...`, or clauses such as `never touching anyone`. These clauses can silently delete the requested relationship, action, emotion, prop, person count, wardrobe, or genre signal. The modern core normalizer rejects them before the core can be frozen.
@@ -202,7 +222,7 @@ Read the compact composition view before loading full optional candidate details
   --pack candidate_pack.json --output composer_view.json
 ```
 
-The view binds the unchanged source pack and presents requirements plus a candidate catalog. Use repeatable `--candidate-id <id>` to read full details for candidates under consideration. Review every mandatory requirement, retrieve a selected candidate's complete constraints before using it, and keep the original pack as the audit input. The view is a reading aid, not a replacement or mutable pack.
+The view binds the unchanged source pack and presents requirements plus a candidate catalog. Use repeatable `--candidate-id <id>` to read full details for candidates under consideration. Review every mandatory requirement, retrieve a selected candidate's complete constraints before using it, and keep the original pack as the audit input. The view is a reading aid, not a replacement or mutable pack. Modern v6 semantic surfaces preserve short `concept_units` and directed `relations`; keep each unit intact when interpreting its meaning. Selecting a relational candidate requires literal `relation_evidence`, and selecting an optional bundle also requires `component_evidence` for every component. Read the complete selection contract in the detail view and `references/composition-contract.md`. Bundle members form one joint choice; their associated profile IDs never acquire automatic hard authority.
 
 ### Optional post-core visual intent
 

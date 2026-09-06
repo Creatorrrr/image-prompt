@@ -1132,7 +1132,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             "definition_only",
         )
         self.assertIn(
-            "syringe_weapon_blood_or_red_light_only",
+            "role_prop_or_styling_only",
             obligation["reject_substitutes"],
         )
 

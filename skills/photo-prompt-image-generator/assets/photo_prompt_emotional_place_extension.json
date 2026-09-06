@@ -1,12 +1,6 @@
 {
   "schema_version": "photo-prompt-research-extension/v1",
-  "semantic_policy": {
-    "hard_activation": "Only narrow context-complete relation phrases in the visual-obligation registry create hard duties. Broad labels such as cafe aesthetic, alley mood, exhibition vibe, rooftop mood, station aesthetic, industrial aesthetic, or hanok aesthetic remain candidate-only.",
-    "visual_actuation": "A selected emotional-place relation must remain an observable same-frame structure: physical place anchor, human or object action, depth or source geometry, and an immediate material or state consequence. A location label, color grade, bokeh, costume, or generic mood alone is never evidence.",
-    "claim_boundary": "Pixels may support only visible architecture, path continuity, surface state, light ownership, viewing or browsing direction, transit state, retained material junctions, and inside-outside topology. They do not establish identity, ethnicity, nationality, social class, ownership, relationship, authenticity, historicity, destination, or personal memory.",
-    "reference_boundary": "A supplied portrait may guide only observable adult appearance, face proportions, hair, wardrobe, and framing. It never supplies identity, protected traits, personal history, cultural membership, or a place connection.",
-    "judgment_boundary": "Registry, routing, prompt, and request audits prove only data binding. A rendered arm passes only when all five profile gates are simultaneously visible; partial visibility is failure, and requesting-user judgment remains separate."
-  },
+  "maintenance_ref": {"contract_version": "photo-extension-maintenance-ref/v1", "record_id": "photo_prompt_emotional_place_extension", "sha256": "669218a80142e6cc93c4af9b3a21a8e30514fcb510763505b2916b92ff80ccac"},
   "visual_semantics": [
     {
       "id": "window_seat_daylight_activity_relation",
@@ -34,6 +28,7 @@
     },
     {
       "id": "wet_surface_light_reflection_owner_relation",
+      "candidate_slots": {"neon": "lighting"},
       "primary_visual_proposition": "A visibly wet surface receives a geometrically aligned reflection from an in-frame owner, with an occluding interruption and a wet-dry boundary.",
       "hard_profile_ids": ["wet_surface_light_reflection_owner_relation"],
       "component_groups": ["wet surface state", "visible reflection owner", "aligned reflection", "reflection interruption", "wet-dry boundary"],

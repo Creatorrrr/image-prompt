@@ -331,9 +331,11 @@ class PhotoSpaceVisualSemanticsTests(unittest.TestCase):
         self.assertEqual(set(bound_candidate_ids), all_candidate_ids)
 
     def test_representation_modes_keep_observation_and_concept_claims_separate(self):
+        reference = self.extension["maintenance_ref"]
+        maintenance = json.loads((ROOT / "docs" / "research-evidence" / "photo-prompt" / "extension-maintenance" / (reference["record_id"] + ".json")).read_text())
         modes = {
             str(row["id"]): str(row["meaning"])
-            for row in self.extension["representation_modes"]
+            for row in maintenance["maintenance_only"]["representation_modes"]
         }
         self.assertEqual(
             set(modes),
