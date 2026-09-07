@@ -1,0 +1,198 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "c3f35a8525ddf85b9e023cc6ae99579b7132f302",
+    "candidate_revision": "working-tree:c3f35a8:deaff6666788df129266868fdf5a81cc70746f2fb34494023ca0026d3052faae"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "가난 관련어 리서치의 관찰 가능한 관계를 시각 의미 데이터와 후보팩에 반영하고, 첨부 성인 외형 참조를 활용한 서로 다른 무작위 복합 컨셉 세 개를 독립 서브에이전트에서 한 번씩 생성해 실제 픽셀 반영을 검증한다."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "공식 정의와 재현 윤리 자료를 근거로 빈곤을 사람의 외모가 아니라 자원, 서비스, 접근, 선택, 대응 행동과 즉시 결과의 관계로 분해했고 broad 명칭, 신체 표지, 고정관념적 장소와 단일 소품은 hard evidence에서 제외했다.",
+      "artifact": "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/report-source.md; candidate-data-proposal.json; evidence.jsonl; routing-regression-proposal.jsonl"
+    },
+    {
+      "id": "e-reference-boundary",
+      "kind": "source-observation",
+      "claim": "첨부 사진에서는 명백한 성인으로 보이는 가상 인물의 긴 어두운 부드러운 웨이브 헤어, 부드럽게 좁아지는 타원형 얼굴, 자연스러운 직선 눈썹, 갈색 눈과 침착한 중립 표정만 참고했고 동일인 여부나 경제상태를 포함한 민감·비시각 속성을 추론하지 않았다.",
+      "artifact": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg sha256=3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "9개 P0 시각 관계 프로필, 45개 component-owned hard gate, 6개 slot의 advisory 후보 54개와 9개 optional bundle projection을 런타임에 통합했다. 프로필은 4개 exact event term만 hard route로 허용하고 broad terms와 BM25F/embedding은 advisory로 유지한다. P1 digital 프로필과 7개 duration-sensitive 또는 specialist bundle은 보류했다.",
+      "artifact": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json; photo_prompt_poverty_extension.json; docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_poverty_extension.json"
+    },
+    {
+      "id": "e-index-and-routing",
+      "kind": "measurement",
+      "claim": "사전 메타데이터 검증과 visual index check가 통과했고 생성 인덱스는 363 profiles, 1794 exact terms, semantic index 8196 entries, 16 shards다. 신규 34개 exact, broad, negative routing case와 후보 54개 전부의 BM25F 및 semantic-index 노출이 통과했다.",
+      "artifact": "tests/test_photo_poverty_visual_semantics.py; tests/fixtures/photo_prompt/poverty_visual_obligation_routing_v1.jsonl; validate_photo_prompt_dictionary.py PASS; build_visual_profile_index.py --check PASS; test_photo_poverty_visual_semantics Ran 13 tests OK"
+    },
+    {
+      "id": "e-focused-regression",
+      "kind": "measurement",
+      "claim": "신규 전용 13개 테스트, 기존 candidate semantic 13개 테스트, BM25F, composer view, run manifest 14개 테스트와 visual-profile retrieval 13개 테스트가 모두 통과했다. 느린 전체 visual-obligation fixture 실행은 기존 yandere routing 충돌 5건을 재관찰한 뒤 중단했으므로 full-suite PASS는 주장하지 않는다.",
+      "artifact": ".venv/bin/python -m unittest -v tests.test_photo_poverty_visual_semantics => 13 OK; tests.test_photo_candidate_semantics => 13 OK; tests.test_photo_bm25f_retrieval tests.test_photo_composer_view tests.test_photo_run_manifest => 14 OK; tests.test_photo_visual_profile_retrieval => 13 OK"
+    },
+    {
+      "id": "e-independent-protocol",
+      "kind": "measurement",
+      "claim": "시스템 엔트로피에서 9개 P0 중 난방비 대응, 근로소득과 필수비용 격차, 교통비 접근장벽을 중복 없이 추출했고 서로 다른 세 seed, 별도 frozen request/core/pack/view와 정확히 한 번의 이미지 호출, 재시도와 fallback 0, cross-arm input 금지를 고정했다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/test-protocol.json"
+    },
+    {
+      "id": "e-prompt-runtime",
+      "kind": "prompt-evaluation",
+      "claim": "세 arm 모두 target visual-concept 후보만 선택하고 관련 없는 kuudere 후보와 creative augmentation을 거절했으며 composed prompt audit와 exact runtime request audit를 통과했다. 최종 원장 한 행의 prompt bytes, prompt id, image hash, reference hash와 manifest가 runtime request 및 실제 파일과 일치한다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/arm-a-energy; arm-b-working-income; arm-c-transport"
+    },
+    {
+      "id": "e-generation",
+      "kind": "generation-outcome",
+      "claim": "세 독립 서브에이전트는 동일 외형 참조를 실제 native reference mechanism으로 첨부해 image_gen을 각 1회 호출했고 세 결과를 모두 repo-local final.png로 저장했다. 총 호출 3, 전달 3, 재시도 0, API fallback 0이다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/*/image_runs.ndjson; */run_manifest.json"
+    },
+    {
+      "id": "e-render-energy",
+      "kind": "render-observation",
+      "claim": "난방 arm은 점유 주거, 온전하지만 비활성 라디에이터, 0.00 meter와 utility-token 자원 단서, 창 단열 행동과 단일 활동 구역, 공간 전체의 차가운 결과가 같은 이미지에 보여 5/5 PASS다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/arm-a-energy/final.png sha256=64949577d93ff4bc7748a4fb990495ee193ed5d3d4601c09601f645c4a57f973; arm-a-energy/moe_render_review.json"
+    },
+    {
+      "id": "e-render-income",
+      "kind": "render-observation",
+      "claim": "근로소득 arm은 완료 노동, 동일 성인의 보상, 세 필수비용 앵커와 배분 행동은 보였지만 지폐가 상당량 남아 보상 소진을 입증하지 못해 4/5 FAIL이다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/arm-b-working-income/final.png sha256=a3dfc3644d9c1f2da4c85165840e3a905c5ce8c86c244a4276bfd3ab124516f0; arm-b-working-income/render-review.json"
+    },
+    {
+      "id": "e-render-transport",
+      "kind": "render-observation",
+      "claim": "교통 arm은 운영 경계와 노선, 경계의 요금 부족, 중단된 진입과 닫힌 gate 결과는 보였지만 일반 가방만으로 필수 이동 목적을 구별하지 못해 4/5 FAIL이다.",
+      "artifact": "generated_images/poverty-semantics-three-agent-20260907/coordination/arm-c-transport/final.png sha256=5403998ca62f95102e31f3b5bba3483b90dd941a5d98ad4b6b1f3a6530095e15; arm-c-transport/render_review.json"
+    },
+    {
+      "id": "e-pixel-fixture",
+      "kind": "measurement",
+      "claim": "agent와 coordinator 판정은 세 arm에서 일치했고 총 15개 gate 중 13개, all-of profile 3개 중 1개가 통과했다. 이미지와 reference hash, profile gate set, 1회 생성 정책을 회귀 fixture에 고정했다.",
+      "artifact": "tests/fixtures/photo_prompt/poverty_visual_semantics_three_arm_pixel_cases_v1.jsonl; generated_images/poverty-semantics-three-agent-20260907/coordination/coordinator-final-review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "각 선택된 poverty-access profile이 소유한 다섯 관계 gate가 같은 저장 이미지에서 native와 지정 thumbnail scale에 모두 읽혀야 하며 하나라도 부분적이거나 빠지면 그 profile은 실패다.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-relation-not-appearance",
+        "statement": "빈곤 의미는 외모, 직업, 장소, 분위기, 신체 상태나 단일 소품이 아니라 constraint source, actor or resource system, response action과 immediate result의 관찰 가능한 관계로만 표현한다.",
+        "evidence_ids": ["e-research", "e-package", "e-reference-boundary"],
+        "causal_controls": ["five component groups per hard profile", "definition-only runtime mode", "broad labels remain advisory", "visible adult appearance reference only"]
+      },
+      {
+        "id": "inv-independent-one-shot",
+        "statement": "세 arm은 서로 다른 profile과 seed를 갖고 frozen source에서 독립 합성하며 한 번만 생성하고 다른 arm의 프롬프트, 메시지 또는 이미지를 입력으로 사용하지 않는다.",
+        "evidence_ids": ["e-independent-protocol", "e-generation", "e-pixel-fixture"],
+        "causal_controls": ["three independent subagents", "one image call per arm", "zero retry", "zero fallback", "cross-arm inputs forbidden"]
+      },
+      {
+        "id": "inv-evidence-layers",
+        "statement": "Package와 routing PASS, prompt와 runtime PASS, image delivery, saved-pixel hard gates와 requesting-user judgment는 서로 대체하지 않는다.",
+        "evidence_ids": ["e-index-and-routing", "e-prompt-runtime", "e-generation", "e-render-energy", "e-render-income", "e-render-transport"],
+        "causal_controls": ["partial_is_fail", "blocked render unscored", "same-image all-of review", "user judgment pending"]
+      }
+    ],
+    "flexible_dimensions": [
+      "adult-safe fictional venue and event premise",
+      "framing and camera position that preserve all relation anchors",
+      "lighting and color that preserve causal legibility",
+      "incidental unbranded environmental detail"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "mismatch-income-resource-exhaustion",
+      "scale": "local",
+      "axis": "resource-state continuity",
+      "source_state": "After allocation one essential need remains visibly unmet while the available compensation is exhausted.",
+      "render_state": "The no-balance transit state is visible, but banknotes and coins remain visibly available in the adult's hand and on the table.",
+      "evidence_ids": ["e-render-income"]
+    },
+    {
+      "id": "mismatch-transport-purpose-specificity",
+      "scale": "local",
+      "axis": "essential-trip anchor specificity",
+      "source_state": "A concrete essential-trip purpose remains visibly linked to the adult traveler.",
+      "render_state": "The black shoulder bag supports travel but remains too generic to distinguish an essential commute from ordinary travel.",
+      "evidence_ids": ["e-render-transport"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-typed-relations-route-safely",
+      "stage": "representation",
+      "statement": "Component-owned exact profiles plus separately advisory candidates will expose poverty-access relations without hard-activating broad labels or converting appearance into evidence.",
+      "evidence_ids": ["e-research", "e-package", "e-index-and-routing"],
+      "falsifier": "A broad poverty label or isolated face, garment, place, occupation, mood, number or prop hard-activates a profile, or an optional candidate silently creates hard duties."
+    },
+    {
+      "id": "h-five-gates-survive-one-shot",
+      "stage": "generator-response",
+      "statement": "Five explicit relation gates in an audited one-shot prompt are sufficient for each selected poverty-access relation to survive a complex scene and one adult appearance reference.",
+      "evidence_ids": ["e-generation", "e-render-energy", "e-render-income", "e-render-transport"],
+      "falsifier": "Any gate is absent, reversed, ambiguous or only partially visible in the saved image despite prompt and runtime audit PASS."
+    },
+    {
+      "id": "h-terminal-states-need-salience",
+      "stage": "prompt-priority",
+      "statement": "Resource-exhaustion and essential-purpose terminal states need stronger object-state and role-specific visual salience than a generic no-balance display or work-like bag.",
+      "evidence_ids": ["e-render-income", "e-render-transport"],
+      "falsifier": "Future independent one-shot arms preserve the unchanged representation yet reliably show both zero remaining compensation and unmistakably essential trip purpose without stronger terminal-state anchors."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["module", "reference", "test"],
+    "general_rule": "Source-backed poverty concepts become hard visual semantics only as component-complete, observable resource or access relations under exact request or frozen-core evidence; broad taxonomy, sensitive diagnosis and duration-dependent meanings stay advisory or deferred.",
+    "generalization_basis": "The nine P0 profiles cover food purchase and depletion, basic-needs tradeoff, energy service, housing habitability, working income, transport access, replacement repair and relative participation through the same constraint-action-result grammar while retaining domain-specific confusions.",
+    "hypothesis_ids": ["h-typed-relations-route-safely", "h-five-gates-survive-one-shot", "h-terminal-states-need-salience"],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_poverty_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_poverty.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index_shards/8720277c4a9acb6e",
+      "docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_poverty_extension.json",
+      "tests/test_photo_candidate_semantics.py",
+      "tests/test_photo_poverty_visual_semantics.py",
+      "tests/fixtures/photo_prompt/poverty_visual_obligation_routing_v1.jsonl",
+      "tests/fixtures/photo_prompt/poverty_visual_semantics_three_arm_pixel_cases_v1.jsonl",
+      "generated_images/poverty-semantics-three-agent-20260907/coordination",
+      "docs/research-evidence/photo-prompt/poverty-visual-semantics-20260907/implementation-iteration-record.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-package", "e-index-and-routing", "e-focused-regression"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-independent-protocol", "e-prompt-runtime"]},
+    "render": {"status": "fail", "evidence_ids": ["e-generation", "e-render-energy", "e-render-income", "e-render-transport", "e-pixel-fixture"]},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {"id":"holdout-energy-coping","case_role":"held-out","status":"pass","covered_axes":["occupied home","inactive intact service","finite service cue","coping action","room-wide consequence"],"evidence_ids":["e-render-energy"]},
+      {"id":"holdout-working-income-gap","case_role":"held-out","status":"fail","covered_axes":["completed work","same-adult compensation","essential anchors","allocation","unmet need after exhaustion"],"evidence_ids":["e-render-income"]},
+      {"id":"holdout-transport-barrier","case_role":"held-out","status":"fail","covered_axes":["essential trip purpose","operational boundary and route","fare gap","stopped entry","closure consequence"],"evidence_ids":["e-render-transport"]}
+    ]
+  },
+  "decision": {
+    "status": "revise",
+    "claim_scope": "render-fidelity",
+    "rationale": "P0 데이터, 로더, 인덱스, 검색 경계, 후보팩 projection, 세 prompt/runtime audit와 세 1회 생성은 완료됐고 난방 profile은 5/5를 통과했다. 그러나 근로소득은 보상 소진, 교통은 구체적 필수 이동 목적이 누락되어 각각 4/5였으므로 전체 render-fidelity는 13/15 gates와 1/3 all-of profiles에서 실패다. 구현과 실패 fixture는 유지하되 두 terminal-state salience를 새 독립 평가에서 재검증하기 전에는 일반 픽셀 성공으로 승격하지 않는다. 사용자 선호 판단도 아직 unscored다.",
+    "evidence_ids": ["e-package", "e-index-and-routing", "e-focused-regression", "e-prompt-runtime", "e-generation", "e-render-energy", "e-render-income", "e-render-transport", "e-pixel-fixture"]
+  }
+}
