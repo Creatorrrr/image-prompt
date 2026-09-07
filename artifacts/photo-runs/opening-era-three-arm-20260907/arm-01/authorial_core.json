@@ -1,0 +1,153 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently randomized complex opening-era outdoor traditional-clothing scene testing visible architecture, clothing and action with supplied adult portrait appearance. Specific scene is agent-authored under requester creative permission.",
+  "subject": "an adult woman",
+  "setting": "A low traditional building with curved dark roof tiles and wooden posts adjoins a red brick legation wall",
+  "event": "her left palm presses the lid downward while her right hand draws a loose burgundy silk ribbon clear of the closing edge",
+  "visual_priorities": [
+    "Traditional clothing and transitional architecture coexist in one frame",
+    "Readable trunk and ribbon hand contacts",
+    "Visible reference appearance"
+  ],
+  "baseline_prompt_en": "Create a realistic color editorial photograph of an adult woman, using the supplied portrait solely for her visible adult facial appearance: softly oval face, dark brown eyes, full natural lips, fair skin and long dark wavy hair. Place her in a Korean opening-era, early Korean Empire inspired outdoor courtyard just after a shower. A low traditional building with curved dark roof tiles and wooden posts adjoins a red brick legation wall, with a plain iron street lamp beyond the gate. She wears a cream jeogori with overlapping front, narrow tied goreum ribbons and a muted jade full-length chima, the high gathered skirt spreading over a worn stone step. Her hair is loosely gathered at the nape with some face-framing waves. In a single visible moment, she leans forward to close a small wooden travel trunk on the step: her left palm presses the lid downward while her right hand draws a loose burgundy silk ribbon clear of the closing edge. Wind lifts the free ribbon end sideways, and the trunk lid remains visibly ajar beneath her palm. Brass trunk corners and the visible gap establish the action. A folded newspaper with small vertical printed columns rests on the trunk's far corner, beside a plain cloth-wrapped parcel. Her eyes follow her right hand with concentrated calm. Prioritize readable hand-to-lid and hand-to-ribbon contact, historically coherent traditional clothing, the meeting of timber-and-tile architecture with brick and iron, and a recognizable visible likeness to the portrait. Frame a three-quarter-length environmental portrait at eye level, retaining the skirt, step, both hands and trunk. Soft post-rain daylight reveals damp stone reflections, matte fabric weave, weathered wood and natural skin texture; restrained jade, cream, burgundy and brick colors make one coherent photographic scene.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent complex randomized concept and supplied image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Requester delegates concept choices and image-based prompt creation; the agent independently selects opening-era courtyard, traditional clothing and trunk-closing event.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "Korean opening-era, early Korean Empire inspired outdoor courtyard"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "her left palm presses the lid downward while her right hand draws a loose burgundy silk ribbon clear of the closing edge"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "setting",
+        "prompt_evidence": "A low traditional building with curved dark roof tiles and wooden posts adjoins a red brick legation wall"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "appearance",
+        "prompt_evidence": "a cream jeogori with overlapping front, narrow tied goreum ribbons and a muted jade full-length chima"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the supplied portrait solely for her visible adult facial appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "appearance",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "era_setting",
+      "dimension": "setting",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "setting",
+        "concept"
+      ],
+      "axes": {
+        "period": "opening era early Korean Empire inspired",
+        "relation": "traditional timber tile alongside brick iron"
+      },
+      "evidence": {
+        "architecture": "A low traditional building with curved dark roof tiles and wooden posts adjoins a red brick legation wall",
+        "iron": "a plain iron street lamp beyond the gate"
+      }
+    },
+    {
+      "assertion_id": "traditional_clothing",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "garment": "jeogori and chima",
+        "construction": "overlap tied goreum and high gathered skirt"
+      },
+      "evidence": {
+        "clothing": "a cream jeogori with overlapping front, narrow tied goreum ribbons and a muted jade full-length chima"
+      }
+    },
+    {
+      "assertion_id": "trunk_action",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "contact": "left palm on lid right hand on ribbon",
+        "state": "lid ajar ribbon clear"
+      },
+      "evidence": {
+        "contact": "her left palm presses the lid downward while her right hand draws a loose burgundy silk ribbon clear of the closing edge",
+        "consequence": "Wind lifts the free ribbon end sideways, and the trunk lid remains visibly ajar beneath her palm"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial photography",
+    "family": "naturalistic historical outdoor editorial",
+    "evidence": [
+      "damp stone reflections",
+      "matte fabric weave"
+    ]
+  },
+  "variation_key": "arm-01-10821928009311509859"
+}

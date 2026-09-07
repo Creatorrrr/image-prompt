@@ -1,0 +1,141 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independent randomized complex photographic test of a later 1930s café interior, chosen under requester creative delegation; portrait governs visible adult appearance only.",
+  "subject": "One adult woman based on visible adult reference appearance",
+  "setting": "1935-inspired Korean café reading room",
+  "event": "A newspaper page-turn pauses while the subject listens toward a gramophone",
+  "visual_priorities": [
+    "Simultaneous newspaper hand contact and listening direction",
+    "Later interwar café signals rather than an Empire-era claim",
+    "Visible reference appearance"
+  ],
+  "baseline_prompt_en": "A photographic editorial staged in a 1935-inspired Korean café reading room, explicitly a later interwar interior. One adult woman with the reference portrait’s long dark wavy hair, softly oval face, dark eyes and natural lip shape sits at a small walnut table. She wears an ivory blouse under a burgundy sleeveless knit vest. She pauses a turning newspaper page to listen to a tabletop gramophone: her right fingers pinch the lifted upper page corner while her left palm holds the lower newspaper flat, and her eyes turn toward the gramophone. The lifted page makes a clear diagonal above the spread. On the same table, a dark shellac disc rests on the gramophone turntable with its tonearm lowered onto the outer groove; its small flared brass horn points toward her. A porcelain coffee cup and brass sugar tongs occupy the near edge, separated from the newspaper. Behind her are bentwood chairs, dark timber wall panels and a modest geometric frosted-glass partition. A sunlit window with outside drizzle gives fine bright droplets and warm reflected light across the paper. Frame a three-quarter seated portrait with face, both hands, newspaper and entire gramophone legible together. Keep the scene’s later café modernity evident through the fitted knit layering, compact sound apparatus and geometric interior. Prioritize the suspended page-turn listening action, the distinct interwar café material language, and visible reference appearance. Natural skin texture, credible hand contact, nuanced wood and brass, quiet photographic realism.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "randomized independent test concept",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Requester delegates independent complex concept choices and image-based testing; choose a 1935-inspired café listening and reading event using general knowledge.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a 1935-inspired Korean café reading room"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "subject",
+        "prompt_evidence": "One adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "She pauses a turning newspaper page to listen to a tabletop gramophone"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "the reference portrait’s long dark wavy hair, softly oval face, dark eyes and natural lip shape"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "setting",
+        "prompt_evidence": "a later interwar interior"
+      },
+      {
+        "anchor_id": "core_style",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "style",
+        "prompt_evidence": "quiet photographic realism"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "setting",
+      "style"
+    ],
+    "open_dimensions": [
+      "framing",
+      "lighting",
+      "camera",
+      "composition"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "later_interwar_cafe",
+      "dimension": "setting",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "setting",
+        "concept"
+      ],
+      "axes": {
+        "period": [
+          "1935_inspired",
+          "later_interwar"
+        ],
+        "setting": "cafe_reading_room"
+      },
+      "evidence": {
+        "period_phrase": "a 1935-inspired Korean café reading room",
+        "interior_phrase": "bentwood chairs, dark timber wall panels and a modest geometric frosted-glass partition",
+        "dress_phrase": "an ivory blouse under a burgundy sleeveless knit vest"
+      }
+    },
+    {
+      "assertion_id": "page_listening_event",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "event"
+      ],
+      "axes": {
+        "action": "paused_page_turn",
+        "sound_target": "tabletop_gramophone",
+        "simultaneity": "same_frame"
+      },
+      "evidence": {
+        "event_phrase": "She pauses a turning newspaper page to listen to a tabletop gramophone",
+        "contact_phrase": "her right fingers pinch the lifted upper page corner while her left palm holds the lower newspaper flat",
+        "sound_phrase": "a dark shellac disc rests on the gramophone turntable with its tonearm lowered onto the outer groove"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial photography",
+    "family": "interwar cafe historical fiction",
+    "evidence": [
+      "walnut table and brass horn",
+      "window light on newspaper"
+    ]
+  },
+  "variation_key": "arm03-seed10267444985622163614"
+}
