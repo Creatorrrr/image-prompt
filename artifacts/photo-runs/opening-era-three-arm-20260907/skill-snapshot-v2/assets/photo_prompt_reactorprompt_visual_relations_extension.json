@@ -1,0 +1,477 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "description": "Post-core advisory candidates derived from the ReactorPrompt incremental visual-semantics research. They encode observable relations rather than equipment, brand, mood, identity, or functional-truth claims. T14 failure prevention and T15 clause lineage are implemented as policy/test boundaries instead of image candidates.",
+  "slots": {
+    "composition": [
+      {
+        "id": "crop_boundary_anchor_integrity",
+        "ko": "프레임 경계가 의미 앵커를 자르지 않는 크롭 관계",
+        "en": "crop-boundary integrity that keeps every meaning-bearing anchor and its connection inside the frame",
+        "weight": 0.56,
+        "tags": ["composition", "crop_relation", "reactorprompt_relation"],
+        "aliases": ["anchor-safe crop", "의미 앵커 보존 크롭"],
+        "keywords": ["required landmarks", "forbidden cut", "entry and exit edge", "connection visible"],
+        "embedding_text": "the crop keeps every required landmark, contact point, connected limb, material edge, and directional continuation visible while incidental regions may leave the frame"
+      },
+      {
+        "id": "multi_panel_count_layout_sequence",
+        "ko": "정확한 패널 수와 순서가 읽히는 다중 패널 토폴로지",
+        "en": "multi-panel topology with an exact panel count, stable layout, and readable sequence",
+        "weight": 0.48,
+        "tags": ["composition", "panel_topology", "reactorprompt_relation"],
+        "aliases": ["exact panel topology", "패널 수 순서 구도"],
+        "keywords": ["panel count", "layout separation", "reading order", "single panel boundaries"],
+        "embedding_text": "an exact number of visually separated panels preserves a stable grid or sequence, unique content per panel, readable ordering, and unambiguous outer boundaries"
+      },
+      {
+        "id": "foreground_midground_background_depth_chain",
+        "ko": "전경·중경·배경이 독립 단서로 이어지는 깊이 사슬",
+        "en": "foreground-to-midground-to-background depth chain with independent overlap, scale, and atmosphere cues",
+        "weight": 0.58,
+        "tags": ["composition", "environment", "depth_relation", "reactorprompt_relation"],
+        "aliases": ["three-plane environmental depth", "전중후경 깊이 사슬"],
+        "keywords": ["near anchor", "midground bridge", "distant plane", "overlap", "scale change", "atmosphere"],
+        "embedding_text": "a grounded near-plane anchor connects through a readable midground bridge to a distant background using at least two independent depth cues rather than blur alone"
+      },
+      {
+        "id": "product_surface_support_hierarchy",
+        "ko": "제품 본체·지지면·보조 요소의 명확한 위계",
+        "en": "product body, support surface, and secondary prop hierarchy with unambiguous contact",
+        "weight": 0.52,
+        "tags": ["object", "product", "support_relation", "reactorprompt_relation"],
+        "for_any": ["object"],
+        "aliases": ["product support hierarchy", "제품 지지 관계"],
+        "keywords": ["primary product", "support contact", "secondary prop", "silhouette separation"],
+        "embedding_text": "one primary product retains a clean complete silhouette and physically coherent contact with its support surface while secondary props remain subordinate and non-occluding"
+      },
+      {
+        "id": "food_material_state_vessel_relation",
+        "ko": "음식의 재료 상태와 용기 접촉 관계",
+        "en": "food material state visibly coupled to its vessel, utensil, and local temperature evidence",
+        "weight": 0.52,
+        "tags": ["food", "vessel_relation", "material_state", "reactorprompt_relation"],
+        "for_any": ["food"],
+        "aliases": ["food state vessel relation", "음식 상태 용기 관계"],
+        "keywords": ["surface state", "vessel contact", "utensil trace", "temperature consequence"],
+        "embedding_text": "the food surface, vessel boundary, utensil interaction, and visible heat or moisture consequence agree in one frame without claiming taste, recipe authenticity, or safety"
+      },
+      {
+        "id": "nature_habitat_subject_state_advisory",
+        "ko": "자연 피사체와 서식 환경 상태의 관찰 가능한 연결",
+        "en": "observable subject-state and habitat relation without inferring hidden ecological function",
+        "weight": 0.46,
+        "tags": ["animal", "plant", "environment", "habitat_relation", "reactorprompt_relation"],
+        "for_any": ["animal", "plant", "environment"],
+        "aliases": ["habitat subject state", "서식 환경 피사체 상태"],
+        "keywords": ["visible subject state", "habitat surface", "contact or shelter", "weather trace"],
+        "embedding_text": "a visible animal or plant state connects to a specific habitat surface, shelter, contact, or weather trace while population health and ecological function remain unclaimed"
+      }
+    ],
+    "body_pose": [
+      {
+        "id": "single_support_backward_flexed_free_leg",
+        "ko": "한 다리는 지지하고 반대 다리는 뒤로 굽혀 드는 역학",
+        "en": "single-support stance with the free leg flexed backward and load visibly owned by the planted side",
+        "weight": 0.54,
+        "tags": ["human", "pose_mechanics", "support_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["single support backward flex", "한발 지지 뒤굽힘"],
+        "keywords": ["planted support foot", "loaded hip", "free knee bent backward", "balance counteraction"],
+        "embedding_text": "one planted foot and loaded hip own the body weight while the opposite knee bends backward as a non-supporting free leg and the torso visibly counterbalances"
+      }
+    ],
+    "body_framing": [
+      {
+        "id": "forward_torso_lean_close_crop",
+        "ko": "앞으로 기운 몸통과 지지 단서를 함께 남기는 근접 프레이밍",
+        "en": "close framing that preserves a forward torso lean together with its support and depth cues",
+        "weight": 0.5,
+        "tags": ["human", "pose_mechanics", "framing", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["forward lean close crop", "전방 기울기 근접 크롭"],
+        "keywords": ["torso pitch", "support cue", "shoulder depth", "crop eligibility"],
+        "embedding_text": "the close crop retains shoulder and torso pitch, a readable support or counterbalance cue, and depth foreshortening so forward lean cannot collapse into a flat head-and-shoulders pose"
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "fingertip_contact_visible_target_non_support",
+        "ko": "지지 하중 없이 손끝과 표적이 닿는 가벼운 접촉",
+        "en": "fingertip contact with one visible target while the contact remains non-load-bearing",
+        "weight": 0.5,
+        "tags": ["human", "contact_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["non-support fingertip contact", "손끝 비지지 접촉"],
+        "keywords": ["fingertip target", "contact point", "no load transfer", "connected hand"],
+        "embedding_text": "one anatomically connected fingertip touches a clearly visible target at a precise point while body support remains elsewhere and no weight-bearing deformation is implied"
+      },
+      {
+        "id": "load_bearing_contact_deformation",
+        "ko": "하중을 전달하며 수신면이 국소 변형되는 접촉",
+        "en": "load-bearing contact with a visible force path and local receiver deformation",
+        "weight": 0.52,
+        "tags": ["human", "object", "contact_relation", "force_relation", "reactorprompt_relation"],
+        "aliases": ["load-bearing contact", "하중 접촉 변형"],
+        "keywords": ["force path", "contact patch", "compression", "support response"],
+        "embedding_text": "a visible actor or object transfers load through one contact patch, creating direction-consistent compression or deformation on the receiver and a readable counterforce"
+      }
+    ],
+    "action": [
+      {
+        "id": "tool_contact_active_process_visible_result",
+        "ko": "도구 접촉과 진행 중 공정 및 즉시 결과가 함께 보이는 동작",
+        "en": "active tool contact that shows the ongoing process and one immediate visible result",
+        "weight": 0.54,
+        "tags": ["human", "tool_relation", "process_phase", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["tool contact active process", "도구 접촉 진행 결과"],
+        "keywords": ["actor-tool contact", "target surface", "unfinished process", "visible consequence"],
+        "embedding_text": "an actor grips one tool in coherent contact with a visible target surface during an unfinished operation, with one immediate material or state change already readable"
+      }
+    ],
+    "lens": [
+      {
+        "id": "source_relative_perspective_distance_coherence",
+        "ko": "카메라 거리와 투영 효과가 장면 전반에서 일관된 관계",
+        "en": "source-relative camera distance and projection effects that remain coherent across the scene",
+        "weight": 0.48,
+        "tags": ["camera_optics", "perspective_relation", "reactorprompt_relation"],
+        "aliases": ["perspective-distance coherence", "거리 투영 일관성"],
+        "keywords": ["camera distance", "relative scale", "foreshortening", "edge distortion"],
+        "embedding_text": "camera distance owns relative scale and foreshortening while focal-length metadata remains secondary; faces, hands, props, and architecture share one coherent projection"
+      }
+    ],
+    "focus": [
+      {
+        "id": "subject_anchor_focus_plane_priority",
+        "ko": "의미 앵커가 같은 초점면에서 우선 읽히는 관계",
+        "en": "focus-plane priority that keeps the meaning-bearing subject anchors jointly readable",
+        "weight": 0.5,
+        "tags": ["camera_optics", "focus_relation", "reactorprompt_relation"],
+        "aliases": ["anchor focus plane", "의미 앵커 초점면"],
+        "keywords": ["primary focus plane", "required anchor", "depth separation", "legibility"],
+        "embedding_text": "the primary focus plane contains every meaning-bearing anchor that must be judged together while secondary depth softens gradually without hiding required contact or topology"
+      }
+    ],
+    "light_shape": [
+      {
+        "id": "patterned_cast_shadow_receiver_continuity",
+        "ko": "연결된 수신면을 따라 이어지고 변형되는 패턴 그림자",
+        "en": "one patterned cast shadow continuing and deforming across connected receiver surfaces",
+        "weight": 0.58,
+        "tags": ["lighting", "cast_shadow", "receiver_relation", "reactorprompt_relation"],
+        "aliases": ["pattern shadow continuity", "패턴 그림자 연속성"],
+        "keywords": ["coherent source direction", "occluder grammar", "surface deformation", "two connected receivers"],
+        "embedding_text": "one leaf slat or lattice occluder projects alternating bright and dark structure that bends with curvature and continues across at least two connected receiver regions"
+      }
+    ],
+    "lighting": [
+      {
+        "id": "daylight_fill_flash_balance_relation",
+        "ko": "주변 일광 방향을 유지하며 플래시가 그림자 밀도만 여는 균형",
+        "en": "daylight key direction preserved while near-axis fill flash opens shadow density without a second shadow",
+        "weight": 0.52,
+        "tags": ["lighting", "fill_flash", "source_relation", "reactorprompt_relation"],
+        "aliases": ["daylight fill flash balance", "일광 필 플래시 균형"],
+        "keywords": ["ambient key direction", "near-axis flash", "reduced shadow density", "background exposure retained"],
+        "embedding_text": "the non-flash daylight or ambient key remains directionally visible while near-camera fill flash reduces its shadow density, preserves background exposure, and creates no opposing cast shadow"
+      },
+      {
+        "id": "multi_material_same_source_response",
+        "ko": "같은 광원 아래 서로 다른 재질 응답을 구분하는 관계",
+        "en": "same-source lighting that produces distinct matte, glossy, wet, metallic, or translucent responses",
+        "weight": 0.46,
+        "tags": ["lighting", "material_response", "advisory", "reactorprompt_relation"],
+        "aliases": ["multi-material same source", "동일 광원 재질별 응답"],
+        "keywords": ["one source", "receiver ownership", "highlight width", "transmission edge", "diffuse response"],
+        "embedding_text": "one traceable source direction acts on two or more materials whose highlight width, diffuse gradient, wet reflection, metallic compactness, or transmission edge remain visibly distinct"
+      }
+    ],
+    "color_grading": [
+      {
+        "id": "palette_role_hierarchy_relation",
+        "ko": "주색·보조색·강조색의 면적과 위치가 만든 팔레트 위계",
+        "en": "palette hierarchy with primary, supporting, and accent colors owned by distinct regions",
+        "weight": 0.52,
+        "tags": ["color", "palette_relation", "reactorprompt_relation"],
+        "aliases": ["palette role hierarchy", "팔레트 역할 위계"],
+        "keywords": ["dominant field", "supporting region", "small accent", "attention order"],
+        "embedding_text": "one dominant color field, one supporting region, and one bounded accent keep distinct area and location roles so the palette directs attention rather than becoming an equal color list"
+      },
+      {
+        "id": "selective_color_same_surface_exception_relation",
+        "ko": "같은 표면 안의 한정된 선택색 예외와 연속성",
+        "en": "bounded selective-color exception on one continuous surface while tonal structure stays coherent",
+        "weight": 0.46,
+        "tags": ["color", "selective_color", "surface_relation", "reactorprompt_relation"],
+        "aliases": ["same-surface selective color", "동일 표면 선택색 예외"],
+        "keywords": ["continuous surface", "bounded color exception", "shared shading", "edge ownership"],
+        "embedding_text": "a small selected color interval remains attached to one continuous surface with shared shading and texture while surrounding chroma is restrained without pasted-mask edges"
+      },
+      {
+        "id": "low_chroma_preserved_color_separation",
+        "ko": "저채도에서도 인접 재질과 영역의 색 분리가 남는 관계",
+        "en": "low-chroma rendering that preserves subtle color separation between adjacent materials and regions",
+        "weight": 0.48,
+        "tags": ["color", "low_chroma", "material_separation", "reactorprompt_relation"],
+        "aliases": ["low-chroma separation", "저채도 색 분리"],
+        "keywords": ["restrained chroma", "hue separation", "material boundary", "tone hierarchy"],
+        "embedding_text": "overall chroma stays restrained while adjacent skin fabric object and background regions retain small but readable hue differences instead of collapsing into one gray or tinted wash"
+      }
+    ],
+    "weather": [
+      {
+        "id": "weather_material_subject_consequence_chain",
+        "ko": "날씨가 재질과 피사체 상태에 남긴 결과 사슬",
+        "en": "weather-to-material-to-subject consequence chain with visible local traces",
+        "weight": 0.54,
+        "tags": ["weather", "environment", "consequence_relation", "reactorprompt_relation"],
+        "aliases": ["weather consequence chain", "날씨 재질 피사체 결과"],
+        "keywords": ["atmospheric cause", "surface trace", "subject response", "local consequence"],
+        "embedding_text": "one readable weather condition produces a local trace on a named material surface and one compatible visible subject response, such as wet edges, displaced hair, condensation, or pressed clothing"
+      }
+    ],
+    "relational_action": [
+      {
+        "id": "two_adult_shared_target_handoff",
+        "ko": "두 성인이 하나의 보이는 물체를 주고받는 미완 인계",
+        "en": "two clearly adult actors handing off one visible shared object during an unfinished transfer",
+        "weight": 0.58,
+        "tags": ["human", "multi_subject", "handoff_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["single-object adult handoff", "두 성인 한 물체 인계"],
+        "keywords": ["giver release", "receiver alignment", "one shared target", "hand ownership"],
+        "embedding_text": "two separately legible adult actors share exactly one visible object as the giver releases it and the receiver aligns a hand and visible response toward that same target"
+      },
+      {
+        "id": "cropped_companion_visible_contact_relation",
+        "ko": "프레임 밖 동반자의 연결된 사지와 접촉이 남는 관계",
+        "en": "cropped companion relation with an owned entering limb, visible contact, and compatible response",
+        "weight": 0.48,
+        "tags": ["human", "multi_subject", "crop_relation", "contact_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["cropped companion contact", "잘린 동반자 접촉"],
+        "keywords": ["connected entering limb", "clear contact point", "owner direction", "main-subject response"],
+        "embedding_text": "a partially off-frame companion retains one limb visibly connected to an owner, a precise contact or offer point, and a compatible orientation or response from the primary subject"
+      }
+    ],
+    "partner_framing": [
+      {
+        "id": "foreground_background_two_actor_occlusion_relation",
+        "ko": "전경·배경 두 인물의 깊이와 가림 순서가 분리되는 관계",
+        "en": "two-actor foreground-background relation with coherent depth order, occlusion edge, and interaction vector",
+        "weight": 0.5,
+        "tags": ["human", "multi_subject", "occlusion_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["two-actor depth occlusion", "전후경 두 인물 가림"],
+        "keywords": ["two actors", "depth order", "occlusion boundary", "separate landmarks", "interaction edge"],
+        "embedding_text": "two distinct actors occupy foreground and background with a coherent overlap edge, preserved face or body landmarks, and one requested gaze or action relation rather than a merged silhouette"
+      },
+      {
+        "id": "cropped_companion_limb_ownership",
+        "ko": "프레임 가장자리에서 들어오는 동반자 사지의 소유 관계",
+        "en": "frame-edge companion limb with a readable owner direction and uninterrupted anatomical connection",
+        "weight": 0.44,
+        "tags": ["human", "multi_subject", "crop_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["companion limb ownership", "동반자 사지 소유"],
+        "keywords": ["frame entry point", "owner direction", "continuous limb", "relation action"],
+        "embedding_text": "a companion's partial arm or leg enters from a named frame edge with continuous anatomy, clear owner direction, and a visible relation action instead of a floating body part"
+      }
+    ],
+    "proxemics": [
+      {
+        "id": "focused_group_shared_access_formation",
+        "ko": "작은 집단이 하나의 표적 주위에 접근 공간을 공유하는 대형",
+        "en": "focused small group forming shared access around one visible target",
+        "weight": 0.48,
+        "tags": ["human", "multi_subject", "group_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["shared-access group formation", "공통 접근 집단 대형"],
+        "keywords": ["participant count", "one focal target", "open access arc", "context crowd separation"],
+        "embedding_text": "a bounded number of primary participants orient toward one visible focal target with clear access gaps and distinct roles while any background crowd remains contextual"
+      }
+    ],
+    "gaze_target": [
+      {
+        "id": "head_eye_counterorientation_relation",
+        "ko": "머리 방향과 눈동자 방향이 서로 다른 표적 관계",
+        "en": "head and eye counter-orientation toward two readable directions without breaking anatomy",
+        "weight": 0.52,
+        "tags": ["human", "gaze_relation", "facial_display", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["counter-oriented head and eyes", "머리 눈 반대 방향"],
+        "keywords": ["head vector", "iris vector", "visible target", "eye aperture", "neck coherence"],
+        "embedding_text": "the head turns toward one readable direction while the irises return toward a second visible target, preserving believable eye aperture, sclera balance, neck connection, and target geometry"
+      }
+    ],
+    "expression": [
+      {
+        "id": "facial_display_native_readability",
+        "ko": "가림과 조명 속에서도 얼굴 국소 동작이 원본 크기에서 읽히는 상태",
+        "en": "native-scale facial display readability with head, eyes, and local actions separately observable",
+        "weight": 0.46,
+        "tags": ["human", "facial_display", "observability", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["facial display readability", "얼굴 동작 가독성"],
+        "keywords": ["head direction", "eye direction", "brow action", "mouth action", "occlusion eligibility"],
+        "embedding_text": "the crop light and occlusion preserve enough native detail to judge head direction, iris direction, brow or lid action, and mouth action separately without inferring an emotion label"
+      }
+    ],
+    "surface_material": [
+      {
+        "id": "satin_directional_luster_drape_surface",
+        "ko": "주름 방향을 따라 넓은 광택이 이동하는 새틴 계열 드레이프",
+        "en": "continuous satin-like drape whose broad smooth luster follows fold direction and curvature",
+        "weight": 0.58,
+        "tags": ["human", "garment", "material_response", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["fold-following satin luster", "새틴 방향성 광택"],
+        "keywords": ["continuous garment surface", "fold direction", "broad smooth highlight", "dark-plane detail", "seam ownership"],
+        "embedding_text": "one continuous satin-like garment surface keeps seams and edges while a broad smooth highlight follows coherent fold curvature and darker planes retain material detail"
+      },
+      {
+        "id": "velvet_pile_nap_direction_surface",
+        "ko": "방향과 압박에 따라 밝기가 달라지는 벨벳 파일·냅 표면",
+        "en": "velvet-like short pile whose brightness changes with nap direction, fold, and local compression",
+        "weight": 0.52,
+        "tags": ["human", "garment", "pile_nap", "material_response", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["velvet nap direction", "벨벳 파일 방향"],
+        "keywords": ["short pile", "directional tone change", "compression response", "garment edge continuity"],
+        "embedding_text": "a continuous velvet-like garment shows short pile or nap cues, direction-dependent bright and dark regions, local fold or pressure response, and traceable seams and edges"
+      }
+    ],
+    "hair_style": [
+      {
+        "id": "wind_displaced_hair_coherence",
+        "ko": "한 바람 방향이 뿌리·중간·끝 가닥을 일관되게 이동시키는 헤어 상태",
+        "en": "wind-displaced hair with coherent force direction from roots through mid-lengths to free ends",
+        "weight": 0.5,
+        "tags": ["human", "hair_motion", "force_relation", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["coherent wind-displaced hair", "바람에 밀린 머리 연속성"],
+        "keywords": ["wind source direction", "root response", "leading strands", "trailing mass", "face clearance"],
+        "embedding_text": "one readable wind direction displaces hair from root lift through mid-length curvature to leading and trailing ends while the hairstyle topology and face remain identifiable"
+      }
+    ],
+    "skin_finish": [
+      {
+        "id": "skin_microtexture_local_light_response",
+        "ko": "국소 광원 반응과 함께 모공·미세결이 남는 피부 표면",
+        "en": "skin microtexture retained through local diffuse and specular light response",
+        "weight": 0.44,
+        "tags": ["human", "skin_surface", "observability", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["skin microtexture response", "피부 미세결 광응답"],
+        "keywords": ["pores", "fine texture", "local color variation", "small speculars", "highlight rolloff"],
+        "embedding_text": "native detail retains pores, fine relief, local color variation, small direction-owned speculars, and highlight rolloff on one visible skin region without claiming health or identity"
+      }
+    ],
+    "capture_context": [
+      {
+        "id": "front_camera_low_light_response_advisory",
+        "ko": "전면 카메라 저조도에서 나타날 수 있는 근거리·신호 응답 후보",
+        "en": "front-camera low-light response treated as advisory near-field geometry and signal behavior",
+        "weight": 0.38,
+        "tags": ["human", "capture_response", "advisory", "reactorprompt_relation"],
+        "for_any": ["human"],
+        "aliases": ["front-camera low-light response", "전면 카메라 저조도 응답"],
+        "keywords": ["near-field perspective", "low-light signal", "local denoising", "display illumination", "compression"],
+        "embedding_text": "an arm-length front-camera view may combine near-field perspective, weak display illumination, low-light signal smoothing, and compression traces, but the device brand and RAW status are not asserted"
+      },
+      {
+        "id": "capture_label_effect_separation",
+        "ko": "장비·포맷 라벨과 실제 픽셀 효과를 분리하는 촬영 응답",
+        "en": "capture label preserved as metadata while only visible geometry, signal, and processing effects become image candidates",
+        "weight": 0.36,
+        "tags": ["capture_response", "metadata_boundary", "reactorprompt_relation"],
+        "aliases": ["capture label effect separation", "촬영 라벨 효과 분리"],
+        "keywords": ["metadata label", "visible geometry", "signal response", "compression trace", "claim boundary"],
+        "embedding_text": "camera lens sensor film RAW or brand words remain input labels while perspective focus noise rolloff halation compression and color response require their own observable evidence"
+      }
+    ],
+    "narrative_phase": [
+      {
+        "id": "precontact_readiness_visible_gap",
+        "ko": "접촉 직전의 준비 동작과 보이는 간격",
+        "en": "pre-contact readiness with an explicit visible gap between actor and target",
+        "weight": 0.46,
+        "tags": ["event_phase", "precontact", "reactorprompt_relation"],
+        "aliases": ["pre-contact visible gap", "접촉 직전 간격"],
+        "keywords": ["approach vector", "visible gap", "prepared hand", "target"],
+        "embedding_text": "the actor and target remain separated by a visible gap while body and hand vectors show imminent contact rather than completed action or static posing"
+      },
+      {
+        "id": "locomotion_counterturn_midphase",
+        "ko": "이동 중 몸통과 진행 방향이 어긋나는 중간 단계",
+        "en": "mid-locomotion counterturn with travel direction and torso rotation simultaneously readable",
+        "weight": 0.44,
+        "tags": ["event_phase", "motion_relation", "reactorprompt_relation"],
+        "aliases": ["locomotion counterturn", "이동 중 역회전"],
+        "keywords": ["travel vector", "torso counterturn", "support transition", "unfinished stride"],
+        "embedding_text": "an unfinished stride preserves a readable travel vector, changing support, and torso counterturn without collapsing into a static twist or blur-only motion"
+      },
+      {
+        "id": "source_to_receiver_liquid_transfer_midphase",
+        "ko": "액체가 출발 용기에서 수신 용기로 이동하는 중간 단계",
+        "en": "mid-transfer liquid path visibly connecting one source vessel to one receiver",
+        "weight": 0.48,
+        "tags": ["event_phase", "liquid_transfer", "reactorprompt_relation"],
+        "aliases": ["liquid transfer midphase", "액체 이송 중간 단계"],
+        "keywords": ["source vessel", "continuous stream", "receiver", "unfinished fill"],
+        "embedding_text": "one visible continuous liquid stream leaves a source vessel and enters a distinct receiver while the source tilt and receiving level show the transfer is still underway"
+      },
+      {
+        "id": "tool_contact_active_process_phase",
+        "ko": "도구가 표적에 닿아 공정이 진행되는 단계",
+        "en": "active process phase with coherent tool-target contact and an immediate trace",
+        "weight": 0.48,
+        "tags": ["event_phase", "tool_relation", "reactorprompt_relation"],
+        "aliases": ["active tool-contact phase", "도구 접촉 공정 단계"],
+        "keywords": ["tool contact", "target surface", "force direction", "process trace"],
+        "embedding_text": "the tool stays coherently connected to its target during an unfinished process while force direction and one immediate trace or state change remain visible"
+      },
+      {
+        "id": "postcontact_release_continuing_trajectory",
+        "ko": "접촉 해제 뒤에도 이어지는 궤적 단계",
+        "en": "post-contact release with a continuing actor or object trajectory",
+        "weight": 0.42,
+        "tags": ["event_phase", "release", "trajectory", "reactorprompt_relation"],
+        "aliases": ["release continuing trajectory", "해제 후 이어지는 궤적"],
+        "keywords": ["separation gap", "release point", "continuing vector", "residual trace"],
+        "embedding_text": "a new separation gap appears after contact while the actor or object continues along a readable trajectory and the contact site retains one residual consequence"
+      },
+      {
+        "id": "visible_mishap_repair_phase",
+        "ko": "실수의 결과와 수습 동작이 함께 보이는 단계",
+        "en": "visible mishap repair phase with a localized consequence and active corrective action",
+        "weight": 0.44,
+        "tags": ["event_phase", "repair", "consequence", "reactorprompt_relation"],
+        "aliases": ["mishap repair phase", "실수 수습 단계"],
+        "keywords": ["localized mishap", "repair target", "corrective action", "unfinished recovery"],
+        "embedding_text": "one localized mishap consequence remains visible while the actor performs a concrete corrective action on that same target and the recovery is still incomplete"
+      },
+      {
+        "id": "untouched_target_preuse_threshold",
+        "ko": "아직 손대지 않은 표적과 사용 직전 문턱",
+        "en": "pre-use threshold with an untouched target, prepared actor, and explicit remaining gap",
+        "weight": 0.4,
+        "tags": ["event_phase", "preuse", "reactorprompt_relation"],
+        "aliases": ["untouched pre-use threshold", "미사용 직전 문턱"],
+        "keywords": ["untouched target", "prepared tool", "visible gap", "no result yet"],
+        "embedding_text": "the target remains visibly untouched while a prepared hand or tool approaches across a clear gap and no use-result trace has appeared yet"
+      },
+      {
+        "id": "settling_aftereffect_trace_phase",
+        "ko": "주동작 뒤 결과가 가라앉는 잔여 단계",
+        "en": "settling aftereffect phase with a visible residual trace and diminishing motion",
+        "weight": 0.42,
+        "tags": ["event_phase", "aftereffect", "reactorprompt_relation"],
+        "aliases": ["settling aftereffect", "잔여 여파 단계"],
+        "keywords": ["residual trace", "diminishing motion", "settling material", "completed cause absent"],
+        "embedding_text": "a visible residual trace such as droplets dust displaced fabric or ripples is still settling while motion diminishes and the initiating action need not be inferred off-frame"
+      }
+    ]
+  }
+}

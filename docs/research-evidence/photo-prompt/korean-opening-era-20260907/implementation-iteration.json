@@ -1,0 +1,136 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "56b774e6479c6b743c00c3e6988fba9f874f31a8",
+    "candidate_revision": "working-tree:snapshot-v2:d19b7a555e4a36810daa54314014b8c28da419afb4d29cd753d34221cb131b2a"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "조사한 개화기 시각 의미와 후보 데이터를 반영하고 독립된 세 컨셉으로 첨부 이미지를 활용해 생성·검토한다."
+  },
+  "evidence": [
+    {
+      "id": "research",
+      "kind": "external-research",
+      "claim": "16 scoped visible-form proposals with source and chronology limitations.",
+      "artifact": "docs/research-evidence/photo-prompt/korean-opening-era-20260907/report-source.md"
+    },
+    {
+      "id": "package",
+      "kind": "package-check",
+      "claim": "62 regression tests and one additional embedding boundary test passed; dictionary and indices valid.",
+      "artifact": "artifacts/photo-runs/opening-era-three-arm-20260907/validation-result.json"
+    },
+    {
+      "id": "prompts",
+      "kind": "prompt-evaluation",
+      "claim": "All three composed/runtime audits pass, but zero new opening candidates exposed/adopted.",
+      "artifact": "artifacts/photo-runs/opening-era-three-arm-20260907/candidate_scope_diagnostic.json"
+    },
+    {
+      "id": "pixels",
+      "kind": "render-observation",
+      "claim": "Manual frozen-case pixel gates: 8/8,3/5,4/7. New-data causal contribution unestablished.",
+      "artifact": "artifacts/photo-runs/opening-era-three-arm-20260907/parent_pixel_review.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Visible object construction and same-frame actor-object relations, with source-limited historical framing.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "visible-components",
+        "statement": "Broad era words never substitute for complete visible relations.",
+        "evidence_ids": [
+          "research"
+        ],
+        "causal_controls": [
+          "component completeness",
+          "confusion substitutes",
+          "slot dimension ownership"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "creative details explicitly open in frozen intent lock"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "no-exposure",
+      "scale": "global",
+      "axis": "candidate delivery",
+      "source_state": "New data is registered and indexed.",
+      "render_state": "No new candidate was exposed or adopted in three actual public packs.",
+      "evidence_ids": [
+        "prompts"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "scope",
+      "stage": "representation",
+      "statement": "Closed setting and appearance dimensions exclude all new bundles in these frozen cores.",
+      "evidence_ids": [
+        "prompts"
+      ],
+      "falsifier": "An exposed bundle in the same pack whose required dimension remains closed would contradict this diagnosis."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "test"
+    ],
+    "general_rule": "Explicit component-complete relation profiles and scoped optional atoms/bundles; retrieval cannot activate hard obligations.",
+    "generalization_basis": "16 source-backed form families with partial/negative and optional-scope boundary tests.",
+    "hypothesis_ids": [
+      "scope"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_opening_era_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_opening_era.json",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "tests/test_photo_opening_era_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "package"
+      ]
+    },
+    "prompt": {
+      "status": "fail",
+      "evidence_ids": [
+        "prompts"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "pixels"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": []
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "Implementation and scoped tests complete. Actual candidate delivery fails; no prompt-behavior or render-fidelity promotion.",
+    "evidence_ids": [
+      "package",
+      "prompts",
+      "pixels"
+    ]
+  }
+}

@@ -46,10 +46,10 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
         return auditor.audit_candidate_semantic_contracts(pack, prompt, set(chosen),
                                                          auditor.candidate_objects_from_pack(pack), evidence or [])
 
-    def test_all_111_authored_bundles_compile_and_profile_links_remain_advisory(self):
+    def test_all_127_authored_bundles_compile_and_profile_links_remain_advisory(self):
         sources = [row for path in ASSETS.glob("*extension.json")
                    for row in json.loads(path.read_text()).get("visual_semantics", [])]
-        self.assertEqual(len(self.data["candidate_bundles"]), 111)
+        self.assertEqual(len(self.data["candidate_bundles"]), 127)
         self.assertEqual({row["id"] for row in sources}, {row["id"] for row in self.data["candidate_bundles"]})
         for bundle in self.data["candidate_bundles"]:
             self.assertEqual(bundle["adoption"], "optional")
@@ -116,7 +116,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
             self.assertNotIn("semantic_policy", extension)
             self.assertNotIn("representation_modes", extension)
             self.assertTrue(record["maintenance_only"])
-        self.assertEqual(count, 11)
+        self.assertEqual(count, 12)
         serialized = json.dumps(self.pack())
         self.assertNotIn("maintenance_ref", serialized)
         self.assertNotIn("judgment_boundary", serialized)
