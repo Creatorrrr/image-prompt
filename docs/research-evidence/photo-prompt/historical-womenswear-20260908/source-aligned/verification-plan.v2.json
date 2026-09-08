@@ -1,0 +1,710 @@
+{
+  "schema_version": "historical-womenswear-verification-plan/v2",
+  "status": "designed_not_executed",
+  "scope": "연구 데이터와 미래 채택 판단의 검증 설계. 이번 실행은 구조 검사만 수행.",
+  "semantic_axes": [
+    {
+      "id": "garment_identity",
+      "relation_type": "named_variant",
+      "question_ko": "명칭을 그대로 보존하되 하나의 선택 변형을 붙인다.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "원문 라벨·지역·연대는 검색/근거; 형태의 충분조건 아님"
+    },
+    {
+      "id": "layering",
+      "relation_type": "outer_over_inner",
+      "question_ko": "겉옷의 열림을 통해 아래 옷의 독립된 경계가 드러나는가.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "슈미즈·가무라/조르네아·오버스커트·치마저고리"
+    },
+    {
+      "id": "back_construction",
+      "relation_type": "origin_attachment",
+      "question_ko": "등 주름이 목선에서 시작해 허리를 지나 자유롭게 떨어지는가, 허리에 맞춰 고정되는가.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "정면 인물사진만으로 판별 금지"
+    },
+    {
+      "id": "waist_placement",
+      "relation_type": "garment_seam_to_body_landmark",
+      "question_ko": "옷 허리선·새시 위치를 신체 기준점과 관계로 기술.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "인물의 신체 비율·흉곽을 변경하는 슬롯과 분리"
+    },
+    {
+      "id": "skirt_volume",
+      "relation_type": "lateral_radial_rear",
+      "question_ko": "좌우·둘레·뒤 방향의 옷 부피를 구분한다.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "보이는 외곽선과 내부 지지대의 실재를 별도 검사"
+    },
+    {
+      "id": "sleeve_topology",
+      "relation_type": "attachment_opening_volume",
+      "question_ko": "팔·소매의 접합부, 입구, 부피의 최대 위치를 구분.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "Bombard/Gigot/Kosode/Tippet의 단어 유사성보다 관계"
+    },
+    {
+      "id": "headwear_topology",
+      "relation_type": "support_wrap_band",
+      "question_ko": "머리 위 지지점, 턱 아래 띠, 목을 감싸는 면, 달린 소매를 분리.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "장옷/쓰개치마, 윔플/바베트/필릿"
+    },
+    {
+      "id": "closure_ownership",
+      "relation_type": "wearer_left_right",
+      "question_ko": "앞섶·버튼·고름·매듭의 위치와 어떤 옷을 닫는지 명시.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "카메라 좌우와 착용자 좌우 혼동 금지"
+    },
+    {
+      "id": "fiber_weave_surface",
+      "relation_type": "independent_factors",
+      "question_ko": "섬유, 직조, 파일, 광택, 패턴 형성 방식을 독립 속성으로 보존.",
+      "dimension_proposal": "material",
+      "limit_ko": "실크와 새틴은 배타값이 아님; 사진으로 섬유 성분 확정 금지"
+    },
+    {
+      "id": "trim_ownership",
+      "relation_type": "attached_to_garment",
+      "question_ko": "자수·리본·브레이드·레이스가 부착된 옷 부분을 명시.",
+      "dimension_proposal": "appearance",
+      "limit_ko": "실제 꽃/나비, 피부 무늬로 개체 이동 금지"
+    },
+    {
+      "id": "prop_action",
+      "relation_type": "support_contact_result",
+      "question_ko": "누가 무엇을 어느 부위로 잡고, 동작으로 어떤 상태가 보이는지 기록.",
+      "dimension_proposal": "relationship",
+      "limit_ko": "원문 창작 장면이며 도구의 정확한 역사 형태는 개별 검증"
+    },
+    {
+      "id": "occasion_and_capture",
+      "relation_type": "separate_context",
+      "question_ko": "낮/산책/사교/상복 맥락, 사진 공정, 재현 방식은 의복 구조와 분리.",
+      "dimension_proposal": "context",
+      "limit_ko": "검정=상중, 중세옷=중세 당시사진 같은 추론 금지"
+    }
+  ],
+  "source_image_observations": [
+    {
+      "id": "I01",
+      "source_id": "S20",
+      "object": "Met 1976.146a,b",
+      "image_url": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/84611/2214663/main-image",
+      "method": "CUA screenshot viewed",
+      "view": "rear",
+      "observed_ko": "허리에 맞춘 세로 등판과 걷어 올린 겉치마 드레이프가 한 옷에 공존한다.",
+      "not_observed_ko": "내부 고리·끈은 보이지 않음. 모든 드레이프 구획의 개수를 이 시점 하나로 확정하지 않음.",
+      "generated_image": false
+    },
+    {
+      "id": "I02",
+      "source_id": "S18",
+      "object": "Met 2009.300.903a,b",
+      "image_url": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/159485/335486/main-image",
+      "method": "CUA screenshot viewed",
+      "view": "rear three-quarter",
+      "observed_ko": "등목선 부근에서 긴 세로 주름이 시작해 허리를 지나 아래까지 자유롭게 이어짐.",
+      "not_observed_ko": "내부 파니에 형태·뼈대 재료는 겉사진에서 보이지 않음.",
+      "generated_image": false
+    },
+    {
+      "id": "I03",
+      "source_id": "N13",
+      "object": "KCDF 쓰개치마 소개 이미지",
+      "image_url": "https://www.kculture.or.kr/jnrepo/upload/jnBrdBoard/202208/e242498b4e2a4ddcbfbb6f687459c91c_1660731378824.PNG",
+      "method": "CUA screenshot viewed",
+      "view": "flat-laid; source image 374 x 266",
+      "observed_ko": "윗 띠 아래 모인 넓은 천, 양 끝의 긴 끈. 펼친 형상에 소매가 없음.",
+      "not_observed_ko": "착용 시 턱·손 위치는 사진에 없음. 본문의 착용 설명에 의존. 섬유 성분은 해상도로 판정 불가.",
+      "generated_image": false
+    },
+    {
+      "id": "I04",
+      "source_id": "N19",
+      "object": "Met 1970.145",
+      "image_url": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/70499/174570/main-image",
+      "method": "CUA screenshot viewed",
+      "view": "front, sleeves extended; source image 1200 x 900",
+      "observed_ko": "넓게 펼친 소매와 긴 몸판, 목·여밈·소매끝·밑단을 따르는 어두운 테두리, 천 위 반복 나비 문양.",
+      "not_observed_ko": "옆트임의 열린 깊이·착용자의 몸 위 드레이프·착용 행사·혼인 상태는 이 사진으로 확인하지 않음.",
+      "generated_image": false
+    }
+  ],
+  "visual_cases": [
+    {
+      "id": "V01",
+      "key": "back_francaise",
+      "candidate_id": "hw_francaise_free_back",
+      "positive_variant_ko": "등목선에서 시작해 허리를 지나 떨어지는 프랑세즈 등 주름",
+      "minimal_counterexample_ko": "주름 시작점을 허리로 옮긴 긴 치마",
+      "decisive_gate_ko": "목선-허리-치마의 연속 경로",
+      "required_view": "후면 전신",
+      "source_ids": [
+        "S17",
+        "S18"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V02",
+      "key": "back_anglaise",
+      "candidate_id": "hw_anglaise_fitted_back",
+      "positive_variant_ko": "허리에 맞춘 등판이 보이는 앙글레즈 후면",
+      "minimal_counterexample_ko": "목선부터 매달린 자유로운 sacque 등판",
+      "decisive_gate_ko": "허리에서의 등판 맞춤; 앞 페티코트는 이 검사에 불필요",
+      "required_view": "후면 전신",
+      "source_ids": [
+        "S19",
+        "S20"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V03",
+      "key": "polonaise_with_anglaise",
+      "candidate_id": "hw_polonaise_three_lifts",
+      "positive_variant_ko": "밀착 등판과 세 구획으로 들어 올린 겉치마가 공존",
+      "minimal_counterexample_ko": "뒤쪽 큰 버슬 한 덩어리만 있는 치마",
+      "decisive_gate_ko": "별도 아래 치마와 들어 올린 드레이프 관계; 등판 분류와 공존 허용",
+      "required_view": "후면3/4 + 필요 시 정면 별도",
+      "source_ids": [
+        "S20"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V04",
+      "key": "pannier_direction",
+      "candidate_id": "hw_lateral_pannier",
+      "positive_variant_ko": "옆으로 넓고 앞뒤가 비교적 얕은 치마",
+      "minimal_counterexample_ko": "둘레가 둥근 크리놀린 또는 뒤만 튀어나온 버슬",
+      "decisive_gate_ko": "옷의 부피 방향; 정면 한 장으로 깊이 수치 확정 금지",
+      "required_view": "3/4 전신; 소장품 정면/측면 보완",
+      "source_ids": [
+        "S18",
+        "S21"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V05",
+      "key": "bustle_rear",
+      "candidate_id": "hw_shelf_bustle",
+      "positive_variant_ko": "허리 아래에서 뒤로 돌출하는1880년대 선택형",
+      "minimal_counterexample_ko": "엉덩이 신체 자체만 확대",
+      "decisive_gate_ko": "옷 드레이프가 후방 돌출부를 형성하고 아래로 떨어짐",
+      "required_view": "측면·측후면",
+      "source_ids": [
+        "S24",
+        "S29"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V06",
+      "key": "chemise_vs_empire",
+      "candidate_id": "hw_chemise_gown_sash",
+      "positive_variant_ko": "자연 허리에 새시를 묶은1780년대 슈미즈 가운",
+      "minimal_counterexample_ko": "새시가 가슴 바로 아래에 고정",
+      "decisive_gate_ko": "해당 선택 변형의 허리 높이를 유지",
+      "required_view": "정면 전신",
+      "source_ids": [
+        "S21"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V07",
+      "key": "tippet_ownership",
+      "candidate_id": "hw_tippet_back_sleeve",
+      "positive_variant_ko": "소매 뒤에 부착한 천이 팔 동작을 따라 늘어짐",
+      "minimal_counterexample_ko": "목 스카프 또는 손에 쥔 리본",
+      "decisive_gate_ko": "소매와 티펫의 실제 연결부가 보임",
+      "required_view": "소매 뒤가 보이는3/4",
+      "source_ids": [
+        "S03"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V08",
+      "key": "wimple_barbette",
+      "candidate_id": "hw_wimple_chin_neck",
+      "positive_variant_ko": "턱 아래와 목을 넓게 감싼 윔플",
+      "minimal_counterexample_ko": "목을 드러내고 턱 아래 좁은 바베트 띠만 있음",
+      "decisive_gate_ko": "면으로 감싸는 범위와 띠 경로 구분",
+      "required_view": "머리·목 정면",
+      "source_ids": [
+        "N01"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V09",
+      "key": "bombard_gigot",
+      "candidate_id": "hw_houppelande_bombard",
+      "positive_variant_ko": "어깨 쪽은 좁고 아래로 크게 열리는 소매",
+      "minimal_counterexample_ko": "위팔만 크게 부풀고 손목은 좁은 소매",
+      "decisive_gate_ko": "소매 부피 최대 위치와 입구",
+      "required_view": "팔을 옆으로 조금 든 상반신",
+      "source_ids": [
+        "S02",
+        "S03"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V10",
+      "key": "hidden_support",
+      "candidate_id": "hw_stays_structure_display",
+      "positive_variant_ko": "불투명 겉옷 속 스테이즈를 착용한 완성복",
+      "minimal_counterexample_ko": "뼈대가 겉옷을 뚫고 보임",
+      "decisive_gate_ko": "완성복에서는 겉 형태만; 내부 증명은 별도 전시",
+      "required_view": "전신 + 별도 구조 전시",
+      "source_ids": [
+        "S16",
+        "S21"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V11",
+      "key": "lingerie_not_underwear",
+      "candidate_id": "hw_lingerie_daydress",
+      "positive_variant_ko": "1900년대 여름 외출용 면·레이스 드레스",
+      "minimal_counterexample_ko": "현대 란제리 세트나 잠옷으로 바뀜",
+      "decisive_gate_ko": "겉옷으로 이어지는 몸판·치마, 선택한 인서션 디테일",
+      "required_view": "전신 정면",
+      "source_ids": [
+        "N05",
+        "N06"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V12",
+      "key": "mourning_morning",
+      "candidate_id": "hw_mourning_crepe",
+      "positive_variant_ko": "명시한19세기 검정 크레이프 상복",
+      "minimal_counterexample_ko": "morning 아침복으로 검색하거나 모든 검정옷을 상복화",
+      "decisive_gate_ko": "용도는 문맥에서, 직물은 픽셀에서 따로 확인",
+      "required_view": "섬유 질감이 남는 상반신",
+      "source_ids": [
+        "N08"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V13",
+      "key": "drop_waist_geometry",
+      "candidate_id": "hw_drop_waist_1920",
+      "positive_variant_ko": "옷의 허리선이 골반 부근에 있는1920년대 드레스",
+      "minimal_counterexample_ko": "사람 몸통을 늘리거나 허리선 없이 술 장식만 추가",
+      "decisive_gate_ko": "인체 기준점 대비 의복의 솔기 위치",
+      "required_view": "전신 정면",
+      "source_ids": [
+        "N09"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V14",
+      "key": "cloche_shape",
+      "candidate_id": "hw_cloche_bell",
+      "positive_variant_ko": "짧게 내려오는 챙의 밀착 종 모양 모자",
+      "minimal_counterexample_ko": "넓은 수평 챙·식탁 클로슈",
+      "decisive_gate_ko": "머리와 모자의 연속 외곽",
+      "required_view": "머리3/4",
+      "source_ids": [
+        "N11"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V15",
+      "key": "bias_evidence_limit",
+      "candidate_id": "hw_bias_draped_1930",
+      "positive_variant_ko": "기록으로 바이어스 재단이 확인된 드레스의 유연한 드레이프",
+      "minimal_counterexample_ko": "광택만 보고 바이어스 재단 PASS",
+      "decisive_gate_ko": "픽셀=흐르는 결과, 재단=패턴·기록의 두 판정",
+      "required_view": "전신3/4와 패턴 기록",
+      "source_ids": [
+        "N10"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V16",
+      "key": "jangot_sseugae",
+      "candidate_id": "hw_jangot_headcover",
+      "positive_variant_ko": "머리에 걸친 포에 달린 두 소매가 구별되는 장옷",
+      "minimal_counterexample_ko": "소매 없는 치마형 천으로 변함",
+      "decisive_gate_ko": "머리쓰개와 연결된 소매의 소유·부착 관계",
+      "required_view": "머리부터 늘어진 소매까지 정면",
+      "source_ids": [
+        "N12",
+        "N13"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V17",
+      "key": "sseugae_ties",
+      "candidate_id": "hw_sseugaechima_headcover",
+      "positive_variant_ko": "모인 띠와 천, 턱 아래로 모이는 끈의 쓰개치마",
+      "minimal_counterexample_ko": "허리에 치마를 입거나 코트 소매가 생김",
+      "decisive_gate_ko": "머리 위 지지점과 끈·치마형 천의 연속 관계",
+      "required_view": "머리·턱·상체 정면",
+      "source_ids": [
+        "N13"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V18",
+      "key": "dangui_layering",
+      "candidate_id": "hw_dangui_open_sides",
+      "positive_variant_ko": "긴 앞뒤 자락이 옆트임으로 갈라지는 당의",
+      "minimal_counterexample_ko": "짧은 저고리나 한 장 원피스",
+      "decisive_gate_ko": "긴 자락·옆트임·아래 치마의 구별",
+      "required_view": "앞3/4",
+      "source_ids": [
+        "N14"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V19",
+      "key": "reformed_hanbok_variant",
+      "candidate_id": "hw_gaeryang_hanbok_1920",
+      "positive_variant_ko": "1920–30년대 특정 도판의 긴 저고리·짧은 통치마",
+      "minimal_counterexample_ko": "모든 개량한복에 현대 버튼/같은 기장 강제",
+      "decisive_gate_ko": "선택한 표본 특징만 고정; 신념·교육 추정 없음",
+      "required_view": "신발 포함 전신",
+      "source_ids": [
+        "N15",
+        "N29"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V20",
+      "key": "kosode_opening",
+      "candidate_id": "hw_kosode_small_opening",
+      "positive_variant_ko": "큰 소매 패널 안에 작은 손목 입구가 있는 고소데",
+      "minimal_counterexample_ko": "소매 전체를 반팔로 축소",
+      "decisive_gate_ko": "입구의 크기와 소매 전체의 길이·면적 구분",
+      "required_view": "소매 상세",
+      "source_ids": [
+        "N17"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V21",
+      "key": "kimono_left_right",
+      "candidate_id": "hw_kimono_obi_wrap",
+      "positive_variant_ko": "착용자의 왼 앞섶이 오른 앞섶 위를 덮음",
+      "minimal_counterexample_ko": "화면 좌우로 해석해 반대로 여밈",
+      "decisive_gate_ko": "착용자 좌우와 별도 오비 레이어",
+      "required_view": "정면 비반전 보기",
+      "source_ids": [
+        "N16"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V22",
+      "key": "qing_motif_ownership",
+      "candidate_id": "hw_qing_embroidered_robe",
+      "positive_variant_ko": "나비 자수 문양이 장포의 천 위에 반복됨",
+      "minimal_counterexample_ko": "나비가 몸에서 떨어져 실제 생물로 날아다님",
+      "decisive_gate_ko": "모티프는 의복 표면에 속함",
+      "required_view": "소매를 펼친 전신 또는 펼침",
+      "source_ids": [
+        "N19"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V23",
+      "key": "qipao_1920_volume",
+      "candidate_id": "hw_qipao_1920_loose",
+      "positive_variant_ko": "넉넉한 몸판과 긴 소매의1920년대 치파오 선택형",
+      "minimal_counterexample_ko": "현대 초밀착·양쪽 높은 트임",
+      "decisive_gate_ko": "명시한 실물 변형의 여유량·소매·길이 보존",
+      "required_view": "전신 정면",
+      "source_ids": [
+        "N20",
+        "N21"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V24",
+      "key": "damask_brocade_overlap",
+      "candidate_id": "hw_brocade_raised_motifs",
+      "positive_variant_ko": "다마스크 바탕 위에 추가 문양 직조가 공존",
+      "minimal_counterexample_ko": "둘 중 하나를 지워야 유효하다고 판정",
+      "decisive_gate_ko": "바탕 대비와 추가 문양을 별개 축으로 허용",
+      "required_view": "직물 근접 사광",
+      "source_ids": [
+        "N23",
+        "N24"
+      ],
+      "first_pixel_wave": true,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V25",
+      "key": "pintuck_print",
+      "candidate_id": "hw_fine_pintucks",
+      "positive_variant_ko": "봉제한 가는 턱이 천 위에서 솟아 있음",
+      "minimal_counterexample_ko": "줄무늬 프린트로만 표현",
+      "decisive_gate_ko": "능선과 봉제선; 소장품 확인 전 역사명칭 PASS 보류",
+      "required_view": "천 근접 사광",
+      "source_ids": [
+        "N06"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    },
+    {
+      "id": "V26",
+      "key": "chatelaine_contact",
+      "candidate_id": "hw_chatelaine_waist_tools",
+      "positive_variant_ko": "허리 고리에 짧은 체인과 도구통이 연결",
+      "minimal_counterexample_ko": "도구통이 떠 있거나 속 가위가 외함을 투과",
+      "decisive_gate_ko": "고정구→체인→도구통의 연속성",
+      "required_view": "허리 근접",
+      "source_ids": [
+        "N27"
+      ],
+      "first_pixel_wave": false,
+      "status": "not_run",
+      "pass_rule": "요구 관계와 보이는 증거가 모두 있을 때만 해당 게이트 통과. 가림/해상도 부족은 충족으로 인정하지 않음.",
+      "not_a_test_of": "착용자 신분·민족·성격·실제 섬유성분"
+    }
+  ],
+  "routing_negative_fixtures": [
+    {
+      "id": "R01",
+      "label": "ruff animal",
+      "input": "avian feather ruff",
+      "expected_ko": "조류 목깃에서 역사 의복·인간 주체를 강제하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R02",
+      "label": "ruff clown",
+      "input": "ruffled clown collar",
+      "expected_ko": "광대 러플이 튜더 전체 복식을 자동 활성화하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R03",
+      "label": "anglaise lace",
+      "input": "broderie anglaise eyelet blouse",
+      "expected_ko": "레이스의 anglaise와 robe à l’anglaise 등판을 구별",
+      "status": "not_run"
+    },
+    {
+      "id": "R04",
+      "label": "pannier fantasy",
+      "input": "rococopunk asymmetrical pannier repair",
+      "expected_ko": "펑크 맥락과 수선 동작을 보존; 역사 원형으로 강제 정규화하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R05",
+      "label": "morning",
+      "input": "morning walk in a blue dress",
+      "expected_ko": "mourning 상복 후보를 의무로 만들지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R06",
+      "label": "black dress",
+      "input": "검정색 현대 드레스",
+      "expected_ko": "상복 의미를 자동 추가하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R07",
+      "label": "chemise",
+      "input": "modern chemise sleepwear",
+      "expected_ko": "18세기 슈미즈 가운으로 자동 변경하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R08",
+      "label": "cloche object",
+      "input": "glass cloche on a table",
+      "expected_ko": "사람 머리 모자를 생성하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R09",
+      "label": "reticle",
+      "input": "camera reticle overlay",
+      "expected_ko": "레티큘 가방으로 변경하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R10",
+      "label": "hennin spelling",
+      "input": "conical hennin / hennin / haut bonnet / 원뿔형 헤닌",
+      "expected_ko": "검색 별칭 유지; 뿔·원뿔 구체 변형은 별도 해석",
+      "status": "not_run"
+    },
+    {
+      "id": "R11",
+      "label": "modern costume",
+      "input": "modern color photograph of medieval costume recreation",
+      "expected_ko": "의복 시대가 고사진 공정이나 실제 중세 촬영 날짜를 강제하지 않음",
+      "status": "not_run"
+    },
+    {
+      "id": "R12",
+      "label": "body lock",
+      "input": "same specified adult appearance with a pannier-supported skirt",
+      "expected_ko": "몸의 골반·가슴·신체 비율을 옷 부피로 교체하지 않음",
+      "status": "not_run"
+    }
+  ],
+  "qualification_protocol": {
+    "stage_order": [
+      "출처별 선택 변형 확정",
+      "한국어·영어·구두점 별칭과 다의어 라우팅",
+      "실제 생성 pack에서 멤버 노출과 intent lock 검사",
+      "최종 프롬프트와 모델에 전달된 바이트 검사",
+      "이미지 생성·픽셀 평가",
+      "사용자 판단 후 채택"
+    ],
+    "candidate_exposure_gate": "컴파일 성공을 노출 성공으로 바꾸지 않는다. 실제 pack에 24개 전부 나와야 하는 것도 아니다. 현재 최대 번들2, 멤버8 제한·차원 개방·멤버 자격을 적용하고 목표 후보의 선택 가능성을 검사.",
+    "pixel_experiment": {
+      "initial_cases": [
+        "V01",
+        "V03",
+        "V04",
+        "V11",
+        "V16",
+        "V18",
+        "V23",
+        "V24"
+      ],
+      "arms": [
+        {
+          "id": "A",
+          "description": "현재 런타임, 고정한 요청과 동일한 생성 모델/설정"
+        },
+        {
+          "id": "B",
+          "description": "동일 런타임 + 제안 후보팩. 동일 요청·열린 차원 아래 후보 선택 및 실제 노출 기록"
+        },
+        {
+          "id": "C",
+          "description": "동일한 요청 의미를 사람이 명시적으로 풀어 쓴 문장. 모델이 형태를 표현할 수 있는지 보는 참고군; B의 성능으로 합산하지 않음"
+        }
+      ],
+      "controls": [
+        "실행 전에 각 요청의 의미·선택 변형·자유 차원 고정",
+        "같은 모델·해상도·출력 수·프롬프트 예산, 지원하면 같은 seed",
+        "각 arm 한 번 생성, 자동 재시도/대체 모델 없음",
+        "소장품 이미지는 의미 조사용; text-only 비교에서 모델 입력 reference_sha256=[]",
+        "고정 대상 특징과 무관한 추가 미화/의상 변화 금지",
+        "A/B/C 출처를 가린 픽셀 판독; 프롬프트 PASS와 이미지 PASS 별도",
+        "가려진 필수 특징은 성공 아님; 기술적으로 판독 불가능한 재단·성분은 별도 검증"
+      ],
+      "pass_policy": "partial_is_fail: 정의된 모든 필수 시각 관계가 보일 때만 해당 사례 PASS. 전달되지 않은 출력/차단은 unscored; 누락·차단 수를 따로 보고.",
+      "stop_rule": "명칭·시대·옷의 소유권이 바뀌거나 잠긴 신체/촬영 의도가 변하면 해당 번들 채택 중단. 픽셀 개선을 만들기 위해 평가 기준이나 요청 의미를 바꾸지 않는다.",
+      "adoption_rule": "실제 노출→선택→프롬프트 보존→픽셀 게이트까지 통과한 번들만 부분 채택 후보. 다른 82개 후보로 결과를 일반화하지 않음."
+    },
+    "not_run": [
+      "routing",
+      "actual_candidate_exposure",
+      "prompt",
+      "runtime_request",
+      "image_generation",
+      "generated_pixels",
+      "user_judgment"
+    ]
+  }
+}

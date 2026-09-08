@@ -1,0 +1,2099 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Selected visible garment topology, layered clothing and textile surface relations.",
+  "profiles": [
+    {
+      "id": "hw_francaise_free_back",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "deep box pleats originate at the gown upper back neckline; the gown back pleats descend freely past the waist into the skirt",
+          "가운 등목선에서 시작한 깊은 상자주름이 허리를 지나 치마까지 자유롭게 내려온다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Robe à la française free back pleats as a selected visible variant: deep box pleats originate at the gown upper back neckline; the gown back pleats descend freely past the waist into the skirt.",
+        "paraphrase_examples": [
+          "Robe à la française free back pleats with deep box pleats originate at the gown upper back neckline and the gown back pleats descend freely past the waist into the skirt",
+          "robe à la française",
+          "robe a la francaise",
+          "sack-back gown",
+          "프랑세즈"
+        ],
+        "contrast_examples": [
+          "허리에서 시작하는 치마 주름",
+          "별도 케이프",
+          "몸에 맞는 앙글레즈 등판"
+        ],
+        "claim_limits": [
+          "정면 사진으로 등 주름 PASS 불가",
+          "특정 색·꽃무늬는 정의가 아님",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Robe à la française free back pleats",
+          "프랑세즈의 자유로운 등 주름",
+          "deep box pleats originate at the gown upper back neckline",
+          "the gown back pleats descend freely past the waist into the skirt"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "허리에서 시작하는 치마 주름",
+        "별도 케이프",
+        "몸에 맞는 앙글레즈 등판"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "deep box pleats originate at the gown upper back neckline"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "deep box pleats originate at the gown upper back neckline"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: deep box pleats originate at the gown upper back neckline",
+            "render_gate": {
+              "id": "vo_hw_francaise_free_back_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows deep box pleats originate at the gown upper back neckline. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gown back pleats descend freely past the waist into the skirt"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gown back pleats descend freely past the waist into the skirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown back pleats descend freely past the waist into the skirt",
+            "render_gate": {
+              "id": "vo_hw_francaise_free_back_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown back pleats descend freely past the waist into the skirt. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_anglaise_fitted_back",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the gown back is shaped closely to the waist; the gown skirt spreads below the shaped back waist",
+          "가운 등판이 허리에 맞춰지고 그 아래에서 치마가 펼쳐진다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Robe à l’anglaise fitted back as a selected visible variant: the gown back is shaped closely to the waist; the gown skirt spreads below the shaped back waist.",
+        "paraphrase_examples": [
+          "Robe à l’anglaise fitted back with the gown back is shaped closely to the waist and the gown skirt spreads below the shaped back waist",
+          "robe à l’anglaise",
+          "robe a langlaise",
+          "robe à l'anglaise",
+          "앙글레즈"
+        ],
+        "contrast_examples": [
+          "어깨에서 떨어지는 자유로운 sacque 등판",
+          "국적을 나타내는 프린트"
+        ],
+        "claim_limits": [
+          "앙글레즈와 폴로네즈식 드레이핑을 무조건 배타적으로 두지 않음",
+          "앞 열림은 hw_overskirt_layering에서 별도 판정. 후면 판별에 정면 사진을 요구하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Robe à l’anglaise fitted back",
+          "앙글레즈의 밀착 등판",
+          "the gown back is shaped closely to the waist",
+          "the gown skirt spreads below the shaped back waist"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "어깨에서 떨어지는 자유로운 sacque 등판",
+        "국적을 나타내는 프린트"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the gown back is shaped closely to the waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the gown back is shaped closely to the waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown back is shaped closely to the waist",
+            "render_gate": {
+              "id": "vo_hw_anglaise_fitted_back_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown back is shaped closely to the waist. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gown skirt spreads below the shaped back waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gown skirt spreads below the shaped back waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown skirt spreads below the shaped back waist",
+            "render_gate": {
+              "id": "vo_hw_anglaise_fitted_back_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown skirt spreads below the shaped back waist. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_polonaise_three_lifts",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the gown overskirt is drawn up into three distinct draped sections; a separate petticoat remains visible below the lifted gown overskirt",
+          "겉치마가 세 구획으로 걷어 올려지고 그 아래 별도 페티코트가 보인다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Three-part polonaise skirt draping as a selected visible variant: the gown overskirt is drawn up into three distinct draped sections; a separate petticoat remains visible below the lifted gown overskirt.",
+        "paraphrase_examples": [
+          "Three-part polonaise skirt draping with the gown overskirt is drawn up into three distinct draped sections and a separate petticoat remains visible below the lifted gown overskirt",
+          "polonaise",
+          "robe à la polonaise",
+          "폴로네즈"
+        ],
+        "contrast_examples": [
+          "1880년대 한 덩어리 선반형 버슬",
+          "안치마 없는 하이로 드레스"
+        ],
+        "claim_limits": [
+          "세 걷어올림만으로 모든 역사적 polonaise 재단을 정의하지 않음",
+          "매듭·링이 가려졌으면 보였다고 기록하지 않음",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Three-part polonaise skirt draping",
+          "폴로네즈식 세 부분 치마 걷어 올림",
+          "the gown overskirt is drawn up into three distinct draped sections",
+          "a separate petticoat remains visible below the lifted gown overskirt"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "1880년대 한 덩어리 선반형 버슬",
+        "안치마 없는 하이로 드레스"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the gown overskirt is drawn up into three distinct draped sections"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the gown overskirt is drawn up into three distinct draped sections"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown overskirt is drawn up into three distinct draped sections",
+            "render_gate": {
+              "id": "vo_hw_polonaise_three_lifts_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown overskirt is drawn up into three distinct draped sections. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a separate petticoat remains visible below the lifted gown overskirt"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a separate petticoat remains visible below the lifted gown overskirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a separate petticoat remains visible below the lifted gown overskirt",
+            "render_gate": {
+              "id": "vo_hw_polonaise_three_lifts_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a separate petticoat remains visible below the lifted gown overskirt. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_lateral_pannier",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the gown skirt extends strongly to the left and right of the waist; the gown skirt has less front-to-back depth than lateral width",
+          "가운 치마가 허리 좌우로 넓게 퍼지고 앞뒤 깊이는 좌우 폭보다 작다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Lateral pannier volume as a selected visible variant: the gown skirt extends strongly to the left and right of the waist; the gown skirt has less front-to-back depth than lateral width.",
+        "paraphrase_examples": [
+          "Lateral pannier volume with the gown skirt extends strongly to the left and right of the waist and the gown skirt has less front-to-back depth than lateral width",
+          "pannier",
+          "paniers",
+          "파니에",
+          "패니어"
+        ],
+        "contrast_examples": [
+          "케이지 크리놀린의 둘레 확장",
+          "후방 버슬",
+          "자전거 짐가방"
+        ],
+        "claim_limits": [
+          "입은 가운의 윤곽만으로 보이지 않는 케이지를 그려 넣지 않음",
+          "pannier 단독 다의성",
+          "정면만으로 앞뒤 깊이까지 판독하지 않음. 몸의 골반 폭 확대 요청이 아님.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Lateral pannier volume",
+          "파니에의 좌우 확장",
+          "the gown skirt extends strongly to the left and right of the waist",
+          "the gown skirt has less front-to-back depth than lateral width"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "케이지 크리놀린의 둘레 확장",
+        "후방 버슬",
+        "자전거 짐가방"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the gown skirt extends strongly to the left and right of the waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the gown skirt extends strongly to the left and right of the waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown skirt extends strongly to the left and right of the waist",
+            "render_gate": {
+              "id": "vo_hw_lateral_pannier_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown skirt extends strongly to the left and right of the waist. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gown skirt has less front-to-back depth than lateral width"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gown skirt has less front-to-back depth than lateral width"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown skirt has less front-to-back depth than lateral width",
+            "render_gate": {
+              "id": "vo_hw_lateral_pannier_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown skirt has less front-to-back depth than lateral width. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_stomacher_insert",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a distinct stomacher panel tapers downward inside the gown bodice opening; the outer gown bodice edges frame the inserted stomacher panel",
+          "가운 몸판 앞 열림의 양 가장자리가 아래로 좁아지는 별도 스토머커 앞판을 둘러싼다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Separate stomacher panel as a selected visible variant: a distinct stomacher panel tapers downward inside the gown bodice opening; the outer gown bodice edges frame the inserted stomacher panel.",
+        "paraphrase_examples": [
+          "Separate stomacher panel with a distinct stomacher panel tapers downward inside the gown bodice opening and the outer gown bodice edges frame the inserted stomacher panel",
+          "stomacher",
+          "스토머커"
+        ],
+        "contrast_examples": [
+          "복부 맨살",
+          "코르셋 전체",
+          "치마의 forepart"
+        ],
+        "claim_limits": [
+          "분리식 여부가 보이지 않으면 외관의 패널 관계까지만 주장",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Separate stomacher panel",
+          "스토머커 앞패널",
+          "a distinct stomacher panel tapers downward inside the gown bodice opening",
+          "the outer gown bodice edges frame the inserted stomacher panel"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "복부 맨살",
+        "코르셋 전체",
+        "치마의 forepart"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a distinct stomacher panel tapers downward inside the gown bodice opening"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a distinct stomacher panel tapers downward inside the gown bodice opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a distinct stomacher panel tapers downward inside the gown bodice opening",
+            "render_gate": {
+              "id": "vo_hw_stomacher_insert_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a distinct stomacher panel tapers downward inside the gown bodice opening. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the outer gown bodice edges frame the inserted stomacher panel"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the outer gown bodice edges frame the inserted stomacher panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the outer gown bodice edges frame the inserted stomacher panel",
+            "render_gate": {
+              "id": "vo_hw_stomacher_insert_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the outer gown bodice edges frame the inserted stomacher panel. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_chemise_gown_sash",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a lightweight gown forms soft gathers through the bodice and skirt; a sash gathers the chemise gown near the natural waist",
+          "가벼운 슈미즈 가운의 몸판과 치마에 부드러운 주름이 생기고 새시가 자연 허리에서 천을 모은다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Chemise gown gathered by a sash as a selected visible variant: a lightweight gown forms soft gathers through the bodice and skirt; a sash gathers the chemise gown near the natural waist.",
+        "paraphrase_examples": [
+          "Chemise gown gathered by a sash with a lightweight gown forms soft gathers through the bodice and skirt and a sash gathers the chemise gown near the natural waist",
+          "chemise gown",
+          "chemise à la reine",
+          "chemise a la reine",
+          "슈미즈 아 라 렌"
+        ],
+        "contrast_examples": [
+          "기본 chemise 속옷",
+          "시대 불문 흰색 원피스",
+          "반드시 가슴 바로 아래인 Empire 허리선"
+        ],
+        "claim_limits": [
+          "색·비침·코르셋 부재를 단어 하나에서 강제하지 않음",
+          "자연 허리 변형. 엠파이어 허리로 자동 상승시키지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Chemise gown gathered by a sash",
+          "슈미즈 가운과 허리띠",
+          "a lightweight gown forms soft gathers through the bodice and skirt",
+          "a sash gathers the chemise gown near the natural waist"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "기본 chemise 속옷",
+        "시대 불문 흰색 원피스",
+        "반드시 가슴 바로 아래인 Empire 허리선"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a lightweight gown forms soft gathers through the bodice and skirt"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a lightweight gown forms soft gathers through the bodice and skirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a lightweight gown forms soft gathers through the bodice and skirt",
+            "render_gate": {
+              "id": "vo_hw_chemise_gown_sash_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a lightweight gown forms soft gathers through the bodice and skirt. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a sash gathers the chemise gown near the natural waist"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a sash gathers the chemise gown near the natural waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a sash gathers the chemise gown near the natural waist",
+            "render_gate": {
+              "id": "vo_hw_chemise_gown_sash_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a sash gathers the chemise gown near the natural waist. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_empire_raised_waist",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the gown bodice ends immediately below the bust; the gown skirt descends from the raised bodice seam in a relatively narrow column",
+          "가운 몸판이 가슴 바로 아래에서 끝나고 긴 치마가 그 높은 이음선에서 내려온다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Empire raised-waist silhouette as a selected visible variant: the gown bodice ends immediately below the bust; the gown skirt descends from the raised bodice seam in a relatively narrow column.",
+        "paraphrase_examples": [
+          "Empire raised-waist silhouette with the gown bodice ends immediately below the bust and the gown skirt descends from the raised bodice seam in a relatively narrow column",
+          "Empire dress",
+          "Regency dress",
+          "Empire waist",
+          "엠파이어",
+          "리젠시"
+        ],
+        "contrast_examples": [
+          "자연 허리선에 리본만",
+          "풍성한 크리놀린",
+          "고대 그리스 옷과 동일시"
+        ],
+        "claim_limits": [
+          "Regency는 시대·문화 문맥, Empire waist는 형태 문맥",
+          "흰 얇은 면만을 필수로 두지 않음",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Empire raised-waist silhouette",
+          "엠파이어의 높은 허리선",
+          "the gown bodice ends immediately below the bust",
+          "the gown skirt descends from the raised bodice seam in a relatively narrow column"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "자연 허리선에 리본만",
+        "풍성한 크리놀린",
+        "고대 그리스 옷과 동일시"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the gown bodice ends immediately below the bust"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the gown bodice ends immediately below the bust"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown bodice ends immediately below the bust",
+            "render_gate": {
+              "id": "vo_hw_empire_raised_waist_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown bodice ends immediately below the bust. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gown skirt descends from the raised bodice seam in a relatively narrow column"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gown skirt descends from the raised bodice seam in a relatively narrow column"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown skirt descends from the raised bodice seam in a relatively narrow column",
+            "render_gate": {
+              "id": "vo_hw_empire_raised_waist_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown skirt descends from the raised bodice seam in a relatively narrow column. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_shelf_bustle",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the gown skirt projects sharply backward just below the waist; the gown rear skirt falls from the elevated projecting mass",
+          "가운 치마가 허리 바로 아래에서 뒤로 돌출하고 뒤 치마가 그 높은 돌출부에서 떨어진다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Shelf-like 1880s bustle as a selected visible variant: the gown skirt projects sharply backward just below the waist; the gown rear skirt falls from the elevated projecting mass.",
+        "paraphrase_examples": [
+          "Shelf-like 1880s bustle with the gown skirt projects sharply backward just below the waist and the gown rear skirt falls from the elevated projecting mass",
+          "1880s bustle",
+          "shelf bustle",
+          "버슬 드레스"
+        ],
+        "contrast_examples": [
+          "큰 엉덩이라는 신체 설명",
+          "낮은 트레인만",
+          "좌우 파니에"
+        ],
+        "claim_limits": [
+          "속 지지물은 여러 유형; 금속을 무조건 필수로 두지 않음",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Shelf-like 1880s bustle",
+          "1880년대 선반형 버슬",
+          "the gown skirt projects sharply backward just below the waist",
+          "the gown rear skirt falls from the elevated projecting mass"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "큰 엉덩이라는 신체 설명",
+        "낮은 트레인만",
+        "좌우 파니에"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the gown skirt projects sharply backward just below the waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the gown skirt projects sharply backward just below the waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown skirt projects sharply backward just below the waist",
+            "render_gate": {
+              "id": "vo_hw_shelf_bustle_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown skirt projects sharply backward just below the waist. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the gown rear skirt falls from the elevated projecting mass"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the gown rear skirt falls from the elevated projecting mass"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gown rear skirt falls from the elevated projecting mass",
+            "render_gate": {
+              "id": "vo_hw_shelf_bustle_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gown rear skirt falls from the elevated projecting mass. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_tippet_back_sleeve",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a long narrow tippet hangs from the back of the gown upper sleeve; the tippet strip remains visibly attached to the sleeve as the arm rises",
+          "긴 티펫 천이 가운 위팔 소매 뒤에 부착되어 팔을 들어도 소매와 연결되어 늘어진다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Sleeve-attached tippet as a selected visible variant: a long narrow tippet hangs from the back of the gown upper sleeve; the tippet strip remains visibly attached to the sleeve as the arm rises.",
+        "paraphrase_examples": [
+          "Sleeve-attached tippet with a long narrow tippet hangs from the back of the gown upper sleeve and the tippet strip remains visibly attached to the sleeve as the arm rises",
+          "tippet",
+          "티펫"
+        ],
+        "contrast_examples": [
+          "목 스카프·동물 꼬리·손에 쥔 끈으로 분리"
+        ],
+        "claim_limits": [
+          "후대 목도리 용례와 구별. 부착 위치는 선택한 문헌 표본에 연결.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Sleeve-attached tippet",
+          "소매 뒤에 연결된 티펫",
+          "a long narrow tippet hangs from the back of the gown upper sleeve",
+          "the tippet strip remains visibly attached to the sleeve as the arm rises"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "목 스카프·동물 꼬리·손에 쥔 끈으로 분리"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a long narrow tippet hangs from the back of the gown upper sleeve"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a long narrow tippet hangs from the back of the gown upper sleeve"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a long narrow tippet hangs from the back of the gown upper sleeve",
+            "render_gate": {
+              "id": "vo_hw_tippet_back_sleeve_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a long narrow tippet hangs from the back of the gown upper sleeve. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the tippet strip remains visibly attached to the sleeve as the arm rises"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the tippet strip remains visibly attached to the sleeve as the arm rises"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the tippet strip remains visibly attached to the sleeve as the arm rises",
+            "render_gate": {
+              "id": "vo_hw_tippet_back_sleeve_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the tippet strip remains visibly attached to the sleeve as the arm rises. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_wimple_chin_neck",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a broad wimple cloth cups the underside of the chin; the same wimple cloth spreads across the neck below the face",
+          "넓은 윔플 천이 턱 아래를 받치고 같은 천이 얼굴 아래 목까지 감싼다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Wimple enclosing chin and neck as a selected visible variant: a broad wimple cloth cups the underside of the chin; the same wimple cloth spreads across the neck below the face.",
+        "paraphrase_examples": [
+          "Wimple enclosing chin and neck with a broad wimple cloth cups the underside of the chin and the same wimple cloth spreads across the neck below the face",
+          "wimple",
+          "윔플"
+        ],
+        "contrast_examples": [
+          "좁은 턱끈만 있는 바베트·머리띠만 있는 필릿"
+        ],
+        "claim_limits": [
+          "종교·혼인 상태를 시각 판정하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Wimple enclosing chin and neck",
+          "턱과 목을 감싸는 윔플",
+          "a broad wimple cloth cups the underside of the chin",
+          "the same wimple cloth spreads across the neck below the face"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "좁은 턱끈만 있는 바베트·머리띠만 있는 필릿"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a broad wimple cloth cups the underside of the chin"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a broad wimple cloth cups the underside of the chin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a broad wimple cloth cups the underside of the chin",
+            "render_gate": {
+              "id": "vo_hw_wimple_chin_neck_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a broad wimple cloth cups the underside of the chin. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the same wimple cloth spreads across the neck below the face"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the same wimple cloth spreads across the neck below the face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the same wimple cloth spreads across the neck below the face",
+            "render_gate": {
+              "id": "vo_hw_wimple_chin_neck_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the same wimple cloth spreads across the neck below the face. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_barbette_underchin_band",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a narrow barbette band runs from one temple under the chin to the other temple; the barbette band leaves the front of the neck uncovered",
+          "좁은 바베트 띠가 양 관자놀이 사이에서 턱 아래를 지나고 목 앞면은 드러난다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Narrow barbette chin band as a selected visible variant: a narrow barbette band runs from one temple under the chin to the other temple; the barbette band leaves the front of the neck uncovered.",
+        "paraphrase_examples": [
+          "Narrow barbette chin band with a narrow barbette band runs from one temple under the chin to the other temple and the barbette band leaves the front of the neck uncovered",
+          "barbette",
+          "바베트"
+        ],
+        "contrast_examples": [
+          "목 전체를 덮은 넓은 윔플"
+        ],
+        "claim_limits": [
+          "넓은 중세 키워드로 자동 필수화하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Narrow barbette chin band",
+          "턱 아래의 바베트 띠",
+          "a narrow barbette band runs from one temple under the chin to the other temple",
+          "the barbette band leaves the front of the neck uncovered"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "목 전체를 덮은 넓은 윔플"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a narrow barbette band runs from one temple under the chin to the other temple"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a narrow barbette band runs from one temple under the chin to the other temple"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a narrow barbette band runs from one temple under the chin to the other temple",
+            "render_gate": {
+              "id": "vo_hw_barbette_underchin_band_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a narrow barbette band runs from one temple under the chin to the other temple. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the barbette band leaves the front of the neck uncovered"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the barbette band leaves the front of the neck uncovered"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the barbette band leaves the front of the neck uncovered",
+            "render_gate": {
+              "id": "vo_hw_barbette_underchin_band_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the barbette band leaves the front of the neck uncovered. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_lingerie_daydress",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a full-length white cotton day dress forms one continuous outer garment; lace insertion panels join the dress bodice and sleeves; the fitted waist joins a long gathered skirt",
+          "긴 흰 면 외출 드레스의 몸판과 소매를 레이스 인서션이 연결하고 맞춘 허리 아래로 모인 긴 치마가 이어진다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Lingerie summer day dress as a selected visible variant: a full-length white cotton day dress forms one continuous outer garment; lace insertion panels join the dress bodice and sleeves; the fitted waist joins a long gathered skirt.",
+        "paraphrase_examples": [
+          "Lingerie summer day dress with a full-length white cotton day dress forms one continuous outer garment and lace insertion panels join the dress bodice and sleeves and the fitted waist joins a long gathered skirt",
+          "lingerie dress",
+          "란제리 드레스"
+        ],
+        "contrast_examples": [
+          "브라·팬티 세트·잠옷·슈미즈 속옷으로 치환"
+        ],
+        "claim_limits": [
+          "흰색 긴 치마는 선택 변형. 피부 노출과 완전 투명도를 강제하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Lingerie summer day dress",
+          "외출용 란제리 드레스",
+          "a full-length white cotton day dress forms one continuous outer garment",
+          "lace insertion panels join the dress bodice and sleeves",
+          "the fitted waist joins a long gathered skirt"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "브라·팬티 세트·잠옷·슈미즈 속옷으로 치환"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a full-length white cotton day dress forms one continuous outer garment"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a full-length white cotton day dress forms one continuous outer garment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a full-length white cotton day dress forms one continuous outer garment",
+            "render_gate": {
+              "id": "vo_hw_lingerie_daydress_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a full-length white cotton day dress forms one continuous outer garment. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "lace insertion panels join the dress bodice and sleeves"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "lace insertion panels join the dress bodice and sleeves"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: lace insertion panels join the dress bodice and sleeves",
+            "render_gate": {
+              "id": "vo_hw_lingerie_daydress_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows lace insertion panels join the dress bodice and sleeves. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the fitted waist joins a long gathered skirt"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the fitted waist joins a long gathered skirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the fitted waist joins a long gathered skirt",
+            "render_gate": {
+              "id": "vo_hw_lingerie_daydress_3",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the fitted waist joins a long gathered skirt. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_drop_waist_1920",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the dress waist seam sits below the natural waist near the hips; the dress hangs loosely through the torso before the lowered seam",
+          "넉넉한 드레스 몸판 아래 허리 솔기가 자연 허리보다 낮은 골반 부근에 놓인다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "1920s dropped-waist dress as a selected visible variant: the dress waist seam sits below the natural waist near the hips; the dress hangs loosely through the torso before the lowered seam.",
+        "paraphrase_examples": [
+          "1920s dropped-waist dress with the dress waist seam sits below the natural waist near the hips and the dress hangs loosely through the torso before the lowered seam",
+          "drop waist",
+          "dropped waist",
+          "드롭 웨이스트",
+          "플래퍼"
+        ],
+        "contrast_examples": [
+          "제허리 타이트 드레스·짧은 술 장식만으로 플래퍼 판정"
+        ],
+        "claim_limits": [
+          "밑단 길이·장식·머리는 선택형. 몸의 실제 비율은 바꾸지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "1920s dropped-waist dress",
+          "1920년대 낮은 허리선",
+          "the dress waist seam sits below the natural waist near the hips",
+          "the dress hangs loosely through the torso before the lowered seam"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "제허리 타이트 드레스·짧은 술 장식만으로 플래퍼 판정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the dress waist seam sits below the natural waist near the hips"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the dress waist seam sits below the natural waist near the hips"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the dress waist seam sits below the natural waist near the hips",
+            "render_gate": {
+              "id": "vo_hw_drop_waist_1920_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the dress waist seam sits below the natural waist near the hips. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the dress hangs loosely through the torso before the lowered seam"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the dress hangs loosely through the torso before the lowered seam"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the dress hangs loosely through the torso before the lowered seam",
+            "render_gate": {
+              "id": "vo_hw_drop_waist_1920_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the dress hangs loosely through the torso before the lowered seam. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_cloche_bell",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a close-fitting cloche crown follows the head in a bell shape; the short cloche brim turns down close to the brow and temples",
+          "머리에 밀착한 종 모양 클로슈의 짧은 챙이 이마와 관자놀이 가까이 내려온다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Close-fitting cloche as a selected visible variant: a close-fitting cloche crown follows the head in a bell shape; the short cloche brim turns down close to the brow and temples.",
+        "paraphrase_examples": [
+          "Close-fitting cloche with a close-fitting cloche crown follows the head in a bell shape and the short cloche brim turns down close to the brow and temples",
+          "cloche",
+          "cloche hat",
+          "클로슈",
+          "클로셰 모자"
+        ],
+        "contrast_examples": [
+          "넓은 챙 에드워디안 모자·식탁 덮개 cloche"
+        ],
+        "claim_limits": [
+          "챙 방향은 선택형. 단발·재료·장식은 필수 조건 아님.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Close-fitting cloche",
+          "머리에 밀착한 클로슈",
+          "a close-fitting cloche crown follows the head in a bell shape",
+          "the short cloche brim turns down close to the brow and temples"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "넓은 챙 에드워디안 모자·식탁 덮개 cloche"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a close-fitting cloche crown follows the head in a bell shape"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a close-fitting cloche crown follows the head in a bell shape"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a close-fitting cloche crown follows the head in a bell shape",
+            "render_gate": {
+              "id": "vo_hw_cloche_bell_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a close-fitting cloche crown follows the head in a bell shape. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the short cloche brim turns down close to the brow and temples"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the short cloche brim turns down close to the brow and temples"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the short cloche brim turns down close to the brow and temples",
+            "render_gate": {
+              "id": "vo_hw_cloche_bell_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the short cloche brim turns down close to the brow and temples. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_jangot_headcover",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a coat-shaped jangot is draped over the head with its sleeves hanging at the sides; the jangot front edges frame a face opening below the crown; the jangot sleeve ends remain distinct from the front fastening ties",
+          "소매가 달린 포 형태의 장옷을 머리에 걸쳐 앞자락이 얼굴을 감싸고 양옆에 소매와 앞 고름이 구별된다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Jangot coat-shaped head covering as a selected visible variant: a coat-shaped jangot is draped over the head with its sleeves hanging at the sides; the jangot front edges frame a face opening below the crown; the jangot sleeve ends remain distinct from the front fastening ties.",
+        "paraphrase_examples": [
+          "Jangot coat-shaped head covering with a coat-shaped jangot is draped over the head with its sleeves hanging at the sides and the jangot front edges frame a face opening below the crown and the jangot sleeve ends remain distinct from the front fastening ties",
+          "jangot",
+          "장옷"
+        ],
+        "contrast_examples": [
+          "소매 없는 쓰개치마·보통 망토·다른 지역 복식과 등치"
+        ],
+        "claim_limits": [
+          "색·끝동·착용법 변형 가능. 옷은 문화적 대상이며 얼굴의 민족·신분 근거가 아님.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Jangot coat-shaped head covering",
+          "소매가 남는 장옷 머리쓰개",
+          "a coat-shaped jangot is draped over the head with its sleeves hanging at the sides",
+          "the jangot front edges frame a face opening below the crown",
+          "the jangot sleeve ends remain distinct from the front fastening ties"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "소매 없는 쓰개치마·보통 망토·다른 지역 복식과 등치"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a coat-shaped jangot is draped over the head with its sleeves hanging at the sides"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a coat-shaped jangot is draped over the head with its sleeves hanging at the sides"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a coat-shaped jangot is draped over the head with its sleeves hanging at the sides",
+            "render_gate": {
+              "id": "vo_hw_jangot_headcover_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a coat-shaped jangot is draped over the head with its sleeves hanging at the sides. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the jangot front edges frame a face opening below the crown"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the jangot front edges frame a face opening below the crown"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the jangot front edges frame a face opening below the crown",
+            "render_gate": {
+              "id": "vo_hw_jangot_headcover_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the jangot front edges frame a face opening below the crown. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the jangot sleeve ends remain distinct from the front fastening ties"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the jangot sleeve ends remain distinct from the front fastening ties"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the jangot sleeve ends remain distinct from the front fastening ties",
+            "render_gate": {
+              "id": "vo_hw_jangot_headcover_3",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the jangot sleeve ends remain distinct from the front fastening ties. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_sseugaechima_headcover",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a skirt-shaped sseugaechima falls from a gathered band over the crown; two ties from the sseugaechima band meet below the chin; the gathered skirt cloth continues down both sides of the head covering",
+          "치마형 쓰개치마가 머리 위 모인 띠에서 양옆으로 내려오고 띠의 두 끈이 턱 아래에서 만난다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Skirt-shaped sseugaechima head covering as a selected visible variant: a skirt-shaped sseugaechima falls from a gathered band over the crown; two ties from the sseugaechima band meet below the chin; the gathered skirt cloth continues down both sides of the head covering.",
+        "paraphrase_examples": [
+          "Skirt-shaped sseugaechima head covering with a skirt-shaped sseugaechima falls from a gathered band over the crown and two ties from the sseugaechima band meet below the chin and the gathered skirt cloth continues down both sides of the head covering",
+          "sseugaechima",
+          "sseugae chima",
+          "쓰개치마"
+        ],
+        "contrast_examples": [
+          "장옷 소매·허리에 정상 착용한 치마·턱끈 없는 단순 베일"
+        ],
+        "claim_limits": [
+          "소매 없음은 형태 경계이고 긍정 프롬프트에서는 치마형 연속 천으로 표현; 사진은 펼침만 직접 확인.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Skirt-shaped sseugaechima head covering",
+          "치마형 쓰개치마",
+          "a skirt-shaped sseugaechima falls from a gathered band over the crown",
+          "two ties from the sseugaechima band meet below the chin",
+          "the gathered skirt cloth continues down both sides of the head covering"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "장옷 소매·허리에 정상 착용한 치마·턱끈 없는 단순 베일"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a skirt-shaped sseugaechima falls from a gathered band over the crown"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a skirt-shaped sseugaechima falls from a gathered band over the crown"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a skirt-shaped sseugaechima falls from a gathered band over the crown",
+            "render_gate": {
+              "id": "vo_hw_sseugaechima_headcover_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a skirt-shaped sseugaechima falls from a gathered band over the crown. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "two ties from the sseugaechima band meet below the chin"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "two ties from the sseugaechima band meet below the chin"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: two ties from the sseugaechima band meet below the chin",
+            "render_gate": {
+              "id": "vo_hw_sseugaechima_headcover_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows two ties from the sseugaechima band meet below the chin. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the gathered skirt cloth continues down both sides of the head covering"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the gathered skirt cloth continues down both sides of the head covering"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the gathered skirt cloth continues down both sides of the head covering",
+            "render_gate": {
+              "id": "vo_hw_sseugaechima_headcover_3",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the gathered skirt cloth continues down both sides of the head covering. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_dangui_open_sides",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a dangui outer jacket has long rounded front and back panels; open side slits separate the dangui panels above the chima skirt; light cuff extensions finish the narrow dangui sleeves",
+          "긴 둥근 당의 앞뒤 자락이 치마 위에서 옆트임으로 나뉘고 좁은 소매 끝에 밝은 거들지가 이어진다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Dangui open-sided panels as a selected visible variant: a dangui outer jacket has long rounded front and back panels; open side slits separate the dangui panels above the chima skirt; light cuff extensions finish the narrow dangui sleeves.",
+        "paraphrase_examples": [
+          "Dangui open-sided panels with a dangui outer jacket has long rounded front and back panels and open side slits separate the dangui panels above the chima skirt and light cuff extensions finish the narrow dangui sleeves",
+          "dangui",
+          "당의"
+        ],
+        "contrast_examples": [
+          "짧은 저고리만 묘사·하의와 일체형 원피스"
+        ],
+        "claim_limits": [
+          "근거 실물의 금박·색·왕실 문양을 보편 의무화하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Dangui open-sided panels",
+          "옆이 트인 당의 자락",
+          "a dangui outer jacket has long rounded front and back panels",
+          "open side slits separate the dangui panels above the chima skirt",
+          "light cuff extensions finish the narrow dangui sleeves"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "짧은 저고리만 묘사·하의와 일체형 원피스"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a dangui outer jacket has long rounded front and back panels"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a dangui outer jacket has long rounded front and back panels"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a dangui outer jacket has long rounded front and back panels",
+            "render_gate": {
+              "id": "vo_hw_dangui_open_sides_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a dangui outer jacket has long rounded front and back panels. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "open side slits separate the dangui panels above the chima skirt"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "open side slits separate the dangui panels above the chima skirt"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: open side slits separate the dangui panels above the chima skirt",
+            "render_gate": {
+              "id": "vo_hw_dangui_open_sides_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows open side slits separate the dangui panels above the chima skirt. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "light cuff extensions finish the narrow dangui sleeves"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "light cuff extensions finish the narrow dangui sleeves"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: light cuff extensions finish the narrow dangui sleeves",
+            "render_gate": {
+              "id": "vo_hw_dangui_open_sides_3",
+              "review_scale": "native",
+              "description": "The saved image visibly shows light cuff extensions finish the narrow dangui sleeves. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_kosode_small_opening",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "the kosode sleeve has a small wrist opening within a larger hanging sleeve panel; the sleeve panel remains visibly distinct from the straight robe body",
+          "고소데의 큰 늘어진 소매 패널 안에 작은 손목 입구가 있고 그 패널이 곧은 몸판과 구별된다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Kosode small sleeve opening as a selected visible variant: the kosode sleeve has a small wrist opening within a larger hanging sleeve panel; the sleeve panel remains visibly distinct from the straight robe body.",
+        "paraphrase_examples": [
+          "Kosode small sleeve opening with the kosode sleeve has a small wrist opening within a larger hanging sleeve panel and the sleeve panel remains visibly distinct from the straight robe body",
+          "kosode",
+          "고소데"
+        ],
+        "contrast_examples": [
+          "반팔·소매 전체가 짧다는 해석"
+        ],
+        "claim_limits": [
+          "실물의 후대 소매 개조를 기록. 무조건 짧은 기장을 고증으로 고정하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Kosode small sleeve opening",
+          "작은 소매 입구의 고소데",
+          "the kosode sleeve has a small wrist opening within a larger hanging sleeve panel",
+          "the sleeve panel remains visibly distinct from the straight robe body"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "반팔·소매 전체가 짧다는 해석"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the kosode sleeve has a small wrist opening within a larger hanging sleeve panel"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the kosode sleeve has a small wrist opening within a larger hanging sleeve panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the kosode sleeve has a small wrist opening within a larger hanging sleeve panel",
+            "render_gate": {
+              "id": "vo_hw_kosode_small_opening_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the kosode sleeve has a small wrist opening within a larger hanging sleeve panel. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the sleeve panel remains visibly distinct from the straight robe body"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the sleeve panel remains visibly distinct from the straight robe body"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the sleeve panel remains visibly distinct from the straight robe body",
+            "render_gate": {
+              "id": "vo_hw_kosode_small_opening_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the sleeve panel remains visibly distinct from the straight robe body. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_qing_embroidered_robe",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a long robe has broad straight sleeves spreading from the upper body; embroidered borders trace the robe neckline sleeve ends and hem; small embroidered butterfly motifs repeat across the robe fabric",
+          "긴 장포에 넓고 곧은 소매가 이어지고 목선 소매끝 밑단 테두리와 천 위 반복 나비 자수가 보인다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Late Qing embroidered robe as a selected visible variant: a long robe has broad straight sleeves spreading from the upper body; embroidered borders trace the robe neckline sleeve ends and hem; small embroidered butterfly motifs repeat across the robe fabric.",
+        "paraphrase_examples": [
+          "Late Qing embroidered robe with a long robe has broad straight sleeves spreading from the upper body and embroidered borders trace the robe neckline sleeve ends and hem and small embroidered butterfly motifs repeat across the robe fabric",
+          "late Qing embroidered robe",
+          "embroidered robe",
+          "청 말기 장포"
+        ],
+        "contrast_examples": [
+          "현대 몸에 붙는 치파오·실제 나비가 주변을 날아다님"
+        ],
+        "claim_limits": [
+          "나비는 선택 표본의 문양. 혼례 용도는 확정 불가. 빨간색을 청대 전체 대표로 고정하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Late Qing embroidered robe",
+          "청 말기 자수 장포",
+          "a long robe has broad straight sleeves spreading from the upper body",
+          "embroidered borders trace the robe neckline sleeve ends and hem",
+          "small embroidered butterfly motifs repeat across the robe fabric"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "현대 몸에 붙는 치파오·실제 나비가 주변을 날아다님"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a long robe has broad straight sleeves spreading from the upper body"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a long robe has broad straight sleeves spreading from the upper body"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a long robe has broad straight sleeves spreading from the upper body",
+            "render_gate": {
+              "id": "vo_hw_qing_embroidered_robe_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a long robe has broad straight sleeves spreading from the upper body. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "embroidered borders trace the robe neckline sleeve ends and hem"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "embroidered borders trace the robe neckline sleeve ends and hem"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: embroidered borders trace the robe neckline sleeve ends and hem",
+            "render_gate": {
+              "id": "vo_hw_qing_embroidered_robe_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows embroidered borders trace the robe neckline sleeve ends and hem. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "small embroidered butterfly motifs repeat across the robe fabric"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "small embroidered butterfly motifs repeat across the robe fabric"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: small embroidered butterfly motifs repeat across the robe fabric",
+            "render_gate": {
+              "id": "vo_hw_qing_embroidered_robe_3",
+              "review_scale": "native",
+              "description": "The saved image visibly shows small embroidered butterfly motifs repeat across the robe fabric. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_qipao_1920_loose",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a loose ankle-length cheongsam widens gently below the torso; the cheongsam has wide long sleeves and a diagonal front fastening line",
+          "넉넉한 발목 길이 치파오의 몸판 아래가 완만히 넓어지고 넓은 긴 소매와 대각선 앞 여밈이 있다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Loose 1920s cheongsam variant as a selected visible variant: a loose ankle-length cheongsam widens gently below the torso; the cheongsam has wide long sleeves and a diagonal front fastening line.",
+        "paraphrase_examples": [
+          "Loose 1920s cheongsam variant with a loose ankle-length cheongsam widens gently below the torso and the cheongsam has wide long sleeves and a diagonal front fastening line",
+          "1920s cheongsam",
+          "loose cheongsam",
+          "loose qipao",
+          "roomy cheongsam",
+          "넉넉한 치파오",
+          "1920년대 치파오"
+        ],
+        "contrast_examples": [
+          "현대 초밀착·양쪽 허벅지 트임·짧은 소매 기본값"
+        ],
+        "claim_limits": [
+          "이 지역 소장품의 형태 근거를 중국에서 실제 촬영한 기록으로 바꾸지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Loose 1920s cheongsam variant",
+          "1920년대 넉넉한 치파오",
+          "a loose ankle-length cheongsam widens gently below the torso",
+          "the cheongsam has wide long sleeves and a diagonal front fastening line",
+          "qipao",
+          "cheongsam",
+          "치파오",
+          "창파오"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "현대 초밀착·양쪽 허벅지 트임·짧은 소매 기본값"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a loose ankle-length cheongsam widens gently below the torso"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a loose ankle-length cheongsam widens gently below the torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a loose ankle-length cheongsam widens gently below the torso",
+            "render_gate": {
+              "id": "vo_hw_qipao_1920_loose_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a loose ankle-length cheongsam widens gently below the torso. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the cheongsam has wide long sleeves and a diagonal front fastening line"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the cheongsam has wide long sleeves and a diagonal front fastening line"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: the cheongsam has wide long sleeves and a diagonal front fastening line",
+            "render_gate": {
+              "id": "vo_hw_qipao_1920_loose_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows the cheongsam has wide long sleeves and a diagonal front fastening line. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_lace_insertion",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a narrow lace strip joins two fabric panels within the gown bodice",
+          "좁은 레이스 띠가 가운 몸판 내부의 두 천 패널을 연결한다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Lace insertion between panels as a selected visible variant: a narrow lace strip joins two fabric panels within the gown bodice.",
+        "paraphrase_examples": [
+          "Lace insertion between panels with a narrow lace strip joins two fabric panels within the gown bodice",
+          "lace insertion",
+          "레이스 인서션"
+        ],
+        "contrast_examples": [
+          "소매끝 러플·천에 인쇄한 레이스 무늬"
+        ],
+        "claim_limits": [
+          "전체 란제리 드레스와 독립한 디테일; 소재 레이스의 제작기법까지 사진에서 확정하지 않음.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Lace insertion between panels",
+          "천 패널 사이 레이스 인서션",
+          "a narrow lace strip joins two fabric panels within the gown bodice"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "소매끝 러플·천에 인쇄한 레이스 무늬"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a narrow lace strip joins two fabric panels within the gown bodice"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a narrow lace strip joins two fabric panels within the gown bodice"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a narrow lace strip joins two fabric panels within the gown bodice",
+            "render_gate": {
+              "id": "vo_hw_lace_insertion_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a narrow lace strip joins two fabric panels within the gown bodice. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_brocade_raised_motifs",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "woven floral brocading forms textured motifs above the garment ground",
+          "옷의 바탕 천 위에 꽃 문양 브로케이딩이 직조되어 도톰한 문양을 이룬다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Brocaded woven motifs as a selected visible variant: woven floral brocading forms textured motifs above the garment ground.",
+        "paraphrase_examples": [
+          "Brocaded woven motifs with woven floral brocading forms textured motifs above the garment ground",
+          "floral brocade",
+          "브로케이드"
+        ],
+        "contrast_examples": [
+          "프린트 꽃을 입체 조직으로 판정·다마스크와 무조건 배타"
+        ],
+        "claim_limits": [
+          "바탕의 다마스크와 추가 브로케이딩 공존 가능; 실의 구조 증명은 실물 분석.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Brocaded woven motifs",
+          "직조로 더한 브로케이드 문양",
+          "woven floral brocading forms textured motifs above the garment ground"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "프린트 꽃을 입체 조직으로 판정·다마스크와 무조건 배타"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "woven floral brocading forms textured motifs above the garment ground"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "woven floral brocading forms textured motifs above the garment ground"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: woven floral brocading forms textured motifs above the garment ground",
+            "render_gate": {
+              "id": "vo_hw_brocade_raised_motifs_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows woven floral brocading forms textured motifs above the garment ground. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_damask_tonal_pattern",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a tonal woven damask motif alternates matte and lustrous areas within the same cloth color",
+          "같은 색 천의 다마스크 문양 안에서 무광 부분과 광택 부분이 교대로 나타난다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Tonal damask pattern as a selected visible variant: a tonal woven damask motif alternates matte and lustrous areas within the same cloth color.",
+        "paraphrase_examples": [
+          "Tonal damask pattern with a tonal woven damask motif alternates matte and lustrous areas within the same cloth color",
+          "woven damask pattern",
+          "다마스크"
+        ],
+        "contrast_examples": [
+          "무늬를 전부 색 프린트·금속실 자수로 치환"
+        ],
+        "claim_limits": [
+          "가구용 직물 자료는 표면 관계 근거이며 드레스 연대 근거가 아님.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Tonal damask pattern",
+          "다마스크의 같은 색 명암 문양",
+          "a tonal woven damask motif alternates matte and lustrous areas within the same cloth color"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무늬를 전부 색 프린트·금속실 자수로 치환"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a tonal woven damask motif alternates matte and lustrous areas within the same cloth color"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a tonal woven damask motif alternates matte and lustrous areas within the same cloth color"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a tonal woven damask motif alternates matte and lustrous areas within the same cloth color",
+            "render_gate": {
+              "id": "vo_hw_damask_tonal_pattern_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a tonal woven damask motif alternates matte and lustrous areas within the same cloth color. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "hw_chatelaine_waist_tools",
+      "category": "historical_womenswear_visible_relation",
+      "activation": {
+        "exact_terms": [
+          "a chatelaine clasp is fixed at the gown waist; short chains suspend a small tool case from the same waist clasp",
+          "가운 허리에 고정한 샤틀렌 고리에서 짧은 체인으로 작은 도구통이 매달린다"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "Waist-attached chatelaine as a selected visible variant: a chatelaine clasp is fixed at the gown waist; short chains suspend a small tool case from the same waist clasp.",
+        "paraphrase_examples": [
+          "Waist-attached chatelaine with a chatelaine clasp is fixed at the gown waist and short chains suspend a small tool case from the same waist clasp",
+          "chatelaine",
+          "châtelaine",
+          "샤틀렌",
+          "샤틀레인"
+        ],
+        "contrast_examples": [
+          "공중에 떠 있는 열쇠·목걸이·하녀 신분 추정"
+        ],
+        "claim_limits": [
+          "도구통 내부 가위를 밖에 노출하도록 강제하지 않음; 키/가위 매달림은 다른 표본 선택.",
+          "This selected garment form does not establish the wearer identity, ethnicity, social status or the photograph capture date."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "Waist-attached chatelaine",
+          "허리에 연결된 샤틀렌 도구",
+          "a chatelaine clasp is fixed at the gown waist",
+          "short chains suspend a small tool case from the same waist clasp"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "공중에 떠 있는 열쇠·목걸이·하녀 신분 추정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a chatelaine clasp is fixed at the gown waist"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a chatelaine clasp is fixed at the gown waist"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: a chatelaine clasp is fixed at the gown waist",
+            "render_gate": {
+              "id": "vo_hw_chatelaine_waist_tools_1",
+              "review_scale": "native",
+              "description": "The saved image visibly shows a chatelaine clasp is fixed at the gown waist. Occlusion or a substituted garment relation does not pass."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "short chains suspend a small tool case from the same waist clasp"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "short chains suspend a small tool case from the same waist clasp"
+            ],
+            "min_content_words": 3,
+            "instruction": "Keep the selected garment relation visible: short chains suspend a small tool case from the same waist clasp",
+            "render_gate": {
+              "id": "vo_hw_chatelaine_waist_tools_2",
+              "review_scale": "native",
+              "description": "The saved image visibly shows short chains suspend a small tool case from the same waist clasp. Occlusion or a substituted garment relation does not pass."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
