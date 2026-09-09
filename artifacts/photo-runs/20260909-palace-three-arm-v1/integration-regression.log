@@ -1,0 +1,41 @@
+test_alias_field_outranks_incidental_support_cue (tests.test_photo_bm25f_retrieval.PhotoBm25fRetrievalTests.test_alias_field_outranks_incidental_support_cue) ... ok
+test_index_validation_detects_stale_authored_fields (tests.test_photo_bm25f_retrieval.PhotoBm25fRetrievalTests.test_index_validation_detects_stale_authored_fields) ... ok
+test_japanese_compounds_use_longest_first_authored_lexicon (tests.test_photo_bm25f_retrieval.PhotoBm25fRetrievalTests.test_japanese_compounds_use_longest_first_authored_lexicon) ... ok
+test_korean_boundaries_do_not_turn_appearance_into_moe (tests.test_photo_bm25f_retrieval.PhotoBm25fRetrievalTests.test_korean_boundaries_do_not_turn_appearance_into_moe) ... ok
+test_rank_and_rrf_ties_are_deterministic (tests.test_photo_bm25f_retrieval.PhotoBm25fRetrievalTests.test_rank_and_rrf_ties_are_deterministic) ... ok
+test_all_151_authored_bundles_compile_and_profile_links_remain_advisory (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_151_authored_bundles_compile_and_profile_links_remain_advisory) ... FAIL
+test_canonical_street_link_and_storefront_label_keep_stable_ids (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_canonical_street_link_and_storefront_label_keep_stable_ids) ... ok
+test_maintenance_prose_is_external_and_hash_bound (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound) ... FAIL
+test_missing_member_ineligible_member_internal_conflict_or_locked_scope_hides_bundle (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_missing_member_ineligible_member_internal_conflict_or_locked_scope_hides_bundle) ... ok
+test_multiword_relations_survive_v6_pack_overview_and_full_details (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_multiword_relations_survive_v6_pack_overview_and_full_details) ... ok
+test_real_generator_builds_an_adoptable_bundle_with_full_view_and_audit (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_real_generator_builds_an_adoptable_bundle_with_full_view_and_audit) ... ok
+test_required_extension_loss_fails_before_dictionary_use (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_required_extension_loss_fails_before_dictionary_use) ... ok
+test_scope_ownership_preserves_distinct_locked_dimensions (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_scope_ownership_preserves_distinct_locked_dimensions) ... ok
+test_selected_bundle_requires_every_component_and_relation_literal_evidence (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_selected_bundle_requires_every_component_and_relation_literal_evidence) ... ok
+test_semantic_units_relations_and_canonical_links_reject_malformed_authored_data (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_semantic_units_relations_and_canonical_links_reject_malformed_authored_data) ... ok
+test_source_contract_or_scope_tampering_fails_even_after_pack_hash_recompute (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_source_contract_or_scope_tampering_fails_even_after_pack_hash_recompute) ... ok
+test_unknown_runtime_keys_and_missing_or_ambiguous_references_fail (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_unknown_runtime_keys_and_missing_or_ambiguous_references_fail) ... ok
+test_v4_v5_token_surfaces_and_legacy_v6_are_not_reinterpreted (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_v4_v5_token_surfaces_and_legacy_v6_are_not_reinterpreted) ... ok
+
+======================================================================
+FAIL: test_all_151_authored_bundles_compile_and_profile_links_remain_advisory (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_151_authored_bundles_compile_and_profile_links_remain_advisory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py", line 52, in test_all_151_authored_bundles_compile_and_profile_links_remain_advisory
+    self.assertEqual(len(self.data["candidate_bundles"]), 151)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 185 != 151
+
+======================================================================
+FAIL: test_maintenance_prose_is_external_and_hash_bound (tests.test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py", line 119, in test_maintenance_prose_is_external_and_hash_bound
+    self.assertEqual(count, 13)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: 14 != 13
+
+----------------------------------------------------------------------
+Ran 18 tests in 13.834s
+
+FAILED (failures=2)
