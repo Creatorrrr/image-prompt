@@ -1,0 +1,194 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator",
+    "baseline_revision": "29d4d42a4114922991e3e0678c458c164a43124b",
+    "candidate_revision": "working-tree palace-fortification 2026-09-09"
+  },
+  "goal": {
+    "claim_scope": "render-fidelity",
+    "request": "궁전 성채 시각 의미와 후보팩 반영 및 독립3개 복합컨셉 참조이미지 생성 검증"
+  },
+  "evidence": [
+    {
+      "id": "research",
+      "kind": "external-research",
+      "claim": "출처 범위를 가진 34개 건축 관계 조사",
+      "artifact": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/palace-fortification-20260909/research-report.md"
+    },
+    {
+      "id": "package",
+      "kind": "package-check",
+      "claim": "6개 전용 검사와18개 검색/후보 통합 검사, 사전/인덱스 일치 통과; 전체 회귀 통과는 아님",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260909-palace-three-arm-v1/runtime-verification.json; /Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260909-palace-three-arm-v1/focused-tests.log; /Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260909-palace-three-arm-v1/integration-regression-final.log"
+    },
+    {
+      "id": "pixels",
+      "kind": "render-observation",
+      "claim": "실제 저장 이미지의 사전15개 게이트 중11개 통과, 전체 A/B/C실패",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260909-palace-three-arm-v1/coordinator-pixel-review.json"
+    },
+    {
+      "id": "prompt",
+      "kind": "prompt-evaluation",
+      "claim": "세 프롬프트 및 runtime 감사 통과; 신규 시각 프로필2개 실제 채택, 신규 슬롯/묶음은0노출",
+      "artifact": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/20260909-palace-three-arm-v1/arm-{a,b,c}/composed-audit.json and runtime-audit.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "선택된 건축 관계가 같은 생성 이미지에서 연결 구조와 깊이로 확인될 것",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "spatial-relations",
+        "statement": "명칭만으로 통과하지 않으며 모든 필수 관계가 보여야 한다",
+        "evidence_ids": [
+          "research"
+        ],
+        "causal_controls": [
+          "입구와 격자 및 수직 홈",
+          "좌석과 양측 reveal 및 창 면",
+          "수로와 회랑 깊이"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "각 독립 코어에서 열린 촬영/조명/구도 차원"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "cropped-reveal",
+      "scale": "regional",
+      "axis": "framing",
+      "source_state": "양측 reveal과 좌석 깊이가 보이는 창가 내장 좌석",
+      "render_state": "오른쪽 reveal이 프레임 밖",
+      "evidence_ids": [
+        "pixels"
+      ]
+    },
+    {
+      "id": "no-bundle-exposure",
+      "scale": "global",
+      "axis": "candidate exposure",
+      "source_state": "34개 신규 관계 묶음과68개 후보 등록",
+      "render_state": "세 정상 후보팩 신규 슬롯/묶음0노출",
+      "evidence_ids": [
+        "prompt"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "relations",
+      "stage": "representation",
+      "statement": "관계 단위 프로필과 혼동 경계가 건축 특징 보존을 도울 수 있다",
+      "evidence_ids": [
+        "research"
+      ],
+      "falsifier": "선택·명시한 관계가 픽셀에서 소실되거나 후보가 정상 검색 후 노출되지 않는 경우"
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "module",
+      "test"
+    ],
+    "general_rule": "범위를 갖는 구조 관계를 선택형 프로필 및 실제 슬롯 후보로 제공하고 모든 구성 요소를 관찰 가능한 게이트로 평가한다",
+    "generalization_basis": "34개 기능/공간/재료 관계에서 반복되는 구성 요소와 연결의 구분",
+    "hypothesis_ids": [
+      "relations"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_palace_fortification_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_palace_fortification.json",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "tests/test_photo_palace_fortification_semantics.py",
+      "tests/test_photo_candidate_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "prompt"
+      ]
+    },
+    "render": {
+      "status": "fail",
+      "evidence_ids": [
+        "pixels"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "arm-a",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "portcullis_grille",
+          "portcullis_guides_depth",
+          "gatehouse_mass",
+          "reference_appearance",
+          "conservator_event_visibility"
+        ],
+        "evidence_ids": [
+          "pixels"
+        ]
+      },
+      {
+        "id": "arm-b",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "boiserie",
+          "window_seat",
+          "reference_appearance",
+          "case_contact",
+          "composition_materials"
+        ],
+        "evidence_ids": [
+          "pixels"
+        ]
+      },
+      {
+        "id": "arm-c",
+        "case_role": "held-out",
+        "status": "fail",
+        "covered_axes": [
+          "channel",
+          "arcade",
+          "reference_appearance",
+          "illustrator_event",
+          "integrated_scene"
+        ],
+        "evidence_ids": [
+          "pixels"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "render-fidelity",
+    "rationale": "데이터 반영 및 생성 실험 완료. 전체3개 모두 적어도 한 필수 픽셀 기준 실패. 신규 슬롯/묶음의 실제 채택, 전체34개 프로필의 렌더 품질, 개선의 인과 효과는 입증하지 못했으므로 promote하지 않는다.",
+    "evidence_ids": [
+      "package",
+      "prompt",
+      "pixels"
+    ]
+  }
+}
