@@ -1,0 +1,170 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 달리는 봉고차 조수석에 앉아서 아헤가오 더블피스를 하고 있는 바니걸 프롬프트를 작성해줘.",
+  "interpreted_intent": "A provocative, energetic adult bunny-girl fashion photograph inside the passenger seat of a van visibly moving at speed, with an unmistakable ahegao expression and a clearly readable double-peace gesture.",
+  "subject": "One unmistakably adult bunny-girl performer",
+  "setting": "The front passenger seat of a moving compact van at night",
+  "event": "The seated performer makes an exaggerated ahegao expression while holding clear V signs beside both cheeks as the van travels at speed",
+  "visual_priorities": [
+    "The ahegao facial components and both V-sign hands are simultaneously legible",
+    "The passenger-seat geometry and exterior motion cues make the moving van unmistakable"
+  ],
+  "baseline_prompt_en": "A high-energy editorial photograph of an unmistakably adult bunny-girl performer seated in the front passenger seat of a moving compact van. She is visibly in her mid-twenties, with mature facial structure and adult proportions. She wears a sleek black satin bunny suit, opaque tights, a white collar, wrist cuffs, and tall rabbit ears. Her seat belt crosses her torso and her hips remain planted against the passenger seat while she leans slightly toward the camera. She raises both hands beside her cheeks, each hand forming a clear V sign with separated index and middle fingers, creating a symmetrical double-peace pose. Her expression is an exaggerated overwhelmed display: eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical ecstasy. Photograph her from a dashboard-mounted camera angled toward the passenger side, with her face and both hands fully visible. Through the windshield and side window, streaked roadside lights and directional motion blur establish that the van is traveling at speed, while the cabin, subject, seat belt, and costume remain sharply frozen by direct on-camera flash. Use a wide-angle documentary-fashion aesthetic, energetic diagonal composition, crisp skin texture, glossy fabric highlights, and candid nightlife intensity.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "달리는 봉고차 조수석",
+      "source_text": "달리는 봉고차 조수석에 앉아서",
+      "basis": "request_context",
+      "resolution": "The performer is visibly seated in the front passenger seat of a compact van that is currently moving.",
+      "sources": []
+    },
+    {
+      "term": "아헤가오 더블피스",
+      "source_text": "아헤가오 더블피스",
+      "basis": "agent_general_knowledge",
+      "resolution": "An exaggerated ecstatic face with upward slightly crossed eyes, extended tongue, flushed cheeks, and two simultaneous V signs framing the face.",
+      "sources": []
+    },
+    {
+      "term": "바니걸",
+      "source_text": "바니걸",
+      "basis": "agent_general_knowledge",
+      "resolution": "An adult performer wearing the recognizable satin bunny-suit ensemble, rabbit ears, collar, cuffs, and tights.",
+      "sources": []
+    },
+    {
+      "term": "topic request",
+      "source_text": "달리는 봉고차 조수석에 앉아서 아헤가오 더블피스를 하고 있는 바니걸 프롬프트를 작성해줘.",
+      "basis": "request_context",
+      "resolution": "Create one photographic prompt combining the specified adult subject, moving-vehicle setting, facial expression, and two-handed pose.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": ["아헤가오"],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "아헤가오 더블피스",
+        "dimension": "concept",
+        "prompt_evidence": "Her expression is an exaggerated overwhelmed display"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "바니걸",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult bunny-girl performer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "달리는 봉고차 조수석에 앉아서",
+        "dimension": "event",
+        "prompt_evidence": "seated in the front passenger seat of a moving compact van"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "더블피스",
+        "dimension": "pose",
+        "prompt_evidence": "creating a symmetrical double-peace pose"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "아헤가오",
+        "dimension": "expression",
+        "prompt_evidence": "eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "달리는 봉고차 조수석",
+        "dimension": "setting",
+        "prompt_evidence": "streaked roadside lights and directional motion blur"
+      },
+      {
+        "anchor_id": "core_sexual_tone",
+        "source_text": "아헤가오",
+        "dimension": "sexual_tone",
+        "prompt_evidence": "mouth open in theatrical ecstasy"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "pose",
+      "expression",
+      "setting",
+      "sexual_tone"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "double_peace_pose",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": ["topic"],
+      "affected_dimensions": ["pose"],
+      "axes": {
+        "hand_count": "both hands",
+        "gesture": "clear V signs",
+        "placement": "beside her cheeks"
+      },
+      "evidence": {
+        "pose_phrase": "She raises both hands beside her cheeks, each hand forming a clear V sign"
+      }
+    },
+    {
+      "assertion_id": "ahegao_expression",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": ["topic"],
+      "affected_dimensions": ["expression", "sexual_tone"],
+      "axes": {
+        "eyes": "rolled upward and slightly crossed",
+        "mouth": "open with tongue extended",
+        "cheeks": "flushed",
+        "tone": "theatrically ecstatic"
+      },
+      "evidence": {
+        "expression_phrase": "eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical ecstasy"
+      }
+    },
+    {
+      "assertion_id": "moving_passenger_seat",
+      "dimension": "setting",
+      "polarity": "required",
+      "source_span_ids": ["topic"],
+      "affected_dimensions": ["setting", "event"],
+      "axes": {
+        "seat": "front passenger seat",
+        "vehicle": "moving compact van",
+        "motion_evidence": "exterior directional motion blur"
+      },
+      "evidence": {
+        "setting_phrase": "seated in the front passenger seat of a moving compact van",
+        "motion_phrase": "streaked roadside lights and directional motion blur establish that the van is traveling at speed"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "sensual editorial nightlife photography",
+    "family": "direct-flash wide-angle documentary fashion",
+    "evidence": [
+      "direct on-camera flash",
+      "energetic diagonal composition"
+    ]
+  },
+  "variation_key": "bunny-van-night-v1"
+}

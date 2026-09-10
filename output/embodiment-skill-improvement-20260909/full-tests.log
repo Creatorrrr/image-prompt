@@ -1,0 +1,55 @@
+...............FF..........FFFFFFFFFF.................Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_affect_visual_semantics.py", line 199, in test_exact_composite_terms_harden_but_components_stay_optional
+    optional = prompt_generator.candidate_pack_auto_visual_concept_matches(
+        self.registry,
+        self.source_rows(f"성인 인물의 {contract['exact_term']} 장면"),
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12308, in candidate_pack_auto_visual_concept_matches
+    match_kind = candidate_pack_visual_component_match(profile, text)
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12228, in candidate_pack_visual_component_match
+    if any(intent_alias_matches(text, term) for term in excluded_terms):
+       ^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12228, in <genexpr>
+    if any(intent_alias_matches(text, term) for term in excluded_terms):
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyboardInterrupt

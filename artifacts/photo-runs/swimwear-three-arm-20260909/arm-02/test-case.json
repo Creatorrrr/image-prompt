@@ -1,0 +1,37 @@
+{
+  "contract_version": "independent-pixel-test/v1",
+  "arm": "arm-02",
+  "seed": 2796799556,
+  "selection_method": "Python random.Random(seed).choice over three independently authored choices each for garment, setting and event; no project candidate data inspected.",
+  "request_owned": [
+    "Three independent different random complex concepts",
+    "Use attached image",
+    "Generate prompt and image and test actual visual reflection"
+  ],
+  "agent_authored": [
+    "Asymmetric one-shoulder wrap maillot",
+    "Flooded conservatory pool",
+    "Wind-lifted striped towel catching event",
+    "Petrol fabric and warm/cool lighting"
+  ],
+  "reference_path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+  "precore_sources": [
+    "skills/photo-prompt-image-generator/SKILL.md",
+    "/Users/chasoik/.codex/skills/.system/imagegen/SKILL.md",
+    "artifacts/photo-runs/swimwear-three-arm-20260909/arm-02/request-envelope.json",
+    "reference image"
+  ],
+  "hard_pixel_gates": {
+    "one_piece_continuity": "Covered front and hip fabric visibly form one connected swimsuit",
+    "single_shoulder": "Broad left shoulder strap and bare right shoulder visibly distinct",
+    "diagonal_wrap": "Diagonal panel overlap has a readable physical edge; a shadow or printed diagonal alone fails",
+    "waist_keyhole": "Small right side-waist opening clearly visible and not hidden by hand/towel",
+    "hip_band": "Wide continuous hip band visible connecting covered front and side",
+    "event": "Right hand visibly catches towel billowing beyond waist; cloth does not cover focal construction",
+    "setting_light": "Glass conservatory, pool and shallow floor water coexist with warm sunlight and cool pool fill",
+    "reference": "Face and dark wavy hair visibly retain supplied reference appearance"
+  },
+  "decision_policy": "Each mandatory gate PASS only with visible evidence; ambiguous or partial is FAIL. Prompt/runtime audits and candidate exposure are separate from pixels. No baseline-vs-data causal improvement claim from a single rendered condition.",
+  "generation_limit": 1,
+  "fallback_allowed": false
+}

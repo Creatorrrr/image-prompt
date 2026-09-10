@@ -1,0 +1,830 @@
+--- baseline/skills/photo-prompt-image-generator/SKILL.md
++++ candidate/skills/photo-prompt-image-generator/SKILL.md
+@@ -51,6 +51,31 @@
+ ## Phase 1 — Write and Freeze the Basic Prompt
+ 
+ Without project-local prompt data, author a coherent 48–640 word English photographic prompt that can stand alone. Treat 360 words as the default recommended maximum, not a hard cap. Exceed it only when requester meaning or literal hard evidence cannot be represented cleanly within 360 words; never pad toward the limit. It must already specify a concrete subject, setting, visible event or state, and at least two visual priorities. It is not a search query, tag bag, or placeholder.
++
++Before freezing that draft, review any material bodily action, contact, load-bearing state, or consequentially hidden appendage using only the permitted pre-core inputs. Trace the acting body part to its owner, its connected articulation and target, the supporting surfaces and available space, and what the chosen viewpoint will reveal. Distinguish actor-relative directions from screen directions. Check simultaneous states together; a plausible action label does not establish a plausible way to perform it.
++
++Resolve contradictions and consequentially unspecified geometry in agent-authored staging before freezing. Add only the positive spatial relations needed to make that particular action legible. Preserve the requested interaction, affect, bodily structure, and intentional departures from ordinary realism; do not remove contact, hide the affected part, prescribe universal angles or handedness, or simplify every unusual pose. Do not turn the review into requester-owned exclusions or assertions. Foreshortening, occlusion, clothing, atypical anatomy, and a requested nonhuman structure are reasons to examine the applicable body model, not automatic failures. Ask only when requester meaning remains unresolved, not for routine staging choices.
++
++Freeze a separate `embodiment_review.json` with the corrected baseline. Use single-space whitespace in `baseline_prompt_en` before hashing, matching the core's canonical whitespace form. It is agent-owned review evidence and must not enter semantic retrieval. This neutral wire shape is available pre-core; its explanations and literal phrases come from the current draft, not project examples:
++
++```json
++{
++  "contract_version": "photo-embodiment-review/v1",
++  "provenance": "agent_prepack",
++  "prompt_sha256": "<SHA-256 of exact final baseline_prompt_en UTF-8 bytes>",
++  "scope": "body_action",
++  "summary": "<applicable body model and material physical interaction>",
++  "checks": {
++    "body_ownership": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
++    "joint_chain_and_reach": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
++    "support_and_balance": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
++    "contact_and_space": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
++    "visibility_and_projection": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]}
++  }
++}
++```
++
++Each explanation is concrete; each applicable check cites one to four literal phrases of at least three words. Use `not_applicable` with a reason and empty evidence for an irrelevant check. An intentional departure uses `requester_intended` plus `requester_source_text` copied exactly from an active requester span; it is not permission to erase that departure. `needs_revision` and `unresolved` block the reviewed version until addressed. For a scene without a material bodily mechanism, use `scope: not_applicable`, explain why, and set `checks: {}`. Do not fabricate a bodily action to fill the record. `supported` means the agent found a plausible realization, not that a solver or rendered image verified it. Review timing is declared provenance, not independently proven by the hash.
+ 
+ First create one external `photo-request-envelope/v1` from the actual requester message. `request_text` is the complete, byte-exact user text, never an agent summary. For a single-topic request, the active span may be the whole request. For a multi-topic or multi-arm request, select the exact non-overlapping topic span plus every exact global modifier that governs that arm. Do not invent a cleaner per-arm request. Create and freeze this envelope before delegation so a downstream agent cannot relabel its own interpretation as user text. In delegated work, the coordinator creates the envelope and passes its path plus SHA-256 to the child; a task brief, coordinator safety summary, reviewer note, or subagent message is never requester text and must never be used to create or expand the envelope.
+ 
+@@ -200,6 +225,7 @@
+ .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
+   --request-envelope-json request_envelope.json \
+   --authorial-core-json authorial_core.json \
++  --embodiment-review-json embodiment_review.json \
+   --candidate-pack-version v6 \
+   --creativity 0.5 \
+   --emit-candidate-pack --n 1
+@@ -233,6 +259,8 @@
+ ## Phase 3 — Clarify, Enrich, and Add the Authorial Pass
+ 
+ Read `references/composition-contract.md` for the composed shape and active conditional fields. Compose one final English prompt from the core and the pack; optional candidates may clarify or deepen it only within permitted dimensions.
++
++When `embodiment_preflight` is present, read `references/embodiment-preflight.md`. Recheck the entire final prompt, including new camera, framing, clothing, and contact clauses; preserve the baseline review and bind a fresh `agent_postcomposition` review in `embodiment_review`. A changed prompt invalidates the previous review hash. Fix new composition conflicts within the allowed dimensions; do not silently rewrite frozen staging to satisfy this check. Use the existing rebuild or repair lineage when a frozen phrase must change. General defect negatives cannot substitute for a coherent positive realization.
+ 
+ For every semantic clarification, record exactly one decision:
+ 
+@@ -264,6 +292,8 @@
+ ```
+ 
+ Fix every failure. `negative_intent_guard_contract`, `negative_intent_guard_terms`, `negative_intent_guard_baseline`, and `negative_intent_guard_prompt` are blocking failures: they mean either the pack carries an ungrounded semantic suppression or positive prompt prose is trying to delete meaning with a blanket negative directive. Do not generate an image from an unaudited prompt.
++
++`embodiment_preflight` failures block missing, stale, unsupported, or unresolved review records. The validator checks records and literal actuation; the agent must actually inspect spatial consistency. It does not detect arbitrary anatomical contradictions from prose. Normal new runs supply the baseline-review flag above; serialized packs and direct compatibility callers without that opt-in keep their recorded contract and do not gain a claim of physical review.
+ 
+ If image generation was requested, read `references/image-runtime.md`, copy `source_intent_lock_sha256` into the exact runtime request, and when present also copy `render_repair_contract_sha256`. Audit it with `scripts/audit_image_render_request.py`, generate, preserve the output and ledger record, then record and audit the exact generic repair hard-gate set with `scripts/audit_image_render_review.py`. Prompt/audit success is preflight evidence, not proof that rendered pixels satisfy the request.
+ 
+@@ -279,6 +309,7 @@
+ - Natural-language character-response, identity, and pixel-review contracts: `references/moe-response-contract.md`
+ - Intent, concept, preset, and slot routing behavior: `references/concept-routing.md`
+ - Image generation, saving, retries, and ledger records: `references/image-runtime.md`
++- Body-action review binding and conditional pixel gates: `references/embodiment-preflight.md`
+ - Dictionary/profile edits, validation, semantic index, and evaluation: `references/maintenance.md`
+ 
+ Do not load every reference for a normal prompt request. Maintenance fixtures and research evidence are never runtime composition sources.
+@@ -298,6 +329,7 @@
+ 
+ ```bash
+ .venv/bin/python -m unittest tests.test_photo_prepack_isolation_v5 -v
++.venv/bin/python -m unittest tests.test_photo_embodiment -v
+ .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
+ .venv/bin/python -m unittest tests.test_photo_authorial_core_v6 -v
+ .venv/bin/python -m unittest tests.test_photo_bm25f_retrieval -v
+--- baseline/skills/photo-prompt-image-generator/scripts/prompt_generator.py
++++ candidate/skills/photo-prompt-image-generator/scripts/prompt_generator.py
+@@ -40,6 +40,7 @@
+     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
+ try:
+     import photo_candidate_semantics
++    import photo_embodiment
+     from visual_profile_contracts import (
+         compile_visual_profile,
+         hard_activation_is_supported,
+@@ -16047,6 +16048,8 @@
+             "retrieval_query": retrieval_provenance,
+         }
+     )
++    if "embodiment_preflight_required" in original_provenance:
++        public_provenance["embodiment_preflight_required"] = original_provenance["embodiment_preflight_required"]
+     projected["provenance"] = public_provenance
+ 
+     hybrid = (
+@@ -16732,6 +16735,12 @@
+         pack["semantic_assertion_obligations"] = semantic_assertion_obligations
+     if render_repair is not None:
+         pack["render_repair"] = render_repair
++    if "embodiment_preflight" in provenance:
++        if requested_contract_version != CANDIDATE_PACK_CONTRACT_V6:
++            raise ValueError("embodiment preflight requires candidate-pack v6")
++        pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
++        pack["provenance"]["embodiment_preflight_required"] = True
++        photo_embodiment.policy_from_pack({**pack, "contract_version": requested_contract_version})
+     if viewer_experience is not None:
+         pack["viewer_experience"] = viewer_experience
+     if japanese_subculture_photo is not None:
+@@ -26786,6 +26795,11 @@
+         help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept, requester-priority intent lock, and baseline prompt. Required for v5 candidate-pack output.",
+     )
+     parser.add_argument(
++        "--embodiment-review-json",
++        default=None,
++        help="Frozen agent-authored baseline body-action review as a JSON file. Normal skill v6 workflow; no anatomy is inferred by this validator.",
++    )
++    parser.add_argument(
+         "--request-envelope-json",
+         default=None,
+         help="Inline JSON or path containing the exact requesting-user text and byte-grounded active spans. Required for v5 candidate-pack output.",
+@@ -26954,6 +26968,8 @@
+         raise ValueError("--authorial-request-json requires --candidate-pack-version v4")
+     if args.authorial_core_json and not args.emit_candidate_pack:
+         raise ValueError("--authorial-core-json requires --emit-candidate-pack")
++    if args.embodiment_review_json and (not args.emit_candidate_pack or args.candidate_pack_version != "v6"):
++        raise ValueError("--embodiment-review-json requires --emit-candidate-pack and --candidate-pack-version v6")
+     if args.authorial_core_json and args.candidate_pack_version not in {"v5", "v6"}:
+         raise ValueError(
+             "--authorial-core-json requires --candidate-pack-version v5 or v6"
+@@ -27012,6 +27028,13 @@
+     authorial_core = load_authorial_core_arg(
+         args.authorial_core_json,
+         request_envelope=request_envelope,
++    )
++    embodiment_preflight = (
++        photo_embodiment.build_policy(
++            authorial_core,
++            json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8")),
++        )
++        if args.embodiment_review_json else None
+     )
+     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
+     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
+@@ -27294,6 +27317,8 @@
+             result.setdefault("provenance", {})["authorial_request"] = copy.deepcopy(
+                 authorial_request
+             )
++        if embodiment_preflight is not None:
++            result.setdefault("provenance", {})["embodiment_preflight"] = copy.deepcopy(embodiment_preflight)
+         if visual_intent is not None:
+             result.setdefault("provenance", {})["visual_intent"] = copy.deepcopy(
+                 visual_intent
+--- baseline/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py
++++ candidate/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py
+@@ -19,6 +19,7 @@
+     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
+ try:
+     import photo_candidate_semantics
++    import photo_embodiment
+     import prompt_generator as candidate_semantics_generator
+     from photo_contracts import (
+         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
+@@ -8000,6 +8001,7 @@
+         audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
+     )
+     failures.extend(audit_render_repair_v6(pack, composed, prompt_en))
++    failures.extend(photo_embodiment.audit_composed(pack, composed))
+     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
+     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
+     failures.extend(audit_authorial_core_v5(pack, composed, prompt_en, warnings))
+--- baseline/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py
++++ candidate/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py
+@@ -16,6 +16,7 @@
+ from typing import Any
+ 
+ import audit_composed_prompt
++import photo_embodiment
+ 
+ 
+ SCHEMA_VERSION = "photo-image-render-request/v2"
+@@ -61,6 +62,7 @@
+     request_path: Path | None = None,
+ ) -> dict[str, Any]:
+     failures: list[dict[str, Any]] = []
++    failures.extend(photo_embodiment.audit_runtime(pack, composed, request))
+ 
+     if request.get("schema_version") != SCHEMA_VERSION:
+         failures.append(
+--- baseline/skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py
++++ candidate/skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py
+@@ -187,6 +187,11 @@
+     character_contract, character_gates, character_failures = (
+         derive_character_response_render_gates(pack, composed)
+     )
++    embodiment_gates, embodiment_failures = (
++        audit_composed_prompt.photo_embodiment.render_gate_ids(pack, composed)
++    )
++    schema_failures.extend(embodiment_failures)
++    has_embodiment_contract = bool(embodiment_gates)
+     has_character_contract = character_contract is not None
+     schema_failures.extend(character_failures)
+     character_contract_sha256 = (
+@@ -230,7 +235,7 @@
+         if isinstance(value, str) and value.strip()
+     ]
+     has_visual_contract = bool(effective_visual_gates)
+-    if not has_moe_contract and not has_character_contract and not has_visual_contract:
++    if not has_moe_contract and not has_character_contract and not has_visual_contract and not has_embodiment_contract:
+         schema_failures.append(
+             {
+                 "check": "render_qualification_contract",
+@@ -241,7 +246,7 @@
+             }
+         )
+     required_gates = list(
+-        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates)
++        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates + embodiment_gates)
+     )
+     if not required_gates:
+         schema_failures.append(
+@@ -271,6 +276,8 @@
+         else audit_composed_prompt.CHARACTER_RESPONSE_CONTRACT_VERSION
+         if has_character_contract
+         else str((effective_visual_contract or {}).get("contract_version") or "")
++        if has_visual_contract
++        else audit_composed_prompt.photo_embodiment.POLICY_VERSION
+     )
+     if str(review.get("contract_version") or "") != expected_review_contract_version:
+         schema_failures.append(
+@@ -353,7 +360,7 @@
+                     "missing": missing_from_qualification,
+                 }
+             )
+-    if has_character_contract or (
++    if has_character_contract or has_embodiment_contract or (
+         isinstance(effective_visual_contract, dict)
+         and effective_visual_contract.get("strict_gate_set") is True
+     ):
+--- baseline/skills/photo-prompt-image-generator/references/composition-contract.md
++++ candidate/skills/photo-prompt-image-generator/references/composition-contract.md
+@@ -28,6 +28,8 @@
+ The public v5 pack contains no relevance score, probability, sampler winner, fixed three-route hybrid answer, or candidate prose. Every creative row contains unordered concept terms and a semantic band only. A seed chooses material within the allowed range; array order is non-preferential. General candidate retrieval may use rule/context fallback for offline inspection, but v5 visual-profile rule mode is exact-only; only semantic-mode evidence proves embedding-based profile discovery. V4 retains its prior lexical optional-profile behavior for compatibility.
+ 
+ The composed object keeps the three v5 bindings and adds typed v6 bindings:
++
++- A normal new run supplies `--embodiment-review-json`. Its `embodiment_preflight` policy binds a reviewed baseline without changing requester assertions or retrieval. Supply a complete, separately hashed final `embodiment_review`; see [embodiment-preflight.md](embodiment-preflight.md). Missing or stale reviews and unresolved findings block composition. Legacy packs without the policy retain their recorded behavior.
+ 
+ - `authorial_core_binding` repeats the exact core and intent-lock hashes, preserves every anchor ID and anchor evidence, lists at least three distinct substantive phrases occurring literally in both baseline and final prompt, and records the number of substantive authored decisions required by the pack's authorship policy, each with a distinct open dimension and rationale. Without that policy the legacy minimum remains two. Every explicit `user_exclusions` and `runtime_forbidden_labels` phrase remains absent from the final prompt.
+ - `negative_intent_guard` is pack-owned and has no composer override. `negative_en` remains byte-identical to the pack, but equality alone is insufficient: every emitted item must be an intent-neutral defect, an exact requester-grounded exclusion, or an enabled identity-preservation control, and neither baseline nor final positive prompt may contain a blanket negative directive.
+--- baseline/skills/photo-prompt-image-generator/references/image-runtime.md
++++ candidate/skills/photo-prompt-image-generator/references/image-runtime.md
+@@ -5,6 +5,8 @@
+ When the user asks to create or render an image, use the session's native image generation tool with the audited `prompt_en`. Append the preserved negative prompt as `Avoid: ...` when supported.
+ 
+ Follow the current user instructions and existing session authorization before these procedural defaults. An already authorized generation, API fallback, or API cost does not require repeated confirmation. Use the requested attempt count and runtime when they are specified.
++
++When `embodiment_preflight` is active, also copy its exact `canonical_sha256` into runtime `source_embodiment_preflight_sha256`. Use only the reviewed composed prompt and optional exact `\n\nAvoid: <negative_en>` suffix. New runtime prose requires recomposition and a fresh review. After generation include the applicable `embodiment_*` gates derived from the exact composed review; [embodiment-preflight.md](embodiment-preflight.md) defines their criteria. They join the existing strict checklist even on an initial generation, without fabricating repair lineage.
+ 
+ Before the tool call, serialize the exact native runtime inputs as `photo-image-render-request/v2` and run `scripts/audit_image_render_request.py`. The request must include `pack_id`, exact `runtime_prompt_en`, exact `runtime_negative_en`, the composed and runtime audit boundary, and every attached reference path, SHA-256, and role. For a normal intent-locked v5/v6 pack, it must also include `source_intent_lock_sha256` copied exactly from `authorial_core.intent_lock.canonical_sha256`. When the pack contains `render_repair`, also copy its exact `canonical_sha256` into `render_repair_contract_sha256`; omission or mutation blocks generation. The audited composed prompt must occur contiguously inside the runtime prompt, while the runtime string remains `not_run` until this exact-input audit passes. When `chosen_visual_concept_ids` is non-empty, also include the auditor-derived `effective_visual_contract_sha256`; this binds the optional selection to the hard contract used after rendering. The inherited composed PASS includes `photo-negative-intent-guard/v1`: do not append a platform-safety summary, recipe suppression, coordinator instruction, or new `Avoid:` item after audit. The runtime auditor scans both the complete positive runtime string and `runtime_negative_en` for the union of core `runtime_forbidden_labels` and active-profile `runtime_expression.runtime_forbidden_labels`; a shorthand label may aid meaning resolution but may not leak through either runtime surface. A negative mismatch, negative-intent-guard failure, runtime-label leak, missing intent-lock or repair-contract binding, missing reference, hash mismatch, visual-contract mismatch, role ambiguity, or missing/failed inherited composed audit blocks generation. An inherited composed PASS is required.
+ 
+--- baseline/skills/photo-prompt-image-generator/references/maintenance.md
++++ candidate/skills/photo-prompt-image-generator/references/maintenance.md
+@@ -1,4 +1,6 @@
+ # Maintenance and Evaluation
++
++Body-action plausibility review is agent-owned and separate from semantic meaning. Maintain its deterministic binding in `scripts/photo_embodiment.py`; do not introduce pose-template retrieval, named anatomy defaults, broad defect negatives, or a purported prose-to-kinematics solver. The normal skill opts in with `--embodiment-review-json`; preserve serialized pack compatibility. Regression coverage must include stale final/runtime prose, missing or unresolved review checks, exact requester-supported departures, unrelated body structures, and conditional pixel gates. Record validation proves review integrity only; real prompt reasoning and rendered-fidelity claims need their own evidence.
+ 
+ Maintenance-only. Never read this file while resolving a live request or writing its basic prompt. Maintained keyword meanings belong in structured runtime data and their tests; they must not be copied into `SKILL.md` or used as pre-core agent knowledge.
+ 
+--- baseline/skills/photo-prompt-image-generator/scripts/photo_embodiment.py
++++ candidate/skills/photo-prompt-image-generator/scripts/photo_embodiment.py
+@@ -0,0 +1,183 @@
++"""Bind agent-authored body-action reviews; this module is not a pose solver.
++
++No subject taxonomy, reference image, or prompt keyword selects an anatomy model.
++The reviewer owns applicability and plausibility; code checks evidence, unresolved
++findings, and exact input bindings. All helpers are post-core only.
++"""
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++from typing import Any
++
++REVIEW_VERSION = "photo-embodiment-review/v1"
++POLICY_VERSION = "photo-embodiment-preflight/v1"
++CHECKS = (
++    "body_ownership",
++    "joint_chain_and_reach",
++    "support_and_balance",
++    "contact_and_space",
++    "visibility_and_projection",
++)
++GATES = tuple(f"embodiment_{check}" for check in CHECKS)
++
++
++def text_sha256(text: str) -> str:
++    return hashlib.sha256(text.encode("utf-8")).hexdigest()
++
++
++def canonical_sha256(value: Any) -> str:
++    return text_sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
++
++
++def _text(value: Any, label: str) -> str:
++    if not isinstance(value, str) or len(value.strip()) < 12:
++        raise ValueError(f"{label} requires a concrete explanation")
++    return value
++
++
++def validate_review(review: Any, prompt: str, core: dict, provenance: str) -> dict:
++    fields = {"contract_version", "provenance", "prompt_sha256", "scope", "summary", "checks"}
++    if not isinstance(review, dict) or set(review) != fields:
++        raise ValueError("embodiment review requires exactly " + ", ".join(sorted(fields)))
++    if review["contract_version"] != REVIEW_VERSION or review["provenance"] != provenance:
++        raise ValueError("embodiment review version or authoring phase is incorrect")
++    if review["prompt_sha256"] != text_sha256(prompt):
++        raise ValueError("embodiment review is stale: review the exact current prompt again")
++    _text(review["summary"], "embodiment summary")
++    if not isinstance(review["scope"], str) or review["scope"] not in {"body_action", "not_applicable"}:
++        raise ValueError("embodiment scope must be body_action or not_applicable")
++    checks = review["checks"]
++    if review["scope"] == "not_applicable":
++        if checks != {}:
++            raise ValueError("not_applicable scope requires empty checks and an explained summary")
++        return copy.deepcopy(review)
++    if not isinstance(checks, dict) or set(checks) != set(CHECKS):
++        raise ValueError("body-action review must decide every generic check exactly once")
++    spans = (core.get("request_binding") or {}).get("active_spans") or []
++    for check, row in checks.items():
++        required = {"status", "reason", "prompt_evidence"}
++        if not isinstance(row, dict) or not required <= set(row) or set(row) - required - {"requester_source_text"}:
++            raise ValueError(f"{check}: invalid review fields")
++        _text(row["reason"], check)
++        status = row["status"]
++        if not isinstance(status, str):
++            raise ValueError(f"{check}: review status must be a string")
++        if status in {"needs_revision", "unresolved"}:
++            raise ValueError(f"{check}: {status}; resolve the finding before freezing or generating")
++        if status not in {"supported", "not_applicable", "requester_intended"}:
++            raise ValueError(f"{check}: unsupported review status")
++        evidence = row["prompt_evidence"]
++        if not isinstance(evidence, list) or len(evidence) > 4:
++            raise ValueError(f"{check}: prompt_evidence must be a list of at most four phrases")
++        if status != "not_applicable" and not evidence:
++            raise ValueError(f"{check}: an applicable check requires literal positive prompt evidence")
++        if status == "not_applicable" and evidence:
++            raise ValueError(f"{check}: not_applicable requires empty evidence and an explanation")
++        for phrase in evidence:
++            if not isinstance(phrase, str) or len(phrase.split()) < 3 or phrase not in prompt:
++                raise ValueError(f"{check}: evidence must be a substantive literal phrase in the reviewed prompt")
++        if status == "requester_intended":
++            source = row.get("requester_source_text")
++            if not isinstance(source, str) or len(source.strip()) < 3 or not any(
++                source in str(span.get("text") or "") for span in spans if isinstance(span, dict)
++            ):
++                raise ValueError(f"{check}: an intentional departure needs exact active requester source text")
++        elif "requester_source_text" in row:
++            raise ValueError(f"{check}: requester exception belongs only to requester_intended")
++    if all(row["status"] == "not_applicable" for row in checks.values()):
++        raise ValueError("body_action scope cannot mark every check not_applicable")
++    return copy.deepcopy(review)
++
++
++def build_policy(core: Any, baseline_review: Any) -> dict:
++    if not isinstance(core, dict) or core.get("contract_version") != "photo-authorial-core/v3":
++        raise ValueError("embodiment preflight requires a frozen v3 core")
++    baseline = core.get("baseline_prompt_en")
++    if not isinstance(baseline, str):
++        raise ValueError("embodiment preflight requires the frozen baseline prompt")
++    policy = {
++        "contract_version": POLICY_VERSION,
++        "source_authorial_core_sha256": core["canonical_sha256"],
++        "source_intent_lock_sha256": core["intent_lock"]["canonical_sha256"],
++        "baseline_review": validate_review(baseline_review, baseline, core, "agent_prepack"),
++        "required_checks": list(CHECKS),
++        "boundary": "Agent review with literal actuation and exact text binding; not a kinematic proof or pixel judgment.",
++    }
++    policy["canonical_sha256"] = canonical_sha256(policy)
++    return policy
++
++
++def policy_from_pack(pack: dict) -> dict | None:
++    marker = (pack.get("provenance") or {}).get("embodiment_preflight_required")
++    if "embodiment_preflight" not in pack and marker is None:
++        return None  # Serialized packs made before this opt-in workflow remain replayable.
++    if pack.get("contract_version") != "photo-candidate-pack/v6" or marker is not True:
++        raise ValueError("embodiment preflight requires a v6 pack and its explicit provenance marker")
++    policy = pack.get("embodiment_preflight")
++    if not isinstance(policy, dict):
++        raise ValueError("required embodiment preflight is missing")
++    expected = build_policy(pack.get("authorial_core"), policy.get("baseline_review"))
++    if policy != expected:
++        raise ValueError("embodiment preflight differs from the frozen core and baseline review")
++    return expected
++
++
++def audit_composed(pack: dict, composed: dict) -> list[dict]:
++    try:
++        policy = policy_from_pack(pack)
++        binding = composed.get("embodiment_review")
++        if policy is None:
++            if "embodiment_review" in composed:
++                raise ValueError("embodiment review has no governing pack contract")
++            return []
++        if not isinstance(binding, dict) or set(binding) != {"source_contract_sha256", "review"}:
++            raise ValueError("composed prompt requires an embodiment_review binding")
++        if binding["source_contract_sha256"] != policy["canonical_sha256"]:
++            raise ValueError("composed embodiment review is bound to a different contract")
++        review = validate_review(binding["review"], str(composed.get("prompt_en") or ""),
++                                 pack["authorial_core"], "agent_postcomposition")
++        if policy["baseline_review"]["scope"] == "body_action" and review["scope"] != "body_action":
++            raise ValueError("a frozen body-action review cannot be downgraded during composition")
++        for check, baseline_row in policy["baseline_review"]["checks"].items():
++            if baseline_row["status"] != "not_applicable" and review["checks"][check]["status"] == "not_applicable":
++                raise ValueError(f"{check}: an applicable baseline check cannot be dropped during composition")
++    except (ValueError, KeyError, TypeError) as exc:
++        return [{"check": "embodiment_preflight", "reason": str(exc)}]
++    return []
++
++
++def audit_runtime(pack: dict, composed: dict, request: dict) -> list[dict]:
++    failures = audit_composed(pack, composed)
++    if failures:
++        return failures
++    policy = policy_from_pack(pack)
++    if policy is None:
++        if "source_embodiment_preflight_sha256" in request:
++            return [{"check": "embodiment_runtime", "reason": "runtime embodiment binding has no governing policy"}]
++        return []
++    if request.get("source_embodiment_preflight_sha256") != policy["canonical_sha256"]:
++        failures.append({"check": "embodiment_runtime", "reason": "runtime must bind the exact embodiment preflight"})
++    prompt = composed["prompt_en"]
++    allowed = [prompt]
++    negative = composed.get("negative_en")
++    if isinstance(negative, str):
++        allowed.append(prompt + "\n\nAvoid: " + negative)
++    if request.get("runtime_prompt_en") not in allowed:
++        failures.append({"check": "embodiment_runtime", "reason": "new runtime prose requires a new composed review; only the exact prompt and optional preserved Avoid suffix are allowed"})
++    return failures
++
++
++def render_gate_ids(pack: dict, composed: dict | None) -> tuple[list[str], list[dict]]:
++    failures = audit_composed(pack, composed or {})
++    if failures:
++        return [], failures
++    policy = policy_from_pack(pack)
++    if policy is None:
++        return [], []
++    review = composed["embodiment_review"]["review"]
++    if review["scope"] == "not_applicable":
++        return [], []
++    return [f"embodiment_{check}" for check in CHECKS
++            if review["checks"][check]["status"] != "not_applicable"], []
+--- baseline/skills/photo-prompt-image-generator/references/embodiment-preflight.md
++++ candidate/skills/photo-prompt-image-generator/references/embodiment-preflight.md
+@@ -0,0 +1,57 @@
++# Embodiment preflight
++
++Post-core only. The pre-core reasoning and neutral review shape live in `SKILL.md`. This reference explains bindings and review interpretation, not a catalog of preferred poses.
++
++## Ownership and scope
++
++The agent supplies `--embodiment-review-json` with the independently reviewed baseline. The generator validates it against the exact baseline and creates `photo-embodiment-preflight/v1`, binding the normalized core, intent lock, baseline review, and check set. It does not infer human anatomy from a costume, name, role, or retrieved subject category. The review stays outside retrieval, requester meaning, and the negative prompt.
++
++Use the current requested bodily structure. A still life or a portrait with no material bodily mechanism can explain `not_applicable`. A contact, support, articulation, or occluded limb that matters to the image uses `body_action`; decide the five checks individually. Do not mark all five inapplicable to bypass the review. Composition may introduce an applicable action to a previously inapplicable scene, but may not downgrade an applicable baseline or any of its applicable checks to bypass review.
++
++`supported` records a plausible qualitative realization. `requester_intended` preserves a specifically requested departure and requires both literal realization and exact active requester text; the validator checks provenance, not whether that text truly describes the departure. Neither status certifies geometry. `needs_revision` and `unresolved` are blocking findings. Do not relabel uncertainty as support just to get an audit pass. If a detail cannot be inferred, assess whether it matters before adding geometry or asking a question.
++
++## Final composition binding
++
++After rereading the complete final prompt, add:
++
++```json
++{
++  "embodiment_review": {
++    "source_contract_sha256": "<pack.embodiment_preflight.canonical_sha256>",
++    "review": {
++      "contract_version": "photo-embodiment-review/v1",
++      "provenance": "agent_postcomposition",
++      "prompt_sha256": "<SHA-256 of exact prompt_en UTF-8 bytes>",
++      "scope": "<body_action or not_applicable>",
++      "summary": "<what was reviewed in this complete final version>",
++      "checks": {}
++    }
++  }
++}
++```
++
++For `body_action`, populate all five checks using the neutral shape in `SKILL.md`. A substantive control may serve more than one check; do not pad the prompt with duplicate clauses. Keep meta-review explanations out of runtime prose. Rehashing is the last step after a real re-review, not an automatic repair for stale evidence.
++
++If the core's meaning is clear but the proposed realization is inconsistent, repair agent-authored staging before the first freeze. After freeze, preserve literal locked evidence and use only the allowed composition changes. A required frozen change needs the existing lineage/rebuild path, preserving requester intent and the meaningful contact. Do not copy the motivating case's body part, target, direction, or numerical joint values into generic defaults.
++
++## Runtime boundary
++
++Copy `source_embodiment_preflight_sha256` from the policy into `photo-image-render-request/v2`. With this policy, the runtime prompt is exactly `prompt_en`, optionally followed by `\n\nAvoid: ` and the unchanged nonempty `negative_en`. Additional positive runtime prose must first be incorporated into composition and reviewed. This closes the path where a reviewed prompt is embedded in a larger, unreviewed pose instruction.
++
++Older packs without this policy retain their historical audit behavior. The opt-in flag is required by the normal skill procedure, not retroactively imposed on saved v6 files or direct compatibility callers. Omitting or mutating the policy in a marked pack fails audit.
++
++## Pixel review
++
++The exact composed review determines the additional hard gates below. Include a gate for each final check whose status is not `not_applicable`; review at native scale, using the overall frame to assess ownership and projection. Every gate is judged against the current requested structure, including an explicitly intended departure, rather than universal human proportions.
++
++| Gate | Pixel question |
++| --- | --- |
++| `embodiment_body_ownership` | Do the important parts visibly belong to the intended actor and structure? |
++| `embodiment_joint_chain_and_reach` | Are connected segments, articulation, and the reach to the target coherent? |
++| `embodiment_support_and_balance` | Do the visible supports and load-bearing relationships agree with the intended state? |
++| `embodiment_contact_and_space` | Does the intended contact survive with coherent boundaries and available space? |
++| `embodiment_visibility_and_projection` | Does the view make the critical relation assessable, accounting for foreshortening and occlusion? |
++
++Use the existing `moe-render-review/v1` record and `audit_moe_render_review.py --pack ... --composed ... --review ...`. Its exact checklist is the union of these gates and the existing active character/visual gates. With only embodiment gates, use `photo-embodiment-preflight/v1` as the review's `contract_version`. Keep image path/hash and requester judgment requirements. A critical relationship hidden beyond assessment is not a pass; use `fail` with an explanation of visibility rather than claiming a diagnosed deformity. Harmless occlusion or atypical anatomy alone is not failure.
++
++The audit validates a submitted review; it does not inspect pixels, solve inverse kinematics, estimate failure probability, or establish user preference. Structural and prompt-review results must remain separate from rendered-fidelity claims.
+--- baseline/tests/test_photo_embodiment.py
++++ candidate/tests/test_photo_embodiment.py
+@@ -0,0 +1,312 @@
++from __future__ import annotations
++
++import copy
++import hashlib
++import json
++from pathlib import Path
++import sys
++import subprocess
++import tempfile
++import unittest
++
++ROOT = Path(__file__).resolve().parents[1]
++SCRIPTS = ROOT / "skills/photo-prompt-image-generator/scripts"
++sys.path.insert(0, str(SCRIPTS)) if str(SCRIPTS) not in sys.path else None
++import photo_embodiment as embodiment
++import audit_composed_prompt
++import audit_image_render_request
++import audit_moe_render_review
++import compose_pack_view
++import prompt_generator
++
++
++BASELINE = (
++    "An adult technician operates a lever under an open shelf. Her working hand belongs "
++    "to the arm nearest the lever, with a relaxed shoulder and a bent elbow beside her "
++    "ribs. The forearm crosses the open gap and the wrist follows its line. Her fingers "
++    "close around the lever, while both feet rest on the floor. A side view reveals the "
++    "connected segments and contact against the still machinery in soft workshop light."
++)
++
++
++def core(baseline=BASELINE, request="A technician operates a lever."):
++    return {
++        "contract_version": "photo-authorial-core/v3",
++        "canonical_sha256": "a" * 64,
++        "intent_lock": {"canonical_sha256": "b" * 64},
++        "baseline_prompt_en": baseline,
++        "request_binding": {"active_spans": [{"span_id": "topic", "text": request}]},
++    }
++
++
++def review(prompt=BASELINE, phase="agent_prepack", scope="body_action"):
++    phrases = {
++        "body_ownership": "Her working hand belongs to the arm nearest the lever",
++        "joint_chain_and_reach": "a relaxed shoulder and a bent elbow beside her ribs",
++        "support_and_balance": "both feet rest on the floor",
++        "contact_and_space": "Her fingers close around the lever",
++        "visibility_and_projection": "A side view reveals the connected segments and contact",
++    }
++    return {
++        "contract_version": embodiment.REVIEW_VERSION,
++        "provenance": phase,
++        "prompt_sha256": embodiment.text_sha256(prompt),
++        "scope": scope,
++        "summary": "Synthetic review fixture; exercises binding, not actual visual qualification.",
++        "checks": {
++            check: {"status": "supported", "reason": "Synthetic case-specific review observation.",
++                    "prompt_evidence": [phrases[check]]}
++            for check in embodiment.CHECKS
++        } if scope == "body_action" else {},
++    }
++
++
++def fixture():
++    frozen_core = core()
++    policy = embodiment.build_policy(frozen_core, review())
++    pack = {"contract_version": "photo-candidate-pack/v6", "authorial_core": frozen_core,
++            "provenance": {"embodiment_preflight_required": True}, "embodiment_preflight": policy}
++    composed = {"prompt_en": BASELINE, "negative_en": "low resolution", "embodiment_review": {
++        "source_contract_sha256": policy["canonical_sha256"],
++        "review": review(phase="agent_postcomposition"),
++    }}
++    return pack, composed
++
++
++class EmbodimentContractTests(unittest.TestCase):
++    def test_freezing_review_does_not_mutate_semantic_core_or_prompt(self):
++        frozen = core()
++        original = copy.deepcopy(frozen)
++        policy = embodiment.build_policy(frozen, review())
++        self.assertEqual(frozen, original)
++        self.assertEqual(policy["baseline_review"]["prompt_sha256"], embodiment.text_sha256(BASELINE))
++
++    def test_stale_baseline_and_wrong_authoring_phase_are_rejected(self):
++        for key, value in [("prompt_sha256", "c" * 64), ("provenance", "agent_postcomposition")]:
++            with self.subTest(key=key):
++                r = review()
++                r[key] = value
++                with self.assertRaises(ValueError):
++                    embodiment.build_policy(core(), r)
++
++    def test_unresolved_or_repair_needed_findings_block_every_check(self):
++        for check in embodiment.CHECKS:
++            for status in ("unresolved", "needs_revision", "partial"):
++                with self.subTest(check=check, status=status):
++                    r = review()
++                    r["checks"][check]["status"] = status
++                    with self.assertRaises(ValueError):
++                        embodiment.build_policy(core(), r)
++
++    def test_missing_evidence_and_nonliteral_controls_do_not_pass(self):
++        for evidence in ([], ["plausible posture"], ["a hand from a different person"]):
++            r = review()
++            r["checks"]["body_ownership"]["prompt_evidence"] = evidence
++            with self.subTest(evidence=evidence), self.assertRaises(ValueError):
++                embodiment.build_policy(core(), r)
++
++    def test_still_life_can_remain_inapplicable_without_inventing_an_actor(self):
++        prompt = "Light reflects from the glaze of a ceramic bowl on the table."
++        r = review(prompt, scope="not_applicable")
++        policy = embodiment.build_policy(core(prompt), r)
++        self.assertEqual(policy["baseline_review"]["checks"], {})
++
++    def test_body_action_cannot_omit_checks_or_mark_everything_inapplicable(self):
++        for mode in ("missing", "all_inapplicable"):
++            r = review()
++            if mode == "missing":
++                r["checks"].pop("contact_and_space")
++            else:
++                for row in r["checks"].values():
++                    row.update(status="not_applicable", prompt_evidence=[])
++            with self.subTest(mode=mode), self.assertRaises(ValueError):
++                embodiment.build_policy(core(), r)
++
++    def test_requested_unusual_structure_is_retained_with_grounded_evidence(self):
++        phrase = "a robot with four articulated manipulators"
++        prompt = BASELINE + " Beside her stands " + phrase + "."
++        request = "Show a robot with four articulated manipulators beside the technician."
++        r = review(prompt)
++        r["checks"]["body_ownership"].update(
++            status="requester_intended", prompt_evidence=[phrase], requester_source_text=phrase)
++        self.assertEqual(embodiment.build_policy(core(prompt, request), r)["baseline_review"], r)
++        r["checks"]["body_ownership"]["requester_source_text"] = "an agent preference for extra limbs"
++        with self.assertRaisesRegex(ValueError, "requester source"):
++            embodiment.build_policy(core(prompt, request), r)
++
++    def test_unrelated_animal_motion_uses_its_own_structure(self):
++        phrase = "The bird braces its feet and spreads its wings above the branch"
++        r = review(phrase)
++        for row in r["checks"].values():
++            row["prompt_evidence"] = [phrase]
++        policy = embodiment.build_policy(core(phrase, "A bird prepares to fly."), r)
++        self.assertEqual(policy["baseline_review"]["checks"], r["checks"])
++        self.assertNotIn("human", json.dumps(policy))
++
++    def test_missing_or_mutated_policy_is_not_silently_downgraded(self):
++        for mode in ("missing", "mutated", "marker_removed"):
++            pack, composed = fixture()
++            if mode == "missing":
++                pack.pop("embodiment_preflight")
++            elif mode == "mutated":
++                pack["embodiment_preflight"]["required_checks"] = []
++            else:
++                pack["provenance"].clear()
++            with self.subTest(mode=mode):
++                self.assertTrue(embodiment.audit_composed(pack, composed))
++
++    def test_final_prompt_change_requires_a_new_review(self):
++        pack, composed = fixture()
++        self.assertEqual(embodiment.audit_composed(pack, composed), [])
++        composed["prompt_en"] += " The working arm is fully straight while the same elbow is sharply bent."
++        failures = embodiment.audit_composed(pack, composed)
++        self.assertIn("stale", failures[0]["reason"])
++        composed["embodiment_review"]["review"]["prompt_sha256"] = embodiment.text_sha256(composed["prompt_en"])
++        composed["embodiment_review"]["review"]["checks"]["joint_chain_and_reach"]["status"] = "needs_revision"
++        self.assertIn("needs_revision", embodiment.audit_composed(pack, composed)[0]["reason"])
++
++    def test_newly_reviewed_lighting_variation_preserves_contact(self):
++        pack, composed = fixture()
++        composed["prompt_en"] += " Reflected light traces the same contact."
++        composed["embodiment_review"]["review"] = review(composed["prompt_en"], "agent_postcomposition")
++        self.assertEqual(embodiment.audit_composed(pack, composed), [])
++        self.assertIn("Her fingers close around the lever", composed["prompt_en"])
++
++    def test_final_review_cannot_downgrade_material_action(self):
++        pack, composed = fixture()
++        composed["embodiment_review"]["review"] = review(phase="agent_postcomposition", scope="not_applicable")
++        self.assertIn("downgraded", embodiment.audit_composed(pack, composed)[0]["reason"])
++
++    def test_runtime_requires_binding_and_rejects_added_positive_prose(self):
++        pack, composed = fixture()
++        request = {"source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
++                   "runtime_prompt_en": BASELINE + "\n\nAvoid: low resolution"}
++        self.assertEqual(embodiment.audit_runtime(pack, composed, request), [])
++        request["runtime_prompt_en"] += " Extend the other arm across the first."
++        self.assertTrue(embodiment.audit_runtime(pack, composed, request))
++        request["runtime_prompt_en"] = BASELINE
++        request.pop("source_embodiment_preflight_sha256")
++        self.assertTrue(embodiment.audit_runtime(pack, composed, request))
++
++    def test_legacy_packs_stay_replayable_without_a_new_review_claim(self):
++        self.assertEqual(embodiment.audit_composed({}, {"prompt_en": BASELINE}), [])
++        self.assertEqual(embodiment.render_gate_ids({}, None), ([], []))
++        self.assertTrue(embodiment.audit_composed({}, {"embodiment_review": {}}))
++
++    def test_applicable_pixel_gates_are_derived_from_final_review(self):
++        pack, composed = fixture()
++        baseline = copy.deepcopy(pack["embodiment_preflight"]["baseline_review"])
++        baseline["checks"]["support_and_balance"].update(
++            status="not_applicable", prompt_evidence=[], reason="This framing does not make load-bearing material.")
++        pack["embodiment_preflight"] = embodiment.build_policy(pack["authorial_core"], baseline)
++        composed["embodiment_review"]["source_contract_sha256"] = pack["embodiment_preflight"]["canonical_sha256"]
++        composed["embodiment_review"]["review"]["checks"]["support_and_balance"].update(
++            status="not_applicable", prompt_evidence=[], reason="This close framing does not make load-bearing material.")
++        gates, failures = embodiment.render_gate_ids(pack, composed)
++        self.assertEqual(failures, [])
++        self.assertEqual(len(gates), 4)
++        self.assertNotIn("embodiment_support_and_balance", gates)
++
++    def test_material_baseline_check_cannot_be_suppressed_after_composition(self):
++        pack, composed = fixture()
++        composed["embodiment_review"]["review"]["checks"]["contact_and_space"].update(
++            status="not_applicable", prompt_evidence=[], reason="Attempted suppression of the frozen interaction.")
++        self.assertIn("cannot be dropped", embodiment.audit_composed(pack, composed)[0]["reason"])
++
++
++class EmbodimentPipelineTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        from tests import test_photo_character_render_review as existing
++        existing.PhotoCharacterRenderReviewTests.setUpClass()
++        cls.original_pack = copy.deepcopy(existing.PhotoCharacterRenderReviewTests.pack)
++        cls.original_composed = copy.deepcopy(existing.PhotoCharacterRenderReviewTests.composed)
++
++    def bound_pair(self):
++        pack, composed = copy.deepcopy((self.original_pack, self.original_composed))
++        frozen = pack["authorial_core"]
++        baseline = frozen["baseline_prompt_en"]
++        r = review(baseline)
++        for row in r["checks"].values():
++            row["prompt_evidence"] = ["wraps the coworker's scraped wrist with practical care"]
++        policy = embodiment.build_policy(frozen, r)
++        pack["embodiment_preflight"] = policy
++        pack["provenance"]["embodiment_preflight_required"] = True
++        pack["pack_id"] = audit_composed_prompt.computed_pack_id(pack)
++        composed["pack_id"] = pack["pack_id"]
++        final = copy.deepcopy(r)
++        final.update(provenance="agent_postcomposition", prompt_sha256=embodiment.text_sha256(composed["prompt_en"]))
++        composed["embodiment_review"] = {"source_contract_sha256": policy["canonical_sha256"], "review": final}
++        return pack, composed
++
++    def test_composed_audit_and_compact_view_preserve_the_new_contract(self):
++        pack, composed = self.bound_pair()
++        result = audit_composed_prompt.audit_composed_prompt(pack, composed)
++        self.assertEqual(result["failures"], [])
++        self.assertEqual(compose_pack_view.build_view(pack)["requirements"]["embodiment_preflight"], pack["embodiment_preflight"])
++        composed.pop("embodiment_review")
++        self.assertIn("embodiment_preflight", {x["check"] for x in audit_composed_prompt.audit_composed_prompt(pack, composed)["failures"]})
++
++    def test_runtime_auditor_checks_full_reviewed_input(self):
++        pack, composed = self.bound_pair()
++        request = {"schema_version": "photo-image-render-request/v2", "pack_id": pack["pack_id"],
++                   "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
++                   "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
++                   "runtime_prompt_en": composed["prompt_en"] + "\n\nAvoid: " + composed["negative_en"], "runtime_negative_en": composed["negative_en"],
++                   "audit_boundary": {"composed_prompt_audit_status": "pass", "runtime_prompt_audit_status": "not_run", "inherits_composed_prompt_pass": False},
++                   "references": []}
++        result = audit_image_render_request.audit_image_render_request(pack, composed, request)
++        self.assertEqual(result["status"], "pass", result["failures"])
++        request["runtime_prompt_en"] += " Make the same arm both straight and bent."
++        self.assertIn("embodiment_runtime", {x["check"] for x in audit_image_render_request.audit_image_render_request(pack, composed, request)["failures"]})
++
++    def test_wrapper_emits_bound_policy_without_retrieving_review_prose(self):
++        from tests import test_photo_authorial_core_v6 as fixtures
++        raw = fixtures.core()
++        r = review(raw["baseline_prompt_en"])
++        r["summary"] = "REVIEW_ONLY_SENTINEL: synthetic record outside semantic retrieval."
++        for row in r["checks"].values():
++            row["prompt_evidence"] = ["wraps the coworker's scraped wrist with practical care"]
++        with tempfile.TemporaryDirectory() as tmp:
++            paths = {}
++            for name, value in (("core", raw), ("envelope", fixtures.envelope()), ("review", r)):
++                # A review filename must not invoke the dictionary loader's special
++                # extension handling, even if it happens to match its basename.
++                paths[name] = Path(tmp) / ("photo_prompt_tags.json" if name == "review" else name + ".json")
++                paths[name].write_text(json.dumps(value, ensure_ascii=False))
++            completed = subprocess.run([
++                sys.executable, str(SCRIPTS / "generate_photo_prompt.py"),
++                "--selection-mode", "rule", "--seed", "9501", "--creativity", "0",
++                "--emit-candidate-pack", "--candidate-pack-version", "v6",
++                "--authorial-core-json", str(paths["core"]),
++                "--request-envelope-json", str(paths["envelope"]),
++                "--embodiment-review-json", str(paths["review"]), "--n", "1",
++            ], cwd=ROOT, capture_output=True, text=True, timeout=180)
++        self.assertEqual(completed.returncode, 0, completed.stderr)
++        pack = json.loads(completed.stdout)[0]
++        self.assertEqual(embodiment.policy_from_pack(pack)["baseline_review"], r)
++        query, _ = prompt_generator.authorial_core_retrieval_text(pack["authorial_core"])
++        self.assertNotIn("REVIEW_ONLY_SENTINEL", query)
++        self.assertEqual(pack["authorial_core"]["baseline_prompt_en"], raw["baseline_prompt_en"])
++
++    def test_pixel_review_requires_new_gates_without_claiming_real_pixels(self):
++        pack, composed = self.bound_pair()
++        with tempfile.TemporaryDirectory() as tmp:
++            image = Path(tmp) / "synthetic-review-record.bin"
++            image.write_bytes(b"review validator fixture; not rendered image evidence")
++            gates = [g["id"] for g in pack["character_response"]["render_gates"]]
++            r = {"schema_version": "moe-render-review/v1", "pack_id": pack["pack_id"],
++                 "contract_version": "photo-character-response/v1", "reviewer": "synthetic validator fixture",
++                 "result_image": str(image), "result_sha256": hashlib.sha256(image.read_bytes()).hexdigest(),
++                 "hard_gates": {g: {"status": "pass", "evidence": "Synthetic observation for record validation only."} for g in gates},
++                 "user_judgment": {"baseline_available": False, "genuinely_moe": "pending", "better_than_baseline": "not_applicable", "source": "not_yet_received", "evidence": ""}}
++            self.assertFalse(audit_moe_render_review.audit_moe_render_review(pack, r, composed=composed)["technical_qualified"])
++            for g in embodiment.GATES:
++                r["hard_gates"][g] = {"status": "pass", "evidence": "Synthetic observation for record validation only."}
++            self.assertTrue(audit_moe_render_review.audit_moe_render_review(pack, r, composed=composed)["technical_qualified"])
++            r["hard_gates"]["embodiment_joint_chain_and_reach"]["status"] = "fail"
++            self.assertFalse(audit_moe_render_review.audit_moe_render_review(pack, r, composed=composed)["technical_qualified"])
++
++
++if __name__ == "__main__":
++    unittest.main()

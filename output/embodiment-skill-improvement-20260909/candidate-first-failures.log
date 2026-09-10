@@ -1,0 +1,152 @@
+test_all_185_authored_bundles_compile_and_profile_links_remain_advisory (test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_185_authored_bundles_compile_and_profile_links_remain_advisory) ... FAIL
+test_maintenance_prose_is_external_and_hash_bound (test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound) ... FAIL
+test_all_concept_recipe_forced_slots_are_registered (test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered) ... FAIL
+test_all_semantic_inputs_exclude_control_and_process_metadata (test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata) ... FAIL
+test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer) ... 
+  test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer) (concept='윈터 간호사 회사원') ... FAIL
+  test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer) (concept='닝닝 경찰 회사원') ... FAIL
+test_concept_recipe_explain_combines_role_and_assassin_mixin (test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin) ... FAIL
+test_concept_soft_spec_carries_v3_group_guard_and_priority_terms (test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms) ... FAIL
+test_semantic_index_builder_subprocess_uses_project_env_file (test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file) ... FAIL
+test_vampire_weak_role_prompts_include_positive_anchors (test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors) ... FAIL
+test_aggregate_validator_does_not_hide_partial_pixel_qualification (test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification) ... ERROR
+
+======================================================================
+ERROR: test_aggregate_validator_does_not_hide_partial_pixel_qualification (test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_contract_v1.py", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification
+    summary = validate_all(ASSET_ROOT)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11465, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6387, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+FAIL: test_all_185_authored_bundles_compile_and_profile_links_remain_advisory (test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_185_authored_bundles_compile_and_profile_links_remain_advisory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py", line 52, in test_all_185_authored_bundles_compile_and_profile_links_remain_advisory
+    self.assertEqual(len(self.data["candidate_bundles"]), 185)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 273 != 185
+
+======================================================================
+FAIL: test_maintenance_prose_is_external_and_hash_bound (test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py", line 119, in test_maintenance_prose_is_external_and_hash_bound
+    self.assertEqual(count, 14)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: 15 != 14
+
+======================================================================
+FAIL: test_all_concept_recipe_forced_slots_are_registered (test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 9129, in test_all_concept_recipe_forced_slots_are_registered
+    self.assertEqual(missing, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: Lists differ: [('mixins.노령림 구조.set', 'aesthetic_trend', [11363 chars]me')] != []
+
+First list contains 140 additional elements.
+First extra element 0:
+('mixins.노령림 구조.set', 'aesthetic_trend', 'old_growth_forest_structure_aesthetic')
+
+Diff is 12427 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_all_semantic_inputs_exclude_control_and_process_metadata (test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 11521, in test_all_semantic_inputs_exclude_control_and_process_metadata
+    self.assertEqual(len(rows), 6910)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: 8443 != 6910
+
+======================================================================
+FAIL: test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer) (concept='윈터 간호사 회사원')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer
+    self.assertIn(expected_id, combined[slot], slot)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'nurse_uniform_costume' not found in ['clinical_nursing_scrub_duty_system'] : costume_style
+
+======================================================================
+FAIL: test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer) (concept='닝닝 경찰 회사원')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer
+    self.assertIn(expected_id, combined[slot], slot)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform'] : costume_style
+
+======================================================================
+FAIL: test_concept_recipe_explain_combines_role_and_assassin_mixin (test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 5743, in test_concept_recipe_explain_combines_role_and_assassin_mixin
+    self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_uniform_costume"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['police_public_safety_duty_uniform'] != ['police_uniform_costume']
+
+First differing element 0:
+'police_public_safety_duty_uniform'
+'police_uniform_costume'
+
+- ['police_public_safety_duty_uniform']
++ ['police_uniform_costume']
+
+======================================================================
+FAIL: test_concept_soft_spec_carries_v3_group_guard_and_priority_terms (test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 2270, in test_concept_soft_spec_carries_v3_group_guard_and_priority_terms
+    self.assertIn("police_uniform_costume", role_costume[0]["pool"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform']
+
+======================================================================
+FAIL: test_semantic_index_builder_subprocess_uses_project_env_file (test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 11922, in test_semantic_index_builder_subprocess_uses_project_env_file
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmprugn6jee/source/skills/photo-prompt-image-generator/scripts/build_semantic_index.py", line 16, in <module>
+    from prompt_generator import (
+    ...<14 lines>...
+    )
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmprugn6jee/source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 42, in <module>
+    import photo_candidate_semantics
+ModuleNotFoundError: No module named 'photo_candidate_semantics'
+
+
+======================================================================
+FAIL: test_vampire_weak_role_prompts_include_positive_anchors (test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py", line 3249, in test_vampire_weak_role_prompts_include_positive_anchors
+    self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'police_public_safety_duty_uniform' != 'police_uniform_costume'
+- police_public_safety_duty_uniform
++ police_uniform_costume
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 59.538s
+
+FAILED (failures=10, errors=1)

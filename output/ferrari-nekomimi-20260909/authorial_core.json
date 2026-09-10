@@ -1,0 +1,182 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 달리는 페라리 조수석에 앉아서 삐진 츤데레 네코미미 메이드",
+  "interpreted_intent": "Reference-inspired photographic cat-eared maid, sulking yet affectionate toward the driver while riding a moving Ferrari.",
+  "subject": "Adult woman as cat-eared maid",
+  "setting": "Front passenger seat of moving Ferrari",
+  "event": "Sulking passenger affectionately tugs driver sleeve",
+  "visual_priorities": [
+    "Pout contrasted with affectionate sleeve tug",
+    "Recognizable cat-ear maid costume and moving Ferrari passenger cabin"
+  ],
+  "baseline_prompt_en": "A cinematic live-action photograph of an adult woman in her mid-twenties, using the attached portrait as the facial and long wavy dark-hair reference, as a sulking cat-eared maid riding in the front passenger seat of a moving Ferrari. She wears plush black cat ears with pale inner fur, a white ruffled maid headband, and a black short-sleeved maid dress with a white apron and neat lace cuffs. Her seatbelt lies correctly across her torso. The red leather passenger bucket seat, carbon-fiber center console, and yellow prancing-horse badge on the left-side steering wheel establish the Ferrari cabin. Roadside trees streak horizontally outside the closed passenger window while her face and hands remain crisp. Her shoulders turn toward the passenger door, her brows pinch and her lips form a stubborn pout. The adult driver beside her wears a blue shirt and keeps both hands on the steering wheel, eyes on the road, with a small amused smile visible in profile. Reacting to that driver's teasing smile, she reaches back across the console and gently tugs the blue fabric at his upper sleeve toward her, betraying her wish for his attention while her torso stays pointed away. The driver's sleeve is visibly gathered into a little fold beneath her fingers. A fleeting warm blush spreads across her cheeks during the tug, contrasting with her defiant pout. The blue sleeve under her fingers belongs to the same driver whose amused profile is visible beside her. Frame her from cat ears to lap from a fixed central dashboard camera, with the driver partially visible at the left edge. Soft late-afternoon window light reveals natural skin texture, individual hair strands, crisp apron cotton, and leather grain; the passenger's contradictory expression and affectionate sleeve tug are the visual center.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "full scene",
+      "source_text": "달리는 페라리 조수석에 앉아서 삐진 츤데레 네코미미 메이드",
+      "basis": "request_context",
+      "resolution": "Moving Ferrari passenger, cat-ear maid attire, sulking tsundere behavior toward driver; attached portrait supplies appearance reference.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "달리는 페라리 조수석에 앉아서 삐진 츤데레 네코미미 메이드",
+        "dimension": "concept",
+        "prompt_evidence": "a sulking cat-eared maid"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "네코미미 메이드",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman in her mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "달리는 페라리",
+        "dimension": "event",
+        "prompt_evidence": "riding in the front passenger seat of a moving Ferrari"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "페라리 조수석",
+        "dimension": "setting",
+        "prompt_evidence": "red leather passenger bucket seat"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "조수석에 앉아서",
+        "dimension": "pose",
+        "prompt_evidence": "Her seatbelt lies correctly across her torso"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "네코미미 메이드",
+        "dimension": "appearance",
+        "prompt_evidence": "plush black cat ears with pale inner fur"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "삐진",
+        "dimension": "expression",
+        "prompt_evidence": "her brows pinch and her lips form a stubborn pout"
+      },
+      {
+        "anchor_id": "core_character_response",
+        "source_text": "츤데레",
+        "dimension": "character_response",
+        "prompt_evidence": "betraying her wish for his attention while her torso stays pointed away"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "appearance",
+      "expression",
+      "character_response"
+    ],
+    "open_dimensions": [
+      "framing",
+      "lighting",
+      "camera",
+      "composition"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "tsundere_response",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "sulking defiance",
+        "underlying_affiliation": "desire for closeness and attention",
+        "relationship_target": "adult driver in blue shirt",
+        "primary_action": "tug his upper sleeve toward herself",
+        "affect_leak_timing": "during sleeve tug",
+        "affect_leak_channels": [
+          "cheek blush"
+        ],
+        "event_phase": "ongoing tug with gathered sleeve"
+      },
+      "evidence": {
+        "actor_phrase": "an adult woman in her mid-twenties",
+        "baseline_phrase": "Her shoulders turn toward the passenger door",
+        "trigger_phrase": "Reacting to that driver's teasing smile",
+        "target_phrase": "The adult driver beside her wears a blue shirt",
+        "primary_action_phrase": "she reaches back across the console and gently tugs the blue fabric at his upper sleeve toward her",
+        "affective_leak_phrase": "A fleeting warm blush spreads across her cheeks during the tug",
+        "visible_response_phrase": "a small amused smile visible in profile",
+        "immediate_consequence_phrase": "The driver's sleeve is visibly gathered into a little fold beneath her fingers",
+        "continuity_phrase": "The blue sleeve under her fingers belongs to the same driver whose amused profile is visible beside her"
+      },
+      "relations": [
+        {
+          "operator": "contrasts",
+          "left": "surface_affect",
+          "right": "underlying_affiliation"
+        },
+        {
+          "operator": "same_target",
+          "members": [
+            "primary_action",
+            "immediate_consequence",
+            "relationship_target"
+          ]
+        }
+      ]
+    },
+    {
+      "assertion_id": "costume_and_motion",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "appearance",
+        "setting",
+        "event",
+        "expression"
+      ],
+      "axes": {
+        "costume": "cat ears and maid uniform",
+        "motion": "moving Ferrari passenger",
+        "expression": "sulking"
+      },
+      "evidence": {
+        "ears": "plush black cat ears with pale inner fur",
+        "uniform": "a black short-sleeved maid dress with a white apron and neat lace cuffs",
+        "motion": "Roadside trees streak horizontally outside the closed passenger window",
+        "vehicle": "yellow prancing-horse badge on the left-side steering wheel",
+        "pout": "her brows pinch and her lips form a stubborn pout"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "cinematic automotive character portrait",
+    "evidence": [
+      "natural skin texture",
+      "late-afternoon window light"
+    ]
+  }
+}

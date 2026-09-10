@@ -187,6 +187,11 @@ def audit_moe_render_review(
     character_contract, character_gates, character_failures = (
         derive_character_response_render_gates(pack, composed)
     )
+    embodiment_gates, embodiment_failures = (
+        audit_composed_prompt.photo_embodiment.render_gate_ids(pack, composed)
+    )
+    schema_failures.extend(embodiment_failures)
+    has_embodiment_contract = bool(embodiment_gates)
     has_character_contract = character_contract is not None
     schema_failures.extend(character_failures)
     character_contract_sha256 = (
@@ -230,7 +235,7 @@ def audit_moe_render_review(
         if isinstance(value, str) and value.strip()
     ]
     has_visual_contract = bool(effective_visual_gates)
-    if not has_moe_contract and not has_character_contract and not has_visual_contract:
+    if not has_moe_contract and not has_character_contract and not has_visual_contract and not has_embodiment_contract:
         schema_failures.append(
             {
                 "check": "render_qualification_contract",
@@ -241,7 +246,7 @@ def audit_moe_render_review(
             }
         )
     required_gates = list(
-        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates)
+        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates + embodiment_gates)
     )
     if not required_gates:
         schema_failures.append(
@@ -271,6 +276,8 @@ def audit_moe_render_review(
         else audit_composed_prompt.CHARACTER_RESPONSE_CONTRACT_VERSION
         if has_character_contract
         else str((effective_visual_contract or {}).get("contract_version") or "")
+        if has_visual_contract
+        else audit_composed_prompt.photo_embodiment.POLICY_VERSION
     )
     if str(review.get("contract_version") or "") != expected_review_contract_version:
         schema_failures.append(
@@ -353,7 +360,7 @@ def audit_moe_render_review(
                     "missing": missing_from_qualification,
                 }
             )
-    if has_character_contract or (
+    if has_character_contract or has_embodiment_contract or (
         isinstance(effective_visual_contract, dict)
         and effective_visual_contract.get("strict_gate_set") is True
     ):

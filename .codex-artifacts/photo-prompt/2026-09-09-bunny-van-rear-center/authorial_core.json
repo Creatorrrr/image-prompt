@@ -1,0 +1,182 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "봉고차 뒷좌석 가운데로 하고 ecstacy 를 happiness 로 바꿔줘. 자세는 뒷좌석에 뒤로 기댄 느낌으로 해줘.",
+  "interpreted_intent": "Revise the existing adult bunny-girl moving-van photograph so she occupies the middle of the rear bench and visibly leans back against it, while the expression reads as happiness rather than ecstasy and the established double-peace gesture remains intact.",
+  "subject": "The same unmistakably adult bunny-girl performer",
+  "setting": "The center position of the rear bench seat in a moving compact van at night",
+  "event": "The rear-seat performer leans back while making the established exaggerated expression and holding both V signs beside her cheeks as the van travels at speed",
+  "visual_priorities": [
+    "The rear bench center position and backward-leaning support are spatially unmistakable",
+    "The face communicates theatrical happiness while both V-sign hands remain fully legible"
+  ],
+  "baseline_prompt_en": "A high-energy editorial photograph of an unmistakably adult bunny-girl performer seated in the center position of the rear bench seat in a moving compact van. She is visibly in her mid-twenties, with mature facial structure and adult proportions. She wears a sleek black satin bunny suit, opaque tights, a white collar, wrist cuffs, and tall rabbit ears. Her shoulders and hips rest against the rear backrest as she leans comfortably backward, with the center three-point seat belt crossing her torso. She raises both hands beside her cheeks, each hand forming a clear V sign with separated index and middle fingers, creating a symmetrical double-peace pose. Her expression is an exaggerated overwhelmed display: eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical happiness. Photograph her from the front-center aisle looking back toward the rear bench, with her face, both hands, reclined posture, and central seating position fully visible. Through both side windows, streaked roadside lights and directional motion blur establish that the van is traveling at speed, while direct on-camera flash keeps the passenger, seat belt, upholstery, and costume sharply frozen. Use a close wide-angle documentary-fashion aesthetic, centered depth composition, crisp skin texture, glossy fabric highlights, and playful nightlife energy.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "correction request",
+      "source_text": "봉고차 뒷좌석 가운데로 하고 ecstacy 를 happiness 로 바꿔줘. 자세는 뒷좌석에 뒤로 기댄 느낌으로 해줘.",
+      "basis": "request_context",
+      "resolution": "This message revises the immediately preceding prompt while preserving its adult bunny-costume subject, moving van, exaggerated facial components, and double-peace gesture.",
+      "sources": []
+    },
+    {
+      "term": "봉고차 뒷좌석 가운데",
+      "source_text": "봉고차 뒷좌석 가운데로 하고",
+      "basis": "request_context",
+      "resolution": "Place the performer in the center seating position of the van's rear bench.",
+      "sources": []
+    },
+    {
+      "term": "happiness",
+      "source_text": "ecstacy 를 happiness 로 바꿔줘",
+      "basis": "request_context",
+      "resolution": "Replace the earlier ecstasy wording with a visibly happy, playful emotional tone.",
+      "sources": []
+    },
+    {
+      "term": "뒤로 기댄 느낌",
+      "source_text": "자세는 뒷좌석에 뒤로 기댄 느낌으로 해줘",
+      "basis": "request_context",
+      "resolution": "Her shoulders and hips are supported by the rear backrest while her torso leans backward.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "봉고차 뒷좌석 가운데로 하고 ecstacy 를 happiness 로 바꿔줘",
+        "dimension": "concept",
+        "prompt_evidence": "Her expression is an exaggerated overwhelmed display"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "봉고차 뒷좌석 가운데로 하고 ecstacy 를 happiness 로 바꿔줘",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult bunny-girl performer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "봉고차 뒷좌석 가운데로 하고 ecstacy 를 happiness 로 바꿔줘. 자세는 뒷좌석에 뒤로 기댄 느낌으로 해줘.",
+        "dimension": "event",
+        "prompt_evidence": "the van is traveling at speed"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "봉고차 뒷좌석 가운데로 하고",
+        "dimension": "setting",
+        "prompt_evidence": "center position of the rear bench seat"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "자세는 뒷좌석에 뒤로 기댄 느낌으로 해줘",
+        "dimension": "pose",
+        "prompt_evidence": "she leans comfortably backward"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "ecstacy 를 happiness 로 바꿔줘",
+        "dimension": "expression",
+        "prompt_evidence": "mouth open in theatrical happiness"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "expression"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "double_peace_pose",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": ["correction"],
+      "affected_dimensions": ["pose"],
+      "axes": {
+        "hand_count": "both hands",
+        "gesture": "clear V signs",
+        "placement": "beside her cheeks"
+      },
+      "evidence": {
+        "pose_phrase": "She raises both hands beside her cheeks, each hand forming a clear V sign"
+      }
+    },
+    {
+      "assertion_id": "happy_overwhelmed_expression",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": ["correction"],
+      "affected_dimensions": ["expression"],
+      "axes": {
+        "eyes": "rolled upward and slightly crossed",
+        "mouth": "open with tongue extended",
+        "cheeks": "flushed",
+        "tone": "theatrically happy"
+      },
+      "evidence": {
+        "expression_phrase": "eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical happiness"
+      }
+    },
+    {
+      "assertion_id": "rear_center_recline",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": ["correction"],
+      "affected_dimensions": ["pose", "setting"],
+      "axes": {
+        "seat": "center position of rear bench",
+        "support": "shoulders and hips against rear backrest",
+        "torso": "leaning backward"
+      },
+      "evidence": {
+        "seat_phrase": "seated in the center position of the rear bench seat in a moving compact van",
+        "support_phrase": "Her shoulders and hips rest against the rear backrest as she leans comfortably backward"
+      }
+    },
+    {
+      "assertion_id": "moving_van",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": ["correction"],
+      "affected_dimensions": ["event"],
+      "axes": {
+        "vehicle": "moving compact van",
+        "motion_evidence": "side-window directional motion blur"
+      },
+      "evidence": {
+        "motion_phrase": "streaked roadside lights and directional motion blur establish that the van is traveling at speed"
+      }
+    }
+  ],
+  "request_lineage": {
+    "parent_request_id": "2026-09-09-bunny-van",
+    "parent_core_sha256": "a99e0e229e09d93c5d40a1ffffd75a195e01919897d6444bf3c39fb60995bd49",
+    "preserved_dimensions": ["concept", "subject", "event"],
+    "allowed_changes": ["setting", "pose", "expression", "sexual_tone", "framing", "composition", "lighting", "camera"]
+  },
+  "style": {
+    "domain": "sensual editorial nightlife photography",
+    "family": "direct-flash wide-angle documentary fashion",
+    "evidence": [
+      "direct on-camera flash",
+      "centered depth composition"
+    ]
+  },
+  "variation_key": "bunny-van-rear-center-v2"
+}

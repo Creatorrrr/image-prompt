@@ -16,6 +16,7 @@ from pathlib import Path
 from typing import Any
 
 import audit_composed_prompt
+import photo_embodiment
 
 
 SCHEMA_VERSION = "photo-image-render-request/v2"
@@ -61,6 +62,7 @@ def audit_image_render_request(
     request_path: Path | None = None,
 ) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
+    failures.extend(photo_embodiment.audit_runtime(pack, composed, request))
 
     if request.get("schema_version") != SCHEMA_VERSION:
         failures.append(
