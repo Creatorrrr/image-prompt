@@ -1,0 +1,66 @@
+{
+  "requested_ids": [
+    "test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_185_authored_bundles_compile_and_profile_links_remain_advisory",
+    "test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors",
+    "test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification"
+  ],
+  "tests_run": 10,
+  "seconds": 60.01,
+  "successful": false,
+  "failures": [
+    {
+      "id": "test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_all_185_authored_bundles_compile_and_profile_links_remain_advisory",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py\", line 52, in test_all_185_authored_bundles_compile_and_profile_links_remain_advisory\n    self.assertEqual(len(self.data[\"candidate_bundles\"]), 185)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 273 != 185\n"
+    },
+    {
+      "id": "test_photo_candidate_semantics.PhotoCandidateSemanticsTests.test_maintenance_prose_is_external_and_hash_bound",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_photo_candidate_semantics.py\", line 119, in test_maintenance_prose_is_external_and_hash_bound\n    self.assertEqual(count, 14)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^\nAssertionError: 15 != 14\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 9129, in test_all_concept_recipe_forced_slots_are_registered\n    self.assertEqual(missing, [])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\nAssertionError: Lists differ: [('mixins.노령림 구조.set', 'aesthetic_trend', [11363 chars]me')] != []\n\nFirst list contains 140 additional elements.\nFirst extra element 0:\n('mixins.노령림 구조.set', 'aesthetic_trend', 'old_growth_forest_structure_aesthetic')\n\nDiff is 12427 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 11521, in test_all_semantic_inputs_exclude_control_and_process_metadata\n    self.assertEqual(len(rows), 6910)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nAssertionError: 8443 != 6910\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (concept='윈터 간호사 회사원')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer\n    self.assertIn(expected_id, combined[slot], slot)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nurse_uniform_costume' not found in ['clinical_nursing_scrub_duty_system'] : costume_style\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (concept='닝닝 경찰 회사원')",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer\n    self.assertIn(expected_id, combined[slot], slot)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform'] : costume_style\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 5743, in test_concept_recipe_explain_combines_role_and_assassin_mixin\n    self.assertEqual(concept[\"combined_forced_slots\"][\"costume_style\"], [\"police_uniform_costume\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: ['police_public_safety_duty_uniform'] != ['police_uniform_costume']\n\nFirst differing element 0:\n'police_public_safety_duty_uniform'\n'police_uniform_costume'\n\n- ['police_public_safety_duty_uniform']\n+ ['police_uniform_costume']\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 2270, in test_concept_soft_spec_carries_v3_group_guard_and_priority_terms\n    self.assertIn(\"police_uniform_costume\", role_costume[0][\"pool\"])\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform']\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 11922, in test_semantic_index_builder_subprocess_uses_project_env_file\n    self.assertEqual(result.returncode, 0, result.stderr)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 0 : Traceback (most recent call last):\n  File \"/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmprugn6jee/source/skills/photo-prompt-image-generator/scripts/build_semantic_index.py\", line 16, in <module>\n    from prompt_generator import (\n    ...<14 lines>...\n    )\n  File \"/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmprugn6jee/source/skills/photo-prompt-image-generator/scripts/prompt_generator.py\", line 42, in <module>\n    import photo_candidate_semantics\nModuleNotFoundError: No module named 'photo_candidate_semantics'\n\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_prompt_generator.py\", line 3249, in test_vampire_weak_role_prompts_include_positive_anchors\n    self.assertEqual(police[\"choices\"][\"costume_style\"][\"id\"], \"police_uniform_costume\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_public_safety_duty_uniform' != 'police_uniform_costume'\n- police_public_safety_duty_uniform\n+ police_uniform_costume\n\n"
+    }
+  ],
+  "errors": [
+    {
+      "id": "test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification",
+      "trace": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/tests/test_subculture_illustration_contract_v1.py\", line 504, in test_aggregate_validator_does_not_hide_partial_pixel_qualification\n    summary = validate_all(ASSET_ROOT)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 11465, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6387, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    }
+  ],
+  "skipped": []
+}

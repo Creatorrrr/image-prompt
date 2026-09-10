@@ -1,0 +1,144 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/photo-prompt-image-generator",
+    "baseline_revision": "b6e70b787c083bbd9c472488875a028d28fbd2a8",
+    "candidate_revision": "working-tree swimwear extension"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Implement researched swimwear visual semantics and candidate packs, then qualify three independently authored reference-image renders."
+  },
+  "evidence": [
+    {
+      "id": "e-research",
+      "kind": "external-research",
+      "claim": "Independent garment axes and observable construction boundaries identified; source-image pixels were not inspected during research.",
+      "artifact": "docs/research-evidence/photo-prompt/swimwear-20260909/research-report.md"
+    },
+    {
+      "id": "e-source",
+      "kind": "repository-history",
+      "claim": "Baseline has sparse swim-specific structure and existing common waist/back/layer relations.",
+      "artifact": "docs/research-evidence/photo-prompt/swimwear-20260909/local-coverage.json"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "Scoped checks pass: 9 swimwear tests, dictionary and index metadata, 112 scene routes. Full suite stopped at 54/1128 with 12 baseline-reproduced failures. Related suite stopped after 65 passes, 1 baseline-reproduced failure and 7 baseline-reproduced fixture failures; neither broad suite completed.",
+      "artifact": "artifacts/photo-runs/swimwear-three-arm-20260909/checks/"
+    },
+    {
+      "id": "e-prompt",
+      "kind": "prompt-evaluation",
+      "claim": "Three frozen independent cores yield composed and runtime audit passes; only arm-01 adopts one new visual concept; ordinary new candidates and bundles not exposed.",
+      "artifact": "artifacts/photo-runs/swimwear-three-arm-20260909/qualification-summary.json"
+    },
+    {
+      "id": "e-block",
+      "kind": "generation-outcome",
+      "claim": "All three native image generation calls are moderation_blocked, with no images delivered.",
+      "artifact": "artifacts/photo-runs/swimwear-three-arm-20260909/qualification-summary.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Requested garment structure survives a complex scene and supplied appearance reference.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "garment-topology",
+        "statement": "Maintain separately specified garment continuity, openings, straps and layers.",
+        "evidence_ids": [
+          "e-research"
+        ],
+        "causal_controls": [
+          "garment component owner",
+          "visible attachment path",
+          "independent waist and leg axes"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "unlocked photographic decisions only"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "missing-swim-structure",
+      "scale": "regional",
+      "axis": "garment structure",
+      "source_state": "research distinguishes independent construction axes",
+      "render_state": "unavailable: all three image calls blocked",
+      "evidence_ids": [
+        "e-research",
+        "e-source"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "literal-structure",
+      "stage": "representation",
+      "statement": "Adding opt-in literal garment relations can preserve distinctions when the matching candidates are exposed and adopted.",
+      "evidence_ids": [
+        "e-research"
+      ],
+      "falsifier": "Exposed adopted relations remain absent or coupled in the saved pixels."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "policy",
+      "test"
+    ],
+    "general_rule": "Broad labels remain advisory; selected component-complete variants own literal evidence and pixel gates; candidate bundles require independent request evidence and compatible dimensions.",
+    "generalization_basis": "Object, part, boundary and layer relations apply across garments and photographs.",
+    "hypothesis_ids": [
+      "literal-structure"
+    ],
+    "changed_paths": [
+      "skills/photo-prompt-image-generator/assets/photo_prompt_swimwear_extension.json",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_swimwear.json",
+      "skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "tests/test_photo_swimwear_semantics.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-prompt"
+      ]
+    },
+    "render": {
+      "status": "blocked",
+      "evidence_ids": [
+        "e-block"
+      ]
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": []
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "Selected data and scoped checks implemented. Image qualification unavailable after three platform blocks; candidate delivery incomplete. No render-fidelity or causal data-improvement promotion. Broad suite not completed; observed failures reproduced at baseline.",
+    "evidence_ids": [
+      "e-package",
+      "e-prompt",
+      "e-block"
+    ]
+  }
+}

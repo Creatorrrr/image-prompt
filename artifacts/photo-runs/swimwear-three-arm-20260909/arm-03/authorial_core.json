@@ -1,0 +1,109 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester delegates a complex random concept and reference-based generation to test recently added visual data. This arm independently authors a water-sports rash-guard scene; the precise garment, setting, and action are agent choices, not user-specified details.",
+  "subject": "An adult woman in her late twenties with portrait-referenced appearance wearing a separate rash guard and swim briefs",
+  "setting": "a flooded tropical mangrove launch",
+  "event": "retrieving a floating surfboard after a small broken wave",
+  "visual_priorities": [
+    "Readable rash-guard and swim-brief construction",
+    "Reference appearance and physically clear surfboard-water interaction"
+  ],
+  "baseline_prompt_en": "Create a photorealistic adventure-fashion photograph of an adult woman in her late twenties using the attached portrait as an appearance reference, preserving her recognizable facial proportions, dark brown eyes, and long dark wavy hair. She is at a flooded tropical mangrove launch, retrieving a floating surfboard after a small broken wave. Her focal swim outfit is a fitted long-sleeve rash guard with a high crew neckline, visible diagonal raglan shoulder seams, and contrasting pale side panels, worn as a separate top over high-waisted swim briefs with curved high-cut leg openings. The rash guard hem overlaps the briefs waistband, while both curved leg openings remain clearly visible. Deep teal stretch swim fabric carries small water beads and gentle tension folds where her arm reaches; the pale side panel stays readable against the darker torso. Her surfboard lies flat on the water beside her, its rounded nose and rail visible, and the wrist nearest it makes clear hand contact with the board rail. A small wave divides around her legs, leaving a curved white foam trail across the dark shallow water. Photograph the interaction in cool overcast with a narrow sunbreak, with bright individual spray droplets suspended beside a softly shaded face. Her body turns three quarters toward camera while her face looks toward the board. Use a vertical full-body composition, enough space around the feet to read the water contact, a natural eye-level viewpoint, and a moderate telephoto perspective. Prioritize legible garment construction, recognizable reference appearance, believable board contact, and the crossing of luminous water droplets over the darker setting.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "User-authorized random concept selection and attached-portrait use; this arm selects the precise sports-swimwear realization independently before retrieval.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a fitted long-sleeve rash guard"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman in her late twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "retrieving a floating surfboard after a small broken wave"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the attached portrait as an appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "focal_sports_swimwear",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "choice_origin": "agent_authored_under_user_delegation",
+        "garment_category": "separate_rash_guard_and_swim_briefs",
+        "sleeve": "long",
+        "neckline": "high_crew",
+        "construction": [
+          "diagonal_raglan_seams",
+          "contrasting_side_panels",
+          "overlapping_separate_hem",
+          "curved_brief_leg_openings"
+        ]
+      },
+      "evidence": {
+        "top_structure": "a fitted long-sleeve rash guard with a high crew neckline, visible diagonal raglan shoulder seams, and contrasting pale side panels",
+        "bottom_structure": "worn as a separate top over high-waisted swim briefs with curved high-cut leg openings",
+        "separation": "The rash guard hem overlaps the briefs waistband, while both curved leg openings remain clearly visible."
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "adventure fashion photography",
+    "family": "waterline outdoor sports editorial",
+    "evidence": [
+      "small water beads",
+      "bright individual spray droplets"
+    ]
+  },
+  "variation_key": "arm-03-seed-1774314871"
+}

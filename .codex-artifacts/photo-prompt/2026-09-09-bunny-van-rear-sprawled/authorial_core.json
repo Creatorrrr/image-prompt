@@ -1,0 +1,160 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+  "interpreted_intent": "Revise the existing adult bunny-girl moving-van photograph so she remains at the middle of the rear bench but leans deeply back in a loose sprawled posture with her legs visibly spread, while the established happy overwhelmed expression and double-peace gesture remain intact.",
+  "subject": "The same unmistakably adult bunny-girl performer",
+  "setting": "The center position of the rear bench seat in a moving compact van at night",
+  "event": "The performer sprawls backward against the rear bench with her knees spread while holding both V signs beside her cheeks as the van travels at speed",
+  "visual_priorities": [
+    "The backward-sprawled torso and widely separated knees read as one coherent supported pose",
+    "The full seated body, both V-sign hands, and happy exaggerated facial components remain simultaneously legible"
+  ],
+  "baseline_prompt_en": "A high-energy editorial photograph of an unmistakably adult bunny-girl performer sprawled across the center position of the rear bench seat in a moving compact van. She is visibly in her mid-twenties, with mature facial structure and adult proportions. She wears a sleek black satin bunny suit, opaque tights, a white collar, wrist cuffs, tall rabbit ears, and ankle boots. Her shoulders and hips sink against the rear backrest as she leans deeply backward, with the center three-point seat belt crossing her torso. Her thighs angle apart, both knees remain widely separated, and each booted foot stays planted on the van floor, creating a loose open-legged posture. She raises both hands beside her cheeks, each hand forming a clear V sign with separated index and middle fingers, creating a symmetrical double-peace pose. Her expression is an exaggerated overwhelmed display: eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical happiness. Photograph her from the front-center aisle looking back toward the rear bench in a wide seated full-body frame, with her face, both hands, reclined torso, separated knees, and both planted feet visible together. Through both side windows, streaked roadside lights and directional motion blur establish that the van is traveling at speed, while direct on-camera flash keeps the passenger, seat belt, upholstery, and costume sharply frozen. Use a close wide-angle documentary-fashion aesthetic, centered depth composition, crisp skin texture, glossy fabric highlights, and playful nightlife energy.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "pose correction",
+      "source_text": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+      "basis": "request_context",
+      "resolution": "Preserve the immediately preceding adult subject, rear-center van setting, happy overwhelmed face, and double-peace gesture while changing the body to a loose backward sprawl with visibly separated legs.",
+      "sources": []
+    },
+    {
+      "term": "다리를 벌리고",
+      "source_text": "다리를 벌리고",
+      "basis": "request_context",
+      "resolution": "Both thighs angle outward, both knees are clearly separated, and the feet remain apart and visibly supported on the floor.",
+      "sources": []
+    },
+    {
+      "term": "널부러지듯 뒷좌석에 뒤로 기대어",
+      "source_text": "널부러지듯 뒷좌석에 뒤로 기대어있게",
+      "basis": "request_context",
+      "resolution": "Her shoulders and hips sink into the rear backrest in a loose, deeply reclined seated posture.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "Her expression is an exaggerated overwhelmed display"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult bunny-girl performer"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+        "dimension": "event",
+        "prompt_evidence": "the van is traveling at speed"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "뒷좌석에",
+        "dimension": "setting",
+        "prompt_evidence": "center position of the rear bench seat"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "널부러지듯 뒷좌석에 뒤로 기대어있게",
+        "dimension": "pose",
+        "prompt_evidence": "she leans deeply backward"
+      },
+      {
+        "anchor_id": "core_body_geometry",
+        "source_text": "다리를 벌리고",
+        "dimension": "body_geometry",
+        "prompt_evidence": "both knees remain widely separated"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "다리를 벌리고 널부러지듯 뒷좌석에 뒤로 기대어있게 작성해줘.",
+        "dimension": "expression",
+        "prompt_evidence": "mouth open in theatrical happiness"
+      },
+      {
+        "anchor_id": "core_framing",
+        "source_text": "다리를 벌리고",
+        "dimension": "framing",
+        "prompt_evidence": "wide seated full-body frame"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "body_geometry",
+      "expression",
+      "framing"
+    ],
+    "open_dimensions": ["composition", "lighting", "camera"]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "double_peace_pose",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": ["pose_correction"],
+      "affected_dimensions": ["pose"],
+      "axes": {"hand_count": "both hands", "gesture": "clear V signs", "placement": "beside her cheeks"},
+      "evidence": {"pose_phrase": "She raises both hands beside her cheeks, each hand forming a clear V sign"}
+    },
+    {
+      "assertion_id": "happy_overwhelmed_expression",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": ["pose_correction"],
+      "affected_dimensions": ["expression"],
+      "axes": {"eyes": "rolled upward and slightly crossed", "mouth": "open with tongue extended", "cheeks": "flushed", "tone": "theatrically happy"},
+      "evidence": {"expression_phrase": "eyes visibly rolled upward and slightly crossed, tongue extended, cheeks flushed, and mouth open in theatrical happiness"}
+    },
+    {
+      "assertion_id": "rear_sprawled_open_legs",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": ["pose_correction"],
+      "affected_dimensions": ["pose", "body_geometry", "setting", "framing"],
+      "axes": {"seat": "center of rear bench", "support": "shoulders and hips against backrest", "torso": "deep backward lean", "legs": "knees widely separated", "feet": "planted apart on floor"},
+      "evidence": {
+        "support_phrase": "Her shoulders and hips sink against the rear backrest as she leans deeply backward",
+        "leg_phrase": "Her thighs angle apart, both knees remain widely separated, and each booted foot stays planted on the van floor",
+        "visibility_phrase": "her face, both hands, reclined torso, separated knees, and both planted feet visible together"
+      }
+    },
+    {
+      "assertion_id": "moving_van",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": ["pose_correction"],
+      "affected_dimensions": ["event"],
+      "axes": {"vehicle": "moving compact van", "motion_evidence": "side-window directional motion blur"},
+      "evidence": {"motion_phrase": "streaked roadside lights and directional motion blur establish that the van is traveling at speed"}
+    }
+  ],
+  "request_lineage": {
+    "parent_request_id": "2026-09-09-bunny-van-rear-center",
+    "parent_core_sha256": "22d1a1025ef71a2104ab140764f75626911ef44bd68d28723f735a8dc0e3b522",
+    "preserved_dimensions": ["concept", "subject", "event", "setting", "expression"],
+    "allowed_changes": ["pose", "body_geometry", "framing", "composition", "lighting", "camera"]
+  },
+  "style": {
+    "domain": "sensual editorial nightlife photography",
+    "family": "direct-flash wide-angle documentary fashion",
+    "evidence": ["direct on-camera flash", "centered depth composition"]
+  },
+  "variation_key": "bunny-van-rear-sprawled-v3"
+}

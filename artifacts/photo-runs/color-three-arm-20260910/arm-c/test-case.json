@@ -1,0 +1,238 @@
+{
+  "test_case_id": "color-three-arm-c-20260910",
+  "random_seed": 1986106126,
+  "scene": "Adult ceramic artist arranging monumental glaze samples",
+  "experimental_lane_provenance": "Coordinator assigned keyword lane; actual user authorized random complex test authorship. Not a requester definition.",
+  "keyword_hypotheses": [
+    {
+      "keyword": "Muted-on-Vivid",
+      "independent_interpretation": "A visibly subdued low-saturation subject separated from large highly saturated environmental fields.",
+      "pixel_pass_requires": [
+        "gray coverall remains subdued",
+        "surrounding cobalt and vermilion are conspicuously saturated",
+        "contrast perceptible in the overall frame"
+      ]
+    },
+    {
+      "keyword": "Diagonal Color Split",
+      "independent_interpretation": "Two large different color fields meet along one obvious oblique boundary across the backdrop.",
+      "pixel_pass_requires": [
+        "two large chromatic backdrop fields",
+        "one clear diagonal division rising lower-left to upper-right",
+        "division reads at thumbnail scale"
+      ]
+    },
+    {
+      "keyword": "Color Blocking",
+      "independent_interpretation": "Broad largely uniform opaque colors occupy distinct bounded geometric areas.",
+      "pixel_pass_requires": [
+        "large bounded flat color faces",
+        "crisp geometric divisions",
+        "color areas remain distinct despite ceramic reflections"
+      ]
+    }
+  ],
+  "scene_fidelity": [
+    "recognizable reference appearance and long dark wavy hair",
+    "adult artist stands behind bench",
+    "left palm rests on workbench and right fingertips touch upper edge of upright grooved slab",
+    "three independent glaze samples",
+    "ceramic thickness and workbench supports assessable"
+  ],
+  "policy": "All three keyword relations plus active full opt-in contracts and embodiment gates must pass in the same saved image. Partial or unclear equals fail. Requester preference is pending.",
+  "initial_attempt_limit": 1,
+  "status": "frozen before first image call",
+  "selected_profiles": [
+    {
+      "id": "cr_color_blocks",
+      "category": "selected_color_region_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Keep this selected color relation visible: large bounded color fields organize the principal composition Keep this selected color relation visible: each field retains photographic surface shading or depth cues",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "large bounded color fields organize the principal composition"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "each field retains photographic surface shading or depth cues"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "large bounded color fields organize the principal composition"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "each field retains photographic surface shading or depth cues"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_cr_color_blocks_1",
+          "review_scale": "both",
+          "description": "large bounded color fields organize the principal composition. Judge the declared owners and scope in saved pixels; missing, merged, reversed or unclear relations fail."
+        },
+        {
+          "id": "vo_cr_color_blocks_2",
+          "review_scale": "both",
+          "description": "each field retains photographic surface shading or depth cues. Judge the declared owners and scope in saved pixels; missing, merged, reversed or unclear relations fail."
+        }
+      ],
+      "reject_substitutes": [
+        "잘게 쪼개진 다색 무늬",
+        "무조건 평면 포스터"
+      ]
+    },
+    {
+      "id": "cr_diagonal_split",
+      "category": "selected_color_region_relation",
+      "activation": {
+        "source": "composer_opt_in",
+        "scope": "request_only",
+        "source_intent_ids": []
+      },
+      "composition_instruction": "Keep this selected color relation visible: two large colored regions occupy opposite sides of a diagonal boundary Keep this selected color relation visible: the directional division remains readable across the principal composition",
+      "component_semantics": {
+        "minimum_component_groups": 2,
+        "required_group_ids": [
+          "component_1",
+          "component_2"
+        ],
+        "groups": [
+          {
+            "id": "component_1",
+            "any_terms": [
+              "two large colored regions occupy opposite sides of a diagonal boundary"
+            ]
+          },
+          {
+            "id": "component_2",
+            "any_terms": [
+              "the directional division remains readable across the principal composition"
+            ]
+          }
+        ]
+      },
+      "prompt_binding": {
+        "composed_field": "visual_obligation_evidence",
+        "required_evidence_fields": [
+          "component_1_phrase",
+          "component_2_phrase"
+        ],
+        "minimum_distinct_evidence_phrases": 2,
+        "prompt_evidence_must_be_literal": true,
+        "maximum_pairwise_content_token_overlap_ratio": 0.82,
+        "forbidden_filler_phrases": [
+          "visible evidence",
+          "visual evidence",
+          "required cue",
+          "prompt phrase"
+        ]
+      },
+      "evidence_requirements": {
+        "component_1_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "two large colored regions occupy opposite sides of a diagonal boundary"
+          ]
+        },
+        "component_2_phrase": {
+          "min_content_words": 3,
+          "must_mention_any": [
+            "the directional division remains readable across the principal composition"
+          ]
+        }
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "render_gates": [
+        {
+          "id": "vo_cr_diagonal_split_1",
+          "review_scale": "both",
+          "description": "two large colored regions occupy opposite sides of a diagonal boundary. Judge the declared owners and scope in saved pixels; missing, merged, reversed or unclear relations fail."
+        },
+        {
+          "id": "vo_cr_diagonal_split_2",
+          "review_scale": "both",
+          "description": "the directional division remains readable across the principal composition. Judge the declared owners and scope in saved pixels; missing, merged, reversed or unclear relations fail."
+        }
+      ],
+      "reject_substitutes": [
+        "split toning으로 치환",
+        "작은 대각 소품만 있음"
+      ]
+    }
+  ],
+  "effective_visual_contract_sha256": "36a32bd35dec02d91950a279a6b87ba59bae0e260f4779f26abf0951b7613d8a",
+  "data_adoption_coverage": {
+    "passed": [
+      "Color Blocking",
+      "Diagonal Color Split"
+    ],
+    "failed": [
+      "Muted-on-Vivid"
+    ],
+    "all_three_adopted": false,
+    "new_bundle_or_slot_count": 0
+  },
+  "supplemental_criteria": [
+    "Muted-on-Vivid is preserved prepack-authored meaning only, not adopted candidate evidence.",
+    "Reference appearance comparison is supplemental; no reference_identity_control gate active."
+  ],
+  "baseline_sha256": "390748f7856b6c4b58d95067dd992d43190087947c21e122b37f22f46b8f3f64",
+  "runtime_request_file_sha256": "b119b5f4ae1904295aef2a2858cdbb3efde41eaa1e409957cd3ad9210718c68f",
+  "embodiment_gates": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ]
+}

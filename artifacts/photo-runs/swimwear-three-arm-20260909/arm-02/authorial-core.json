@@ -1,0 +1,115 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently choose a complex randomized photographic test concept using the supplied portrait; one-piece fashion swimwear is the delegated test category, and its exact garment, setting and event are agent-created, not requester-specified details.",
+  "subject": "Adult woman with the reference portrait facial appearance and dark wavy hair",
+  "setting": "Flooded glass conservatory beside a lap pool",
+  "event": "Catching a wind-lifted striped towel while standing in shallow water",
+  "visual_priorities": [
+    "Readable asymmetric one-piece construction with sewn diagonal wrap edge and side-waist keyhole",
+    "Single-frame gust, towel motion, ripples and mixed daylight interaction"
+  ],
+  "baseline_prompt_en": "Photograph an adult woman in her late twenties, using the attached portrait as her facial and dark wavy hair appearance reference, in a flooded glass conservatory beside a lap pool. She wears a deep petrol one-piece swimsuit with one broad left shoulder strap, a bare right shoulder, a diagonal front wrap panel, a small right side-waist keyhole, and a wide continuous hip band connecting the covered front to the side. Opaque lined stretch fabric and narrow bound edges clearly establish a functional fashion swimsuit; the diagonal panel is a real overlapping fabric edge with fine stitching. Frame her from head to upper shins in a front three-quarter view, with the swimsuit front and right waist readable. She is catching a wind-lifted striped towel with her right hand held away from her waist; the towel billows beyond her right side while her left hand hangs beside her left thigh. A gust through an open glass door bows nearby fern fronds and pulls several damp hair strands sideways. Her bare feet stand in a shallow film of water on pale stone, with spreading ripples around one lifted heel. Warm low sunlight crosses the conservatory mullions and grazes the wrap seam, while cool reflected pool light fills the shadow side. Wet glass, fern silhouettes, suspended towel folds and a distant lane stripe create layered depth. Keep the shoulder asymmetry, sewn wrap edge and side keyhole visually distinct from their cast shadows. Render lifelike skin texture, small water beads on fabric and physically coherent reflections as a precise editorial photograph.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex concept test using attached portrait",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The requester delegates distinct random test-concept choices and reference-based prompt/image creation. This arm selects its specific garment and event with general visual reasoning; these details are agent choices.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "in a flooded glass conservatory beside a lap pool"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman in her late twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "catching a wind-lifted striped towel with her right hand held away from her waist"
+      },
+      {
+        "anchor_id": "reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the attached portrait as her facial and dark wavy hair appearance reference"
+      },
+      {
+        "anchor_id": "garment",
+        "source_text": "각각 서로 다른 컨셉으로",
+        "dimension": "appearance",
+        "prompt_evidence": "a deep petrol one-piece swimsuit"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "focal_swimsuit_structure",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "origin": "agent_authored_under_requester_delegated_random_concept",
+        "garment_type": "one_piece_swimsuit",
+        "shoulder_structure": "single_broad_left_strap_bare_right_shoulder",
+        "front_construction": "diagonal_overlap_panel_with_stitching",
+        "waist_structure": "small_right_side_keyhole",
+        "hip_structure": "wide_continuous_hip_band"
+      },
+      "evidence": {
+        "garment_phrase": "a deep petrol one-piece swimsuit",
+        "shoulder_phrase": "one broad left shoulder strap, a bare right shoulder",
+        "front_phrase": "a diagonal front wrap panel",
+        "waist_phrase": "a small right side-waist keyhole",
+        "hip_phrase": "a wide continuous hip band connecting the covered front to the side",
+        "seam_phrase": "a real overlapping fabric edge with fine stitching"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion editorial photography",
+    "family": "botanical pool weather study",
+    "evidence": [
+      "Warm low sunlight crosses the conservatory mullions",
+      "cool reflected pool light fills the shadow side"
+    ]
+  },
+  "variation_key": "swimwear-arm-02-seed-2796799556"
+}

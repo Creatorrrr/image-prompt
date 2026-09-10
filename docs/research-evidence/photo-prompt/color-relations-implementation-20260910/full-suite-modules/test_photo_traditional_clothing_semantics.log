@@ -1,0 +1,107 @@
+test_candidate_pack_contains_bounded_garment_and_textile_clusters (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_candidate_pack_contains_bounded_garment_and_textile_clusters) ... ok
+test_component_complete_paraphrases_are_bm25f_optional_never_hard (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_component_complete_paraphrases_are_bm25f_optional_never_hard) ... ok
+test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) ... 
+  test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_en') ... FAIL
+  test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_ko') ... FAIL
+  test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_nivi_sari_en') ... FAIL
+  test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='candidate_nivi_components') ... FAIL
+test_five_render_profiles_have_connected_component_and_gate_contracts (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_five_render_profiles_have_connected_component_and_gate_contracts) ... ok
+test_generic_labels_never_hard_activate_a_named_profile (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_generic_labels_never_hard_activate_a_named_profile) ... ok
+test_new_candidates_do_not_infer_wearer_identity_from_clothing (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_new_candidates_do_not_infer_wearer_identity_from_clothing) ... ok
+test_registry_schema_is_valid_apart_from_generated_index_refresh (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_registry_schema_is_valid_apart_from_generated_index_refresh) ... ok
+test_research_evidence_maps_only_to_existing_candidates_and_profiles (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_research_evidence_maps_only_to_existing_candidates_and_profiles) ... ok
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_wrapcover'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_wrapcover'
+
+- ['sw_wrapcover']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_ko')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_wrapcover'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_wrapcover'
+
+- ['sw_wrapcover']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_nivi_sari_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_pleats'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_pleats'
+
+- ['sw_pleats']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='candidate_nivi_components')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['nivi_sari_continuous_pleat_pallu_system', 'sw_pleats'] != ['nivi_sari_continuous_pleat_pallu_system']
+
+First list contains 1 additional elements.
+First extra element 1:
+'sw_pleats'
+
+- ['nivi_sari_continuous_pleat_pallu_system', 'sw_pleats']
+?                                           -------------
+
++ ['nivi_sari_continuous_pleat_pallu_system']
+
+----------------------------------------------------------------------
+Ran 8 tests in 172.430s
+
+FAILED (failures=4)

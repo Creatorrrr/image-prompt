@@ -52,6 +52,31 @@ The requesting user's intended meaning has highest priority. System and image-to
 
 Without project-local prompt data, author a coherent 48–640 word English photographic prompt that can stand alone. Treat 360 words as the default recommended maximum, not a hard cap. Exceed it only when requester meaning or literal hard evidence cannot be represented cleanly within 360 words; never pad toward the limit. It must already specify a concrete subject, setting, visible event or state, and at least two visual priorities. It is not a search query, tag bag, or placeholder.
 
+Before freezing that draft, review any material bodily action, contact, load-bearing state, or consequentially hidden appendage using only the permitted pre-core inputs. Trace the acting body part to its owner, its connected articulation and target, the supporting surfaces and available space, and what the chosen viewpoint will reveal. Distinguish actor-relative directions from screen directions. Check simultaneous states together; a plausible action label does not establish a plausible way to perform it.
+
+Resolve contradictions and consequentially unspecified geometry in agent-authored staging before freezing. Add only the positive spatial relations needed to make that particular action legible. Preserve the requested interaction, affect, bodily structure, and intentional departures from ordinary realism; do not remove contact, hide the affected part, prescribe universal angles or handedness, or simplify every unusual pose. Do not turn the review into requester-owned exclusions or assertions. Foreshortening, occlusion, clothing, atypical anatomy, and a requested nonhuman structure are reasons to examine the applicable body model, not automatic failures. Ask only when requester meaning remains unresolved, not for routine staging choices.
+
+Freeze a separate `embodiment_review.json` with the corrected baseline. Use single-space whitespace in `baseline_prompt_en` before hashing, matching the core's canonical whitespace form. It is agent-owned review evidence and must not enter semantic retrieval. This neutral wire shape is available pre-core; its explanations and literal phrases come from the current draft, not project examples:
+
+```json
+{
+  "contract_version": "photo-embodiment-review/v1",
+  "provenance": "agent_prepack",
+  "prompt_sha256": "<SHA-256 of exact final baseline_prompt_en UTF-8 bytes>",
+  "scope": "body_action",
+  "summary": "<applicable body model and material physical interaction>",
+  "checks": {
+    "body_ownership": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
+    "joint_chain_and_reach": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
+    "support_and_balance": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
+    "contact_and_space": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]},
+    "visibility_and_projection": {"status": "supported", "reason": "<reason>", "prompt_evidence": ["<literal phrase>"]}
+  }
+}
+```
+
+Each explanation is concrete; each applicable check cites one to four literal phrases of at least three words. Use `not_applicable` with a reason and empty evidence for an irrelevant check. An intentional departure uses `requester_intended` plus `requester_source_text` copied exactly from an active requester span; it is not permission to erase that departure. `needs_revision` and `unresolved` block the reviewed version until addressed. For a scene without a material bodily mechanism, use `scope: not_applicable`, explain why, and set `checks: {}`. Do not fabricate a bodily action to fill the record. `supported` means the agent found a plausible realization, not that a solver or rendered image verified it. Review timing is declared provenance, not independently proven by the hash.
+
 First create one external `photo-request-envelope/v1` from the actual requester message. `request_text` is the complete, byte-exact user text, never an agent summary. For a single-topic request, the active span may be the whole request. For a multi-topic or multi-arm request, select the exact non-overlapping topic span plus every exact global modifier that governs that arm. Do not invent a cleaner per-arm request. Create and freeze this envelope before delegation so a downstream agent cannot relabel its own interpretation as user text. In delegated work, the coordinator creates the envelope and passes its path plus SHA-256 to the child; a task brief, coordinator safety summary, reviewer note, or subagent message is never requester text and must never be used to create or expand the envelope.
 
 ```json
@@ -200,6 +225,7 @@ Generate exactly one pack:
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --request-envelope-json request_envelope.json \
   --authorial-core-json authorial_core.json \
+  --embodiment-review-json embodiment_review.json \
   --candidate-pack-version v6 \
   --creativity 0.5 \
   --emit-candidate-pack --n 1
@@ -234,6 +260,8 @@ Before rendering, an explicitly focal perceptual meaning needs a required typed 
 
 Read `references/composition-contract.md` for the composed shape and active conditional fields. Compose one final English prompt from the core and the pack; optional candidates may clarify or deepen it only within permitted dimensions.
 
+When `embodiment_preflight` is present, read `references/embodiment-preflight.md`. Recheck the entire final prompt, including new camera, framing, clothing, and contact clauses; preserve the baseline review and bind a fresh `agent_postcomposition` review in `embodiment_review`. A changed prompt invalidates the previous review hash. Fix new composition conflicts within the allowed dimensions; do not silently rewrite frozen staging to satisfy this check. Use the existing rebuild or repair lineage when a frozen phrase must change. General defect negatives cannot substitute for a coherent positive realization.
+
 For every semantic clarification, record exactly one decision:
 
 - Apply a fitting clarification and bind literal prompt evidence.
@@ -265,6 +293,8 @@ Write the pack and composed object to files, then run:
 
 Fix every failure. `negative_intent_guard_contract`, `negative_intent_guard_terms`, `negative_intent_guard_baseline`, and `negative_intent_guard_prompt` are blocking failures: they mean either the pack carries an ungrounded semantic suppression or positive prompt prose is trying to delete meaning with a blanket negative directive. Do not generate an image from an unaudited prompt.
 
+`embodiment_preflight` failures block missing, stale, unsupported, or unresolved review records. The validator checks records and literal actuation; the agent must actually inspect spatial consistency. It does not detect arbitrary anatomical contradictions from prose. Normal new runs supply the baseline-review flag above; serialized packs and direct compatibility callers without that opt-in keep their recorded contract and do not gain a claim of physical review.
+
 If image generation was requested, read `references/image-runtime.md`, copy `source_intent_lock_sha256` into the exact runtime request, and when present also copy `render_repair_contract_sha256`. Audit it with `scripts/audit_image_render_request.py`, generate, preserve the output and ledger record, then record and audit the exact generic repair hard-gate set with `scripts/audit_image_render_review.py`. Prompt/audit success is preflight evidence, not proof that rendered pixels satisfy the request.
 
 ## Post-Core Reference Routing
@@ -279,6 +309,7 @@ All references below are post-core only. Load only what the frozen request and r
 - Natural-language character-response, identity, and pixel-review contracts: `references/moe-response-contract.md`
 - Intent, concept, preset, and slot routing behavior: `references/concept-routing.md`
 - Image generation, saving, retries, and ledger records: `references/image-runtime.md`
+- Body-action review binding and conditional pixel gates: `references/embodiment-preflight.md`
 - Dictionary/profile edits, validation, semantic index, and evaluation: `references/maintenance.md`
 
 Do not load every reference for a normal prompt request. Maintenance fixtures and research evidence are never runtime composition sources.
@@ -298,6 +329,7 @@ After changing this skill or its contracts, run focused tests first, then the re
 
 ```bash
 .venv/bin/python -m unittest tests.test_photo_prepack_isolation_v5 -v
+.venv/bin/python -m unittest tests.test_photo_embodiment -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v6 -v
 .venv/bin/python -m unittest tests.test_photo_bm25f_retrieval -v

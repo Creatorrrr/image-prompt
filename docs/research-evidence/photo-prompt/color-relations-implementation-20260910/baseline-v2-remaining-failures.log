@@ -1,0 +1,43 @@
+test_retrieval_holdout_and_research_evidence_contracts_are_versioned (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_retrieval_holdout_and_research_evidence_contracts_are_versioned) ... FAIL
+test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes) ... FAIL
+test_v4_opens_singleton_role_scene_slots_for_agent_authorship (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_v4_opens_singleton_role_scene_slots_for_agent_authorship) ... FAIL
+
+======================================================================
+FAIL: test_retrieval_holdout_and_research_evidence_contracts_are_versioned (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_retrieval_holdout_and_research_evidence_contracts_are_versioned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_photo_prompt_contract_v2.py", line 4633, in test_retrieval_holdout_and_research_evidence_contracts_are_versioned
+    self.assertIn("no ", row["reuse_note"].lower())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'no ' not found in 'only abstract support-leg, opposed-plane, counter-turn and three-dimensional-reading relations informed original pose geometry and gates.'
+
+======================================================================
+FAIL: test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_photo_prompt_contract_v2.py", line 1403, in test_v4_hybrid_requires_new_authorial_context_and_varies_candidate_routes
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        {row["slot"] for row in candidate_pack["authorial_open_slots"]},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"subject", "action", "location", "prop"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Items in the second set but not the first:
+'action'
+
+======================================================================
+FAIL: test_v4_opens_singleton_role_scene_slots_for_agent_authorship (tests.test_photo_prompt_contract_v2.PhotoPromptContractV2Tests.test_v4_opens_singleton_role_scene_slots_for_agent_authorship)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_photo_prompt_contract_v2.py", line 1590, in test_v4_opens_singleton_role_scene_slots_for_agent_authorship
+    self.assertEqual(set(open_contracts), {"subject", "action", "location", "prop"})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the second set but not the first:
+'action'
+
+----------------------------------------------------------------------
+Ran 3 tests in 91.610s
+
+FAILED (failures=3)

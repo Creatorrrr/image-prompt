@@ -1,0 +1,4461 @@
+{
+  "schema_version": "photo-color-combination-research/v1",
+  "status": "proposed_not_runtime_compatible",
+  "records": [
+    {
+      "id": "ccp_monochromatic",
+      "axis": "hue",
+      "name_ko": "한 유채색군의 변주",
+      "source_terms": [
+        "Monochromatic"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "이름 붙인 유채색 영역들이 한 색상군에 머묾",
+        "영역 사이 명도나 채도 단계는 구별됨"
+      ],
+      "reject_substitutes": [
+        "흑백만 있음",
+        "전역 색광 워시로 표면 구별이 사라짐"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_monochromatic",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Keep the named chromatic regions within one hue family, with readable lightness or chroma variation.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_monochromatic_g1",
+          "condition": "이름 붙인 유채색 영역들이 한 색상군에 머묾",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_monochromatic_g2",
+          "condition": "영역 사이 명도나 채도 단계는 구별됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_achromatic",
+      "axis": "hue",
+      "name_ko": "무채색 톤 구성",
+      "source_terms": [
+        "Achromatic"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "대상 범위의 유채색이 제거됨",
+        "흑색·회색·백색 사이 톤과 재질이 구별됨"
+      ],
+      "reject_substitutes": [
+        "세피아 단색",
+        "저채도지만 색이 남는 장면"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_achromatic",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Render the specified scope without chromatic hues while retaining its tonal and material distinctions.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_achromatic_g1",
+          "condition": "대상 범위의 유채색이 제거됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_achromatic_g2",
+          "condition": "흑색·회색·백색 사이 톤과 재질이 구별됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S03",
+        "S15"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "monochrome"
+      ],
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_analogous",
+      "axis": "hue",
+      "name_ko": "인접 색상군",
+      "source_terms": [
+        "Analogous"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "주요 유채색 영역들이 같은 색상환의 연속된 이웃 구간에 놓임",
+        "각 영역은 다른 색상군으로 구별됨"
+      ],
+      "reject_substitutes": [
+        "한 색의 밝기 변화만 있음",
+        "멀리 떨어진 포인트를 필수로 추가"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_analogous",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Keep the principal chromatic regions in neighboring hue families on the declared wheel.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_analogous_g1",
+          "condition": "주요 유채색 영역들이 같은 색상환의 연속된 이웃 구간에 놓임",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_analogous_g2",
+          "condition": "각 영역은 다른 색상군으로 구별됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_complementary",
+      "axis": "hue",
+      "name_ko": "대향 색상군",
+      "source_terms": [
+        "Complementary",
+        "Complementary Contrast"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "두 주요 색상군의 영역 소유자가 구별됨",
+        "선택한 색상환에서 서로 대향함"
+      ],
+      "reject_substitutes": [
+        "두 색이 다르기만 함",
+        "한쪽 색은 조명 번짐뿐임"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_complementary",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Assign the two named regions opposing hue families on the declared wheel, retaining each region's boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_complementary_g1",
+          "condition": "두 주요 색상군의 영역 소유자가 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_complementary_g2",
+          "condition": "선택한 색상환에서 서로 대향함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_near_complementary",
+      "axis": "hue",
+      "name_ko": "보색 부근의 어긋남",
+      "source_terms": [
+        "Near-Complementary"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "두 영역은 넓은 색상 차를 유지함",
+        "한쪽이 선언된 보색 기준에서 약간 이동함"
+      ],
+      "reject_substitutes": [
+        "보색과 같은 프로필로 중복 집계",
+        "임의의 두 색"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_near_complementary",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Offset one member of the declared opposing pair slightly while preserving a clear two-region hue contrast.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_near_complementary_g1",
+          "condition": "두 영역은 넓은 색상 차를 유지함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_near_complementary_g2",
+          "condition": "한쪽이 선언된 보색 기준에서 약간 이동함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_split_complementary",
+      "axis": "hue",
+      "name_ko": "기준색과 분할된 대향군",
+      "source_terms": [
+        "Split Complementary"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "기준 영역 하나와 대향 쪽 두 색상군이 구별됨",
+        "대향 쪽 두 색의 벌어짐이 각각 보임"
+      ],
+      "reject_substitutes": [
+        "삼색 균등 간격으로 치환",
+        "보색 한쪽만 존재"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_split_complementary",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Use one base hue family and two distinct families flanking its opposite on the declared wheel.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_split_complementary_g1",
+          "condition": "기준 영역 하나와 대향 쪽 두 색상군이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_split_complementary_g2",
+          "condition": "대향 쪽 두 색의 벌어짐이 각각 보임",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S07",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_triadic",
+      "axis": "hue",
+      "name_ko": "세 방향 색상군",
+      "source_terms": [
+        "Triadic"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "세 주요 유채색군이 각각 영역에 귀속됨",
+        "선택한 색상환에서 세 방향 간격이 대체로 균등함"
+      ],
+      "reject_substitutes": [
+        "세 개 물체지만 색상군은 둘",
+        "분할 보색으로 대체"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_triadic",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Place three distinguishable hue families approximately evenly around the declared wheel and assign each to a named region.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_triadic_g1",
+          "condition": "세 주요 유채색군이 각각 영역에 귀속됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_triadic_g2",
+          "condition": "선택한 색상환에서 세 방향 간격이 대체로 균등함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_tetradic",
+      "axis": "hue",
+      "name_ko": "두 보색쌍의 사색 관계",
+      "source_terms": [
+        "Tetradic",
+        "Double Complementary",
+        "Rectangle Scheme"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "네 색상군을 두 대향쌍으로 연결할 수 있음",
+        "각 색상군의 영역과 쌍 관계가 보존됨"
+      ],
+      "reject_substitutes": [
+        "Adobe double split complementary와 무조건 동일시",
+        "네 색이기만 함"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_tetradic",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Assign four hue families as two opposing pairs, recording whether the requested geometry is rectangular or square.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_tetradic_g1",
+          "condition": "네 색상군을 두 대향쌍으로 연결할 수 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_tetradic_g2",
+          "condition": "각 색상군의 영역과 쌍 관계가 보존됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S07",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_square",
+      "axis": "hue",
+      "name_ko": "정방형 사색 관계",
+      "source_terms": [
+        "Square Scheme"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "네 주요 색상군이 구별됨",
+        "선택한 색상환의 네 방향 간격이 대체로 균등함"
+      ],
+      "reject_substitutes": [
+        "직사각형 사색을 같은 것으로 판정",
+        "세 색과 중성색 하나"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_square",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Distribute four principal hue families approximately evenly around the declared wheel.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared color wheel or qualitative interpretation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_square_g1",
+          "condition": "네 주요 색상군이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_square_g2",
+          "condition": "선택한 색상환의 네 방향 간격이 대체로 균등함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S07",
+        "S08"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_accented_analogous",
+      "axis": "hue",
+      "name_ko": "유사색 기반의 이탈 포인트",
+      "source_terms": [
+        "Accented Analogous"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "큰 기반 영역은 인접 색상군을 이룸",
+        "별도 작은 영역은 그 범위에서 떨어진 색상군임"
+      ],
+      "reject_substitutes": [
+        "기반부터 다색으로 분산",
+        "강조색이 기반만큼 큼"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_accented_analogous",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Use an analogous base field and a bounded accent outside that hue neighborhood.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_accented_analogous_g1",
+          "condition": "큰 기반 영역은 인접 색상군을 이룸",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_accented_analogous_g2",
+          "condition": "별도 작은 영역은 그 범위에서 떨어진 색상군임",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S14"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_limited_palette",
+      "axis": "hue",
+      "name_ko": "제한된 색상 자원",
+      "source_terms": [
+        "Limited Palette",
+        "Restricted Subject Palette",
+        "Restricted Background Palette"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "제한할 피사체 또는 배경 범위가 지정됨",
+        "그 범위의 주된 색상군 수나 범위가 제한됨"
+      ],
+      "reject_substitutes": [
+        "무조건 단색으로 바꿈",
+        "화면 전체 제한을 피사체만으로 대체"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_limited_palette",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Restrict the principal hue families within the named scope, leaving other scopes as requested.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_limited_palette_g1",
+          "condition": "제한할 피사체 또는 배경 범위가 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_limited_palette_g2",
+          "condition": "그 범위의 주된 색상군 수나 범위가 제한됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S06",
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_polychromatic",
+      "axis": "hue",
+      "name_ko": "다색 구성",
+      "source_terms": [
+        "Polychromatic"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "다수의 구별 가능한 색상군이 지정 범위에서 함께 읽힘",
+        "그 색들이 여러 실제 영역에 귀속됨"
+      ],
+      "reject_substitutes": [
+        "고채도 한 색",
+        "작은 노이즈를 색상군으로 집계"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_polychromatic",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Allow multiple clearly distinct hue families across the specified regions without imposing a fixed harmony scheme.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_polychromatic_g1",
+          "condition": "다수의 구별 가능한 색상군이 지정 범위에서 함께 읽힘",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_polychromatic_g2",
+          "condition": "그 색들이 여러 실제 영역에 귀속됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_hue_contrast",
+      "axis": "hue",
+      "name_ko": "색상 차이 축",
+      "source_terms": [
+        "Hue Contrast"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "비교할 두 영역이 구별됨",
+        "명도나 채도만이 아닌 색상군 차이가 있음"
+      ],
+      "reject_substitutes": [
+        "명암만 강함",
+        "무조건 보색으로 확대"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_hue_contrast",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Keep a readable hue difference between the named regions independently of their lightness contrast.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_hue_contrast_g1",
+          "condition": "비교할 두 영역이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_hue_contrast_g2",
+          "condition": "명도나 채도만이 아닌 색상군 차이가 있음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S06"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_chroma_field",
+      "axis": "chroma",
+      "name_ko": "전체 채도 수준",
+      "source_terms": [
+        "High-Chroma Palette",
+        "Low-Chroma Palette",
+        "Muted Palette"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "조절할 범위가 명시됨",
+        "그 범위에 선명함 또는 억제된 색채감이 지속됨"
+      ],
+      "reject_substitutes": [
+        "밝기만 올림",
+        "암부로 묻어 색이 안 보임"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_chroma_field",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Set the overall chroma level of the named field while retaining its requested hue and tonal structure.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_chroma_field_g1",
+          "condition": "조절할 범위가 명시됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_chroma_field_g2",
+          "condition": "그 범위에 선명함 또는 억제된 색채감이 지속됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S01",
+        "S02"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "muted",
+        "low_chroma_preserved_color_separation"
+      ],
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_chroma_separation",
+      "axis": "chroma",
+      "name_ko": "영역간 채도 대비",
+      "source_terms": [
+        "Saturation / Chroma Contrast",
+        "Saturated Accent",
+        "Vivid-on-Muted",
+        "Muted-on-Vivid",
+        "Subject–Background Saturation Separation",
+        "Color Pop"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "비교 대상의 소유자가 분리됨",
+        "한쪽의 색채감이 다른 쪽보다 뚜렷이 강함"
+      ],
+      "reject_substitutes": [
+        "밝은 쪽을 고채도로 오인",
+        "배경도 함께 선명해짐"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_chroma_separation",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Give the named subject and environment a clear chroma hierarchy, in the requested direction.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_chroma_separation_g1",
+          "condition": "비교 대상의 소유자가 분리됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_chroma_separation_g2",
+          "condition": "한쪽의 색채감이 다른 쪽보다 뚜렷이 강함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S11"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_chroma_gradient",
+      "axis": "chroma",
+      "name_ko": "채도의 순차 변화",
+      "source_terms": [
+        "Chroma Gradient"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "변화의 공간 경로나 대상 순서가 있음",
+        "그 순서를 따라 채도 단계가 일관되게 변함"
+      ],
+      "reject_substitutes": [
+        "명도만 변함",
+        "랜덤한 색 점들의 나열"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_chroma_gradient",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Vary chroma progressively along the specified path while holding the other requested color axes stable.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_chroma_gradient_g1",
+          "condition": "변화의 공간 경로나 대상 순서가 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_chroma_gradient_g2",
+          "condition": "그 순서를 따라 채도 단계가 일관되게 변함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S02",
+        "S24"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_chroma_distribution",
+      "axis": "chroma",
+      "name_ko": "색상군별 채도 배분",
+      "source_terms": [
+        "Uniform Saturation",
+        "Mixed Saturation",
+        "Soft-on-Soft"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "대상 색상군과 비교 기준이 지정됨",
+        "유사 채도 또는 차등 채도 배분이 여러 영역에서 확인됨"
+      ],
+      "reject_substitutes": [
+        "HSV 수치가 같으면 지각도 동일하다고 단정",
+        "soft를 흐림으로 대체"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_chroma_distribution",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Distribute chroma consistently or unequally across the specified hue groups, preserving the requested tonal softness separately.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_chroma_distribution_g1",
+          "condition": "대상 색상군과 비교 기준이 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_chroma_distribution_g2",
+          "condition": "유사 채도 또는 차등 채도 배분이 여러 영역에서 확인됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_tonal_key",
+      "axis": "tone",
+      "name_ko": "명도 분포의 키",
+      "source_terms": [
+        "High-Key Palette",
+        "Low-Key Palette",
+        "Mid-Key Palette"
+      ],
+      "disposition": "reuse_existing",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "밝은·어두운·중간 영역 중 요청한 범위가 화면 분포를 지배함",
+        "핵심 피사체의 필요한 계조는 남음"
+      ],
+      "reject_substitutes": [
+        "하이키를 클리핑으로 대체",
+        "로키를 전역 노출 부족으로 대체"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_tonal_key",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Bias the image's tonal distribution toward the requested key while retaining the specified subject detail.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_tonal_key_g1",
+          "condition": "밝은·어두운·중간 영역 중 요청한 범위가 화면 분포를 지배함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_tonal_key_g2",
+          "condition": "핵심 피사체의 필요한 계조는 남음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S15"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "high_key_tonal_distribution",
+        "low_key_selective_illumination"
+      ],
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md.",
+      "scope_warning": "Existing low-key profile requires selective illumination, which is narrower than a dark tonal distribution. Reuse only for matching meaning; keep mid-key and distribution-only low-key separate."
+    },
+    {
+      "id": "ccp_value_contrast",
+      "axis": "tone",
+      "name_ko": "영역간 명도 대비",
+      "source_terms": [
+        "Light–Dark / Value Contrast",
+        "High-Value Contrast",
+        "Low-Value Contrast"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "비교할 영역이 명확함",
+        "요청한 큰 또는 작은 밝고 어두움의 차이가 존재함"
+      ],
+      "reject_substitutes": [
+        "채도 차이만 있음",
+        "강한 그림자를 무조건 추가"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_value_contrast",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Control the lightness difference between the named regions without changing their hue relationship unnecessarily.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_value_contrast_g1",
+          "condition": "비교할 영역이 명확함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_value_contrast_g2",
+          "condition": "요청한 큰 또는 작은 밝고 어두움의 차이가 존재함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S03",
+        "S15"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_tonal_layering",
+      "axis": "tone",
+      "name_ko": "비슷한 톤의 층 구별",
+      "source_terms": [
+        "Tonal Harmony",
+        "Tone-on-Tone",
+        "Dark-on-Dark",
+        "Light-on-Light"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "비슷한 톤 또는 같은 색군의 영역이 겹치거나 이웃함",
+        "미세한 명도·색·질감 차이로 경계가 남음"
+      ],
+      "reject_substitutes": [
+        "검은 실루엣으로 합쳐짐",
+        "밝은 영역 전부 클리핑"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_tonal_layering",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Layer related tones while preserving small readable differences at the named boundaries.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_tonal_layering_g1",
+          "condition": "비슷한 톤 또는 같은 색군의 영역이 겹치거나 이웃함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_tonal_layering_g2",
+          "condition": "미세한 명도·색·질감 차이로 경계가 남음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S03",
+        "S15"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_equiluminance",
+      "axis": "tone",
+      "name_ko": "등휘도와 근사 밝기 일치",
+      "source_terms": [
+        "Isoluminant / Equiluminant Color"
+      ],
+      "disposition": "measurement_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "서로 다른 색상군을 비교할 영역이 정해짐",
+        "선언한 측정 색공간과 표시 조건에서 휘도 일치 여부를 확인함"
+      ],
+      "reject_substitutes": [
+        "같은 HSV V",
+        "그레이스케일처럼 보인다는 주관적 판정만 있음"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_equiluminance",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "For a photographic approximation, use different hues with closely matched displayed luminance; reserve exact equiluminance for calibrated testing.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "declared display/profile/observer conditions; otherwise only near-luminance photographic approximation"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_equiluminance_g1",
+          "condition": "서로 다른 색상군을 비교할 영역이 정해짐",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_equiluminance_g2",
+          "condition": "선언한 측정 색공간과 표시 조건에서 휘도 일치 여부를 확인함",
+          "scale": "calibrated_measurement"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S13",
+        "S24"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_simultaneous_contrast",
+      "axis": "perception",
+      "name_ko": "동일 자극과 주변색의 상호작용",
+      "source_terms": [
+        "Simultaneous Contrast"
+      ],
+      "disposition": "measurement_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "서로 다른 주변색 안의 비교 자극이 같은 표시색인지 확인됨",
+        "자극 차이와 구별된 주변 맥락 효과를 관찰 조건과 함께 평가함"
+      ],
+      "reject_substitutes": [
+        "두 자극 자체의 RGB가 다름",
+        "조명 차이로 실제 표면 표시색이 달라진 것을 지각 착시로 단정"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_simultaneous_contrast",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Place matching displayed-color samples in different surrounds; evaluate the contextual perceptual effect separately from pixel equality.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_simultaneous_contrast_g1",
+          "condition": "서로 다른 주변색 안의 비교 자극이 같은 표시색인지 확인됨",
+          "scale": "color_managed_pixel_measurement"
+        },
+        {
+          "id": "ccp_simultaneous_contrast_g2",
+          "condition": "자극 차이와 구별된 주변 맥락 효과를 관찰 조건과 함께 평가함",
+          "scale": "controlled_perceptual_review"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S10"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_role_hierarchy",
+      "axis": "area",
+      "name_ko": "주조·보조·강조의 역할 위계",
+      "source_terms": [
+        "Dominant–Secondary–Accent",
+        "Dominant Color",
+        "Supporting Color",
+        "Secondary Color",
+        "Accent Color",
+        "60–30–10 Rule",
+        "Extension / Proportion Contrast"
+      ],
+      "disposition": "reuse_existing",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "주조 영역이 가장 넓고 보조 영역이 구별됨",
+        "강조 영역의 면적과 위치가 두 기반 영역에 종속됨"
+      ],
+      "reject_substitutes": [
+        "모든 색면을 같은 비중으로 배치",
+        "색목록만 있고 영역 소유자가 없음"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_role_hierarchy",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Keep a large dominant field, a smaller supporting region, and a bounded accent, with proportions specified only when requested.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength",
+          "area denominator",
+          "area ordering or explicitly requested ratios"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_role_hierarchy_g1",
+          "condition": "주조 영역이 가장 넓고 보조 영역이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_role_hierarchy_g2",
+          "condition": "강조 영역의 면적과 위치가 두 기반 영역에 종속됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S14",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "palette_role_hierarchy_relation"
+      ],
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_single_accent",
+      "axis": "area",
+      "name_ko": "단일 강조 색상군",
+      "source_terms": [
+        "Single Color Accent",
+        "Achromatic + Accent",
+        "Chromatic Accent"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "기반의 중성 또는 저채도 성격이 분명함",
+        "강조할 색상군과 소유자가 제한됨"
+      ],
+      "reject_substitutes": [
+        "중성 기반과 저채도 기반을 무조건 같게 봄",
+        "단일 색상군을 단일 물체로 강제"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_single_accent",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Confine the principal chromatic accent to the named owner against the requested neutral or restrained base.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_single_accent_g1",
+          "condition": "기반의 중성 또는 저채도 성격이 분명함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_single_accent_g2",
+          "condition": "강조할 색상군과 소유자가 제한됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S02",
+        "S14"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_isolated_accent",
+      "axis": "spatial",
+      "name_ko": "공간적으로 고립된 포인트",
+      "source_terms": [
+        "Isolated Accent"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "포인트 영역이 따로 식별됨",
+        "주변에 경쟁 색 덩어리 없이 분리 공간이 남음"
+      ],
+      "reject_substitutes": [
+        "포인트 주변에 같은 색이 붙어 큰 덩어리가 됨",
+        "무조건 중앙 배치"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_isolated_accent",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Separate the bounded accent from competing chromatic regions with a readable surrounding interval.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_isolated_accent_g1",
+          "condition": "포인트 영역이 따로 식별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_isolated_accent_g2",
+          "condition": "주변에 경쟁 색 덩어리 없이 분리 공간이 남음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S12",
+        "S14"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_micro_accent",
+      "axis": "area",
+      "name_ko": "작지만 읽히는 포인트",
+      "source_terms": [
+        "Micro Accent"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "강조 영역은 기반에 비해 작음",
+        "최종 출력과 썸네일 목표에서 요구한 표적은 식별 가능함"
+      ],
+      "reject_substitutes": [
+        "작아서 사라짐",
+        "큰 소품을 마이크로라 부름"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_micro_accent",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Use a small localized chromatic accent that remains identifiable at the intended viewing size.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_micro_accent_g1",
+          "condition": "강조 영역은 기반에 비해 작음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_micro_accent_g2",
+          "condition": "최종 출력과 썸네일 목표에서 요구한 표적은 식별 가능함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S14"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_accent_distribution",
+      "axis": "spatial",
+      "name_ko": "강조색의 군집과 분산",
+      "source_terms": [
+        "Accent Cluster",
+        "Scattered Accent",
+        "Clustered Color",
+        "Distributed Color"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "같은 역할의 색 요소들이 여러 개 있음",
+        "한정 영역 집중 또는 화면 분산이라는 요청한 배치가 보임"
+      ],
+      "reject_substitutes": [
+        "군집과 분산을 동시 의무화",
+        "색상 히스토그램만으로 판단"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_accent_distribution",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Place the accent elements in the requested cluster or dispersed arrangement, retaining each element's boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_accent_distribution_g1",
+          "condition": "같은 역할의 색 요소들이 여러 개 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_accent_distribution_g2",
+          "condition": "한정 영역 집중 또는 화면 분산이라는 요청한 배치가 보임",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_repetition",
+      "axis": "spatial",
+      "name_ko": "분리된 소유자 사이 색 반복",
+      "source_terms": [
+        "Repeated Accent",
+        "Color Echo",
+        "Color Repetition",
+        "Color Link"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "서로 떨어진 둘 이상의 영역이 구별됨",
+        "그 영역의 색상군이 시각적으로 연결됨"
+      ],
+      "reject_substitutes": [
+        "한 물체의 반사상만으로 별도 소유자 조건 충족",
+        "전역 워시"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_repetition",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Repeat a recognizable hue family across distinct, separated scene elements.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_repetition_g1",
+          "condition": "서로 떨어진 둘 이상의 영역이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_repetition_g2",
+          "condition": "그 영역의 색상군이 시각적으로 연결됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_rhythm",
+      "axis": "spatial",
+      "name_ko": "순서와 간격을 가진 반복",
+      "source_terms": [
+        "Color Rhythm",
+        "Alternating Color"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "색 요소의 순서가 읽힘",
+        "반복 또는 교대 간격이 구도의 방향을 이룸"
+      ],
+      "reject_substitutes": [
+        "두 개 색 점만으로 리듬 보장",
+        "무작위 산포"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_rhythm",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Repeat or alternate the named color regions along a readable sequence with visible intervals.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_rhythm_g1",
+          "condition": "색 요소의 순서가 읽힘",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_rhythm_g2",
+          "condition": "반복 또는 교대 간격이 구도의 방향을 이룸",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_anchor",
+      "axis": "attention",
+      "name_ko": "색의 초점과 균형점",
+      "source_terms": [
+        "Color Anchor",
+        "Chromatic Focal Point",
+        "Focal Color",
+        "Key Color",
+        "Highlight Color"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "의도한 시각 표적이 지정됨",
+        "그 표적의 색 대비가 주변과 구별됨"
+      ],
+      "reject_substitutes": [
+        "highlight를 무조건 밝은 톤으로 해석",
+        "면적 최대인 색을 무조건 시선 초점으로 간주"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_anchor",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Use the named region as the chromatic focal cue while preserving its intended relation to surrounding areas.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_anchor_g1",
+          "condition": "의도한 시각 표적이 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_anchor_g2",
+          "condition": "그 표적의 색 대비가 주변과 구별됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S11",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_bridge",
+      "axis": "spatial",
+      "name_ko": "두 색군 사이 연결 영역",
+      "source_terms": [
+        "Color Bridge",
+        "Transitional Color"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "서로 다른 두 색군의 영역이 있음",
+        "중간 색조를 가진 제삼의 연결 영역 또는 연속 경로가 있음"
+      ],
+      "reject_substitutes": [
+        "배경 어디든 중간색 한 점",
+        "단순 두 색 혼합"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_bridge",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Place a visible intermediate-color region between the two named palette regions.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_bridge_g1",
+          "condition": "서로 다른 두 색군의 영역이 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_bridge_g2",
+          "condition": "중간 색조를 가진 제삼의 연결 영역 또는 연속 경로가 있음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S07",
+        "S05"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_temperature_field",
+      "axis": "temperature",
+      "name_ko": "따뜻한·차가운 색 지배",
+      "source_terms": [
+        "Warm-Dominant",
+        "Cool-Dominant"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "대상 범위의 상대적 한난 경향이 읽힘",
+        "요청한 중성 예외나 반대 영역이 있으면 보존됨"
+      ],
+      "reject_substitutes": [
+        "특정 켈빈을 픽셀에서 역산",
+        "웜을 무조건 주황색 워시로 만듦"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_temperature_field",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Make the specified field relatively warm or cool while retaining any named neutral exceptions.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_temperature_field_g1",
+          "condition": "대상 범위의 상대적 한난 경향이 읽힘",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_temperature_field_g2",
+          "condition": "요청한 중성 예외나 반대 영역이 있으면 보존됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S04",
+        "S05"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_temperature_separation",
+      "axis": "temperature",
+      "name_ko": "소유자별 한난 분리",
+      "source_terms": [
+        "Warm–Cool Contrast",
+        "Warm Subject / Cool Environment",
+        "Cool Subject / Warm Environment",
+        "Subject–Background Temperature Separation"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "피사체와 환경 등 비교 소유자가 구별됨",
+        "두 영역이 상대적으로 반대 한난 경향을 가짐"
+      ],
+      "reject_substitutes": [
+        "피부를 고정 주황색으로 만듦",
+        "전체 색조만 따뜻해짐"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_temperature_separation",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Separate the named owners by relative warm and cool color tendencies in the requested direction.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_temperature_separation_g1",
+          "condition": "피사체와 환경 등 비교 소유자가 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_temperature_separation_g2",
+          "condition": "두 영역이 상대적으로 반대 한난 경향을 가짐",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S04",
+        "S22"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_depth_temperature",
+      "axis": "temperature",
+      "name_ko": "깊이별 한난 배열",
+      "source_terms": [
+        "Warm Foreground / Cool Background",
+        "Cool Foreground / Warm Background",
+        "Temperature Gradient"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "전후경 또는 공간 방향이 독립 단서로 읽힘",
+        "그 경로를 따라 요청한 한난 순서가 존재함"
+      ],
+      "reject_substitutes": [
+        "평면 위 두 색 띠를 깊이 증거로 대체",
+        "먼 곳은 항상 파랑으로 고정"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_depth_temperature",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Arrange the requested warm–cool order across independently readable spatial planes or a named spatial path.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_depth_temperature_g1",
+          "condition": "전후경 또는 공간 방향이 독립 단서로 읽힘",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_depth_temperature_g2",
+          "condition": "그 경로를 따라 요청한 한난 순서가 존재함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S21",
+        "S22"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_mixed_illuminants",
+      "axis": "illumination",
+      "name_ko": "혼합 광원의 색 관계",
+      "source_terms": [
+        "Mixed Color Temperature"
+      ],
+      "disposition": "reuse_existing",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "서로 다른 광원의 방향과 수광 영역이 구별됨",
+        "같은 재질 또는 중성 기준에서 두 조명 응답이 일관됨"
+      ],
+      "reject_substitutes": [
+        "명암 기반 split tone만 있음",
+        "전역 캐스트만 존재"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_mixed_illuminants",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Let distinct illuminants affect traceable receiving regions, with a declared white-balance anchor.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_mixed_illuminants_g1",
+          "condition": "서로 다른 광원의 방향과 수광 영역이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_mixed_illuminants_g2",
+          "condition": "같은 재질 또는 중성 기준에서 두 조명 응답이 일관됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S04",
+        "S16"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "mixed_illuminant_white_balance_relation"
+      ],
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_tone_temperature",
+      "axis": "grading",
+      "name_ko": "명암 구간별 한난 배분",
+      "source_terms": [
+        "Warm Highlight / Cool Shadow",
+        "Cool Highlight / Warm Shadow",
+        "Shadow Tint",
+        "Midtone Tint",
+        "Highlight Tint"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "하이라이트·중간톤·암부의 대상 구간이 선언됨",
+        "그 구간에 요청한 색 경향이 존재함"
+      ],
+      "reject_substitutes": [
+        "좌우 두 색 조명을 무조건 같은 의미로 처리",
+        "전역 단색 틴트"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_tone_temperature",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Give the specified tonal bands distinct color tendencies with controlled transitions and named protected regions.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_tone_temperature_g1",
+          "condition": "하이라이트·중간톤·암부의 대상 구간이 선언됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_tone_temperature_g2",
+          "condition": "그 구간에 요청한 색 경향이 존재함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S17"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_multicolor_lighting",
+      "axis": "illumination",
+      "name_ko": "여러 색광의 수광 관계",
+      "source_terms": [
+        "Bi-Color Lighting",
+        "Dual-Tone Lighting",
+        "Two-Color Lighting",
+        "Tri-Color Lighting",
+        "RGB Lighting",
+        "Gel Contrast"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "요청한 수의 색광 기여가 수광면에서 구별됨",
+        "빛의 방향·가림·겹침이 장면 표면과 연결됨"
+      ],
+      "reject_substitutes": [
+        "장비가 RGB라는 이유만으로 세 광원 판정",
+        "바이컬러 백색광 장비를 두 색 연출로 강제"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_multicolor_lighting",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Use separately traceable colored-light contributions on the specified receiving surfaces.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [
+          "explicit request for separate colored-light contributions, not merely a bi-color fixture"
+        ],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_multicolor_lighting_g1",
+          "condition": "요청한 수의 색광 기여가 수광면에서 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_multicolor_lighting_g2",
+          "condition": "빛의 방향·가림·겹침이 장면 표면과 연결됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S16",
+        "S04"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_key_fill_color",
+      "axis": "illumination",
+      "name_ko": "주광·보조광의 색 역할",
+      "source_terms": [
+        "Colored Key + Neutral Fill",
+        "Neutral Key + Colored Fill"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "주광과 보조광의 역할이 형상과 그림자에서 구별됨",
+        "각 역할에 색 또는 중성 특성이 요청대로 귀속됨"
+      ],
+      "reject_substitutes": [
+        "중성 피부라는 말만 있음",
+        "두 광원의 역할이 반대"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_key_fill_color",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Assign the requested color to the key or fill contribution while keeping the other contribution relatively neutral.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_key_fill_color_g1",
+          "condition": "주광과 보조광의 역할이 형상과 그림자에서 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_key_fill_color_g2",
+          "condition": "각 역할에 색 또는 중성 특성이 요청대로 귀속됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S16"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_colored_rim",
+      "axis": "illumination",
+      "name_ko": "윤곽에 귀속된 색광",
+      "source_terms": [
+        "Colored Rim Light",
+        "Contrasting Rim Light"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "피사체 윤곽 일부에 색광이 존재함",
+        "그 색광이 후방 또는 측후방 수광 형상과 일치함"
+      ],
+      "reject_substitutes": [
+        "후광 그래픽",
+        "배경색 경계를 림광으로 오인"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_colored_rim",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Keep the colored light on source-facing contours, with its hue distinct from the key when requested.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_colored_rim_g1",
+          "condition": "피사체 윤곽 일부에 색광이 존재함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_colored_rim_g2",
+          "condition": "그 색광이 후방 또는 측후방 수광 형상과 일치함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S16",
+        "S22"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_wash",
+      "axis": "illumination",
+      "name_ko": "범위를 가진 색광 워시",
+      "source_terms": [
+        "Color Wash",
+        "Background Color Wash"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "워시를 받을 공간이나 배경이 지정됨",
+        "그 범위에 색광이 넓게 이어지면서 가림을 따름"
+      ],
+      "reject_substitutes": [
+        "배경 페인트색만 있음",
+        "배경 한정을 무시하고 얼굴까지 워시"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_wash",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Wash the named receiving area with colored illumination, preserving requested spill boundaries.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_wash_g1",
+          "condition": "워시를 받을 공간이나 배경이 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_wash_g2",
+          "condition": "그 범위에 색광이 넓게 이어지면서 가림을 따름",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S16"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_cross_color_light",
+      "axis": "illumination",
+      "name_ko": "반대 방향의 서로 다른 색광",
+      "source_terms": [
+        "Cross-Color Lighting",
+        "Color Separation Lighting"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "분리된 방향 또는 수광 영역이 있음",
+        "그 영역별 다른 색광과 경계 전이가 읽힘"
+      ],
+      "reject_substitutes": [
+        "화면 위 색 필터 두 장",
+        "광원 방향 없는 착색"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_cross_color_light",
+        "proposed_slot": "lighting",
+        "affected_dimensions": [
+          "lighting",
+          "color"
+        ],
+        "positive_literal": "Let differently colored contributions arrive from distinct directions and follow the receiving forms and occlusions.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_cross_color_light_g1",
+          "condition": "분리된 방향 또는 수광 영역이 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_cross_color_light_g2",
+          "condition": "그 영역별 다른 색광과 경계 전이가 읽힘",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S16",
+        "S22"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_figure_ground",
+      "axis": "spatial",
+      "name_ko": "형태와 배경의 색 분리",
+      "source_terms": [
+        "Subject–Background Color Separation",
+        "Figure–Ground Color Contrast",
+        "Neutral Field / Chromatic Subject",
+        "Chromatic Field / Neutral Subject",
+        "Character–Environment Palette Contrast"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "피사체 외곽과 배경이 독립 영역으로 구별됨",
+        "요청한 색 차이가 주요 외곽을 따라 유지됨"
+      ],
+      "reject_substitutes": [
+        "흐림만으로 분리",
+        "배경 일부 작은 색 점"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_figure_ground",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Maintain the requested color contrast along the subject–background boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_figure_ground_g1",
+          "condition": "피사체 외곽과 배경이 독립 영역으로 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_figure_ground_g2",
+          "condition": "요청한 색 차이가 주요 외곽을 따라 유지됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S11",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "scope_warning": "Broad palette contrast permits multiple axes and hue families; do not force warm–cool separation or a single accent. Bind neutral/chromatic direction to the request.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_depth_palette",
+      "axis": "spatial",
+      "name_ko": "공간 층별 팔레트",
+      "source_terms": [
+        "Foreground–Midground–Background Palette",
+        "Layered Color Palette",
+        "Color Depth Separation"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "전경·중경·배경이 중첩·크기 등으로 구별됨",
+        "각 층의 색군 역할이 혼동되지 않음"
+      ],
+      "reject_substitutes": [
+        "색면 세 개만 있음",
+        "블러 단계만 존재"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_depth_palette",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Assign distinct palette roles to independently readable foreground, middle, and background planes.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_depth_palette_g1",
+          "condition": "전경·중경·배경이 중첩·크기 등으로 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_depth_palette_g2",
+          "condition": "각 층의 색군 역할이 혼동되지 않음",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S21"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_atmospheric_color",
+      "axis": "spatial",
+      "name_ko": "거리 증가에 따른 색·대비 변화",
+      "source_terms": [
+        "Atmospheric Color Separation"
+      ],
+      "disposition": "reuse_or_parameter",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "원근 거리 순서가 다른 단서로 확인됨",
+        "먼 영역의 색 강도와 명암 대비가 대기 조건에 맞게 약화됨"
+      ],
+      "reject_substitutes": [
+        "전역 뿌연 필터",
+        "모든 원경을 무조건 파랑으로 변경"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_atmospheric_color",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Let distant planes lose chroma and local tonal contrast relative to nearer planes, consistent with the depicted atmosphere.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_atmospheric_color_g1",
+          "condition": "원근 거리 순서가 다른 단서로 확인됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_atmospheric_color_g2",
+          "condition": "먼 영역의 색 강도와 명암 대비가 대기 조건에 맞게 약화됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S21"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_framing",
+      "axis": "spatial",
+      "name_ko": "색 영역의 둘러쌈",
+      "source_terms": [
+        "Color Framing"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "중심 표적과 주변 색 영역이 구별됨",
+        "색 영역이 두 면 이상 또는 요청한 윤곽을 따라 표적을 감쌈"
+      ],
+      "reject_substitutes": [
+        "색 소품 하나가 근처에 있음",
+        "후반 테두리를 자동 추가"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_framing",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Use the specified colored scene regions to surround or bracket the focal subject.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_framing_g1",
+          "condition": "중심 표적과 주변 색 영역이 구별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_framing_g2",
+          "condition": "색 영역이 두 면 이상 또는 요청한 윤곽을 따라 표적을 감쌈",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_blocks",
+      "axis": "spatial",
+      "name_ko": "넓고 분리된 색면",
+      "source_terms": [
+        "Color Blocking",
+        "Large Color Fields"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "넓은 색면들이 각각 식별됨",
+        "색면 사이 경계가 구도에서 읽힘"
+      ],
+      "reject_substitutes": [
+        "잘게 쪼개진 다색 무늬",
+        "무조건 평면 포스터"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_blocks",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Compose with large, clearly bounded color fields while retaining the requested photographic surface and depth cues.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_blocks_g1",
+          "condition": "넓은 색면들이 각각 식별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_blocks_g2",
+          "condition": "색면 사이 경계가 구도에서 읽힘",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_split",
+      "axis": "spatial",
+      "name_ko": "지정 방향의 색면 분할",
+      "source_terms": [
+        "Split Color Composition",
+        "Diagonal Color Split"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "주요 색 영역들이 큰 구획으로 나뉨",
+        "경계의 위치나 대각 방향이 요청과 일치함"
+      ],
+      "reject_substitutes": [
+        "split toning으로 치환",
+        "작은 대각 소품만 있음"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_split",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Divide the main composition into the requested large color regions with a readable directional boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_split_g1",
+          "condition": "주요 색 영역들이 큰 구획으로 나뉨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_split_g2",
+          "condition": "경계의 위치나 대각 방향이 요청과 일치함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_bands",
+      "axis": "spatial",
+      "name_ko": "수평·수직 색 띠",
+      "source_terms": [
+        "Horizontal Color Bands",
+        "Vertical Color Bands"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "둘 이상의 길게 이어진 색 띠가 보임",
+        "띠의 방향과 순서가 명확함"
+      ],
+      "reject_substitutes": [
+        "줄무늬 의상만으로 전역 구도 충족",
+        "임의 색 점"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_bands",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Arrange the specified scope as ordered horizontal or vertical color bands.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_bands_g1",
+          "condition": "둘 이상의 길게 이어진 색 띠가 보임",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_bands_g2",
+          "condition": "띠의 방향과 순서가 명확함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_radial_color",
+      "axis": "spatial",
+      "name_ko": "방사·동심 배열",
+      "source_terms": [
+        "Radial Color Arrangement",
+        "Concentric Color Structure"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "중심 또는 공통 축이 식별됨",
+        "방사 방향 또는 둘러싼 고리들의 색 순서가 보임"
+      ],
+      "reject_substitutes": [
+        "단순 중앙 포인트",
+        "원형 물체 하나"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_radial_color",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Arrange color regions as rays or nested surrounding zones around a visible shared center.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_radial_color_g1",
+          "condition": "중심 또는 공통 축이 식별됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_radial_color_g2",
+          "condition": "방사 방향 또는 둘러싼 고리들의 색 순서가 보임",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_spatial_gradient",
+      "axis": "spatial",
+      "name_ko": "공간을 따른 연속 색 변화",
+      "source_terms": [
+        "Gradient",
+        "Ombré"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "변화하는 물체나 공간 경로가 지정됨",
+        "그 경로에서 색상·명도·채도의 선언된 축이 연속적으로 변함"
+      ],
+      "reject_substitutes": [
+        "Gradient Map과 동의어 처리",
+        "색 띠의 단절을 연속으로 판정"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_spatial_gradient",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Change the specified color axis smoothly along the named surface or spatial path.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_spatial_gradient_g1",
+          "condition": "변화하는 물체나 공간 경로가 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_spatial_gradient_g2",
+          "condition": "그 경로에서 색상·명도·채도의 선언된 축이 연속적으로 변함",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S07",
+        "S24"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_zones",
+      "axis": "spatial",
+      "name_ko": "영역별 색 구획",
+      "source_terms": [
+        "Color Zoning"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "둘 이상의 의미 있는 공간 구역이 있음",
+        "각 구역의 색 역할과 경계가 유지됨"
+      ],
+      "reject_substitutes": [
+        "아무 다색 장면",
+        "영역 소유자 없는 팔레트"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_zones",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Assign stable palette roles to the named spatial zones, preserving their boundaries.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_zones_g1",
+          "condition": "둘 이상의 의미 있는 공간 구역이 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_color_zones_g2",
+          "condition": "각 구역의 색 역할과 경계가 유지됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_palette_complexity",
+      "axis": "complexity",
+      "name_ko": "피사체·배경 색상군 복잡도 차",
+      "source_terms": [
+        "Simple Background / Complex Subject Palette",
+        "Complex Background / Simple Subject Palette",
+        "Palette Density Contrast"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "피사체와 배경의 평가 범위가 분리됨",
+        "한쪽의 유효 색상군 다양성이 다른 쪽보다 큼"
+      ],
+      "reject_substitutes": [
+        "채도 높은 한 색을 복잡하다고 간주",
+        "질감 노이즈만 증가"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_palette_complexity",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Use more distinct hue families in one named scope and fewer in the other, independently of texture detail.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_palette_complexity_g1",
+          "condition": "피사체와 배경의 평가 범위가 분리됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_palette_complexity_g2",
+          "condition": "한쪽의 유효 색상군 다양성이 다른 쪽보다 큼",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S05",
+        "S12"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_split_toning",
+      "axis": "grading",
+      "name_ko": "두 톤 구간의 색조 분리",
+      "source_terms": [
+        "Split Toning"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "주로 암부와 밝은 톤에 다른 색 경향이 있음",
+        "색 변화가 화면 좌표보다 톤 구간에 결부됨"
+      ],
+      "reject_substitutes": [
+        "좌우 색광만 있음",
+        "전역 한 색 틴트"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_split_toning",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Apply different color tendencies to shadows and highlights with an explicit transition policy.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_split_toning_g1",
+          "condition": "주로 암부와 밝은 톤에 다른 색 경향이 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_split_toning_g2",
+          "condition": "색 변화가 화면 좌표보다 톤 구간에 결부됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S17"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_three_way_grade",
+      "axis": "grading",
+      "name_ko": "세 톤 구간의 독립 보정",
+      "source_terms": [
+        "Three-Way Color Grading"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "암부·중간톤·하이라이트 처리 방향이 각각 지정됨",
+        "구간 전이가 연속적이고 보호 대상이 유지됨"
+      ],
+      "reject_substitutes": [
+        "색광 세 개",
+        "반드시 세 개 서로 다른 Hue로 강제"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_three_way_grade",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Control shadows, midtones, and highlights separately; the three controls need not introduce three different hues.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_three_way_grade_g1",
+          "condition": "암부·중간톤·하이라이트 처리 방향이 각각 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_three_way_grade_g2",
+          "condition": "구간 전이가 연속적이고 보호 대상이 유지됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S17"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_duotone",
+      "axis": "grading",
+      "name_ko": "제한 색조의 톤 재해석",
+      "source_terms": [
+        "Duotone",
+        "Tritone"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "제한된 색조가 여러 원래 표면의 명암 구조를 재해석함",
+        "잔존 원색과 계조의 허용 범위가 선언됨"
+      ],
+      "reject_substitutes": [
+        "두 색 의상",
+        "두 색 조명"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_duotone",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Use a declared two- or three-color tonal remapping treatment, with the intended treatment of original surface hues made explicit.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_duotone_g1",
+          "condition": "제한된 색조가 여러 원래 표면의 명암 구조를 재해석함",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_duotone_g2",
+          "condition": "잔존 원색과 계조의 허용 범위가 선언됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S18",
+        "S20"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_selective_retention",
+      "axis": "grading",
+      "name_ko": "국소 색 보존·억제",
+      "source_terms": [
+        "Selective Color",
+        "Partial Desaturation"
+      ],
+      "disposition": "reuse_existing",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "남길 영역과 억제할 영역이 지정됨",
+        "경계·질감·동일 물체의 연결성이 유지됨"
+      ],
+      "reject_substitutes": [
+        "채도 높은 소품을 중성 배경에 둔 것만으로 편집 이력 단정",
+        "Photoshop Selective Color 조정과 무조건 동의어"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_selective_retention",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Retain chroma in the selected region while suppressing it elsewhere, with continuous shading and texture across the mask boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_selective_retention_g1",
+          "condition": "남길 영역과 억제할 영역이 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_selective_retention_g2",
+          "condition": "경계·질감·동일 물체의 연결성이 유지됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S19",
+        "S25"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "existing_overlap_ids": [
+        "selective_color_same_surface_exception_relation"
+      ],
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md.",
+      "scope_warning": "Existing same-surface exception is narrower than keeping one entire object colored. Retain separate variants. Selective Color adjustment tool requires its own disambiguated interpretation."
+    },
+    {
+      "id": "ccp_global_tint",
+      "axis": "grading",
+      "name_ko": "범위 전체의 공통 색 편향",
+      "source_terms": [
+        "Global Tint",
+        "Color Cast Unification"
+      ],
+      "disposition": "parameter_variant",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "전역 또는 지정 범위에 공통 색 편향이 있음",
+        "예외로 둔 중성 또는 제품 표면이 있으면 구별됨"
+      ],
+      "reject_substitutes": [
+        "한 색 물체만 많음",
+        "광원 원인을 단정"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_global_tint",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Apply a shared color bias within the declared scope, with explicit exceptions where requested.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_global_tint_g1",
+          "condition": "전역 또는 지정 범위에 공통 색 편향이 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_global_tint_g2",
+          "condition": "예외로 둔 중성 또는 제품 표면이 있으면 구별됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S17",
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_gradient_mapping",
+      "axis": "grading",
+      "name_ko": "톤값을 색으로 대응",
+      "source_terms": [
+        "Gradient Mapping"
+      ],
+      "disposition": "new_narrow",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "회색조 기준과 색 정지점 대응이 지정됨",
+        "떨어진 영역도 같은 톤 조건에서 같은 매핑 체계를 따름"
+      ],
+      "reject_substitutes": [
+        "왼쪽에서 오른쪽으로만 바뀌는 배경",
+        "후반 도구 사용 이력을 픽셀만으로 확정"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_gradient_mapping",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Map the declared tonal range to a specified sequence of color stops rather than to screen position.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_gradient_mapping_g1",
+          "condition": "회색조 기준과 색 정지점 대응이 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_gradient_mapping_g2",
+          "condition": "떨어진 영역도 같은 톤 조건에서 같은 매핑 체계를 따름",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S20"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_cross_processed",
+      "axis": "grading",
+      "name_ko": "교차 현상풍 색·톤 관계",
+      "source_terms": [
+        "Cross-Processed Palette"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "어떤 색·톤 구간이 어떻게 이동하는지 지정됨",
+        "표면별 계조와 선택한 편향이 읽힘"
+      ],
+      "reject_substitutes": [
+        "녹색 캐스트 하나를 모든 교차 현상 표준으로 취급",
+        "생성 이미지로 실제 현상 이력 주장"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_cross_processed",
+        "proposed_slot": "color_grading",
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Describe the requested channel or tonal color shifts explicitly, treating cross-processing as a look reference unless process metadata exists.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_cross_processed_g1",
+          "condition": "어떤 색·톤 구간이 어떻게 이동하는지 지정됨",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_cross_processed_g2",
+          "condition": "표면별 계조와 선택한 편향이 읽힘",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S23"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "documented_definition_or_mechanism",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_discord",
+      "axis": "attention",
+      "name_ko": "의도한 색 불균형",
+      "source_terms": [
+        "Color Discord",
+        "Clashing Colors",
+        "Chromatic Tension",
+        "Unequal Color Balance",
+        "Off-Balance Palette",
+        "Abrupt Color Contrast",
+        "Controlled Discord"
+      ],
+      "disposition": "advisory",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "기반 색 관계와 이탈 또는 급변 영역을 구별할 수 있음",
+        "이탈의 면적·위치·색 차이가 선언됨"
+      ],
+      "reject_substitutes": [
+        "불쾌함·긴장감의 보편적 발생을 보장",
+        "임의 다색 혼란"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_discord",
+        "proposed_slot": "color",
+        "affected_dimensions": [
+          "color",
+          "composition"
+        ],
+        "positive_literal": "Introduce the specified hue, chroma, area, or spatial imbalance relative to an otherwise readable palette structure.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_discord_g1",
+          "condition": "기반 색 관계와 이탈 또는 급변 영역을 구별할 수 있음",
+          "scale": "thumbnail_and_native"
+        },
+        {
+          "id": "ccp_discord_g2",
+          "condition": "이탈의 면적·위치·색 차이가 선언됨",
+          "scale": "thumbnail_and_native"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S10",
+        "S11"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_palette_continuity",
+      "axis": "sequence",
+      "name_ko": "연속 장면의 색 관계 유지",
+      "source_terms": [
+        "Palette Continuity"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "둘 이상의 순서 있는 프레임이 있음",
+        "소유자별 색 관계가 장면 변화에도 유지됨"
+      ],
+      "reject_substitutes": [
+        "단일 이미지로 연속성 통과",
+        "전체 평균 RGB만 일치"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_palette_continuity",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Maintain the declared owner-to-color relationships across the ordered frames.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_palette_continuity_g1",
+          "condition": "둘 이상의 순서 있는 프레임이 있음",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_palette_continuity_g2",
+          "condition": "소유자별 색 관계가 장면 변화에도 유지됨",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_palette_progression",
+      "axis": "sequence",
+      "name_ko": "시간에 따른 색 변화",
+      "source_terms": [
+        "Palette Progression",
+        "Color Arc"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "세 개 이상의 순서 있는 프레임 또는 시간 표본이 있음",
+        "지정 색 축의 변화 방향이 연속적으로 읽힘"
+      ],
+      "reject_substitutes": [
+        "한 장의 공간 그라디언트",
+        "사진 하나로 서사 변화 입증"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_palette_progression",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Change the declared palette axis progressively across the ordered sequence.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_palette_progression_g1",
+          "condition": "세 개 이상의 순서 있는 프레임 또는 시간 표본이 있음",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_palette_progression_g2",
+          "condition": "지정 색 축의 변화 방향이 연속적으로 읽힘",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S22",
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_palette_shift",
+      "axis": "sequence",
+      "name_ko": "사건 전후 색 체계 전환",
+      "source_terms": [
+        "Palette Shift"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "전환 전후 프레임과 사건 경계가 지정됨",
+        "그 경계에서 요청한 팔레트 관계가 바뀜"
+      ],
+      "reject_substitutes": [
+        "화이트밸런스 오류를 의도된 사건으로 추론",
+        "정지 사진 한 장"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_palette_shift",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Change the declared palette relationship at the specified sequence boundary.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_palette_shift_g1",
+          "condition": "전환 전후 프레임과 사건 경계가 지정됨",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_palette_shift_g2",
+          "condition": "그 경계에서 요청한 팔레트 관계가 바뀜",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S22",
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_palette_inversion",
+      "axis": "sequence",
+      "name_ko": "전후 색 역할 반전",
+      "source_terms": [
+        "Palette Inversion"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "비교할 전후 프레임이 있음",
+        "같은 소유자들에 배정된 색 역할이 서로 뒤바뀜"
+      ],
+      "reject_substitutes": [
+        "RGB 음화 반전",
+        "장면 사이 무관한 색 변화"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_palette_inversion",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Swap the declared owner-to-color roles between the before and after frames.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_palette_inversion_g1",
+          "condition": "비교할 전후 프레임이 있음",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_palette_inversion_g2",
+          "condition": "같은 소유자들에 배정된 색 역할이 서로 뒤바뀜",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S22",
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_motif",
+      "axis": "sequence",
+      "name_ko": "반복되는 색과 서사 대상",
+      "source_terms": [
+        "Color Motif",
+        "Signature Color"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "동일한 서사 대상 또는 주제가 외부 맥락으로 지정됨",
+        "여러 프레임에서 그 대상과 색군의 결합이 반복됨"
+      ],
+      "reject_substitutes": [
+        "한 이미지의 포인트색으로 고유 시그니처나 감정 단정",
+        "국적·성격 추론"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_motif",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Repeat the declared color association with the specified narrative referent across the sequence.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength",
+          "externally declared association; no universal color-emotion mapping"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_motif_g1",
+          "condition": "동일한 서사 대상 또는 주제가 외부 맥락으로 지정됨",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_color_motif_g2",
+          "condition": "여러 프레임에서 그 대상과 색군의 결합이 반복됨",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S22"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    },
+    {
+      "id": "ccp_color_coding",
+      "axis": "sequence",
+      "name_ko": "대상별 색 부호",
+      "source_terms": [
+        "Color Coding"
+      ],
+      "disposition": "sequence_only",
+      "semantic_status": "research_proposal",
+      "runtime_enabled": false,
+      "observable_components": [
+        "둘 이상의 인물·장소·상황에 대응 규칙이 선언됨",
+        "각 대상이 해당 규칙에 맞는 색 관계를 반복 유지함"
+      ],
+      "reject_substitutes": [
+        "임의 색 옷으로 신분이나 역할 단정",
+        "명시한 대응표 없이 상징 주장"
+      ],
+      "candidate_proposal": {
+        "id": "candidate_ccp_color_coding",
+        "proposed_slot": null,
+        "affected_dimensions": [
+          "color"
+        ],
+        "positive_literal": "Maintain the explicitly declared color code for each named entity or setting.",
+        "open_slots": [
+          "actual hue choices",
+          "named region owners",
+          "requested strength"
+        ],
+        "retrieval_role": "post_core_advisory",
+        "weight": null,
+        "open_slots_policy": "Potential authorial parameters only; bind to the actual request and do not reopen locked choices."
+      },
+      "activation_proposal": {
+        "exact_term_alone_sufficient": false,
+        "requester_evidence_required": [
+          "non-negated explicit visual request",
+          "intended scope and owners",
+          "compatible intent locks"
+        ],
+        "additional_required": [],
+        "broad_label_policy": "retrieve interpretations; do not introduce hidden hard obligations"
+      },
+      "pixel_gate_proposals": [
+        {
+          "id": "ccp_color_coding_g1",
+          "condition": "둘 이상의 인물·장소·상황에 대응 규칙이 선언됨",
+          "scale": "sequence"
+        },
+        {
+          "id": "ccp_color_coding_g2",
+          "condition": "각 대상이 해당 규칙에 맞는 색 관계를 반복 유지함",
+          "scale": "sequence"
+        }
+      ],
+      "qualification_status": "unrendered_unqualified",
+      "source_ids": [
+        "S22",
+        "S26"
+      ],
+      "evidence_boundary": "Sources support the concept or adjacent design principle; region contracts and gates are authored proposals, not validated generator behavior.",
+      "source_support_level": "adjacent_principle_supports_authored_operationalization",
+      "term_standardization": "Do not treat descriptive workshop phrases as internationally standardized taxonomy; consult the disambiguation in report.md."
+    }
+  ],
+  "policy": {
+    "no_production_activation": true,
+    "no_fixed_hue_defaults": true,
+    "hard_profile_adoption": "Only a separately reviewed observable meaning with requester support may later be promoted.",
+    "variants": "Grouped terms are parameter variants or related senses, not interchangeable exact aliases.",
+    "source_grounding": "Source-backed definitions and authored operational proposals are distinct.",
+    "color_owner_model": [
+      "surface_appearance",
+      "illumination",
+      "capture_white_balance",
+      "global_grade",
+      "regional_grade",
+      "tone_response"
+    ],
+    "color_relation_axes": [
+      "hue",
+      "lightness",
+      "chroma",
+      "relative_warm_cool",
+      "area",
+      "spatial_topology",
+      "tone_band",
+      "temporal_order"
+    ]
+  }
+}

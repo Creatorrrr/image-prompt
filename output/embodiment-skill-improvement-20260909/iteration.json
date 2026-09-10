@@ -1,0 +1,225 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md",
+    "baseline_revision": "b6e70b787c083bbd9c472488875a028d28fbd2a8 plus preexisting worktree changes",
+    "candidate_revision": "working tree; exact files in candidate-source-hashes.json"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "스킬을 개선해줘. Add pre-freeze and final-composition body-action review to reduce unresolved anatomical staging risks in prompt authoring."
+  },
+  "evidence": [
+    {
+      "id": "motivating-review",
+      "kind": "prompt-inspection",
+      "claim": "The earlier scene combines a torso turn and sleeve contact without a clearly specified actuation path. This is a qualitative risk hypothesis, not a proven cause of the supplied image. The pre-change audit accepted added contradictory arm prose.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/ferrari-nekomimi-20260909/anatomy-preflight-review.md"
+    },
+    {
+      "id": "user-report",
+      "kind": "user-judgment",
+      "claim": "The requester reported that the arm holding the clothing looks anatomically wrong and requested prompt-time prevention, then authorized a skill improvement. No acceptance of new rendered pixels was given.",
+      "artifact": "current conversation: user report with ChatGPT Image 2026-09-09 05_30_02.png and subsequent 스킬을 개선해줘"
+    },
+    {
+      "id": "structural-tests",
+      "kind": "package-check",
+      "claim": "20 focused unit/pipeline tests passed. Tests exercise record integrity, exact prompt binding, unresolved statuses, preservation of requested structure, CLI isolation, and conditional pixel-review gates. Synthetic record fixtures are not actual visual evidence.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/embodiment-tests-final.log"
+    },
+    {
+      "id": "baseline-tests",
+      "kind": "package-check",
+      "claim": "55 related tests passed before source changes, retained as baseline evidence only.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/baseline-tests.log"
+    },
+    {
+      "id": "precore-isolation",
+      "kind": "package-check",
+      "claim": "The focused pre-core source-isolation test passed after the procedure was edited.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/isolation-check.log"
+    },
+    {
+      "id": "index-check",
+      "kind": "package-check",
+      "claim": "Visual profile index check passed with 502 profiles and 2007 exact terms. Existing asset changes were preserved.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/profile-index-check.log"
+    },
+    {
+      "id": "dictionary-check",
+      "kind": "package-check",
+      "claim": "Dictionary metadata validation passed.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/dictionary-check.log"
+    },
+    {
+      "id": "route-check",
+      "kind": "package-check",
+      "claim": "Current scene expression check passed all 112 routes.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/scene-check.log"
+    },
+    {
+      "id": "source-change",
+      "kind": "repository-history",
+      "claim": "The intervention is limited to 11 source, test, and documentation paths. Snapshots include the preexisting swimwear changes; the intervention diff excludes them.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/intervention.diff"
+    },
+    {
+      "id": "skill-structure",
+      "kind": "package-check",
+      "claim": "Skill creator quick validation passed.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/skill-package-check.log"
+    },
+    {
+      "id": "regression-comparison",
+      "kind": "package-check",
+      "claim": "All 13 test methods with observed failures reproduced before the intervention: 15 assertion/subtest failures and 2 errors. The full 1148-test suite was interrupted during high system load; it is not complete or passing.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/failure-comparison.json"
+    },
+    {
+      "id": "regression-interruption",
+      "kind": "package-check",
+      "claim": "The four owned broad test processes were interrupted and all logs were preserved. At interruption 358 successful top-level test lines had been recorded; partial coverage is not whole-suite qualification.",
+      "artifact": "/Users/chasoik/Projects/image-prompt/output/embodiment-skill-improvement-20260909/full-suite-interruption.json"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Authoring explicitly reviews and resolves material ownership, articulation, reach, support, contact, and view conflicts before the first freeze, and again after composition. Generation fidelity remains separately evaluated.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "retain-meaning",
+        "statement": "Preserve requester meaning, intended interaction and body structure; do not replace the desired contact with an easier unrelated pose.",
+        "evidence_ids": [
+          "motivating-review",
+          "user-report"
+        ],
+        "causal_controls": [
+          "Repair agent-owned staging before freeze.",
+          "Keep requested deviations grounded in active requester text."
+        ]
+      },
+      {
+        "id": "preserve-phases",
+        "statement": "Pre-core review uses only the conversation and independent reasoning; no case-specific anatomy or candidate catalog supplies initial meaning.",
+        "evidence_ids": [
+          "precore-isolation",
+          "source-change"
+        ],
+        "causal_controls": [
+          "Neutral pre-core schema in SKILL.md only.",
+          "Review record remains outside retrieval."
+        ]
+      },
+      {
+        "id": "truthful-boundary",
+        "statement": "A valid review record does not prove plausible pixels or actual author reasoning.",
+        "evidence_ids": [
+          "structural-tests",
+          "motivating-review"
+        ],
+        "causal_controls": [
+          "Separate text-bound review from output-image gates.",
+          "Do not relabel unknown physical relationships as supported to pass validation."
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "Agent-authored staging before initial freeze.",
+      "Open camera, framing, clothing and lighting details only when consistent with frozen action."
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "arm-staging",
+      "scale": "regional",
+      "axis": "Connected articulation, contact, and projection",
+      "source_state": "User requested a sulking passenger character; the author added turning and sleeve contact.",
+      "render_state": "User reports an awkward arm. In the single view, the large limb chain is readable but shoulder and wrist articulation are ambiguous; a particular joint violation and complete generation settings are unverified.",
+      "evidence_ids": [
+        "motivating-review",
+        "user-report"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "review-gap",
+      "stage": "prompt-interaction",
+      "statement": "Existing literal actuation audits leave material spatial interactions to implicit author reasoning. A required review step with exact version binding can prevent missing or stale review evidence and flagged conflicts from silently proceeding.",
+      "evidence_ids": [
+        "motivating-review",
+        "source-change"
+      ],
+      "falsifier": "If missing, unresolved, or stale review records pass the new opt-in pipeline, the structural intervention fails. Even a structural pass does not establish a reduced rendered defect rate."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Review the applicable body mechanism before freezing, repair contradictory authored staging, and require a fresh exact-text review after composition. Derive initial pixel gates without fabricating repair lineage.",
+    "generalization_basis": "Generic actor ownership, articulation/reach, support, contact/space, and visibility/projection checks; no fixed body part, limb side, angle, vehicle, costume, or character defaults. Synthetic unrelated human, nonhuman, and inapplicable cases exercise schema behavior only.",
+    "hypothesis_ids": [
+      "review-gap"
+    ],
+    "changed_paths": [
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/audit_composed_prompt.py",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/audit_image_render_request.py",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/audit_moe_render_review.py",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/references/composition-contract.md",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/references/image-runtime.md",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/references/maintenance.md",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/photo_embodiment.py",
+      "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/references/embodiment-preflight.md",
+      "/Users/chasoik/Projects/image-prompt/tests/test_photo_embodiment.py"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "fail",
+      "evidence_ids": [
+        "structural-tests",
+        "precore-isolation",
+        "skill-structure",
+        "index-check",
+        "dictionary-check",
+        "route-check",
+        "regression-comparison",
+        "regression-interruption"
+      ],
+      "note": "Focused intervention and package checks pass. Overall package qualification is not green: the broad suite is incomplete and has reproduced preexisting failures."
+    },
+    "prompt": {
+      "status": "not-run",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": []
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The structural intervention is implemented and its 20 focused tests pass. All 13 observed failing test methods reproduce before the change. The broad suite is incomplete under high system load, so no whole-suite promotion is claimed. No independent prompt-authoring experiment, new image/API run, rendered-fidelity improvement, or user acceptance is claimed.",
+    "evidence_ids": [
+      "structural-tests",
+      "source-change",
+      "regression-comparison",
+      "regression-interruption"
+    ]
+  }
+}

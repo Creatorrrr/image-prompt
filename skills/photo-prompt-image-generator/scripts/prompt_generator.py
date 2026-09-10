@@ -40,6 +40,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import photo_embodiment
     from visual_profile_contracts import (
         compile_visual_profile,
         hard_activation_is_supported,
@@ -152,6 +153,8 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_opening_era.json",
     "photo_prompt_visual_obligations_historical_womenswear.json",
     "photo_prompt_visual_obligations_palace_fortification.json",
+    "photo_prompt_visual_obligations_swimwear.json",
+    "photo_prompt_visual_obligations_color_relations.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -174,6 +177,8 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_opening_era_extension.json",
     "photo_prompt_historical_womenswear_extension.json",
     "photo_prompt_palace_fortification_extension.json",
+    "photo_prompt_swimwear_extension.json",
+    "photo_prompt_color_relations_extension.json",
     "photo_prompt_lighting_extension.json",
     "photo_prompt_photo_era_extension.json",
     "photo_prompt_violence_crime_extension.json",
@@ -16045,6 +16050,8 @@ def candidate_pack_project_v5(
             "retrieval_query": retrieval_provenance,
         }
     )
+    if "embodiment_preflight_required" in original_provenance:
+        public_provenance["embodiment_preflight_required"] = original_provenance["embodiment_preflight_required"]
     projected["provenance"] = public_provenance
 
     hybrid = (
@@ -16730,6 +16737,12 @@ def build_candidate_pack(
         pack["semantic_assertion_obligations"] = semantic_assertion_obligations
     if render_repair is not None:
         pack["render_repair"] = render_repair
+    if "embodiment_preflight" in provenance:
+        if requested_contract_version != CANDIDATE_PACK_CONTRACT_V6:
+            raise ValueError("embodiment preflight requires candidate-pack v6")
+        pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
+        pack["provenance"]["embodiment_preflight_required"] = True
+        photo_embodiment.policy_from_pack({**pack, "contract_version": requested_contract_version})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if japanese_subculture_photo is not None:
@@ -26784,6 +26797,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept, requester-priority intent lock, and baseline prompt. Required for v5 candidate-pack output.",
     )
     parser.add_argument(
+        "--embodiment-review-json",
+        default=None,
+        help="Frozen agent-authored baseline body-action review as a JSON file. Normal skill v6 workflow; no anatomy is inferred by this validator.",
+    )
+    parser.add_argument(
         "--request-envelope-json",
         default=None,
         help="Inline JSON or path containing the exact requesting-user text and byte-grounded active spans. Required for v5 candidate-pack output.",
@@ -26952,6 +26970,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError("--authorial-request-json requires --candidate-pack-version v4")
     if args.authorial_core_json and not args.emit_candidate_pack:
         raise ValueError("--authorial-core-json requires --emit-candidate-pack")
+    if args.embodiment_review_json and (not args.emit_candidate_pack or args.candidate_pack_version != "v6"):
+        raise ValueError("--embodiment-review-json requires --emit-candidate-pack and --candidate-pack-version v6")
     if args.authorial_core_json and args.candidate_pack_version not in {"v5", "v6"}:
         raise ValueError(
             "--authorial-core-json requires --candidate-pack-version v5 or v6"
@@ -27010,6 +27030,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     authorial_core = load_authorial_core_arg(
         args.authorial_core_json,
         request_envelope=request_envelope,
+    )
+    embodiment_preflight = (
+        photo_embodiment.build_policy(
+            authorial_core,
+            json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8")),
+        )
+        if args.embodiment_review_json else None
     )
     quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
@@ -27292,6 +27319,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             result.setdefault("provenance", {})["authorial_request"] = copy.deepcopy(
                 authorial_request
             )
+        if embodiment_preflight is not None:
+            result.setdefault("provenance", {})["embodiment_preflight"] = copy.deepcopy(embodiment_preflight)
         if visual_intent is not None:
             result.setdefault("provenance", {})["visual_intent"] = copy.deepcopy(
                 visual_intent

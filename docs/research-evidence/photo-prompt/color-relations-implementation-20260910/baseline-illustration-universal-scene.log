@@ -1,0 +1,47 @@
+test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels) ... ERROR
+test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable) ... ERROR
+
+======================================================================
+ERROR: test_existing_render_manifests_keep_historical_failure_labels (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_subculture_illustration_universal_scene_v3.py", line 1712, in test_existing_render_manifests_keep_historical_failure_labels
+    result = validate_all(str(ASSET_ROOT), verify_local_images=False)
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 11465, in validate_all
+    photo_regression = validate_photo_regression_baseline(root)
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6387, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+======================================================================
+ERROR: test_v1_v2_exact_replay_and_photo_baseline_remain_immutable (tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_subculture_illustration_universal_scene_v3.py", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable
+    photo = validate_photo_regression_baseline(ASSET_ROOT)
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 6387, in validate_photo_regression_baseline
+    _require(
+    ~~~~~~~~^
+        digest == baseline.get("sha256"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "current photo baseline candidate-pack bytes drift",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py", line 1280, in _require
+    raise ValidationFailure(message)
+validate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift
+
+----------------------------------------------------------------------
+Ran 2 tests in 14.922s
+
+FAILED (errors=2)

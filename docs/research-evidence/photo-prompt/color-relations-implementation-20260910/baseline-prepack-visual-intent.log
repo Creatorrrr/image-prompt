@@ -1,0 +1,31 @@
+test_prepack_visual_intent_is_hash_bound_and_source_grounded (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded) ... FAIL
+
+======================================================================
+FAIL: test_prepack_visual_intent_is_hash_bound_and_source_grounded (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/photo-color-baseline-tm91dup7/tests/test_photo_visual_obligations.py", line 598, in test_prepack_visual_intent_is_hash_bound_and_source_grounded
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        audit_composed_prompt.audit_visual_obligations(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        [],
+        ^^^
+    )
+    ^
+AssertionError: Lists differ: [{'check': 'chosen_visual_concept_ids', 'r[99 chars]ty'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'check': 'chosen_visual_concept_ids', 'reason': 'a pack with optional visual concepts requires an explicit selection list, which may be empty'}
+
++ []
+- [{'check': 'chosen_visual_concept_ids',
+-   'reason': 'a pack with optional visual concepts requires an explicit '
+-             'selection list, which may be empty'}]
+
+----------------------------------------------------------------------
+Ran 1 test in 12.148s
+
+FAILED (failures=1)

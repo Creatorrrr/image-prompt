@@ -1,5 +1,7 @@
 # Maintenance and Evaluation
 
+Body-action plausibility review is agent-owned and separate from semantic meaning. Maintain its deterministic binding in `scripts/photo_embodiment.py`; do not introduce pose-template retrieval, named anatomy defaults, broad defect negatives, or a purported prose-to-kinematics solver. The normal skill opts in with `--embodiment-review-json`; preserve serialized pack compatibility. Regression coverage must include stale final/runtime prose, missing or unresolved review checks, exact requester-supported departures, unrelated body structures, and conditional pixel gates. Record validation proves review integrity only; real prompt reasoning and rendered-fidelity claims need their own evidence.
+
 Maintenance-only. Never read this file while resolving a live request or writing its basic prompt. Maintained keyword meanings belong in structured runtime data and their tests; they must not be copied into `SKILL.md` or used as pre-core agent knowledge.
 
 User instructions and existing session authorization govern maintenance and evaluation scope. A requested edit or render test does not need a second confirmation merely because this reference describes it. Preserve the initial-request isolation boundary and the narrow retry-only parent whitelist in `SKILL.md`; neither research evidence nor a compact pack view is pre-core meaning input.

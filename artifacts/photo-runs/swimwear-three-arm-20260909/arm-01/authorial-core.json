@@ -1,0 +1,109 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The user delegates independent random complex visual test cases and reference-based photo generation. This arm independently chooses a two-piece swimwear structure and a rain-spout pool interaction. Exact swimwear silhouette, color, adult age, setting, pose and event are agent-authored test design, not quoted requester specifications.",
+  "subject": "One adult woman, age 28, using attached portrait facial appearance",
+  "setting": "glass-roofed botanical plunge pool",
+  "event": "The woman catches a copper rain-spout stream in her raised palm while standing ankle-deep on a pool step.",
+  "visual_priorities": [
+    "Readable two-piece bikini construction including triangular gathered cups, halter strings and paired hip bows",
+    "Recognizable reference facial appearance and readable hand-water interaction"
+  ],
+  "baseline_prompt_en": "A photographic swimwear editorial featuring one adult woman, age 28, using the attached portrait as the facial-appearance reference: preserve her recognizable facial proportions, brown eyes, and long dark wavy hair. She wears a deep jade green two-piece bikini with separate triangular cups gathered along a thin underbust string, paired halter strings visibly rising from the cup tips and tying behind the neck, and a matching low-rise bottom with two narrow strings tied into a bow at each hip. The exposed gap between top and bottom clearly establishes two separate garments. Opaque finely ribbed swim fabric and bound cup edges remain legible against wet skin. At a glass-roofed botanical plunge pool, she stands on the first broad submerged step in ankle-deep water, turning her face toward camera while her raised right hand catches a falling stream from a copper rain spout. Water breaks against her open palm and scatters into distinct droplets; the left hand rests on the tiled coping behind her hip, leaving both side bows visible. Late-afternoon sun breaking through rain makes the drops sparkle and projects the window mullions across the wet terracotta deck. Tall broad leaves behind glass, rain beads on the panes, and overlapping rings around her ankles establish a humid sheltered pool during a passing shower. Use an eye-level, full-body vertical composition, with the face, cup construction, neck strings, hip bows, hand-stream contact, and feet readable together. A restrained editorial color grade preserves natural skin texture, the fabric ribs, and the contrast between cool water and warm terracotta. Her expression is quietly amused by the cold stream.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex test using attached reference",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The requester delegates test concept selection and image generation; the arm selects swimwear construction and a complex photographic event independently, with the attachment used for facial appearance.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "two-piece bikini with separate triangular cups gathered along a thin underbust string"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman, age 28"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "her raised right hand catches a falling stream from a copper rain spout"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the attached portrait as the facial-appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "two_piece_structure",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "origin": "agent_authored_delegated_test_design",
+        "garment_topology": "two separate garments with exposed midriff gap",
+        "cup_structure": "triangular cups gathered on thin underbust string",
+        "support_structure": "paired halter strings from cup tips tied behind neck",
+        "bottom_structure": "low-rise bottom with paired side string bows",
+        "material_structure": "opaque finely ribbed swim fabric with bound cup edges"
+      },
+      "evidence": {
+        "cup_phrase": "separate triangular cups gathered along a thin underbust string",
+        "support_phrase": "paired halter strings visibly rising from the cup tips and tying behind the neck",
+        "bottom_phrase": "a matching low-rise bottom with two narrow strings tied into a bow at each hip",
+        "separation_phrase": "The exposed gap between top and bottom clearly establishes two separate garments.",
+        "material_phrase": "Opaque finely ribbed swim fabric and bound cup edges"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic swimwear editorial",
+    "family": "rainlit architectural pool editorial",
+    "evidence": [
+      "copper rain spout and terracotta tiles",
+      "readable fabric construction and splash contact"
+    ]
+  },
+  "variation_key": "arm-01-seed-436041344"
+}

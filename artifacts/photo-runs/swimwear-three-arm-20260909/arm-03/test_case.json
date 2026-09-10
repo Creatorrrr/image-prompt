@@ -1,0 +1,69 @@
+{
+  "contract_version": "independent-swimwear-pixel-test/v1",
+  "arm_id": "arm-03",
+  "random_seed": 1774314871,
+  "random_method": "Python random.Random(seed), one choice per ordered setting/event/lighting list authored from general knowledge",
+  "choice_lists": {
+    "setting": [
+      "a volcanic cove beneath a sea cave arch",
+      "a weathered harbor slipway",
+      "a flooded tropical mangrove launch"
+    ],
+    "event": [
+      "retrieving a floating surfboard after a small broken wave",
+      "pausing with one hand on a surfboard while shore foam streams past her ankles",
+      "stepping from a low rock ledge toward a floating paddleboard"
+    ],
+    "lighting": [
+      "low sunrise crossing sea spray",
+      "late afternoon side light beneath storm clouds",
+      "cool overcast with a narrow sunbreak"
+    ]
+  },
+  "selected": {
+    "setting": "a flooded tropical mangrove launch",
+    "event": "retrieving a floating surfboard after a small broken wave",
+    "lighting": "cool overcast with a narrow sunbreak"
+  },
+  "focal_choices_origin": "agent_authored_under_requester_delegation; no exact garment structure specified in user text",
+  "reference_image": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+  "gates": [
+    {
+      "id": "adult_reference",
+      "required": true,
+      "criterion": "An adult subject retains recognizable facial proportions, dark eyes, and long dark hair from the portrait."
+    },
+    {
+      "id": "rash_guard",
+      "required": true,
+      "criterion": "Fitted long sleeves, high crew neckline and both raglan construction and pale side panels are visually readable."
+    },
+    {
+      "id": "separate_briefs",
+      "required": true,
+      "criterion": "Separate overlapping shirt hem and swim briefs are discernible; both curved high-cut leg openings are readable."
+    },
+    {
+      "id": "board_contact",
+      "required": true,
+      "criterion": "Surfboard floats beside subject with visible rail/nose and one hand visibly contacting rail."
+    },
+    {
+      "id": "water_event",
+      "required": true,
+      "criterion": "Wave or foam divides around legs and a curved white trail is visible in shallow water."
+    },
+    {
+      "id": "space_light",
+      "required": true,
+      "criterion": "Selected setting and selected light are recognizable; droplets visibly catch light against darker space."
+    },
+    {
+      "id": "anatomy",
+      "required": true,
+      "criterion": "Visible hands, arms, legs, face and board interaction have no material anatomical or contact defect."
+    }
+  ],
+  "verdict_policy": "All required gates must PASS; partial, unclear, obscured, or unevaluated is not PASS. Prompt and runtime audits are separate from pixels. One render only; preserve original even on failure.",
+  "candidate_data_effect_policy": "Record exposed new swimwear candidate IDs and actual selected/adopted evidence separately. Rendering the independently authored baseline alone does not prove data contribution."
+}

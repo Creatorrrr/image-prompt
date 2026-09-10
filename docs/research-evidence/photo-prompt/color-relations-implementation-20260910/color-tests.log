@@ -1,0 +1,34 @@
+test_broad_names_and_confounds_never_harden (tests.test_photo_color_relations.ColorRelationsTests.test_broad_names_and_confounds_never_harden) ... ok
+test_bundles_require_members_and_every_affected_open_dimension (tests.test_photo_color_relations.ColorRelationsTests.test_bundles_require_members_and_every_affected_open_dimension) ... ok
+test_complete_relation_required_and_negation_excluded (tests.test_photo_color_relations.ColorRelationsTests.test_complete_relation_required_and_negation_excluded) ... ok
+test_opposite_directions_and_distinct_mechanisms_do_not_cross_harden (tests.test_photo_color_relations.ColorRelationsTests.test_opposite_directions_and_distinct_mechanisms_do_not_cross_harden) ... ok
+test_real_indexes_cover_authored_data_and_are_current (tests.test_photo_color_relations.ColorRelationsTests.test_real_indexes_cover_authored_data_and_are_current) ... ERROR
+test_selected_components_and_native_thumbnail_gates_compile_together (tests.test_photo_color_relations.ColorRelationsTests.test_selected_components_and_native_thumbnail_gates_compile_together) ... ok
+test_semantic_similarity_is_advisory_even_for_close_visual_query (tests.test_photo_color_relations.ColorRelationsTests.test_semantic_similarity_is_advisory_even_for_close_visual_query) ... ERROR
+test_source_binding_and_unmeasurable_or_sequence_concepts_excluded (tests.test_photo_color_relations.ColorRelationsTests.test_source_binding_and_unmeasurable_or_sequence_concepts_excluded) ... ok
+
+======================================================================
+ERROR: test_real_indexes_cover_authored_data_and_are_current (tests.test_photo_color_relations.ColorRelationsTests.test_real_indexes_cover_authored_data_and_are_current)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_color_relations.py", line 120, in test_real_indexes_cover_authored_data_and_are_current
+    pg.validate_semantic_index_metadata(index,self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 17477, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+ERROR: test_semantic_similarity_is_advisory_even_for_close_visual_query (tests.test_photo_color_relations.ColorRelationsTests.test_semantic_similarity_is_advisory_even_for_close_visual_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_color_relations.py", line 73, in test_semantic_similarity_is_advisory_even_for_close_visual_query
+    hit=next(h for h in result['hits'] if h['profile_id']==target)
+StopIteration
+
+----------------------------------------------------------------------
+Ran 8 tests in 72.010s
+
+FAILED (errors=2)

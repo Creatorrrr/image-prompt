@@ -19,6 +19,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import photo_embodiment
     import prompt_generator as candidate_semantics_generator
     from photo_contracts import (
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
@@ -8000,6 +8001,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
         audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
     )
     failures.extend(audit_render_repair_v6(pack, composed, prompt_en))
+    failures.extend(photo_embodiment.audit_composed(pack, composed))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
     failures.extend(audit_authorial_core_v5(pack, composed, prompt_en, warnings))
