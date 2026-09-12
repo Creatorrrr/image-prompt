@@ -1,0 +1,161 @@
+{
+  "pack_id": "8cf918d42694ff26",
+  "composer": "agent",
+  "prompt_en": "Use the attached portrait as the sole facial appearance reference for the witch, preserving her eye shape and spacing, softly oval face, jaw proportions, nose shape, lip contours, natural skin tone, and long dark wavy hair with its center part. Keep her face recognizable as the same person while changing her expression to the specified languid resting look. An intricately detailed photographic portrait of an adult blue witch resting in a Gothic citadel. She wears a midnight-blue velvet witch gown with cobalt silk insets, fine silver botanical embroidery, fitted long sleeves, and a tall blue pointed hat with a softly bent tip. Her long dark hair falls over her shoulders, framing a languid expression with half-lidded eyes and softly relaxed lips. She sits deep on a carved walnut sofa upholstered in faded sapphire velvet. Her left elbow rests firmly on the padded sofa arm, her left forearm rises naturally, and the heel of her left palm supports her chin, with fingers resting along the side of her jaw. Her head tilts gently into that hand, while her right hand lies loosely on her lap. Her hips and thighs settle into the cushion, and her skirt drapes over bent knees toward the stone floor. A black cat sits on the adjacent cushion, its pointed ears, amber eyes, glossy fur and curled tail distinctly visible beside her gown. Ribbed orange pumpkins with rough curved stems cluster at the foot of the sofa; one carved pumpkin glows softly from within. Behind her, pointed stone arches, slender clustered columns, iron candle stands and a leaded lancet window establish the Gothic citadel interior. Cool window light reveals the pile of the blue velvet and weathered stone, balanced by small amber candle highlights. Photograph the scene from a slightly front-left three-quarter viewpoint, showing the entire supporting forearm and chin contact, the cat, and the pumpkins. Prioritize her sleepy face and credible relaxed pose, then the tactile richness of blue fabric, carved wood, black fur and pumpkin rind.",
+  "negative_en": "cartoon style, low resolution, 3D render look, awkward animal anatomy, excessive HDR, fake-looking background, over-processed retouching, overly smooth fur, illustration look",
+  "chosen_candidate_ids": [],
+  "chosen_visual_concept_ids": [],
+  "candidate_interpretations": [],
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "6acfdcba3bd338c92e7778cbd417dcc6fe62bb9c187d6159f1670dac3a3db560",
+    "source_intent_lock_sha256": "e157d7f66cda742cd23762b708c3b9422665fc33264a847c44de9cefb2e7fe80",
+    "preserved_anchor_ids": [
+      "core_concept",
+      "core_subject",
+      "core_event",
+      "setting",
+      "pose",
+      "expression",
+      "color",
+      "details",
+      "cat",
+      "pumpkins",
+      "reference_identity",
+      "reference_use"
+    ],
+    "preserved_evidence": [
+      "Her hips and thighs settle into the cushion",
+      "Her head tilts gently into that hand",
+      "with fingers resting along the side of her jaw"
+    ],
+    "authorial_decisions": []
+  },
+  "semantic_clarification_decisions": [
+    {
+      "clarification_id": "clarification:authorial-core:interpreted-intent",
+      "decision": "applied",
+      "rationale": "Preserves reference face in the requested witch scene.",
+      "prompt_evidence": "Use the attached portrait as the sole facial appearance reference for the witch"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:deliberate_underarm_salience",
+      "decision": "rejected",
+      "rationale": "This unrelated action would change the preserved chin-rest pose."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:hands_free_supported_drink_load",
+      "decision": "rejected",
+      "rationale": "This unrelated action would change the preserved chin-rest pose."
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:lighting:blue_hour",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      },
+      {
+        "candidate_id": "slot:light_shape:diffused_ambient",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      },
+      {
+        "candidate_id": "slot:light_shape:volumetric_beams",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      },
+      {
+        "candidate_id": "slot:light_type:bright_window_silhouette_light",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      },
+      {
+        "candidate_id": "slot:subject_framing:group_two_shot",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      },
+      {
+        "candidate_id": "slot:format:portrait_4_5",
+        "decision": "rejected",
+        "rationale": "This reference variant preserves the frozen scene without additional creative changes."
+      }
+    ]
+  },
+  "semantic_assertion_evidence": {
+    "source_contract_sha256": "9260718058d4c69fd345b5e6912ce791644f80e133bfac622cf126490e19eb9f",
+    "evidence": {
+      "chin_rest": {
+        "contact": "the heel of her left palm supports her chin",
+        "support": "Her left elbow rests firmly on the padded sofa arm"
+      },
+      "languid_face": {
+        "expression": "a languid expression with half-lidded eyes and softly relaxed lips"
+      },
+      "portrait_reference": {
+        "source": "Use the attached portrait as the sole facial appearance reference for the witch",
+        "features": "preserving her eye shape and spacing, softly oval face, jaw proportions, nose shape, lip contours"
+      }
+    }
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "8359596b14321072073856363df41f0255c36033f0b5e5c3823321cbc818796e",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "prompt_sha256": "82da840d16a6f95c123c72b1fcf8df786b1d3ee97570d09035aaa3de6640d934",
+      "scope": "body_action",
+      "summary": "Preserved seated left elbow-to-palm support chain, rechecked with the reference face and long wavy hair; facial features remain visible under the witch hat and hand contacts the jaw.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "The left arm belongs to the witch; the free right hand is separately located.",
+          "prompt_evidence": [
+            "her left forearm rises naturally",
+            "her right hand lies loosely on her lap"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "Supported elbow and raised forearm allow the palm to reach the slightly tilted chin.",
+          "prompt_evidence": [
+            "Her left elbow rests firmly on the padded sofa arm",
+            "her left forearm rises naturally",
+            "Her head tilts gently into that hand"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "The sofa carries her seated weight and elbow, with the head leaning into its hand support.",
+          "prompt_evidence": [
+            "Her hips and thighs settle into the cushion",
+            "Her left elbow rests firmly on the padded sofa arm"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "Palm contacts chin with fingers along the jaw; cat occupies a separate adjacent cushion.",
+          "prompt_evidence": [
+            "the heel of her left palm supports her chin",
+            "with fingers resting along the side of her jaw",
+            "A black cat sits on the adjacent cushion"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "Front-left view reveals the acting left forearm and chin contact while showing the props.",
+          "prompt_evidence": [
+            "a slightly front-left three-quarter viewpoint",
+            "showing the entire supporting forearm and chin contact"
+          ]
+        }
+      }
+    }
+  },
+  "authored_slots": {
+    "subject": {
+      "prompt_evidence": "adult blue witch resting in a Gothic citadel",
+      "artistic_rationale": "The supplied portrait defines the witch face in the preserved Gothic scene."
+    }
+  }
+}

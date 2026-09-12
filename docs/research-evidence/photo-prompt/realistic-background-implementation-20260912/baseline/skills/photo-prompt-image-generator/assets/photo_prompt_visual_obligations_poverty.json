@@ -1,0 +1,1501 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Observable adult-centered resource, service, repair, access and participation relations derived from the poverty visual-semantics research; broad poverty labels remain advisory.",
+  "profiles": [
+    {
+      "id": "food_access_budget_choice_event",
+      "category": "poverty_access_food_access_resource_constraint",
+      "activation": {
+        "exact_terms": [
+          "an adult returns one basic food item because a visibly finite grocery budget cannot cover the selected essentials, then completes the reduced purchase",
+          "an adult removes one staple from an essential grocery basket under a finite food budget and pays for the smaller set",
+          "기본 식품을 살 자원이 부족해 한 품목을 원래 진열대로 되돌리고 줄어든 구매 묶음으로 결제를 끝내는 성인",
+          "유한한 식비 때문에 장바구니의 필수 식품 하나를 빼고 남은 품목만 구입하는 성인"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary price comparison",
+          "dietary choice",
+          "coupon use",
+          "product advertising",
+          "store restocking",
+          "forgotten wallet"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An unmistakably adult shopper reduces a basic-food purchase because a visibly finite payment resource cannot cover the selected essentials. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects several basic staple-food items remain grouped as one intended essential purchase, one visibly finite payment resource is physically compared with the essential set without depending on readable prices, the same unmistakably adult shopper visibly returns or removes one staple item from the intended set, the remaining smaller set visibly reaches a completed paid purchase state, and the returned item's source and the reduced paid set remain spatially connected to the same shopper.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "ordinary price comparison",
+          "dietary choice",
+          "coupon use",
+          "product advertising",
+          "store restocking",
+          "forgotten wallet"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "several basic staple-food items remain grouped as one intended essential purchase",
+          "one visibly finite payment resource is physically compared with the essential set without depending on readable prices",
+          "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set",
+          "the remaining smaller set visibly reaches a completed paid purchase state",
+          "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "ordinary_price_comparison",
+        "dietary_choice",
+        "coupon_use",
+        "product_advertising",
+        "store_restocking",
+        "forgotten_wallet"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "multiple_basic_food_items",
+            "match_terms": [
+              "several basic staple-food items remain grouped as one intended essential purchase"
+            ],
+            "evidence_field": "multiple_basic_food_items_phrase",
+            "evidence_terms": [
+              "several basic staple-food items remain grouped as one intended essential purchase"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep several basic staple-food items remain grouped as one intended essential purchase clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_budget_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that several basic staple-food items remain grouped as one intended essential purchase."
+            }
+          },
+          {
+            "id": "finite_payment_resource",
+            "match_terms": [
+              "one visibly finite payment resource is physically compared with the essential set without depending on readable prices"
+            ],
+            "evidence_field": "finite_payment_resource_phrase",
+            "evidence_terms": [
+              "one visibly finite payment resource is physically compared with the essential set without depending on readable prices"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one visibly finite payment resource is physically compared with the essential set without depending on readable prices clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_budget_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that one visibly finite payment resource is physically compared with the essential set without depending on readable prices."
+            }
+          },
+          {
+            "id": "same_adult_item_return_or_removal",
+            "match_terms": [
+              "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set"
+            ],
+            "evidence_field": "same_adult_item_return_or_removal_phrase",
+            "evidence_terms": [
+              "the same unmistakably adult shopper visibly returns or removes one staple item from the intended set"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the same unmistakably adult shopper visibly returns or removes one staple item from the intended set clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_budget_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the same unmistakably adult shopper visibly returns or removes one staple item from the intended set."
+            }
+          },
+          {
+            "id": "completed_reduced_purchase",
+            "match_terms": [
+              "the remaining smaller set visibly reaches a completed paid purchase state"
+            ],
+            "evidence_field": "completed_reduced_purchase_phrase",
+            "evidence_terms": [
+              "the remaining smaller set visibly reaches a completed paid purchase state"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the remaining smaller set visibly reaches a completed paid purchase state clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_budget_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the remaining smaller set visibly reaches a completed paid purchase state."
+            }
+          },
+          {
+            "id": "source_to_result_continuity",
+            "match_terms": [
+              "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+            ],
+            "evidence_field": "source_to_result_continuity_phrase",
+            "evidence_terms": [
+              "the returned item's source and the reduced paid set remain spatially connected to the same shopper"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the returned item's source and the reduced paid set remain spatially connected to the same shopper clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_budget_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the returned item's source and the reduced paid set remain spatially connected to the same shopper."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "household_food_depletion_portioning_event",
+      "category": "poverty_access_food_supply_allocation_relation",
+      "activation": {
+        "exact_terms": [
+          "adults divide the nearly depleted contents of one household food container into several bounded portions, leaving the source visibly empty",
+          "an adult portions the last visible staple supply from one source container across several meals in the same frame",
+          "거의 소진된 동일 식량 용기에서 남은 양을 여러 몫으로 나누고 분배 뒤 빈 용기가 남는 성인들",
+          "남은 주식 한 용기를 같은 프레임의 여러 끼 분량으로 나누어 두는 성인"
+        ],
+        "exclude_if_any_terms": [
+          "tasting menu",
+          "meal prep",
+          "diet portions",
+          "food styling",
+          "camping rations",
+          "ordinary shared meal"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A nearly depleted household food source is actively divided into several bounded portions, leaving a visible post-allocation remainder or empty source. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects one household food container is visibly near depletion before allocation, the same group of unmistakably adult household members actively divides contents from that one source, several clearly bounded portions are visible as the result of the division, every divided portion remains physically traceable to the single depleted source container, and the source container is visibly empty or nearly empty after the portions are allocated.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "tasting menu",
+          "meal prep",
+          "diet portions",
+          "food styling",
+          "camping rations",
+          "ordinary shared meal"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one household food container is visibly near depletion before allocation",
+          "the same group of unmistakably adult household members actively divides contents from that one source",
+          "several clearly bounded portions are visible as the result of the division",
+          "every divided portion remains physically traceable to the single depleted source container",
+          "the source container is visibly empty or nearly empty after the portions are allocated"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "tasting_menu",
+        "meal_prep",
+        "diet_portions",
+        "food_styling",
+        "camping_rations",
+        "ordinary_shared_meal"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "single_nearly_depleted_source",
+            "match_terms": [
+              "one household food container is visibly near depletion before allocation"
+            ],
+            "evidence_field": "single_nearly_depleted_source_phrase",
+            "evidence_terms": [
+              "one household food container is visibly near depletion before allocation"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one household food container is visibly near depletion before allocation clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_portion_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that one household food container is visibly near depletion before allocation."
+            }
+          },
+          {
+            "id": "active_same_source_portioning",
+            "match_terms": [
+              "the same group of unmistakably adult household members actively divides contents from that one source"
+            ],
+            "evidence_field": "active_same_source_portioning_phrase",
+            "evidence_terms": [
+              "the same group of unmistakably adult household members actively divides contents from that one source"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the same group of unmistakably adult household members actively divides contents from that one source clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_portion_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the same group of unmistakably adult household members actively divides contents from that one source."
+            }
+          },
+          {
+            "id": "multiple_bounded_portions",
+            "match_terms": [
+              "several clearly bounded portions are visible as the result of the division"
+            ],
+            "evidence_field": "multiple_bounded_portions_phrase",
+            "evidence_terms": [
+              "several clearly bounded portions are visible as the result of the division"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep several clearly bounded portions are visible as the result of the division clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_portion_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that several clearly bounded portions are visible as the result of the division."
+            }
+          },
+          {
+            "id": "source_to_portion_continuity",
+            "match_terms": [
+              "every divided portion remains physically traceable to the single depleted source container"
+            ],
+            "evidence_field": "source_to_portion_continuity_phrase",
+            "evidence_terms": [
+              "every divided portion remains physically traceable to the single depleted source container"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep every divided portion remains physically traceable to the single depleted source container clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_portion_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that every divided portion remains physically traceable to the single depleted source container."
+            }
+          },
+          {
+            "id": "post_allocation_depletion_trace",
+            "match_terms": [
+              "the source container is visibly empty or nearly empty after the portions are allocated"
+            ],
+            "evidence_field": "post_allocation_depletion_trace_phrase",
+            "evidence_terms": [
+              "the source container is visibly empty or nearly empty after the portions are allocated"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the source container is visibly empty or nearly empty after the portions are allocated clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_food_portion_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the source container is visibly empty or nearly empty after the portions are allocated."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "basic_needs_budget_tradeoff_deferral",
+      "category": "poverty_access_basic_needs_choice_constraint",
+      "activation": {
+        "exact_terms": [
+          "an adult allocates a finite household budget to one of two concrete basic needs and visibly defers the other",
+          "two essential household needs compete for one finite resource; the same adult meets one and leaves the other immediately unresolved",
+          "한정된 생활비를 두 필수 필요 중 하나에 배정하고 다른 하나를 즉시 미루는 성인",
+          "식비와 난방비처럼 두 기본 필요가 충돌해 하나를 충족하고 다른 하나의 공급을 미루는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary budget planning",
+          "investment choice",
+          "nonessential shopping",
+          "coupon hobby",
+          "generic bill pile",
+          "anxious expression only"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "One adult allocates a finite household resource to one of two concrete basic needs and visibly defers the other. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects two distinct basic household needs remain visible as separate concrete anchors, one visibly finite household resource is shared between those two needs without depending on readable numbers, the same unmistakably adult person physically allocates that finite resource toward one need, the selected basic need shows an already completed met or paid state, and the other basic need remains visibly deferred with an immediate material consequence.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "ordinary budget planning",
+          "investment choice",
+          "nonessential shopping",
+          "coupon hobby",
+          "generic bill pile",
+          "anxious expression only"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "two distinct basic household needs remain visible as separate concrete anchors",
+          "one visibly finite household resource is shared between those two needs without depending on readable numbers",
+          "the same unmistakably adult person physically allocates that finite resource toward one need",
+          "the selected basic need shows an already completed met or paid state",
+          "the other basic need remains visibly deferred with an immediate material consequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "ordinary_budget_planning",
+        "investment_choice",
+        "nonessential_shopping",
+        "coupon_hobby",
+        "generic_bill_pile",
+        "anxious_expression_only"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "two_distinct_basic_need_anchors",
+            "match_terms": [
+              "two distinct basic household needs remain visible as separate concrete anchors"
+            ],
+            "evidence_field": "two_distinct_basic_need_anchors_phrase",
+            "evidence_terms": [
+              "two distinct basic household needs remain visible as separate concrete anchors"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep two distinct basic household needs remain visible as separate concrete anchors clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_needs_tradeoff_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that two distinct basic household needs remain visible as separate concrete anchors."
+            }
+          },
+          {
+            "id": "one_finite_shared_resource",
+            "match_terms": [
+              "one visibly finite household resource is shared between those two needs without depending on readable numbers"
+            ],
+            "evidence_field": "one_finite_shared_resource_phrase",
+            "evidence_terms": [
+              "one visibly finite household resource is shared between those two needs without depending on readable numbers"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one visibly finite household resource is shared between those two needs without depending on readable numbers clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_needs_tradeoff_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that one visibly finite household resource is shared between those two needs without depending on readable numbers."
+            }
+          },
+          {
+            "id": "same_adult_allocation_action",
+            "match_terms": [
+              "the same unmistakably adult person physically allocates that finite resource toward one need"
+            ],
+            "evidence_field": "same_adult_allocation_action_phrase",
+            "evidence_terms": [
+              "the same unmistakably adult person physically allocates that finite resource toward one need"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the same unmistakably adult person physically allocates that finite resource toward one need clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_needs_tradeoff_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the same unmistakably adult person physically allocates that finite resource toward one need."
+            }
+          },
+          {
+            "id": "one_need_met",
+            "match_terms": [
+              "the selected basic need shows an already completed met or paid state"
+            ],
+            "evidence_field": "one_need_met_phrase",
+            "evidence_terms": [
+              "the selected basic need shows an already completed met or paid state"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the selected basic need shows an already completed met or paid state clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_needs_tradeoff_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the selected basic need shows an already completed met or paid state."
+            }
+          },
+          {
+            "id": "other_need_deferred_with_consequence",
+            "match_terms": [
+              "the other basic need remains visibly deferred with an immediate material consequence"
+            ],
+            "evidence_field": "other_need_deferred_with_consequence_phrase",
+            "evidence_terms": [
+              "the other basic need remains visibly deferred with an immediate material consequence"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the other basic need remains visibly deferred with an immediate material consequence clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_needs_tradeoff_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the other basic need remains visibly deferred with an immediate material consequence."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "household_energy_affordability_coping_relation",
+      "category": "poverty_access_energy_service_affordability_relation",
+      "activation": {
+        "exact_terms": [
+          "in an occupied home, unaffordable or unavailable heating leaves the intact heat source inactive while adults consolidate activity and seal drafts",
+          "adults in an occupied home cope with unaffordable cooling by shading and consolidating one usable zone while the room-wide heat consequence remains visible",
+          "점유 중인 집에서 난방비 또는 서비스 제약으로 난방원이 멈춘 채 성인들이 한 구역에 생활을 모으고 외풍을 막는 장면",
+          "감당할 수 없는 냉난방 서비스 때문에 같은 방에 모여 단열·차광으로 대응하는 성인 가구"
+        ],
+        "exclude_if_any_terms": [
+          "cozy winter interior",
+          "broken heater only",
+          "disaster blackout",
+          "abandoned ruin",
+          "outdoor cold",
+          "blue color grade"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An occupied home has intact but unavailable or unaffordable heating or cooling service, and adults visibly consolidate activity or seal heat transfer while the room-wide consequence remains visible. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged, an intact household heating or cooling service remains visibly inactive inside the occupied home, a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit, the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action, and the active zone and unused room areas show one coherent room-wide thermal consequence.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "cozy winter interior",
+          "broken heater only",
+          "disaster blackout",
+          "abandoned ruin",
+          "outdoor cold",
+          "blue color grade"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged",
+          "an intact household heating or cooling service remains visibly inactive inside the occupied home",
+          "a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit",
+          "the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action",
+          "the active zone and unused room areas show one coherent room-wide thermal consequence"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "cozy_winter_interior",
+        "broken_heater_only",
+        "disaster_blackout",
+        "abandoned_ruin",
+        "outdoor_cold",
+        "blue_color_grade"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "occupied_domestic_space",
+            "match_terms": [
+              "ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged"
+            ],
+            "evidence_field": "occupied_domestic_space_phrase",
+            "evidence_terms": [
+              "ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_energy_coping_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that ordinary belongings and ongoing activity make the domestic space visibly occupied rather than abandoned or staged."
+            }
+          },
+          {
+            "id": "intact_but_inactive_energy_service",
+            "match_terms": [
+              "an intact household heating or cooling service remains visibly inactive inside the occupied home"
+            ],
+            "evidence_field": "intact_but_inactive_energy_service_phrase",
+            "evidence_terms": [
+              "an intact household heating or cooling service remains visibly inactive inside the occupied home"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep an intact household heating or cooling service remains visibly inactive inside the occupied home clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_energy_coping_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that an intact household heating or cooling service remains visibly inactive inside the occupied home."
+            }
+          },
+          {
+            "id": "affordability_or_supply_constraint_cue",
+            "match_terms": [
+              "a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit"
+            ],
+            "evidence_field": "affordability_or_supply_constraint_cue_phrase",
+            "evidence_terms": [
+              "a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_energy_coping_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that a physical finite-service or spent prepaid-resource cue connects the inactive service to an affordability or supply limit."
+            }
+          },
+          {
+            "id": "practical_same_household_coping_action",
+            "match_terms": [
+              "the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action"
+            ],
+            "evidence_field": "practical_same_household_coping_action_phrase",
+            "evidence_terms": [
+              "the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_energy_coping_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the same adult household consolidates daily activity in one zone and performs a practical draft or heat-control action."
+            }
+          },
+          {
+            "id": "room_wide_thermal_consequence",
+            "match_terms": [
+              "the active zone and unused room areas show one coherent room-wide thermal consequence"
+            ],
+            "evidence_field": "room_wide_thermal_consequence_phrase",
+            "evidence_terms": [
+              "the active zone and unused room areas show one coherent room-wide thermal consequence"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the active zone and unused room areas show one coherent room-wide thermal consequence clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_energy_coping_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the active zone and unused room areas show one coherent room-wide thermal consequence."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "occupied_housing_habitability_mitigation_relation",
+      "category": "poverty_access_housing_habitability_defect_relation",
+      "activation": {
+        "exact_terms": [
+          "in a currently occupied dwelling, one traceable leak damp or draft path affects the living zone while an adult performs a temporary mitigation",
+          "an adult traces and mitigates one habitability defect in an occupied home while the defect source and remaining consequence stay visible",
+          "현재 거주 중인 집에서 누수·습기·외풍의 원인과 생활공간 영향이 이어지고 성인이 임시 완화를 하는 장면",
+          "점유 주거의 거주 가능성 결함을 추적해 물받이·밀봉·환기로 대응하지만 결함이 남아 있는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "ruin exploration",
+          "construction site",
+          "intentional rustic design",
+          "post disaster damage",
+          "single mold patch",
+          "empty abandoned room"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "A currently occupied dwelling contains one traceable cold, damp, leak, ventilation or sanitation defect that affects a living zone while an adult performs a temporary mitigation. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects daily belongings and current activity establish that the dwelling is presently occupied, one leak dampness or draft has a visible physical source and continuous path, that defect path reaches an actively used living zone and leaves a visible local consequence, an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path, and the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "ruin exploration",
+          "construction site",
+          "intentional rustic design",
+          "post disaster damage",
+          "single mold patch",
+          "empty abandoned room"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "daily belongings and current activity establish that the dwelling is presently occupied",
+          "one leak dampness or draft has a visible physical source and continuous path",
+          "that defect path reaches an actively used living zone and leaves a visible local consequence",
+          "an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path",
+          "the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "ruin_exploration",
+        "construction_site",
+        "intentional_rustic_design",
+        "post_disaster_damage",
+        "single_mold_patch",
+        "empty_abandoned_room"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "occupied_dwelling_context",
+            "match_terms": [
+              "daily belongings and current activity establish that the dwelling is presently occupied"
+            ],
+            "evidence_field": "occupied_dwelling_context_phrase",
+            "evidence_terms": [
+              "daily belongings and current activity establish that the dwelling is presently occupied"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep daily belongings and current activity establish that the dwelling is presently occupied clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_housing_mitigation_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that daily belongings and current activity establish that the dwelling is presently occupied."
+            }
+          },
+          {
+            "id": "traceable_defect_source",
+            "match_terms": [
+              "one leak dampness or draft has a visible physical source and continuous path"
+            ],
+            "evidence_field": "traceable_defect_source_phrase",
+            "evidence_terms": [
+              "one leak dampness or draft has a visible physical source and continuous path"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one leak dampness or draft has a visible physical source and continuous path clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_housing_mitigation_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that one leak dampness or draft has a visible physical source and continuous path."
+            }
+          },
+          {
+            "id": "living_zone_consequence",
+            "match_terms": [
+              "that defect path reaches an actively used living zone and leaves a visible local consequence"
+            ],
+            "evidence_field": "living_zone_consequence_phrase",
+            "evidence_terms": [
+              "that defect path reaches an actively used living zone and leaves a visible local consequence"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep that defect path reaches an actively used living zone and leaves a visible local consequence clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_housing_mitigation_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that that defect path reaches an actively used living zone and leaves a visible local consequence."
+            }
+          },
+          {
+            "id": "adult_mitigation_action",
+            "match_terms": [
+              "an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path"
+            ],
+            "evidence_field": "adult_mitigation_action_phrase",
+            "evidence_terms": [
+              "an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_housing_mitigation_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that an unmistakably adult resident performs a material-appropriate temporary mitigation at the affected path."
+            }
+          },
+          {
+            "id": "remaining_unresolved_defect",
+            "match_terms": [
+              "the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame"
+            ],
+            "evidence_field": "remaining_unresolved_defect_phrase",
+            "evidence_terms": [
+              "the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_housing_mitigation_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the mitigation is visibly provisional while the underlying defect remains unresolved in the same frame."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "working_income_essential_cost_gap_relation",
+      "category": "poverty_access_paid_work_household_resource_gap",
+      "activation": {
+        "exact_terms": [
+          "the same adult's completed paid shift and compensation remain linked to essential household costs that still exceed the available resource",
+          "after paid work, an adult allocates the compensation across food housing or transport essentials and one necessary item remains unmet",
+          "유급 교대를 마친 같은 성인의 작업 결과와 보상을 기본 생활비와 대조했을 때 남는 부족이 보이는 장면",
+          "일을 마친 성인이 받은 보상을 식비·주거·교통 같은 필수비용에 배분해도 한 항목이 미충족으로 남는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "night shift portrait",
+          "delivery bag only",
+          "rough hands",
+          "busy worker",
+          "freelance invoice",
+          "frugal budgeting"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same adult's completed paid-work output and compensation are linked to concrete essential household costs that still exceed the available resource. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects a completed paid shift or finished work output remains visibly associated with the same adult, the compensation resource is visibly received and handled by that same unmistakably adult worker, multiple concrete essential household cost anchors remain visible without relying on readable bill text, the adult visibly allocates or reconciles the compensation resource against those essential costs, and after allocation one essential need remains visibly unmet while the available compensation is exhausted.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "night shift portrait",
+          "delivery bag only",
+          "rough hands",
+          "busy worker",
+          "freelance invoice",
+          "frugal budgeting"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "a completed paid shift or finished work output remains visibly associated with the same adult",
+          "the compensation resource is visibly received and handled by that same unmistakably adult worker",
+          "multiple concrete essential household cost anchors remain visible without relying on readable bill text",
+          "the adult visibly allocates or reconciles the compensation resource against those essential costs",
+          "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "night_shift_portrait",
+        "delivery_bag_only",
+        "rough_hands",
+        "busy_worker",
+        "freelance_invoice",
+        "frugal_budgeting"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "completed_paid_work_output",
+            "match_terms": [
+              "a completed paid shift or finished work output remains visibly associated with the same adult"
+            ],
+            "evidence_field": "completed_paid_work_output_phrase",
+            "evidence_terms": [
+              "a completed paid shift or finished work output remains visibly associated with the same adult"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep a completed paid shift or finished work output remains visibly associated with the same adult clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_working_gap_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that a completed paid shift or finished work output remains visibly associated with the same adult."
+            }
+          },
+          {
+            "id": "same_adult_compensation_resource",
+            "match_terms": [
+              "the compensation resource is visibly received and handled by that same unmistakably adult worker"
+            ],
+            "evidence_field": "same_adult_compensation_resource_phrase",
+            "evidence_terms": [
+              "the compensation resource is visibly received and handled by that same unmistakably adult worker"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the compensation resource is visibly received and handled by that same unmistakably adult worker clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_working_gap_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the compensation resource is visibly received and handled by that same unmistakably adult worker."
+            }
+          },
+          {
+            "id": "multiple_essential_cost_anchors",
+            "match_terms": [
+              "multiple concrete essential household cost anchors remain visible without relying on readable bill text"
+            ],
+            "evidence_field": "multiple_essential_cost_anchors_phrase",
+            "evidence_terms": [
+              "multiple concrete essential household cost anchors remain visible without relying on readable bill text"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep multiple concrete essential household cost anchors remain visible without relying on readable bill text clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_working_gap_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that multiple concrete essential household cost anchors remain visible without relying on readable bill text."
+            }
+          },
+          {
+            "id": "allocation_or_reconciliation_action",
+            "match_terms": [
+              "the adult visibly allocates or reconciles the compensation resource against those essential costs"
+            ],
+            "evidence_field": "allocation_or_reconciliation_action_phrase",
+            "evidence_terms": [
+              "the adult visibly allocates or reconciles the compensation resource against those essential costs"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the adult visibly allocates or reconciles the compensation resource against those essential costs clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_working_gap_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the adult visibly allocates or reconciles the compensation resource against those essential costs."
+            }
+          },
+          {
+            "id": "remaining_essential_shortfall",
+            "match_terms": [
+              "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+            ],
+            "evidence_field": "remaining_essential_shortfall_phrase",
+            "evidence_terms": [
+              "after allocation one essential need remains visibly unmet while the available compensation is exhausted"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep after allocation one essential need remains visibly unmet while the available compensation is exhausted clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_working_gap_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that after allocation one essential need remains visibly unmet while the available compensation is exhausted."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "transport_affordability_access_barrier_event",
+      "category": "poverty_access_transport_cost_access_event",
+      "activation": {
+        "exact_terms": [
+          "an adult's concrete essential trip is blocked at a transit boundary by a visible fare-resource gap while the usable vehicle departs",
+          "a fare or access-cost barrier prevents the same adult from making an essential trip as the viable route closes",
+          "필수 이동 목적을 가진 성인이 운임 자원 부족으로 교통 경계를 통과하지 못하고 차량이 떠나는 장면",
+          "출근·진료 같은 구체적 이동이 운임 또는 접근 비용 장벽에서 막혀 동일 성인이 출발편을 놓치는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "ordinary waiting",
+          "missed train candid",
+          "forgotten wallet",
+          "tourist confusion",
+          "service cancellation",
+          "liminal transit mood"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An adult's concrete essential trip is blocked at a transport boundary by a visible fare or access-resource gap while the usable route departs or closes. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler, an operational transit boundary and a viable departing route remain visible in one continuous space, the traveler has a visible fare or access-resource gap at that exact boundary, the same adult's attempted entry visibly stops at the fare-controlled threshold, and the usable vehicle departs or the gate closes while the unmade trip remains immediately legible.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "ordinary waiting",
+          "missed train candid",
+          "forgotten wallet",
+          "tourist confusion",
+          "service cancellation",
+          "liminal transit mood"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler",
+          "an operational transit boundary and a viable departing route remain visible in one continuous space",
+          "the traveler has a visible fare or access-resource gap at that exact boundary",
+          "the same adult's attempted entry visibly stops at the fare-controlled threshold",
+          "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "ordinary_waiting",
+        "missed_train_candid",
+        "forgotten_wallet",
+        "tourist_confusion",
+        "service_cancellation",
+        "liminal_transit_mood"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "concrete_essential_trip_anchor",
+            "match_terms": [
+              "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+            ],
+            "evidence_field": "concrete_essential_trip_anchor_phrase",
+            "evidence_terms": [
+              "a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_transport_barrier_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that a concrete essential-trip purpose remains visibly linked to the unmistakably adult traveler."
+            }
+          },
+          {
+            "id": "transport_boundary_and_viable_route",
+            "match_terms": [
+              "an operational transit boundary and a viable departing route remain visible in one continuous space"
+            ],
+            "evidence_field": "transport_boundary_and_viable_route_phrase",
+            "evidence_terms": [
+              "an operational transit boundary and a viable departing route remain visible in one continuous space"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep an operational transit boundary and a viable departing route remain visible in one continuous space clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_transport_barrier_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that an operational transit boundary and a viable departing route remain visible in one continuous space."
+            }
+          },
+          {
+            "id": "visible_fare_or_access_resource_gap",
+            "match_terms": [
+              "the traveler has a visible fare or access-resource gap at that exact boundary"
+            ],
+            "evidence_field": "visible_fare_or_access_resource_gap_phrase",
+            "evidence_terms": [
+              "the traveler has a visible fare or access-resource gap at that exact boundary"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the traveler has a visible fare or access-resource gap at that exact boundary clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_transport_barrier_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the traveler has a visible fare or access-resource gap at that exact boundary."
+            }
+          },
+          {
+            "id": "same_adult_failed_entry_action",
+            "match_terms": [
+              "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+            ],
+            "evidence_field": "same_adult_failed_entry_action_phrase",
+            "evidence_terms": [
+              "the same adult's attempted entry visibly stops at the fare-controlled threshold"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the same adult's attempted entry visibly stops at the fare-controlled threshold clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_transport_barrier_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the same adult's attempted entry visibly stops at the fare-controlled threshold."
+            }
+          },
+          {
+            "id": "departure_or_closure_consequence",
+            "match_terms": [
+              "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+            ],
+            "evidence_field": "departure_or_closure_consequence_phrase",
+            "evidence_terms": [
+              "the usable vehicle departs or the gate closes while the unmade trip remains immediately legible"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the usable vehicle departs or the gate closes while the unmade trip remains immediately legible clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_transport_barrier_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the usable vehicle departs or the gate closes while the unmade trip remains immediately legible."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "material_replacement_deferral_repair_cycle",
+      "category": "poverty_access_essential_item_use_extension_relation",
+      "activation": {
+        "exact_terms": [
+          "an adult repairs localized functional wear on an essential daily item because replacement is unavailable, then returns it to continued use",
+          "a resource-constrained repair restores an essential shoe bag or garment to use while preserving visible care and localized wear",
+          "교체할 수 없는 필수 생활품의 국소 마모를 성인이 수선하고 다시 사용 상태로 돌려놓는 장면",
+          "필수 신발·가방·의복의 기능 손상을 임시 수선해 계속 사용하는 자원 제약 장면"
+        ],
+        "exclude_if_any_terms": [
+          "vintage fashion",
+          "decorative distressing",
+          "slow fashion hobby",
+          "heritage conservation",
+          "cosplay repair",
+          "dirty clothing only"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "An essential item with localized functional wear is actively repaired because replacement is unavailable, then visibly returned to continued use while remaining cared for. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects one essential daily-use item has localized functional wear while its broader structure remains cared for, the worn item remains the only serviceable example and a new replacement is visibly unavailable in context, an unmistakably adult user performs a material-appropriate repair directly on the worn functional area, clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing, and the repaired item visibly returns to its ordinary practical use with the new mend still readable.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "vintage fashion",
+          "decorative distressing",
+          "slow fashion hobby",
+          "heritage conservation",
+          "cosplay repair",
+          "dirty clothing only"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one essential daily-use item has localized functional wear while its broader structure remains cared for",
+          "the worn item remains the only serviceable example and a new replacement is visibly unavailable in context",
+          "an unmistakably adult user performs a material-appropriate repair directly on the worn functional area",
+          "clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing",
+          "the repaired item visibly returns to its ordinary practical use with the new mend still readable"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "vintage_fashion",
+        "decorative_distressing",
+        "slow_fashion_hobby",
+        "heritage_conservation",
+        "cosplay_repair",
+        "dirty_clothing_only"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "essential_item_with_localized_functional_wear",
+            "match_terms": [
+              "one essential daily-use item has localized functional wear while its broader structure remains cared for"
+            ],
+            "evidence_field": "essential_item_with_localized_functional_wear_phrase",
+            "evidence_terms": [
+              "one essential daily-use item has localized functional wear while its broader structure remains cared for"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one essential daily-use item has localized functional wear while its broader structure remains cared for clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_repair_cycle_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that one essential daily-use item has localized functional wear while its broader structure remains cared for."
+            }
+          },
+          {
+            "id": "explicit_replacement_unavailability_context",
+            "match_terms": [
+              "the worn item remains the only serviceable example and a new replacement is visibly unavailable in context"
+            ],
+            "evidence_field": "explicit_replacement_unavailability_context_phrase",
+            "evidence_terms": [
+              "the worn item remains the only serviceable example and a new replacement is visibly unavailable in context"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the worn item remains the only serviceable example and a new replacement is visibly unavailable in context clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_repair_cycle_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that the worn item remains the only serviceable example and a new replacement is visibly unavailable in context."
+            }
+          },
+          {
+            "id": "active_material_appropriate_repair",
+            "match_terms": [
+              "an unmistakably adult user performs a material-appropriate repair directly on the worn functional area"
+            ],
+            "evidence_field": "active_material_appropriate_repair_phrase",
+            "evidence_terms": [
+              "an unmistakably adult user performs a material-appropriate repair directly on the worn functional area"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep an unmistakably adult user performs a material-appropriate repair directly on the worn functional area clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_repair_cycle_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that an unmistakably adult user performs a material-appropriate repair directly on the worn functional area."
+            }
+          },
+          {
+            "id": "care_and_maintenance_evidence",
+            "match_terms": [
+              "clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing"
+            ],
+            "evidence_field": "care_and_maintenance_evidence_phrase",
+            "evidence_terms": [
+              "clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_repair_cycle_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that clean tools aligned patches and prior careful mends show continued maintenance rather than neglect or decorative distressing."
+            }
+          },
+          {
+            "id": "return_to_use_result",
+            "match_terms": [
+              "the repaired item visibly returns to its ordinary practical use with the new mend still readable"
+            ],
+            "evidence_field": "return_to_use_result_phrase",
+            "evidence_terms": [
+              "the repaired item visibly returns to its ordinary practical use with the new mend still readable"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the repaired item visibly returns to its ordinary practical use with the new mend still readable clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_repair_cycle_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the repaired item visibly returns to its ordinary practical use with the new mend still readable."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "relative_participation_affordability_barrier",
+      "category": "poverty_access_relative_access_participation_relation",
+      "activation": {
+        "exact_terms": [
+          "the same ordinary activity is accessible to other adults while one adult is blocked at the same threshold by a concrete affordability boundary",
+          "normal participation flow, a cost-resource boundary and one adult's immediate exclusion from the same activity remain visible together",
+          "같은 활동에 다른 성인들은 정상 참여하지만 한 성인은 구체적 비용 장벽 때문에 같은 문턱에서 참여하지 못하는 장면",
+          "공공·사회 활동의 접근 흐름과 비용 경계, 차단된 한 성인의 즉시 참여 결과가 함께 보이는 장면"
+        ],
+        "exclude_if_any_terms": [
+          "window shopping",
+          "lonely outsider",
+          "luxury envy",
+          "private party",
+          "protected trait discrimination inference",
+          "sad expression only"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": true
+      },
+      "semantics": {
+        "definition": "The same ordinary activity or service is visibly accessible to others while one adult is blocked by a concrete affordability or resource boundary, producing an immediate participation gap. All five observable relations must coexist; a broad poverty label, isolated prop, appearance cue or mood treatment alone is not evidence.",
+        "paraphrase_examples": [
+          "A same-frame photographic relation connects one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold, other adults visibly pass through the normal access flow and begin the same activity, a concrete payment token or resource boundary controls entry without depending on readable signage, one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary, and the activity continues for those admitted while the blocked adult remains outside in the same frame.",
+          "The constraint source, the same adult response, and the immediate material outcome remain spatially continuous while labels and appearance stay non-diagnostic."
+        ],
+        "contrast_examples": [
+          "window shopping",
+          "lonely outsider",
+          "luxury envy",
+          "private party",
+          "protected trait discrimination inference",
+          "sad expression only"
+        ],
+        "claim_limits": [
+          "Visible event components do not establish a person's income, diagnosis, nutrition, housing status, protected traits, social class or population-level poverty classification.",
+          "Readable prices, bills, account balances and labels may support context but cannot be the only evidence."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold",
+          "other adults visibly pass through the normal access flow and begin the same activity",
+          "a concrete payment token or resource boundary controls entry without depending on readable signage",
+          "one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary",
+          "the activity continues for those admitted while the blocked adult remains outside in the same frame"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_only",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ],
+        "runtime_forbidden_labels": [
+          "poor person",
+          "poverty face",
+          "poverty-stricken person",
+          "starving body",
+          "slum dweller"
+        ]
+      },
+      "reject_substitutes": [
+        "window_shopping",
+        "lonely_outsider",
+        "luxury_envy",
+        "private_party",
+        "protected_trait_discrimination_inference",
+        "sad_expression_only"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "same_activity_or_service_for_all",
+            "match_terms": [
+              "one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold"
+            ],
+            "evidence_field": "same_activity_or_service_for_all_phrase",
+            "evidence_terms": [
+              "one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_participation_barrier_1",
+              "review_scale": "thumbnail",
+              "description": "The saved image clearly shows that one ordinary activity or service is visibly the same opportunity for every adult at the shared threshold."
+            }
+          },
+          {
+            "id": "normal_access_flow_for_comparators",
+            "match_terms": [
+              "other adults visibly pass through the normal access flow and begin the same activity"
+            ],
+            "evidence_field": "normal_access_flow_for_comparators_phrase",
+            "evidence_terms": [
+              "other adults visibly pass through the normal access flow and begin the same activity"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep other adults visibly pass through the normal access flow and begin the same activity clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_participation_barrier_2",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that other adults visibly pass through the normal access flow and begin the same activity."
+            }
+          },
+          {
+            "id": "concrete_affordability_or_resource_boundary",
+            "match_terms": [
+              "a concrete payment token or resource boundary controls entry without depending on readable signage"
+            ],
+            "evidence_field": "concrete_affordability_or_resource_boundary_phrase",
+            "evidence_terms": [
+              "a concrete payment token or resource boundary controls entry without depending on readable signage"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep a concrete payment token or resource boundary controls entry without depending on readable signage clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_participation_barrier_3",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that a concrete payment token or resource boundary controls entry without depending on readable signage."
+            }
+          },
+          {
+            "id": "blocked_adult_at_same_threshold",
+            "match_terms": [
+              "one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary"
+            ],
+            "evidence_field": "blocked_adult_at_same_threshold_phrase",
+            "evidence_terms": [
+              "one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_participation_barrier_4",
+              "review_scale": "both",
+              "description": "The saved image clearly shows that one unmistakably adult participant is visibly stopped at that same threshold by the resource boundary."
+            }
+          },
+          {
+            "id": "immediate_participation_gap",
+            "match_terms": [
+              "the activity continues for those admitted while the blocked adult remains outside in the same frame"
+            ],
+            "evidence_field": "immediate_participation_gap_phrase",
+            "evidence_terms": [
+              "the activity continues for those admitted while the blocked adult remains outside in the same frame"
+            ],
+            "min_content_words": 6,
+            "instruction": "Keep the activity continues for those admitted while the blocked adult remains outside in the same frame clearly legible as part of the same photographic event.",
+            "render_gate": {
+              "id": "vo_pov_participation_barrier_5",
+              "review_scale": "native",
+              "description": "The saved image clearly shows that the activity continues for those admitted while the blocked adult remains outside in the same frame."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

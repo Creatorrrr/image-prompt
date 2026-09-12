@@ -1,0 +1,78 @@
+test_bm25f_retrieval_surfaces_each_complete_cluster_near_the_top (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_bm25f_retrieval_surfaces_each_complete_cluster_near_the_top) ... ERROR
+test_broad_polysemous_and_adjacent_terms_never_force_new_profiles (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_broad_polysemous_and_adjacent_terms_never_force_new_profiles) ... ok
+test_complete_component_text_is_optional_not_hard (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_complete_component_text_is_optional_not_hard) ... ok
+test_every_candidate_is_merged_source_bound_and_fail_closed (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_every_candidate_is_merged_source_bound_and_fail_closed) ... ok
+test_existing_harem_trouser_profile_remains_the_only_exact_owner (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_existing_harem_trouser_profile_remains_the_only_exact_owner) ... ok
+test_extension_registers_eight_complete_six_candidate_clusters (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_extension_registers_eight_complete_six_candidate_clusters) ... ok
+test_five_profiles_are_complete_adult_five_group_pixel_contracts (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_five_profiles_are_complete_adult_five_group_pixel_contracts) ... ok
+test_generated_indexes_contain_all_profiles_and_candidates (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_generated_indexes_contain_all_profiles_and_candidates) ... ERROR
+test_narrow_context_complete_terms_route_to_one_profile (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_narrow_context_complete_terms_route_to_one_profile) ... ok
+test_nearest_visual_substitutes_fail_closed (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_nearest_visual_substitutes_fail_closed) ... ok
+test_registry_validator_accepts_profiles (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_registry_validator_accepts_profiles) ... FAIL
+test_research_evidence_covers_sources_profiles_and_candidate_clusters (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_research_evidence_covers_sources_profiles_and_candidate_clusters) ... ok
+test_research_note_keeps_claim_and_identity_boundaries (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_research_note_keeps_claim_and_identity_boundaries) ... ok
+
+======================================================================
+ERROR: test_bm25f_retrieval_surfaces_each_complete_cluster_near_the_top (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_bm25f_retrieval_surfaces_each_complete_cluster_near_the_top)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_harem_visual_semantics.py", line 421, in test_bm25f_retrieval_surfaces_each_complete_cluster_near_the_top
+    prompt_generator.validate_semantic_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        semantic_index,
+        ^^^^^^^^^^^^^^^
+        self.tags,
+        ^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 17481, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+ERROR: test_generated_indexes_contain_all_profiles_and_candidates (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_generated_indexes_contain_all_profiles_and_candidates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_harem_visual_semantics.py", line 399, in test_generated_indexes_contain_all_profiles_and_candidates
+    visual_index = prompt_generator.load_visual_profile_index(
+        VISUAL_INDEX_PATH,
+    ...<3 lines>...
+        dimensions=prompt_generator.DEFAULT_SEMANTIC_DIMENSIONS,
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2795, in load_visual_profile_index
+    validate_visual_profile_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload,
+        ^^^^^^^^
+    ...<3 lines>...
+        dimensions=dimensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2708, in validate_visual_profile_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+======================================================================
+FAIL: test_registry_validator_accepts_profiles (tests.test_photo_harem_visual_semantics.PhotoHaremVisualSemanticsTests.test_registry_validator_accepts_profiles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_harem_visual_semantics.py", line 481, in test_registry_validator_accepts_profiles
+    self.assertEqual(errors, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: ["visual obligation registry.profiles[587][2833 chars]s']"] != []
+
+First list contains 32 additional elements.
+First extra element 0:
+"visual obligation registry.profiles[587].semantics: unknown keys ['visual_components']"
+
+Diff is 3173 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 13 tests in 14.395s
+
+FAILED (failures=1, errors=2)

@@ -1,0 +1,36 @@
+setUpClass (tests.test_photo_korean_emotional_visual_semantics.PhotoKoreanEmotionalVisualSemanticsTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_korean_emotional_visual_semantics.PhotoKoreanEmotionalVisualSemanticsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_korean_emotional_visual_semantics.py", line 85, in setUpClass
+    cls.visual_index = prompt_generator.load_visual_profile_index(
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        VISUAL_INDEX_PATH,
+        ^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        dimensions=prompt_generator.DEFAULT_SEMANTIC_DIMENSIONS,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2795, in load_visual_profile_index
+    validate_visual_profile_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload,
+        ^^^^^^^^
+    ...<3 lines>...
+        dimensions=dimensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2708, in validate_visual_profile_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.418s
+
+FAILED (errors=1)

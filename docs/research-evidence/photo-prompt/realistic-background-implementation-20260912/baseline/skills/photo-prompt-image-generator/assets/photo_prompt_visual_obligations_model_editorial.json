@@ -1,0 +1,2243 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Request-bound photographic presentation; broad model/editorial/professional labels remain advisory.",
+  "profiles": [
+    {
+      "id": "mep_casting_front",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the face is presented squarely enough to inspect its current visible features; soft frontal daylight keeps facial planes readable; restrained surface treatment preserves local skin variation"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the face is presented squarely enough to inspect its current visible features; soft frontal daylight keeps facial planes readable; restrained surface treatment preserves local skin variation",
+        "paraphrase_examples": [
+          "정면 캐스팅 기록",
+          "model digitals",
+          "front-facing casting portrait",
+          "Casting Polaroid",
+          "Digitals",
+          "Polaroids"
+        ],
+        "contrast_examples": [
+          "뷰티 광고의 강한 색조 메이크업",
+          "즉석사진 흰 테두리만 있는 화보",
+          "fashion test shoot with dramatic makeup",
+          "instant-film borders on an editorial portrait"
+        ],
+        "claim_limits": [
+          "얼굴 또는 피부 미감의 보편적 기준으로 쓰지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "정면 캐스팅 기록",
+          "model digitals",
+          "front-facing casting portrait",
+          "the face is presented squarely enough to inspect its current visible features",
+          "soft frontal daylight keeps facial planes readable",
+          "restrained surface treatment preserves local skin variation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "뷰티 광고의 강한 색조 메이크업",
+        "즉석사진 흰 테두리만 있는 화보",
+        "fashion test shoot with dramatic makeup",
+        "instant-film borders on an editorial portrait"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the face is presented squarely enough to inspect its current visible features"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the face is presented squarely enough to inspect its current visible features"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the face is presented squarely enough to inspect its current visible features",
+            "render_gate": {
+              "id": "vo_mep_casting_front_1",
+              "review_scale": "both",
+              "description": "the face is presented squarely enough to inspect its current visible features. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "soft frontal daylight keeps facial planes readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "soft frontal daylight keeps facial planes readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: soft frontal daylight keeps facial planes readable",
+            "render_gate": {
+              "id": "vo_mep_casting_front_2",
+              "review_scale": "native",
+              "description": "soft frontal daylight keeps facial planes readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "restrained surface treatment preserves local skin variation"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "restrained surface treatment preserves local skin variation"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: restrained surface treatment preserves local skin variation",
+            "render_gate": {
+              "id": "vo_mep_casting_front_3",
+              "review_scale": "both",
+              "description": "restrained surface treatment preserves local skin variation. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_casting_profile",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the nose lip and chin contours form a readable side profile; the head remains connected naturally to the neck and shoulders; hair placement preserves the requested profile landmarks",
+        "paraphrase_examples": [
+          "측면 캐스팅 기록",
+          "casting profile view",
+          "Digitals",
+          "Casting Polaroid"
+        ],
+        "contrast_examples": [
+          "정면 사진의 옆머리",
+          "원근으로 겹친 두 얼굴 윤곽"
+        ],
+        "claim_limits": [
+          "좌우 방향과 헤어 정리는 현재 요청에서 정한다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "측면 캐스팅 기록",
+          "casting profile view",
+          "the nose lip and chin contours form a readable side profile",
+          "the head remains connected naturally to the neck and shoulders",
+          "hair placement preserves the requested profile landmarks"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "정면 사진의 옆머리",
+        "원근으로 겹친 두 얼굴 윤곽"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the nose lip and chin contours form a readable side profile"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the nose lip and chin contours form a readable side profile"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the nose lip and chin contours form a readable side profile",
+            "render_gate": {
+              "id": "vo_mep_casting_profile_1",
+              "review_scale": "both",
+              "description": "the nose lip and chin contours form a readable side profile. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the head remains connected naturally to the neck and shoulders"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the head remains connected naturally to the neck and shoulders"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the head remains connected naturally to the neck and shoulders",
+            "render_gate": {
+              "id": "vo_mep_casting_profile_2",
+              "review_scale": "native",
+              "description": "the head remains connected naturally to the neck and shoulders. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "hair placement preserves the requested profile landmarks"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "hair placement preserves the requested profile landmarks"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: hair placement preserves the requested profile landmarks",
+            "render_gate": {
+              "id": "vo_mep_casting_profile_3",
+              "review_scale": "both",
+              "description": "hair placement preserves the requested profile landmarks. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_casting_full_length",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the frame includes the head and both feet with usable surrounding space; simple clothing keeps the outer body outline readable; even enough illumination separates clothing edges from the background"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the frame includes the head and both feet with usable surrounding space; simple clothing keeps the outer body outline readable; even enough illumination separates clothing edges from the background",
+        "paraphrase_examples": [
+          "전신 캐스팅 기록",
+          "full-length model digitals",
+          "Digitals",
+          "Agency-standard"
+        ],
+        "contrast_examples": [
+          "전신이 잘린 뷰티 크롭",
+          "원근 과장으로 비율이 크게 변한 사진"
+        ],
+        "claim_limits": [
+          "실제 키·사이즈·신원·보정 이력은 픽셀로 인증하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "전신 캐스팅 기록",
+          "full-length model digitals",
+          "the frame includes the head and both feet with usable surrounding space",
+          "simple clothing keeps the outer body outline readable",
+          "even enough illumination separates clothing edges from the background"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "전신이 잘린 뷰티 크롭",
+        "원근 과장으로 비율이 크게 변한 사진"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the frame includes the head and both feet with usable surrounding space"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the frame includes the head and both feet with usable surrounding space"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the frame includes the head and both feet with usable surrounding space",
+            "render_gate": {
+              "id": "vo_mep_casting_full_length_1",
+              "review_scale": "both",
+              "description": "the frame includes the head and both feet with usable surrounding space. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "simple clothing keeps the outer body outline readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "simple clothing keeps the outer body outline readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: simple clothing keeps the outer body outline readable",
+            "render_gate": {
+              "id": "vo_mep_casting_full_length_2",
+              "review_scale": "native",
+              "description": "simple clothing keeps the outer body outline readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "even enough illumination separates clothing edges from the background"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "even enough illumination separates clothing edges from the background"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: even enough illumination separates clothing edges from the background",
+            "render_gate": {
+              "id": "vo_mep_casting_full_length_3",
+              "review_scale": "both",
+              "description": "even enough illumination separates clothing edges from the background. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_garment_clearance",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the declared garment closure or seam is visible along its intended length; the hands occupy separate image regions from that feature; the garment keeps plausible folds and contact with the body"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the declared garment closure or seam is visible along its intended length; the hands occupy separate image regions from that feature; the garment keeps plausible folds and contact with the body",
+        "paraphrase_examples": [
+          "의상 핵심 디테일과 손의 분리",
+          "garment-aware posing",
+          "visible garment details",
+          "Garment-aware",
+          "Lookbook",
+          "E-commerce",
+          "Hand Placement"
+        ],
+        "contrast_examples": [
+          "버튼을 가린 채 멋진 손 포즈",
+          "의상이 사라진 얼굴 중심 크롭",
+          "hands covering the jacket buttons",
+          "face-only crop hiding garment details"
+        ],
+        "claim_limits": [
+          "hand discipline이라는 인격·숙련 평가를 만들지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의상 핵심 디테일과 손의 분리",
+          "garment-aware posing",
+          "visible garment details",
+          "the declared garment closure or seam is visible along its intended length",
+          "the hands occupy separate image regions from that feature",
+          "the garment keeps plausible folds and contact with the body"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "버튼을 가린 채 멋진 손 포즈",
+        "의상이 사라진 얼굴 중심 크롭",
+        "hands covering the jacket buttons",
+        "face-only crop hiding garment details"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the declared garment closure or seam is visible along its intended length"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the declared garment closure or seam is visible along its intended length"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the declared garment closure or seam is visible along its intended length",
+            "render_gate": {
+              "id": "vo_mep_garment_clearance_1",
+              "review_scale": "both",
+              "description": "the declared garment closure or seam is visible along its intended length. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the hands occupy separate image regions from that feature"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the hands occupy separate image regions from that feature"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the hands occupy separate image regions from that feature",
+            "render_gate": {
+              "id": "vo_mep_garment_clearance_2",
+              "review_scale": "native",
+              "description": "the hands occupy separate image regions from that feature. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the garment keeps plausible folds and contact with the body"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the garment keeps plausible folds and contact with the body"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the garment keeps plausible folds and contact with the body",
+            "render_gate": {
+              "id": "vo_mep_garment_clearance_3",
+              "review_scale": "both",
+              "description": "the garment keeps plausible folds and contact with the body. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_garment_side_depth",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn",
+        "paraphrase_examples": [
+          "의상 옆선·두께 읽기",
+          "side seam detail"
+        ],
+        "contrast_examples": [
+          "정면 무늬만 보임",
+          "몸통과 골반이 물리적으로 분리됨"
+        ],
+        "claim_limits": [
+          "lookbook 전체가 이 각도를 필수로 요구하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의상 옆선·두께 읽기",
+          "side seam detail",
+          "the view exposes the selected side seam and adjacent front panel",
+          "hem overlap and folds give the fabric visible thickness",
+          "the torso and pelvis remain connected in a plausible turn"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "정면 무늬만 보임",
+        "몸통과 골반이 물리적으로 분리됨"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the view exposes the selected side seam and adjacent front panel"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the view exposes the selected side seam and adjacent front panel"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the view exposes the selected side seam and adjacent front panel",
+            "render_gate": {
+              "id": "vo_mep_garment_side_depth_1",
+              "review_scale": "both",
+              "description": "the view exposes the selected side seam and adjacent front panel. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "hem overlap and folds give the fabric visible thickness"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "hem overlap and folds give the fabric visible thickness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: hem overlap and folds give the fabric visible thickness",
+            "render_gate": {
+              "id": "vo_mep_garment_side_depth_2",
+              "review_scale": "native",
+              "description": "hem overlap and folds give the fabric visible thickness. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the torso and pelvis remain connected in a plausible turn"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the torso and pelvis remain connected in a plausible turn"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the torso and pelvis remain connected in a plausible turn",
+            "render_gate": {
+              "id": "vo_mep_garment_side_depth_3",
+              "review_scale": "both",
+              "description": "the torso and pelvis remain connected in a plausible turn. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_garment_movement",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "one readable step or turn provides the movement phase; the attached fabric trails or folds in a direction compatible with that movement; the support or airborne state remains consistent with the chosen phase"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one readable step or turn provides the movement phase; the attached fabric trails or folds in a direction compatible with that movement; the support or airborne state remains consistent with the chosen phase",
+        "paraphrase_examples": [
+          "움직임과 직물 지연",
+          "fabric in motion",
+          "moving fashion",
+          "Movement Direction",
+          "Dynamic Pose",
+          "Fashion Editorial"
+        ],
+        "contrast_examples": [
+          "정지 인물 뒤의 무관한 천",
+          "모든 방향으로 터진 주름"
+        ],
+        "claim_limits": [
+          "한 장에서 실제 속도·직전 직후 동작은 확정하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "움직임과 직물 지연",
+          "fabric in motion",
+          "moving fashion",
+          "one readable step or turn provides the movement phase",
+          "the attached fabric trails or folds in a direction compatible with that movement",
+          "the support or airborne state remains consistent with the chosen phase"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "정지 인물 뒤의 무관한 천",
+        "모든 방향으로 터진 주름"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one readable step or turn provides the movement phase"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one readable step or turn provides the movement phase"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: one readable step or turn provides the movement phase",
+            "render_gate": {
+              "id": "vo_mep_garment_movement_1",
+              "review_scale": "both",
+              "description": "one readable step or turn provides the movement phase. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the attached fabric trails or folds in a direction compatible with that movement"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the attached fabric trails or folds in a direction compatible with that movement"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the attached fabric trails or folds in a direction compatible with that movement",
+            "render_gate": {
+              "id": "vo_mep_garment_movement_2",
+              "review_scale": "native",
+              "description": "the attached fabric trails or folds in a direction compatible with that movement. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the support or airborne state remains consistent with the chosen phase"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the support or airborne state remains consistent with the chosen phase"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the support or airborne state remains consistent with the chosen phase",
+            "render_gate": {
+              "id": "vo_mep_garment_movement_3",
+              "review_scale": "both",
+              "description": "the support or airborne state remains consistent with the chosen phase. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_product_hero",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the selected product has a clear continuous silhouette; focus light and placement keep its defining feature readable; supporting human gestures direct attention toward the product"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the selected product has a clear continuous silhouette; focus light and placement keep its defining feature readable; supporting human gestures direct attention toward the product",
+        "paraphrase_examples": [
+          "제품 중심의 시각 위계",
+          "product-led shoot",
+          "product hero image",
+          "Hero Image",
+          "Key Visual / KV"
+        ],
+        "contrast_examples": [
+          "얼굴만 선명하고 제품이 흐림",
+          "손에 잡혔지만 제품의 주요 형태가 가림",
+          "sharp face and blurred product",
+          "hands hide the defining product shape"
+        ],
+        "claim_limits": [
+          "모든 광고가 제품 클로즈업이어야 한다는 뜻은 아니다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "제품 중심의 시각 위계",
+          "product-led shoot",
+          "product hero image",
+          "the selected product has a clear continuous silhouette",
+          "focus light and placement keep its defining feature readable",
+          "supporting human gestures direct attention toward the product"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "얼굴만 선명하고 제품이 흐림",
+        "손에 잡혔지만 제품의 주요 형태가 가림",
+        "sharp face and blurred product",
+        "hands hide the defining product shape"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the selected product has a clear continuous silhouette"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the selected product has a clear continuous silhouette"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the selected product has a clear continuous silhouette",
+            "render_gate": {
+              "id": "vo_mep_product_hero_1",
+              "review_scale": "both",
+              "description": "the selected product has a clear continuous silhouette. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "focus light and placement keep its defining feature readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "focus light and placement keep its defining feature readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: focus light and placement keep its defining feature readable",
+            "render_gate": {
+              "id": "vo_mep_product_hero_2",
+              "review_scale": "native",
+              "description": "focus light and placement keep its defining feature readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "supporting human gestures direct attention toward the product"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "supporting human gestures direct attention toward the product"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: supporting human gestures direct attention toward the product",
+            "render_gate": {
+              "id": "vo_mep_product_hero_3",
+              "review_scale": "both",
+              "description": "supporting human gestures direct attention toward the product. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_jewelry_contact",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the jewel follows a plausible wearing or holding contact; its outline remains separate from fingers skin and background; small highlights preserve the visible material boundaries"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the jewel follows a plausible wearing or holding contact; its outline remains separate from fingers skin and background; small highlights preserve the visible material boundaries",
+        "paraphrase_examples": [
+          "주얼리 착용 접점",
+          "jewelry campaign",
+          "jewellery campaign",
+          "Parts Model",
+          "Hand Placement"
+        ],
+        "contrast_examples": [
+          "피부와 금속이 융합됨",
+          "광점만 있고 장신구 형태가 없음",
+          "jewel fused into skin",
+          "bright sparkle with no readable jewel outline"
+        ],
+        "claim_limits": [
+          "제품 가독성 원리에서 도출한 연구 설계이며 주얼리 업계 표준으로 검증한 것은 아니다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "주얼리 착용 접점",
+          "jewelry campaign",
+          "jewellery campaign",
+          "the jewel follows a plausible wearing or holding contact",
+          "its outline remains separate from fingers skin and background",
+          "small highlights preserve the visible material boundaries"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "피부와 금속이 융합됨",
+        "광점만 있고 장신구 형태가 없음",
+        "jewel fused into skin",
+        "bright sparkle with no readable jewel outline"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the jewel follows a plausible wearing or holding contact"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the jewel follows a plausible wearing or holding contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the jewel follows a plausible wearing or holding contact",
+            "render_gate": {
+              "id": "vo_mep_jewelry_contact_1",
+              "review_scale": "both",
+              "description": "the jewel follows a plausible wearing or holding contact. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "its outline remains separate from fingers skin and background"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "its outline remains separate from fingers skin and background"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: its outline remains separate from fingers skin and background",
+            "render_gate": {
+              "id": "vo_mep_jewelry_contact_2",
+              "review_scale": "native",
+              "description": "its outline remains separate from fingers skin and background. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "small highlights preserve the visible material boundaries"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "small highlights preserve the visible material boundaries"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: small highlights preserve the visible material boundaries",
+            "render_gate": {
+              "id": "vo_mep_jewelry_contact_3",
+              "review_scale": "both",
+              "description": "small highlights preserve the visible material boundaries. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_beauty_detail",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the requested makeup design appears on its specified facial region; the crop and focus resolve that design at useful scale; adjacent skin and facial landmarks remain distinguishable"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the requested makeup design appears on its specified facial region; the crop and focus resolve that design at useful scale; adjacent skin and facial landmarks remain distinguishable",
+        "paraphrase_examples": [
+          "메이크업 디테일의 부위 소유권",
+          "beauty editorial",
+          "makeup detail",
+          "Beauty Model",
+          "Beauty Campaign"
+        ],
+        "contrast_examples": [
+          "배경 색을 아이섀도 성공으로 판정",
+          "다른 부위에만 동일한 색이 있음",
+          "blue background with black eyeliner",
+          "color appears only on clothing"
+        ],
+        "claim_limits": [
+          "뷰티 화보 자체를 하나의 피부 마감이나 표정으로 고정하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "메이크업 디테일의 부위 소유권",
+          "beauty editorial",
+          "makeup detail",
+          "the requested makeup design appears on its specified facial region",
+          "the crop and focus resolve that design at useful scale",
+          "adjacent skin and facial landmarks remain distinguishable"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "배경 색을 아이섀도 성공으로 판정",
+        "다른 부위에만 동일한 색이 있음",
+        "blue background with black eyeliner",
+        "color appears only on clothing"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the requested makeup design appears on its specified facial region"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the requested makeup design appears on its specified facial region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the requested makeup design appears on its specified facial region",
+            "render_gate": {
+              "id": "vo_mep_beauty_detail_1",
+              "review_scale": "both",
+              "description": "the requested makeup design appears on its specified facial region. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the crop and focus resolve that design at useful scale"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the crop and focus resolve that design at useful scale"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the crop and focus resolve that design at useful scale",
+            "render_gate": {
+              "id": "vo_mep_beauty_detail_2",
+              "review_scale": "native",
+              "description": "the crop and focus resolve that design at useful scale. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "adjacent skin and facial landmarks remain distinguishable"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "adjacent skin and facial landmarks remain distinguishable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: adjacent skin and facial landmarks remain distinguishable",
+            "render_gate": {
+              "id": "vo_mep_beauty_detail_3",
+              "review_scale": "both",
+              "description": "adjacent skin and facial landmarks remain distinguishable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_hair_outline",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the selected hair shape remains separated from the background; light reveals the intended volume changes; visible strand groups remain connected to the hairstyle"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the selected hair shape remains separated from the background; light reveals the intended volume changes; visible strand groups remain connected to the hairstyle",
+        "paraphrase_examples": [
+          "헤어 볼륨과 외곽 분리",
+          "hair model",
+          "hair silhouette",
+          "Beauty Editorial"
+        ],
+        "contrast_examples": [
+          "머리 뒤의 후광만 있음",
+          "모발이 배경에 녹아 형태가 안 보임"
+        ],
+        "claim_limits": [
+          "길이·색·인종적 외모를 직업명에서 추론하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "헤어 볼륨과 외곽 분리",
+          "hair model",
+          "hair silhouette",
+          "the selected hair shape remains separated from the background",
+          "light reveals the intended volume changes",
+          "visible strand groups remain connected to the hairstyle"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "머리 뒤의 후광만 있음",
+        "모발이 배경에 녹아 형태가 안 보임"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the selected hair shape remains separated from the background"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the selected hair shape remains separated from the background"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the selected hair shape remains separated from the background",
+            "render_gate": {
+              "id": "vo_mep_hair_outline_1",
+              "review_scale": "both",
+              "description": "the selected hair shape remains separated from the background. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "light reveals the intended volume changes"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "light reveals the intended volume changes"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: light reveals the intended volume changes",
+            "render_gate": {
+              "id": "vo_mep_hair_outline_2",
+              "review_scale": "native",
+              "description": "light reveals the intended volume changes. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "visible strand groups remain connected to the hairstyle"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "visible strand groups remain connected to the hairstyle"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: visible strand groups remain connected to the hairstyle",
+            "render_gate": {
+              "id": "vo_mep_hair_outline_3",
+              "review_scale": "both",
+              "description": "visible strand groups remain connected to the hairstyle. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_cover_copy_space",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the reserved text region forms one usable area; important facial and product details remain outside that specified area; contrast within the reserved area supports the intended later typography"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the reserved text region forms one usable area; important facial and product details remain outside that specified area; contrast within the reserved area supports the intended later typography",
+        "paraphrase_examples": [
+          "표지 사진의 지정 문구 영역",
+          "cover copy space",
+          "magazine cover",
+          "Cover Shoot",
+          "Negative Space"
+        ],
+        "contrast_examples": [
+          "머리 위 아주 작은 틈",
+          "여백이 있지만 필수 제품을 잘라냄",
+          "arbitrary masthead over the face",
+          "small accidental gap without usable copy space"
+        ],
+        "claim_limits": [
+          "타이포를 포함한 실제 표지 제작은 text·format을 별도로 잠가야 한다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "표지 사진의 지정 문구 영역",
+          "cover copy space",
+          "magazine cover",
+          "the reserved text region forms one usable area",
+          "important facial and product details remain outside that specified area",
+          "contrast within the reserved area supports the intended later typography"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "머리 위 아주 작은 틈",
+        "여백이 있지만 필수 제품을 잘라냄",
+        "arbitrary masthead over the face",
+        "small accidental gap without usable copy space"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the reserved text region forms one usable area"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the reserved text region forms one usable area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the reserved text region forms one usable area",
+            "render_gate": {
+              "id": "vo_mep_cover_copy_space_1",
+              "review_scale": "both",
+              "description": "the reserved text region forms one usable area. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "important facial and product details remain outside that specified area"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "important facial and product details remain outside that specified area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: important facial and product details remain outside that specified area",
+            "render_gate": {
+              "id": "vo_mep_cover_copy_space_2",
+              "review_scale": "native",
+              "description": "important facial and product details remain outside that specified area. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "contrast within the reserved area supports the intended later typography"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "contrast within the reserved area supports the intended later typography"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: contrast within the reserved area supports the intended later typography",
+            "render_gate": {
+              "id": "vo_mep_cover_copy_space_3",
+              "review_scale": "both",
+              "description": "contrast within the reserved area supports the intended later typography. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_environment_relation",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the subject engages with one scene element relevant to the stated story; the environment includes a readable contextual cue; the framing preserves both the action and that cue"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the subject engages with one scene element relevant to the stated story; the environment includes a readable contextual cue; the framing preserves both the action and that cue",
+        "paraphrase_examples": [
+          "인물 행동과 환경의 관계",
+          "editorial portrait",
+          "environmental portrait",
+          "Portrait Editorial",
+          "Environmental Context"
+        ],
+        "contrast_examples": [
+          "무관한 고급 배경",
+          "소품만으로 실제 직업을 확정"
+        ],
+        "claim_limits": [
+          "배경 단서는 표현된 상황을 지지할 뿐 실제 경력을 증명하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "인물 행동과 환경의 관계",
+          "editorial portrait",
+          "environmental portrait",
+          "the subject engages with one scene element relevant to the stated story",
+          "the environment includes a readable contextual cue",
+          "the framing preserves both the action and that cue"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무관한 고급 배경",
+        "소품만으로 실제 직업을 확정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the subject engages with one scene element relevant to the stated story"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the subject engages with one scene element relevant to the stated story"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the subject engages with one scene element relevant to the stated story",
+            "render_gate": {
+              "id": "vo_mep_environment_relation_1",
+              "review_scale": "both",
+              "description": "the subject engages with one scene element relevant to the stated story. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the environment includes a readable contextual cue"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the environment includes a readable contextual cue"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the environment includes a readable contextual cue",
+            "render_gate": {
+              "id": "vo_mep_environment_relation_2",
+              "review_scale": "native",
+              "description": "the environment includes a readable contextual cue. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the framing preserves both the action and that cue"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the framing preserves both the action and that cue"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the framing preserves both the action and that cue",
+            "render_gate": {
+              "id": "vo_mep_environment_relation_3",
+              "review_scale": "both",
+              "description": "the framing preserves both the action and that cue. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_graphic_pose",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "connected limbs form the requested angular or curved arrangement; a deliberate gap separates the relevant limb from the torso; the support and joint configuration can sustain the depicted pose"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "connected limbs form the requested angular or curved arrangement; a deliberate gap separates the relevant limb from the torso; the support and joint configuration can sustain the depicted pose",
+        "paraphrase_examples": [
+          "사지와 몸통의 그래픽 간격",
+          "graphic pose",
+          "sculptural pose",
+          "Angular Pose",
+          "Broken Line"
+        ],
+        "contrast_examples": [
+          "옷 무늬의 삼각형",
+          "관절이 뒤집힌 채 실루엣만 맞음"
+        ],
+        "claim_limits": [
+          "팔 각도·손 위치는 템플릿으로 고정하지 않고 표현 목표에 맞춘다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "사지와 몸통의 그래픽 간격",
+          "graphic pose",
+          "sculptural pose",
+          "connected limbs form the requested angular or curved arrangement",
+          "a deliberate gap separates the relevant limb from the torso",
+          "the support and joint configuration can sustain the depicted pose"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "옷 무늬의 삼각형",
+        "관절이 뒤집힌 채 실루엣만 맞음"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "connected limbs form the requested angular or curved arrangement"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "connected limbs form the requested angular or curved arrangement"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: connected limbs form the requested angular or curved arrangement",
+            "render_gate": {
+              "id": "vo_mep_graphic_pose_1",
+              "review_scale": "both",
+              "description": "connected limbs form the requested angular or curved arrangement. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a deliberate gap separates the relevant limb from the torso"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a deliberate gap separates the relevant limb from the torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: a deliberate gap separates the relevant limb from the torso",
+            "render_gate": {
+              "id": "vo_mep_graphic_pose_2",
+              "review_scale": "native",
+              "description": "a deliberate gap separates the relevant limb from the torso. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the support and joint configuration can sustain the depicted pose"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the support and joint configuration can sustain the depicted pose"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the support and joint configuration can sustain the depicted pose",
+            "render_gate": {
+              "id": "vo_mep_graphic_pose_3",
+              "review_scale": "both",
+              "description": "the support and joint configuration can sustain the depicted pose. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_gaze_target",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the face orientation is compatible with the declared gaze direction; visible eyes point consistently toward the nominated target; the framing preserves the evidence needed to judge that relation"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the face orientation is compatible with the declared gaze direction; visible eyes point consistently toward the nominated target; the framing preserves the evidence needed to judge that relation",
+        "paraphrase_examples": [
+          "시선 방향과 화면 내 목표",
+          "directed eye-line",
+          "gaze target",
+          "Eye-line",
+          "Camera-aware",
+          "Profile Control"
+        ],
+        "contrast_examples": [
+          "무조건 카메라 응시",
+          "목표와 반대인 눈 방향"
+        ],
+        "claim_limits": [
+          "카메라 응시는 숙련·동의·자신감의 증명이 아니다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "시선 방향과 화면 내 목표",
+          "directed eye-line",
+          "gaze target",
+          "the face orientation is compatible with the declared gaze direction",
+          "visible eyes point consistently toward the nominated target",
+          "the framing preserves the evidence needed to judge that relation"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무조건 카메라 응시",
+        "목표와 반대인 눈 방향"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the face orientation is compatible with the declared gaze direction"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the face orientation is compatible with the declared gaze direction"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the face orientation is compatible with the declared gaze direction",
+            "render_gate": {
+              "id": "vo_mep_gaze_target_1",
+              "review_scale": "both",
+              "description": "the face orientation is compatible with the declared gaze direction. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "visible eyes point consistently toward the nominated target"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "visible eyes point consistently toward the nominated target"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: visible eyes point consistently toward the nominated target",
+            "render_gate": {
+              "id": "vo_mep_gaze_target_2",
+              "review_scale": "native",
+              "description": "visible eyes point consistently toward the nominated target. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the framing preserves the evidence needed to judge that relation"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the framing preserves the evidence needed to judge that relation"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the framing preserves the evidence needed to judge that relation",
+            "render_gate": {
+              "id": "vo_mep_gaze_target_3",
+              "review_scale": "both",
+              "description": "the framing preserves the evidence needed to judge that relation. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_poised_support",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the body has a readable support path to the ground or seat; joint positions remain compatible with that support; the requested still pose is legible without assigning a personality"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the body has a readable support path to the ground or seat; joint positions remain compatible with that support; the requested still pose is legible without assigning a personality",
+        "paraphrase_examples": [
+          "차분한 자세의 지지 관계",
+          "poised posture",
+          "balanced stillness",
+          "Poised",
+          "Composed",
+          "Self-possessed",
+          "Static Pose"
+        ],
+        "contrast_examples": [
+          "무조건 무표정",
+          "허공에 떠 있는 지지 발"
+        ],
+        "claim_limits": [
+          "서 있는 사람만 적용하지 않는다. 앉은 자세와 접근성 요구도 보존한다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "차분한 자세의 지지 관계",
+          "poised posture",
+          "balanced stillness",
+          "the body has a readable support path to the ground or seat",
+          "joint positions remain compatible with that support",
+          "the requested still pose is legible without assigning a personality"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무조건 무표정",
+        "허공에 떠 있는 지지 발"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the body has a readable support path to the ground or seat"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the body has a readable support path to the ground or seat"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the body has a readable support path to the ground or seat",
+            "render_gate": {
+              "id": "vo_mep_poised_support_1",
+              "review_scale": "both",
+              "description": "the body has a readable support path to the ground or seat. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "joint positions remain compatible with that support"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "joint positions remain compatible with that support"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: joint positions remain compatible with that support",
+            "render_gate": {
+              "id": "vo_mep_poised_support_2",
+              "review_scale": "native",
+              "description": "joint positions remain compatible with that support. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the requested still pose is legible without assigning a personality"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the requested still pose is legible without assigning a personality"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the requested still pose is legible without assigning a personality",
+            "render_gate": {
+              "id": "vo_mep_poised_support_3",
+              "review_scale": "both",
+              "description": "the requested still pose is legible without assigning a personality. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_in_between",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "one primary action is visibly underway; a displaced hand fabric edge or moving foot makes its incomplete phase readable; the rest of the body supports the same moment"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one primary action is visibly underway; a displaced hand fabric edge or moving foot makes its incomplete phase readable; the rest of the body supports the same moment",
+        "paraphrase_examples": [
+          "동작 전환의 미완 상태",
+          "in-between moment",
+          "pose transition",
+          "Effortless"
+        ],
+        "contrast_examples": [
+          "단순 모션 블러",
+          "정적 포즈에 candid 라벨만 붙임"
+        ],
+        "claim_limits": [
+          "실제 몰래 찍음·우연·자발성·시간적 micro-expression은 인증하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "동작 전환의 미완 상태",
+          "in-between moment",
+          "pose transition",
+          "one primary action is visibly underway",
+          "a displaced hand fabric edge or moving foot makes its incomplete phase readable",
+          "the rest of the body supports the same moment"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "단순 모션 블러",
+        "정적 포즈에 candid 라벨만 붙임"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one primary action is visibly underway"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one primary action is visibly underway"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: one primary action is visibly underway",
+            "render_gate": {
+              "id": "vo_mep_in_between_1",
+              "review_scale": "both",
+              "description": "one primary action is visibly underway. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a displaced hand fabric edge or moving foot makes its incomplete phase readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a displaced hand fabric edge or moving foot makes its incomplete phase readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: a displaced hand fabric edge or moving foot makes its incomplete phase readable",
+            "render_gate": {
+              "id": "vo_mep_in_between_2",
+              "review_scale": "native",
+              "description": "a displaced hand fabric edge or moving foot makes its incomplete phase readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the rest of the body supports the same moment"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the rest of the body supports the same moment"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the rest of the body supports the same moment",
+            "render_gate": {
+              "id": "vo_mep_in_between_3",
+              "review_scale": "both",
+              "description": "the rest of the body supports the same moment. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_surface_texture",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "the selected surface retains irregular fine detail; broad tonal transitions remain distinct from fine texture; edges of neighboring features remain locally coherent"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the selected surface retains irregular fine detail; broad tonal transitions remain distinct from fine texture; edges of neighboring features remain locally coherent",
+        "paraphrase_examples": [
+          "피부·직물의 국소 질감",
+          "texture preservation",
+          "skin retention",
+          "Beauty Retouch"
+        ],
+        "contrast_examples": [
+          "균일한 노이즈 오버레이",
+          "피부는 플라스틱인데 배경 직물만 선명",
+          "plastic skin with sharp knit background",
+          "uniform noise pasted over smooth skin"
+        ],
+        "claim_limits": [
+          "무보정·특정 소프트웨어·주파수 분리 사용 여부는 별도 이력 정보다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "피부·직물의 국소 질감",
+          "texture preservation",
+          "skin retention",
+          "the selected surface retains irregular fine detail",
+          "broad tonal transitions remain distinct from fine texture",
+          "edges of neighboring features remain locally coherent"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "균일한 노이즈 오버레이",
+        "피부는 플라스틱인데 배경 직물만 선명",
+        "plastic skin with sharp knit background",
+        "uniform noise pasted over smooth skin"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the selected surface retains irregular fine detail"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the selected surface retains irregular fine detail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the selected surface retains irregular fine detail",
+            "render_gate": {
+              "id": "vo_mep_surface_texture_1",
+              "review_scale": "both",
+              "description": "the selected surface retains irregular fine detail. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "broad tonal transitions remain distinct from fine texture"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "broad tonal transitions remain distinct from fine texture"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: broad tonal transitions remain distinct from fine texture",
+            "render_gate": {
+              "id": "vo_mep_surface_texture_2",
+              "review_scale": "native",
+              "description": "broad tonal transitions remain distinct from fine texture. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "edges of neighboring features remain locally coherent"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "edges of neighboring features remain locally coherent"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: edges of neighboring features remain locally coherent",
+            "render_gate": {
+              "id": "vo_mep_surface_texture_3",
+              "review_scale": "both",
+              "description": "edges of neighboring features remain locally coherent. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_selective_imperfection",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "one specified fold strand or styling offset remains irregular; neighboring selected features retain coherent structure; the irregularity stays subordinate to the declared focal subject"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one specified fold strand or styling offset remains irregular; neighboring selected features retain coherent structure; the irregularity stays subordinate to the declared focal subject",
+        "paraphrase_examples": [
+          "국소 흐트러짐과 정돈의 대비",
+          "deliberate imperfection",
+          "Editorial Restraint",
+          "Understated"
+        ],
+        "contrast_examples": [
+          "전체 흐림·인체 오류",
+          "여러 무관한 결함을 창의성으로 판정"
+        ],
+        "claim_limits": [
+          "deliberate는 실제 제작 의도를 이미지로 증명한다는 뜻이 아니다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "국소 흐트러짐과 정돈의 대비",
+          "deliberate imperfection",
+          "one specified fold strand or styling offset remains irregular",
+          "neighboring selected features retain coherent structure",
+          "the irregularity stays subordinate to the declared focal subject"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "전체 흐림·인체 오류",
+        "여러 무관한 결함을 창의성으로 판정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one specified fold strand or styling offset remains irregular"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one specified fold strand or styling offset remains irregular"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: one specified fold strand or styling offset remains irregular",
+            "render_gate": {
+              "id": "vo_mep_selective_imperfection_1",
+              "review_scale": "both",
+              "description": "one specified fold strand or styling offset remains irregular. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "neighboring selected features retain coherent structure"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "neighboring selected features retain coherent structure"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: neighboring selected features retain coherent structure",
+            "render_gate": {
+              "id": "vo_mep_selective_imperfection_2",
+              "review_scale": "native",
+              "description": "neighboring selected features retain coherent structure. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the irregularity stays subordinate to the declared focal subject"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the irregularity stays subordinate to the declared focal subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the irregularity stays subordinate to the declared focal subject",
+            "render_gate": {
+              "id": "vo_mep_selective_imperfection_3",
+              "review_scale": "both",
+              "description": "the irregularity stays subordinate to the declared focal subject. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_visual_juxtaposition",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "both selected elements remain identifiable; a shared spatial or material relation makes their contrast readable; neither element replaces a locked subject or event"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "both selected elements remain identifiable; a shared spatial or material relation makes their contrast readable; neither element replaces a locked subject or event",
+        "paraphrase_examples": [
+          "지정한 두 요소의 병치",
+          "visual juxtaposition",
+          "visual tension",
+          "Juxtaposition",
+          "Concept-driven"
+        ],
+        "contrast_examples": [
+          "무관한 소품 나열",
+          "색 차이만으로 서사 완성 주장"
+        ],
+        "claim_limits": [
+          "source가 증명하는 것은 콘셉트 가능성이고 이 구체 규격은 연구 제안이다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "지정한 두 요소의 병치",
+          "visual juxtaposition",
+          "visual tension",
+          "both selected elements remain identifiable",
+          "a shared spatial or material relation makes their contrast readable",
+          "neither element replaces a locked subject or event"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무관한 소품 나열",
+        "색 차이만으로 서사 완성 주장"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "both selected elements remain identifiable"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "both selected elements remain identifiable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: both selected elements remain identifiable",
+            "render_gate": {
+              "id": "vo_mep_visual_juxtaposition_1",
+              "review_scale": "both",
+              "description": "both selected elements remain identifiable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a shared spatial or material relation makes their contrast readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a shared spatial or material relation makes their contrast readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: a shared spatial or material relation makes their contrast readable",
+            "render_gate": {
+              "id": "vo_mep_visual_juxtaposition_2",
+              "review_scale": "native",
+              "description": "a shared spatial or material relation makes their contrast readable. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "neither element replaces a locked subject or event"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "neither element replaces a locked subject or event"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: neither element replaces a locked subject or event",
+            "render_gate": {
+              "id": "vo_mep_visual_juxtaposition_3",
+              "review_scale": "both",
+              "description": "neither element replaces a locked subject or event. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_tether_review",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "a visible capture setup relates to the displayed preview; a person inspects a specific detail of that preview; the review action and screen content are readable in the scene"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a visible capture setup relates to the displayed preview; a person inspects a specific detail of that preview; the review action and screen content are readable in the scene",
+        "paraphrase_examples": [
+          "테더 촬영 검토 장면",
+          "tethered review",
+          "digital tech",
+          "Digital Tech / Digi Tech",
+          "Pre-light",
+          "Photo Assistant"
+        ],
+        "contrast_examples": [
+          "노트북만 있는 사진",
+          "장비가 많다는 이유로 전문성 성공",
+          "laptop as decoration",
+          "finished fashion portrait without a production activity"
+        ],
+        "claim_limits": [
+          "완성 화보 요청에 스태프·케이블·화면을 자동 삽입하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "테더 촬영 검토 장면",
+          "tethered review",
+          "digital tech",
+          "a visible capture setup relates to the displayed preview",
+          "a person inspects a specific detail of that preview",
+          "the review action and screen content are readable in the scene"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "노트북만 있는 사진",
+        "장비가 많다는 이유로 전문성 성공",
+        "laptop as decoration",
+        "finished fashion portrait without a production activity"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a visible capture setup relates to the displayed preview"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a visible capture setup relates to the displayed preview"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: a visible capture setup relates to the displayed preview",
+            "render_gate": {
+              "id": "vo_mep_tether_review_1",
+              "review_scale": "both",
+              "description": "a visible capture setup relates to the displayed preview. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a person inspects a specific detail of that preview"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a person inspects a specific detail of that preview"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: a person inspects a specific detail of that preview",
+            "render_gate": {
+              "id": "vo_mep_tether_review_2",
+              "review_scale": "native",
+              "description": "a person inspects a specific detail of that preview. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the review action and screen content are readable in the scene"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the review action and screen content are readable in the scene"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the review action and screen content are readable in the scene",
+            "render_gate": {
+              "id": "vo_mep_tether_review_3",
+              "review_scale": "both",
+              "description": "the review action and screen content are readable in the scene. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "mep_fitting_adjustment",
+      "category": "photographic_presentation_relation",
+      "activation": {
+        "exact_terms": [
+          "hands contact the specified garment adjustment point; the fabric changes locally at that contact; the wearer support and fitter reach remain physically compatible"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "hands contact the specified garment adjustment point; the fabric changes locally at that contact; the wearer support and fitter reach remain physically compatible",
+        "paraphrase_examples": [
+          "의상 피팅의 실제 조정",
+          "wardrobe fitting",
+          "fit model",
+          "Fitting",
+          "Wardrobe Stylist"
+        ],
+        "contrast_examples": [
+          "재킷 입은 인물만",
+          "천에 닿지 않는 핀·손",
+          "fitness model exercising",
+          "hands hover without changing the garment"
+        ],
+        "claim_limits": [
+          "fit model과 fitness model을 분리한다. 실제 치수 인증은 수행하지 않는다.",
+          "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "의상 피팅의 실제 조정",
+          "wardrobe fitting",
+          "fit model",
+          "hands contact the specified garment adjustment point",
+          "the fabric changes locally at that contact",
+          "the wearer support and fitter reach remain physically compatible"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "재킷 입은 인물만",
+        "천에 닿지 않는 핀·손",
+        "fitness model exercising",
+        "hands hover without changing the garment"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "hands contact the specified garment adjustment point"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "hands contact the specified garment adjustment point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: hands contact the specified garment adjustment point",
+            "render_gate": {
+              "id": "vo_mep_fitting_adjustment_1",
+              "review_scale": "both",
+              "description": "hands contact the specified garment adjustment point. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the fabric changes locally at that contact"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the fabric changes locally at that contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the fabric changes locally at that contact",
+            "render_gate": {
+              "id": "vo_mep_fitting_adjustment_2",
+              "review_scale": "native",
+              "description": "the fabric changes locally at that contact. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the wearer support and fitter reach remain physically compatible"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the wearer support and fitter reach remain physically compatible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requested subject and make this selected relation visible: the wearer support and fitter reach remain physically compatible",
+            "render_gate": {
+              "id": "vo_mep_fitting_adjustment_3",
+              "review_scale": "both",
+              "description": "the wearer support and fitter reach remain physically compatible. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

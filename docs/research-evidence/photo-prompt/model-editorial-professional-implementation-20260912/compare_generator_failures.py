@@ -1,0 +1,6 @@
+from pathlib import Path
+import json,re,subprocess,sys,time
+ROOT=Path.cwd();OUT=ROOT/'docs/research-evidence/photo-prompt/model-editorial-professional-implementation-20260912';base=Path(json.loads((OUT/'head-baseline.json').read_text())['path']);module='tests.test_prompt_generator';current=next(r for r in json.loads((OUT/'full-suite/summary.json').read_text())['results'] if r['module']==module);targets=sorted(set(re.search(r'\((tests\.[^)]+)\)',s).group(1) for s in current['failures']))
+start=time.monotonic();p=subprocess.run([sys.executable,'-m','unittest',*targets,'-v'],cwd=base,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=900);log=p.stdout;(OUT/'head-comparison/generator-targeted.log').write_text(log);failures=re.findall(r'^(?:FAIL|ERROR): ([^\n]+)',log,re.M)
+row={'module':module,'baseline_scope':'failed_methods_only','target_ids':targets,'target_count':len(targets),'baseline_returncode':p.returncode,'baseline_failures':failures,'current_failures':current['failures'],'same_failure_names':failures==current['failures'],'seconds':round(time.monotonic()-start,2),'interrupted_full_baseline_not_used':True}
+(OUT/'head-comparison/generator-targeted-result.json').write_text(json.dumps(row,indent=2)+'\n');print(len(targets),row['same_failure_names'])

@@ -1,0 +1,83 @@
+{
+  "schema_version": "photo-realistic-background-integration/research-v1",
+  "status": "proposal_not_implemented",
+  "runtime_change_performed": false,
+  "priority_1": {
+    "objective": "기존 depth/light/reflection 계약 재사용 및 의미 과잉 확장 방지",
+    "existing_ids": [
+      "shallow_depth_focus_falloff_relation",
+      "three_plane_depth_chain",
+      "highlight_rolloff_tone_response",
+      "wet_surface_light_reflection_owner_relation",
+      "hard_light_shadow_edge_relation",
+      "soft_light_shadow_edge_relation"
+    ],
+    "guard": "창가 활동·에디토리얼 행동은 일반 배경 관계에 강제하지 않음"
+  },
+  "priority_2": {
+    "objective": "접속·재료·사용 흔적의 owner와 범위 보강",
+    "proposals": [
+      "rb_architecture_connectivity",
+      "rb_repair_patch_locality",
+      "rb_contact_wear_locality",
+      "rb_material_response_contrast",
+      "rb_window_room_gradient",
+      "rb_readable_environment_focus"
+    ],
+    "guard": "현실감 broad alias를 hard activation으로 쓰지 않음"
+  },
+  "priority_3": {
+    "objective": "조건부 효과·직접 실증 없는 가설을 수동 검토 뒤 시험",
+    "proposals": [
+      "rb_distance_haze",
+      "rb_low_light_noise",
+      "rb_film_grain_choice",
+      "rb_shared_wind_response",
+      "rb_support_compression"
+    ],
+    "guard": "날씨·매체·구도·청결·무풍 등 잠긴 요청 보존"
+  },
+  "future_files": [
+    "skills/photo-prompt-image-generator/assets/photo_prompt_realistic_background_extension.json",
+    "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_realistic_background.json",
+    "tests/test_photo_realistic_background_semantics.py"
+  ],
+  "future_file_status": "names proposed only; files not created; current loader and schema must be checked before integration",
+  "implementation_gates": [
+    "research schema mapped to runtime schema",
+    "authored duplicate-ID check",
+    "focused tests with negative and intent-lock cases",
+    "regenerate source-bound indexes if source changes",
+    "real candidate-pack v6 exposure and selection provenance",
+    "composed-prompt and render-request audits",
+    "owner-specific pixel review"
+  ],
+  "pilot": {
+    "status": "not_run",
+    "scene_families": 8,
+    "arms": [
+      "current",
+      "labels",
+      "relations",
+      "indiscriminate_effect_stack"
+    ],
+    "repeats": 3,
+    "proposed_images": 96,
+    "power_analysis": "not_performed",
+    "confound_controls": [
+      "model version",
+      "reference",
+      "locked intent",
+      "resolution",
+      "prompt length and object count",
+      "seed if supported"
+    ],
+    "outcomes": [
+      "relation qualification",
+      "intent violation",
+      "technical defects",
+      "blinded realism preference",
+      "aesthetic preference"
+    ]
+  }
+}

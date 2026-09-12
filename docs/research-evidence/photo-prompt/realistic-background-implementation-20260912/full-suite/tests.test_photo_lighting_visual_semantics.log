@@ -1,0 +1,35 @@
+setUpClass (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.test_photo_lighting_visual_semantics.PhotoLightingVisualSemanticsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_lighting_visual_semantics.py", line 83, in setUpClass
+    cls.generated_index = prompt_generator.load_visual_profile_index(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        INDEX_PATH,
+        ^^^^^^^^^^^
+        cls.registry,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2795, in load_visual_profile_index
+    validate_visual_profile_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload,
+        ^^^^^^^^
+    ...<3 lines>...
+        dimensions=dimensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2708, in validate_visual_profile_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.483s
+
+FAILED (errors=1)

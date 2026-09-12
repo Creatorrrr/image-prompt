@@ -1,0 +1,49 @@
+test_beastkin_mixin_no_longer_locks_generic_scene_or_mood (tests.test_beastkin_improvements.TestBeastkinImprovements.test_beastkin_mixin_no_longer_locks_generic_scene_or_mood) ... ok
+test_beastkin_ornament_risk_appends_absorption_negatives (tests.test_beastkin_improvements.TestBeastkinImprovements.test_beastkin_ornament_risk_appends_absorption_negatives) ... ok
+test_beastkin_required_priority_is_body_rooted_not_ears_tail_only (tests.test_beastkin_improvements.TestBeastkinImprovements.test_beastkin_required_priority_is_body_rooted_not_ears_tail_only) ... ok
+test_beastkin_slots_and_negative_pool_are_registered (tests.test_beastkin_improvements.TestBeastkinImprovements.test_beastkin_slots_and_negative_pool_are_registered) ... ok
+test_every_beastkin_species_variant_pins_marker_texture_and_body_connection (tests.test_beastkin_improvements.TestBeastkinImprovements.test_every_beastkin_species_variant_pins_marker_texture_and_body_connection) ... ok
+test_review_weak_roles_have_role_specific_beastkin_bundles (tests.test_beastkin_improvements.TestBeastkinImprovements.test_review_weak_roles_have_role_specific_beastkin_bundles) ... ok
+test_role_beastkin_explain_carries_body_evidence_slots (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_beastkin_explain_carries_body_evidence_slots) ... ok
+test_role_beastkin_soft_spec_carries_scene_and_species_family_policy (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_beastkin_soft_spec_carries_scene_and_species_family_policy) ... FAIL
+test_role_scene_pools_cover_reviewed_beastkin_roles (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) ... 
+  test_role_scene_pools_cover_reviewed_beastkin_roles (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) (role='경찰') ... FAIL
+
+======================================================================
+FAIL: test_role_beastkin_soft_spec_carries_scene_and_species_family_policy (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_beastkin_soft_spec_carries_scene_and_species_family_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_beastkin_improvements.py", line 126, in test_role_beastkin_soft_spec_carries_scene_and_species_family_policy
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        set(spec["role_scene_policy"]["allowed_locations"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Items in the first set but not the second:
+'controlled_public_safety_perimeter'
+Items in the second set but not the first:
+'traffic_crossing_rain'
+'city_intersection_night'
+'lost_child_service_desk'
+
+======================================================================
+FAIL: test_role_scene_pools_cover_reviewed_beastkin_roles (tests.test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) (role='경찰')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_beastkin_improvements.py", line 113, in test_role_scene_pools_cover_reviewed_beastkin_roles
+    self.assertEqual(set(policy["allowed_locations"]), locations)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'controlled_public_safety_perimeter'
+Items in the second set but not the first:
+'traffic_crossing_rain'
+'city_intersection_night'
+'lost_child_service_desk'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.714s
+
+FAILED (failures=2)

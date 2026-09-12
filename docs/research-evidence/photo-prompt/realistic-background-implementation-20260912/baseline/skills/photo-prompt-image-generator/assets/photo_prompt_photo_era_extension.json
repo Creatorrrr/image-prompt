@@ -1,0 +1,988 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "description": "Optional photo-era process, object, response, output, deterioration, later-treatment, and scene-compatible candidate atoms.",
+  "slots": {
+    "medium": [
+      {
+        "id": "cased_photographic_plate_object",
+        "ko": "케이스에 보관된 사진 판 객체",
+        "en": "a cased photographic plate object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "material_object",
+          "medium"
+        ],
+        "keywords": [
+          "material_object",
+          "daguerreotype cased plate 1839 1860s"
+        ],
+        "embedding_text": "a cased photographic plate object. a physical photographic object with readable boundaries and depth. compatible with daguerreotype cased plate 1839 1860s."
+      },
+      {
+        "id": "salted_paper_print_object",
+        "ko": "염지 종이 사진 인화물",
+        "en": "a salted-paper photographic print object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "material_object",
+          "medium"
+        ],
+        "keywords": [
+          "material_object",
+          "calotype salted paper 1841 1860s"
+        ],
+        "embedding_text": "a salted-paper photographic print object. a physical photographic object with readable boundaries and depth. compatible with calotype salted paper 1841 1860s."
+      },
+      {
+        "id": "glass_plate_negative_object",
+        "ko": "유리판 사진 네거티브 객체",
+        "en": "a glass-plate photographic negative object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "material_object",
+          "medium"
+        ],
+        "keywords": [
+          "material_object",
+          "wet collodion albumen 1851 1890s",
+          "gelatin dry plate 1870s 1920s"
+        ],
+        "embedding_text": "a glass-plate photographic negative object. a physical photographic object with readable boundaries and depth. compatible with wet collodion albumen 1851 1890s, gelatin dry plate 1870s 1920s."
+      },
+      {
+        "id": "mounted_albumen_card_print",
+        "ko": "카드에 마운트된 알부민 인화물",
+        "en": "a card-mounted albumen photographic print",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "material_object",
+          "medium"
+        ],
+        "keywords": [
+          "material_object",
+          "wet collodion albumen 1851 1890s"
+        ],
+        "embedding_text": "a card-mounted albumen photographic print. a physical photographic object with readable boundaries and depth. compatible with wet collodion albumen 1851 1890s."
+      },
+      {
+        "id": "backlit_color_transparency_object",
+        "ko": "후면광으로 보는 컬러 투명 원고 객체",
+        "en": "a backlit color transparency object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "medium"
+        ],
+        "keywords": [
+          "output_container",
+          "autochrome transparency 1907 1930s",
+          "midcentury bw street and color slide 1950s"
+        ],
+        "embedding_text": "a backlit color transparency object. a physical or displayed output container with readable image-within-object topology. compatible with autochrome transparency 1907 1930s, midcentury bw street and color slide 1950s."
+      },
+      {
+        "id": "newsprint_photo_reproduction",
+        "ko": "신문지 망점 사진 복제물",
+        "en": "a halftone newsprint photographic reproduction",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "medium"
+        ],
+        "keywords": [
+          "output_container",
+          "wartime press flash newsprint 1930s 1940s"
+        ],
+        "embedding_text": "a halftone newsprint photographic reproduction. a physical or displayed output container with readable image-within-object topology. compatible with wartime press flash newsprint 1930s 1940s."
+      },
+      {
+        "id": "consumer_minilab_print_object",
+        "ko": "소비자용 미니랩 인화물 객체",
+        "en": "a consumer minilab print object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "medium"
+        ],
+        "keywords": [
+          "output_container",
+          "autofocus minilab family flash 1980s",
+          "disposable party print 1990s"
+        ],
+        "embedding_text": "a consumer minilab print object. a physical or displayed output container with readable image-within-object topology. compatible with autofocus minilab family flash 1980s, disposable party print 1990s."
+      },
+      {
+        "id": "social_platform_reproduction_container",
+        "ko": "소셜 플랫폼 재게시 컨테이너",
+        "en": "a social-platform image reproduction container",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "medium"
+        ],
+        "keywords": [
+          "output_container",
+          "early compact digicam social repost 2000 2004",
+          "consumer digital web 2005 2009",
+          "square social filter output 2010 2014"
+        ],
+        "embedding_text": "a social-platform image reproduction container. a physical or displayed output container with readable image-within-object topology. compatible with early compact digicam social repost 2000 2004, consumer digital web 2005 2009, square social filter output 2010 2014."
+      }
+    ],
+    "genre": [
+      {
+        "id": "pictorialist_handworked_photography",
+        "ko": "손작업 인화 기반 픽토리얼리즘 사진",
+        "en": "hand-worked Pictorialist photography",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "pictorialist handworked 1890s 1910s"
+        ],
+        "embedding_text": "hand-worked Pictorialist photography. a photographic practice expressed through visible composition and output. compatible with pictorialist handworked 1890s 1910s."
+      },
+      {
+        "id": "new_vision_modernist_photography",
+        "ko": "비관습 시점의 뉴 비전 모더니즘 사진",
+        "en": "New Vision modernist photography with unconventional viewpoints",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "new vision geometry 1920s 1930s"
+        ],
+        "embedding_text": "New Vision modernist photography with unconventional viewpoints. a photographic practice expressed through visible composition and output. compatible with new vision geometry 1920s 1930s."
+      },
+      {
+        "id": "fsa_owi_documentary_context_candidate",
+        "ko": "FSA/OWI 기록 프로젝트 맥락 후보",
+        "en": "an FSA/OWI documentary-project context candidate",
+        "weight": 0.25,
+        "tags": [
+          "photo_era",
+          "metadata_only",
+          "genre"
+        ],
+        "keywords": [
+          "metadata_only",
+          "fsa owi documentary context 1935 1944"
+        ],
+        "embedding_text": "an FSA/OWI documentary-project context candidate. an explicit camera-process specification retained with the requested scene. compatible with fsa owi documentary context 1935 1944."
+      },
+      {
+        "id": "midcentury_available_light_street_candidate",
+        "ko": "20세기 중반 가용광 거리사진 후보",
+        "en": "a mid-century available-light street-photography candidate",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "midcentury bw street and color slide 1950s"
+        ],
+        "embedding_text": "a mid-century available-light street-photography candidate. a photographic practice expressed through visible composition and output. compatible with midcentury bw street and color slide 1950s."
+      },
+      {
+        "id": "family_snapshot_practice_candidate",
+        "ko": "가정 생활 스냅 촬영 관습 후보",
+        "en": "a domestic family-snapshot practice candidate",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "rollfilm brownie snapshot 1888 1910s",
+          "instamatic flashcube super8 1960s",
+          "pocket 110 and new color 1970s",
+          "autofocus minilab family flash 1980s"
+        ],
+        "embedding_text": "a domestic family-snapshot practice candidate. a photographic practice expressed through visible composition and output. compatible with rollfilm brownie snapshot 1888 1910s, instamatic flashcube super8 1960s, pocket 110 and new color 1970s."
+      },
+      {
+        "id": "late_century_party_snapshot_candidate",
+        "ko": "20세기 후반 파티 스냅 관습 후보",
+        "en": "a late-century party-snapshot practice candidate",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "disposable party print 1990s"
+        ],
+        "embedding_text": "a late-century party-snapshot practice candidate. a photographic practice expressed through visible composition and output. compatible with disposable party print 1990s."
+      },
+      {
+        "id": "early_social_digicam_snapshot_candidate",
+        "ko": "초기 소셜 디카 스냅 관습 후보",
+        "en": "an early-social compact-digicam snapshot candidate",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "genre"
+        ],
+        "keywords": [
+          "genre_practice",
+          "early compact digicam social repost 2000 2004",
+          "consumer digital web 2005 2009"
+        ],
+        "embedding_text": "an early-social compact-digicam snapshot candidate. a photographic practice expressed through visible composition and output. compatible with early compact digicam social repost 2000 2004, consumer digital web 2005 2009."
+      },
+      {
+        "id": "dual_time_digicam_revival_candidate",
+        "ko": "현재 장면과 옛 디카 룩을 분리한 이중 시간 후보",
+        "en": "a dual-time current-scene and revived-digicam-look candidate",
+        "weight": 0.4,
+        "tags": [
+          "photo_era",
+          "retro_simulation",
+          "genre"
+        ],
+        "keywords": [
+          "retro_simulation",
+          "computational clean vs digicam revived 2023 2026"
+        ],
+        "embedding_text": "a dual-time current-scene and revived-digicam-look candidate. a later visual treatment kept separate from claims about the original capture. compatible with computational clean vs digicam revived 2023 2026."
+      }
+    ],
+    "capture_context": [
+      {
+        "id": "reflective_cased_plate_viewing_context",
+        "ko": "보호 케이스 속 반사성 사진 판을 비스듬히 보는 맥락",
+        "en": "angled viewing of a reflective photographic plate inside its protective case",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_process",
+          "daguerreotype cased plate 1839 1860s"
+        ],
+        "embedding_text": "angled viewing of a reflective photographic plate inside its protective case. a process-linked photographic cue. compatible with daguerreotype cased plate 1839 1860s."
+      },
+      {
+        "id": "paper_fiber_embedded_image_context",
+        "ko": "종이 섬유층에 사진상이 내재된 촬영 맥락",
+        "en": "photographic image embedded in visible paper fibers",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_process",
+          "calotype salted paper 1841 1860s"
+        ],
+        "embedding_text": "photographic image embedded in visible paper fibers. a process-linked photographic cue. compatible with calotype salted paper 1841 1860s."
+      },
+      {
+        "id": "hand_poured_glass_plate_context",
+        "ko": "손으로 도포한 유리판 가장자리와 핀홀이 보이는 맥락",
+        "en": "hand-poured glass-plate context with coating edge and pinholes",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_process",
+          "wet collodion albumen 1851 1890s"
+        ],
+        "embedding_text": "hand-poured glass-plate context with coating edge and pinholes. a process-linked photographic cue. compatible with wet collodion albumen 1851 1890s."
+      },
+      {
+        "id": "contact_print_object_silhouette_context",
+        "ko": "물체를 종이에 직접 접촉시킨 청사진 맥락",
+        "en": "direct contact-print object-silhouette context",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_process",
+          "cyanotype contact process 1842 present"
+        ],
+        "embedding_text": "direct contact-print object-silhouette context. a process-linked photographic cue. compatible with cyanotype contact process 1842 present."
+      },
+      {
+        "id": "backlit_starch_screen_transparency_context",
+        "ko": "미세 전분 색소 스크린이 보이는 후면광 투명판 맥락",
+        "en": "backlit transparency context with a fine starch color screen",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_process",
+          "autochrome transparency 1907 1930s"
+        ],
+        "embedding_text": "backlit transparency context with a fine starch color screen. a process-linked photographic cue. compatible with autochrome transparency 1907 1930s."
+      },
+      {
+        "id": "handworked_print_mount_context",
+        "ko": "손작업 인화 표면과 마운트를 함께 보는 맥락",
+        "en": "hand-worked photographic print and mount context",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "capture_context"
+        ],
+        "keywords": [
+          "genre_practice",
+          "pictorialist handworked 1890s 1910s"
+        ],
+        "embedding_text": "hand-worked photographic print and mount context. a photographic practice expressed through visible composition and output. compatible with pictorialist handworked 1890s 1910s."
+      },
+      {
+        "id": "press_flash_newsprint_context",
+        "ko": "직광 보도사진이 신문 망점으로 복제된 맥락",
+        "en": "direct-flash press image reproduced in newsprint halftone",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "capture_context"
+        ],
+        "keywords": [
+          "output_container",
+          "wartime press flash newsprint 1930s 1940s"
+        ],
+        "embedding_text": "direct-flash press image reproduced in newsprint halftone. a physical or displayed output container with readable image-within-object topology. compatible with wartime press flash newsprint 1930s 1940s."
+      },
+      {
+        "id": "mounted_slide_backlight_context",
+        "ko": "마운트된 슬라이드를 투과광으로 보는 맥락",
+        "en": "mounted photographic slide viewed by transmitted light",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "capture_context"
+        ],
+        "keywords": [
+          "output_container",
+          "midcentury bw street and color slide 1950s"
+        ],
+        "embedding_text": "mounted photographic slide viewed by transmitted light. a physical or displayed output container with readable image-within-object topology. compatible with midcentury bw street and color slide 1950s."
+      },
+      {
+        "id": "integral_instant_print_development_context",
+        "ko": "일체형 즉석 인화물이 물체로 놓인 현상 맥락",
+        "en": "an integral instant print present as a developing physical object",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "capture_context"
+        ],
+        "keywords": [
+          "output_container",
+          "integral instant 1972 onward"
+        ],
+        "embedding_text": "an integral instant print present as a developing physical object. a physical or displayed output container with readable image-within-object topology. compatible with integral instant 1972 onward."
+      },
+      {
+        "id": "consumer_print_album_table_context",
+        "ko": "가정용 인화물이 앨범이나 탁자에 놓인 맥락",
+        "en": "consumer photographic print placed on an album page or table",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "capture_context"
+        ],
+        "keywords": [
+          "output_container",
+          "autofocus minilab family flash 1980s",
+          "disposable party print 1990s"
+        ],
+        "embedding_text": "consumer photographic print placed on an album page or table. a physical or displayed output container with readable image-within-object topology. compatible with autofocus minilab family flash 1980s, disposable party print 1990s."
+      },
+      {
+        "id": "multiframe_hdr_high_contrast_context",
+        "ko": "강한 명암차를 다중 프레임으로 균형화한 룩 맥락",
+        "en": "multi-frame HDR look in a genuinely high-contrast scene",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_response",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_response",
+          "portrait hdr ringlight 2015 2019"
+        ],
+        "embedding_text": "multi-frame HDR look in a genuinely high-contrast scene. a visible optical or computational capture response. compatible with portrait hdr ringlight 2015 2019."
+      },
+      {
+        "id": "multiframe_low_light_motion_boundary_context",
+        "ko": "저조도 합성과 움직임 경계가 함께 보이는 맥락",
+        "en": "low-light multi-frame look with a readable motion boundary",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_response",
+          "capture_context"
+        ],
+        "keywords": [
+          "capture_response",
+          "night ultrawide vertical 2020 2022"
+        ],
+        "embedding_text": "low-light multi-frame look with a readable motion boundary. a visible optical or computational capture response. compatible with night ultrawide vertical 2020 2022."
+      }
+    ],
+    "camera_type": [
+      {
+        "id": "plate_camera_process_metadata",
+        "ko": "사진 판 카메라 공정 메타데이터",
+        "en": "plate-camera process metadata",
+        "weight": 0.25,
+        "tags": [
+          "photo_era",
+          "metadata_only",
+          "camera_type"
+        ],
+        "keywords": [
+          "metadata_only",
+          "camera type photographic cue"
+        ],
+        "embedding_text": "plate-camera process metadata. an explicit camera-process specification retained with the requested scene."
+      },
+      {
+        "id": "rollfilm_box_camera_candidate",
+        "ko": "롤필름 박스 카메라 후보",
+        "en": "a roll-film box-camera candidate",
+        "weight": 0.35,
+        "tags": [
+          "photo_era",
+          "scene_prior",
+          "camera_type"
+        ],
+        "keywords": [
+          "scene_prior",
+          "rollfilm brownie snapshot 1888 1910s"
+        ],
+        "embedding_text": "a roll-film box-camera candidate. an optional scene-compatible camera clue. compatible with rollfilm brownie snapshot 1888 1910s."
+      },
+      {
+        "id": "instamatic_126_camera_metadata",
+        "ko": "Instamatic 126 카메라 명시 메타데이터",
+        "en": "explicit Instamatic 126 camera metadata",
+        "weight": 0.25,
+        "tags": [
+          "photo_era",
+          "metadata_only",
+          "camera_type"
+        ],
+        "keywords": [
+          "metadata_only",
+          "instamatic flashcube super8 1960s"
+        ],
+        "embedding_text": "explicit Instamatic 126 camera metadata. an explicit camera-process specification retained with the requested scene. compatible with instamatic flashcube super8 1960s."
+      },
+      {
+        "id": "pocket_110_camera_metadata",
+        "ko": "Pocket 110 카메라 명시 메타데이터",
+        "en": "explicit pocket 110 camera metadata",
+        "weight": 0.25,
+        "tags": [
+          "photo_era",
+          "metadata_only",
+          "camera_type"
+        ],
+        "keywords": [
+          "metadata_only",
+          "pocket 110 and new color 1970s"
+        ],
+        "embedding_text": "explicit pocket 110 camera metadata. an explicit camera-process specification retained with the requested scene. compatible with pocket 110 and new color 1970s."
+      },
+      {
+        "id": "integral_instant_camera_candidate",
+        "ko": "일체형 즉석카메라 후보",
+        "en": "an integral instant-camera candidate",
+        "weight": 0.35,
+        "tags": [
+          "photo_era",
+          "scene_prior",
+          "camera_type"
+        ],
+        "keywords": [
+          "scene_prior",
+          "integral instant 1972 onward"
+        ],
+        "embedding_text": "an integral instant-camera candidate. an optional scene-compatible camera clue. compatible with integral instant 1972 onward."
+      },
+      {
+        "id": "early_camera_phone_metadata",
+        "ko": "초기 카메라폰 명시 메타데이터",
+        "en": "explicit early camera-phone metadata",
+        "weight": 0.25,
+        "tags": [
+          "photo_era",
+          "metadata_only",
+          "camera_type"
+        ],
+        "keywords": [
+          "metadata_only",
+          "camera type photographic cue"
+        ],
+        "embedding_text": "explicit early camera-phone metadata. an explicit camera-process specification retained with the requested scene."
+      }
+    ],
+    "composition": [
+      {
+        "id": "modernist_extreme_viewpoint_diagonal",
+        "ko": "극단 시점과 구조 대각선의 모더니즘 구도",
+        "en": "modernist composition with an extreme viewpoint and structural diagonals",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "composition"
+        ],
+        "keywords": [
+          "genre_practice",
+          "new vision geometry 1920s 1930s"
+        ],
+        "embedding_text": "modernist composition with an extreme viewpoint and structural diagonals. a photographic practice expressed through visible composition and output. compatible with new vision geometry 1920s 1930s."
+      },
+      {
+        "id": "urgent_press_crop_action",
+        "ko": "행동을 비대칭으로 급하게 자른 보도 구도",
+        "en": "an urgent asymmetrical press crop around ongoing action",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "composition"
+        ],
+        "keywords": [
+          "genre_practice",
+          "wartime press flash newsprint 1930s 1940s"
+        ],
+        "embedding_text": "an urgent asymmetrical press crop around ongoing action. a photographic practice expressed through visible composition and output. compatible with wartime press flash newsprint 1930s 1940s."
+      },
+      {
+        "id": "full_slide_mount_boundary",
+        "ko": "슬라이드 마운트 전체 경계를 포함한 구도",
+        "en": "composition preserving the complete slide-mount boundary",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "composition"
+        ],
+        "keywords": [
+          "output_container",
+          "midcentury bw street and color slide 1950s"
+        ],
+        "embedding_text": "composition preserving the complete slide-mount boundary. a physical or displayed output container with readable image-within-object topology. compatible with midcentury bw street and color slide 1950s."
+      },
+      {
+        "id": "full_instant_print_boundary",
+        "ko": "즉석 인화물 전체 경계를 포함한 구도",
+        "en": "composition preserving the complete instant-print boundary",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "composition"
+        ],
+        "keywords": [
+          "output_container",
+          "integral instant 1972 onward"
+        ],
+        "embedding_text": "composition preserving the complete instant-print boundary. a physical or displayed output container with readable image-within-object topology. compatible with integral instant 1972 onward."
+      },
+      {
+        "id": "square_social_output_container",
+        "ko": "정사각 소셜 유통 프레임",
+        "en": "a square social-output frame container",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "composition"
+        ],
+        "keywords": [
+          "output_container",
+          "square social filter output 2010 2014"
+        ],
+        "embedding_text": "a square social-output frame container. a physical or displayed output container with readable image-within-object topology. compatible with square social filter output 2010 2014."
+      },
+      {
+        "id": "vertical_social_output_container",
+        "ko": "세로 소셜 유통 프레임",
+        "en": "a vertical social-output frame container",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "composition"
+        ],
+        "keywords": [
+          "output_container",
+          "night ultrawide vertical 2020 2022"
+        ],
+        "embedding_text": "a vertical social-output frame container. a physical or displayed output container with readable image-within-object topology. compatible with night ultrawide vertical 2020 2022."
+      }
+    ],
+    "color": [
+      {
+        "id": "autochrome_restrained_screen_color",
+        "ko": "전분 스크린 기반 절제된 오토크롬 색",
+        "en": "restrained Autochrome starch-screen color",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "color"
+        ],
+        "keywords": [
+          "capture_process",
+          "autochrome transparency 1907 1930s"
+        ],
+        "embedding_text": "restrained Autochrome starch-screen color. a process-linked photographic cue. compatible with autochrome transparency 1907 1930s."
+      },
+      {
+        "id": "chromogenic_channel_specific_fade",
+        "ko": "염료 채널별로 다르게 빠진 크로모제닉 퇴색",
+        "en": "channel-specific chromogenic dye fading",
+        "weight": 0.45,
+        "tags": [
+          "photo_era",
+          "deterioration",
+          "color"
+        ],
+        "keywords": [
+          "deterioration",
+          "color photographic cue"
+        ],
+        "embedding_text": "channel-specific chromogenic dye fading. localized change on a physical photographic object."
+      },
+      {
+        "id": "early_digital_mixed_white_balance",
+        "ko": "초기 디지털 룩의 혼합 화이트밸런스",
+        "en": "mixed white balance in an early-digital look",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_response",
+          "color"
+        ],
+        "keywords": [
+          "capture_response",
+          "early compact digicam social repost 2000 2004"
+        ],
+        "embedding_text": "mixed white balance in an early-digital look. a visible optical or computational capture response. compatible with early compact digicam social repost 2000 2004."
+      },
+      {
+        "id": "computational_local_tone_color_balance",
+        "ko": "계산사진 국소 톤·색 균형 룩",
+        "en": "a computational local tone-and-color balance look",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_response",
+          "color"
+        ],
+        "keywords": [
+          "capture_response",
+          "portrait hdr ringlight 2015 2019",
+          "computational clean vs digicam revived 2023 2026"
+        ],
+        "embedding_text": "a computational local tone-and-color balance look. a visible optical or computational capture response. compatible with portrait hdr ringlight 2015 2019, computational clean vs digicam revived 2023 2026."
+      }
+    ],
+    "surface_material": [
+      {
+        "id": "silvered_copper_photographic_plate",
+        "ko": "은도금 동판 사진 표면",
+        "en": "a silvered-copper photographic plate surface",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "surface_material"
+        ],
+        "keywords": [
+          "capture_process",
+          "daguerreotype cased plate 1839 1860s"
+        ],
+        "embedding_text": "a silvered-copper photographic plate surface. a process-linked photographic cue. compatible with daguerreotype cased plate 1839 1860s."
+      },
+      {
+        "id": "salted_paper_visible_fiber_surface",
+        "ko": "섬유가 보이는 염지 종이 사진 표면",
+        "en": "salted-paper photographic surface with visible fibers",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "surface_material"
+        ],
+        "keywords": [
+          "capture_process",
+          "calotype salted paper 1841 1860s"
+        ],
+        "embedding_text": "salted-paper photographic surface with visible fibers. a process-linked photographic cue. compatible with calotype salted paper 1841 1860s."
+      },
+      {
+        "id": "collodion_glass_pour_edge_surface",
+        "ko": "도포 가장자리가 남은 콜로디온 유리 표면",
+        "en": "collodion-coated glass surface with a pour edge",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "surface_material"
+        ],
+        "keywords": [
+          "capture_process",
+          "wet collodion albumen 1851 1890s"
+        ],
+        "embedding_text": "collodion-coated glass surface with a pour edge. a process-linked photographic cue. compatible with wet collodion albumen 1851 1890s."
+      },
+      {
+        "id": "albumen_overall_fine_crackle_surface",
+        "ko": "전반적 미세 균열이 있는 알부민 표면",
+        "en": "albumen surface with characteristic overall fine crackle",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process+deterioration",
+          "surface_material"
+        ],
+        "keywords": [
+          "capture_process deterioration",
+          "wet collodion albumen 1851 1890s"
+        ],
+        "embedding_text": "albumen surface with characteristic overall fine crackle. a process surface with localized physical change. compatible with wet collodion albumen 1851 1890s."
+      },
+      {
+        "id": "autochrome_starch_mosaic_glass_surface",
+        "ko": "전분 색소 모자이크의 오토크롬 유리 표면",
+        "en": "Autochrome glass surface with a fine dyed-starch mosaic",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "surface_material"
+        ],
+        "keywords": [
+          "capture_process",
+          "autochrome transparency 1907 1930s"
+        ],
+        "embedding_text": "Autochrome glass surface with a fine dyed-starch mosaic. a process-linked photographic cue. compatible with autochrome transparency 1907 1930s."
+      },
+      {
+        "id": "instant_print_layered_border_surface",
+        "ko": "층과 비대칭 여백이 보이는 즉석 인화 표면",
+        "en": "instant-print surface with layered depth and asymmetric margin",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "surface_material"
+        ],
+        "keywords": [
+          "output_container",
+          "integral instant 1972 onward"
+        ],
+        "embedding_text": "instant-print surface with layered depth and asymmetric margin. a physical or displayed output container with readable image-within-object topology. compatible with integral instant 1972 onward."
+      },
+      {
+        "id": "silver_mirroring_dense_region_surface",
+        "ko": "고밀도 영역에 모인 은경화 금속성 표면",
+        "en": "silver-mirroring metallic surface concentrated in dense image regions",
+        "weight": 0.45,
+        "tags": [
+          "photo_era",
+          "deterioration",
+          "surface_material"
+        ],
+        "keywords": [
+          "deterioration",
+          "surface material photographic cue"
+        ],
+        "embedding_text": "silver-mirroring metallic surface concentrated in dense image regions. localized change on a physical photographic object."
+      },
+      {
+        "id": "acetate_channeling_emulsion_surface",
+        "ko": "채널링과 박리가 보이는 아세테이트 유제 표면",
+        "en": "acetate-film emulsion surface with channeling and delamination",
+        "weight": 0.45,
+        "tags": [
+          "photo_era",
+          "deterioration",
+          "surface_material"
+        ],
+        "keywords": [
+          "deterioration",
+          "surface material photographic cue"
+        ],
+        "embedding_text": "acetate-film emulsion surface with channeling and delamination. localized change on a physical photographic object."
+      },
+      {
+        "id": "chromogenic_fade_boundary_surface",
+        "ko": "가림 경계가 남은 크로모제닉 퇴색 표면",
+        "en": "chromogenic dye-fade surface with a covered comparison boundary",
+        "weight": 0.45,
+        "tags": [
+          "photo_era",
+          "deterioration",
+          "surface_material"
+        ],
+        "keywords": [
+          "deterioration",
+          "surface material photographic cue"
+        ],
+        "embedding_text": "chromogenic dye-fade surface with a covered comparison boundary. localized change on a physical photographic object."
+      },
+      {
+        "id": "newsprint_halftone_paper_surface",
+        "ko": "신문지 망점 사진 표면",
+        "en": "a newsprint paper surface carrying photographic halftones",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "output_container",
+          "surface_material"
+        ],
+        "keywords": [
+          "output_container",
+          "wartime press flash newsprint 1930s 1940s"
+        ],
+        "embedding_text": "a newsprint paper surface carrying photographic halftones. a physical or displayed output container with readable image-within-object topology. compatible with wartime press flash newsprint 1930s 1940s."
+      }
+    ],
+    "lens": [
+      {
+        "id": "ultrawide_near_far_scale_expansion",
+        "ko": "초광각 근거리-원거리 스케일 확장",
+        "en": "ultra-wide near-to-far scale expansion",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_response",
+          "lens"
+        ],
+        "keywords": [
+          "capture_response",
+          "night ultrawide vertical 2020 2022"
+        ],
+        "embedding_text": "ultra-wide near-to-far scale expansion. a visible optical or computational capture response. compatible with night ultrawide vertical 2020 2022."
+      }
+    ],
+    "focus": [
+      {
+        "id": "pictorialist_selective_soft_focus",
+        "ko": "기준 초점을 남긴 픽토리얼리즘 선택적 연초점",
+        "en": "Pictorialist selective soft focus retaining one focus reference",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "genre_practice",
+          "focus"
+        ],
+        "keywords": [
+          "genre_practice",
+          "pictorialist handworked 1890s 1910s"
+        ],
+        "embedding_text": "Pictorialist selective soft focus retaining one focus reference. a photographic practice expressed through visible composition and output. compatible with pictorialist handworked 1890s 1910s."
+      }
+    ],
+    "quality": [
+      {
+        "id": "process_trace_legibility",
+        "ko": "공정 흔적과 이미지 디테일이 함께 읽히는 품질",
+        "en": "quality preserving both process traces and photographic detail",
+        "weight": 0.55,
+        "tags": [
+          "photo_era",
+          "capture_process",
+          "quality"
+        ],
+        "keywords": [
+          "capture_process",
+          "daguerreotype cased plate 1839 1860s",
+          "calotype salted paper 1841 1860s",
+          "cyanotype contact process 1842 present",
+          "gelatin dry plate 1870s 1920s"
+        ],
+        "embedding_text": "quality preserving both process traces and photographic detail. a process-linked photographic cue. compatible with daguerreotype cased plate 1839 1860s, calotype salted paper 1841 1860s, cyanotype contact process 1842 present."
+      },
+      {
+        "id": "localized_archive_damage_legibility",
+        "ko": "국소 열화와 비손상 비교 영역을 함께 보존하는 품질",
+        "en": "quality preserving localized deterioration and an unaffected comparison region",
+        "weight": 0.45,
+        "tags": [
+          "photo_era",
+          "deterioration",
+          "quality"
+        ],
+        "keywords": [
+          "deterioration",
+          "quality photographic cue"
+        ],
+        "embedding_text": "quality preserving localized deterioration and an unaffected comparison region. localized change on a physical photographic object."
+      }
+    ],
+    "color_grading": [
+      {
+        "id": "retro_grade_declared_simulation",
+        "ko": "후대 재현임을 명시한 레트로 색보정",
+        "en": "a retro color grade explicitly treated as later simulation",
+        "weight": 0.4,
+        "tags": [
+          "photo_era",
+          "retro_simulation",
+          "color_grading"
+        ],
+        "keywords": [
+          "retro_simulation",
+          "consumer digital web 2005 2009",
+          "square social filter output 2010 2014",
+          "computational clean vs digicam revived 2023 2026"
+        ],
+        "embedding_text": "a retro color grade explicitly treated as later simulation. a later visual treatment kept separate from claims about the original capture. compatible with consumer digital web 2005 2009, square social filter output 2010 2014, computational clean vs digicam revived 2023 2026."
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+test_broad_legend_terms_remain_advisory (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_broad_legend_terms_remain_advisory) ... ok
+test_cluster_manifest_binds_profiles_candidates_and_advisory_row (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_cluster_manifest_binds_profiles_candidates_and_advisory_row) ... ok
+test_extension_has_eight_complete_six_slot_clusters (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_extension_has_eight_complete_six_slot_clusters) ... ok
+test_narrow_exact_terms_route_to_exactly_one_new_profile (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_narrow_exact_terms_route_to_exactly_one_new_profile) ... ok
+test_nearest_substitutes_do_not_activate_new_profiles (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_nearest_substitutes_do_not_activate_new_profiles) ... ok
+test_real_generated_index_contains_new_profiles_and_vectors (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_real_generated_index_contains_new_profiles_and_vectors) ... ERROR
+test_registry_schema_accepts_legend_profiles (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_registry_schema_accepts_legend_profiles) ... FAIL
+test_research_evidence_is_approved_and_contract_bound (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_research_evidence_is_approved_and_contract_bound) ... ok
+test_six_new_profiles_have_five_components_fields_and_pixel_gates (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_six_new_profiles_have_five_components_fields_and_pixel_gates) ... ok
+
+======================================================================
+ERROR: test_real_generated_index_contains_new_profiles_and_vectors (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_real_generated_index_contains_new_profiles_and_vectors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_legend_visual_semantics.py", line 302, in test_real_generated_index_contains_new_profiles_and_vectors
+    real_index = prompt_generator.load_visual_profile_index(
+        INDEX_PATH,
+        self.registry,
+    )
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2795, in load_visual_profile_index
+    validate_visual_profile_index_metadata(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload,
+        ^^^^^^^^
+    ...<3 lines>...
+        dimensions=dimensions,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 2708, in validate_visual_profile_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: visual profile index registry_sha256 does not match the visual registry; regenerate it with build_visual_profile_index.py
+
+======================================================================
+FAIL: test_registry_schema_accepts_legend_profiles (tests.test_photo_legend_visual_semantics.PhotoLegendVisualSemanticsTests.test_registry_schema_accepts_legend_profiles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_legend_visual_semantics.py", line 322, in test_registry_schema_accepts_legend_profiles
+    self.assertEqual(errors, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: ["visual obligation registry.profiles[587][2833 chars]s']"] != []
+
+First list contains 32 additional elements.
+First extra element 0:
+"visual obligation registry.profiles[587].semantics: unknown keys ['visual_components']"
+
+Diff is 3173 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.740s
+
+FAILED (failures=1, errors=1)

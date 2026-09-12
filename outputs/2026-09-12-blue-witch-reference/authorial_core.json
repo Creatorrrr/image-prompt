@@ -1,0 +1,202 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "이 이미지로 생성해줘.",
+  "interpreted_intent": "Use the attached portrait as the facial and hair appearance reference for the previously requested blue witch, preserving the Gothic citadel sofa scene, languid expression, supported chin, black cat and pumpkins.",
+  "subject": "Adult blue-clad witch, black cat, orange pumpkins",
+  "setting": "Gothic citadel sitting chamber",
+  "event": "Witch rests seated with chin supported by her hand",
+  "visual_priorities": [
+    "Languid face and clearly supported chin-rest pose",
+    "Detailed blue costume, Gothic architecture, black cat and pumpkins"
+  ],
+  "baseline_prompt_en": "Use the attached portrait as the sole facial appearance reference for the witch, preserving her eye shape and spacing, softly oval face, jaw proportions, nose shape, lip contours, natural skin tone, and long dark wavy hair with its center part. Keep her face recognizable as the same person while changing her expression to the specified languid resting look. An intricately detailed photographic portrait of an adult blue witch resting in a Gothic citadel. She wears a midnight-blue velvet witch gown with cobalt silk insets, fine silver botanical embroidery, fitted long sleeves, and a tall blue pointed hat with a softly bent tip. Her long dark hair falls over her shoulders, framing a languid expression with half-lidded eyes and softly relaxed lips. She sits deep on a carved walnut sofa upholstered in faded sapphire velvet. Her left elbow rests firmly on the padded sofa arm, her left forearm rises naturally, and the heel of her left palm supports her chin, with fingers resting along the side of her jaw. Her head tilts gently into that hand, while her right hand lies loosely on her lap. Her hips and thighs settle into the cushion, and her skirt drapes over bent knees toward the stone floor. A black cat sits on the adjacent cushion, its pointed ears, amber eyes, glossy fur and curled tail distinctly visible beside her gown. Ribbed orange pumpkins with rough curved stems cluster at the foot of the sofa; one carved pumpkin glows softly from within. Behind her, pointed stone arches, slender clustered columns, iron candle stands and a leaded lancet window establish the Gothic citadel interior. Cool window light reveals the pile of the blue velvet and weathered stone, balanced by small amber candle highlights. Photograph the scene from a slightly front-left three-quarter viewpoint, showing the entire supporting forearm and chin contact, the cat, and the pumpkins. Prioritize her sleepy face and credible relaxed pose, then the tactile richness of blue fabric, carved wood, black fur and pumpkin rind.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이 이미지로",
+      "source_text": "이 이미지로 생성해줘.",
+      "basis": "request_context",
+      "resolution": "The supplied portrait provides the witch facial and hair appearance; the earlier witch scene and pose remain requested.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "adult blue witch"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "She wears a midnight-blue velvet witch gown"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "event",
+        "prompt_evidence": "She sits deep on a carved walnut sofa"
+      },
+      {
+        "anchor_id": "setting",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "setting",
+        "prompt_evidence": "Gothic citadel interior"
+      },
+      {
+        "anchor_id": "pose",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "pose",
+        "prompt_evidence": "the heel of her left palm supports her chin"
+      },
+      {
+        "anchor_id": "expression",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "expression",
+        "prompt_evidence": "a languid expression with half-lidded eyes and softly relaxed lips"
+      },
+      {
+        "anchor_id": "color",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "color",
+        "prompt_evidence": "cobalt silk insets"
+      },
+      {
+        "anchor_id": "details",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "style",
+        "prompt_evidence": "fine silver botanical embroidery"
+      },
+      {
+        "anchor_id": "cat",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "A black cat sits on the adjacent cushion"
+      },
+      {
+        "anchor_id": "pumpkins",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "Ribbed orange pumpkins with rough curved stems"
+      },
+      {
+        "anchor_id": "reference_identity",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "identity",
+        "prompt_evidence": "preserving her eye shape and spacing, softly oval face, jaw proportions, nose shape, lip contours"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "이 이미지로 생성해줘.",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait as the sole facial appearance reference for the witch"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "expression",
+      "color",
+      "style",
+      "identity",
+      "reference_use"
+    ],
+    "open_dimensions": []
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "chin_rest",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "axes": {
+        "support": "elbow supported on sofa arm, palm under chin"
+      },
+      "evidence": {
+        "contact": "the heel of her left palm supports her chin",
+        "support": "Her left elbow rests firmly on the padded sofa arm"
+      }
+    },
+    {
+      "assertion_id": "languid_face",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "expression"
+      ],
+      "axes": {
+        "affect": "sleepy relaxation"
+      },
+      "evidence": {
+        "expression": "a languid expression with half-lidded eyes and softly relaxed lips"
+      }
+    },
+    {
+      "assertion_id": "portrait_reference",
+      "dimension": "identity",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "identity",
+        "reference_use"
+      ],
+      "axes": {
+        "source": "attached portrait",
+        "features": "face shape, eyes, nose, lips, hair"
+      },
+      "evidence": {
+        "source": "Use the attached portrait as the sole facial appearance reference for the witch",
+        "features": "preserving her eye shape and spacing, softly oval face, jaw proportions, nose shape, lip contours"
+      }
+    }
+  ],
+  "request_lineage": {
+    "parent_request_id": "20260912-blue-witch",
+    "parent_core_sha256": "605c26205d90f3a7c416c2f3d622713e5aa58800b95d8ae356422bdb9c7360c3",
+    "preserved_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "expression",
+      "color",
+      "style"
+    ],
+    "allowed_changes": [
+      "identity",
+      "reference_use"
+    ]
+  },
+  "style": {
+    "domain": "photographic fantasy portrait",
+    "family": "tactile Gothic cinematic portrait",
+    "evidence": [
+      "fine silver botanical embroidery",
+      "weathered stone"
+    ]
+  },
+  "variation_key": "blue-witch-reference-01"
+}

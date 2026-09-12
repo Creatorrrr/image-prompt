@@ -1,0 +1,339 @@
+{
+  "record_id": "photo_prompt_model_editorial_extension",
+  "authored_source_sha256": "316485ea4983cc38d44551a9aa0837371ecacff9536ca68738780b259df71372",
+  "maintenance_only": {
+    "research_path": "docs/research-evidence/photo-prompt/model-editorial-professional-20260912",
+    "source_ids": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S11",
+      "S14",
+      "S15",
+      "S16",
+      "S17"
+    ],
+    "included_proposal_ids": [
+      "mep_casting_front",
+      "mep_casting_profile",
+      "mep_casting_full_length",
+      "mep_garment_clearance",
+      "mep_garment_side_depth",
+      "mep_garment_movement",
+      "mep_product_hero",
+      "mep_jewelry_contact",
+      "mep_beauty_detail",
+      "mep_hair_outline",
+      "mep_cover_copy_space",
+      "mep_environment_relation",
+      "mep_graphic_pose",
+      "mep_gaze_target",
+      "mep_poised_support",
+      "mep_in_between",
+      "mep_surface_texture",
+      "mep_selective_imperfection",
+      "mep_visual_juxtaposition",
+      "mep_tether_review",
+      "mep_fitting_adjustment"
+    ],
+    "deferred_proposals": [
+      {
+        "id": "mep_spread_gutter",
+        "label_ko": "펼침면 중앙부 보호",
+        "related_terms": [
+          "Double-page Spread / DPS",
+          "Editorial Spread"
+        ],
+        "status": "research_proposal",
+        "source_ids": [
+          "S08",
+          "S09"
+        ],
+        "evidence_level": "source_informed_design_not_external_validation",
+        "scope": "layout",
+        "owner": "critical subject features and center fold band",
+        "relation": "two-page placement",
+        "affected_dimensions": [
+          "composition",
+          "format"
+        ],
+        "applicable_when_ko": "정해진 지면 템플릿을 사용하는 경우",
+        "components": [
+          {
+            "id": "spread_gutter_c1",
+            "prompt_fragment_en": "the image is evaluated against a specified two-page layout",
+            "review_scale": "both"
+          },
+          {
+            "id": "spread_gutter_c2",
+            "prompt_fragment_en": "critical face or product features lie outside the nominated fold-loss band",
+            "review_scale": "native"
+          },
+          {
+            "id": "spread_gutter_c3",
+            "prompt_fragment_en": "the composition remains readable after the simulated center loss",
+            "review_scale": "both"
+          }
+        ],
+        "contrast_examples_ko": [
+          "가로 사진이라는 이유만으로 DPS 통과",
+          "중앙 접힘에 눈·제품이 잘림"
+        ],
+        "limitations_ko": "항상 중앙을 비우라는 보편적 미감 규칙이 아니다. 제본·재단 조건이 먼저다.",
+        "activation": {
+          "broad_term_alone_hard_eligible": false,
+          "approximate_retrieval": "advisory_only",
+          "promotion": "only_after_request_grounding_and_complete_component_selection"
+        },
+        "render_status": "NOT_RUN",
+        "user_judgment": "NOT_REQUESTED",
+        "claim_not_allowed": [
+          "actual_professional_status",
+          "documented_provenance_from_pixels"
+        ]
+      },
+      {
+        "id": "mep_series_lookbook",
+        "label_ko": "룩북의 컷 간 일관성과 변주",
+        "related_terms": [
+          "Lookbook",
+          "Catalog",
+          "Cohesive",
+          "Pose Vocabulary"
+        ],
+        "status": "research_proposal",
+        "source_ids": [
+          "S01",
+          "S06",
+          "S07"
+        ],
+        "evidence_level": "source_informed_design_not_external_validation",
+        "scope": "series",
+        "owner": "ordered collection images",
+        "relation": "cross-frame continuity",
+        "affected_dimensions": [
+          "format",
+          "framing",
+          "color"
+        ],
+        "applicable_when_ko": "여러 컷의 룩북 산출물을 요청한 경우",
+        "components": [
+          {
+            "id": "series_lookbook_c1",
+            "prompt_fragment_en": "several separately identified images show the specified looks or garment views",
+            "review_scale": "both"
+          },
+          {
+            "id": "series_lookbook_c2",
+            "prompt_fragment_en": "the agreed scale background and illumination remain comparable across the set",
+            "review_scale": "native"
+          },
+          {
+            "id": "series_lookbook_c3",
+            "prompt_fragment_en": "view changes add garment information rather than duplicating one image",
+            "review_scale": "both"
+          }
+        ],
+        "contrast_examples_ko": [
+          "단일 사진",
+          "같은 사진의 복제 격자"
+        ],
+        "limitations_ko": "한 장의 후보팩이나 썸네일만으로 series PASS를 선언하지 않는다.",
+        "activation": {
+          "broad_term_alone_hard_eligible": false,
+          "approximate_retrieval": "advisory_only",
+          "promotion": "only_after_request_grounding_and_complete_component_selection"
+        },
+        "render_status": "NOT_RUN",
+        "user_judgment": "NOT_REQUESTED",
+        "claim_not_allowed": [
+          "actual_professional_status",
+          "documented_provenance_from_pixels"
+        ]
+      },
+      {
+        "id": "mep_series_story",
+        "label_ko": "서사 시퀀스",
+        "related_terms": [
+          "Fashion Story",
+          "Photo Story",
+          "Visual Story",
+          "Sequencing",
+          "Sequence Edit"
+        ],
+        "status": "research_proposal",
+        "source_ids": [
+          "S02",
+          "S06",
+          "S15"
+        ],
+        "evidence_level": "source_informed_design_not_external_validation",
+        "scope": "series",
+        "owner": "ordered photographs and recurring subject or motif",
+        "relation": "temporal or conceptual progression",
+        "affected_dimensions": [
+          "format",
+          "event",
+          "timing"
+        ],
+        "applicable_when_ko": "연작의 컷 역할과 연속성이 요청된 경우",
+        "components": [
+          {
+            "id": "series_story_c1",
+            "prompt_fragment_en": "each frame has an explicit role in the ordered set",
+            "review_scale": "both"
+          },
+          {
+            "id": "series_story_c2",
+            "prompt_fragment_en": "a recurring anchor connects the frames",
+            "review_scale": "native"
+          },
+          {
+            "id": "series_story_c3",
+            "prompt_fragment_en": "changes between frames develop the stated narrative or concept",
+            "review_scale": "both"
+          }
+        ],
+        "contrast_examples_ko": [
+          "서로 무관한 화보 모음",
+          "한 장을 여러 컷이라고 부름"
+        ],
+        "limitations_ko": "시퀀스의 사건 순서를 단일 이미지 hard gate로 대체하지 않는다.",
+        "activation": {
+          "broad_term_alone_hard_eligible": false,
+          "approximate_retrieval": "advisory_only",
+          "promotion": "only_after_request_grounding_and_complete_component_selection"
+        },
+        "render_status": "NOT_RUN",
+        "user_judgment": "NOT_REQUESTED",
+        "claim_not_allowed": [
+          "actual_professional_status",
+          "documented_provenance_from_pixels"
+        ]
+      }
+    ],
+    "deferred_bundles": [
+      {
+        "id": "mep_bundle_digitals_set",
+        "label_ko": "캐스팅 3뷰 세트",
+        "status": "research_proposal",
+        "component_proposal_ids": [
+          "mep_casting_front",
+          "mep_casting_profile",
+          "mep_casting_full_length"
+        ],
+        "scope": "series",
+        "affected_dimensions": [
+          "appearance",
+          "framing",
+          "lighting",
+          "pose"
+        ],
+        "request_condition_ko": "정면·측면·전신의 분리된 세 컷",
+        "conflict_ko": "세 컷을 한 인체의 동시 자세로 결합",
+        "selection_note_ko": "별도 이미지 ID 및 인물·의상 연속성 검토 필요",
+        "source_ids": [
+          "S03",
+          "S04"
+        ],
+        "activation": "opt_in_after_frozen_core_only",
+        "adoption_requires": "all component evidence plus explicit relation evidence; all affected dimensions open or already request-locked with identical meaning",
+        "runtime_status": "NOT_INTEGRATED",
+        "pixel_status": "NOT_RUN"
+      },
+      {
+        "id": "mep_bundle_dps_layout",
+        "label_ko": "펼침면 배치안",
+        "status": "research_proposal",
+        "component_proposal_ids": [
+          "mep_spread_gutter"
+        ],
+        "scope": "layout",
+        "affected_dimensions": [
+          "composition",
+          "format"
+        ],
+        "request_condition_ko": "두 페이지 템플릿에 맞춘 배치",
+        "conflict_ko": "제본 폭 미확정 상태의 print-ready 주장",
+        "selection_note_ko": "템플릿에서 중앙 손실 영역을 정하고 배치 후 검사",
+        "source_ids": [
+          "S08",
+          "S09"
+        ],
+        "activation": "opt_in_after_frozen_core_only",
+        "adoption_requires": "all component evidence plus explicit relation evidence; all affected dimensions open or already request-locked with identical meaning",
+        "runtime_status": "NOT_INTEGRATED",
+        "pixel_status": "NOT_RUN"
+      },
+      {
+        "id": "mep_bundle_story_sequence",
+        "label_ko": "패션 연작 구성",
+        "status": "research_proposal",
+        "component_proposal_ids": [
+          "mep_series_story",
+          "mep_visual_juxtaposition"
+        ],
+        "scope": "series",
+        "affected_dimensions": [
+          "format",
+          "event",
+          "timing",
+          "composition",
+          "setting",
+          "material"
+        ],
+        "request_condition_ko": "연속 모티프와 컷 역할을 가진 연작",
+        "conflict_ko": "모든 컷을 한 장의 collage로 자동 병합",
+        "selection_note_ko": "각 컷을 별도 코어로 동결하고 연속성은 세트에서 판정",
+        "source_ids": [
+          "S02",
+          "S06",
+          "S15"
+        ],
+        "activation": "opt_in_after_frozen_core_only",
+        "adoption_requires": "all component evidence plus explicit relation evidence; all affected dimensions open or already request-locked with identical meaning",
+        "runtime_status": "NOT_INTEGRATED",
+        "pixel_status": "NOT_RUN"
+      },
+      {
+        "id": "mep_bundle_consistent_catalog",
+        "label_ko": "일관된 카탈로그 세트",
+        "status": "research_proposal",
+        "component_proposal_ids": [
+          "mep_series_lookbook",
+          "mep_garment_clearance"
+        ],
+        "scope": "series",
+        "affected_dimensions": [
+          "format",
+          "framing",
+          "color",
+          "pose",
+          "composition"
+        ],
+        "request_condition_ko": "분리된 정면·옆면 등 제품 자료",
+        "conflict_ko": "매 컷 다른 색·조명·비율로 상품 비교 불가",
+        "selection_note_ko": "잠근 항목의 컷 간 차이를 검증하며 상품 정보는 컷마다 추가",
+        "source_ids": [
+          "S01",
+          "S06",
+          "S07"
+        ],
+        "activation": "opt_in_after_frozen_core_only",
+        "adoption_requires": "all component evidence plus explicit relation evidence; all affected dimensions open or already request-locked with identical meaning",
+        "runtime_status": "NOT_INTEGRATED",
+        "pixel_status": "NOT_RUN"
+      }
+    ],
+    "reason": "Series and layout require a separate output-level contract, not hard duties on a single image.",
+    "broad_term_policy": "industry status, publication provenance and subjective quality are advisory context only",
+    "claim_boundary": "Source and index integrity are not candidate adoption or rendered success."
+  }
+}

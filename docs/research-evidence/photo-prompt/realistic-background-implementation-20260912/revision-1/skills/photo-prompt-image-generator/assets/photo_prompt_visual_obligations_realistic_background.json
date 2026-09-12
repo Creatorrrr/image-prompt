@@ -1,0 +1,3355 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Optional scene-bound environmental relationships; no universal realism style or capture-authenticity claim.",
+  "profiles": [
+    {
+      "id": "rb_architecture_connectivity",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the doorway is recessed within visible wall thickness; the path continues to the doorway threshold; service fixtures remain visibly attached to the building surface"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the doorway is recessed within visible wall thickness; the path continues to the doorway threshold; service fixtures remain visibly attached to the building surface",
+        "paraphrase_examples": [
+          "The recessed doorway has visible wall thickness, and the pavement continues to its threshold beneath wall-mounted fixtures.",
+          "기존 건축의 접속 구조",
+          "architecture connectivity relation"
+        ],
+        "contrast_examples": [
+          "건물 이름만 제시",
+          "벽에 붙인 평면 벽지",
+          "끊긴 문턱"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "기존 건축의 접속 구조",
+          "architecture connectivity relation",
+          "the doorway is recessed within visible wall thickness",
+          "the path continues to the doorway threshold",
+          "service fixtures remain visibly attached to the building surface"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "건물 이름만 제시",
+        "벽에 붙인 평면 벽지",
+        "끊긴 문턱"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the doorway is recessed within visible wall thickness"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the doorway is recessed within visible wall thickness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the doorway is recessed within visible wall thickness",
+            "render_gate": {
+              "id": "vo_rb_architecture_connectivity_1",
+              "review_scale": "both",
+              "description": "the doorway is recessed within visible wall thickness. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the path continues to the doorway threshold"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the path continues to the doorway threshold"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the path continues to the doorway threshold",
+            "render_gate": {
+              "id": "vo_rb_architecture_connectivity_2",
+              "review_scale": "both",
+              "description": "the path continues to the doorway threshold. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "service fixtures remain visibly attached to the building surface"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "service fixtures remain visibly attached to the building surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: service fixtures remain visibly attached to the building surface",
+            "render_gate": {
+              "id": "vo_rb_architecture_connectivity_3",
+              "review_scale": "both",
+              "description": "service fixtures remain visibly attached to the building surface. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_use_trace_affordance",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a recently used object rests on a stable working surface; the object is placed within the user's reach; the adjacent walking route remains clear"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a recently used object rests on a stable working surface; the object is placed within the user's reach; the adjacent walking route remains clear",
+        "paraphrase_examples": [
+          "A recently used mug rests within reach beside a folded cloth, with the walking route left clear.",
+          "사용 목적에 맞는 생활 흔적",
+          "use trace affordance relation"
+        ],
+        "contrast_examples": [
+          "무작위 쓰레기",
+          "모든 공간의 빈곤화",
+          "부유 소품"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "사용 목적에 맞는 생활 흔적",
+          "use trace affordance relation",
+          "a recently used object rests on a stable working surface",
+          "the object is placed within the user's reach",
+          "the adjacent walking route remains clear"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무작위 쓰레기",
+        "모든 공간의 빈곤화",
+        "부유 소품"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a recently used object rests on a stable working surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a recently used object rests on a stable working surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a recently used object rests on a stable working surface",
+            "render_gate": {
+              "id": "vo_rb_use_trace_affordance_1",
+              "review_scale": "both",
+              "description": "a recently used object rests on a stable working surface. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the object is placed within the user's reach"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the object is placed within the user's reach"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the object is placed within the user's reach",
+            "render_gate": {
+              "id": "vo_rb_use_trace_affordance_2",
+              "review_scale": "both",
+              "description": "the object is placed within the user's reach. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the adjacent walking route remains clear"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the adjacent walking route remains clear"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the adjacent walking route remains clear",
+            "render_gate": {
+              "id": "vo_rb_use_trace_affordance_3",
+              "review_scale": "both",
+              "description": "the adjacent walking route remains clear. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_infrastructure_attachment",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a drain cover fits flush within the walking surface; a service pipe follows the wall on visible supports; the fixtures leave a continuous passage through the space"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a drain cover fits flush within the walking surface; a service pipe follows the wall on visible supports; the fixtures leave a continuous passage through the space",
+        "paraphrase_examples": [
+          "A drain cover sits flush with the path while a service pipe follows the wall on visible brackets.",
+          "일상 설비의 부착과 배치",
+          "infrastructure attachment relation"
+        ],
+        "contrast_examples": [
+          "서울이면 쓰레기 강제",
+          "공중에 끝나는 케이블",
+          "시대 불일치 설비"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "일상 설비의 부착과 배치",
+          "infrastructure attachment relation",
+          "a drain cover fits flush within the walking surface",
+          "a service pipe follows the wall on visible supports",
+          "the fixtures leave a continuous passage through the space"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "서울이면 쓰레기 강제",
+        "공중에 끝나는 케이블",
+        "시대 불일치 설비"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a drain cover fits flush within the walking surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a drain cover fits flush within the walking surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a drain cover fits flush within the walking surface",
+            "render_gate": {
+              "id": "vo_rb_infrastructure_attachment_1",
+              "review_scale": "both",
+              "description": "a drain cover fits flush within the walking surface. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a service pipe follows the wall on visible supports"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a service pipe follows the wall on visible supports"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a service pipe follows the wall on visible supports",
+            "render_gate": {
+              "id": "vo_rb_infrastructure_attachment_2",
+              "review_scale": "both",
+              "description": "a service pipe follows the wall on visible supports. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the fixtures leave a continuous passage through the space"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the fixtures leave a continuous passage through the space"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the fixtures leave a continuous passage through the space",
+            "render_gate": {
+              "id": "vo_rb_infrastructure_attachment_3",
+              "review_scale": "both",
+              "description": "the fixtures leave a continuous passage through the space. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_repair_patch_locality",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "one bounded repair patch is visible on the selected wall; the patch differs subtly from the surrounding paint; the wall joints remain continuous outside the patch"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one bounded repair patch is visible on the selected wall; the patch differs subtly from the surrounding paint; the wall joints remain continuous outside the patch",
+        "paraphrase_examples": [
+          "One small repaired patch differs slightly in paint tone while the wall joints continue through the surrounding surface.",
+          "국소적인 보수 경계",
+          "repair patch locality relation"
+        ],
+        "contrast_examples": [
+          "폐허 전역 균열",
+          "랜덤 디지털 얼룩"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "국소적인 보수 경계",
+          "repair patch locality relation",
+          "one bounded repair patch is visible on the selected wall",
+          "the patch differs subtly from the surrounding paint",
+          "the wall joints remain continuous outside the patch"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "폐허 전역 균열",
+        "랜덤 디지털 얼룩"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one bounded repair patch is visible on the selected wall"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one bounded repair patch is visible on the selected wall"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: one bounded repair patch is visible on the selected wall",
+            "render_gate": {
+              "id": "vo_rb_repair_patch_locality_1",
+              "review_scale": "native",
+              "description": "one bounded repair patch is visible on the selected wall. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the patch differs subtly from the surrounding paint"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the patch differs subtly from the surrounding paint"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the patch differs subtly from the surrounding paint",
+            "render_gate": {
+              "id": "vo_rb_repair_patch_locality_2",
+              "review_scale": "native",
+              "description": "the patch differs subtly from the surrounding paint. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the wall joints remain continuous outside the patch"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the wall joints remain continuous outside the patch"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the wall joints remain continuous outside the patch",
+            "render_gate": {
+              "id": "vo_rb_repair_patch_locality_3",
+              "review_scale": "native",
+              "description": "the wall joints remain continuous outside the patch. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_contact_wear_locality",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "wear is localized to the gripping area of the selected handle; the adjacent unhandled surface remains comparatively intact; the handle keeps a continuous solid shape through the worn area"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "wear is localized to the gripping area of the selected handle; the adjacent unhandled surface remains comparatively intact; the handle keeps a continuous solid shape through the worn area",
+        "paraphrase_examples": [
+          "The door pull is slightly polished at the gripping area, while the adjacent painted panel remains intact.",
+          "접촉 위치에 집중된 마모",
+          "contact wear locality relation"
+        ],
+        "contrast_examples": [
+          "모든 표면에 같은 스크래치",
+          "카메라 노이즈로 대체"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "접촉 위치에 집중된 마모",
+          "contact wear locality relation",
+          "wear is localized to the gripping area of the selected handle",
+          "the adjacent unhandled surface remains comparatively intact",
+          "the handle keeps a continuous solid shape through the worn area"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 표면에 같은 스크래치",
+        "카메라 노이즈로 대체"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "wear is localized to the gripping area of the selected handle"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "wear is localized to the gripping area of the selected handle"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: wear is localized to the gripping area of the selected handle",
+            "render_gate": {
+              "id": "vo_rb_contact_wear_locality_1",
+              "review_scale": "native",
+              "description": "wear is localized to the gripping area of the selected handle. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the adjacent unhandled surface remains comparatively intact"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the adjacent unhandled surface remains comparatively intact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the adjacent unhandled surface remains comparatively intact",
+            "render_gate": {
+              "id": "vo_rb_contact_wear_locality_2",
+              "review_scale": "native",
+              "description": "the adjacent unhandled surface remains comparatively intact. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the handle keeps a continuous solid shape through the worn area"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the handle keeps a continuous solid shape through the worn area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the handle keeps a continuous solid shape through the worn area",
+            "render_gate": {
+              "id": "vo_rb_contact_wear_locality_3",
+              "review_scale": "native",
+              "description": "the handle keeps a continuous solid shape through the worn area. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_water_path_stain",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a drainage outlet is visible above the selected wall; a narrow runoff mark begins immediately below that outlet; the surrounding wall remains distinct from the localized water trace"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a drainage outlet is visible above the selected wall; a narrow runoff mark begins immediately below that outlet; the surrounding wall remains distinct from the localized water trace",
+        "paraphrase_examples": [
+          "A faint runoff mark begins below the drain outlet and follows a narrow path down the wall.",
+          "물 경로에 연결된 변색",
+          "water path stain relation"
+        ],
+        "contrast_examples": [
+          "무작위 세로 줄무늬",
+          "벽 전체 곰팡이 자동 생성",
+          "사진으로 누수 진단"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "물 경로에 연결된 변색",
+          "water path stain relation",
+          "a drainage outlet is visible above the selected wall",
+          "a narrow runoff mark begins immediately below that outlet",
+          "the surrounding wall remains distinct from the localized water trace"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무작위 세로 줄무늬",
+        "벽 전체 곰팡이 자동 생성",
+        "사진으로 누수 진단"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a drainage outlet is visible above the selected wall"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a drainage outlet is visible above the selected wall"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a drainage outlet is visible above the selected wall",
+            "render_gate": {
+              "id": "vo_rb_water_path_stain_1",
+              "review_scale": "native",
+              "description": "a drainage outlet is visible above the selected wall. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a narrow runoff mark begins immediately below that outlet"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a narrow runoff mark begins immediately below that outlet"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a narrow runoff mark begins immediately below that outlet",
+            "render_gate": {
+              "id": "vo_rb_water_path_stain_2",
+              "review_scale": "native",
+              "description": "a narrow runoff mark begins immediately below that outlet. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the surrounding wall remains distinct from the localized water trace"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the surrounding wall remains distinct from the localized water trace"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the surrounding wall remains distinct from the localized water trace",
+            "render_gate": {
+              "id": "vo_rb_water_path_stain_3",
+              "review_scale": "native",
+              "description": "the surrounding wall remains distinct from the localized water trace. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_material_response_contrast",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the matte surface has broad subdued shading; the adjacent coated metal carries a limited sharper highlight; the adjacent glass retains its distinct reflection and transmission"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the matte surface has broad subdued shading; the adjacent coated metal carries a limited sharper highlight; the adjacent glass retains its distinct reflection and transmission",
+        "paraphrase_examples": [
+          "Matte plaster, painted metal and window glass respond differently to the same side light.",
+          "재료별 반사 응답 차이",
+          "material response contrast relation"
+        ],
+        "contrast_examples": [
+          "모든 재료의 동일 플라스틱 광택",
+          "재료마다 불필요한 오염"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "재료별 반사 응답 차이",
+          "material response contrast relation",
+          "the matte surface has broad subdued shading",
+          "the adjacent coated metal carries a limited sharper highlight",
+          "the adjacent glass retains its distinct reflection and transmission"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 재료의 동일 플라스틱 광택",
+        "재료마다 불필요한 오염"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the matte surface has broad subdued shading"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the matte surface has broad subdued shading"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the matte surface has broad subdued shading",
+            "render_gate": {
+              "id": "vo_rb_material_response_contrast_1",
+              "review_scale": "both",
+              "description": "the matte surface has broad subdued shading. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the adjacent coated metal carries a limited sharper highlight"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the adjacent coated metal carries a limited sharper highlight"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the adjacent coated metal carries a limited sharper highlight",
+            "render_gate": {
+              "id": "vo_rb_material_response_contrast_2",
+              "review_scale": "both",
+              "description": "the adjacent coated metal carries a limited sharper highlight. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the adjacent glass retains its distinct reflection and transmission"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the adjacent glass retains its distinct reflection and transmission"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the adjacent glass retains its distinct reflection and transmission",
+            "render_gate": {
+              "id": "vo_rb_material_response_contrast_3",
+              "review_scale": "both",
+              "description": "the adjacent glass retains its distinct reflection and transmission. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_glass_reflection_transmission",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a visible window frame locates the glass plane; the glass reflection corresponds to the opposite facade; the interior beyond the pane remains readable through another part of the glass"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a visible window frame locates the glass plane; the glass reflection corresponds to the opposite facade; the interior beyond the pane remains readable through another part of the glass",
+        "paraphrase_examples": [
+          "The window holds a restrained reflection of the opposite facade while the interior table remains visible through it.",
+          "유리 반사와 투과의 공존",
+          "glass reflection transmission relation"
+        ],
+        "contrast_examples": [
+          "거울로 대체",
+          "유리 뒤 물체가 유리 앞에 겹침",
+          "모든 반사를 왜곡"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "유리 반사와 투과의 공존",
+          "glass reflection transmission relation",
+          "a visible window frame locates the glass plane",
+          "the glass reflection corresponds to the opposite facade",
+          "the interior beyond the pane remains readable through another part of the glass"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "거울로 대체",
+        "유리 뒤 물체가 유리 앞에 겹침",
+        "모든 반사를 왜곡"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a visible window frame locates the glass plane"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a visible window frame locates the glass plane"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a visible window frame locates the glass plane",
+            "render_gate": {
+              "id": "vo_rb_glass_reflection_transmission_1",
+              "review_scale": "both",
+              "description": "a visible window frame locates the glass plane. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the glass reflection corresponds to the opposite facade"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the glass reflection corresponds to the opposite facade"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the glass reflection corresponds to the opposite facade",
+            "render_gate": {
+              "id": "vo_rb_glass_reflection_transmission_2",
+              "review_scale": "both",
+              "description": "the glass reflection corresponds to the opposite facade. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the interior beyond the pane remains readable through another part of the glass"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the interior beyond the pane remains readable through another part of the glass"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the interior beyond the pane remains readable through another part of the glass",
+            "render_gate": {
+              "id": "vo_rb_glass_reflection_transmission_3",
+              "review_scale": "both",
+              "description": "the interior beyond the pane remains readable through another part of the glass. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_window_room_gradient",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the window-facing tabletop receives brighter daylight; the deeper room surfaces remain at a lower light level; the subject and nearby objects share the window's light direction"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the window-facing tabletop receives brighter daylight; the deeper room surfaces remain at a lower light level; the subject and nearby objects share the window's light direction",
+        "paraphrase_examples": [
+          "Daylight enters from the left window, brightening the nearby tabletop and falling to a softer level deeper in the room.",
+          "창에서 실내로 이어지는 밝기 차이",
+          "window room gradient relation"
+        ],
+        "contrast_examples": [
+          "화면 가장자리 비네트",
+          "모든 얼굴에 독립 조명",
+          "무조건 어두운 방"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "창에서 실내로 이어지는 밝기 차이",
+          "window room gradient relation",
+          "the window-facing tabletop receives brighter daylight",
+          "the deeper room surfaces remain at a lower light level",
+          "the subject and nearby objects share the window's light direction"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "화면 가장자리 비네트",
+        "모든 얼굴에 독립 조명",
+        "무조건 어두운 방"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the window-facing tabletop receives brighter daylight"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the window-facing tabletop receives brighter daylight"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the window-facing tabletop receives brighter daylight",
+            "render_gate": {
+              "id": "vo_rb_window_room_gradient_1",
+              "review_scale": "both",
+              "description": "the window-facing tabletop receives brighter daylight. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the deeper room surfaces remain at a lower light level"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the deeper room surfaces remain at a lower light level"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the deeper room surfaces remain at a lower light level",
+            "render_gate": {
+              "id": "vo_rb_window_room_gradient_2",
+              "review_scale": "both",
+              "description": "the deeper room surfaces remain at a lower light level. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the subject and nearby objects share the window's light direction"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the subject and nearby objects share the window's light direction"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the subject and nearby objects share the window's light direction",
+            "render_gate": {
+              "id": "vo_rb_window_room_gradient_3",
+              "review_scale": "both",
+              "description": "the subject and nearby objects share the window's light direction. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_practical_pool",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the acting wall lamp is visible; the lamp produces a localized light pool on the adjacent surface; the pool fades into the surrounding room illumination"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the acting wall lamp is visible; the lamp produces a localized light pool on the adjacent surface; the pool fades into the surrounding room illumination",
+        "paraphrase_examples": [
+          "The wall lamp produces a localized pool on the adjacent wall and table, fading into the surrounding room light.",
+          "보이는 조명과 조명 영역의 대응",
+          "practical pool relation"
+        ],
+        "contrast_examples": [
+          "빛나기만 하는 소품",
+          "천장등과 무관한 스포트라이트"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "보이는 조명과 조명 영역의 대응",
+          "practical pool relation",
+          "the acting wall lamp is visible",
+          "the lamp produces a localized light pool on the adjacent surface",
+          "the pool fades into the surrounding room illumination"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "빛나기만 하는 소품",
+        "천장등과 무관한 스포트라이트"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the acting wall lamp is visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the acting wall lamp is visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the acting wall lamp is visible",
+            "render_gate": {
+              "id": "vo_rb_practical_pool_1",
+              "review_scale": "both",
+              "description": "the acting wall lamp is visible. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lamp produces a localized light pool on the adjacent surface"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lamp produces a localized light pool on the adjacent surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the lamp produces a localized light pool on the adjacent surface",
+            "render_gate": {
+              "id": "vo_rb_practical_pool_2",
+              "review_scale": "both",
+              "description": "the lamp produces a localized light pool on the adjacent surface. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the pool fades into the surrounding room illumination"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the pool fades into the surrounding room illumination"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the pool fades into the surrounding room illumination",
+            "render_gate": {
+              "id": "vo_rb_practical_pool_3",
+              "review_scale": "both",
+              "description": "the pool fades into the surrounding room illumination. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_mixed_source_zones",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the window-side sleeve receives cool window light; the lamp-side tabletop receives warmer local light; the source-bound color zones mix gradually where their illumination overlaps"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the window-side sleeve receives cool window light; the lamp-side tabletop receives warmer local light; the source-bound color zones mix gradually where their illumination overlaps",
+        "paraphrase_examples": [
+          "Cool window light reaches the window-side sleeve, while the nearby lamp gives the tabletop a warmer local tone.",
+          "서로 다른 광원의 공간적 색 구역",
+          "mixed source zones relation"
+        ],
+        "contrast_examples": [
+          "전역 청록·주황 LUT",
+          "서로 다른 표면 고유색만 있음",
+          "모든 야경 네온화"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "서로 다른 광원의 공간적 색 구역",
+          "mixed source zones relation",
+          "the window-side sleeve receives cool window light",
+          "the lamp-side tabletop receives warmer local light",
+          "the source-bound color zones mix gradually where their illumination overlaps"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "전역 청록·주황 LUT",
+        "서로 다른 표면 고유색만 있음",
+        "모든 야경 네온화"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the window-side sleeve receives cool window light"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the window-side sleeve receives cool window light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the window-side sleeve receives cool window light",
+            "render_gate": {
+              "id": "vo_rb_mixed_source_zones_1",
+              "review_scale": "both",
+              "description": "the window-side sleeve receives cool window light. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the lamp-side tabletop receives warmer local light"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the lamp-side tabletop receives warmer local light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the lamp-side tabletop receives warmer local light",
+            "render_gate": {
+              "id": "vo_rb_mixed_source_zones_2",
+              "review_scale": "both",
+              "description": "the lamp-side tabletop receives warmer local light. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the source-bound color zones mix gradually where their illumination overlaps"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the source-bound color zones mix gradually where their illumination overlaps"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the source-bound color zones mix gradually where their illumination overlaps",
+            "render_gate": {
+              "id": "vo_rb_mixed_source_zones_3",
+              "review_scale": "both",
+              "description": "the source-bound color zones mix gradually where their illumination overlaps. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_bounce_owner",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a muted green wall is close to the white sleeve; only the sleeve area facing that wall carries a faint green return; the other sleeve planes retain their neutral material color"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a muted green wall is close to the white sleeve; only the sleeve area facing that wall carries a faint green return; the other sleeve planes retain their neutral material color",
+        "paraphrase_examples": [
+          "A muted green wall adds a faint green return only to the nearby white sleeve facing it.",
+          "근접 표면에서 돌아온 색",
+          "bounce owner relation"
+        ],
+        "contrast_examples": [
+          "옷 자체의 배색",
+          "전체 화이트밸런스 변화",
+          "멀리 떨어진 면의 동일 색"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "근접 표면에서 돌아온 색",
+          "bounce owner relation",
+          "a muted green wall is close to the white sleeve",
+          "only the sleeve area facing that wall carries a faint green return",
+          "the other sleeve planes retain their neutral material color"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "옷 자체의 배색",
+        "전체 화이트밸런스 변화",
+        "멀리 떨어진 면의 동일 색"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a muted green wall is close to the white sleeve"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a muted green wall is close to the white sleeve"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a muted green wall is close to the white sleeve",
+            "render_gate": {
+              "id": "vo_rb_bounce_owner_1",
+              "review_scale": "both",
+              "description": "a muted green wall is close to the white sleeve. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "only the sleeve area facing that wall carries a faint green return"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "only the sleeve area facing that wall carries a faint green return"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: only the sleeve area facing that wall carries a faint green return",
+            "render_gate": {
+              "id": "vo_rb_bounce_owner_2",
+              "review_scale": "both",
+              "description": "only the sleeve area facing that wall carries a faint green return. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the other sleeve planes retain their neutral material color"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the other sleeve planes retain their neutral material color"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the other sleeve planes retain their neutral material color",
+            "render_gate": {
+              "id": "vo_rb_bounce_owner_3",
+              "review_scale": "both",
+              "description": "the other sleeve planes retain their neutral material color. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_shared_cast_shadow",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the person casts a shadow connected to the supporting ground contact; the nearby post casts a shadow compatible with the same acting light; both shadows follow the geometry of the receiving pavement"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the person casts a shadow connected to the supporting ground contact; the nearby post casts a shadow compatible with the same acting light; both shadows follow the geometry of the receiving pavement",
+        "paraphrase_examples": [
+          "The person and nearby bollard cast shadows consistent with the same late-afternoon light onto the sloping pavement.",
+          "피사체와 주변 물체의 투영 그림자 일관성",
+          "shared cast shadow relation"
+        ],
+        "contrast_examples": [
+          "모든 그림자가 반드시 평행",
+          "복수 광원 무시",
+          "몸과 무관한 바닥 얼룩"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "피사체와 주변 물체의 투영 그림자 일관성",
+          "shared cast shadow relation",
+          "the person casts a shadow connected to the supporting ground contact",
+          "the nearby post casts a shadow compatible with the same acting light",
+          "both shadows follow the geometry of the receiving pavement"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 그림자가 반드시 평행",
+        "복수 광원 무시",
+        "몸과 무관한 바닥 얼룩"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the person casts a shadow connected to the supporting ground contact"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the person casts a shadow connected to the supporting ground contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the person casts a shadow connected to the supporting ground contact",
+            "render_gate": {
+              "id": "vo_rb_shared_cast_shadow_1",
+              "review_scale": "both",
+              "description": "the person casts a shadow connected to the supporting ground contact. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the nearby post casts a shadow compatible with the same acting light"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the nearby post casts a shadow compatible with the same acting light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the nearby post casts a shadow compatible with the same acting light",
+            "render_gate": {
+              "id": "vo_rb_shared_cast_shadow_2",
+              "review_scale": "both",
+              "description": "the nearby post casts a shadow compatible with the same acting light. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "both shadows follow the geometry of the receiving pavement"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "both shadows follow the geometry of the receiving pavement"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: both shadows follow the geometry of the receiving pavement",
+            "render_gate": {
+              "id": "vo_rb_shared_cast_shadow_3",
+              "review_scale": "both",
+              "description": "both shadows follow the geometry of the receiving pavement. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_soft_ground_contact",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the supporting shoe sole meets the paving without a gap; soft local darkening remains directly beneath the sole; the supporting leg connects plausibly to the grounded shoe"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the supporting shoe sole meets the paving without a gap; soft local darkening remains directly beneath the sole; the supporting leg connects plausibly to the grounded shoe",
+        "paraphrase_examples": [
+          "The supporting shoe sits flush on the paving, with only a soft local darkening under the sole in the overcast light.",
+          "확산광 아래 발과 바닥의 접촉",
+          "soft ground contact relation"
+        ],
+        "contrast_examples": [
+          "떠 있는 발",
+          "모든 발 주위 검은 외곽선",
+          "숨겨진 발을 통과 처리"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "확산광 아래 발과 바닥의 접촉",
+          "soft ground contact relation",
+          "the supporting shoe sole meets the paving without a gap",
+          "soft local darkening remains directly beneath the sole",
+          "the supporting leg connects plausibly to the grounded shoe"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "떠 있는 발",
+        "모든 발 주위 검은 외곽선",
+        "숨겨진 발을 통과 처리"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the supporting shoe sole meets the paving without a gap"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the supporting shoe sole meets the paving without a gap"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the supporting shoe sole meets the paving without a gap",
+            "render_gate": {
+              "id": "vo_rb_soft_ground_contact_1",
+              "review_scale": "native",
+              "description": "the supporting shoe sole meets the paving without a gap. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "soft local darkening remains directly beneath the sole"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "soft local darkening remains directly beneath the sole"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: soft local darkening remains directly beneath the sole",
+            "render_gate": {
+              "id": "vo_rb_soft_ground_contact_2",
+              "review_scale": "native",
+              "description": "soft local darkening remains directly beneath the sole. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the supporting leg connects plausibly to the grounded shoe"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the supporting leg connects plausibly to the grounded shoe"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the supporting leg connects plausibly to the grounded shoe",
+            "render_gate": {
+              "id": "vo_rb_soft_ground_contact_3",
+              "review_scale": "native",
+              "description": "the supporting leg connects plausibly to the grounded shoe. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_exposure_priority",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the specified subject detail retains readable midtones; the window or local light source remains brighter than the interior; the darker interior zones retain a distinct lower tonal level"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the specified subject detail retains readable midtones; the window or local light source remains brighter than the interior; the darker interior zones retain a distinct lower tonal level",
+        "paraphrase_examples": [
+          "Expose for the person and interior surfaces, allowing the distant window to remain brighter without flattening the room's tonal separation.",
+          "장면 내 밝기 우선순위",
+          "exposure priority relation"
+        ],
+        "contrast_examples": [
+          "모든 면 균일 밝기",
+          "얼굴 전체 클리핑",
+          "그림자 디테일 보존 금지"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "장면 내 밝기 우선순위",
+          "exposure priority relation",
+          "the specified subject detail retains readable midtones",
+          "the window or local light source remains brighter than the interior",
+          "the darker interior zones retain a distinct lower tonal level"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 면 균일 밝기",
+        "얼굴 전체 클리핑",
+        "그림자 디테일 보존 금지"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the specified subject detail retains readable midtones"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the specified subject detail retains readable midtones"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the specified subject detail retains readable midtones",
+            "render_gate": {
+              "id": "vo_rb_exposure_priority_1",
+              "review_scale": "both",
+              "description": "the specified subject detail retains readable midtones. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the window or local light source remains brighter than the interior"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the window or local light source remains brighter than the interior"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the window or local light source remains brighter than the interior",
+            "render_gate": {
+              "id": "vo_rb_exposure_priority_2",
+              "review_scale": "both",
+              "description": "the window or local light source remains brighter than the interior. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the darker interior zones retain a distinct lower tonal level"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the darker interior zones retain a distinct lower tonal level"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the darker interior zones retain a distinct lower tonal level",
+            "render_gate": {
+              "id": "vo_rb_exposure_priority_3",
+              "review_scale": "both",
+              "description": "the darker interior zones retain a distinct lower tonal level. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_distance_haze",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the near railing retains clear local contrast; the distant buildings show lower contrast along the long viewing path; the atmospheric separation follows the buildings' depth order"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the near railing retains clear local contrast; the distant buildings show lower contrast along the long viewing path; the atmospheric separation follows the buildings' depth order",
+        "paraphrase_examples": [
+          "Distant buildings lose some contrast through the long air path while the nearby railing stays clear.",
+          "거리에 따른 대기층 분리",
+          "distance haze relation"
+        ],
+        "contrast_examples": [
+          "2m 카페의 뿌연 필터",
+          "유리 오염",
+          "모든 원경의 일률 청색"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "거리에 따른 대기층 분리",
+          "distance haze relation",
+          "the near railing retains clear local contrast",
+          "the distant buildings show lower contrast along the long viewing path",
+          "the atmospheric separation follows the buildings' depth order"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "2m 카페의 뿌연 필터",
+        "유리 오염",
+        "모든 원경의 일률 청색"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the near railing retains clear local contrast"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the near railing retains clear local contrast"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the near railing retains clear local contrast",
+            "render_gate": {
+              "id": "vo_rb_distance_haze_1",
+              "review_scale": "both",
+              "description": "the near railing retains clear local contrast. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the distant buildings show lower contrast along the long viewing path"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the distant buildings show lower contrast along the long viewing path"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the distant buildings show lower contrast along the long viewing path",
+            "render_gate": {
+              "id": "vo_rb_distance_haze_2",
+              "review_scale": "both",
+              "description": "the distant buildings show lower contrast along the long viewing path. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the atmospheric separation follows the buildings' depth order"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the atmospheric separation follows the buildings' depth order"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the atmospheric separation follows the buildings' depth order",
+            "render_gate": {
+              "id": "vo_rb_distance_haze_3",
+              "review_scale": "both",
+              "description": "the atmospheric separation follows the buildings' depth order. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_readable_environment_focus",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the selected subject plane remains crisp; the middle-distance doorway and pavement junction remain recognizable; the farther background loses focus consistently with its depth"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the selected subject plane remains crisp; the middle-distance doorway and pavement junction remain recognizable; the farther background loses focus consistently with its depth",
+        "paraphrase_examples": [
+          "Keep the subject distinct while the doorway and sidewalk junction remain recognizable in the middle distance.",
+          "인물 분리와 환경 가독성",
+          "readable environment focus relation"
+        ],
+        "contrast_examples": [
+          "조리개 숫자만 만족",
+          "모든 배경 추상 보케",
+          "전역 샤프닝"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "인물 분리와 환경 가독성",
+          "readable environment focus relation",
+          "the selected subject plane remains crisp",
+          "the middle-distance doorway and pavement junction remain recognizable",
+          "the farther background loses focus consistently with its depth"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "조리개 숫자만 만족",
+        "모든 배경 추상 보케",
+        "전역 샤프닝"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the selected subject plane remains crisp"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the selected subject plane remains crisp"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the selected subject plane remains crisp",
+            "render_gate": {
+              "id": "vo_rb_readable_environment_focus_1",
+              "review_scale": "both",
+              "description": "the selected subject plane remains crisp. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the middle-distance doorway and pavement junction remain recognizable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the middle-distance doorway and pavement junction remain recognizable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the middle-distance doorway and pavement junction remain recognizable",
+            "render_gate": {
+              "id": "vo_rb_readable_environment_focus_2",
+              "review_scale": "both",
+              "description": "the middle-distance doorway and pavement junction remain recognizable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the farther background loses focus consistently with its depth"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the farther background loses focus consistently with its depth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the farther background loses focus consistently with its depth",
+            "render_gate": {
+              "id": "vo_rb_readable_environment_focus_3",
+              "review_scale": "both",
+              "description": "the farther background loses focus consistently with its depth. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_foreground_occlusion",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a nearby chair back continues beyond the lower frame edge; the chair back coherently overlaps part of the table; the subject's requested hand action remains visible beyond the overlap"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a nearby chair back continues beyond the lower frame edge; the chair back coherently overlaps part of the table; the subject's requested hand action remains visible beyond the overlap",
+        "paraphrase_examples": [
+          "A nearby chair back enters one lower edge of the frame and overlaps the table without covering the person's hands.",
+          "프레임 가장자리의 실제 전경 가림",
+          "foreground occlusion relation"
+        ],
+        "contrast_examples": [
+          "얼굴의 필수 표정 가림",
+          "공중에 뜬 장식 스트립",
+          "가림 없는 물체 목록"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "프레임 가장자리의 실제 전경 가림",
+          "foreground occlusion relation",
+          "a nearby chair back continues beyond the lower frame edge",
+          "the chair back coherently overlaps part of the table",
+          "the subject's requested hand action remains visible beyond the overlap"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "얼굴의 필수 표정 가림",
+        "공중에 뜬 장식 스트립",
+        "가림 없는 물체 목록"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a nearby chair back continues beyond the lower frame edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a nearby chair back continues beyond the lower frame edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a nearby chair back continues beyond the lower frame edge",
+            "render_gate": {
+              "id": "vo_rb_foreground_occlusion_1",
+              "review_scale": "both",
+              "description": "a nearby chair back continues beyond the lower frame edge. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the chair back coherently overlaps part of the table"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the chair back coherently overlaps part of the table"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the chair back coherently overlaps part of the table",
+            "render_gate": {
+              "id": "vo_rb_foreground_occlusion_2",
+              "review_scale": "both",
+              "description": "the chair back coherently overlaps part of the table. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the subject's requested hand action remains visible beyond the overlap"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the subject's requested hand action remains visible beyond the overlap"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the subject's requested hand action remains visible beyond the overlap",
+            "render_gate": {
+              "id": "vo_rb_foreground_occlusion_3",
+              "review_scale": "both",
+              "description": "the subject's requested hand action remains visible beyond the overlap. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_scale_perspective",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "near and distant doorways have consistent relative scale; the paving lines recede coherently through the depth; the doorway boundaries stay connected to their walls"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "near and distant doorways have consistent relative scale; the paving lines recede coherently through the depth; the doorway boundaries stay connected to their walls",
+        "paraphrase_examples": [
+          "Paving lines and repeated doorways recede consistently from the near post toward the far end of the street.",
+          "공간 깊이와 상대 크기의 일관성",
+          "scale perspective relation"
+        ],
+        "contrast_examples": [
+          "모든 문 같은 화면 크기",
+          "배럴 왜곡을 원근으로 대체",
+          "광각이면 신체 변형 강제"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "공간 깊이와 상대 크기의 일관성",
+          "scale perspective relation",
+          "near and distant doorways have consistent relative scale",
+          "the paving lines recede coherently through the depth",
+          "the doorway boundaries stay connected to their walls"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 문 같은 화면 크기",
+        "배럴 왜곡을 원근으로 대체",
+        "광각이면 신체 변형 강제"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "near and distant doorways have consistent relative scale"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "near and distant doorways have consistent relative scale"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: near and distant doorways have consistent relative scale",
+            "render_gate": {
+              "id": "vo_rb_scale_perspective_1",
+              "review_scale": "both",
+              "description": "near and distant doorways have consistent relative scale. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the paving lines recede coherently through the depth"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the paving lines recede coherently through the depth"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the paving lines recede coherently through the depth",
+            "render_gate": {
+              "id": "vo_rb_scale_perspective_2",
+              "review_scale": "both",
+              "description": "the paving lines recede coherently through the depth. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the doorway boundaries stay connected to their walls"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the doorway boundaries stay connected to their walls"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the doorway boundaries stay connected to their walls",
+            "render_gate": {
+              "id": "vo_rb_scale_perspective_3",
+              "review_scale": "both",
+              "description": "the doorway boundaries stay connected to their walls. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_local_motion_blur",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the moving hand carries a short directional blur; the stationary doorframe and torso remain comparatively clear; the moving hand remains connected to its arm"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the moving hand carries a short directional blur; the stationary doorframe and torso remain comparatively clear; the moving hand remains connected to its arm",
+        "paraphrase_examples": [
+          "A small blur follows the moving hand while the stationary doorframe and torso remain clear.",
+          "움직인 부위에 제한된 번짐",
+          "local motion blur relation"
+        ],
+        "contrast_examples": [
+          "사진 전체 흐리기",
+          "가짜 속도선",
+          "모든 손가락 융합"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "움직인 부위에 제한된 번짐",
+          "local motion blur relation",
+          "the moving hand carries a short directional blur",
+          "the stationary doorframe and torso remain comparatively clear",
+          "the moving hand remains connected to its arm"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "사진 전체 흐리기",
+        "가짜 속도선",
+        "모든 손가락 융합"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the moving hand carries a short directional blur"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the moving hand carries a short directional blur"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the moving hand carries a short directional blur",
+            "render_gate": {
+              "id": "vo_rb_local_motion_blur_1",
+              "review_scale": "both",
+              "description": "the moving hand carries a short directional blur. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the stationary doorframe and torso remain comparatively clear"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the stationary doorframe and torso remain comparatively clear"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the stationary doorframe and torso remain comparatively clear",
+            "render_gate": {
+              "id": "vo_rb_local_motion_blur_2",
+              "review_scale": "both",
+              "description": "the stationary doorframe and torso remain comparatively clear. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the moving hand remains connected to its arm"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the moving hand remains connected to its arm"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the moving hand remains connected to its arm",
+            "render_gate": {
+              "id": "vo_rb_local_motion_blur_3",
+              "review_scale": "both",
+              "description": "the moving hand remains connected to its arm. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_shared_wind_response",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "loose hair bends while remaining attached at the scalp; the free jacket hem responds while the jacket's supported parts stay stable; exposed leaves respond compatibly while retaining their own stems and stiffness"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "loose hair bends while remaining attached at the scalp; the free jacket hem responds while the jacket's supported parts stay stable; exposed leaves respond compatibly while retaining their own stems and stiffness",
+        "paraphrase_examples": [
+          "Loose hair, the free jacket hem and exposed leaves respond compatibly to the breeze, each retaining its own attachment and stiffness.",
+          "동일 바람과 양립하는 반응",
+          "shared wind response relation"
+        ],
+        "contrast_examples": [
+          "모든 잎·옷이 똑같이 평행",
+          "인물 머리만 강풍",
+          "바람 속도 인증"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "동일 바람과 양립하는 반응",
+          "shared wind response relation",
+          "loose hair bends while remaining attached at the scalp",
+          "the free jacket hem responds while the jacket's supported parts stay stable",
+          "exposed leaves respond compatibly while retaining their own stems and stiffness"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 잎·옷이 똑같이 평행",
+        "인물 머리만 강풍",
+        "바람 속도 인증"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "loose hair bends while remaining attached at the scalp"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "loose hair bends while remaining attached at the scalp"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: loose hair bends while remaining attached at the scalp",
+            "render_gate": {
+              "id": "vo_rb_shared_wind_response_1",
+              "review_scale": "both",
+              "description": "loose hair bends while remaining attached at the scalp. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the free jacket hem responds while the jacket's supported parts stay stable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the free jacket hem responds while the jacket's supported parts stay stable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the free jacket hem responds while the jacket's supported parts stay stable",
+            "render_gate": {
+              "id": "vo_rb_shared_wind_response_2",
+              "review_scale": "both",
+              "description": "the free jacket hem responds while the jacket's supported parts stay stable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "exposed leaves respond compatibly while retaining their own stems and stiffness"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "exposed leaves respond compatibly while retaining their own stems and stiffness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: exposed leaves respond compatibly while retaining their own stems and stiffness",
+            "render_gate": {
+              "id": "vo_rb_shared_wind_response_3",
+              "review_scale": "both",
+              "description": "exposed leaves respond compatibly while retaining their own stems and stiffness. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_low_light_noise",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "darker neutral wall tones contain fine random luminance variation; the main object edges remain readable; the fine variation remains distinct from colored blocks and surface scratches"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "darker neutral wall tones contain fine random luminance variation; the main object edges remain readable; the fine variation remains distinct from colored blocks and surface scratches",
+        "paraphrase_examples": [
+          "Subtle luminance noise is visible in the darker wall tones while edges and material differences remain readable.",
+          "저조도 명도 노이즈의 제한적 질감",
+          "low light noise relation"
+        ],
+        "contrast_examples": [
+          "대낮 저감도에도 강제",
+          "필름 긁힘",
+          "벽 재질을 노이즈로 대체"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "저조도 명도 노이즈의 제한적 질감",
+          "low light noise relation",
+          "darker neutral wall tones contain fine random luminance variation",
+          "the main object edges remain readable",
+          "the fine variation remains distinct from colored blocks and surface scratches"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "대낮 저감도에도 강제",
+        "필름 긁힘",
+        "벽 재질을 노이즈로 대체"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "darker neutral wall tones contain fine random luminance variation"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "darker neutral wall tones contain fine random luminance variation"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: darker neutral wall tones contain fine random luminance variation",
+            "render_gate": {
+              "id": "vo_rb_low_light_noise_1",
+              "review_scale": "native",
+              "description": "darker neutral wall tones contain fine random luminance variation. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the main object edges remain readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the main object edges remain readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the main object edges remain readable",
+            "render_gate": {
+              "id": "vo_rb_low_light_noise_2",
+              "review_scale": "native",
+              "description": "the main object edges remain readable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the fine variation remains distinct from colored blocks and surface scratches"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the fine variation remains distinct from colored blocks and surface scratches"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the fine variation remains distinct from colored blocks and surface scratches",
+            "render_gate": {
+              "id": "vo_rb_low_light_noise_3",
+              "review_scale": "native",
+              "description": "the fine variation remains distinct from colored blocks and surface scratches. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_optional_lens_falloff",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the outer image field darkens gradually from the center; the scene's own local illumination pattern remains readable; the falloff stays mild without becoming a solid border"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the outer image field darkens gradually from the center; the scene's own local illumination pattern remains readable; the falloff stays mild without becoming a solid border",
+        "paraphrase_examples": [
+          "A mild optical falloff gently darkens the outer field without replacing the room's own lighting pattern.",
+          "선택적인 렌즈 주변 광량 감소",
+          "optional lens falloff relation"
+        ],
+        "contrast_examples": [
+          "방 구석 어둠과 혼동",
+          "모든 실제 사진의 필수 결함"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "선택적인 렌즈 주변 광량 감소",
+          "optional lens falloff relation",
+          "the outer image field darkens gradually from the center",
+          "the scene's own local illumination pattern remains readable",
+          "the falloff stays mild without becoming a solid border"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "방 구석 어둠과 혼동",
+        "모든 실제 사진의 필수 결함"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the outer image field darkens gradually from the center"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the outer image field darkens gradually from the center"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the outer image field darkens gradually from the center",
+            "render_gate": {
+              "id": "vo_rb_optional_lens_falloff_1",
+              "review_scale": "native",
+              "description": "the outer image field darkens gradually from the center. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the scene's own local illumination pattern remains readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the scene's own local illumination pattern remains readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the scene's own local illumination pattern remains readable",
+            "render_gate": {
+              "id": "vo_rb_optional_lens_falloff_2",
+              "review_scale": "native",
+              "description": "the scene's own local illumination pattern remains readable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the falloff stays mild without becoming a solid border"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the falloff stays mild without becoming a solid border"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the falloff stays mild without becoming a solid border",
+            "render_gate": {
+              "id": "vo_rb_optional_lens_falloff_3",
+              "review_scale": "native",
+              "description": "the falloff stays mild without becoming a solid border. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_optional_chromatic_fringe",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a slight color offset appears on selected peripheral high-contrast edges; flat areas keep their original color structure; the fringe stays distinct from colored scene illumination"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a slight color offset appears on selected peripheral high-contrast edges; flat areas keep their original color structure; the fringe stays distinct from colored scene illumination",
+        "paraphrase_examples": [
+          "A very slight color fringe appears only at a few high-contrast edges near the image periphery.",
+          "국소적인 색수차 표현",
+          "optional chromatic fringe relation"
+        ],
+        "contrast_examples": [
+          "전체 RGB 분리",
+          "피부 얼룩",
+          "현실감 기본값으로 강제"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "국소적인 색수차 표현",
+          "optional chromatic fringe relation",
+          "a slight color offset appears on selected peripheral high-contrast edges",
+          "flat areas keep their original color structure",
+          "the fringe stays distinct from colored scene illumination"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "전체 RGB 분리",
+        "피부 얼룩",
+        "현실감 기본값으로 강제"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a slight color offset appears on selected peripheral high-contrast edges"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a slight color offset appears on selected peripheral high-contrast edges"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a slight color offset appears on selected peripheral high-contrast edges",
+            "render_gate": {
+              "id": "vo_rb_optional_chromatic_fringe_1",
+              "review_scale": "native",
+              "description": "a slight color offset appears on selected peripheral high-contrast edges. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "flat areas keep their original color structure"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "flat areas keep their original color structure"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: flat areas keep their original color structure",
+            "render_gate": {
+              "id": "vo_rb_optional_chromatic_fringe_2",
+              "review_scale": "native",
+              "description": "flat areas keep their original color structure. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the fringe stays distinct from colored scene illumination"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the fringe stays distinct from colored scene illumination"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the fringe stays distinct from colored scene illumination",
+            "render_gate": {
+              "id": "vo_rb_optional_chromatic_fringe_3",
+              "review_scale": "native",
+              "description": "the fringe stays distinct from colored scene illumination. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_restrained_processing",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "architectural edges retain restrained local contrast; large surface tones keep gradual transitions; surface texture remains distinct without bright sharpening halos"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "architectural edges retain restrained local contrast; large surface tones keep gradual transitions; surface texture remains distinct without bright sharpening halos",
+        "paraphrase_examples": [
+          "Keep edge contrast restrained and preserve broad tonal transitions without sharpening halos around the architecture.",
+          "처리 흔적을 억제한 경계와 톤",
+          "restrained processing relation"
+        ],
+        "contrast_examples": [
+          "무보정 인증",
+          "노이즈를 추가해 결함 은폐",
+          "모든 색보정 금지"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "처리 흔적을 억제한 경계와 톤",
+          "restrained processing relation",
+          "architectural edges retain restrained local contrast",
+          "large surface tones keep gradual transitions",
+          "surface texture remains distinct without bright sharpening halos"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무보정 인증",
+        "노이즈를 추가해 결함 은폐",
+        "모든 색보정 금지"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "architectural edges retain restrained local contrast"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "architectural edges retain restrained local contrast"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: architectural edges retain restrained local contrast",
+            "render_gate": {
+              "id": "vo_rb_restrained_processing_1",
+              "review_scale": "both",
+              "description": "architectural edges retain restrained local contrast. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "large surface tones keep gradual transitions"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "large surface tones keep gradual transitions"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: large surface tones keep gradual transitions",
+            "render_gate": {
+              "id": "vo_rb_restrained_processing_2",
+              "review_scale": "both",
+              "description": "large surface tones keep gradual transitions. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "surface texture remains distinct without bright sharpening halos"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "surface texture remains distinct without bright sharpening halos"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: surface texture remains distinct without bright sharpening halos",
+            "render_gate": {
+              "id": "vo_rb_restrained_processing_3",
+              "review_scale": "both",
+              "description": "surface texture remains distinct without bright sharpening halos. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_clean_space_plausibility",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the clean lobby retains readable wall floor and frame joints; the furniture rests securely on the floor; stone fabric and glass retain distinct surface responses"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the clean lobby retains readable wall floor and frame joints; the furniture rests securely on the floor; stone fabric and glass retain distinct surface responses",
+        "paraphrase_examples": [
+          "The clean lobby retains readable joints, securely placed furniture and distinct stone, fabric and glass responses.",
+          "깨끗한 공간의 현실적 구조",
+          "clean space plausibility relation"
+        ],
+        "contrast_examples": [
+          "낡음·쓰레기·곰팡이로 현실감 강제",
+          "깨끗하면 CG 판정"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "깨끗한 공간의 현실적 구조",
+          "clean space plausibility relation",
+          "the clean lobby retains readable wall floor and frame joints",
+          "the furniture rests securely on the floor",
+          "stone fabric and glass retain distinct surface responses"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "낡음·쓰레기·곰팡이로 현실감 강제",
+        "깨끗하면 CG 판정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the clean lobby retains readable wall floor and frame joints"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the clean lobby retains readable wall floor and frame joints"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the clean lobby retains readable wall floor and frame joints",
+            "render_gate": {
+              "id": "vo_rb_clean_space_plausibility_1",
+              "review_scale": "both",
+              "description": "the clean lobby retains readable wall floor and frame joints. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the furniture rests securely on the floor"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the furniture rests securely on the floor"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the furniture rests securely on the floor",
+            "render_gate": {
+              "id": "vo_rb_clean_space_plausibility_2",
+              "review_scale": "both",
+              "description": "the furniture rests securely on the floor. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "stone fabric and glass retain distinct surface responses"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "stone fabric and glass retain distinct surface responses"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: stone fabric and glass retain distinct surface responses",
+            "render_gate": {
+              "id": "vo_rb_clean_space_plausibility_3",
+              "review_scale": "both",
+              "description": "stone fabric and glass retain distinct surface responses. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_spatial_density_variation",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a small object cluster occupies the active working area; an adjacent usable surface remains clear; the main passage remains separate from the cluster"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a small object cluster occupies the active working area; an adjacent usable surface remains clear; the main passage remains separate from the cluster",
+        "paraphrase_examples": [
+          "A few used objects cluster near the work surface, leaving the chair space and main passage open.",
+          "일상 물체 밀도의 국소 차이",
+          "spatial density variation relation"
+        ],
+        "contrast_examples": [
+          "모든 픽셀 소품",
+          "무작위 배치",
+          "생활감이면 빈곤 판정"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "일상 물체 밀도의 국소 차이",
+          "spatial density variation relation",
+          "a small object cluster occupies the active working area",
+          "an adjacent usable surface remains clear",
+          "the main passage remains separate from the cluster"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 픽셀 소품",
+        "무작위 배치",
+        "생활감이면 빈곤 판정"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a small object cluster occupies the active working area"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a small object cluster occupies the active working area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a small object cluster occupies the active working area",
+            "render_gate": {
+              "id": "vo_rb_spatial_density_variation_1",
+              "review_scale": "both",
+              "description": "a small object cluster occupies the active working area. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "an adjacent usable surface remains clear"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "an adjacent usable surface remains clear"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: an adjacent usable surface remains clear",
+            "render_gate": {
+              "id": "vo_rb_spatial_density_variation_2",
+              "review_scale": "both",
+              "description": "an adjacent usable surface remains clear. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the main passage remains separate from the cluster"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the main passage remains separate from the cluster"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the main passage remains separate from the cluster",
+            "render_gate": {
+              "id": "vo_rb_spatial_density_variation_3",
+              "review_scale": "both",
+              "description": "the main passage remains separate from the cluster. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_support_compression",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "the seated body meets a coherent support area on the soft cushion; a small cushion depression is localized beneath the load; the clothing folds follow the seated contact without penetrating the seat"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the seated body meets a coherent support area on the soft cushion; a small cushion depression is localized beneath the load; the clothing folds follow the seated contact without penetrating the seat",
+        "paraphrase_examples": [
+          "The seated body meets the cushion at a coherent support area, with fabric folds and a small depression localized to the load.",
+          "앉거나 기대는 지지 관계",
+          "support compression relation"
+        ],
+        "contrast_examples": [
+          "단단한 돌 의자 압축",
+          "몸이 좌면 관통",
+          "그림자만으로 지지 대체"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "앉거나 기대는 지지 관계",
+          "support compression relation",
+          "the seated body meets a coherent support area on the soft cushion",
+          "a small cushion depression is localized beneath the load",
+          "the clothing folds follow the seated contact without penetrating the seat"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "단단한 돌 의자 압축",
+        "몸이 좌면 관통",
+        "그림자만으로 지지 대체"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the seated body meets a coherent support area on the soft cushion"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the seated body meets a coherent support area on the soft cushion"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the seated body meets a coherent support area on the soft cushion",
+            "render_gate": {
+              "id": "vo_rb_support_compression_1",
+              "review_scale": "native",
+              "description": "the seated body meets a coherent support area on the soft cushion. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "a small cushion depression is localized beneath the load"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "a small cushion depression is localized beneath the load"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a small cushion depression is localized beneath the load",
+            "render_gate": {
+              "id": "vo_rb_support_compression_2",
+              "review_scale": "native",
+              "description": "a small cushion depression is localized beneath the load. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the clothing folds follow the seated contact without penetrating the seat"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the clothing folds follow the seated contact without penetrating the seat"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the clothing folds follow the seated contact without penetrating the seat",
+            "render_gate": {
+              "id": "vo_rb_support_compression_3",
+              "review_scale": "native",
+              "description": "the clothing folds follow the seated contact without penetrating the seat. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_glass_smudge_locality",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a faint smudge sits near the glass door pull; the mark remains attached to the glass plane; the rest of the pane retains readable reflection and transparency"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a faint smudge sits near the glass door pull; the mark remains attached to the glass plane; the rest of the pane retains readable reflection and transparency",
+        "paraphrase_examples": [
+          "A faint smudge remains near the glass pull while the rest of the pane keeps its reflection and transparency.",
+          "유리 표면의 국소 접촉 흔적",
+          "glass smudge locality relation"
+        ],
+        "contrast_examples": [
+          "화면 전체 안개",
+          "렌즈 오염",
+          "큰 지문을 원경에 강제"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "유리 표면의 국소 접촉 흔적",
+          "glass smudge locality relation",
+          "a faint smudge sits near the glass door pull",
+          "the mark remains attached to the glass plane",
+          "the rest of the pane retains readable reflection and transparency"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "화면 전체 안개",
+        "렌즈 오염",
+        "큰 지문을 원경에 강제"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a faint smudge sits near the glass door pull"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a faint smudge sits near the glass door pull"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a faint smudge sits near the glass door pull",
+            "render_gate": {
+              "id": "vo_rb_glass_smudge_locality_1",
+              "review_scale": "native",
+              "description": "a faint smudge sits near the glass door pull. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the mark remains attached to the glass plane"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the mark remains attached to the glass plane"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the mark remains attached to the glass plane",
+            "render_gate": {
+              "id": "vo_rb_glass_smudge_locality_2",
+              "review_scale": "native",
+              "description": "the mark remains attached to the glass plane. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the rest of the pane retains readable reflection and transparency"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the rest of the pane retains readable reflection and transparency"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the rest of the pane retains readable reflection and transparency",
+            "render_gate": {
+              "id": "vo_rb_glass_smudge_locality_3",
+              "review_scale": "native",
+              "description": "the rest of the pane retains readable reflection and transparency. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_vegetation_site_relation",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "small plants emerge from soil at the paving edge; their stems remain connected to that ground area; the maintained walking surface remains clear beside the plants"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "small plants emerge from soil at the paving edge; their stems remain connected to that ground area; the maintained walking surface remains clear beside the plants",
+        "paraphrase_examples": [
+          "A few small plants emerge from soil at the paving edge, while the maintained walking surface remains clear.",
+          "식생과 바닥 조건의 접속",
+          "vegetation site relation relation"
+        ],
+        "contrast_examples": [
+          "포장 전체 잡초",
+          "복제한 식물 타일",
+          "현실 공원은 무조건 야생화"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "식생과 바닥 조건의 접속",
+          "vegetation site relation relation",
+          "small plants emerge from soil at the paving edge",
+          "their stems remain connected to that ground area",
+          "the maintained walking surface remains clear beside the plants"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "포장 전체 잡초",
+        "복제한 식물 타일",
+        "현실 공원은 무조건 야생화"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "small plants emerge from soil at the paving edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "small plants emerge from soil at the paving edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: small plants emerge from soil at the paving edge",
+            "render_gate": {
+              "id": "vo_rb_vegetation_site_relation_1",
+              "review_scale": "both",
+              "description": "small plants emerge from soil at the paving edge. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "their stems remain connected to that ground area"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "their stems remain connected to that ground area"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: their stems remain connected to that ground area",
+            "render_gate": {
+              "id": "vo_rb_vegetation_site_relation_2",
+              "review_scale": "both",
+              "description": "their stems remain connected to that ground area. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the maintained walking surface remains clear beside the plants"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the maintained walking surface remains clear beside the plants"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the maintained walking surface remains clear beside the plants",
+            "render_gate": {
+              "id": "vo_rb_vegetation_site_relation_3",
+              "review_scale": "both",
+              "description": "the maintained walking surface remains clear beside the plants. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_coating_substrate_boundary",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "a small worn edge interrupts the paint coating; exposed metal carries a different local highlight; the coating boundary follows the solid shape of the part"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a small worn edge interrupts the paint coating; exposed metal carries a different local highlight; the coating boundary follows the solid shape of the part",
+        "paraphrase_examples": [
+          "A tiny worn edge exposes metal beneath the paint, with a different highlight response limited to that patch.",
+          "도막과 금속 바탕의 경계",
+          "coating substrate boundary relation"
+        ],
+        "contrast_examples": [
+          "모든 금속에 주황 녹",
+          "금속 종류 진위 판정",
+          "전역 스크래치"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "도막과 금속 바탕의 경계",
+          "coating substrate boundary relation",
+          "a small worn edge interrupts the paint coating",
+          "exposed metal carries a different local highlight",
+          "the coating boundary follows the solid shape of the part"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 금속에 주황 녹",
+        "금속 종류 진위 판정",
+        "전역 스크래치"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a small worn edge interrupts the paint coating"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a small worn edge interrupts the paint coating"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: a small worn edge interrupts the paint coating",
+            "render_gate": {
+              "id": "vo_rb_coating_substrate_boundary_1",
+              "review_scale": "native",
+              "description": "a small worn edge interrupts the paint coating. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "exposed metal carries a different local highlight"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "exposed metal carries a different local highlight"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: exposed metal carries a different local highlight",
+            "render_gate": {
+              "id": "vo_rb_coating_substrate_boundary_2",
+              "review_scale": "native",
+              "description": "exposed metal carries a different local highlight. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the coating boundary follows the solid shape of the part"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the coating boundary follows the solid shape of the part"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the coating boundary follows the solid shape of the part",
+            "render_gate": {
+              "id": "vo_rb_coating_substrate_boundary_3",
+              "review_scale": "native",
+              "description": "the coating boundary follows the solid shape of the part. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "rb_film_grain_choice",
+      "category": "photographic_environment_relation",
+      "activation": {
+        "exact_terms": [
+          "restrained irregular film-like grain remains visible; scene edges and material differences stay readable; the grain stays distinct from digital colored noise and film scratches"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "restrained irregular film-like grain remains visible; scene edges and material differences stay readable; the grain stays distinct from digital colored noise and film scratches",
+        "paraphrase_examples": [
+          "A restrained irregular film-like grain remains subordinate to the scene's edges and material textures.",
+          "선택한 필름 계열의 입자 느낌",
+          "film grain choice relation"
+        ],
+        "contrast_examples": [
+          "실제 필름 인증",
+          "센서 노이즈와 동일 원인",
+          "모든 사진에 필름 추가"
+        ],
+        "claim_limits": [
+          "The selected owner and all components must be visible in one image.",
+          "A depiction is not evidence of capture history, material diagnosis or geographic authenticity.",
+          "The concrete objects are a selected manifestation, never defaults for a broad realism request."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "선택한 필름 계열의 입자 느낌",
+          "film grain choice relation",
+          "restrained irregular film-like grain remains visible",
+          "scene edges and material differences stay readable",
+          "the grain stays distinct from digital colored noise and film scratches"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "실제 필름 인증",
+        "센서 노이즈와 동일 원인",
+        "모든 사진에 필름 추가"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "restrained irregular film-like grain remains visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "restrained irregular film-like grain remains visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: restrained irregular film-like grain remains visible",
+            "render_gate": {
+              "id": "vo_rb_film_grain_choice_1",
+              "review_scale": "both",
+              "description": "restrained irregular film-like grain remains visible. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "scene edges and material differences stay readable"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "scene edges and material differences stay readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: scene edges and material differences stay readable",
+            "render_gate": {
+              "id": "vo_rb_film_grain_choice_2",
+              "review_scale": "both",
+              "description": "scene edges and material differences stay readable. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the grain stays distinct from digital colored noise and film scratches"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the grain stays distinct from digital colored noise and film scratches"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this selected relationship in the declared environment: the grain stays distinct from digital colored noise and film scratches",
+            "render_gate": {
+              "id": "vo_rb_film_grain_choice_3",
+              "review_scale": "both",
+              "description": "the grain stays distinct from digital colored noise and film scratches. All named owners must be visible in this image. Missing, ambiguous, substituted or partly realized evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

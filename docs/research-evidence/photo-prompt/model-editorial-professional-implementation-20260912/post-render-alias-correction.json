@@ -1,0 +1,219 @@
+{
+  "reason": "Broad genre/context names are not paraphrases of the side-depth relation. Preserve them in ordinary candidate keywords; remove their direct legacy visual-concept activation.",
+  "profile_id": "mep_garment_side_depth",
+  "removed_direct_paraphrases": [
+    "Catalog",
+    "Lookbook",
+    "Garment-aware"
+  ],
+  "before_registry_file_sha256": "1e40172f1d4756da86ced3dc5c1b457e03f6c3b3527c0fbb3e5ab7219f982f35",
+  "before_profile": {
+    "id": "mep_garment_side_depth",
+    "category": "photographic_presentation_relation",
+    "activation": {
+      "exact_terms": [
+        "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn"
+      ],
+      "requires_adult_character": true,
+      "semantic_discovery_requires_component_evidence": false
+    },
+    "semantics": {
+      "definition": "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn",
+      "paraphrase_examples": [
+        "의상 옆선·두께 읽기",
+        "side seam detail",
+        "Catalog",
+        "Lookbook",
+        "Garment-aware"
+      ],
+      "contrast_examples": [
+        "정면 무늬만 보임",
+        "몸통과 골반이 물리적으로 분리됨"
+      ],
+      "claim_limits": [
+        "lookbook 전체가 이 각도를 필수로 요구하지 않는다.",
+        "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+      ]
+    },
+    "concept_candidate": {
+      "concept_terms": [
+        "의상 옆선·두께 읽기",
+        "side seam detail",
+        "the view exposes the selected side seam and adjacent front panel",
+        "hem overlap and folds give the fabric visible thickness",
+        "the torso and pelvis remain connected in a plausible turn"
+      ]
+    },
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "prompt_label_terms": [],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "reject_substitutes": [
+      "정면 무늬만 보임",
+      "몸통과 골반이 물리적으로 분리됨"
+    ],
+    "authored_components": {
+      "contract_version": "photo-authored-visual-components/v1",
+      "components": [
+        {
+          "id": "component_1",
+          "match_terms": [
+            "the view exposes the selected side seam and adjacent front panel"
+          ],
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "the view exposes the selected side seam and adjacent front panel"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: the view exposes the selected side seam and adjacent front panel",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_1",
+            "review_scale": "both",
+            "description": "the view exposes the selected side seam and adjacent front panel. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        },
+        {
+          "id": "component_2",
+          "match_terms": [
+            "hem overlap and folds give the fabric visible thickness"
+          ],
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "hem overlap and folds give the fabric visible thickness"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: hem overlap and folds give the fabric visible thickness",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_2",
+            "review_scale": "native",
+            "description": "hem overlap and folds give the fabric visible thickness. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        },
+        {
+          "id": "component_3",
+          "match_terms": [
+            "the torso and pelvis remain connected in a plausible turn"
+          ],
+          "evidence_field": "component_3_phrase",
+          "evidence_terms": [
+            "the torso and pelvis remain connected in a plausible turn"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: the torso and pelvis remain connected in a plausible turn",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_3",
+            "review_scale": "both",
+            "description": "the torso and pelvis remain connected in a plausible turn. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        }
+      ]
+    }
+  },
+  "after_profile": {
+    "id": "mep_garment_side_depth",
+    "category": "photographic_presentation_relation",
+    "activation": {
+      "exact_terms": [
+        "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn"
+      ],
+      "requires_adult_character": true,
+      "semantic_discovery_requires_component_evidence": false
+    },
+    "semantics": {
+      "definition": "the view exposes the selected side seam and adjacent front panel; hem overlap and folds give the fabric visible thickness; the torso and pelvis remain connected in a plausible turn",
+      "paraphrase_examples": [
+        "의상 옆선·두께 읽기",
+        "side seam detail"
+      ],
+      "contrast_examples": [
+        "정면 무늬만 보임",
+        "몸통과 골반이 물리적으로 분리됨"
+      ],
+      "claim_limits": [
+        "lookbook 전체가 이 각도를 필수로 요구하지 않는다.",
+        "The requested owner and scope must be visible in one saved image; professional status, production history and delivery compliance are not pixel claims."
+      ]
+    },
+    "concept_candidate": {
+      "concept_terms": [
+        "의상 옆선·두께 읽기",
+        "side seam detail",
+        "the view exposes the selected side seam and adjacent front panel",
+        "hem overlap and folds give the fabric visible thickness",
+        "the torso and pelvis remain connected in a plausible turn"
+      ]
+    },
+    "runtime_expression": {
+      "default_mode": "definition_with_optional_label",
+      "prompt_label_terms": [],
+      "forbidden_prompt_terms": [],
+      "runtime_forbidden_labels": []
+    },
+    "reject_substitutes": [
+      "정면 무늬만 보임",
+      "몸통과 골반이 물리적으로 분리됨"
+    ],
+    "authored_components": {
+      "contract_version": "photo-authored-visual-components/v1",
+      "components": [
+        {
+          "id": "component_1",
+          "match_terms": [
+            "the view exposes the selected side seam and adjacent front panel"
+          ],
+          "evidence_field": "component_1_phrase",
+          "evidence_terms": [
+            "the view exposes the selected side seam and adjacent front panel"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: the view exposes the selected side seam and adjacent front panel",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_1",
+            "review_scale": "both",
+            "description": "the view exposes the selected side seam and adjacent front panel. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        },
+        {
+          "id": "component_2",
+          "match_terms": [
+            "hem overlap and folds give the fabric visible thickness"
+          ],
+          "evidence_field": "component_2_phrase",
+          "evidence_terms": [
+            "hem overlap and folds give the fabric visible thickness"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: hem overlap and folds give the fabric visible thickness",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_2",
+            "review_scale": "native",
+            "description": "hem overlap and folds give the fabric visible thickness. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        },
+        {
+          "id": "component_3",
+          "match_terms": [
+            "the torso and pelvis remain connected in a plausible turn"
+          ],
+          "evidence_field": "component_3_phrase",
+          "evidence_terms": [
+            "the torso and pelvis remain connected in a plausible turn"
+          ],
+          "min_content_words": 3,
+          "instruction": "Preserve the requested subject and make this selected relation visible: the torso and pelvis remain connected in a plausible turn",
+          "render_gate": {
+            "id": "vo_mep_garment_side_depth_3",
+            "review_scale": "both",
+            "description": "the torso and pelvis remain connected in a plausible turn. Judge the explicitly declared owner and scope in this saved image; missing, obscured, reversed or unclear evidence fails."
+          }
+        }
+      ]
+    }
+  },
+  "frozen_holdout_case_unchanged": true,
+  "images_were_generated_before_this_retrieval_only_correction": true,
+  "selected_beauty_profile_unchanged": true,
+  "after_registry_file_sha256": "e68bd757b0213c4049b19d781a87d00dd5969a148383e0bc175e9f7c103cfe1f"
+}

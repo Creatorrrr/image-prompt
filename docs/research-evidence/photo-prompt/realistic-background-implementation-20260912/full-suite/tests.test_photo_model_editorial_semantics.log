@@ -1,0 +1,27 @@
+test_broad_career_genre_and_nearby_visual_substitutes_do_not_harden (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_broad_career_genre_and_nearby_visual_substitutes_do_not_harden) ... ok
+test_broad_catalog_is_not_a_paraphrase_of_garment_side_depth (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_broad_catalog_is_not_a_paraphrase_of_garment_side_depth) ... ok
+test_bts_context_guards_do_not_leak_into_finished_portraits (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_bts_context_guards_do_not_leak_into_finished_portraits) ... ok
+test_bundles_reject_missing_or_locked_members_and_never_promote_associated_profiles (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_bundles_reject_missing_or_locked_members_and_never_promote_associated_profiles) ... ok
+test_full_owner_relation_only_and_negation (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_full_owner_relation_only_and_negation) ... ok
+test_guarded_nonadult_context_does_not_gain_hard_human_profile (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_guarded_nonadult_context_does_not_gain_hard_human_profile) ... ok
+test_real_indexes_cover_the_new_source (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_real_indexes_cover_the_new_source) ... ERROR
+test_selected_contract_keeps_every_owner_component_and_rejects_duplicate_evidence (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_selected_contract_keeps_every_owner_component_and_rejects_duplicate_evidence) ... ok
+test_series_layout_and_provenance_stay_outside_single_image_runtime (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_series_layout_and_provenance_stay_outside_single_image_runtime) ... ok
+
+======================================================================
+ERROR: test_real_indexes_cover_the_new_source (tests.test_photo_model_editorial_semantics.ModelEditorialTests.test_real_indexes_cover_the_new_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_model_editorial_semantics.py", line 105, in test_real_indexes_cover_the_new_source
+    pg.validate_semantic_index_metadata(si,self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 17481, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.910s
+
+FAILED (errors=1)

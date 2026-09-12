@@ -1,0 +1,120 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently sampled complex photographic outdoor scene for a realistic-background keyword realization test, using the attached adult woman as appearance and identity reference. Scene selection and staging are agent-authored, not requester definitions.",
+  "subject": "One adult woman matching the supplied reference appearance",
+  "setting": "Late-spring alpine botanical terrace above a reservoir, descending stone stairs and distant mountain switchbacks",
+  "event": "Woman rests her open palm on adjacent waist-high stone parapet while standing on a dry landing",
+  "visual_priorities": [
+    "Recognizable reference face and physically clear palm, parapet and planted feet",
+    "Readable foreground stone, middle garden and reservoir, distant mountain with spatially localized wetness and remaining snow"
+  ],
+  "baseline_prompt_en": "A natural photographic travel portrait of one adult woman matching the supplied reference face, dark eyes, softly parted lips, and long wavy dark hair, at an alpine botanical terrace above a reservoir in late spring. She wears a muted olive field jacket, cream knit top, dark walking trousers and brown hiking boots. She stands on the broad dry upper landing, both boots planted apart on the same level, torso upright; her nearer forearm reaches gently forward with a relaxed elbow, and her open palm rests flat on the waist-high stone parapet immediately beside her hip. Her other hand hangs visibly by her thigh. Her face turns toward the camera with a quiet, attentive expression. Show her complete body within the surrounding place. Rough chipped parapet stones fill one lower foreground edge; tiny rooted plants occupy some mortar joints. A flight of stone steps descends away behind her into the middle distance, its lower shaded treads dark with irregular residual rainwater while the exposed upper landing has dried. Uneven remnants of old snow survive beneath shadowed shrubs along the terrace edge. Beyond the gardens lies the blue-green reservoir, then a far mountain slope bearing narrow switchback paths that diminish convincingly with distance. Close stones retain distinct grain, middle shrubs have grouped leaves, and the distant mountain retains broad landforms with softer texture and lighter contrast. Cool open daylight from the cloudy alpine sky illuminates her face and the landscape consistently. The scene feels occupied and weathered through localized physical traces, coherent perspective and contact shadows, with enough environmental detail to read the actual place.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent complex-concept image realization test",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The user requests three independent randomly chosen complex concepts and reference-based image generation with actual realization assessment. This arm independently authors a late-spring alpine terrace scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "at an alpine botanical terrace above a reservoir in late spring"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman matching the supplied reference face"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "her open palm rests flat on the waist-high stone parapet immediately beside her hip"
+      },
+      {
+        "anchor_id": "identity",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "identity",
+        "prompt_evidence": "dark eyes, softly parted lips, and long wavy dark hair"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "matching the supplied reference face"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "identity",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "atmosphere",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "realistic_background_spatial_test",
+      "dimension": "concept",
+      "polarity": "required",
+      "source_span_ids": [
+        "global"
+      ],
+      "affected_dimensions": [
+        "concept"
+      ],
+      "axes": {
+        "depth_owners": [
+          "foreground chipped stones",
+          "middle terrace garden and reservoir",
+          "distant mountain switchbacks"
+        ],
+        "physical_trace_owners": [
+          "shaded lower stair treads retain moisture",
+          "upper landing dried",
+          "old snow beneath shaded shrubs"
+        ]
+      },
+      "evidence": {
+        "depth_phrase": "Beyond the gardens lies the blue-green reservoir, then a far mountain slope bearing narrow switchback paths that diminish convincingly with distance",
+        "trace_phrase": "its lower shaded treads dark with irregular residual rainwater while the exposed upper landing has dried",
+        "snow_phrase": "Uneven remnants of old snow survive beneath shadowed shrubs along the terrace edge"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "travel photography",
+    "family": "natural environmental portrait",
+    "evidence": [
+      "coherent alpine daylight",
+      "localized weather traces and readable landscape depth"
+    ]
+  },
+  "variation_key": "arm-c-seed-17705118996401894872"
+}
