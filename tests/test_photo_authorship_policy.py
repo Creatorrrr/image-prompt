@@ -83,6 +83,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
             "prompt_en": core["baseline_prompt_en"],
             "negative_en": pack["negative_en"],
             "chosen_candidate_ids": [],
+            "chosen_visual_concept_ids": [],
             "composer": "agent",
             "candidate_interpretations": [],
             "authorial_core_binding": {

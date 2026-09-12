@@ -3235,6 +3235,7 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                         "paraphrase_examples",
                         "contrast_examples",
                         "component_semantics",
+                        "visual_components",
                         "claim_limits",
                         "interpretation_scope",
                     }
@@ -3243,6 +3244,17 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                     errors.append(
                         f"{label}.semantics: unknown keys {unknown_semantic_keys}"
                     )
+                # The positive retrieval projection already consumes these
+                # optional descriptive units. They confer no hard activation.
+                if "visual_components" in semantics:
+                    visual_components = semantics["visual_components"]
+                    if (
+                        not isinstance(visual_components, list)
+                        or not visual_components
+                        or any(not isinstance(value, str) or not value.strip() for value in visual_components)
+                        or len({value.strip().casefold() for value in visual_components if isinstance(value, str)}) != len(visual_components)
+                    ):
+                        errors.append(f"{label}.semantics.visual_components: must be a non-empty list of distinct non-empty strings")
                 if "claim_limits" in semantics:
                     limits = normalize_list(semantics["claim_limits"])
                     if not limits or len({value.casefold() for value in limits}) != len(limits):

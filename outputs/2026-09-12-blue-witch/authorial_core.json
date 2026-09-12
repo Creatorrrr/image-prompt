@@ -1,0 +1,156 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 푸른 마녀 디테일 고딕 성채 소파에 앉아 나른한 표정 턱을 괸 자세 검은 고양이 호박",
+  "interpreted_intent": "A richly detailed blue-themed witch in a Gothic citadel, seated on a sofa with a languid face and chin supported by her hand, accompanied by a black cat and pumpkins.",
+  "subject": "Adult blue-clad witch, black cat, orange pumpkins",
+  "setting": "Gothic citadel sitting chamber",
+  "event": "Witch rests seated with chin supported by her hand",
+  "visual_priorities": [
+    "Languid face and clearly supported chin-rest pose",
+    "Detailed blue costume, Gothic architecture, black cat and pumpkins"
+  ],
+  "baseline_prompt_en": "An intricately detailed photographic portrait of an adult blue witch resting in a Gothic citadel. She wears a midnight-blue velvet witch gown with cobalt silk insets, fine silver botanical embroidery, fitted long sleeves, and a tall blue pointed hat with a softly bent tip. Her long dark hair falls over her shoulders, framing a languid expression with half-lidded eyes and softly relaxed lips. She sits deep on a carved walnut sofa upholstered in faded sapphire velvet. Her left elbow rests firmly on the padded sofa arm, her left forearm rises naturally, and the heel of her left palm supports her chin, with fingers resting along the side of her jaw. Her head tilts gently into that hand, while her right hand lies loosely on her lap. Her hips and thighs settle into the cushion, and her skirt drapes over bent knees toward the stone floor. A black cat sits on the adjacent cushion, its pointed ears, amber eyes, glossy fur and curled tail distinctly visible beside her gown. Ribbed orange pumpkins with rough curved stems cluster at the foot of the sofa; one carved pumpkin glows softly from within. Behind her, pointed stone arches, slender clustered columns, iron candle stands and a leaded lancet window establish the Gothic citadel interior. Cool window light reveals the pile of the blue velvet and weathered stone, balanced by small amber candle highlights. Photograph the scene from a slightly front-left three-quarter viewpoint, showing the entire supporting forearm and chin contact, the cat, and the pumpkins. Prioritize her sleepy face and credible relaxed pose, then the tactile richness of blue fabric, carved wood, black fur and pumpkin rind.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "blue witch resting scene",
+      "source_text": "푸른 마녀 디테일 고딕 성채 소파에 앉아 나른한 표정 턱을 괸 자세 검은 고양이 호박",
+      "basis": "request_context",
+      "resolution": "Blue is expressed through the witch costume; Gothic citadel denotes pointed stone architecture; the witch sits lazily with her hand supporting her chin, with a black cat and pumpkins in the same frame.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "푸른 마녀",
+        "dimension": "concept",
+        "prompt_evidence": "adult blue witch"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "마녀",
+        "dimension": "subject",
+        "prompt_evidence": "She wears a midnight-blue velvet witch gown"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "소파에 앉아",
+        "dimension": "event",
+        "prompt_evidence": "She sits deep on a carved walnut sofa"
+      },
+      {
+        "anchor_id": "setting",
+        "source_text": "고딕 성채",
+        "dimension": "setting",
+        "prompt_evidence": "Gothic citadel interior"
+      },
+      {
+        "anchor_id": "pose",
+        "source_text": "턱을 괸 자세",
+        "dimension": "pose",
+        "prompt_evidence": "the heel of her left palm supports her chin"
+      },
+      {
+        "anchor_id": "expression",
+        "source_text": "나른한 표정",
+        "dimension": "expression",
+        "prompt_evidence": "a languid expression with half-lidded eyes and softly relaxed lips"
+      },
+      {
+        "anchor_id": "color",
+        "source_text": "푸른 마녀",
+        "dimension": "color",
+        "prompt_evidence": "cobalt silk insets"
+      },
+      {
+        "anchor_id": "details",
+        "source_text": "디테일",
+        "dimension": "style",
+        "prompt_evidence": "fine silver botanical embroidery"
+      },
+      {
+        "anchor_id": "cat",
+        "source_text": "검은 고양이",
+        "dimension": "subject",
+        "prompt_evidence": "A black cat sits on the adjacent cushion"
+      },
+      {
+        "anchor_id": "pumpkins",
+        "source_text": "호박",
+        "dimension": "subject",
+        "prompt_evidence": "Ribbed orange pumpkins with rough curved stems"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "pose",
+      "expression",
+      "color",
+      "style"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "chin_rest",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "axes": {
+        "support": "elbow supported on sofa arm, palm under chin"
+      },
+      "evidence": {
+        "contact": "the heel of her left palm supports her chin",
+        "support": "Her left elbow rests firmly on the padded sofa arm"
+      }
+    },
+    {
+      "assertion_id": "languid_face",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "expression"
+      ],
+      "axes": {
+        "affect": "sleepy relaxation"
+      },
+      "evidence": {
+        "expression": "a languid expression with half-lidded eyes and softly relaxed lips"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic fantasy portrait",
+    "family": "tactile Gothic cinematic portrait",
+    "evidence": [
+      "fine silver botanical embroidery",
+      "weathered stone"
+    ]
+  },
+  "variation_key": "blue-witch-01"
+}

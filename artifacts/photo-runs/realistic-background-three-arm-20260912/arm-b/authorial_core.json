@@ -1,0 +1,83 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently choose a complex photographic test scene, use the supplied person reference, and judge whether selected visual relations actually render. A clean sophisticated tea gallery is the agent-authored experimental setting, not a requester definition.",
+  "subject": "One adult woman whose appearance is guided by the supplied portrait",
+  "setting": "Pristine boutique tea tasting gallery with limestone, walnut, glazed ceramics, brushed steel and glass",
+  "event": "Woman sets a celadon cup on a saucer at the counter",
+  "visual_priorities": [
+    "Legible clean interior with distinct material responses and physically coherent light",
+    "Transparent and reflective glass with spatial depth",
+    "Connected hand contact and faithful reference appearance"
+  ],
+  "baseline_prompt_en": "An environmental editorial photograph of one adult woman in a pristine, sophisticated boutique tea tasting gallery, using the supplied portrait as the appearance and identity reference: preserve her oval face, dark brown eyes, softly shaped lips, and long wavy black hair. The setting is a newly maintained real interior with a pale limestone tasting counter, finely joined walnut cabinetry, a transparent glass partition, brushed stainless steel shelving, and small glazed ceramic tea vessels. She wears an ivory knit top and charcoal tailored trousers. Standing beside the counter with both feet planted on the floor and her weight balanced, she sets a small celadon cup onto a saucer: her right thumb and fingers hold the cup on opposite sides, her right elbow stays beside her waist, and her left palm rests flat on the nearby counter edge. The cup base meets the saucer surface. Show her face, both connected arms, the hand-to-cup contact, and the counter-to-floor relationship in a three-quarter environmental view. Through the glass partition, a second row of walnut shelves remains visible while a faint reflection of the nearer window occupies the same pane. A large side window gives broad cool daylight, and a recessed warm shelf lamp lights the ceramic display. Matte limestone scatters that daylight softly, brushed steel catches a narrow directional highlight, and the celadon glaze carries a small bright reflection. The cabinetry has precise joints and the stone has restrained natural variation. The counter casts a grounded shadow on its plinth; the woman and ceramics share the same directional light. Space, clean material identity, believable glass, and physically connected human action remain readable.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent complex-concept reference-image render test",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The requester asks independent randomized complex concepts and actual image realization tests using the attachment; the clean tea gallery and physical cup action are agent-authored choices.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "test_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a pristine, sophisticated boutique tea tasting gallery"
+      },
+      {
+        "anchor_id": "reference_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman"
+      },
+      {
+        "anchor_id": "visible_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "event",
+        "prompt_evidence": "she sets a small celadon cup onto a saucer"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the supplied portrait as the appearance and identity reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "environmental editorial photography",
+    "family": "clean architectural portrait",
+    "evidence": [
+      "restrained natural variation",
+      "physically connected human action"
+    ]
+  },
+  "variation_key": "arm-b-clean-tea-2026091202"
+}

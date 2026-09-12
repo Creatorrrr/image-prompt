@@ -1,0 +1,106 @@
+{
+  "classification": "calibrated_followup_not_independent_holdout",
+  "pack_id": "58de339810c6ae97",
+  "chosen_candidate_ids": [
+    "bundle:rbb_clean_clinic"
+  ],
+  "selected_contract_sha256": "8a3e5e3b2b4f3a205d0c89217b4e76d92c70026b72fa126255bad7e1108a1a3f",
+  "result_image": "/Users/chasoik/Projects/image-prompt/artifacts/photo-runs/realistic-background-three-arm-20260912/arm-b/revision-2/generated-02.png",
+  "result_sha256": "289126a25346655bfc2cbdcfd662d7474be80da2d523a20cca2ca666719571b1",
+  "criteria_sha256": "e0a9177535ac27308656b41ff58331db4457adc79dfa3c74bcd29e0c7b164cf5",
+  "policy": "partial_is_fail",
+  "review_scales": [
+    "native",
+    "thumbnail"
+  ],
+  "atomic_gates": [
+    {
+      "id": "clean_joints",
+      "owner": "wall floor and frame joints",
+      "status": "pass",
+      "evidence": "Native: pale wall and floor seams, black/silver pane junctions are aligned and readable. Thumbnail: frame geometry and tiled floor segmentation remain visible."
+    },
+    {
+      "id": "furniture_support",
+      "owner": "walnut counter plinth",
+      "status": "pass",
+      "evidence": "Native: counter mass sits on an attached plinth contacting floor. Thumbnail: base and grounded placement remain coherent."
+    },
+    {
+      "id": "distinct_surfaces",
+      "owner": "stone and reflective materials",
+      "status": "pass",
+      "evidence": "Native: pale stone face is diffuse while steel strips and glass respond more specularly. Thumbnail: material separation survives."
+    },
+    {
+      "id": "matte_response",
+      "owner": "limestone counter",
+      "status": "pass",
+      "evidence": "Native: stone face carries a broad low-contrast tonal gradient. Thumbnail: counter remains a broad subdued plane."
+    },
+    {
+      "id": "metal_response",
+      "owner": "right-hand brushed steel shelf fascias",
+      "status": "pass",
+      "evidence": "Native: silver fascias show directional bands and limited bright upper edges; these are visually distinct from the warm lamps beneath. Thumbnail: silver strips remain separate from warm lighting."
+    },
+    {
+      "id": "glass_dual_response",
+      "owner": "left-middle glass pane",
+      "status": "pass",
+      "evidence": "Native: window/tree reflection overlays a visible farther shelf interior. Thumbnail: translucent framed layer and reflected window/tree structure remain legible."
+    },
+    {
+      "id": "broad_source_transition",
+      "owner": "window-lit sleeves and nearby counter",
+      "status": "pass",
+      "evidence": "Native: sleeve and stone form shadows transition gradually under left window light. Thumbnail: soft tonal modeling remains readable; harder floor patches are not used as this evidence."
+    },
+    {
+      "id": "shared_form_shading",
+      "owner": "woman and surrounding counter",
+      "status": "pass",
+      "evidence": "Native: woman and counter receive compatible bright left-side light and darker opposite form shading. Thumbnail: both remain inside the same light field."
+    },
+    {
+      "id": "local_contact",
+      "owner": "cup-saucer and shoes-floor",
+      "status": "pass",
+      "evidence": "Native: narrow local occlusion at cup base/saucer and shoes/floor grounds both. Thumbnail: cup-set contact silhouette and shoe grounding remain readable; fine finger anatomy is native-only."
+    }
+  ],
+  "component_groups": {
+    "rb_clean_space_plausibility_component": {
+      "status": "pass",
+      "gate_ids": [
+        "clean_joints",
+        "furniture_support",
+        "distinct_surfaces"
+      ]
+    },
+    "rb_material_response_contrast_component": {
+      "status": "pass",
+      "gate_ids": [
+        "matte_response",
+        "metal_response",
+        "glass_dual_response"
+      ]
+    },
+    "rb_soft_source_environment_component": {
+      "status": "pass",
+      "gate_ids": [
+        "broad_source_transition",
+        "shared_form_shading",
+        "local_contact"
+      ]
+    }
+  },
+  "joint_relation": {
+    "id": "rbb_clean_clinic_joint",
+    "status": "pass",
+    "evidence": "The stone counter and its walnut base, right metal shelves, left framed glass and central woman share one perspective-connected tea gallery in the same saved image at native and thumbnail scales."
+  },
+  "overall": "pass",
+  "user_judgment": "pending",
+  "causal_improvement": "not established"
+}

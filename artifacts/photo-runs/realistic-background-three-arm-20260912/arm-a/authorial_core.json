@@ -1,0 +1,82 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently design and render a complex randomized photographic test scene using the attached person as appearance reference, then test visual realization. The hillside transit location and infrastructure staging are agent-authored choices, with coordinator-owned outdoor family guidance.",
+  "subject": "One adult woman whose facial appearance and hair follow the attached portrait",
+  "setting": "Terraced hillside bus interchange after rain on an overcast morning",
+  "event": "Woman pauses with her left hand on a handrail and both feet supported on a stair landing",
+  "visual_priorities": [
+    "Recognizable reference-derived face and hair",
+    "Natural background material fidelity and continuous transit infrastructure geometry",
+    "Plausible visible handrail contact and body support"
+  ],
+  "baseline_prompt_en": "Create a natural editorial photograph of one adult woman at a terraced hillside bus interchange on an overcast morning after rain. Use the attached portrait as her facial appearance and hair reference: retain the softly oval face, dark brown eyes, full natural lips, and long loose dark wavy hair. She wears a charcoal weatherproof coat over a cream knit top, straight dark trousers and practical ankle boots. She pauses on a broad concrete stair landing, both boot soles resting flat on the same level surface, her left hand lightly wrapped around the waist-high metal handrail beside her left hip while her right hand holds a small canvas tote beside her right thigh. Her torso turns a little toward the camera, with a quiet attentive expression. Both forearms and the hand-to-rail contact remain visible. The rail continues down the adjacent stairs, leaving clear standing space around her feet. Show her full figure within a spacious architectural view. A foreground drainage grate meets the landing edge; the stairs rise behind her to a steel and glass bus shelter; a retaining wall and hillside apartment facades occupy successively deeper planes. Concrete stair joints, tile paving seams and shelter posts retain consistent perspective and human scale. Rain darkens sheltered concrete unevenly, with a shallow puddle beside the drain and small scuffs along the handrail. Glass panels transmit the structures behind them and catch the pale sky. Soft overhead daylight reaches her face and the surrounding construction with matching direction and restrained contrast. Keep the ordinary infrastructure legible across the image, with believable material surfaces and continuous geometry. The result should feel like a candid photograph made at an actual working transit stop.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent randomized complex concept and actual image evaluation",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Create a separate random complex scene, use the supplied person image as an appearance reference, and evaluate the generated photograph against preregistered criteria; the particular scene and pixel criteria are agent-authored.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a terraced hillside bus interchange on an overcast morning after rain"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "컨셉을 정하여",
+        "dimension": "event",
+        "prompt_evidence": "She pauses on a broad concrete stair landing"
+      },
+      {
+        "anchor_id": "reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait as her facial appearance and hair reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "material"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial photography",
+    "family": "natural transit location portrait",
+    "evidence": [
+      "ordinary infrastructure legible across the image",
+      "believable material surfaces and continuous geometry"
+    ]
+  },
+  "variation_key": "arm-a-seed-1751180039"
+}
