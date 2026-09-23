@@ -1,0 +1,101 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "An independently chosen, complex but plausible one-frame everyday photograph in an orderly domestic space; the supplied portrait guides visible adult appearance only, while multiple household relations can be evaluated in pixels.",
+  "subject": "one visibly adult woman with visible hair and expression cues from the supplied portrait",
+  "setting": "compact, orderly apartment living room with an oak bookcase, sofa, sideboard, side table, basket, and herb-lined window",
+  "event": "she is placing a folded throw onto an open bookcase shelf after tidying",
+  "visual_priorities": [
+    "the hand-to-throw-to-shelf action is visibly connected and physically plausible",
+    "the living-room objects occupy distinct readable positions that communicate an orderly everyday setting"
+  ],
+  "baseline_prompt_en": "Editorial lifestyle photograph of one unmistakably adult woman in a compact, orderly apartment living room, quietly placing a folded cream throw on the open middle shelf of a low oak bookcase after tidying. Her visible appearance takes loose guidance from the supplied portrait: long dark softly waved hair with a near-center part and a calm face. She stands close to the bookcase with both feet on the wood floor; her left palm supports the folded throw from below while her right fingertips guide its front edge onto the shelf. The bookcase has neat rows of books with a clear space for the throw. A pale sofa with two squared cushions occupies the right side of the room. A pleated table lamp stands on a sideboard behind the sofa, a closed paperback rests on a small round side table, and a woven storage basket sits under the bookcase. Small herbs in terracotta pots line the window sill beside sheer curtains. A medium-wide, eye-level composition keeps her hands, the shelf, the sofa, and the household objects readable in one natural frame; late-afternoon window light reveals oak grain, linen folds, and a quiet, recently tidied atmosphere.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Choose a seeded multi-object everyday scene with observable spatial and action relations; specifics are agent-authored rather than requester-defined.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the provided portrait as visible adult appearance guidance for a new scene, without asserting identity.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "compact, orderly apartment living room"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "placing a folded cream throw on the open middle shelf"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "setting",
+        "prompt_evidence": "low oak bookcase"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "action",
+        "prompt_evidence": "her left palm supports the folded throw from below"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible appearance takes loose guidance from the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "action",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "lighting",
+      "camera",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial lifestyle photography",
+    "family": "quiet domestic documentary",
+    "evidence": [
+      "readable household placements",
+      "late-afternoon window light"
+    ]
+  },
+  "variation_key": "arm-c-seed-14906590725294261376"
+}

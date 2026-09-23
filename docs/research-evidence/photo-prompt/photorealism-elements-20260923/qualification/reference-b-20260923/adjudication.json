@@ -1,0 +1,67 @@
+{
+  "schema_version": "photorealism-reference-b-three-arm-adjudication/v1",
+  "rule": "all declared components in one native image; ambiguous visibility is fail; partial_is_fail",
+  "arm_results": {
+    "a": {
+      "candidate_exposed_count": 1,
+      "candidate_opted_in_count": 0,
+      "target_profiles_passed": 2,
+      "target_profiles_total": 3,
+      "whole_scene_status": "fail",
+      "failed_target_profile_ids": [
+        "pr_surface_wear_contact_owner"
+      ],
+      "coordinator_preliminary_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/coordinator_preliminary_a.json",
+      "arm_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/arm_a/native_pixel_review.json"
+    },
+    "b": {
+      "candidate_exposed_count": 0,
+      "candidate_opted_in_count": 0,
+      "target_profiles_passed": 2,
+      "target_profiles_total": 3,
+      "whole_scene_status": "fail",
+      "failed_target_profile_ids": [
+        "pr_surface_wear_contact_owner"
+      ],
+      "coordinator_preliminary_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/coordinator_preliminary_b.json",
+      "arm_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/arm_b/native_pixel_review.json"
+    },
+    "c": {
+      "candidate_exposed_count": 1,
+      "candidate_opted_in_count": 1,
+      "target_profiles_passed": 2,
+      "target_profiles_total": 3,
+      "whole_scene_status": "fail",
+      "failed_target_profile_ids": [
+        "pr_surface_wear_contact_owner"
+      ],
+      "coordinator_preliminary_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/coordinator_preliminary_c.json",
+      "arm_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/arm_c/native_pixel_review.json"
+    }
+  },
+  "aggregate": {
+    "saved_images": 3,
+    "image_calls": 3,
+    "composed_audit_passed": 3,
+    "runtime_audit_passed": 3,
+    "target_profiles_passed": 6,
+    "target_profiles_total": 9,
+    "candidate_exposed": 2,
+    "candidate_opted_in": 1,
+    "whole_scenes_passed": 0,
+    "whole_scenes_total": 3
+  },
+  "review_reconciliation": {
+    "a": "Coordinator preliminary review treated selector highlights as contact wear; arm native crop could not distinguish a small worn patch from broad specular bands. Apply stricter failure.",
+    "b": "Coordinator and arm agree the colored crescent is remote from left-palm contact and is not restrained fingertip polish.",
+    "c": "Coordinator and arm agree the broad bright wiped mark fails the faint localized trace. They differ on whether the marker touches a Y flourish or a separate underline, and on assessment of the wet raised paint edge; these scene details are not counted as profile passes and the scene already fails on wear."
+  },
+  "independence_limits": [
+    "Each arm used a separate seed, core, pack, prompt, image and ledger; manifests declare no cross-arm inputs.",
+    "Coordinator checked broad scene uniqueness and required C to redraw an overlapping astronomy theme before rendering; C had generated but says it had not read the first pack. The discarded core is retained.",
+    "Coordinator required A to add primary pr_* target gates before rendering after noticing its first gate plan used only legacy rb_* profiles. Core and public pack were unchanged.",
+    "No source asset or retrieval calibration occurred during this replay, so pack exposure is measured against the frozen source snapshot."
+  ],
+  "causal_limit": "Profiles passed in pixels when largely absent from the public pack; this run cannot attribute those passes to candidate-pack exposure.",
+  "user_judgment": "not_yet_received"
+}

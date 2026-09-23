@@ -1,0 +1,74 @@
+{
+  "contract_version": "photo-arm-pack-exposure-diagnosis/v1",
+  "arm_id": "reference-b-arm-a",
+  "source_pack_id": "aae4efc7b9999882",
+  "public_pack_basis": "Exact candidate IDs in candidate_pack.json; source/index existence is a separate status.",
+  "selected_visual_concept_ids": [],
+  "selected_candidate_ids": [
+    "bundle:rbb_surface_focus",
+    "slot:composition:third_grid_off_center_subject"
+  ],
+  "primary_photorealism_element_targets": [
+    {
+      "profile_id": "pr_environmental_portrait_subject_place",
+      "pack_surface": "visual_concept",
+      "public_candidate_ids": [
+        "visual-concept:pr_environmental_portrait_subject_place"
+      ],
+      "formal_selected_candidate_ids": [],
+      "source_index_present": true,
+      "native_pixel_status": "pass"
+    },
+    {
+      "profile_id": "pr_observed_action_trace",
+      "pack_surface": "source_index_only",
+      "public_candidate_ids": [],
+      "formal_selected_candidate_ids": [],
+      "source_index_present": true,
+      "native_pixel_status": "pass"
+    },
+    {
+      "profile_id": "pr_surface_wear_contact_owner",
+      "pack_surface": "source_index_only",
+      "public_candidate_ids": [],
+      "formal_selected_candidate_ids": [],
+      "source_index_present": true,
+      "native_pixel_status": "fail"
+    }
+  ],
+  "supplemental_realistic_background_targets": [
+    {
+      "profile_id": "rb_material_response_contrast",
+      "pack_surface": "candidate_bundle",
+      "public_candidate_ids": [
+        "bundle:rbb_surface_focus",
+        "bundle:rbb_clean_hotel"
+      ],
+      "formal_selected_candidate_ids": [
+        "bundle:rbb_surface_focus"
+      ],
+      "source_index_present": true,
+      "native_pixel_status": "pass"
+    },
+    {
+      "profile_id": "rb_readable_environment_focus",
+      "pack_surface": "candidate_bundle",
+      "public_candidate_ids": [
+        "bundle:rbb_surface_focus",
+        "bundle:rbb_blue_hour",
+        "bundle:rbb_landscape_depth",
+        "bundle:rbb_environment_editorial"
+      ],
+      "formal_selected_candidate_ids": [
+        "bundle:rbb_surface_focus"
+      ],
+      "source_index_present": true,
+      "native_pixel_status": "pass"
+    }
+  ],
+  "caveats": [
+    "pr_environmental_portrait_subject_place was exposed as an eligible public visual concept but was not opted into a strict profile obligation.",
+    "pr_observed_action_trace and pr_surface_wear_contact_owner were source/index targets and did not appear in this public candidate pack.",
+    "The selected rbb_surface_focus bundle did not automatically activate its associated rb profiles as formal visual obligations; they were independently frozen arm-local pixel targets."
+  ]
+}

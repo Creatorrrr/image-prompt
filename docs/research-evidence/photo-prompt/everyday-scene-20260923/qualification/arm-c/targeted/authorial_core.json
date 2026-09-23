@@ -1,0 +1,101 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "An independently selected complex everyday scene for testing visible domestic place, in-progress tidying action, background, and prop relations. The coordinator specified the test family as returning one object to its place in a neat but actively used home; this is an evaluation condition, not requester text. The supplied portrait guides visible adult appearance only.",
+  "subject": "one visibly adult woman whose visible hair and expression loosely follow the supplied portrait",
+  "setting": "compact apartment living room with an oak shelf, upright books, side table, sofa, sideboard, and window",
+  "event": "she is halfway through returning a closed blue paperback to its gap between upright books",
+  "visual_priorities": [
+    "the partial book-in-gap placement, hands, and target are all readable in the same frame",
+    "the room looks neat yet in use through distinct plausible household objects and subtle traces of use"
+  ],
+  "baseline_prompt_en": "An editorial lifestyle photograph of one unmistakably adult woman in a compact apartment living room that looks neat yet actively used. Her visible appearance takes loose guidance from the supplied portrait: long dark softly waved hair parted near the center and a calm face. She is midway through returning a closed blue paperback to the narrow gap between upright books on an oak shelf. Her left palm supports the lower edge of the book while her right fingertips steady its upper edge; the book is halfway inserted, its fore-edge entering the gap and its spine still projecting from the row. She stands on both feet close to the shelf with her elbows naturally bent, and the open shelf faces the camera. A glass of water sits on a side table beside a pale sofa with slightly compressed cushions; a pleated lamp stands on a sideboard, and a small plant brightens the window sill. Clear overcast daylight reveals the lived-in order, her touching hands, the half-returned book, and its exact target gap in one medium-wide frame.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "A seeded, independently authored one-frame scene with several observable spatial and action relations.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "The supplied portrait informs visible adult appearance in a new scene without making identity claims.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "compact apartment living room that looks neat yet actively used"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "midway through returning a closed blue paperback"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "setting",
+        "prompt_evidence": "upright books on an oak shelf"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "action",
+        "prompt_evidence": "Her left palm supports the lower edge of the book"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible appearance takes loose guidance from the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "action",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "lighting",
+      "camera",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial lifestyle photography",
+    "family": "quiet domestic documentary",
+    "evidence": [
+      "neat yet actively used room",
+      "clear overcast daylight"
+    ]
+  },
+  "variation_key": "arm-c-targeted-seed-14906590725294261376"
+}

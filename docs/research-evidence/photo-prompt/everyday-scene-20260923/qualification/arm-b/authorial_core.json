@@ -1,0 +1,98 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorized independent selection of a random, complex, pixel-testable photographic concept using the attached image. This arm independently selects a small everyday grocery scene; the market details are agent-authored, not requester-specified.",
+  "subject": "one adult shopper with visible hair and facial appearance guided by the attached portrait",
+  "setting": "a tiny neighborhood grocery in overcast early morning",
+  "event": "the shopper lifts a tangerine from a produce crate while holding a shopping list",
+  "visual_priorities": [
+    "legible hand-to-tangerine action beside the produce crate",
+    "visible shopping list, blue wire basket, and small-grocery background in one frame"
+  ],
+  "baseline_prompt_en": "A candid editorial photograph inside a tiny neighborhood grocery on a dry, overcast early morning. One adult woman is the focal shopper; use the attached portrait as guidance only for her visible long dark wavy hair parted near the center, dark eyes, and softly contoured face. She wears an olive jacket over a dark shirt and stands beside a shallow wooden produce crate. Her right hand lifts one bright tangerine a few inches above the pile in the crate, while her left hand holds a folded paper shopping list at chest height. A blue wire shopping basket rests on the waist-high counter beside her, with two tangerines visible through its open mesh. The narrow wall of canned goods behind her and a dry sidewalk glimpsed through the front window make the small shop readable as a lived-in place. Amber hanging bulbs warm the fruit while cool gray window light falls across her face. Frame her face, both hands, the lifted fruit, the crate, the list, and the basket in one coherent three-quarter view. Preserve believable hand contact and the ordinary clutter and textures of a working grocery; render as a natural photographic moment with crisp focal details and gently receding shelves.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "The user asks for a random complex test case; this arm independently chooses a small-grocery shopper scene."
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "The attached portrait guides visible appearance of an adult-looking person in the generated scene."
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A candid editorial photograph inside a tiny neighborhood grocery"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "subject",
+        "prompt_evidence": "One adult woman is the focal shopper"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "Her right hand lifts one bright tangerine"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "setting",
+        "prompt_evidence": "inside a tiny neighborhood grocery"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "action",
+        "prompt_evidence": "left hand holds a folded paper shopping list"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "use the attached portrait as guidance only for her visible long dark wavy hair"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "action",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "camera",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "candid neighborhood-market editorial",
+    "evidence": [
+      "natural photographic moment",
+      "crisp focal details and gently receding shelves"
+    ]
+  },
+  "variation_key": "arm-b-market-seed-7317368639665177668"
+}

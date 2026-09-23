@@ -1,0 +1,209 @@
+{
+  "contract_version": "photo-arm-native-pixel-review/v1",
+  "arm_id": "reference-b-arm-a",
+  "reviewer": "agent_arm_a",
+  "image_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/reference-b-20260923/arm_a/generated_images/radio-telescope-control-power-test/native_render.png",
+  "image_sha256": "bae78d7c1e93fabcac13e37c0f9d67a65bfa2dca0440fc71c5be7a193640c58f",
+  "native_size_px": [
+    1024,
+    1536
+  ],
+  "pre_render_gates_sha256": "7f4077b7ffaf9eeb2a59b2eae083f7d6fe286d033b9c7bf56b126a4b2e878c29",
+  "target_contract_sha256": "0d82bf1b3fdc0f8d2764460ecfc5c3b8df7a2bdee928ada20b651141e1c5b38f",
+  "method": "Visual inspection of the saved 1024x1536 native PNG and unresampled console/window inspection crops; every named component must coexist in this image.",
+  "partial_is_fail": true,
+  "gates": [
+    {
+      "gate_id": "target_pr_environmental_portrait_subject_place",
+      "lane": "primary_pr",
+      "status": "pass",
+      "owner": "The fictional adult, their visible face, the console and meter fixtures, and the framed radio dish within one control-cabin view",
+      "component_results": [
+        {
+          "requirement": "The adult face remains identifiable at environmental portrait scale",
+          "status": "pass",
+          "evidence": "Adult face and short hair occupy the left of the environmental frame."
+        },
+        {
+          "requirement": "A task-specific console, meter faces, and radio dish establish the actual control cabin",
+          "status": "pass",
+          "evidence": "Console, meters and exterior radio dish are visible as task-specific apparatus."
+        },
+        {
+          "requirement": "The adult right hand connects to the console selector as part of the power-test task",
+          "status": "pass",
+          "evidence": "Right hand contacts the main power selector on that console."
+        },
+        {
+          "requirement": "The frame retains enough cabin and dish context to explain the task",
+          "status": "pass",
+          "evidence": "The frame includes the surrounding cabin window, dish and console beyond the face."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "target_pr_observed_action_trace",
+      "lane": "primary_pr",
+      "status": "pass",
+      "owner": "The adult right hand, red knurled selector, and amber status lamps on the same console",
+      "component_results": [
+        {
+          "requirement": "The specific right-hand turning action is visible",
+          "status": "pass",
+          "evidence": "Right hand is visibly turning the large red main-power selector."
+        },
+        {
+          "requirement": "The red selector target is visible with that hand in the same frame",
+          "status": "pass",
+          "evidence": "The red selector is in the same frame directly under the fingertips."
+        },
+        {
+          "requirement": "The hand visibly grips the selector through a plausible wrist-arm path",
+          "status": "pass",
+          "evidence": "Wrist, forearm and knob contact form a reachable path without separation."
+        },
+        {
+          "requirement": "Amber lamps on that console show an immediate state change linked to the turned selector",
+          "status": "pass",
+          "evidence": "Amber status lamps above the selector are lit on the same console; the still frame shows a plausible immediate power-on state, although it cannot prove the sequence timing."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "target_pr_surface_wear_contact_owner",
+      "lane": "primary_pr",
+      "status": "fail",
+      "owner": "The red selector grip, its small polished ridges, the neighboring intact coating, and the selector base material",
+      "component_results": [
+        {
+          "requirement": "The red selector base material retains its own limited metal or coated reflection response",
+          "status": "pass",
+          "evidence": "The red knob and nearby metal have distinguishable reflective responses."
+        },
+        {
+          "requirement": "Small polished wear sits at the ridges that the right fingertips can reach",
+          "status": "fail",
+          "evidence": "At 1024-pixel native size, bright marks on the red ridges read as broad specular bands; a separate small worn patch under or adjacent to the fingertips is not distinguishable."
+        },
+        {
+          "requirement": "Wear strength is modest for a functional control cabin and does not cover all surfaces",
+          "status": "fail",
+          "evidence": "Wear is not visually established as a modest, contact-local trace; surrounding steel has general fine surface marks."
+        },
+        {
+          "requirement": "The selector edge and local highlights remain coherent beneath the worn patches",
+          "status": "pass",
+          "evidence": "The knob rim remains one continuous solid shape with coherent edge highlights."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "target_rb_material_response_contrast",
+      "lane": "supplemental_rb",
+      "status": "pass",
+      "owner": "The matte charcoal console surround, adjacent brushed-steel rim, and cabin window under the same light",
+      "component_results": [
+        {
+          "requirement": "The matte charcoal surround has broad subdued shading",
+          "status": "pass",
+          "evidence": "Matte black console panel holds subdued shading."
+        },
+        {
+          "requirement": "The brushed-steel rim shows a narrower localized highlight",
+          "status": "pass",
+          "evidence": "Brushed steel rim and panel edge catch narrow warm highlights."
+        },
+        {
+          "requirement": "The adjacent glass has a separate faint reflection while transmitting the exterior dish",
+          "status": "pass",
+          "evidence": "Window carries faint amber interior lamp reflections while the exterior dish remains visible through it."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "target_rb_readable_environment_focus",
+      "lane": "supplemental_rb",
+      "status": "pass",
+      "owner": "Adult eyes, both hands and selector in the selected plane; meter faces at middle depth; exterior dish farther away",
+      "component_results": [
+        {
+          "requirement": "Adult eyes, both hands, and selector stay crisp",
+          "status": "pass",
+          "evidence": "Eyes, hands and selector have readable crisp contours."
+        },
+        {
+          "requirement": "Intermediate meter faces remain recognizable",
+          "status": "pass",
+          "evidence": "Middle-distance meter dials and labels remain recognizable."
+        },
+        {
+          "requirement": "The far dish loses fine detail while retaining its dish shape",
+          "status": "pass",
+          "evidence": "Exterior dish remains recognizable while fine strut detail is softer than the selected subject and console."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "core_selector_power_test",
+      "lane": "core",
+      "status": "pass",
+      "owner": "Adult right hand, red selector, and amber status lamps on the same console",
+      "component_results": [
+        {
+          "requirement": "Right hand visibly contacts and turns the red selector",
+          "status": "pass",
+          "evidence": "Right fingers enclose and touch the red main-power selector."
+        },
+        {
+          "requirement": "Amber status lamps above that selector visibly illuminate",
+          "status": "pass",
+          "evidence": "Five amber lamps glow above the control."
+        },
+        {
+          "requirement": "Selector and lamps share one coherent console layout and reachable action",
+          "status": "pass",
+          "evidence": "The knob and lamps share the same visible console panel with a credible reach."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    },
+    {
+      "gate_id": "portrait_visible_guidance",
+      "lane": "reference",
+      "status": "pass",
+      "owner": "Fictional adult face and hair compared only to visible appearance in the attached portrait",
+      "component_results": [
+        {
+          "requirement": "Clearly adult-looking face visible in three-quarter view",
+          "status": "pass",
+          "evidence": "A visibly adult face remains clear in a three-quarter angle."
+        },
+        {
+          "requirement": "Short dark bob with loose wispy bangs visible",
+          "status": "pass",
+          "evidence": "Short dark bob and wispy bangs are visible."
+        },
+        {
+          "requirement": "Soft oval face and dark eyes plausibly follow the visible appearance guidance",
+          "status": "pass",
+          "evidence": "Dark eyes and a soft oval face follow the supplied portrait as appearance guidance; no identity comparison is inferred."
+        }
+      ],
+      "decision_rule": "partial_is_fail"
+    }
+  ],
+  "target_verdict": "fail",
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "interpretation_limits": [
+    "A still frame cannot prove the lamp illumination sequence in time; it can show a lit result adjacent to the operated selector.",
+    "The portrait comparison is limited to visible adult face and hair appearance, not personal identity."
+  ]
+}

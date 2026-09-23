@@ -1,0 +1,98 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes separate random complex photo tests with an attached portrait. The coordinator assigns this arm a small-grocery comparison test; the product pair and staging are independently randomized and agent-authored, not requester-specified.",
+  "subject": "one adult shopper whose visible hair and face are guided by the attached portrait",
+  "setting": "a tiny neighborhood grocery at a low shelf of cooking oils",
+  "event": "the shopper compares two similar olive oil bottles, one green glass and one amber glass",
+  "visual_priorities": [
+    "both similar olive oil bottles legible side by side and directed toward the shopper",
+    "clear two-hand comparison action with grocery shelves and shopping basket in the same frame"
+  ],
+  "baseline_prompt_en": "A candid editorial photograph in a tiny neighborhood grocery on a dry overcast morning. One adult woman shopper stands close to a low wooden shelf of cooking oils, comparing two similar olive oil bottles in a single visible moment of choice. Her left hand holds a green glass olive oil bottle and her right hand holds an amber glass olive oil bottle; she brings their front labels side by side at chest height, angles both labels toward herself, and studies them with a concentrated downward gaze. The bottles remain separate and equally visible, with the colored glass and matching olive oil bottle shapes making their similarity and difference clear. Her long dark wavy hair parted near the center, dark eyes, and softly contoured face take only visible appearance guidance from the attached portrait. She wears a charcoal cardigan over a simple pale shirt. A blue wire shopping basket rests on the counter below her elbows. Narrow shelves of bottled sauces continue behind her, while cool fluorescent strips and gray window light define the compact working shop. Frame her face, both hands, both bottle bodies and labels, the basket, and the shelves together in an eye-level three-quarter photograph; preserve plausible grips, supported posture, and crisp product-to-hand contact.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "This authorizes independent choice of a complex testable scene; this arm uses the coordinator assigned small-grocery product-comparison condition and independently sampled details."
+    },
+    {
+      "term": "첨부한 이미지를 활용",
+      "source_text": "첨부한 이미지를 활용",
+      "basis": "request_context",
+      "resolution": "The attached portrait provides only visible appearance guidance for an adult-looking model in the generated photo."
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A candid editorial photograph in a tiny neighborhood grocery"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "subject",
+        "prompt_evidence": "One adult woman shopper stands close"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "event",
+        "prompt_evidence": "comparing two similar olive oil bottles in a single visible moment of choice"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "setting",
+        "prompt_evidence": "in a tiny neighborhood grocery on a dry overcast morning"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "action",
+        "prompt_evidence": "brings their front labels side by side at chest height"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "첨부한 이미지를 활용",
+        "dimension": "reference_use",
+        "prompt_evidence": "take only visible appearance guidance from the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "action",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "camera",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "candid grocery editorial",
+    "evidence": [
+      "candid editorial photograph",
+      "eye-level three-quarter photograph"
+    ]
+  },
+  "variation_key": "arm-b-market-compare-seed-7317368639665177668"
+}

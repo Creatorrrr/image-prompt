@@ -1,0 +1,81 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "For this independent random-concept image test, the coordinator specified an everyday cafe pickup-counter waiting moment. Use the portrait only as visible adult appearance guidance and test a legible pending handoff of a prepared drink, with action, setting, background, and props visible together.",
+  "subject": "one adult woman whose visible appearance is guided by the supplied portrait",
+  "setting": "the customer side of a neighborhood cafe pickup counter in warm early evening",
+  "event": "she waits while a barista places her prepared drink at the pickup point",
+  "visual_priorities": [
+    "woman visibly waiting on the customer side as the prepared cup arrives from service side",
+    "readable pickup counter and handoff geometry, with the cup still at the ledge",
+    "portrait-guided visible adult appearance plus phone, sign, and menu-board context"
+  ],
+  "baseline_prompt_en": "A photorealistic editorial photograph of one adult woman waiting at the pickup counter of a neighborhood cafe in warm early evening. Her visible facial features and long, softly waved dark hair are informed by the supplied portrait. She wears a charcoal knit sweater with sleeves rolled at the wrists. Standing one step back from the customer-side pickup ledge, she holds a phone at chest height in her right hand, its screen showing a simple order number, and glances toward a freshly prepared drink arriving from the service side. A barista behind the counter extends one forearm into the frame and sets a white paper cup with a flat lid on the ledge beside a small wooden sign marked PICKUP. Her left hand rests by her hip, with a clear gap between her and the cup; the drink remains at the handoff point in this suspended moment. A wall-mounted menu board and the working counter form the recognizable cafe background. Warm window light catches the cup rim, her face, and the phone while retaining detail behind the ledge. A standing eye-level three-quarter view includes her face, the phone, both sides of the pickup ledge, the barista forearm, and the complete cup in one frame. Natural skin texture, credible hand geometry, and the quiet rhythm of a routine order pickup make the moment feel observed rather than posed.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept test with supplied image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Select an independent everyday photograph and evaluate whether its visible scene elements survive generation; use the supplied portrait for visible appearance only. The cafe pickup scene is a coordinator test choice rather than a rewording of requester text.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "waiting at the pickup counter of a neighborhood cafe"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman waiting at the pickup counter"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "sets a white paper cup with a flat lid on the ledge"
+      },
+      {
+        "anchor_id": "appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible facial features and long, softly waved dark hair are informed by the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "observational editorial lifestyle",
+    "evidence": [
+      "Warm window light catches the cup rim",
+      "Natural skin texture, credible hand geometry"
+    ]
+  },
+  "variation_key": "arm-a-targeted-seed-15511735850014077439"
+}

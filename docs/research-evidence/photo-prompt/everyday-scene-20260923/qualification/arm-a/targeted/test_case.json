@@ -1,0 +1,128 @@
+{
+  "contract_version": "everyday-scene-pixel-test/v1",
+  "arm_id": "arm-a-targeted",
+  "scene_family": "neighborhood_cafe_pickup_wait",
+  "seed": 15511735850014077439,
+  "randomization": {
+    "algorithm": "Python random.Random(seed), one choice per ordered dimension",
+    "ordered_dimensions": [
+      "order_marker",
+      "drink",
+      "counter_detail",
+      "background_detail",
+      "time_light",
+      "wardrobe",
+      "camera"
+    ],
+    "options": {
+      "order_marker": [
+        "a narrow printed order receipt held between two fingers",
+        "a small square numbered pickup ticket resting in her palm",
+        "a folded paper order slip held at waist level",
+        "a phone displaying a simple order number"
+      ],
+      "drink": [
+        "a clear iced latte with a domed lid",
+        "a white paper cup with a flat lid",
+        "a glass cup of iced tea",
+        "a ceramic cup of cappuccino"
+      ],
+      "counter_detail": [
+        "a brass service bell near the pickup edge",
+        "a small wooden sign marked PICKUP",
+        "a row of stacked cardboard cup sleeves",
+        "a shallow tray of wrapped stirring sticks"
+      ],
+      "background_detail": [
+        "an espresso machine with a short plume of steam",
+        "a wooden shelf of bean jars",
+        "a lit pastry case",
+        "a wall-mounted menu board"
+      ],
+      "time_light": [
+        "rainy afternoon window light",
+        "warm early-evening window light",
+        "soft overcast morning light",
+        "late-morning sun through blinds"
+      ],
+      "wardrobe": [
+        "a charcoal knit sweater with rolled sleeves",
+        "a moss green cardigan over an ivory blouse",
+        "a pale blue button-down shirt and tan jacket",
+        "a rust linen shirt with dark trousers"
+      ],
+      "camera": [
+        "seated eye-level three-quarter view",
+        "standing eye-level three-quarter view",
+        "slightly elevated view from the aisle",
+        "waist-height side view toward the counter"
+      ]
+    },
+    "selected": {
+      "order_marker": "a phone displaying a simple order number",
+      "drink": "a white paper cup with a flat lid",
+      "counter_detail": "a small wooden sign marked PICKUP",
+      "background_detail": "a wall-mounted menu board",
+      "time_light": "warm early-evening window light",
+      "wardrobe": "a charcoal knit sweater with rolled sleeves",
+      "camera": "standing eye-level three-quarter view"
+    }
+  },
+  "request_envelope_file_sha256": "a8db7511811cd21cf55956cb40c257a29c165ea946eca53a4394f950f4ad132b",
+  "frozen_authorial_core_file_sha256": "c93e5f5d8c60acfa7f0fb785c1503f2380f307ea5dfefea6b55aad006752ab9d",
+  "frozen_baseline_prompt_sha256": "34e9ddc89d1b779c3dc004931dd5db44a0dfac3886131164a5234298765aeea4",
+  "candidate_pack_id": "4663e3f5a32b4abe",
+  "selected_visual_concept_id": "visual-concept:ed_cafe_pickup_wait",
+  "reference": {
+    "path": "/Users/chasoik/Downloads/7A2759F9-F4D0-46BC-AB4C-63F661226CD4.jpeg",
+    "sha256": "3d363f7e1bfde96cd153cd22550e11144de30cf0aec492a3c97007653ec92aea",
+    "role": "visible adult appearance only"
+  },
+  "positive_pixel_gates": [
+    {
+      "id": "vo_ed_cafe_pickup_wait_1",
+      "scale": "both",
+      "must_show": "A customer faces the cafe pickup point while waiting; the woman remains on the customer side.",
+      "confounders": [
+        "a generic cafe portrait without an identifiable pickup point",
+        "a seated diner drinking at a table"
+      ]
+    },
+    {
+      "id": "vo_ed_cafe_pickup_wait_2",
+      "scale": "both",
+      "must_show": "The prepared cup is on the service-side section of the pickup counter as the barista places it.",
+      "confounders": [
+        "cup already in customer hand",
+        "cup on a dining table or on the customer-side ledge"
+      ]
+    },
+    {
+      "id": "vo_ed_cafe_pickup_wait_3",
+      "scale": "both",
+      "must_show": "Both counter sides and an open handoff gap between cup and customer are visible in one frame.",
+      "confounders": [
+        "counter boundary hidden by crop",
+        "server and customer hands overlapping around the same cup"
+      ]
+    },
+    {
+      "id": "vo_ed_cafe_pickup_wait_4",
+      "scale": "both",
+      "must_show": "The prepared cup stays physically separate from both of the woman’s hands.",
+      "confounders": [
+        "woman holding or drinking from cup",
+        "ambiguous merged fingers that seem to grip the cup"
+      ]
+    }
+  ],
+  "secondary_observations": [
+    "portrait-guided visible facial appearance and long dark hair, without identity inference",
+    "phone order cue",
+    "PICKUP sign",
+    "menu-board cafe background",
+    "plausible forearm and cup contact"
+  ],
+  "decision_rule": "partial_is_fail: every selected visual-concept gate must pass at both thumbnail and native scale in the same saved image; occluded or ambiguous critical relations fail. If no accessible saved pixels exist, mark INDETERMINATE.",
+  "user_judgment": "pending"
+}

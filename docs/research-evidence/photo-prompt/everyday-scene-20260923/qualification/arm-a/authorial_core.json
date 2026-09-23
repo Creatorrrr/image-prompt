@@ -1,0 +1,81 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "An independently chosen, complex everyday neighborhood-cafe photograph uses the supplied portrait for visible adult appearance and tests whether a specific action, setting, background, and props survive image generation.",
+  "subject": "one adult woman with visible features guided by the supplied portrait",
+  "setting": "a neighborhood cafe at warm early evening",
+  "event": "she slides a folded postcard into an envelope at a small table",
+  "visual_priorities": [
+    "legible two-hand postcard and envelope interaction at the table",
+    "recognizable cafe setting with coffee, pastry, and bean-jar shelf",
+    "visible adult facial appearance informed by the supplied portrait"
+  ],
+  "baseline_prompt_en": "A photorealistic editorial still of one adult woman seated at a small round table inside a neighborhood cafe in warm early evening. Her visible facial features and long, softly waved dark hair are informed by the supplied portrait. She wears a charcoal knit sweater with sleeves rolled at the wrists. Her left fingertips pin the near edge of a cream envelope against the tabletop while her right hand slides a folded postcard into its open mouth; both forearms rest on the table with clear space around the envelope. A ceramic cup of coffee sits to her right beyond the envelope, and a flaky croissant rests on a brown paper bag beside the cup, with a few crumbs near the fold. Behind her, a wooden shelf displays glass jars of coffee beans above the service counter. Warm light from a side window falls across her fingers, the postcard, and the cup, while the cafe interior remains legible in the middle distance. A seated eye-level three-quarter view frames her face, both hands, the complete envelope, the coffee, and the pastry in one frame. The moment feels quiet and habitual, with natural skin texture, believable proportions, and photographic depth.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept test with supplied image",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Choose one distinct everyday scene and test visible scene elements in an image generated with the supplied portrait as an appearance guide.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "a neighborhood cafe in warm early evening"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman seated at a small round table"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지 생성하도록 하여 잘 반영되었는지 테스트해줘",
+        "dimension": "event",
+        "prompt_evidence": "slides a folded postcard into its open mouth"
+      },
+      {
+        "anchor_id": "appearance_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible facial features and long, softly waved dark hair are informed by the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "observational editorial lifestyle",
+    "evidence": [
+      "warm light from a side window",
+      "natural skin texture, believable proportions, and photographic depth"
+    ]
+  },
+  "variation_key": "arm-a-seed-15511735850014077439"
+}

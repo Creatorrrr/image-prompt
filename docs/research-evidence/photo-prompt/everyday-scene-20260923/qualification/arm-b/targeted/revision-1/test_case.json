@@ -1,0 +1,100 @@
+{
+  "contract_version": "everyday-scene-qualification-test/v1",
+  "arm_id": "b-targeted",
+  "status": "revised_profile_gate_frozen_before_render",
+  "request_envelope_sha256": "87ff9abc8f2953bb9b775bda39d830acea60e6ec607e81a9d725c3aec23fc2c9",
+  "authorial_core_file_sha256": "27b574767f81f4fb8699ac189d112202e99fb14f7cc995b397ddb0cf8a8b4f87",
+  "baseline_prompt_sha256": "18b8fabe973f1a0f7af8e6f204dd7797b5a23f248015951985bdcc8b9b61b7ae",
+  "randomization": {
+    "seed": "7317368639665177668:targeted",
+    "algorithm": "Python random.Random string seed and randrange over ordered option lists",
+    "draws": {
+      "product_pair": {
+        "index": 2,
+        "value": "two bottles of olive oil with green and amber glass"
+      },
+      "time": {
+        "index": 1,
+        "value": "dry overcast morning"
+      },
+      "display": {
+        "index": 0,
+        "value": "a low wooden shelf"
+      },
+      "basket": {
+        "index": 0,
+        "value": "a blue wire basket"
+      },
+      "background": {
+        "index": 2,
+        "value": "narrow shelves of bottled sauces"
+      },
+      "light": {
+        "index": 1,
+        "value": "cool fluorescent strips"
+      }
+    }
+  },
+  "scene_family": "small neighborhood grocery",
+  "focal_event": "adult shopper visibly compares two similar olive oil bottles in one frame",
+  "reference_scope": "Use only observable adult facial and hair appearance from the attached portrait; no identity, biometric, sensitive-trait, or body-shape inference.",
+  "selected_visual_concept_id": "visual-concept:ed_market_compare",
+  "selected_profile_id": "ed_market_compare",
+  "profile_activation": "composer_opt_in_required; not automatically hard from exposure",
+  "positive_pixel_gates": [
+    {
+      "id": "vo_ed_market_compare_1",
+      "scale": "both",
+      "pass": "At both thumbnail and native scale, two same-category olive oil bottles are simultaneously visible in the same shopping area; green versus amber glass is discernible.",
+      "confusion": "One bottle appears, or a second object is a different grocery item or remote shelf stock."
+    },
+    {
+      "id": "vo_ed_market_compare_2",
+      "scale": "both",
+      "pass": "The shopper visibly holds one bottle in each hand beside the other at chest height, with both bodies visible.",
+      "confusion": "Two bottles merely sit on a shelf, one is hidden, or only one is held."
+    },
+    {
+      "id": "vo_ed_market_compare_3",
+      "scale": "both",
+      "pass": "Her gaze and side-by-side label orientation visibly link the two bottles as a deliberated choice.",
+      "confusion": "She simply carries two bottles or looks at the camera or elsewhere without a comparison cue."
+    },
+    {
+      "id": "vo_ed_market_compare_4",
+      "scale": "both",
+      "pass": "At both thumbnail and native scale, each compared bottle has visible physical support from its own connected hand grip, or an actual basket/shelf contact; the two compared objects do not float.",
+      "confusion": "Only unrelated shelf stock or the basket itself is supported while one of the two compared bottles floats, merges with a hand, or lacks a continuous support path."
+    }
+  ],
+  "embodiment_hard_gates": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "local_scene_gates": [
+    {
+      "id": "local_grocery_context",
+      "pass": "Compact grocery is visible through oil/sauce shelving, counter, and basket, beyond a generic portrait backdrop."
+    },
+    {
+      "id": "local_reference_appearance",
+      "pass": "The adult shopper visibly retains long dark wavy near-center-part hair and dark-eyed soft facial appearance guidance from the source portrait; no same-person identity conclusion is made."
+    },
+    {
+      "id": "local_basket",
+      "pass": "A blue wire shopping basket is visibly supported by the counter below the arms."
+    }
+  ],
+  "decision_rule": "partial_is_fail: PASS only if every active revised-profile, embodiment, retry-specific, and local scene gate passes in the same saved image at its declared scale; FAIL on any failed gate; INDETERMINATE only if the image cannot be inspected.",
+  "user_judgment": "pending_direct_user_review",
+  "profile_source_sha256": "5cabf57fe6e8d2d4e945471106e7924613486cd78a1fcaa6a72bb8db6c7e0014",
+  "previous_profile_source_sha256": "c75c281618d9465ef2d1f4c2693255f3299217f2d0cf419db35d34a225d55924",
+  "retry_specific_gate": {
+    "id": "actor_relative_hand_assignment",
+    "pass": "The green bottle is visibly in the shopper’s anatomical left hand (frame right for a front-facing view), and the amber bottle in her anatomical right hand (frame left); sleeves and grips permit ownership judgment.",
+    "confusion": "Screen-left is mistaken for anatomical left, the two bottle colors are swapped, or the wrists are hidden."
+  }
+}

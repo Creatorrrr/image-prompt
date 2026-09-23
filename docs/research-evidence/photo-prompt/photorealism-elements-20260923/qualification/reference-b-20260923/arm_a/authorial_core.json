@@ -1,0 +1,114 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+  "interpreted_intent": "Repeat the independent single-image photographic test using the supplied portrait as visible adult face and hair appearance guidance, with one independently seeded complex scene and pixel-level review.",
+  "subject": "One fictional adult whose visible face and short dark hair are guided by the supplied portrait",
+  "setting": "A compact radio telescope control cabin at dusk with a dish visible beyond the window",
+  "event": "During a power test, the adult turns a red selector and amber status lamps illuminate as they check the console",
+  "visual_priorities": [
+    "Readable right-hand selector contact and amber cause-and-response lights",
+    "Distinct interior reflections and exterior dish through the window",
+    "Visible adult face and dark bob guided by the supplied portrait"
+  ],
+  "baseline_prompt_en": "A cinematic yet documentary photograph inside a small radio telescope control cabin during a dusk power test. One fictional adult stands beside a waist-high brushed-metal console, with visible adult face and hair appearance guided by the attached portrait: a soft oval face, dark eyes, and a short dark bob with loose wispy bangs. The adult wears a charcoal utility overshirt over a plain crewneck. Their right hand grips and turns a large red knurled power selector on the near edge of the console, with the wrist, forearm, elbow, and shoulder forming a relaxed reachable chain. Their left palm holds a paper checklist flat on the console beside the selector; both hands, the paper, and the selector are fully visible in the same frame. A short row of amber status lamps illuminates in sequence above the turned selector while the adult glances down at the readings, face in clear three-quarter view. Beyond the cabin window, the pale curved structure of a radio dish rises against a violet blue evening sky. Reflections of the amber lamps appear faintly on the window glass while the exterior dish stays readable through it. A cool dusk glow shapes the face and hair, and warm console light falls locally on the fingertips, red selector, and worn metal surface. The photograph has believable scale, tactile edges, subtle surface wear, natural optical depth, and a precise instant of cause and response. Frame from console height with a restrained medium portrait composition that keeps the action and the dish in view.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "같은 방식",
+      "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+      "basis": "request_context",
+      "resolution": "Repeat the previously established independent photographic prompt, one native-reference render, and owner-bound pixel evaluation workflow."
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "같은 방식으로 테스트 해줘",
+        "dimension": "concept",
+        "prompt_evidence": "a small radio telescope control cabin during a dusk power test"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "이 이미지로",
+        "dimension": "subject",
+        "prompt_evidence": "One fictional adult stands beside a waist-high brushed-metal console"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "같은 방식으로 테스트 해줘",
+        "dimension": "event",
+        "prompt_evidence": "A short row of amber status lamps illuminates in sequence"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "이 이미지로",
+        "dimension": "reference_use",
+        "prompt_evidence": "visible adult face and hair appearance guided by the attached portrait"
+      },
+      {
+        "anchor_id": "portrait_appearance",
+        "source_text": "이 이미지로",
+        "dimension": "appearance",
+        "prompt_evidence": "a soft oval face, dark eyes, and a short dark bob with loose wispy bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "appearance"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "portrait_appearance_scope",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "reference_use",
+        "appearance"
+      ],
+      "axes": {
+        "source": "attached portrait",
+        "scope": [
+          "visible adult face",
+          "visible dark hair"
+        ],
+        "target": "fictional adult in the scene"
+      },
+      "evidence": {
+        "appearance_scope": "visible adult face and hair appearance guided by the attached portrait"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "documentary cinematic environmental portrait",
+    "evidence": [
+      "cool dusk glow shapes the face and hair",
+      "warm console light falls locally on the fingertips"
+    ]
+  },
+  "variation_key": "reference-b-arm-a-seed-1663375902-radio-telescope"
+}

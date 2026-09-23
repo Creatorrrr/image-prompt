@@ -1,0 +1,223 @@
+{
+  "schema_version": "photo-everyday-scene-research/v1",
+  "status": "research_only_not_runtime_loaded",
+  "source_conversation_id": "6ab366b2-2858-83ee-a2f6-d1abee5ac437",
+  "selection_policy": {
+    "broad_everyday_terms": "advisory_only",
+    "activation": "A context-fitting selected v6 bundle requires evidence for its own relations and components; retrieval alone creates no duty, and listed existing profile IDs gain no automatic hard authority.",
+    "intent_precedence": "Preserve requester-defined setting, action, people, weather, cleanliness, composition and other locked dimensions.",
+    "source_scope": "Sources support activity coverage and visual relation/state representations; scenario examples and visual gates are authorial, untested design proposals."
+  },
+  "sources": {
+    "KOR_TIME": "https://www.korea.kr/briefing/policyBriefingView.do?newsId=156721673",
+    "ICATUS": "https://unstats.un.org/unsd/demographic-social/time-use/icatus-2016/",
+    "PLACES": "https://places2.csail.mit.edu/",
+    "IMSITU": "https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Yatskar_Situation_Recognition_Visual_CVPR_2016_paper.pdf",
+    "VG": "https://link.springer.com/article/10.1007/s11263-016-0981-7",
+    "EGO_STATE": "https://ego4d-data.org/docs/benchmarks/hands-and-objects/",
+    "EPIC": "https://epic-kitchens.github.io/",
+    "AP": "https://www.ap.org/about/news-values-and-principles/telling-the-story/"
+  },
+  "candidate_bundles": [
+    {
+      "id": "ed_home_departure", "priority": "P0", "setting_function": "home exit threshold", "event_phase": "before departure",
+      "role_graph": ["person adjusts shoe at doorway", "personal bag or coat is within departure reach"],
+      "visible_requirements": ["hand and shoe form a plausible adjustment contact", "doorway or entrance boundary is legible", "the departure item has a stable location near the person"],
+      "optional_context": ["morning light", "keys", "another household member"],
+      "reject_substitutes": ["unrelated shoes arranged as decor", "person already walking outdoors"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_use_trace_affordance"],
+      "slot_targets": ["action", "location", "prop", "situation_context"], "source_ids": ["KOR_TIME", "ICATUS", "IMSITU", "EGO_STATE"],
+      "prompt_seed_en": "At the apartment doorway, a person finishes adjusting one shoe while the bag they are taking rests within reach."
+    },
+    {
+      "id": "ed_kitchen_prep", "priority": "P0", "setting_function": "working kitchen", "event_phase": "during preparation",
+      "role_graph": ["person prepares ingredient on work surface", "utensil acts on ingredient", "changed ingredient remains at the same station"],
+      "visible_requirements": ["working hand, utensil and ingredient share one reachable work area", "partly prepared and unprepared material can be distinguished", "work surface supports the active tools"],
+      "optional_context": ["window light", "used dish", "second cook"],
+      "reject_substitutes": ["only a finished dish", "knife hovering away from food", "randomly scattered ingredients"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_use_trace_affordance"],
+      "slot_targets": ["action", "location", "prop", "contact_point"], "source_ids": ["EPIC", "EGO_STATE", "IMSITU"],
+      "prompt_seed_en": "In a usable home kitchen, one hand moves cut vegetables from the board toward a bowl while the remaining uncut pieces stay beside it."
+    },
+    {
+      "id": "ed_laundry_sort", "priority": "P1", "setting_function": "laundry work area", "event_phase": "before wash",
+      "role_graph": ["person sorts garment between two laundry groups", "machine or basket marks the next step"],
+      "visible_requirements": ["the hand holds a garment between distinct groups", "groups occupy supported surfaces or baskets", "machine or destination basket is spatially reachable"],
+      "optional_context": ["folded cloth", "laundromat machines"],
+      "reject_substitutes": ["unrelated clothing heap", "all clothes already inside a closed machine"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_spatial_density_variation"],
+      "slot_targets": ["action", "location", "prop", "space_condition"], "source_ids": ["KOR_TIME", "ICATUS", "EGO_STATE"],
+      "prompt_seed_en": "At a laundry station, a person moves one garment from the unsorted basket toward a second sorted group."
+    },
+    {
+      "id": "ed_clean_room_reset", "priority": "P0", "setting_function": "used and orderly room", "event_phase": "during tidying",
+      "role_graph": ["person returns an item to a usable place", "one work area is now clear", "one small task remains in progress"],
+      "visible_requirements": ["the hand and item form a coherent placement action", "a cleared surface and an active small area coexist", "walking space remains passable without imposed dirt"],
+      "optional_context": ["folded clothes", "morning light"],
+      "reject_substitutes": ["abandoned room", "blank showroom with no current task", "poverty or dirt as a realism shortcut"],
+      "existing_profile_ids": ["rb_clean_space_plausibility", "rb_spatial_density_variation", "pr_observed_action_trace"],
+      "slot_targets": ["action", "location", "space_condition", "prop"], "source_ids": ["KOR_TIME", "ICATUS", "VG"],
+      "prompt_seed_en": "A person puts the last folded cloth away in a clean, actively used room; the nearby work surface is cleared and the path remains open."
+    },
+    {
+      "id": "ed_cafe_pickup_wait", "priority": "P0", "setting_function": "cafe pickup point", "event_phase": "before pickup",
+      "role_graph": ["customer waits facing service point", "uncollected drink remains on service side", "route for handoff is open"],
+      "visible_requirements": ["pickup counter or handoff position is visible", "waiting person is oriented to that position", "the drink has not already become the person's consumed cup"],
+      "optional_context": ["receipt", "independent other customer", "phone in hand"],
+      "reject_substitutes": ["person drinking a full cup while described as waiting", "generic cafe background without service geometry"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place"],
+      "slot_targets": ["action", "location", "situation_context", "relational_action"], "source_ids": ["PLACES", "IMSITU", "VG"],
+      "prompt_seed_en": "At a small cafe pickup counter, a customer waits beside an open handoff space while a prepared cup remains behind the counter."
+    },
+    {
+      "id": "ed_market_compare", "priority": "P0", "setting_function": "shop or market selection area", "event_phase": "comparing alternatives",
+      "role_graph": ["shopper compares first item with second item", "both items belong to the same choice context"],
+      "visible_requirements": ["two plausible alternatives are simultaneously visible", "hand or attention links the shopper to both", "shelf, basket or stall supports the choice setting"],
+      "optional_context": ["small price tags without required readability", "shopping basket"],
+      "reject_substitutes": ["one item held without an alternative", "readable price arithmetic demanded at thumbnail size"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place"],
+      "slot_targets": ["action", "location", "prop", "relational_action"], "source_ids": ["ICATUS", "IMSITU", "VG"],
+      "prompt_seed_en": "At a market shelf, a shopper holds one item near a second comparable choice and looks between them before placing either in the basket."
+    },
+    {
+      "id": "ed_checkout_handoff", "priority": "P0", "setting_function": "point of sale", "event_phase": "payment handoff",
+      "role_graph": ["customer brings payment token to terminal", "counter supports purchased item", "service or pickup side is distinct"],
+      "visible_requirements": ["payment tool approaches a reachable terminal or cashier position", "item and counter share a supported checkout area", "customer and service sides are distinguishable"],
+      "optional_context": ["non-readable receipt", "cashier", "shopping basket"],
+      "reject_substitutes": ["wallet displayed without transaction target", "floating terminal", "brand or financial data required to read"],
+      "existing_profile_ids": ["pr_observed_action_trace", "pr_object_contact_shadow_support"],
+      "slot_targets": ["action", "location", "prop", "relational_action"], "source_ids": ["ICATUS", "IMSITU", "VG"],
+      "prompt_seed_en": "At a checkout counter, a customer brings a card toward the payment terminal while the item rests on the counter within the same transaction."
+    },
+    {
+      "id": "ed_bus_stop_ready", "priority": "P0", "setting_function": "bus boarding point", "event_phase": "boarding begins",
+      "role_graph": ["passenger faces open bus doorway", "stop or curb connects to boarding path", "bag remains with passenger"],
+      "visible_requirements": ["bus doorway and passenger are in the same navigable space", "the person is moving or poised toward the doorway", "curb or platform height permits the step"],
+      "optional_context": ["other passengers in queue", "transit card"],
+      "reject_substitutes": ["bus pictured behind unrelated walker", "person waiting for a late bus without a bus present"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place", "pr_observed_action_trace"],
+      "slot_targets": ["action", "location", "situation_context", "prop"], "source_ids": ["KOR_TIME", "ICATUS", "PLACES", "IMSITU"],
+      "prompt_seed_en": "A passenger adjusts a bag strap as an open bus doorway becomes reachable from the stop curb."
+    },
+    {
+      "id": "ed_subway_exit", "priority": "P0", "setting_function": "train-platform threshold", "event_phase": "alighting",
+      "role_graph": ["passenger crosses carriage door", "platform is destination", "other passenger flow stays distinct"],
+      "visible_requirements": ["open train door separates carriage from platform", "the exiting person's body direction crosses the threshold", "supporting floor levels and route are plausible"],
+      "optional_context": ["another rider waiting aside", "held bag"],
+      "reject_substitutes": ["person merely standing on platform", "closed train door", "commuter flow through a wall"],
+      "existing_profile_ids": ["pr_observed_action_trace", "pr_environmental_portrait_subject_place"],
+      "slot_targets": ["action", "location", "situation_context", "crowd_density"], "source_ids": ["KOR_TIME", "ICATUS", "PLACES", "IMSITU"],
+      "prompt_seed_en": "A passenger steps across an open train doorway onto the platform while waiting riders leave a clear path."
+    },
+    {
+      "id": "ed_rain_threshold", "priority": "P0", "setting_function": "sheltered entrance after rain", "event_phase": "just inside",
+      "role_graph": ["person folds wet umbrella", "wet outdoor route remains beyond doorway", "water remains on umbrella not randomly elsewhere"],
+      "visible_requirements": ["inside-outside threshold is identifiable", "hand and umbrella show a plausible folding state", "wetness is localized to the umbrella and weather-exposed area"],
+      "optional_context": ["small water drops", "floor mat", "mixed light"],
+      "reject_substitutes": ["dry open umbrella used indoors", "every indoor surface soaked", "rain in a scene requested as dry"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_use_trace_affordance"],
+      "slot_targets": ["action", "location", "weather", "prop"], "source_ids": ["IMSITU", "EGO_STATE", "VG"],
+      "prompt_seed_en": "Just inside the doorway, a person folds a rain-wet umbrella; the wet pavement stays visible outside and a floor mat receives the drips."
+    },
+    {
+      "id": "ed_office_return", "priority": "P1", "setting_function": "office passage to desk", "event_phase": "returning from shared area",
+      "role_graph": ["worker carries drink from shared area", "desk is destination", "hands have feasible load"],
+      "visible_requirements": ["source passage and destination desk are spatially connected", "held object is supported by a visible hand", "walking route to desk remains open"],
+      "optional_context": ["coworker doing unrelated work", "meeting notes"],
+      "reject_substitutes": ["coffee as portrait prop only", "full cup floating above inaccessible hand"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place", "rb_use_trace_affordance"],
+      "slot_targets": ["action", "location", "prop", "situation_context"], "source_ids": ["KOR_TIME", "ICATUS", "IMSITU"],
+      "prompt_seed_en": "A worker carries one cup back along the office passage toward a visible desk, with the route between pantry and workstation unobstructed."
+    },
+    {
+      "id": "ed_library_page_turn", "priority": "P1", "setting_function": "reading or study place", "event_phase": "page transition",
+      "role_graph": ["reader lifts page", "book rests on support", "other hand or posture stabilizes reading position"],
+      "visible_requirements": ["one page visibly separates from the open book", "fingers contact a reachable page edge", "book is supported on lap or table"],
+      "optional_context": ["notebook", "quiet other reader"],
+      "reject_substitutes": ["book merely held closed", "pages floating without finger contact"],
+      "existing_profile_ids": ["pr_observed_action_trace", "pr_object_contact_shadow_support"],
+      "slot_targets": ["action", "location", "prop", "contact_point"], "source_ids": ["KOR_TIME", "ICATUS", "IMSITU", "EGO_STATE"],
+      "prompt_seed_en": "At a library table, the reader lifts a single page by its edge while the book stays supported beside a notebook."
+    },
+    {
+      "id": "ed_clinic_wait", "priority": "P1", "setting_function": "clinic reception waiting area", "event_phase": "before service",
+      "role_graph": ["visitor waits in seating zone", "reception or service direction remains legible", "other visitors, if present, have separate space"],
+      "visible_requirements": ["waiting seats and reception/service direction belong to one room", "the visitor has a plausible waiting position", "no treatment is shown unless explicitly requested"],
+      "optional_context": ["appointment card without readable private details", "another visitor"],
+      "reject_substitutes": ["medical condition inferred from appearance", "treatment equipment added as waiting proof", "dirty clinic by default"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place", "rb_clean_space_plausibility"],
+      "slot_targets": ["action", "location", "crowd_density", "space_condition"], "source_ids": ["KOR_TIME", "ICATUS", "PLACES"],
+      "prompt_seed_en": "A visitor waits in a clean clinic seating area with the reception route visible beyond the chairs."
+    },
+    {
+      "id": "ed_laundromat_transfer", "priority": "P1", "setting_function": "self-service laundry", "event_phase": "unloading",
+      "role_graph": ["person removes cloth from open machine", "basket receives cloth", "hand path joins machine and basket"],
+      "visible_requirements": ["machine door is open and accessible", "cloth, hand and basket follow one reachable transfer path", "basket sits stably near the machine"],
+      "optional_context": ["other operating machine", "empty folding table"],
+      "reject_substitutes": ["closed machine with separate full basket", "garment floating between machines"],
+      "existing_profile_ids": ["pr_observed_action_trace", "pr_object_contact_shadow_support"],
+      "slot_targets": ["action", "location", "prop", "contact_point"], "source_ids": ["ICATUS", "IMSITU", "EGO_STATE"],
+      "prompt_seed_en": "At a laundromat, a person draws a piece of cloth from the open washer toward a stable basket just below the door."
+    },
+    {
+      "id": "ed_civic_form", "priority": "P1", "setting_function": "public service form area", "event_phase": "completing before submission",
+      "role_graph": ["visitor writes on form", "writing surface supports form", "submission counter is distinct destination"],
+      "visible_requirements": ["pen contacts a form on a stable writing surface", "visitor is positioned at a form station", "submission point or service route is legible without readable text"],
+      "optional_context": ["blank number ticket", "other visitor"],
+      "reject_substitutes": ["readable personal data required", "pen held away from paper", "office employee mistaken for visitor"],
+      "existing_profile_ids": ["pr_observed_action_trace", "pr_environmental_portrait_subject_place"],
+      "slot_targets": ["action", "location", "prop", "situation_context"], "source_ids": ["KOR_TIME", "ICATUS", "IMSITU", "PLACES"],
+      "prompt_seed_en": "At a public-service writing counter, a visitor fills in a form on the supported desk before moving toward the submission window."
+    },
+    {
+      "id": "ed_park_rest", "priority": "P1", "setting_function": "walking path and rest edge", "event_phase": "brief pause",
+      "role_graph": ["walker pauses beside route", "bench or low wall supports rest", "carried item stays with walker"],
+      "visible_requirements": ["path and rest point are connected", "body weight or hand has plausible support", "water bottle or bag has a stable held or resting position if selected"],
+      "optional_context": ["another walker passing independently", "shade"],
+      "reject_substitutes": ["studio workout pose", "bench located apart from the path"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place", "rb_soft_ground_contact"],
+      "slot_targets": ["action", "location", "prop", "composition"], "source_ids": ["KOR_TIME", "ICATUS", "PLACES", "VG"],
+      "prompt_seed_en": "A walker pauses on a bench beside the park path, one hand resting near the carried water bottle while the route continues behind."
+    },
+    {
+      "id": "ed_shared_phone", "priority": "P0", "setting_function": "shared conversational space", "event_phase": "show and respond",
+      "role_graph": ["person A presents one phone to person B", "person B looks to the same screen", "person B gives a small visible response"],
+      "visible_requirements": ["one screen lies between two reachable participants", "both attention directions converge on that screen", "one participant's gesture or expression responds to the shared content"],
+      "optional_context": ["cafe table", "bench", "third unrelated person"],
+      "reject_substitutes": ["each person looks at a separate phone", "screen faces camera but not recipient", "claim about exact content without visible evidence"],
+      "existing_profile_ids": ["pr_observed_action_trace"],
+      "slot_targets": ["relational_action", "prop", "composition", "crowd_density"], "source_ids": ["IMSITU", "VG"],
+      "prompt_seed_en": "Two friends look toward the same phone as one tilts it toward the other and the listener begins to smile."
+    },
+    {
+      "id": "ed_shop_closing", "priority": "P1", "setting_function": "small shop after service", "event_phase": "closing work",
+      "role_graph": ["worker clears used counter", "remaining tray or chair marks work in progress", "exit route remains usable"],
+      "visible_requirements": ["worker is actively moving or wiping an item", "some service fixtures are being put away while others remain in place", "the shop reads as maintained and occupied"],
+      "optional_context": ["one remaining customer", "warm practical lights"],
+      "reject_substitutes": ["abandoned or damaged storefront", "all lights off while active work needs visibility", "piled trash as the only closing cue"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_use_trace_affordance", "rb_spatial_density_variation"],
+      "slot_targets": ["action", "location", "space_condition", "prop"], "source_ids": ["KOR_TIME", "ICATUS", "IMSITU"],
+      "prompt_seed_en": "After service, a shop worker wipes one section of the counter while a few trays remain to be put away."
+    },
+    {
+      "id": "ed_parcel_open", "priority": "P1", "setting_function": "home receiving area", "event_phase": "just opened",
+      "role_graph": ["person opens parcel", "box flaps show changed state", "content remains connected to packaging"],
+      "visible_requirements": ["hand contacts opened flap or content", "box is supported on floor or table", "content and packaging occupy the same work area"],
+      "optional_context": ["packing paper", "delivery label without readable private data"],
+      "reject_substitutes": ["sealed box only", "empty unrelated cardboard in background", "readable address required"],
+      "existing_profile_ids": ["pr_observed_action_trace", "rb_use_trace_affordance"],
+      "slot_targets": ["action", "location", "prop", "space_condition"], "source_ids": ["ICATUS", "EGO_STATE", "VG"],
+      "prompt_seed_en": "At a home table, a person lifts one open parcel flap while the partly revealed contents and packing paper remain beside the box."
+    },
+    {
+      "id": "ed_independent_bystander", "priority": "P0", "setting_function": "shared public space", "event_phase": "parallel activities",
+      "role_graph": ["foreground actor performs focal task", "background person performs a different task", "their paths or work areas remain distinct"],
+      "visible_requirements": ["both people's tasks are individually identifiable at the chosen scale", "background activity has a separate target or route", "background person does not block the requested focal action"],
+      "optional_context": ["foreground overlap that preserves action", "another customer in a different phase"],
+      "reject_substitutes": ["duplicated anonymous crowd", "second person copied into a solo/private request", "foreground occlusion erasing the task"],
+      "existing_profile_ids": ["pr_environmental_portrait_subject_place", "rb_foreground_occlusion"],
+      "slot_targets": ["crowd_density", "relational_action", "composition", "location"], "source_ids": ["VG", "IMSITU", "PLACES"],
+      "prompt_seed_en": "The focal person finishes a purchase while, farther back, another customer independently browses a shelf along a separate aisle."
+    }
+  ]
+}

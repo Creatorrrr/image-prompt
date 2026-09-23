@@ -1,0 +1,99 @@
+{
+  "contract_version": "photo-arm-pre-render-pixel-gates/v1",
+  "arm_id": "reference-b-arm-a",
+  "target_contract_sha256": "6d2242a6a655dcc2b572d5357d12a5072373d78b735e73f4c9982c70e665536e",
+  "image_basis": "single_native_output",
+  "partial_is_fail": true,
+  "user_judgment": "pending_direct_requester_review",
+  "gates": [
+    {
+      "gate_id": "target_rb_material_response_contrast",
+      "target_profile_id": "rb_material_response_contrast",
+      "review_scale": "native",
+      "owner": "The matte charcoal console surround, adjacent brushed-steel rim, and cabin window under the same dusk and console illumination",
+      "required_components": [
+        "Matte charcoal console surround has broad subdued shading",
+        "Adjacent brushed-steel rim carries a narrower and sharper localized glint",
+        "Adjacent window glass has its own faint interior reflection and transmits the exterior dish"
+      ],
+      "confusion_boundary": "A uniform plastic gloss across all three materials fails.",
+      "pass_rule": "All named components must be visibly co-realized by this owner in the same native image; any missing, ambiguous, substituted, or partial component is fail."
+    },
+    {
+      "gate_id": "target_rb_readable_environment_focus",
+      "target_profile_id": "rb_readable_environment_focus",
+      "review_scale": "native",
+      "owner": "The adult face, both operating hands and selector in the selected plane; meter faces in middle distance; dish outside the window at far distance",
+      "required_components": [
+        "Adult eyes, both hands and selector remain crisp",
+        "Intermediate console meter faces remain recognizable",
+        "Far dish loses fine detail with depth while retaining its dish shape"
+      ],
+      "confusion_boundary": "All-over sharpness or fully abstract background blur fails.",
+      "pass_rule": "All named components must be visibly co-realized by this owner in the same native image; any missing, ambiguous, substituted, or partial component is fail."
+    },
+    {
+      "gate_id": "target_rb_mixed_source_zones",
+      "target_profile_id": "rb_mixed_source_zones",
+      "review_scale": "native",
+      "owner": "Window-side overshirt sleeve, paper and fingertips on warm console side, and forearm across their overlap",
+      "required_components": [
+        "Cool window-side illumination is visible on the window-side sleeve",
+        "Warmer console illumination is visible on the paper and fingertips",
+        "The color zones meet gradually on the forearm rather than appearing as unrelated color grading"
+      ],
+      "confusion_boundary": "A global blue-orange tint without source-bound receiving surfaces fails.",
+      "pass_rule": "All named components must be visibly co-realized by this owner in the same native image; any missing, ambiguous, substituted, or partial component is fail."
+    },
+    {
+      "gate_id": "target_rb_glass_reflection_transmission",
+      "target_profile_id": "rb_glass_reflection_transmission",
+      "review_scale": "native",
+      "owner": "The framed cabin window, faint amber reflection of actual interior status lamps, and exterior radio dish transmitted through the pane",
+      "required_components": [
+        "Visible window frame locates the glass plane",
+        "Interior lamp reflection is attached to that glass plane and corresponds to the visible amber status lamps",
+        "The exterior dish remains readable through another region of the same glass"
+      ],
+      "confusion_boundary": "A mirror-only pane, floating reflected lamps, or an opaque dish pasted in front of the window fails.",
+      "pass_rule": "All named components must be visibly co-realized by this owner in the same native image; any missing, ambiguous, substituted, or partial component is fail."
+    },
+    {
+      "gate_id": "target_rb_contact_wear_locality",
+      "target_profile_id": "rb_contact_wear_locality",
+      "review_scale": "native",
+      "owner": "Red selector ridges gripped by the adult right fingers and adjacent unhandled coated metal",
+      "required_components": [
+        "Small polished wear is localized to the selector ridges at the right-hand gripping area",
+        "Neighboring unhandled coating is comparatively intact",
+        "The red selector retains one continuous solid shape through the worn area"
+      ],
+      "confusion_boundary": "Uniform scratches across the whole console, random image grain, or broken selector geometry fails.",
+      "pass_rule": "All named components must be visibly co-realized by this owner in the same native image; any missing, ambiguous, substituted, or partial component is fail."
+    },
+    {
+      "gate_id": "core_selector_power_test",
+      "review_scale": "native",
+      "owner": "Adult right hand, red selector, and amber status lamps of the same console",
+      "required_components": [
+        "Right hand visibly contacts and turns the red selector",
+        "Amber status lamps above that selector visibly illuminate",
+        "The selector and lamps share one coherent console layout and reachable action"
+      ],
+      "confusion_boundary": "A nearby but unheld control, decorative lights, or an untraceable second control fails.",
+      "pass_rule": "All named components must be visible together; partial is fail."
+    },
+    {
+      "gate_id": "portrait_visible_guidance",
+      "review_scale": "native",
+      "owner": "The fictional adult face and hair compared only to visible appearance in the supplied portrait",
+      "required_components": [
+        "A clearly adult-looking face remains visible in three-quarter view",
+        "Short dark bob with loose wispy bangs remains visible",
+        "Soft oval face and dark eyes plausibly reflect the supplied appearance guidance"
+      ],
+      "confusion_boundary": "This gate does not establish identity, biometrics, protected traits, body shape, or occupation.",
+      "pass_rule": "All named visible appearance components must be assessable in the saved image; partial is fail."
+    }
+  ]
+}

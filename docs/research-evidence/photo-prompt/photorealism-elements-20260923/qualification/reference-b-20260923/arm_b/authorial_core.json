@@ -1,0 +1,104 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+  "interpreted_intent": "Independently create one complex staged photographic test from the unspecified repeat request, using the attached portrait only as visible adult face and hair guidance; a seeded draw selected a midnight laundromat.",
+  "subject": "One adult woman whose visible face and dark bob are guided by the attached portrait",
+  "setting": "Nearly empty self-service laundromat at night",
+  "event": "She lifts one corner of a damp cobalt-blue scarf from an open front-loading washer",
+  "visual_priorities": [
+    "Readable adult face and hair reference alongside full hand-to-scarf contact",
+    "Coherent body support and distinct open glass door, stationary steel rim, wet scarf, and drum geometry",
+    "Plausible wet material, mixed practical light, depth and glass reflections"
+  ],
+  "baseline_prompt_en": "Create a documentary-style night photograph inside a nearly empty self-service laundromat. An unmistakably adult woman, with visible facial proportions, dark eyes, and a short straight dark bob with loose wispy bangs guided by the attached portrait, kneels on a black rubber floor mat in front of an open front-loading washer. Her left shin rests on the mat and her right foot is planted on the tile, leaving room for her torso to lean toward the drum. Her right forearm crosses the clear space between her knee and the drum. With her right thumb and forefinger she lifts one corner of a damp cobalt-blue scarf just outside the circular drum opening; the fabric sags under its own weight and clear droplets cling to its folded lower edge. Her left palm braces on the stationary steel machine rim, separate from the open glass door swinging toward the camera. She looks down at the cloth, her face visible in three-quarter view beneath the fringe. The opened drum is still, with water beads on the grey gasket and a small damp crescent on the metal threshold. Cool overhead strip lighting falls over the tiled aisle, while a warm street sign across the front window reflects softly along the machine's curved chrome trim. A camera angle just above the washer opening keeps her full face, both hands, the scarf, rim, open door, and floor support readable together. Preserve fine fabric weave, natural skin texture, slight optical falloff toward the repeating machines, and physically plausible glass reflections.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+      "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+      "basis": "request_context",
+      "resolution": "Repeat the independently generated photographic workflow with this supplied image as visible adult appearance guidance; scene details are agent-authored with a fixed seed.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+        "dimension": "concept",
+        "prompt_evidence": "documentary-style night photograph inside a nearly empty self-service laundromat"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+        "dimension": "subject",
+        "prompt_evidence": "An unmistakably adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+        "dimension": "event",
+        "prompt_evidence": "she lifts one corner of a damp cobalt-blue scarf just outside the circular drum opening"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "이번엔 이 이미지로 독립된 서브에이전트 3개에서 같은 방식으로 테스트 해줘.",
+        "dimension": "reference_use",
+        "prompt_evidence": "visible facial proportions, dark eyes, and a short straight dark bob with loose wispy bangs guided by the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "reference_visible_appearance",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "reference_use"
+      ],
+      "axes": {
+        "role": "visible adult face and hair guidance",
+        "input": "attached portrait",
+        "scope": "facial appearance and hair only"
+      },
+      "evidence": {
+        "appearance_phrase": "visible facial proportions, dark eyes, and a short straight dark bob with loose wispy bangs guided by the attached portrait"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic",
+    "family": "observational nocturnal documentary",
+    "evidence": [
+      "mixed cool laundromat and warm street illumination",
+      "readable human action and wet machine surfaces"
+    ]
+  },
+  "variation_key": "arm_b_seed_2103905450_scene_index_1_of_6"
+}

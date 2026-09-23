@@ -1,0 +1,54 @@
+{
+  "contract_version": "everyday-scene-independent-review-plan/v1",
+  "timing": "frozen_before_render",
+  "scales": [
+    "thumbnail",
+    "native"
+  ],
+  "decision_rule": "partial_is_fail; a keyword passes only if every gate is directly visible in the same image at the required scale",
+  "portrait_reference_rule": "assess only visible adult appearance guidance, never identity or inferred sensitive traits",
+  "user_judgment": "pending",
+  "arms": {
+    "a": {
+      "keyword": "ed_cafe_pickup_wait",
+      "gates": [
+        "Focal adult faces or attends the cafe pickup point while waiting.",
+        "A prepared drink is visible on the service or handoff side, separate from the customer hands.",
+        "Customer and service sides of the counter and a plausible open handoff gap are visible.",
+        "Counter, prepared drink, customer and the present waiting phase coexist in one coherent frame."
+      ],
+      "confusions": [
+        "a person already drinking the cup",
+        "a generic cafe table with no pickup geometry"
+      ]
+    },
+    "b": {
+      "keyword": "ed_market_compare",
+      "gates": [
+        "Two comparable olive-oil bottles are simultaneously visible as alternatives.",
+        "The shopper holds or attends to both bottles as one active comparison.",
+        "Hands and bottle positions form physically plausible contact and support.",
+        "A shelf or basket and store context support the comparison scene."
+      ],
+      "confusions": [
+        "one bottle only",
+        "two unrelated background bottles",
+        "products floating or merged into hands"
+      ]
+    },
+    "c": {
+      "keyword": "ed_clean_room_reset",
+      "gates": [
+        "The adult is visibly returning one book to its place in the tidy room.",
+        "A recently cleared usable surface is visible.",
+        "One small task remains active beside the cleared area.",
+        "An open walking path connects the active area with the room."
+      ],
+      "confusions": [
+        "blank showroom with no active task",
+        "mess or dirt used as a generic realism cue",
+        "fully completed shelving with no ongoing action"
+      ]
+    }
+  }
+}

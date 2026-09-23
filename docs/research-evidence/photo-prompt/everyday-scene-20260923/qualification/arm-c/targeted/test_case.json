@@ -1,0 +1,118 @@
+{
+  "case_id": "arm-c-targeted-clean-room-reset-book-return",
+  "case_contract": "photo-independent-qualification-case/v1",
+  "frozen_before_render": true,
+  "seed": 14906590725294261376,
+  "seed_derivation": "seed xor 0xC0DEC0DE for targeted details",
+  "source_request_envelope_sha256": "0b21b8d8e5d32383ba973ace642f33d7e8cca6a9f308cf2f409cec6a68a306b6",
+  "baseline_prompt_sha256": "7d910a82b2082e98f7fec4b9b0611c4a8650963b260eb2b9294e49eeb97ed00d",
+  "composed_prompt_sha256": "88e41cb8f1f6e446311f471f9ca199138e239d1b59bb22366ce61461773d30d5",
+  "pack_id": "5b9fe4387d4f08f6",
+  "pack_sha256": "1c41f2e705205f00044fdaf790ca8c6a5cca0b55af860a2b6ab1093a7d86af5b",
+  "effective_visual_contract_sha256": "71e5986b60d40e3f19783f77829e6e2a38346cb56d434ca3be8082b5f3682331",
+  "selected_visual_concept_ids": [
+    "visual-concept:ed_clean_room_reset"
+  ],
+  "hard_profile_activation": {
+    "profile_id": "ed_clean_room_reset",
+    "source": "composer_opt_in",
+    "active": true,
+    "activation_scope": "this composed prompt and its render"
+  },
+  "scene": "A visibly adult woman in a neat yet actively used compact living room is halfway through returning one blue paperback into its existing shelf gap. Other household elements make the reset visibly in progress.",
+  "randomized_details": {
+    "return_object": "closed blue paperback",
+    "return_target": "gap between upright books on oak shelf",
+    "room": "compact apartment living room",
+    "support_prop": "glass of water on side table",
+    "background_prop": "pleated lamp on sideboard",
+    "timing": "clear overcast daylight"
+  },
+  "review_policy": {
+    "partial_is_fail": true,
+    "hard_result_rule": "PASS only if every hard gate passes on the same saved image at its specified scales; FAIL if any hard gate fails; INDETERMINATE only if pixels cannot be obtained or inspected",
+    "user_judgment": "pending_direct_user_review"
+  },
+  "scales": {
+    "thumbnail": "approximately 512 px longest side for composition and global relations",
+    "native": "full output resolution for contact, shelf gap, and small prop evidence"
+  },
+  "hard_visual_gates": [
+    {
+      "id": "vo_ed_clean_room_reset_1",
+      "review_scale": "both",
+      "positive_pixel_gate": "The adult woman visibly guides one blue paperback halfway into an existing gap between upright books on the oak shelf, with book, target, and hand contact readable together.",
+      "confusion_targets": [
+        "book merely held beside the shelf",
+        "book already fully stored with no active return",
+        "book resting on a table",
+        "book being handed to another person"
+      ]
+    },
+    {
+      "id": "vo_ed_clean_room_reset_2",
+      "review_scale": "both",
+      "positive_pixel_gate": "A broad sideboard work surface is visibly recently cleared, retaining a subtle localized book-sized patch while the surrounding lived-in room remains coherent.",
+      "confusion_targets": [
+        "featureless showroom with no trace of use",
+        "sideboard completely crowded",
+        "bare wall mistaken for work surface",
+        "patch only asserted by prompt but absent in pixels"
+      ]
+    },
+    {
+      "id": "vo_ed_clean_room_reset_3",
+      "review_scale": "both",
+      "positive_pixel_gate": "A half-folded throw on the sofa arm near the cleared sideboard is visibly awaiting the next tidy motion while the book return is in progress.",
+      "confusion_targets": [
+        "fully folded finished stack",
+        "random decorative blanket unrelated to a remaining task",
+        "throw hidden or too small to inspect",
+        "unrelated distant clutter"
+      ]
+    },
+    {
+      "id": "vo_ed_clean_room_reset_4",
+      "review_scale": "both",
+      "positive_pixel_gate": "A continuous open strip of floor connects the bookcase activity area with the sofa and broader room, allowing a clear walking route.",
+      "confusion_targets": [
+        "tight crop omits the path",
+        "furniture or clutter blocks the route",
+        "isolated floor patch with no connection",
+        "room is empty showroom rather than actively used home"
+      ]
+    }
+  ],
+  "embodiment_hard_gates": [
+    {
+      "id": "embodiment_body_ownership",
+      "review_scale": "native",
+      "positive_pixel_gate": "The acting hands visibly belong to the woman and no crucial hand is duplicated or detached."
+    },
+    {
+      "id": "embodiment_joint_chain_and_reach",
+      "review_scale": "native",
+      "positive_pixel_gate": "Her arm connection and reach to the target shelf are physically coherent."
+    },
+    {
+      "id": "embodiment_support_and_balance",
+      "review_scale": "native",
+      "positive_pixel_gate": "Her standing support agrees with the weight of the light book and the visible body position."
+    },
+    {
+      "id": "embodiment_contact_and_space",
+      "review_scale": "native",
+      "positive_pixel_gate": "Hand-to-book and book-to-shelf-gap contact are physically coherent with adequate space."
+    },
+    {
+      "id": "embodiment_visibility_and_projection",
+      "review_scale": "native",
+      "positive_pixel_gate": "The camera view makes the critical book return relation assessable."
+    }
+  ],
+  "supplemental_observations": [
+    "visible adult appearance guidance from supplied portrait is assessed without identity assertion",
+    "neat but used living room, glass, pleated lamp, and plant are recorded separately from the hard relation gates"
+  ],
+  "created_at_utc": "2026-09-23T07:10:09.164948+00:00"
+}

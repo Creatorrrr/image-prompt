@@ -1,0 +1,71 @@
+{
+  "contract_version": "everyday-scene-root-independent-pixel-review/v1",
+  "source_review_plan": "independent-review-plan.json",
+  "decision_rule": "partial_is_fail",
+  "user_judgment": "pending",
+  "arms": {
+    "a": {
+      "keyword": "ed_cafe_pickup_wait",
+      "image": "docs/research-evidence/photo-prompt/everyday-scene-20260923/qualification/arm-a/targeted/generated.png",
+      "outcome": "PASS",
+      "gate_status": [
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "evidence": [
+        "The adult waits facing the pickup ledge and looks toward the prepared cup.",
+        "The lidded cup is at the service ledge while the customer holds only her phone.",
+        "The counter separates the customer and barista while leaving a visible handoff path above the ledge.",
+        "The cup, counter, customer and still-pending handoff coexist at thumbnail and native scale."
+      ],
+      "caveat": "A second drink appears with the barista, but it does not replace the focal uncollected cup.",
+      "image_sha256": "ad98aac3fd6e1615f981a9e4b27e48abe22707573d7a3022f7c80dda7d09faa4",
+      "thumbnail_and_native_inspected": true,
+      "portrait_reference": "visible adult appearance guidance only; identity not evaluated"
+    },
+    "b": {
+      "keyword": "ed_market_compare",
+      "image": "docs/research-evidence/photo-prompt/everyday-scene-20260923/qualification/arm-b/targeted/revision-1/render_attempt_2.png",
+      "outcome": "PASS_AFTER_CALIBRATION",
+      "gate_status": [
+        "pass",
+        "pass",
+        "pass",
+        "pass"
+      ],
+      "evidence": [
+        "Two similar olive-oil bottles, one amber and one green, remain simultaneously visible.",
+        "The shopper holds one in each hand and looks between the compared alternatives.",
+        "Each bottle has a distinct plausible hand grip; green is in her anatomical left hand and amber in her right.",
+        "Shelf stock, a basket and a working grocery surround the hand-supported comparison."
+      ],
+      "caveat": "The profile support condition was corrected after attempt 1. This is a calibrated retest, not a blind holdout. Label readability to the shopper is not proved.",
+      "image_sha256": "6138301fa3b61d01f4cfa5789266d05ffee1e39542010ce2637a84c2bf33a657",
+      "thumbnail_and_native_inspected": true,
+      "portrait_reference": "visible adult appearance guidance only; identity not evaluated"
+    },
+    "c": {
+      "keyword": "ed_clean_room_reset",
+      "image": "docs/research-evidence/photo-prompt/everyday-scene-20260923/qualification/arm-c/targeted/render_attempt_2.png",
+      "outcome": "FAIL",
+      "gate_status": [
+        "fail",
+        "fail",
+        "fail",
+        "pass"
+      ],
+      "evidence": [
+        "The blue book and hands are visible, but entry into a receiving shelf gap is ambiguous.",
+        "The sideboard remains visible, yet a recently cleared work patch is not distinguishable.",
+        "The sofa throw reads as settled decor rather than a remaining active task.",
+        "A clear wood-floor route links the shelf area to the rest of the room."
+      ],
+      "caveat": "One allowed framing and camera retry improved floor visibility but did not repair the three missing event relations.",
+      "image_sha256": "ae4e11ea3bffbf2bb2727f9650b6655502ffd6b71fce03601c6202032b29920c",
+      "thumbnail_and_native_inspected": true,
+      "portrait_reference": "visible adult appearance guidance only; identity not evaluated"
+    }
+  }
+}
