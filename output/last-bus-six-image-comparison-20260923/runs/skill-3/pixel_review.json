@@ -1,0 +1,56 @@
+{
+  "schema_version": "last-bus-skill-arm-pixel-review/v1",
+  "reviewer": "Codex agent",
+  "image_path": "/Users/chasoik/Projects/image-prompt-last-bus-skill-6380bf-3/output/last-bus-comparison-skill-3/image.png",
+  "image_sha256": "ea9de575d6d6c208434c0ad38b2d4b12033e83adf74e44943e245fdbb135c893",
+  "dimensions_px": [
+    1536,
+    1024
+  ],
+  "inspection": "native pixels and whole frame",
+  "reviewed_at_utc": "2026-09-23T09:38:56.752806+00:00",
+  "observations": {
+    "adult_alone_at_stop": {
+      "status": "pass",
+      "evidence": "A single adult occupies the shelter foreground; no second person stands with them at the stop."
+    },
+    "rainy_night": {
+      "status": "pass",
+      "evidence": "Dark street, rain-speckled shelter glass, wet pavement and long lamp reflections."
+    },
+    "wet_documents_held": {
+      "status": "pass",
+      "evidence": "The adult grips a stack of paper with curled wet edges and visible water drops hanging below."
+    },
+    "departing_bus_same_frame": {
+      "status": "pass",
+      "evidence": "The bus rear with illuminated tail lamps is farther along the road, away from the adult and shelter."
+    },
+    "missed_bus_event": {
+      "status": "pass",
+      "evidence": "The adult remains beside the shelter while the closed-rear bus recedes, separated by a wet curb line."
+    },
+    "dejection": {
+      "status": "pass",
+      "evidence": "Head and gaze angle downward; shoulders round and the adult appears withdrawn while holding the papers."
+    },
+    "last_bus_of_night": {
+      "status": "fail",
+      "evidence": "The bus itself is labeled route 12, while the shelter timetable visibly lists route 13 in 6 minutes and route 49 in 14 minutes. The frame does not establish that this is the final bus of the night."
+    },
+    "hurried_passerby_photo": {
+      "status": "partial",
+      "evidence": "Off-center street-level framing supports a candid viewpoint, but the exposure and composition look relatively controlled and motion blur is slight."
+    }
+  },
+  "focal_coverage": {
+    "prompt_status": "pass",
+    "runtime_audit_status": "pass",
+    "pixel_status": "fail",
+    "reason": "Missed bus and dejection are visible; final-bus status is not visually established and scheduled later buses appear on the sign."
+  },
+  "limits": [
+    "The audit scripts validate declared evidence and file hashes; they do not inspect image pixels.",
+    "User judgment and six-arm comparison are outside this independent arm."
+  ]
+}

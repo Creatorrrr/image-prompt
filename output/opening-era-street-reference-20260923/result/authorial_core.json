@@ -1,0 +1,267 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "이번엔 \"개화기 번화가 한가운데 우윳빛 피부의 20대 초반 한국 여성 더러운 거지가 불쌍한 표정으로 구걸하고 있고, 지나가던 사람이 반쯤 먹은 햄버거를 던져주는 장면을 지나가던 사람이 카메라로 찍은 듯 한 실사 이미지\"를 독립된 환경의 서브에이전트로 생성해줘. 인물은 첨부한 이미지를 사용해줘.",
+  "interpreted_intent": "A candid realistic photograph of an early-twenties Korean woman begging in a crowded Gaehwagi-era street, while a passerby throws her a half-eaten hamburger and a different passerby captures the moment; use the attached portrait for visible appearance.",
+  "subject": "An early-twenties Korean woman begging in dusty, worn period clothing, visually guided by the attached portrait.",
+  "setting": "A busy Korean Gaehwagi-era commercial street with traditional and early-modern cues.",
+  "event": "A passerby has just thrown a visibly half-eaten hamburger toward the begging woman, suspended between the source and her reaching hand.",
+  "visual_priorities": [
+    "The portrait-guided woman, her soiled condition, pleading pose and sorrowful expression remain clear.",
+    "The throwing source, bitten hamburger in flight, and destination form a legible relationship within the period street.",
+    "The image feels like a third passerby quickly captured an unposed real event."
+  ],
+  "baseline_prompt_en": "A candid, photorealistic street photograph in a crowded Korean Gaehwagi-era commercial district during the opening-to-modernity period. At the center, a Korean woman in her early twenties with a fair milky complexion begs beside the dusty roadway, seated low with one bent knee and both feet grounded. Use the attached portrait only as the visual reference for her visible face, dark eyes, and dark chin-length bob with wispy bangs. Her worn period clothing is visibly smeared with dust and street grime; faint dirt marks cross her cheeks while her recognizable facial features remain clear. Her shoulders hunch, and her right hand reaches forward palm up in a pleading gesture while her left hand braces against the ground. She looks toward a passing pedestrian with a sorrowful, vulnerable expression. The passing pedestrian at frame left has just thrown a half-eaten hamburger toward her: the open throwing hand, the burger with an irregular bitten edge suspended in the air, and her reaching hand form one readable diagonal trajectory. Keep the anachronistic hamburger visibly distinct within the period street scene. Shopfronts, mixed traditional and early modern street dress, carts, and moving pedestrians make the district feel busy. Frame it from the viewpoint of a separate passerby who quickly raised a camera while walking, with a slightly tilted, imperfect crop, natural daylight, real street texture, and subtle background motion blur.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "개화기 번화가 장면",
+      "source_text": "개화기 번화가 한가운데 우윳빛 피부의 20대 초반 한국 여성 더러운 거지가 불쌍한 표정으로 구걸하고 있고, 지나가던 사람이 반쯤 먹은 햄버거를 던져주는 장면을 지나가던 사람이 카메라로 찍은 듯 한 실사 이미지",
+      "basis": "request_context",
+      "resolution": "A busy Korean street during the opening-to-modernity era, shown through mixed traditional and early-modern street cues; the specified hamburger remains an intentional visual anachronism.",
+      "sources": []
+    },
+    {
+      "term": "첨부 이미지 인물 사용",
+      "source_text": "인물은 첨부한 이미지를 사용해줘.",
+      "basis": "request_context",
+      "resolution": "Use the attached portrait as reference for the focal woman’s visible face, hair, and complexion while applying the requester-specified age and nationality.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "개화기 번화가",
+        "dimension": "concept",
+        "prompt_evidence": "crowded Korean Gaehwagi-era commercial district"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "20대 초반 한국 여성",
+        "dimension": "subject",
+        "prompt_evidence": "a Korean woman in her early twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "지나가던 사람이 반쯤 먹은 햄버거를 던져주는 장면",
+        "dimension": "event",
+        "prompt_evidence": "The passing pedestrian at frame left has just thrown a half-eaten hamburger toward her"
+      },
+      {
+        "anchor_id": "core_age",
+        "source_text": "20대 초반",
+        "dimension": "age",
+        "prompt_evidence": "in her early twenties"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "우윳빛 피부",
+        "dimension": "appearance",
+        "prompt_evidence": "a fair milky complexion"
+      },
+      {
+        "anchor_id": "core_role",
+        "source_text": "더러운 거지가",
+        "dimension": "role",
+        "prompt_evidence": "begs beside the dusty roadway"
+      },
+      {
+        "anchor_id": "core_pose",
+        "source_text": "구걸하고 있고",
+        "dimension": "pose",
+        "prompt_evidence": "her right hand reaches forward palm up in a pleading gesture"
+      },
+      {
+        "anchor_id": "core_expression",
+        "source_text": "불쌍한 표정",
+        "dimension": "expression",
+        "prompt_evidence": "a sorrowful, vulnerable expression"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "개화기 번화가 한가운데",
+        "dimension": "setting",
+        "prompt_evidence": "Shopfronts, mixed traditional and early modern street dress, carts, and moving pedestrians"
+      },
+      {
+        "anchor_id": "core_relationship",
+        "source_text": "지나가던 사람이 반쯤 먹은 햄버거를 던져주는",
+        "dimension": "relationship",
+        "prompt_evidence": "one readable diagonal trajectory"
+      },
+      {
+        "anchor_id": "core_style",
+        "source_text": "실사 이미지",
+        "dimension": "style",
+        "prompt_evidence": "A candid, photorealistic street photograph"
+      },
+      {
+        "anchor_id": "core_camera",
+        "source_text": "지나가던 사람이 카메라로 찍은 듯 한",
+        "dimension": "camera",
+        "prompt_evidence": "from the viewpoint of a separate passerby who quickly raised a camera while walking"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "인물은 첨부한 이미지를 사용해줘.",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait only as the visual reference for her visible face, dark eyes, and dark chin-length bob with wispy bangs"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "반쯤 먹은 햄버거를 던져주는",
+        "dimension": "action",
+        "prompt_evidence": "the open throwing hand"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "age",
+      "appearance",
+      "role",
+      "pose",
+      "expression",
+      "setting",
+      "relationship",
+      "style",
+      "camera",
+      "reference_use",
+      "action"
+    ],
+    "open_dimensions": [
+      "composition",
+      "lighting",
+      "color"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "burger_throw_relation",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "event",
+        "relationship",
+        "action"
+      ],
+      "axes": {
+        "actor": "passing pedestrian",
+        "object": "half-eaten hamburger with an irregular bitten edge",
+        "action": "thrown toward the begging woman",
+        "phase": "airborne between thrower and reaching woman",
+        "relation": "throwing hand to bitten burger to her reaching hand"
+      },
+      "evidence": {
+        "throw": "The passing pedestrian at frame left has just thrown a half-eaten hamburger toward her",
+        "trajectory": "the open throwing hand, the burger with an irregular bitten edge suspended in the air, and her reaching hand form one readable diagonal trajectory"
+      }
+    },
+    {
+      "assertion_id": "begging_state",
+      "dimension": "pose",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "pose",
+        "role",
+        "expression"
+      ],
+      "axes": {
+        "posture": "seated low beside street, one hand out for alms",
+        "affect": "sorrowful and vulnerable",
+        "surface": "dust and street grime on clothing and cheeks"
+      },
+      "evidence": {
+        "plea": "her right hand reaches forward palm up in a pleading gesture",
+        "expression": "a sorrowful, vulnerable expression",
+        "grime": "Her worn period clothing is visibly smeared with dust and street grime"
+      }
+    },
+    {
+      "assertion_id": "opening_era_street",
+      "dimension": "setting",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "setting",
+        "concept"
+      ],
+      "axes": {
+        "place": "crowded Korean Gaehwagi-era commercial district",
+        "details": "mixed traditional and early-modern shopfronts, clothing, carts, pedestrians",
+        "anachronism": "half-eaten hamburger deliberately appears in period setting"
+      },
+      "evidence": {
+        "period": "a crowded Korean Gaehwagi-era commercial district",
+        "crowd": "Shopfronts, mixed traditional and early modern street dress, carts, and moving pedestrians make the district feel busy",
+        "juxtaposition": "the anachronistic hamburger visibly distinct within the period street scene"
+      }
+    },
+    {
+      "assertion_id": "portrait_appearance",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "reference_use"
+      ],
+      "affected_dimensions": [
+        "reference_use",
+        "appearance"
+      ],
+      "axes": {
+        "use": "attached portrait as visible appearance guide",
+        "visible_features": "dark eyes, chin-length dark bob, wispy bangs, fair complexion"
+      },
+      "evidence": {
+        "appearance": "Use the attached portrait only as the visual reference for her visible face, dark eyes, and dark chin-length bob with wispy bangs"
+      }
+    },
+    {
+      "assertion_id": "passerby_snapshot",
+      "dimension": "camera",
+      "polarity": "required",
+      "source_span_ids": [
+        "scene"
+      ],
+      "affected_dimensions": [
+        "camera",
+        "style"
+      ],
+      "axes": {
+        "camera_actor": "a separate passerby",
+        "capture": "quickly raised camera while walking",
+        "look": "photorealistic candid street snapshot"
+      },
+      "evidence": {
+        "view": "from the viewpoint of a separate passerby who quickly raised a camera while walking",
+        "realism": "A candid, photorealistic street photograph"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic street documentary",
+    "family": "candid period street realism",
+    "evidence": [
+      "a slightly tilted, imperfect crop",
+      "real street texture, and subtle background motion blur"
+    ]
+  },
+  "variation_key": "opening-era-street-reference-20260923"
+}

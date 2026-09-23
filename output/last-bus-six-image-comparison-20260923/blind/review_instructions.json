@@ -1,0 +1,51 @@
+{
+  "scene_request": "비 오는 밤, 막차가 떠나는 정류장에 혼자 남은 성인이 젖은 서류를 쥔 순간. 지나가던 사람이 급히 찍은 실사 사진. 버스를 놓친 사건과 인물의 낙담이 한 프레임에서 읽히게.",
+  "scale": {
+    "0": "보이지 않거나 반대 장면",
+    "1": "일부 보이지만 모호함",
+    "2": "프레임에서 분명하게 읽힘"
+  },
+  "criteria": [
+    {
+      "id": "rainy_night",
+      "question": "비 오는 밤이라는 시간과 날씨가 드러나는가?"
+    },
+    {
+      "id": "departing_bus",
+      "question": "버스가 정류장을 떠나는 중이라는 동작이 보이는가?"
+    },
+    {
+      "id": "adult_alone_at_stop",
+      "question": "주인공 성인이 정류장에 홀로 남는 상황이 보이는가?"
+    },
+    {
+      "id": "wet_papers_held",
+      "question": "주인공이 젖은 서류를 손에 쥐고 있는가?"
+    },
+    {
+      "id": "missed_bus_causality",
+      "question": "버스의 이탈과 주인공의 행동이 연결돼 막차를 놓쳤다는 사건이 읽히는가?"
+    },
+    {
+      "id": "despondency",
+      "question": "인물의 낙담이 표정·자세·동작으로 읽히는가?"
+    },
+    {
+      "id": "hurried_passerby_photo",
+      "question": "제삼자가 지나가며 급히 찍은 듯한 촬영 시점과 프레이밍인가?"
+    },
+    {
+      "id": "photorealism_coherence",
+      "question": "실사 질감과 인물·손·서류·버스·비의 공간적 관계가 자연스러운가?"
+    }
+  ],
+  "image_labels": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F"
+  ],
+  "review_rule": "Judge pixels only. A criterion is 2 only when visually clear; use 1 for plausible but ambiguous. Do not infer from image metadata or prompt wording. Record per criterion evidence, major visual defects, overall request fidelity, and photographic naturalness. Do not guess arm identity. Do not open files outside this blind directory."
+}
