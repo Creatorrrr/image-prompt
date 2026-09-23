@@ -157,6 +157,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_color_relations.json",
     "photo_prompt_visual_obligations_model_editorial.json",
     "photo_prompt_visual_obligations_realistic_background.json",
+    "photo_prompt_visual_obligations_photorealism_elements.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -183,6 +184,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_color_relations_extension.json",
     "photo_prompt_model_editorial_extension.json",
     "photo_prompt_realistic_background_extension.json",
+    "photo_prompt_photorealism_elements_extension.json",
     "photo_prompt_lighting_extension.json",
     "photo_prompt_photo_era_extension.json",
     "photo_prompt_violence_crime_extension.json",
