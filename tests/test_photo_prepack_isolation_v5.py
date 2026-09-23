@@ -92,8 +92,44 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             skill_text.index("phase 2 — retrieve"),
         )
         self.assertIn(
-            "the `skill.md` procedure is the only project-local material available before the core",
+            "the `skill.md` procedure and that single named catalog are the only project-local material available before the core",
             skill_text,
+        )
+        self.assertIn(
+            "`precore/visual_feature_catalog.json`, only in phase 1 after resolving the request's meaning",
+            skill_text,
+        )
+        self.assertIn(
+            "any file under this skill's `assets/`, `references/`, or `scripts/` directories",
+            skill_text,
+        )
+        precore_dir = SKILL_DIR / "precore"
+        self.assertEqual(
+            {path.name for path in precore_dir.iterdir() if path.name != ".DS_Store"},
+            {"visual_feature_catalog.json"},
+        )
+        catalog_text = (precore_dir / "visual_feature_catalog.json").read_text(
+            encoding="utf-8"
+        ).casefold()
+        profile_ids = {
+            str(profile.get("id") or "").casefold()
+            for profile in self.registry.get("profiles") or []
+        }
+        profile_index = json.loads(
+            (SKILL_DIR / "assets" / "photo_prompt_visual_profile_index.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        profile_ids.update(
+            str(profile_id).casefold() for profile_id in profile_index["entries"]
+        )
+        self.assertEqual(
+            sorted(
+                profile_id
+                for profile_id in profile_ids
+                if profile_id and profile_id in catalog_text
+            ),
+            [],
         )
 
     def test_core_requires_a_resolved_ambiguity_boundary_and_auditable_web_basis(self):

@@ -17,6 +17,7 @@ For an initial request, before `baseline_prompt_en` and its `photo-authorial-cor
 
 - the current user conversation, including definitions, exclusions, modifiers, references, and corrections;
 - the model's general knowledge and independent visual reasoning;
+- this skill's exact `precore/visual_feature_catalog.json`, only in Phase 1 after resolving the request's meaning, for neutral feature selection;
 - one focused clarification question when different plausible meanings would materially change the image; or
 - focused public-web research about the term's meaning when it is stable and publicly documentable but unfamiliar or uncertain.
 
@@ -28,9 +29,9 @@ During that pre-core phase, do not open, search, quote, or infer from:
 - tests, fixtures, evaluation cases, snapshots, rendered attempts, or maintenance evidence;
 - private routing, another experiment arm, or a previous prompt produced from project-local knowledge.
 
-The `SKILL.md` procedure is the only project-local material available before the core. This initial-request rule includes the neutral schemas below; retries have only the explicit exception in the next paragraph. This file intentionally contains no maintained definition for any particular keyword. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
+The `SKILL.md` procedure and that single named catalog are the only project-local material available before the core. The catalog contains observation categories and illustrative examples, not definitions, execution instructions, request requirements, profile triggers, or defaults. This initial-request rule includes the neutral schemas below; retries have only the explicit exception in the next paragraph. This file intentionally contains no maintained definition for any particular keyword. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
 
-A retry has one narrow exception: inspect the named parent request/core/intent-lock hashes, frozen fields and evidence for dimensions the requester preserves, the effective hard obligations governing those dimensions, and the reported defect relevant to the repair. A previously selected opt-in obligation is part of that effective hard contract. Read only those fields from the parent artifacts; candidate inventories, unselected concepts, previous optional prose, other arms, and maintenance examples remain unavailable. This exception carries an existing obligation and never supplies fresh inspiration. If selective reading is impractical, use a coordinator-created whitelist extract bound to the parent artifact hashes.
+A retry has one narrow exception: inspect the named parent request/core/intent-lock hashes, frozen fields and evidence for dimensions the requester preserves, the effective hard obligations governing those dimensions, and the reported defect relevant to the repair. A previously selected opt-in obligation is part of that effective hard contract. Read only those fields from the parent artifacts; candidate inventories, unselected concepts, previous optional prose, other arms, maintenance examples, and the parent's feature-selection record remain unavailable. The current neutral catalog may be read again for a new selection, but previous selected categories are not inherited as hard obligations. This exception carries an existing obligation and never supplies fresh inspiration. If selective reading is impractical, use a coordinator-created whitelist extract bound to the parent artifact hashes.
 
 ## Phase 0 — Resolve Meaning Independently
 
@@ -50,7 +51,11 @@ The requesting user's intended meaning has highest priority. System and image-to
 
 ## Phase 1 — Write and Freeze the Basic Prompt
 
-Without project-local prompt data, author a coherent 48–640 word English photographic prompt that can stand alone. Treat 360 words as the default recommended maximum, not a hard cap. Exceed it only when requester meaning or literal hard evidence cannot be represented cleanly within 360 words; never pad toward the limit. It must already specify a concrete subject, setting, visible event or state, and at least two visual priorities. It is not a search query, tag bag, or placeholder.
+After selecting the categories below, use only the permitted pre-core inputs to author a coherent 48–640 word English photographic prompt that can stand alone. Treat 360 words as the default recommended maximum, not a hard cap. Exceed it only when requester meaning or literal hard evidence cannot be represented cleanly within 360 words; never pad toward the limit. It must already specify a concrete subject, setting, visible event or state, and two to six distinct visual priorities. It is not a search query, tag bag, or placeholder.
+
+Read the exact neutral catalog named above. Review its category names and choose five to ten distinct categories to develop for this request; count categories already specified by the requester. The catalog's `source_examples` and `added_examples` are optional examples to consult for relevant categories, not a menu of required values or permission to invent a person, action, era detail, defect, or camera recipe. Translate examples phrased as an absence into visible positive states in the baseline (for example, still reeds or natural edge transitions); do not copy their negated clauses into `baseline_prompt_en`. Start with the event, subject, setting, and visible consequence; unless the requester asked for photographic technique, do not let technique categories dominate the selection. A sparse or precise request still gets five meaningful observation axes by counting what it already specifies and making only restrained choices in genuinely open photographic dimensions. More than ten requester-specified axes never lose their instructions merely because only five to ten categories are selected for focused development. Do not count overlapping categories twice for the same visual decision.
+
+Select only features that distinguish the request's meaning, make its event, relationships, or consequential physical or spatial arrangements legible in one frame, or support a visual hierarchy suited to the request's purpose. When relevant, express an abstract situation, affect, or implied prior context through actions, directed attention, visible responses, material states, or traces present in that frame. Integrate those cues into one scene instead of filling a feature checklist; omit irrelevant prompt detail without closing genuinely open dimensions in `intent_lock`. The five to ten selected categories are not the core's two to six `visual_priorities`: each priority should be one coherent visible proposition, not a concatenation of category names or camera tags. Other selected categories may appear only in the baseline prose. Do not record incidental agent-chosen staging as a requester definition or exclusion, a resolution of a request term in `interpretation_provenance`, or an independent semantic assertion; keep required evidence phrases limited to the visible meaning they prove, excluding incidental detail from open dimensions. A category selection never creates a locked dimension, anchor, assertion, or `photo-visual-intent/v1`, nor does it remove an open dimension; every requester-specified dimension still follows the existing lock rules. A catalog example alone is never a source for `user_definitions`, `interpretation_provenance`, `semantic_assertions`, or `photo-visual-intent/v1`. Showing affect or a visible response this way does not itself activate `character_response`; follow the requester-meaning trigger below.
 
 Before freezing that draft, review any material bodily action, contact, load-bearing state, or consequentially hidden appendage using only the permitted pre-core inputs. Trace the acting body part to its owner, its connected articulation and target, the supporting surfaces and available space, and what the chosen viewpoint will reveal. Distinguish actor-relative directions from screen directions. Check simultaneous states together; a plausible action label does not establish a plausible way to perform it.
 
@@ -213,6 +218,48 @@ Use three separate lanes:
 
 The pack exposes a hash-bound `photo-negative-intent-guard/v1` containing the emitted negative terms and governing policy. It is recomputed during composed audit. This guard applies to both the positive prompt surface and `negative_en`; copying the pack negative bytes is necessary but no longer sufficient.
 
+### Record the pre-core feature selection
+
+Keep one `precore_feature_selection.json` beside the envelope and core for each request arm. Choose the categories before drafting, then finish this record using the final, canonically spaced `baseline_prompt_en` and frozen envelope. Each selected category needs a distinct reason and a literal baseline phrase showing how it was used. `basis` is `explicit_request` for an exact requester span, `request_derived` for a visible realization derived from a cited active span, or `agent_visual_choice` for a decision within an open dimension. For `explicit_request`, fill `source_span_ids` and `source_text` with an exact substring of an active span, and set `derivation` to `null`. For `request_derived`, fill `source_span_ids` and `derivation`, and set `source_text` to `null`. For `agent_visual_choice`, set `source_span_ids` to `[]` and both `source_text` and `derivation` to `null`. These labels describe the recorded realization, not the category's permanent authority.
+
+```json
+{
+  "contract_version": "photo-precore-feature-selection/v1",
+  "request_id": "<envelope request_id>",
+  "active_span_ids": ["<this arm's active envelope span ID>"],
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v1",
+  "catalog_sha256": "<SHA-256 of exact catalog file bytes>",
+  "request_sha256": "<envelope request_sha256>",
+  "baseline_prompt_sha256": "<SHA-256 of final canonical baseline_prompt_en UTF-8 bytes>",
+  "selected": [
+    {
+      "category_id": "feature.situation",
+      "basis": "explicit_request",
+      "source_span_ids": ["topic"],
+      "source_text": "<exact requester substring inside topic>",
+      "derivation": null,
+      "reason": "<why this category matters to the image>",
+      "baseline_evidence": "<literal phrase in canonical baseline_prompt_en>"
+    }
+  ]
+}
+```
+
+The sample row shows shape, not a default category or a complete five-to-ten selection. The selection record is audit evidence only: do not put it in the core, retrieval query, candidate pack, semantic assertion, or runtime prompt. Copy the exact catalog bytes beside the run artifacts for later historical review; never use a prior run's copy to write a new core. After freezing the core, and **before** any candidate or profile access, validate the record:
+
+```bash
+cp skills/photo-prompt-image-generator/precore/visual_feature_catalog.json visual_feature_catalog.snapshot.json
+.venv/bin/python skills/photo-prompt-image-generator/scripts/validate_precore_feature_selection.py \
+  --catalog skills/photo-prompt-image-generator/precore/visual_feature_catalog.json \
+  --request-envelope request_envelope.json \
+  --authorial-core authorial_core.json \
+  --embodiment-review embodiment_review.json \
+  --selection precore_feature_selection.json
+```
+
+If validation fails, correct the record or rebuild the affected pre-core artifacts before opening candidate data. Inspect `warnings` even when the command succeeds: revise repeated reasons or evidence, and review any delivery-and-technique majority against the request before proceeding. The group-majority warning is a review cue, not an automatic rejection of a justified composition choice. Any baseline change also invalidates the embodiment-review hash, core, derived intent-lock binding, and selection hash. The validator checks the supplied catalog against the current permitted file in live runs; use `--historical-catalog` only to verify an archived record against its saved snapshot after the run. It confirms structure and literal binding; it cannot prove that selection preceded drafting or that the resulting image is good.
+
 Pass the envelope with `--request-envelope-json`, the core with `--authorial-core-json`, and explicitly request candidate-pack v6. The generator canonicalizes both, rejects unsupported or ungrounded fields, and binds their hashes and active spans to retrieval, the public pack, composition, and runtime.
 
 ## Phase 2 — Retrieve After the Core Is Frozen
@@ -331,6 +378,7 @@ After changing this skill or its contracts, run focused tests first, then the re
 
 ```bash
 .venv/bin/python -m unittest tests.test_photo_prepack_isolation_v5 -v
+.venv/bin/python -m unittest tests.test_photo_precore_feature_selection -v
 .venv/bin/python -m unittest tests.test_photo_embodiment -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v6 -v
