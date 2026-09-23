@@ -358,9 +358,12 @@ def rank_bm25f(
     documents = payload.get("documents") or {}
     rows: list[dict[str, Any]] = []
 
-    for document_id in sorted(str(key) for key in documents):
-        if allowed is not None and document_id not in allowed:
-            continue
+    document_ids = (
+        sorted(str(key) for key in documents)
+        if allowed is None
+        else sorted(document_id for document_id in allowed if document_id in documents)
+    )
+    for document_id in document_ids:
         if document_id in blocked:
             continue
         document = documents.get(document_id) or {}

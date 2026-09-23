@@ -1,0 +1,181 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "제안해준 내용을 반영한 다음 독립된 환경의 서브에이전트에서 테스트해줘. 개발 전에 먼저 독립된 환경의 서브에이전트에서 \"어두운 달빛 아래 빗자루를 타고 날아가는 네코미미 마녀가 KF-21 전투기에 쫓기며 대응 사격을 하는 긴급히 찍은 듯한 실사 촬영 이미지\" 를 생성해두고 개발한 다음에 다시 한번 개선된 스킬로 이미지를 생성하고 두개를 비교해줘.",
+  "interpreted_intent": "A single urgent-looking photorealistic night photograph of an adult cat-eared witch flying a broom while an identifiable KF-21 pursues her and she fires back toward it.",
+  "subject": "An adult human witch with visible cat ears, a flying broom, and the pursuing KF-21 fighter jet",
+  "setting": "A dark moonlit sky with broken low clouds",
+  "event": "The witch flies ahead of the fighter and fires a visible return shot toward it",
+  "visual_priorities": [
+    "The cat-eared witch, broom, pursuing fighter, and backward shot are simultaneously legible",
+    "A dark, hurriedly captured live-action photographic appearance"
+  ],
+  "baseline_prompt_en": "A hurried photorealistic night photograph catches an unmistakably adult nekomimi witch, a human woman with two distinct triangular cat ears rising through her windblown hair, flying on a rough wooden broom beneath dim moonlight. She straddles the broom, both thighs gripping its shaft; her left hand braces on the forward handle while her torso twists over her right shoulder. With her free right hand she aims a short wand behind her and fires a sharp luminous projectile toward the pursuing KF-21 fighter jet. The aircraft is visibly closing from behind along the same flight path, its recognizable swept wings and twin tails cutting through broken low clouds; the glowing shot crosses the space between witch and jet. The broom bristles stream aft with her movement. Viewed from an oblique ground-level vantage, both figures remain in one unsettled frame with a slightly tilted horizon, imperfect edge crop, coarse high-ISO grain, and restrained motion streaks. Moonlit clouds and a faint rim on the ears and broom keep the scene dark while the return shot briefly illuminates her tense face.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "requested scene",
+      "source_text": "어두운 달빛 아래 빗자루를 타고 날아가는 네코미미 마녀가 KF-21 전투기에 쫓기며 대응 사격을 하는 긴급히 찍은 듯한 실사 촬영 이미지",
+      "basis": "request_context",
+      "resolution": "A nekomimi witch visibly rides a broom in moonlit flight, is chased by a KF-21, and returns fire in an urgent-looking photorealistic shot.",
+      "sources": []
+    },
+    {
+      "term": "네코미미",
+      "source_text": "네코미미 마녀",
+      "basis": "agent_general_knowledge",
+      "resolution": "A human witch with visible cat ears.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "네코미미 마녀",
+        "dimension": "concept",
+        "prompt_evidence": "unmistakably adult nekomimi witch"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "네코미미 마녀",
+        "dimension": "subject",
+        "prompt_evidence": "a human woman with two distinct triangular cat ears"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "대응 사격을 하는",
+        "dimension": "event",
+        "prompt_evidence": "fires a sharp luminous projectile toward the pursuing KF-21 fighter jet"
+      },
+      {
+        "anchor_id": "core_appearance",
+        "source_text": "네코미미",
+        "dimension": "appearance",
+        "prompt_evidence": "two distinct triangular cat ears rising through her windblown hair"
+      },
+      {
+        "anchor_id": "core_action",
+        "source_text": "빗자루를 타고 날아가는",
+        "dimension": "action",
+        "prompt_evidence": "flying on a rough wooden broom beneath dim moonlight"
+      },
+      {
+        "anchor_id": "core_relationship",
+        "source_text": "KF-21 전투기에 쫓기며",
+        "dimension": "relationship",
+        "prompt_evidence": "The aircraft is visibly closing from behind along the same flight path"
+      },
+      {
+        "anchor_id": "core_setting",
+        "source_text": "어두운 달빛 아래",
+        "dimension": "setting",
+        "prompt_evidence": "a rough wooden broom beneath dim moonlight"
+      },
+      {
+        "anchor_id": "core_lighting",
+        "source_text": "어두운 달빛 아래",
+        "dimension": "lighting",
+        "prompt_evidence": "Moonlit clouds and a faint rim on the ears and broom keep the scene dark"
+      },
+      {
+        "anchor_id": "core_style",
+        "source_text": "긴급히 찍은 듯한 실사 촬영 이미지",
+        "dimension": "style",
+        "prompt_evidence": "A hurried photorealistic night photograph"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance",
+      "action",
+      "relationship",
+      "setting",
+      "lighting",
+      "style"
+    ],
+    "open_dimensions": [
+      "composition",
+      "camera",
+      "color"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "visible_cat_ears",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "ear_form": "two clearly visible triangular cat ears on the adult witch"
+      },
+      "evidence": {
+        "cat_ears_phrase": "two distinct triangular cat ears rising through her windblown hair"
+      }
+    },
+    {
+      "assertion_id": "return_fire_chase",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event",
+        "action",
+        "relationship"
+      ],
+      "axes": {
+        "actor": "nekomimi witch",
+        "pursuer": "KF-21 fighter jet",
+        "relative_position": "fighter approaching from behind",
+        "response": "witch fires a visible shot backward toward the fighter"
+      },
+      "evidence": {
+        "return_fire_phrase": "fires a sharp luminous projectile toward the pursuing KF-21 fighter jet",
+        "chase_phrase": "The aircraft is visibly closing from behind along the same flight path"
+      }
+    },
+    {
+      "assertion_id": "urgent_photo",
+      "dimension": "style",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "style"
+      ],
+      "axes": {
+        "medium": "photorealistic night photograph",
+        "capture_feel": "hurried imperfect capture"
+      },
+      "evidence": {
+        "photograph_phrase": "A hurried photorealistic night photograph",
+        "urgency_phrase": "a slightly tilted horizon, imperfect edge crop, coarse high-ISO grain"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photorealistic night action photography",
+    "family": "hurried eyewitness telephoto",
+    "evidence": [
+      "coarse high-ISO grain",
+      "restrained motion streaks"
+    ]
+  },
+  "variation_key": "baseline-20260923"
+}

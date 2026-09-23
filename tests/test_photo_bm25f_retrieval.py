@@ -145,6 +145,23 @@ class PhotoBm25fRetrievalTests(unittest.TestCase):
         self.assertEqual([row["document_id"] for row in fused], ["a", "b"])
         self.assertEqual(fused[0]["lane_count"], 2)
 
+    def test_allowed_ids_are_ranked_as_the_same_corpus_subset(self):
+        documents = {
+            name: {"aliases": [name], "definition": ["care"], "visible_actions": [], "support_cues": []}
+            for name in ("a", "b", "c")
+        }
+        index = bm25f_retrieval.build_bm25f_index(documents, policy=POLICY)
+        full = bm25f_retrieval.rank_bm25f(index, {"request": "care"})
+        restricted = bm25f_retrieval.rank_bm25f(
+            index,
+            {"request": "care"},
+            allowed_ids={"a", "c", "missing"},
+        )
+        self.assertEqual(
+            [row for row in full if row["document_id"] in {"a", "c"}],
+            restricted,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

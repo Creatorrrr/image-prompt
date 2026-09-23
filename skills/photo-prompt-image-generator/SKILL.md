@@ -233,6 +233,8 @@ Generate exactly one pack:
 
 The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. `--concept-lock` is normally omitted; if supplied, every value must byte-equal the active spans in order. The pack must not define the baseline after the fact.
 
+For v6 slot candidates, the generator keeps the frozen whole-scene query and prepares a separate core-derived focus query only for each active slot with relevant frozen fields. It searches the sampler's eligible pool and may recover additional candidates from the same slot corpus after reapplying request, domain, facet, and exclusion guards. It fuses whole-scene and focused hits into a bounded shortlist, keeping the sampler result available and favoring candidates supported by both queries. This produces one pack, not one pack per slot. A slot hit is optional even when it matches strongly; the composer must keep the subject–action–target and other directed relations intact when choosing across slots. Slots without a grounded focus or a lexical hit retain their existing shortlist. The single visual-profile resolver and its exact-versus-approximate authority rules are unchanged.
+
 Candidate-pack v6 separates three jobs:
 
 - `semantic_assertions` and the baseline are the governing meaning. The v3 core is required and non-revisable inside the pack run. A material correction requires a rebuilt envelope/core/pack; use an already supplied requester correction without asking again, and ask only when requester meaning remains unresolved.

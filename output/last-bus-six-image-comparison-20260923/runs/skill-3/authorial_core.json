@@ -1,0 +1,186 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "비 오는 밤, 막차가 떠나는 정류장에 혼자 남은 성인이 젖은 서류를 쥔 순간. 지나가던 사람이 급히 찍은 실사 사진. 버스를 놓친 사건과 인물의 낙담이 한 프레임에서 읽히게.\n\n이걸로 아까와 같은 방법으로 하되 스킬 미사용 3개, 스킬 사용 3개 이미지 생성까지 진행하고 비교해줘. 프롬프트 비교도 진행하고 이미지 자체에 대한 비교도 진행해줘.",
+  "interpreted_intent": "A candid real photograph should show the final bus visibly departing while a solitary adult, holding rain-soaked documents, registers a missed ride and dejection within the same frame.",
+  "subject": "one adult stranded at a bus stop, holding wet paper documents",
+  "setting": "a rain-soaked bus stop and empty road late at night",
+  "event": "the final bus pulls away as the adult remains at the stop",
+  "visual_priorities": [
+    "one-frame readability of the missed final bus",
+    "visible dejection in the adult while the wet documents remain legible"
+  ],
+  "baseline_prompt_en": "A hurried, unposed street photograph at a rain-soaked bus stop late at night. One unmistakably adult person stands alone on the pavement beside the shelter, gripping a small stack of wet paper documents in their left hand at waist level, with that elbow loosely bent; the pages sag, stick together, and drip onto the ground. Their feet stay planted beneath their weight and their free arm hangs beside their coat. Their shoulders are slumped, their chin lowered, and tired eyes follow the departing vehicle. The final bus is already pulling away from the stop in the same frame, its rear doors shut and red taillights receding along the empty road. The widening gap between the stranded adult and the moving bus makes the missed ride clear at a glance. Shot by a passerby while moving past, at human height with a slightly tilted frame and a trace of motion blur, using available bus-stop light reflected in wet asphalt. Natural skin and fabric texture, documentary realism, a single fleeting moment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "막차를 놓친 순간",
+      "source_text": "비 오는 밤, 막차가 떠나는 정류장에 혼자 남은 성인이 젖은 서류를 쥔 순간. 지나가던 사람이 급히 찍은 실사 사진. 버스를 놓친 사건과 인물의 낙담이 한 프레임에서 읽히게.",
+      "basis": "request_context",
+      "resolution": "The last scheduled bus of the night is already leaving while the adult remains behind at its stop; the rain-soaked papers and posture are visible in the same candid photograph.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "버스를 놓친 사건과 인물의 낙담이 한 프레임에서 읽히게",
+        "dimension": "concept",
+        "prompt_evidence": "The widening gap between the stranded adult and the moving bus makes the missed ride clear at a glance"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "혼자 남은 성인이",
+        "dimension": "subject",
+        "prompt_evidence": "One unmistakably adult person stands alone on the pavement beside the shelter"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "막차가 떠나는",
+        "dimension": "event",
+        "prompt_evidence": "The final bus is already pulling away from the stop in the same frame"
+      },
+      {
+        "anchor_id": "adult_age",
+        "source_text": "성인이",
+        "dimension": "age",
+        "prompt_evidence": "One unmistakably adult person"
+      },
+      {
+        "anchor_id": "one_person",
+        "source_text": "혼자 남은",
+        "dimension": "count",
+        "prompt_evidence": "stands alone on the pavement"
+      },
+      {
+        "anchor_id": "wet_documents",
+        "source_text": "젖은 서류를 쥔",
+        "dimension": "action",
+        "prompt_evidence": "gripping a small stack of wet paper documents in their left hand"
+      },
+      {
+        "anchor_id": "rainy_night_stop",
+        "source_text": "비 오는 밤, 막차가 떠나는 정류장에",
+        "dimension": "setting",
+        "prompt_evidence": "a rain-soaked bus stop late at night"
+      },
+      {
+        "anchor_id": "dejection",
+        "source_text": "인물의 낙담이",
+        "dimension": "expression",
+        "prompt_evidence": "Their shoulders are slumped, their chin lowered, and tired eyes follow the departing vehicle"
+      },
+      {
+        "anchor_id": "candid_real_photo",
+        "source_text": "지나가던 사람이 급히 찍은 실사 사진",
+        "dimension": "style",
+        "prompt_evidence": "Shot by a passerby while moving past"
+      },
+      {
+        "anchor_id": "departure_instant",
+        "source_text": "막차가 떠나는",
+        "dimension": "timing",
+        "prompt_evidence": "a single fleeting moment"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "age",
+      "count",
+      "action",
+      "setting",
+      "expression",
+      "style",
+      "timing"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "missed_final_bus",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "image_scene"
+      ],
+      "affected_dimensions": [
+        "concept",
+        "event",
+        "timing"
+      ],
+      "axes": {
+        "bus_phase": "already departing with rear doors shut",
+        "adult_state": "left behind at the stop",
+        "visibility": "bus and stranded adult share one frame"
+      },
+      "evidence": {
+        "departure": "The final bus is already pulling away from the stop in the same frame",
+        "missed_ride": "The widening gap between the stranded adult and the moving bus makes the missed ride clear at a glance"
+      }
+    },
+    {
+      "assertion_id": "visible_dejection",
+      "dimension": "expression",
+      "polarity": "required",
+      "source_span_ids": [
+        "image_scene"
+      ],
+      "affected_dimensions": [
+        "expression"
+      ],
+      "axes": {
+        "affect": "dejection after missing the bus",
+        "visible_channels": [
+          "slumped shoulders",
+          "lowered chin",
+          "tired eyes"
+        ]
+      },
+      "evidence": {
+        "posture": "Their shoulders are slumped, their chin lowered, and tired eyes follow the departing vehicle"
+      }
+    },
+    {
+      "assertion_id": "wet_documents",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "image_scene"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "owner": "the lone adult",
+        "held_object": "rain-soaked paper documents",
+        "contact": "gripped in their hand"
+      },
+      "evidence": {
+        "grip": "gripping a small stack of wet paper documents in their left hand"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "candid street photography",
+    "family": "hurried documentary night photograph",
+    "evidence": [
+      "slightly tilted frame and a trace of motion blur",
+      "available bus-stop light reflected in wet asphalt"
+    ]
+  },
+  "variation_key": "last-bus-skill-3"
+}

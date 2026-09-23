@@ -1,0 +1,67 @@
+{
+  "scale": {
+    "0": "보이지 않거나 반대 장면",
+    "1": "일부 보이지만 모호함",
+    "2": "프레임에서 분명하게 읽힘"
+  },
+  "criteria": [
+    {
+      "id": "rainy_night",
+      "question": "비 오는 밤이라는 시간과 날씨가 드러나는가?"
+    },
+    {
+      "id": "departing_bus",
+      "question": "버스가 정류장을 떠나는 중이라는 동작이 보이는가?"
+    },
+    {
+      "id": "adult_alone_at_stop",
+      "question": "주인공 성인이 정류장에 홀로 남는 상황이 보이는가?"
+    },
+    {
+      "id": "wet_papers_held",
+      "question": "주인공이 젖은 서류를 손에 쥐고 있는가?"
+    },
+    {
+      "id": "missed_bus_causality",
+      "question": "버스의 이탈과 주인공의 행동이 연결돼 막차를 놓쳤다는 사건이 읽히는가?"
+    },
+    {
+      "id": "despondency",
+      "question": "인물의 낙담이 표정·자세·동작으로 읽히는가?"
+    },
+    {
+      "id": "hurried_passerby_photo",
+      "question": "제삼자가 지나가며 급히 찍은 듯한 촬영 시점과 프레이밍인가?"
+    },
+    {
+      "id": "photorealism_coherence",
+      "question": "실사 질감과 인물·손·서류·버스·비의 공간적 관계가 자연스러운가?"
+    }
+  ],
+  "assessment": "Six images will be anonymized and shuffled for blind pixel review; score each criterion 0-2, then compare arm distributions. One imagegen call per arm, no retries.",
+  "limits": "Three independent outputs per condition are descriptive evidence, not a controlled statistical proof of skill benefit. Skill prompt writing and image model randomness both vary.",
+  "prompt_review": {
+    "required_meaning": [
+      "비 오는 밤",
+      "정류장에서 떠나는 막차",
+      "혼자 남은 성인",
+      "손에 쥔 젖은 서류",
+      "지나가던 사람이 급히 찍은 실사",
+      "버스를 놓친 사건",
+      "낙담"
+    ],
+    "checks": [
+      "각 요청 요소가 이미지 모델용 문장에 남았는가",
+      "떠나는 버스와 인물의 반응 사이의 인과 관계를 가시적으로 구성했는가",
+      "추가한 구도·조명·소품이 요청을 보조하는가",
+      "요청에 없는 서사·인물·감정으로 의미가 이동했는가",
+      "너무 긴 설명이나 상충되는 지시가 생겼는가"
+    ],
+    "measurement": [
+      "exact prompt bytes and hashes",
+      "English word or Korean character count",
+      "candidate concepts actually adopted, not merely retrieved",
+      "audits versus actual pixels kept separate"
+    ]
+  }
+}
