@@ -1,0 +1,84 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "A randomly chosen complex photorealistic maker portrait for testing visible image fidelity; the attached portrait guides only visible adult appearance.",
+  "subject": "one adult woman whose visible appearance is guided by the attached portrait",
+  "setting": "botanical specimen mounting bench inside a working conservation studio",
+  "event": "the woman aligns a folded cream paper folio against a brass ruler at the bench",
+  "visual_priorities": [
+    "readable adult face and both working hands",
+    "credible paper-ruler contact, bench support, and tactile photographic detail"
+  ],
+  "baseline_prompt_en": "Create a photorealistic environmental portrait of one adult woman, using the attached portrait only as a guide to visible appearance: long dark wavy hair with a loose center part, dark eyes, softly shaped brows, and the overall adult facial proportions. She stands at a botanical specimen mounting bench inside a working conservation studio. In the same captured instant, her left hand pins the near edge of a folded cream paper folio against the flat bench while her right hand slides its outer fold into alignment with the straight edge of a brass ruler. The ruler lies fully supported on the bench, parallel to the folio's fold, with both hands visible on opposite sides of that fold. Her torso leans only slightly over the table, weight carried by both feet outside the frame; her face remains readable above the work surface, eyes directed toward the alignment point. A shallow tray of pressed leaves, archival labels, blotting sheets, and specimen cabinets make the room's purpose legible. Side daylight from a tall window grazes the paper fibers and brass edge; soft fill keeps her face and working fingers clear. Photograph at medium distance from table height in a restrained editorial style, with realistic skin texture, individual hair strands, fine garment creases, a faint shadow under the folio, and natural depth of field.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "A self-contained complex but visually testable photographic scene was selected before candidate retrieval.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the supplied portrait as a guide to visible adult appearance in the generated scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "a photorealistic environmental portrait"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "event",
+        "prompt_evidence": "her right hand slides its outer fold into alignment with the straight edge of a brass ruler"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "using the attached portrait only as a guide to visible appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "camera"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "controlled environmental maker portrait",
+    "evidence": [
+      "Side daylight from a tall window",
+      "realistic skin texture"
+    ]
+  },
+  "variation_key": "photorealism-qualification-arm-a-20260923"
+}

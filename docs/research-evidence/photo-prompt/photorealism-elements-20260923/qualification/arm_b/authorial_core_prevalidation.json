@@ -1,0 +1,134 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Create one independently chosen complex documentary street-photo test scene, using the supplied portrait only for visible adult appearance guidance, then test whether its specified visual components appear in generated pixels.",
+  "subject": "One adult woman guided by the supplied portrait in visible facial and hair appearance only",
+  "setting": "A pedestrian bridge just after a shower",
+  "event": "She lifts a transparent umbrella with her left hand while reading a route card held in her right hand.",
+  "visual_priorities": [
+    "Simultaneously legible umbrella lift and route-card reading with clear body ownership",
+    "Believable rain-after surfaces, wind response, depth, and a localized wet reflection"
+  ],
+  "baseline_prompt_en": "A candid, photorealistic street photograph of one adult woman whose visible adult facial features and long, dark, loosely wavy hair are guided by the attached portrait. She stands on a pedestrian bridge just after a shower, with the bridge railing close beside her and the walkway receding into softer distance. Caught in the same instant, her left hand raises the straight shaft of an open transparent umbrella from beside her left shoulder until the canopy clears her head; her right hand holds a small printed route card at chest height, turned toward her eyes. Her face stays visible in three-quarter view as she reads the card, brows gently focused. Wind from camera-right pushes loose hair toward camera-left and tips the canopy slightly toward its source, while her planted feet and quiet weight shift keep her balanced. Fresh droplets cling to the clear canopy and sleeve, and a single shallow puddle near her shoes reflects a small patch of pale sky. The foreground railing has crisp wet texture, the far bridge fades naturally, and soft overcast daylight gives skin, fabric, acrylic, and concrete distinct believable surfaces. Frame this at casual phone height with ordinary observational timing and natural scale.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The user requests a random complex test concept, and the coordinator selected this pedestrian-bridge scene; its scene details are experiment choices rather than requester definitions.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "a pedestrian bridge just after a shower"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "one adult woman whose visible adult facial features and long, dark, loosely wavy hair"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "her left hand raises the straight shaft of an open transparent umbrella"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "guided by the attached portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "simultaneous_route_and_umbrella",
+      "dimension": "event",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "event",
+        "action",
+        "body_geometry"
+      ],
+      "axes": {
+        "umbrella_actor": "the woman left hand",
+        "route_card_actor": "the woman right hand",
+        "timing": "same instant",
+        "umbrella_state": "open transparent canopy raised above her head",
+        "attention": "eyes reading route card"
+      },
+      "evidence": {
+        "umbrella_lift": "her left hand raises the straight shaft of an open transparent umbrella",
+        "card_reading": "her right hand holds a small printed route card at chest height, turned toward her eyes",
+        "simultaneity": "Caught in the same instant"
+      }
+    },
+    {
+      "assertion_id": "rain_after_physical_cues",
+      "dimension": "material",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "material",
+        "setting",
+        "atmosphere"
+      ],
+      "axes": {
+        "weather_state": "after a shower",
+        "water_evidence": "visible droplets and one localized shallow reflection",
+        "depth": "near railing and far receding bridge",
+        "wind": "hair and canopy respond to one wind direction"
+      },
+      "evidence": {
+        "bridge": "a pedestrian bridge just after a shower",
+        "droplets": "Fresh droplets cling to the clear canopy and sleeve",
+        "reflection": "a single shallow puddle near her shoes reflects a small patch of pale sky",
+        "near_far": "The foreground railing has crisp wet texture, the far bridge fades naturally",
+        "wind": "Wind from camera-right pushes loose hair toward camera-left and tips the canopy slightly toward its source"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "street photography",
+    "family": "documentary photorealism",
+    "evidence": [
+      "candid, photorealistic street photograph",
+      "casual phone height"
+    ]
+  },
+  "variation_key": "photorealism-elements-20260923-b"
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": "photorealism-arm-target-gate-plan/v1",
+  "arm_id": "b",
+  "review_rule": "All owner-bound components must pass in the same saved image; partial_is_fail.",
+  "profiles": {
+    "pr_hair_strand_owner_and_cause": {
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photorealism_elements.json",
+      "definition": "flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration",
+      "gates": [
+        {
+          "id": "vo_pr_hair_strand_owner_and_cause_1",
+          "review_scale": "native",
+          "component": "Show this relation on its selected owner: flyaway strands connect to the hairline or tie point"
+        },
+        {
+          "id": "vo_pr_hair_strand_owner_and_cause_2",
+          "review_scale": "native",
+          "component": "Show this relation on its selected owner: local strands agree with the main hair direction"
+        },
+        {
+          "id": "vo_pr_hair_strand_owner_and_cause_3",
+          "review_scale": "native",
+          "component": "Show this relation on its selected owner: their movement agrees with the stated breeze dampness or action"
+        },
+        {
+          "id": "vo_pr_hair_strand_owner_and_cause_4",
+          "review_scale": "native",
+          "component": "Show this relation on its selected owner: hair and facial contours remain separate without penetration"
+        }
+      ]
+    },
+    "pr_casual_crop_subject_legibility": {
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photorealism_elements.json",
+      "definition": "one peripheral part meets or exits a plausible frame edge; the adult and task-bearing action remain legible; camera height and tilt match the observer's position; the cropped part continues in a physically possible direction",
+      "gates": [
+        {
+          "id": "vo_pr_casual_crop_subject_legibility_1",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: one peripheral part meets or exits a plausible frame edge"
+        },
+        {
+          "id": "vo_pr_casual_crop_subject_legibility_2",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: the adult and task-bearing action remain legible"
+        },
+        {
+          "id": "vo_pr_casual_crop_subject_legibility_3",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: camera height and tilt match the observer's position"
+        },
+        {
+          "id": "vo_pr_casual_crop_subject_legibility_4",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: the cropped part continues in a physically possible direction"
+        }
+      ]
+    },
+    "pr_atmospheric_distance_contrast": {
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_photorealism_elements.json",
+      "definition": "multiple near middle and far depth references are visible; far objects have lower contrast than near objects; the atmospheric effect agrees with weather and light; near material detail remains as readable as requested",
+      "gates": [
+        {
+          "id": "vo_pr_atmospheric_distance_contrast_1",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: multiple near middle and far depth references are visible"
+        },
+        {
+          "id": "vo_pr_atmospheric_distance_contrast_2",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: far objects have lower contrast than near objects"
+        },
+        {
+          "id": "vo_pr_atmospheric_distance_contrast_3",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: the atmospheric effect agrees with weather and light"
+        },
+        {
+          "id": "vo_pr_atmospheric_distance_contrast_4",
+          "review_scale": "both",
+          "component": "Show this relation on its selected owner: near material detail remains as readable as requested"
+        }
+      ]
+    },
+    "wet_surface_light_reflection_owner_relation": {
+      "source_file": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations.json",
+      "definition": "A visibly wet surface receives a geometrically aligned reflection from an in-frame owner, with an occluding interruption and a wet-dry boundary. All five relations must coexist; a broad place or mood label alone is not evidence.",
+      "gates": [
+        {
+          "id": "vo_place_wet_surface_state",
+          "review_scale": "thumbnail",
+          "component": "The frame visibly establishes wet surface state as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_owner_visible",
+          "review_scale": "both",
+          "component": "The frame visibly establishes visible reflection owner as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_reflection_alignment",
+          "review_scale": "native",
+          "component": "The frame visibly establishes aligned reflection as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_reflection_interruption",
+          "review_scale": "both",
+          "component": "The frame visibly establishes reflection interruption as a physically coherent same-frame relation."
+        },
+        {
+          "id": "vo_place_wet_dry_boundary",
+          "review_scale": "native",
+          "component": "The frame visibly establishes wet-dry boundary as a physically coherent same-frame relation."
+        }
+      ]
+    }
+  },
+  "pixel_verdict": "pending_image"
+}

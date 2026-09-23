@@ -1,0 +1,1633 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Scene-bound photorealistic evidence; no universal authenticity or imperfection claim.",
+  "profiles": [
+    {
+      "id": "pr_environmental_portrait_subject_place",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the adult subject remains identifiable at environmental portrait scale; the place has visible task-specific fixtures or objects; the subject's action or position connects to those fixtures; the frame retains enough surrounding space to explain the task"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the adult subject remains identifiable at environmental portrait scale; the place has visible task-specific fixtures or objects; the subject's action or position connects to those fixtures; the frame retains enough surrounding space to explain the task",
+        "paraphrase_examples": [
+          "Keep the adult subject, the functional place, and the ongoing task legible in one environmental frame.",
+          "환경 인물의 장소 연계",
+          "environmental portrait subject place relation"
+        ],
+        "visual_components": [
+          "environmental portrait",
+          "working room",
+          "task-specific setting",
+          "the adult subject remains identifiable at environmental portrait scale",
+          "the place has visible task-specific fixtures or objects",
+          "the subject's action or position connects to those fixtures",
+          "the frame retains enough surrounding space to explain the task"
+        ],
+        "contrast_examples": [
+          "인물 뒤에 임의 배경만 합성",
+          "장소만 선명하고 인물이 읽히지 않음",
+          "위치 단서 없는 머리 클로즈업"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "환경 인물의 장소 연계",
+          "environmental portrait subject place relation",
+          "environmental portrait",
+          "working room",
+          "task-specific setting",
+          "the adult subject remains identifiable at environmental portrait scale",
+          "the place has visible task-specific fixtures or objects",
+          "the subject's action or position connects to those fixtures",
+          "the frame retains enough surrounding space to explain the task"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "인물 뒤에 임의 배경만 합성",
+        "장소만 선명하고 인물이 읽히지 않음",
+        "위치 단서 없는 머리 클로즈업"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the adult subject remains identifiable at environmental portrait scale"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the adult subject remains identifiable at environmental portrait scale"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the adult subject remains identifiable at environmental portrait scale",
+            "render_gate": {
+              "id": "vo_pr_environmental_portrait_subject_place_1",
+              "review_scale": "both",
+              "description": "the adult subject remains identifiable at environmental portrait scale. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the place has visible task-specific fixtures or objects"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the place has visible task-specific fixtures or objects"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the place has visible task-specific fixtures or objects",
+            "render_gate": {
+              "id": "vo_pr_environmental_portrait_subject_place_2",
+              "review_scale": "both",
+              "description": "the place has visible task-specific fixtures or objects. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the subject's action or position connects to those fixtures"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the subject's action or position connects to those fixtures"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the subject's action or position connects to those fixtures",
+            "render_gate": {
+              "id": "vo_pr_environmental_portrait_subject_place_3",
+              "review_scale": "both",
+              "description": "the subject's action or position connects to those fixtures. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the frame retains enough surrounding space to explain the task"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the frame retains enough surrounding space to explain the task"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the frame retains enough surrounding space to explain the task",
+            "render_gate": {
+              "id": "vo_pr_environmental_portrait_subject_place_4",
+              "review_scale": "both",
+              "description": "the frame retains enough surrounding space to explain the task. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_observed_action_trace",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the actor's specific hand or body action is visible; the action's target object is visible in the same frame; contact or the approach path is spatially possible; the action leaves a small visible result or immediate state change"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the actor's specific hand or body action is visible; the action's target object is visible in the same frame; contact or the approach path is spatially possible; the action leaves a small visible result or immediate state change",
+        "paraphrase_examples": [
+          "Show the actor, the object of the action, and a small visible consequence in the same frame.",
+          "관찰된 행동과 직전·직후 흔적",
+          "observed action trace relation"
+        ],
+        "visual_components": [
+          "visible hand action",
+          "hand meets object",
+          "immediate action result",
+          "object placement",
+          "the actor's specific hand or body action is visible",
+          "the action's target object is visible in the same frame",
+          "contact or the approach path is spatially possible",
+          "the action leaves a small visible result or immediate state change"
+        ],
+        "contrast_examples": [
+          "standing naturally 같은 상태 라벨만 있음",
+          "손과 대상의 위치가 분리됨",
+          "도구만 들고 결과가 없음"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "관찰된 행동과 직전·직후 흔적",
+          "observed action trace relation",
+          "visible hand action",
+          "hand meets object",
+          "immediate action result",
+          "object placement",
+          "the actor's specific hand or body action is visible",
+          "the action's target object is visible in the same frame",
+          "contact or the approach path is spatially possible",
+          "the action leaves a small visible result or immediate state change"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "standing naturally 같은 상태 라벨만 있음",
+        "손과 대상의 위치가 분리됨",
+        "도구만 들고 결과가 없음"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the actor's specific hand or body action is visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the actor's specific hand or body action is visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the actor's specific hand or body action is visible",
+            "render_gate": {
+              "id": "vo_pr_observed_action_trace_1",
+              "review_scale": "both",
+              "description": "the actor's specific hand or body action is visible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the action's target object is visible in the same frame"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the action's target object is visible in the same frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the action's target object is visible in the same frame",
+            "render_gate": {
+              "id": "vo_pr_observed_action_trace_2",
+              "review_scale": "both",
+              "description": "the action's target object is visible in the same frame. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "contact or the approach path is spatially possible"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "contact or the approach path is spatially possible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: contact or the approach path is spatially possible",
+            "render_gate": {
+              "id": "vo_pr_observed_action_trace_3",
+              "review_scale": "both",
+              "description": "contact or the approach path is spatially possible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the action leaves a small visible result or immediate state change"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the action leaves a small visible result or immediate state change"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the action leaves a small visible result or immediate state change",
+            "render_gate": {
+              "id": "vo_pr_observed_action_trace_4",
+              "review_scale": "both",
+              "description": "the action leaves a small visible result or immediate state change. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_scene_owned_exposure_tradeoff",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the indoor subject retains needed readable detail; window and room brightness differ consistently across space; only a small high-luminance window region loses detail; the interior retains tonal depth rather than uniform HDR brightness"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the indoor subject retains needed readable detail; window and room brightness differ consistently across space; only a small high-luminance window region loses detail; the interior retains tonal depth rather than uniform HDR brightness",
+        "paraphrase_examples": [
+          "Expose the indoor subject for readable detail while retaining a spatially credible brighter window and a limited highlight loss.",
+          "실내·창밖 노출 선택의 소유자",
+          "scene owned exposure tradeoff relation"
+        ],
+        "visual_components": [
+          "bright window",
+          "dim deeper room",
+          "window-room exposure contrast",
+          "limited highlight flare",
+          "the indoor subject retains needed readable detail",
+          "window and room brightness differ consistently across space",
+          "only a small high-luminance window region loses detail",
+          "the interior retains tonal depth rather than uniform HDR brightness"
+        ],
+        "contrast_examples": [
+          "모든 표면이 동일한 밝기",
+          "창밖 전체가 하얀 구멍이 되어 장소 정보를 잃음",
+          "하이라이트 클립만으로 실사라 주장"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "실내·창밖 노출 선택의 소유자",
+          "scene owned exposure tradeoff relation",
+          "bright window",
+          "dim deeper room",
+          "window-room exposure contrast",
+          "limited highlight flare",
+          "the indoor subject retains needed readable detail",
+          "window and room brightness differ consistently across space",
+          "only a small high-luminance window region loses detail",
+          "the interior retains tonal depth rather than uniform HDR brightness"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 표면이 동일한 밝기",
+        "창밖 전체가 하얀 구멍이 되어 장소 정보를 잃음",
+        "하이라이트 클립만으로 실사라 주장"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the indoor subject retains needed readable detail"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the indoor subject retains needed readable detail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the indoor subject retains needed readable detail",
+            "render_gate": {
+              "id": "vo_pr_scene_owned_exposure_tradeoff_1",
+              "review_scale": "both",
+              "description": "the indoor subject retains needed readable detail. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "window and room brightness differ consistently across space"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "window and room brightness differ consistently across space"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: window and room brightness differ consistently across space",
+            "render_gate": {
+              "id": "vo_pr_scene_owned_exposure_tradeoff_2",
+              "review_scale": "both",
+              "description": "window and room brightness differ consistently across space. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "only a small high-luminance window region loses detail"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "only a small high-luminance window region loses detail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: only a small high-luminance window region loses detail",
+            "render_gate": {
+              "id": "vo_pr_scene_owned_exposure_tradeoff_3",
+              "review_scale": "both",
+              "description": "only a small high-luminance window region loses detail. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the interior retains tonal depth rather than uniform HDR brightness"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the interior retains tonal depth rather than uniform HDR brightness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the interior retains tonal depth rather than uniform HDR brightness",
+            "render_gate": {
+              "id": "vo_pr_scene_owned_exposure_tradeoff_4",
+              "review_scale": "both",
+              "description": "the interior retains tonal depth rather than uniform HDR brightness. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_hair_strand_owner_and_cause",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration",
+        "paraphrase_examples": [
+          "Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.",
+          "잔머리의 부착과 움직임 원인",
+          "hair strand owner and cause relation"
+        ],
+        "visual_components": [
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze",
+          "flyaway strands connect to the hairline or tie point",
+          "local strands agree with the main hair direction",
+          "their movement agrees with the stated breeze dampness or action",
+          "hair and facial contours remain separate without penetration"
+        ],
+        "contrast_examples": [
+          "공중에 떠 있는 독립 머리카락",
+          "모든 머리카락을 일괄 난류로 흐트림",
+          "요청된 정돈 헤어를 무조건 헝클어뜨림"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "잔머리의 부착과 움직임 원인",
+          "hair strand owner and cause relation",
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze",
+          "flyaway strands connect to the hairline or tie point",
+          "local strands agree with the main hair direction",
+          "their movement agrees with the stated breeze dampness or action",
+          "hair and facial contours remain separate without penetration"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "공중에 떠 있는 독립 머리카락",
+        "모든 머리카락을 일괄 난류로 흐트림",
+        "요청된 정돈 헤어를 무조건 헝클어뜨림"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "flyaway strands connect to the hairline or tie point"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "flyaway strands connect to the hairline or tie point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: flyaway strands connect to the hairline or tie point",
+            "render_gate": {
+              "id": "vo_pr_hair_strand_owner_and_cause_1",
+              "review_scale": "native",
+              "description": "flyaway strands connect to the hairline or tie point. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "local strands agree with the main hair direction"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "local strands agree with the main hair direction"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: local strands agree with the main hair direction",
+            "render_gate": {
+              "id": "vo_pr_hair_strand_owner_and_cause_2",
+              "review_scale": "native",
+              "description": "local strands agree with the main hair direction. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "their movement agrees with the stated breeze dampness or action"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "their movement agrees with the stated breeze dampness or action"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: their movement agrees with the stated breeze dampness or action",
+            "render_gate": {
+              "id": "vo_pr_hair_strand_owner_and_cause_3",
+              "review_scale": "native",
+              "description": "their movement agrees with the stated breeze dampness or action. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "hair and facial contours remain separate without penetration"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "hair and facial contours remain separate without penetration"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: hair and facial contours remain separate without penetration",
+            "render_gate": {
+              "id": "vo_pr_hair_strand_owner_and_cause_4",
+              "review_scale": "native",
+              "description": "hair and facial contours remain separate without penetration. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_fabric_tension_fold_attachment",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the garment's fabric texture or sheen is distinguishable; folds originate at a seam joint or pulling contact; fold direction agrees with the body's action or pose; folds preserve the garment silhouette and closure"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the garment's fabric texture or sheen is distinguishable; folds originate at a seam joint or pulling contact; fold direction agrees with the body's action or pose; folds preserve the garment silhouette and closure",
+        "paraphrase_examples": [
+          "Let garment folds start at visible seams, joints, or a pulling hand and follow the fabric's actual movement.",
+          "직물 주름의 장력·재봉선 소유",
+          "fabric tension fold attachment relation"
+        ],
+        "visual_components": [
+          "fine garment creases",
+          "sleeve folds",
+          "fabric creases at a bent elbow",
+          "the garment's fabric texture or sheen is distinguishable",
+          "folds originate at a seam joint or pulling contact",
+          "fold direction agrees with the body's action or pose",
+          "folds preserve the garment silhouette and closure"
+        ],
+        "contrast_examples": [
+          "임의로 찍힌 주름 패턴 오버레이",
+          "옷의 재질과 무관한 단일 플라스틱 광택",
+          "옷 표면의 lint가 허공에도 떠 있음"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "직물 주름의 장력·재봉선 소유",
+          "fabric tension fold attachment relation",
+          "fine garment creases",
+          "sleeve folds",
+          "fabric creases at a bent elbow",
+          "the garment's fabric texture or sheen is distinguishable",
+          "folds originate at a seam joint or pulling contact",
+          "fold direction agrees with the body's action or pose",
+          "folds preserve the garment silhouette and closure"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "임의로 찍힌 주름 패턴 오버레이",
+        "옷의 재질과 무관한 단일 플라스틱 광택",
+        "옷 표면의 lint가 허공에도 떠 있음"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the garment's fabric texture or sheen is distinguishable"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the garment's fabric texture or sheen is distinguishable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the garment's fabric texture or sheen is distinguishable",
+            "render_gate": {
+              "id": "vo_pr_fabric_tension_fold_attachment_1",
+              "review_scale": "native",
+              "description": "the garment's fabric texture or sheen is distinguishable. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "folds originate at a seam joint or pulling contact"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "folds originate at a seam joint or pulling contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: folds originate at a seam joint or pulling contact",
+            "render_gate": {
+              "id": "vo_pr_fabric_tension_fold_attachment_2",
+              "review_scale": "native",
+              "description": "folds originate at a seam joint or pulling contact. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "fold direction agrees with the body's action or pose"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "fold direction agrees with the body's action or pose"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: fold direction agrees with the body's action or pose",
+            "render_gate": {
+              "id": "vo_pr_fabric_tension_fold_attachment_3",
+              "review_scale": "native",
+              "description": "fold direction agrees with the body's action or pose. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "folds preserve the garment silhouette and closure"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "folds preserve the garment silhouette and closure"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: folds preserve the garment silhouette and closure",
+            "render_gate": {
+              "id": "vo_pr_fabric_tension_fold_attachment_4",
+              "review_scale": "native",
+              "description": "folds preserve the garment silhouette and closure. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_surface_wear_contact_owner",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the base material has its own reflection or roughness response; the selected wear or trace sits at a reachable contact point; trace strength fits the scene's use and cleanliness; underlying edges and reflections remain coherent beneath the trace"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the base material has its own reflection or roughness response; the selected wear or trace sits at a reachable contact point; trace strength fits the scene's use and cleanliness; underlying edges and reflections remain coherent beneath the trace",
+        "paraphrase_examples": [
+          "Confine the chosen wear or handling trace to the material and contact point that could produce it.",
+          "사용 흔적의 접촉면 귀속",
+          "surface wear contact owner relation"
+        ],
+        "visual_components": [
+          "localized handling trace",
+          "fingerprints at a touched rim",
+          "material-specific wear",
+          "the base material has its own reflection or roughness response",
+          "the selected wear or trace sits at a reachable contact point",
+          "trace strength fits the scene's use and cleanliness",
+          "underlying edges and reflections remain coherent beneath the trace"
+        ],
+        "contrast_examples": [
+          "모든 물체에 같은 그랜지 텍스처",
+          "새 제품·청결 공간을 무조건 낡게 만듦",
+          "유리 지문을 금속 부식으로 치환"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "사용 흔적의 접촉면 귀속",
+          "surface wear contact owner relation",
+          "localized handling trace",
+          "fingerprints at a touched rim",
+          "material-specific wear",
+          "the base material has its own reflection or roughness response",
+          "the selected wear or trace sits at a reachable contact point",
+          "trace strength fits the scene's use and cleanliness",
+          "underlying edges and reflections remain coherent beneath the trace"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "모든 물체에 같은 그랜지 텍스처",
+        "새 제품·청결 공간을 무조건 낡게 만듦",
+        "유리 지문을 금속 부식으로 치환"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the base material has its own reflection or roughness response"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the base material has its own reflection or roughness response"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the base material has its own reflection or roughness response",
+            "render_gate": {
+              "id": "vo_pr_surface_wear_contact_owner_1",
+              "review_scale": "native",
+              "description": "the base material has its own reflection or roughness response. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the selected wear or trace sits at a reachable contact point"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the selected wear or trace sits at a reachable contact point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the selected wear or trace sits at a reachable contact point",
+            "render_gate": {
+              "id": "vo_pr_surface_wear_contact_owner_2",
+              "review_scale": "native",
+              "description": "the selected wear or trace sits at a reachable contact point. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "trace strength fits the scene's use and cleanliness"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "trace strength fits the scene's use and cleanliness"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: trace strength fits the scene's use and cleanliness",
+            "render_gate": {
+              "id": "vo_pr_surface_wear_contact_owner_3",
+              "review_scale": "native",
+              "description": "trace strength fits the scene's use and cleanliness. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "underlying edges and reflections remain coherent beneath the trace"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "underlying edges and reflections remain coherent beneath the trace"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: underlying edges and reflections remain coherent beneath the trace",
+            "render_gate": {
+              "id": "vo_pr_surface_wear_contact_owner_4",
+              "review_scale": "native",
+              "description": "underlying edges and reflections remain coherent beneath the trace. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_object_contact_shadow_support",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the object and its supporting surface are both visible; local darkening or compression touches the load-bearing point; shadow direction and softness agree with the scene light; object shape and support contact align without a gap"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the object and its supporting surface are both visible; local darkening or compression touches the load-bearing point; shadow direction and softness agree with the scene light; object shape and support contact align without a gap",
+        "paraphrase_examples": [
+          "Seat the object on a visible support with a small contact shadow and scene-consistent falloff.",
+          "물체 지지·접점 그림자",
+          "object contact shadow support relation"
+        ],
+        "visual_components": [
+          "faint shadow under the object",
+          "object fully supported on its surface",
+          "local contact shadow",
+          "the object and its supporting surface are both visible",
+          "local darkening or compression touches the load-bearing point",
+          "shadow direction and softness agree with the scene light",
+          "object shape and support contact align without a gap"
+        ],
+        "contrast_examples": [
+          "무접점 물체가 허공에 뜸",
+          "광원 반대가 아닌 임의 방향 그림자",
+          "붙지 않은 도장형 검은 타원"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "물체 지지·접점 그림자",
+          "object contact shadow support relation",
+          "faint shadow under the object",
+          "object fully supported on its surface",
+          "local contact shadow",
+          "the object and its supporting surface are both visible",
+          "local darkening or compression touches the load-bearing point",
+          "shadow direction and softness agree with the scene light",
+          "object shape and support contact align without a gap"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "무접점 물체가 허공에 뜸",
+        "광원 반대가 아닌 임의 방향 그림자",
+        "붙지 않은 도장형 검은 타원"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the object and its supporting surface are both visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the object and its supporting surface are both visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the object and its supporting surface are both visible",
+            "render_gate": {
+              "id": "vo_pr_object_contact_shadow_support_1",
+              "review_scale": "both",
+              "description": "the object and its supporting surface are both visible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "local darkening or compression touches the load-bearing point"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "local darkening or compression touches the load-bearing point"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: local darkening or compression touches the load-bearing point",
+            "render_gate": {
+              "id": "vo_pr_object_contact_shadow_support_2",
+              "review_scale": "both",
+              "description": "local darkening or compression touches the load-bearing point. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "shadow direction and softness agree with the scene light"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "shadow direction and softness agree with the scene light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: shadow direction and softness agree with the scene light",
+            "render_gate": {
+              "id": "vo_pr_object_contact_shadow_support_3",
+              "review_scale": "both",
+              "description": "shadow direction and softness agree with the scene light. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "object shape and support contact align without a gap"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "object shape and support contact align without a gap"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: object shape and support contact align without a gap",
+            "render_gate": {
+              "id": "vo_pr_object_contact_shadow_support_4",
+              "review_scale": "both",
+              "description": "object shape and support contact align without a gap. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_casual_crop_subject_legibility",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "one peripheral part meets or exits a plausible frame edge; the adult and task-bearing action remain legible; camera height and tilt match the observer's position; the cropped part continues in a physically possible direction"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "one peripheral part meets or exits a plausible frame edge; the adult and task-bearing action remain legible; camera height and tilt match the observer's position; the cropped part continues in a physically possible direction",
+        "paraphrase_examples": [
+          "Let a frame edge crop a peripheral moving part while keeping the adult and the main action legible.",
+          "스냅의 불완전한 프레임과 주피사체 보존",
+          "casual crop subject legibility relation"
+        ],
+        "visual_components": [
+          "casual phone framing",
+          "peripheral frame crop",
+          "readable action despite crop",
+          "one peripheral part meets or exits a plausible frame edge",
+          "the adult and task-bearing action remain legible",
+          "camera height and tilt match the observer's position",
+          "the cropped part continues in a physically possible direction"
+        ],
+        "contrast_examples": [
+          "요청된 의상이나 행동 대상이 잘려 보이지 않음",
+          "장면 전체를 무작위로 기울임",
+          "발이 경계 근처라는 말만 있고 몸이 부러짐"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "스냅의 불완전한 프레임과 주피사체 보존",
+          "casual crop subject legibility relation",
+          "casual phone framing",
+          "peripheral frame crop",
+          "readable action despite crop",
+          "one peripheral part meets or exits a plausible frame edge",
+          "the adult and task-bearing action remain legible",
+          "camera height and tilt match the observer's position",
+          "the cropped part continues in a physically possible direction"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "요청된 의상이나 행동 대상이 잘려 보이지 않음",
+        "장면 전체를 무작위로 기울임",
+        "발이 경계 근처라는 말만 있고 몸이 부러짐"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "one peripheral part meets or exits a plausible frame edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "one peripheral part meets or exits a plausible frame edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: one peripheral part meets or exits a plausible frame edge",
+            "render_gate": {
+              "id": "vo_pr_casual_crop_subject_legibility_1",
+              "review_scale": "both",
+              "description": "one peripheral part meets or exits a plausible frame edge. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the adult and task-bearing action remain legible"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the adult and task-bearing action remain legible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the adult and task-bearing action remain legible",
+            "render_gate": {
+              "id": "vo_pr_casual_crop_subject_legibility_2",
+              "review_scale": "both",
+              "description": "the adult and task-bearing action remain legible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "camera height and tilt match the observer's position"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "camera height and tilt match the observer's position"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: camera height and tilt match the observer's position",
+            "render_gate": {
+              "id": "vo_pr_casual_crop_subject_legibility_3",
+              "review_scale": "both",
+              "description": "camera height and tilt match the observer's position. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the cropped part continues in a physically possible direction"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the cropped part continues in a physically possible direction"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the cropped part continues in a physically possible direction",
+            "render_gate": {
+              "id": "vo_pr_casual_crop_subject_legibility_4",
+              "review_scale": "both",
+              "description": "the cropped part continues in a physically possible direction. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_instant_print_material_object",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "the image window and card border have a clear boundary; card thickness edges and hand support are visible; photographic color and tone remain inside the image window; the card casts a contact shadow consistent with its position"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the image window and card border have a clear boundary; card thickness edges and hand support are visible; photographic color and tone remain inside the image window; the card casts a contact shadow consistent with its position",
+        "paraphrase_examples": [
+          "Show a complete instant print as a physical card with an image window, border, thickness, and supported contact.",
+          "즉석 인화물의 전체 물체",
+          "instant print material object relation"
+        ],
+        "visual_components": [
+          "instant print card",
+          "physical print border",
+          "card thickness",
+          "the image window and card border have a clear boundary",
+          "card thickness edges and hand support are visible",
+          "photographic color and tone remain inside the image window",
+          "the card casts a contact shadow consistent with its position"
+        ],
+        "contrast_examples": [
+          "사진 안쪽에 흰 디지털 테두리만 그림",
+          "공중에 뜬 카드",
+          "재료 열화를 촬영 당시의 빛으로 오인"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "즉석 인화물의 전체 물체",
+          "instant print material object relation",
+          "instant print card",
+          "physical print border",
+          "card thickness",
+          "the image window and card border have a clear boundary",
+          "card thickness edges and hand support are visible",
+          "photographic color and tone remain inside the image window",
+          "the card casts a contact shadow consistent with its position"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "사진 안쪽에 흰 디지털 테두리만 그림",
+        "공중에 뜬 카드",
+        "재료 열화를 촬영 당시의 빛으로 오인"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the image window and card border have a clear boundary"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the image window and card border have a clear boundary"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the image window and card border have a clear boundary",
+            "render_gate": {
+              "id": "vo_pr_instant_print_material_object_1",
+              "review_scale": "native",
+              "description": "the image window and card border have a clear boundary. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "card thickness edges and hand support are visible"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "card thickness edges and hand support are visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: card thickness edges and hand support are visible",
+            "render_gate": {
+              "id": "vo_pr_instant_print_material_object_2",
+              "review_scale": "native",
+              "description": "card thickness edges and hand support are visible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "photographic color and tone remain inside the image window"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "photographic color and tone remain inside the image window"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: photographic color and tone remain inside the image window",
+            "render_gate": {
+              "id": "vo_pr_instant_print_material_object_3",
+              "review_scale": "native",
+              "description": "photographic color and tone remain inside the image window. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the card casts a contact shadow consistent with its position"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the card casts a contact shadow consistent with its position"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the card casts a contact shadow consistent with its position",
+            "render_gate": {
+              "id": "vo_pr_instant_print_material_object_4",
+              "review_scale": "native",
+              "description": "the card casts a contact shadow consistent with its position. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_fixed_surveillance_observation",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "a high fixed installation viewpoint is spatially readable; the monitored entrance or passage occupies a broad view; the moving subject occupies a limited portion of the frame; image limitations remain consistent with the scene without exaggerated damage"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a high fixed installation viewpoint is spatially readable; the monitored entrance or passage occupies a broad view; the moving subject occupies a limited portion of the frame; image limitations remain consistent with the scene without exaggerated damage",
+        "paraphrase_examples": [
+          "Use a stationary high viewpoint that covers the monitored passage, with the passing adult occupying a small part.",
+          "고정 감시 시점의 관찰 구조",
+          "fixed surveillance observation relation"
+        ],
+        "visual_components": [
+          "fixed high viewpoint",
+          "wide monitored passage",
+          "small passing subject",
+          "a high fixed installation viewpoint is spatially readable",
+          "the monitored entrance or passage occupies a broad view",
+          "the moving subject occupies a limited portion of the frame",
+          "image limitations remain consistent with the scene without exaggerated damage"
+        ],
+        "contrast_examples": [
+          "거친 노이즈만 있는 인물 클로즈업",
+          "가짜 타임스탬프만 붙인 패션 화보",
+          "고정 관찰이라며 매 프레임 영화 카메라 이동"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "고정 감시 시점의 관찰 구조",
+          "fixed surveillance observation relation",
+          "fixed high viewpoint",
+          "wide monitored passage",
+          "small passing subject",
+          "a high fixed installation viewpoint is spatially readable",
+          "the monitored entrance or passage occupies a broad view",
+          "the moving subject occupies a limited portion of the frame",
+          "image limitations remain consistent with the scene without exaggerated damage"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "거친 노이즈만 있는 인물 클로즈업",
+        "가짜 타임스탬프만 붙인 패션 화보",
+        "고정 관찰이라며 매 프레임 영화 카메라 이동"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a high fixed installation viewpoint is spatially readable"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a high fixed installation viewpoint is spatially readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: a high fixed installation viewpoint is spatially readable",
+            "render_gate": {
+              "id": "vo_pr_fixed_surveillance_observation_1",
+              "review_scale": "both",
+              "description": "a high fixed installation viewpoint is spatially readable. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the monitored entrance or passage occupies a broad view"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the monitored entrance or passage occupies a broad view"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the monitored entrance or passage occupies a broad view",
+            "render_gate": {
+              "id": "vo_pr_fixed_surveillance_observation_2",
+              "review_scale": "both",
+              "description": "the monitored entrance or passage occupies a broad view. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the moving subject occupies a limited portion of the frame"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the moving subject occupies a limited portion of the frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the moving subject occupies a limited portion of the frame",
+            "render_gate": {
+              "id": "vo_pr_fixed_surveillance_observation_3",
+              "review_scale": "both",
+              "description": "the moving subject occupies a limited portion of the frame. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "image limitations remain consistent with the scene without exaggerated damage"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "image limitations remain consistent with the scene without exaggerated damage"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: image limitations remain consistent with the scene without exaggerated damage",
+            "render_gate": {
+              "id": "vo_pr_fixed_surveillance_observation_4",
+              "review_scale": "both",
+              "description": "image limitations remain consistent with the scene without exaggerated damage. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_camcorder_still_temporal_container",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "a single video-frame container or cue is visible; the actor or moving object is caught in one action phase; motion trace is local to moving parts; frame format tone and resolution form a coherent video image"
+        ],
+        "requires_adult_character": true,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a single video-frame container or cue is visible; the actor or moving object is caught in one action phase; motion trace is local to moving parts; frame format tone and resolution form a coherent video image",
+        "paraphrase_examples": [
+          "Present one camcorder video frame at a legible action phase with only local motion smear and coherent frame treatment.",
+          "홈비디오 정지 프레임의 시간 단서",
+          "camcorder still temporal container relation"
+        ],
+        "visual_components": [
+          "single camcorder still",
+          "one video action phase",
+          "local motion trace",
+          "a single video-frame container or cue is visible",
+          "the actor or moving object is caught in one action phase",
+          "motion trace is local to moving parts",
+          "frame format tone and resolution form a coherent video image"
+        ],
+        "contrast_examples": [
+          "아날로그 TV scanline만 뿌린 정지 인물 화보",
+          "비디오 프레임을 진짜 1990년 촬영 기록이라고 주장",
+          "CCTV 고정 보안 시야와 혼동"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "홈비디오 정지 프레임의 시간 단서",
+          "camcorder still temporal container relation",
+          "single camcorder still",
+          "one video action phase",
+          "local motion trace",
+          "a single video-frame container or cue is visible",
+          "the actor or moving object is caught in one action phase",
+          "motion trace is local to moving parts",
+          "frame format tone and resolution form a coherent video image"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "아날로그 TV scanline만 뿌린 정지 인물 화보",
+        "비디오 프레임을 진짜 1990년 촬영 기록이라고 주장",
+        "CCTV 고정 보안 시야와 혼동"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a single video-frame container or cue is visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a single video-frame container or cue is visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: a single video-frame container or cue is visible",
+            "render_gate": {
+              "id": "vo_pr_camcorder_still_temporal_container_1",
+              "review_scale": "both",
+              "description": "a single video-frame container or cue is visible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the actor or moving object is caught in one action phase"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the actor or moving object is caught in one action phase"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the actor or moving object is caught in one action phase",
+            "render_gate": {
+              "id": "vo_pr_camcorder_still_temporal_container_2",
+              "review_scale": "both",
+              "description": "the actor or moving object is caught in one action phase. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "motion trace is local to moving parts"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "motion trace is local to moving parts"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: motion trace is local to moving parts",
+            "render_gate": {
+              "id": "vo_pr_camcorder_still_temporal_container_3",
+              "review_scale": "both",
+              "description": "motion trace is local to moving parts. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "frame format tone and resolution form a coherent video image"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "frame format tone and resolution form a coherent video image"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: frame format tone and resolution form a coherent video image",
+            "render_gate": {
+              "id": "vo_pr_camcorder_still_temporal_container_4",
+              "review_scale": "both",
+              "description": "frame format tone and resolution form a coherent video image. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pr_atmospheric_distance_contrast",
+      "category": "photographic_scene_relation",
+      "activation": {
+        "exact_terms": [
+          "multiple near middle and far depth references are visible; far objects have lower contrast than near objects; the atmospheric effect agrees with weather and light; near material detail remains as readable as requested"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "multiple near middle and far depth references are visible; far objects have lower contrast than near objects; the atmospheric effect agrees with weather and light; near material detail remains as readable as requested",
+        "paraphrase_examples": [
+          "Keep near forms detailed and let distant forms lose some contrast only along the actual long viewing path.",
+          "거리별 대기 대비 감소",
+          "atmospheric distance contrast relation"
+        ],
+        "visual_components": [
+          "near foreground detail",
+          "distant structure fades",
+          "distant lower contrast",
+          "weather-consistent haze",
+          "multiple near middle and far depth references are visible",
+          "far objects have lower contrast than near objects",
+          "the atmospheric effect agrees with weather and light",
+          "near material detail remains as readable as requested"
+        ],
+        "contrast_examples": [
+          "전역 Gaussian blur",
+          "실내 좁은 방에 무조건 안개 추가",
+          "청색 오버레이 하나로 원경 주장"
+        ],
+        "claim_limits": [
+          "The named owner and every selected component must be visible in one image.",
+          "Depiction alone does not prove capture history, source authenticity, camera model or actual location.",
+          "A broad photorealism label does not require this relation or any artificial imperfection."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "거리별 대기 대비 감소",
+          "atmospheric distance contrast relation",
+          "near foreground detail",
+          "distant structure fades",
+          "distant lower contrast",
+          "weather-consistent haze",
+          "multiple near middle and far depth references are visible",
+          "far objects have lower contrast than near objects",
+          "the atmospheric effect agrees with weather and light",
+          "near material detail remains as readable as requested"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "전역 Gaussian blur",
+        "실내 좁은 방에 무조건 안개 추가",
+        "청색 오버레이 하나로 원경 주장"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "multiple near middle and far depth references are visible"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "multiple near middle and far depth references are visible"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: multiple near middle and far depth references are visible",
+            "render_gate": {
+              "id": "vo_pr_atmospheric_distance_contrast_1",
+              "review_scale": "both",
+              "description": "multiple near middle and far depth references are visible. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "far objects have lower contrast than near objects"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "far objects have lower contrast than near objects"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: far objects have lower contrast than near objects",
+            "render_gate": {
+              "id": "vo_pr_atmospheric_distance_contrast_2",
+              "review_scale": "both",
+              "description": "far objects have lower contrast than near objects. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the atmospheric effect agrees with weather and light"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the atmospheric effect agrees with weather and light"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: the atmospheric effect agrees with weather and light",
+            "render_gate": {
+              "id": "vo_pr_atmospheric_distance_contrast_3",
+              "review_scale": "both",
+              "description": "the atmospheric effect agrees with weather and light. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "near material detail remains as readable as requested"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "near material detail remains as readable as requested"
+            ],
+            "min_content_words": 3,
+            "instruction": "Show this relation on its selected owner: near material detail remains as readable as requested",
+            "render_gate": {
+              "id": "vo_pr_atmospheric_distance_contrast_4",
+              "review_scale": "both",
+              "description": "near material detail remains as readable as requested. Inspect the declared owner; missing, substituted or partly visible evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

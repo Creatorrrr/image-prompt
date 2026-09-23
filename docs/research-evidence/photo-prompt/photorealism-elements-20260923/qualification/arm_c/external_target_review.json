@@ -1,0 +1,80 @@
+{
+  "schema_version": "photorealism-external-target-review/v1",
+  "arm_id": "c",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_c/generated_images/seed-swap-camcorder-20260923T035043Z/native_render.png",
+  "result_sha256": "6aecf22ac69df5b20205ef555c6326373c88a90547458461074dd1a5298e78a2",
+  "rule": "partial_is_fail; every owner-bound component must be visible in the same image",
+  "selected_profiles": [
+    "pr_camcorder_still_temporal_container",
+    "pr_scene_owned_exposure_tradeoff"
+  ],
+  "unexposed_target_profile": "pr_observed_action_trace",
+  "profiles": {
+    "pr_camcorder_still_temporal_container": {
+      "status": "fail",
+      "components": {
+        "vo_pr_camcorder_still_temporal_container_1": {
+          "status": "pass",
+          "evidence": "The 4:3 frame has a PLAY icon, pixelated timestamp, and bottom-edge video stripe; one bounded frame is visible."
+        },
+        "vo_pr_camcorder_still_temporal_container_2": {
+          "status": "pass",
+          "evidence": "The woman grips the painted bowl with both hands while its base meets the table, a readable placement phase."
+        },
+        "vo_pr_camcorder_still_temporal_container_3": {
+          "status": "fail",
+          "evidence": "At native scale the fingers, cuff, and painted bowl edge are mostly crisp; a local motion trail on the moving parts is not discernible."
+        },
+        "vo_pr_camcorder_still_temporal_container_4": {
+          "status": "fail",
+          "evidence": "The frame has camcorder overlays but the subject, bowl painting, shelves, and typography remain very clean and high-resolution; format and image texture do not fully agree."
+        }
+      }
+    },
+    "pr_scene_owned_exposure_tradeoff": {
+      "status": "fail",
+      "components": {
+        "vo_pr_scene_owned_exposure_tradeoff_1": {
+          "status": "pass",
+          "evidence": "The indoor woman’s face, both hands, and bowl painting remain readable midtone subjects."
+        },
+        "vo_pr_scene_owned_exposure_tradeoff_2": {
+          "status": "pass",
+          "evidence": "The left window is much brighter than the table and darker chalkboard and shelves in the same room."
+        },
+        "vo_pr_scene_owned_exposure_tradeoff_3": {
+          "status": "fail",
+          "evidence": "A broad portion of the left window panes is nearly white with lost outside detail; clipping is not confined to a small highlight region."
+        },
+        "vo_pr_scene_owned_exposure_tradeoff_4": {
+          "status": "pass",
+          "evidence": "The chalkboard and shelving recede into darker tones while room objects remain separated, giving the interior tonal depth."
+        }
+      }
+    },
+    "pr_observed_action_trace": {
+      "status": "fail",
+      "source": "external_pixel_gate_after_pack_recall_failure",
+      "components": {
+        "actor_action_visible": {
+          "status": "pass",
+          "evidence": "Both hands grip the bowl while the woman leans forward over the shared table."
+        },
+        "target_object_visible": {
+          "status": "pass",
+          "evidence": "The painted ceramic bowl is fully visible between her hands in the same frame."
+        },
+        "contact_path_possible": {
+          "status": "pass",
+          "evidence": "The fingers meet opposite bowl sides and the bowl base rests on the reachable tabletop."
+        },
+        "visible_immediate_result": {
+          "status": "fail",
+          "evidence": "The prompt’s folded packet does not visibly slide inside the bowl; the packet shown stands outside against the rim, so an action-caused small result is not established."
+        }
+      }
+    }
+  },
+  "overall_status": "fail",
+  "user_judgment": "pending"
+}

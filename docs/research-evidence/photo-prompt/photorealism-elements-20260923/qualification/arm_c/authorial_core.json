@@ -1,0 +1,90 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Use the supplied portrait as visible adult appearance guidance to test whether an independently chosen complex seed-swap camcorder scene survives prompt composition and appears in rendered pixels.",
+  "subject": "An adult woman with long dark wavy hair, with visible appearance guided by the supplied portrait.",
+  "setting": "A community seed-swap room with a shared table and bright side window.",
+  "event": "The woman lowers a painted ceramic bowl onto the table during a seed swap.",
+  "visual_priorities": [
+    "Readable bowl-to-table placement and the same actor’s hands, face, and bowl.",
+    "Uneven camcorder exposure between bright window and dim interior, with restrained local motion trace."
+  ],
+  "baseline_prompt_en": "Create a single contemporary household camcorder still inside a community seed-swap room. An adult woman with long, loose dark wavy hair and soft facial features, guided only by the visible appearance of the supplied portrait, leans over a crowded shared wooden table. She is in the instant of placing a hand-painted ceramic bowl onto a clear patch of tabletop: her right hand cups the bowl beneath its near rim while her left steadies the far rim, its base just touching the wood. The bowl carries a few folded seed packets. Her shoulders and elbows follow the small downward movement, and both forearms have room between her body and the table edge. She glances down at the bowl with an unguarded, absorbed expression. Seed envelopes, a pencil, a chipped mug and another person's sleeve at the far edge suggest the room is shared, but her face, both hands, and the bowl remain distinct and readable. A bright side window flares across one patch of the table while the deeper room falls dim; the camcorder holds both in the same imperfect exposure. A short motion trace trails the descending bowl and sleeve, while facial detail, painted glaze, paper fibers, and the bowl-to-wood contact remain legible. Frame it at chest height with a slightly wide consumer-video perspective, subtle sensor grain and natural color unevenness, as one unposed moment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "An independently chosen complex photographic scene that can be checked after rendering.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the portrait as visible adult appearance guidance while designing the generated scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "single contemporary household camcorder still inside a community seed-swap room"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "An adult woman with long, loose dark wavy hair and soft facial features"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "placing a hand-painted ceramic bowl onto a clear patch of tabletop"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "guided only by the visible appearance of the supplied portrait"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "candid photography",
+    "family": "household camcorder documentary still",
+    "evidence": [
+      "slightly wide consumer-video perspective",
+      "subtle sensor grain and natural color unevenness"
+    ]
+  },
+  "variation_key": "photorealism-elements-20260923-arm-c"
+}

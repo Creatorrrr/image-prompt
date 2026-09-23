@@ -1,0 +1,113 @@
+{
+  "schema_version": "photorealism-independent-arm-qualification/v1",
+  "arm_id": "b",
+  "source_snapshot_sha256": "e743d71e5d77029eb5488b6b6593810d0631fcba252723c828c8e6c8768d77bc",
+  "source": {
+    "target_profiles_present": {
+      "pr_hair_strand_owner_and_cause": true,
+      "pr_casual_crop_subject_legibility": true,
+      "pr_atmospheric_distance_contrast": true,
+      "wet_surface_light_reflection_owner_relation": true
+    },
+    "status": "present"
+  },
+  "index": {
+    "visual_profile_entries": {
+      "pr_hair_strand_owner_and_cause": true,
+      "pr_casual_crop_subject_legibility": true,
+      "pr_atmospheric_distance_contrast": true,
+      "wet_surface_light_reflection_owner_relation": true
+    },
+    "semantic_slot_entries": {
+      "pr_hair_strand_owner_and_cause": [
+        "slot:hair_style:pr_hair_strand_owner_and_cause_candidate"
+      ],
+      "pr_casual_crop_subject_legibility": [
+        "slot:platform_framing:pr_casual_crop_subject_legibility_candidate"
+      ],
+      "pr_atmospheric_distance_contrast": [
+        "slot:ambient_particle:pr_atmospheric_distance_contrast_candidate"
+      ],
+      "wet_surface_light_reflection_owner_relation": []
+    },
+    "status": "present"
+  },
+  "candidate_pack": {
+    "initial_pack_id": "eaabfec4b5a13ef4",
+    "initial_exposure": {
+      "target_visual_concepts": [],
+      "target_clarifications": [],
+      "pe_bundles": [],
+      "target_visual_concept_count": 0,
+      "target_clarification_count": 0,
+      "pe_bundle_count": 0
+    },
+    "calibrated_pack_id": "5962ecabaa78de60",
+    "calibrated_exposure": {
+      "target_visual_concepts": [],
+      "target_clarifications": [],
+      "pe_bundles": [],
+      "target_visual_concept_count": 0,
+      "target_clarification_count": 0,
+      "pe_bundle_count": 0
+    },
+    "status": "fail_target_recall",
+    "calibration_boundary": "Generic owner cues were added to source/index after initial frozen-core recall failure; calibrated exposure is not independent holdout proof. The core and baseline remained unchanged across both successful pack generations."
+  },
+  "prompt_audit": {
+    "status": "pass",
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_b/composed_audit.json"
+  },
+  "runtime_audit": {
+    "status": "pass",
+    "reference_count": 1,
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_b/image_render_request_audit.json"
+  },
+  "render": {
+    "tool": "native_image_gen",
+    "image_call_count": 1,
+    "status": "saved",
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_b/generated_images/bridge-rain-observation-20260923/render_01.png",
+    "sha256": "8e3625f8b5e03c7f3d82d53a8a77bdf076f92311625415a75084d01e053d8df5",
+    "ledger_run_id": "0214df1cd4dd0035"
+  },
+  "pixels": {
+    "target_status": "fail",
+    "target_profiles": {
+      "pr_hair_strand_owner_and_cause": {
+        "status": "pass",
+        "passed_gates": 4,
+        "total_gates": 4
+      },
+      "pr_casual_crop_subject_legibility": {
+        "status": "pass",
+        "passed_gates": 4,
+        "total_gates": 4
+      },
+      "pr_atmospheric_distance_contrast": {
+        "status": "pass",
+        "passed_gates": 4,
+        "total_gates": 4
+      },
+      "wet_surface_light_reflection_owner_relation": {
+        "status": "fail",
+        "passed_gates": 2,
+        "total_gates": 5
+      }
+    },
+    "passed_gates": 14,
+    "total_gates": 17,
+    "target_review_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_b/target_pixel_review.json",
+    "embodiment_technical_qualified": false,
+    "embodiment_failed_hard_gates": [
+      "embodiment_support_and_balance",
+      "embodiment_visibility_and_projection"
+    ],
+    "embodiment_audit_path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_b/embodiment_pixel_audit.json"
+  },
+  "user_judgment": {
+    "source": "not_yet_received",
+    "status": "pending"
+  },
+  "precore_note": "Initial pre-target core was saved as authorial_core_prevalidation.json; after target read, semantic assertion affected_dimensions were mechanically corrected to locked concept/event for generator schema validity. Baseline prompt and embodiment review remained byte-identical."
+}

@@ -1,0 +1,690 @@
+{
+  "schema_version": "photo-photorealism-visual-proposals/research-v1",
+  "status": "research_draft_not_registered",
+  "policy": {
+    "broad_terms_are_hard_triggers": false,
+    "hard_eligibility": "명시된 관계나 사용자가 고정한 구성요소가 있을 때만 후속 구현에서 검토",
+    "candidate_selection": "unordered_optional_after_frozen_user_intent",
+    "evaluation": "동일 owner·동일 이미지의 필수 구성요소 전체가 보여야 pass; 부분 충족은 fail; 보이지 않으면 unscored",
+    "provenance": "공식 촬영·영상 자료로 관찰 가능성과 경계를 조사한 설계안. 생성 모델 개선 효과는 미검증"
+  },
+  "proposals": [
+    {
+      "id": "pr_environmental_portrait_subject_place",
+      "priority": "P0",
+      "lane": "capture_genre",
+      "label_ko": "환경 인물의 장소 연계",
+      "owner": "인물과 그 사람이 쓰는 특정 장소",
+      "required_visible_components": [
+        "인물의 얼굴 또는 신체가 주 피사체로 식별됨",
+        "장소의 기능을 알 수 있는 고유 설비나 물체가 함께 보임",
+        "인물의 행동이나 위치가 그 설비와 인과적으로 연결됨",
+        "카메라 거리가 인물과 주변 맥락을 한 프레임에 남김"
+      ],
+      "near_misses": [
+        "인물 뒤에 임의 배경만 합성",
+        "장소만 선명하고 인물이 읽히지 않음",
+        "위치 단서 없는 머리 클로즈업"
+      ],
+      "candidate_expression_en": "An adult repairer pauses beside the open workbench they are using; hands, tools, and the room entrance remain in the same frame.",
+      "existing_profile_ids": [
+        "three_plane_depth_chain",
+        "circulation_path_mid_action_depth_relation"
+      ],
+      "recommended_slots": [
+        "medium",
+        "capture_context",
+        "shot_scale"
+      ],
+      "source_ids": [
+        "S02",
+        "S03",
+        "S20"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_observed_action_trace",
+      "priority": "P0",
+      "lane": "capture_genre",
+      "label_ko": "관찰된 행동과 직전·직후 흔적",
+      "owner": "한 피사체의 손·도구·대상",
+      "required_visible_components": [
+        "손 또는 신체의 특정 동작이 읽힘",
+        "행동의 대상 물체가 같은 프레임에 있음",
+        "대상에 닿거나 닿으려는 경로가 공간적으로 가능함",
+        "행동으로 생긴 작은 결과나 직후 상태가 보임"
+      ],
+      "near_misses": [
+        "standing naturally 같은 상태 라벨만 있음",
+        "손과 대상의 위치가 분리됨",
+        "도구만 들고 결과가 없음"
+      ],
+      "candidate_expression_en": "The person is setting a cup on the table; fingertips still touch the handle and the saucer has shifted toward the chair.",
+      "existing_profile_ids": [
+        "peak_action_event_phase"
+      ],
+      "recommended_slots": [
+        "action",
+        "relational_action",
+        "narrative_phase"
+      ],
+      "source_ids": [
+        "S01",
+        "S20",
+        "S21"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_camera_distance_subject_scale",
+      "priority": "P0",
+      "lane": "capture_geometry",
+      "label_ko": "카메라 거리와 인물·환경 비율",
+      "owner": "인물의 머리·몸·인접 환경",
+      "required_visible_components": [
+        "요청한 shot size에 맞는 신체 범위가 보임",
+        "머리와 몸의 상대 비율이 단일 원근에서 일관됨",
+        "배경 구조물의 크기 변화가 카메라 위치와 맞음",
+        "피사체 주위에 요청된 환경 여백이 남음"
+      ],
+      "near_misses": [
+        "35mm 라벨만 있고 인물 머리가 과대함",
+        "와이드샷인데 신체가 잘림",
+        "인물과 배경의 촬영 거리감이 맞지 않음"
+      ],
+      "candidate_expression_en": "The camera stands several meters away at eye level, retaining the whole adult figure and a generous section of the pavement and shopfront.",
+      "existing_profile_ids": [
+        "wide_angle_near_field_perspective",
+        "telephoto_distance_compression_relation"
+      ],
+      "recommended_slots": [
+        "shot_scale",
+        "distance_narrative",
+        "lens"
+      ],
+      "source_ids": [
+        "S03",
+        "S04",
+        "S20"
+      ],
+      "status": "reuse_and_extend_distance_contract"
+    },
+    {
+      "id": "pr_focus_plane_subject_falloff",
+      "priority": "P0",
+      "lane": "optics",
+      "label_ko": "초점면의 대상·깊이 이행",
+      "owner": "주피사체와 앞뒤 거리 기준물",
+      "required_visible_components": [
+        "명시된 주피사체 세부가 가장 선명함",
+        "주피사체 앞쪽과 뒤쪽의 흐림이 거리별로 달라짐",
+        "피사체 경계의 흐림이 배경과 자연스럽게 이어짐",
+        "요청된 중요한 행동 대상은 읽을 수 있음"
+      ],
+      "near_misses": [
+        "가짜 인물 모드 경계 마스크",
+        "주피사체의 눈이나 손까지 전체 흐림",
+        "전경부터 무한대까지 선명하다는 모순된 지시"
+      ],
+      "candidate_expression_en": "The person's reaching hand and the cup handle share the focus plane, while the nearer chair edge and farther doorway soften gradually.",
+      "existing_profile_ids": [
+        "shallow_depth_focus_falloff_relation"
+      ],
+      "recommended_slots": [
+        "focus",
+        "composition"
+      ],
+      "source_ids": [
+        "S04",
+        "S07"
+      ],
+      "status": "reuse_existing_profile_with_new_candidate"
+    },
+    {
+      "id": "pr_scene_owned_exposure_tradeoff",
+      "priority": "P0",
+      "lane": "tone_exposure",
+      "label_ko": "실내·창밖 노출 선택의 소유자",
+      "owner": "실내 주피사체·창·창밖",
+      "required_visible_components": [
+        "실내 주피사체의 필요한 세부가 노출됨",
+        "창과 실내의 밝기 차가 공간적으로 일관됨",
+        "창의 작은 고휘도 부분에서만 세부 손실이 허용됨",
+        "전체 실내가 평탄한 HDR처럼 보이지 않음"
+      ],
+      "near_misses": [
+        "모든 표면이 동일한 밝기",
+        "창밖 전체가 하얀 구멍이 되어 장소 정보를 잃음",
+        "하이라이트 클립만으로 실사라 주장"
+      ],
+      "candidate_expression_en": "Exposure favors the person at the indoor table; a narrow bright region beyond the window loses detail while the frame and nearby exterior shapes remain legible.",
+      "existing_profile_ids": [
+        "highlight_rolloff_tone_response",
+        "motivated_practical_mixed_interior_relation"
+      ],
+      "recommended_slots": [
+        "lighting",
+        "quality",
+        "color_grading"
+      ],
+      "source_ids": [
+        "S06",
+        "S09",
+        "S11"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_skin_detail_lighting_scale",
+      "priority": "P0",
+      "lane": "human_surface",
+      "label_ko": "피부 세부의 조명·크기 조건",
+      "owner": "보이는 성인 인물의 피부",
+      "required_visible_components": [
+        "얼굴 또는 손의 피부가 충분한 크기로 보임",
+        "빛이 닿는 부분에서 톤과 미세 질감이 구별됨",
+        "그림자·하이라이트가 피부 형태를 따라감",
+        "보정의 강도가 눈·입술·피부를 서로 같은 플라스틱 면으로 만들지 않음"
+      ],
+      "near_misses": [
+        "피부가 작아 보이지 않는데 pores를 hard gate로 요구",
+        "거친 노이즈를 모공으로 간주",
+        "결점이나 주근깨를 모든 인물에게 강제"
+      ],
+      "candidate_expression_en": "Soft side light preserves gentle tonal variation across the adult face and a little natural skin texture at portrait viewing size.",
+      "existing_profile_ids": [
+        "sheer_complexion_texture_preservation",
+        "glass_skin_specular_diffuse_balance"
+      ],
+      "recommended_slots": [
+        "skin_finish",
+        "quality",
+        "lighting"
+      ],
+      "source_ids": [
+        "S07",
+        "S09"
+      ],
+      "status": "reuse_with_scope_guard"
+    },
+    {
+      "id": "pr_hair_strand_owner_and_cause",
+      "priority": "P1",
+      "lane": "human_surface",
+      "label_ko": "잔머리의 부착과 움직임 원인",
+      "owner": "인물의 두피·묶임점·머리끝",
+      "required_visible_components": [
+        "잔머리가 실제 헤어라인이나 묶임점에서 이어짐",
+        "주된 머리 방향과 국소 잔가닥 방향이 양립함",
+        "바람·습도·움직임 중 지정된 원인이 옷이나 주변과 맞음",
+        "얼굴 윤곽과 머리카락 경계가 서로 관통하지 않음"
+      ],
+      "near_misses": [
+        "공중에 떠 있는 독립 머리카락",
+        "모든 머리카락을 일괄 난류로 흐트림",
+        "요청된 정돈 헤어를 무조건 헝클어뜨림"
+      ],
+      "candidate_expression_en": "A few flyaway strands remain attached near the temple and lean in the same light breeze as the loose collar edge.",
+      "existing_profile_ids": [
+        "wet_damp_clumped_hair_state"
+      ],
+      "recommended_slots": [
+        "hair_style",
+        "motion",
+        "weather"
+      ],
+      "source_ids": [
+        "S01",
+        "S17"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_fabric_tension_fold_attachment",
+      "priority": "P0",
+      "lane": "material_response",
+      "label_ko": "직물 주름의 장력·재봉선 소유",
+      "owner": "한 의복의 봉제선·접촉점·접힘",
+      "required_visible_components": [
+        "직물의 재질별 결이나 광택이 읽힘",
+        "주름의 시작점이 봉제선·관절·잡아당기는 손 등 힘의 위치와 이어짐",
+        "접힘 방향이 몸의 자세나 움직임과 맞음",
+        "주름이 의복의 실루엣·여밈 구조를 파괴하지 않음"
+      ],
+      "near_misses": [
+        "임의로 찍힌 주름 패턴 오버레이",
+        "옷의 재질과 무관한 단일 플라스틱 광택",
+        "옷 표면의 lint가 허공에도 떠 있음"
+      ],
+      "candidate_expression_en": "The cotton sleeve creases from the bent elbow toward its seam, while the fabric weave remains visible in the light.",
+      "existing_profile_ids": [
+        "sheer_garment_optical_layering"
+      ],
+      "recommended_slots": [
+        "garment_detail",
+        "surface_material",
+        "action"
+      ],
+      "source_ids": [
+        "S01",
+        "S17"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_surface_wear_contact_owner",
+      "priority": "P0",
+      "lane": "material_response",
+      "label_ko": "사용 흔적의 접촉면 귀속",
+      "owner": "손이 닿거나 물체가 놓이는 표면",
+      "required_visible_components": [
+        "재질을 식별할 수 있는 기본 반사·거칠기 반응이 있음",
+        "마모·지문·먼지 중 선택된 흔적이 접촉 가능 지점에 놓임",
+        "흔적의 강도가 사용 빈도와 청결 맥락에 맞음",
+        "물체의 모서리·요철·반사가 흔적 아래에서도 일관됨"
+      ],
+      "near_misses": [
+        "모든 물체에 같은 그랜지 텍스처",
+        "새 제품·청결 공간을 무조건 낡게 만듦",
+        "유리 지문을 금속 부식으로 치환"
+      ],
+      "candidate_expression_en": "Only the frequently handled glass rim carries faint fingerprints; the clean table and nearby metal keep their distinct surface responses.",
+      "existing_profile_ids": [
+        "adaptive_reuse_old_new_material_junction"
+      ],
+      "recommended_slots": [
+        "surface_material",
+        "texture",
+        "space_condition"
+      ],
+      "source_ids": [
+        "S01",
+        "S17"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_object_contact_shadow_support",
+      "priority": "P0",
+      "lane": "physical_coherence",
+      "label_ko": "물체 지지·접점 그림자",
+      "owner": "물체 바닥면과 지지 표면",
+      "required_visible_components": [
+        "물체가 닿는 지지 표면이 보임",
+        "무게가 실리는 접점에 국소 그림자나 압착이 있음",
+        "그림자의 방향과 부드러움이 장면 광원에 맞음",
+        "물체의 형태와 표면 접촉 위치가 맞음"
+      ],
+      "near_misses": [
+        "무접점 물체가 허공에 뜸",
+        "광원 반대가 아닌 임의 방향 그림자",
+        "붙지 않은 도장형 검은 타원"
+      ],
+      "candidate_expression_en": "The ceramic cup rests on the table, with a small contact shadow directly beneath its base and a broader falloff away from the window.",
+      "existing_profile_ids": [
+        "hard_light_shadow_edge_relation",
+        "soft_light_shadow_edge_relation"
+      ],
+      "recommended_slots": [
+        "lighting",
+        "surface_material",
+        "composition"
+      ],
+      "source_ids": [
+        "S01",
+        "S06",
+        "S17"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_reflection_scene_binding",
+      "priority": "P0",
+      "lane": "physical_coherence",
+      "label_ko": "반사체와 장면의 대상 결합",
+      "owner": "유리·거울·젖은 바닥의 지정 반사면",
+      "required_visible_components": [
+        "반사면의 실제 위치와 방향이 보임",
+        "장면의 원래 물체가 해당 면에 대응하는 위치에서 반사됨",
+        "반사 강도·왜곡이 재질과 시점에 맞음",
+        "광원과 그림자가 반사 속에서도 자기모순을 만들지 않음"
+      ],
+      "near_misses": [
+        "반사 안에 없는 사람 추가",
+        "유리·거울·젖은 바닥을 동일한 선명 거울로 표현",
+        "비에 젖지 않은 바닥에 반사만 있음"
+      ],
+      "candidate_expression_en": "The wet pavement reflects only the storefront sign above it, broken by shallow ripples and aligned with the camera angle.",
+      "existing_profile_ids": [
+        "wet_surface_light_reflection_owner_relation",
+        "mirror_selfie_reflection_device_topology"
+      ],
+      "recommended_slots": [
+        "surface_material",
+        "lighting",
+        "reflection_logic"
+      ],
+      "source_ids": [
+        "S01",
+        "S17"
+      ],
+      "status": "reuse_existing_owner_profile"
+    },
+    {
+      "id": "pr_casual_crop_subject_legibility",
+      "priority": "P1",
+      "lane": "composition",
+      "label_ko": "스냅의 불완전한 프레임과 주피사체 보존",
+      "owner": "프레임 경계와 주피사체",
+      "required_visible_components": [
+        "프레임 경계에서 손·머리·발 등의 일부가 자연스럽게 잘림",
+        "행동·인물 정체성을 읽는 핵심 부분은 남음",
+        "카메라 높이와 기울기가 장면의 관찰 위치와 맞음",
+        "크롭된 부위와 이어지는 신체·물체 방향이 가능함"
+      ],
+      "near_misses": [
+        "요청된 의상이나 행동 대상이 잘려 보이지 않음",
+        "장면 전체를 무작위로 기울임",
+        "발이 경계 근처라는 말만 있고 몸이 부러짐"
+      ],
+      "candidate_expression_en": "The adult subject remains readable while a moving elbow exits one edge of the casual phone frame.",
+      "existing_profile_ids": [
+        "asymmetric_counterbalance_relation",
+        "overhead_social_snapshot_relation"
+      ],
+      "recommended_slots": [
+        "composition",
+        "platform_framing",
+        "shot_scale"
+      ],
+      "source_ids": [
+        "S02",
+        "S20"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_shadows_local_digital_noise",
+      "priority": "P1",
+      "lane": "capture_response",
+      "label_ko": "디지털 저조도 노이즈의 공간 소유",
+      "owner": "어두운 영상 영역",
+      "required_visible_components": [
+        "밝은 면과 그림자 면의 노이즈 양이 다름",
+        "휘도 노이즈 또는 색 노이즈가 어두운 영역에 국소적으로 보임",
+        "물체 경계와 얼굴 핵심은 필요한 만큼 읽힘",
+        "노이즈가 장면의 디지털 처리와 양립함"
+      ],
+      "near_misses": [
+        "필름 그레인을 디지털 노이즈라고 단정",
+        "균일한 먼지 텍스처를 모든 면에 적용",
+        "피부 세부를 노이즈로 덮음"
+      ],
+      "candidate_expression_en": "Fine luminance noise appears mostly in the dim wall and floor, while the lit face and window frame retain useful detail.",
+      "existing_profile_ids": [
+        "early_2000s_compact_digicam_social_repost"
+      ],
+      "recommended_slots": [
+        "grain_profile",
+        "camera_type",
+        "quality"
+      ],
+      "source_ids": [
+        "S10",
+        "S11"
+      ],
+      "status": "optional_candidate_only"
+    },
+    {
+      "id": "pr_jpeg_edge_blocking",
+      "priority": "P1",
+      "lane": "distribution_artifact",
+      "label_ko": "재압축의 고대비 경계 흔적",
+      "owner": "재게시된 이미지의 압축된 경계",
+      "required_visible_components": [
+        "해당 이미지가 파일·화면·재게시물 맥락에 놓임",
+        "고대비 경계 근처에 약한 링잉이나 블록화가 국소적으로 있음",
+        "평탄 영역의 색 계조와 경계 손상이 구별됨",
+        "압축 강도가 원래 내용의 식별을 훼손하지 않음"
+      ],
+      "near_misses": [
+        "센서 노이즈를 JPEG 압축으로 간주",
+        "원본 스냅 전체에 큰 픽셀 모자이크",
+        "영상 코덱 흔적을 필름 입자로 호출"
+      ],
+      "candidate_expression_en": "The reposted compact-camera photo has slight blockiness around bright lettering, but the person's gesture remains readable.",
+      "existing_profile_ids": [
+        "early_2000s_compact_digicam_social_repost",
+        "camera_display_rephotographed_preview"
+      ],
+      "recommended_slots": [
+        "format",
+        "grain_profile",
+        "capture_context"
+      ],
+      "source_ids": [
+        "S08",
+        "S10",
+        "S25"
+      ],
+      "status": "optional_candidate_only"
+    },
+    {
+      "id": "pr_film_grain_print_scan_scope",
+      "priority": "P1",
+      "lane": "capture_response",
+      "label_ko": "필름 입자와 인화·스캔 층 분리",
+      "owner": "사진 이미지층과 그 출력 물체",
+      "required_visible_components": [
+        "입상 질감이 이미지층 안에 있음",
+        "명암에 따라 입상감이 변하되 얼굴·재질 구조를 덮지 않음",
+        "인화지나 스캔 먼지가 있다면 별도 출력층에 귀속됨",
+        "선택된 필름 룩이 실제 필름 원본이라는 주장으로 이어지지 않음"
+      ],
+      "near_misses": [
+        "디지털 노이즈를 필름 진품 증거로 사용",
+        "먼지 오버레이를 모든 물체에 붙임",
+        "특정 필름 이름만으로 색·입상 계약 강제"
+      ],
+      "candidate_expression_en": "A restrained grain pattern belongs to the picture area; a few scan specks belong only to the print surface near its edge.",
+      "existing_profile_ids": [
+        "physical_print_scan_material_context",
+        "film_halation_highlight_edge_relation"
+      ],
+      "recommended_slots": [
+        "grain_profile",
+        "film_emulation",
+        "format"
+      ],
+      "source_ids": [
+        "S12",
+        "S13"
+      ],
+      "status": "optional_candidate_only"
+    },
+    {
+      "id": "pr_instant_print_material_object",
+      "priority": "P1",
+      "lane": "material_object",
+      "label_ko": "즉석 인화물의 전체 물체",
+      "owner": "즉석 인화 카드 전체",
+      "required_visible_components": [
+        "이미지 영역과 실제 카드 테두리의 경계가 보임",
+        "카드의 두께·모서리·손에 잡힌 지지 상태가 읽힘",
+        "이미지 색·톤은 카드 이미지면 안에만 있음",
+        "지면·손가락 접점 그림자가 카드 위치와 맞음"
+      ],
+      "near_misses": [
+        "사진 안쪽에 흰 디지털 테두리만 그림",
+        "공중에 뜬 카드",
+        "재료 열화를 촬영 당시의 빛으로 오인"
+      ],
+      "candidate_expression_en": "A complete instant print is held by one corner, its image window set inside the thicker card border and casting a narrow shadow on the hand.",
+      "existing_profile_ids": [
+        "physical_print_scan_material_context"
+      ],
+      "recommended_slots": [
+        "medium",
+        "format",
+        "prop"
+      ],
+      "source_ids": [
+        "S14"
+      ],
+      "status": "new_object_candidate"
+    },
+    {
+      "id": "pr_fixed_surveillance_observation",
+      "priority": "P1",
+      "lane": "capture_genre",
+      "label_ko": "고정 감시 시점의 관찰 구조",
+      "owner": "고정 카메라와 감시 대상 공간",
+      "required_visible_components": [
+        "높은 설치 위치나 고정 시야의 공간 경계가 읽힘",
+        "출입구·통로 등 관찰 목적 구역이 넓게 보임",
+        "움직이는 대상이 화면의 일부만 차지함",
+        "화질·노출·압축의 제한은 장면 조건과 맞되 필수적 과장은 없음"
+      ],
+      "near_misses": [
+        "거친 노이즈만 있는 인물 클로즈업",
+        "가짜 타임스탬프만 붙인 패션 화보",
+        "고정 관찰이라며 매 프레임 영화 카메라 이동"
+      ],
+      "candidate_expression_en": "A fixed high corner viewpoint covers the shop entrance and most of the aisle; the passing adult occupies a small part of the frame.",
+      "existing_profile_ids": [],
+      "recommended_slots": [
+        "medium",
+        "camera_type",
+        "capture_context"
+      ],
+      "source_ids": [
+        "S15"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_camcorder_still_temporal_container",
+      "priority": "P1",
+      "lane": "moving_image_frame",
+      "label_ko": "홈비디오 정지 프레임의 시간 단서",
+      "owner": "한 비디오 프레임과 장면 움직임",
+      "required_visible_components": [
+        "단일 비디오 프레임이라는 표시나 화면 컨테이너가 있음",
+        "동작 중인 사람·물체의 단계가 보임",
+        "해당 매체와 양립하는 국소 움직임 흔적이 있음",
+        "프레임 형식과 색·해상도의 제한이 서로 일관됨"
+      ],
+      "near_misses": [
+        "아날로그 TV scanline만 뿌린 정지 인물 화보",
+        "비디오 프레임을 진짜 1990년 촬영 기록이라고 주장",
+        "CCTV 고정 보안 시야와 혼동"
+      ],
+      "candidate_expression_en": "A single domestic camcorder frame catches a person turning toward the birthday table, with mild motion smear on the moving hand.",
+      "existing_profile_ids": [],
+      "recommended_slots": [
+        "medium",
+        "motion",
+        "format"
+      ],
+      "source_ids": [
+        "S05",
+        "S26"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_atmospheric_distance_contrast",
+      "priority": "P1",
+      "lane": "environment",
+      "label_ko": "거리별 대기 대비 감소",
+      "owner": "전경·중경·원경 건물 또는 지형",
+      "required_visible_components": [
+        "거리를 비교할 수 있는 복수의 공간 기준물이 있음",
+        "먼 대상의 대비가 가까운 대상보다 완만히 낮음",
+        "대기 상태가 빛과 날씨 조건에 맞음",
+        "근거리 재질 세부는 요청 범위만큼 보존됨"
+      ],
+      "near_misses": [
+        "전역 Gaussian blur",
+        "실내 좁은 방에 무조건 안개 추가",
+        "청색 오버레이 하나로 원경 주장"
+      ],
+      "candidate_expression_en": "The near stone wall stays crisp while the distant hill loses a little contrast through light afternoon haze.",
+      "existing_profile_ids": [
+        "three_plane_depth_chain",
+        "overlook_edge_foreground_vista_relation"
+      ],
+      "recommended_slots": [
+        "weather",
+        "ambient_particle",
+        "composition"
+      ],
+      "source_ids": [
+        "S16"
+      ],
+      "status": "new_relation_candidate"
+    },
+    {
+      "id": "pr_documentary_authenticity_boundary",
+      "priority": "P0",
+      "lane": "provenance_policy",
+      "label_ko": "다큐·보도 룩과 실제 기록의 분리",
+      "owner": "이미지 설명·메타데이터·검증 절차",
+      "policy_conditions": [
+        "시각 후보는 관찰 거리·행동·현장 맥락만 제안함",
+        "실제 사건·날짜·촬영자·원본성은 시각 후보로 추론하지 않음",
+        "합성 또는 연출이면 설명의 제작 상태가 분리되어 기록됨"
+      ],
+      "near_misses": [
+        "photojournalistic이라는 단어로 실제 보도 인증",
+        "흔들림·피부 결점으로 비연출 사실 인증",
+        "가짜 타임스탬프를 provenance로 사용"
+      ],
+      "candidate_expression_en": "A documentary-style fictional scene observed from the doorway, with the ongoing task and surrounding room visible.",
+      "existing_profile_ids": [],
+      "recommended_slots": [
+        "medium",
+        "genre",
+        "caption_context"
+      ],
+      "source_ids": [
+        "S18",
+        "S19"
+      ],
+      "status": "policy_guard_not_pixel_profile"
+    },
+    {
+      "id": "pr_conditional_imperfection_budget",
+      "priority": "P0",
+      "lane": "candidate_governance",
+      "label_ko": "맥락 조건부 불완전성",
+      "owner": "선택된 매체·장면·주피사체",
+      "policy_conditions": [
+        "사용자 고정 의도와 양립하는 결함 하나를 선택함",
+        "결함이 광학·센서·물체·재게시 등 원인 층에 귀속됨",
+        "결함의 강도가 주피사체와 필수 행동을 가리지 않음",
+        "깨끗한 광고·제품·과학 기록이면 결함을 생략할 수 있음"
+      ],
+      "near_misses": [
+        "2~4개 결함을 항상 의무화",
+        "잡티·노이즈·스크래치·헤이즈를 모두 추가",
+        "요청의 청결·정밀·화보 의도를 깨뜨림"
+      ],
+      "candidate_expression_en": "If a casual low-light phone scene benefits from it, retain only slight shadow noise while keeping the subject's action clear.",
+      "existing_profile_ids": [],
+      "recommended_slots": [
+        "quality",
+        "grain_profile",
+        "lens_artifact"
+      ],
+      "source_ids": [
+        "S02",
+        "S09",
+        "S10",
+        "S22"
+      ],
+      "status": "optional_governance_rule"
+    }
+  ]
+}

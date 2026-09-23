@@ -1,0 +1,505 @@
+{
+  "schema_version": "photo-photorealism-candidate-bundles/research-v1",
+  "status": "research_draft_not_exposed_in_runtime",
+  "selection_policy": "사용자 의도·잠금 차원을 먼저 동결한 뒤 열린 차원에서만 비선호 순서의 선택 후보로 제시한다. 모든 예문은 복사 템플릿이 아니다.",
+  "bundles": [
+    {
+      "id": "pb_clean_studio_portrait",
+      "scenario_ko": "깨끗한 스튜디오 인물",
+      "proposals": [
+        "pr_skin_detail_lighting_scale",
+        "pr_focus_plane_subject_falloff"
+      ],
+      "existing_profile_ids": [
+        "key_fill_separation_background_roles"
+      ],
+      "seed_slots": {
+        "medium": [
+          "beauty_campaign_photo"
+        ],
+        "camera_type": [
+          "full_frame_mirrorless"
+        ],
+        "quality": [
+          "editorial_quality"
+        ]
+      },
+      "optional": [
+        "국소적인 피부 톤 이행"
+      ],
+      "do_not_infer": [
+        "주근깨·결점 의무",
+        "필름 입자",
+        "먼지",
+        "RAW 파일"
+      ],
+      "example_en": "A clean adult studio portrait keeps the eyes and lips clear under controlled key and fill light, with gentle skin tonal variation at portrait scale.",
+      "source_ids": [
+        "S06",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "pb_cafe_window_phone",
+      "scenario_ko": "낮 카페 창가 스마트폰 스냅",
+      "proposals": [
+        "pr_observed_action_trace",
+        "pr_scene_owned_exposure_tradeoff",
+        "pr_casual_crop_subject_legibility"
+      ],
+      "existing_profile_ids": [
+        "motivated_practical_mixed_interior_relation"
+      ],
+      "seed_slots": {
+        "medium": [
+          "smartphone_snapshot"
+        ],
+        "camera_type": [
+          "smartphone_camera"
+        ],
+        "capture_context": [
+          "accidental_phone_snapshot"
+        ]
+      },
+      "optional": [
+        "유리창 밝은 부분의 제한적 클립",
+        "살짝 비축된 프레임"
+      ],
+      "do_not_infer": [
+        "항상 노이즈 추가",
+        "실제 촬영 이력",
+        "얼굴 크기 과장"
+      ],
+      "example_en": "An adult reaches for a cup at the café table; the window behind holds a small bright clip while the hands and cup remain readable in a casual phone frame.",
+      "source_ids": [
+        "S01",
+        "S02",
+        "S11"
+      ]
+    },
+    {
+      "id": "pb_low_light_phone",
+      "scenario_ko": "저조도 스마트폰 생활사진",
+      "proposals": [
+        "pr_shadows_local_digital_noise",
+        "pr_observed_action_trace",
+        "pr_conditional_imperfection_budget"
+      ],
+      "existing_profile_ids": [
+        "mixed_illuminant_white_balance_relation"
+      ],
+      "seed_slots": {
+        "medium": [
+          "smartphone_snapshot"
+        ],
+        "camera_type": [
+          "smartphone_camera"
+        ],
+        "grain_profile": [
+          "smartphone_night_noise"
+        ]
+      },
+      "optional": [
+        "암부 노이즈 또는 움직이는 손의 약한 흐림 중 하나"
+      ],
+      "do_not_infer": [
+        "전경·배경 전체 그레인",
+        "Night mode이면 반드시 밝은 밤",
+        "실제 스마트폰 기종"
+      ],
+      "example_en": "A phone held near the dinner table catches the adult passing a plate; the moving hand is slightly soft and the dim wall shows fine noise.",
+      "source_ids": [
+        "S05",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "pb_street_observation",
+      "scenario_ko": "거리 관찰 사진",
+      "proposals": [
+        "pr_observed_action_trace",
+        "pr_camera_distance_subject_scale",
+        "pr_casual_crop_subject_legibility"
+      ],
+      "existing_profile_ids": [
+        "peak_action_event_phase",
+        "three_plane_depth_chain"
+      ],
+      "seed_slots": {
+        "medium": [
+          "street_snapshot"
+        ],
+        "genre": [
+          "street_photography"
+        ],
+        "capture_context": [
+          "street_observation_documentary_context"
+        ]
+      },
+      "optional": [
+        "전경 가림",
+        "행인 움직임 흔적"
+      ],
+      "do_not_infer": [
+        "실제 비연출 증거",
+        "모든 인물의 얼굴 초점",
+        "인물 모션 블러 과다"
+      ],
+      "example_en": "From a sidewalk distance, a pedestrian folds a paper map while moving past a stall; the vendor and street behind retain their spatial positions.",
+      "source_ids": [
+        "S02",
+        "S05",
+        "S18"
+      ]
+    },
+    {
+      "id": "pb_environmental_maker",
+      "scenario_ko": "작업장 환경 인물",
+      "proposals": [
+        "pr_environmental_portrait_subject_place",
+        "pr_observed_action_trace",
+        "pr_fabric_tension_fold_attachment"
+      ],
+      "existing_profile_ids": [
+        "circulation_path_mid_action_depth_relation"
+      ],
+      "seed_slots": {
+        "medium": [
+          "documentary_photo"
+        ],
+        "genre": [
+          "portrait"
+        ],
+        "camera_type": [
+          "full_frame_mirrorless"
+        ]
+      },
+      "optional": [
+        "작업 흔적이 남은 공구",
+        "손이 닿는 직물 주름"
+      ],
+      "do_not_infer": [
+        "실제 직업 이력",
+        "촬영 장소의 실재성",
+        "의도치 않은 보도사진 주장"
+      ],
+      "example_en": "A fictional adult maker stands beside the bench in mid-task; the held material, work surface, and room entrance identify one coherent workspace.",
+      "source_ids": [
+        "S01",
+        "S18",
+        "S20"
+      ]
+    },
+    {
+      "id": "pb_fashion_editorial_clean",
+      "scenario_ko": "선명한 패션 에디토리얼",
+      "proposals": [
+        "pr_fabric_tension_fold_attachment",
+        "pr_skin_detail_lighting_scale",
+        "pr_focus_plane_subject_falloff"
+      ],
+      "existing_profile_ids": [
+        "key_fill_separation_background_roles"
+      ],
+      "seed_slots": {
+        "medium": [
+          "fashion_editorial"
+        ],
+        "genre": [
+          "fashion"
+        ],
+        "quality": [
+          "editorial_quality"
+        ]
+      },
+      "optional": [
+        "의복 재봉선과 움직임에 따른 국소 주름"
+      ],
+      "do_not_infer": [
+        "임의의 피부 잡티",
+        "CCD 노이즈",
+        "어긋난 수평선",
+        "구도 결함 의무"
+      ],
+      "example_en": "The garment's side seam and sleeve tension remain visible under clean directional light, while the requested silhouette is fully legible.",
+      "source_ids": [
+        "S06",
+        "S09",
+        "S17"
+      ]
+    },
+    {
+      "id": "pb_product_material_clean",
+      "scenario_ko": "청결한 제품·재질 사진",
+      "proposals": [
+        "pr_surface_wear_contact_owner",
+        "pr_object_contact_shadow_support",
+        "pr_reflection_scene_binding"
+      ],
+      "existing_profile_ids": [
+        "hard_light_shadow_edge_relation"
+      ],
+      "seed_slots": {
+        "medium": [
+          "product_catalog"
+        ],
+        "genre": [
+          "product"
+        ],
+        "quality": [
+          "commercial_crisp"
+        ]
+      },
+      "optional": [
+        "제품 사용 상태가 명시되었을 때만 국소 스크래치"
+      ],
+      "do_not_infer": [
+        "새 제품에 먼지",
+        "거울 같은 모든 표면",
+        "부유 제품"
+      ],
+      "example_en": "A clean brushed-metal object rests on the counter, with a contact shadow beneath the base and restrained reflections following the actual studio lights.",
+      "source_ids": [
+        "S06",
+        "S17"
+      ]
+    },
+    {
+      "id": "pb_2000s_compact_repost",
+      "scenario_ko": "2000년대 소형 디카 재게시 룩",
+      "proposals": [
+        "pr_shadows_local_digital_noise",
+        "pr_jpeg_edge_blocking",
+        "pr_conditional_imperfection_budget"
+      ],
+      "existing_profile_ids": [
+        "early_2000s_compact_digicam_social_repost",
+        "direct_on_camera_flash_snapshot_signature"
+      ],
+      "seed_slots": {
+        "camera_type": [
+          "digicam_2000s_camera"
+        ],
+        "film_emulation": [
+          "compact_ccd_digicam"
+        ],
+        "grain_profile": [
+          "ccd_chroma_noise"
+        ]
+      },
+      "optional": [
+        "직광 플래시의 근처 그림자",
+        "재게시 압축의 약한 경계 손상"
+      ],
+      "do_not_infer": [
+        "실제 CCD 센서",
+        "정확한 연도",
+        "압축과 센서 노이즈의 동일시"
+      ],
+      "example_en": "A compact-camera-style social repost uses direct flash on the nearby adult, modest shadow color noise, and mild recompression around the caption edge.",
+      "source_ids": [
+        "S08",
+        "S10",
+        "S11",
+        "S25"
+      ]
+    },
+    {
+      "id": "pb_consumer_35mm_look",
+      "scenario_ko": "소비자 35mm 필름 스냅 룩",
+      "proposals": [
+        "pr_film_grain_print_scan_scope",
+        "pr_casual_crop_subject_legibility"
+      ],
+      "existing_profile_ids": [
+        "film_halation_highlight_edge_relation",
+        "physical_print_scan_material_context"
+      ],
+      "seed_slots": {
+        "camera_type": [
+          "disposable_film_camera"
+        ],
+        "film_emulation": [
+          "kodak_gold_200_look"
+        ],
+        "quality": [
+          "candid_imperfect"
+        ]
+      },
+      "optional": [
+        "명암에 따른 억제된 입자",
+        "인화물로 제시한 경우에만 인화·스캔층"
+      ],
+      "do_not_infer": [
+        "Kodak 원본 인증",
+        "빛샘과 긁힘 의무",
+        "인화지 먼지와 피사체 먼지 혼동"
+      ],
+      "example_en": "A consumer-film-style family snapshot has restrained image-layer grain; if shown as a print, the paper edge belongs to the separate physical object.",
+      "source_ids": [
+        "S12",
+        "S13"
+      ]
+    },
+    {
+      "id": "pb_instant_print_on_table",
+      "scenario_ko": "테이블 위 즉석 인화 카드",
+      "proposals": [
+        "pr_instant_print_material_object",
+        "pr_object_contact_shadow_support"
+      ],
+      "existing_profile_ids": [
+        "physical_print_scan_material_context"
+      ],
+      "seed_slots": {
+        "medium": [
+          "still_life_photo"
+        ]
+      },
+      "optional": [
+        "테이블과 카드 사이의 그림자",
+        "이미지면과 카드 재질 구분"
+      ],
+      "do_not_infer": [
+        "흰 테두리만으로 실제 필름 인증",
+        "사용하지 않은 사진에 화학 얼룩 의무"
+      ],
+      "example_en": "A complete instant print lies on the table; its image window, white card border, thickness, and cast shadow are visible together.",
+      "source_ids": [
+        "S14"
+      ]
+    },
+    {
+      "id": "pb_homevideo_still",
+      "scenario_ko": "가정용 캠코더 정지 프레임",
+      "proposals": [
+        "pr_camcorder_still_temporal_container",
+        "pr_conditional_imperfection_budget"
+      ],
+      "existing_profile_ids": [],
+      "seed_slots": {
+        "medium": [
+          "vhs_video_frame_photo"
+        ],
+        "camera_type": [
+          "vhs_camcorder_camera"
+        ],
+        "motion": [
+          "vhs_interlace_smear"
+        ]
+      },
+      "optional": [
+        "움직이는 손의 매체에 맞는 흔적"
+      ],
+      "do_not_infer": [
+        "정지 인물 화보에 scanline만 추가",
+        "실제 녹화 날짜",
+        "CCTV 보안 관찰"
+      ],
+      "example_en": "One home-video frame catches the adult blowing out candles, with a little movement on the hand and the surrounding birthday table still visible.",
+      "source_ids": [
+        "S05",
+        "S26"
+      ]
+    },
+    {
+      "id": "pb_cctv_shop_entry",
+      "scenario_ko": "상점 출입구 고정 감시 시점",
+      "proposals": [
+        "pr_fixed_surveillance_observation",
+        "pr_shadows_local_digital_noise"
+      ],
+      "existing_profile_ids": [],
+      "seed_slots": {
+        "medium": [
+          "cctv_frame"
+        ],
+        "camera_type": [
+          "cctv_camera"
+        ],
+        "motion": [
+          "cctv_fixed_static"
+        ]
+      },
+      "optional": [
+        "저조도라면 국소 노이즈 또는 압축"
+      ],
+      "do_not_infer": [
+        "실제 감시 기록 인증",
+        "타임스탬프만으로 장르 결정",
+        "이동하는 영화 카메라"
+      ],
+      "example_en": "The high fixed camera covers the shop entrance and aisle; the entering adult is small relative to the room, with quality limited only where the light falls off.",
+      "source_ids": [
+        "S15"
+      ]
+    },
+    {
+      "id": "pb_hazy_distant_landscape",
+      "scenario_ko": "먼 능선이 있는 야외 풍경",
+      "proposals": [
+        "pr_atmospheric_distance_contrast",
+        "pr_camera_distance_subject_scale"
+      ],
+      "existing_profile_ids": [
+        "three_plane_depth_chain"
+      ],
+      "seed_slots": {
+        "medium": [
+          "travel_photo"
+        ],
+        "genre": [
+          "landscape"
+        ]
+      },
+      "optional": [
+        "원경 대비 감소"
+      ],
+      "do_not_infer": [
+        "전역 흐림",
+        "실내 연무",
+        "모든 야외 장면의 헤이즈"
+      ],
+      "example_en": "The foreground wall retains surface detail while successive distant ridges lose contrast gradually in the afternoon air.",
+      "source_ids": [
+        "S16"
+      ]
+    },
+    {
+      "id": "pb_documentary_style_fiction",
+      "scenario_ko": "합성 이미지의 다큐멘터리 스타일",
+      "proposals": [
+        "pr_documentary_authenticity_boundary",
+        "pr_observed_action_trace",
+        "pr_environmental_portrait_subject_place"
+      ],
+      "existing_profile_ids": [],
+      "seed_slots": {
+        "medium": [
+          "documentary_photo"
+        ],
+        "genre": [
+          "documentary"
+        ],
+        "capture_context": [
+          "street_observation_documentary_context"
+        ]
+      },
+      "optional": [
+        "상황을 설명하는 비연출풍 거리·행동"
+      ],
+      "do_not_infer": [
+        "실제 사건 증거",
+        "실제 촬영자",
+        "뉴스 보도 라벨을 사실 인증으로 사용"
+      ],
+      "example_en": "A fictional documentary-style image observes an adult volunteer arranging supplies in a community room, with the task and surrounding space clear.",
+      "source_ids": [
+        "S18",
+        "S19"
+      ]
+    }
+  ]
+}

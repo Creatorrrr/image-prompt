@@ -1,0 +1,82 @@
+{
+  "schema_version": "photorealism-independent-arm-result/v1",
+  "arm_id": "a",
+  "request_envelope_sha256": "6324e5a470f753bbc6ab9771bd87b7edfcab7c9f5bd92a73ead580dce4ca603c",
+  "frozen_core_file_sha256": "d08a1aa6fc43166f4883beb2d08d5373d3878470bbd66b322832955c354404c7",
+  "frozen_core_canonical_sha256": "c158d3703df62a65ac6241bb725558696e121b6b68fb7c82b219ec6a5dbbdbc3",
+  "source_snapshot_file_sha256": "e743d71e5d77029eb5488b6b6593810d0631fcba252723c828c8e6c8768d77bc",
+  "calibration": {
+    "occurred": true,
+    "initial_pack_id": "78b0ef3ab260048a",
+    "initial_pack_file_sha256": "a3277874408558d99b8b08523c04132051c879682f6a4cb4c8ca0d736f6cae68",
+    "final_pack_id": "c9bee19b66f59836",
+    "final_pack_file_sha256": "53bd993e33fa84dbd6013e8e54fb94654875a1c87558dd17dee00c3c0d5a79a4",
+    "note": "The coordinator enriched generic source/index owner cues after initial recall failure. The same frozen core was reused; this is calibration, not independent holdout evidence."
+  },
+  "stages": {
+    "source": "present_3_of_3_target_profiles_and_slot_candidates",
+    "index": "present_3_of_3_target_profiles_and_slot_entries",
+    "pack_exposure": {
+      "status": "partial_fail",
+      "exposed_target_profile_ids": [
+        "pr_environmental_portrait_subject_place"
+      ],
+      "missing_target_profile_ids": [
+        "pr_fabric_tension_fold_attachment",
+        "pr_object_contact_shadow_support"
+      ],
+      "candidate_bundle_count": 0,
+      "bundle_note": "pe_environmental_maker omitted by normal open-dimension joint-admission policy; no bypass."
+    },
+    "selection": {
+      "selected_visual_concept_ids": [
+        "visual-concept:pr_environmental_portrait_subject_place"
+      ],
+      "selected_target_hard_profiles": [
+        "pr_environmental_portrait_subject_place"
+      ]
+    },
+    "composed_prompt_audit": {
+      "status": "pass",
+      "failure_count": 0,
+      "warning_count": 4
+    },
+    "runtime_request_audit": {
+      "status": "pass",
+      "runtime_prompt_id": "0d29b963d1cfd646",
+      "reference_count": 1
+    },
+    "image_generation": {
+      "tool": "image_gen.imagegen",
+      "image_calls": 1,
+      "native_output_path": "/Users/chasoik/.codex/generated_images/01a0cc51-2753-7a13-9030-a3c7efe539cc/exec-b4344146-df6f-4bd9-a526-c715b6a1295b.png",
+      "repo_copy_path": "/Users/chasoik/Projects/image-prompt/generated_images/photorealism-arm-a-20260923/render.png",
+      "image_sha256": "01fc6c2dbeaa6a03084243dc75b30377afcef661d36653d5a2cd1b4e288633ce",
+      "ledger_run_id": "b77f8f506a22b2d4"
+    },
+    "pixel_review": {
+      "selected_hard_gate_status": "failed_technical_hard_gates",
+      "selected_hard_gate_failures": [
+        "embodiment_contact_and_space"
+      ],
+      "external_target_profile_statuses": {
+        "pr_environmental_portrait_subject_place": "pass",
+        "pr_fabric_tension_fold_attachment": "fail",
+        "pr_object_contact_shadow_support": "fail"
+      },
+      "combined_target_status": "fail",
+      "core_event_status": "fail_right_hand_targets_ruler_not_folio_fold"
+    },
+    "user_judgment": "pending_not_yet_received"
+  },
+  "overall": "fail",
+  "limitations": [
+    "Source/index presence is not pack exposure or pixel success.",
+    "Only environmental profile was selected as a pack hard obligation; fabric and contact-shadow judgments are external target checks.",
+    "Garment closure is obscured and the ruler shadow direction is not clearly resolvable at native pixels, so both profiles fail under partial_is_fail.",
+    "The requested right-hand fold movement is not visible; the selected hard embodiment contact gate fails.",
+    "Visible adult appearance continuity is observed; identity and protected traits are not inferred.",
+    "Strict pre-core input isolation was not fully satisfied because of the general memory registry lookup; no prior scene prose or other-arm material was used."
+  ],
+  "precore_isolation_note": "Before freezing the core, a keyword-only search of the general MEMORY.md registry was run while locating relevant workflow history. The returned snippets were procedural keywords, not prior prompts, packs, images, target-contract content, or other-arm outputs. This was outside the skill’s literal pre-core input allowlist; treat strict procedural isolation as not fully satisfied."
+}

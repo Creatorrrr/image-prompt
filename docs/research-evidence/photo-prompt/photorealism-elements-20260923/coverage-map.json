@@ -1,0 +1,515 @@
+{
+  "schema_version": "photo-photorealism-keyword-coverage/research-v1",
+  "referenced_conversation_id": "6ab33f23-a8bc-83e8-abb9-8e41f2af7191",
+  "note": "번호는 참조 대화 본문의 1~40절이다. 이 표의 status는 연구 판단이며 런타임 노출 상태가 아니다.",
+  "sections": [
+    {
+      "n": 1,
+      "topic": "촬영 장르·매체",
+      "status": "split",
+      "existing": [
+        "medium",
+        "genre"
+      ],
+      "proposed": [
+        "pr_environmental_portrait_subject_place",
+        "pr_fixed_surveillance_observation",
+        "pr_camcorder_still_temporal_container",
+        "pr_documentary_authenticity_boundary"
+      ],
+      "boundary": "사진 장르와 실제 기록 진정성을 분리"
+    },
+    {
+      "n": 2,
+      "topic": "카메라 포맷·센서",
+      "status": "metadata_plus_candidate",
+      "existing": [
+        "camera_type"
+      ],
+      "proposed": [
+        "pr_shadows_local_digital_noise"
+      ],
+      "boundary": "센서 크기·기종은 픽셀에서 확정하지 않음"
+    },
+    {
+      "n": 3,
+      "topic": "초점거리·렌즈 어휘",
+      "status": "reuse",
+      "existing": [
+        "wide_angle_near_field_perspective",
+        "telephoto_distance_compression_relation",
+        "lens"
+      ],
+      "proposed": [
+        "pr_camera_distance_subject_scale"
+      ],
+      "boundary": "원근 단서는 카메라 위치·거리와 함께 기록"
+    },
+    {
+      "n": 4,
+      "topic": "카메라 거리·shot size",
+      "status": "extend",
+      "existing": [
+        "shot_scale",
+        "distance_narrative"
+      ],
+      "proposed": [
+        "pr_camera_distance_subject_scale"
+      ],
+      "boundary": "머리 크기·신체 범위·환경 여백을 함께 판정"
+    },
+    {
+      "n": 5,
+      "topic": "조리개·피사계심도",
+      "status": "reuse",
+      "existing": [
+        "shallow_depth_focus_falloff_relation",
+        "focus"
+      ],
+      "proposed": [
+        "pr_focus_plane_subject_falloff"
+      ],
+      "boundary": "f-number만으로 보케 형태를 강제하지 않음"
+    },
+    {
+      "n": 6,
+      "topic": "초점 대상·오차",
+      "status": "extend",
+      "existing": [
+        "focus",
+        "shallow_depth_focus_falloff_relation"
+      ],
+      "proposed": [
+        "pr_focus_plane_subject_falloff"
+      ],
+      "boundary": "미스포커스는 선택적, 중요한 행동 대상의 가독성 우선"
+    },
+    {
+      "n": 7,
+      "topic": "셔터·움직임",
+      "status": "reuse",
+      "existing": [
+        "panning_subject_tracking_motion_relation",
+        "rear_curtain_flash_motion_trace",
+        "motion"
+      ],
+      "proposed": [
+        "pr_observed_action_trace"
+      ],
+      "boundary": "피사체 흐림·배경 흐림·카메라 흔들림의 소유자를 분리"
+    },
+    {
+      "n": 8,
+      "topic": "자연광 방향·광질",
+      "status": "reuse",
+      "existing": [
+        "hard_light_shadow_edge_relation",
+        "soft_light_shadow_edge_relation",
+        "golden_hour_low_sun_relation"
+      ],
+      "proposed": [
+        "pr_object_contact_shadow_support"
+      ],
+      "boundary": "광질은 밝기가 아닌 그림자 경계와 표면 반응"
+    },
+    {
+      "n": 9,
+      "topic": "실내 인공광·practical",
+      "status": "reuse",
+      "existing": [
+        "motivated_practical_mixed_interior_relation",
+        "lighting"
+      ],
+      "proposed": [
+        "pr_scene_owned_exposure_tradeoff"
+      ],
+      "boundary": "광원 물체와 실제 수광면을 연결"
+    },
+    {
+      "n": 10,
+      "topic": "혼합 색온도",
+      "status": "reuse",
+      "existing": [
+        "mixed_illuminant_white_balance_relation"
+      ],
+      "proposed": [],
+      "boundary": "두 광원과 공간별 색 반응을 요구; Kelvin 숫자는 메타데이터"
+    },
+    {
+      "n": 11,
+      "topic": "노출·클리핑",
+      "status": "extend",
+      "existing": [
+        "highlight_rolloff_tone_response"
+      ],
+      "proposed": [
+        "pr_scene_owned_exposure_tradeoff"
+      ],
+      "boundary": "고휘도 손실의 위치와 보존할 주피사체를 지정"
+    },
+    {
+      "n": 12,
+      "topic": "dynamic range·roll-off",
+      "status": "reuse",
+      "existing": [
+        "highlight_rolloff_tone_response"
+      ],
+      "proposed": [
+        "pr_scene_owned_exposure_tradeoff"
+      ],
+      "boundary": "HDR 라벨과 실제 국소 톤 분포를 구별"
+    },
+    {
+      "n": 13,
+      "topic": "화이트밸런스·색온도",
+      "status": "reuse",
+      "existing": [
+        "mixed_illuminant_white_balance_relation",
+        "color_grading"
+      ],
+      "proposed": [],
+      "boundary": "3200K 등 수치만으로 가시 결과 확정 금지"
+    },
+    {
+      "n": 14,
+      "topic": "피부 질감",
+      "status": "extend",
+      "existing": [
+        "sheer_complexion_texture_preservation",
+        "skin_finish"
+      ],
+      "proposed": [
+        "pr_skin_detail_lighting_scale"
+      ],
+      "boundary": "모공·결점은 보이는 스케일과 요청에 따라 선택"
+    },
+    {
+      "n": 15,
+      "topic": "얼굴 비대칭",
+      "status": "advisory",
+      "existing": [
+        "face_shape_relation"
+      ],
+      "proposed": [
+        "pr_skin_detail_lighting_scale"
+      ],
+      "boundary": "참조 외형을 임의로 비대칭화하거나 결점 강제 금지"
+    },
+    {
+      "n": 16,
+      "topic": "머리카락 잔가닥",
+      "status": "extend",
+      "existing": [
+        "hair_style",
+        "wet_damp_clumped_hair_state"
+      ],
+      "proposed": [
+        "pr_hair_strand_owner_and_cause"
+      ],
+      "boundary": "잔가닥의 두피 부착·바람 원인 확인"
+    },
+    {
+      "n": 17,
+      "topic": "옷감 결·주름",
+      "status": "extend",
+      "existing": [
+        "garment_detail",
+        "surface_material"
+      ],
+      "proposed": [
+        "pr_fabric_tension_fold_attachment"
+      ],
+      "boundary": "주름 시작점과 장력·봉제선 연결"
+    },
+    {
+      "n": 18,
+      "topic": "금속·유리·가죽·목재·플라스틱",
+      "status": "extend",
+      "existing": [
+        "surface_material",
+        "texture"
+      ],
+      "proposed": [
+        "pr_surface_wear_contact_owner",
+        "pr_reflection_scene_binding"
+      ],
+      "boundary": "재질별 반사·마모의 위치와 원인 구분"
+    },
+    {
+      "n": 19,
+      "topic": "lived-in 공간",
+      "status": "extend",
+      "existing": [
+        "architectural_threshold_frame_depth_relation",
+        "space_condition"
+      ],
+      "proposed": [
+        "pr_surface_wear_contact_owner",
+        "pr_environmental_portrait_subject_place"
+      ],
+      "boundary": "사용 흔적은 청결·기능·동작에 조건부"
+    },
+    {
+      "n": 20,
+      "topic": "그림자·반사·중력 일관성",
+      "status": "extend",
+      "existing": [
+        "wet_surface_light_reflection_owner_relation",
+        "reflection_logic"
+      ],
+      "proposed": [
+        "pr_object_contact_shadow_support",
+        "pr_reflection_scene_binding"
+      ],
+      "boundary": "동일 광원·동일 물체·동일 지지면의 관계"
+    },
+    {
+      "n": 21,
+      "topic": "구도·가림·레이어",
+      "status": "reuse",
+      "existing": [
+        "three_plane_depth_chain",
+        "frame_within_frame_boundary_relation",
+        "subject_field_negative_space_relation"
+      ],
+      "proposed": [
+        "pr_casual_crop_subject_legibility"
+      ],
+      "boundary": "가림이 요청된 주피사체 정보를 삭제하면 실패"
+    },
+    {
+      "n": 22,
+      "topic": "카메라 각도",
+      "status": "reuse",
+      "existing": [
+        "camera_direction",
+        "camera_height"
+      ],
+      "proposed": [
+        "pr_camera_distance_subject_scale"
+      ],
+      "boundary": "기울기만으로 거리·행동·장르를 대신하지 않음"
+    },
+    {
+      "n": 23,
+      "topic": "스냅의 자연스러운 crop",
+      "status": "extend",
+      "existing": [
+        "composition",
+        "shot_scale"
+      ],
+      "proposed": [
+        "pr_casual_crop_subject_legibility"
+      ],
+      "boundary": "불완전 프레임에서도 핵심 의미는 보존"
+    },
+    {
+      "n": 24,
+      "topic": "포즈 대신 행동",
+      "status": "extend",
+      "existing": [
+        "peak_action_event_phase",
+        "action"
+      ],
+      "proposed": [
+        "pr_observed_action_trace"
+      ],
+      "boundary": "행동 대상·접촉·결과를 같은 장면에 둠"
+    },
+    {
+      "n": 25,
+      "topic": "시선",
+      "status": "advisory",
+      "existing": [
+        "gaze_target",
+        "gaze_engagement"
+      ],
+      "proposed": [
+        "pr_observed_action_trace"
+      ],
+      "boundary": "off-camera 시선이 행동 대상과 일치할 때만 관계적 의미"
+    },
+    {
+      "n": 26,
+      "topic": "렌즈 결함·halation",
+      "status": "reuse",
+      "existing": [
+        "lens_ghosting_flare_alignment",
+        "veiling_flare_contrast_loss_relation",
+        "film_halation_highlight_edge_relation",
+        "lens_artifact"
+      ],
+      "proposed": [
+        "pr_conditional_imperfection_budget"
+      ],
+      "boundary": "광학 확산·필름 halation·후처리 bloom 분리"
+    },
+    {
+      "n": 27,
+      "topic": "센서 노이즈·압축",
+      "status": "extend",
+      "existing": [
+        "grain_profile",
+        "early_2000s_compact_digicam_social_repost"
+      ],
+      "proposed": [
+        "pr_shadows_local_digital_noise",
+        "pr_jpeg_edge_blocking"
+      ],
+      "boundary": "휘도/색 노이즈와 JPEG 경계 손상 분리"
+    },
+    {
+      "n": 28,
+      "topic": "필름 물성·스톡",
+      "status": "extend",
+      "existing": [
+        "film_halation_highlight_edge_relation",
+        "film_emulation"
+      ],
+      "proposed": [
+        "pr_film_grain_print_scan_scope",
+        "pr_instant_print_material_object"
+      ],
+      "boundary": "stock 이름은 룩 후보; 실제 화학 공정 인증 금지"
+    },
+    {
+      "n": 29,
+      "topic": "사진 기술 시대",
+      "status": "reuse",
+      "existing": [
+        "early_2000s_compact_digicam_social_repost",
+        "photo_prompt_photo_era_extension.json"
+      ],
+      "proposed": [
+        "pr_jpeg_edge_blocking"
+      ],
+      "boundary": "출시 시점·촬영 연도·후대 복제를 구별"
+    },
+    {
+      "n": 30,
+      "topic": "색 처리·미보정",
+      "status": "advisory",
+      "existing": [
+        "color_grading",
+        "quality"
+      ],
+      "proposed": [
+        "pr_skin_detail_lighting_scale"
+      ],
+      "boundary": "unretouched는 실제 편집 이력 인증이 아님"
+    },
+    {
+      "n": 31,
+      "topic": "날씨·공기",
+      "status": "extend",
+      "existing": [
+        "weather",
+        "ambient_particle"
+      ],
+      "proposed": [
+        "pr_atmospheric_distance_contrast"
+      ],
+      "boundary": "헤이즈·먼지·습기는 상황별 물리 관계"
+    },
+    {
+      "n": 32,
+      "topic": "대기 원근",
+      "status": "extend",
+      "existing": [
+        "three_plane_depth_chain"
+      ],
+      "proposed": [
+        "pr_atmospheric_distance_contrast"
+      ],
+      "boundary": "먼 대상의 대비 감소를 전역 흐림과 구별"
+    },
+    {
+      "n": 33,
+      "topic": "controlled imperfection",
+      "status": "governance",
+      "existing": [
+        "quality",
+        "grain_profile",
+        "lens_artifact"
+      ],
+      "proposed": [
+        "pr_conditional_imperfection_budget"
+      ],
+      "boundary": "일률적 2~4개 규칙은 근거 없음"
+    },
+    {
+      "n": 34,
+      "topic": "8K·masterpiece 등 품질어",
+      "status": "downrank",
+      "existing": [
+        "quality"
+      ],
+      "proposed": [],
+      "boundary": "실사 관계를 대신하는 hard 증거로 취급 금지"
+    },
+    {
+      "n": 35,
+      "topic": "RAW DSLR",
+      "status": "metadata_only",
+      "existing": [
+        "camera_type"
+      ],
+      "proposed": [],
+      "boundary": "RAW는 센서 파일 형식, 시각 스타일이 아님"
+    },
+    {
+      "n": 36,
+      "topic": "HDR",
+      "status": "split",
+      "existing": [
+        "highlight_rolloff_tone_response"
+      ],
+      "proposed": [
+        "pr_scene_owned_exposure_tradeoff"
+      ],
+      "boundary": "다중 노출·톤 매핑 공정과 보이는 하이라이트를 분리"
+    },
+    {
+      "n": 37,
+      "topic": "CGI·매끈한 피부 등 충돌 표현",
+      "status": "governance",
+      "existing": [
+        "quality",
+        "negative_prompt"
+      ],
+      "proposed": [
+        "pr_conditional_imperfection_budget"
+      ],
+      "boundary": "사용자 명시 스타일이 CGI면 사진 기본값이 덮어쓰지 않음"
+    },
+    {
+      "n": 38,
+      "topic": "negative prompt",
+      "status": "model_specific",
+      "existing": [
+        "negative_prompt"
+      ],
+      "proposed": [],
+      "boundary": "모델별 지원·효과가 다르며 장황한 일괄 목록 금지"
+    },
+    {
+      "n": 39,
+      "topic": "중요도 별점",
+      "status": "hypothesis_only",
+      "existing": [],
+      "proposed": [],
+      "boundary": "대화의 별점은 측정 결과가 아니므로 우선순위 실험으로 검증"
+    },
+    {
+      "n": 40,
+      "topic": "조립 순서·예시",
+      "status": "method_only",
+      "existing": [
+        "photo-authorial-core/v3",
+        "photo-candidate-pack/v6"
+      ],
+      "proposed": [],
+      "boundary": "사용자 고정 의도를 먼저 쓰고 후보는 열린 차원에만 적용"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": "photorealism-arm-external-target-pixel-review/v1",
+  "arm_id": "a",
+  "result_image": "/Users/chasoik/Projects/image-prompt/generated_images/photorealism-arm-a-20260923/render.png",
+  "result_sha256": "01fc6c2dbeaa6a03084243dc75b30377afcef661d36653d5a2cd1b4e288633ce",
+  "review_scales": [
+    "full_frame",
+    "native_1086x1448"
+  ],
+  "reviewer": "Codex arm A agent",
+  "review_rule": "partial_is_fail; each profile passes only if every owner-bound component passes in one saved image",
+  "profiles": {
+    "pr_environmental_portrait_subject_place": {
+      "owner": "adult woman, the mounting bench and botanical workroom in the same frame",
+      "status": "pass",
+      "components": [
+        {
+          "component_id": "adult_subject_identifiable",
+          "status": "pass",
+          "evidence": "Her face and both hands are readable at environmental portrait scale."
+        },
+        {
+          "component_id": "task_specific_place",
+          "status": "pass",
+          "evidence": "Specimen drawers, pressed leaves, labels and mounting papers identify the workroom."
+        },
+        {
+          "component_id": "subject_place_task_link",
+          "status": "pass",
+          "evidence": "Her hands work on the folio and ruler at the mounting bench amid specimen materials."
+        },
+        {
+          "component_id": "surrounding_space",
+          "status": "pass",
+          "evidence": "Window, cabinets and broad bench remain visible around the subject."
+        }
+      ]
+    },
+    "pr_fabric_tension_fold_attachment": {
+      "owner": "olive canvas apron worn by the adult woman",
+      "status": "fail",
+      "components": [
+        {
+          "component_id": "material_texture",
+          "status": "pass",
+          "evidence": "Canvas weave and matte worn texture are distinguishable on the apron front."
+        },
+        {
+          "component_id": "fold_origin",
+          "status": "pass",
+          "evidence": "Apron folds begin near the waist seam and pocket attachment, following the tied waist."
+        },
+        {
+          "component_id": "fold_direction",
+          "status": "pass",
+          "evidence": "Horizontal compression at the waist and angled folds below it are consistent with her slight forward lean."
+        },
+        {
+          "component_id": "silhouette_and_closure",
+          "status": "fail",
+          "evidence": "The apron silhouette is visible, but its tie or fastening closure is obscured behind the body; the full closure relation cannot be verified."
+        }
+      ]
+    },
+    "pr_object_contact_shadow_support": {
+      "owner": "brass ruler on the wooden workbench",
+      "status": "fail",
+      "components": [
+        {
+          "component_id": "object_and_support_visible",
+          "status": "pass",
+          "evidence": "The full brass ruler and wood worktop are visible together."
+        },
+        {
+          "component_id": "local_contact_darkening",
+          "status": "pass",
+          "evidence": "A narrow dark line runs along the ruler’s bench-contact edge rather than appearing as detached shading."
+        },
+        {
+          "component_id": "shadow_light_consistency",
+          "status": "fail",
+          "evidence": "The ruler has only a thin dark border at contact; a separate directional soft shadow cannot be resolved clearly enough to verify agreement with the left-side window."
+        },
+        {
+          "component_id": "no_support_gap",
+          "status": "pass",
+          "evidence": "The ruler lies flush along its length on the bench, with no visible floating gap."
+        }
+      ]
+    }
+  },
+  "combined_target_status": "fail",
+  "limitations": [
+    "Only the environmental profile was exposed and selected as a pack visual concept; the other two are external target checks, not audited hard pack obligations.",
+    "Image-grounded judgments are agent observations, not user acceptance or proof of actual capture provenance."
+  ],
+  "review_crops": [
+    "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_a/review_crops/ruler_contact.png"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "photorealism-independent-arm-result/v1",
+  "arm_id": "c",
+  "scenario": "community seed-swap room; adult woman places a painted ceramic bowl on a shared table; single camcorder frame",
+  "reference_boundary": "visible adult appearance guidance only; identity and protected traits not assessed",
+  "source_index": {
+    "target_profile_ids_in_registry": [
+      "pr_camcorder_still_temporal_container",
+      "pr_observed_action_trace",
+      "pr_scene_owned_exposure_tradeoff"
+    ],
+    "target_profile_ids_in_visual_index": [
+      "pr_camcorder_still_temporal_container",
+      "pr_observed_action_trace",
+      "pr_scene_owned_exposure_tradeoff"
+    ],
+    "target_profile_ids_in_semantic_index": [
+      "pr_camcorder_still_temporal_container",
+      "pr_observed_action_trace",
+      "pr_scene_owned_exposure_tradeoff"
+    ],
+    "source_snapshot": "../source_snapshot.json"
+  },
+  "calibration": {
+    "baseline_core_changed_after_first_pack": false,
+    "initial_pack_id": "f2313e49856483af",
+    "initial_target_visual_concepts": [
+      "pr_camcorder_still_temporal_container"
+    ],
+    "calibrated_pack_id": "2b0164633f2790b0",
+    "calibrated_target_visual_concepts": [
+      "pr_camcorder_still_temporal_container",
+      "pr_scene_owned_exposure_tradeoff"
+    ],
+    "note": "Generic owner cues and indexes were calibrated after initial recall failure; this is not an independent holdout. Global retrieval limit still omitted action trace. The pe_window_action bundle is absent because its action member affects the locked action dimension."
+  },
+  "audit": {
+    "composed_status": "pass",
+    "runtime_status": "pass",
+    "runtime_reference_count": 1,
+    "effective_visual_contract_sha256": "0573a9a6b68089d819c74b897c74ea7239ad95e48614c5ed992e0b4fa8e1bac4"
+  },
+  "image": {
+    "tool": "image_gen.imagegen",
+    "call_count": 1,
+    "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/photorealism-elements-20260923/qualification/arm_c/generated_images/seed-swap-camcorder-20260923T035043Z/native_render.png",
+    "sha256": "6aecf22ac69df5b20205ef555c6326373c88a90547458461074dd1a5298e78a2",
+    "pixel_size": [
+      1448,
+      1086
+    ]
+  },
+  "pixel": {
+    "selected_hard_gate_count": 13,
+    "selected_failed_hard_gates": [
+      "vo_pr_camcorder_still_temporal_container_3",
+      "vo_pr_camcorder_still_temporal_container_4",
+      "vo_pr_scene_owned_exposure_tradeoff_3"
+    ],
+    "selected_qualification_status": "failed_technical_hard_gates",
+    "target_profile_verdicts": {
+      "pr_camcorder_still_temporal_container": "fail",
+      "pr_scene_owned_exposure_tradeoff": "fail",
+      "pr_observed_action_trace": "fail"
+    },
+    "unexposed_target_external_review": "pr_observed_action_trace",
+    "overall_status": "fail",
+    "partial_is_fail": true
+  },
+  "user_judgment": "pending",
+  "limitations": [
+    "Composed and runtime audit prove text, binding and reference bytes, not image fidelity.",
+    "The unexposed action trace was evaluated externally in pixels and is not part of the pack-promoted hard contract.",
+    "A generated video-style image does not prove actual camcorder provenance."
+  ]
+}
