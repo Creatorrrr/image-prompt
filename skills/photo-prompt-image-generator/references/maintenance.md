@@ -4,6 +4,14 @@ Body-action plausibility review is agent-owned and separate from semantic meanin
 
 Maintenance-only. Never read this file while resolving a live request or writing its basic prompt. Maintained keyword meanings belong in structured runtime data and their tests; they must not be copied into `SKILL.md` or used as pre-core agent knowledge.
 
+## Neutral pre-core feature catalog
+
+`precore/visual_feature_catalog.json` is the one project-local data exception permitted before a new core is frozen. It is a neutral list of photographic observation axes, not a keyword-to-meaning table or a candidate source. Preserve the user-referenced 45 numbered categories and their full `source_examples`. Keep later categories and examples in clearly marked `origin: added` / `added_examples` fields with a reason; correct a transcription only against the source conversation. A category or example never supplies requester definitions, profile activation, exclusions, required assertions, visual intent, or hard render gates. It must not route a request type to a fixed scene, camera recipe, or style.
+
+Retain source examples that describe an absence, but realize them as positive visible states in a baseline prompt so they do not become blanket negative directives. Write new `added_examples` as positive visual cues where possible. A live selection validation must compare its catalog bytes with the current permitted file; the explicit historical-catalog mode is only for archived record checks.
+
+Keep project profile IDs, candidate/preset/slot IDs, glossary mappings, and semantic-index documents out of this catalog. Generic photographic words can coincide with a profile's exact term; inspect and report those overlaps without deleting source examples or treating coincidence as authority. Keep the catalog out of the candidate index and BM25F input. Maintain `tests/test_photo_prepack_isolation_v5.py` and `tests/test_photo_precore_feature_selection.py` when changing the catalog or its permitted pre-core boundary. A run's `precore_feature_selection.json` is a separate audit record, never a generator input or parent-retry hard obligation.
+
 User instructions and existing session authorization govern maintenance and evaluation scope. A requested edit or render test does not need a second confirmation merely because this reference describes it. Preserve the initial-request isolation boundary and the narrow retry-only parent whitelist in `SKILL.md`; neither research evidence nor a compact pack view is pre-core meaning input.
 
 New v6 packs use `authorial_composition.authorship_policy` (`photo-authorial-authorship-policy/v1`) to bind the permitted dimensions and `min(2, len(open_dimensions))` authorial-decision minimum to the frozen core. Test zero, one, and multiple open dimensions, locked-dimension mutations, policy tampering, and replay without the policy. V2–v5 cannot opt into the new policy; existing serialized packs keep the prior two-decision minimum. Keep all semantic anchors and three preserved baseline phrases mandatory.
@@ -75,6 +83,7 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 .venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v6 -v
+.venv/bin/python -m unittest tests.test_photo_precore_feature_selection -v
 .venv/bin/python -m unittest tests.test_photo_bm25f_retrieval -v
 .venv/bin/python -m unittest tests.test_photo_character_response_concepts -v
 .venv/bin/python -m unittest tests.test_photo_visual_profile_retrieval -v
