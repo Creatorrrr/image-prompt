@@ -32,7 +32,7 @@ After rereading the complete final prompt, add:
 
 For `body_action`, populate all five checks using the neutral shape in `SKILL.md`. A substantive control may serve more than one check; do not pad the prompt with duplicate clauses. Keep meta-review explanations out of runtime prose. Rehashing is the last step after a real re-review, not an automatic repair for stale evidence.
 
-If the core's meaning is clear but the proposed realization is inconsistent, repair agent-authored staging before the first freeze. After freeze, preserve literal locked evidence and use only the allowed composition changes. A required frozen change needs the existing lineage/rebuild path, preserving requester intent and the meaningful contact. Do not copy the motivating case's body part, target, direction, or numerical joint values into generic defaults.
+If the core's meaning is clear but the proposed realization is inconsistent, repair agent-authored staging before the first freeze. After freeze, unbound staging on open dimensions may be refined, simplified, or replaced without changing the saved baseline. Preserve literal locked evidence and review the entire resulting prompt again; do not carry a stale postcomposition review forward. A required frozen change needs the existing lineage/rebuild path, preserving requester intent and the meaningful contact. Keep detailed support and articulation reasoning in the review record, using only consequential spatial relations in the photographic prose. Do not copy the motivating case's body part, target, direction, or numerical joint values into generic defaults.
 
 ## Runtime boundary
 

@@ -43,6 +43,8 @@ try:
         INTENT_LOCK_CONTRACT_VERSION,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
+        LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
+        LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
         LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
         NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
         RENDER_REPAIR_ALLOWED_AXES,
@@ -6423,12 +6425,13 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
 
 def audit_authorial_authorship_policy(
     pack: dict[str, Any],
-) -> tuple[list[dict[str, Any]], int, int]:
-    """Recompute the optional v6 policy; unmarked replay keeps the old minimum.
+) -> tuple[list[dict[str, Any]], int, int, int]:
+    """Derive decision, open-dimension and extra-evidence minima by version.
 
-    The serialized minimum is never trusted. Both policy and binding blocks
-    must equal independent derivations from the frozen core before 0/1 open
-    dimensions or decisions are accepted.
+    V2 permits a complete authored baseline to survive unchanged. Its optional
+    final refinements do not weaken the separately audited semantic anchors or
+    assertions. V1 and unmarked historical packs retain their original quotas.
+    Never trust serialized minima, even after a caller rehashes a forged policy.
     """
 
     authorial = pack.get("authorial_composition")
@@ -6441,7 +6444,7 @@ def audit_authorial_authorship_policy(
         or "source_authorship_policy_sha256" in binding
     )
     if not marked:
-        return [], 2, 2
+        return [], 2, 2, 3
 
     core = pack.get("authorial_core")
     core = core if isinstance(core, dict) else {}
@@ -6449,27 +6452,39 @@ def audit_authorial_authorship_policy(
     intent_lock = intent_lock if isinstance(intent_lock, dict) else {}
     opened = intent_lock.get("open_dimensions")
     opened = opened if isinstance(opened, list) else []
-    minimum_decisions = min(2, len(opened))
+    policy = authorial.get("authorship_policy")
+    policy = policy if isinstance(policy, dict) else {}
+    refinement = policy.get("contract_version") == AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
+    minimum_decisions = 0 if refinement else min(2, len(opened))
+    minimum_evidence = 0 if refinement else 3
+    policy_version = (
+        AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
+        if refinement else LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
+    )
+    binding_version = (
+        AUTHORIAL_CORE_BINDING_CONTRACT_VERSION
+        if refinement else LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION
+    )
     expected_policy = {
-        "contract_version": AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
+        "contract_version": policy_version,
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
         "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
         "allowed_dimensions": copy.deepcopy(opened),
         "minimum_authorial_decisions": minimum_decisions,
-        "minimum_preserved_evidence_phrases": 3,
+        "minimum_preserved_evidence_phrases": minimum_evidence,
         "dimension_policy": "distinct_open_dimensions_only",
         "insufficient_freedom_policy": "do_not_invent_open_dimensions",
     }
     expected_policy["canonical_sha256"] = canonical_json_sha256(expected_policy)
     expected_binding = {
         "composed_field": "authorial_core_binding",
-        "minimum_preserved_evidence_phrases": 3,
+        "minimum_preserved_evidence_phrases": minimum_evidence,
         "minimum_authorial_decisions": minimum_decisions,
         "evidence_must_be_literal_in_baseline_and_final_prompt": True,
         "source_intent_lock_sha256_required": True,
         "all_semantic_anchor_ids_required": True,
         "authorial_decisions_limited_to_open_dimensions": True,
-        "contract_version": AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
+        "contract_version": binding_version,
         "source_authorship_policy_sha256": expected_policy["canonical_sha256"],
     }
     if (
@@ -6483,8 +6498,8 @@ def audit_authorial_authorship_policy(
                 "check": "authorial_authorship_policy_contract",
                 "reason": "the v6 authorship policy and core binding must match the frozen open dimensions and hashes",
             }
-        ], 2, 2
-    return [], minimum_decisions, 0
+        ], 2, 2, 3
+    return [], minimum_decisions, 0, minimum_evidence
 
 
 def audit_authorial_core_v5(
@@ -6494,7 +6509,7 @@ def audit_authorial_core_v5(
     warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     pack_version = str(pack.get("contract_version") or "")
-    failures, minimum_decisions, minimum_open_dimensions = (
+    failures, minimum_decisions, minimum_open_dimensions, minimum_evidence = (
         audit_authorial_authorship_policy(pack)
     )
     if pack_version not in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}:
@@ -6835,12 +6850,24 @@ def audit_authorial_core_v5(
                     "reason": "v5/v6 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
-    evidence = nonempty_string_list(binding.get("preserved_evidence"))
-    if len(evidence) < 3 or len({item.casefold() for item in evidence}) != len(evidence):
+    raw_evidence = binding.get("preserved_evidence")
+    evidence = nonempty_string_list(raw_evidence)
+    if (
+        len(evidence) < minimum_evidence
+        or len({item.casefold() for item in evidence}) != len(evidence)
+        or (
+            minimum_evidence == 0
+            and (
+                not isinstance(raw_evidence, list)
+                or any(not isinstance(item, str) or not item.strip() for item in raw_evidence)
+            )
+        )
+    ):
         failures.append(
             {
                 "check": "authorial_core_evidence",
-                "reason": "authorial_core_binding requires at least three distinct preserved evidence phrases",
+                "reason": "preserved_evidence must be an explicit list of distinct phrases meeting the recorded policy minimum",
+                "minimum_preserved_evidence_phrases": minimum_evidence,
             }
         )
     baseline = str(core.get("baseline_prompt_en") or "")

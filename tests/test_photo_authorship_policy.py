@@ -67,7 +67,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         return copy.deepcopy(self.packs[opened])
 
     @staticmethod
-    def composed(pack: dict) -> dict:
+    def composed(pack: dict, *, legacy: bool = False) -> dict:
         core = pack["authorial_core"]
         lock = core["intent_lock"]
         decisions = [
@@ -77,7 +77,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
                 "rationale": "keeps the requested material and steam readable",
             }
             for dimension in lock["open_dimensions"][:2]
-        ]
+        ] if legacy else []
         return {
             "pack_id": pack["pack_id"],
             "prompt_en": core["baseline_prompt_en"],
@@ -94,7 +94,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
                 ],
                 "preserved_evidence": [
                     row["prompt_evidence"] for row in lock["semantic_anchors"]
-                ],
+                ] if legacy else [],
                 "authorial_decisions": decisions,
             },
             "semantic_clarification_decisions": [
@@ -135,14 +135,16 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
                 pack = self.pack(opened)
                 composed = self.composed(pack)
                 policy = pack["authorial_composition"]["authorship_policy"]
-                self.assertEqual(policy["minimum_authorial_decisions"], min(2, len(opened)))
+                self.assertEqual(policy["contract_version"], "photo-authorial-authorship-policy/v2")
+                self.assertEqual(policy["minimum_authorial_decisions"], 0)
+                self.assertEqual(policy["minimum_preserved_evidence_phrases"], 0)
                 self.assertEqual(policy["allowed_dimensions"], list(opened))
                 self.assertEqual(pack["authorial_core"]["intent_lock"]["open_dimensions"], list(opened))
                 audit = auditor.audit_composed_prompt(pack, composed)
                 self.assertEqual(audit["status"], "pass", audit["failures"])
-                if not opened:
-                    self.assertEqual(composed["prompt_en"], pack["authorial_core"]["baseline_prompt_en"])
-                    self.assertEqual(composed["authorial_core_binding"]["authorial_decisions"], [])
+                self.assertEqual(composed["prompt_en"], pack["authorial_core"]["baseline_prompt_en"])
+                self.assertEqual(composed["authorial_core_binding"]["authorial_decisions"], [])
+                self.assertEqual(composed["authorial_core_binding"]["preserved_evidence"], [])
 
     def test_closed_dimensions_and_missing_anchor_still_fail(self):
         pack = self.pack(())
@@ -165,18 +167,15 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         composed["prompt_en"] = composed["prompt_en"].replace(phrase, "unrelated glossy ornament")
         self.assertIn("intent_lock_prompt_evidence", self.core_failures(pack, composed))
 
-    def test_decision_minimum_distinctness_and_explicit_empty_list_are_enforced(self):
-        for opened in (("framing",), ("framing", "lighting", "camera")):
-            with self.subTest(opened=opened):
-                pack = self.pack(opened)
-                composed = self.composed(pack)
-                composed["authorial_core_binding"]["authorial_decisions"].pop()
-                self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
-
+    def test_optional_decisions_remain_distinct_substantive_and_explicit(self):
         pack = self.pack(("framing", "lighting", "camera"))
-        composed = self.composed(pack)
+        composed = self.composed(pack, legacy=True)
         decisions = composed["authorial_core_binding"]["authorial_decisions"]
         decisions[1]["dimension"] = decisions[0]["dimension"]
+        self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
+
+        composed = self.composed(pack, legacy=True)
+        composed["authorial_core_binding"]["authorial_decisions"][0]["rationale"] = "good"
         self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
 
         pack = self.pack(())
@@ -188,6 +187,39 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         composed = self.composed(pack)
         del composed["authorial_core_binding"]["authorial_decisions"]
         self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
+
+    def test_optional_preserved_evidence_is_still_well_formed_and_literal(self):
+        pack = self.pack(("composition",))
+        for invalid in (None, {}, "", [None], [""], [42], ["invented photographic phrase"]):
+            with self.subTest(invalid=invalid):
+                composed = self.composed(pack)
+                composed["authorial_core_binding"]["preserved_evidence"] = invalid
+                self.assertIn("authorial_core_evidence", self.core_failures(pack, composed))
+        composed = self.composed(pack)
+        del composed["authorial_core_binding"]["preserved_evidence"]
+        self.assertIn("authorial_core_evidence", self.core_failures(pack, composed))
+
+    def test_unbound_staging_can_be_replaced_without_rewriting_the_core(self):
+        pack = self.pack(("camera", "composition"))
+        original_core = copy.deepcopy(pack["authorial_core"])
+        composed = self.composed(pack)
+        self.assertIn("shallow focus", composed["prompt_en"])
+        composed["prompt_en"] = composed["prompt_en"].replace(
+            "shallow focus", "depth extending from the cup to the rainlit room"
+        )
+        composed["authorial_core_binding"]["authorial_decisions"] = [{
+            "dimension": "camera",
+            "decision": "replace the shallow focus with legible room depth",
+            "rationale": "lets the still life draw its presence from the surrounding room",
+        }]
+        audit = auditor.audit_composed_prompt(pack, composed)
+        self.assertEqual(audit["status"], "pass", audit["failures"])
+        self.assertEqual(pack["authorial_core"], original_core)
+
+        # The looser final-pass quotas cannot remove a requester-owned meaning.
+        phrase = original_core["intent_lock"]["semantic_anchors"][0]["prompt_evidence"]
+        composed["prompt_en"] = composed["prompt_en"].replace(phrase, "plain empty counter")
+        self.assertIn("intent_lock_prompt_evidence", self.core_failures(pack, composed))
 
     def test_v3_requires_explicit_freedom_without_weakening_lock_validation(self):
         malformed = self.raw_core(())
@@ -218,16 +250,25 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         mutations.append(missing_binding)
         forged = copy.deepcopy(original)
         policy = forged["authorial_composition"]["authorship_policy"]
-        policy["minimum_authorial_decisions"] = 0
+        policy["minimum_authorial_decisions"] = 1
         del policy["canonical_sha256"]
         policy["canonical_sha256"] = generator.canonical_json_sha256(policy)
         binding = forged["authorial_composition"]["core_binding_contract"]
-        binding["minimum_authorial_decisions"] = 0
+        binding["minimum_authorial_decisions"] = 1
         binding["source_authorship_policy_sha256"] = policy["canonical_sha256"]
         mutations.append(forged)
         wrong_dimensions = copy.deepcopy(original)
         wrong_dimensions["authorial_composition"]["authorship_policy"]["allowed_dimensions"].append("subject")
         mutations.append(wrong_dimensions)
+        wrong_evidence = copy.deepcopy(original)
+        policy = wrong_evidence["authorial_composition"]["authorship_policy"]
+        policy["minimum_preserved_evidence_phrases"] = 1
+        del policy["canonical_sha256"]
+        policy["canonical_sha256"] = generator.canonical_json_sha256(policy)
+        binding = wrong_evidence["authorial_composition"]["core_binding_contract"]
+        binding["minimum_preserved_evidence_phrases"] = 1
+        binding["source_authorship_policy_sha256"] = policy["canonical_sha256"]
+        mutations.append(wrong_evidence)
         for index, pack in enumerate(mutations):
             with self.subTest(mutation=index):
                 # Rehash the outer pack to isolate semantic recomputation from
@@ -245,7 +286,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         del binding["contract_version"]
         del binding["source_authorship_policy_sha256"]
         generator.candidate_pack_recompute_id(pack)
-        composed = self.composed(pack)
+        composed = self.composed(pack, legacy=True)
         audit = auditor.audit_composed_prompt(pack, composed)
         self.assertEqual(audit["status"], "pass", audit["failures"])
         binding["minimum_authorial_decisions"] = 0
@@ -259,6 +300,35 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
         failures = self.core_failures(no_freedom, self.composed(no_freedom))
         self.assertIn("authorial_core_integrity", failures)
         self.assertIn("authorial_core_decisions", failures)
+
+    def test_serialized_v1_policy_retains_original_quotas(self):
+        for opened in ((), ("framing",), ("framing", "lighting", "camera")):
+            with self.subTest(opened=opened):
+                pack = self.pack(opened)
+                authorial = pack["authorial_composition"]
+                policy = authorial["authorship_policy"]
+                policy["contract_version"] = "photo-authorial-authorship-policy/v1"
+                policy["minimum_authorial_decisions"] = min(2, len(opened))
+                policy["minimum_preserved_evidence_phrases"] = 3
+                del policy["canonical_sha256"]
+                policy["canonical_sha256"] = generator.canonical_json_sha256(policy)
+                binding = authorial["core_binding_contract"]
+                binding.update(
+                    contract_version="photo-authorial-core-binding/v2",
+                    source_authorship_policy_sha256=policy["canonical_sha256"],
+                    minimum_authorial_decisions=min(2, len(opened)),
+                    minimum_preserved_evidence_phrases=3,
+                )
+                generator.candidate_pack_recompute_id(pack)
+                composed = self.composed(pack, legacy=True)
+                audit = auditor.audit_composed_prompt(pack, composed)
+                self.assertEqual(audit["status"], "pass", audit["failures"])
+                composed["authorial_core_binding"]["preserved_evidence"] = []
+                self.assertIn("authorial_core_evidence", self.core_failures(pack, composed))
+                if opened:
+                    composed = self.composed(pack, legacy=True)
+                    composed["authorial_core_binding"]["authorial_decisions"].pop()
+                    self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
 
     def test_legacy_versions_cannot_opt_in_and_v2_core_keeps_minimum(self):
         for version in ("v2", "v3", "v4", "v5"):

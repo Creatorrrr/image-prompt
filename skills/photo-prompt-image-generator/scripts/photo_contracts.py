@@ -222,8 +222,10 @@ AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
     "shortened face compared with the identity reference",
 }
 
-AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v1"
-AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v2"
+LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v1"
+LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v2"
+AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v2"
+AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v3"
 
 
 def canonical_json_sha256(payload: Any) -> str:

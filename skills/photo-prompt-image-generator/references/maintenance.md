@@ -14,7 +14,7 @@ Keep project profile IDs, candidate/preset/slot IDs, glossary mappings, and sema
 
 User instructions and existing session authorization govern maintenance and evaluation scope. A requested edit or render test does not need a second confirmation merely because this reference describes it. Preserve the initial-request isolation boundary and the narrow retry-only parent whitelist in `SKILL.md`; neither research evidence nor a compact pack view is pre-core meaning input.
 
-New v6 packs use `authorial_composition.authorship_policy` (`photo-authorial-authorship-policy/v1`) to bind the permitted dimensions and `min(2, len(open_dimensions))` authorial-decision minimum to the frozen core. Test zero, one, and multiple open dimensions, locked-dimension mutations, policy tampering, and replay without the policy. V2–v5 cannot opt into the new policy; existing serialized packs keep the prior two-decision minimum. Keep all semantic anchors and three preserved baseline phrases mandatory.
+New v6 packs use `photo-authorial-authorship-policy/v2` and `photo-authorial-core-binding/v3`. Both extra baseline-evidence and final-decision minima are zero; all semantic anchors and required assertions remain mandatory. Test unchanged authored baselines, removal or replacement of unbound staging on open dimensions, preservation of required meaning, malformed optional lists, policy tampering, and historical replay. Serialized v1 policies retain three extra preserved phrases and `min(2, len(open_dimensions))` decisions; unmarked historical packs retain their three-phrase/two-decision minima. V2–v5 cannot opt into v6 authorship policies. Do not use automated pass counts as evidence of artistic improvement.
 
 `scripts/compose_pack_view.py` is a deterministic reading projection over the unchanged v6 pack. Its compact requirements and candidate catalog must preserve source identity and every mandatory duty; on-demand candidate detail must bind the same source hash and expose the full selected contract. Audits continue to consume the full source pack. Test that the view cannot bypass pack mutation detection or conceal a hard obligation, and keep optional candidates optional. Named legacy moe geometry belongs only in `moe-response-legacy.md`, never in normal typed v6 composition, viewer, or runtime guidance.
 
@@ -78,7 +78,10 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 
 ## Validation
 
+Choose checks by the changed surface. For instruction or metadata edits, validate the skill and pre-core isolation, then review the affected workflow for conflicting guidance. For a generator/audit contract change, run focused invariant tests and the affected caller, compatibility, and downstream contract suites. Use the full suite for changes spanning independent routes or an unresolved wider regression risk, rather than automatically because a shared file was edited. Dictionary/index checks apply when those assets or retrieval behavior change. The commands below are a menu, not an unconditional sequence; broaden or repeat checks after a pass only for new edits, failures, or an unresolved concern.
+
 ```bash
+.venv/bin/python -m unittest tests.test_photo_authorship_policy -v
 .venv/bin/python skills/photo-prompt-image-generator/scripts/validate_photo_prompt_dictionary.py
 .venv/bin/python skills/photo-prompt-image-generator/scripts/audit_scene_expression.py --current
 .venv/bin/python -m unittest tests.test_photo_authorial_core_v5 -v
@@ -97,7 +100,7 @@ Put repeated theme boundaries in quality-layer `applicability_guards`. Use `matc
 .venv/bin/python -m unittest discover -s tests
 ```
 
-Run focused contract and generalization tests before the full suite. Review golden changes; update snapshots only when output changes are intentional. Evaluation cases, holdouts, baselines, plans, and visual-review fixtures live under `tests/fixtures/photo_prompt/`; they are not runtime skill assets.
+Review intentional golden changes; do not rewrite holdouts after a failure. Evaluation cases, holdouts, baselines, plans, and visual-review fixtures live under `tests/fixtures/photo_prompt/`; they are not runtime skill assets. When behavioral skill evaluation is warranted, use realistic requests and inspect the resulting prompts or images for early artistic direction, subject appeal at varied distances, and preservation of requester-owned meaning. Such evaluation must use only permitted pre-core inputs, and must distinguish prompt behavior from rendered quality and user preference.
 
 For natural moe changes, include focused checks for multilingual routing/hard negatives; unspecified/feminine bishoujo, explicit masculine bishonen, and explicit androgynous presentation; pre-sample preset/subject compatibility; nonsexual adult-appeal suppression and explicit override; role/species preservation; the frozen render cases; aesthetic-only, generic-casting, causal/event-phase audit mutations; manual-gate evidence; and character-scene corpus distribution. A scene corpus may expand only with selectable atomic scenes; reports or labels alone do not count as coverage.
 
