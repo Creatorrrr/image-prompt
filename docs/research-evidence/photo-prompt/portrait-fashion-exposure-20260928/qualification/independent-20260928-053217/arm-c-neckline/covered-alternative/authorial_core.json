@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes distinct complex concept cases that use the supplied portrait and test reflected fashion meanings in generated pixels. This developmental within-arm alternative tests covered garment construction: an opaque one-shoulder dress support band over a high-neck long-sleeve underlayer, seam-anchored ruching, and body-skimming drape with hanging ease. It retains this arm's independently chosen kiln/crank scene and analog direction. This is a different garment-design test, not a reattempt of the original exposed neckline case. The portrait guides visible face/hair appearance only.",
+  "subject": "an adult woman guided by portrait-visible face/hair; opaque rust one-shoulder midi dress over charcoal high-neck long-sleeve top, localized side-seam ruching and body-skimming free drape",
+  "setting": "a ceramic kiln studio beside a rainy loading court",
+  "event": "the final quarter-turn of a small waist-height brass vent crank on a cooled closed kiln",
+  "visual_priorities": [
+    "Readable portrait-guided face and the covered dress design share one environmental editorial frame.",
+    "One broad left-shoulder dress band visibly supports the diagonal dress edge, with charcoal underlayer covering the opposite shoulder and chest.",
+    "Repeated gathers converge at the left waist side-seam anchor, distinct from freely hanging central vertical folds.",
+    "The same adult right hand grips the kiln crank while torso fabric hangs with ease rather than a vacuum-tight fit."
+  ],
+  "baseline_prompt_en": "In a ceramic kiln studio beside a rain-glossed loading court, an adult woman pauses at a cooled closed kiln during the final quarter-turn of its small brass vent crank. Make a tactile analog garment-design editorial: quiet concentration, warm rust fabric and charcoal knit stand against ceramic machinery and wet window reflections. Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance. Her head faces the camera with both eyes and her entire face readable. She stands upright next to the kiln, her right hand wrapping the waist-height crank handle and her right elbow below the chest; her free left hand rests against her own thigh. She wears a rust-colored opaque one-shoulder midi dress over an opaque charcoal high-neck long-sleeve top. The dress has one broad band on her left shoulder, continuous with its bodice; its diagonal upper edge runs down to the right underarm, where the charcoal underlayer still covers the opposite shoulder and upper chest. The rust dress covers her torso through the calves. Short repeated puckers gather at a stitched draw channel in the dress's left waist side seam, with smooth fabric farther from that anchor. Across the central torso, body-skimming drape follows the local outline with hanging ease: gravity makes free vertical folds below the waist, and a small fabric gap remains near the hip. The localized ruched seam and the larger freely hanging center folds remain distinct regions of the same opaque dress. Frame vertically from the complete head to the upper thighs at chest-height, nearly frontal with a slight view toward her left side seam, retaining the face, both layers, gathered seam and right-hand crank together. Soft frontal window daylight and a warm overhead work lamp preserve natural skin texture, fabric weave and restrained fine film grain.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent concept garment-design qualification with supplied portrait",
+      "source_text": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "An authorized distinct generation-and-pixel-test case, with fresh agent-owned covered garment structure choices and the supplied portrait used for visible appearance guidance. The actual requester message remains unchanged.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "a tactile analog garment-design editorial"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "the final quarter-turn of its small brass vent crank"
+      },
+      {
+        "anchor_id": "portrait_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance."
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "setting",
+      "pose",
+      "expression",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "style",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "portrait_appearance_guidance",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "reference_use"
+      ],
+      "axes": {
+        "reference_role": "visible face and hair appearance guidance",
+        "reference_boundary": "visible appearance only"
+      },
+      "evidence": {
+        "reference_phrase": "Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance."
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion",
+    "family": "tactile analog covered garment-design environmental editorial",
+    "evidence": [
+      "warm rust fabric and charcoal knit",
+      "restrained fine film grain"
+    ]
+  },
+  "variation_key": "arm-c-covered-garment-alternative-463907"
+}

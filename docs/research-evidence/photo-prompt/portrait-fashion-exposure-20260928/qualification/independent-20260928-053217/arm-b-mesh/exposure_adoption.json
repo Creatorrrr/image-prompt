@@ -1,0 +1,89 @@
+{
+  "contract_version": "qualification-exposure-adoption/v1",
+  "pack_id": "fd6b46616ef86ac3",
+  "source_pack_sha256": "aa120839bc6af1706076d82e0294b941a71fa3ec4434dfd958b19a6f65e5a391",
+  "candidate_catalog_count": 100,
+  "candidate_slot_count": 74,
+  "visual_profile_exposure_count": 8,
+  "fashion_owner_profile_exposure_count": 6,
+  "fashion_owner_profile_exposed_ids": [
+    "visual-concept:pfe_lateral_chest",
+    "visual-concept:pfe_navel",
+    "visual-concept:pfe_hem_foundation",
+    "visual-concept:pfe_mesh_skin",
+    "visual-concept:pfe_illusion_panel",
+    "visual-concept:pfe_lower_chest"
+  ],
+  "target_profile_exposed_ids": [
+    "visual-concept:pfe_mesh_skin",
+    "visual-concept:pfe_navel"
+  ],
+  "selected_visual_concept_ids": [
+    "visual-concept:pfe_mesh_skin"
+  ],
+  "selected_candidate_ids": [
+    "slot:subject_framing:face_hands_prop_visibility_budget",
+    "slot:location:between_use_transit_interior",
+    "integration:material_trace",
+    "integration:environment_binding",
+    "slot:concept_tension:documentary_vs_staged_tension"
+  ],
+  "selected_candidate_count": 5,
+  "fashion_owner_profile_adoption_count": 1,
+  "target_profile_adoption_count": 1,
+  "selected_discovered_mesh_profile_all_components_and_gates": true,
+  "navel_profile_rejection_reason": "Requires uncovered skin; frozen independent navel-through-mesh assertion governs instead.",
+  "other_profile_decisions": [
+    {
+      "clarification_id": "clarification:visual-profile:hands_free_supported_drink_load",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_hem_foundation",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_illusion_panel",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_lateral_chest",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_lower_chest",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_mesh_skin",
+      "decision": "applied",
+      "rationale": "The discovered abdominal mesh owner relation fits the frozen focal test; adopt all three components and gates.",
+      "prompt_evidence": "an interconnected mesh pattern remains visible across the adult abdominal panel"
+    },
+    {
+      "clarification_id": "clarification:visual-profile:pfe_navel",
+      "decision": "rejected",
+      "rationale": "The optional profile requires an uncovered navel between garments; this independent test instead requires a real navel readable through a mesh panel. Keep its frozen typed assertion, not the mismatched bare-skin profile."
+    },
+    {
+      "clarification_id": "clarification:visual-profile:sheer_garment_optical_layering",
+      "decision": "rejected",
+      "rationale": "This optional relation is outside the frozen abdominal mesh and working-set test; adopting it would introduce a different wardrobe or action."
+    }
+  ],
+  "creative_exposed_count": 6,
+  "creative_transformed_count": 0,
+  "absent_entry_injection": false,
+  "focal_coverage": {
+    "abdominal_mesh": "typed bounded_abdominal_mesh plus selected full pfe_mesh_skin opt-in obligation",
+    "real_navel_through_mesh": "typed real_navel_between_edges",
+    "opaque_panel_contrast": "typed adjacent_opaque_contrast"
+  },
+  "selection_detail_view_sha256": "725abce96c926f734fc8e86dc4f285b33e4a81e1836d0d99ce3d6e4712510699",
+  "target_profile_exposure_count": 2
+}

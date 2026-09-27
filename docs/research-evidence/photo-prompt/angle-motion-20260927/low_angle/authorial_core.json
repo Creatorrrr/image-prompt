@@ -1,0 +1,134 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아까 그 첨부 이미지로 이번엔 하이 앵글, 로우 앵글, 동적인 느낌을 줄 수 있는 구도 이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+  "interpreted_intent": "An independent single-image low-angle photographic test, using the supplied portrait for visible face and hair appearance. Low angle means a viewpoint below the subject looking upward, evidenced by projection rather than a label.",
+  "subject": "An adult fictional woman with face and hair appearance guided by the attached portrait.",
+  "setting": "A glass-roofed conservatory with iron ribs and a narrow galvanized-metal potting bench.",
+  "event": "Standing with both boots supported on stone while wiping a wet streak along the vertical near edge of the bench with her right hand and holding a spare towel bundle with her left.",
+  "visual_priorities": [
+    "An upward-looking viewpoint with visible undersides, lower-body near scale and upward converging structure.",
+    "Reference-informed face and dark bob remain recognizable in the invented adult subject.",
+    "Right-hand cloth contact on the bench edge and both boot-floor support are visible together.",
+    "Cool side daylight distinguishes damp metal, cloth and stone."
+  ],
+  "baseline_prompt_en": "A single photographic test scene presents an adult fictional woman in a glass-roofed conservatory with iron ribs. Use the attached portrait as a facial and hair appearance reference: the visible dark chin-length bob, airy fringe, soft face contour, dark eyes and natural skin texture inform this invented adult character. One exposure catches a visible working moment. She stands beside a narrow weathered galvanized-metal potting bench, her right palm pressing a folded cloth against its vertical near edge and wiping a wet streak along that edge; her left hand cradles a spare towel bundle at her waist. Both boot soles rest on the stone floor, feet staggered, with her torso upright and elbows softly bent. Her linen overshirt and straight trousers follow the posture. The viewpoint is below the subject's waist and directed upward. The underside of her chin and overhead roof ribs are visible. Near boots appear larger than her head as the body recedes upward. Vertical iron columns converge toward the upper frame. A portrait-oriented full-body photograph includes the floor contacts, cloth-to-edge contact and tall glass canopy in one connected view. Cool overcast daylight enters through the open side, separating the face and hands from the ironwork with gentle tonal contrast. Damp metal, folded cloth and stone remain tactile and distinct.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "로우 앵글",
+      "source_text": "로우 앵글",
+      "basis": "agent_general_knowledge",
+      "resolution": "Camera viewpoint below the subject directed upward; projection shows undersides, larger nearby lower-body elements and overhead lines receding upward.",
+      "sources": []
+    },
+    {
+      "term": "첨부 이미지 참조",
+      "source_text": "아까 그 첨부 이미지로 이번엔",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as a visible facial and hair appearance reference for a fictional adult character, without inferring actual identity or personal facts.",
+      "sources": []
+    },
+    {
+      "term": "독립 주제 테스트 절차",
+      "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Run this topic as its own single photographic scene through the provided isolated freeze, one candidate-pack, audit and one native-render protocol.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "로우 앵글",
+        "dimension": "concept",
+        "prompt_evidence": "The viewpoint is below the subject's waist and directed upward"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "subject",
+        "prompt_evidence": "an adult fictional woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "One exposure catches a visible working moment"
+      },
+      {
+        "anchor_id": "camera_direction",
+        "source_text": "로우 앵글",
+        "dimension": "camera",
+        "prompt_evidence": "The underside of her chin and overhead roof ribs are visible"
+      },
+      {
+        "anchor_id": "reference_appearance",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait as a facial and hair appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "camera",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "framing",
+      "composition",
+      "lighting",
+      "color",
+      "material",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "low_angle_camera",
+      "dimension": "camera",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera",
+        "concept"
+      ],
+      "axes": {
+        "viewpoint_relation": "below_subject_waist",
+        "optical_direction": "upward",
+        "visible_projection": [
+          "underside_visibility",
+          "near_lower_body_larger",
+          "vertical_upward_convergence"
+        ]
+      },
+      "evidence": {
+        "viewpoint": "The viewpoint is below the subject's waist and directed upward",
+        "underside": "The underside of her chin and overhead roof ribs are visible",
+        "scale": "Near boots appear larger than her head as the body recedes upward",
+        "convergence": "Vertical iron columns converge toward the upper frame"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial portrait photography",
+    "family": "tactile conservatory working portrait",
+    "evidence": [
+      "gentle tonal contrast",
+      "Damp metal, folded cloth and stone remain tactile and distinct"
+    ]
+  },
+  "variation_key": "low-angle-14321191467143688212"
+}

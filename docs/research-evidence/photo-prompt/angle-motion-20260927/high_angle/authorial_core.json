@@ -1,0 +1,140 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아까 그 첨부 이미지로 이번엔 하이 앵글, 로우 앵글, 동적인 느낌을 줄 수 있는 구도 이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+  "interpreted_intent": "An independent photographic test of a clearly elevated, downward-looking oblique camera angle using the provided face and hair appearance reference. The setting, action, props and light are independently randomized agent staging, not requester definitions.",
+  "subject": "One adult fictional woman using the supplied reference only for visible face and hair appearance.",
+  "setting": "A compact paper conservation studio with a worktable, square stool, drying boards, window sill, metal ruler and shallow pigment dish.",
+  "event": "Seated with both feet supported, she presses a paper sheet flat with a right-hand brush while her left palm steadies a far corner.",
+  "visual_priorities": [
+    "An elevated oblique viewpoint visibly looks down across the woman and table.",
+    "Crown, shoulder tops, tabletop and surrounding floor jointly reveal downward projection.",
+    "Upper body projects nearer and larger while knees and feet recede.",
+    "Brush bristles, right hand and paper form readable contact while the left palm stabilizes the sheet.",
+    "Her seated support and both feet remain visible within the complete work scene."
+  ],
+  "baseline_prompt_en": "One adult fictional woman is seated at a paper conservation worktable, pressing a large paper sheet flat with a soft broad brush in a single photographic scene. Use the supplied image as a reference for visible facial appearance and the dark bob with fine bangs. She wears a plain linen work shirt with rolled sleeves. The photograph captures one complete visible activity: her right hand holds the brush against the paper while her left palm steadies its far corner. The brush bristles make a broad contact patch on the sheet, with a slightly lifted edge flattening beside them. Her hips rest on a square wooden stool, both feet rest on the floor, and her torso leans a little forward within comfortable reach of the table. A metal ruler and shallow pigment dish sit apart from the paper, while stacked drying boards and a window sill give the compact studio a used working character. Diffuse north-window daylight reveals the paper fibers, linen folds, and soft hand shadows. The elevated oblique viewpoint looks downward across the subject and the work surface. The camera is above her head and angled downward; the crown of her head, shoulder tops, the broad tabletop, and the floor around the stool are visible together. In this perspective her upper body appears nearer and larger than her knees and feet, which recede toward the floor. An oblique view retains the front edge of the table and a partial view of her face. The rectangular window frame remains upright in the image, giving the downward projection a stable orientation. Show the hands, brush contact, paper, stool, and feet together in a coherent environmental photograph.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "하이 앵글",
+      "source_text": "하이 앵글",
+      "basis": "agent_general_knowledge",
+      "resolution": "A camera located above the subject and directed downward, visibly exposing top surfaces and a receding lower body in an oblique projection.",
+      "sources": []
+    },
+    {
+      "term": "reference context",
+      "source_text": "아까 그 첨부 이미지로 이번엔",
+      "basis": "request_context",
+      "resolution": "Use the supplied reference photograph for its visible face and hair appearance in the new image test. No biography or real identity is inferred.",
+      "sources": []
+    },
+    {
+      "term": "test workflow",
+      "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This arm is one of three independent topic tests; preserve the first image outcome and separately assess focal keyword and complete scene.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "하이 앵글",
+        "dimension": "concept",
+        "prompt_evidence": "The elevated oblique viewpoint looks downward across the subject and the work surface"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "subject",
+        "prompt_evidence": "One adult fictional woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "The photograph captures one complete visible activity"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied image as a reference for visible facial appearance and the dark bob with fine bangs"
+      },
+      {
+        "anchor_id": "camera_downward",
+        "source_text": "하이 앵글",
+        "dimension": "camera",
+        "prompt_evidence": "The camera is above her head and angled downward"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "camera"
+    ],
+    "open_dimensions": [
+      "setting",
+      "action",
+      "pose",
+      "framing",
+      "composition",
+      "lighting",
+      "color",
+      "material",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "high_angle_camera",
+      "dimension": "camera",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "camera",
+        "concept"
+      ],
+      "axes": {
+        "camera_position": "above_subject_head",
+        "optical_direction": "downward",
+        "projection": "oblique_elevated",
+        "observable_components": [
+          "crown_and_shoulder_tops",
+          "broad_tabletop_and_floor",
+          "upper_near_lower_receding"
+        ],
+        "boundary": "oblique_face_and_table_front_edge_retained"
+      },
+      "evidence": {
+        "elevated_position": "The camera is above her head and angled downward",
+        "top_surfaces": "the crown of her head, shoulder tops, the broad tabletop, and the floor around the stool are visible together",
+        "depth_projection": "her upper body appears nearer and larger than her knees and feet, which recede toward the floor",
+        "oblique_boundary": "An oblique view retains the front edge of the table and a partial view of her face"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "lifestyle",
+    "family": "observational environmental photography",
+    "evidence": [
+      "paper fibers and linen folds",
+      "soft hand shadows in diffuse daylight"
+    ]
+  },
+  "variation_key": "high_angle-7350812925794127079"
+}

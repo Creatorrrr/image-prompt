@@ -1,0 +1,94 @@
+{
+  "contract_version": "angle-motion-keyword-pixel-results/v1",
+  "arm": "high_angle",
+  "topic": "하이 앵글",
+  "source_test_case_sha256": "699b5ebd055591277be55ccdab12a2b00eccaf9e9c0a9bc1ac91c5a29effb11c",
+  "source_core_file_sha256": "933f4ce97b7a3a8cca95eac372201f065556b0240abccc8db5a142e4f5cbd5d9",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/angle-motion-20260927/high_angle/generated.png",
+  "result_sha256": "1a8f9cf36313cda20de09cbb68ab4d440d52610996f43ee4353ed679e9c28e59",
+  "all_of_policy": "partial_is_fail",
+  "components": [
+    {
+      "component_id": "elevated_downward_projection",
+      "criterion": "The joint visible projection reads as a camera above the subject looking down, rather than eye-level with a high background.",
+      "status": "pass",
+      "scale_results": {
+        "original": {
+          "status": "pass",
+          "evidence": "The large visible tabletop, the crown of the bob, the upper shoulder surfaces and the floor behind/beside the seated actor jointly read as an elevated camera aimed downward. The viewpoint is clearly above her face even though she lifts her eyes to it."
+        },
+        "reduced_420px": {
+          "status": "pass",
+          "evidence": "At 420 px the head-top, broad paper table and surrounding floor remain visible together, making elevation read immediately."
+        }
+      }
+    },
+    {
+      "component_id": "multiple_top_planes",
+      "criterion": "Crown or hair top, shoulders, tabletop and surrounding floor expose upper surfaces together.",
+      "status": "pass",
+      "scale_results": {
+        "original": {
+          "status": "pass",
+          "evidence": "Hair crown is visible at the upper center, shoulder/shirt tops occupy the middle, paper and wooden tabletop spread across the lower-left, and floor texture is exposed at right and beneath the stool."
+        },
+        "reduced_420px": {
+          "status": "pass",
+          "evidence": "Crown, shoulder top, table plane and floor survive reduction as separate upper-facing surfaces."
+        }
+      }
+    },
+    {
+      "component_id": "body_depth_recession",
+      "criterion": "Upper body is visually nearer/larger, with knees and feet receding toward the ground.",
+      "status": "pass",
+      "scale_results": {
+        "original": {
+          "status": "pass",
+          "evidence": "The head and upper torso dominate the upper-middle frame, while knees and the two shoes taper into the lower-right floor space. This qualitative recession agrees with the downward view; it is not a measured camera height."
+        },
+        "reduced_420px": {
+          "status": "pass",
+          "evidence": "Head and shoulders remain large while both shoes appear smaller and farther below, maintaining qualitative body depth."
+        }
+      }
+    },
+    {
+      "component_id": "oblique_not_orthographic_overhead",
+      "criterion": "Some face and the table front edge remain visible while the camera looks down.",
+      "status": "pass",
+      "scale_results": {
+        "original": {
+          "status": "pass",
+          "evidence": "Her face, chest-facing shirt plane, near/front table edge and stool side are all visible, so the camera retains an oblique side component instead of producing a flat overhead plan."
+        },
+        "reduced_420px": {
+          "status": "pass",
+          "evidence": "The face and table front remain recognizable at reduced size, preserving the oblique boundary."
+        }
+      }
+    },
+    {
+      "component_id": "orientation_not_dutch_substitute",
+      "criterion": "A stable vertical reference and downward projection distinguish high angle from merely tilting the frame.",
+      "status": "pass",
+      "scale_results": {
+        "original": {
+          "status": "pass",
+          "evidence": "The upright wall joint and drying-rack posts provide stable vertical references. Table and window sill diagonals arise from perspective; frame roll is not carrying the high-angle effect."
+        },
+        "reduced_420px": {
+          "status": "pass",
+          "evidence": "Rack posts remain broadly upright at thumbnail scale; the scene reads as looking down, not merely rotated."
+        }
+      }
+    }
+  ],
+  "passed_components": 5,
+  "required_components": 5,
+  "all_of_result": "pass",
+  "measurement_limit": "The pixels support a qualitative elevated downward-looking viewpoint. Real camera elevation, exact pitch angle and focal length are not established.",
+  "focal_semantic_prompt_coverage": "required high_angle_camera assertion, four immutable literal evidence fields preserved; source contract ea5f0e9e0f9c8f1af873744ab6927f55611ac6bcbe97c7c7c347c0c8a6b64b98",
+  "user_aesthetic_acceptance": "pending",
+  "reviewer": "agent high_angle"
+}

@@ -1,0 +1,108 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes independently chosen complex concepts to test previously reflected fashion meanings in generated pixels using the supplied portrait. This arm chooses a ceramic kiln studio event and an analog fashion direction. Its agent-owned test targets are central cleavage, an integrated hanging cowl neckline, and fitted inner versus loose outer layer contrast. The image should feel like an assured fashion portrait inhabiting a working room rather than a costume diagram. The portrait guides only visible face and hair appearance.",
+  "subject": "an adult woman with portrait-guided visible face and short dark bob; champagne fitted satin cowl camisole showing central cleavage and a loose open olive jacket",
+  "setting": "a floodlit ceramic kiln studio overlooking a rainy loading court",
+  "event": "the final quarter-turn of a waist-height brass vent crank on a cooled closed kiln",
+  "visual_priorities": [
+    "The readable portrait-guided face remains the primary human anchor in the environmental fashion frame.",
+    "The hanging integrated satin cowl and visible central cleavage are jointly legible with the fitted torso.",
+    "The open loose jacket keeps the fitted inner camisole visible and shows a clear volume contrast.",
+    "The right hand actually wraps the brass crank handle while rain reflections and machinery give the event a credible setting."
+  ],
+  "baseline_prompt_en": "In a floodlit ceramic kiln studio overlooking a rain-glossed loading court, an adult woman pauses at a cooled kiln during the final quarter-turn of its small brass vent crank. Make a tactile analog fashion photograph: her calm presence and the gravity of fabric stand against heavy ceramic machinery, wet reflections, and deep olive shadows. Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance. Her head faces the camera, with both eyes and the whole face clearly readable. She stands upright beside the closed kiln; her right hand wraps the waist-height crank handle, her right elbow stays below the chest, and her free left hand rests against her own thigh. A champagne satin cowl camisole has a torso fitted closely at the waist and side seams while its integrated front neckline hangs in several soft folds from the two shoulder straps. The low cowl opening reveals the central cleavage groove between the inner upper breast contours; satin continues across the lower bust. A loose olive jacket hangs open outside the camisole, its lapels falling to either side of the visible inner neckline, and its broad sleeves and boxy hem retain an air gap around the fitted inner torso. A long dark skirt continues below the frame. Frame vertically from the complete head to the upper thighs at chest-height, slightly front three-quarter, keeping the neckline and both garment silhouettes readable. Soft frontal daylight enters through the loading window; a warm overhead work light glints on the crank and satin, with fine film grain and natural skin texture.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex concept qualification with portrait reference",
+      "source_text": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "This is a user-authorized generation-and-pixel-test arm using independently authored concept choices and the supplied portrait for visible appearance guidance, testing reflected fashion relations.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "a tactile analog fashion photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "the final quarter-turn of its small brass vent crank"
+      },
+      {
+        "anchor_id": "portrait_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance."
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "setting",
+      "pose",
+      "expression",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "style",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "portrait_appearance_guidance",
+      "dimension": "reference_use",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "reference_use"
+      ],
+      "axes": {
+        "reference_role": "visible face and hair appearance guidance",
+        "reference_boundary": "visible appearance only"
+      },
+      "evidence": {
+        "reference_phrase": "Her visible face and short dark bob with fine separated bangs follow the supplied portrait as appearance guidance."
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion",
+    "family": "tactile analog environmental editorial",
+    "evidence": [
+      "fine film grain and natural skin texture",
+      "Soft frontal daylight enters through the loading window"
+    ]
+  },
+  "variation_key": "independent-arm-c-seed-463907"
+}

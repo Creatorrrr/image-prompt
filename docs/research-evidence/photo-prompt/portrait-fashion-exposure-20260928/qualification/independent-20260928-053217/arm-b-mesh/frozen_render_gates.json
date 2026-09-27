@@ -1,0 +1,109 @@
+{
+  "contract_version": "qualification-frozen-render-gates/v1",
+  "frozen_before_image_call": true,
+  "partial_is_fail": true,
+  "missing_is_fail": true,
+  "ambiguous_is_fail": true,
+  "prompt_sha256": "93959a80e1c4348c0ff0c9112e8ef6491abc2f5e4dcf3b603be6a2b6b3efe835",
+  "runtime_prompt_sha256": "0fb437692c3e70533778d20d3642edb4f62af908ce1ddceb23f377a66ff63be6",
+  "effective_visual_contract_sha256": "2739944422a9dcbdcd52ad76824fffc854c5bc7b85c945a0079a1292863a7fd0",
+  "hard_gates": [
+    {
+      "gate_id": "vo_pfe_mesh_skin_1",
+      "review_scale": "both",
+      "criterion": "an interconnected mesh pattern remains visible across the adult abdominal panel. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails.",
+      "reject_substitutes": [
+        "a mesh pattern printed on opaque fabric",
+        "an empty cutout without threads",
+        "a smooth sheer panel without visible mesh",
+        "a fishnet backdrop behind the subject"
+      ]
+    },
+    {
+      "gate_id": "vo_pfe_mesh_skin_2",
+      "review_scale": "both",
+      "criterion": "the abdominal skin surface remains visible through that same mesh's openings. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails.",
+      "reject_substitutes": [
+        "a mesh pattern printed on opaque fabric",
+        "an empty cutout without threads",
+        "a smooth sheer panel without visible mesh",
+        "a fishnet backdrop behind the subject"
+      ]
+    },
+    {
+      "gate_id": "vo_pfe_mesh_skin_3",
+      "review_scale": "native",
+      "criterion": "attached opaque garment panels retain continuous edges beside the mesh region. Require the same declared subject and garment; missing, substituted or ambiguous evidence fails.",
+      "reject_substitutes": [
+        "a mesh pattern printed on opaque fabric",
+        "an empty cutout without threads",
+        "a smooth sheer panel without visible mesh",
+        "a fishnet backdrop behind the subject"
+      ]
+    },
+    {
+      "gate_id": "embodiment_body_ownership",
+      "review_scale": "native",
+      "criterion": "The right hand belongs to the standing adult subject and the left arm remains at her hip; each is explicitly assigned."
+    },
+    {
+      "gate_id": "embodiment_joint_chain_and_reach",
+      "review_scale": "native",
+      "criterion": "A shoulder-height knob beside her can be reached by a bent arm without twisting the front-facing torso; the lamp stays outside the abdominal sightline."
+    },
+    {
+      "gate_id": "embodiment_support_and_balance",
+      "review_scale": "native",
+      "criterion": "The subject stands upright on a level floor. Her hidden lower legs continue under her pelvis; no second load or unstable prop support is demanded."
+    },
+    {
+      "gate_id": "embodiment_contact_and_space",
+      "review_scale": "native",
+      "criterion": "The operative hand contacts the exterior brass tilt knob on a side yoke. The lamp is beside rather than in front of the abdomen, leaving space for the mesh panel."
+    },
+    {
+      "gate_id": "embodiment_visibility_and_projection",
+      "review_scale": "native",
+      "criterion": "Almost frontal head-to-upper-thigh framing includes the face, complete abdominal panel and waistband. The pose keeps the arm and lamp out of that panel; mesh is over skin rather than substituted for a void."
+    }
+  ],
+  "supplemental_target_gates": [
+    {
+      "gate_id": "mesh_weave_over_bounded_abdominal_skin",
+      "expected": "Real fine mesh threads and open cells over abdominal skin, bounded by opaque bodice hem above and opaque trouser waistband below."
+    },
+    {
+      "gate_id": "real_navel_between_distinct_garment_edges",
+      "expected": "A readable small anatomical navel depression through the mesh, below the upper hem and above the trouser waistband; no jewel, hole in cloth or painted dot substitute."
+    },
+    {
+      "gate_id": "adjacent_opaque_coverage_contrast",
+      "expected": "Continuous opaque fitted bodice covering bust and opaque trousers beside the transparent panel."
+    },
+    {
+      "gate_id": "adult_face_hair_reference_scope",
+      "expected": "Clearly adult fashion subject; visible short dark bob, airy bangs and broad facial appearance guidance from portrait; no identity inference."
+    },
+    {
+      "gate_id": "lamp_hand_contact_support",
+      "expected": "Right hand contacts brass tilt knob on side yoke; lamp is on a stand beside subject; body supported by level floor."
+    },
+    {
+      "gate_id": "face_panel_readability",
+      "expected": "Complete face and relevant mesh panel and navel visible at native scale; hands and lamp do not occlude panel."
+    }
+  ],
+  "reference_input": {
+    "path": "/tmp/codex-remote-attachments/01a0e3ac-baa0-7220-bb99-f2cf1e063924/A48739FA-E1B4-4657-8C64-FF9ED8216699/1-사진-1.jpg",
+    "sha256": "048adbd3e4343a3725fec6aa0455aa1f367878560bc15d4493a18fde1ce8604c",
+    "scope": "visible face and hair only",
+    "observed_features": [
+      "short dark bob",
+      "airy bangs",
+      "softly rounded face contours",
+      "dark eyes",
+      "natural glossy lips"
+    ],
+    "not_identity_evidence": true
+  }
+}

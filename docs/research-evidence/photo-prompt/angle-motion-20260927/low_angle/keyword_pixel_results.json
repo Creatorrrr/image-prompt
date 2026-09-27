@@ -1,0 +1,70 @@
+{
+  "contract_version": "photo-keyword-pixel-results/v1",
+  "arm_id": "low_angle",
+  "keyword": "로우 앵글",
+  "reviewer": "agent independent low_angle arm",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/angle-motion-20260927/low_angle/generated.png",
+  "result_sha256": "97f8ec5f8c17f908c2ebb083084ee8f3d83c499f01f0ae5fcffee6a114a8ac84",
+  "frozen_testcase_file_sha256": "8759b63709744e837ff34be95ed9c7c732b073a9f9386c7a119dec8d3e6a9669",
+  "criteria_rule": "all_of; partial_is_fail",
+  "reviewed_scales": [
+    {
+      "type": "native",
+      "width": 1024,
+      "height": 1536,
+      "source": "generated.png",
+      "direct_view": true
+    },
+    {
+      "type": "thumbnail",
+      "width": 341,
+      "height": 512,
+      "source": "review_thumbnail.png",
+      "direct_view": true
+    }
+  ],
+  "components": [
+    {
+      "id": "below_subject_projection",
+      "criterion": "The view reads from below the standing subject rather than eye-level or above, through the underside of the chin and overhead bench/roof geometry.",
+      "status": "pass",
+      "evidence": "The front boot dominates the lower foreground, the metal bench underside occupies the right half, and a narrow jaw-to-neck underside is visible beneath the chin; these co-visible planes make the apparent viewpoint lower than the standing torso.",
+      "native_status": "pass",
+      "thumbnail_status": "pass"
+    },
+    {
+      "id": "upward_projection",
+      "criterion": "Upward-facing projection includes overhead roof ribs and a clear view of architectural undersides.",
+      "status": "pass",
+      "evidence": "Roof ribs and glass canopy extend across the upper frame above the actor. The bench bottom and structural underside are exposed from below in the right midground, rather than a tabletop viewed from above.",
+      "native_status": "pass",
+      "thumbnail_status": "pass"
+    },
+    {
+      "id": "near_lower_scale",
+      "criterion": "Nearby boots/lower body are visibly enlarged relative to the receding upper body/head in the same connected subject.",
+      "status": "pass",
+      "evidence": "The nearest boot is a long enlarged foreground mass at bottom-left, with trouser legs receding upward to the smaller head; the rear boot reads smaller and farther away in the same connected stance.",
+      "native_status": "pass",
+      "thumbnail_status": "pass"
+    },
+    {
+      "id": "upward_convergence",
+      "criterion": "Multiple vertical iron columns recede and converge toward the upper frame; this is coherent spatial perspective, not isolated leaning props.",
+      "status": "pass",
+      "evidence": "The tall perimeter stanchion at left and the rear stanchion beside the head lean inward through the rising frame with narrowing separation at higher elevations; roof ribs continue the upward recession. The connected supports provide multiple perspective cues rather than a rolled frame alone.",
+      "native_status": "pass",
+      "thumbnail_status": "pass"
+    }
+  ],
+  "all_of_status": "pass",
+  "camera_position_claim": "Apparent relative position and projection only; actual camera height and focal length are not measurable from the saved image.",
+  "confusion_boundary_review": {
+    "dutch_roll_only": "ruled_out by simultaneous foreground scale and exposed undersides",
+    "level_portrait_only": "ruled_out by below-bench projection and overhead ribs",
+    "wide_lens_only": "ruled_out by connected upward projection cues",
+    "raised_subject_only": "ruled_out; both boots visibly contact the floor"
+  },
+  "user_aesthetic_judgment": "pending",
+  "reviewed_at_utc": "2026-09-27T09:33:49.381602+00:00"
+}

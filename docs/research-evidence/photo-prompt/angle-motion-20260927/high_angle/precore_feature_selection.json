@@ -1,0 +1,103 @@
+{
+  "contract_version": "photo-precore-feature-selection/v1",
+  "request_id": "angle-motion-20260927-high_angle",
+  "active_span_ids": [
+    "reference_context",
+    "topic",
+    "workflow"
+  ],
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v1",
+  "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+  "request_sha256": "446ff8d572a31946464346f63db3b738abca85731c7a388b7fbc251651efcbc2",
+  "baseline_prompt_sha256": "4c45d7192cb893379f616da5d3400f517a05c0f2ea11d87a98acb585b9ee32e9",
+  "selected": [
+    {
+      "category_id": "feature.situation",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "The image needs one complete legible working moment rather than isolated camera tags.",
+      "baseline_evidence": "pressing a large paper sheet flat with a soft broad brush in a single photographic scene"
+    },
+    {
+      "category_id": "feature.subject",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "reference_context"
+      ],
+      "source_text": null,
+      "derivation": "The supplied photograph provides observable facial and hair guidance for a fictional adult actor.",
+      "reason": "Retain reference appearance through visible face and hair rather than inferred identity.",
+      "baseline_evidence": "Use the supplied image as a reference for visible facial appearance and the dark bob with fine bangs"
+    },
+    {
+      "category_id": "feature.location",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "A table-based studio supplies broad top planes for downward projection and a coherent action setting.",
+      "baseline_evidence": "at a paper conservation worktable"
+    },
+    {
+      "category_id": "feature.action",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Brush pressure and left-hand stabilization make the randomized action visible in one instant.",
+      "baseline_evidence": "her right hand holds the brush against the paper while her left palm steadies its far corner"
+    },
+    {
+      "category_id": "feature.pose",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "A seated posture provides clear hip and floor supports, with a plausible reach to the paper.",
+      "baseline_evidence": "Her hips rest on a square wooden stool, both feet rest on the floor"
+    },
+    {
+      "category_id": "feature.props",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Separate ruler and dish enrich the scene while preserving room for both hands and sheet.",
+      "baseline_evidence": "A metal ruler and shallow pigment dish sit apart from the paper"
+    },
+    {
+      "category_id": "feature.lighting_source",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Window diffusion reveals paper fibers and soft contact shadows without obscuring the top planes.",
+      "baseline_evidence": "Diffuse north-window daylight reveals the paper fibers, linen folds, and soft hand shadows"
+    },
+    {
+      "category_id": "feature.camera_angle",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "하이 앵글",
+      "derivation": null,
+      "reason": "The requested camera meaning needs an unmistakably elevated downward-looking oblique view.",
+      "baseline_evidence": "The camera is above her head and angled downward"
+    },
+    {
+      "category_id": "feature.spatial_depth",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": null,
+      "derivation": "A high viewpoint projects the upper body nearer and the lower body receding toward visible ground.",
+      "reason": "Relative body scale and floor depth distinguish elevation from a tilted eye-level photograph.",
+      "baseline_evidence": "her upper body appears nearer and larger than her knees and feet, which recede toward the floor"
+    }
+  ]
+}

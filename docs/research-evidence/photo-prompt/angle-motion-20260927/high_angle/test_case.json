@@ -1,0 +1,86 @@
+{
+  "contract_version": "angle-motion-pixel-test/v1",
+  "arm": "high_angle",
+  "frozen_before_generation": true,
+  "definition_origin": "agent_general_knowledge",
+  "requester_definition_present": false,
+  "all_of_policy": "partial_is_fail",
+  "topic_components": [
+    {
+      "id": "elevated_downward_projection",
+      "required": true,
+      "criterion": "The joint visible projection reads as a camera above the subject looking down, rather than eye-level with a high background.",
+      "evidence_expected": "Crown and shoulder tops seen from above alongside a broad tabletop and floor."
+    },
+    {
+      "id": "multiple_top_planes",
+      "required": true,
+      "criterion": "Crown or hair top, shoulders, tabletop and surrounding floor expose upper surfaces together.",
+      "evidence_expected": "Independent top surfaces reinforce one downward projection."
+    },
+    {
+      "id": "body_depth_recession",
+      "required": true,
+      "criterion": "Upper body is visually nearer/larger, with knees and feet receding toward the ground.",
+      "evidence_expected": "Qualitative relative scale and foreshortening; actual camera height is not measurable from the generated image."
+    },
+    {
+      "id": "oblique_not_orthographic_overhead",
+      "required": true,
+      "criterion": "Some face and the table front edge remain visible while the camera looks down.",
+      "evidence_expected": "A sloped oblique view rather than a flat plan view."
+    },
+    {
+      "id": "orientation_not_dutch_substitute",
+      "required": true,
+      "criterion": "A stable vertical reference and downward projection distinguish high angle from merely tilting the frame.",
+      "evidence_expected": "Window frame approximately upright and depth projection still downward."
+    }
+  ],
+  "confusion_boundaries": [
+    "eye-level viewpoint with subject lowering her head",
+    "pure vertical overhead or flat plan view",
+    "Dutch roll without elevated viewpoint",
+    "wide lens making head larger without multiple downward-looking planes",
+    "a label or prompt mention without visible perspective"
+  ],
+  "full_scene_components": [
+    {
+      "id": "reference_face_hair",
+      "criterion": "Visible face and dark bob with fine bangs provide qualitative appearance-reference correspondence; no identity claim."
+    },
+    {
+      "id": "paper_studio",
+      "criterion": "Paper worktable, drying boards and window sill form the studio setting."
+    },
+    {
+      "id": "brush_press_and_stabilize",
+      "criterion": "Right hand grips brush contacting paper, left palm steadies far corner, broad bristle patch and flattening edge are legible."
+    },
+    {
+      "id": "seated_support",
+      "criterion": "Hips sit on square wooden stool, both feet visibly contact floor, connected torso/arms plausibly reach sheet."
+    },
+    {
+      "id": "props_and_light",
+      "criterion": "Separate metal ruler and shallow pigment dish are visible; soft window light reveals paper/linen texture."
+    },
+    {
+      "id": "whole_frame_visibility",
+      "criterion": "Hands, brush contact, paper, stool and feet are visible together."
+    }
+  ],
+  "embodiment_components": [
+    "body_ownership",
+    "joint_chain_and_reach",
+    "support_and_balance",
+    "contact_and_space",
+    "visibility_and_projection"
+  ],
+  "user_aesthetic_acceptance": "pending",
+  "review_scale": [
+    "original",
+    "reduced"
+  ],
+  "runtime_measurement_limit": "A generated perspective can support an elevated-view interpretation, not a measured real camera height or focal length."
+}

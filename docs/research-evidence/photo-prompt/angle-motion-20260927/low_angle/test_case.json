@@ -1,0 +1,62 @@
+{
+  "contract_version": "photo-independent-test-case/v1",
+  "arm_id": "low_angle",
+  "source_request_sha256": "446ff8d572a31946464346f63db3b738abca85731c7a388b7fbc251651efcbc2",
+  "topic_criteria": {
+    "keyword": "로우 앵글",
+    "rule": "all_of; partial_is_fail",
+    "components": [
+      {
+        "id": "below_subject_projection",
+        "criterion": "The view reads from below the standing subject rather than eye-level or above, through the underside of the chin and overhead bench/roof geometry.",
+        "required": true
+      },
+      {
+        "id": "upward_projection",
+        "criterion": "Upward-facing projection includes overhead roof ribs and a clear view of architectural undersides.",
+        "required": true
+      },
+      {
+        "id": "near_lower_scale",
+        "criterion": "Nearby boots/lower body are visibly enlarged relative to the receding upper body/head in the same connected subject.",
+        "required": true
+      },
+      {
+        "id": "upward_convergence",
+        "criterion": "Multiple vertical iron columns recede and converge toward the upper frame; this is coherent spatial perspective, not isolated leaning props.",
+        "required": true
+      }
+    ],
+    "confusion_boundaries": [
+      "A Dutch roll or diagonal frame alone does not show low angle.",
+      "A level full-body photograph with tall background alone fails.",
+      "A wide lens alone without upward projection fails.",
+      "A subject on a raised platform does not itself prove a low camera.",
+      "Numerical camera height cannot be measured from this image; only apparent position and projection are judged."
+    ],
+    "evidence_units": "visible regions and relationships at native size and reduced view"
+  },
+  "fixed_scene_contract": {
+    "provenance": "agent_prepack_random_staging",
+    "not_requester_definitions": true,
+    "all_of": [
+      "One adult fictional woman with reference-informed dark bob and face appearance.",
+      "Glass-roofed conservatory with visible iron ribs.",
+      "Right hand pressing a folded cloth against the vertical near edge of a narrow galvanized-metal potting bench.",
+      "Visible wet streak on that wiped edge.",
+      "Left hand cradling a separate spare towel bundle at waist.",
+      "Both boot soles contact a stone floor with staggered feet and upright torso.",
+      "Cool overcast side daylight.",
+      "Portrait full-body view includes contact, support and canopy together."
+    ]
+  },
+  "embodiment_pixel_checks": [
+    "ownership of right cloth hand and left towel hand",
+    "continuous shoulders-elbows-wrists with plausible reach",
+    "both boot-floor contacts and stable balance",
+    "cloth-edge contact with distinct cloth and metal",
+    "contact/support/overhead projection visible together"
+  ],
+  "user_aesthetic_judgment": "pending",
+  "frozen_before_candidate_access": true
+}

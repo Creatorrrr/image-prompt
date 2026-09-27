@@ -161,6 +161,7 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_everyday_scene.json",
     "photo_prompt_visual_obligations_y2k.json",
     "photo_prompt_visual_obligations_portrait_composition.json",
+    "photo_prompt_visual_obligations_portrait_fashion_exposure.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -203,6 +204,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_scene_expression_character_moe.json",
     "photo_prompt_y2k_extension.json",
     "photo_prompt_portrait_composition_extension.json",
+    "photo_prompt_portrait_fashion_exposure_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
@@ -16555,8 +16557,8 @@ def candidate_pack_project_v6(
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
         "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
         "allowed_dimensions": open_dimensions,
-        "minimum_authorial_decisions": min(2, len(open_dimensions)),
-        "minimum_preserved_evidence_phrases": 3,
+        "minimum_authorial_decisions": 0,
+        "minimum_preserved_evidence_phrases": 0,
         "dimension_policy": "distinct_open_dimensions_only",
         "insufficient_freedom_policy": "do_not_invent_open_dimensions",
     }
@@ -16568,6 +16570,9 @@ def candidate_pack_project_v6(
             "source_authorship_policy_sha256": authorship_policy["canonical_sha256"],
             "minimum_authorial_decisions": authorship_policy[
                 "minimum_authorial_decisions"
+            ],
+            "minimum_preserved_evidence_phrases": authorship_policy[
+                "minimum_preserved_evidence_phrases"
             ],
         }
     )

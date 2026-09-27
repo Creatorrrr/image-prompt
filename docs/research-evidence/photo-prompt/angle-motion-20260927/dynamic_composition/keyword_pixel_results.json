@@ -1,0 +1,98 @@
+{
+  "contract_version": "keyword-pixel-results/v1",
+  "arm": "dynamic_composition",
+  "topic": "동적인 느낌을 줄 수 있는 구도",
+  "requester_definition_present": false,
+  "interpretation_basis": "agent_general_knowledge",
+  "composition_subtype": "diagonal-depth directional asymmetry",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/generated.png",
+  "result_sha256": "8a0365d80e489f3db0960dcce54bf13c4f892abd3944dff51649dcb726e1779a",
+  "review_scales": {
+    "native": {
+      "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/generated.png",
+      "dimensions": [
+        1448,
+        1086
+      ],
+      "directly_viewed": true
+    },
+    "thumbnail": {
+      "path": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/angle-motion-20260927/dynamic_composition/review_thumbnail.png",
+      "dimensions": [
+        512,
+        384
+      ],
+      "directly_viewed": true
+    }
+  },
+  "test_case_file_sha256": "a6ea249d6282e3bd8911953a4897bc79539191fa5b9b77d1f6531f9511379a45",
+  "operator": "all",
+  "partial_is_fail": true,
+  "topic_test_case_components": [
+    {
+      "component_id": "diagonal_flow",
+      "status": "pass",
+      "native_evidence": "The inclined torso and long trailing leg rise diagonally toward screen-right; pavement seams and the receding exit also progress to the upper-right. At least two subject/scene vectors agree.",
+      "thumbnail_evidence": "The leaning actor and receding pavement remain strong diagonal directions at 512x384.",
+      "limit": "The dominant foreground ridge has the opposite slope; this fails the stronger frozen required assertion below."
+    },
+    {
+      "component_id": "directional_asymmetry",
+      "status": "pass",
+      "native_evidence": "Actor body occupies approximately x=304..866 of a 1448-wide frame, with a broad continuation area on the right; her gaze, lifted step and lean face that area.",
+      "thumbnail_evidence": "The actor remains left of center, with clear open wet pavement ahead to screen-right."
+    },
+    {
+      "component_id": "depth_progression",
+      "status": "pass",
+      "native_evidence": "Near drainage ridge, midground whole actor and background sunlit underpass exit/river railing are separable by overlap, scale and receding seams.",
+      "thumbnail_evidence": "Foreground lip, actor and bright distant opening remain three distinct layers."
+    },
+    {
+      "component_id": "motion_and_readability",
+      "status": "pass",
+      "native_evidence": "A raised lead shoe, rear toe support, bent forward elbow and inclined torso show a running/bounding direction; face, tube, connected limbs and both shoes are readable without global blur.",
+      "thumbnail_evidence": "The stride silhouette and held tube remain readable; the face remains recognizable as the main subject."
+    }
+  ],
+  "topic_test_case_all_of_status": "pass",
+  "frozen_required_assertion_components": [
+    {
+      "component_id": "directional_diagonal",
+      "status": "fail",
+      "native_evidence": "The foreground threshold runs from lower-left down toward lower-right, whereas the frozen phrase requires the foreground drainage ridge to lead toward the upper-right exit. The tunnel seams recede up-right, so the requested common ridge/seam vector survives only partly.",
+      "thumbnail_evidence": "The near ridge slopes down-right while the exit route slopes up-right; the mismatch is still evident.",
+      "partial_is_fail": true
+    },
+    {
+      "component_id": "directional_asymmetry",
+      "status": "pass",
+      "native_evidence": "Actor left-of-center and larger open continuation space toward screen-right.",
+      "thumbnail_evidence": "Left placement and lead room are unmistakable."
+    },
+    {
+      "component_id": "layered_space",
+      "status": "pass",
+      "native_evidence": "Near ridge, midground woman and distant exit coexist in one spatially readable frame.",
+      "thumbnail_evidence": "Three layers remain distinct."
+    },
+    {
+      "component_id": "subject_legibility",
+      "status": "pass",
+      "native_evidence": "Face, fingers around tube, bent elbow, connected trouser legs and raised shoe edge are resolved.",
+      "thumbnail_evidence": "Face, main limb arrangement, shoes and tube remain discernible."
+    },
+    {
+      "component_id": "localized_motion",
+      "status": "fail",
+      "native_evidence": "Small hair strands trail to screen-left, but the bag rests against the hip with a settled lower edge. The required conjunction of trailing hair and a swinging bag edge is not clearly present.",
+      "thumbnail_evidence": "Hair and bag silhouette are clear, but a swinging bag-edge displacement is not assessable as a separate motion cue.",
+      "partial_is_fail": true
+    }
+  ],
+  "frozen_required_assertion_all_of_status": "fail",
+  "keyword_all_of_status": "fail",
+  "reason": "Broad movement/space criteria pass, but the non-substitutable frozen ridge vector and combined localized motion evidence fail. A label or pleasing overall impression cannot replace those components.",
+  "user_aesthetic_acceptance": "pending",
+  "reviewer": "angle_dynamic agent, direct pixel inspection"
+}

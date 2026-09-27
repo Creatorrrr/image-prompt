@@ -1,0 +1,56 @@
+{
+  "contract_version": "independent-photo-test-case/v1",
+  "arm": "arm-a-hosiery",
+  "seed": 287413,
+  "concept": "Heritage-exhibition print installation in an art deco tram depot at rainy blue hour",
+  "authorial_scope": "Seeded agent choice; not requester-defined wardrobe or personality.",
+  "random_draw_file": "random_draw.json",
+  "draw_adaptation": "A framed route-map print is a plausible heritage-exhibition object inside the randomly drawn depot. Lifting level is embodied as bringing an inclined print upright while its bottom stays supported.",
+  "reference_path": "/tmp/codex-remote-attachments/01a0e3ac-baa0-7220-bb99-f2cf1e063924/A48739FA-E1B4-4657-8C64-FF9ED8216699/1-사진-1.jpg",
+  "reference_scope": [
+    "visible face appearance",
+    "visible dark bob and fringe"
+  ],
+  "reference_exclusions": [
+    "identity claim",
+    "unseen body shape",
+    "personality inference"
+  ],
+  "focal_targets": [
+    {
+      "gate_id": "mini_skirt_exterior",
+      "observable_pass": "Continuous exterior mini-skirt silhouette and its above-knee hem visible; neither coat/shorts nor interior exposure substitutes.",
+      "baseline_phrase": "a warm charcoal tailored mini skirt"
+    },
+    {
+      "gate_id": "thigh_skin_band",
+      "observable_pass": "On both legs, a positive uninterrupted bare-thigh interval between visible skirt hem and distinct above-knee hosiery top; only thigh region counts.",
+      "baseline_phrase": "an uninterrupted band of bare thigh skin lies between the skirt hem and each hosiery top"
+    },
+    {
+      "gate_id": "sheer_hosiery",
+      "observable_pass": "Black textile coverage clearly continues over lower thigh/knee/shin with underlying skin tone visibly transmitted; opaque socks, leggings or bare legs fail.",
+      "baseline_phrase": "Fine translucent knit reveals underlying skin tone through the hosiery"
+    },
+    {
+      "gate_id": "hosiery_surface_sheen",
+      "observable_pass": "Soft highlights belong to the hosiery surface along shins while translucency remains visible; wet skin or patent boots alone do not count.",
+      "baseline_phrase": "narrow soft highlights track the textile surface along the shins"
+    }
+  ],
+  "common_gates": [
+    "adult fashion scene",
+    "readable face and face/hair resemblance guidance",
+    "both complete grounded legs",
+    "hand-to-print contact",
+    "print-bottom-to-table support",
+    "full-body view and lateral unobstructing table",
+    "coherent environment and photographic materials"
+  ],
+  "failure_policy": "Any missing, partial or ambiguous target/component/contact/support gate fails; prompt audit does not substitute for pixel review. Blocked image call is UNSCORED.",
+  "generation_budget": {
+    "native_imagegen_calls": 1,
+    "quality_retries": 0,
+    "cli_fallback": false
+  }
+}

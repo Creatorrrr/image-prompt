@@ -1,0 +1,258 @@
+{
+  "fixture_sha256": "0b3b9b6994d775c4b777a7c2b32c47fd8deafdf8464fc231bd32878071bab557",
+  "registry_sha256": "09ab2958703b660ff067f680b01f7bfbc5c259391ecdeb2de554c0e14f93fe73",
+  "provider": "gemini",
+  "embedding_model": "gemini-embedding-2",
+  "dimensions": 768,
+  "cases": [
+    {
+      "id": "central_skin",
+      "query": "An adult fashion photograph shows a shallow central hollow between the upper breasts within a garment opening; the cloth border is separate from the skin shading.",
+      "expected_profile": "pfe_cleavage",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_cleavage",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_midriff",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_cowl",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "returned_face",
+      "query": "A woman in an open-backed evening dress turns her head back so her face can still be seen next to the back opening, with a continuous neck and shoulder connection.",
+      "expected_profile": "pfe_back_face",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_back_face",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "hanging_ease",
+      "query": "A dress follows the adult wearer's outline gently but hangs freely in small areas, keeping suspended fabric folds instead of uniform tight compression.",
+      "expected_profile": "pfe_skimming",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_skimming",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_cleavage",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_ruching",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "gathered_anchor",
+      "query": "On an adult dress, numerous short fabric folds draw together at a fixed stitched point on one side while the adjacent panel is smooth and connected.",
+      "expected_profile": "pfe_ruching",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_ruching",
+          "match_basis": "embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_hem_foundation",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_slit",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_cutout",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "side_opening",
+      "query": "An adult's skirt has a side opening with two sewn edges through which one continuous leg can be seen; the other skirt panel still hangs normally.",
+      "expected_profile": "pfe_slit",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_slit",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_hem_foundation",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_skimming",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "small_underlayer",
+      "query": "At a skirt's lower border, the outer cloth covers most of the adult wearer's opaque briefs; a small part of that separate cloth with its curved leg edge remains visible.",
+      "expected_profile": "pfe_hem_foundation",
+      "kind": "positive_paraphrase",
+      "expected_discovered": true,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_hem_foundation",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_neck_foundation",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "geology",
+      "query": "Mineral cleavage planes in a quartz specimen under laboratory illumination.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "scanning",
+      "query": "Slit-scan photography stretches a city skyline into bands over time.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "fringe",
+      "query": "시스루 앞머리와 머리카락 사이로 보이는 이마를 촬영한다.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "petticoat",
+      "query": "A long lace petticoat hem extends beneath a fully opaque skirt; its own gathered lower edge is visible.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_hem_foundation",
+          "match_basis": "bm25f+embedding",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_slit",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "shorts",
+      "query": "Separate safety shorts under a skirt show two straight leg hems; the inner layer is shorts rather than briefs.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [
+        {
+          "profile_id": "pfe_volume_contrast",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_neck_foundation",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_slit",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_skimming",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        },
+        {
+          "profile_id": "pfe_hem_foundation",
+          "match_basis": "bm25f",
+          "hard_eligible": false,
+          "optional_eligible": true
+        }
+      ],
+      "any_new_hard_hit": false
+    },
+    {
+      "id": "waistband",
+      "query": "A narrow underwear side strap emerges above the waistband of low-rise trousers at the hip.",
+      "kind": "adjacent_negative",
+      "expected_discovered": null,
+      "new_optional_hits": [],
+      "any_new_hard_hit": false
+    }
+  ],
+  "limitations": "Discoverability and authority diagnostics only; optional adjacent hits are not false hard activation or automatic candidate selection. No image was generated."
+}

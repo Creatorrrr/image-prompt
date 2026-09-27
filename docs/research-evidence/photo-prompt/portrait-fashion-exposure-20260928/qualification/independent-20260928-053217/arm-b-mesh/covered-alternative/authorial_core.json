@@ -1,0 +1,143 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes complex randomized reference-assisted image tests of the added fashion keywords. This separate developmental alternative retains this arm's own random working-set scene and independently tests fully covered garment construction: an opaque fitted one-piece and a distinct loose outer coat. The clothing choice is agent-authored test design, not a requester definition.",
+  "subject": "An adult woman in her late twenties in a fully opaque fitted teal long-sleeved jumpsuit and a separate loose tan coat.",
+  "setting": "A temporary photography set inside a glass-roofed transit concourse after rain.",
+  "event": "One right hand turns the shoulder-height brass tilt knob on a lamp beside the standing subject.",
+  "visual_priorities": [
+    "The same solid garment follows the torso, waist and hip through shaped seams and tension folds.",
+    "A separate loose coat forms outward front edges, broad draping folds and a visible air gap around the fitted base.",
+    "The readable reference-guided face and one practical equipment gesture inhabit a quiet architectural tableau."
+  ],
+  "baseline_prompt_en": "A fashion editorial photograph of an adult woman in her late twenties making a practical lighting adjustment on a temporary photography set inside a glass-roofed transit concourse after rain. Use the attached portrait only as guidance for visible face and hair appearance: a short dark bob with airy bangs, softly rounded facial contours, dark eyes and natural glossy lips. She wears a fully opaque deep-teal long-sleeved one-piece jumpsuit with a closed neckline and full-length trouser legs. The same solid garment closely follows her torso, waist and hip contours, with shaped seams and small tension folds proving a fitted textile surface. Its opaque fabric continues uninterrupted across the chest, abdomen and pelvis. A separate loose tan hip-length coat hangs around that fitted base, its two open front edges falling outward and its broad sleeve folds keeping a visible air gap from the underlying jumpsuit. She stands upright on the level stone floor with her torso almost frontal. Her right hand turns the brass tilt knob on the side yoke of a vintage spotlight at shoulder height beside her; her left arm rests naturally beside her hip. Her attentive face remains readable as she glances toward the lamp. Frame the complete head through the knees at chest height, with both coat edges, the fitted waist and hips, and the operative hand visible together. Repeating roof arches form a quiet symmetrical backdrop above shallow reflections on the damp floor. Late-afternoon daylight shows the teal seam relief and tan drape as distinct materials, with a restrained warm accent on the brass lamp housing.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "complex reference-assisted garment-structure test",
+      "source_text": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Create a separate original adult fashion photograph within the randomized test authorization, with a complete opaque fitted garment beneath a distinct loose coat and visible face/hair reference guidance. Its focal construction choices are agent-owned.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "dimension": "concept",
+        "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "prompt_evidence": "A fashion editorial photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "dimension": "subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록",
+        "prompt_evidence": "an adult woman in her late twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "dimension": "event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "prompt_evidence": "Her right hand turns the brass tilt knob on the side yoke of a vintage spotlight"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "dimension": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "prompt_evidence": "Use the attached portrait only as guidance for visible face and hair appearance"
+      },
+      {
+        "anchor_id": "test_garment_structure",
+        "dimension": "material",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "prompt_evidence": "The same solid garment closely follows her torso, waist and hip contours"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "material"
+    ],
+    "open_dimensions": [
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "timing",
+      "atmosphere",
+      "pose",
+      "expression"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "opaque_fitted_one_piece",
+      "dimension": "material",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "material"
+      ],
+      "axes": {
+        "owner": "same_one_piece_garment_on_adult_subject",
+        "surface": "fully_opaque_textile",
+        "fit": [
+          "torso_following",
+          "waist_following",
+          "hip_following"
+        ],
+        "readability": [
+          "shaped_seams",
+          "small_tension_folds"
+        ],
+        "coverage": "continuous_chest_abdomen_pelvis"
+      },
+      "evidence": {
+        "fit_phrase": "The same solid garment closely follows her torso, waist and hip contours, with shaped seams and small tension folds proving a fitted textile surface",
+        "coverage_phrase": "Its opaque fabric continues uninterrupted across the chest, abdomen and pelvis"
+      }
+    },
+    {
+      "assertion_id": "separate_loose_outer",
+      "dimension": "material",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "material"
+      ],
+      "axes": {
+        "owner": "separate_tan_coat_over_fitted_jumpsuit",
+        "fit": "loose",
+        "relation": "air_gap_and_outward_front_edges_distinguish_layers"
+      },
+      "evidence": {
+        "layer_phrase": "A separate loose tan hip-length coat hangs around that fitted base, its two open front edges falling outward and its broad sleeve folds keeping a visible air gap from the underlying jumpsuit"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion_editorial",
+    "family": "covered working fashion tableau",
+    "evidence": [
+      "quiet symmetrical backdrop",
+      "Late-afternoon daylight shows the teal seam relief and tan drape as distinct materials"
+    ]
+  },
+  "variation_key": "arm-b-covered-alternative"
+}

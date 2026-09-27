@@ -1,0 +1,105 @@
+{
+  "contract_version": "photo-precore-feature-selection/v1",
+  "request_id": "angle-motion-20260927-low_angle",
+  "active_span_ids": [
+    "reference_context",
+    "topic",
+    "workflow"
+  ],
+  "catalog_path": "skills/photo-prompt-image-generator/precore/visual_feature_catalog.json",
+  "catalog_schema_version": "photo-precore-feature-catalog/v1",
+  "catalog_sha256": "0517ab8503183d5cfa23647aa9158cdf72169ca49a9fd8e72d030a40e77d04c5",
+  "request_sha256": "446ff8d572a31946464346f63db3b738abca85731c7a388b7fbc251651efcbc2",
+  "baseline_prompt_sha256": "543ea77a499d062d000424b7b5e6cd620e25526cd67fe01cb789209fa0feb442",
+  "selected": [
+    {
+      "category_id": "feature.subject",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "reference_context"
+      ],
+      "source_text": null,
+      "derivation": "The supplied face and hair are visibly interpreted as appearance guidance.",
+      "reason": "Keep visible appearance guidance distinct from invented staging.",
+      "baseline_evidence": "Use the attached portrait as a facial and hair appearance reference"
+    },
+    {
+      "category_id": "feature.location",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Tall overhead architecture makes upward projection inspectable.",
+      "baseline_evidence": "a glass-roofed conservatory with iron ribs"
+    },
+    {
+      "category_id": "feature.action",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "One visible wiping moment gives the portrait a coherent practical event.",
+      "baseline_evidence": "wiping a wet streak along that edge"
+    },
+    {
+      "category_id": "feature.props",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Distinct cloth and metal establish an inspectable interaction target.",
+      "baseline_evidence": "her left hand cradles a spare towel bundle at her waist"
+    },
+    {
+      "category_id": "feature.pose",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Staggered floor contacts make balance visible from the low view.",
+      "baseline_evidence": "Both boot soles rest on the stone floor, feet staggered"
+    },
+    {
+      "category_id": "feature.camera_height",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": null,
+      "derivation": "A low-angle view places the viewing position below the subject.",
+      "reason": "Camera position must read below the standing subject.",
+      "baseline_evidence": "The viewpoint is below the subject's waist"
+    },
+    {
+      "category_id": "feature.camera_angle",
+      "basis": "explicit_request",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": "로우 앵글",
+      "derivation": null,
+      "reason": "The focal request requires an upward-looking direction.",
+      "baseline_evidence": "and directed upward"
+    },
+    {
+      "category_id": "feature.spatial_depth",
+      "basis": "request_derived",
+      "source_span_ids": [
+        "topic"
+      ],
+      "source_text": null,
+      "derivation": "Near lower elements appear larger while elevated structure recedes.",
+      "reason": "Projection separates low angle from a level portrait or simple tilt.",
+      "baseline_evidence": "Near boots appear larger than her head as the body recedes upward"
+    },
+    {
+      "category_id": "feature.lighting_direction",
+      "basis": "agent_visual_choice",
+      "source_span_ids": [],
+      "source_text": null,
+      "derivation": null,
+      "reason": "Side daylight separates face and hands from tall structural lines.",
+      "baseline_evidence": "Cool overcast daylight enters through the open side"
+    }
+  ]
+}

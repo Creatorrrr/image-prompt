@@ -1,0 +1,100 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes independent randomized complex scenes to test updated fashion keywords in generated pixels using the attached portrait. My artistic choice is a calm exhibition installation moment inside a tram depot, with face, action, skirt outline and hosiery material relationships simultaneously legible. The specific scene and wardrobe are agent choices for testing, not a requester definition.",
+  "subject": "A clearly adult woman using the attached portrait as visible face and hair appearance guidance only.",
+  "setting": "Art deco tram depot at blue hour after rain, being prepared for a small heritage exhibition.",
+  "event": "The woman brings a supported framed route-map print upright on a padded worktable.",
+  "visual_priorities": [
+    "A readable adult face and calm working presence in an architectural environment.",
+    "Her hands act on one framed print whose bottom edge visibly remains supported on the worktable.",
+    "A coherent short exterior skirt hem is followed by bare-thigh bands and above-knee hosiery tops.",
+    "Transparent black knit and soft textile reflections remain distinct material cues.",
+    "A full figure stands clearly in front of a receding tram and arched windows."
+  ],
+  "baseline_prompt_en": "A quiet cinematic fashion editorial at blue hour after rain, inside an art deco tram depot being prepared for a small heritage exhibition. A clearly adult woman, around twenty-nine, brings a framed route-map print upright on a padded waist-high worktable: her left hand grips its upper corner, her right hand holds the lower side, and its bottom edge remains on the padded table as the top edge becomes horizontal. The table and frame sit beside her rather than across her legs. Both feet rest flat on the dry aisle floor, knees softly extended, with a slight torso turn toward the worktable and her face turned toward the camera. Use the supplied portrait as guidance for visible face and hair appearance: short dark bob, fine separated fringe, softly rounded facial contours, and readable dark eyes. Her calm focused expression belongs to this working moment. She wears a fully buttoned pale ivory collared blouse tucked into a warm charcoal tailored mini skirt, the skirt's continuous exterior hem ending high on her thighs with a coherent short skirt silhouette. Black sheer thigh-high hosiery ends above each knee; an uninterrupted band of bare thigh skin lies between the skirt hem and each hosiery top. Fine translucent knit reveals underlying skin tone through the hosiery, while narrow soft highlights track the textile surface along the shins. Simple dark low-heeled shoes anchor her stance. Photograph from a front three-quarter full-body view including her head, hands, knees and both shoes, using natural proportions and a readable face. Cool skylight mixes with an amber work lamp; skin bands, hosiery tops, transparent weave and textile sheen remain individually legible. A tram body and repeating arched windows recede behind her; damp reflections remain outside the open depot doorway.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent random complex test concept",
+      "source_text": "각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Each arm authors its own seeded complex photographic scene to expose the assigned newly added fashion relations to prompt and actual-pixel testing. The concrete scene is my choice, not a user definition.",
+      "sources": []
+    },
+    {
+      "term": "attached portrait use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attachment for observable visible face and hair appearance, without claiming identity, hidden anatomy, body shape or personality.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A quiet cinematic fashion editorial"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "A clearly adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "brings a framed route-map print upright"
+      },
+      {
+        "anchor_id": "portrait_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied portrait as guidance for visible face and hair appearance"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "setting",
+      "pose",
+      "action",
+      "appearance",
+      "expression",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion_editorial",
+    "family": "Quiet cinematic environmental fashion photograph",
+    "evidence": [
+      "Cool skylight mixes with an amber work lamp",
+      "A tram body and repeating arched windows recede behind her"
+    ]
+  },
+  "variation_key": "arm-a-hosiery-seed-287413"
+}

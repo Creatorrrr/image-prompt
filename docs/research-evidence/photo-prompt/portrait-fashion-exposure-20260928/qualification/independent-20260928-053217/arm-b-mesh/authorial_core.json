@@ -1,0 +1,171 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "The requester authorizes an independent randomly chosen complex reference-assisted test photograph for recently added fashion visual meanings. This arm independently chooses a working fashion tableau in a transit concourse, using mesh transparency, a real readable navel and adjacent opaque coverage as its focal test relations; those scene choices are agent-owned test design, not requester definitions.",
+  "subject": "An adult woman in her late twenties wearing an opaque deep-teal cropped bodice with a fine-mesh abdominal extension and low-rise opaque trousers.",
+  "setting": "A temporary photography set in a glass-roofed transit concourse after rain, in late afternoon.",
+  "event": "The woman stands upright while adjusting the brass tilt knob of a vintage spotlight beside her.",
+  "visual_priorities": [
+    "Fine mesh cells remain visible over a bounded abdominal skin region while adjacent garments remain opaque.",
+    "A real anatomical navel is visible below the bodice hem and above the trouser waistband.",
+    "A practical shoulder-height spotlight adjustment leaves the face and abdominal panel readable.",
+    "Quiet repeating arches and damp stone reflections surround a calm adult fashion subject."
+  ],
+  "baseline_prompt_en": "A fashion editorial photograph of an adult woman in her late twenties pausing on a temporary photography set inside a glass-roofed transit concourse in late afternoon after a short rain. Use the attached portrait only as guidance for visible face and hair appearance: a short dark bob with airy bangs, softly rounded facial contours, dark eyes and natural glossy lips. She stands upright on the level floor with her torso facing the camera, adjusting the brass tilt knob on the side yoke of a vintage spotlight at shoulder height with her right hand; the lamp stands beside her, and her left arm hangs comfortably beside her hip. Her deep-teal opaque fitted cropped bodice covers the bust and ends below the ribcage. A black fine-mesh extension spans a bounded region of abdominal skin between the opaque bodice hem and the low-rise opaque trouser waistband. Individual fine mesh threads and open cells remain visible over the skin beneath. Her real navel is a small anatomical depression clearly readable through the mesh, below the bodice hem and above the trouser waistband. The opaque cotton-sateen bodice and trousers have continuous solid surfaces, seam contours and natural folds contrasting with the transparent abdominal mesh. Her face is calm and attentive, angled slightly toward the lamp while remaining readable. Frame her from the full head to upper thighs at chest height, almost frontal, with the hand and lamp entirely to the side of the abdominal panel. Repeating roof arches form a quiet symmetrical backdrop; a shallow reflection of them crosses the damp stone floor. Soft daylight reveals the mesh texture and skin relief, while the warm spotlight housing provides a restrained amber accent.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent complex reference-assisted visual test",
+      "source_text": "아직 반영된 게 아니라면 시각 의미 데이터와 후보팩에 반영해줘. 반영되었다면 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Use the user-authorized random complex test design to make a single adult fashion photograph, with the attached portrait restricted to visible face and hair guidance. The setting and action are seeded independent visual choices.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A fashion editorial photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman in her late twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "adjusting the brass tilt knob on the side yoke of a vintage spotlight"
+      },
+      {
+        "anchor_id": "core_reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the attached portrait only as guidance for visible face and hair appearance"
+      },
+      {
+        "anchor_id": "test_material",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "material",
+        "prompt_evidence": "Individual fine mesh threads and open cells remain visible over the skin beneath"
+      },
+      {
+        "anchor_id": "test_navel",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트",
+        "dimension": "body_geometry",
+        "prompt_evidence": "Her real navel is a small anatomical depression clearly readable through the mesh"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "material",
+      "body_geometry"
+    ],
+    "open_dimensions": [
+      "setting",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "timing",
+      "atmosphere",
+      "pose",
+      "expression"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "bounded_abdominal_mesh",
+      "dimension": "material",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "material"
+      ],
+      "axes": {
+        "owner": "adult_subject_abdominal_panel",
+        "material": "fine_black_mesh",
+        "substrate": "abdominal_skin",
+        "bounds": [
+          "opaque_bodice_hem",
+          "opaque_trouser_waistband"
+        ],
+        "visibility": "threads_open_cells_and_skin"
+      },
+      "evidence": {
+        "bounds_phrase": "A black fine-mesh extension spans a bounded region of abdominal skin between the opaque bodice hem and the low-rise opaque trouser waistband",
+        "weave_phrase": "Individual fine mesh threads and open cells remain visible over the skin beneath"
+      }
+    },
+    {
+      "assertion_id": "real_navel_between_edges",
+      "dimension": "body_geometry",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "body_geometry"
+      ],
+      "axes": {
+        "owner": "adult_subject_abdomen",
+        "landmark": "real_anatomical_navel",
+        "visibility": "readable_through_mesh",
+        "position": [
+          "below_bodice_hem",
+          "above_trouser_waistband"
+        ]
+      },
+      "evidence": {
+        "landmark_phrase": "Her real navel is a small anatomical depression clearly readable through the mesh, below the bodice hem and above the trouser waistband"
+      }
+    },
+    {
+      "assertion_id": "adjacent_opaque_contrast",
+      "dimension": "material",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "material"
+      ],
+      "axes": {
+        "owner": "adult_subject_bodice_and_trousers",
+        "material": "opaque_cotton_sateen",
+        "contrast": "solid_coverage_adjacent_to_transparent_mesh"
+      },
+      "evidence": {
+        "coverage_phrase": "Her deep-teal opaque fitted cropped bodice covers the bust and ends below the ribcage",
+        "contrast_phrase": "The opaque cotton-sateen bodice and trousers have continuous solid surfaces, seam contours and natural folds contrasting with the transparent abdominal mesh"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion_editorial",
+    "family": "quiet working tableau",
+    "evidence": [
+      "quiet symmetrical backdrop",
+      "Soft daylight reveals the mesh texture and skin relief"
+    ]
+  },
+  "variation_key": "arm-b-seed-739821"
+}

@@ -1,0 +1,36 @@
+test_added_projection_preserves_initial_profiles_candidates_and_source_links (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links) ... FAIL
+test_appended_labels_do_not_imply_exposure_fit_anatomy_or_viewpoint (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_appended_labels_do_not_imply_exposure_fit_anatomy_or_viewpoint) ... ok
+test_broad_labels_and_adjacent_substitutes_do_not_create_hard_geometry (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_broad_labels_and_adjacent_substitutes_do_not_create_hard_geometry) ... ok
+test_bundles_are_joint_optional_and_respect_all_locked_dimensions (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_bundles_are_joint_optional_and_respect_all_locked_dimensions) ... ok
+test_candidate_eligibility_requires_an_adult_human_context (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_candidate_eligibility_requires_an_adult_human_context) ... ok
+test_complete_relation_has_authority_but_fragments_negation_and_nonadult_do_not (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_complete_relation_has_authority_but_fragments_negation_and_nonadult_do_not) ... ok
+test_each_selected_profile_retains_every_component_and_gate (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_each_selected_profile_retains_every_component_and_gate) ... ok
+test_embedding_discovery_is_advisory_even_for_a_required_query (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_embedding_discovery_is_advisory_even_for_a_required_query) ... ok
+test_real_generated_indexes_bind_sources_and_every_candidate (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_real_generated_indexes_bind_sources_and_every_candidate) ... ok
+test_research_sources_and_proposals_do_not_leak_into_runtime (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_research_sources_and_proposals_do_not_leak_into_runtime) ... ok
+test_thigh_skin_band_does_not_change_the_existing_negative_space_profile (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_thigh_skin_band_does_not_change_the_existing_negative_space_profile) ... FAIL
+test_unrelated_homonyms_are_filtered_even_with_an_adult_context (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_unrelated_homonyms_are_filtered_even_with_an_adult_context) ... ok
+
+======================================================================
+FAIL: test_added_projection_preserves_initial_profiles_candidates_and_source_links (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_added_projection_preserves_initial_profiles_candidates_and_source_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 171, in test_added_projection_preserves_initial_profiles_candidates_and_source_links
+    self.assertEqual(p, self.profiles[p["id"]])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id'[1272 chars]ms.']}, 'concept_candidate': {'concept_terms':[2910 chars]}}]}} != {'id'[1272 chars]ms.'], 'component_semantics': {'minimum_compon[5240 chars]ows"}
+Diff is 23414 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_thigh_skin_band_does_not_change_the_existing_negative_space_profile (tests.test_photo_portrait_fashion_exposure.PortraitFashionExposureTests.test_thigh_skin_band_does_not_change_the_existing_negative_space_profile)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_portrait_fashion_exposure.py", line 160, in test_thigh_skin_band_does_not_change_the_existing_negative_space_profile
+    self.assertIn("절대공역", old["activation"]["exact_terms"])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '절대공역' not found in ['thigh gap', 'inner thigh gap', 'inner-thigh negative space']
+
+----------------------------------------------------------------------
+Ran 12 tests in 7.830s
+
+FAILED (failures=2)

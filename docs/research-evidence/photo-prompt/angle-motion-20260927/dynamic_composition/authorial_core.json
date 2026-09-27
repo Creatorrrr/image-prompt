@@ -1,0 +1,132 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "아까 그 첨부 이미지로 이번엔 하이 앵글, 로우 앵글, 동적인 느낌을 줄 수 있는 구도 이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+  "interpreted_intent": "Produce this arm of the requested photographic test using a dynamic-feeling composition. General-knowledge interpretation: coherent diagonal spatial flow, directional asymmetry, layered depth and an immediately readable protagonist create visual momentum; the random physical scene is agent staging and not a requester definition.",
+  "subject": "An adult fictional woman guided by the supplied portrait only for visible facial appearance and short dark bob with wispy bangs.",
+  "setting": "Riverside pedestrian underpass with wet concrete, a low drainage threshold, and an open sunlit exit.",
+  "event": "One quick bounding stride past the low drainage threshold, with left forefoot pushing from pavement and right shoe lifted clear.",
+  "visual_priorities": [
+    "Diagonal spatial flow echoes the inclined body and forward stride.",
+    "Off-center placement leaves readable continuation space ahead.",
+    "Foreground ridge, woman and receding exit produce directional depth.",
+    "The reference-guided face and bodily action remain readable amid localized motion cues."
+  ],
+  "baseline_prompt_en": "A single-frame photographic study of forward movement shows an adult fictional woman, with the supplied reference guiding the visible facial appearance and short dark bob with wispy bangs, taking one quick bounding stride past a low drainage threshold in a riverside pedestrian underpass with wet concrete. Her left forefoot pushes against the pavement behind the threshold while her right knee lifts ahead and her right shoe clears the low ridge; her torso inclines into the movement toward screen-right. Her left hand grips a rolled drawing tube beside her left thigh, her right elbow swings forward, and a rust-red crossbody canvas bag rests at her right hip with its strap crossing her clothed torso. She wears a light blue windbreaker, straight charcoal trousers, and practical sneakers. In an oblique side-front view at chest height, diagonal pavement seams and a foreground drainage ridge lead from the lower-left foreground toward the upper-right exit, echoing the inclined body and the lifted stride. The woman sits left of center with open space ahead of her movement, so her forward vector continues visibly into the frame. A near wet ridge, the midground woman, and the receding underpass exit form three readable depth layers. Her face, hands, shoe clearance, and connected limbs remain sharply readable, while a few trailing hair strands and a swinging bag edge give localized motion cues. Late-afternoon sun entering from one open side makes a warm stripe across her face and jacket, reflected in the wet concrete, while the shaded tunnel retains its cool concrete texture. The image reads as a natural editorial photograph with the moving woman as its first visual focus.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "reference_context",
+      "source_text": "아까 그 첨부 이미지로 이번엔",
+      "basis": "request_context",
+      "resolution": "Use the supplied image as visual reference for the face and hair of an adult fictional character; the scene is independently authored.",
+      "sources": []
+    },
+    {
+      "term": "동적인 느낌을 줄 수 있는 구도",
+      "source_text": "동적인 느낌을 줄 수 있는 구도",
+      "basis": "agent_general_knowledge",
+      "resolution": "Dynamic composition is made visible by coherent diagonal flow, directional asymmetry, depth progression and a readable protagonist; no specific dynamic subtype was defined by the requester.",
+      "sources": []
+    },
+    {
+      "term": "workflow",
+      "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "Run this as one separate single-frame photographic test using the authorized intent-first freeze, one candidate pack and one native render protocol.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "동적인 느낌을 줄 수 있는 구도",
+        "dimension": "concept",
+        "prompt_evidence": "diagonal pavement seams and a foreground drainage ridge lead from the lower-left foreground toward the upper-right exit"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "subject",
+        "prompt_evidence": "an adult fictional woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "이렇게 3개 주제로 아까와 같은 방식으로 테스트해줘.",
+        "dimension": "event",
+        "prompt_evidence": "A single-frame photographic study of forward movement"
+      },
+      {
+        "anchor_id": "core_composition",
+        "source_text": "동적인 느낌을 줄 수 있는 구도",
+        "dimension": "composition",
+        "prompt_evidence": "The woman sits left of center with open space ahead of her movement"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "아까 그 첨부 이미지로 이번엔",
+        "dimension": "reference_use",
+        "prompt_evidence": "the supplied reference guiding the visible facial appearance and short dark bob with wispy bangs"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "composition",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "framing",
+      "material",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "dynamic_composition_visible",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "directional_flow": "coherent_diagonal_spatial_flow",
+        "placement": "asymmetric_with_continuation_space",
+        "space": "foreground_midground_background_progression",
+        "readability": "recognizable_protagonist_and_action",
+        "motion_scope": "localized_motion_with_readable_body"
+      },
+      "evidence": {
+        "directional_diagonal": "diagonal pavement seams and a foreground drainage ridge lead from the lower-left foreground toward the upper-right exit",
+        "directional_asymmetry": "The woman sits left of center with open space ahead of her movement",
+        "layered_space": "A near wet ridge, the midground woman, and the receding underpass exit form three readable depth layers",
+        "subject_legibility": "Her face, hands, shoe clearance, and connected limbs remain sharply readable",
+        "localized_motion": "a few trailing hair strands and a swinging bag edge give localized motion cues"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photographic editorial",
+    "family": "natural movement study",
+    "evidence": [
+      "natural editorial photograph",
+      "cool concrete texture"
+    ]
+  },
+  "variation_key": "dynamic-composition-13179358549791421548"
+}

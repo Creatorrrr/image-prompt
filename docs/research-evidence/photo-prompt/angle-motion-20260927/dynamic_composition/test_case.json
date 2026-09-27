@@ -1,0 +1,65 @@
+{
+  "contract_version": "angle-motion-test-case/v1",
+  "arm": "dynamic_composition",
+  "provenance": "agent_prepack_pixel_criteria",
+  "requester_definition_present": false,
+  "interpretation_basis": "agent_general_knowledge",
+  "composition_subtype": "diagonal-depth directional asymmetry",
+  "topic_all_of": {
+    "operator": "all",
+    "partial_is_fail": true,
+    "components": [
+      {
+        "id": "diagonal_flow",
+        "pass": "At least two clear scene/subject vectors share a diagonal direction and lead toward a visible continuation in the frame.",
+        "fail": "A random camera tilt or a lone diagonal decorative object without coherent flow."
+      },
+      {
+        "id": "directional_asymmetry",
+        "pass": "Actor is visibly off-center with more usable space ahead of the movement than behind; action direction agrees with that space.",
+        "fail": "Centered symmetry or movement running directly out of an immediately cropped edge."
+      },
+      {
+        "id": "depth_progression",
+        "pass": "A readable foreground object, midground actor and receding background form a traversable spatial route.",
+        "fail": "Flat backdrop, collage depth or incoherent vanishing directions."
+      },
+      {
+        "id": "motion_and_readability",
+        "pass": "Pose or localized trailing elements show movement direction while face, connected body and action remain readable at original and thumbnail size.",
+        "fail": "The word dynamic alone, static straight pose, full-frame blur, or unreadable protagonist."
+      }
+    ]
+  },
+  "confusion_boundaries": [
+    "Camera roll alone is insufficient.",
+    "Running alone in a centered flat portrait is insufficient.",
+    "Global blur does not prove dynamic composition.",
+    "A strong diagonal that competes with or erases the actor is insufficient."
+  ],
+  "fixed_scene_all_of": [
+    "Adult fictional woman with reference-guided visible face and dark bob with wispy bangs.",
+    "Riverside pedestrian underpass and wet concrete.",
+    "Left forefoot propulsive pavement contact behind a low threshold while right shoe clears it.",
+    "Tube held by left hand and rust-red crossbody bag supported at right hip by chest-crossing strap.",
+    "Light blue windbreaker, charcoal trousers and sneakers.",
+    "Side-entering late afternoon warm light with shaded concrete and visible wet reflections."
+  ],
+  "embodiment_pixel_checks": [
+    "Body ownership and connected limbs.",
+    "Left foot support and right shoe clearance.",
+    "Left hand and drawing tube contact.",
+    "Bag support and strap routing.",
+    "Available clearance around threshold and actor."
+  ],
+  "user_aesthetic_acceptance": "pending",
+  "status_domains_separate": [
+    "prompt_audit",
+    "runtime_request_audit",
+    "saved_output",
+    "topic_pixels",
+    "fixed_scene_pixels",
+    "embodiment_pixels",
+    "user_acceptance"
+  ]
+}
