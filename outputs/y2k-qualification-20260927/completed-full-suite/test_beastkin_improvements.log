@@ -1,0 +1,42 @@
+test_role_beastkin_soft_spec_carries_scene_and_species_family_policy (test_beastkin_improvements.TestBeastkinImprovements.test_role_beastkin_soft_spec_carries_scene_and_species_family_policy) ... FAIL
+test_role_scene_pools_cover_reviewed_beastkin_roles (test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) ... 
+  test_role_scene_pools_cover_reviewed_beastkin_roles (test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) (role='경찰') ... FAIL
+
+======================================================================
+FAIL: test_role_beastkin_soft_spec_carries_scene_and_species_family_policy (test_beastkin_improvements.TestBeastkinImprovements.test_role_beastkin_soft_spec_carries_scene_and_species_family_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_beastkin_improvements.py", line 126, in test_role_beastkin_soft_spec_carries_scene_and_species_family_policy
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        set(spec["role_scene_policy"]["allowed_locations"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Items in the first set but not the second:
+'controlled_public_safety_perimeter'
+Items in the second set but not the first:
+'traffic_crossing_rain'
+'lost_child_service_desk'
+'city_intersection_night'
+
+======================================================================
+FAIL: test_role_scene_pools_cover_reviewed_beastkin_roles (test_beastkin_improvements.TestBeastkinImprovements.test_role_scene_pools_cover_reviewed_beastkin_roles) (role='경찰')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_beastkin_improvements.py", line 113, in test_role_scene_pools_cover_reviewed_beastkin_roles
+    self.assertEqual(set(policy["allowed_locations"]), locations)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'controlled_public_safety_perimeter'
+Items in the second set but not the first:
+'traffic_crossing_rain'
+'lost_child_service_desk'
+'city_intersection_night'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.204s
+
+FAILED (failures=2)

@@ -1,0 +1,73 @@
+{
+  "tests_run": 2,
+  "failed_test_ids": [
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_inner_thigh_en')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_contained_affect_components')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_yandere_en')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_yandere_ko')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_yandere_relation_components')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='negative_yandere_expression_only')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='negative_yandere_role_prop_only')",
+    "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_kuudere_relation_components')"
+  ],
+  "error_test_ids": [],
+  "failure_evidence": [
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 598, in test_prepack_visual_intent_is_hash_bound_and_source_grounded\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        audit_composed_prompt.audit_visual_obligations(\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<4 lines>...\n        [],\n        ^^^\n    )\n    ^\nAssertionError: Lists differ: [{'check': 'chosen_visual_concept_ids', 'r[99 chars]ty'}] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n{'check': 'chosen_visual_concept_ids', 'reason': 'a pack with optional visual concepts requires an explicit selection list, which may be empty'}\n\n+ []\n- [{'check': 'chosen_visual_concept_ids',\n-   'reason': 'a pack with optional visual concepts requires an explicit '\n-             'selection list, which may be empty'}]\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_inner_thigh_en')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['mep_cover_copy_space'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'mep_cover_copy_space'\n\n- ['mep_cover_copy_space']\n+ []\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_contained_affect_components')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['contained_affect_self_presentation', 'pf_keep_ward'] != ['contained_affect_self_presentation']\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n'pf_keep_ward'\n\n- ['contained_affect_self_presentation', 'pf_keep_ward']\n?                                      ----------------\n\n+ ['contained_affect_self_presentation']\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_yandere_en')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['clinical_nursing_duty_system'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'clinical_nursing_duty_system'\n\n- ['clinical_nursing_duty_system']\n+ []\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='positive_yandere_ko')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['clinical_nursing_duty_system'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'clinical_nursing_duty_system'\n\n- ['clinical_nursing_duty_system']\n+ []\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_yandere_relation_components')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['clinical_nursing_duty_system', 'yandere_affection_control_relation'] != ['yandere_affection_control_relation']\n\nFirst differing element 0:\n'clinical_nursing_duty_system'\n'yandere_affection_control_relation'\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n'yandere_affection_control_relation'\n\n- ['clinical_nursing_duty_system', 'yandere_affection_control_relation']\n+ ['yandere_affection_control_relation']\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='negative_yandere_expression_only')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['clinical_nursing_duty_system'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'clinical_nursing_duty_system'\n\n- ['clinical_nursing_duty_system']\n+ []\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='negative_yandere_role_prop_only')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['clinical_nursing_duty_system'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'clinical_nursing_duty_system'\n\n- ['clinical_nursing_duty_system']\n+ []\n"
+    },
+    {
+      "id": "tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture (fixture='visual_obligation_routing_v1.jsonl', case='candidate_kuudere_relation_components')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py\", line 127, in assert_routing_fixture\n    self.assertEqual(\n    ~~~~~~~~~~~~~~~~^\n        sorted(concept_matches),\n        ^^^^^^^^^^^^^^^^^^^^^^^^\n        sorted(case[\"expected_candidate_profile_ids\"]),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\nAssertionError: Lists differ: ['kuudere_composed_warmth_relation', 'mep_poised_support', 'pf_keep_ward'] != ['kuudere_composed_warmth_relation']\n\nFirst list contains 2 additional elements.\nFirst extra element 1:\n'mep_poised_support'\n\n- ['kuudere_composed_warmth_relation', 'mep_poised_support', 'pf_keep_ward']\n+ ['kuudere_composed_warmth_relation']\n"
+    }
+  ],
+  "error_evidence": [],
+  "source_root": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source",
+  "source": "clean HEAD generator/tags and saved original indexes; subprocess paths also isolated",
+  "routing_case_selection": {
+    "case_ids": [
+      "candidate_contained_affect_components",
+      "candidate_kuudere_relation_components",
+      "candidate_yandere_relation_components",
+      "negative_yandere_expression_only",
+      "negative_yandere_role_prop_only",
+      "positive_inner_thigh_en",
+      "positive_yandere_en",
+      "positive_yandere_ko"
+    ],
+    "original_fixture": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/fixtures/photo_prompt/visual_obligation_routing_v1.jsonl",
+    "original_sha256": "dbef8fd33a0ec9d70c79f6800293a595dc65b8cad45ef50ed8a8f98b98de8ffc",
+    "selected_fixture": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-visual-selected-fixtures/visual_obligation_routing_v1.jsonl",
+    "selected_sha256": "9399b94e491a7368923e0695f341d6f594a9cb23540636b94951a7a3444fd81f",
+    "rows_and_expectations": "Verbatim existing rows; unchanged test assertions and runtime source. Only case selection is narrowed to observed failures."
+  }
+}

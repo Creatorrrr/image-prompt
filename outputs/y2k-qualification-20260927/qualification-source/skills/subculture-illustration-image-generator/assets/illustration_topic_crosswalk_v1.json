@@ -1,0 +1,3112 @@
+{
+  "schema": "subculture-illustration-topic-crosswalk/v1",
+  "version": "2026-08-09",
+  "domain": "subculture_illustration",
+  "normalization": {
+    "form": "NFKC",
+    "whitespace": "collapse",
+    "ascii_boundary": true,
+    "unicode_form": "NFKC",
+    "casefold": true,
+    "outer_whitespace": "strip",
+    "internal_whitespace": "collapse",
+    "punctuation": "preserve",
+    "match_mode": "exact_phrase_within_request",
+    "embedding_or_semantic_index": "forbidden"
+  },
+  "deterministic_resolution": [
+    "normalize request and aliases with the declared NFKC contract",
+    "consider only aliases inside this illustration runtime scope",
+    "select the longest exact topic phrase",
+    "fail closed on an equal-length cross-route tie",
+    "select the longest allowed explicit format phrase or use the route default",
+    "fail closed when an explicit surface variant is outside the route allowlist"
+  ],
+  "format_family_defaults": {
+    "single_frame": {
+      "default_route_id": "single_frame_narrative_compression",
+      "single_illustration": "single_frame_narrative_compression"
+    },
+    "key_art": {
+      "default_route_id": "anime_game_key_art_visual_declaration",
+      "key_art": "anime_game_key_art_visual_declaration",
+      "ensemble_key_art": "ensemble_relationship_staging",
+      "responsive_key_art": "thumbnail_banner_cover_crop_resilience"
+    },
+    "cover": {
+      "default_route_id": "light_novel_manga_cover_promise",
+      "light_novel_cover": "light_novel_manga_cover_promise"
+    },
+    "card": {
+      "default_route_id": "collectible_card_gacha_splash_grammar",
+      "collectible_card": "collectible_card_gacha_splash_grammar"
+    },
+    "vertical_sequence": {
+      "default_route_id": "vertical_scroll_webtoon_time_emotion",
+      "vertical_scroll_sequence": "vertical_scroll_webtoon_time_emotion"
+    },
+    "adaptation_board": {
+      "default_route_id": "serial_model_sheet_identity_continuity",
+      "character_design_board": "serial_model_sheet_identity_continuity",
+      "merch_adaptation_board": "merch_sticker_sd_identity_preservation",
+      "campaign_art_board": "campaign_wide_art_direction"
+    }
+  },
+  "format_routes": [
+    {
+      "variant_id": "single_illustration",
+      "family_id": "single_frame",
+      "aliases": {
+        "ko": [
+          "단일 장면 일러스트"
+        ],
+        "en": [
+          "single-frame illustration"
+        ],
+        "ja": [
+          "単一場面イラスト"
+        ],
+        "zh": [
+          "单场景插画"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "단일 키 아트"
+        ],
+        "en": [
+          "single key art"
+        ],
+        "ja": [
+          "単一キービジュアル"
+        ],
+        "zh": [
+          "单幅主视觉"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "ensemble_key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "앙상블 키 아트"
+        ],
+        "en": [
+          "ensemble key art"
+        ],
+        "ja": [
+          "群像キービジュアル"
+        ],
+        "zh": [
+          "群像主视觉"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "responsive_key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "반응형 키 아트 세트"
+        ],
+        "en": [
+          "responsive key art set"
+        ],
+        "ja": [
+          "レスポンシブキービジュアルセット"
+        ],
+        "zh": [
+          "响应式主视觉套组"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "light_novel_cover",
+      "family_id": "cover",
+      "aliases": {
+        "ko": [
+          "라이트노벨 표지 일러스트"
+        ],
+        "en": [
+          "light novel cover illustration"
+        ],
+        "ja": [
+          "ライトノベル表紙イラスト"
+        ],
+        "zh": [
+          "轻小说封面插画"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "collectible_card",
+      "family_id": "card",
+      "aliases": {
+        "ko": [
+          "수집형 카드 일러스트"
+        ],
+        "en": [
+          "collectible card illustration"
+        ],
+        "ja": [
+          "コレクションカードイラスト"
+        ],
+        "zh": [
+          "收藏卡牌插画"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "vertical_scroll_sequence",
+      "family_id": "vertical_sequence",
+      "aliases": {
+        "ko": [
+          "세로 스크롤 시퀀스"
+        ],
+        "en": [
+          "vertical scroll sequence"
+        ],
+        "ja": [
+          "縦スクロールシーケンス"
+        ],
+        "zh": [
+          "纵向滚动序列"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "character_design_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "캐릭터 디자인 보드"
+        ],
+        "en": [
+          "character design board"
+        ],
+        "ja": [
+          "キャラクターデザインボード"
+        ],
+        "zh": [
+          "角色设计板"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "merch_adaptation_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "굿즈 적응 보드"
+        ],
+        "en": [
+          "merch adaptation board"
+        ],
+        "ja": [
+          "グッズ展開ボード"
+        ],
+        "zh": [
+          "周边适配板"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    },
+    {
+      "variant_id": "campaign_art_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "캠페인 아트 보드"
+        ],
+        "en": [
+          "campaign art board"
+        ],
+        "ja": [
+          "キャンペーンアートボード"
+        ],
+        "zh": [
+          "活动美术板"
+        ]
+      },
+      "resolution_rule": "longest_nfkc_exact_phrase_within_allowed_route_variants"
+    }
+  ],
+  "routes": [
+    {
+      "ordinal": 1,
+      "route_id": "single_frame_narrative_compression",
+      "topic_id": "single_frame_narrative_compression",
+      "family_id": "foundations",
+      "research_family_id": "foundations",
+      "matrix_id": "ill_single_frame_narrative_compression_matrix_v1",
+      "source_record_ids": [
+        "src_single_frame_spect_event_model",
+        "src_single_frame_coherence_gap"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "단일 프레임 서사 압축",
+          "사건의 전후가 동시에 궁금"
+        ],
+        "en": [
+          "single frame narrative compression"
+        ],
+        "ja": [
+          "単一フレームの物語圧縮"
+        ],
+        "zh": [
+          "单帧叙事压缩"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::single_frame_narrative_compression::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "단일 프레임 서사 압축",
+            "사건의 전후가 동시에 궁금"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::single_frame_narrative_compression::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "single frame narrative compression"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::single_frame_narrative_compression::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "単一フレームの物語圧縮"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::single_frame_narrative_compression::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "单帧叙事压缩"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "actor_action_target_triangle",
+        "causal_state_change",
+        "consequence_trace",
+        "temporal_boundary_pose",
+        "bridging_gap_cue",
+        "off_frame_cause_vector",
+        "setting_time_anchor",
+        "narrative_ambiguity_budget"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::single_frame_narrative_compression::01",
+        "bundle::single_frame_narrative_compression::02"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "route_id": "focal_routing_attention_hierarchy",
+      "topic_id": "focal_routing_attention_hierarchy",
+      "family_id": "foundations",
+      "research_family_id": "foundations",
+      "matrix_id": "ill_focal_routing_attention_hierarchy_matrix_v1",
+      "source_record_ids": [
+        "src_focal_composition_scanpaths",
+        "src_focal_art_eye_tracking"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "초점 라우팅과 주의 위계",
+          "첫 시선과 두 번째 발견"
+        ],
+        "en": [
+          "focal routing and attention hierarchy"
+        ],
+        "ja": [
+          "焦点誘導と注意階層"
+        ],
+        "zh": [
+          "焦点引导与注意层级"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::focal_routing_attention_hierarchy::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "초점 라우팅과 주의 위계",
+            "첫 시선과 두 번째 발견"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::focal_routing_attention_hierarchy::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "focal routing and attention hierarchy"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::focal_routing_attention_hierarchy::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "焦点誘導と注意階層"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::focal_routing_attention_hierarchy::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "焦点引导与注意层级"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "ensemble_key_art",
+        "responsive_key_art",
+        "light_novel_cover",
+        "collectible_card"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "primary_focal_anchor",
+        "first_fixation_contrast",
+        "secondary_discovery_node",
+        "guiding_vector_chain",
+        "edge_sharpness_gradient",
+        "contrast_isolation",
+        "semantic_relevance_anchor",
+        "scanpath_return_cue"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::focal_routing_attention_hierarchy::01",
+        "bundle::focal_routing_attention_hierarchy::02"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "route_id": "silhouette_shape_language",
+      "topic_id": "silhouette_shape_language",
+      "family_id": "foundations",
+      "research_family_id": "foundations",
+      "matrix_id": "ill_silhouette_shape_language_matrix_v1",
+      "source_record_ids": [
+        "src_shape_part_boundaries",
+        "src_shape_multiview_structure"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "실루엣과 형태 언어",
+          "세 명이 한눈에 구분되면서도 같은 팀"
+        ],
+        "en": [
+          "silhouette and shape language"
+        ],
+        "ja": [
+          "シルエットと形態言語"
+        ],
+        "zh": [
+          "轮廓与形态语言"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::silhouette_shape_language::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "실루엣과 형태 언어",
+            "세 명이 한눈에 구분되면서도 같은 팀"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::silhouette_shape_language::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "silhouette and shape language"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::silhouette_shape_language::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "シルエットと形態言語"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::silhouette_shape_language::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "轮廓与形态语言"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "ensemble_key_art",
+      "allowed_variant_ids": [
+        "ensemble_key_art",
+        "key_art",
+        "character_design_board",
+        "collectible_card"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "card",
+        "key_art"
+      ],
+      "visual_candidate_ids": [
+        "thumbnail_outer_contour",
+        "internal_part_boundary",
+        "concavity_landmark",
+        "cast_shape_contrast",
+        "negative_space_window",
+        "pose_invariant_landmarks",
+        "multi_view_recognition",
+        "background_figure_separation"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::silhouette_shape_language::01",
+        "bundle::silhouette_shape_language::02"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "route_id": "value_grouping_color_dramaturgy",
+      "topic_id": "value_grouping_color_dramaturgy",
+      "family_id": "foundations",
+      "research_family_id": "foundations",
+      "matrix_id": "ill_value_grouping_color_dramaturgy_matrix_v1",
+      "source_record_ids": [
+        "src_color_context_combinations",
+        "src_color_pair_preference_harmony"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "명암 그룹과 색채 드라마",
+          "제한된 명암과 색의 흐름"
+        ],
+        "en": [
+          "value grouping and color dramaturgy"
+        ],
+        "ja": [
+          "明度グループと色彩ドラマツルギー"
+        ],
+        "zh": [
+          "明度分组与色彩戏剧"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::value_grouping_color_dramaturgy::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "명암 그룹과 색채 드라마",
+            "제한된 명암과 색의 흐름"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::value_grouping_color_dramaturgy::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "value grouping and color dramaturgy"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::value_grouping_color_dramaturgy::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "明度グループと色彩ドラマツルギー"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::value_grouping_color_dramaturgy::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "明度分组与色彩戏剧"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card",
+        "campaign_art_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "card",
+        "cover",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "dominant_value_mass",
+        "focal_value_separation",
+        "palette_role_map",
+        "accent_chroma_budget",
+        "temperature_transition",
+        "context_color_interaction",
+        "grayscale_readability",
+        "single_color_emotion_guard"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::value_grouping_color_dramaturgy::01",
+        "bundle::value_grouping_color_dramaturgy::02"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "route_id": "line_edge_mark_finish_hierarchy",
+      "topic_id": "line_edge_mark_finish_hierarchy",
+      "family_id": "authorial_surface",
+      "research_family_id": "authorial_surface",
+      "matrix_id": "lesfh_matrix_v1",
+      "source_record_ids": [
+        "lesfh_src_palette_stroke_distribution",
+        "lesfh_src_imaginary_stroke_motion"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "선 에지 마크 마감 위계",
+          "선, 에지, 흔적과 의도적 미완성"
+        ],
+        "en": [
+          "line edge mark and finish hierarchy"
+        ],
+        "ja": [
+          "線とエッジと筆致と仕上げの階層"
+        ],
+        "zh": [
+          "线条边缘笔触与完成度层级"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::line_edge_mark_finish_hierarchy::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "선 에지 마크 마감 위계",
+            "선, 에지, 흔적과 의도적 미완성"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::line_edge_mark_finish_hierarchy::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "line edge mark and finish hierarchy"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::line_edge_mark_finish_hierarchy::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "線とエッジと筆致と仕上げの階層"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::line_edge_mark_finish_hierarchy::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "线条边缘笔触与完成度层级"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "ev_edge_priority_map",
+        "ev_mark_direction_field",
+        "ev_finish_density_gradient",
+        "ev_boundary_holdout",
+        "ev_stroke_scale_ladder",
+        "ev_overpaint_history",
+        "ev_surface_drag_consistency",
+        "ev_lost_found_edge_cycle"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::line_edge_mark_finish_hierarchy::01",
+        "bundle::line_edge_mark_finish_hierarchy::02"
+      ]
+    },
+    {
+      "ordinal": 6,
+      "route_id": "negative_space_information_density",
+      "topic_id": "negative_space_information_density",
+      "family_id": "authorial_surface",
+      "research_family_id": "authorial_surface",
+      "matrix_id": "nsid_matrix_v1",
+      "source_record_ids": [
+        "nsid_src_organized_complexity",
+        "nsid_src_visual_clutter"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "네거티브 스페이스와 정보 밀도",
+          "여백과 고밀도 단서의 대비"
+        ],
+        "en": [
+          "negative space and information density"
+        ],
+        "ja": [
+          "ネガティブスペースと情報密度"
+        ],
+        "zh": [
+          "负空间与信息密度"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::negative_space_information_density::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "네거티브 스페이스와 정보 밀도",
+            "여백과 고밀도 단서의 대비"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::negative_space_information_density::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "negative space and information density"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::negative_space_information_density::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "ネガティブスペースと情報密度"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::negative_space_information_density::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "负空间与信息密度"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "ev_primary_clearance_band",
+        "ev_density_heatmap_gradient",
+        "ev_cluster_hierarchy",
+        "ev_channel_role_split",
+        "ev_asymmetric_open_mass",
+        "ev_intercluster_interval",
+        "ev_thumbnail_density_survival",
+        "ev_discovery_depth"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::negative_space_information_density::01",
+        "bundle::negative_space_information_density::02"
+      ]
+    },
+    {
+      "ordinal": 7,
+      "route_id": "recurring_motif_visual_metaphor",
+      "topic_id": "recurring_motif_visual_metaphor",
+      "family_id": "authorial_surface",
+      "research_family_id": "authorial_surface",
+      "matrix_id": "rmvm_matrix_v1",
+      "source_record_ids": [
+        "rmvm_src_pictorial_metaphor_cues",
+        "rmvm_src_similarity_proximity_grouping"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "반복 모티프와 시각적 은유",
+          "하나의 실 모티프가 인물, 도구, 공간에서 서로 다른 상태로 반복"
+        ],
+        "en": [
+          "recurring motif and visual metaphor"
+        ],
+        "ja": [
+          "反復モチーフと視覚的メタファー"
+        ],
+        "zh": [
+          "重复母题与视觉隐喻"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::recurring_motif_visual_metaphor::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "반복 모티프와 시각적 은유",
+            "하나의 실 모티프가 인물, 도구, 공간에서 서로 다른 상태로 반복"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::recurring_motif_visual_metaphor::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "recurring motif and visual metaphor"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::recurring_motif_visual_metaphor::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "反復モチーフと視覚的メタファー"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::recurring_motif_visual_metaphor::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "重复母题与视觉隐喻"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "ev_motif_family_feature",
+        "ev_motif_state_sequence",
+        "ev_literal_scene_anchor",
+        "ev_early_anomaly",
+        "ev_context_confirmation",
+        "ev_grouping_separation",
+        "ev_mapping_budget",
+        "ev_payoff_transform"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::recurring_motif_visual_metaphor::01",
+        "bundle::recurring_motif_visual_metaphor::02"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "route_id": "gesture_force_environment_response",
+      "topic_id": "gesture_force_environment_response",
+      "family_id": "authorial_surface",
+      "research_family_id": "authorial_surface",
+      "matrix_id": "gfer_matrix_v1",
+      "source_record_ids": [
+        "gfer_src_implied_motion_activation",
+        "gfer_src_cloth_dynamics"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "제스처 힘과 환경 반응",
+          "같은 힘의 흐름에 반응"
+        ],
+        "en": [
+          "gesture force and environment response"
+        ],
+        "ja": [
+          "ジェスチャーの力と環境反応"
+        ],
+        "zh": [
+          "姿态力场与环境响应"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::gesture_force_environment_response::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "제스처 힘과 환경 반응",
+            "같은 힘의 흐름에 반응"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::gesture_force_environment_response::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "gesture force and environment response"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::gesture_force_environment_response::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "ジェスチャーの力と環境反応"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::gesture_force_environment_response::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "姿态力场与环境响应"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "key_art",
+      "allowed_variant_ids": [
+        "key_art",
+        "single_illustration",
+        "light_novel_cover",
+        "collectible_card",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "ev_dominant_force_arrow",
+        "ev_gesture_accessory_chain",
+        "ev_material_lag_order",
+        "ev_visible_anchor_point",
+        "ev_deformation_falloff",
+        "ev_directional_wake",
+        "ev_aftermath_trace",
+        "ev_competing_force_node"
+      ],
+      "router_candidate_ids": [],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::gesture_force_environment_response::01",
+        "bundle::gesture_force_environment_response::02"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "route_id": "ensemble_relationship_staging",
+      "topic_id": "ensemble_relationship_staging",
+      "family_id": "character_world",
+      "research_family_id": "character_world",
+      "matrix_id": "subculture_illustration_ensemble_relationship_staging_matrix",
+      "source_record_ids": [
+        "subculture_illustration_ensemble_natural_interaction_source",
+        "subculture_illustration_ensemble_gaze_dynamics_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "앙상블 관계 스테이징",
+          "도구를 주고받는 관계 중심"
+        ],
+        "en": [
+          "ensemble relationship staging"
+        ],
+        "ja": [
+          "アンサンブル関係演出"
+        ],
+        "zh": [
+          "群像关系调度"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::ensemble_relationship_staging::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "앙상블 관계 스테이징",
+            "도구를 주고받는 관계 중심"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::ensemble_relationship_staging::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "ensemble relationship staging"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::ensemble_relationship_staging::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "アンサンブル関係演出"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::ensemble_relationship_staging::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "群像关系调度"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "ensemble_key_art",
+      "allowed_variant_ids": [
+        "ensemble_key_art",
+        "key_art",
+        "single_illustration",
+        "collectible_card",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "ensemble_directed_action_vector",
+        "ensemble_target_contact_or_avoidance",
+        "ensemble_reaction_consequence",
+        "ensemble_gaze_triangle",
+        "ensemble_role_silhouette_separation",
+        "ensemble_reciprocal_orientation",
+        "ensemble_shared_task_prop",
+        "ensemble_afteraction_trace",
+        "asymmetric_help_with_response",
+        "negotiated_object_exchange",
+        "cooperative_shared_attention",
+        "competitive_counteraction",
+        "interrupted_group_action"
+      ],
+      "router_candidate_ids": [
+        "reciprocal_task_ensemble"
+      ],
+      "guard_candidate_ids": [
+        "relationship_action_target_consequence_bundle",
+        "ensemble_event_focal_hierarchy"
+      ],
+      "bundle_ids": [
+        "bundle::ensemble_relationship_staging::01",
+        "bundle::ensemble_relationship_staging::02"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "route_id": "costume_prop_environment_state_continuity",
+      "topic_id": "costume_prop_environment_state_continuity",
+      "family_id": "character_world",
+      "research_family_id": "character_world",
+      "matrix_id": "subculture_illustration_costume_prop_environment_state_continuity_matrix",
+      "source_record_ids": [
+        "subculture_illustration_continuity_indexical_space_source",
+        "subculture_illustration_continuity_material_trace_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "의상 소품 환경 상태 연속성",
+          "같은 여정의 사용·수선 흔적"
+        ],
+        "en": [
+          "costume prop environment state continuity"
+        ],
+        "ja": [
+          "衣装と小道具と環境の状態連続性"
+        ],
+        "zh": [
+          "服装道具环境状态连续性"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::costume_prop_environment_state_continuity::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "의상 소품 환경 상태 연속성",
+            "같은 여정의 사용·수선 흔적"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::costume_prop_environment_state_continuity::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "costume prop environment state continuity"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::costume_prop_environment_state_continuity::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "衣装と小道具と環境の状態連続性"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::costume_prop_environment_state_continuity::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "服装道具环境状态连续性"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "character_design_board",
+        "key_art",
+        "light_novel_cover",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "identity_invariant_silhouette_anchor",
+        "garment_action_deformation",
+        "prop_contact_wear_zone",
+        "environment_event_trace",
+        "cross_asset_shared_residue",
+        "repair_over_damage_layer",
+        "material_specific_response",
+        "state_ledger_before_after",
+        "lived_in_costume_state",
+        "prop_use_history",
+        "environment_indexical_clue",
+        "repair_history_layer"
+      ],
+      "router_candidate_ids": [
+        "shared_event_trace_bundle"
+      ],
+      "guard_candidate_ids": [
+        "continuity_state_ledger",
+        "material_response_mapping",
+        "identity_anchor_state_overlay"
+      ],
+      "bundle_ids": [
+        "bundle::costume_prop_environment_state_continuity::01",
+        "bundle::costume_prop_environment_state_continuity::02"
+      ]
+    },
+    {
+      "ordinal": 11,
+      "route_id": "transformation_fx_causal_grammar",
+      "topic_id": "transformation_fx_causal_grammar",
+      "family_id": "character_world",
+      "research_family_id": "character_world",
+      "matrix_id": "subculture_illustration_transformation_fx_causal_grammar_matrix",
+      "source_record_ids": [
+        "subculture_illustration_transformation_perceptual_causality_source",
+        "subculture_illustration_transformation_stylized_fx_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "변신 효과 인과 문법",
+          "변신의 원인, 진행 방향, 대가와 회복 흔적"
+        ],
+        "en": [
+          "transformation effects causal grammar"
+        ],
+        "ja": [
+          "変身エフェクトの因果文法"
+        ],
+        "zh": [
+          "变身特效因果语法"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::transformation_fx_causal_grammar::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "변신 효과 인과 문법",
+            "변신의 원인, 진행 방향, 대가와 회복 흔적"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::transformation_fx_causal_grammar::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "transformation effects causal grammar"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::transformation_fx_causal_grammar::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "変身エフェクトの因果文法"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::transformation_fx_causal_grammar::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "变身特效因果语法"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "collectible_card",
+      "allowed_variant_ids": [
+        "collectible_card",
+        "single_illustration",
+        "key_art",
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "transformation_trigger_contact",
+        "transformation_phase_boundary",
+        "transformation_medium_path",
+        "transformation_identity_invariant",
+        "fx_directional_propagation",
+        "fx_material_interaction",
+        "transformation_cost_marker",
+        "transformation_aftermath_residue",
+        "material_coupled_fx",
+        "aftermath_consequence"
+      ],
+      "router_candidate_ids": [
+        "condition_to_result_mapping"
+      ],
+      "guard_candidate_ids": [
+        "causal_transformation_state_machine",
+        "phase_legibility_bundle",
+        "identity_preserving_state_change",
+        "bounded_transformation_cost",
+        "primary_secondary_fx_hierarchy"
+      ],
+      "bundle_ids": [
+        "bundle::transformation_fx_causal_grammar::01",
+        "bundle::transformation_fx_causal_grammar::02"
+      ]
+    },
+    {
+      "ordinal": 12,
+      "route_id": "nonhuman_creature_functional_design",
+      "topic_id": "nonhuman_creature_functional_design",
+      "family_id": "character_world",
+      "research_family_id": "character_world",
+      "matrix_id": "subculture_illustration_nonhuman_creature_functional_design_matrix",
+      "source_record_ids": [
+        "subculture_illustration_creature_ecomorphology_assumptions_source",
+        "subculture_illustration_creature_integrative_function_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "비인간 크리처 기능 설계",
+          "기능적 감각기관, 이동 방식, 도구 상호작용"
+        ],
+        "en": [
+          "nonhuman creature functional design"
+        ],
+        "ja": [
+          "非人間クリーチャーの機能設計"
+        ],
+        "zh": [
+          "非人类生物功能设计"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::nonhuman_creature_functional_design::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "비인간 크리처 기능 설계",
+            "기능적 감각기관, 이동 방식, 도구 상호작용"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::nonhuman_creature_functional_design::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "nonhuman creature functional design"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::nonhuman_creature_functional_design::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "非人間クリーチャーの機能設計"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::nonhuman_creature_functional_design::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "非人类生物功能设计"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "character_design_board",
+      "allowed_variant_ids": [
+        "character_design_board",
+        "single_illustration",
+        "key_art",
+        "vertical_scroll_sequence",
+        "merch_adaptation_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "creature_ecological_task",
+        "creature_functional_structure",
+        "creature_behavior_sequence",
+        "creature_environment_contact",
+        "creature_material_constraint",
+        "creature_tradeoff_visible",
+        "creature_resource_trace",
+        "creature_social_signal_action",
+        "habitat_coupled_locomotion",
+        "sensory_field_interaction",
+        "feeding_or_tool_contact",
+        "defense_communication_tradeoff",
+        "ecological_resource_history",
+        "nonhuman_behavior_event"
+      ],
+      "router_candidate_ids": [
+        "function_first_creature_brief"
+      ],
+      "guard_candidate_ids": [
+        "structure_performance_behavior_chain"
+      ],
+      "bundle_ids": [
+        "bundle::nonhuman_creature_functional_design::01",
+        "bundle::nonhuman_creature_functional_design::02"
+      ]
+    },
+    {
+      "ordinal": 13,
+      "route_id": "faction_magic_technology_visual_system",
+      "topic_id": "faction_magic_technology_visual_system",
+      "family_id": "world_cover",
+      "research_family_id": "world_cover",
+      "matrix_id": "subculture_illustration_faction_system_matrix",
+      "source_record_ids": [
+        "subculture_illustration_faction_vfx_source",
+        "subculture_illustration_faction_material_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "세력 마법 기술 시각 시스템",
+          "서로 다른 접합 방식과 재료 규칙"
+        ],
+        "en": [
+          "faction magic technology visual system"
+        ],
+        "ja": [
+          "勢力別魔法技術の視覚システム"
+        ],
+        "zh": [
+          "阵营魔法技术视觉系统"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::faction_magic_technology_visual_system::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "세력 마법 기술 시각 시스템",
+            "서로 다른 접합 방식과 재료 규칙"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::faction_magic_technology_visual_system::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "faction magic technology visual system"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::faction_magic_technology_visual_system::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "勢力別魔法技術の視覚システム"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::faction_magic_technology_visual_system::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "阵营魔法技术视觉系统"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "ensemble_key_art",
+      "allowed_variant_ids": [
+        "ensemble_key_art",
+        "key_art",
+        "single_illustration",
+        "collectible_card",
+        "vertical_scroll_sequence",
+        "responsive_key_art"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "system_shape_vocabulary",
+        "system_negative_space_rhythm",
+        "system_material_family",
+        "system_construction_joint_rule",
+        "system_color_value_role",
+        "system_effect_lifecycle",
+        "system_wear_repair_logic",
+        "system_rule_break_exception"
+      ],
+      "router_candidate_ids": [
+        "faction_magic_technology_visual_system"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::faction_magic_technology_visual_system::01",
+        "bundle::faction_magic_technology_visual_system::02"
+      ]
+    },
+    {
+      "ordinal": 14,
+      "route_id": "lived_in_background_world_evidence",
+      "topic_id": "lived_in_background_world_evidence",
+      "family_id": "world_cover",
+      "research_family_id": "world_cover",
+      "matrix_id": "subculture_illustration_lived_in_world_matrix",
+      "source_record_ids": [
+        "subculture_illustration_lived_in_object_tableau_source",
+        "subculture_illustration_lived_in_cause_effect_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "생활감 있는 배경 세계 증거",
+          "생활 동선, 임시 수리, 누적된 작업 흔적"
+        ],
+        "en": [
+          "lived in background world evidence"
+        ],
+        "ja": [
+          "生活感のある背景世界の証拠"
+        ],
+        "zh": [
+          "生活化背景世界证据"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::lived_in_background_world_evidence::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "생활감 있는 배경 세계 증거",
+            "생활 동선, 임시 수리, 누적된 작업 흔적"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::lived_in_background_world_evidence::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "lived in background world evidence"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::lived_in_background_world_evidence::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "生活感のある背景世界の証拠"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::lived_in_background_world_evidence::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "生活化背景世界证据"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "responsive_key_art",
+        "vertical_scroll_sequence",
+        "light_novel_cover"
+      ],
+      "allowed_format_family_ids": [
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "lived_in_task_cluster",
+        "lived_in_path_wear",
+        "lived_in_repair_trace",
+        "lived_in_storage_logic",
+        "lived_in_cause_effect_trace",
+        "lived_in_absence_imprint",
+        "lived_in_scale_affordance",
+        "lived_in_focal_clue_hierarchy"
+      ],
+      "router_candidate_ids": [
+        "lived_in_background_world_evidence"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::lived_in_background_world_evidence::01",
+        "bundle::lived_in_background_world_evidence::02"
+      ]
+    },
+    {
+      "ordinal": 15,
+      "route_id": "serial_model_sheet_identity_continuity",
+      "topic_id": "serial_model_sheet_identity_continuity",
+      "family_id": "world_cover",
+      "research_family_id": "world_cover",
+      "matrix_id": "subculture_illustration_serial_model_sheet_matrix",
+      "source_record_ids": [
+        "subculture_illustration_serial_model_curriculum_source",
+        "subculture_illustration_serial_story_benchmark_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "연재 모델시트 정체성 연속성",
+          "평상시, 폭우 임무 중, 임무 후 수선 상태에서도 같은 인물"
+        ],
+        "en": [
+          "serial model sheet identity continuity"
+        ],
+        "ja": [
+          "連載モデルシートの同一性連続"
+        ],
+        "zh": [
+          "系列设定表身份连续性"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::serial_model_sheet_identity_continuity::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "연재 모델시트 정체성 연속성",
+            "평상시, 폭우 임무 중, 임무 후 수선 상태에서도 같은 인물"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::serial_model_sheet_identity_continuity::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "serial model sheet identity continuity"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::serial_model_sheet_identity_continuity::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "連載モデルシートの同一性連続"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::serial_model_sheet_identity_continuity::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "系列设定表身份连续性"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "character_design_board",
+      "allowed_variant_ids": [
+        "character_design_board",
+        "vertical_scroll_sequence",
+        "key_art",
+        "collectible_card",
+        "merch_adaptation_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "card",
+        "key_art",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "identity_canonical_turnaround",
+        "identity_proportion_landmarks",
+        "identity_face_feature_anchor",
+        "identity_silhouette_anchor",
+        "identity_palette_material_anchor",
+        "identity_expression_range_sheet",
+        "identity_state_delta_log",
+        "identity_cross_scene_holdout"
+      ],
+      "router_candidate_ids": [
+        "serial_model_sheet_identity_continuity"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::serial_model_sheet_identity_continuity::01",
+        "bundle::serial_model_sheet_identity_continuity::02"
+      ]
+    },
+    {
+      "ordinal": 16,
+      "route_id": "light_novel_manga_cover_promise",
+      "topic_id": "light_novel_manga_cover_promise",
+      "family_id": "world_cover",
+      "research_family_id": "world_cover",
+      "matrix_id": "subculture_illustration_cover_promise_matrix",
+      "source_record_ids": [
+        "subculture_illustration_cover_attention_source",
+        "subculture_illustration_cover_safe_area_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "라이트노벨 만화 표지의 약속",
+          "관계와 갈등의 후크"
+        ],
+        "en": [
+          "light novel manga cover promise"
+        ],
+        "ja": [
+          "ライトノベル漫画表紙の約束"
+        ],
+        "zh": [
+          "轻小说漫画封面承诺"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::light_novel_manga_cover_promise::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "라이트노벨 만화 표지의 약속",
+            "관계와 갈등의 후크"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::light_novel_manga_cover_promise::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "light novel manga cover promise"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::light_novel_manga_cover_promise::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "ライトノベル漫画表紙の約束"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::light_novel_manga_cover_promise::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "轻小说漫画封面承诺"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "light_novel_cover",
+      "allowed_variant_ids": [
+        "light_novel_cover",
+        "key_art",
+        "responsive_key_art",
+        "single_illustration"
+      ],
+      "allowed_format_family_ids": [
+        "cover",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "cover_primary_promise",
+        "cover_character_relation_hierarchy",
+        "cover_world_hook",
+        "cover_secondary_reveal",
+        "cover_title_safe_negative_space",
+        "cover_crop_resilient_silhouette",
+        "cover_thumbnail_value_group",
+        "cover_series_delta_anchor"
+      ],
+      "router_candidate_ids": [
+        "light_novel_manga_cover_promise"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::light_novel_manga_cover_promise::01",
+        "bundle::light_novel_manga_cover_promise::02"
+      ]
+    },
+    {
+      "ordinal": 17,
+      "route_id": "anime_game_key_art_visual_declaration",
+      "topic_id": "anime_game_key_art_visual_declaration",
+      "family_id": "commercial_formats",
+      "research_family_id": "commercial_formats",
+      "matrix_id": "subculture_illustration_anime_game_key_art_visual_declaration_matrix",
+      "source_record_ids": [
+        "subculture_illustration_key_art_visual_signature_source",
+        "subculture_illustration_key_art_single_image_narrative_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "애니메이션 게임 키 아트 시각 선언",
+          "작품 전체의 갈등과 시각 규칙 하나가 선언"
+        ],
+        "en": [
+          "anime game key art visual declaration"
+        ],
+        "ja": [
+          "アニメゲームキービジュアル宣言"
+        ],
+        "zh": [
+          "动画游戏主视觉宣言"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::anime_game_key_art_visual_declaration::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "애니메이션 게임 키 아트 시각 선언",
+            "작품 전체의 갈등과 시각 규칙 하나가 선언"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::anime_game_key_art_visual_declaration::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "anime game key art visual declaration"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::anime_game_key_art_visual_declaration::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "アニメゲームキービジュアル宣言"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::anime_game_key_art_visual_declaration::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "动画游戏主视觉宣言"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "key_art",
+      "allowed_variant_ids": [
+        "key_art",
+        "responsive_key_art",
+        "ensemble_key_art",
+        "single_illustration"
+      ],
+      "allowed_format_family_ids": [
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "key_art_primary_subject_anchor",
+        "key_art_secondary_force_counterweight",
+        "key_art_single_event_state",
+        "key_art_gaze_gesture_route",
+        "key_art_value_color_signature",
+        "key_art_world_scale_cue",
+        "key_art_title_safe_negative_space",
+        "key_art_campaign_identity_repeat"
+      ],
+      "router_candidate_ids": [
+        "anime_game_key_art_visual_declaration"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::anime_game_key_art_visual_declaration::01",
+        "bundle::anime_game_key_art_visual_declaration::02"
+      ]
+    },
+    {
+      "ordinal": 18,
+      "route_id": "thumbnail_banner_cover_crop_resilience",
+      "topic_id": "thumbnail_banner_cover_crop_resilience",
+      "family_id": "commercial_formats",
+      "research_family_id": "commercial_formats",
+      "matrix_id": "subculture_illustration_thumbnail_banner_cover_crop_resilience_matrix",
+      "source_record_ids": [
+        "subculture_illustration_crop_resilience_safe_zone_source",
+        "subculture_illustration_crop_resilience_webtoon_thumbnail_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "썸네일 배너 표지 크롭 회복력",
+          "세로 표지, 정사각 썸네일, 가로 배너"
+        ],
+        "en": [
+          "thumbnail banner cover crop resilience"
+        ],
+        "ja": [
+          "サムネイルとバナーと表紙のクロップ耐性"
+        ],
+        "zh": [
+          "缩略图横幅封面裁切韧性"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::thumbnail_banner_cover_crop_resilience::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "썸네일 배너 표지 크롭 회복력",
+            "세로 표지, 정사각 썸네일, 가로 배너"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::thumbnail_banner_cover_crop_resilience::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "thumbnail banner cover crop resilience"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::thumbnail_banner_cover_crop_resilience::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "サムネイルとバナーと表紙のクロップ耐性"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::thumbnail_banner_cover_crop_resilience::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "缩略图横幅封面裁切韧性"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "responsive_key_art",
+      "allowed_variant_ids": [
+        "responsive_key_art",
+        "key_art",
+        "light_novel_cover",
+        "campaign_art_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "cover",
+        "key_art"
+      ],
+      "visual_candidate_ids": [
+        "crop_multi_ratio_export_set",
+        "crop_safe_intersection_subject",
+        "crop_wide_variant_counterspace",
+        "crop_tall_variant_vertical_action",
+        "crop_square_variant_identity_anchor",
+        "crop_optional_logo_safe_region",
+        "crop_thumbnail_silhouette_check",
+        "crop_edge_bleed_reserve"
+      ],
+      "router_candidate_ids": [
+        "thumbnail_banner_cover_crop_resilience"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::thumbnail_banner_cover_crop_resilience::01",
+        "bundle::thumbnail_banner_cover_crop_resilience::02"
+      ]
+    },
+    {
+      "ordinal": 19,
+      "route_id": "collectible_card_gacha_splash_grammar",
+      "topic_id": "collectible_card_gacha_splash_grammar",
+      "family_id": "commercial_formats",
+      "research_family_id": "commercial_formats",
+      "matrix_id": "subculture_illustration_collectible_card_gacha_splash_grammar_matrix",
+      "source_record_ids": [
+        "subculture_illustration_card_full_art_render_separation_source",
+        "subculture_illustration_card_art_brief_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "수집형 카드 가챠 스플래시 문법",
+          "유료 등급 UI가 아니라 장면의 규모와 물질적 결과"
+        ],
+        "en": [
+          "collectible card splash grammar"
+        ],
+        "ja": [
+          "コレクションカードのスプラッシュ文法"
+        ],
+        "zh": [
+          "收藏卡牌主插画语法"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::collectible_card_gacha_splash_grammar::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "수집형 카드 가챠 스플래시 문법",
+            "유료 등급 UI가 아니라 장면의 규모와 물질적 결과"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::collectible_card_gacha_splash_grammar::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "collectible card splash grammar"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::collectible_card_gacha_splash_grammar::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "コレクションカードのスプラッシュ文法"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::collectible_card_gacha_splash_grammar::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "收藏卡牌主插画语法"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "collectible_card",
+      "allowed_variant_ids": [
+        "collectible_card",
+        "key_art",
+        "single_illustration"
+      ],
+      "allowed_format_family_ids": [
+        "card",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "card_full_art_subject_action",
+        "card_frame_window_focal_survival",
+        "card_intent_location_action_chain",
+        "card_foreground_midground_depth",
+        "card_material_consequence_signal",
+        "card_relationship_stake",
+        "card_alt_view_identity_anchor",
+        "card_small_size_value_group"
+      ],
+      "router_candidate_ids": [
+        "collectible_card_gacha_splash_grammar"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::collectible_card_gacha_splash_grammar::01",
+        "bundle::collectible_card_gacha_splash_grammar::02"
+      ]
+    },
+    {
+      "ordinal": 20,
+      "route_id": "vertical_scroll_webtoon_time_emotion",
+      "topic_id": "vertical_scroll_webtoon_time_emotion",
+      "family_id": "commercial_formats",
+      "research_family_id": "commercial_formats",
+      "matrix_id": "subculture_illustration_vertical_scroll_webtoon_time_emotion_matrix",
+      "source_record_ids": [
+        "subculture_illustration_webtoon_scroll_gutter_time_source",
+        "subculture_illustration_webtoon_vertical_expansion_source"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "세로 스크롤 웹툰 시간 감정",
+          "여백과 공개 순서가 시간과 감정을 조절"
+        ],
+        "en": [
+          "vertical scroll webtoon time and emotion"
+        ],
+        "ja": [
+          "縦スクロール漫画の時間と感情"
+        ],
+        "zh": [
+          "纵向滚动漫画的时间与情感"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::vertical_scroll_webtoon_time_emotion::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "세로 스크롤 웹툰 시간 감정",
+            "여백과 공개 순서가 시간과 감정을 조절"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::vertical_scroll_webtoon_time_emotion::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "vertical scroll webtoon time and emotion"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::vertical_scroll_webtoon_time_emotion::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "縦スクロール漫画の時間と感情"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::vertical_scroll_webtoon_time_emotion::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "纵向滚动漫画的时间与情感"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "vertical_scroll_sequence",
+      "allowed_variant_ids": [
+        "vertical_scroll_sequence"
+      ],
+      "allowed_format_family_ids": [
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "webtoon_scroll_beat_sequence",
+        "webtoon_variable_gutter_pause",
+        "webtoon_viewport_deferred_reveal",
+        "webtoon_vertical_expansion_depth",
+        "webtoon_repetition_variation_anchor",
+        "webtoon_transition_contrast",
+        "webtoon_character_state_continuity",
+        "webtoon_post_reveal_consequence"
+      ],
+      "router_candidate_ids": [
+        "vertical_scroll_webtoon_time_emotion"
+      ],
+      "guard_candidate_ids": [],
+      "bundle_ids": [
+        "bundle::vertical_scroll_webtoon_time_emotion::01",
+        "bundle::vertical_scroll_webtoon_time_emotion::02"
+      ]
+    },
+    {
+      "ordinal": 21,
+      "route_id": "merch_sticker_sd_identity_preservation",
+      "topic_id": "merch_sticker_sd_identity_preservation",
+      "family_id": "adaptation_governance",
+      "research_family_id": "adaptation_governance",
+      "matrix_id": "subculture_illustration_merch_identity_matrix",
+      "source_record_ids": [
+        "subculture_illustration_merch_unicode_support",
+        "subculture_illustration_merch_line_support"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "굿즈 스티커 SD 정체성 보존",
+          "전신 일러스트, SD 아크릴 굿즈, 스티커 아이콘"
+        ],
+        "en": [
+          "merch sticker super deformed identity preservation"
+        ],
+        "ja": [
+          "グッズとステッカーのSD同一性保持"
+        ],
+        "zh": [
+          "周边贴纸Q版身份保持"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::merch_sticker_sd_identity_preservation::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "굿즈 스티커 SD 정체성 보존",
+            "전신 일러스트, SD 아크릴 굿즈, 스티커 아이콘"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::merch_sticker_sd_identity_preservation::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "merch sticker super deformed identity preservation"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::merch_sticker_sd_identity_preservation::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "グッズとステッカーのSD同一性保持"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::merch_sticker_sd_identity_preservation::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "周边贴纸Q版身份保持"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "merch_adaptation_board",
+      "allowed_variant_ids": [
+        "merch_adaptation_board",
+        "character_design_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board"
+      ],
+      "visual_candidate_ids": [
+        "merch_anchor_silhouette_match",
+        "merch_face_landmark_constellation",
+        "merch_signature_object_relation",
+        "merch_palette_value_anchor",
+        "merch_scale_legibility_triptych",
+        "merch_expression_family_continuity",
+        "merch_sd_proportion_mapping",
+        "merch_master_output_trace"
+      ],
+      "router_candidate_ids": [
+        "identity_anchor_ledger",
+        "sd_proportion_map",
+        "expression_variant_invariant",
+        "gesture_message_adaptation"
+      ],
+      "guard_candidate_ids": [
+        "thumbnail_readability_check",
+        "format_crop_safe_zone",
+        "merch_master_continuity",
+        "rights_provenance_gate"
+      ],
+      "bundle_ids": [
+        "bundle::merch_sticker_sd_identity_preservation::01",
+        "bundle::merch_sticker_sd_identity_preservation::02"
+      ]
+    },
+    {
+      "ordinal": 22,
+      "route_id": "campaign_wide_art_direction",
+      "topic_id": "campaign_wide_art_direction",
+      "family_id": "adaptation_governance",
+      "research_family_id": "adaptation_governance",
+      "matrix_id": "subculture_illustration_campaign_art_direction_matrix",
+      "source_record_ids": [
+        "subculture_illustration_campaign_steam_assets_support",
+        "subculture_illustration_campaign_apple_optimization_support"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "캠페인 와이드 아트 디렉션",
+          "키 아트, 캐릭터 카드, 이벤트 배너가 서로 다르지만 같은 작품"
+        ],
+        "en": [
+          "campaign wide art direction"
+        ],
+        "ja": [
+          "キャンペーン横断アートディレクション"
+        ],
+        "zh": [
+          "跨活动资产美术指导"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::campaign_wide_art_direction::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "캠페인 와이드 아트 디렉션",
+            "키 아트, 캐릭터 카드, 이벤트 배너가 서로 다르지만 같은 작품"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::campaign_wide_art_direction::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "campaign wide art direction"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::campaign_wide_art_direction::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "キャンペーン横断アートディレクション"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::campaign_wide_art_direction::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "跨活动资产美术指导"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "campaign_art_board",
+      "allowed_variant_ids": [
+        "campaign_art_board",
+        "responsive_key_art",
+        "key_art"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "key_art"
+      ],
+      "visual_candidate_ids": [
+        "campaign_signature_constellation",
+        "campaign_asset_role_board",
+        "campaign_focal_motif_crop_set",
+        "campaign_core_event_layer_pair",
+        "campaign_logo_artwork_separation",
+        "campaign_localized_text_zone",
+        "campaign_single_variable_variant",
+        "campaign_family_contact_sheet"
+      ],
+      "router_candidate_ids": [
+        "campaign_visual_signature",
+        "campaign_asset_role_matrix",
+        "campaign_core_event_layer"
+      ],
+      "guard_candidate_ids": [
+        "campaign_crop_resilience",
+        "campaign_logo_art_separation",
+        "campaign_localization_safe_artwork",
+        "campaign_single_variable_test",
+        "campaign_continuity_delta"
+      ],
+      "bundle_ids": [
+        "bundle::campaign_wide_art_direction::01",
+        "bundle::campaign_wide_art_direction::02"
+      ]
+    },
+    {
+      "ordinal": 23,
+      "route_id": "cjk_visual_convention_literacy",
+      "topic_id": "cjk_visual_convention_literacy",
+      "family_id": "adaptation_governance",
+      "research_family_id": "adaptation_governance",
+      "matrix_id": "subculture_illustration_cjk_literacy_matrix",
+      "source_record_ids": [
+        "subculture_illustration_cjk_webtoon_reader_support",
+        "subculture_illustration_cjk_attention_support"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "한중일 시각 관습 리터러시",
+          "일반 독자는 행동을 이해하고 장르 숙련 독자는 추가 단서"
+        ],
+        "en": [
+          "east asian visual convention literacy"
+        ],
+        "ja": [
+          "東アジア視覚慣習リテラシー"
+        ],
+        "zh": [
+          "东亚视觉惯例素养"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::cjk_visual_convention_literacy::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "한중일 시각 관습 리터러시",
+            "일반 독자는 행동을 이해하고 장르 숙련 독자는 추가 단서"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::cjk_visual_convention_literacy::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "east asian visual convention literacy"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::cjk_visual_convention_literacy::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "東アジア視覚慣習リテラシー"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::cjk_visual_convention_literacy::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "东亚视觉惯例素养"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "vertical_scroll_sequence",
+        "light_novel_cover",
+        "key_art"
+      ],
+      "allowed_format_family_ids": [
+        "cover",
+        "key_art",
+        "single_frame",
+        "vertical_sequence"
+      ],
+      "visual_candidate_ids": [
+        "cjk_reading_path_anchor",
+        "cjk_panel_sequence_disambiguation",
+        "cjk_symbol_literal_action_pair",
+        "cjk_format_native_spacing",
+        "cjk_text_image_reference_alignment",
+        "cjk_subjective_viewpoint_context",
+        "cjk_background_focal_balance",
+        "cjk_unfamiliar_reader_fallback"
+      ],
+      "router_candidate_ids": [
+        "audience_literacy_context",
+        "reading_direction_context",
+        "interface_format_context",
+        "genre_convention_context",
+        "literal_action_fallback",
+        "convention_redundancy_level"
+      ],
+      "guard_candidate_ids": [
+        "localization_review_required",
+        "comparative_evidence_scope"
+      ],
+      "bundle_ids": [
+        "bundle::cjk_visual_convention_literacy::01",
+        "bundle::cjk_visual_convention_literacy::02"
+      ]
+    },
+    {
+      "ordinal": 24,
+      "route_id": "fanart_homage_remix_ip_boundary",
+      "topic_id": "fanart_homage_remix_ip_boundary",
+      "family_id": "adaptation_governance",
+      "research_family_id": "adaptation_governance",
+      "matrix_id": "subculture_illustration_remix_boundary_matrix",
+      "source_record_ids": [
+        "subculture_illustration_remix_derivative_work_support",
+        "subculture_illustration_remix_provenance_support"
+      ],
+      "routing_scope": "subculture_illustration_only",
+      "aliases": {
+        "ko": [
+          "팬아트 오마주 리믹스 지식재산 경계",
+          "어떤 기존 작품이나 작가의 디자인·화풍도 복제하지 않는"
+        ],
+        "en": [
+          "fan art homage remix intellectual property boundary"
+        ],
+        "ja": [
+          "ファンアートとオマージュとリミックスの知的財産境界"
+        ],
+        "zh": [
+          "同人致敬混创知识产权边界"
+        ]
+      },
+      "routing_rules": [
+        {
+          "id": "rule::fanart_homage_remix_ip_boundary::ko",
+          "locale": "ko",
+          "match": "exact_phrase",
+          "phrases": [
+            "팬아트 오마주 리믹스 지식재산 경계",
+            "어떤 기존 작품이나 작가의 디자인·화풍도 복제하지 않는"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::fanart_homage_remix_ip_boundary::en",
+          "locale": "en",
+          "match": "exact_phrase",
+          "phrases": [
+            "fan art homage remix intellectual property boundary"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::fanart_homage_remix_ip_boundary::ja",
+          "locale": "ja",
+          "match": "exact_phrase",
+          "phrases": [
+            "ファンアートとオマージュとリミックスの知的財産境界"
+          ],
+          "priority": 3000
+        },
+        {
+          "id": "rule::fanart_homage_remix_ip_boundary::zh",
+          "locale": "zh",
+          "match": "exact_phrase",
+          "phrases": [
+            "同人致敬混创知识产权边界"
+          ],
+          "priority": 3000
+        }
+      ],
+      "default_variant_id": "single_illustration",
+      "allowed_variant_ids": [
+        "single_illustration",
+        "key_art",
+        "light_novel_cover",
+        "collectible_card",
+        "merch_adaptation_board",
+        "campaign_art_board"
+      ],
+      "allowed_format_family_ids": [
+        "adaptation_board",
+        "card",
+        "cover",
+        "key_art",
+        "single_frame"
+      ],
+      "visual_candidate_ids": [
+        "remix_original_subject_silhouette",
+        "remix_original_costume_prop_relation",
+        "remix_generic_mechanism_trace",
+        "remix_protected_marker_absence",
+        "remix_style_name_free_mark_system",
+        "remix_reference_transformation_delta",
+        "remix_original_setting_and_event",
+        "remix_mark_edge_grammar_recurrence"
+      ],
+      "router_candidate_ids": [
+        "abstract_visual_mechanism",
+        "authorization_or_original_route",
+        "content_credentials_optional"
+      ],
+      "guard_candidate_ids": [
+        "provenance_declaration",
+        "reference_rights_scope",
+        "protected_marker_exclusion",
+        "style_non_imitation",
+        "original_combination_requirement"
+      ],
+      "bundle_ids": [
+        "bundle::fanart_homage_remix_ip_boundary::01",
+        "bundle::fanart_homage_remix_ip_boundary::02"
+      ]
+    }
+  ],
+  "frozen_resolutions": [
+    {
+      "case_id": "illustration_topic_01_ko",
+      "seed": 910001,
+      "expected_topic_id": "single_frame_narrative_compression",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "single_frame_narrative_compression",
+        "topic_id": "single_frame_narrative_compression",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "사건의 전후가 동시에 궁금",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_02_ko",
+      "seed": 910002,
+      "expected_topic_id": "focal_routing_attention_hierarchy",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "focal_routing_attention_hierarchy",
+        "topic_id": "focal_routing_attention_hierarchy",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "첫 시선과 두 번째 발견",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_03_ko",
+      "seed": 910003,
+      "expected_topic_id": "silhouette_shape_language",
+      "expected_variant_id": "ensemble_key_art",
+      "resolved": {
+        "route_id": "silhouette_shape_language",
+        "topic_id": "silhouette_shape_language",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "세 명이 한눈에 구분되면서도 같은 팀",
+        "variant_id": "ensemble_key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_04_ko",
+      "seed": 910004,
+      "expected_topic_id": "value_grouping_color_dramaturgy",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "value_grouping_color_dramaturgy",
+        "topic_id": "value_grouping_color_dramaturgy",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "제한된 명암과 색의 흐름",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_05_ko",
+      "seed": 910005,
+      "expected_topic_id": "line_edge_mark_finish_hierarchy",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "line_edge_mark_finish_hierarchy",
+        "topic_id": "line_edge_mark_finish_hierarchy",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "선, 에지, 흔적과 의도적 미완성",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_06_ko",
+      "seed": 910006,
+      "expected_topic_id": "negative_space_information_density",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "negative_space_information_density",
+        "topic_id": "negative_space_information_density",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "여백과 고밀도 단서의 대비",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_07_ko",
+      "seed": 910007,
+      "expected_topic_id": "recurring_motif_visual_metaphor",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "recurring_motif_visual_metaphor",
+        "topic_id": "recurring_motif_visual_metaphor",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "하나의 실 모티프가 인물, 도구, 공간에서 서로 다른 상태로 반복",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_08_ko",
+      "seed": 910008,
+      "expected_topic_id": "gesture_force_environment_response",
+      "expected_variant_id": "key_art",
+      "resolved": {
+        "route_id": "gesture_force_environment_response",
+        "topic_id": "gesture_force_environment_response",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "같은 힘의 흐름에 반응",
+        "variant_id": "key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_09_ko",
+      "seed": 910009,
+      "expected_topic_id": "ensemble_relationship_staging",
+      "expected_variant_id": "ensemble_key_art",
+      "resolved": {
+        "route_id": "ensemble_relationship_staging",
+        "topic_id": "ensemble_relationship_staging",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "도구를 주고받는 관계 중심",
+        "variant_id": "ensemble_key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_10_ko",
+      "seed": 910010,
+      "expected_topic_id": "costume_prop_environment_state_continuity",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "costume_prop_environment_state_continuity",
+        "topic_id": "costume_prop_environment_state_continuity",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "같은 여정의 사용·수선 흔적",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_11_ko",
+      "seed": 910011,
+      "expected_topic_id": "transformation_fx_causal_grammar",
+      "expected_variant_id": "collectible_card",
+      "resolved": {
+        "route_id": "transformation_fx_causal_grammar",
+        "topic_id": "transformation_fx_causal_grammar",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "변신의 원인, 진행 방향, 대가와 회복 흔적",
+        "variant_id": "collectible_card",
+        "format_family_id": "card",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_12_ko",
+      "seed": 910012,
+      "expected_topic_id": "nonhuman_creature_functional_design",
+      "expected_variant_id": "character_design_board",
+      "resolved": {
+        "route_id": "nonhuman_creature_functional_design",
+        "topic_id": "nonhuman_creature_functional_design",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "기능적 감각기관, 이동 방식, 도구 상호작용",
+        "variant_id": "character_design_board",
+        "format_family_id": "adaptation_board",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_13_ko",
+      "seed": 910013,
+      "expected_topic_id": "faction_magic_technology_visual_system",
+      "expected_variant_id": "ensemble_key_art",
+      "resolved": {
+        "route_id": "faction_magic_technology_visual_system",
+        "topic_id": "faction_magic_technology_visual_system",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "서로 다른 접합 방식과 재료 규칙",
+        "variant_id": "ensemble_key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_14_ko",
+      "seed": 910014,
+      "expected_topic_id": "lived_in_background_world_evidence",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "lived_in_background_world_evidence",
+        "topic_id": "lived_in_background_world_evidence",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "생활 동선, 임시 수리, 누적된 작업 흔적",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_15_ko",
+      "seed": 910015,
+      "expected_topic_id": "serial_model_sheet_identity_continuity",
+      "expected_variant_id": "character_design_board",
+      "resolved": {
+        "route_id": "serial_model_sheet_identity_continuity",
+        "topic_id": "serial_model_sheet_identity_continuity",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "평상시, 폭우 임무 중, 임무 후 수선 상태에서도 같은 인물",
+        "variant_id": "character_design_board",
+        "format_family_id": "adaptation_board",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_16_ko",
+      "seed": 910016,
+      "expected_topic_id": "light_novel_manga_cover_promise",
+      "expected_variant_id": "light_novel_cover",
+      "resolved": {
+        "route_id": "light_novel_manga_cover_promise",
+        "topic_id": "light_novel_manga_cover_promise",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "관계와 갈등의 후크",
+        "variant_id": "light_novel_cover",
+        "format_family_id": "cover",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_17_ko",
+      "seed": 910017,
+      "expected_topic_id": "anime_game_key_art_visual_declaration",
+      "expected_variant_id": "key_art",
+      "resolved": {
+        "route_id": "anime_game_key_art_visual_declaration",
+        "topic_id": "anime_game_key_art_visual_declaration",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "작품 전체의 갈등과 시각 규칙 하나가 선언",
+        "variant_id": "key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_18_ko",
+      "seed": 910018,
+      "expected_topic_id": "thumbnail_banner_cover_crop_resilience",
+      "expected_variant_id": "responsive_key_art",
+      "resolved": {
+        "route_id": "thumbnail_banner_cover_crop_resilience",
+        "topic_id": "thumbnail_banner_cover_crop_resilience",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "세로 표지, 정사각 썸네일, 가로 배너",
+        "variant_id": "responsive_key_art",
+        "format_family_id": "key_art",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_19_ko",
+      "seed": 910019,
+      "expected_topic_id": "collectible_card_gacha_splash_grammar",
+      "expected_variant_id": "collectible_card",
+      "resolved": {
+        "route_id": "collectible_card_gacha_splash_grammar",
+        "topic_id": "collectible_card_gacha_splash_grammar",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "유료 등급 UI가 아니라 장면의 규모와 물질적 결과",
+        "variant_id": "collectible_card",
+        "format_family_id": "card",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_20_ko",
+      "seed": 910020,
+      "expected_topic_id": "vertical_scroll_webtoon_time_emotion",
+      "expected_variant_id": "vertical_scroll_sequence",
+      "resolved": {
+        "route_id": "vertical_scroll_webtoon_time_emotion",
+        "topic_id": "vertical_scroll_webtoon_time_emotion",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "여백과 공개 순서가 시간과 감정을 조절",
+        "variant_id": "vertical_scroll_sequence",
+        "format_family_id": "vertical_sequence",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_21_ko",
+      "seed": 910021,
+      "expected_topic_id": "merch_sticker_sd_identity_preservation",
+      "expected_variant_id": "merch_adaptation_board",
+      "resolved": {
+        "route_id": "merch_sticker_sd_identity_preservation",
+        "topic_id": "merch_sticker_sd_identity_preservation",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "전신 일러스트, SD 아크릴 굿즈, 스티커 아이콘",
+        "variant_id": "merch_adaptation_board",
+        "format_family_id": "adaptation_board",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_22_ko",
+      "seed": 910022,
+      "expected_topic_id": "campaign_wide_art_direction",
+      "expected_variant_id": "campaign_art_board",
+      "resolved": {
+        "route_id": "campaign_wide_art_direction",
+        "topic_id": "campaign_wide_art_direction",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "키 아트, 캐릭터 카드, 이벤트 배너가 서로 다르지만 같은 작품",
+        "variant_id": "campaign_art_board",
+        "format_family_id": "adaptation_board",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_23_ko",
+      "seed": 910023,
+      "expected_topic_id": "cjk_visual_convention_literacy",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "cjk_visual_convention_literacy",
+        "topic_id": "cjk_visual_convention_literacy",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "일반 독자는 행동을 이해하고 장르 숙련 독자는 추가 단서",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    },
+    {
+      "case_id": "illustration_topic_24_ko",
+      "seed": 910024,
+      "expected_topic_id": "fanart_homage_remix_ip_boundary",
+      "expected_variant_id": "single_illustration",
+      "resolved": {
+        "route_id": "fanart_homage_remix_ip_boundary",
+        "topic_id": "fanart_homage_remix_ip_boundary",
+        "matched_topic_locale": "ko",
+        "matched_topic_alias": "어떤 기존 작품이나 작가의 디자인·화풍도 복제하지 않는",
+        "variant_id": "single_illustration",
+        "format_family_id": "single_frame",
+        "matched_format_locale": null,
+        "matched_format_alias": null,
+        "format_resolution": "route_default"
+      },
+      "frozen_before_implementation": true
+    }
+  ],
+  "counts": {
+    "routes": 24,
+    "topics": 24,
+    "topic_route_count": 24,
+    "topic_alias_count": 120,
+    "format_family_count": 6,
+    "surface_variant_count": 10,
+    "frozen_resolution_count": 24
+  },
+  "self_validation": {
+    "topic_routes": 24,
+    "topic_aliases_unique_normalized": 120,
+    "format_aliases_unique_normalized": 40,
+    "normalized_collisions": 0,
+    "format_families": 6,
+    "surface_variants": 10,
+    "candidate_nodes": 264,
+    "roles": {
+      "visual_atom": 209,
+      "guard": 27,
+      "router": 28
+    },
+    "bundles": 48,
+    "frozen_resolutions": 24,
+    "render_holdouts": 6,
+    "named_runtime_leaks": 0
+  }
+}

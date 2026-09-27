@@ -1,0 +1,1027 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "slots": {
+    "composition": [
+      {
+        "id": "pr_environmental_portrait_subject_place_candidate",
+        "ko": "환경 인물의 장소 연계",
+        "en": "Keep the adult subject, the functional place, and the ongoing task legible in one environmental frame.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "composition"
+        ],
+        "aliases": [
+          "환경 인물의 장소 연계",
+          "environmental portrait subject place relation"
+        ],
+        "keywords": [
+          "environmental portrait",
+          "working room",
+          "task-specific setting"
+        ],
+        "embedding_text": "환경 인물의 장소 연계; Keep the adult subject, the functional place, and the ongoing task legible in one environmental frame.; environmental portrait; working room; task-specific setting; the adult subject remains identifiable at environmental portrait scale; the place has visible task-specific fixtures or objects; the subject's action or position connects to those fixtures; the frame retains enough surrounding space to explain the task",
+        "concept_units": [
+          "환경 인물의 장소 연계",
+          "environmental portrait",
+          "working room",
+          "task-specific setting",
+          "the adult subject remains identifiable at environmental portrait scale",
+          "the place has visible task-specific fixtures or objects",
+          "the subject's action or position connects to those fixtures",
+          "the frame retains enough surrounding space to explain the task"
+        ],
+        "relations": [
+          {
+            "id": "pr_environmental_portrait_subject_place_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "인물과 그 사람이 쓰는 특정 장소",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "composition"
+        ]
+      }
+    ],
+    "relational_action": [
+      {
+        "id": "pr_observed_action_trace_candidate",
+        "ko": "관찰된 행동과 직전·직후 흔적",
+        "en": "Show the actor, the object of the action, and a small visible consequence in the same frame.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "relational_action"
+        ],
+        "aliases": [
+          "관찰된 행동과 직전·직후 흔적",
+          "observed action trace relation"
+        ],
+        "keywords": [
+          "visible hand action",
+          "hand meets object",
+          "immediate action result",
+          "object placement"
+        ],
+        "embedding_text": "관찰된 행동과 직전·직후 흔적; Show the actor, the object of the action, and a small visible consequence in the same frame.; visible hand action; hand meets object; immediate action result; object placement; the actor's specific hand or body action is visible; the action's target object is visible in the same frame; contact or the approach path is spatially possible; the action leaves a small visible result or immediate state change",
+        "concept_units": [
+          "관찰된 행동과 직전·직후 흔적",
+          "visible hand action",
+          "hand meets object",
+          "immediate action result",
+          "object placement",
+          "the actor's specific hand or body action is visible",
+          "the action's target object is visible in the same frame",
+          "contact or the approach path is spatially possible",
+          "the action leaves a small visible result or immediate state change"
+        ],
+        "relations": [
+          {
+            "id": "pr_observed_action_trace_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "한 피사체의 손·도구·대상",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "action"
+        ]
+      }
+    ],
+    "shot_scale": [
+      {
+        "id": "pr_camera_distance_subject_scale_candidate",
+        "ko": "카메라 거리와 인물·환경 비율",
+        "en": "Set camera distance so the requested body coverage and surrounding space share one coherent perspective.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "shot_scale"
+        ],
+        "aliases": [
+          "카메라 거리와 인물·환경 비율",
+          "camera distance subject scale relation"
+        ],
+        "keywords": [
+          "medium camera distance",
+          "natural subject scale",
+          "environmental margin"
+        ],
+        "embedding_text": "카메라 거리와 인물·환경 비율; Set camera distance so the requested body coverage and surrounding space share one coherent perspective.; medium camera distance; natural subject scale; environmental margin; the requested body coverage is visible; head and body scale follow one perspective; nearby structures scale coherently with camera distance; the requested environmental margin remains around the subject",
+        "concept_units": [
+          "카메라 거리와 인물·환경 비율",
+          "medium camera distance",
+          "natural subject scale",
+          "environmental margin",
+          "the requested body coverage is visible",
+          "head and body scale follow one perspective",
+          "nearby structures scale coherently with camera distance",
+          "the requested environmental margin remains around the subject"
+        ],
+        "relations": [
+          {
+            "id": "pr_camera_distance_subject_scale_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "인물의 머리·몸·인접 환경",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "framing"
+        ]
+      }
+    ],
+    "focus": [
+      {
+        "id": "pr_focus_plane_subject_falloff_candidate",
+        "ko": "초점면의 대상·깊이 이행",
+        "en": "Keep the task-bearing subject details readable while foreground and background soften according to distance.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "focus"
+        ],
+        "aliases": [
+          "초점면의 대상·깊이 이행",
+          "focus plane subject falloff relation"
+        ],
+        "keywords": [
+          "natural depth of field",
+          "readable working hands",
+          "near and far focus"
+        ],
+        "embedding_text": "초점면의 대상·깊이 이행; Keep the task-bearing subject details readable while foreground and background soften according to distance.; natural depth of field; readable working hands; near and far focus; the specified subject detail is the clearest plane; near and far objects soften according to their distances; subject edges transition naturally into the background; the important action target remains readable",
+        "concept_units": [
+          "초점면의 대상·깊이 이행",
+          "natural depth of field",
+          "readable working hands",
+          "near and far focus",
+          "the specified subject detail is the clearest plane",
+          "near and far objects soften according to their distances",
+          "subject edges transition naturally into the background",
+          "the important action target remains readable"
+        ],
+        "relations": [
+          {
+            "id": "pr_focus_plane_subject_falloff_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "주피사체와 앞뒤 거리 기준물",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "camera"
+        ]
+      }
+    ],
+    "lighting": [
+      {
+        "id": "pr_scene_owned_exposure_tradeoff_candidate",
+        "ko": "실내·창밖 노출 선택의 소유자",
+        "en": "Expose the indoor subject for readable detail while retaining a spatially credible brighter window and a limited highlight loss.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "lighting"
+        ],
+        "aliases": [
+          "실내·창밖 노출 선택의 소유자",
+          "scene owned exposure tradeoff relation"
+        ],
+        "keywords": [
+          "bright window",
+          "dim deeper room",
+          "window-room exposure contrast",
+          "limited highlight flare"
+        ],
+        "embedding_text": "실내·창밖 노출 선택의 소유자; Expose the indoor subject for readable detail while retaining a spatially credible brighter window and a limited highlight loss.; bright window; dim deeper room; window-room exposure contrast; limited highlight flare; the indoor subject retains needed readable detail; window and room brightness differ consistently across space; only a small high-luminance window region loses detail; the interior retains tonal depth rather than uniform HDR brightness",
+        "concept_units": [
+          "실내·창밖 노출 선택의 소유자",
+          "bright window",
+          "dim deeper room",
+          "window-room exposure contrast",
+          "limited highlight flare",
+          "the indoor subject retains needed readable detail",
+          "window and room brightness differ consistently across space",
+          "only a small high-luminance window region loses detail",
+          "the interior retains tonal depth rather than uniform HDR brightness"
+        ],
+        "relations": [
+          {
+            "id": "pr_scene_owned_exposure_tradeoff_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "실내 주피사체·창·창밖",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "lighting"
+        ]
+      }
+    ],
+    "skin_finish": [
+      {
+        "id": "pr_skin_detail_lighting_scale_candidate",
+        "ko": "피부 세부의 조명·크기 조건",
+        "en": "At portrait scale, preserve gentle skin tone changes and lighting-shaped detail without imposing blemishes.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "skin_finish"
+        ],
+        "aliases": [
+          "피부 세부의 조명·크기 조건",
+          "skin detail lighting scale relation"
+        ],
+        "keywords": [
+          "realistic skin texture",
+          "portrait-scale tonal detail",
+          "lit facial texture"
+        ],
+        "embedding_text": "피부 세부의 조명·크기 조건; At portrait scale, preserve gentle skin tone changes and lighting-shaped detail without imposing blemishes.; realistic skin texture; portrait-scale tonal detail; lit facial texture; the adult face or hand is large enough to inspect; lit skin shows gentle tone and fine texture differences; skin shadows and highlights follow the visible form; eyes lips and skin remain distinct instead of one plastic surface",
+        "concept_units": [
+          "피부 세부의 조명·크기 조건",
+          "realistic skin texture",
+          "portrait-scale tonal detail",
+          "lit facial texture",
+          "the adult face or hand is large enough to inspect",
+          "lit skin shows gentle tone and fine texture differences",
+          "skin shadows and highlights follow the visible form",
+          "eyes lips and skin remain distinct instead of one plastic surface"
+        ],
+        "relations": [
+          {
+            "id": "pr_skin_detail_lighting_scale_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "보이는 성인 인물의 피부",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      }
+    ],
+    "hair_style": [
+      {
+        "id": "pr_hair_strand_owner_and_cause_candidate",
+        "ko": "잔머리의 부착과 움직임 원인",
+        "en": "Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "hair_style"
+        ],
+        "aliases": [
+          "잔머리의 부착과 움직임 원인",
+          "hair strand owner and cause relation"
+        ],
+        "keywords": [
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze"
+        ],
+        "embedding_text": "잔머리의 부착과 움직임 원인; Keep a few flyaway hairs attached to the hairline, with their direction explained by the scene's motion or air.; wind pushes loose hair; hairline-attached strands; hair moves with the breeze; flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration",
+        "concept_units": [
+          "잔머리의 부착과 움직임 원인",
+          "wind pushes loose hair",
+          "hairline-attached strands",
+          "hair moves with the breeze",
+          "flyaway strands connect to the hairline or tie point",
+          "local strands agree with the main hair direction",
+          "their movement agrees with the stated breeze dampness or action",
+          "hair and facial contours remain separate without penetration"
+        ],
+        "relations": [
+          {
+            "id": "pr_hair_strand_owner_and_cause_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "인물의 두피·묶임점·머리끝",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      }
+    ],
+    "garment_detail": [
+      {
+        "id": "pr_fabric_tension_fold_attachment_candidate",
+        "ko": "직물 주름의 장력·재봉선 소유",
+        "en": "Let garment folds start at visible seams, joints, or a pulling hand and follow the fabric's actual movement.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "garment_detail"
+        ],
+        "aliases": [
+          "직물 주름의 장력·재봉선 소유",
+          "fabric tension fold attachment relation"
+        ],
+        "keywords": [
+          "fine garment creases",
+          "sleeve folds",
+          "fabric creases at a bent elbow"
+        ],
+        "embedding_text": "직물 주름의 장력·재봉선 소유; Let garment folds start at visible seams, joints, or a pulling hand and follow the fabric's actual movement.; fine garment creases; sleeve folds; fabric creases at a bent elbow; the garment's fabric texture or sheen is distinguishable; folds originate at a seam joint or pulling contact; fold direction agrees with the body's action or pose; folds preserve the garment silhouette and closure",
+        "concept_units": [
+          "직물 주름의 장력·재봉선 소유",
+          "fine garment creases",
+          "sleeve folds",
+          "fabric creases at a bent elbow",
+          "the garment's fabric texture or sheen is distinguishable",
+          "folds originate at a seam joint or pulling contact",
+          "fold direction agrees with the body's action or pose",
+          "folds preserve the garment silhouette and closure"
+        ],
+        "relations": [
+          {
+            "id": "pr_fabric_tension_fold_attachment_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "한 의복의 봉제선·접촉점·접힘",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "appearance"
+        ]
+      }
+    ],
+    "texture": [
+      {
+        "id": "pr_surface_wear_contact_owner_candidate",
+        "ko": "사용 흔적의 접촉면 귀속",
+        "en": "Confine the chosen wear or handling trace to the material and contact point that could produce it.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "texture"
+        ],
+        "aliases": [
+          "사용 흔적의 접촉면 귀속",
+          "surface wear contact owner relation"
+        ],
+        "keywords": [
+          "localized handling trace",
+          "fingerprints at a touched rim",
+          "material-specific wear"
+        ],
+        "embedding_text": "사용 흔적의 접촉면 귀속; Confine the chosen wear or handling trace to the material and contact point that could produce it.; localized handling trace; fingerprints at a touched rim; material-specific wear; the base material has its own reflection or roughness response; the selected wear or trace sits at a reachable contact point; trace strength fits the scene's use and cleanliness; underlying edges and reflections remain coherent beneath the trace",
+        "concept_units": [
+          "사용 흔적의 접촉면 귀속",
+          "localized handling trace",
+          "fingerprints at a touched rim",
+          "material-specific wear",
+          "the base material has its own reflection or roughness response",
+          "the selected wear or trace sits at a reachable contact point",
+          "trace strength fits the scene's use and cleanliness",
+          "underlying edges and reflections remain coherent beneath the trace"
+        ],
+        "relations": [
+          {
+            "id": "pr_surface_wear_contact_owner_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "손이 닿거나 물체가 놓이는 표면",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "material"
+        ]
+      }
+    ],
+    "contact_point": [
+      {
+        "id": "pr_object_contact_shadow_support_candidate",
+        "ko": "물체 지지·접점 그림자",
+        "en": "Seat the object on a visible support with a small contact shadow and scene-consistent falloff.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "contact_point"
+        ],
+        "aliases": [
+          "물체 지지·접점 그림자",
+          "object contact shadow support relation"
+        ],
+        "keywords": [
+          "faint shadow under the object",
+          "object fully supported on its surface",
+          "local contact shadow"
+        ],
+        "embedding_text": "물체 지지·접점 그림자; Seat the object on a visible support with a small contact shadow and scene-consistent falloff.; faint shadow under the object; object fully supported on its surface; local contact shadow; the object and its supporting surface are both visible; local darkening or compression touches the load-bearing point; shadow direction and softness agree with the scene light; object shape and support contact align without a gap",
+        "concept_units": [
+          "물체 지지·접점 그림자",
+          "faint shadow under the object",
+          "object fully supported on its surface",
+          "local contact shadow",
+          "the object and its supporting surface are both visible",
+          "local darkening or compression touches the load-bearing point",
+          "shadow direction and softness agree with the scene light",
+          "object shape and support contact align without a gap"
+        ],
+        "relations": [
+          {
+            "id": "pr_object_contact_shadow_support_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "물체 바닥면과 지지 표면",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "relationship"
+        ]
+      }
+    ],
+    "reflection_logic": [
+      {
+        "id": "pr_reflection_scene_binding_candidate",
+        "ko": "반사체와 장면의 대상 결합",
+        "en": "Bind the selected reflection to a visible surface, matching source object, and camera viewpoint.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "reflection_logic"
+        ],
+        "aliases": [
+          "반사체와 장면의 대상 결합",
+          "reflection scene binding relation"
+        ],
+        "keywords": [
+          "wet patch reflects a source",
+          "localized wet reflection",
+          "reflection aligned to source"
+        ],
+        "embedding_text": "반사체와 장면의 대상 결합; Bind the selected reflection to a visible surface, matching source object, and camera viewpoint.; wet patch reflects a source; localized wet reflection; reflection aligned to source; the reflecting surface has a visible position and angle; only a source object in the scene appears at the corresponding reflection position; reflection strength and distortion fit the surface and viewpoint; light and shadow geometry remain mutually consistent",
+        "concept_units": [
+          "반사체와 장면의 대상 결합",
+          "wet patch reflects a source",
+          "localized wet reflection",
+          "reflection aligned to source",
+          "the reflecting surface has a visible position and angle",
+          "only a source object in the scene appears at the corresponding reflection position",
+          "reflection strength and distortion fit the surface and viewpoint",
+          "light and shadow geometry remain mutually consistent"
+        ],
+        "relations": [
+          {
+            "id": "pr_reflection_scene_binding_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "유리·거울·젖은 바닥의 지정 반사면",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "composition"
+        ]
+      }
+    ],
+    "platform_framing": [
+      {
+        "id": "pr_casual_crop_subject_legibility_candidate",
+        "ko": "스냅의 불완전한 프레임과 주피사체 보존",
+        "en": "Let a frame edge crop a peripheral moving part while keeping the adult and the main action legible.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "platform_framing"
+        ],
+        "aliases": [
+          "스냅의 불완전한 프레임과 주피사체 보존",
+          "casual crop subject legibility relation"
+        ],
+        "keywords": [
+          "casual phone framing",
+          "peripheral frame crop",
+          "readable action despite crop"
+        ],
+        "embedding_text": "스냅의 불완전한 프레임과 주피사체 보존; Let a frame edge crop a peripheral moving part while keeping the adult and the main action legible.; casual phone framing; peripheral frame crop; readable action despite crop; one peripheral part meets or exits a plausible frame edge; the adult and task-bearing action remain legible; camera height and tilt match the observer's position; the cropped part continues in a physically possible direction",
+        "concept_units": [
+          "스냅의 불완전한 프레임과 주피사체 보존",
+          "casual phone framing",
+          "peripheral frame crop",
+          "readable action despite crop",
+          "one peripheral part meets or exits a plausible frame edge",
+          "the adult and task-bearing action remain legible",
+          "camera height and tilt match the observer's position",
+          "the cropped part continues in a physically possible direction"
+        ],
+        "relations": [
+          {
+            "id": "pr_casual_crop_subject_legibility_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "프레임 경계와 주피사체",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "framing"
+        ]
+      }
+    ],
+    "grain_profile": [
+      {
+        "id": "pr_shadows_local_digital_noise_candidate",
+        "ko": "디지털 저조도 노이즈의 공간 소유",
+        "en": "If the selected digital capture is dim, keep fine noise mainly in the shadows while the lit subject stays readable.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "grain_profile"
+        ],
+        "aliases": [
+          "디지털 저조도 노이즈의 공간 소유",
+          "shadows local digital noise relation"
+        ],
+        "keywords": [
+          "fine noise in dim shadows",
+          "shadow-local digital noise"
+        ],
+        "embedding_text": "디지털 저조도 노이즈의 공간 소유; If the selected digital capture is dim, keep fine noise mainly in the shadows while the lit subject stays readable.; fine noise in dim shadows; shadow-local digital noise; bright and shadowed image regions differ in visible noise; fine luminance or chroma noise concentrates in darker regions; critical subject edges and face remain readable; the noise resembles digital processing rather than scratches or print dust",
+        "concept_units": [
+          "디지털 저조도 노이즈의 공간 소유",
+          "fine noise in dim shadows",
+          "shadow-local digital noise",
+          "bright and shadowed image regions differ in visible noise",
+          "fine luminance or chroma noise concentrates in darker regions",
+          "critical subject edges and face remain readable",
+          "the noise resembles digital processing rather than scratches or print dust"
+        ],
+        "relations": [
+          {
+            "id": "pr_shadows_local_digital_noise_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "어두운 영상 영역",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "style"
+        ]
+      }
+    ],
+    "format": [
+      {
+        "id": "pr_jpeg_edge_blocking_candidate",
+        "ko": "재압축의 고대비 경계 흔적",
+        "en": "For an explicitly reposted compressed image, keep mild compression near high-contrast edges without obscuring the action.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "format"
+        ],
+        "aliases": [
+          "재압축의 고대비 경계 흔적",
+          "jpeg edge blocking relation"
+        ],
+        "keywords": [
+          "reposted compressed image",
+          "mild high-contrast edge blocking"
+        ],
+        "embedding_text": "재압축의 고대비 경계 흔적; For an explicitly reposted compressed image, keep mild compression near high-contrast edges without obscuring the action.; reposted compressed image; mild high-contrast edge blocking; a file screen or repost context is explicit; slight ringing or blocking sits near high-contrast edges; flat tone areas remain distinct from edge damage; compression does not conceal the main gesture",
+        "concept_units": [
+          "재압축의 고대비 경계 흔적",
+          "reposted compressed image",
+          "mild high-contrast edge blocking",
+          "a file screen or repost context is explicit",
+          "slight ringing or blocking sits near high-contrast edges",
+          "flat tone areas remain distinct from edge damage",
+          "compression does not conceal the main gesture"
+        ],
+        "relations": [
+          {
+            "id": "pr_jpeg_edge_blocking_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "재게시된 이미지의 압축된 경계",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "format"
+        ]
+      }
+    ],
+    "film_emulation": [
+      {
+        "id": "pr_film_grain_print_scan_scope_candidate",
+        "ko": "필름 입자와 인화·스캔 층 분리",
+        "en": "Keep restrained grain inside the picture area and any scan dust on the separate print surface.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "film_emulation"
+        ],
+        "aliases": [
+          "필름 입자와 인화·스캔 층 분리",
+          "film grain print scan scope relation"
+        ],
+        "keywords": [
+          "restrained film grain",
+          "grain inside the picture area",
+          "print scan specks"
+        ],
+        "embedding_text": "필름 입자와 인화·스캔 층 분리; Keep restrained grain inside the picture area and any scan dust on the separate print surface.; restrained film grain; grain inside the picture area; print scan specks; grain belongs to the photographic picture area; grain varies with tone without hiding face or material structure; any specks remain on the print or scan layer; the look does not imply an actual film capture history",
+        "concept_units": [
+          "필름 입자와 인화·스캔 층 분리",
+          "restrained film grain",
+          "grain inside the picture area",
+          "print scan specks",
+          "grain belongs to the photographic picture area",
+          "grain varies with tone without hiding face or material structure",
+          "any specks remain on the print or scan layer",
+          "the look does not imply an actual film capture history"
+        ],
+        "relations": [
+          {
+            "id": "pr_film_grain_print_scan_scope_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "사진 이미지층과 그 출력 물체",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "style"
+        ]
+      }
+    ],
+    "prop": [
+      {
+        "id": "pr_instant_print_material_object_candidate",
+        "ko": "즉석 인화물의 전체 물체",
+        "en": "Show a complete instant print as a physical card with an image window, border, thickness, and supported contact.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "prop"
+        ],
+        "aliases": [
+          "즉석 인화물의 전체 물체",
+          "instant print material object relation"
+        ],
+        "keywords": [
+          "instant print card",
+          "physical print border",
+          "card thickness"
+        ],
+        "embedding_text": "즉석 인화물의 전체 물체; Show a complete instant print as a physical card with an image window, border, thickness, and supported contact.; instant print card; physical print border; card thickness; the image window and card border have a clear boundary; card thickness edges and hand support are visible; photographic color and tone remain inside the image window; the card casts a contact shadow consistent with its position",
+        "concept_units": [
+          "즉석 인화물의 전체 물체",
+          "instant print card",
+          "physical print border",
+          "card thickness",
+          "the image window and card border have a clear boundary",
+          "card thickness edges and hand support are visible",
+          "photographic color and tone remain inside the image window",
+          "the card casts a contact shadow consistent with its position"
+        ],
+        "relations": [
+          {
+            "id": "pr_instant_print_material_object_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "즉석 인화 카드 전체",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": []
+      }
+    ],
+    "camera_height": [
+      {
+        "id": "pr_fixed_surveillance_observation_candidate",
+        "ko": "고정 감시 시점의 관찰 구조",
+        "en": "Use a stationary high viewpoint that covers the monitored passage, with the passing adult occupying a small part.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "camera_height"
+        ],
+        "aliases": [
+          "고정 감시 시점의 관찰 구조",
+          "fixed surveillance observation relation"
+        ],
+        "keywords": [
+          "fixed high viewpoint",
+          "wide monitored passage",
+          "small passing subject"
+        ],
+        "embedding_text": "고정 감시 시점의 관찰 구조; Use a stationary high viewpoint that covers the monitored passage, with the passing adult occupying a small part.; fixed high viewpoint; wide monitored passage; small passing subject; a high fixed installation viewpoint is spatially readable; the monitored entrance or passage occupies a broad view; the moving subject occupies a limited portion of the frame; image limitations remain consistent with the scene without exaggerated damage",
+        "concept_units": [
+          "고정 감시 시점의 관찰 구조",
+          "fixed high viewpoint",
+          "wide monitored passage",
+          "small passing subject",
+          "a high fixed installation viewpoint is spatially readable",
+          "the monitored entrance or passage occupies a broad view",
+          "the moving subject occupies a limited portion of the frame",
+          "image limitations remain consistent with the scene without exaggerated damage"
+        ],
+        "relations": [
+          {
+            "id": "pr_fixed_surveillance_observation_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "고정 카메라와 감시 대상 공간",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "camera"
+        ]
+      }
+    ],
+    "medium": [
+      {
+        "id": "pr_camcorder_still_temporal_container_candidate",
+        "ko": "홈비디오 정지 프레임의 시간 단서",
+        "en": "Present one camcorder video frame at a legible action phase with only local motion smear and coherent frame treatment.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "medium"
+        ],
+        "aliases": [
+          "홈비디오 정지 프레임의 시간 단서",
+          "camcorder still temporal container relation"
+        ],
+        "keywords": [
+          "single camcorder still",
+          "one video action phase",
+          "local motion trace"
+        ],
+        "embedding_text": "홈비디오 정지 프레임의 시간 단서; Present one camcorder video frame at a legible action phase with only local motion smear and coherent frame treatment.; single camcorder still; one video action phase; local motion trace; a single video-frame container or cue is visible; the actor or moving object is caught in one action phase; motion trace is local to moving parts; frame format tone and resolution form a coherent video image",
+        "concept_units": [
+          "홈비디오 정지 프레임의 시간 단서",
+          "single camcorder still",
+          "one video action phase",
+          "local motion trace",
+          "a single video-frame container or cue is visible",
+          "the actor or moving object is caught in one action phase",
+          "motion trace is local to moving parts",
+          "frame format tone and resolution form a coherent video image"
+        ],
+        "relations": [
+          {
+            "id": "pr_camcorder_still_temporal_container_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "한 비디오 프레임과 장면 움직임",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "style"
+        ]
+      }
+    ],
+    "ambient_particle": [
+      {
+        "id": "pr_atmospheric_distance_contrast_candidate",
+        "ko": "거리별 대기 대비 감소",
+        "en": "Keep near forms detailed and let distant forms lose some contrast only along the actual long viewing path.",
+        "weight": 0.45,
+        "tags": [
+          "photographic_scene",
+          "photorealism_elements",
+          "ambient_particle"
+        ],
+        "aliases": [
+          "거리별 대기 대비 감소",
+          "atmospheric distance contrast relation"
+        ],
+        "keywords": [
+          "near foreground detail",
+          "distant structure fades",
+          "distant lower contrast",
+          "weather-consistent haze"
+        ],
+        "embedding_text": "거리별 대기 대비 감소; Keep near forms detailed and let distant forms lose some contrast only along the actual long viewing path.; near foreground detail; distant structure fades; distant lower contrast; weather-consistent haze; multiple near middle and far depth references are visible; far objects have lower contrast than near objects; the atmospheric effect agrees with weather and light; near material detail remains as readable as requested",
+        "concept_units": [
+          "거리별 대기 대비 감소",
+          "near foreground detail",
+          "distant structure fades",
+          "distant lower contrast",
+          "weather-consistent haze",
+          "multiple near middle and far depth references are visible",
+          "far objects have lower contrast than near objects",
+          "the atmospheric effect agrees with weather and light",
+          "near material detail remains as readable as requested"
+        ],
+        "relations": [
+          {
+            "id": "pr_atmospheric_distance_contrast_owner_relation",
+            "type": "scene_bound_owner_relation",
+            "subject": "전경·중경·원경 건물 또는 지형",
+            "object": "the selected visible subject and its directly related scene surfaces"
+          }
+        ],
+        "affected_dimensions": [
+          "atmosphere"
+        ]
+      }
+    ]
+  },
+  "visual_semantics": [
+    {
+      "id": "pe_window_action",
+      "primary_visual_proposition": "창가 실내의 행동·노출·초점",
+      "component_groups": [
+        {
+          "id": "pr_observed_action_trace_component",
+          "visible_evidence": [
+            "the actor's specific hand or body action is visible; the action's target object is visible in the same frame; contact or the approach path is spatially possible; the action leaves a small visible result or immediate state change"
+          ]
+        },
+        {
+          "id": "pr_scene_owned_exposure_tradeoff_component",
+          "visible_evidence": [
+            "the indoor subject retains needed readable detail; window and room brightness differ consistently across space; only a small high-luminance window region loses detail; the interior retains tonal depth rather than uniform HDR brightness"
+          ]
+        },
+        {
+          "id": "pr_focus_plane_subject_falloff_component",
+          "visible_evidence": [
+            "the specified subject detail is the clearest plane; near and far objects soften according to their distances; subject edges transition naturally into the background; the important action target remains readable"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "pr_observed_action_trace_candidate",
+        "pr_scene_owned_exposure_tradeoff_candidate",
+        "pr_focus_plane_subject_falloff_candidate"
+      ],
+      "candidate_slots": {
+        "pr_observed_action_trace_candidate": "relational_action",
+        "pr_scene_owned_exposure_tradeoff_candidate": "lighting",
+        "pr_focus_plane_subject_falloff_candidate": "focus"
+      },
+      "hard_profile_ids": [
+        "pr_observed_action_trace",
+        "pr_scene_owned_exposure_tradeoff"
+      ],
+      "confusion_boundaries": [
+        "Adoption is optional and must respect every locked dimension.",
+        "A visual depiction does not verify its capture provenance."
+      ],
+      "source_keywords": [
+        "창가 실내의 행동·노출·초점",
+        "pr_observed_action_trace",
+        "pr_scene_owned_exposure_tradeoff",
+        "pr_focus_plane_subject_falloff"
+      ],
+      "relations": [
+        {
+          "id": "pe_window_action_joint",
+          "type": "co_realized_in_one_scene",
+          "subject": "all selected component owners",
+          "object": "one coherent photographic frame"
+        }
+      ]
+    },
+    {
+      "id": "pe_environmental_maker",
+      "primary_visual_proposition": "인물·작업장·의복·접점",
+      "component_groups": [
+        {
+          "id": "pr_environmental_portrait_subject_place_component",
+          "visible_evidence": [
+            "the adult subject remains identifiable at environmental portrait scale; the place has visible task-specific fixtures or objects; the subject's action or position connects to those fixtures; the frame retains enough surrounding space to explain the task"
+          ]
+        },
+        {
+          "id": "pr_fabric_tension_fold_attachment_component",
+          "visible_evidence": [
+            "the garment's fabric texture or sheen is distinguishable; folds originate at a seam joint or pulling contact; fold direction agrees with the body's action or pose; folds preserve the garment silhouette and closure"
+          ]
+        },
+        {
+          "id": "pr_object_contact_shadow_support_component",
+          "visible_evidence": [
+            "the object and its supporting surface are both visible; local darkening or compression touches the load-bearing point; shadow direction and softness agree with the scene light; object shape and support contact align without a gap"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "pr_environmental_portrait_subject_place_candidate",
+        "pr_fabric_tension_fold_attachment_candidate",
+        "pr_object_contact_shadow_support_candidate"
+      ],
+      "candidate_slots": {
+        "pr_environmental_portrait_subject_place_candidate": "composition",
+        "pr_fabric_tension_fold_attachment_candidate": "garment_detail",
+        "pr_object_contact_shadow_support_candidate": "contact_point"
+      },
+      "hard_profile_ids": [
+        "pr_environmental_portrait_subject_place",
+        "pr_fabric_tension_fold_attachment",
+        "pr_object_contact_shadow_support"
+      ],
+      "confusion_boundaries": [
+        "Adoption is optional and must respect every locked dimension.",
+        "A visual depiction does not verify its capture provenance."
+      ],
+      "source_keywords": [
+        "인물·작업장·의복·접점",
+        "pr_environmental_portrait_subject_place",
+        "pr_fabric_tension_fold_attachment",
+        "pr_object_contact_shadow_support"
+      ],
+      "relations": [
+        {
+          "id": "pe_environmental_maker_joint",
+          "type": "co_realized_in_one_scene",
+          "subject": "all selected component owners",
+          "object": "one coherent photographic frame"
+        }
+      ]
+    },
+    {
+      "id": "pe_rain_observation",
+      "primary_visual_proposition": "거리의 바람·반사·크롭·원경",
+      "component_groups": [
+        {
+          "id": "pr_hair_strand_owner_and_cause_component",
+          "visible_evidence": [
+            "flyaway strands connect to the hairline or tie point; local strands agree with the main hair direction; their movement agrees with the stated breeze dampness or action; hair and facial contours remain separate without penetration"
+          ]
+        },
+        {
+          "id": "pr_reflection_scene_binding_component",
+          "visible_evidence": [
+            "the reflecting surface has a visible position and angle; only a source object in the scene appears at the corresponding reflection position; reflection strength and distortion fit the surface and viewpoint; light and shadow geometry remain mutually consistent"
+          ]
+        },
+        {
+          "id": "pr_casual_crop_subject_legibility_component",
+          "visible_evidence": [
+            "one peripheral part meets or exits a plausible frame edge; the adult and task-bearing action remain legible; camera height and tilt match the observer's position; the cropped part continues in a physically possible direction"
+          ]
+        },
+        {
+          "id": "pr_atmospheric_distance_contrast_component",
+          "visible_evidence": [
+            "multiple near middle and far depth references are visible; far objects have lower contrast than near objects; the atmospheric effect agrees with weather and light; near material detail remains as readable as requested"
+          ]
+        }
+      ],
+      "candidate_ids": [
+        "pr_hair_strand_owner_and_cause_candidate",
+        "pr_reflection_scene_binding_candidate",
+        "pr_casual_crop_subject_legibility_candidate",
+        "pr_atmospheric_distance_contrast_candidate"
+      ],
+      "candidate_slots": {
+        "pr_hair_strand_owner_and_cause_candidate": "hair_style",
+        "pr_reflection_scene_binding_candidate": "reflection_logic",
+        "pr_casual_crop_subject_legibility_candidate": "platform_framing",
+        "pr_atmospheric_distance_contrast_candidate": "ambient_particle"
+      },
+      "hard_profile_ids": [
+        "pr_hair_strand_owner_and_cause",
+        "pr_casual_crop_subject_legibility",
+        "pr_atmospheric_distance_contrast"
+      ],
+      "confusion_boundaries": [
+        "Adoption is optional and must respect every locked dimension.",
+        "A visual depiction does not verify its capture provenance."
+      ],
+      "source_keywords": [
+        "거리의 바람·반사·크롭·원경",
+        "pr_hair_strand_owner_and_cause",
+        "pr_reflection_scene_binding",
+        "pr_casual_crop_subject_legibility",
+        "pr_atmospheric_distance_contrast"
+      ],
+      "relations": [
+        {
+          "id": "pe_rain_observation_joint",
+          "type": "co_realized_in_one_scene",
+          "subject": "all selected component owners",
+          "object": "one coherent photographic frame"
+        }
+      ]
+    }
+  ],
+  "maintenance_ref": {
+    "contract_version": "photo-extension-maintenance-ref/v1",
+    "record_id": "photo_prompt_photorealism_elements_extension",
+    "sha256": "c36ffe156f8dbfd556d9b35001e14c7d4723b950011f8e57f505c155c803519f"
+  }
+}

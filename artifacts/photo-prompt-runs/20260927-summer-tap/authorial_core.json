@@ -1,0 +1,259 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) 韩系不完美美女，从上往下看，抬头喝水龙头的水，ccd彩色柔焦，夏天，生命力 프롬프트 작성해줘.",
+  "interpreted_intent": "An overhead summer photograph of an adult woman with Korean-style natural, imperfect beauty raising her face to drink directly from a tap; color CCD softness and visible bodily vitality.",
+  "subject": "An adult woman with understated Korean-style beauty and natural facial imperfections.",
+  "setting": "An outdoor basin and running tap in a sunlit summer courtyard.",
+  "event": "She raises her face beneath the faucet and drinks the short falling stream directly.",
+  "visual_priorities": [
+    "The upturned face, faucet outlet, and stream entering her lips remain readable together from above.",
+    "Natural facial asymmetry and skin texture express imperfect beauty.",
+    "Flushed cheeks, an eager gulp, and scattered water droplets convey summer vitality.",
+    "A color CCD compact-camera aesthetic gives the scene gentle softness and luminous water."
+  ],
+  "baseline_prompt_en": "A candid summer photograph of an adult woman with understated Korean-style beauty drinking directly from the running tap in a sunlit courtyard. Her face has natural facial asymmetry, faint blemishes, and visible skin texture; loosely tied dark hair leaves damp wisps along her cheeks. Wearing a simple pale cotton T-shirt, she crouches beside a shallow outdoor basin, heels settled on the ground and one palm resting on its rim. With her head tilted back and chin raised, she positions her open mouth just below the downward-facing faucet outlet. A narrow stream falls a few centimeters from the spout and enters her parted lips; stray droplets bead on her chin and splash into the basin. The projecting faucet stays beside her cheek, leaving her upturned face and the stream-to-mouth contact visible. Photograph from a high viewpoint looking downward, slightly in front of her, catching the lifted face, the faucet, and the falling water together. Half-closed eyes, flushed cheeks, and her eager gulp convey lively relief and unguarded summer vitality. Midsummer daylight glints across wet concrete and leafy green edges. An early-2000s CCD compact-camera color photograph with gentle soft focus, luminous water highlights, warm skin tones, fresh greens, faint digital grain, and a spontaneous personal-snapshot feeling.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "韩系不完美美女",
+      "source_text": "韩系不完美美女",
+      "basis": "agent_general_knowledge",
+      "resolution": "Korean-style feminine beauty expressed with ordinary facial asymmetry and visible skin texture.",
+      "sources": []
+    },
+    {
+      "term": "从上往下看",
+      "source_text": "从上往下看",
+      "basis": "request_context",
+      "resolution": "The camera looks downward from above the subject.",
+      "sources": []
+    },
+    {
+      "term": "抬头喝水龙头的水",
+      "source_text": "抬头喝水龙头的水",
+      "basis": "request_context",
+      "resolution": "The woman tilts her face upward and drinks flowing tap water directly.",
+      "sources": []
+    },
+    {
+      "term": "ccd彩色柔焦",
+      "source_text": "ccd彩色柔焦",
+      "basis": "agent_general_knowledge",
+      "resolution": "Color CCD compact-camera aesthetic with gentle soft focus.",
+      "sources": []
+    },
+    {
+      "term": "夏天，生命力",
+      "source_text": "夏天，生命力",
+      "basis": "request_context",
+      "resolution": "A summer scene whose active drinking moment, flushed face, and water droplets convey vitality.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "生命力",
+        "dimension": "concept",
+        "prompt_evidence": "unguarded summer vitality"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "韩系不完美美女",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman with understated Korean-style beauty"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "抬头喝水龙头的水",
+        "dimension": "event",
+        "prompt_evidence": "A narrow stream falls a few centimeters from the spout and enters her parted lips"
+      },
+      {
+        "anchor_id": "imperfect_appearance",
+        "source_text": "不完美美女",
+        "dimension": "appearance",
+        "prompt_evidence": "natural facial asymmetry, faint blemishes, and visible skin texture"
+      },
+      {
+        "anchor_id": "raised_head",
+        "source_text": "抬头",
+        "dimension": "pose",
+        "prompt_evidence": "her head tilted back and chin raised"
+      },
+      {
+        "anchor_id": "direct_drinking",
+        "source_text": "喝水龙头的水",
+        "dimension": "action",
+        "prompt_evidence": "drinking directly from the running tap"
+      },
+      {
+        "anchor_id": "overhead_view",
+        "source_text": "从上往下看",
+        "dimension": "framing",
+        "prompt_evidence": "a high viewpoint looking downward"
+      },
+      {
+        "anchor_id": "ccd_capture",
+        "source_text": "ccd",
+        "dimension": "camera",
+        "prompt_evidence": "CCD compact-camera"
+      },
+      {
+        "anchor_id": "soft_focus",
+        "source_text": "柔焦",
+        "dimension": "style",
+        "prompt_evidence": "gentle soft focus"
+      },
+      {
+        "anchor_id": "color_image",
+        "source_text": "彩色",
+        "dimension": "color",
+        "prompt_evidence": "color photograph"
+      },
+      {
+        "anchor_id": "summer",
+        "source_text": "夏天",
+        "dimension": "timing",
+        "prompt_evidence": "Midsummer daylight"
+      },
+      {
+        "anchor_id": "vital_atmosphere",
+        "source_text": "生命力",
+        "dimension": "atmosphere",
+        "prompt_evidence": "lively relief"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "appearance",
+      "pose",
+      "action",
+      "framing",
+      "camera",
+      "style",
+      "color",
+      "timing",
+      "atmosphere"
+    ],
+    "open_dimensions": [
+      "setting",
+      "composition",
+      "lighting",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "tap_drinking",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "action",
+        "pose",
+        "event"
+      ],
+      "axes": {
+        "actor": "adult woman",
+        "interaction": "direct drinking of flowing tap water",
+        "head_orientation": "tilted back with chin raised",
+        "contact": "falling stream reaches open mouth"
+      },
+      "evidence": {
+        "interaction_phrase": "drinking directly from the running tap",
+        "pose_phrase": "her head tilted back and chin raised",
+        "contact_phrase": "A narrow stream falls a few centimeters from the spout and enters her parted lips"
+      }
+    },
+    {
+      "assertion_id": "natural_imperfect_beauty",
+      "dimension": "appearance",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "beauty_style": "understated Korean-style beauty",
+        "surface_detail": [
+          "facial asymmetry",
+          "faint blemishes",
+          "visible skin texture"
+        ]
+      },
+      "evidence": {
+        "beauty_phrase": "understated Korean-style beauty",
+        "imperfection_phrase": "natural facial asymmetry, faint blemishes, and visible skin texture"
+      }
+    },
+    {
+      "assertion_id": "summer_vitality",
+      "dimension": "atmosphere",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept",
+        "atmosphere",
+        "timing"
+      ],
+      "axes": {
+        "season": "summer",
+        "perceptual_meaning": "vitality expressed through an eager drink and relief in heat"
+      },
+      "evidence": {
+        "response_phrase": "Half-closed eyes, flushed cheeks, and her eager gulp convey lively relief and unguarded summer vitality",
+        "season_phrase": "Midsummer daylight"
+      }
+    },
+    {
+      "assertion_id": "overhead_ccd",
+      "dimension": "style",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "framing",
+        "camera",
+        "style",
+        "color"
+      ],
+      "axes": {
+        "viewpoint": "above looking downward",
+        "medium_aesthetic": "CCD compact-camera color",
+        "focus": "gentle soft focus"
+      },
+      "evidence": {
+        "viewpoint_phrase": "a high viewpoint looking downward",
+        "capture_phrase": "An early-2000s CCD compact-camera color photograph with gentle soft focus"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "portrait",
+    "family": "candid summer CCD snapshot",
+    "evidence": [
+      "gentle soft focus",
+      "luminous water highlights",
+      "warm skin tones"
+    ]
+  },
+  "variation_key": "summer-tap-overhead-01"
+}

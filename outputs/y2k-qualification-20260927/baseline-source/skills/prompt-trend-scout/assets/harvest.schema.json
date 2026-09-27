@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prompt Trend Scout HarvestRecord",
+  "type": "object",
+  "required": ["id", "collected_at", "adapter", "collection_method", "source_url", "source", "raw_text", "media", "license_signals", "flags"],
+  "properties": {
+    "id": {"type": "string"},
+    "collected_at": {"type": "string"},
+    "adapter": {"type": "string"},
+    "collection_method": {"enum": ["official_api", "allowed_feed", "local_inbox"]},
+    "source_url": {"type": "string"},
+    "source": {"type": "object"},
+    "raw_text": {"type": "string"},
+    "media": {"type": "array"},
+    "license_signals": {"type": "object"},
+    "flags": {"type": "array", "items": {"type": "string"}}
+  }
+}

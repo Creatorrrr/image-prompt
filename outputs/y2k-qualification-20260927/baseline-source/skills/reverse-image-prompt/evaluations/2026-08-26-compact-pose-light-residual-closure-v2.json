@@ -1,0 +1,295 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "58c139282f24d686d058ecd941afcdaaba538e9c",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Improve compact reverse-image prompting so a concise posture or lighting overview can retain source-supported P0/P1 spatial and Light/Form residual relations, and so a material cross-lane handoff cannot disappear when its causal lane was not routed."
+  },
+  "evidence": [
+    {
+      "id": "e-user-judgment",
+      "kind": "user-judgment",
+      "claim": "The user judged the delivered result as needing more precise posture, lighting, and shading control and explicitly requested an improvement that adds detail beneath the abstract overview.",
+      "artifact": "Conversation feedback on 2026-08-26"
+    },
+    {
+      "id": "e-baseline-source-render",
+      "kind": "render-observation",
+      "claim": "The motivating source has an off-axis, depth-ordered low-view spatial read and stronger regional face, neck, shoulder, garment, and mural separation than the delivered render, which appears more centered, symmetric, and tonally even.",
+      "artifact": "source sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9 frame=969x1280; delivered render sha256=9458ba6ee75826542259a71211b7efa66748de25d923c3189305022b22c6066d frame=1087x1447"
+    },
+    {
+      "id": "e-baseline-prompt-route",
+      "kind": "prompt-inspection",
+      "claim": "The motivating compact route omitted the color/light lane even though the medium report made capture-light-contrast-topology P1 and handed it to light/color owners; the spatial report compressed the pose as near-frontal and grouped viewpoint-held orientation relations as non-material.",
+      "artifact": "/Users/chasoik/.codex/sessions/2026/08/26/rollout-2026-08-26T15-45-18-01a03cd0-e4d3-7021-834d-8438528ed036.jsonl; source-bound prompt and compact lane reports"
+    },
+    {
+      "id": "e-diagnostic-measurement",
+      "kind": "measurement",
+      "claim": "Unregistered diagnostic samples found substantially different source/render regional separations, supporting the need to keep target/reference Light/Form relations distinct; the values are not accepted pixel-fidelity thresholds because regions were not registered and ICC handling was unavailable.",
+      "artifact": "diagnostic medians from the motivating comparison: face-neck displayed-L gap source about 12.3 versus render about 40.6; exposed shoulder about 81.0 versus 60.8; garment p90 about 25.5 versus 10.3; mural pink field about 36.0 versus 65.9"
+    },
+    {
+      "id": "e-focused-package",
+      "kind": "package-check",
+      "claim": "Source-neutral compact-v2 fixtures pass for sufficient summaries, lossy residual requirements, overactuation rejection, schema drift, cross-lane closure, routed Light/Form ownership, and absent-lane route-gap behavior. The full package suite, module/lane budget check, generated-file check, iteration-record validation, and whitespace check also pass.",
+      "artifact": "focused compact and route tests => 33 passed; full reverse-image-prompt suite => 247 passed; validate_modules.py => 37 modules, 6 lanes, 16589 runtime words, 3783 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => pass; validate_iteration_record.py => pass; git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "The compact path keeps one source-relative macro posture or lighting read first, adds only independently drifting P0/P1 relations that the summary loses, and refuses integration when a required causal owner lane or module is absent.",
+    "user_appeal": "Retain the source's particular posture, lighting direction across form, and shading distribution instead of producing a more centered and evenly lit generic result.",
+    "invariants": [
+      {
+        "id": "inv-spatial-summary-residual",
+        "statement": "A P0/P1 macro spatial result is checked with viewpoint and crop held fixed, and only source-visible relations that remain at risk survive as residual controls.",
+        "evidence_ids": [
+          "e-user-judgment",
+          "e-baseline-source-render",
+          "e-baseline-prompt-route",
+          "e-focused-package"
+        ],
+        "causal_controls": [
+          "macro-summary representation",
+          "summary adequacy verdict",
+          "source-relative at-risk relations"
+        ]
+      },
+      {
+        "id": "inv-light-form-relations",
+        "statement": "A compact lighting summary cannot replace material target/reference region, bright-plane coverage, local form contrast, gradient extent, shadow topology, material response, background spill, or pose dependency relations that drift independently.",
+        "evidence_ids": [
+          "e-baseline-source-render",
+          "e-diagnostic-measurement",
+          "e-focused-package"
+        ],
+        "causal_controls": [
+          "regional visible-result ownership",
+          "pose-bound Light/Form dependency",
+          "summary-before-residual ordering"
+        ]
+      },
+      {
+        "id": "inv-handoff-closure",
+        "statement": "Every route-required P0/P1 cross-lane residual names a present target lane and a module assigned to that lane, otherwise validation reports route-gap.",
+        "evidence_ids": [
+          "e-baseline-prompt-route",
+          "e-focused-package"
+        ],
+        "causal_controls": [
+          "structured handoff source ids",
+          "target lane closure",
+          "required module closure",
+          "bounded reroute"
+        ]
+      },
+      {
+        "id": "inv-no-case-default",
+        "statement": "Runtime rules contain no motivating angle, side, anatomy, garment, color, regional numeric threshold, named lighting preset, or generator-specific response default.",
+        "evidence_ids": [
+          "e-focused-package"
+        ],
+        "causal_controls": [
+          "source-relative relation ids",
+          "generic causal axes",
+          "fixture-only motivating hashes and measurements"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "actual source pose and viewpoint",
+      "whether a macro summary is sufficient, lossy, or uncertain",
+      "which regional Light/Form relations are material",
+      "human or non-human subject type",
+      "literal source-supported wording and downstream render variation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-spatial-normalization",
+      "scale": "global",
+      "axis": "viewpoint-held posture continuity",
+      "source_state": "The source read depends on a low viewpoint plus jointly material off-axis and depth-order relations.",
+      "render_state": "The delivered result preserves low viewpoint but normalizes the subject toward a centered, symmetric, near-frontal arrangement.",
+      "evidence_ids": [
+        "e-baseline-source-render",
+        "e-baseline-prompt-route"
+      ]
+    },
+    {
+      "id": "m-light-form-compression",
+      "scale": "regional",
+      "axis": "regional illumination and shading topology",
+      "source_state": "Major visible regions carry distinct light-to-form, shadow, material-response, and background relations.",
+      "render_state": "The delivered result shifts those regional relations while the prompt relies primarily on a broad lighting summary and a generic under-form shadow cue.",
+      "evidence_ids": [
+        "e-baseline-source-render",
+        "e-baseline-prompt-route",
+        "e-diagnostic-measurement"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-compact-summary-loss",
+      "stage": "representation",
+      "statement": "A compact posture or lighting label is lossy unless its coverage of the source-visible relations that jointly create the macro read is explicitly checked.",
+      "evidence_ids": [
+        "e-baseline-source-render",
+        "e-baseline-prompt-route"
+      ],
+      "falsifier": "Unrelated compact cases preserve all viewer-material spatial and Light/Form relations from macro-only findings without a loss audit, while loss-audited cases add no useful distinction."
+    },
+    {
+      "id": "h-route-handoff-gap",
+      "stage": "observation",
+      "statement": "A material effect discovered by one lane can disappear before integration when its declared causal owner lane or module is absent and handoffs have no deterministic closure check.",
+      "evidence_ids": [
+        "e-baseline-prompt-route",
+        "e-focused-package"
+      ],
+      "falsifier": "Held-out routes with absent P0/P1 owner lanes reliably preserve and causally own those effects without structured closure or rerouting."
+    },
+    {
+      "id": "h-causal-prompt-order",
+      "stage": "prompt-interaction",
+      "statement": "Placing camera and macro pose before at-risk spatial residuals, then pose-bound Light/Form before surface and capture, reduces later prose that neutralizes the intended spatial or shading relation.",
+      "evidence_ids": [
+        "e-baseline-prompt-route"
+      ],
+      "falsifier": "Held-out prompt comparisons show no reduction in pose or Light/Form contradiction, or show that the causal order consistently weakens the primary proposition."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "policy",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Use compact-v2 findings with atomic or macro-summary representation. A macro declares sufficient, lossy, or uncertain adequacy; sufficient emits no residuals, while lossy or uncertain emits only source-supported P0/P1 at-risk relations. Close every cross-lane causal residual against a routed target lane and assigned module, otherwise return route-gap. Keep pose-bound Light/Form after its owning spatial relation and before surface or capture effects.",
+    "generalization_basis": "The rule is parameterized by source-owned region and relation ids, causal axes, summary coverage, route membership, and module assignment. It selects no preferred pose, light, shadow, subject, wording, or numeric target, and fixtures exercise both under- and over-actuation plus present and absent causal owners.",
+    "hypothesis_ids": [
+      "h-compact-summary-loss",
+      "h-route-handoff-gap",
+      "h-causal-prompt-order"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.global-composition.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/lanes/lane.color-light-material.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.information-layout.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/route_resolver.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tools/compact_reports.py",
+      "skills/reverse-image-prompt/tests/test_route_resolver.py",
+      "skills/reverse-image-prompt/tests/test_compact_reports.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-26-compact-pose-light-residual-closure-v2.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-focused-package"
+      ]
+    },
+    "prompt": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-summary-sufficient",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "sufficient macro summary",
+          "zero residual overactuation"
+        ],
+        "evidence_ids": [
+          "e-focused-package"
+        ]
+      },
+      {
+        "id": "heldout-summary-lossy",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "lossy macro summary",
+          "required at-risk residual"
+        ],
+        "evidence_ids": [
+          "e-focused-package"
+        ]
+      },
+      {
+        "id": "heldout-route-closure",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "present Light/Form lane and module",
+          "absent owner route-gap",
+          "unclosed cross-lane residual"
+        ],
+        "evidence_ids": [
+          "e-focused-package"
+        ]
+      },
+      {
+        "id": "motivating-source-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": [
+          "low-view posture residual",
+          "regional light and shading separation",
+          "compact route handoff"
+        ],
+        "evidence_ids": [
+          "e-user-judgment",
+          "e-baseline-source-render",
+          "e-baseline-prompt-route"
+        ]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The compact contract now distinguishes atomic findings from macro summaries, rejects both residual omission and residual overactuation, and treats an absent P0/P1 causal owner as a bounded route-gap. The change is implemented and source-neutral structural fixtures pass. No independent post-change prompt extraction, new render, registered pixel comparison, or post-change user review was performed, so prompt behavior, render fidelity, and user preference remain unscored.",
+    "evidence_ids": [
+      "e-baseline-prompt-route",
+      "e-focused-package"
+    ]
+  }
+}

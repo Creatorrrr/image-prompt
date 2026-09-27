@@ -1,0 +1,74 @@
+{
+  "reviewer": "root",
+  "independence": "coordinator direct image review after receiving the agent verdict; not a blind review",
+  "method": "exact saved image viewed at original detail; fixed criteria unchanged",
+  "image_path": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/arm-a/generated_image.png",
+  "image_sha256": "ef00197b1e01d800b5ba17932a054d873d1bdb7e0c81872d26d6a2c9532fc1ae",
+  "gates_sha256": "4995bd34c9ca56964194b877feea32c6c988b9376ea97024666eda50f740c023",
+  "policy": "partial_is_fail; insufficient visibility or resolution is unscored",
+  "gates": [
+    {
+      "gate_id": "a_y2k_materials",
+      "status": "pass",
+      "observation": "The cropped silver jacket has broad metallic specular folds; both sleeves are translucent with lavender/rainbow PVC reflections and the upper-arm skin is visible through the clear panels."
+    },
+    {
+      "gate_id": "a_y2k_silhouette",
+      "status": "pass",
+      "observation": "The fitted jacket ends above the waist; silver cargo trousers sit low on the hips with large flap pockets; both thick-soled platform boots are completely visible."
+    },
+    {
+      "gate_id": "a_y2k_accessories",
+      "status": "unscored",
+      "observation": "Violet-tinted lenses and polished oval buckle are visible. The perched oblique glasses do not provide sufficiently clear evidence of wraparound lens curvature; belt transparency also cannot be established confidently against the silver trouser surface. Full accessories requirement is unscored."
+    },
+    {
+      "gate_id": "a_y2k_on_subject_cluster",
+      "status": "unscored",
+      "observation": "Silver/PVC materials, cropped top, low cargo waistband/pockets and platform boots coexist on the subject. This gate explicitly depends on the accessory gate; unresolved wraparound curvature and belt transparency prevent an all-component pass."
+    },
+    {
+      "gate_id": "a_reference_visible_appearance",
+      "status": "pass",
+      "observation": "The face is unobscured and visibly has dark brown eyes, a softly tapered facial outline, a straight slender nose, and rounded pale-pink lips. This is an appearance comparison, not an identity judgment."
+    },
+    {
+      "gate_id": "a_physical_actuation",
+      "status": "pass",
+      "observation": "The arm from the subject's right shoulder crosses forward to a grip on the projector side wheel; the left arm extends down to a separate stationary bench edge. Both arm chains and contact points are visible."
+    },
+    {
+      "gate_id": "a_projector_consequence",
+      "status": "pass",
+      "observation": "Two distinct black perforated spherical projection heads are connected by a heavy crossbar and pedestal; the side handwheel is mounted into the same structure. A dense field of projected star points covers the curved dome wall behind it."
+    },
+    {
+      "gate_id": "a_embodied_scene_legibility",
+      "status": "unscored",
+      "observation": "Both arms and contacts, face, belt, boots and supported standing body are readable. The right projector sphere crosses the top/right image boundary. Complete equipment visibility is unscored."
+    }
+  ],
+  "counts": {
+    "pass": 5,
+    "fail": 0,
+    "unscored": 3
+  },
+  "overall": "not_qualified_required_gate_unscored",
+  "differences_from_agent": [
+    {
+      "gate_id": "a_y2k_accessories",
+      "agent_status": "pass",
+      "root_status": "unscored"
+    },
+    {
+      "gate_id": "a_y2k_on_subject_cluster",
+      "agent_status": "pass",
+      "root_status": "unscored"
+    }
+  ],
+  "limits": [
+    "No inferred identity, actual age or historical prevalence.",
+    "No before-after control and no claim of data-caused improvement.",
+    "Original agent verdict is retained; no prompt, gate, pack or render was changed."
+  ]
+}

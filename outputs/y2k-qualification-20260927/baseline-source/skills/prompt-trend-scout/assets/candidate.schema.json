@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prompt Trend Scout ReflectionCandidate",
+  "type": "object",
+  "required": ["candidate_id", "kind", "target_asset", "proposed", "abstracted_from", "frequency", "novelty", "overlap_with_existing", "confidence", "rationale", "risk_flags", "verbatim_similarity", "recommendation"],
+  "properties": {
+    "candidate_id": {"type": "string"},
+    "kind": {"enum": ["tag", "facet_value", "recipe", "drift_gate", "coherence_rule"]},
+    "target_asset": {"type": "string"},
+    "proposed": {"type": "object"},
+    "abstracted_from": {"type": "array", "items": {"type": "string"}},
+    "frequency": {"type": "integer"},
+    "novelty": {"enum": ["new", "reinforce", "conflict"]},
+    "overlap_with_existing": {"type": "array"},
+    "confidence": {"type": "number"},
+    "rationale": {"type": "string"},
+    "risk_flags": {"type": "array", "items": {"type": "string"}},
+    "verbatim_similarity": {"type": "number"},
+    "recommendation": {"enum": ["adopt", "trial", "reject", "needs_human"]}
+  }
+}

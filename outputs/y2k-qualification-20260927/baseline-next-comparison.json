@@ -1,0 +1,38 @@
+{
+  "tests_run": 3,
+  "failed_test_ids": [
+    "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-a-energy')",
+    "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-b-working-income')",
+    "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-c-transport')"
+  ],
+  "error_test_ids": [
+    "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels",
+    "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable"
+  ],
+  "failure_evidence": [
+    {
+      "id": "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-a-energy')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_poverty_visual_semantics.py\", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed\n    self.assertTrue(result_path.is_file())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+    },
+    {
+      "id": "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-b-working-income')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_poverty_visual_semantics.py\", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed\n    self.assertTrue(result_path.is_file())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+    },
+    {
+      "id": "tests.test_photo_poverty_visual_semantics.PhotoPovertyVisualSemanticsTests.test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed (arm_id='arm-c-transport')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_poverty_visual_semantics.py\", line 385, in test_three_arm_pixel_cases_are_hash_bound_independent_and_fail_closed\n    self.assertTrue(result_path.is_file())\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+    }
+  ],
+  "error_evidence": [
+    {
+      "id": "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneDataContractTests.test_existing_render_manifests_keep_historical_failure_labels",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_subculture_illustration_universal_scene_v3.py\", line 1712, in test_existing_render_manifests_keep_historical_failure_labels\n    result = validate_all(str(ASSET_ROOT), verify_local_images=False)\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 11465, in validate_all\n    photo_regression = validate_photo_regression_baseline(root)\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6387, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    },
+    {
+      "id": "tests.test_subculture_illustration_universal_scene_v3.UniversalSceneRuntimeContractTests.test_v1_v2_exact_replay_and_photo_baseline_remain_immutable",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_subculture_illustration_universal_scene_v3.py\", line 4697, in test_v1_v2_exact_replay_and_photo_baseline_remain_immutable\n    photo = validate_photo_regression_baseline(ASSET_ROOT)\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 6387, in validate_photo_regression_baseline\n    _require(\n    ~~~~~~~~^\n        digest == baseline.get(\"sha256\"),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        \"current photo baseline candidate-pack bytes drift\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/subculture-illustration-image-generator/scripts/validate_illustration_assets.py\", line 1280, in _require\n    raise ValidationFailure(message)\nvalidate_illustration_assets.ValidationFailure: current photo baseline candidate-pack bytes drift\n"
+    }
+  ],
+  "source_root": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source",
+  "source": "clean HEAD generator/tags and saved original indexes; subprocess paths also isolated"
+}
