@@ -1,0 +1,244 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "d2693ea345f983379c21d5303d4c24180f5a85b9+pre-existing-spatial-working-tree-sha256-5673b1b4260c39669a8c73cd4f5711e5999c714d80f247c105c08c5106ef2f2d",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Prevent one-session reverse analysis from silently losing material human appearance, skin, lighting, and portrait-aesthetic evidence by routing independent topic lanes, enforcing source-relative appearance decisions, preserving primary roles, composing stable partial surface axes, and scoping displayed-tone and broad prior controls without case defaults."
+  },
+  "evidence": [
+    {
+      "id": "e-user-failure",
+      "kind": "user-judgment",
+      "claim": "The user judges the latest reconstruction materially different in broad population appearance, nationality or regional reading, skin color, and aesthetic, and suspects vague human analysis plus a single serial context caused omissions.",
+      "artifact": "Conversation feedback on 2026-08-24; perceptual comparison and workflow hypothesis, not a factual classification of the depicted person."
+    },
+    {
+      "id": "e-source-render",
+      "kind": "render-observation",
+      "claim": "The motivating source and delivered render preserve much of the pose and composition but visibly diverge in the person's broad reading and in regional value/light response; these images are regression evidence only.",
+      "artifact": "source=/tmp/codex-remote-attachments/01a02eba-abf4-7652-a65e-1b7ad496ca98/A06837B2-31B8-4FEC-858C-FB160910782D/1-사진-1.jpg sha256=5cd468f3320deb985ea8670690ac3bfa292070752cdaeec7f5bf306fcde91497; render=/tmp/codex-remote-attachments/01a02eba-abf4-7652-a65e-1b7ad496ca98/C6EF8CB4-2C86-4E32-8A56-049BC68D7089/1-사진-1.jpg sha256=6699fd3c5873647c7663a57a37fa28faac4c400512b13820f4807ea9efd29738"
+    },
+    {
+      "id": "e-baseline-plan",
+      "kind": "prompt-inspection",
+      "claim": "The exact prior plan marked a readable human person prior omit with high confidence because local geometry was said sufficient, but carried no drift-risk, geometry-sufficiency link, omission counterfactual, frame-versus-fidelity salience, or identity-context split. Its controlled skin descriptor discarded stable value, chroma, and finish because undertone was unresolved.",
+      "artifact": "generated_images/reverse-image-prompt-improved-isolated-20260824T012020+0900/plan.json sha256=53a5a112831b3a791aa777d1c9bf84388a39ac4496e4f7725c2938438e71117c"
+    },
+    {
+      "id": "e-baseline-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The exact prior prompt emitted generic fine-art portrait shorthand and an unscoped deep shadow floor while the compact broad person approximation was absent; stable skin axes appeared as loose prose rather than a validated partial wrapper.",
+      "artifact": "generated_images/reverse-image-prompt-improved-isolated-20260824T012020+0900/prompt.txt sha256=b4253226ad3ecf74165bb28a8f6ac95463b17c49e913045bc6d0bc4905016487"
+    },
+    {
+      "id": "e-baseline-package",
+      "kind": "package-check",
+      "claim": "The inherited spatial-orientation working tree passed 172 tests and module validation at 37 modules, 16940 runtime words, and the exact 3800-word Tier-0 cap, but had no lane routing, bundle validator, appearance-v2 omission gate, role-continuity check, partial descriptor, or displayed-tone scope gate.",
+      "artifact": "HEAD d2693ea345f983379c21d5303d4c24180f5a85b9 plus tracked patch sha256=5673b1b4260c39669a8c73cd4f5711e5999c714d80f247c105c08c5106ef2f2d; turn-start validation output"
+    },
+    {
+      "id": "e-candidate-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Held-out structural fixtures now cover deterministic lane routing and fingerprints, missing reports/topics/modules, independence disclosure, hash-bound finding-to-plan integration, primary-role demotion, conflict and critic gates, human prior omission counterfactuals, source-visible identity rejection, external identity provenance, face/body form ownership, complete/partial/bounded/inconclusive surface descriptors, neutral undertone boundaries, prior-cluster calibration, and non-trivial regional tone anchors.",
+      "artifact": "skills/reverse-image-prompt/tests/test_analysis_bundle.py, test_route_resolver.py, test_salience_plan.py, test_color_language.py, and test_compiled_profiles.py; 206-test candidate discovery"
+    },
+    {
+      "id": "e-candidate-package",
+      "kind": "package-check",
+      "claim": "The candidate passes all 206 tests, skill quick validation, generated manifest/registry checks, compiled-profile regeneration checks, whitespace checks, and module validation with six analysis lanes, 37 modules, 16900 runtime words, and the unchanged 3800-word Tier-0 cap.",
+      "artifact": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; tools/validate_modules.py; tools/gen_manifest.py --check; skill-creator quick_validate.py; git diff --check"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every material analysis topic reaches an isolated lane report and explicit integration disposition; readable fidelity-material human appearance cannot be weakly omitted; stable surface axes survive uncertainty in another axis; primary roles, broad prior decomposition, and regional tone scope survive into owned controls.",
+    "user_appeal": "Reconstruct the same broad person reading, skin appearance, lighting, and portrait sensibility as the source without asserting unsupported factual identity or installing one image's labels as defaults.",
+    "invariants": [
+      {
+        "id": "inv-analysis-coverage",
+        "statement": "Routed domain topics are analyzed in separate bounded contexts, integrated by semantic ownership, and independently checked for route gaps, merge loss, unsupported additions, role drift, and scope leakage.",
+        "evidence_ids": ["e-user-failure", "e-baseline-package"],
+        "causal_controls": ["deterministic lane route", "versioned lane report envelope", "integration disposition", "independent coverage critic"]
+      },
+      {
+        "id": "inv-human-appearance",
+        "statement": "Human appearance separates frame prominence, fidelity salience, trusted identity context, non-identifying generation approximation, model-default drift risk, local form geometry, and omission counterfactual.",
+        "evidence_ids": ["e-user-failure", "e-baseline-plan"],
+        "causal_controls": ["human-appearance/v2", "person-prior omission gate", "form geometry control linkage", "primary role continuity"]
+      },
+      {
+        "id": "inv-surface-light-style",
+        "statement": "Stable surface axes may emit without inventing unresolved axes, displayed tone remains region-scoped with protected regions, and broad aesthetic shorthand cannot add uncalibrated content beyond literal causal controls.",
+        "evidence_ids": ["e-source-render", "e-baseline-plan", "e-baseline-prompt"],
+        "causal_controls": ["partial axis descriptor", "tone scope and prompt anchor", "prior-cluster provenance and decomposition"]
+      },
+      {
+        "id": "inv-no-case-default",
+        "statement": "No motivating nationality, race, skin value, undertone, pose, garment, lighting direction, portrait label, region coordinate, or desired wording becomes a runtime default.",
+        "evidence_ids": ["e-user-failure", "e-candidate-prompt-tests"],
+        "causal_controls": ["source-relative schemas", "open candidate provenance", "causal holdouts across human and non-human routes"]
+      }
+    ],
+    "flexible_dimensions": [
+      "the number of active lanes selected from current facets",
+      "current-source person approximation or explicit uncertainty",
+      "which surface axes are stable, bounded, or unresolved",
+      "global, region, or declared region-group tone scope",
+      "source-supported aesthetic shorthand or literal controls only"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-serial-coverage",
+      "scale": "global",
+      "axis": "analysis coverage",
+      "source_state": "Appearance, spatial, color/light/material, capture aesthetic, and global composition are independently material topics whose omissions need explicit evidence.",
+      "render_state": "One session previously performed route, all domain analysis, merge, and prompt drafting serially with no topic-disposition artifacts or independent coverage critic.",
+      "evidence_ids": ["e-user-failure", "e-baseline-package"]
+    },
+    {
+      "id": "m-appearance-omit",
+      "scale": "regional",
+      "axis": "human appearance",
+      "source_state": "The readable secondary person can be fidelity-primary and vulnerable to a different model-default broad reading.",
+      "render_state": "A free-text high-confidence omit passed without emitted geometry sufficiency, drift-risk assessment, or omission counterfactual.",
+      "evidence_ids": ["e-user-failure", "e-baseline-plan", "e-source-render"]
+    },
+    {
+      "id": "m-partial-surface-loss",
+      "scale": "local",
+      "axis": "skin surface language",
+      "source_state": "Stable value, chroma, or finish evidence remains useful even when a different axis is unresolved.",
+      "render_state": "One low-confidence undertone forced the whole controlled descriptor to inconclusive, leaving stable axes outside the intended wrapper contract.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-prompt"]
+    },
+    {
+      "id": "m-style-tone-scope",
+      "scale": "global",
+      "axis": "aesthetic and displayed tone",
+      "source_state": "Broad production aesthetics must decompose into visible controls, while darkness applies to evidenced regions and protects bright planes.",
+      "render_state": "An uncalibrated fine-art shorthand and unscoped deep shadow floor could influence identity-adjacent appearance and overall exposure without structured ownership.",
+      "evidence_ids": ["e-baseline-prompt", "e-source-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-serial-context-loss",
+      "stage": "representation",
+      "statement": "A single context that performs every routed analysis and prompt drafting can skip or demote material topics without leaving a machine-checkable coverage gap.",
+      "evidence_ids": ["e-user-failure", "e-baseline-package"],
+      "falsifier": "The baseline produces per-lane topic dispositions, exact module/version coverage, integration records, and an independent critic result before prompt freeze."
+    },
+    {
+      "id": "h-weak-appearance-omit",
+      "stage": "prompt-priority",
+      "statement": "A free-text omit reason lets a readable fidelity-primary person's broad generation prior disappear even when local geometry is insufficient or model-default drift risk is high.",
+      "evidence_ids": ["e-baseline-plan", "e-source-render"],
+      "falsifier": "The baseline rejects omit unless it links sufficient emitted form geometry, low drift risk, and a preserved omission counterfactual while keeping unsupported high-risk cases uncertain."
+    },
+    {
+      "id": "h-all-or-nothing-surface",
+      "stage": "representation",
+      "statement": "Treating one unresolved surface axis as failure of the entire composite suppresses stable source evidence and weakens generator intent.",
+      "evidence_ids": ["e-baseline-plan", "e-baseline-prompt"],
+      "falsifier": "The baseline emits a canonical wrapper from stable axes while omitting unresolved or boundary-only axes without invention."
+    },
+    {
+      "id": "h-role-style-scope",
+      "stage": "prompt-interaction",
+      "statement": "Primary-to-supporting demotion, uncalibrated broad aesthetic shorthand, and regionless displayed-tone language can jointly overpower source-specific person and skin evidence despite individually plausible clauses.",
+      "evidence_ids": ["e-user-failure", "e-baseline-prompt"],
+      "falsifier": "The baseline enforces invariant-to-claim role equality, broad prior provenance/decomposition/calibration, and exact regional tone anchors with protected regions."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Route selected modules into a small set of clean-context analysis lanes; bind retained findings to a canonical-hash integrated plan; validate lane reports, integration, adjudication, and an independent critic in every execution mode before prompt freeze. For humans, use human-appearance/v2 with independent frame/fidelity roles, externally sourced factual identity context, and evidence-bearing prior omission. Preserve invariant roles across face and body form, serialize only stable surface axes, keep neutral-boundary undertones diagnostic, require calibrated decomposition for broad aesthetic shorthand, and bind displayed tone to declared affected/protected regions and exact non-trivial anchors.",
+    "generalization_basis": "The intervention operates on route selectors, source hashes, topic dispositions, semantic owner keys, evidence/confidence, role, causal origin, drift risk, geometry links, counterfactuals, classified axes, calibration provenance, and region scope. Lane files contain no domain target values and existing modules remain the single source of visual-analysis rules. Holdouts include generic, human, product, screenshot/information, color/light, and non-human surface paths.",
+    "hypothesis_ids": ["h-serial-context-loss", "h-weak-appearance-omit", "h-all-or-nothing-surface", "h-role-style-scope"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.global-composition.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/lanes/lane.color-light-material.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.information-layout.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/color-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/references/surface-color-language.md",
+      "skills/reverse-image-prompt/tools/analysis_bundle.py",
+      "skills/reverse-image-prompt/tools/anchor_catalog.py",
+      "skills/reverse-image-prompt/tools/color_language.py",
+      "skills/reverse-image-prompt/tools/compile_skill.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tools/route_resolver.py",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/validate_modules.py",
+      "skills/reverse-image-prompt/tests/test_analysis_bundle.py",
+      "skills/reverse-image-prompt/tests/test_color_language.py",
+      "skills/reverse-image-prompt/tests/test_compiled_profiles.py",
+      "skills/reverse-image-prompt/tests/test_route_resolver.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-24-distributed-analysis-human-appearance-v2.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {"status": "pass", "evidence_ids": ["e-candidate-package"]},
+    "prompt": {"status": "pass", "evidence_ids": ["e-candidate-prompt-tests"]},
+    "render": {"status": "unscored", "evidence_ids": []},
+    "user": {"status": "unscored", "evidence_ids": []},
+    "holdouts": [
+      {
+        "id": "heldout-distributed-routes",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["ordinary three-lane route", "human portrait lane activation", "information route", "route fingerprint", "missing module/report/topic", "sequential disclosure", "hash-bound plan invariant", "independent critic freeze gate"],
+        "evidence_ids": ["e-candidate-prompt-tests"]
+      },
+      {
+        "id": "heldout-human-appearance-v2",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["readable-secondary fidelity-primary", "low and high drift risk", "sufficient and insufficient form geometry", "preserved and material-drift counterfactual", "identity inference rejection", "external identity provenance", "face and body-form geometry ownership", "primary role continuity"],
+        "evidence_ids": ["e-candidate-prompt-tests"]
+      },
+      {
+        "id": "heldout-surface-style-tone",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["complete descriptor", "partial stable axes", "boundary-only non-emission", "neutral undertone boundary", "inconclusive axes", "aesthetic prior calibration", "non-trivial exact regional tone anchor", "protected region"],
+        "evidence_ids": ["e-candidate-prompt-tests"]
+      },
+      {
+        "id": "motivating-source-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["broad person reading", "skin value and finish", "lighting separation", "portrait production aesthetic"],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The candidate mechanically rejects the previously silent coverage, weak appearance omission, role demotion, all-or-nothing surface composition, uncalibrated broad style prior, and unscoped displayed-tone paths across unrelated fixtures. No post-change image or user judgment was collected in this turn, so render and aesthetic promotion remain unscored.",
+    "evidence_ids": ["e-candidate-package", "e-candidate-prompt-tests", "e-baseline-plan", "e-baseline-prompt"]
+  }
+}

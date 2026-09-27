@@ -1,0 +1,3099 @@
+{
+  "schema_version": "portrait-composition-research/v1",
+  "concepts": [
+    {
+      "id": "PC01",
+      "label_ko": "눈높이의 가까운 상반신",
+      "terms_en": [
+        "eye-level close portrait",
+        "head-and-shoulders portrait"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the frame includes the face and shoulders at a readable portrait scale",
+          "owner": "main subject",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "camera_height",
+          "evidence_en": "the viewpoint meets the subject near the visible eye line",
+          "owner": "camera relative to main subject",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the visible eye and expression-bearing facial landmarks remain resolved",
+          "owner": "visible face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "a simpler surrounding field separates the face and shoulder contour",
+          "owner": "face and background",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "얼굴만 확대했다고 눈높이가 증명되지는 않는다.",
+        "가슴 위 프레이밍과 정면 얼굴 방향은 별개다."
+      ],
+      "source_ids": [
+        "S01",
+        "S02",
+        "S04"
+      ],
+      "existing_ids": [
+        "head_and_shoulders_crop",
+        "eye_level_observer",
+        "eye_focus"
+      ],
+      "integration_proposal": "reuse_atoms",
+      "priority": "P0",
+      "positive_case_ko": "얼굴과 어깨가 보이고 눈높이에서 촬영한 성인 인물",
+      "negative_case_ko": "같은 크롭이지만 정수리를 크게 내려다보는 사진",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC02",
+      "label_ko": "몸은 사선, 얼굴은 카메라 쪽",
+      "terms_en": [
+        "angled shoulders facing camera",
+        "three-quarter body angle"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_orientation",
+          "evidence_en": "the torso and shoulder plane turn obliquely to the camera",
+          "owner": "main torso",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "body_orientation",
+          "evidence_en": "the head turns back toward the camera relative to the torso",
+          "owner": "head relative to torso",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "gaze_engagement",
+          "evidence_en": "the visible eyes address the lens while the shoulders remain oblique",
+          "owner": "main eyes and lens",
+          "dimensions": [
+            "expression"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "neck and shoulder connections remain continuous through the turn",
+          "owner": "head neck and torso",
+          "dimensions": [
+            "body_geometry"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "three-quarter-length는 촬영 범위이다.",
+        "얼굴과 몸이 함께 측면으로 향하는 사진은 다르다."
+      ],
+      "source_ids": [
+        "S03",
+        "S04"
+      ],
+      "existing_ids": [
+        "three_quarter_body_turn",
+        "head_shoulder_opposition",
+        "direct_camera_aware"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "어깨는 비스듬하지만 머리와 눈은 렌즈를 향한 성인",
+      "negative_case_ko": "무릎 위로 찍었을 뿐 얼굴과 어깨가 모두 정면",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC03",
+      "label_ko": "맞은편 테이블 구도",
+      "terms_en": [
+        "across-the-table portrait",
+        "table companion perspective"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a near table edge separates the camera position from the seated subject",
+          "owner": "table and camera and seated subject",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "subject_framing",
+          "evidence_en": "the subject face remains above the near table plane at readable scale",
+          "owner": "main face and table",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "hand_pose",
+          "evidence_en": "the subject hands rest or act on the visible tabletop with plausible contact",
+          "owner": "subject hands and table",
+          "dimensions": [
+            "pose",
+            "action"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "table objects occupy supporting regions around the primary face",
+          "owner": "table objects and face",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "카페 배경만 있거나 탑다운 음식 사진인 경우",
+        "실제 연애 관계·친밀한 성격의 증거로 사용"
+      ],
+      "source_ids": [
+        "S01",
+        "S05",
+        "S15"
+      ],
+      "existing_ids": [
+        "companion_viewpoint_everyday_candid",
+        "hand_on_table_edge"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "맞은편 좌석에서 컵 옆 손과 얼굴을 함께 담은 성인",
+      "negative_case_ko": "높은 탑다운 시점에서 음식이 중심이고 얼굴은 프레임 밖",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC04",
+      "label_ko": "가까운 동행자의 시점",
+      "terms_en": [
+        "companion perspective",
+        "close handheld portrait"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "camera_direction",
+          "evidence_en": "the view occupies a plausible nearby companion position beside a daily activity",
+          "owner": "camera and daily activity",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "action",
+          "evidence_en": "one concrete hand activity remains legible in the near setting",
+          "owner": "subject hand and activity object",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "gaze_engagement",
+          "evidence_en": "one glance or gesture addresses the nearby camera holder",
+          "owner": "subject response and camera holder",
+          "dimensions": [
+            "expression",
+            "action"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the face stays readable within the nearby environmental frame",
+          "owner": "main face and environment",
+          "dimensions": [
+            "composition",
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "셀피와 카메라 밖 동행자 촬영은 다르다.",
+        "소품 없는 인플루언서 포즈만으로 생활 행동을 증명하지 않는다."
+      ],
+      "source_ids": [
+        "S05",
+        "S10"
+      ],
+      "existing_ids": [
+        "companion_viewpoint_everyday_candid",
+        "off_camera_companion_everyday_capture"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "동행자 좌석에서 일상 동작과 렌즈 쪽 짧은 반응을 담은 성인",
+      "negative_case_ko": "팔 길이 전면카메라 셀피",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC05",
+      "label_ko": "어깨 너머로 돌아보기",
+      "terms_en": [
+        "looking back over the shoulder",
+        "over-the-shoulder glance"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_orientation",
+          "evidence_en": "the main subject torso faces partly away from the camera",
+          "owner": "main torso",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "body_orientation",
+          "evidence_en": "the same subject head turns back across the near shoulder",
+          "owner": "main head and own shoulder",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the turned face remains readable beyond its own near shoulder",
+          "owner": "main face and own shoulder",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "body_pose",
+          "evidence_en": "the head neck and torso retain a plausible connected turning range",
+          "owner": "main body chain",
+          "dimensions": [
+            "body_geometry"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "타인의 어깨 너머로 찍는 OTS와 혼동",
+        "몸 전체를 카메라 쪽으로 돌린 정면 사진"
+      ],
+      "source_ids": [
+        "S03"
+      ],
+      "existing_ids": [
+        "turning_back_over_shoulder_pose",
+        "looking_back_over_shoulder_orientation"
+      ],
+      "integration_proposal": "extend_existing_atoms",
+      "priority": "P1",
+      "positive_case_ko": "등이 일부 보이고 본인의 어깨 너머로 돌아보는 성인",
+      "negative_case_ko": "다른 사람의 어깨만 전경에 있고 주인공은 정면",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC06",
+      "label_ko": "옆얼굴과 시선 앞 여백",
+      "terms_en": [
+        "profile with looking room",
+        "side-profile portrait"
+      ],
+      "family": "face",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_orientation",
+          "evidence_en": "the visible nose lip and chin form a readable side-face contour",
+          "owner": "main face",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "gaze_target",
+          "evidence_en": "the visible eye and head establish one sideward direction",
+          "owner": "visible eye and head",
+          "dimensions": [
+            "expression"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "usable open space extends ahead of the stated gaze direction",
+          "owner": "gaze vector and image field",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "subject_framing",
+          "evidence_en": "the profile landmarks remain large enough to inspect in the final frame",
+          "owner": "profile face",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "여백이 시선 뒤에 있으면 looking room과 다르다.",
+        "옆을 보는 눈과 완전 옆얼굴은 별개다."
+      ],
+      "source_ids": [
+        "S01",
+        "S07"
+      ],
+      "existing_ids": [
+        "mep_casting_profile",
+        "look_motion_room_direction_relation"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "옆얼굴이 화면 오른쪽을 보며 그 앞에 넓은 공간이 남음",
+      "negative_case_ko": "옆얼굴 앞은 잘리고 뒷머리 뒤쪽에만 여백이 있음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC07",
+      "label_ko": "무릎 위의 약한 로우앵글",
+      "terms_en": [
+        "knee-up subtle low angle",
+        "three-quarter-length portrait"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the frame runs from the head to the explicitly chosen region above the knees",
+          "owner": "main body and crop edges",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "camera_height",
+          "evidence_en": "the viewpoint lies modestly below the face with upward spatial cues",
+          "owner": "camera and main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "the torso and legs retain coherent near-to-far proportions",
+          "owner": "main torso and legs",
+          "dimensions": [
+            "body_geometry"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the face remains a readable focal region within the larger body frame",
+          "owner": "main face and body",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "극단적인 지면 시점·벌레 시점은 약한 로우앵글이 아니다.",
+        "3/4 얼굴 방향과 knee-up은 별도 축이다."
+      ],
+      "source_ids": [
+        "S01",
+        "S05",
+        "S14"
+      ],
+      "existing_ids": [
+        "knee_up_framing"
+      ],
+      "integration_proposal": "extend_existing_atoms",
+      "priority": "P1",
+      "positive_case_ko": "무릎 조금 위에서 잘리고 약하게 올려다보는 성인 인물",
+      "negative_case_ko": "지면에서 신발이 크게 돌출되고 얼굴이 아주 작음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC08",
+      "label_ko": "한쪽 다리에 무게를 둔 비대칭 전신",
+      "terms_en": [
+        "weight-shift pose",
+        "asymmetrical standing pose"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the full frame preserves the head and both feet",
+          "owner": "main body",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "body_pose",
+          "evidence_en": "one support leg carries the stance while the other remains relatively relaxed",
+          "owner": "main support and free leg",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_orientation",
+          "evidence_en": "shoulder and pelvis alignment vary with the visible weight shift",
+          "owner": "shoulders and pelvis",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "contact_point",
+          "evidence_en": "the supporting foot establishes a plausible ground contact path",
+          "owner": "support foot and ground",
+          "dimensions": [
+            "body_geometry"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "S커브·골반 과장·비대칭 의상만으로 하중 분담을 증명하지 않는다.",
+        "일반 웨이트 시프트를 고전 콘트라포스토와 동일시하지 않는다."
+      ],
+      "source_ids": [
+        "S18"
+      ],
+      "existing_ids": [
+        "relaxed_standing_weight_shift",
+        "contrapposto_full_body",
+        "mep_poised_support"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "한 발이 지지하고 반대 무릎이 이완된 전신 성인",
+      "negative_case_ko": "양발 지지는 같고 의상만 비대칭",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC09",
+      "label_ko": "앉아서 만드는 삼각형",
+      "terms_en": [
+        "seated triangular composition",
+        "triangular pose grouping"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_pose",
+          "evidence_en": "the subject sits on a visible supporting surface",
+          "owner": "subject and seat",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the face elbow and knee define three separated triangle vertices",
+          "owner": "face elbow and knee",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "the visible arm and leg joints connect plausibly between those vertices",
+          "owner": "subject limb joints",
+          "dimensions": [
+            "body_geometry"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "subject_framing",
+          "evidence_en": "the frame preserves all three nominated vertices and their spacing",
+          "owner": "nominated body regions",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "삼각 무늬나 세 인물의 배치가 대체하지 않는다.",
+        "신체 내부 여백의 삼각형과 세 점의 배치는 다르다."
+      ],
+      "source_ids": [
+        "S05",
+        "S18"
+      ],
+      "existing_ids": [
+        "mep_graphic_pose",
+        "body_bounded_negative_space"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "앉은 성인의 얼굴·팔꿈치·세운 무릎 세 점이 삼각 배치",
+      "negative_case_ko": "팔과 허리 사이만 삼각형이고 무릎은 잘림",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC10",
+      "label_ko": "몸이 가로지르는 대각선",
+      "terms_en": [
+        "diagonal reclining portrait",
+        "diagonal body axis"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_pose",
+          "evidence_en": "a seat sofa or wall visibly supports the reclining torso",
+          "owner": "torso and support",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the shoulder-to-pelvis body axis crosses the image diagonally",
+          "owner": "main torso axis",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "camera_direction",
+          "evidence_en": "stable environmental reference lines retain the intended level camera roll",
+          "owner": "camera and environmental lines",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the face remains readable near one end of the diagonal body path",
+          "owner": "main face and body axis",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "더치 앵글은 몸이 아니라 카메라 회전이다.",
+        "지지 없이 공중에 누운 형상은 실패한다."
+      ],
+      "source_ids": [
+        "S01",
+        "S09"
+      ],
+      "existing_ids": [
+        "propped_elbow_recline_support"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "소파에 지지된 몸만 대각선이고 창틀은 수직인 성인",
+      "negative_case_ko": "몸은 수직인데 카메라 전체가 기울어짐",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC11",
+      "label_ko": "앉은 인물을 위에서 가까이 보기",
+      "terms_en": [
+        "high-angle seated portrait",
+        "close elevated observer"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_pose",
+          "evidence_en": "the subject is visibly seated on a supporting surface",
+          "owner": "subject and seat",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "camera_height",
+          "evidence_en": "the camera looks downward from a nearby position above the seated face",
+          "owner": "camera and seated face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "gaze_engagement",
+          "evidence_en": "the raised face or visible eye direction connects toward that camera",
+          "owner": "main face and elevated lens",
+          "dimensions": [
+            "expression"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "head torso and near limbs follow one coherent downward perspective",
+          "owner": "subject body and camera",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "가까운 고각과 수직 탑다운·드론은 다르다.",
+        "앉았다는 이유로 자동 overhead 프로필을 강제하지 않는다."
+      ],
+      "source_ids": [
+        "S05",
+        "S14"
+      ],
+      "existing_ids": [
+        "overhead_social_snapshot_relation",
+        "floor_high_angle_direction"
+      ],
+      "integration_proposal": "extend_existing_atoms",
+      "priority": "P1",
+      "positive_case_ko": "의자에 앉아 고개를 들어 가까운 위쪽 카메라를 보는 성인",
+      "negative_case_ko": "드론 거리의 작은 인물이 바닥만 바라봄",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC12",
+      "label_ko": "팔과 손으로 얼굴 주위 공간 만들기",
+      "terms_en": [
+        "arm framing",
+        "hands framing the face"
+      ],
+      "family": "body",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "hand_pose",
+          "evidence_en": "the subject own arm or hand arcs around the face perimeter",
+          "owner": "subject own hand and face",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the face lies within a readable opening formed by that arm or hand",
+          "owner": "face and body-made opening",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "the wrist elbow and shoulder connect plausibly through the framing gesture",
+          "owner": "main arm joint chain",
+          "dimensions": [
+            "body_geometry"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the requested expression-bearing facial region remains readable through the opening",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "눈을 막는 손과 얼굴 주변의 프레이밍은 별개다.",
+        "화면 밖 타인의 손을 주인공의 손으로 혼동하지 않는다."
+      ],
+      "source_ids": [
+        "S25",
+        "S05"
+      ],
+      "existing_ids": [
+        "arms_raised_overhead",
+        "mep_graphic_pose",
+        "body_bounded_negative_space"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "자기 팔이 얼굴 둘레에 아치를 만들고 눈은 열린 공간에 있음",
+      "negative_case_ko": "두 손바닥이 눈과 표정을 완전히 덮음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC13",
+      "label_ko": "포즈 사이의 순간",
+      "terms_en": [
+        "in-between moment",
+        "mid-gesture portrait"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "action",
+          "evidence_en": "one nominated body or hand action remains visibly underway",
+          "owner": "main subject and action",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "motion",
+          "evidence_en": "a displaced limb hair group or cloth edge indicates the unfinished phase",
+          "owner": "main action-bearing region",
+          "dimensions": [
+            "timing"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "the rest of the stance supports the same action phase",
+          "owner": "main body support",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the facial reaction remains legible beside the incomplete gesture",
+          "owner": "face and action",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "고정된 옆시선만으로 중간 순간을 증명하지 않는다.",
+        "실제 비연출·진심·성격을 픽셀에서 확정하지 않는다."
+      ],
+      "source_ids": [
+        "S05",
+        "S10"
+      ],
+      "existing_ids": [
+        "mep_in_between",
+        "camera_acknowledged_observer_frame"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "옷깃을 고쳐 잡는 중 손과 옷 가장자리가 이동한 성인",
+      "negative_case_ko": "옆을 본 정지 포즈에 candid라는 이름만 붙음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC14",
+      "label_ko": "비스듬히 걸어 들어오기",
+      "terms_en": [
+        "walking portrait",
+        "diagonal movement"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "action",
+          "evidence_en": "one subject step establishes a readable walking phase",
+          "owner": "main walker",
+          "dimensions": [
+            "action",
+            "timing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the walking path runs obliquely across the image plane",
+          "owner": "walker path and frame",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "feet support and fabric displacement agree with the same step",
+          "owner": "main feet and attached cloth",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "subject_framing",
+          "evidence_en": "the moving face remains readable within the chosen mid-distance frame",
+          "owner": "main face",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "기울어진 카메라가 보행 방향을 대체하지 않는다.",
+        "걷는 포즈·실제 이동 궤적·장노출은 별개다."
+      ],
+      "source_ids": [
+        "S05",
+        "S17"
+      ],
+      "existing_ids": [
+        "mep_garment_movement",
+        "stepping_into_frame_pose"
+      ],
+      "integration_proposal": "extend_existing_atoms",
+      "priority": "P1",
+      "positive_case_ko": "성인 인물이 화면을 사선으로 지나며 한 걸음의 지지가 보임",
+      "negative_case_ko": "양발 정지인데 난간만 사선",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC15",
+      "label_ko": "활동 중심 환경 인물",
+      "terms_en": [
+        "environmental portrait",
+        "activity-based portrait"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "action",
+          "evidence_en": "the subject contacts or attends to one task-relevant scene element",
+          "owner": "subject and task element",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "a contextual fixture explains where the activity takes place",
+          "owner": "task and contextual fixture",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the frame retains the face and task-bearing hand action together",
+          "owner": "main face and hands",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the environment supports the activity while the subject remains readable",
+          "owner": "main subject and environment",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "공간만 넓고 행동이 없는 원경과 다르다.",
+        "도구 소유만으로 취향·직업·숙련을 확정하지 않는다."
+      ],
+      "source_ids": [
+        "S05",
+        "S15"
+      ],
+      "existing_ids": [
+        "pr_environmental_portrait_subject_place",
+        "mep_environment_relation"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "작업대에서 손의 작업과 얼굴·관련 도구가 같은 화면에 있음",
+      "negative_case_ko": "풍경 속 아주 작은 인물에게 직업 라벨만 부여",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC16",
+      "label_ko": "카메라 쪽으로 건네기",
+      "terms_en": [
+        "offering gesture",
+        "reaching toward camera"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "hand_pose",
+          "evidence_en": "the subject attached hand extends toward the camera position",
+          "owner": "subject hand and camera",
+          "dimensions": [
+            "pose",
+            "action"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "contact_point",
+          "evidence_en": "the offered object follows the visible subject hand contact",
+          "owner": "subject hand and offered object",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the offered hand or object occupies a nearer plane than the face",
+          "owner": "near object and main face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the near object leaves the requested facial expression region readable",
+          "owner": "offered object and main face",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "카메라를 잡은 셀피 팔과 구분한다.",
+        "프레임 밖 관객의 손을 주인공의 팔로 연결하지 않는다."
+      ],
+      "source_ids": [
+        "S15"
+      ],
+      "existing_ids": [
+        "reaching_toward_camera",
+        "hands_foreground_face_behind"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "자기 팔로 작은 물건을 렌즈 쪽에 내밀고 뒤 얼굴이 보이는 성인",
+      "negative_case_ko": "누구의 손인지 불명확하거나 물건이 얼굴 전체를 덮음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC17",
+      "label_ko": "타인의 어깨 너머 주인공",
+      "terms_en": [
+        "over-the-shoulder shot",
+        "OTS portrait"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "partner_framing",
+          "evidence_en": "another person shoulder forms a partial near-plane silhouette",
+          "owner": "secondary companion shoulder",
+          "dimensions": [
+            "relationship",
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the camera observes the main face beyond that secondary shoulder",
+          "owner": "camera secondary shoulder and main face",
+          "dimensions": [
+            "camera",
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "gaze_target",
+          "evidence_en": "the main response relates to the companion position indicated by the near shoulder",
+          "owner": "main response and secondary companion",
+          "dimensions": [
+            "expression",
+            "relationship"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the main face receives the requested focus priority over the foreground shoulder",
+          "owner": "main face and secondary shoulder",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "주인공 자신의 돌아보는 어깨가 아니다.",
+        "어깨가 아니라 의자·소품 전경인 경우는 별도이다."
+      ],
+      "source_ids": [
+        "S08"
+      ],
+      "existing_ids": [
+        "over_partner_shoulder_subject_face",
+        "over_the_shoulder_dialogue"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "화면 왼쪽 타인의 흐린 어깨 너머로 성인 주인공 얼굴이 선명",
+      "negative_case_ko": "주인공이 본인 어깨 너머로 돌아보기만 함",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC18",
+      "label_ko": "타인의 손만 보이는 상호작용",
+      "terms_en": [
+        "cropped companion interaction",
+        "companion hands-only portrait"
+      ],
+      "family": "event",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "partner_framing",
+          "evidence_en": "a secondary person hand enters from a traceable frame edge",
+          "owner": "secondary companion hand",
+          "dimensions": [
+            "relationship",
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "contact_point",
+          "evidence_en": "that hand contacts or transfers the specified garment or small object",
+          "owner": "secondary hand and nominated target",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "action",
+          "evidence_en": "the main subject reaction relates to the same visible contact or transfer",
+          "owner": "main subject and companion contact",
+          "dimensions": [
+            "action",
+            "expression"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the secondary hand stays subordinate while the main face remains readable",
+          "owner": "secondary hand and main face",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "떠 있는 손·주인공의 세 번째 팔·자기 옷깃 조정과 구분한다.",
+        "손만 등장했다고 연인·친구·동의를 추론하지 않는다."
+      ],
+      "source_ids": [
+        "S08",
+        "S15"
+      ],
+      "existing_ids": [
+        "mep_fitting_adjustment"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "가장자리에서 들어온 타인 손이 옷깃을 정리하고 성인 주인공이 반응",
+      "negative_case_ko": "주인공 자신의 손이 옷깃을 만짐",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC19",
+      "label_ko": "흐릿한 전경 사이 얼굴",
+      "terms_en": [
+        "foreground framing",
+        "foreground bokeh portrait"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a scene-owned near object occupies a peripheral foreground region",
+          "owner": "near object and frame edge",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "focus",
+          "evidence_en": "that near object remains softer than the resolved main face",
+          "owner": "near object and main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "a clear opening through the foreground reveals the intended face region",
+          "owner": "foreground opening and main face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "overlap and softness separate foreground subject and farther setting",
+          "owner": "three scene planes",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "배경 보케만 있는 사진·디지털 비네팅과 구분한다.",
+        "부드러움이 눈·표정을 덮으면 목적에 실패한다."
+      ],
+      "source_ids": [
+        "S06",
+        "S04"
+      ],
+      "existing_ids": [
+        "botanical_editorial_portrait_context",
+        "rb_foreground_occlusion"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "흐린 전경 잎이 양쪽 가장자리에 있고 성인 얼굴은 빈 틈에서 선명",
+      "negative_case_ko": "얼굴은 선명하지만 보케가 배경에만 있음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC20",
+      "label_ko": "문·창문 속 인물",
+      "terms_en": [
+        "frame within a frame",
+        "doorway portrait"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a physical scene boundary forms an opening around the primary subject",
+          "owner": "scene opening and main subject",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "readable boundary thickness or overlap establishes a near plane",
+          "owner": "opening boundary",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the main face stays readable inside the opening",
+          "owner": "main face and opening",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the intended opening enclosure is preserved within the final crop",
+          "owner": "opening edges and frame",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "디지털 테두리·비네팅·배경에 그린 아치와 구분한다.",
+        "기존 hard 프로필은 최소 세 면의 경계를 요구하므로 한쪽 창틀만 요청하면 강제하지 않는다."
+      ],
+      "source_ids": [
+        "S01",
+        "S06"
+      ],
+      "existing_ids": [
+        "frame_within_frame_boundary_relation",
+        "architectural_threshold_frame_depth_relation"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "실제 문틀의 세 면과 깊이가 성인 얼굴 주변을 감싸는 사진",
+      "negative_case_ko": "사진 파일에 테두리만 추가",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC21",
+      "label_ko": "유리 너머 얼굴과 도시 반사",
+      "terms_en": [
+        "through-glass portrait",
+        "window reflection portrait"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a visible pane edge or frame locates the glass plane between camera and subject",
+          "owner": "glass plane",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the subject face is seen through the pane in the transmitted scene",
+          "owner": "transmitted main face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "reflection_logic",
+          "evidence_en": "a restrained exterior reflection overlays a distinct region of the pane",
+          "owner": "reflected exterior scene and glass",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the transmitted expression-bearing face remains readable through the layered pane",
+          "owner": "transmitted face and reflection",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "평면거울 속 얼굴·이중노출·비닐 필름 흐림과 구분한다.",
+        "창문 반사만으로 도시 위치·특정 장소를 확정하지 않는다."
+      ],
+      "source_ids": [
+        "S12",
+        "S13"
+      ],
+      "existing_ids": [
+        "rb_glass_reflection_transmission",
+        "pr_reflection_scene_binding_candidate"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "창틀 너머 성인 얼굴과 약한 거리 반사가 분리돼 읽힘",
+      "negative_case_ko": "불투명 거울에 얼굴 하나만 반사됨",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC22",
+      "label_ko": "거울 속 얼굴이 주인공",
+      "terms_en": [
+        "mirror-led portrait",
+        "reflected face as main subject"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "reflection_logic",
+          "evidence_en": "a physical mirror boundary contains a reflected face in one coherent view",
+          "owner": "mirror and reflected face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the reflected face receives the primary visual emphasis",
+          "owner": "reflected main face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_orientation",
+          "evidence_en": "a partial direct body view corresponds plausibly to that reflection",
+          "owner": "direct body and reflected body",
+          "dimensions": [
+            "pose",
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the reflected eye or expression region remains resolved within the visible mirror boundary",
+          "owner": "reflected face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "거울 셀피는 휴대폰의 주체·접촉·반사까지 요구하는 다른 계약이다.",
+        "유령·지연 반사·이중 자아 라우트가 섞이면 실패한다."
+      ],
+      "source_ids": [
+        "S12",
+        "S13"
+      ],
+      "existing_ids": [
+        "faithful_reflection",
+        "pr_reflection_scene_binding_candidate"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "실제 뒷어깨와 거울 속 성인 얼굴이 같은 순간에 대응함",
+      "negative_case_ko": "거울 테두리만 선명하고 반사 얼굴은 흐림",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC23",
+      "label_ko": "작은 손거울 안의 얼굴",
+      "terms_en": [
+        "handheld mirror portrait",
+        "selective face reflection"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "contact_point",
+          "evidence_en": "a visible hand supports one small mirror at plausible contact points",
+          "owner": "hand and small mirror",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "reflection_logic",
+          "evidence_en": "the mirror boundary encloses the selected reflected face region",
+          "owner": "small mirror and reflected face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the reflected expression remains readable at the mirror image scale",
+          "owner": "reflected face and image scale",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the reflected face and direct surroundings retain a coherent focus hierarchy",
+          "owner": "reflected face and direct scene",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "손거울이 보여도 얼굴 반사가 없으면 실패한다.",
+        "눈 한 조각만 요청한 경우 표정 전체를 요구하지 않는다."
+      ],
+      "source_ids": [
+        "S12",
+        "S13",
+        "S15"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "손이 잡은 작은 거울 안에 표정이 읽히는 성인 얼굴이 담김",
+      "negative_case_ko": "손거울 밖 직접 얼굴만 보이고 거울 안은 하늘",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC24",
+      "label_ko": "가장자리 프리즘·굴절",
+      "terms_en": [
+        "edge refraction portrait",
+        "prism edge effect"
+      ],
+      "family": "optical",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "lens_artifact",
+          "evidence_en": "a localized peripheral region shows refracted displacement or spectral separation",
+          "owner": "peripheral optical effect",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the optical effect remains near a chosen image edge",
+          "owner": "optical region and frame",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the central requested facial features remain coherent and resolved",
+          "owner": "central main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the shifted edge detail remains connected to the same scene or light source",
+          "owner": "edge effect and scene owner",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "얼굴 전체 분해·무지개 조명만 있는 사진·원인 없는 복제와 구분한다.",
+        "굴절 결과는 관찰 가능하지만 실제 프리즘 장비 사용은 메타데이터이다."
+      ],
+      "source_ids": [
+        "S11"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "한쪽 가장자리만 굴절되고 성인 얼굴 중심은 선명",
+      "negative_case_ko": "얼굴 전부가 여러 조각으로 반복됨",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC25",
+      "label_ko": "가장자리 타이트 크롭",
+      "terms_en": [
+        "off-center close-up",
+        "tight face crop"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the face occupies a close portrait scale near one image edge",
+          "owner": "main face and crop edge",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the face focal point lies visibly away from the geometric center",
+          "owner": "main face and frame center",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the explicitly requested eye and expression region remains resolved",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "subject_framing",
+          "evidence_en": "the crop preserves the requested diagnostic facial region",
+          "owner": "nominated facial region",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "의도적 두상 크롭과 요청한 눈·입을 잘라버린 크롭은 다르다.",
+        "프로필·눈 감음 요청에 양쪽 눈 가시성을 일괄 적용하지 않는다."
+      ],
+      "source_ids": [
+        "S01",
+        "S04"
+      ],
+      "existing_ids": [
+        "pr_casual_crop_subject_legibility",
+        "beauty_tight_face_crop"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "머리 위는 일부 잘리지만 성인 눈과 입이 읽히며 중심에서 벗어남",
+      "negative_case_ko": "요청한 눈이 화면 밖으로 잘림",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC26",
+      "label_ko": "여백을 바라보는 인물",
+      "terms_en": [
+        "negative-space portrait",
+        "looking room"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "gaze_target",
+          "evidence_en": "one visible head or gaze vector points toward a nominated side",
+          "owner": "main head and gaze",
+          "dimensions": [
+            "expression"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "a contiguous low-detail field extends ahead of that vector",
+          "owner": "gaze and open field",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the subject facial signal remains readable at the final display size",
+          "owner": "main face",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the subject outline separates from the simple field",
+          "owner": "subject contour and field",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "negative space·headroom·look room·move room은 서로 다른 측정이다.",
+        "시선 앞 공간이 있어도 복잡한 간판으로 가득하면 저정보 여백과 다르다."
+      ],
+      "source_ids": [
+        "S07"
+      ],
+      "existing_ids": [
+        "look_motion_room_direction_relation",
+        "subject_field_negative_space_relation"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "성인이 향한 쪽에 단순한 벽 여백이 있고 얼굴이 읽힘",
+      "negative_case_ko": "뒷머리 뒤쪽에만 여백",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC27",
+      "label_ko": "대칭 공간 속 비대칭 인물",
+      "terms_en": [
+        "symmetrical setting asymmetrical pose",
+        "axial portrait contrast"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "architectural pairs form a readable symmetry axis in the scene",
+          "owner": "architecture axis and paired elements",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "body_pose",
+          "evidence_en": "the main subject limb or head arrangement departs visibly from that symmetry",
+          "owner": "main subject pose",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the two spatial roles remain simultaneously readable in one frame",
+          "owner": "architecture and pose",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the face retains focal priority within the paired architecture",
+          "owner": "main face and architecture",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "단순 중앙 배치는 배경 대칭을 증명하지 않는다.",
+        "인물까지 좌우 완전 복제인 경우는 다른 구도이다."
+      ],
+      "source_ids": [
+        "S01",
+        "S05"
+      ],
+      "existing_ids": [
+        "centered_symmetric",
+        "mep_graphic_pose"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "대칭 복도 중앙에서 성인 한쪽 팔과 고개만 비대칭",
+      "negative_case_ko": "비대칭 배경에서 인물만 중앙에 둠",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC28",
+      "label_ko": "빛·그림자의 면 분할",
+      "terms_en": [
+        "graphic shadows",
+        "gobo portrait",
+        "shadow framing"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "lighting",
+          "evidence_en": "a coherent patterned light and shadow region crosses a visible scene surface",
+          "owner": "light pattern and receiving surface",
+          "dimensions": [
+            "lighting"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "light_shape",
+          "evidence_en": "the pattern defines graphic areas distinct from permanent material markings",
+          "owner": "light pattern and surface material",
+          "dimensions": [
+            "lighting"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the pattern boundary organizes the image around the main face",
+          "owner": "pattern and main face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "focus",
+          "evidence_en": "the requested facial expression survives the patterned illumination",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "의복 프린트·피부 무늬·벽지와 광원 패턴을 혼동하지 않는다.",
+        "프레임 밖 광원인 경우 장비 사용 증명보다 패턴 결과만 판정한다."
+      ],
+      "source_ids": [
+        "S16"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "optional_relation_candidate",
+      "priority": "P1",
+      "positive_case_ko": "벽과 어깨에 창 그림자가 이어지고 성인 표정은 읽힘",
+      "negative_case_ko": "얼굴의 무늬가 조명과 무관한 타투",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC29",
+      "label_ko": "정지 인물과 움직이는 주변",
+      "terms_en": [
+        "still subject motion contrast",
+        "sharp stationary portrait with trails"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_pose",
+          "evidence_en": "the primary subject keeps a readable stationary support and pose",
+          "owner": "main subject and support",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "focus",
+          "evidence_en": "the requested facial region remains comparatively resolved",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "motion",
+          "evidence_en": "a separate moving peripheral element leaves a directional exposure trail",
+          "owner": "moving peripheral element",
+          "dimensions": [
+            "timing",
+            "camera"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "composition",
+          "evidence_en": "the trail and sharp subject occupy coherently related scene planes",
+          "owner": "trail owner and main subject",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "보케 원·얕은 심도·렌즈 흔들림만으로 모션 궤적을 증명하지 않는다.",
+        "주인공을 추적하는 패닝과 정지 인물 대비는 다른 계약이다."
+      ],
+      "source_ids": [
+        "S17"
+      ],
+      "existing_ids": [
+        "panning_subject_tracking_motion_relation",
+        "rear_curtain_flash_motion_trace"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P0",
+      "positive_case_ko": "선명한 정지 성인 옆으로 이동하는 빛이 방향 궤적을 남김",
+      "negative_case_ko": "배경은 흐리지만 모든 빛 점이 동그란 보케",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PC30",
+      "label_ko": "프레임을 기울이기",
+      "terms_en": [
+        "Dutch angle",
+        "Dutch tilt",
+        "canted angle",
+        "camera roll"
+      ],
+      "family": "graphic",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "camera_direction",
+          "evidence_en": "the camera roll rotates a stable scene reference relative to the image axes",
+          "owner": "camera and reference lines",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "multiple normally level scene lines share a coherent tilt direction",
+          "owner": "scene reference lines",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "body_pose",
+          "evidence_en": "the subject stance remains plausible in the tilted scene coordinates",
+          "owner": "main support and tilted scene",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c4",
+          "slot": "subject_framing",
+          "evidence_en": "the nominated facial region remains readable after the rotated crop",
+          "owner": "main face and crop",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "몸 자체 대각선·경사진 지면·우연히 비스듬한 물체와 구분한다.",
+        "더치 앵글을 캔디드 촬영의 동의어로 사용하지 않는다."
+      ],
+      "source_ids": [
+        "S09"
+      ],
+      "existing_ids": [
+        "dutch_tilt_direction",
+        "dutch_angle_tension"
+      ],
+      "integration_proposal": "new_joint_relation",
+      "priority": "P1",
+      "positive_case_ko": "창틀과 수평 난간이 함께 기울어진 프레임의 성인 인물",
+      "negative_case_ko": "창틀은 수직인데 인물 몸만 기대어 사선",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX01",
+      "label_ko": "촬영 범위와 얼굴 방향의 분리",
+      "terms_en": [
+        "shot scale versus facial orientation",
+        "three-quarter ambiguity"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the crop endpoint explicitly describes the included body extent",
+          "owner": "main crop",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "body_orientation",
+          "evidence_en": "the facial direction is specified independently of that crop endpoint",
+          "owner": "main face",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the visible result simultaneously preserves the two requested axes",
+          "owner": "crop and facial direction",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "three-quarter 단독 표현은 길이인지 방향인지 불명확하다.",
+        "새 후보가 원래 요청의 모호성을 사후에 대신 해석하지 않는다."
+      ],
+      "source_ids": [
+        "S01",
+        "S03"
+      ],
+      "existing_ids": [
+        "knee_up_framing",
+        "restrained_three_quarter_face_depth_read"
+      ],
+      "integration_proposal": "reuse_atoms",
+      "priority": "P0",
+      "positive_case_ko": "무릎 위 프레이밍이며 얼굴은 비스듬히 보임",
+      "negative_case_ko": "3/4라는 단어만으로 얼굴·몸 방향을 모두 고정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX02",
+      "label_ko": "머리 위 여백",
+      "terms_en": [
+        "headroom",
+        "top frame clearance"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a nominated top margin separates the head contour from the upper frame edge",
+          "owner": "head contour and top frame",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "subject_framing",
+          "evidence_en": "the same frame preserves the requested facial region and shot scale",
+          "owner": "face and crop",
+          "dimensions": [
+            "framing"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the top margin remains independent of lateral gaze space",
+          "owner": "top margin and lateral field",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "headroom은 시선 앞 여백이 아니다.",
+        "타이트 크롭 요청이면 머리 위 여백을 강제하지 않는다."
+      ],
+      "source_ids": [
+        "S01"
+      ],
+      "existing_ids": [
+        "head_and_shoulders_crop"
+      ],
+      "integration_proposal": "optional_relation_candidate",
+      "priority": "P1",
+      "positive_case_ko": "머리 위 공간은 작고 시선 앞 공간은 넓음",
+      "negative_case_ko": "머리 위 여백을 주기 위해 요청한 상반신 범위를 원경으로 바꿈",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX03",
+      "label_ko": "주인공의 첫 읽기 위계",
+      "terms_en": [
+        "subject visual hierarchy",
+        "face priority"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "the intended face is separable from competing bright or high-detail regions",
+          "owner": "main face and distractors",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "focus",
+          "evidence_en": "the intended facial signal resolves at the nominated output display size",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "supporting props preserve their role relative to the main face",
+          "owner": "props and main face",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "호감·매력 점수와 가시성은 다른 지표다.",
+        "도구가 주인공인 제품 사진에 얼굴 우선 원칙을 강제하지 않는다."
+      ],
+      "source_ids": [
+        "S04",
+        "S05"
+      ],
+      "existing_ids": [
+        "face_hands_prop_visibility_budget"
+      ],
+      "integration_proposal": "reuse_atoms",
+      "priority": "P0",
+      "positive_case_ko": "작은 썸네일에서도 성인 얼굴이 읽히고 밝은 소품이 가리지 않음",
+      "negative_case_ko": "얼굴은 네이티브 확대에서만 보이고 간판이 화면을 지배",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX04",
+      "label_ko": "초점의 소유자",
+      "terms_en": [
+        "focus ownership",
+        "visible eye focus"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "focus",
+          "evidence_en": "the nominated direct or reflected facial region receives the focus priority",
+          "owner": "nominated face surface",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the foreground and background softness agree with that selected owner",
+          "owner": "scene planes and focus owner",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the focused feature is large enough for the intended review scale",
+          "owner": "focused feature",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "거울 테두리의 선명함은 반사된 눈의 선명함이 아니다.",
+        "포커스 스태킹·스플릿 디옵터는 단일 초점 이행과 다른 선택이다."
+      ],
+      "source_ids": [
+        "S04",
+        "S13"
+      ],
+      "existing_ids": [
+        "eye_focus",
+        "shallow_depth_focus_falloff_relation"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "거울 테두리는 부드럽고 안의 성인 눈이 선명",
+      "negative_case_ko": "거울 테두리만 날카롭고 반사된 얼굴이 흐림",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX05",
+      "label_ko": "가림의 소유자와 범위",
+      "terms_en": [
+        "occlusion owner",
+        "partial occlusion"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "the nominated occluder has a traceable scene or body owner",
+          "owner": "occluder owner",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the occluder overlaps only the requested image region",
+          "owner": "occluder and target region",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the requested surviving facial or action evidence remains exposed",
+          "owner": "surviving diagnostic region",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "친밀감·몰래 촬영·얼굴 숨김을 같은 상태로 합치지 않는다.",
+        "전체 얼굴 노출보다 특정 남길 영역을 요청 기준으로 쓴다."
+      ],
+      "source_ids": [
+        "S06",
+        "S08"
+      ],
+      "existing_ids": [
+        "rb_foreground_occlusion",
+        "intentional_face_occluded_mood_portrait"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "커튼이 한쪽 어깨만 가리고 표정은 보이는 성인",
+      "negative_case_ko": "커튼이 요청한 눈까지 막음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX06",
+      "label_ko": "손의 소유자와 접촉",
+      "terms_en": [
+        "hand ownership",
+        "contact continuity"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "contact_point",
+          "evidence_en": "each visible hand connects to a plausible subject or entering frame-edge owner",
+          "owner": "hand and owner",
+          "dimensions": [
+            "body_geometry"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "contact_point",
+          "evidence_en": "the nominated hand contacts the object at a traceable grip or support point",
+          "owner": "hand and object",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the contact remains visible at the required final review scale",
+          "owner": "contact region",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "새 팔 생성·떠 있는 소품·손가락 수만 맞는 경우",
+        "피사체 수 한 명과 타인 손의 존재는 충돌할 수 있으므로 count와 relationship에 요청 근거 필요"
+      ],
+      "source_ids": [
+        "S15"
+      ],
+      "existing_ids": [
+        "pr_object_contact_shadow_support"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "자기 팔이 이어진 손으로 손거울 테두리를 지지함",
+      "negative_case_ko": "손은 보이지만 팔·가장자리 소유자가 없고 거울이 떠 있음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX07",
+      "label_ko": "얼굴 비례와 카메라 거리",
+      "terms_en": [
+        "camera-distance perspective",
+        "near-field facial perspective"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "camera_direction",
+          "evidence_en": "the camera viewpoint defines a coherent near-to-far relation across the face",
+          "owner": "camera and face depth",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "near facial or hand regions change scale coherently with the chosen distance",
+          "owner": "near and farther facial regions",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the intended crop is preserved independently of the perspective choice",
+          "owner": "crop and camera position",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "초점거리 숫자만으로 원근 비례를 증명하지 않는다.",
+        "초광각 셀피 요청을 무조건 자연 비례 사진으로 치환하지 않는다."
+      ],
+      "source_ids": [
+        "S14"
+      ],
+      "existing_ids": [
+        "wide_angle_near_field_perspective",
+        "distortion_controlled_portrait_perspective"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P0",
+      "positive_case_ko": "같은 크롭이라도 가까운 시점의 코·손과 먼 시점의 비례를 구분",
+      "negative_case_ko": "24mm 라벨만 있고 원근 단서가 없음",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX08",
+      "label_ko": "몸 대각선과 카메라 롤의 분리",
+      "terms_en": [
+        "body diagonal versus camera roll",
+        "diagonal versus canted"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "the body axis is measured against the image frame",
+          "owner": "main body axis",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "camera_direction",
+          "evidence_en": "camera roll is evaluated through independent stable scene lines",
+          "owner": "camera and scene lines",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the two angle relations remain independently describable in the same image",
+          "owner": "body and scene angle axes",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "자세 변경을 카메라 변경으로 교정하지 않는다.",
+        "배경 기준선이 없으면 카메라 롤 판정은 unscorable이다."
+      ],
+      "source_ids": [
+        "S01",
+        "S09"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "optional_relation_candidate",
+      "priority": "P0",
+      "positive_case_ko": "소파의 성인 몸은 대각선이고 창틀은 수직",
+      "negative_case_ko": "인물만 사선인데 Dutch angle이라고 판정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX09",
+      "label_ko": "배경 선과 윤곽의 접선 분리",
+      "terms_en": [
+        "background tangency",
+        "contour separation"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "the nominated background line remains separable from the subject contour",
+          "owner": "background line and subject contour",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the hair and shoulder edges retain a readable depth boundary",
+          "owner": "hair shoulders and background",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the separation survives the final crop and display size",
+          "owner": "subject contour in final crop",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "인물 머리에서 자라는 전봇대·어깨에 붙은 난간",
+        "모든 겹침을 금지하는 규칙으로 확장하지 않는다."
+      ],
+      "source_ids": [
+        "S03",
+        "S05"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "optional_relation_candidate",
+      "priority": "P1",
+      "positive_case_ko": "머리 옆 간판 지지대가 떨어져 보임",
+      "negative_case_ko": "지지대가 정수리 윤곽과 이어짐",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX10",
+      "label_ko": "팔·몸 사이 여백의 형상",
+      "terms_en": [
+        "body-bounded negative space",
+        "arm-torso aperture"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "body_pose",
+          "evidence_en": "connected body contours bound one readable opening",
+          "owner": "main body contours",
+          "dimensions": [
+            "pose"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the opening contains continuous scene background",
+          "owner": "body opening and background",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "all nominated contour boundaries remain visible in the crop",
+          "owner": "opening boundary",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "앉은 삼각형의 세 점 배치와 다르다.",
+        "의상 무늬·배경 삼각형이 대체하지 않는다."
+      ],
+      "source_ids": [
+        "S18"
+      ],
+      "existing_ids": [
+        "body_bounded_negative_space",
+        "mep_graphic_pose"
+      ],
+      "integration_proposal": "reuse_scoped_profile",
+      "priority": "P1",
+      "positive_case_ko": "굽힌 팔과 허리 사이에 배경이 보이는 삼각 틈",
+      "negative_case_ko": "셔츠에 그려진 삼각형",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX11",
+      "label_ko": "얼굴로 수렴하는 장면 선",
+      "terms_en": [
+        "leading lines to face",
+        "scene-owned directional line"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "a scene-owned line has a traceable beginning and continuation",
+          "owner": "scene line",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "its visible direction leads toward the nominated subject region",
+          "owner": "scene line and target face",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "the line remains subordinate to the target facial signal",
+          "owner": "line and face hierarchy",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "사선이라는 이유만으로 유도선이 되지 않는다.",
+        "얼굴을 가로지르는 강한 선은 집중을 분산할 수 있다."
+      ],
+      "source_ids": [
+        "S03",
+        "S01"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "optional_relation_candidate",
+      "priority": "P1",
+      "positive_case_ko": "테이블 가장자리와 난간이 성인 얼굴 근처로 이어짐",
+      "negative_case_ko": "강한 선이 얼굴 반대쪽 화면 밖으로 흐름",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PX12",
+      "label_ko": "원본 구도와 게시 크롭",
+      "terms_en": [
+        "output crop preservation",
+        "display-scale portrait"
+      ],
+      "family": "primitive",
+      "scope": "single_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "subject_framing",
+          "evidence_en": "the nominated facial and action regions remain inside the declared output crop",
+          "owner": "face action and output crop",
+          "dimensions": [
+            "framing",
+            "format"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the selected optical or framing device remains visible after that crop",
+          "owner": "selected device and crop",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the required feature remains legible at the nominated display scale",
+          "owner": "required feature and display",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "SNS 비율을 모든 플랫폼의 영구 규격으로 고정하지 않는다.",
+        "미리보기 재크롭을 검증하지 않고 최종 게시 성공이라고 보고하지 않는다."
+      ],
+      "source_ids": [
+        "S01",
+        "S04"
+      ],
+      "existing_ids": [
+        "face_hands_prop_visibility_budget"
+      ],
+      "integration_proposal": "reuse_atoms",
+      "priority": "P0",
+      "positive_case_ko": "세로 크롭 후에도 손거울 테두리와 성인 눈이 남음",
+      "negative_case_ko": "크롭이 거울 테두리를 잘라 일반 얼굴 사진으로 바뀜",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PS01",
+      "label_ko": "포토덤프·꾸민 듯 안 꾸민 듯한 스냅",
+      "terms_en": [
+        "photo dump",
+        "curated candid"
+      ],
+      "family": "style",
+      "scope": "capture_style",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "capture_context",
+          "evidence_en": "one frame depicts a specific interrupted everyday action",
+          "owner": "subject and everyday action",
+          "dimensions": [
+            "action",
+            "timing"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "one restrained crop or gesture irregularity remains visible",
+          "owner": "scene irregularity",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the chosen portrait signal remains readable despite that irregularity",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "느슨한 외관과 실제 무편집·무연출은 다르다.",
+        "여러 장의 묶음이라는 의미를 한 장 안의 콜라주로 치환하지 않는다."
+      ],
+      "source_ids": [
+        "S23",
+        "S10"
+      ],
+      "existing_ids": [
+        "mep_in_between",
+        "photodump_candid_sequence_context"
+      ],
+      "integration_proposal": "maintenance_style",
+      "priority": "P2",
+      "positive_case_ko": "생활 행동의 순간을 골라 묶은 시리즈의 한 장",
+      "negative_case_ko": "2026 인기 1위라는 근거 없는 라벨",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PS02",
+      "label_ko": "디카·직광 플래시 스냅",
+      "terms_en": [
+        "digicam aesthetic",
+        "direct-flash snapshot"
+      ],
+      "family": "style",
+      "scope": "capture_style",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "lighting",
+          "evidence_en": "a near-axis flash-like source creates direct highlights and scene-owned cast shadows",
+          "owner": "main subject and near-axis source",
+          "dimensions": [
+            "lighting"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "texture",
+          "evidence_en": "one nominated low-resolution or compression texture remains locally visible",
+          "owner": "selected image texture",
+          "dimensions": [
+            "style"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the intended facial expression remains legible through the chosen texture",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "직광 플래시·노이즈·JPEG는 독립 조건이며 CCD 장비를 픽셀에서 확정하지 않는다.",
+        "Y2K 의상·2000년대 시대·디카를 자동 동의어로 묶지 않는다."
+      ],
+      "source_ids": [
+        "S03",
+        "S02"
+      ],
+      "existing_ids": [
+        "early_2000s_digicam_social_repost_capture"
+      ],
+      "integration_proposal": "maintenance_style",
+      "priority": "P2",
+      "positive_case_ko": "정면광 그림자와 약한 압축이 있으면서 성인 얼굴은 읽힘",
+      "negative_case_ko": "노이즈만 추가하고 디카 촬영·2026 유행을 확정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PS03",
+      "label_ko": "0.5 셀피·초광각 셀피",
+      "terms_en": [
+        "0.5 selfie",
+        "ultrawide selfie"
+      ],
+      "family": "style",
+      "scope": "capture_style",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "camera_direction",
+          "evidence_en": "a close self-held camera viewpoint produces a wide surrounding field",
+          "owner": "camera holder and environment",
+          "dimensions": [
+            "camera"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "near and farther body regions show coherent close-range scale differences",
+          "owner": "subject body depth",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "subject_framing",
+          "evidence_en": "the requested face region remains recognizable within that wide field",
+          "owner": "main face",
+          "dimensions": [
+            "framing"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        ".5x는 카메라 선택 메타데이터이고 0.5 셀피는 촬영 관행이다.",
+        "후면·화면 비확인·손의 위치를 라벨만으로 일괄 강제하지 않는다."
+      ],
+      "source_ids": [
+        "S21",
+        "S14"
+      ],
+      "existing_ids": [
+        "wide_angle_near_field_perspective"
+      ],
+      "integration_proposal": "maintenance_style",
+      "priority": "P2",
+      "positive_case_ko": "넓은 주변과 근접 원근을 의도한 성인 셀피",
+      "negative_case_ko": "초광각 요청을 자동 망원 얼굴 사진으로 치환",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PS04",
+      "label_ko": "관계·반응 중심 인물",
+      "terms_en": [
+        "relational portrait",
+        "interaction-led portrait"
+      ],
+      "family": "style",
+      "scope": "capture_style",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "action",
+          "evidence_en": "one visible gesture or response relates to a specific interaction target",
+          "owner": "subject and target",
+          "dimensions": [
+            "action",
+            "relationship"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "the frame preserves evidence of that same target or its position",
+          "owner": "target cue and frame",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the subject reaction remains readable within the interaction frame",
+          "owner": "main face or gesture",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "진정성·성격·실제 관계는 단일 픽셀의 확정 사실이 아니다.",
+        "기쁨·대화·호감을 모든 인물에게 기본 주입하지 않는다."
+      ],
+      "source_ids": [
+        "S19",
+        "S20",
+        "S08"
+      ],
+      "existing_ids": [
+        "mep_gaze_target"
+      ],
+      "integration_proposal": "maintenance_style",
+      "priority": "P1",
+      "positive_case_ko": "타인에게 건네는 행동과 상대 위치 단서가 같은 화면에 있음",
+      "negative_case_ko": "표정 하나로 실제 연애 관계·진심을 판정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PS05",
+      "label_ko": "생활 도구를 이용한 시각 실험",
+      "terms_en": [
+        "creative portrait",
+        "everyday optical device"
+      ],
+      "family": "style",
+      "scope": "capture_style",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "composition",
+          "evidence_en": "one nominated scene-owned device changes a visible spatial relation",
+          "owner": "selected device and scene",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "action",
+          "evidence_en": "the subject action or visible placement relates coherently to that device",
+          "owner": "subject and device",
+          "dimensions": [
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "focus",
+          "evidence_en": "the requested portrait signal survives the optical intervention",
+          "owner": "main face",
+          "dimensions": [
+            "camera"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "creative·cinematic·editorial은 특정 시각 의무가 아니다.",
+        "새로움 점수와 장비·인물의 매력은 서로 다른 평가다."
+      ],
+      "source_ids": [
+        "S11",
+        "S15",
+        "S24"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "maintenance_style",
+      "priority": "P1",
+      "positive_case_ko": "손거울 한 가지로 얼굴 중심의 구도를 변주",
+      "negative_case_ko": "굴절·기울기·강한 그림자·얼굴 가림을 모두 자동 추가",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PM01",
+      "label_ko": "딥틱",
+      "terms_en": [
+        "diptych",
+        "paired portraits"
+      ],
+      "family": "series",
+      "scope": "multi_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "format",
+          "evidence_en": "two independently readable images form one explicitly ordered pair",
+          "owner": "two images",
+          "dimensions": [
+            "format"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "a declared visual attribute links the paired images",
+          "owner": "pair relation",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "action",
+          "evidence_en": "a declared change distinguishes their portrait roles",
+          "owner": "pair role difference",
+          "dimensions": [
+            "action"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "두 사람 투샷과 두 이미지의 쌍은 다르다.",
+        "기본 single-image 생성에 두 패널을 몰래 추가하지 않는다."
+      ],
+      "source_ids": [
+        "S22"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "maintenance_series",
+      "priority": "P2",
+      "positive_case_ko": "정면 눈맞춤과 옆시선 두 사진의 쌍",
+      "negative_case_ko": "한 프레임 두 인물을 diptych라고 판정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PM02",
+      "label_ko": "트립틱",
+      "terms_en": [
+        "triptych",
+        "three-image portrait set"
+      ],
+      "family": "series",
+      "scope": "multi_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "format",
+          "evidence_en": "three independently readable images form one nominated group",
+          "owner": "three images",
+          "dimensions": [
+            "format"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "composition",
+          "evidence_en": "a declared color shape or light relation connects all three",
+          "owner": "series linking attribute",
+          "dimensions": [
+            "composition"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "action",
+          "evidence_en": "each image contributes a distinct declared portrait function",
+          "owner": "series image roles",
+          "dimensions": [
+            "action"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "세 사람 단체사진과 세 이미지의 그룹은 다르다.",
+        "같은 시드·외형 연속성이 자동 보장되지 않는다."
+      ],
+      "source_ids": [
+        "S22"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "maintenance_series",
+      "priority": "P2",
+      "positive_case_ko": "얼굴·행동·공간이라는 세 기능의 사진 묶음",
+      "negative_case_ko": "단체사진 한 장을 세 이미지 시리즈로 판정",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    },
+    {
+      "id": "PM03",
+      "label_ko": "시간 순서 인물 시퀀스",
+      "terms_en": [
+        "portrait sequence",
+        "temporal portrait progression"
+      ],
+      "family": "series",
+      "scope": "multi_image",
+      "components": [
+        {
+          "id": "c1",
+          "slot": "format",
+          "evidence_en": "separate images have an explicit ordered sequence",
+          "owner": "ordered image set",
+          "dimensions": [
+            "format"
+          ]
+        },
+        {
+          "id": "c2",
+          "slot": "action",
+          "evidence_en": "one declared event phase changes between the ordered frames",
+          "owner": "event phase across frames",
+          "dimensions": [
+            "timing",
+            "action"
+          ]
+        },
+        {
+          "id": "c3",
+          "slot": "composition",
+          "evidence_en": "declared appearance and setting anchors maintain permitted continuity",
+          "owner": "series continuity anchors",
+          "dimensions": [
+            "composition"
+          ]
+        }
+      ],
+      "confusion_boundaries_ko": [
+        "단일 중간 순간은 시간 순서를 증명하지 않는다.",
+        "인물의 진짜 감정 변화·성격을 사진의 순서만으로 확정하지 않는다."
+      ],
+      "source_ids": [
+        "S22",
+        "S10"
+      ],
+      "existing_ids": [],
+      "integration_proposal": "maintenance_series",
+      "priority": "P2",
+      "positive_case_ko": "대화 듣기·반응·정리라는 세 상태를 순서대로 제시",
+      "negative_case_ko": "거의 같은 정지 포즈 세 장에 시간 라벨만 부여",
+      "authority": "research_proposal; requester meaning has precedence",
+      "factual_basis": "Sources support named photographic principles only; component conjunctions and gates are authored engineering proposals."
+    }
+  ]
+}

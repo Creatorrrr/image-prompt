@@ -1,0 +1,203 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "1c11532f7e8d6cf68d53011bac3f7c669a249577",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Apply a general summary-first, detail-when-lossy actuation rule so a coupled orientation control keeps its broad source-relative direction without allowing that summary to erase material member relations, while avoiding motivating-case pose values, anatomy names, wording, coordinates, or generator-specific defaults."
+  },
+  "evidence": [
+    {
+      "id": "e-user-judgment",
+      "kind": "user-judgment",
+      "claim": "The user judges that repeated generations still normalize toward a centered frontal pose and proposes identifying the most neutral high-level label first, then adding details only when that label compresses the source too far.",
+      "artifact": "Conversation feedback and approved application request through 2026-08-25"
+    },
+    {
+      "id": "e-baseline-plan",
+      "kind": "prompt-inspection",
+      "claim": "The latest persisted v3 plan couples six individually non-emitted orientation decisions under one aggregate result, but has no per-member record proving which visible relations that result preserves, partially carries, or loses.",
+      "artifact": "generated_images/reverse-faithful-20260825-7e65abea-6b59-4d5e-ba43-c55dc29ac5db/plan.json sha256=f15be61520b7c50b69065f9d893d8eb96ab398b85e85ddfb7676b230fa570840; prompt.txt sha256=76163c499aa6648e675a8b2476b0de1aad649398a654e913f5bef0be9dcddb67"
+    },
+    {
+      "id": "e-baseline-rejection",
+      "kind": "package-check",
+      "claim": "The v4 validator rejects that exact v3 plan because it lacks a summary anchor, a summary-adequacy decision, and exactly one member actuation for each of the six coupled members.",
+      "artifact": "PYTHONDONTWRITEBYTECODE=1 python3 skills/reverse-image-prompt/tools/salience_plan.py generated_images/reverse-faithful-20260825-7e65abea-6b59-4d5e-ba43-c55dc29ac5db/plan.json --prompt generated_images/reverse-faithful-20260825-7e65abea-6b59-4d5e-ba43-c55dc29ac5db/prompt.txt; expected nonzero exit with v4 decomposition errors"
+    },
+    {
+      "id": "e-behavior-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Source-neutral prompt fixtures require summary-before-residual ordering, exact member coverage, residuals for only partial or lost members, no residuals for a sufficient summary, uncertainty disclosure, no duplicate residual prose, and the same loss audit for non-human coupled orientation.",
+      "artifact": "skills/reverse-image-prompt/tests/test_salience_plan.py; 125 focused tests passed and 223 full reverse-image-prompt tests passed"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The complete reverse-image-prompt test suite, module/lane validator, generated-file check, skill quick validation, Python compilation, and whitespace/error check pass after regeneration.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py' => 223 passed; validate_modules.py => 37 modules, 6 lanes, 16926 runtime words, 3799 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => pass; quick_validate.py => pass; git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "A coupled spatial control states the broad source-relative visible result first, then retains every material member relation that the summary only partially carries or loses, without duplicating ownership or forcing detail when the summary is sufficient.",
+    "user_appeal": "Keep the source's non-neutral pose and viewing relation from collapsing into a generic centered frontal result while preserving a coherent large-scale direction.",
+    "invariants": [
+      {
+        "id": "inv-summary-direction",
+        "statement": "Every invariant coupled effect has one source-relative macro summary that appears first inside its single aggregate control.",
+        "evidence_ids": ["e-user-judgment", "e-baseline-plan", "e-behavior-tests"],
+        "causal_controls": ["summary_anchor", "single coupled control owner", "literal prompt order audit"]
+      },
+      {
+        "id": "inv-residual-continuity",
+        "statement": "Every coupled member is assessed exactly once, and each source-visible result classified partial or lost remains a literal residual subclause in the same coupled control.",
+        "evidence_ids": ["e-baseline-plan", "e-baseline-rejection", "e-behavior-tests"],
+        "causal_controls": ["summary_adequacy", "member_actuations", "at_risk_decision_ids", "residual excerpt containment"]
+      },
+      {
+        "id": "inv-no-overactuation",
+        "statement": "A sufficient summary emits no member residuals, and complete or not-applicable members remain non-emitted so detail cannot become a universal pose preset or duplicate salience.",
+        "evidence_ids": ["e-behavior-tests", "e-package"],
+        "causal_controls": ["sufficient verdict", "complete disposition", "not-applicable disposition", "one-owner gate"]
+      },
+      {
+        "id": "inv-no-case-default",
+        "statement": "Runtime rules contain no preferred centering, frontality, side, angle, body part, cue count, subject class, phrase, coordinate, or generator-specific workaround.",
+        "evidence_ids": ["e-behavior-tests", "e-package"],
+        "causal_controls": ["source-relative observations", "generic member ids", "human and non-human holdouts", "empty case-specific defaults"]
+      }
+    ],
+    "flexible_dimensions": [
+      "actual source direction and mirrored orientation",
+      "whether a coupled summary is sufficient, lossy, or uncertain",
+      "which and how many member relations remain at risk",
+      "human or non-human subject kind",
+      "literal source-supported wording and stochastic rendered pixels"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-summary-compression",
+      "scale": "global",
+      "axis": "analysis-to-prompt orientation continuity",
+      "source_state": "Several weak source-visible relations may jointly establish one macro direction while still carrying distinct residual information.",
+      "render_state": "The v3 aggregate-control rule proved one owner and one macro result but did not prove which member relations its compact summary preserved or erased.",
+      "evidence_ids": ["e-user-judgment", "e-baseline-plan"]
+    },
+    {
+      "id": "m-ownership-detail-tension",
+      "scale": "local",
+      "axis": "coupled control decomposition",
+      "source_state": "Material residual relations need literal actuation when a summary is lossy, but complete member results need no extra wording.",
+      "render_state": "The previous binary choice between one summary and separate member controls could either omit source detail or duplicate and over-amplify it.",
+      "evidence_ids": ["e-baseline-plan", "e-behavior-tests"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-summary-adequacy",
+      "stage": "representation",
+      "statement": "A coupled label or macro result is a lossy summary unless its coverage of every source-visible member result is explicitly assessed.",
+      "evidence_ids": ["e-user-judgment", "e-baseline-plan", "e-baseline-rejection"],
+      "falsifier": "Unrelated coupled-orientation cases retain all material member relations from a summary-only control without per-member coverage or residual actuation."
+    },
+    {
+      "id": "h-hierarchical-actuation",
+      "stage": "prompt-priority",
+      "statement": "Putting one macro summary first and only at-risk residuals immediately after it preserves global direction while avoiding both detail loss and duplicate control ownership.",
+      "evidence_ids": ["e-behavior-tests"],
+      "falsifier": "Held-out prompt or render comparisons show that the hierarchy systematically weakens macro direction, duplicates salience, or performs worse than summary-only and fully decomposed controls."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Use spatial-orientation/v4. An invariant coupled effect keeps one relation/effect/claim/control path; inside that control, write a source-relative summary anchor first, classify its adequacy, cover every member exactly once, and append literal residual subclauses only for partial or lost member results.",
+    "generalization_basis": "The rule operates on source-owned member ids, visible results, evidence, adequacy, and containment rather than any target direction or named pose. Sufficient, lossy, uncertain, partial, human, and non-human fixtures exercise opposite detail budgets without selecting a preferred output.",
+    "hypothesis_ids": ["h-summary-adequacy", "h-hierarchical-actuation"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-25-summary-residual-actuation-v4.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-baseline-rejection", "e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-behavior-tests"]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-summary-sufficient",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["sufficient macro summary", "complete members", "zero residual prose"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-summary-lossy",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["lossy macro summary", "at-risk subset", "residual containment", "summary-first order"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-summary-uncertain",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["uncertain adequacy", "partial member coverage", "uncertainty note", "supported residual preservation"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "heldout-subject-generality",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["human coupled orientation", "non-human coupled orientation", "source-relative member ids", "no preferred direction"],
+        "evidence_ids": ["e-behavior-tests"]
+      },
+      {
+        "id": "motivating-pose-generation",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["centered-frontal drift", "macro pose direction", "source-visible residual relations"],
+        "evidence_ids": ["e-user-judgment", "e-baseline-plan"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The candidate now rejects the exact v3 summary-only coupled plan and passes source-neutral fixtures for sufficient, lossy, uncertain, partial, duplicate, ordering, and non-human behavior. No independent post-change prompt generation or image render was performed in this apply-only turn, so pixel fidelity and post-change user preference remain unscored and the intervention is not promoted beyond structural implementation.",
+    "evidence_ids": ["e-baseline-rejection", "e-behavior-tests", "e-package"]
+  }
+}

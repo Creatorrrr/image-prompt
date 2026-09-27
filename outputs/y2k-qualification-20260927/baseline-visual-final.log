@@ -1,0 +1,76 @@
+test_prepack_visual_intent_is_hash_bound_and_source_grounded (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_prepack_visual_intent_is_hash_bound_and_source_grounded) ... FAIL
+test_registry_and_request_scoped_routing_fixture (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture) ... 
+  test_registry_and_request_scoped_routing_fixture (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture) (fixture='visual_obligation_routing_v1.jsonl', case='positive_inner_thigh_en') ... FAIL
+  test_registry_and_request_scoped_routing_fixture (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture) (fixture='visual_obligation_routing_v1.jsonl', case='candidate_contained_affect_components') ... FAIL
+  test_registry_and_request_scoped_routing_fixture (tests.test_photo_visual_obligations.PhotoVisualObligationTests.test_registry_and_request_scoped_routing_fixture) (fixture='visual_obligation_routing_v1.jsonl', case='positive_yandere_en') ... FAIL
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/compare_isolated_baseline.py", line 14, in <module>
+    names = json.loads(names_file.read_text())
+             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py", line 193, in test_registry_and_request_scoped_routing_fixture
+    self.assert_routing_fixture(ROUTING_FIXTURE_PATH)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/tests/test_photo_visual_obligations.py", line 115, in assert_routing_fixture
+    hard_matches = prompt_generator.candidate_pack_auto_visual_obligation_matches(
+        self.registry,
+        source_rows,
+    )
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12562, in candidate_pack_auto_visual_obligation_matches
+    resolution = resolve_visual_profile_hits(
+        registry,
+        source_rows,
+        adult_context=True,
+    )
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 11209, in resolve_visual_profile_hits
+    or candidate_pack_visual_component_match(profile, context_text)
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12619, in candidate_pack_visual_component_match
+    if any(
+       ^^^
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 12620, in <genexpr>
+    intent_alias_matches(text, str(term))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5471, in intent_alias_matches
+    if intent_term_is_negated(normalized_text, normalized_alias):
+       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/baseline-source/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 5457, in intent_term_is_negated
+    or re.search(japanese_suffix, lowered)
+       ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py", line 177, in search
+    return _compile(pattern, flags).search(string)
+           ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py", line 350, in _compile
+    p = _compiler.compile(pattern, flags)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py", line 762, in compile
+    p = _parser.parse(p, flags)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py", line 973, in parse
+    p = _parse_sub(source, state, flags & SRE_FLAG_VERBOSE, 0)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py", line 460, in _parse_sub
+    itemsappend(_parse(source, state, verbose, nested + 1,
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                       not nested and not items))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,200 @@
+{
+  "contract_version": "photo-candidate-exposure/v1",
+  "pack_id": "45b4dc93e9138bfd",
+  "source_pack_sha256": "3f149cf763133d01b4ba8e8a235c03c94d615df7e5d70e34bdc8da376fa4237d",
+  "compact_view_sha256": "8d4766c1a5895ff3abdd572cd81bc9705cb4b1f61ba3b13427948ceeea3e9d11",
+  "exposed_pc_candidates": [
+    {
+      "id": "visual-concept:pc_pc09_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/0",
+      "concept_terms": [
+        "the frame preserves all three nominated vertices and their spacing",
+        "triangular pose grouping",
+        "the subject sits on a visible supporting surface",
+        "seated triangular composition",
+        "the visible arm and leg joints connect plausibly between those vertices",
+        "앉아서 만드는 삼각형",
+        "the face elbow and knee define three separated triangle vertices"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc17_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/2",
+      "concept_terms": [
+        "타인의 어깨 너머 주인공",
+        "another person shoulder forms a partial near-plane silhouette",
+        "over-the-shoulder shot",
+        "the main face receives the requested focus priority over the foreground shoulder",
+        "the main response relates to the companion position indicated by the near shoulder",
+        "OTS portrait",
+        "the camera observes the main face beyond that secondary shoulder"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc12_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/4",
+      "concept_terms": [
+        "hands framing the face",
+        "the wrist elbow and shoulder connect plausibly through the framing gesture",
+        "팔과 손으로 얼굴 주위 공간 만들기",
+        "the requested expression-bearing facial region remains readable through the opening",
+        "the face lies within a readable opening formed by that arm or hand",
+        "arm framing",
+        "the subject own arm or hand arcs around the face perimeter"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc16_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/5",
+      "concept_terms": [
+        "the near object leaves the requested facial expression region readable",
+        "offering gesture",
+        "카메라 쪽으로 건네기",
+        "the offered hand or object occupies a nearer plane than the face",
+        "reaching toward camera",
+        "the offered object follows the visible subject hand contact",
+        "the subject attached hand extends toward the camera position"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc18_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/6",
+      "concept_terms": [
+        "companion hands-only portrait",
+        "a secondary person hand enters from a traceable frame edge",
+        "that hand contacts or transfers the specified garment or small object",
+        "cropped companion interaction",
+        "the secondary hand stays subordinate while the main face remains readable",
+        "the main subject reaction relates to the same visible contact or transfer",
+        "타인의 손만 보이는 상호작용"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "visual-concept:pc_pc03_owner_relation",
+      "source_pointer": "/visual_concept_candidates/candidates/7",
+      "concept_terms": [
+        "the subject hands rest or act on the visible tabletop with plausible contact",
+        "a near table edge separates the camera position from the seated subject",
+        "맞은편 테이블 구도",
+        "table companion perspective",
+        "the subject face remains above the near table plane at readable scale",
+        "across-the-table portrait",
+        "table objects occupy supporting regions around the primary face"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "hybrid_visual_profile_resolution"
+      }
+    },
+    {
+      "id": "slot:hand_pose:pc_pc12_component_1",
+      "source_pointer": "/slots/hand_pose/candidates/0",
+      "concept_terms": [
+        "the subject own arm or hand arcs around the face perimeter"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "sampler_eligible_pool",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "slot": "hand_pose",
+      "concept_units": [
+        "the subject own arm or hand arcs around the face perimeter"
+      ],
+      "relations": [
+        {
+          "id": "pc_pc12_component_1_owner",
+          "type": "declared_owner_scope",
+          "subject": "subject own hand and face",
+          "object": "the requester-supported main portrait and frame"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    },
+    {
+      "id": "slot:body_orientation:pc_px01_component_2",
+      "source_pointer": "/slots/body_orientation/candidates/0",
+      "concept_terms": [
+        "the facial direction is specified independently of that crop endpoint"
+      ],
+      "applicability": {
+        "status": "eligible",
+        "source": "sampler_eligible_pool",
+        "reason": null
+      },
+      "conflicts_with": [],
+      "affected_dimensions": [
+        "pose"
+      ],
+      "slot": "body_orientation",
+      "concept_units": [
+        "the facial direction is specified independently of that crop endpoint"
+      ],
+      "relations": [
+        {
+          "id": "pc_px01_component_2_owner",
+          "type": "declared_owner_scope",
+          "subject": "main face",
+          "object": "the requester-supported main portrait and frame"
+        }
+      ],
+      "adoption": "optional",
+      "semantic_surface_version": "photo-candidate-semantic-surface/v1"
+    }
+  ],
+  "chosen_pc_visual_concepts": [
+    "visual-concept:pc_pc03_owner_relation",
+    "visual-concept:pc_pc16_owner_relation",
+    "visual-concept:pc_pc17_owner_relation"
+  ],
+  "chosen_pc_slot_candidates": [],
+  "selected_detail_view_sha256": "f5faefd222a8c8a0628490893d66d3813649e5ccae2d26581903f486d30d5adb",
+  "selected_prompt_evidence": {
+    "pc_pc03_owner_relation": {
+      "component_1_phrase": "a near table edge separates the camera position from the seated subject",
+      "component_2_phrase": "the subject face remains above the near table plane at readable scale",
+      "component_3_phrase": "the subject hands rest or act on the visible tabletop with plausible contact",
+      "component_4_phrase": "table objects occupy supporting regions around the primary face"
+    },
+    "pc_pc16_owner_relation": {
+      "component_1_phrase": "the subject attached hand extends toward the camera position",
+      "component_2_phrase": "the offered object follows the visible subject hand contact",
+      "component_3_phrase": "the offered hand or object occupies a nearer plane than the face",
+      "component_4_phrase": "the near object leaves the requested facial expression region readable"
+    },
+    "pc_pc17_owner_relation": {
+      "component_1_phrase": "another person shoulder forms a partial near-plane silhouette",
+      "component_2_phrase": "the camera observes the main face beyond that secondary shoulder",
+      "component_3_phrase": "the main response relates to the companion position indicated by the near shoulder",
+      "component_4_phrase": "the main face receives the requested focus priority over the foreground shoulder"
+    }
+  },
+  "forced_candidate_selection": false,
+  "retrieval_diagnostic_needed": false,
+  "note": "The three relevant new pc visual concepts were actually exposed normally. Unrelated pc slot concepts were not selected."
+}

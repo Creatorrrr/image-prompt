@@ -1,0 +1,1947 @@
+{
+  "schema_version": "photo-visual-obligation-registry-extension/v1",
+  "relation_contract_version": "photo-visual-relation/v1",
+  "description": "Research draft, not installed; narrow requester-supported portrait relations.",
+  "profiles": [
+    {
+      "id": "pc_pc02_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the torso and shoulder plane turn obliquely to the camera; the head turns back toward the camera relative to the torso; the visible eyes address the lens while the shoulders remain oblique; neck and shoulder connections remain continuous through the turn"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the torso and shoulder plane turn obliquely to the camera; the head turns back toward the camera relative to the torso; the visible eyes address the lens while the shoulders remain oblique; neck and shoulder connections remain continuous through the turn",
+        "paraphrase_examples": [
+          "몸은 사선, 얼굴은 카메라 쪽",
+          "angled shoulders facing camera",
+          "three-quarter body angle"
+        ],
+        "contrast_examples": [
+          "three-quarter-length는 촬영 범위이다.",
+          "얼굴과 몸이 함께 측면으로 향하는 사진은 다르다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸은 사선, 얼굴은 카메라 쪽",
+          "angled shoulders facing camera",
+          "three-quarter body angle",
+          "the torso and shoulder plane turn obliquely to the camera",
+          "the head turns back toward the camera relative to the torso",
+          "the visible eyes address the lens while the shoulders remain oblique",
+          "neck and shoulder connections remain continuous through the turn"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "three-quarter-length는 촬영 범위이다.",
+        "얼굴과 몸이 함께 측면으로 향하는 사진은 다르다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the torso and shoulder plane turn obliquely to the camera"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the torso and shoulder plane turn obliquely to the camera"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the torso and shoulder plane turn obliquely to the camera",
+            "render_gate": {
+              "id": "vo_pc_pc02_owner_relation_1",
+              "review_scale": "both",
+              "description": "the torso and shoulder plane turn obliquely to the camera. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the head turns back toward the camera relative to the torso"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the head turns back toward the camera relative to the torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the head turns back toward the camera relative to the torso",
+            "render_gate": {
+              "id": "vo_pc_pc02_owner_relation_2",
+              "review_scale": "both",
+              "description": "the head turns back toward the camera relative to the torso. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the visible eyes address the lens while the shoulders remain oblique"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the visible eyes address the lens while the shoulders remain oblique"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the visible eyes address the lens while the shoulders remain oblique",
+            "render_gate": {
+              "id": "vo_pc_pc02_owner_relation_3",
+              "review_scale": "both",
+              "description": "the visible eyes address the lens while the shoulders remain oblique. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "neck and shoulder connections remain continuous through the turn"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "neck and shoulder connections remain continuous through the turn"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: neck and shoulder connections remain continuous through the turn",
+            "render_gate": {
+              "id": "vo_pc_pc02_owner_relation_4",
+              "review_scale": "both",
+              "description": "neck and shoulder connections remain continuous through the turn. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc03_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a near table edge separates the camera position from the seated subject; the subject face remains above the near table plane at readable scale; the subject hands rest or act on the visible tabletop with plausible contact; table objects occupy supporting regions around the primary face"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a near table edge separates the camera position from the seated subject; the subject face remains above the near table plane at readable scale; the subject hands rest or act on the visible tabletop with plausible contact; table objects occupy supporting regions around the primary face",
+        "paraphrase_examples": [
+          "맞은편 테이블 구도",
+          "across-the-table portrait",
+          "table companion perspective"
+        ],
+        "contrast_examples": [
+          "카페 배경만 있거나 탑다운 음식 사진인 경우",
+          "실제 연애 관계·친밀한 성격의 증거로 사용"
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "맞은편 테이블 구도",
+          "across-the-table portrait",
+          "table companion perspective",
+          "a near table edge separates the camera position from the seated subject",
+          "the subject face remains above the near table plane at readable scale",
+          "the subject hands rest or act on the visible tabletop with plausible contact",
+          "table objects occupy supporting regions around the primary face"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "카페 배경만 있거나 탑다운 음식 사진인 경우",
+        "실제 연애 관계·친밀한 성격의 증거로 사용"
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a near table edge separates the camera position from the seated subject"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a near table edge separates the camera position from the seated subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a near table edge separates the camera position from the seated subject",
+            "render_gate": {
+              "id": "vo_pc_pc03_owner_relation_1",
+              "review_scale": "both",
+              "description": "a near table edge separates the camera position from the seated subject. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the subject face remains above the near table plane at readable scale"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the subject face remains above the near table plane at readable scale"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject face remains above the near table plane at readable scale",
+            "render_gate": {
+              "id": "vo_pc_pc03_owner_relation_2",
+              "review_scale": "both",
+              "description": "the subject face remains above the near table plane at readable scale. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the subject hands rest or act on the visible tabletop with plausible contact"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the subject hands rest or act on the visible tabletop with plausible contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject hands rest or act on the visible tabletop with plausible contact",
+            "render_gate": {
+              "id": "vo_pc_pc03_owner_relation_3",
+              "review_scale": "both",
+              "description": "the subject hands rest or act on the visible tabletop with plausible contact. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "table objects occupy supporting regions around the primary face"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "table objects occupy supporting regions around the primary face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: table objects occupy supporting regions around the primary face",
+            "render_gate": {
+              "id": "vo_pc_pc03_owner_relation_4",
+              "review_scale": "both",
+              "description": "table objects occupy supporting regions around the primary face. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc09_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the subject sits on a visible supporting surface; the face elbow and knee define three separated triangle vertices; the visible arm and leg joints connect plausibly between those vertices; the frame preserves all three nominated vertices and their spacing"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the subject sits on a visible supporting surface; the face elbow and knee define three separated triangle vertices; the visible arm and leg joints connect plausibly between those vertices; the frame preserves all three nominated vertices and their spacing",
+        "paraphrase_examples": [
+          "앉아서 만드는 삼각형",
+          "seated triangular composition",
+          "triangular pose grouping"
+        ],
+        "contrast_examples": [
+          "삼각 무늬나 세 인물의 배치가 대체하지 않는다.",
+          "신체 내부 여백의 삼각형과 세 점의 배치는 다르다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "앉아서 만드는 삼각형",
+          "seated triangular composition",
+          "triangular pose grouping",
+          "the subject sits on a visible supporting surface",
+          "the face elbow and knee define three separated triangle vertices",
+          "the visible arm and leg joints connect plausibly between those vertices",
+          "the frame preserves all three nominated vertices and their spacing"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "삼각 무늬나 세 인물의 배치가 대체하지 않는다.",
+        "신체 내부 여백의 삼각형과 세 점의 배치는 다르다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the subject sits on a visible supporting surface"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the subject sits on a visible supporting surface"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject sits on a visible supporting surface",
+            "render_gate": {
+              "id": "vo_pc_pc09_owner_relation_1",
+              "review_scale": "both",
+              "description": "the subject sits on a visible supporting surface. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the face elbow and knee define three separated triangle vertices"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the face elbow and knee define three separated triangle vertices"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the face elbow and knee define three separated triangle vertices",
+            "render_gate": {
+              "id": "vo_pc_pc09_owner_relation_2",
+              "review_scale": "both",
+              "description": "the face elbow and knee define three separated triangle vertices. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the visible arm and leg joints connect plausibly between those vertices"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the visible arm and leg joints connect plausibly between those vertices"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the visible arm and leg joints connect plausibly between those vertices",
+            "render_gate": {
+              "id": "vo_pc_pc09_owner_relation_3",
+              "review_scale": "both",
+              "description": "the visible arm and leg joints connect plausibly between those vertices. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the frame preserves all three nominated vertices and their spacing"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the frame preserves all three nominated vertices and their spacing"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the frame preserves all three nominated vertices and their spacing",
+            "render_gate": {
+              "id": "vo_pc_pc09_owner_relation_4",
+              "review_scale": "both",
+              "description": "the frame preserves all three nominated vertices and their spacing. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc10_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a seat sofa or wall visibly supports the reclining torso; the shoulder-to-pelvis body axis crosses the image diagonally; stable environmental reference lines retain the intended level camera roll; the face remains readable near one end of the diagonal body path"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a seat sofa or wall visibly supports the reclining torso; the shoulder-to-pelvis body axis crosses the image diagonally; stable environmental reference lines retain the intended level camera roll; the face remains readable near one end of the diagonal body path",
+        "paraphrase_examples": [
+          "몸이 가로지르는 대각선",
+          "diagonal reclining portrait",
+          "diagonal body axis"
+        ],
+        "contrast_examples": [
+          "더치 앵글은 몸이 아니라 카메라 회전이다.",
+          "지지 없이 공중에 누운 형상은 실패한다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "몸이 가로지르는 대각선",
+          "diagonal reclining portrait",
+          "diagonal body axis",
+          "a seat sofa or wall visibly supports the reclining torso",
+          "the shoulder-to-pelvis body axis crosses the image diagonally",
+          "stable environmental reference lines retain the intended level camera roll",
+          "the face remains readable near one end of the diagonal body path"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "더치 앵글은 몸이 아니라 카메라 회전이다.",
+        "지지 없이 공중에 누운 형상은 실패한다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a seat sofa or wall visibly supports the reclining torso"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a seat sofa or wall visibly supports the reclining torso"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a seat sofa or wall visibly supports the reclining torso",
+            "render_gate": {
+              "id": "vo_pc_pc10_owner_relation_1",
+              "review_scale": "both",
+              "description": "a seat sofa or wall visibly supports the reclining torso. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the shoulder-to-pelvis body axis crosses the image diagonally"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the shoulder-to-pelvis body axis crosses the image diagonally"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the shoulder-to-pelvis body axis crosses the image diagonally",
+            "render_gate": {
+              "id": "vo_pc_pc10_owner_relation_2",
+              "review_scale": "both",
+              "description": "the shoulder-to-pelvis body axis crosses the image diagonally. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "stable environmental reference lines retain the intended level camera roll"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "stable environmental reference lines retain the intended level camera roll"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: stable environmental reference lines retain the intended level camera roll",
+            "render_gate": {
+              "id": "vo_pc_pc10_owner_relation_3",
+              "review_scale": "both",
+              "description": "stable environmental reference lines retain the intended level camera roll. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the face remains readable near one end of the diagonal body path"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the face remains readable near one end of the diagonal body path"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the face remains readable near one end of the diagonal body path",
+            "render_gate": {
+              "id": "vo_pc_pc10_owner_relation_4",
+              "review_scale": "both",
+              "description": "the face remains readable near one end of the diagonal body path. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc12_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the subject own arm or hand arcs around the face perimeter; the face lies within a readable opening formed by that arm or hand; the wrist elbow and shoulder connect plausibly through the framing gesture; the requested expression-bearing facial region remains readable through the opening"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the subject own arm or hand arcs around the face perimeter; the face lies within a readable opening formed by that arm or hand; the wrist elbow and shoulder connect plausibly through the framing gesture; the requested expression-bearing facial region remains readable through the opening",
+        "paraphrase_examples": [
+          "팔과 손으로 얼굴 주위 공간 만들기",
+          "arm framing",
+          "hands framing the face"
+        ],
+        "contrast_examples": [
+          "눈을 막는 손과 얼굴 주변의 프레이밍은 별개다.",
+          "화면 밖 타인의 손을 주인공의 손으로 혼동하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "팔과 손으로 얼굴 주위 공간 만들기",
+          "arm framing",
+          "hands framing the face",
+          "the subject own arm or hand arcs around the face perimeter",
+          "the face lies within a readable opening formed by that arm or hand",
+          "the wrist elbow and shoulder connect plausibly through the framing gesture",
+          "the requested expression-bearing facial region remains readable through the opening"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "눈을 막는 손과 얼굴 주변의 프레이밍은 별개다.",
+        "화면 밖 타인의 손을 주인공의 손으로 혼동하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the subject own arm or hand arcs around the face perimeter"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the subject own arm or hand arcs around the face perimeter"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject own arm or hand arcs around the face perimeter",
+            "render_gate": {
+              "id": "vo_pc_pc12_owner_relation_1",
+              "review_scale": "both",
+              "description": "the subject own arm or hand arcs around the face perimeter. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the face lies within a readable opening formed by that arm or hand"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the face lies within a readable opening formed by that arm or hand"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the face lies within a readable opening formed by that arm or hand",
+            "render_gate": {
+              "id": "vo_pc_pc12_owner_relation_2",
+              "review_scale": "both",
+              "description": "the face lies within a readable opening formed by that arm or hand. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the wrist elbow and shoulder connect plausibly through the framing gesture"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the wrist elbow and shoulder connect plausibly through the framing gesture"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the wrist elbow and shoulder connect plausibly through the framing gesture",
+            "render_gate": {
+              "id": "vo_pc_pc12_owner_relation_3",
+              "review_scale": "both",
+              "description": "the wrist elbow and shoulder connect plausibly through the framing gesture. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the requested expression-bearing facial region remains readable through the opening"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the requested expression-bearing facial region remains readable through the opening"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the requested expression-bearing facial region remains readable through the opening",
+            "render_gate": {
+              "id": "vo_pc_pc12_owner_relation_4",
+              "review_scale": "native",
+              "description": "the requested expression-bearing facial region remains readable through the opening. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc16_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the subject attached hand extends toward the camera position; the offered object follows the visible subject hand contact; the offered hand or object occupies a nearer plane than the face; the near object leaves the requested facial expression region readable"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the subject attached hand extends toward the camera position; the offered object follows the visible subject hand contact; the offered hand or object occupies a nearer plane than the face; the near object leaves the requested facial expression region readable",
+        "paraphrase_examples": [
+          "카메라 쪽으로 건네기",
+          "offering gesture",
+          "reaching toward camera"
+        ],
+        "contrast_examples": [
+          "카메라를 잡은 셀피 팔과 구분한다.",
+          "프레임 밖 관객의 손을 주인공의 팔로 연결하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "카메라 쪽으로 건네기",
+          "offering gesture",
+          "reaching toward camera",
+          "the subject attached hand extends toward the camera position",
+          "the offered object follows the visible subject hand contact",
+          "the offered hand or object occupies a nearer plane than the face",
+          "the near object leaves the requested facial expression region readable"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "카메라를 잡은 셀피 팔과 구분한다.",
+        "프레임 밖 관객의 손을 주인공의 팔로 연결하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the subject attached hand extends toward the camera position"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the subject attached hand extends toward the camera position"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject attached hand extends toward the camera position",
+            "render_gate": {
+              "id": "vo_pc_pc16_owner_relation_1",
+              "review_scale": "both",
+              "description": "the subject attached hand extends toward the camera position. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the offered object follows the visible subject hand contact"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the offered object follows the visible subject hand contact"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the offered object follows the visible subject hand contact",
+            "render_gate": {
+              "id": "vo_pc_pc16_owner_relation_2",
+              "review_scale": "native",
+              "description": "the offered object follows the visible subject hand contact. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the offered hand or object occupies a nearer plane than the face"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the offered hand or object occupies a nearer plane than the face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the offered hand or object occupies a nearer plane than the face",
+            "render_gate": {
+              "id": "vo_pc_pc16_owner_relation_3",
+              "review_scale": "both",
+              "description": "the offered hand or object occupies a nearer plane than the face. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the near object leaves the requested facial expression region readable"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the near object leaves the requested facial expression region readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the near object leaves the requested facial expression region readable",
+            "render_gate": {
+              "id": "vo_pc_pc16_owner_relation_4",
+              "review_scale": "both",
+              "description": "the near object leaves the requested facial expression region readable. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc17_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "another person shoulder forms a partial near-plane silhouette; the camera observes the main face beyond that secondary shoulder; the main response relates to the companion position indicated by the near shoulder; the main face receives the requested focus priority over the foreground shoulder"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "another person shoulder forms a partial near-plane silhouette; the camera observes the main face beyond that secondary shoulder; the main response relates to the companion position indicated by the near shoulder; the main face receives the requested focus priority over the foreground shoulder",
+        "paraphrase_examples": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait"
+        ],
+        "contrast_examples": [
+          "주인공 자신의 돌아보는 어깨가 아니다.",
+          "어깨가 아니라 의자·소품 전경인 경우는 별도이다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "타인의 어깨 너머 주인공",
+          "over-the-shoulder shot",
+          "OTS portrait",
+          "another person shoulder forms a partial near-plane silhouette",
+          "the camera observes the main face beyond that secondary shoulder",
+          "the main response relates to the companion position indicated by the near shoulder",
+          "the main face receives the requested focus priority over the foreground shoulder"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "주인공 자신의 돌아보는 어깨가 아니다.",
+        "어깨가 아니라 의자·소품 전경인 경우는 별도이다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "another person shoulder forms a partial near-plane silhouette"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "another person shoulder forms a partial near-plane silhouette"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: another person shoulder forms a partial near-plane silhouette",
+            "render_gate": {
+              "id": "vo_pc_pc17_owner_relation_1",
+              "review_scale": "both",
+              "description": "another person shoulder forms a partial near-plane silhouette. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the camera observes the main face beyond that secondary shoulder"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the camera observes the main face beyond that secondary shoulder"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the camera observes the main face beyond that secondary shoulder",
+            "render_gate": {
+              "id": "vo_pc_pc17_owner_relation_2",
+              "review_scale": "both",
+              "description": "the camera observes the main face beyond that secondary shoulder. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the main response relates to the companion position indicated by the near shoulder"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the main response relates to the companion position indicated by the near shoulder"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the main response relates to the companion position indicated by the near shoulder",
+            "render_gate": {
+              "id": "vo_pc_pc17_owner_relation_3",
+              "review_scale": "both",
+              "description": "the main response relates to the companion position indicated by the near shoulder. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the main face receives the requested focus priority over the foreground shoulder"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the main face receives the requested focus priority over the foreground shoulder"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the main face receives the requested focus priority over the foreground shoulder",
+            "render_gate": {
+              "id": "vo_pc_pc17_owner_relation_4",
+              "review_scale": "native",
+              "description": "the main face receives the requested focus priority over the foreground shoulder. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc18_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a secondary person hand enters from a traceable frame edge; that hand contacts or transfers the specified garment or small object; the main subject reaction relates to the same visible contact or transfer; the secondary hand stays subordinate while the main face remains readable"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a secondary person hand enters from a traceable frame edge; that hand contacts or transfers the specified garment or small object; the main subject reaction relates to the same visible contact or transfer; the secondary hand stays subordinate while the main face remains readable",
+        "paraphrase_examples": [
+          "타인의 손만 보이는 상호작용",
+          "cropped companion interaction",
+          "companion hands-only portrait"
+        ],
+        "contrast_examples": [
+          "떠 있는 손·주인공의 세 번째 팔·자기 옷깃 조정과 구분한다.",
+          "손만 등장했다고 연인·친구·동의를 추론하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "타인의 손만 보이는 상호작용",
+          "cropped companion interaction",
+          "companion hands-only portrait",
+          "a secondary person hand enters from a traceable frame edge",
+          "that hand contacts or transfers the specified garment or small object",
+          "the main subject reaction relates to the same visible contact or transfer",
+          "the secondary hand stays subordinate while the main face remains readable"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "떠 있는 손·주인공의 세 번째 팔·자기 옷깃 조정과 구분한다.",
+        "손만 등장했다고 연인·친구·동의를 추론하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a secondary person hand enters from a traceable frame edge"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a secondary person hand enters from a traceable frame edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a secondary person hand enters from a traceable frame edge",
+            "render_gate": {
+              "id": "vo_pc_pc18_owner_relation_1",
+              "review_scale": "both",
+              "description": "a secondary person hand enters from a traceable frame edge. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "that hand contacts or transfers the specified garment or small object"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "that hand contacts or transfers the specified garment or small object"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: that hand contacts or transfers the specified garment or small object",
+            "render_gate": {
+              "id": "vo_pc_pc18_owner_relation_2",
+              "review_scale": "native",
+              "description": "that hand contacts or transfers the specified garment or small object. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the main subject reaction relates to the same visible contact or transfer"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the main subject reaction relates to the same visible contact or transfer"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the main subject reaction relates to the same visible contact or transfer",
+            "render_gate": {
+              "id": "vo_pc_pc18_owner_relation_3",
+              "review_scale": "both",
+              "description": "the main subject reaction relates to the same visible contact or transfer. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the secondary hand stays subordinate while the main face remains readable"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the secondary hand stays subordinate while the main face remains readable"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the secondary hand stays subordinate while the main face remains readable",
+            "render_gate": {
+              "id": "vo_pc_pc18_owner_relation_4",
+              "review_scale": "both",
+              "description": "the secondary hand stays subordinate while the main face remains readable. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc19_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a scene-owned near object occupies a peripheral foreground region; that near object remains softer than the resolved main face; a clear opening through the foreground reveals the intended face region; overlap and softness separate foreground subject and farther setting"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a scene-owned near object occupies a peripheral foreground region; that near object remains softer than the resolved main face; a clear opening through the foreground reveals the intended face region; overlap and softness separate foreground subject and farther setting",
+        "paraphrase_examples": [
+          "흐릿한 전경 사이 얼굴",
+          "foreground framing",
+          "foreground bokeh portrait"
+        ],
+        "contrast_examples": [
+          "배경 보케만 있는 사진·디지털 비네팅과 구분한다.",
+          "부드러움이 눈·표정을 덮으면 목적에 실패한다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "흐릿한 전경 사이 얼굴",
+          "foreground framing",
+          "foreground bokeh portrait",
+          "a scene-owned near object occupies a peripheral foreground region",
+          "that near object remains softer than the resolved main face",
+          "a clear opening through the foreground reveals the intended face region",
+          "overlap and softness separate foreground subject and farther setting"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "배경 보케만 있는 사진·디지털 비네팅과 구분한다.",
+        "부드러움이 눈·표정을 덮으면 목적에 실패한다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a scene-owned near object occupies a peripheral foreground region"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a scene-owned near object occupies a peripheral foreground region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a scene-owned near object occupies a peripheral foreground region",
+            "render_gate": {
+              "id": "vo_pc_pc19_owner_relation_1",
+              "review_scale": "both",
+              "description": "a scene-owned near object occupies a peripheral foreground region. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "that near object remains softer than the resolved main face"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "that near object remains softer than the resolved main face"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: that near object remains softer than the resolved main face",
+            "render_gate": {
+              "id": "vo_pc_pc19_owner_relation_2",
+              "review_scale": "native",
+              "description": "that near object remains softer than the resolved main face. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a clear opening through the foreground reveals the intended face region"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a clear opening through the foreground reveals the intended face region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a clear opening through the foreground reveals the intended face region",
+            "render_gate": {
+              "id": "vo_pc_pc19_owner_relation_3",
+              "review_scale": "both",
+              "description": "a clear opening through the foreground reveals the intended face region. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "overlap and softness separate foreground subject and farther setting"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "overlap and softness separate foreground subject and farther setting"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: overlap and softness separate foreground subject and farther setting",
+            "render_gate": {
+              "id": "vo_pc_pc19_owner_relation_4",
+              "review_scale": "both",
+              "description": "overlap and softness separate foreground subject and farther setting. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc21_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a visible pane edge or frame locates the glass plane between camera and subject; the subject face is seen through the pane in the transmitted scene; a restrained exterior reflection overlays a distinct region of the pane; the transmitted expression-bearing face remains readable through the layered pane"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a visible pane edge or frame locates the glass plane between camera and subject; the subject face is seen through the pane in the transmitted scene; a restrained exterior reflection overlays a distinct region of the pane; the transmitted expression-bearing face remains readable through the layered pane",
+        "paraphrase_examples": [
+          "유리 너머 얼굴과 도시 반사",
+          "through-glass portrait",
+          "window reflection portrait"
+        ],
+        "contrast_examples": [
+          "평면거울 속 얼굴·이중노출·비닐 필름 흐림과 구분한다.",
+          "창문 반사만으로 도시 위치·특정 장소를 확정하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "유리 너머 얼굴과 도시 반사",
+          "through-glass portrait",
+          "window reflection portrait",
+          "a visible pane edge or frame locates the glass plane between camera and subject",
+          "the subject face is seen through the pane in the transmitted scene",
+          "a restrained exterior reflection overlays a distinct region of the pane",
+          "the transmitted expression-bearing face remains readable through the layered pane"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "평면거울 속 얼굴·이중노출·비닐 필름 흐림과 구분한다.",
+        "창문 반사만으로 도시 위치·특정 장소를 확정하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a visible pane edge or frame locates the glass plane between camera and subject"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a visible pane edge or frame locates the glass plane between camera and subject"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a visible pane edge or frame locates the glass plane between camera and subject",
+            "render_gate": {
+              "id": "vo_pc_pc21_owner_relation_1",
+              "review_scale": "both",
+              "description": "a visible pane edge or frame locates the glass plane between camera and subject. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the subject face is seen through the pane in the transmitted scene"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the subject face is seen through the pane in the transmitted scene"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject face is seen through the pane in the transmitted scene",
+            "render_gate": {
+              "id": "vo_pc_pc21_owner_relation_2",
+              "review_scale": "both",
+              "description": "the subject face is seen through the pane in the transmitted scene. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a restrained exterior reflection overlays a distinct region of the pane"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a restrained exterior reflection overlays a distinct region of the pane"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a restrained exterior reflection overlays a distinct region of the pane",
+            "render_gate": {
+              "id": "vo_pc_pc21_owner_relation_3",
+              "review_scale": "both",
+              "description": "a restrained exterior reflection overlays a distinct region of the pane. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the transmitted expression-bearing face remains readable through the layered pane"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the transmitted expression-bearing face remains readable through the layered pane"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the transmitted expression-bearing face remains readable through the layered pane",
+            "render_gate": {
+              "id": "vo_pc_pc21_owner_relation_4",
+              "review_scale": "native",
+              "description": "the transmitted expression-bearing face remains readable through the layered pane. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc22_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a physical mirror boundary contains a reflected face in one coherent view; the reflected face receives the primary visual emphasis; a partial direct body view corresponds plausibly to that reflection; the reflected eye or expression region remains resolved within the visible mirror boundary"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a physical mirror boundary contains a reflected face in one coherent view; the reflected face receives the primary visual emphasis; a partial direct body view corresponds plausibly to that reflection; the reflected eye or expression region remains resolved within the visible mirror boundary",
+        "paraphrase_examples": [
+          "거울 속 얼굴이 주인공",
+          "mirror-led portrait",
+          "reflected face as main subject"
+        ],
+        "contrast_examples": [
+          "거울 셀피는 휴대폰의 주체·접촉·반사까지 요구하는 다른 계약이다.",
+          "유령·지연 반사·이중 자아 라우트가 섞이면 실패한다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "거울 속 얼굴이 주인공",
+          "mirror-led portrait",
+          "reflected face as main subject",
+          "a physical mirror boundary contains a reflected face in one coherent view",
+          "the reflected face receives the primary visual emphasis",
+          "a partial direct body view corresponds plausibly to that reflection",
+          "the reflected eye or expression region remains resolved within the visible mirror boundary"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "거울 셀피는 휴대폰의 주체·접촉·반사까지 요구하는 다른 계약이다.",
+        "유령·지연 반사·이중 자아 라우트가 섞이면 실패한다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a physical mirror boundary contains a reflected face in one coherent view"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a physical mirror boundary contains a reflected face in one coherent view"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a physical mirror boundary contains a reflected face in one coherent view",
+            "render_gate": {
+              "id": "vo_pc_pc22_owner_relation_1",
+              "review_scale": "both",
+              "description": "a physical mirror boundary contains a reflected face in one coherent view. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the reflected face receives the primary visual emphasis"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the reflected face receives the primary visual emphasis"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the reflected face receives the primary visual emphasis",
+            "render_gate": {
+              "id": "vo_pc_pc22_owner_relation_2",
+              "review_scale": "both",
+              "description": "the reflected face receives the primary visual emphasis. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a partial direct body view corresponds plausibly to that reflection"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a partial direct body view corresponds plausibly to that reflection"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a partial direct body view corresponds plausibly to that reflection",
+            "render_gate": {
+              "id": "vo_pc_pc22_owner_relation_3",
+              "review_scale": "both",
+              "description": "a partial direct body view corresponds plausibly to that reflection. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the reflected eye or expression region remains resolved within the visible mirror boundary"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the reflected eye or expression region remains resolved within the visible mirror boundary"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the reflected eye or expression region remains resolved within the visible mirror boundary",
+            "render_gate": {
+              "id": "vo_pc_pc22_owner_relation_4",
+              "review_scale": "native",
+              "description": "the reflected eye or expression region remains resolved within the visible mirror boundary. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc23_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a visible hand supports one small mirror at plausible contact points; the mirror boundary encloses the selected reflected face region; the reflected expression remains readable at the mirror image scale; the reflected face and direct surroundings retain a coherent focus hierarchy"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a visible hand supports one small mirror at plausible contact points; the mirror boundary encloses the selected reflected face region; the reflected expression remains readable at the mirror image scale; the reflected face and direct surroundings retain a coherent focus hierarchy",
+        "paraphrase_examples": [
+          "작은 손거울 안의 얼굴",
+          "handheld mirror portrait",
+          "selective face reflection"
+        ],
+        "contrast_examples": [
+          "손거울이 보여도 얼굴 반사가 없으면 실패한다.",
+          "눈 한 조각만 요청한 경우 표정 전체를 요구하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "작은 손거울 안의 얼굴",
+          "handheld mirror portrait",
+          "selective face reflection",
+          "a visible hand supports one small mirror at plausible contact points",
+          "the mirror boundary encloses the selected reflected face region",
+          "the reflected expression remains readable at the mirror image scale",
+          "the reflected face and direct surroundings retain a coherent focus hierarchy"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "손거울이 보여도 얼굴 반사가 없으면 실패한다.",
+        "눈 한 조각만 요청한 경우 표정 전체를 요구하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a visible hand supports one small mirror at plausible contact points"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a visible hand supports one small mirror at plausible contact points"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a visible hand supports one small mirror at plausible contact points",
+            "render_gate": {
+              "id": "vo_pc_pc23_owner_relation_1",
+              "review_scale": "native",
+              "description": "a visible hand supports one small mirror at plausible contact points. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the mirror boundary encloses the selected reflected face region"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the mirror boundary encloses the selected reflected face region"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the mirror boundary encloses the selected reflected face region",
+            "render_gate": {
+              "id": "vo_pc_pc23_owner_relation_2",
+              "review_scale": "both",
+              "description": "the mirror boundary encloses the selected reflected face region. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the reflected expression remains readable at the mirror image scale"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the reflected expression remains readable at the mirror image scale"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the reflected expression remains readable at the mirror image scale",
+            "render_gate": {
+              "id": "vo_pc_pc23_owner_relation_3",
+              "review_scale": "both",
+              "description": "the reflected expression remains readable at the mirror image scale. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the reflected face and direct surroundings retain a coherent focus hierarchy"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the reflected face and direct surroundings retain a coherent focus hierarchy"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the reflected face and direct surroundings retain a coherent focus hierarchy",
+            "render_gate": {
+              "id": "vo_pc_pc23_owner_relation_4",
+              "review_scale": "native",
+              "description": "the reflected face and direct surroundings retain a coherent focus hierarchy. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc24_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "a localized peripheral region shows refracted displacement or spectral separation; the optical effect remains near a chosen image edge; the central requested facial features remain coherent and resolved; the shifted edge detail remains connected to the same scene or light source"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "a localized peripheral region shows refracted displacement or spectral separation; the optical effect remains near a chosen image edge; the central requested facial features remain coherent and resolved; the shifted edge detail remains connected to the same scene or light source",
+        "paraphrase_examples": [
+          "가장자리 프리즘·굴절",
+          "edge refraction portrait",
+          "prism edge effect"
+        ],
+        "contrast_examples": [
+          "얼굴 전체 분해·무지개 조명만 있는 사진·원인 없는 복제와 구분한다.",
+          "굴절 결과는 관찰 가능하지만 실제 프리즘 장비 사용은 메타데이터이다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "가장자리 프리즘·굴절",
+          "edge refraction portrait",
+          "prism edge effect",
+          "a localized peripheral region shows refracted displacement or spectral separation",
+          "the optical effect remains near a chosen image edge",
+          "the central requested facial features remain coherent and resolved",
+          "the shifted edge detail remains connected to the same scene or light source"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "얼굴 전체 분해·무지개 조명만 있는 사진·원인 없는 복제와 구분한다.",
+        "굴절 결과는 관찰 가능하지만 실제 프리즘 장비 사용은 메타데이터이다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "a localized peripheral region shows refracted displacement or spectral separation"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "a localized peripheral region shows refracted displacement or spectral separation"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a localized peripheral region shows refracted displacement or spectral separation",
+            "render_gate": {
+              "id": "vo_pc_pc24_owner_relation_1",
+              "review_scale": "both",
+              "description": "a localized peripheral region shows refracted displacement or spectral separation. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the optical effect remains near a chosen image edge"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the optical effect remains near a chosen image edge"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the optical effect remains near a chosen image edge",
+            "render_gate": {
+              "id": "vo_pc_pc24_owner_relation_2",
+              "review_scale": "both",
+              "description": "the optical effect remains near a chosen image edge. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the central requested facial features remain coherent and resolved"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the central requested facial features remain coherent and resolved"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the central requested facial features remain coherent and resolved",
+            "render_gate": {
+              "id": "vo_pc_pc24_owner_relation_3",
+              "review_scale": "native",
+              "description": "the central requested facial features remain coherent and resolved. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the shifted edge detail remains connected to the same scene or light source"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the shifted edge detail remains connected to the same scene or light source"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the shifted edge detail remains connected to the same scene or light source",
+            "render_gate": {
+              "id": "vo_pc_pc24_owner_relation_4",
+              "review_scale": "both",
+              "description": "the shifted edge detail remains connected to the same scene or light source. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc27_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "architectural pairs form a readable symmetry axis in the scene; the main subject limb or head arrangement departs visibly from that symmetry; the two spatial roles remain simultaneously readable in one frame; the face retains focal priority within the paired architecture"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "architectural pairs form a readable symmetry axis in the scene; the main subject limb or head arrangement departs visibly from that symmetry; the two spatial roles remain simultaneously readable in one frame; the face retains focal priority within the paired architecture",
+        "paraphrase_examples": [
+          "대칭 공간 속 비대칭 인물",
+          "symmetrical setting asymmetrical pose",
+          "axial portrait contrast"
+        ],
+        "contrast_examples": [
+          "단순 중앙 배치는 배경 대칭을 증명하지 않는다.",
+          "인물까지 좌우 완전 복제인 경우는 다른 구도이다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "대칭 공간 속 비대칭 인물",
+          "symmetrical setting asymmetrical pose",
+          "axial portrait contrast",
+          "architectural pairs form a readable symmetry axis in the scene",
+          "the main subject limb or head arrangement departs visibly from that symmetry",
+          "the two spatial roles remain simultaneously readable in one frame",
+          "the face retains focal priority within the paired architecture"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "단순 중앙 배치는 배경 대칭을 증명하지 않는다.",
+        "인물까지 좌우 완전 복제인 경우는 다른 구도이다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "architectural pairs form a readable symmetry axis in the scene"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "architectural pairs form a readable symmetry axis in the scene"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: architectural pairs form a readable symmetry axis in the scene",
+            "render_gate": {
+              "id": "vo_pc_pc27_owner_relation_1",
+              "review_scale": "both",
+              "description": "architectural pairs form a readable symmetry axis in the scene. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the main subject limb or head arrangement departs visibly from that symmetry"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the main subject limb or head arrangement departs visibly from that symmetry"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the main subject limb or head arrangement departs visibly from that symmetry",
+            "render_gate": {
+              "id": "vo_pc_pc27_owner_relation_2",
+              "review_scale": "both",
+              "description": "the main subject limb or head arrangement departs visibly from that symmetry. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the two spatial roles remain simultaneously readable in one frame"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the two spatial roles remain simultaneously readable in one frame"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the two spatial roles remain simultaneously readable in one frame",
+            "render_gate": {
+              "id": "vo_pc_pc27_owner_relation_3",
+              "review_scale": "both",
+              "description": "the two spatial roles remain simultaneously readable in one frame. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the face retains focal priority within the paired architecture"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the face retains focal priority within the paired architecture"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the face retains focal priority within the paired architecture",
+            "render_gate": {
+              "id": "vo_pc_pc27_owner_relation_4",
+              "review_scale": "both",
+              "description": "the face retains focal priority within the paired architecture. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc29_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the primary subject keeps a readable stationary support and pose; the requested facial region remains comparatively resolved; a separate moving peripheral element leaves a directional exposure trail; the trail and sharp subject occupy coherently related scene planes"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the primary subject keeps a readable stationary support and pose; the requested facial region remains comparatively resolved; a separate moving peripheral element leaves a directional exposure trail; the trail and sharp subject occupy coherently related scene planes",
+        "paraphrase_examples": [
+          "정지 인물과 움직이는 주변",
+          "still subject motion contrast",
+          "sharp stationary portrait with trails"
+        ],
+        "contrast_examples": [
+          "보케 원·얕은 심도·렌즈 흔들림만으로 모션 궤적을 증명하지 않는다.",
+          "주인공을 추적하는 패닝과 정지 인물 대비는 다른 계약이다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "정지 인물과 움직이는 주변",
+          "still subject motion contrast",
+          "sharp stationary portrait with trails",
+          "the primary subject keeps a readable stationary support and pose",
+          "the requested facial region remains comparatively resolved",
+          "a separate moving peripheral element leaves a directional exposure trail",
+          "the trail and sharp subject occupy coherently related scene planes"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "보케 원·얕은 심도·렌즈 흔들림만으로 모션 궤적을 증명하지 않는다.",
+        "주인공을 추적하는 패닝과 정지 인물 대비는 다른 계약이다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the primary subject keeps a readable stationary support and pose"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the primary subject keeps a readable stationary support and pose"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the primary subject keeps a readable stationary support and pose",
+            "render_gate": {
+              "id": "vo_pc_pc29_owner_relation_1",
+              "review_scale": "both",
+              "description": "the primary subject keeps a readable stationary support and pose. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "the requested facial region remains comparatively resolved"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "the requested facial region remains comparatively resolved"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the requested facial region remains comparatively resolved",
+            "render_gate": {
+              "id": "vo_pc_pc29_owner_relation_2",
+              "review_scale": "native",
+              "description": "the requested facial region remains comparatively resolved. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "a separate moving peripheral element leaves a directional exposure trail"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "a separate moving peripheral element leaves a directional exposure trail"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: a separate moving peripheral element leaves a directional exposure trail",
+            "render_gate": {
+              "id": "vo_pc_pc29_owner_relation_3",
+              "review_scale": "both",
+              "description": "a separate moving peripheral element leaves a directional exposure trail. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the trail and sharp subject occupy coherently related scene planes"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the trail and sharp subject occupy coherently related scene planes"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the trail and sharp subject occupy coherently related scene planes",
+            "render_gate": {
+              "id": "vo_pc_pc29_owner_relation_4",
+              "review_scale": "both",
+              "description": "the trail and sharp subject occupy coherently related scene planes. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "pc_pc30_owner_relation",
+      "category": "portrait_composition_owner_relation",
+      "activation": {
+        "exact_terms": [
+          "the camera roll rotates a stable scene reference relative to the image axes; multiple normally level scene lines share a coherent tilt direction; the subject stance remains plausible in the tilted scene coordinates; the nominated facial region remains readable after the rotated crop"
+        ],
+        "requires_adult_character": false,
+        "semantic_discovery_requires_component_evidence": false
+      },
+      "semantics": {
+        "definition": "the camera roll rotates a stable scene reference relative to the image axes; multiple normally level scene lines share a coherent tilt direction; the subject stance remains plausible in the tilted scene coordinates; the nominated facial region remains readable after the rotated crop",
+        "paraphrase_examples": [
+          "프레임을 기울이기",
+          "Dutch angle",
+          "Dutch tilt",
+          "canted angle",
+          "camera roll"
+        ],
+        "contrast_examples": [
+          "몸 자체 대각선·경사진 지면·우연히 비스듬한 물체와 구분한다.",
+          "더치 앵글을 캔디드 촬영의 동의어로 사용하지 않는다."
+        ],
+        "claim_limits": [
+          "Only the requester-supported owner and visible scope are hard.",
+          "Attractiveness, authenticity, biography and actual relationship are not pixel claims."
+        ]
+      },
+      "concept_candidate": {
+        "concept_terms": [
+          "프레임을 기울이기",
+          "Dutch angle",
+          "Dutch tilt",
+          "canted angle",
+          "camera roll",
+          "the camera roll rotates a stable scene reference relative to the image axes",
+          "multiple normally level scene lines share a coherent tilt direction",
+          "the subject stance remains plausible in the tilted scene coordinates",
+          "the nominated facial region remains readable after the rotated crop"
+        ]
+      },
+      "runtime_expression": {
+        "default_mode": "definition_with_optional_label",
+        "prompt_label_terms": [],
+        "forbidden_prompt_terms": [],
+        "runtime_forbidden_labels": []
+      },
+      "reject_substitutes": [
+        "몸 자체 대각선·경사진 지면·우연히 비스듬한 물체와 구분한다.",
+        "더치 앵글을 캔디드 촬영의 동의어로 사용하지 않는다."
+      ],
+      "authored_components": {
+        "contract_version": "photo-authored-visual-components/v1",
+        "components": [
+          {
+            "id": "component_1",
+            "match_terms": [
+              "the camera roll rotates a stable scene reference relative to the image axes"
+            ],
+            "evidence_field": "component_1_phrase",
+            "evidence_terms": [
+              "the camera roll rotates a stable scene reference relative to the image axes"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the camera roll rotates a stable scene reference relative to the image axes",
+            "render_gate": {
+              "id": "vo_pc_pc30_owner_relation_1",
+              "review_scale": "both",
+              "description": "the camera roll rotates a stable scene reference relative to the image axes. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_2",
+            "match_terms": [
+              "multiple normally level scene lines share a coherent tilt direction"
+            ],
+            "evidence_field": "component_2_phrase",
+            "evidence_terms": [
+              "multiple normally level scene lines share a coherent tilt direction"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: multiple normally level scene lines share a coherent tilt direction",
+            "render_gate": {
+              "id": "vo_pc_pc30_owner_relation_2",
+              "review_scale": "both",
+              "description": "multiple normally level scene lines share a coherent tilt direction. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_3",
+            "match_terms": [
+              "the subject stance remains plausible in the tilted scene coordinates"
+            ],
+            "evidence_field": "component_3_phrase",
+            "evidence_terms": [
+              "the subject stance remains plausible in the tilted scene coordinates"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the subject stance remains plausible in the tilted scene coordinates",
+            "render_gate": {
+              "id": "vo_pc_pc30_owner_relation_3",
+              "review_scale": "both",
+              "description": "the subject stance remains plausible in the tilted scene coordinates. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          },
+          {
+            "id": "component_4",
+            "match_terms": [
+              "the nominated facial region remains readable after the rotated crop"
+            ],
+            "evidence_field": "component_4_phrase",
+            "evidence_terms": [
+              "the nominated facial region remains readable after the rotated crop"
+            ],
+            "min_content_words": 3,
+            "instruction": "Preserve the requester-supported owner and make this relation visible: the nominated facial region remains readable after the rotated crop",
+            "render_gate": {
+              "id": "vo_pc_pc30_owner_relation_4",
+              "review_scale": "both",
+              "description": "the nominated facial region remains readable after the rotated crop. Judge the declared owner in the same saved image; missing or unclear evidence fails."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

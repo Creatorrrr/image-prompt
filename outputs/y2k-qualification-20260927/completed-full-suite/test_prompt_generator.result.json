@@ -1,0 +1,58 @@
+{
+  "requested_ids": [
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_menhera_sensitive_role_prompts_keep_safe_anchors",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_menhera_weak_role_prompts_include_explicit_anxiety_anchors",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file",
+    "test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors"
+  ],
+  "tests_run": 9,
+  "failures": [
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_all_concept_recipe_forced_slots_are_registered",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 9129, in test_all_concept_recipe_forced_slots_are_registered\n    self.assertEqual(missing, [])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\nAssertionError: Lists differ: [('mixins.\ub178\ub839\ub9bc \uad6c\uc870.set', 'aesthetic_trend', [11363 chars]me')] != []\n\nFirst list contains 140 additional elements.\nFirst extra element 0:\n('mixins.\ub178\ub839\ub9bc \uad6c\uc870.set', 'aesthetic_trend', 'old_growth_forest_structure_aesthetic')\n\nDiff is 12427 characters long. Set self.maxDiff to None to see it.\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_all_semantic_inputs_exclude_control_and_process_metadata",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 11521, in test_all_semantic_inputs_exclude_control_and_process_metadata\n    self.assertEqual(len(rows), 6910)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\nAssertionError: 8972 != 6910\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (concept='\uc708\ud130 \uac04\ud638\uc0ac \ud68c\uc0ac\uc6d0')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer\n    self.assertIn(expected_id, combined[slot], slot)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'nurse_uniform_costume' not found in ['clinical_nursing_scrub_duty_system'] : costume_style\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer (concept='\ub2dd\ub2dd \uacbd\ucc30 \ud68c\uc0ac\uc6d0')",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 1999, in test_company_worker_mixin_preserves_role_costumes_and_adds_corporate_layer\n    self.assertIn(expected_id, combined[slot], slot)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform'] : costume_style\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_recipe_explain_combines_role_and_assassin_mixin",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 5743, in test_concept_recipe_explain_combines_role_and_assassin_mixin\n    self.assertEqual(concept[\"combined_forced_slots\"][\"costume_style\"], [\"police_uniform_costume\"])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: ['police_public_safety_duty_uniform'] != ['police_uniform_costume']\n\nFirst differing element 0:\n'police_public_safety_duty_uniform'\n'police_uniform_costume'\n\n- ['police_public_safety_duty_uniform']\n+ ['police_uniform_costume']\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_concept_soft_spec_carries_v3_group_guard_and_priority_terms",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 2270, in test_concept_soft_spec_carries_v3_group_guard_and_priority_terms\n    self.assertIn(\"police_uniform_costume\", role_costume[0][\"pool\"])\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_uniform_costume' not found in ['police_public_safety_duty_uniform']\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_menhera_sensitive_role_prompts_keep_safe_anchors",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 4451, in test_menhera_sensitive_role_prompts_keep_safe_anchors\n    self.assertEqual(nurse[\"choices\"][\"costume_style\"][\"id\"], \"nurse_uniform_costume\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'clinical_nursing_scrub_duty_system' != 'nurse_uniform_costume'\n- clinical_nursing_scrub_duty_system\n+ nurse_uniform_costume\n\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_menhera_weak_role_prompts_include_explicit_anxiety_anchors",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 4591, in test_menhera_weak_role_prompts_include_explicit_anxiety_anchors\n    self.assertEqual(police[\"choices\"][\"costume_style\"][\"id\"], \"police_uniform_costume\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_public_safety_duty_uniform' != 'police_uniform_costume'\n- police_public_safety_duty_uniform\n+ police_uniform_costume\n\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_semantic_index_builder_subprocess_uses_project_env_file",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 11922, in test_semantic_index_builder_subprocess_uses_project_env_file\n    self.assertEqual(result.returncode, 0, result.stderr)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 1 != 0 : Traceback (most recent call last):\n  File \"/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmpfidb97qg/source/skills/photo-prompt-image-generator/scripts/build_semantic_index.py\", line 16, in <module>\n    from prompt_generator import (\n    ...<14 lines>...\n    )\n  File \"/private/var/folders/4x/l_6vrtjj4rsbvgmq7t6tfgsh0000gn/T/tmpfidb97qg/source/skills/photo-prompt-image-generator/scripts/prompt_generator.py\", line 42, in <module>\n    import photo_candidate_semantics\nModuleNotFoundError: No module named 'photo_candidate_semantics'\n\n"
+    },
+    {
+      "id": "test_prompt_generator.PromptGeneratorRegressionTests.test_vampire_weak_role_prompts_include_positive_anchors",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/qualification-source/tests/test_prompt_generator.py\", line 3249, in test_vampire_weak_role_prompts_include_positive_anchors\n    self.assertEqual(police[\"choices\"][\"costume_style\"][\"id\"], \"police_uniform_costume\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'police_public_safety_duty_uniform' != 'police_uniform_costume'\n- police_public_safety_duty_uniform\n+ police_uniform_costume\n\n"
+    }
+  ],
+  "errors": [],
+  "skipped": []
+}

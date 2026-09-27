@@ -1,0 +1,238 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "58c139282f24d686d058ecd941afcdaaba538e9c",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "prompt-behavior",
+    "request": "Prioritize abstract human appearance intent while keeping exact race, ethnicity, nationality, or other identity context externally sourced; separate displayed skin from identity; and prevent a person-aesthetic or attractiveness anchor from changing source-specific face form, hair, cosmetics, garment coverage, pose, light, color, crop, or capture treatment unless those dimensions are explicitly intended and owned."
+  },
+  "evidence": [
+    {
+      "id": "e-user-contract",
+      "kind": "user-judgment",
+      "claim": "The user reports that the generated person differs materially from the source and asks person analysis to prioritize abstract identity, displayed skin, and aesthetic characteristics while incorporating the earlier face, hair, makeup, clothing, pose, lighting, and capture diagnosis into the skill.",
+      "artifact": "Conversation requests on 2026-08-25 and approved skill implementation on 2026-08-26"
+    },
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The source person is read through a narrow raised-chin profile, extended neck, side-on slightly reclined torso, compact dark hair with loose wisps, low cosmetic legibility under bloom, covered translucent garment geometry, and a hand and bent leg integrated into luminous tulle.",
+      "artifact": "/tmp/codex-remote-attachments/01a0386a-5875-7c23-8269-4ab22dac864c/ABEADB76-11FF-4C0B-8919-5E8990E6A536/1-사진-1.jpg; SHA-256 5cd468f3320deb985ea8670690ac3bfa292070752cdaeec7f5bf306fcde91497; 1024x1280"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "The prior render remains compositionally related but changes the person toward a more camera-open sculpted face, reduced neck extension, more frontal upright torso, lap-resting hand, voluminous styled curls, defined cosmetics and glossy warm skin, a more open fitted garment, a more isolated leg, and polished glamour lighting.",
+      "artifact": "/tmp/codex-remote-attachments/01a0386a-5875-7c23-8269-4ab22dac864c/8D2C3ACA-A788-4083-BE4E-E74BB88D6E85/1-사진-1.jpg; SHA-256 91c100ed92dc71c203ed4872c8690b1e21b7b9a2c68e094ee377e8d6e010632b; 1024x1280"
+    },
+    {
+      "id": "e-baseline-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The exact prior authored prompt already names many source-correct pose, softness, hair, garment, and anti-polish cues, so the render difference cannot be attributed to one missing noun. The earliest actionable skill gap is semantic integration and relative priority, while generator response and sampling remain unresolved because model/version, settings, and reference handling were not preserved.",
+      "artifact": "Canonical prior prompt body: 2451 bytes, SHA-256 66ae9ac18f2e572f79401dfc631999b1822062aea5bcad9b477c2d98518d365c; recovered from /Users/chasoik/.codex/sessions/2026/08/25/rollout-2026-08-25T19-14-48-01a0386a-5875-7c23-8269-4ab22dac864c.jsonl"
+    },
+    {
+      "id": "e-repository-history",
+      "kind": "repository-history",
+      "claim": "At the baseline revision, human-appearance/v2 separated frame salience, identity context, person prior, and skin, but it had no dedicated bounded appearance-gestalt decision, no intended/protected effect budget, no owner-by-dimension validation, and runtime visual-evidence prose still permitted a pixel-derived broad racial or ethnic generation approximation.",
+      "artifact": "Baseline revision 58c139282f24d686d058ecd941afcdaaba538e9c inspection of SKILL.md, subject.human.md, detail.human-face-likeness.md, behavior-evaluation.md, and tools/salience_plan.py"
+    },
+    {
+      "id": "e-prompt-tests",
+      "kind": "prompt-evaluation",
+      "claim": "Held-out synthetic prompt contracts pass for user/trusted external identity provenance and P0/P1 gating, external identity ordering before a person-aesthetic summary, summary-before-decomposition ordering, cross-module effect ownership, protected-dimension leakage rejection, and displayed-skin priority/scope independence.",
+      "artifact": ".venv/bin/python -m unittest skills.reverse-image-prompt.tests.test_salience_plan => 135 passed; full reverse-image-prompt suite => 239 passed, 20 skipped"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The revised modular package, generated artifacts, improver contract, Python syntax, and diff hygiene all pass without increasing the runtime corpus limit.",
+      "artifact": "validate_modules.py => 37 modules, 6 lanes, 16551 runtime words, 3745 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => pass; image-prompt-skill-improver suite => 12 passed; py_compile and git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "For every material human, exact externally supplied identity context, a non-identifying person prior, displayed-skin surface, and a person-aesthetic gestalt are independently prioritized; one qualified abstract anchor may lead the passage, but it changes only declared intended dimensions through immediate owner-correct controls and cannot overwrite protected source-specific appearance or composition.",
+    "user_appeal": "Preserve the source person's particular profile, hair restraint, low cosmetic definition, covered translucent styling, pose, bloom, and non-glamorous softness instead of substituting a different polished but generically attractive person.",
+    "invariants": [
+      {
+        "id": "inv-external-identity",
+        "statement": "Race, ethnicity, nationality, or other exact identity context is never inferred from pixels; user-supplied creative intent or trusted metadata may emit once only when P0/P1 and stays separate from non-identifying generation priors.",
+        "evidence_ids": ["e-user-contract", "e-repository-history", "e-prompt-tests"],
+        "causal_controls": ["identity provenance", "context-use classification", "viewer-priority gate", "one subject-owned external-context control"]
+      },
+      {
+        "id": "inv-bounded-gestalt",
+        "statement": "A material person-aesthetic or attractiveness reading is retained once as an abstract semantic anchor only when source-supported and omission-sensitive, then immediately decomposed across every intended dimension.",
+        "evidence_ids": ["e-user-contract", "e-source", "e-render", "e-prompt-tests"],
+        "causal_controls": ["appearance_gestalt disposition", "material-drift counterfactual", "intended dimensions", "literal decomposition control ids"]
+      },
+      {
+        "id": "inv-protected-dimensions",
+        "statement": "The aggregate anchor cannot silently change identity, pose/occlusion, crop/scale, age presentation, garment coverage, displayed skin, cosmetics, light/color, or capture polish outside its declared intended and owner-correct effect budget.",
+        "evidence_ids": ["e-source", "e-render", "e-baseline-prompt", "e-prompt-tests"],
+        "causal_controls": ["protected dimensions", "appearance_dimension on each control", "dimension-owner allowlist", "summary-before-decomposition ordering"]
+      },
+      {
+        "id": "inv-displayed-skin",
+        "statement": "Skin is handled as independently prioritized displayed surface evidence with explicit region and observation scope, never as biological color, demographic identity, or likeness geometry.",
+        "evidence_ids": ["e-user-contract", "e-source", "e-render", "e-prompt-tests"],
+        "causal_controls": ["skin viewer priority", "displayed-surface semantic use", "Color/Tone region binding", "descriptor scope match"]
+      }
+    ],
+    "flexible_dimensions": [
+      "the literal external identity phrase supplied by the user or trusted metadata",
+      "whether a person prior or appearance gestalt is material for a particular source",
+      "which source-supported dimensions are intended rather than protected",
+      "literal source-relative geometry, hair, garment, skin, pose, light, and capture wording",
+      "generator/version response and rendered pixels pending a controlled forward evaluation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-global-person-reading",
+      "scale": "global",
+      "axis": "person aesthetic and production reading",
+      "source_state": "Restrained, soft, bloom-obscured profile whose person reading depends on pose, compact hair, translucent coverage, and low cosmetic definition together.",
+      "render_state": "Warmer, more sculpted and camera-open glamour portrait with styled curls, stronger cosmetics, glossy skin, and upgraded editorial finish.",
+      "evidence_ids": ["e-source", "e-render"]
+    },
+    {
+      "id": "m-face-hair",
+      "scale": "local",
+      "axis": "face orientation, neck extension, hair boundary, and cosmetics",
+      "source_state": "Narrow raised-chin profile, longer visible neck extension, compact hair mass with wisps, and low cosmetic legibility.",
+      "render_state": "More open facial plane, reduced neck extension, large styled curls, defined lashes and lips, and stronger facial sculpture.",
+      "evidence_ids": ["e-source", "e-render"]
+    },
+    {
+      "id": "m-pose-garment-capture",
+      "scale": "regional",
+      "axis": "protected pose, garment coverage, and capture treatment",
+      "source_state": "Side-on reclined torso, hand near knee/tulle, covered neckline and arms, leg integrated into bright diffused fabric, and cool-green dark ambience.",
+      "render_state": "More upright frontal torso, lap hand, open fitted bodice and exposed forearm, separated glossy leg, and warm polished ambience.",
+      "evidence_ids": ["e-source", "e-render"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-four-way-representation",
+      "stage": "representation",
+      "statement": "Separating external identity context, person prior, displayed skin, and appearance gestalt prevents protected identity and surface evidence from being collapsed into one broad human category.",
+      "evidence_ids": ["e-user-contract", "e-repository-history", "e-prompt-tests"],
+      "falsifier": "Held-out contracts can still emit pixel-derived identity, use displayed skin as identity, or require one decision to stand in for another."
+    },
+    {
+      "id": "h-effect-budget",
+      "stage": "prompt-interaction",
+      "statement": "A bounded aggregate anchor with intended/protected dimensions and immediate owner-correct decomposition preserves the requested abstract person reading without allowing generic beauty or aesthetic language to restage pose, garment, skin, lighting, or capture.",
+      "evidence_ids": ["e-source", "e-render", "e-baseline-prompt", "e-prompt-tests"],
+      "falsifier": "Unrelated held-out prompts pass validation while an appearance anchor changes a protected dimension, lacks one intended control, follows rather than leads its controls, or is owned by the wrong module."
+    },
+    {
+      "id": "h-external-priority",
+      "stage": "user-contract",
+      "statement": "Allowing explicit user/trusted identity context to receive P0/P1 priority before the appearance passage satisfies creative targeting without making visual protected-category inference a runtime behavior.",
+      "evidence_ids": ["e-user-contract", "e-prompt-tests"],
+      "falsifier": "The validator permits external identity emission without provenance, at P2/P3, after the appearance summary, or as a non-identifying generation prior."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Use human-appearance/v3 to independently decide externally sourced identity context, non-identifying person prior, displayed-skin surface, and one optional bounded person-aesthetic gestalt. Require provenance and P0/P1 priority for external identity; require source support, omission sensitivity, intended/protected dimensions, one summary, immediate owner-correct decomposition, and displayed-surface skin semantics for aggregate emission.",
+    "generalization_basis": "The correction is expressed through source-relative evidence, external provenance, counterfactual materiality, semantic dimensions, ownership, and prompt ordering. It installs no race, ethnicity, nationality, skin value, beauty label, hairstyle, garment, pose, light, palette, generator workaround, or motivating-case phrase as a default.",
+    "hypothesis_ids": ["h-four-way-representation", "h-effect-budget", "h-external-priority"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.color-light-material.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/core.fidelity-discipline.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.clothing-fashion.md",
+      "skills/reverse-image-prompt/modules/detail.pose-hands-gesture.md",
+      "skills/reverse-image-prompt/modules/medium.photographic-capture.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-26-person-appearance-semantic-priority-v3.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-package"]
+    },
+    "prompt": {
+      "status": "pass",
+      "evidence_ids": ["e-prompt-tests"]
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-external-identity",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["user versus trusted provenance", "P0/P1 output gate", "external context before appearance", "no generation-prior masquerade"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-person-aesthetic-budget",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["summary before decomposition", "face form", "hair boundary", "garment coverage", "capture treatment", "protected identity"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-displayed-skin",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["displayed-surface semantics", "viewer priority", "observation scope", "descriptor-region binding"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "heldout-person-prior-adjacency",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["person prior provenance", "visible geometry correction", "literal prompt adjacency", "non-identifying scope"],
+        "evidence_ids": ["e-prompt-tests"]
+      },
+      {
+        "id": "motivating-portrait",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["profile and neck", "hair and cosmetics", "garment coverage", "pose and hand", "skin finish", "lighting and capture polish"],
+        "evidence_ids": ["e-source", "e-render", "e-baseline-prompt"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "prompt-behavior",
+    "rationale": "The skill now implements and deterministically validates the requested abstract-first human prompt contract across unrelated synthetic fixtures, while preventing pixel-derived identity and cross-axis aesthetic leakage. Package and prompt-contract checks pass. No post-change image was generated, no generator/version response was measured, and no post-change user judgment exists, so render fidelity and aesthetic preference remain unscored and this record does not claim that the motivating portrait pixels are fixed.",
+    "evidence_ids": ["e-user-contract", "e-repository-history", "e-prompt-tests", "e-package"]
+  }
+}

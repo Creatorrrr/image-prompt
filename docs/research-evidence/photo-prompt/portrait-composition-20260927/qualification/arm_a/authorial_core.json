@@ -1,0 +1,161 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently test three interaction composition keywords from the prior conversation data within a randomized complex photographic scene, using the attached photo for visible facial and hair appearance only. The randomized environment and fictional activity are agent-owned test staging, not requester definitions.",
+  "subject": "Fictional adult woman whose visible face and bob hairstyle are guided by the attached photograph; a separate adult companion is cropped to a foreground shoulder.",
+  "setting": "Glass-roofed botanical conservatory potting pavilion during a lightly snowy late afternoon.",
+  "event": "A seated woman offers a cyanotype postcard across the tabletop toward a companion near the camera.",
+  "visual_priorities": [
+    "Across-table separation with a clearly readable face above tabletop and forearms.",
+    "Another adult companion owns the foreground shoulder; the protagonist faces forward.",
+    "A grasped cyanotype postcard projects toward the camera-side companion below the clear face.",
+    "The attached image guides visible facial and hair appearance of the fictional adult subject."
+  ],
+  "baseline_prompt_en": "Photograph a fictional adult woman trading a hand-printed cyanotype postcard with a seated companion in a glass-roofed botanical conservatory potting pavilion. Use the supplied photograph solely as a visible facial and hair appearance reference: a dark chin-length bob with a wispy center-parted fringe, softly rounded face, brown eyes, and natural lip shape. She wears a forest-green ribbed cardigan over a cream shirt. In this across-the-table portrait, she sits on the far side of a narrow wooden table, with her upper torso and both forearms visible above the tabletop. A folded route map and a half-finished mug of tea rest below her face. The camera looks past another adult companion's softly blurred shoulder in the left foreground toward her clearly focused face, making an over-the-shoulder shot rather than a backward-looking pose by the woman. She faces forward toward the companion beside the lens with a small conversational smile. She offers the cyanotype postcard toward the camera-side companion, her right hand and postcard projecting into the lower foreground while her face remains clear above them. Her right forearm extends across the table from a relaxed bent elbow, and her thumb and index finger grasp the postcard's bottom edge; its deep-blue plant silhouette faces the recipient. Her left forearm rests on the tabletop and her seated torso stays supported by the chair. The offered card hovers a short distance above the near half of the tabletop. A second cyanotype drying on a wire rack, terracotta pots, and softly layered greenhouse plants establish the exchange in a used workshop space. Light snow is visible outdoors through the glass, while late-afternoon side sunlight softened by a translucent blind warms her cheek and the ridges of the cardigan. Keep the portrait legible as one intimate, natural photographic moment.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "independent randomized keyword qualification",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+      "basis": "request_context",
+      "resolution": "The current user authorizes independent complex test cases. Selected keyword meanings are read from prior keyword research data; random draw staging is independently authored.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "concept",
+        "prompt_evidence": "trading a hand-printed cyanotype postcard with a seated companion"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "a fictional adult woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "event",
+        "prompt_evidence": "She offers the cyanotype postcard toward the camera-side companion"
+      },
+      {
+        "anchor_id": "composition_test",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "composition",
+        "prompt_evidence": "another adult companion's softly blurred shoulder in the left foreground"
+      },
+      {
+        "anchor_id": "action_test",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "action",
+        "prompt_evidence": "her right hand and postcard projecting into the lower foreground"
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "Use the supplied photograph solely as a visible facial and hair appearance reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "composition",
+      "action",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "material",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "a_across_table",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "camera_relation": "camera on near side of tabletop; protagonist seated on far side",
+        "portrait_hierarchy": "upper torso and face above tabletop interaction"
+      },
+      "evidence": {
+        "table_separation": "she sits on the far side of a narrow wooden table",
+        "portrait_hierarchy": "with her upper torso and both forearms visible above the tabletop"
+      }
+    },
+    {
+      "assertion_id": "a_other_shoulder",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "foreground_owner": "another adult companion",
+        "depth_relation": "companion shoulder in near foreground; protagonist face beyond it",
+        "protagonist_orientation": "forward toward companion"
+      },
+      "evidence": {
+        "foreground_owner": "another adult companion's softly blurred shoulder in the left foreground",
+        "depth_relation": "toward her clearly focused face",
+        "orientation": "She faces forward toward the companion beside the lens"
+      }
+    },
+    {
+      "assertion_id": "a_offer_camera",
+      "dimension": "action",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "action"
+      ],
+      "axes": {
+        "actor": "fictional adult woman",
+        "target": "camera-side companion",
+        "action": "offers a held cyanotype postcard toward camera-side recipient",
+        "hand_face_relation": "hand and postcard foreground below clear face"
+      },
+      "evidence": {
+        "directed_offer": "She offers the cyanotype postcard toward the camera-side companion",
+        "foreground_action": "her right hand and postcard projecting into the lower foreground while her face remains clear above them",
+        "grasp": "her thumb and index finger grasp the postcard's bottom edge"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "portrait",
+    "family": "natural interaction portrait",
+    "evidence": [
+      "small conversational smile",
+      "used workshop space"
+    ]
+  },
+  "variation_key": "arm_a_4400049719420549872"
+}

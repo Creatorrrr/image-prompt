@@ -1,0 +1,683 @@
+{
+  "schema_version": "photo-prompt-research-extension/v1",
+  "description": "Append-only, evidence-led taxonomy extension for underrepresented operational, ecological, temporal, and visual-structure photography topics.",
+  "auto_optional_policy": "authored_filters_only",
+  "preset_render_contract_defaults": {
+    "profile": "evidence_documentary",
+    "derive_filtered_scenes": true,
+    "derived_scene_limit": 3,
+    "scene_function_cycle": ["controlled_action", "revelation", "aftermath"],
+    "scene_action_templates": ["{action}", "reacting as a previously ambiguous physical trace becomes visible during {action}", "showing the immediate material, environmental, or human consequence after {action}"],
+    "topic_intents": [{"kind": "topic_identity", "text": "recognizable photographic evidence of {preset_en}", "audit_terms": ["{preset_en}", "{preset_ko}"]}],
+    "evidence_budget": {"world_clue_slots": ["prop", "capture_context", "procedure_step", "surface_material", "condition_state", "evidence_scale"], "minimum_chosen": 1, "maximum_chosen": 2, "guidance": "one observable process, one physical prop or trace, and at most one additional evidence clue"},
+    "diegetic_visual_provenance": ["observable_process_context"],
+    "genre_anchors": ["observable_process", "physical_trace", "observable_context"]
+  },
+  "preset_filter_defaults": {
+    "light_type": {"ids": ["open_shade", "fluorescent_ceiling", "led_panel", "inspection_droplight", "lab_led"]},
+    "light_intensity": {"ids": ["balanced_exposure", "soft_low_contrast", "even_flat_overcast", "deep_shadow_detail"]},
+    "light_shape": {"ids": ["diffused_ambient", "window_rectangle", "narrow_spotlight"]},
+    "camera_type": {"ids": ["full_frame_mirrorless", "dslr_camera", "inspection_macro_rig"]},
+    "camera_direction": {"ids": ["eye_level_front", "eye_level_three_quarter", "high_observer_angle", "top_down_90"]},
+    "texture": {"ids": ["fine_grain", "clean_digital", "macro_detail"]}
+  },
+  "facet_vocab": {
+    "place_type": ["collection_storage", "sports_venue"],
+    "weather": ["hail", "frost"],
+    "relation_type": ["competitive"],
+    "event_phase": ["dormancy", "reactivation"],
+    "capture_modality": ["fluorescence", "dic", "polarized_light", "light_sheet", "photogrammetry"],
+    "weather_effect": ["hail_impact", "erosion_deposition"],
+    "acquisition_structure": ["fixed_roi", "time_series", "multichannel", "z_stack", "multiview"],
+    "record_basis": ["human_observation", "machine_observation", "material_sample"],
+    "movement_phase": ["readiness", "initiation", "loading_braking", "propulsion_release", "flight_transfer", "impact_absorption", "deceleration_stabilization", "recovery"],
+    "contact_state": ["clearance_no_contact", "surface_or_medium_contact", "equipment_contact", "opponent_contact", "flight_or_separation", "post_contact_release"],
+    "effort_state": ["controlled", "near_maximal", "fatigued", "recovering"],
+    "material_response": ["compression", "elastic_bend", "rebound", "vibration", "surface_shear", "particle_or_fluid_displacement"],
+    "learning_stage": ["orientation", "demonstration", "guided_practice", "collaborative_problem_solving", "performance_assessment"],
+    "material_lifecycle_stage": ["manufacture", "use", "wear", "failure", "diagnosis", "maintenance", "repair", "reuse", "refurbishment", "remanufacture", "recovery", "disposal"],
+    "material_state_evidence": ["reference_condition", "service_wear", "localized_failure", "diagnostic_contact", "cleaning_boundary", "removed_failed_part", "repaired_interface", "reassembled_state", "functional_test", "separated_fraction", "residual_route", "next_use_handoff"],
+    "atmospheric_class": ["hydrometeor", "lithometeor", "photometeor"],
+    "phenomenon_process": ["suspended_particles", "falling_particles", "wind_raised_particles", "deposited_particles", "optical_interaction"],
+    "observation_interval": ["repeat_interval", "seasonal_cycle"]
+  },
+  "preset_families": [
+    {
+      "id": "human_system_evidence",
+      "ko": "사람과 운영 시스템 증거 프리셋 계열",
+      "en": "human and operational system evidence preset family",
+      "embedding_text": "evidence-led documentary photography of people, tools, coordinated work, access, movement, handoffs, inspection and learning"
+    },
+    {
+      "id": "environment_process_evidence",
+      "ko": "환경과 물질 과정 증거 프리셋 계열",
+      "en": "environment and material process evidence preset family",
+      "embedding_text": "repeatable photographic observation of ecological, atmospheric, heritage, material, spatial and natural-process state evidence"
+    }
+  ],
+  "existing_preset_filter_extensions": {
+    "laboratory_measurement_record": {
+      "capture_context": {"ids": ["fluorescence_microscopy_capture", "dic_optical_path_gradient_capture", "cross_polarized_birefringence_capture", "fixed_roi_time_series_capture", "registered_multichannel_capture"]},
+      "prop": {"ids": ["microscope_pitch_reference_slide"]}
+    },
+    "small_group_interaction_documentary": {
+      "relational_action": {"ids": ["working_same_target_from_two_sides", "co_holding_shared_object"]},
+      "gaze_target": {"ids": ["joint_gaze_to_shared_target"]},
+      "proxemics": {"ids": ["functional_arm_reach_handoff_distance"]},
+      "contact_point": {"ids": ["hand_gripping_tool_handle"]}
+    }
+  },
+  "existing_preset_filter_overrides": {
+    "equestrian_dust": {
+      "texture": {"ids": ["arena_dust_displacement_texture"]}
+    }
+  },
+  "presets": [
+    {
+      "id": "loading_dock_forklift_handoff_record",
+      "ko": "하역장 지게차 인계 기록",
+      "en": "loading-dock forklift handoff record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "loading dock forklift and spotter handoff documentary with a secured dockboard, wheel chock, marked pedestrian boundary and visible pallet transfer state",
+      "tags": ["mobility_logistics", "loading_dock_transfer"],
+      "facets": {"place_type": ["transport"], "mood_family": ["documentary"], "camera_register": ["professional"], "relation_type": ["team", "handoff"], "event_phase": ["handoff"], "process_stage": ["transfer"], "movement_type": ["vehicle_flow"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "motion", "probability": 0.8}, {"slot": "proxemics", "probability": 0.7}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "photojournalism"]}, "genre": {"ids": ["documentary", "technology"]},
+        "subject": {"ids": ["forklift_pallet_transfer"]}, "action": {"ids": ["spotter_guided_forklift_loading"]}, "location": {"ids": ["marked_loading_dock"]},
+        "lighting": {"ids": ["overcast", "fluorescent", "warehouse_sodium_light"]}, "composition": {"ids": ["wide_establishing", "primary_subject_hierarchy_frame", "leading_lines"]},
+        "lens": {"ids": ["35mm", "50mm"]}, "focus": {"ids": ["deep_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["dock_transfer_audit_capture"]}, "procedure_step": {"ids": ["trailer_securement_transfer_step"]},
+        "prop": {"ids": ["secured_dockboard_wheel_chock_prop"]}, "motion": {"ids": ["spotter_guided_forklift_motion"]}, "proxemics": {"ids": ["functional_arm_reach_handoff_distance"]}
+      }
+    },
+    {
+      "id": "smoke_haze_visibility_monitoring",
+      "ko": "연기·연무 시정 모니터링",
+      "en": "smoke-haze visibility monitoring",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "community wildfire smoke and haze monitoring with a collocated air-sensor pair, a fixed distant landmark, visible light loss and documented siting context",
+      "tags": ["climate_adaptation", "air_quality_monitoring"],
+      "facets": {"place_type": ["urban"], "weather": ["haze"], "weather_effect": ["visibility_loss", "airborne_particles"], "mood_family": ["documentary"], "camera_register": ["professional"], "process_stage": ["monitoring"], "record_basis": ["machine_observation"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "weather", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "atmosphere", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo"]}, "genre": {"ids": ["science", "documentary"]},
+        "subject": {"ids": ["collocated_air_sensor_pair"]}, "action": {"ids": ["checking_haze_visibility_against_landmark"]}, "location": {"ids": ["community_smoke_monitoring_site"]},
+        "weather": {"ids": ["wildfire_smoke_visibility_haze"]}, "lighting": {"ids": ["overcast", "harsh_noon"]}, "composition": {"ids": ["wide_establishing", "leading_lines_depth"]},
+        "lens": {"ids": ["50mm", "tele_200mm"]}, "focus": {"ids": ["deep_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["collocated_air_sensor_capture"]}, "procedure_step": {"ids": ["sensor_collocation_check_step"]}, "prop": {"ids": ["fixed_visibility_reference_prop"]},
+        "atmosphere": {"ids": ["particulate_haze_depth"]}
+      }
+    },
+    {
+      "id": "heritage_condition_documentation",
+      "ko": "문화유산 상태 기록",
+      "en": "cultural-heritage condition documentation",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "museum collection object condition documentation with padded support, fixed scale reference, raking light, mapped surface anomalies and optional multiview photogrammetry",
+      "tags": ["heritage_documentation", "collection_object"],
+      "facets": {"place_type": ["collection_storage"], "mood_family": ["documentary"], "camera_register": ["professional", "macro"], "process_stage": ["inspection"], "capture_modality": ["inspection", "photogrammetry"], "acquisition_structure": ["fixed_roi", "multiview"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "surface_material", "probability": 0.7}, {"slot": "situation_context", "probability": 0.7}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "archive_scan", "documentary_photo"]}, "genre": {"ids": ["science", "documentary"]},
+        "subject": {"ids": ["collection_object_condition_station"]}, "action": {"ids": ["mapping_condition_anomalies"]}, "location": {"ids": ["collection_documentation_bay", "heritage_restoration_lab"]},
+        "lighting": {"ids": ["heritage_raking_light", "archive_desk_lamp"]}, "composition": {"ids": ["forensic_macro_marker_frame", "top_down", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["50mm", "macro_100mm"]}, "focus": {"ids": ["macro_focus_stack", "deep_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "capture_context": {"ids": ["fixed_reference_condition_capture", "multi_angle_photogrammetry_capture"]}, "procedure_step": {"ids": ["pre_intervention_documentation_step"]},
+        "prop": {"ids": ["padded_object_support_prop", "calibration_target_card"]}, "surface_material": {"ids": ["localized_heritage_condition_surface"]}, "situation_context": {"ids": ["collection_record_provenance_context"]}
+      }
+    },
+    {
+      "id": "assistive_product_fit_use_followup",
+      "ko": "보조기기 피팅·사용 후속 확인",
+      "en": "assistive-product fit and use follow-up",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "person-centered assistive product fitting and follow-up with an adult user, adjustable walking aid, functional hand contact, user feedback and dignified community rehabilitation context",
+      "tags": ["health_access", "assistive_real_world", "rehabilitation"],
+      "facets": {"place_type": ["interior"], "mood_family": ["documentary"], "camera_register": ["professional"], "relation_type": ["caregiving", "instructional"], "event_phase": ["active_process"], "process_stage": ["intervention", "monitoring"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step", "contact_point"],
+      "optional_slots": [{"slot": "partner_role", "probability": 1.0}, {"slot": "prop", "probability": 1.0}, {"slot": "gaze_target", "probability": 0.8}, {"slot": "relational_action", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "photojournalism"]}, "genre": {"ids": ["medical", "documentary"]},
+        "subject": {"ids": ["assistive_product_user_participant"]}, "action": {"ids": ["fitting_assistive_product_with_user_feedback"]}, "location": {"ids": ["community_rehabilitation_room"]},
+        "lighting": {"ids": ["soft_window", "fluorescent"]}, "composition": {"ids": ["triangulated_two_people_one_object", "hands_first_task_pov"]},
+        "lens": {"ids": ["35mm", "50mm"]}, "focus": {"ids": ["deep_focus", "selective_foreground_focus"]}, "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "capture_context": {"ids": ["assistive_fit_followup_capture"]}, "procedure_step": {"ids": ["assistive_product_fitting_step", "assistive_product_followup_step"]},
+        "contact_point": {"ids": ["hand_gripping_tool_handle", "supportive_hand_at_forearm"]}, "partner_role": {"ids": ["in_frame_rehabilitation_practitioner"]},
+        "prop": {"ids": ["adjustable_walking_aid_prop"]}, "gaze_target": {"ids": ["joint_gaze_to_shared_target"]}, "relational_action": {"ids": ["working_same_target_from_two_sides"]}
+      }
+    },
+    {
+      "id": "accessible_route_wayfinding_record",
+      "ko": "접근 가능한 동선·길찾기 기록",
+      "en": "accessible route and wayfinding record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "accessible public-building route record showing usable circulation, tactile walking surface indicators, threshold clearance and practical wayfinding without readable signage",
+      "tags": ["health_access", "accessible_environment"],
+      "facets": {"subject_kind": ["environment"], "place_type": ["interior"], "mood_family": ["documentary"], "camera_register": ["professional"], "process_stage": ["inspection"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "surface_material", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "architecture_magazine_photo"]}, "genre": {"ids": ["architecture", "documentary"]},
+        "subject": {"ids": ["accessible_route_clearance"]}, "action": {"ids": ["checking_accessible_route_clearance"]}, "location": {"ids": ["accessible_public_building_entry"]},
+        "lighting": {"ids": ["soft_window", "overcast"]}, "composition": {"ids": ["wide_establishing", "strong_leading_lines_vanish", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["wide_24mm", "35mm"]}, "focus": {"ids": ["deep_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["access_route_clearance_capture"]}, "procedure_step": {"ids": ["accessible_route_walkthrough_step"]},
+        "prop": {"ids": ["tactile_walking_surface_indicator_prop"]}, "surface_material": {"ids": ["threshold_clearance_surface"]}
+      }
+    },
+    {
+      "id": "sports_pre_contact_anticipation_record",
+      "ko": "스포츠 접촉 전 예측 동작 기록",
+      "en": "sports pre-contact anticipation record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "sports biomechanics frame isolating pre-contact anticipation, gaze, weight shift and clear opponent or equipment clearance before impact",
+      "tags": ["sports_motion", "athlete", "competitive_motion"],
+      "facets": {"subject_kind": ["human"], "place_type": ["sports_venue"], "mood_family": ["documentary"], "camera_register": ["professional"], "relation_type": ["competitive"], "event_phase": ["preparation"], "movement_type": ["locomotion"], "movement_phase": ["readiness", "loading_braking"], "contact_state": ["clearance_no_contact"], "effort_state": ["controlled"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "motion", "contact_point"],
+      "optional_slots": [{"slot": "gaze_target", "probability": 0.8}, {"slot": "body_pose", "probability": 0.7}],
+      "filters": {
+        "medium": {"ids": ["sports_wire_photo", "photojournalism"]}, "genre": {"ids": ["sports_action", "documentary"]},
+        "subject": {"ids": ["interceptive_sport_athlete"]}, "action": {"ids": ["reading_pre_contact_kinematics"]}, "location": {"ids": ["sports_training_venue"]},
+        "lighting": {"ids": ["stadium_light", "overcast"]}, "composition": {"ids": ["dynamic_diagonal_action_frame", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["70_200mm", "tele_200mm"]}, "focus": {"ids": ["eye_focus", "deep_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "motion": {"ids": ["anticipatory_weight_shift_motion"]}, "contact_point": {"ids": ["competitive_clearance_no_contact"]}, "gaze_target": {"ids": ["gaze_tracking_opponent_center_mass"]}, "body_pose": {"ids": ["loaded_ready_stance"]}
+      }
+    },
+    {
+      "id": "sports_impact_material_response_record",
+      "ko": "스포츠 충돌·물성 반응 기록",
+      "en": "sports impact and material-response record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "sports impact frame where athlete, equipment and surface meet at one plausible contact point with compression, rebound or displaced material responding to the same force event",
+      "tags": ["sports_motion", "athlete", "sports_contact", "competitive_motion"],
+      "facets": {"subject_kind": ["human"], "place_type": ["sports_venue"], "mood_family": ["documentary"], "camera_register": ["professional"], "relation_type": ["competitive"], "event_phase": ["active_process"], "movement_type": ["impact"], "movement_phase": ["impact_absorption", "propulsion_release"], "contact_state": ["equipment_contact", "opponent_contact"], "effort_state": ["near_maximal"], "material_response": ["compression", "rebound", "particle_or_fluid_displacement"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "motion", "contact_point"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "texture", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["sports_wire_photo", "photojournalism"]}, "genre": {"ids": ["sports_action", "documentary"]},
+        "subject": {"ids": ["impact_sport_equipment_contact"]}, "action": {"ids": ["absorbing_contact_then_releasing"]}, "location": {"ids": ["sports_training_venue"]},
+        "lighting": {"ids": ["stadium_light", "high_speed_strobe", "overcast"]}, "composition": {"ids": ["dynamic_diagonal_action_frame", "extreme_close"]},
+        "lens": {"ids": ["70_200mm", "tele_200mm"]}, "focus": {"ids": ["deep_focus", "selective_foreground_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "motion": {"ids": ["impact_compression_rebound_motion"]}, "contact_point": {"ids": ["athlete_equipment_contact"]}, "prop": {"ids": ["compressed_ball_contact_prop"]}, "texture": {"ids": ["arena_dust_displacement_texture"]}
+      }
+    },
+    {
+      "id": "sports_post_exertion_recovery_record",
+      "ko": "스포츠 운동 후 회복 기록",
+      "en": "sports post-exertion recovery record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "post-exertion sports recovery frame with deceleration, breathing reset, stable posture and venue evidence rather than generic sweat or motion blur",
+      "tags": ["sports_motion", "athlete", "sports_recovery"],
+      "facets": {"subject_kind": ["human"], "place_type": ["sports_venue"], "mood_family": ["documentary"], "camera_register": ["professional"], "event_phase": ["recovery"], "movement_type": ["locomotion"], "movement_phase": ["deceleration_stabilization", "recovery"], "contact_state": ["post_contact_release"], "effort_state": ["fatigued", "recovering"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "motion", "body_pose"],
+      "optional_slots": [{"slot": "aftermath_trace", "probability": 0.7}],
+      "filters": {
+        "medium": {"ids": ["sports_wire_photo", "documentary_photo"]}, "genre": {"ids": ["sports_action", "documentary"]},
+        "subject": {"ids": ["post_exertion_athlete"]}, "action": {"ids": ["post_exertion_breathing_reset"]}, "location": {"ids": ["sports_training_venue"]},
+        "lighting": {"ids": ["stadium_light", "overcast"]}, "composition": {"ids": ["medium_close", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["50mm", "85mm"]}, "focus": {"ids": ["eye_focus", "deep_focus"]}, "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "motion": {"ids": ["deceleration_stabilization_motion"]}, "body_pose": {"ids": ["forward_lean_recovery_posture"]}, "aftermath_trace": {"ids": ["post_exertion_ground_contact_trace"]}
+      }
+    },
+    {
+      "id": "guided_skill_learning_record",
+      "ko": "지도형 기술 학습 기록",
+      "en": "guided skill-learning record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "workplace or maker-space learning record with adult mentor and learner, one visible task step, shared gaze, tool contact, practice workpiece and competency evidence",
+      "tags": ["education_training", "guided_learning", "instructional_task"],
+      "facets": {"subject_kind": ["human"], "place_type": ["interior"], "mood_family": ["documentary"], "camera_register": ["professional"], "relation_type": ["instructional", "cooperative"], "event_phase": ["active_process"], "process_stage": ["intervention", "inspection"], "learning_stage": ["demonstration", "guided_practice", "collaborative_problem_solving", "performance_assessment"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step", "partner_role", "relational_action"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "gaze_target", "probability": 0.8}, {"slot": "contact_point", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "photojournalism"]}, "genre": {"ids": ["documentary", "technology"]},
+        "subject": {"ids": ["workplace_skill_learner"]}, "action": {"ids": ["demonstrating_one_task_step", "practicing_task_under_supervision", "jointly_tracing_one_task_problem", "performing_competency_task"]}, "location": {"ids": ["maker_space_learning_bench"]},
+        "lighting": {"ids": ["soft_window", "workshop_worklight"]}, "composition": {"ids": ["triangulated_two_people_one_object", "hands_first_task_pov", "over_the_shoulder_workbench"]},
+        "lens": {"ids": ["35mm", "50mm"]}, "focus": {"ids": ["deep_focus", "selective_foreground_focus"]}, "quality": {"ids": ["photoreal", "candid_imperfect", "not_overdone"]},
+        "capture_context": {"ids": ["task_tool_result_same_frame_capture"]}, "procedure_step": {"ids": ["guided_practice_step", "competency_assessment_step"]},
+        "partner_role": {"ids": ["in_frame_skill_learner"]}, "relational_action": {"ids": ["guiding_attention_to_task_contact_point", "jointly_checking_one_work_result"]},
+        "prop": {"ids": ["practice_workpiece_comparison_prop"]}, "gaze_target": {"ids": ["joint_gaze_to_shared_target"]}, "contact_point": {"ids": ["hand_gripping_tool_handle"]}
+      }
+    },
+    {
+      "id": "returned_product_reuse_assessment_record",
+      "ko": "반환 제품 재사용 평가 기록",
+      "en": "returned-product reuse assessment record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "returned durable product intake assessment showing service wear, diagnostic contact, removed suspect component and a visible route toward direct reuse, refurbishment or material recovery",
+      "tags": ["circular_materials", "reuse_assessment"],
+      "facets": {"subject_kind": ["object"], "place_type": ["interior"], "mood_family": ["documentary"], "camera_register": ["professional", "macro"], "event_phase": ["maintenance"], "process_stage": ["inspection"], "material_lifecycle_stage": ["wear", "diagnosis", "reuse", "refurbishment"], "material_state_evidence": ["service_wear", "diagnostic_contact", "removed_failed_part", "next_use_handoff"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "surface_material", "probability": 0.9}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo"]}, "genre": {"ids": ["technology", "documentary"]},
+        "subject": {"ids": ["returned_durable_product_under_assessment"]}, "action": {"ids": ["grading_returned_product_for_reuse"]}, "location": {"ids": ["reuse_intake_assessment_station", "community_repair_bench"]},
+        "lighting": {"ids": ["inspection_droplight", "workshop_worklight"]}, "composition": {"ids": ["repair_bench_topdown", "forensic_macro_marker_frame"]},
+        "lens": {"ids": ["50mm", "macro_100mm"]}, "focus": {"ids": ["macro_focus_stack", "deep_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "scene_condition_fidelity"]},
+        "capture_context": {"ids": ["lifecycle_condition_route_capture"]}, "procedure_step": {"ids": ["reuse_condition_routing_step"]},
+        "prop": {"ids": ["removed_suspect_component_tray"]}, "surface_material": {"ids": ["localized_service_wear_surface"]}
+      }
+    },
+    {
+      "id": "pollinator_flower_visit_transect",
+      "ko": "수분매개자 꽃 방문 트랜섹트",
+      "en": "pollinator flower-visit transect",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "timed pollinator transect observation showing flower contacts, flowering patch boundaries, habitat context and a human-observation protocol without staged wildlife cues",
+      "tags": ["biodiversity", "pollinator_transect"],
+      "facets": {"subject_kind": ["animal"], "place_type": ["nature"], "mood_family": ["documentary"], "camera_register": ["professional", "macro"], "process_stage": ["monitoring"], "record_basis": ["human_observation"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 0.9}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "wildlife_photo", "macro_photo"]}, "genre": {"ids": ["science", "wildlife", "documentary"]},
+        "subject": {"ids": ["pollinator_flower_visit_event"]}, "action": {"ids": ["observing_pollinator_flower_contacts"]}, "location": {"ids": ["flowering_grassland_transect_plot"]},
+        "lighting": {"ids": ["overcast", "golden_hour"]}, "composition": {"ids": ["macro_detail", "rule_of_thirds", "wide_establishing"]},
+        "lens": {"ids": ["macro_100mm", "tele_200mm"]}, "focus": {"ids": ["macro_focus_stack", "selective_foreground_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]},
+        "capture_context": {"ids": ["human_transect_observation_capture"]}, "procedure_step": {"ids": ["timed_pollinator_transect_step"]}, "prop": {"ids": ["transect_boundary_markers_prop"]}
+      }
+    },
+    {
+      "id": "produce_cold_chain_handoff_record",
+      "ko": "농산물 콜드체인 인계 기록",
+      "en": "produce cold-chain handoff record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "human_system_evidence",
+      "embedding_text": "post-harvest produce cold-chain handoff with batch temperature probing, ventilated shipping crates, precooling state and loading transfer continuity",
+      "tags": ["agriculture_food_systems", "cold_chain_handoff"],
+      "facets": {"subject_kind": ["food"], "place_type": ["commercial", "transport"], "mood_family": ["documentary"], "camera_register": ["professional"], "event_phase": ["handoff"], "process_stage": ["measurement", "transfer"], "record_basis": ["material_sample"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "surface_material", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "documentary_photo"]}, "genre": {"ids": ["food", "science", "documentary"]},
+        "subject": {"ids": ["packed_produce_precooling_lot"]}, "action": {"ids": ["probing_batch_temperature_before_loading"]}, "location": {"ids": ["produce_precooling_loading_bay"]},
+        "lighting": {"ids": ["fluorescent", "overcast"]}, "composition": {"ids": ["wide_establishing", "hands_first_task_pov"]},
+        "lens": {"ids": ["35mm", "50mm"]}, "focus": {"ids": ["deep_focus", "selective_foreground_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["cold_chain_handoff_capture"]}, "procedure_step": {"ids": ["precooling_packaging_transfer_step"]},
+        "prop": {"ids": ["produce_temperature_probe", "ventilated_produce_shipping_crate"]}, "surface_material": {"ids": ["cool_dry_produce_skin_surface"]}
+      }
+    },
+    {
+      "id": "post_storm_building_safety_record",
+      "ko": "폭풍 후 건물 안전 점검 기록",
+      "en": "post-storm building safety record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "post-storm building-envelope safety survey with a cordoned observation boundary, wind and water damage interface, geometric non-readable status marker and georeferenced condition evidence",
+      "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"],
+      "facets": {"subject_kind": ["environment"], "place_type": ["urban"], "weather": ["storm"], "weather_effect": ["surface_wetness", "wind_deformation"], "mood_family": ["documentary"], "camera_register": ["professional"], "event_phase": ["aftermath"], "process_stage": ["inspection"], "capture_modality": ["inspection"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "prop", "probability": 1.0}, {"slot": "surface_material", "probability": 0.9}, {"slot": "aftermath_trace", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["photojournalism", "scientific_record", "documentary_photo"]}, "genre": {"ids": ["architecture", "documentary", "photojournalism"]},
+        "subject": {"ids": ["post_storm_building_envelope"]}, "action": {"ids": ["evaluating_post_storm_building_safety"]}, "location": {"ids": ["cordoned_post_storm_block"]},
+        "lighting": {"ids": ["overcast", "inspection_droplight"]}, "composition": {"ids": ["wide_establishing", "forensic_macro_marker_frame", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["wide_24mm", "35mm", "50mm"]}, "focus": {"ids": ["deep_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["georeferenced_damage_survey_capture"]}, "procedure_step": {"ids": ["building_safety_triage_qa_step"]},
+        "prop": {"ids": ["geometric_building_status_placard_prop"]}, "surface_material": {"ids": ["wind_water_damage_interface_surface"]}, "aftermath_trace": {"ids": ["bounded_storm_damage_trace"]}
+      }
+    },
+    {
+      "id": "atmospheric_ground_observation_record",
+      "ko": "대기 현상 지상 관측 기록",
+      "en": "atmospheric ground-observation record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "ground-truth meteorological observation of hail, frost, dust or deposited particles on a fixed exposure reference with safe post-event measurement",
+      "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"],
+      "facets": {"subject_kind": ["environment"], "place_type": ["nature"], "weather": ["hail", "frost", "dust"], "weather_effect": ["hail_impact", "frost_accumulation", "airborne_particles"], "mood_family": ["documentary"], "camera_register": ["professional", "macro"], "process_stage": ["measurement"], "capture_modality": ["inspection", "macro"], "record_basis": ["human_observation"], "atmospheric_class": ["hydrometeor", "lithometeor"], "phenomenon_process": ["falling_particles", "deposited_particles", "wind_raised_particles"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "weather", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step"],
+      "optional_slots": [{"slot": "surface_material", "probability": 1.0}, {"slot": "prop", "probability": 0.8}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "macro_photo", "documentary_photo"]}, "genre": {"ids": ["science", "documentary"]},
+        "subject": {"ids": ["weather_exposure_reference_array"]}, "action": {"ids": ["documenting_ground_weather_deposition"]}, "location": {"ids": ["open_weather_observation_pad"]},
+        "weather": {"ids": ["fresh_hail_deposit", "frost_crystal_morning", "yellow_dust_haze"]}, "lighting": {"ids": ["overcast", "cold_dawn_overcast"]}, "composition": {"ids": ["macro_detail", "top_down", "wide_establishing"]},
+        "lens": {"ids": ["macro_100mm", "50mm"]}, "focus": {"ids": ["macro_focus_stack", "deep_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "scene_condition_fidelity"]},
+        "capture_context": {"ids": ["fixed_ground_truth_weather_capture"]}, "procedure_step": {"ids": ["safe_post_event_measurement_step"]},
+        "surface_material": {"ids": ["weather_exposure_reference_surface"]}, "prop": {"ids": ["calibration_target_card"]}
+      }
+    },
+    {
+      "id": "longitudinal_place_state_record",
+      "ko": "장소 상태의 반복 관측 기록",
+      "en": "longitudinal place-state record",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "repeat photography of one place from a stable viewpoint with a fixed spatial anchor and visible preparation, active use, closure, maintenance, seasonal transition or reopening state",
+      "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"],
+      "facets": {"subject_kind": ["environment"], "place_type": ["urban", "interior"], "mood_family": ["documentary"], "camera_register": ["professional"], "event_phase": ["preparation", "active_process", "maintenance", "dormancy", "reactivation"], "process_stage": ["monitoring"], "acquisition_structure": ["fixed_roi", "time_series"], "observation_interval": ["repeat_interval", "seasonal_cycle"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step", "space_condition"],
+      "optional_slots": [{"slot": "prop", "probability": 0.7}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "scientific_record", "architecture_magazine_photo"]}, "genre": {"ids": ["documentary", "architecture"]},
+        "subject": {"ids": ["place_state_environment_subject"]}, "action": {"ids": ["recording_repeatable_place_state"]}, "location": {"ids": ["municipal_bus_depot", "modernist_facade", "community_repair_bench"]},
+        "lighting": {"ids": ["overcast", "soft_window", "fluorescent"]}, "composition": {"ids": ["centered_architecture_symmetry", "wide_establishing", "strong_leading_lines_vanish"]},
+        "lens": {"ids": ["35mm", "50mm"]}, "focus": {"ids": ["deep_focus"]}, "quality": {"ids": ["photoreal", "scene_condition_fidelity", "not_overdone"]},
+        "capture_context": {"ids": ["fixed_interval_monitoring_capture", "repeat_viewpoint_place_capture"]}, "procedure_step": {"ids": ["repeat_viewpoint_alignment_step"]},
+        "space_condition": {"ids": ["place_pre_use_preparation_state", "place_active_use_state", "place_close_down_aftermath_state", "place_scheduled_maintenance_state", "place_seasonal_transition_state", "place_secured_temporary_closure_state", "place_reopening_readiness_state"]},
+        "prop": {"ids": ["fixed_viewpoint_reference_prop"]}
+      }
+    },
+    {
+      "id": "natural_process_trace_documentary",
+      "ko": "자연 과정 흔적 다큐멘터리",
+      "en": "natural-process trace documentary",
+      "weight": 1.0,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "single-frame evidence of natural process through biological soil crust, erosion and deposition, condensation boundary, seed radicle emergence or freeze-thaw soil traces with scale and substrate context",
+      "tags": ["natural_process", "process_trace"],
+      "facets": {"subject_kind": ["environment", "plant"], "place_type": ["nature", "interior"], "weather": ["frost", "none"], "weather_effect": ["surface_wetness", "frost_accumulation", "erosion_deposition"], "mood_family": ["documentary"], "camera_register": ["professional", "macro"], "event_phase": ["active_process", "dormancy", "reactivation"], "process_stage": ["monitoring"], "capture_modality": ["macro", "inspection"], "observation_interval": ["repeat_interval", "seasonal_cycle"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality", "capture_context", "procedure_step", "surface_material"],
+      "optional_slots": [{"slot": "texture", "probability": 0.8}, {"slot": "prop", "probability": 0.6}],
+      "filters": {
+        "medium": {"ids": ["scientific_record", "macro_photo", "documentary_photo"]}, "genre": {"ids": ["science", "landscape", "documentary"]},
+        "subject": {"ids": ["biological_soil_crust_patch", "streambank_erosion_deposition_profile", "cold_surface_condensation_boundary", "seed_radicle_emergence_macro", "freeze_thaw_soil_polygon_patch"]},
+        "action": {"ids": ["showing_soil_crust_maturity_boundary", "measuring_erosion_deposition_pin_balance", "condensation_beading_across_cold_boundary", "radicle_breaking_seed_coat", "revealing_freeze_thaw_heave_trace"]},
+        "location": {"ids": ["dryland_soil_surface_plot", "streambank_geomorphic_transect", "cold_surface_observation_station", "controlled_germination_observation_bench", "seasonal_freeze_thaw_ground_plot"]},
+        "lighting": {"ids": ["overcast", "cold_dawn_overcast", "lab_led", "soft_window"]}, "composition": {"ids": ["macro_detail", "top_down", "primary_subject_hierarchy_frame"]},
+        "lens": {"ids": ["macro_100mm", "50mm"]}, "focus": {"ids": ["macro_focus_stack", "deep_focus"]}, "quality": {"ids": ["photoreal", "high_detail", "scene_condition_fidelity"]},
+        "capture_context": {"ids": ["natural_process_fixed_reference_capture"]}, "procedure_step": {"ids": ["natural_process_boundary_check_step"]},
+        "surface_material": {"ids": ["biological_soil_crust_surface", "layered_sediment_bank_surface", "cold_condensation_test_surface", "moist_germination_substrate_surface", "freeze_thaw_polygon_crust_surface"]},
+        "texture": {"ids": ["condensation_bead_coalescence_gradient_texture"]}, "prop": {"ids": ["fixed_process_scale_reference_prop"]}
+      }
+    },
+    {
+      "id": "visual_structure_operator_study",
+      "ko": "범용 시각 구조 연산자 연구",
+      "en": "general visual-structure operator study",
+      "weight": 0.9,
+      "template_style": "natural",
+      "family": "environment_process_evidence",
+      "embedding_text": "photographic visual structure study using a clear figure-ground boundary, physically consistent occlusion, repeated rhythm with one break, contact residue, material-state transition or canonical size anchor",
+      "tags": ["visual_structure", "general_operator"],
+      "facets": {"subject_kind": ["object", "environment"], "place_type": ["studio", "interior", "nature"], "mood_family": ["documentary"], "camera_register": ["professional"], "safety_tier": ["general"]},
+      "required_slots": ["medium", "genre", "subject", "action", "location", "lighting", "composition", "lens", "focus", "quality"],
+      "optional_slots": [{"slot": "aftermath_trace", "probability": 0.75}, {"slot": "transition_stage", "probability": 0.75}, {"slot": "scale_relation", "probability": 0.75}, {"slot": "texture", "probability": 0.6}],
+      "filters": {
+        "medium": {"ids": ["documentary_photo", "still_life_photo", "fine_art_print"]}, "genre": {"ids": ["documentary", "still_life", "fine_art"]},
+        "subject": {"ids": ["visual_structure_still_life"]}, "action": {"ids": ["revealing_one_physical_visual_order"]}, "location": {"ids": ["laboratory", "modernist_facade", "rocky_coast"]},
+        "lighting": {"ids": ["soft_window", "overcast", "inspection_droplight"]},
+        "composition": {"ids": ["figure_ground_boundary_split", "single_break_in_repeated_rhythm", "repeated_shape_rhythm_background", "foreground_object_occlusion_frame", "occlusion_continuity_lock"]},
+        "lens": {"ids": ["35mm", "50mm", "macro_100mm"]}, "focus": {"ids": ["deep_focus", "selective_foreground_focus", "macro_focus_stack"]},
+        "quality": {"ids": ["photoreal", "high_detail", "not_overdone"]}, "aftermath_trace": {"ids": ["contact_residue_trace"]},
+        "transition_stage": {"ids": ["material_state_boundary_transition"]}, "scale_relation": {"ids": ["canonical_size_anchor_relation"]}, "texture": {"ids": ["physical_state_gradient_texture"]}
+      }
+    }
+  ],
+  "slot_applicability": {
+    "preset_domain_overrides": {
+      "loading_dock_forklift_handoff_record": ["mobility_logistics"],
+      "smoke_haze_visibility_monitoring": ["climate_adaptation"],
+      "heritage_condition_documentation": ["heritage_documentation"],
+      "assistive_product_fit_use_followup": ["health_access"],
+      "accessible_route_wayfinding_record": ["health_access"],
+      "sports_pre_contact_anticipation_record": ["sports_motion"],
+      "sports_impact_material_response_record": ["sports_motion"],
+      "sports_post_exertion_recovery_record": ["sports_motion"],
+      "guided_skill_learning_record": ["education_training"],
+      "returned_product_reuse_assessment_record": ["circular_materials"],
+      "pollinator_flower_visit_transect": ["biodiversity_monitoring"],
+      "produce_cold_chain_handoff_record": ["agriculture_food_systems"],
+      "post_storm_building_safety_record": ["disaster_risk_operations"],
+      "small_group_interaction_documentary": ["human_interaction"],
+      "atmospheric_ground_observation_record": ["science_inspection"],
+      "longitudinal_place_state_record": ["longitudinal_place_state"],
+      "natural_process_trace_documentary": ["natural_process"],
+      "visual_structure_operator_study": ["visual_structure"]
+    },
+    "subject_category_overrides": {
+      "forklift_pallet_transfer": "object", "collocated_air_sensor_pair": "object", "collection_object_condition_station": "object",
+      "assistive_product_user_participant": "human", "accessible_route_clearance": "environment", "interceptive_sport_athlete": "human",
+      "impact_sport_equipment_contact": "human", "post_exertion_athlete": "human", "workplace_skill_learner": "human",
+      "returned_durable_product_under_assessment": "object", "pollinator_flower_visit_event": "animal", "packed_produce_precooling_lot": "food",
+      "post_storm_building_envelope": "environment", "weather_exposure_reference_array": "environment", "place_state_environment_subject": "environment",
+      "biological_soil_crust_patch": "environment", "streambank_erosion_deposition_profile": "environment", "cold_surface_condensation_boundary": "environment",
+      "seed_radicle_emergence_macro": "plant", "freeze_thaw_soil_polygon_patch": "environment", "visual_structure_still_life": "object"
+    }
+  },
+  "slots": {
+    "subject": [
+      {"id": "forklift_pallet_transfer", "ko": "팔레트를 인계 중인 지게차와 하역 구역", "en": "a forklift transferring one pallet across a secured loading-dock boundary", "weight": 1.0, "tags": ["object", "mobility_logistics", "loading_dock_transfer"], "kind": ["object"]},
+      {"id": "collocated_air_sensor_pair", "ko": "같은 위치에서 비교 중인 대기 센서 한 쌍", "en": "a collocated pair of compact air sensors beside one fixed visibility reference", "weight": 1.0, "tags": ["object", "climate_adaptation", "air_quality_monitoring"], "kind": ["object"]},
+      {"id": "collection_object_condition_station", "ko": "상태 조사 지지대 위의 소장품", "en": "a collection object resting on a padded condition-documentation station", "weight": 1.0, "tags": ["object", "heritage_documentation", "collection_object"], "kind": ["object"]},
+      {"id": "assistive_product_user_participant", "ko": "보조기기 피팅에 참여하는 사용자", "en": "a participant actively testing the fit and function of an assistive product", "weight": 1.0, "tags": ["human", "health_access", "assistive_real_world", "rehabilitation"], "kind": ["human"]},
+      {"id": "accessible_route_clearance", "ko": "접근 가능한 출입 동선과 여유 폭", "en": "an accessible entry route with a clear threshold, turning space and tactile walking surface", "weight": 1.0, "tags": ["environment", "health_access", "accessible_environment"], "kind": ["environment"]},
+      {"id": "interceptive_sport_athlete", "ko": "상대 움직임을 읽는 인터셉티브 스포츠 선수", "en": "an adult interceptive-sport athlete reading the next movement before contact", "weight": 1.0, "tags": ["human", "sports_motion", "athlete", "competitive_motion"], "kind": ["human"]},
+      {"id": "impact_sport_equipment_contact", "ko": "장비와 접촉하는 순간의 성인 선수", "en": "an adult athlete at the instant of physically plausible contact with sports equipment", "weight": 1.0, "tags": ["human", "sports_motion", "athlete", "sports_contact", "competitive_motion"], "kind": ["human"]},
+      {"id": "post_exertion_athlete", "ko": "고강도 동작 뒤 회복 중인 성인 선수", "en": "an adult athlete stabilizing posture and breathing after a high-effort movement", "weight": 1.0, "tags": ["human", "sports_motion", "athlete", "sports_recovery"], "kind": ["human"]},
+      {"id": "workplace_skill_learner", "ko": "실습 작업을 수행하는 학습자", "en": "a learner performing one visible workplace or maker-space task", "weight": 1.0, "tags": ["human", "education_training", "guided_learning", "instructional_task"], "kind": ["human"]},
+      {"id": "returned_durable_product_under_assessment", "ko": "재사용 가능성을 평가 중인 반환 내구재", "en": "a returned durable product opened only as needed for reuse and refurbishment assessment", "weight": 1.0, "tags": ["object", "circular_materials", "reuse_assessment"], "kind": ["object"]},
+      {"id": "pollinator_flower_visit_event", "ko": "꽃에 실제로 접촉 중인 수분매개 곤충", "en": "a pollinating insect making a visible flower contact within a marked transect", "weight": 1.0, "tags": ["animal", "biodiversity", "pollinator_transect"], "kind": ["animal"]},
+      {"id": "packed_produce_precooling_lot", "ko": "예냉·출하 인계 중인 포장 농산물 배치", "en": "a packed produce lot at the precooling-to-loading handoff", "weight": 1.0, "tags": ["food", "agriculture_food_systems", "cold_chain_handoff"], "kind": ["food"]},
+      {"id": "post_storm_building_envelope", "ko": "폭풍 뒤 외피 상태가 드러난 건물", "en": "a post-storm building envelope with specific wind and water condition evidence", "weight": 1.0, "tags": ["environment", "disaster_risk_operations", "post_disaster_survey", "building_safety_triage"], "kind": ["environment"]},
+      {"id": "weather_exposure_reference_array", "ko": "대기 현상 퇴적을 받는 고정 노출 기준판", "en": "a fixed outdoor exposure-reference array carrying fresh weather deposits", "weight": 1.0, "tags": ["environment", "science_inspection", "atmospheric_observation", "ground_truth_weather"], "kind": ["environment"]},
+      {"id": "place_state_environment_subject", "ko": "같은 시점에서 반복 관찰되는 장소", "en": "one place state organized around a stable doorway, fixture, edge or horizon anchor", "weight": 1.0, "tags": ["environment", "longitudinal_place_state", "place_state", "repeat_viewpoint"], "kind": ["environment"]},
+      {"id": "biological_soil_crust_patch", "ko": "발달 단계 경계가 보이는 생물 토양 피각", "en": "a biological soil-crust patch with adjacent maturity states and intact substrate context", "weight": 1.0, "tags": ["environment", "natural_process", "biocrust"], "kind": ["environment"]},
+      {"id": "streambank_erosion_deposition_profile", "ko": "침식과 퇴적이 함께 보이는 하안 단면", "en": "a streambank profile showing erosion and deposition around fixed reference pins", "weight": 1.0, "tags": ["environment", "natural_process", "geomorphology"], "kind": ["environment"]},
+      {"id": "cold_surface_condensation_boundary", "ko": "차가운 표면의 결로 경계", "en": "a cold material surface with a continuous dry-to-condensed moisture boundary", "weight": 1.0, "tags": ["environment", "natural_process", "condensation_process"], "kind": ["environment"]},
+      {"id": "seed_radicle_emergence_macro", "ko": "종피를 뚫고 나오는 유근의 매크로 관찰", "en": "a germinating seed with the radicle visibly breaking through the seed coat", "weight": 1.0, "tags": ["plant", "natural_process", "germination"], "kind": ["plant"]},
+      {"id": "freeze_thaw_soil_polygon_patch", "ko": "동결 융해 흔적이 남은 토양 다각형", "en": "a freeze-thaw soil patch with polygon cracking, heave and redistributed fine material", "weight": 1.0, "tags": ["environment", "natural_process", "freeze_thaw"], "kind": ["environment"]},
+      {"id": "visual_structure_still_life", "ko": "물리적 시각 구조가 분명한 사물·공간 장면", "en": "an object-and-space arrangement with one physically verifiable visual order", "weight": 0.9, "tags": ["object", "visual_structure", "general_operator"], "kind": ["object"]}
+    ],
+    "action": [
+      {"id": "spotter_guided_forklift_loading", "ko": "스포터 신호에 맞춰 하역 경계를 통과하는", "en": "moving the pallet only while a spotter maintains the marked loading boundary", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer"], "for_any": ["object"], "facets": {"process_stage": ["transfer"], "movement_type": ["vehicle_flow"]}, "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "checking_haze_visibility_against_landmark", "ko": "고정 원경 표식과 연무 시정을 비교하는", "en": "checking haze visibility against the same distant landmark and sensor position", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring"], "for_any": ["object", "environment"], "facets": {"process_stage": ["monitoring"], "weather_effect": ["visibility_loss"]}, "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "mapping_condition_anomalies", "ko": "표면 상태 이상을 기준척과 함께 기록하는", "en": "mapping surface-condition anomalies beside one stable scale and lighting reference", "weight": 1.0, "tags": ["heritage_documentation", "collection_object"], "for_any": ["object"], "facets": {"process_stage": ["inspection"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "fitting_assistive_product_with_user_feedback", "ko": "사용자 피드백에 따라 보조기기 높이와 접점을 조정하는", "en": "adjusting assistive-product height and contact points in response to the adult user's feedback", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation"], "for_any": ["human"], "facets": {"process_stage": ["intervention"], "relation_type": ["caregiving", "instructional"]}, "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "checking_accessible_route_clearance", "ko": "문턱·회전 공간·촉지 유도면의 연속성을 확인하는", "en": "checking continuous usable clearance across the threshold, turning space and tactile route", "weight": 1.0, "tags": ["health_access", "accessible_environment"], "for_any": ["environment"], "facets": {"process_stage": ["inspection"]}, "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "reading_pre_contact_kinematics", "ko": "접촉 전에 상대의 무게 이동과 진행 방향을 읽는", "en": "reading the opponent's weight shift and path before any contact occurs", "weight": 1.0, "tags": ["sports_motion", "competitive_motion"], "for_any": ["human"], "facets": {"movement_phase": ["readiness", "loading_braking"], "contact_state": ["clearance_no_contact"], "effort_state": ["controlled"]}, "requires_primary_any_tags": ["sports_motion", "competitive_motion"]},
+      {"id": "absorbing_contact_then_releasing", "ko": "접촉 힘을 흡수한 뒤 장비를 다시 방출하는", "en": "absorbing one contact force and releasing the equipment along a plausible motion path", "weight": 1.0, "tags": ["sports_motion", "sports_contact", "competitive_motion"], "for_any": ["human"], "facets": {"movement_phase": ["impact_absorption", "propulsion_release"], "contact_state": ["equipment_contact"], "effort_state": ["near_maximal"], "material_response": ["compression", "rebound"]}, "requires_primary_any_tags": ["sports_motion", "sports_contact", "competitive_motion"]},
+      {"id": "post_exertion_breathing_reset", "ko": "감속한 뒤 자세와 호흡을 회복하는", "en": "decelerating into a stable stance while resetting breathing after exertion", "weight": 1.0, "tags": ["sports_motion", "sports_recovery"], "for_any": ["human"], "facets": {"movement_phase": ["deceleration_stabilization", "recovery"], "contact_state": ["post_contact_release"], "effort_state": ["fatigued", "recovering"]}, "requires_primary_any_tags": ["sports_motion", "sports_recovery"]},
+      {"id": "demonstrating_one_task_step", "ko": "하나의 작업 단계를 천천히 시범 보이는", "en": "demonstrating one task step slowly enough for the learner to inspect the contact point", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "for_any": ["human"], "facets": {"learning_stage": ["demonstration"], "relation_type": ["instructional"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "practicing_task_under_supervision", "ko": "감독 아래 같은 작업을 직접 연습하는", "en": "practicing the same task while an adult mentor observes the tool-to-workpiece contact", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "for_any": ["human"], "facets": {"learning_stage": ["guided_practice"], "relation_type": ["instructional"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "jointly_tracing_one_task_problem", "ko": "한 작업 문제의 원인을 함께 추적하는", "en": "jointly tracing one task problem from tool contact to the visible result", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "for_any": ["human"], "facets": {"learning_stage": ["collaborative_problem_solving"], "relation_type": ["cooperative", "instructional"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "performing_competency_task", "ko": "평가 가능한 결과가 남는 역량 과제를 수행하는", "en": "performing a competency task that leaves one directly inspectable work result", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "for_any": ["human"], "facets": {"learning_stage": ["performance_assessment"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "grading_returned_product_for_reuse", "ko": "반환 제품을 재사용·리퍼브·회수 경로로 판정하는", "en": "grading the returned product toward direct reuse, refurbishment or material recovery from visible condition evidence", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment"], "for_any": ["object"], "facets": {"material_lifecycle_stage": ["diagnosis", "reuse", "refurbishment"], "material_state_evidence": ["service_wear", "diagnostic_contact", "next_use_handoff"]}, "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "observing_pollinator_flower_contacts", "ko": "정해진 구간에서 꽃 접촉을 관찰하는", "en": "observing pollinator-to-flower contacts along the marked transect for a fixed interval", "weight": 1.0, "tags": ["biodiversity", "pollinator_transect"], "for_any": ["animal"], "facets": {"process_stage": ["monitoring"], "record_basis": ["human_observation"]}, "requires_primary_any_tags": ["biodiversity", "pollinator_transect"]},
+      {"id": "probing_batch_temperature_before_loading", "ko": "상차 직전 배치 온도를 대표 지점에서 측정하는", "en": "probing produce temperature at a representative batch point immediately before loading", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff"], "for_any": ["food"], "facets": {"process_stage": ["measurement", "transfer"], "record_basis": ["material_sample"]}, "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "evaluating_post_storm_building_safety", "ko": "통제선 밖에서 폭풍 후 건물 상태를 판정하는", "en": "evaluating post-storm building condition from outside a clearly controlled observation boundary", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"], "for_any": ["environment"], "facets": {"event_phase": ["aftermath"], "process_stage": ["inspection"]}, "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "documenting_ground_weather_deposition", "ko": "고정 기준판 위 대기 현상 퇴적을 기록하는", "en": "documenting fresh atmospheric deposits on the same fixed ground-reference surface", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"], "for_any": ["environment"], "facets": {"process_stage": ["measurement"], "record_basis": ["human_observation"], "phenomenon_process": ["falling_particles", "deposited_particles"]}, "requires_primary_any_tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"]},
+      {"id": "recording_repeatable_place_state", "ko": "고정 공간 기준을 중심으로 현재 장소 상태를 기록하는", "en": "recording the present place state around the same fixed spatial anchor and viewpoint", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "for_any": ["environment"], "facets": {"process_stage": ["monitoring"], "observation_interval": ["repeat_interval", "seasonal_cycle"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "showing_soil_crust_maturity_boundary", "ko": "인접한 토양 피각 발달 단계의 경계를 보여주는", "en": "showing adjacent biological soil-crust maturity states without disturbing the surface", "weight": 1.0, "tags": ["natural_process", "biocrust"], "for_any": ["environment"], "requires_primary_any_tags": ["biocrust"]},
+      {"id": "measuring_erosion_deposition_pin_balance", "ko": "고정 핀 주변 침식·퇴적 균형을 측정하는", "en": "measuring erosion and deposition around fixed geomorphic reference pins", "weight": 1.0, "tags": ["natural_process", "geomorphology"], "for_any": ["environment"], "facets": {"weather_effect": ["erosion_deposition"]}, "requires_primary_any_tags": ["geomorphology"]},
+      {"id": "condensation_beading_across_cold_boundary", "ko": "차가운 경계를 따라 결로 방울이 합쳐지는", "en": "condensation beads coalescing across a continuous cold-surface boundary", "weight": 1.0, "tags": ["natural_process", "condensation_process"], "for_any": ["environment"], "facets": {"weather_effect": ["surface_wetness"]}, "requires_primary_any_tags": ["condensation_process"]},
+      {"id": "radicle_breaking_seed_coat", "ko": "유근이 종피를 물리적으로 뚫고 나오는", "en": "the radicle physically breaking through the seed coat into moist substrate", "weight": 1.0, "tags": ["natural_process", "germination"], "for_any": ["plant"], "requires_primary_any_tags": ["germination"]},
+      {"id": "revealing_freeze_thaw_heave_trace", "ko": "동결 융해로 생긴 융기와 미세물질 이동을 드러내는", "en": "revealing freeze-thaw heave, polygon cracking and redistributed fine material", "weight": 1.0, "tags": ["natural_process", "freeze_thaw"], "for_any": ["environment"], "facets": {"weather_effect": ["frost_accumulation"]}, "requires_primary_any_tags": ["freeze_thaw"]},
+      {"id": "revealing_one_physical_visual_order", "ko": "하나의 물리적으로 검증 가능한 시각 질서를 드러내는", "en": "revealing one dominant visual order through boundary, occlusion, rhythm, contact, state or scale", "weight": 0.9, "tags": ["visual_structure", "general_operator"], "for_any": ["object", "environment"], "requires_primary_any_tags": ["visual_structure", "general_operator"]},
+      {"id": "using_tool_at_visible_change_boundary", "ko": "도구를 눈에 보이는 변화 경계에 접촉시키는", "en": "using a hand tool exactly at the visible boundary of change", "weight": 0.9, "tags": ["human", "tool_use", "relationship_grammar"], "for_any": ["human"]}
+    ],
+    "location": [
+      {"id": "marked_loading_dock", "ko": "보행 경계와 고정된 도크보드가 표시된 하역장", "en": "a loading dock with a marked pedestrian boundary and secured dockboard", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer", "transport"], "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "community_smoke_monitoring_site", "ko": "고정 원경 표식이 보이는 지역 대기 관측 지점", "en": "a community air-monitoring site with an unobstructed fixed distant landmark", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring", "urban"], "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "collection_documentation_bay", "ko": "중립 배경과 안정 지지대가 있는 소장품 기록 구역", "en": "a collection-documentation bay with stable support, neutral surroundings and controlled access", "weight": 1.0, "tags": ["heritage_documentation", "collection_object", "collection_storage"], "facets": {"place_type": ["collection_storage"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "community_rehabilitation_room", "ko": "실제 기능 활동을 위한 지역사회 재활실", "en": "a community rehabilitation room arranged for practical adult mobility tasks", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation", "interior"], "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "accessible_public_building_entry", "ko": "문턱과 회전 공간이 명확한 공공건물 출입부", "en": "a public-building entry with a continuous accessible threshold and turning area", "weight": 1.0, "tags": ["health_access", "accessible_environment", "architecture"], "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "sports_training_venue", "ko": "표면과 경계가 읽히는 실제 스포츠 훈련장", "en": "a real sports training venue with a legible playing surface and boundary", "weight": 1.0, "tags": ["sports_motion", "sports_venue", "competitive_motion"], "facets": {"place_type": ["sports_venue"]}, "requires_primary_any_tags": ["sports_motion", "sports_venue", "competitive_motion"]},
+      {"id": "maker_space_learning_bench", "ko": "도구와 연습 결과가 함께 보이는 메이커 교육 작업대", "en": "a maker-space learning bench where tool, workpiece and result remain in the same activity frame", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task", "interior"], "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "reuse_intake_assessment_station", "ko": "반환 제품의 상태와 다음 경로를 판정하는 접수 작업대", "en": "a reuse-intake assessment station separating received condition from next-use routing", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment", "interior"], "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "flowering_grassland_transect_plot", "ko": "경계 표식이 있는 꽃이 핀 초지 트랜섹트", "en": "a flowering grassland transect with unobtrusive boundary markers and intact habitat depth", "weight": 1.0, "tags": ["biodiversity", "pollinator_transect", "nature"], "requires_primary_any_tags": ["biodiversity", "pollinator_transect"]},
+      {"id": "produce_precooling_loading_bay", "ko": "예냉실과 상차 구역이 연결된 농산물 출하장", "en": "a produce loading bay connecting the precooling room to a refrigerated transfer zone", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff", "transport"], "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "cordoned_post_storm_block", "ko": "안전 통제선이 설치된 폭풍 피해 구역", "en": "a post-storm block viewed from outside a clearly established safety control line", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage", "urban"], "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "open_weather_observation_pad", "ko": "주변 가림이 적은 지상 기상 관측대", "en": "an open ground-weather observation pad with fixed exposure references", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather", "nature"], "requires_primary_any_tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"]},
+      {"id": "dryland_soil_surface_plot", "ko": "교란되지 않은 건조지 토양 표면 조사구", "en": "an undisturbed dryland soil-surface plot with a small fixed scale reference", "weight": 1.0, "tags": ["natural_process", "biocrust", "nature"], "requires_primary_any_tags": ["biocrust"]},
+      {"id": "streambank_geomorphic_transect", "ko": "기준 핀이 설치된 하안 지형 트랜섹트", "en": "a streambank geomorphic transect with fixed reference pins and exposed layers", "weight": 1.0, "tags": ["natural_process", "geomorphology", "nature"], "requires_primary_any_tags": ["geomorphology"]},
+      {"id": "cold_surface_observation_station", "ko": "결로 경계를 관찰하는 차가운 재료 표면 스테이션", "en": "a controlled cold-surface observation station with one stable dry-to-condensed boundary", "weight": 1.0, "tags": ["natural_process", "condensation_process", "interior"], "requires_primary_any_tags": ["condensation_process"]},
+      {"id": "controlled_germination_observation_bench", "ko": "발아 단계를 관찰하는 제어된 작업대", "en": "a controlled germination observation bench with moist substrate and fixed macro reference", "weight": 1.0, "tags": ["natural_process", "germination", "interior"], "requires_primary_any_tags": ["germination"]},
+      {"id": "seasonal_freeze_thaw_ground_plot", "ko": "계절 동결 융해가 반복되는 지표 조사구", "en": "a seasonal freeze-thaw ground plot with intact polygon and heave traces", "weight": 1.0, "tags": ["natural_process", "freeze_thaw", "nature"], "requires_primary_any_tags": ["freeze_thaw"]}
+    ],
+    "lighting": [
+      {"id": "heritage_raking_light", "ko": "표면 상태를 드러내는 낮은 각도의 사광", "en": "controlled low-angle raking light revealing relief without clipping reflective condition evidence", "weight": 1.0, "tags": ["heritage_documentation", "conservation_capture"], "facets": {"lighting_family": ["artificial_light"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object", "conservation_lab"]}
+    ],
+    "weather": [
+      {"id": "wildfire_smoke_visibility_haze", "ko": "원경 대비를 줄이는 산불 연기 연무", "en": "wildfire-smoke haze reducing landmark contrast and distance visibility", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring", "haze"], "facets": {"weather": ["haze"], "weather_effect": ["visibility_loss", "airborne_particles"]}, "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "fresh_hail_deposit", "ko": "기준판 위에 갓 쌓인 우박 퇴적", "en": "fresh hail deposited across the fixed reference surface", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"], "facets": {"weather": ["hail"], "weather_effect": ["hail_impact"]}, "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather"]},
+      {"id": "frost_crystal_morning", "ko": "기준면에 형성된 아침 서리 결정", "en": "morning frost crystals formed across the fixed exposure reference", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"], "facets": {"weather": ["frost"], "weather_effect": ["frost_accumulation"]}, "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather"]}
+    ],
+    "atmosphere": [
+      {"id": "particulate_haze_depth", "ko": "거리 층마다 대비가 줄어드는 입자성 연무", "en": "particulate haze progressively reducing contrast across foreground, middle distance and the fixed landmark", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring"], "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]}
+    ],
+    "capture_context": [
+      {"id": "fluorescence_microscopy_capture", "ko": "형광 채널을 등록한 현미경 촬영", "en": "registered fluorescence microscopy capture with physically distinct channels and no decorative glow", "weight": 1.0, "tags": ["science_inspection", "microscopy"], "facets": {"capture_modality": ["microscopy", "fluorescence"], "acquisition_structure": ["multichannel"]}, "requires_primary_any_tags": ["microscopy"]},
+      {"id": "dic_optical_path_gradient_capture", "ko": "미분간섭 대비로 경사를 드러내는 촬영", "en": "differential-interference-contrast capture where optical-path gradients create directional relief", "weight": 1.0, "tags": ["science_inspection", "microscopy"], "facets": {"capture_modality": ["microscopy", "dic"]}, "requires_primary_any_tags": ["microscopy"]},
+      {"id": "cross_polarized_birefringence_capture", "ko": "교차 편광으로 복굴절을 기록하는 촬영", "en": "cross-polarized microscopy capture recording birefringence against a dark field", "weight": 1.0, "tags": ["science_inspection", "microscopy"], "facets": {"capture_modality": ["microscopy", "polarized_light"]}, "requires_primary_any_tags": ["microscopy"]},
+      {"id": "fixed_roi_time_series_capture", "ko": "동일 ROI를 유지하는 시계열 촬영", "en": "fixed-ROI time-series acquisition maintaining the same landmark, field and focus relationship", "weight": 1.0, "tags": ["science_inspection", "microscopy"], "facets": {"capture_modality": ["microscopy"], "acquisition_structure": ["fixed_roi", "time_series"]}, "requires_primary_any_tags": ["microscopy"]},
+      {"id": "registered_multichannel_capture", "ko": "같은 시야를 유지하는 다채널 촬영", "en": "registered multichannel acquisition preserving one field of view and physical reference", "weight": 1.0, "tags": ["science_inspection", "microscopy"], "facets": {"capture_modality": ["microscopy"], "acquisition_structure": ["multichannel"]}, "requires_primary_any_tags": ["microscopy"]},
+      {"id": "dock_transfer_audit_capture", "ko": "도크·차량·보행 경계를 함께 담는 인계 촬영", "en": "audit capture keeping dock edge, trailer, forklift path and pedestrian boundary in one legible frame", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer"], "facets": {"capture_modality": ["inspection"]}, "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "collocated_air_sensor_capture", "ko": "두 센서와 고정 원경 표식을 함께 담는 촬영", "en": "collocated sensor capture including both inlets, mounting context and the same distant visibility landmark", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring"], "facets": {"capture_modality": ["inspection"], "record_basis": ["machine_observation"]}, "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "fixed_reference_condition_capture", "ko": "기준척과 지지 상태를 고정한 소장품 촬영", "en": "fixed-reference condition capture preserving object support, scale, orientation and surface landmarks", "weight": 1.0, "tags": ["heritage_documentation", "conservation_capture"], "facets": {"capture_modality": ["inspection"], "acquisition_structure": ["fixed_roi"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "multi_angle_photogrammetry_capture", "ko": "중첩 시야를 유지하는 다각도 포토그래메트리 촬영", "en": "multi-angle photogrammetry capture with overlapping views, stable support and consistent exposure", "weight": 0.9, "tags": ["heritage_documentation", "photogrammetry_capture"], "facets": {"capture_modality": ["photogrammetry"], "acquisition_structure": ["multiview"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "assistive_fit_followup_capture", "ko": "사용자·보조기기·기능 접점을 함께 담는 후속 촬영", "en": "follow-up capture keeping the adult user, assistive product and functional contact point in the same dignified frame", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation"], "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "access_route_clearance_capture", "ko": "문턱부터 회전 공간까지 연속 동선을 담는 촬영", "en": "route-clearance capture showing threshold, tactile cue, turning space and destination continuity", "weight": 1.0, "tags": ["health_access", "accessible_environment"], "facets": {"capture_modality": ["inspection"]}, "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "task_tool_result_same_frame_capture", "ko": "과제·도구·결과를 한 프레임에 유지하는 촬영", "en": "activity capture keeping the task, tool contact, mentor-learner attention and work result in one frame", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "lifecycle_condition_route_capture", "ko": "현재 상태와 다음 생애주기 경로를 연결하는 촬영", "en": "condition-route capture connecting visible service state to the next reuse, refurbishment or recovery decision", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment"], "facets": {"capture_modality": ["inspection"], "material_lifecycle_stage": ["diagnosis", "reuse", "refurbishment"], "material_state_evidence": ["service_wear", "next_use_handoff"]}, "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "human_transect_observation_capture", "ko": "인간 관찰자의 트랜섹트 꽃 방문 기록 촬영", "en": "human-observation transect capture preserving flower contact, patch boundary and habitat context", "weight": 1.0, "tags": ["biodiversity", "pollinator_transect"], "facets": {"record_basis": ["human_observation"]}, "requires_primary_any_tags": ["biodiversity", "pollinator_transect"]},
+      {"id": "cold_chain_handoff_capture", "ko": "배치·온도 측정·상차 경로를 함께 담는 촬영", "en": "cold-chain handoff capture linking produce batch, temperature contact point and loading route", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff"], "facets": {"record_basis": ["material_sample"]}, "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "georeferenced_damage_survey_capture", "ko": "고정 위치·방향·안전 경계를 유지하는 피해 조사 촬영", "en": "damage-survey capture with stable position, orientation, scale reference and safe observation boundary", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"], "facets": {"capture_modality": ["inspection"]}, "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "fixed_ground_truth_weather_capture", "ko": "같은 노출 기준면을 유지하는 지상 관측 촬영", "en": "fixed ground-truth weather capture preserving exposure surface, scale and surrounding observation context", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"], "facets": {"capture_modality": ["inspection", "macro"], "record_basis": ["human_observation"], "acquisition_structure": ["fixed_roi"]}, "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather"]},
+      {"id": "repeat_viewpoint_place_capture", "ko": "공간 기준점과 시점을 반복 정렬하는 촬영", "en": "repeat-viewpoint place capture aligned to the same spatial anchor, camera height and field of view", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"acquisition_structure": ["fixed_roi", "time_series"], "observation_interval": ["repeat_interval", "seasonal_cycle"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "natural_process_fixed_reference_capture", "ko": "기질과 기준척을 고정한 자연 과정 촬영", "en": "fixed-reference natural-process capture preserving substrate, scale, boundary and surrounding state", "weight": 1.0, "tags": ["natural_process", "process_trace"], "facets": {"capture_modality": ["macro", "inspection"], "acquisition_structure": ["fixed_roi"], "observation_interval": ["repeat_interval", "seasonal_cycle"]}, "requires_primary_any_tags": ["natural_process", "biocrust", "germination", "geomorphology", "freeze_thaw", "condensation_process"]}
+    ],
+    "procedure_step": [
+      {"id": "trailer_securement_transfer_step", "ko": "차량 정지·도크보드 고정·보행 경계를 확인한 뒤 인계하는 단계", "en": "confirm trailer restraint, dockboard position and pedestrian boundary before pallet transfer", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer"], "facets": {"process_stage": ["transfer"]}, "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "sensor_collocation_check_step", "ko": "흡입구 높이와 장애물을 확인하는 센서 병치 단계", "en": "verify matched inlet height, airflow clearance and fixed landmark before comparing the collocated sensors", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring"], "facets": {"process_stage": ["monitoring"]}, "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "pre_intervention_documentation_step", "ko": "처치 전 지지·방향·척도·표면 상태를 기록하는 단계", "en": "document support, orientation, scale and condition before any conservation intervention", "weight": 1.0, "tags": ["heritage_documentation", "collection_object"], "facets": {"process_stage": ["inspection"]}, "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "assistive_product_fitting_step", "ko": "사용자 주도 기능 과제로 높이와 접점을 맞추는 단계", "en": "fit height and contact points through a function chosen and performed by the adult user", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation"], "facets": {"process_stage": ["intervention"]}, "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "assistive_product_followup_step", "ko": "실사용 피드백으로 편안함과 기능을 재확인하는 단계", "en": "recheck comfort, function and fit from real-use feedback during follow-up", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation"], "facets": {"process_stage": ["monitoring"]}, "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "accessible_route_walkthrough_step", "ko": "문턱·회전·촉지 유도·목적지 연속성을 확인하는 단계", "en": "walk the route from threshold through turning space and tactile cue to the usable destination", "weight": 1.0, "tags": ["health_access", "accessible_environment"], "facets": {"process_stage": ["inspection"]}, "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "guided_practice_step", "ko": "시범 뒤 학습자가 같은 접점을 연습하는 단계", "en": "after demonstration, let the adult learner repeat the same tool-to-workpiece contact under guidance", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "facets": {"learning_stage": ["guided_practice"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "competency_assessment_step", "ko": "완료된 작업 결과를 직접 검사하는 역량 평가 단계", "en": "assess competence from the completed task and directly inspectable work result", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task"], "facets": {"learning_stage": ["performance_assessment"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "reuse_condition_routing_step", "ko": "상태 근거에 따라 재사용·리퍼브·회수 경로를 지정하는 단계", "en": "route the item to direct reuse, refurbishment or recovery from visible condition and function evidence", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment"], "facets": {"material_lifecycle_stage": ["diagnosis", "reuse", "refurbishment", "recovery"], "material_state_evidence": ["functional_test", "next_use_handoff"]}, "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "timed_pollinator_transect_step", "ko": "고정 시간·폭·진행 방향으로 꽃 방문을 관찰하는 단계", "en": "observe flower visits for a fixed interval, transect width and walking direction", "weight": 1.0, "tags": ["biodiversity", "pollinator_transect"], "facets": {"process_stage": ["monitoring"], "record_basis": ["human_observation"]}, "requires_primary_any_tags": ["biodiversity", "pollinator_transect"]},
+      {"id": "precooling_packaging_transfer_step", "ko": "예냉 상태·포장 통풍·온도 접점을 확인한 뒤 상차하는 단계", "en": "confirm precooling state, package ventilation and representative temperature contact before loading", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff"], "facets": {"process_stage": ["measurement", "transfer"]}, "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "building_safety_triage_qa_step", "ko": "관찰 근거와 출입 제한 상태를 교차 확인하는 안전 판정 단계", "en": "cross-check the observed condition, safe boundary and restricted or follow-up state before triage", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"], "facets": {"event_phase": ["aftermath"], "process_stage": ["inspection"]}, "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "safe_post_event_measurement_step", "ko": "현상이 끝난 뒤 고정 기준면의 퇴적을 안전하게 측정하는 단계", "en": "measure deposits on the fixed exposure reference only after the immediate weather hazard has passed", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather"], "facets": {"process_stage": ["measurement"], "record_basis": ["human_observation"]}, "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather"]},
+      {"id": "repeat_viewpoint_alignment_step", "ko": "공간 기준점·카메라 높이·시야를 다시 맞추는 단계", "en": "realign the same spatial anchor, camera height, orientation and field of view before recording place state", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"acquisition_structure": ["fixed_roi", "time_series"], "observation_interval": ["repeat_interval", "seasonal_cycle"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "natural_process_boundary_check_step", "ko": "경계·기질·척도·공존 단계를 한 프레임에서 확인하는 단계", "en": "verify that boundary, substrate, scale and coexisting process states are visible in one supported frame", "weight": 1.0, "tags": ["natural_process", "process_trace"], "facets": {"process_stage": ["monitoring"], "observation_interval": ["repeat_interval", "seasonal_cycle"]}, "requires_primary_any_tags": ["natural_process", "biocrust", "germination", "geomorphology", "freeze_thaw", "condensation_process"]}
+    ],
+    "prop": [
+      {"id": "microscope_pitch_reference_slide", "ko": "현미경 배율 교정용 피치 기준 슬라이드", "en": "a microscope pitch-reference slide beside the registered field of view", "weight": 1.0, "tags": ["science_inspection", "microscopy", "calibration"], "requires_primary_any_tags": ["microscopy"]},
+      {"id": "secured_dockboard_wheel_chock_prop", "ko": "고정된 도크보드와 바퀴 고임 장치", "en": "a visibly secured dockboard and wheel chock at the trailer interface", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer"], "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "fixed_visibility_reference_prop", "ko": "시정 비교를 위한 고정 원경 표식", "en": "one fixed, non-readable high-contrast landmark used only as a visibility reference", "weight": 1.0, "tags": ["climate_adaptation", "air_quality_monitoring", "no_text_required"], "requires_primary_any_tags": ["climate_adaptation", "air_quality_monitoring"]},
+      {"id": "padded_object_support_prop", "ko": "소장품 형상에 맞춘 중성 완충 지지대", "en": "a neutral padded support fitted to the collection object's stable resting geometry", "weight": 1.0, "tags": ["heritage_documentation", "collection_object"], "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "adjustable_walking_aid_prop", "ko": "높이 조절 지점이 보이는 보행 보조기기", "en": "an adjustable walking aid with the functional grip and height setting visible", "weight": 1.0, "tags": ["health_access", "assistive_real_world", "rehabilitation"], "requires_primary_any_tags": ["health_access", "assistive_real_world", "rehabilitation"]},
+      {"id": "tactile_walking_surface_indicator_prop", "ko": "연속 방향이 보이는 촉지 보행 표면 지시체", "en": "a tactile walking-surface indicator aligned continuously through the accessible route", "weight": 1.0, "tags": ["health_access", "accessible_environment", "no_text_required"], "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "compressed_ball_contact_prop", "ko": "접촉점에서 순간 압축된 공", "en": "a sports ball visibly compressed only at the physically plausible contact point", "weight": 1.0, "tags": ["sports_motion", "sports_contact", "competitive_motion"], "facets": {"contact_state": ["equipment_contact"], "material_response": ["compression", "rebound"]}, "requires_primary_any_tags": ["sports_motion", "sports_contact", "competitive_motion"]},
+      {"id": "practice_workpiece_comparison_prop", "ko": "시범 결과와 연습 결과를 비교할 수 있는 작업물", "en": "a practice workpiece beside one demonstration result, both free of readable assessment text", "weight": 1.0, "tags": ["education_training", "guided_learning", "instructional_task", "no_text_required"], "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "removed_suspect_component_tray", "ko": "분리된 의심 부품을 담은 작은 부품 트레이", "en": "a small parts tray holding only the removed suspect component beside the assessed product", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment"], "facets": {"material_state_evidence": ["removed_failed_part"]}, "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "transect_boundary_markers_prop", "ko": "서식지를 가리지 않는 작은 트랜섹트 경계 표식", "en": "small unobtrusive transect boundary markers that do not block flowers or pollinator behavior", "weight": 1.0, "tags": ["biodiversity", "pollinator_transect", "no_text_required"], "requires_primary_any_tags": ["biodiversity", "pollinator_transect"]},
+      {"id": "produce_temperature_probe", "ko": "대표 농산물 배치에 접촉한 온도 프로브", "en": "a sanitized temperature probe contacting one representative point in the produce batch", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff"], "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "ventilated_produce_shipping_crate", "ko": "통풍구가 열린 농산물 운송 상자", "en": "ventilated produce shipping crates arranged to preserve airflow during transfer", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff"], "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "geometric_building_status_placard_prop", "ko": "문자 없이 도형만 있는 건물 상태 표식", "en": "a generic geometric building-status placard with no readable text or official insignia", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage", "no_text_required"], "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "fixed_viewpoint_reference_prop", "ko": "반복 시점 정렬용 비문자 공간 기준점", "en": "a permanent non-readable spatial feature used to realign the repeat viewpoint", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint", "no_text_required"], "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "fixed_process_scale_reference_prop", "ko": "자연 과정 관찰을 위한 작은 고정 척도 기준", "en": "a small non-readable scale reference fixed outside the active natural-process boundary", "weight": 1.0, "tags": ["natural_process", "process_trace", "no_text_required"], "requires_primary_any_tags": ["natural_process", "biocrust", "germination", "geomorphology", "freeze_thaw", "condensation_process"]}
+    ],
+    "surface_material": [
+      {"id": "localized_heritage_condition_surface", "ko": "마모·들뜸·부식이 국소적으로 구분되는 소장품 표면", "en": "a collection-object surface with localized wear, lifting or corrosion remaining physically distinct", "weight": 1.0, "tags": ["heritage_documentation", "collection_object", "surface"], "for_any": ["object"], "requires_primary_any_tags": ["heritage_documentation", "collection_object"]},
+      {"id": "threshold_clearance_surface", "ko": "문턱과 인접 바닥 높이 차가 명확한 표면", "en": "a threshold and adjoining floor surface with legible clearance, edge and tactile continuity", "weight": 1.0, "tags": ["health_access", "accessible_environment", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["health_access", "accessible_environment"]},
+      {"id": "localized_service_wear_surface", "ko": "실사용 마모와 국소 고장이 구분되는 제품 표면", "en": "a product surface where ordinary service wear remains distinct from one localized failure", "weight": 1.0, "tags": ["circular_materials", "reuse_assessment", "surface"], "for_any": ["object"], "facets": {"material_state_evidence": ["service_wear", "localized_failure"]}, "requires_primary_any_tags": ["circular_materials", "reuse_assessment"]},
+      {"id": "cool_dry_produce_skin_surface", "ko": "응결 없이 차갑고 건조한 농산물 표면", "en": "a cool dry produce surface with intact bloom and no misleading condensation", "weight": 1.0, "tags": ["agriculture_food_systems", "cold_chain_handoff", "surface"], "for_any": ["food"], "requires_primary_any_tags": ["agriculture_food_systems", "cold_chain_handoff"]},
+      {"id": "wind_water_damage_interface_surface", "ko": "바람과 물 피해 경계가 구분되는 건물 외피 표면", "en": "a building-envelope surface where wind displacement and water intrusion meet at one legible interface", "weight": 1.0, "tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "weather_exposure_reference_surface", "ko": "퇴적 두께와 분포가 보이는 중성 노출 기준면", "en": "a neutral exposure-reference surface preserving deposit size, distribution and edge shape", "weight": 1.0, "tags": ["science_inspection", "atmospheric_observation", "ground_truth_weather", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["atmospheric_observation", "ground_truth_weather"]},
+      {"id": "biological_soil_crust_surface", "ko": "생물 피각과 맨흙 경계가 온전한 표면", "en": "an intact biological soil-crust surface meeting bare mineral soil at a clear maturity boundary", "weight": 1.0, "tags": ["natural_process", "biocrust", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["biocrust"]},
+      {"id": "layered_sediment_bank_surface", "ko": "침식면과 새 퇴적층이 함께 보이는 하안 표면", "en": "a layered streambank surface with an eroded face and adjacent fresh deposition", "weight": 1.0, "tags": ["natural_process", "geomorphology", "surface"], "for_any": ["environment"], "facets": {"weather_effect": ["erosion_deposition"]}, "requires_primary_any_tags": ["geomorphology"]},
+      {"id": "cold_condensation_test_surface", "ko": "건조면과 결로면이 연속된 차가운 시험 표면", "en": "a cold test surface preserving a continuous boundary from dry material to separate and coalesced droplets", "weight": 1.0, "tags": ["natural_process", "condensation_process", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["condensation_process"]},
+      {"id": "moist_germination_substrate_surface", "ko": "유근 주변 입자와 수분이 보이는 발아 기질", "en": "a moist germination substrate with particles displaced around the emerging radicle", "weight": 1.0, "tags": ["natural_process", "germination", "surface"], "for_any": ["plant"], "requires_primary_any_tags": ["germination"]},
+      {"id": "freeze_thaw_polygon_crust_surface", "ko": "균열·융기·미세물질 이동이 남은 동결 융해 표면", "en": "a freeze-thaw crust with polygon cracks, heave and redistributed fine grains", "weight": 1.0, "tags": ["natural_process", "freeze_thaw", "surface"], "for_any": ["environment"], "requires_primary_any_tags": ["freeze_thaw"]}
+    ],
+    "motion": [
+      {"id": "spotter_guided_forklift_motion", "ko": "스포터와 동기화된 저속 지게차 이동", "en": "slow forklift movement synchronized to the spotter with no pedestrian crossing the path", "weight": 1.0, "tags": ["mobility_logistics", "loading_dock_transfer"], "facets": {"movement_type": ["vehicle_flow"]}, "requires_primary_any_tags": ["mobility_logistics", "loading_dock_transfer"]},
+      {"id": "anticipatory_weight_shift_motion", "ko": "접촉 전의 미세한 무게 이동", "en": "a readable anticipatory weight shift before contact, without generic full-frame blur", "weight": 1.0, "tags": ["sports_motion", "competitive_motion"], "facets": {"movement_phase": ["readiness", "loading_braking"], "contact_state": ["clearance_no_contact"], "effort_state": ["controlled"]}, "requires_primary_any_tags": ["sports_motion", "competitive_motion"]},
+      {"id": "impact_compression_rebound_motion", "ko": "접촉 압축에서 반발로 이어지는 순간 동작", "en": "one contact event moving from visible compression into rebound along the same force path", "weight": 1.0, "tags": ["sports_motion", "sports_contact", "competitive_motion"], "facets": {"movement_phase": ["impact_absorption", "propulsion_release"], "contact_state": ["equipment_contact"], "material_response": ["compression", "rebound"]}, "requires_primary_any_tags": ["sports_motion", "sports_contact", "competitive_motion"]},
+      {"id": "deceleration_stabilization_motion", "ko": "감속 뒤 균형을 되찾는 동작", "en": "deceleration resolving into a stable recovery stance with feet and center of mass aligned", "weight": 1.0, "tags": ["sports_motion", "sports_recovery"], "facets": {"movement_phase": ["deceleration_stabilization", "recovery"], "contact_state": ["post_contact_release"], "effort_state": ["recovering"]}, "requires_primary_any_tags": ["sports_motion", "sports_recovery"]}
+    ],
+    "body_pose": [
+      {"id": "loaded_ready_stance", "ko": "접촉 전 무게 중심을 낮춘 준비 자세", "en": "a loaded ready stance with knees, hips and gaze aligned to the anticipated path", "weight": 1.0, "tags": ["human", "sports_motion", "competitive_motion"], "facets": {"movement_phase": ["readiness", "loading_braking"], "effort_state": ["controlled"]}, "requires_primary_any_tags": ["sports_motion", "competitive_motion"]},
+      {"id": "forward_lean_recovery_posture", "ko": "호흡을 회복하며 균형을 유지하는 전방 기울임 자세", "en": "a forward-lean recovery posture with stable foot contact and controlled breathing", "weight": 1.0, "tags": ["human", "sports_motion", "sports_recovery"], "facets": {"movement_phase": ["recovery"], "effort_state": ["fatigued", "recovering"]}, "requires_primary_any_tags": ["sports_motion", "sports_recovery"]}
+    ],
+    "contact_point": [
+      {"id": "hand_gripping_tool_handle", "ko": "손 전체가 도구 손잡이를 기능적으로 감싼 접점", "en": "the full hand making a functional grip around the tool or support handle", "weight": 1.0, "tags": ["human", "tool_use", "relationship_grammar"]},
+      {"id": "supportive_hand_at_forearm", "ko": "동의를 전제로 팔뚝을 안정시키는 보조 접점", "en": "a consent-led supportive hand stabilizing the forearm without restraining movement", "weight": 0.8, "tags": ["human", "health_access", "rehabilitation"], "requires_primary_any_tags": ["health_access", "rehabilitation"]},
+      {"id": "competitive_clearance_no_contact", "ko": "선수 사이에 아직 명확한 여유가 남은 무접촉 상태", "en": "clear visible separation between competitors before any contact", "weight": 1.0, "tags": ["human", "sports_motion", "competitive_motion"], "facets": {"contact_state": ["clearance_no_contact"]}, "requires_primary_any_tags": ["sports_motion", "competitive_motion"]},
+      {"id": "athlete_equipment_contact", "ko": "선수와 장비가 한 지점에서 만나는 접촉", "en": "one physically plausible athlete-to-equipment contact point with aligned force direction", "weight": 1.0, "tags": ["human", "sports_motion", "sports_contact", "competitive_motion"], "facets": {"contact_state": ["equipment_contact"]}, "requires_primary_any_tags": ["sports_motion", "sports_contact", "competitive_motion"]}
+    ],
+    "relational_action": [
+      {"id": "working_same_target_from_two_sides", "ko": "두 사람이 같은 기능 접점을 양쪽에서 확인하는", "en": "two adults working on the same functional target from opposite sides without blocking it", "weight": 1.0, "tags": ["human", "relationship_grammar", "cooperative"]},
+      {"id": "co_holding_shared_object", "ko": "하나의 물체를 역할이 드러나게 함께 잡는", "en": "two people co-holding one shared object with distinct supporting and receiving roles", "weight": 0.9, "tags": ["human", "relationship_grammar", "handoff"]},
+      {"id": "guiding_attention_to_task_contact_point", "ko": "도구와 작업물의 접점으로 주의를 유도하는", "en": "guiding the learner's attention to the exact tool-to-workpiece contact point", "weight": 1.0, "tags": ["human", "education_training", "guided_learning", "instructional_task"], "facets": {"learning_stage": ["demonstration", "guided_practice"], "relation_type": ["instructional"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]},
+      {"id": "jointly_checking_one_work_result", "ko": "하나의 완료 결과를 함께 확인하는", "en": "mentor and learner jointly checking one completed work result", "weight": 1.0, "tags": ["human", "education_training", "guided_learning", "instructional_task"], "facets": {"learning_stage": ["collaborative_problem_solving", "performance_assessment"], "relation_type": ["cooperative", "instructional"]}, "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]}
+    ],
+    "gaze_target": [
+      {"id": "joint_gaze_to_shared_target", "ko": "두 사람의 시선이 같은 작업 대상에 모이는", "en": "both people's gaze converging on the same functional target", "weight": 1.0, "tags": ["human", "relationship_grammar", "cooperative"]},
+      {"id": "gaze_tracking_opponent_center_mass", "ko": "상대의 중심 이동을 추적하는 시선", "en": "gaze tracking the opponent's center-of-mass shift rather than the camera", "weight": 1.0, "tags": ["human", "sports_motion", "competitive_motion"], "requires_primary_any_tags": ["sports_motion", "competitive_motion"]}
+    ],
+    "proxemics": [
+      {"id": "functional_arm_reach_handoff_distance", "ko": "과장 없이 인계가 가능한 팔 길이 거리", "en": "a practical arm's-reach handoff distance with the shared object and path unobstructed", "weight": 1.0, "tags": ["human", "relationship_grammar", "handoff"]}
+    ],
+    "partner_role": [
+      {"id": "in_frame_rehabilitation_practitioner", "ko": "사용자 옆에서 기능 피팅을 돕는 성인 재활 실무자", "en": "an adult rehabilitation practitioner in frame, supporting rather than directing the participant", "weight": 1.0, "tags": ["human", "health_access", "rehabilitation"], "requires_primary_any_tags": ["health_access", "rehabilitation"]},
+      {"id": "in_frame_skill_learner", "ko": "같은 작업 대상에 참여하는 학습자", "en": "a learner in frame sharing attention to the same task and work result", "weight": 1.0, "tags": ["human", "education_training", "guided_learning", "instructional_task"], "requires_primary_any_tags": ["education_training", "guided_learning", "instructional_task"]}
+    ],
+    "composition": [
+      {"id": "figure_ground_boundary_split", "ko": "형태와 배경이 한 연속 경계에서 갈리는 구도", "en": "a single continuous figure-ground boundary controlling the frame without impossible cutout edges", "weight": 0.9, "tags": ["visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]},
+      {"id": "single_break_in_repeated_rhythm", "ko": "반복 리듬 안의 단 하나의 물리적 이탈", "en": "one physically plausible break in an otherwise consistent repeated rhythm", "weight": 0.9, "tags": ["visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]}
+    ],
+    "texture": [
+      {"id": "arena_dust_displacement_texture", "ko": "한 힘 사건에서 밀려난 경기장 먼지", "en": "arena dust displaced locally along the same force and foot-contact event", "weight": 1.0, "tags": ["sports_motion", "sports_contact", "competitive_motion"], "facets": {"material_response": ["particle_or_fluid_displacement"]}, "requires_primary_any_tags": ["sports_motion", "sports_contact", "competitive_motion"]},
+      {"id": "condensation_bead_coalescence_gradient_texture", "ko": "건조면에서 결로 방울로 이어지는 연속 질감", "en": "a continuous texture gradient from dry surface to separate beads and coalesced condensation", "weight": 1.0, "tags": ["natural_process", "condensation_process"], "requires_primary_any_tags": ["condensation_process"]},
+      {"id": "physical_state_gradient_texture", "ko": "하나의 재료 안에서 연속적으로 변하는 상태 질감", "en": "a physically continuous material-state gradient with no arbitrary digital dissolve", "weight": 0.9, "tags": ["visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]}
+    ],
+    "situation_context": [
+      {"id": "collection_record_provenance_context", "ko": "소장품·촬영·처치 단계를 연결하는 비문자 기록 맥락", "en": "collection-object, capture and treatment-stage continuity conveyed without readable accession text", "weight": 1.0, "tags": ["heritage_documentation", "collection_object", "no_text_required"], "requires_primary_any_tags": ["heritage_documentation", "collection_object"]}
+    ],
+    "space_condition": [
+      {"id": "place_pre_use_preparation_state", "ko": "사용 전 준비가 진행 중인 장소 상태", "en": "a place in pre-use preparation with equipment positioned but activity not yet started", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"event_phase": ["preparation"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_active_use_state", "ko": "주요 기능이 실제로 작동 중인 장소 상태", "en": "a place in active use with its primary function visibly operating", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"event_phase": ["active_process"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_close_down_aftermath_state", "ko": "활동 종료 직후 정리 흔적이 남은 장소 상태", "en": "a place just after close-down with specific shutdown and cleanup traces", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"event_phase": ["aftermath"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_scheduled_maintenance_state", "ko": "정기 유지보수 범위가 보이는 장소 상태", "en": "a place under scheduled maintenance with the affected system and access boundary visible", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"event_phase": ["maintenance"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_seasonal_transition_state", "ko": "계절 운영 전환의 물리적 단서가 보이는 장소 상태", "en": "a place showing physical and operational cues of a seasonal transition", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"observation_interval": ["seasonal_cycle"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_secured_temporary_closure_state", "ko": "보호 조치가 완료된 임시 폐쇄 장소 상태", "en": "a temporarily closed place secured with practical protective measures and no readable notices", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint", "no_text_required"], "facets": {"event_phase": ["dormancy"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]},
+      {"id": "place_reopening_readiness_state", "ko": "재가동 직전 기능 점검이 진행되는 장소 상태", "en": "a place in reopening readiness with recommissioned fixtures and final checks visible", "weight": 1.0, "tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"], "facets": {"event_phase": ["reactivation"], "observation_interval": ["repeat_interval"]}, "requires_primary_any_tags": ["longitudinal_place_state", "place_state", "repeat_viewpoint"]}
+    ],
+    "aftermath_trace": [
+      {"id": "post_exertion_ground_contact_trace", "ko": "감속 지점에만 남은 신발·지면 접촉 흔적", "en": "a localized shoe-to-ground deceleration trace aligned with the athlete's recovery path", "weight": 0.9, "tags": ["human", "sports_motion", "sports_recovery"], "requires_primary_any_tags": ["sports_motion", "sports_recovery"]},
+      {"id": "bounded_storm_damage_trace", "ko": "통제선 안쪽에 한정된 바람·물 피해 흔적", "en": "a specific wind-and-water damage trace contained within the observed building zone", "weight": 1.0, "tags": ["environment", "disaster_risk_operations", "post_disaster_survey", "building_safety_triage"], "requires_primary_any_tags": ["disaster_risk_operations", "post_disaster_survey", "building_safety_triage"]},
+      {"id": "contact_residue_trace", "ko": "접촉점의 압력·잔류물·변위가 이어지는 흔적", "en": "a contact trace where pressure, residue or displacement follows one physically plausible interaction", "weight": 0.9, "tags": ["object", "environment", "visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]}
+    ],
+    "transition_stage": [
+      {"id": "material_state_boundary_transition", "ko": "한 재료 안에서 두 상태가 만나는 연속 경계", "en": "a continuous boundary where two physically compatible material states meet within one substrate", "weight": 0.9, "tags": ["object", "environment", "visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]}
+    ],
+    "scale_relation": [
+      {"id": "canonical_size_anchor_relation", "ko": "익숙한 기준물로 실제 크기를 읽게 하는 관계", "en": "a familiar same-plane object providing a canonical size anchor without forced perspective", "weight": 0.9, "tags": ["object", "environment", "visual_structure", "general_operator"], "requires_primary_any_tags": ["visual_structure", "general_operator"]}
+    ]
+  }
+}

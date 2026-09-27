@@ -1,0 +1,1460 @@
+{
+  "schema": "subculture-illustration-format-profiles/v1",
+  "version": "2026-08-09",
+  "domain": "subculture_illustration",
+  "family_resolution": "variant_id_maps_to_exactly_one_family_id",
+  "families": [
+    {
+      "id": "single_frame",
+      "family_id": "single_frame",
+      "default_variant_id": "single_illustration",
+      "variant_ids": [
+        "single_illustration"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "single_canvas_safe_evidence",
+        "recompose_per_target": false,
+        "required_exports": [
+          "declared_native_canvas"
+        ],
+        "critical_evidence": [
+          "primary_subject",
+          "action_target_contact",
+          "visible_consequence"
+        ],
+        "safe_region_rule": "keep all critical evidence inside the declared delivery crop",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count": 1,
+        "secondary_discovery_max": 1,
+        "event_before_exposition": true,
+        "equal_salience_montage": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "none_by_default"
+      },
+      "sequential_contract": {
+        "mode": "single_frame",
+        "ordered": false,
+        "minimum_beats": 1,
+        "maximum_beats": 1,
+        "sequence_substitution": "forbidden"
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "thumbnail_320px",
+          "native"
+        ],
+        "must_survive_thumbnail": [
+          "primary_mass",
+          "core_action",
+          "one_identity_anchor"
+        ],
+        "native_only_evidence_max": 2,
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    },
+    {
+      "id": "key_art",
+      "family_id": "key_art",
+      "default_variant_id": "key_art",
+      "variant_ids": [
+        "key_art",
+        "ensemble_key_art",
+        "responsive_key_art"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "promise_preserving_recomposition",
+        "recompose_per_target": true,
+        "required_exports": [
+          "declared_master"
+        ],
+        "critical_evidence": [
+          "primary_promise",
+          "identity_anchor",
+          "action_stake"
+        ],
+        "safe_region_rule": "recompose rather than trim when any critical evidence falls outside a target crop",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count": 1,
+        "secondary_force_max": 1,
+        "world_scale_cue_max": 1,
+        "equal_protagonist_montage": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "optional_declared_low_detail_region"
+      },
+      "sequential_contract": {
+        "mode": "single_event_declaration",
+        "ordered": false,
+        "minimum_beats": 1,
+        "maximum_beats": 1,
+        "neutral_lineup_substitution": "forbidden"
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "thumbnail_320px",
+          "native",
+          "each_declared_export"
+        ],
+        "must_survive_thumbnail": [
+          "primary_silhouette",
+          "event_stake",
+          "visual_signature_anchor"
+        ],
+        "variant_identity_freeze": [
+          "subject",
+          "event",
+          "consequence",
+          "identity_anchor"
+        ],
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    },
+    {
+      "id": "cover",
+      "family_id": "cover",
+      "default_variant_id": "light_novel_cover",
+      "variant_ids": [
+        "light_novel_cover"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "print_and_storefront_safe_recomposition",
+        "recompose_per_target": true,
+        "required_exports": [
+          "print_cover_artwork_only",
+          "ebook_thumbnail",
+          "approved_storefront_crop"
+        ],
+        "critical_evidence": [
+          "primary_promise",
+          "character_relation_or_dilemma",
+          "world_hook"
+        ],
+        "safe_region_rule": "critical faces hands actions and clues avoid trim spine barcode and title-safe overlays",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count": 1,
+        "secondary_reveal_max": 1,
+        "world_hook_max": 1,
+        "genre_token_stack": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "required_declared_title_safe_negative_space",
+        "print_overlays": [
+          "bleed",
+          "trim",
+          "spine",
+          "barcode",
+          "title_safe"
+        ]
+      },
+      "sequential_contract": {
+        "mode": "single_cover_promise",
+        "ordered": false,
+        "minimum_beats": 1,
+        "maximum_beats": 1,
+        "series_delta": "one_narratively_meaningful_visible_change_per_volume_when_applicable"
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "ebook_thumbnail",
+          "print_preview",
+          "native_artwork"
+        ],
+        "must_survive_thumbnail": [
+          "primary_promise",
+          "silhouette",
+          "value_group"
+        ],
+        "secondary_reveal_may_drop_at_thumbnail": true,
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    },
+    {
+      "id": "card",
+      "family_id": "card",
+      "default_variant_id": "collectible_card",
+      "variant_ids": [
+        "collectible_card"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "art_first_masked_window_and_expanded",
+        "recompose_per_target": true,
+        "required_exports": [
+          "artwork_only",
+          "masked_card_window",
+          "expanded_splash"
+        ],
+        "critical_evidence": [
+          "identity_anchor",
+          "hands_or_action_contact",
+          "visible_consequence"
+        ],
+        "safe_region_rule": "critical evidence remains readable inside the simulated art window before presentation layers",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count": 1,
+        "depth_layer_max": 3,
+        "visible_progression_cue_max": 1,
+        "rarity_ui_as_visual_quality": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "presentation_layer_only",
+        "stats_frame_rarity_ui": "excluded_from_artwork_grammar"
+      },
+      "sequential_contract": {
+        "mode": "single_card_event",
+        "ordered": false,
+        "minimum_beats": 1,
+        "maximum_beats": 1,
+        "progression_requires_visible_cause": true
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "small_card_preview",
+          "masked_window",
+          "native_full_art"
+        ],
+        "must_survive_thumbnail": [
+          "subject",
+          "action",
+          "value_group"
+        ],
+        "alternate_view_freeze": [
+          "event",
+          "identity_anchor"
+        ],
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    },
+    {
+      "id": "vertical_sequence",
+      "family_id": "vertical_sequence",
+      "default_variant_id": "vertical_scroll_sequence",
+      "variant_ids": [
+        "vertical_scroll_sequence"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "phone_viewport_authored_sequence",
+        "recompose_per_target": true,
+        "required_exports": [
+          "continuous_scroll_strip",
+          "phone_viewport_checkpoints"
+        ],
+        "critical_evidence": [
+          "setup",
+          "deferred_reveal",
+          "post_reveal_consequence"
+        ],
+        "safe_region_rule": "place reveal below the preceding viewport and preserve identity across viewport boundaries",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count_per_viewport": 1,
+        "reveal_count": 1,
+        "timing_device_max": 2,
+        "single_tall_still": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "per_panel_optional",
+        "speaker_reference_review": "required_when_text_layer_exists"
+      },
+      "sequential_contract": {
+        "mode": "ordered_vertical_sequence",
+        "ordered": true,
+        "minimum_beats": 3,
+        "required_beats": [
+          "setup",
+          "transition_or_pause",
+          "changed_outcome"
+        ],
+        "continuity_ledger_required": true
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "phone_viewport",
+          "individual_panel",
+          "continuous_strip"
+        ],
+        "must_survive_viewport": [
+          "current_action",
+          "identity_anchor",
+          "continuation_direction"
+        ],
+        "scroll_positions_required": [
+          "pre_reveal",
+          "reveal",
+          "post_reveal"
+        ],
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    },
+    {
+      "id": "adaptation_board",
+      "family_id": "adaptation_board",
+      "default_variant_id": "character_design_board",
+      "variant_ids": [
+        "character_design_board",
+        "merch_adaptation_board",
+        "campaign_art_board"
+      ],
+      "max_support_cues": 2,
+      "crop_contract": {
+        "mode": "typed_multi_output_recomposition",
+        "recompose_per_target": true,
+        "required_exports": [
+          "declared_master",
+          "typed_target_outputs"
+        ],
+        "critical_evidence": [
+          "identity_invariants",
+          "format_specific_action_or_function",
+          "declared_change_delta"
+        ],
+        "safe_region_rule": "each output keeps its declared invariants inside its own crop and occlusion zones",
+        "aspect_ratio_suffix_only": "forbidden"
+      },
+      "hierarchy_contract": {
+        "primary_read_count_per_output": 1,
+        "shared_identity_system": "required",
+        "role_specific_delta": "required",
+        "same_composition_everywhere": "forbidden"
+      },
+      "text_safe_contract": {
+        "generated_typography": "forbidden",
+        "artwork_only_core_required": true,
+        "layout_layer": "separate_downstream_human_layer",
+        "critical_visual_evidence_may_enter_reserved_zone": false,
+        "localization_reflow_review_required_when_text_is_requested": true,
+        "reserved_zone": "typed_per_output",
+        "artwork_only_master": "required"
+      },
+      "sequential_contract": {
+        "mode": "comparative_multi_view_board",
+        "ordered": false,
+        "minimum_views": 3,
+        "master_to_variant_trace_required": true,
+        "state_or_role_delta_required": true
+      },
+      "scale_preservation_contract": {
+        "inspection_scales": [
+          "master_native",
+          "representative_use_size",
+          "smallest_declared_output"
+        ],
+        "must_survive_smallest_output": [
+          "identity_anchor",
+          "action_or_function"
+        ],
+        "contact_sheet_review_required": true,
+        "prompt_only_claims": "insufficient"
+      },
+      "required_evidence_types": [
+        "hierarchy_evidence",
+        "crop_evidence",
+        "text_safe_evidence",
+        "sequence_or_single_frame_evidence",
+        "scale_preservation_evidence"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof",
+        "unreviewed_mechanical_crop"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "single_illustration",
+      "variant_id": "single_illustration",
+      "family_id": "single_frame",
+      "aliases": {
+        "ko": [
+          "단일 장면 일러스트"
+        ],
+        "en": [
+          "single-frame illustration"
+        ],
+        "ja": [
+          "単一場面イラスト"
+        ],
+        "zh": [
+          "单场景插画"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {},
+      "contracts": {
+        "crop_contract": {
+          "mode": "single_canvas_safe_evidence",
+          "recompose_per_target": false,
+          "required_exports": [
+            "declared_native_canvas"
+          ],
+          "critical_evidence": [
+            "primary_subject",
+            "action_target_contact",
+            "visible_consequence"
+          ],
+          "safe_region_rule": "keep all critical evidence inside the declared delivery crop",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "secondary_discovery_max": 1,
+          "event_before_exposition": true,
+          "equal_salience_montage": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "none_by_default"
+        },
+        "sequential_contract": {
+          "mode": "single_frame",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "sequence_substitution": "forbidden"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "thumbnail_320px",
+            "native"
+          ],
+          "must_survive_thumbnail": [
+            "primary_mass",
+            "core_action",
+            "one_identity_anchor"
+          ],
+          "native_only_evidence_max": 2,
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "key_art",
+      "variant_id": "key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "단일 키 아트"
+        ],
+        "en": [
+          "single key art"
+        ],
+        "ja": [
+          "単一キービジュアル"
+        ],
+        "zh": [
+          "单幅主视觉"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {},
+      "contracts": {
+        "crop_contract": {
+          "mode": "promise_preserving_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "declared_master"
+          ],
+          "critical_evidence": [
+            "primary_promise",
+            "identity_anchor",
+            "action_stake"
+          ],
+          "safe_region_rule": "recompose rather than trim when any critical evidence falls outside a target crop",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "secondary_force_max": 1,
+          "world_scale_cue_max": 1,
+          "equal_protagonist_montage": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "optional_declared_low_detail_region"
+        },
+        "sequential_contract": {
+          "mode": "single_event_declaration",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "neutral_lineup_substitution": "forbidden"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "thumbnail_320px",
+            "native",
+            "each_declared_export"
+          ],
+          "must_survive_thumbnail": [
+            "primary_silhouette",
+            "event_stake",
+            "visual_signature_anchor"
+          ],
+          "variant_identity_freeze": [
+            "subject",
+            "event",
+            "consequence",
+            "identity_anchor"
+          ],
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "ensemble_key_art",
+      "variant_id": "ensemble_key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "앙상블 키 아트"
+        ],
+        "en": [
+          "ensemble key art"
+        ],
+        "ja": [
+          "群像キービジュアル"
+        ],
+        "zh": [
+          "群像主视觉"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {
+        "hierarchy_contract": {
+          "participant_mode": "ensemble",
+          "distinct_active_silhouettes_required": true,
+          "shared_event_target_required": true,
+          "proximity_only_relationship_claim": "forbidden"
+        }
+      },
+      "contracts": {
+        "crop_contract": {
+          "mode": "promise_preserving_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "declared_master"
+          ],
+          "critical_evidence": [
+            "primary_promise",
+            "identity_anchor",
+            "action_stake"
+          ],
+          "safe_region_rule": "recompose rather than trim when any critical evidence falls outside a target crop",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "secondary_force_max": 1,
+          "world_scale_cue_max": 1,
+          "equal_protagonist_montage": "forbidden",
+          "participant_mode": "ensemble",
+          "distinct_active_silhouettes_required": true,
+          "shared_event_target_required": true,
+          "proximity_only_relationship_claim": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "optional_declared_low_detail_region"
+        },
+        "sequential_contract": {
+          "mode": "single_event_declaration",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "neutral_lineup_substitution": "forbidden"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "thumbnail_320px",
+            "native",
+            "each_declared_export"
+          ],
+          "must_survive_thumbnail": [
+            "primary_silhouette",
+            "event_stake",
+            "visual_signature_anchor"
+          ],
+          "variant_identity_freeze": [
+            "subject",
+            "event",
+            "consequence",
+            "identity_anchor"
+          ],
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "responsive_key_art",
+      "variant_id": "responsive_key_art",
+      "family_id": "key_art",
+      "aliases": {
+        "ko": [
+          "반응형 키 아트 세트"
+        ],
+        "en": [
+          "responsive key art set"
+        ],
+        "ja": [
+          "レスポンシブキービジュアルセット"
+        ],
+        "zh": [
+          "响应式主视觉套组"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {
+        "crop_contract": {
+          "required_exports": [
+            "wide",
+            "vertical",
+            "square"
+          ],
+          "common_safe_evidence": [
+            "subject",
+            "action",
+            "consequence",
+            "identity_anchor"
+          ],
+          "center_crop_reuse": "forbidden"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "wide_thumbnail_and_native",
+            "vertical_thumbnail_and_native",
+            "square_thumbnail_and_native"
+          ]
+        }
+      },
+      "contracts": {
+        "crop_contract": {
+          "mode": "promise_preserving_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "wide",
+            "vertical",
+            "square"
+          ],
+          "critical_evidence": [
+            "primary_promise",
+            "identity_anchor",
+            "action_stake"
+          ],
+          "safe_region_rule": "recompose rather than trim when any critical evidence falls outside a target crop",
+          "aspect_ratio_suffix_only": "forbidden",
+          "common_safe_evidence": [
+            "subject",
+            "action",
+            "consequence",
+            "identity_anchor"
+          ],
+          "center_crop_reuse": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "secondary_force_max": 1,
+          "world_scale_cue_max": 1,
+          "equal_protagonist_montage": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "optional_declared_low_detail_region"
+        },
+        "sequential_contract": {
+          "mode": "single_event_declaration",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "neutral_lineup_substitution": "forbidden"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "wide_thumbnail_and_native",
+            "vertical_thumbnail_and_native",
+            "square_thumbnail_and_native"
+          ],
+          "must_survive_thumbnail": [
+            "primary_silhouette",
+            "event_stake",
+            "visual_signature_anchor"
+          ],
+          "variant_identity_freeze": [
+            "subject",
+            "event",
+            "consequence",
+            "identity_anchor"
+          ],
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "light_novel_cover",
+      "variant_id": "light_novel_cover",
+      "family_id": "cover",
+      "aliases": {
+        "ko": [
+          "라이트노벨 표지 일러스트"
+        ],
+        "en": [
+          "light novel cover illustration"
+        ],
+        "ja": [
+          "ライトノベル表紙イラスト"
+        ],
+        "zh": [
+          "轻小说封面插画"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {},
+      "contracts": {
+        "crop_contract": {
+          "mode": "print_and_storefront_safe_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "print_cover_artwork_only",
+            "ebook_thumbnail",
+            "approved_storefront_crop"
+          ],
+          "critical_evidence": [
+            "primary_promise",
+            "character_relation_or_dilemma",
+            "world_hook"
+          ],
+          "safe_region_rule": "critical faces hands actions and clues avoid trim spine barcode and title-safe overlays",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "secondary_reveal_max": 1,
+          "world_hook_max": 1,
+          "genre_token_stack": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "required_declared_title_safe_negative_space",
+          "print_overlays": [
+            "bleed",
+            "trim",
+            "spine",
+            "barcode",
+            "title_safe"
+          ]
+        },
+        "sequential_contract": {
+          "mode": "single_cover_promise",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "series_delta": "one_narratively_meaningful_visible_change_per_volume_when_applicable"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "ebook_thumbnail",
+            "print_preview",
+            "native_artwork"
+          ],
+          "must_survive_thumbnail": [
+            "primary_promise",
+            "silhouette",
+            "value_group"
+          ],
+          "secondary_reveal_may_drop_at_thumbnail": true,
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "collectible_card",
+      "variant_id": "collectible_card",
+      "family_id": "card",
+      "aliases": {
+        "ko": [
+          "수집형 카드 일러스트"
+        ],
+        "en": [
+          "collectible card illustration"
+        ],
+        "ja": [
+          "コレクションカードイラスト"
+        ],
+        "zh": [
+          "收藏卡牌插画"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {},
+      "contracts": {
+        "crop_contract": {
+          "mode": "art_first_masked_window_and_expanded",
+          "recompose_per_target": true,
+          "required_exports": [
+            "artwork_only",
+            "masked_card_window",
+            "expanded_splash"
+          ],
+          "critical_evidence": [
+            "identity_anchor",
+            "hands_or_action_contact",
+            "visible_consequence"
+          ],
+          "safe_region_rule": "critical evidence remains readable inside the simulated art window before presentation layers",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count": 1,
+          "depth_layer_max": 3,
+          "visible_progression_cue_max": 1,
+          "rarity_ui_as_visual_quality": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "presentation_layer_only",
+          "stats_frame_rarity_ui": "excluded_from_artwork_grammar"
+        },
+        "sequential_contract": {
+          "mode": "single_card_event",
+          "ordered": false,
+          "minimum_beats": 1,
+          "maximum_beats": 1,
+          "progression_requires_visible_cause": true
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "small_card_preview",
+            "masked_window",
+            "native_full_art"
+          ],
+          "must_survive_thumbnail": [
+            "subject",
+            "action",
+            "value_group"
+          ],
+          "alternate_view_freeze": [
+            "event",
+            "identity_anchor"
+          ],
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "vertical_scroll_sequence",
+      "variant_id": "vertical_scroll_sequence",
+      "family_id": "vertical_sequence",
+      "aliases": {
+        "ko": [
+          "세로 스크롤 시퀀스"
+        ],
+        "en": [
+          "vertical scroll sequence"
+        ],
+        "ja": [
+          "縦スクロールシーケンス"
+        ],
+        "zh": [
+          "纵向滚动序列"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {},
+      "contracts": {
+        "crop_contract": {
+          "mode": "phone_viewport_authored_sequence",
+          "recompose_per_target": true,
+          "required_exports": [
+            "continuous_scroll_strip",
+            "phone_viewport_checkpoints"
+          ],
+          "critical_evidence": [
+            "setup",
+            "deferred_reveal",
+            "post_reveal_consequence"
+          ],
+          "safe_region_rule": "place reveal below the preceding viewport and preserve identity across viewport boundaries",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count_per_viewport": 1,
+          "reveal_count": 1,
+          "timing_device_max": 2,
+          "single_tall_still": "forbidden"
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "per_panel_optional",
+          "speaker_reference_review": "required_when_text_layer_exists"
+        },
+        "sequential_contract": {
+          "mode": "ordered_vertical_sequence",
+          "ordered": true,
+          "minimum_beats": 3,
+          "required_beats": [
+            "setup",
+            "transition_or_pause",
+            "changed_outcome"
+          ],
+          "continuity_ledger_required": true
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "phone_viewport",
+            "individual_panel",
+            "continuous_strip"
+          ],
+          "must_survive_viewport": [
+            "current_action",
+            "identity_anchor",
+            "continuation_direction"
+          ],
+          "scroll_positions_required": [
+            "pre_reveal",
+            "reveal",
+            "post_reveal"
+          ],
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "character_design_board",
+      "variant_id": "character_design_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "캐릭터 디자인 보드"
+        ],
+        "en": [
+          "character design board"
+        ],
+        "ja": [
+          "キャラクターデザインボード"
+        ],
+        "zh": [
+          "角色设计板"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {
+        "crop_contract": {
+          "required_exports": [
+            "canonical_views",
+            "expression_or_state_views",
+            "cross_scene_holdout"
+          ]
+        },
+        "hierarchy_contract": {
+          "identity_anchor_count_min": 3,
+          "allowable_deformation_declared": true
+        },
+        "sequential_contract": {
+          "minimum_views": 4,
+          "view_types": [
+            "canonical",
+            "expression_or_action",
+            "state_delta",
+            "unseen_holdout"
+          ]
+        }
+      },
+      "contracts": {
+        "crop_contract": {
+          "mode": "typed_multi_output_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "canonical_views",
+            "expression_or_state_views",
+            "cross_scene_holdout"
+          ],
+          "critical_evidence": [
+            "identity_invariants",
+            "format_specific_action_or_function",
+            "declared_change_delta"
+          ],
+          "safe_region_rule": "each output keeps its declared invariants inside its own crop and occlusion zones",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count_per_output": 1,
+          "shared_identity_system": "required",
+          "role_specific_delta": "required",
+          "same_composition_everywhere": "forbidden",
+          "identity_anchor_count_min": 3,
+          "allowable_deformation_declared": true
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "typed_per_output",
+          "artwork_only_master": "required"
+        },
+        "sequential_contract": {
+          "mode": "comparative_multi_view_board",
+          "ordered": false,
+          "minimum_views": 4,
+          "master_to_variant_trace_required": true,
+          "state_or_role_delta_required": true,
+          "view_types": [
+            "canonical",
+            "expression_or_action",
+            "state_delta",
+            "unseen_holdout"
+          ]
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "master_native",
+            "representative_use_size",
+            "smallest_declared_output"
+          ],
+          "must_survive_smallest_output": [
+            "identity_anchor",
+            "action_or_function"
+          ],
+          "contact_sheet_review_required": true,
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "merch_adaptation_board",
+      "variant_id": "merch_adaptation_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "굿즈 적응 보드"
+        ],
+        "en": [
+          "merch adaptation board"
+        ],
+        "ja": [
+          "グッズ展開ボード"
+        ],
+        "zh": [
+          "周边适配板"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {
+        "crop_contract": {
+          "required_exports": [
+            "master",
+            "sd_variant",
+            "sticker_or_icon",
+            "physical_or_platform_preview"
+          ]
+        },
+        "hierarchy_contract": {
+          "identity_anchor_count_min": 2,
+          "message_action_before_detail": true
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "master",
+            "ordinary_use",
+            "smallest_platform_size"
+          ]
+        }
+      },
+      "contracts": {
+        "crop_contract": {
+          "mode": "typed_multi_output_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "master",
+            "sd_variant",
+            "sticker_or_icon",
+            "physical_or_platform_preview"
+          ],
+          "critical_evidence": [
+            "identity_invariants",
+            "format_specific_action_or_function",
+            "declared_change_delta"
+          ],
+          "safe_region_rule": "each output keeps its declared invariants inside its own crop and occlusion zones",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count_per_output": 1,
+          "shared_identity_system": "required",
+          "role_specific_delta": "required",
+          "same_composition_everywhere": "forbidden",
+          "identity_anchor_count_min": 2,
+          "message_action_before_detail": true
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "typed_per_output",
+          "artwork_only_master": "required"
+        },
+        "sequential_contract": {
+          "mode": "comparative_multi_view_board",
+          "ordered": false,
+          "minimum_views": 3,
+          "master_to_variant_trace_required": true,
+          "state_or_role_delta_required": true
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "master",
+            "ordinary_use",
+            "smallest_platform_size"
+          ],
+          "must_survive_smallest_output": [
+            "identity_anchor",
+            "action_or_function"
+          ],
+          "contact_sheet_review_required": true,
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    },
+    {
+      "id": "campaign_art_board",
+      "variant_id": "campaign_art_board",
+      "family_id": "adaptation_board",
+      "aliases": {
+        "ko": [
+          "캠페인 아트 보드"
+        ],
+        "en": [
+          "campaign art board"
+        ],
+        "ja": [
+          "キャンペーンアートボード"
+        ],
+        "zh": [
+          "活动美术板"
+        ]
+      },
+      "max_support_cues": 2,
+      "contract_overrides": {
+        "crop_contract": {
+          "required_exports": [
+            "wide",
+            "vertical",
+            "square",
+            "artwork_only",
+            "optional_combined_preview"
+          ]
+        },
+        "hierarchy_contract": {
+          "campaign_signature_rules_min": 2,
+          "asset_role_matrix_required": true
+        },
+        "text_safe_contract": {
+          "reserved_zone": "typed_and_localization_aware_per_asset"
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "real_placement_thumbnail",
+            "native_each_asset",
+            "family_contact_sheet"
+          ]
+        }
+      },
+      "contracts": {
+        "crop_contract": {
+          "mode": "typed_multi_output_recomposition",
+          "recompose_per_target": true,
+          "required_exports": [
+            "wide",
+            "vertical",
+            "square",
+            "artwork_only",
+            "optional_combined_preview"
+          ],
+          "critical_evidence": [
+            "identity_invariants",
+            "format_specific_action_or_function",
+            "declared_change_delta"
+          ],
+          "safe_region_rule": "each output keeps its declared invariants inside its own crop and occlusion zones",
+          "aspect_ratio_suffix_only": "forbidden"
+        },
+        "hierarchy_contract": {
+          "primary_read_count_per_output": 1,
+          "shared_identity_system": "required",
+          "role_specific_delta": "required",
+          "same_composition_everywhere": "forbidden",
+          "campaign_signature_rules_min": 2,
+          "asset_role_matrix_required": true
+        },
+        "text_safe_contract": {
+          "generated_typography": "forbidden",
+          "artwork_only_core_required": true,
+          "layout_layer": "separate_downstream_human_layer",
+          "critical_visual_evidence_may_enter_reserved_zone": false,
+          "localization_reflow_review_required_when_text_is_requested": true,
+          "reserved_zone": "typed_and_localization_aware_per_asset",
+          "artwork_only_master": "required"
+        },
+        "sequential_contract": {
+          "mode": "comparative_multi_view_board",
+          "ordered": false,
+          "minimum_views": 3,
+          "master_to_variant_trace_required": true,
+          "state_or_role_delta_required": true
+        },
+        "scale_preservation_contract": {
+          "inspection_scales": [
+            "real_placement_thumbnail",
+            "native_each_asset",
+            "family_contact_sheet"
+          ],
+          "must_survive_smallest_output": [
+            "identity_anchor",
+            "action_or_function"
+          ],
+          "contact_sheet_review_required": true,
+          "prompt_only_claims": "insufficient"
+        }
+      },
+      "required_evidence_types": [
+        "prompt_contract",
+        "rendered_pixel_review"
+      ],
+      "forbidden_substitutions": [
+        "aspect_ratio_suffix_only",
+        "prompt_metadata_as_pixel_proof"
+      ]
+    }
+  ],
+  "counts": {
+    "families": 6,
+    "variants": 10,
+    "format_family_count": 6,
+    "surface_variant_count": 10
+  },
+  "audit_invariants": [
+    "Every surface variant resolves to one canonical family.",
+    "Every resolved variant carries typed crop, hierarchy, text-safe, sequential, and scale-preservation contracts.",
+    "An aspect-ratio suffix never substitutes for recomposition, viewport, safe-zone, or scale review."
+  ],
+  "self_validation": {
+    "topic_routes": 24,
+    "topic_aliases_unique_normalized": 120,
+    "format_aliases_unique_normalized": 40,
+    "normalized_collisions": 0,
+    "format_families": 6,
+    "surface_variants": 10,
+    "candidate_nodes": 264,
+    "roles": {
+      "visual_atom": 209,
+      "guard": 27,
+      "router": 28
+    },
+    "bundles": 48,
+    "frozen_resolutions": 24,
+    "render_holdouts": 6,
+    "named_runtime_leaks": 0
+  }
+}

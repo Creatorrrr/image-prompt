@@ -1,0 +1,84 @@
+{
+  "reviewer": "root",
+  "independence": "coordinator direct image review after receiving the agent verdict; not a blind review",
+  "method": "exact saved image viewed at original detail; fixed criteria unchanged",
+  "image_path": "/Users/chasoik/Projects/image-prompt/outputs/y2k-qualification-20260927/arm-c/generated.png",
+  "image_sha256": "4fcd85faec2d9b3ba8b6b03e3bcaf13c7a651390a3df2fa2f63197f5bc668dbe",
+  "gates_sha256": "aa6bfa1860f6663d98c3a7adb2187bcbe8370efe03028ba266ca0bd34d5e91ba",
+  "policy": "partial_is_fail; insufficient visibility or resolution is unscored",
+  "gates": [
+    {
+      "gate_id": "c01_period_ensemble",
+      "status": "pass",
+      "observation": "The same full-body subject wears a visibly cropped white/blue sporty tee, roomy cobalt low-waist nylon pants and thick-soled white sneakers. All three coexist in the saved frame."
+    },
+    {
+      "gate_id": "c02_top",
+      "status": "pass",
+      "observation": "The tee has a short fitted body above the navel and contrasting sky-blue raglan sleeves/neck trim against a white body; fabric remains wearable and distinct from background."
+    },
+    {
+      "gate_id": "c03_bottom",
+      "status": "pass",
+      "observation": "A low elastic waistband sits below the visible navel. Wide cobalt nylon legs show glossy folds and a white outer-side piping line from waist toward ankle."
+    },
+    {
+      "gate_id": "c04_footwear",
+      "status": "pass",
+      "observation": "Both feet are visible in white lace-up sneakers with thick raised platform-like midsoles; each outsole is distinct against the pavement."
+    },
+    {
+      "gate_id": "c05_accessories",
+      "status": "unscored",
+      "observation": "Blue-tinted glasses rest on the head and a thin waist chain is visible. The perched oblique lens/frame view does not establish the requested slim wraparound curvature confidently; complete accessory morphology remains unscored."
+    },
+    {
+      "gate_id": "c06_rebound_body_action",
+      "status": "pass",
+      "observation": "One basketball sits at chest height with hands on opposing sides and bent elbows. The subject holds a grounded wide landing stance with flexed knees, both shoes on paving, and a portable hoop above/behind her. The exact preceding rebound time cannot be proved from a still image; the frozen visible state is present."
+    },
+    {
+      "gate_id": "c07_wind_secondary_event",
+      "status": "fail",
+      "observation": "Airborne flyers originate around an open crate and a separate attendant reaches toward them. The frozen criterion additionally requires a parked speaker cart. A road case/crate and headphones are visible, with no recognizable loudspeaker cone or grille; this required combination is partial and fails."
+    },
+    {
+      "gate_id": "c08_consumer_music_prop",
+      "status": "fail",
+      "observation": "Silver CD player and its circular transparent lid/disc are visible beside headphones. No recognizable speaker cone or grille is present on the cart. The CD-player-plus-speakers requirement fails."
+    },
+    {
+      "gate_id": "c09_outdoor_random_setting",
+      "status": "pass",
+      "observation": "The frame contains clear open sky/daylight, multiple fountain jets, temporary white festival canopies and a portable basketball backboard/hoop. Court markings and paving are visible around both feet."
+    },
+    {
+      "gate_id": "c10_reference_visible_appearance",
+      "status": "pass",
+      "observation": "The main subject is represented as adult, with a dark chin-length bob and separated fringe, visible dark eyes/eyelids, light skin and softly colored lips. This is limited external appearance correspondence; no identity or actual age claim is made."
+    }
+  ],
+  "counts": {
+    "pass": 7,
+    "fail": 2,
+    "unscored": 1
+  },
+  "overall": "fail",
+  "differences_from_agent": [
+    {
+      "gate_id": "c05_accessories",
+      "agent_status": "pass",
+      "root_status": "unscored"
+    },
+    {
+      "gate_id": "c07_wind_secondary_event",
+      "agent_status": "pass",
+      "root_status": "fail"
+    }
+  ],
+  "limits": [
+    "No inferred identity, actual age or historical prevalence.",
+    "No before-after control and no claim of data-caused improvement.",
+    "Original agent verdict is retained; no prompt, gate, pack or render was changed."
+  ]
+}

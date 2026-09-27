@@ -1,0 +1,61 @@
+{
+  "contract_version": "photo-semantic-assertion-pixel-review/v1",
+  "result_image": "/Users/chasoik/Projects/image-prompt/docs/research-evidence/photo-prompt/portrait-composition-20260927/qualification/arm_a/generated_original.png",
+  "result_sha256": "6c3291777b75193855481b6559ab2677614a30b892faf67fb94eaf31efb4806d",
+  "reviewer": "independent_arm_a_agent",
+  "partial_is_fail": true,
+  "assertions": {
+    "a_across_table": {
+      "status": "pass",
+      "evidence_fields": {
+        "table_separation": {
+          "status": "pass",
+          "pixels": "Woman sits beyond the visible near table edge."
+        },
+        "portrait_hierarchy": {
+          "status": "pass",
+          "pixels": "Upper torso and both forearms lie above the visible table; face dominates."
+        }
+      }
+    },
+    "a_other_shoulder": {
+      "status": "pass",
+      "evidence_fields": {
+        "foreground_owner": {
+          "status": "pass",
+          "pixels": "Other companion head/ear/neck/shoulder forms near left foreground."
+        },
+        "depth_relation": {
+          "status": "pass",
+          "pixels": "Main face is beyond the shoulder and distinctly sharper."
+        },
+        "orientation": {
+          "status": "pass",
+          "pixels": "She faces forward toward near companion, not backward over her own shoulder."
+        }
+      }
+    },
+    "a_offer_camera": {
+      "status": "fail",
+      "evidence_fields": {
+        "directed_offer": {
+          "status": "pass",
+          "pixels": "Connected right arm extends the held plant postcard toward the near recipient."
+        },
+        "foreground_action": {
+          "status": "pass",
+          "pixels": "Card and hand are near/lower; the whole face remains clear."
+        },
+        "grasp": {
+          "status": "fail",
+          "expected_literal": "her thumb and index finger grasp the postcard's bottom edge",
+          "pixels": "Thumb and index grasp the postcard’s upper edge, not its bottom edge."
+        }
+      },
+      "failure_class": "fine_agent_authored_contact_staging_mismatch"
+    }
+  },
+  "overall_frozen_assertion_status": "fail",
+  "target_keyword_only_status": "pass",
+  "note": "Do not collapse keyword survival, opt-in gate validity, and exact frozen assertion fidelity into one PASS."
+}

@@ -1,0 +1,158 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "interpreted_intent": "Independently invent a random complex portrait concept using the supplied visible appearance reference, and test whether foreground bokeh, concurrent window reflection and transmission, and confined edge refraction are visibly realized in one photograph. The optical keywords come from requester referenced conversation data; the workshop event and objects are agent-created staging.",
+  "subject": "An unmistakably adult fictional woman guided only by the visible face and hair appearance in the supplied portrait.",
+  "setting": "An old railway waiting-room converted into a small lantern workshop, seen from outside through its window.",
+  "event": "She matches a narrow silk ribbon to a coat button while her face is transmitted through glass and peripheral optical layers frame it.",
+  "visual_priorities": [
+    "A readable adult face behind a window that simultaneously transmits the subject and reflects railway structures.",
+    "Near-lens saffron strips make soft edge foreground bokeh around the sharp face.",
+    "A right-edge prism displaces a red lamp outline within a peripheral slice while the central face stays coherent.",
+    "Two connected hands match a silk ribbon to a coat button in the visible workshop."
+  ],
+  "baseline_prompt_en": "An editorial photograph of an unmistakably adult fictional woman inside an old railway waiting-room converted into a small lantern workshop. Use the supplied portrait solely as guidance for visible face and hair appearance: a short dark bob with wispy center-parted fringe and softly rounded cheek contours. She wears an indigo apron over a white shirt and stands beside a coat hanging from a wooden rail near the window. She matches a narrow silk ribbon to the coat button, holding the ribbon end against the button with one hand while her other hand gently draws the loose ribbon level, both forearms comfortably in front of her torso. Her head turns slightly toward the camera, with a calm, attentive expression and both eyes clearly readable. Photograph from outside through one continuous window pane: her face and hands are visibly transmitted through clear glass, while faint reflected railway-canopy beams and an overhead wire occupy the upper and side portions of that same pane. Soft reflections cross the apron and workshop area; the central facial area remains transparent and legible. Very close to the lens, sheer saffron fabric strips blur into soft foreground bokeh along the left and lower frame edges, enclosing the sharply resolved face deeper in the scene. A small faceted prism at the extreme right edge of the camera produces a narrow peripheral refracted slice containing a displaced duplicate outline of the red indicator lamp, with a subtle spectrum fringe; the central face retains a single coherent outline. Rainy-morning window light softly models her cheeks, and a small red indicator lamp glows behind her. An open tin of numbered tags, a partly repaired lantern, and damp window droplets make the workshop tangible. Keep the eye-level portrait close enough for her expression to lead the rich layered scene.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept and tested keywords",
+      "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+      "basis": "request_context",
+      "resolution": "The user authorizes an agent-invented scene and predeclared observable keyword checks, using prior keyword content as data. The three chosen optical terms keep distinct visible mechanisms.",
+      "sources": []
+    },
+    {
+      "term": "attached image use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use only visible face and hair appearance from the attached image as reference for a newly created adult subject.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여",
+        "dimension": "concept",
+        "prompt_evidence": "rich layered scene"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여",
+        "dimension": "subject",
+        "prompt_evidence": "an unmistakably adult fictional woman"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고",
+        "dimension": "event",
+        "prompt_evidence": "She matches a narrow silk ribbon to the coat button"
+      },
+      {
+        "anchor_id": "core_reference",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "a short dark bob with wispy center-parted fringe and softly rounded cheek contours"
+      },
+      {
+        "anchor_id": "core_optical_composition",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는",
+        "dimension": "composition",
+        "prompt_evidence": "her face and hands are visibly transmitted through clear glass"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use",
+      "composition"
+    ],
+    "open_dimensions": [
+      "lighting",
+      "camera",
+      "color",
+      "atmosphere",
+      "framing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "foreground_bokeh",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "near_layer": "blurred saffron strips",
+        "mid_layer": "sharply readable subject face",
+        "frame_relation": "soft blur at edges encloses central face"
+      },
+      "evidence": {
+        "layer_relation": "sheer saffron fabric strips blur into soft foreground bokeh along the left and lower frame edges, enclosing the sharply resolved face deeper in the scene"
+      }
+    },
+    {
+      "assertion_id": "glass_reflection_transmission",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "transmitted_content": "subject face and hands behind glass",
+        "reflected_content": "railway canopy beams and overhead wire",
+        "same_surface": "one window pane",
+        "face_legibility": "transparent central facial area"
+      },
+      "evidence": {
+        "same_pane_optics": "her face and hands are visibly transmitted through clear glass, while faint reflected railway-canopy beams and an overhead wire occupy the upper and side portions of that same pane",
+        "face_legibility": "the central facial area remains transparent and legible"
+      }
+    },
+    {
+      "assertion_id": "peripheral_refraction",
+      "dimension": "composition",
+      "polarity": "required",
+      "source_span_ids": [
+        "request"
+      ],
+      "affected_dimensions": [
+        "composition"
+      ],
+      "axes": {
+        "effect_location": "narrow extreme right peripheral slice",
+        "refracted_content": "displaced duplicate red lamp outline",
+        "material": "small faceted prism",
+        "central_face": "single coherent outline"
+      },
+      "evidence": {
+        "edge_effect": "a narrow peripheral refracted slice containing a displaced duplicate outline of the red indicator lamp, with a subtle spectrum fringe; the central face retains a single coherent outline"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial",
+    "family": "layered optical workshop portrait",
+    "evidence": [
+      "Readable face through a transparent pane",
+      "Restrained edge optics supporting a visible manual activity"
+    ]
+  },
+  "variation_key": "arm_b_1292956637129113158"
+}

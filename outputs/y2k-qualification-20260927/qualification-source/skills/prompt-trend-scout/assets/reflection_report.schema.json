@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prompt Trend Scout ReflectionReport",
+  "type": "object",
+  "required": ["report_id", "generated_at", "no_changes_applied", "counts", "gate_status", "candidates", "report_markdown"],
+  "properties": {
+    "report_id": {"type": "string"},
+    "generated_at": {"type": "string"},
+    "no_changes_applied": {"const": true},
+    "counts": {"type": "object"},
+    "gate_status": {"type": "object"},
+    "candidates": {"type": "array"},
+    "report_markdown": {"type": "string"}
+  }
+}

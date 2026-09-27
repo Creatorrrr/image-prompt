@@ -1,0 +1,163 @@
+{
+  "schema_version": "portrait-composition-qualification-plan/v1",
+  "status": "planned_not_executed",
+  "policy": "partial_is_fail",
+  "request_boundary": "No rendering requested in this research turn; independent pre-core meaning must be authored on each later generation run.",
+  "arms": [
+    {
+      "id": "Q1",
+      "target_concepts": [
+        "PC02",
+        "PC03"
+      ],
+      "scene_variants": [
+        "table edge",
+        "seat edge",
+        "counter edge"
+      ],
+      "hard_owner_checks": [
+        "torso-head separation",
+        "table-camera geometry",
+        "face legibility",
+        "hand contact"
+      ]
+    },
+    {
+      "id": "Q2",
+      "target_concepts": [
+        "PC17",
+        "PC18"
+      ],
+      "scene_variants": [
+        "dialogue shoulder",
+        "collar adjustment",
+        "small object handoff"
+      ],
+      "hard_owner_checks": [
+        "secondary owner",
+        "main versus secondary hands",
+        "reaction target",
+        "requested count"
+      ]
+    },
+    {
+      "id": "Q3",
+      "target_concepts": [
+        "PC19",
+        "PC20"
+      ],
+      "scene_variants": [
+        "plant foreground",
+        "curtain opening",
+        "door opening"
+      ],
+      "hard_owner_checks": [
+        "actual foreground plane",
+        "focus owner",
+        "opening not vignette",
+        "surviving face region"
+      ]
+    },
+    {
+      "id": "Q4",
+      "target_concepts": [
+        "PC21",
+        "PC22",
+        "PC23"
+      ],
+      "scene_variants": [
+        "window transmission",
+        "wall mirror",
+        "hand mirror"
+      ],
+      "hard_owner_checks": [
+        "surface type",
+        "reflected versus transmitted face",
+        "physical correspondence",
+        "reflected-face sharpness"
+      ]
+    },
+    {
+      "id": "Q5",
+      "target_concepts": [
+        "PC09",
+        "PC10",
+        "PC27"
+      ],
+      "scene_variants": [
+        "seated triangle",
+        "reclining diagonal",
+        "symmetric corridor"
+      ],
+      "hard_owner_checks": [
+        "nominated body points",
+        "support path",
+        "camera roll versus body axis",
+        "background versus pose symmetry"
+      ]
+    },
+    {
+      "id": "Q6",
+      "target_concepts": [
+        "PC24",
+        "PC29",
+        "PC30"
+      ],
+      "scene_variants": [
+        "edge prism",
+        "stationary subject with moving lights",
+        "canted window portrait"
+      ],
+      "hard_owner_checks": [
+        "local optical owner",
+        "motion versus defocus",
+        "global reference tilt",
+        "face survives device"
+      ]
+    }
+  ],
+  "experimental_design": {
+    "minimum_per_target_relation": "3 genuinely different scene contexts × 2 independent attempts; final sample size chosen before renders",
+    "baseline_comparison": "paired baseline and selected-candidate conditions; each baseline frozen before local retrieval; same requester constraints and documented randomized condition order",
+    "avoid_claim": "same seed does not guarantee equal stochastic conditions across models; exposure and selection are measured separately",
+    "holdout": "Freeze independently authored paraphrases, counterexamples and image criteria before implementation; development fixtures here are not those holdouts."
+  },
+  "evidence_layers": [
+    "authored_source",
+    "schema_compile",
+    "index_current",
+    "retrieval_candidate_exposure",
+    "composer_selection",
+    "literal_prompt_actuation",
+    "runtime_request_binding",
+    "same_image_pixels",
+    "requester_preference"
+  ],
+  "report_counts": [
+    "source coverage",
+    "exposure per requested target",
+    "selection among exposed targets",
+    "all-hard-gates pass per target",
+    "whole-scene pass",
+    "unscorable or blocked count",
+    "requester acceptance"
+  ],
+  "pixel_review": {
+    "views": [
+      "whole_image_thumbnail",
+      "native_resolution_owner_crop"
+    ],
+    "statuses": [
+      "pass",
+      "fail",
+      "unscorable"
+    ],
+    "aggregate": "A scene qualifies only when every applicable hard gate passes in the same image. No averaging, retry cherry-picking or cross-image evidence pooling.",
+    "separate_user_judgment": [
+      "face readability",
+      "felt engagement",
+      "composition interest",
+      "subjective appeal preference"
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "contract_version": "independent-keyword-test-case/v1",
+  "arm_id": "arm_b",
+  "seed": 1292956637129113158,
+  "frozen_before_render": true,
+  "freeze_time_utc": "2026-09-27T08:02:44.769708+00:00",
+  "concept": "Rainy morning in an old railway waiting-room lantern workshop. A fictional adult portrait subject compares silk ribbon with the button on a hanging coat. The camera sees her through glass with rail-canopy reflections, saffron fabric blur near the lens, and one narrow prism-distorted red-lamp outline at the right edge.",
+  "source": "Agent-authored randomized concept; keyword meanings drawn only from requester-keyword-context.json and general knowledge before pack access.",
+  "reference_role": "visible_face_and_hair_appearance_only",
+  "reference_sha256": "06d6c6feeed0d2397ec9562d46113cd221ac54a0e190295f0aa7f7868c22ece7",
+  "pass_rule": "Every all_of element must be visibly present in the same saved original image. Missing, ambiguous, or partial elements fail the keyword. Overall keyword success requires all three keyword rows pass.",
+  "keyword_tests": [
+    {
+      "keyword": "foreground bokeh",
+      "assertion_id": "foreground_bokeh",
+      "all_of": [
+        "Near-camera saffron fabric creates visibly defocused soft shapes at the left and lower edges.",
+        "The portrait face lies visibly deeper than that near layer.",
+        "The face and eyes remain sharp and readable."
+      ],
+      "false_substitutes": [
+        "Only background blur behind the subject.",
+        "Whole-frame soft focus or haze.",
+        "Flat color border lacking a nearer out-of-focus material."
+      ],
+      "review_scale": [
+        "thumbnail",
+        "native"
+      ]
+    },
+    {
+      "keyword": "glass reflection and transmission",
+      "assertion_id": "glass_reflection_transmission",
+      "all_of": [
+        "The woman and her hand activity are visible behind one transparent window pane.",
+        "Recognizable railway canopy beams and overhead wire appear as reflected external content on the same pane.",
+        "Both transmitted interior subject and reflected external content coexist in the same image.",
+        "The central facial area remains legible through glass."
+      ],
+      "false_substitutes": [
+        "Mirror reflection alone.",
+        "An opaque face reflected into a dark window with no transmitted interior.",
+        "Background beams seen directly through a window instead of external reflections.",
+        "A double portrait or digital collage without a readable pane surface."
+      ],
+      "review_scale": [
+        "thumbnail",
+        "native"
+      ]
+    },
+    {
+      "keyword": "peripheral refraction",
+      "assertion_id": "peripheral_refraction",
+      "all_of": [
+        "A narrow distorted slice is confined to the extreme right frame periphery.",
+        "The red lamp has a spatially displaced duplicate contour in that slice.",
+        "A restrained spectrum fringe accompanies the displacement.",
+        "The central face retains one coherent undistorted outline."
+      ],
+      "false_substitutes": [
+        "Plain rainbow flare or colored haze without displaced contours.",
+        "Motion blur or unshifted ghosting.",
+        "Face fractured or duplicated across the center.",
+        "A red background object merely near the image edge."
+      ],
+      "review_scale": [
+        "thumbnail",
+        "native"
+      ]
+    }
+  ],
+  "supplemental_scene_checks": [
+    "Indigo apron over white shirt.",
+    "Coat is hanging beside the subject.",
+    "Silk ribbon visibly meets a coat button.",
+    "Open tin of numbered tags and lantern workshop cues.",
+    "Soft rainy window light and red indicator source."
+  ],
+  "reference_checks": [
+    "Short dark bob and wispy center-parted fringe visible.",
+    "Soft cheek contours used as appearance guidance, without identity claims.",
+    "Subject presented as an unmistakably adult fictional woman."
+  ],
+  "candidate_evidence_rule": "Record new pc_ candidates exposed in this arm pack, actual adopted candidate IDs, literal prompt evidence, and pixel observations separately. Do not force unexposed candidates."
+}

@@ -1,0 +1,55 @@
+{
+  "contract_version": "photo-independent-test-case/v1",
+  "arm_id": "arm_a",
+  "seed": 4400049719420549872,
+  "frozen_before_render": true,
+  "concept": "Snow outside a botanical-conservatory work table; postcard trade photographed past a companion shoulder toward the reference-guided adult woman.",
+  "keywords": [
+    "across-the-table portrait",
+    "over-the-shoulder shot",
+    "offering gesture toward camera"
+  ],
+  "partial_is_fail": true,
+  "tests": [
+    {
+      "id": "a_across_table",
+      "must_show": [
+        "visible tabletop spans near camera and far seated subject",
+        "subject upper torso and face clearly rise above tabletop",
+        "table props remain below facial priority"
+      ],
+      "confusion_failure": "standing portrait with an incidental table, or tabletop close-up with tiny face"
+    },
+    {
+      "id": "a_other_shoulder",
+      "must_show": [
+        "distinct other-person shoulder at a near frame edge",
+        "main subject visibly beyond that shoulder and in clearer focus",
+        "main subject faces forward toward near-side companion"
+      ],
+      "confusion_failure": "the protagonist merely looking backward over her own shoulder; ambiguous ownership of near shoulder"
+    },
+    {
+      "id": "a_offer_camera",
+      "must_show": [
+        "main subject hand visibly holds cyanotype postcard",
+        "hand and card project toward camera-side recipient in lower foreground",
+        "face remains readable above card"
+      ],
+      "confusion_failure": "card lies on table, points laterally, hides the face, or an extra unattached hand holds it"
+    }
+  ],
+  "reference_checks": [
+    "visible dark chin-length bob and wispy fringe",
+    "eyes, face shape, and lips remain broadly consistent with appearance reference; no real identity or demographic inference"
+  ],
+  "complexity_checks": [
+    "botanical conservatory setting",
+    "cyanotype plant postcard and another drying print",
+    "snow outside glass",
+    "forest-green cardigan",
+    "folded map and tea",
+    "softened late-afternoon side sunlight"
+  ],
+  "gate_rule": "All three keyword tests must be met; missing or partial evidence fails. Appearance and complexity are recorded separately."
+}

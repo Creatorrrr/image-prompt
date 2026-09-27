@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "remove_patterns": [
+    {"type": "handle", "pattern": "(?<![\\w.])@[A-Za-z0-9_.]{2,30}"},
+    {"type": "url", "pattern": "https?://\\S+"},
+    {"type": "promo", "pattern": "(?i)\\b(follow me|follow for more|link in bio|join my discord|subscribe|use my preset|buy my prompt pack)\\b"},
+    {"type": "signature", "pattern": "(?i)\\b(prompt by|created by|made by|image by|credit to)\\b[^\\n,;]*"},
+    {"type": "watermark", "pattern": "(?i)\\b(watermark|no watermark|watermarked|creator mark)\\b"}
+  ],
+  "license_signal_patterns": [
+    {"flag": "explicit_no_repost", "pattern": "(?i)(do not repost|don't repost|no repost|do not steal|don't steal|not for repost|repost prohibited|불펌|무단 ?전재|무단 ?転載)"},
+    {"flag": "credit_required", "pattern": "(?i)(credit required|give credit|credit if used|출처 표시|크레딧)"},
+    {"flag": "watermark_detected", "pattern": "(?i)(watermark|watermarked|creator mark|©)"}
+  ],
+  "risk_patterns": [
+    {"flag": "ip_character", "pattern": "(?i)\\b(disney|marvel|pokemon|pikachu|mickey|gundam|star wars|harry potter)\\b"},
+    {"flag": "brand", "pattern": "(?i)\\b(nike|adidas|apple|samsung|coca-cola|tesla|supreme)\\b"},
+    {"flag": "minor_risk", "pattern": "(?i)\\b(child|minor|schoolgirl|middle school|high school student|teen)\\b"},
+    {"flag": "sexual_or_fetish_risk", "pattern": "(?i)\\b(nude|nsfw|explicit|fetish|lingerie)\\b"},
+    {"flag": "graphic_violence_risk", "pattern": "(?i)\\b(gore|blood splatter|dismembered|graphic violence)\\b"}
+  ]
+}

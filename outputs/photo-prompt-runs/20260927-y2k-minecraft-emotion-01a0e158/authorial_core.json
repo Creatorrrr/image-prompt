@@ -1,0 +1,172 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) y2k，我的世界游戏，情绪 프롬프트 작성해줘.",
+  "interpreted_intent": "A photographic scene combining turn-of-the-millennium Y2K styling, the Minecraft game, and an emotionally expressive atmosphere. Wistful late-night gaming is the authored realization of the open emotional direction.",
+  "subject": "Minecraft visible on a monitor, alongside an adult woman playing it",
+  "setting": "A small bedroom with a gaming desk after midnight",
+  "event": "The gamer rests her hands and looks at her player-built house during a quiet break",
+  "visual_priorities": [
+    "Minecraft is recognizable through its pixel-textured cubic landscape and player-built house",
+    "Y2K styling is visible through silver clothing, butterfly clips, translucent wired headphones, and a flip phone",
+    "A paused gaze and tired half-smile make the gaming moment emotionally legible",
+    "The face, resting hands, and game screen form one intimate photographic scene"
+  ],
+  "baseline_prompt_en": "An intimate photographic portrait of an adult woman taking a quiet break from Minecraft in a small bedroom after midnight. Minecraft runs on a desktop monitor, showing pixel-textured grass blocks, cubic trees, a square sun near the horizon, and a small player-built house with glowing windows. She sits in a desk chair facing the screen, both feet resting on the floor, her right forearm supported by the desk and her right hand resting on the mouse; her left hand lies loosely beside the keyboard. Her eyes linger on the little house, her shoulders soften, and a tired half-smile makes the moment feel bittersweet, as though this digital place holds a private memory. Y2K styling appears in a silver satin camisole over a fitted white baby tee, baggy blue jeans, tiny butterfly hair clips, and wired translucent headphones resting around her neck. A closed flip phone and a few loose CDs catch light beside the keyboard. Cool monitor light meets a small pink bedside lamp, illuminating natural skin texture and the folds of her clothes. A three-quarter side view keeps her face, both hands, and the readable game scene together, with the room falling into gentle shadow. The photograph carries the intimate, slightly grainy texture of a compact-camera diary snapshot.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "y2k",
+      "source_text": "y2k",
+      "basis": "agent_general_knowledge",
+      "resolution": "Turn-of-the-millennium fashion and consumer-tech styling; a visual aesthetic rather than a claim about the date of the depicted scene",
+      "sources": []
+    },
+    {
+      "term": "我的世界游戏",
+      "source_text": "我的世界游戏",
+      "basis": "agent_general_knowledge",
+      "resolution": "Minecraft, the sandbox video game recognized by pixel-textured cubic terrain and player-built structures",
+      "sources": []
+    },
+    {
+      "term": "情绪",
+      "source_text": "情绪",
+      "basis": "request_context",
+      "resolution": "Emotion or mood as an expressive visual direction; the word does not identify a specific relationship archetype",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "y2k，我的世界游戏，情绪",
+        "dimension": "concept",
+        "prompt_evidence": "taking a quiet break from Minecraft"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "我的世界游戏",
+        "dimension": "subject",
+        "prompt_evidence": "Minecraft runs on a desktop monitor"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "我的世界游戏，情绪",
+        "dimension": "event",
+        "prompt_evidence": "Her eyes linger on the little house"
+      },
+      {
+        "anchor_id": "y2k_style",
+        "source_text": "y2k",
+        "dimension": "style",
+        "prompt_evidence": "a silver satin camisole over a fitted white baby tee"
+      },
+      {
+        "anchor_id": "emotional_atmosphere",
+        "source_text": "情绪",
+        "dimension": "atmosphere",
+        "prompt_evidence": "a tired half-smile makes the moment feel bittersweet"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "style",
+      "atmosphere"
+    ],
+    "open_dimensions": [
+      "setting",
+      "appearance",
+      "count",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "minecraft_recognition",
+      "dimension": "subject",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "subject",
+        "concept"
+      ],
+      "axes": {
+        "game": "Minecraft",
+        "visible_structure": [
+          "pixel-textured cubic landscape",
+          "player-built house"
+        ]
+      },
+      "evidence": {
+        "game_phrase": "Minecraft runs on a desktop monitor",
+        "recognition_phrase": "pixel-textured grass blocks, cubic trees",
+        "built_structure_phrase": "a small player-built house with glowing windows"
+      }
+    },
+    {
+      "assertion_id": "y2k_realization",
+      "dimension": "style",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "style"
+      ],
+      "axes": {
+        "aesthetic": "turn-of-the-millennium Y2K fashion and technology"
+      },
+      "evidence": {
+        "wardrobe_phrase": "a silver satin camisole over a fitted white baby tee",
+        "accessory_phrase": "tiny butterfly hair clips",
+        "technology_phrase": "A closed flip phone and a few loose CDs"
+      }
+    },
+    {
+      "assertion_id": "emotion_visibility",
+      "dimension": "atmosphere",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "atmosphere",
+        "event"
+      ],
+      "axes": {
+        "observable_emotion": "an emotionally expressive pause during play"
+      },
+      "evidence": {
+        "attention_phrase": "Her eyes linger on the little house",
+        "affect_phrase": "a tired half-smile makes the moment feel bittersweet"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "editorial portrait photography",
+    "family": "intimate Y2K diary snapshot",
+    "evidence": [
+      "silver satin and translucent accessories",
+      "compact-camera grain with mixed practical light"
+    ]
+  },
+  "variation_key": "20260927-y2k-minecraft-emotion-01a0e158"
+}

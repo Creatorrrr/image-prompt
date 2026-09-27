@@ -1,0 +1,540 @@
+{
+  "scenarios": [
+    {
+      "id": "portrait",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["face", "hands", "low-quality"]
+      },
+      "expect_includes": [
+        "core.visual-evidence",
+        "core.frame-coordinates",
+        "concept.primary-relationship",
+        "core.fidelity-discipline",
+        "core.background-color",
+        "core.pre-emit-gate",
+        "core.output-contract",
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-face-likeness",
+        "detail.pose-hands-gesture",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "broad_person_gestalt_anchor",
+        "aesthetic_upgrade",
+        "face_exposure_budget",
+        "human_detail_hierarchy",
+        "face_anchor_budget",
+        "expression_gaze_hair_geometry",
+        "sharpness_topology",
+        "contrast_topology"
+      ],
+      "expect_excludes": ["detail.human-body-form"]
+    },
+    {
+      "id": "clothing-neckline-crop",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["clothing", "neckline", "body-silhouette", "cropped-edges"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.clothing-fashion"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "symmetric_large_body_lock",
+        "symmetric_moderate_body_lock",
+        "band_height_drift",
+        "garment_geometry",
+        "material_role",
+        "category_prior_disambiguation"
+      ]
+    },
+    {
+      "id": "tight-selfie-cosplay-accessories",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic", "casual-phone"],
+        "relationships": ["ordinary"],
+        "detail_risks": [
+          "face",
+          "hands",
+          "clothing",
+          "tight-selfie",
+          "face-hand-gesture",
+          "accessory-torso-budget"
+        ]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-face-likeness",
+        "detail.pose-hands-gesture",
+        "detail.clothing-fashion",
+        "detail.tight-selfie-hierarchy",
+        "detail.face-hand-gesture",
+        "detail.accessory-torso-budget"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "garment_geometry",
+        "face_anchor_budget",
+        "tight_selfie_hierarchy",
+        "accessory_torso_budget",
+        "partial_cheek_hand_budget"
+      ]
+    },
+    {
+      "id": "screenshot-ui",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["screenshot-ui"],
+        "relationships": ["screen-frame-within-frame"],
+        "detail_risks": ["ui-text", "text-logo", "low-quality"]
+      },
+      "expect_includes": [
+        "medium.screenshot-ui",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label",
+        "detail.low-quality-artifacts",
+        "subject.generic-object"
+      ],
+      "required_anchors": ["screenshot_ui_split", "absent_ui_controls", "low_legibility_text"]
+    },
+    {
+      "id": "phone-hand-occlusion",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["occlusion", "screen-frame-within-frame"],
+        "detail_risks": ["face", "hands", "gesture", "ui-text", "text-logo"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-face-likeness",
+        "concept.occlusion-replacement",
+        "concept.screen-frame-within-frame",
+        "detail.pose-hands-gesture",
+        "detail.text-logo-label"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "face_exposure_budget",
+        "face_anchor_budget",
+        "low_legibility_text"
+      ]
+    },
+    {
+      "id": "mirror-reflection",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["reflection", "mirror"],
+        "detail_risks": ["face", "clothing", "hands", "low-quality"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-face-likeness",
+        "concept.reflection-mirror",
+        "detail.clothing-fashion",
+        "detail.pose-hands-gesture"
+      ],
+      "required_anchors": ["face_fidelity", "face_anchor_budget", "garment_geometry"]
+    },
+    {
+      "id": "miniature-in-real",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["scale-miniature"],
+        "detail_risks": ["low-quality", "small-props"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "concept.scale-miniature",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["miniature_scale", "endpoint_sensitive", "polish_amplifying"]
+    },
+    {
+      "id": "low-light-compressed",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "capture_quality": ["low-quality", "compressed", "underexposed", "noise"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["generic_subject_fallback"]
+    },
+    {
+      "id": "product-in-hand",
+      "facets": {
+        "subjects": ["product"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["hands", "label", "text-logo"]
+      },
+      "expect_includes": [
+        "subject.product",
+        "medium.photographic-capture",
+        "detail.pose-hands-gesture",
+        "detail.text-logo-label"
+      ],
+      "required_anchors": ["low_legibility_text"]
+    },
+    {
+      "id": "document-chart-screenshot",
+      "facets": {
+        "subjects": ["document", "chart"],
+        "medium": ["screenshot-ui"],
+        "relationships": ["screen-frame-within-frame"],
+        "detail_risks": ["ui-text", "text-logo", "low-quality"]
+      },
+      "expect_includes": [
+        "subject.document-data-diagram",
+        "medium.screenshot-ui",
+        "concept.screen-frame-within-frame",
+        "detail.text-logo-label",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["screenshot_ui_split", "absent_ui_controls", "low_legibility_text"]
+    },
+    {
+      "id": "non-photographic-character",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["non-photographic"],
+        "relationships": ["ordinary"],
+        "style": ["stylized-character-maturity"],
+        "detail_risks": ["face", "clothing"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.non-photographic-rendering",
+        "detail.human-face-likeness",
+        "style.stylized-character-maturity",
+        "detail.clothing-fashion"
+      ],
+      "required_anchors": [
+        "face_fidelity",
+        "face_anchor_budget",
+        "maturity_anti_collapse",
+        "garment_geometry"
+      ]
+    },
+    {
+      "id": "capture-quality-routes-photo-medium",
+      "facets": {
+        "subjects": ["human"],
+        "relationships": ["ordinary"],
+        "capture_quality": ["flash", "casual-phone"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture"
+      ],
+      "expect_excludes": [
+        "medium.unspecified-visual",
+        "detail.human-face-likeness",
+        "detail.low-quality-artifacts"
+      ],
+      "required_anchors": ["face_fidelity"],
+      "max_non_core_modules": 2
+    },
+    {
+      "id": "mixed-media-photo-and-render",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic", "non-photographic"],
+        "relationships": ["mixed-media"],
+        "detail_risks": ["face"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "detail.human-face-likeness",
+        "medium.photographic-capture",
+        "medium.non-photographic-rendering",
+        "concept.mixed-media-illusion"
+      ],
+      "expect_excludes": [
+        "medium.unspecified-visual"
+      ],
+      "required_anchors": ["face_fidelity", "face_anchor_budget"],
+      "max_non_core_modules": 5
+    },
+    {
+      "id": "core-handled-and-ui-aliases",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["unspecified"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["UI", "small props", "cropped edges"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.unspecified-visual",
+        "detail.text-logo-label"
+      ],
+      "expect_excludes": [
+        "medium.screenshot-ui"
+      ],
+      "required_anchors": ["low_legibility_text"],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "major-component-contact-topology",
+      "facets": {
+        "subjects": ["human", "architecture"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["hands"]
+      },
+      "expect_includes": [
+        "concept.primary-relationship",
+        "subject.human",
+        "subject.architecture-interior",
+        "medium.photographic-capture",
+        "detail.pose-hands-gesture"
+      ],
+      "required_anchors": [
+        "major_component_relation_graph",
+        "major_component_topology",
+        "interaction_geometry_sentence",
+        "image_scene_space_distinction"
+      ],
+      "max_non_core_modules": 4
+    },
+    {
+      "id": "small-distant-human-no-face-detail",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture"
+      ],
+      "expect_excludes": [
+        "detail.human-face-likeness",
+        "detail.human-body-form"
+      ],
+      "required_anchors": ["face_fidelity"],
+      "max_non_core_modules": 2
+    },
+    {
+      "id": "appearance-led-human-body-form",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": [
+          "body-form",
+          "body-proportion",
+          "muscle-definition",
+          "body-tension",
+          "skin-surface",
+          "body-region-hierarchy",
+          "clothing"
+        ]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.human-body-form",
+        "detail.clothing-fashion"
+      ],
+      "expect_excludes": [
+        "detail.human-face-likeness"
+      ],
+      "required_anchors": [
+        "human_body_form_signature",
+        "muscle_lighting_separation",
+        "skin_surface_signature",
+        "body_region_hierarchy",
+        "persistent_induced_form_split",
+        "contrast_topology",
+        "photographic_causal_decomposition",
+        "color_light_decomposition",
+        "light_to_form_strength",
+        "material_role",
+        "category_prior_disambiguation",
+        "detail_role_ceiling"
+      ],
+      "max_non_core_modules": 4
+    },
+    {
+      "id": "color-critical-generic-object",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["color-tone"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.color-tone-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form"
+      ],
+      "required_anchors": [
+        "color_tone_contract",
+        "color_causal_layers",
+        "relative_color_calibration",
+        "neutral_anchor_confidence",
+        "aggregate_color_effect_budget",
+        "tone_zone_response",
+        "color_measurement_limits",
+        "color_axis_emission_coverage",
+        "color_actuation_contract",
+        "color_control_effectiveness",
+        "render_color_verification",
+        "white_balance_exposure_separation",
+        "photographic_tone_response",
+        "tone_zone_sampling_separation",
+        "global_local_color_residual"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "color-critical-human-photographic",
+      "facets": {
+        "subjects": ["human"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["color-fidelity", "white-balance"]
+      },
+      "expect_includes": [
+        "subject.human",
+        "medium.photographic-capture",
+        "detail.color-tone-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form",
+        "detail.human-face-likeness"
+      ],
+      "required_anchors": [
+        "display_color_scope",
+        "color_axis_emission_coverage",
+        "color_actuation_contract",
+        "tone_zone_sampling_separation",
+        "global_local_color_residual"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "lighting-critical-generic-object",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": [
+          "lighting-fidelity",
+          "light-direction",
+          "shadow-topology",
+          "material-light-response",
+          "background-spill"
+        ]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.color-tone-fidelity",
+        "detail.human-body-form"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "observed_light_result",
+        "source_geometry_fill_separation",
+        "global_local_light_contrast",
+        "shadow_ownership",
+        "material_light_response",
+        "pose_light_dependency",
+        "lighting_color_contract_handoff",
+        "light_control_ledger",
+        "render_light_verification",
+        "contrast_topology",
+        "light_to_form_strength"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "lighting-critical-non-photographic",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["non-photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["light-to-form", "shadow-topology"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.non-photographic-rendering",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "medium.photographic-capture"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "shadow_ownership",
+        "pose_light_dependency"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "source-render-regional-light-residual",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["light-to-form", "material-light-response"]
+      },
+      "expect_includes": [
+        "subject.generic-object",
+        "medium.photographic-capture",
+        "detail.light-form-fidelity"
+      ],
+      "expect_excludes": [
+        "detail.human-body-form",
+        "detail.color-tone-fidelity"
+      ],
+      "required_anchors": [
+        "light_form_contract",
+        "material_light_response",
+        "light_control_ledger"
+      ],
+      "max_non_core_modules": 3
+    },
+    {
+      "id": "unknown-facet-value-fails-visibly",
+      "facets": {
+        "subjects": ["generic-object"],
+        "medium": ["photographic"],
+        "relationships": ["ordinary"],
+        "detail_risks": ["glossy-mystery"]
+      },
+      "expect_error_contains": "unmapped detail-risk value"
+    }
+  ]
+}

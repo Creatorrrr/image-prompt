@@ -1,0 +1,230 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "[$photo-prompt-image-generator](/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/SKILL.md) “Will you be my boyfriend?”～  配方：  深夜告白 × 女友视角 × CCD直闪 × 手写情书 × 私密卧室感 프롬프트 작성해줘.",
+  "interpreted_intent": "A close and vulnerable late-night romantic confession snapshot: the prospective girlfriend offers her handwritten question directly to the person at the camera.",
+  "subject": "An adult woman offering a handwritten love letter to the recipient at the lens",
+  "setting": "Her private bedroom after midnight",
+  "event": "The woman presents a readable handwritten romantic question and waits for the recipient to reply",
+  "visual_priorities": [
+    "The handwritten question faces the recipient and is readily readable.",
+    "The adult woman directs her hopeful confession to the person at the camera.",
+    "Bedding, dim bedside light and the dark window locate the encounter in a private bedroom after midnight.",
+    "Direct flash makes her face and letter bright against the dim room with compact CCD snapshot texture."
+  ],
+  "baseline_prompt_en": "A candid photograph of an adult woman in her mid-twenties making a private late-night confession in her own bedroom. Seen from the camera as the person receiving her confession, she sits securely on the mattress, wearing a loose cotton pajama shirt and soft lounge trousers, with slightly tousled hair. She offers her handwritten love letter toward the lens, holding the sheet by its two side edges with both hands, elbows bent close to her torso. The paper sits just below her chin and tilts toward the camera; her face remains visible just above the letter. Written in large, legible, slightly uneven dark-ink handwriting is the exact sentence \"Will you be my boyfriend?\" with a tiny hand-drawn heart underneath. The written question now faces the recipient in the foreground. Her gaze stays on the recipient while she waits for an answer; the corners of her lips lift into a small, hopeful smile. Rumpled bedding, a softly glowing bedside lamp and a black window establish a quiet bedroom after midnight. An early-2000s compact CCD-camera snapshot with direct on-camera flash: bright facial highlights, crisp shadows behind her, luminous paper with visible ink, warm room light receding into deep shadows, fine digital noise and slightly faded colors. The photograph feels close, personal and unpolished, preserving the vulnerable pause between handing over the letter and hearing a reply.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "late-night handwritten romantic confession photograph",
+      "source_text": "深夜告白 × 女友视角 × CCD直闪 × 手写情书 × 私密卧室感",
+      "basis": "request_context",
+      "resolution": "An intimate portrait of the woman offering a handwritten romantic invitation to the recipient at the camera; the recipe specifies the late hour, private bedroom and direct-flash CCD aesthetic.",
+      "sources": []
+    },
+    {
+      "term": "romantic invitation text",
+      "source_text": "Will you be my boyfriend?",
+      "basis": "request_context",
+      "resolution": "The quoted invitation is written visibly on the love letter addressed to the recipient at the camera.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v1",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "深夜告白",
+        "dimension": "concept",
+        "prompt_evidence": "a private late-night confession"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "女友视角",
+        "dimension": "subject",
+        "prompt_evidence": "an adult woman in her mid-twenties"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "手写情书",
+        "dimension": "event",
+        "prompt_evidence": "She offers her handwritten love letter toward the lens"
+      },
+      {
+        "anchor_id": "bedroom_setting",
+        "source_text": "私密卧室感",
+        "dimension": "setting",
+        "prompt_evidence": "in her own bedroom"
+      },
+      {
+        "anchor_id": "late_night",
+        "source_text": "深夜告白",
+        "dimension": "timing",
+        "prompt_evidence": "a quiet bedroom after midnight"
+      },
+      {
+        "anchor_id": "intimate_atmosphere",
+        "source_text": "私密卧室感",
+        "dimension": "atmosphere",
+        "prompt_evidence": "The photograph feels close, personal and unpolished"
+      },
+      {
+        "anchor_id": "girlfriend_viewpoint",
+        "source_text": "女友视角",
+        "dimension": "framing",
+        "prompt_evidence": "Seen from the camera as the person receiving her confession"
+      },
+      {
+        "anchor_id": "romantic_request",
+        "source_text": "Will you be my boyfriend?",
+        "dimension": "relationship",
+        "prompt_evidence": "the vulnerable pause between handing over the letter and hearing a reply"
+      },
+      {
+        "anchor_id": "ccd_medium",
+        "source_text": "CCD直闪",
+        "dimension": "camera",
+        "prompt_evidence": "An early-2000s compact CCD-camera snapshot"
+      },
+      {
+        "anchor_id": "direct_flash",
+        "source_text": "CCD直闪",
+        "dimension": "lighting",
+        "prompt_evidence": "direct on-camera flash"
+      },
+      {
+        "anchor_id": "ccd_style",
+        "source_text": "CCD直闪",
+        "dimension": "style",
+        "prompt_evidence": "fine digital noise and slightly faded colors"
+      },
+      {
+        "anchor_id": "letter_text",
+        "source_text": "“Will you be my boyfriend?”",
+        "dimension": "text",
+        "prompt_evidence": "Written in large, legible, slightly uneven dark-ink handwriting is the exact sentence \"Will you be my boyfriend?\""
+      },
+      {
+        "anchor_id": "confession_response",
+        "source_text": "深夜告白 × 女友视角",
+        "dimension": "character_response",
+        "prompt_evidence": "Her gaze stays on the recipient while she waits for an answer"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "setting",
+      "timing",
+      "atmosphere",
+      "framing",
+      "relationship",
+      "camera",
+      "lighting",
+      "style",
+      "text",
+      "character_response"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "pose",
+      "composition",
+      "color",
+      "format"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "visible_confession",
+      "dimension": "character_response",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "concept",
+        "subject",
+        "event",
+        "relationship",
+        "character_response"
+      ],
+      "axes": {
+        "surface_affect": "tentative hopeful invitation",
+        "underlying_affiliation": "wish for romantic partnership with the recipient",
+        "relationship_target": "the recipient at the camera",
+        "primary_action": "offer the handwritten confession letter to the recipient",
+        "affect_leak_timing": "while waiting for the recipient to answer",
+        "affect_leak_channels": [
+          "mouth_expression"
+        ],
+        "event_phase": "the letter is offered and the reply is pending"
+      },
+      "evidence": {
+        "actor_phrase": "an adult woman in her mid-twenties",
+        "baseline_phrase": "a private late-night confession",
+        "trigger_phrase": "The written question now faces the recipient in the foreground",
+        "target_phrase": "the camera as the person receiving her confession",
+        "primary_action_phrase": "She offers her handwritten love letter toward the lens",
+        "affective_leak_phrase": "the corners of her lips lift into a small, hopeful smile",
+        "visible_response_phrase": "Her gaze stays on the recipient while she waits for an answer",
+        "immediate_consequence_phrase": "The written question now faces the recipient in the foreground",
+        "continuity_phrase": "her face remains visible just above the letter"
+      },
+      "relations": [
+        {
+          "operator": "same_target",
+          "members": [
+            "primary_action",
+            "immediate_consequence",
+            "relationship_target"
+          ]
+        },
+        {
+          "operator": "same_target",
+          "members": [
+            "underlying_affiliation",
+            "visible_response",
+            "relationship_target"
+          ]
+        }
+      ]
+    },
+    {
+      "assertion_id": "handwritten_question",
+      "dimension": "text",
+      "polarity": "required",
+      "source_span_ids": [
+        "topic"
+      ],
+      "affected_dimensions": [
+        "text",
+        "event"
+      ],
+      "axes": {
+        "content": "Will you be my boyfriend?",
+        "writing_medium": "handwritten ink on a love letter",
+        "readability": "large readable lettering facing the recipient"
+      },
+      "evidence": {
+        "question_phrase": "Written in large, legible, slightly uneven dark-ink handwriting is the exact sentence \"Will you be my boyfriend?\"",
+        "letter_phrase": "She offers her handwritten love letter toward the lens"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "portrait",
+    "family": "intimate compact-camera confession snapshot",
+    "evidence": [
+      "direct on-camera flash",
+      "fine digital noise and slightly faded colors"
+    ]
+  },
+  "variation_key": "20260927-163305-late-night-confession"
+}

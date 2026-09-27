@@ -1,0 +1,366 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "ec198d7bf95d55f84a2644e3f6444d135613dd03 plus the 2026-08-23 source-relative-control-ownership working-tree intervention",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Make source-relative pose, broad human priors, pairwise light-to-form relations, and generation-size settings reach auditable prompt or delivery controls without installing case-specific defaults."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The motivating source contains a non-neutral head, torso, shoulder, and frame-axis relationship plus a material regional value difference across one dark surface.",
+      "artifact": "/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/120A03AF-63A5-498A-ABC0-A49BE74B7A5B/1-사진-1.jpg; sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; 969x1280"
+    },
+    {
+      "id": "e-frozen-prompt",
+      "kind": "prompt-inspection",
+      "claim": "The independently authored frozen prompt explicitly placed the head near the upper center, called the posture upright, and used only a late generic asymmetry boundary, so its strongest pose controls favored neutral central alignment over the weaker source-relative qualification.",
+      "artifact": "generated_images/reverse-image-prompt-independent-20260823/prompt.txt; sha256=5c47be686d542af03f8a6ed17a0a862620714d104db66dd9452a3ec1939f3cf5; 4429 bytes"
+    },
+    {
+      "id": "e-render",
+      "kind": "render-observation",
+      "claim": "The independently generated render remains more centered and frontal than the source; face reading improved but still differs, and regional light-to-form separation improved but remains weaker than the source.",
+      "artifact": "generated_images/reverse-image-prompt-independent-20260823/render-001.png; sha256=fe789bce89aa5ba42fe3368a1feb0713734665b97c3c8986ca884b3320abd59c; 927x1697; one successful built-in text-only generation attempt"
+    },
+    {
+      "id": "e-user",
+      "kind": "user-judgment",
+      "claim": "The user reports that pose and direction still point toward a centered frontal default, the face is somewhat better but retains a different impression, and the lighting separation is improved but too weak.",
+      "artifact": "Conversation feedback on 2026-08-23"
+    },
+    {
+      "id": "e-frame-binding",
+      "kind": "measurement",
+      "claim": "The source adapter target is 960x1264, but the built-in generation path did not bind that setting and delivered 927x1697. The source-to-delivery ratio error is 0.278421, so frame delivery is unscored rather than a composition PASS.",
+      "artifact": "python3 skills/reverse-image-prompt/tools/size_adapter.py 969 1280 --binding-status unbound --delivered-width 927 --delivered-height 1697"
+    },
+    {
+      "id": "e-red-green",
+      "kind": "package-check",
+      "claim": "New tests first failed for missing geometry-claim actuation, unvalidated pairwise lighting references, unchanged lighting signatures, and absent size-binding evidence; they pass after the intervention.",
+      "artifact": "Focused unittest run before implementation failed with four assertion failures and five size-adapter errors; the post-implementation focused run passed 81 tests."
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All 144 reverse-image-prompt tests pass. Module validation reports 37 modules, 16969 runtime words, 3800 Tier-0 words, and 0.0014 duplicate ratio; generated files, Python compilation, and diff whitespace checks pass.",
+      "artifact": "python3 -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python3 skills/reverse-image-prompt/tools/validate_modules.py; python3 skills/reverse-image-prompt/tools/gen_manifest.py --check; python3 -m py_compile skills/reverse-image-prompt/tools/salience_plan.py skills/reverse-image-prompt/tools/size_adapter.py; git diff --check"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Every material source-relative pose, face-prior correction, regional light relation, and requested frame setting reaches one auditable actuation or delivery-evidence path while case-specific values remain outside runtime defaults.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-pose-relation",
+        "statement": "Material head, torso, shoulder, gaze, and frame-axis relations outrank a generic neutral alignment, while explicitly flexible placement may still vary.",
+        "evidence_ids": [
+          "e-source",
+          "e-frozen-prompt",
+          "e-render",
+          "e-user"
+        ],
+        "causal_controls": [
+          "component relation",
+          "human pose invariant",
+          "generic aggregate effect and exact control"
+        ]
+      },
+      {
+        "id": "inv-face-prior-actuation",
+        "statement": "A broad non-identifying human prior remains subordinate to separately emitted source-visible geometry rather than being constrained only by diagnostic prose.",
+        "evidence_ids": [
+          "e-source",
+          "e-render",
+          "e-user"
+        ],
+        "causal_controls": [
+          "generation prior provenance",
+          "geometry claim ids",
+          "owned exact prompt controls"
+        ]
+      },
+      {
+        "id": "inv-pairwise-light",
+        "statement": "A comparative light-to-form residual names two distinct known regions in both observation and aggregate actuation and is not repeated by generic form, clothing, or surface language.",
+        "evidence_ids": [
+          "e-source",
+          "e-render",
+          "e-user"
+        ],
+        "causal_controls": [
+          "reference region id",
+          "pairwise Light/Form signature",
+          "cross-ledger ownership"
+        ]
+      },
+      {
+        "id": "inv-frame-evidence",
+        "statement": "A recommended target size is distinguished from a setting that the tool actually applied and from the frame it delivered.",
+        "evidence_ids": [
+          "e-frame-binding"
+        ],
+        "causal_controls": [
+          "adapter target",
+          "binding status",
+          "delivered frame and continuous ratio error"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "centered, left-offset, or right-offset placement when the source contract marks placement flexible",
+      "human or non-human subject category",
+      "specific face category and appearance wording",
+      "specific region names, lighting direction, strength, or numeric threshold",
+      "generator and conditioning route"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-pose",
+      "scale": "global",
+      "axis": "pose and principal-axis relation",
+      "source_state": "Material subject and frame relations are non-neutral and asymmetric.",
+      "render_state": "The frozen prompt and render favor a centered frontal alignment.",
+      "evidence_ids": [
+        "e-source",
+        "e-frozen-prompt",
+        "e-render",
+        "e-user"
+      ]
+    },
+    {
+      "id": "m-face",
+      "scale": "local",
+      "axis": "face gestalt",
+      "source_state": "Source-visible local geometry determines the face reading.",
+      "render_state": "The face improved but retains a perceptibly different impression.",
+      "evidence_ids": [
+        "e-source",
+        "e-render",
+        "e-user"
+      ]
+    },
+    {
+      "id": "m-light",
+      "scale": "regional",
+      "axis": "pairwise light-to-form separation",
+      "source_state": "Two regions of one surface have a material source-visible value relation.",
+      "render_state": "The separation is present but weaker.",
+      "evidence_ids": [
+        "e-source",
+        "e-render",
+        "e-user"
+      ]
+    },
+    {
+      "id": "m-frame",
+      "scale": "global",
+      "axis": "frame delivery",
+      "source_state": "The source ratio is 0.757031 and the adapter target ratio is 0.759494.",
+      "render_state": "The unbound delivered ratio differs materially and cannot support a composition PASS.",
+      "evidence_ids": [
+        "e-frame-binding"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-pose-priority",
+      "stage": "prompt-priority",
+      "statement": "A generic neutral pose clause can dominate a weaker late asymmetry boundary unless every material orientation phrase reconciles with the source-relative relation ledger.",
+      "evidence_ids": [
+        "e-frozen-prompt",
+        "e-render",
+        "e-user"
+      ],
+      "falsifier": "Independent prompt evaluation shows material pose clauses already agree with the source relation and no neutral alignment receives greater prompt weight."
+    },
+    {
+      "id": "h-face-actuation",
+      "stage": "representation",
+      "statement": "Provenance and prose geometry evidence alone do not prove that a broad person prior is corrected by emitted source-visible geometry.",
+      "evidence_ids": [
+        "e-render",
+        "e-user",
+        "e-red-green"
+      ],
+      "falsifier": "The pre-intervention validator rejects every prior whose geometry does not reach separate owned final-prompt controls."
+    },
+    {
+      "id": "h-pairwise-light",
+      "stage": "representation",
+      "statement": "A one-region light effect can describe contrast without structurally preserving which second region defines the comparison.",
+      "evidence_ids": [
+        "e-source",
+        "e-render",
+        "e-user",
+        "e-red-green"
+      ],
+      "falsifier": "The pre-intervention validator rejects missing, unknown, self-referential, or observation-only comparative region pairs."
+    },
+    {
+      "id": "h-setting-binding",
+      "stage": "external",
+      "statement": "A prompt ratio phrase and adapter recommendation cannot establish composition-frame delivery when the generation tool does not expose or bind the requested size.",
+      "evidence_ids": [
+        "e-frame-binding",
+        "e-render"
+      ],
+      "falsifier": "The generation record proves the target setting was explicitly applied and the exact target frame was delivered."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Reconcile material pose clauses with source-relative relations; make every broad human prior point to separately actuated geometry claims; represent comparative lighting with a matched region-reference pair; and distinguish recommended size from bound and delivered frame evidence.",
+    "generalization_basis": "The implementation uses roles, claim ids, arbitrary known region ids, continuous ratio errors, and explicit binding states. Tests cover centered and opposite offsets, human and non-human cases, invalid pairwise relations, and multiple tool-support states without selecting a preferred direction, face type, body region, light value, or generator outcome.",
+    "hypothesis_ids": [
+      "h-pose-priority",
+      "h-face-actuation",
+      "h-pairwise-light",
+      "h-setting-binding"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/lighting-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/references/model-adapters.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tools/size_adapter.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_size_adapter.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-23-source-relative-actuation-and-setting-binding.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-red-green",
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-nonhuman-placement",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "centered and opposite flexible offsets",
+          "non-human subject",
+          "stable primary signature"
+        ],
+        "evidence_ids": [
+          "e-red-green",
+          "e-package"
+        ]
+      },
+      {
+        "id": "holdout-human-orientation",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "material head and torso relation",
+          "direction-neutral runtime contract",
+          "primary signature change"
+        ],
+        "evidence_ids": [
+          "e-red-green",
+          "e-package"
+        ]
+      },
+      {
+        "id": "holdout-pairwise-light",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "known distinct region pair",
+          "observation-to-actuation matching",
+          "pairwise signature"
+        ],
+        "evidence_ids": [
+          "e-red-green",
+          "e-package"
+        ]
+      },
+      {
+        "id": "holdout-size-binding",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "explicit exact delivery",
+          "explicit mismatch",
+          "auto, unsupported, and unbound states",
+          "continuous ratio error"
+        ],
+        "evidence_ids": [
+          "e-red-green",
+          "e-package"
+        ]
+      },
+      {
+        "id": "motivating-source-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": [
+          "pose and direction",
+          "face gestalt",
+          "regional light-to-form",
+          "frame delivery"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The generic schema, validators, runtime guidance, generated profiles, and unrelated structural holdouts are implemented and package validation passes. No new independent prompt or render was produced after this intervention, so prompt behavior, rendered pixels, and renewed user preference remain unscored and no render-fidelity promotion is claimed.",
+    "evidence_ids": [
+      "e-source",
+      "e-frozen-prompt",
+      "e-render",
+      "e-user",
+      "e-frame-binding",
+      "e-red-green",
+      "e-package"
+    ]
+  }
+}

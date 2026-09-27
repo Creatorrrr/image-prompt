@@ -1,0 +1,233 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "1c11532f7e8d6cf68d53011bac3f7c669a249577+preexisting-working-tree-2026-08-25",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Keep the routed multi-lane and independent-critic architecture while making ordinary prompt extraction materially bounded, viewer-first, and source-specific; preserve full v2/v4 evidence only as an audited profile and prevent generic attractiveness from replacing material human appearance, space, clothing, or pose evidence."
+  },
+  "evidence": [
+    {
+      "id": "e-user-runtime",
+      "kind": "user-judgment",
+      "claim": "The user reports ordinary reverse-image processing taking more than an hour, observed analysis progressing through v4, and judges that nonessential extraction, verification, and retry work is dominating the task.",
+      "artifact": "Conversation feedback and approved implementation request on 2026-08-25"
+    },
+    {
+      "id": "e-user-salience",
+      "kind": "user-judgment",
+      "claim": "The user requires prompt integration to preserve what viewers consider source-defining: changing a material broad facial reading, displayed skin, space, clothing, or pose can destroy the original impression even when the replacement remains generically attractive.",
+      "artifact": "Conversation example and improvement criteria supplied on 2026-08-25"
+    },
+    {
+      "id": "e-baseline-contract",
+      "kind": "prompt-inspection",
+      "claim": "Before this intervention, the active working-tree entrypoint made atomic obligations, spatial-orientation/v4, human-appearance/v2, full integration binding, and pass-gated independent criticism the ordinary route, so prompt-only work inherited evaluation-grade completeness.",
+      "artifact": "Pre-intervention inspection of skills/reverse-image-prompt/SKILL.md, references/analysis-orchestration.md, lanes, tools/salience_plan.py, and tools/analysis_bundle.py"
+    },
+    {
+      "id": "e-route-contract-tests",
+      "kind": "package-check",
+      "claim": "Route fixtures prove that prompt is the default compact profile, audited retains report v2 and full-precision ledgers, both preserve the same five portrait lanes, execution budgets are finite, aliases remain fingerprint-stable, profile fingerprints differ, and unknown profiles fail.",
+      "artifact": "python -m pytest -q skills/reverse-image-prompt/tests/test_route_resolver.py => 25 passed"
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "The full reverse-image-prompt suite and all structural generators and validators pass after the adaptive profile change.",
+      "artifact": "python -m pytest -q skills/reverse-image-prompt/tests => 227 passed and 10 subtests passed; validate_modules.py => 37 modules, 6 lanes, 16953 runtime words, 3629 Tier-0 words, duplicate ratio 0.0014; gen_manifest.py --check => pass; quick_validate.py => pass; git diff --check => pass"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "An ordinary request still receives separate routed lane analyses and an independent critic, but only P0/P1 viewer-material evidence controls the prompt; P2 is compressed, P3 is omitted, source-specific human appearance remains authoritative, and full audited ledgers do not run by default.",
+    "user_appeal": "Preserve the image's original face and skin reading, space, clothing, pose, and other viewer-defining cues instead of producing a different but generically attractive image after an hour of exhaustive analysis.",
+    "invariants": [
+      {
+        "id": "inv-lane-architecture",
+        "statement": "Facet routing still selects three to five owned lanes, each analyzes in an isolated context, and one independent critic remains after integration.",
+        "evidence_ids": ["e-user-runtime", "e-route-contract-tests", "e-package"],
+        "causal_controls": ["route v2 required_lane_ids", "one isolated lane wave", "compact independent critic"]
+      },
+      {
+        "id": "inv-viewer-priority",
+        "statement": "Cross-lane integration ranks source signature and structural identity before supporting and incidental detail, independent of lane length or module count.",
+        "evidence_ids": ["e-user-salience", "e-baseline-contract", "e-package"],
+        "causal_controls": ["P0/P1/P2/P3 map", "change counterfactual", "viewer-first prompt order", "P3 omission"]
+      },
+      {
+        "id": "inv-human-source-reading",
+        "statement": "A material human appearance signature keeps a supported non-identifying broad visual prior adjacent to authoritative local geometry and independently preserves material displayed skin, hair, expression, scale, and capture cues.",
+        "evidence_ids": ["e-user-salience", "e-package"],
+        "causal_controls": ["compact appearance signature", "broad-prior provenance", "local geometry adjacency", "beauty-as-supporting-only"]
+      },
+      {
+        "id": "inv-bounded-work",
+        "statement": "Prompt processing has one lane wave, one critic pass, no detail-seeking rerun, and at most one targeted repair or one affected-route restart for a true route/source failure.",
+        "evidence_ids": ["e-user-runtime", "e-route-contract-tests"],
+        "causal_controls": ["execution_budget", "grouped non-material topics", "advisory-no-retry rule", "bounded repair policy"]
+      },
+      {
+        "id": "inv-audited-preservation",
+        "statement": "Atomic obligations, spatial-orientation/v4, human-appearance/v2, full color/light contracts, bundle validation, and verification criticism remain available under the explicit audited profile.",
+        "evidence_ids": ["e-baseline-contract", "e-route-contract-tests", "e-package"],
+        "causal_controls": ["audited report v2", "full_precision_ledgers", "bundle v2", "audited validator compatibility"]
+      }
+    ],
+    "flexible_dimensions": [
+      "which visual domain becomes P0 or P1 for a particular source",
+      "which non-identifying broad human prior is supported or omitted",
+      "the number of P2 cues that safely merge into owned controls",
+      "literal prompt wording and generator-specific adapter",
+      "actual lane latency and rendered pixels pending forward evaluation"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-analysis-depth",
+      "scale": "global",
+      "axis": "ordinary prompt execution depth",
+      "source_state": "The user needs a practical prompt with separate expert lanes and bounded quality control.",
+      "render_state": "The prior ordinary route used evaluation-grade atomic and v4 completeness, repeated verification opportunities, and no explicit compact execution budget.",
+      "evidence_ids": ["e-user-runtime", "e-baseline-contract"]
+    },
+    {
+      "id": "m-salience-allocation",
+      "scale": "regional",
+      "axis": "cross-lane prompt weight",
+      "source_state": "A few source-specific cues may dominate viewer recognition while many visible fields are incidental.",
+      "render_state": "Detailed lane inventories could receive prompt weight through completeness and repetition rather than viewer impact.",
+      "evidence_ids": ["e-user-salience", "e-baseline-contract"]
+    },
+    {
+      "id": "m-human-prototype",
+      "scale": "local",
+      "axis": "human appearance continuity",
+      "source_state": "Broad visual reading, local geometry, displayed skin, expression, and capture treatment may jointly define the source person.",
+      "render_state": "A generic beauty or model prior can remain attractive while changing those source-specific cues and therefore the image's original impression.",
+      "evidence_ids": ["e-user-salience"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-adaptive-depth",
+      "stage": "representation",
+      "statement": "Separating prompt and audited profiles preserves lane specialization while preventing full evidence-ledger work from becoming the default cost of prompt extraction.",
+      "evidence_ids": ["e-user-runtime", "e-baseline-contract", "e-route-contract-tests"],
+      "falsifier": "Held-out prompt-profile runs still invoke v4/v2 ledgers or show no meaningful latency/report-size reduction against the prior contract."
+    },
+    {
+      "id": "h-viewer-first-integration",
+      "stage": "prompt-priority",
+      "statement": "P0/P1 change counterfactuals and one cross-lane priority map prevent incidental detail from outranking the few cues that make the source recognizable.",
+      "evidence_ids": ["e-user-salience", "e-package"],
+      "falsifier": "Independent held-out prompt reviews find P2/P3 inventory repeatedly dominating or displacing source-signature controls."
+    },
+    {
+      "id": "h-appearance-signature",
+      "stage": "prompt-interaction",
+      "statement": "Keeping a supported broad visual prior next to correcting geometry, with attractiveness only supporting, reduces prototype drift without turning any motivating category or skin combination into a default.",
+      "evidence_ids": ["e-user-salience", "e-package"],
+      "falsifier": "Held-out human prompts preserve generic attractiveness yet still change source-material broad reading, geometry, skin presentation, expression, or capture more often than the baseline."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": ["entrypoint", "module", "reference", "tool", "test"],
+    "general_rule": "Default to a compact prompt profile with the existing routed lane set, P0/P1-only detailed findings, viewer-first integration, a compact source-specific human appearance signature, one independent critic, and bounded repair; retain the preexisting atomic v2/v4 machinery under an explicit audited profile.",
+    "generalization_basis": "The intervention ranks source-relative visible effects by counterfactual viewer impact and default drift risk. It contains no preferred person category, skin value, garment, room, pose, palette, lighting setup, source direction, word count, or generator workaround.",
+    "hypothesis_ids": ["h-adaptive-depth", "h-viewer-first-integration", "h-appearance-signature"],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/lanes/lane.global-composition.md",
+      "skills/reverse-image-prompt/lanes/lane.spatial-topology.md",
+      "skills/reverse-image-prompt/lanes/lane.subject-appearance.md",
+      "skills/reverse-image-prompt/lanes/lane.color-light-material.md",
+      "skills/reverse-image-prompt/lanes/lane.medium-aesthetic-capture.md",
+      "skills/reverse-image-prompt/lanes/lane.information-layout.md",
+      "skills/reverse-image-prompt/modules/core.visual-evidence.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.human-body-form.md",
+      "skills/reverse-image-prompt/modules/detail.clothing-fashion.md",
+      "skills/reverse-image-prompt/modules/detail.pose-hands-gesture.md",
+      "skills/reverse-image-prompt/modules/detail.color-tone-fidelity.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/analysis-orchestration.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/tools/anchor_catalog.py",
+      "skills/reverse-image-prompt/tools/route_resolver.py",
+      "skills/reverse-image-prompt/tools/module_metadata.py",
+      "skills/reverse-image-prompt/tests/test_route_resolver.py",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-25-adaptive-prompt-lanes-viewer-salience.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": ["e-route-contract-tests", "e-package"]
+    },
+    "prompt": {
+      "status": "not-run",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "heldout-route-profile-contracts",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["prompt default", "audited preservation", "finite budgets", "profile-specific report schema"],
+        "evidence_ids": ["e-route-contract-tests"]
+      },
+      {
+        "id": "heldout-route-stability",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": ["facet aliases", "input ordering", "profile fingerprint separation", "unknown-profile rejection"],
+        "evidence_ids": ["e-route-contract-tests"]
+      },
+      {
+        "id": "heldout-prompt-behavior",
+        "case_role": "held-out",
+        "status": "unscored",
+        "covered_axes": ["viewer-first order", "appearance continuity", "P2 compression", "bounded actual runtime"],
+        "evidence_ids": []
+      },
+      {
+        "id": "motivating-long-run",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": ["more-than-one-hour runtime", "v4 analysis expansion", "generic-beauty source drift"],
+        "evidence_ids": ["e-user-runtime", "e-user-salience"]
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The skill now exposes and defaults to a compact bounded prompt profile while preserving the existing audited machinery, and all package, route, generated-file, and regression checks pass. No independent post-change image prompt run, timing distribution, render comparison, or post-change user judgment was obtained, so prompt behavior, latency improvement, pixels, and preference remain unscored and the intervention is not promoted.",
+    "evidence_ids": ["e-user-runtime", "e-user-salience", "e-route-contract-tests", "e-package"]
+  }
+}

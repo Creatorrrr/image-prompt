@@ -1,0 +1,114 @@
+{
+  "contract_version": "independent-portrait-test-case/v1",
+  "arm": "arm_c",
+  "frozen_before_render": true,
+  "core_baseline_sha256": "7cdbc9bc7a1cf4cb4a8d034c2b2657a2f0ddb4c27c465ddbc0bf12e9e608b97e",
+  "randomization_file": "randomization.json",
+  "concept": "A paused map-folding portrait in a restored ferry terminal at autumn dusk, with an elbow triangle, asymmetric supported pose inside bilateral architecture, and moving travelers behind a crisp figure.",
+  "keyword_tests": [
+    {
+      "test_id": "kw_seated_triangle",
+      "keyword": "seated triangular composition",
+      "all_of": [
+        "A clearly seated primary adult figure",
+        "Head is the upper vertex",
+        "Two outward elbows are both visible below the head as separated lower vertices",
+        "Elbow triangle belongs to the body and is legible in the same view",
+        "Forearms have plausible knee support"
+      ],
+      "false_substitutes": [
+        "A triangle in the map or architecture without a body triangle",
+        "A head and two knees substituted for the frozen head-and-elbow relation",
+        "One elbow hidden so the triangle must be imagined"
+      ]
+    },
+    {
+      "test_id": "kw_symmetry_asymmetry",
+      "keyword": "symmetrical architecture with asymmetrical pose",
+      "all_of": [
+        "Central doorway or axis present",
+        "Matching left and right arches and lamps visible together",
+        "Upright columns and level floor lines retain a level surrounding frame",
+        "Primary figure has visibly different elbow heights and a tilted shoulder or head line"
+      ],
+      "false_substitutes": [
+        "Only the figure centered in an unrelated asymmetric room",
+        "Camera tilt offered as body asymmetry",
+        "A symmetric pose in a symmetric room",
+        "One side of architecture outside the frame"
+      ]
+    },
+    {
+      "test_id": "kw_motion_contrast",
+      "keyword": "still subject and moving surroundings",
+      "all_of": [
+        "Primary eyes, face, map and hands sharply stationary",
+        "At least two crossing travelers in the passages behind the bench",
+        "Directional/translucent motion trails attach to moving travelers",
+        "Architecture and bench remain sharp"
+      ],
+      "false_substitutes": [
+        "Uniform defocus or bokeh described as motion",
+        "Camera shake affecting the whole frame",
+        "Moving subject against a crisp static background",
+        "Only ambient light trails without the specified travelers"
+      ]
+    }
+  ],
+  "scene_tests": [
+    {
+      "test_id": "scene_reference",
+      "all_of": [
+        "Visible facial/hair guidance consistent with supplied appearance",
+        "Dark chin-length bob and wispy parted bangs",
+        "Readable both eyes and face",
+        "Adult portrayal"
+      ],
+      "false_substitutes": [
+        "Reference features only named in prose",
+        "Face obscured by effects or props"
+      ]
+    },
+    {
+      "test_id": "scene_action_support",
+      "all_of": [
+        "Partly folded creased paper map visibly held across lap",
+        "Hips supported by bench",
+        "Left foot on floor and right foot on low step are assessable",
+        "Both forearms supported by separated knees"
+      ],
+      "false_substitutes": [
+        "An open book or blank tablet replaces the folded map",
+        "Unclear support because feet are cropped or hidden"
+      ]
+    },
+    {
+      "test_id": "scene_place_prop_light",
+      "all_of": [
+        "Stone bench and paired terminal passageways read together",
+        "Wicker basket containing dry clustered hydrangea flowers beside bench",
+        "Two warm wall lamps and cool dim entrance light visible"
+      ],
+      "false_substitutes": [
+        "Unrelated basket contents",
+        "Bright daytime exterior offered as dusk",
+        "Only one lighting color across the frame"
+      ]
+    }
+  ],
+  "review_policy": {
+    "decision_rule": "all_of in one exact saved image",
+    "pass_values": [
+      "pass"
+    ],
+    "partial_is_fail": true,
+    "missing_is_fail": true,
+    "native_image_scale": "original saved image",
+    "audit_is_not_pixel_proof": true,
+    "direct_user_judgment": "not_yet_received"
+  },
+  "nonpixel_context": [
+    "Exact autumn season and venue historical restoration cannot be established from one indoor portrait; authored setting labels are contextual, while visible scene cues above are tested."
+  ],
+  "frozen_at": "2026-09-27T08:02:31.553334+00:00"
+}

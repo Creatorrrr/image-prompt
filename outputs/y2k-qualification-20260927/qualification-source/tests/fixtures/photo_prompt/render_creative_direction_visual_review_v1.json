@@ -1,0 +1,86 @@
+{
+  "schema": "photo-creative-direction-visual-review/v1",
+  "reviewed_at": "2026-08-08T17:10:31+09:00",
+  "holdout": "render_creative_direction_holdout_v1.jsonl",
+  "artifact_root": "generated_images/creative-direction-holdout-v1-20260808_163100",
+  "selection_policy": "first audited render retained; only frozen-cause bounded pristine repair; no image edits, batches, or cherry-picking",
+  "review_method": "original pixels inspected against the predeclared focus; prompt text was not accepted as proof of a missing visual relation",
+  "cases": [
+    {
+      "case_id": "creative_direction_potter",
+      "baseline_sha256": "9d953e38e37ed787cfdd95b52a3f667e7e1b19b4d29fa015fac197afbeb3a0c5",
+      "final_sha256": "de49f9ad0aa189ed1e14d4a63408dd02687d03295b56f2e0ddcaabea6e0f88c6",
+      "attempt_count": 2,
+      "accepted_attempt": 2,
+      "operator_id": "absence_as_evidence",
+      "focus": {
+        "topic_fidelity": "pass",
+        "nonordinary_core_premise": "pass",
+        "exactly_one_rule_change": "pass",
+        "at_least_two_visible_consequences": "pass",
+        "surprise_to_insight": "pass",
+        "deliberate_authorial_choice": "pass",
+        "no_anomaly_stacking": "pass",
+        "photographic_coherence": "pass"
+      },
+      "improved_axes": ["originality", "ingenuity", "intentionality"],
+      "no_regression": ["topic_fidelity", "photographic_coherence"],
+      "status": "pass"
+    },
+    {
+      "case_id": "creative_direction_urban_solitude",
+      "baseline_sha256": "91f98a526dca4944d53373f5fa0197d2f7e75feb6db44f931a80b6fa10833f3b",
+      "final_sha256": "4e0b30833fe2d6c506830db25dbd2dac0c1e8d43f55d6c9ef074c5cd7ff6e5f2",
+      "attempt_count": 3,
+      "accepted_attempt": 3,
+      "operator_id": "functional_recontextualization",
+      "focus": {
+        "topic_fidelity": "pass",
+        "nonordinary_core_premise": "pass",
+        "exactly_one_rule_change": "pass",
+        "at_least_two_visible_consequences": "pass",
+        "surprise_to_insight": "pass",
+        "deliberate_authorial_choice": "pass",
+        "no_anomaly_stacking": "pass",
+        "photographic_coherence": "pass"
+      },
+      "improved_axes": ["originality", "ingenuity", "intentionality"],
+      "no_regression": ["topic_fidelity", "photographic_coherence"],
+      "status": "pass"
+    },
+    {
+      "case_id": "creative_direction_transformation_recovery",
+      "baseline_sha256": "e0e6b3e019cb05ca19a3a8b654eae78a4bdf0cd7fb15a14db62300be036ad52e",
+      "final_sha256": "e02a5f6c25253346940da16e0ab932f4d462e03097a2bff1c6c412e6adec6fa2",
+      "attempt_count": 1,
+      "accepted_attempt": 1,
+      "operator_id": "temporal_fold",
+      "focus": {
+        "topic_fidelity": "pass",
+        "nonordinary_core_premise": "pass",
+        "exactly_one_rule_change": "pass",
+        "at_least_two_visible_consequences": "pass",
+        "surprise_to_insight": "pass",
+        "deliberate_authorial_choice": "pass",
+        "no_anomaly_stacking": "pass",
+        "photographic_coherence": "pass"
+      },
+      "improved_axes": ["originality", "ingenuity", "intentionality"],
+      "no_regression": ["topic_fidelity", "photographic_coherence"],
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "case_count": 3,
+    "all_focus_pass_count": 3,
+    "baseline_improvement_gate_pass_count": 3,
+    "topic_fidelity_no_regression_count": 3,
+    "photographic_coherence_no_regression_count": 3,
+    "verdict": "pass"
+  },
+  "limitations": [
+    "This is a fixed three-case direct pixel qualification, not a population-level blinded human study.",
+    "Two cases needed relation-specific prompt repairs; the failed renders are preserved and counted.",
+    "The result demonstrates this workflow and these operators, not guaranteed historical novelty for every future topic or image model."
+  ]
+}

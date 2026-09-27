@@ -159,6 +159,8 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_realistic_background.json",
     "photo_prompt_visual_obligations_photorealism_elements.json",
     "photo_prompt_visual_obligations_everyday_scene.json",
+    "photo_prompt_visual_obligations_y2k.json",
+    "photo_prompt_visual_obligations_portrait_composition.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -199,6 +201,8 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_scene_expression_cjk.json",
     "photo_prompt_character_moe_extension.json",
     "photo_prompt_scene_expression_character_moe.json",
+    "photo_prompt_y2k_extension.json",
+    "photo_prompt_portrait_composition_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
@@ -5452,7 +5456,13 @@ def intent_term_is_negated(text: str, term: str) -> bool:
         r"\s*(?:は|を|が|も|の)?\s*(?:なし|抜き|除外|禁止|不要)"
     )
     return bool(
-        re.search(rf"{escaped}{korean_suffix}", lowered)
+        re.search(
+            rf"(?<![a-z0-9])(?:no|without|exclude|excluding|omit|omitting|avoid|avoiding|"
+            rf"not(?:\s+(?:include|use|show|add))?)"
+            rf"(?:\s+(?:a|an|any|the))?\s+{escaped}",
+            lowered,
+        )
+        or re.search(rf"{escaped}{korean_suffix}", lowered)
         or re.search(korean_prefix, lowered)
         or re.search(japanese_suffix, lowered)
     )

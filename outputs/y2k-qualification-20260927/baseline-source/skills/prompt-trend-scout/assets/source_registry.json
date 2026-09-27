@@ -1,0 +1,47 @@
+{
+  "registry_version": 1,
+  "default_cadence": "weekly",
+  "adapters": {
+    "local_inbox": {
+      "enabled": true,
+      "collection_method": "local_inbox",
+      "path": "data/raw/inbox",
+      "rate_limit_per_run": 200,
+      "policy_note": "User-supplied files only."
+    },
+    "rss_atom": {
+      "enabled": true,
+      "collection_method": "allowed_feed",
+      "feeds": [],
+      "query": "",
+      "rate_limit_per_run": 100,
+      "policy_note": "Use publisher-exposed RSS or Atom feeds only."
+    },
+    "activitypub_public": {
+      "enabled": true,
+      "collection_method": "allowed_feed",
+      "urls": [],
+      "query": "",
+      "rate_limit_per_run": 100,
+      "policy_note": "Use public ActivityPub or Mastodon endpoints only."
+    },
+    "x_api": {
+      "enabled": true,
+      "collection_method": "official_api",
+      "required_env": ["X_BEARER_TOKEN"],
+      "endpoint": "https://api.x.com/2/tweets/search/recent",
+      "query": "(\"AI image\" OR \"image prompt\" OR \"prompt share\") has:images -is:retweet",
+      "rate_limit_per_run": 50,
+      "policy_note": "Use X API only; do not scrape x.com."
+    },
+    "threads_official": {
+      "enabled": false,
+      "collection_method": "official_api",
+      "required_env": ["THREADS_ACCESS_TOKEN"],
+      "search_endpoint": "",
+      "query": "AI image prompt",
+      "rate_limit_per_run": 50,
+      "policy_note": "Disabled until official Threads read/search access is configured."
+    }
+  }
+}

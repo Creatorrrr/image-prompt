@@ -1,0 +1,65 @@
+{
+  "contract_version": "independent-pixel-test-gates/v1",
+  "provenance": "agent_owned_precore",
+  "arm": "a",
+  "overall_rule": "Every scored gate must pass; partial is fail. A required cue hidden by occlusion, a blocked render, or insufficient pixel evidence is unscored and never a pass.",
+  "retry_policy": "one authorized built-in image generation call; no retry",
+  "gates": [
+    {
+      "gate_id": "a_y2k_materials",
+      "scope": "Y2K",
+      "requirement": "The worn cropped jacket visibly combines metallic silver fabric and translucent iridescent PVC sleeve panels.",
+      "pass_condition": "Both materials visibly differ on the same garment.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_y2k_silhouette",
+      "scope": "Y2K",
+      "requirement": "Cropped fitted upper garment, low-rise cargo trousers with side pockets, and thick-soled platform boots form one visible outfit.",
+      "pass_condition": "All three silhouette elements are visible from upper body through footwear.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_y2k_accessories",
+      "scope": "Y2K",
+      "requirement": "Narrow violet-tinted wraparound glasses on the forehead and a translucent belt with polished oval chrome hardware.",
+      "pass_condition": "Tinted narrow glasses and clear/chrome belt hardware are recognizable on the subject.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_y2k_on_subject_cluster",
+      "scope": "Y2K",
+      "requirement": "The millennium-futurist cue cluster is carried by the subject outfit and accessories.",
+      "pass_condition": "The subject alone, without the technical background, visibly carries the material, silhouette, and accessory gates.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_reference_visible_appearance",
+      "scope": "reference",
+      "requirement": "Only observed facial cues guide the newly generated adult subject.",
+      "pass_condition": "Dark brown eyes, tapered facial outline, slender straight nose, softly rounded pale-pink lips are visible with the face unobscured; identity is not scored.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_physical_actuation",
+      "scope": "event",
+      "requirement": "Actor-relative right hand grips the side handwheel of the star-projector pedestal and actor-relative left hand rests on the stationary bench brace.",
+      "pass_condition": "Both connected arms and both distinct contacts are visible; the wheel belongs to the projector mechanism.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_projector_consequence",
+      "scope": "event",
+      "requirement": "Twin perforated spherical projector heads on a mechanical pedestal visibly produce a field of star pinpoints across a curved test wall.",
+      "pass_condition": "Projector morphology, mechanically connected wheel, and projected star field on curved wall are readable in one frame.",
+      "partial_is_fail": true
+    },
+    {
+      "gate_id": "a_embodied_scene_legibility",
+      "scope": "geometry",
+      "requirement": "Balanced standing adult, complete equipment, face, both hands, belt, and boots appear in the selected slightly elevated control-side front three-quarter view.",
+      "pass_condition": "Body-part ownership, joint paths, reach, support and spatial separation remain plausible and visible.",
+      "partial_is_fail": true
+    }
+  ]
+}

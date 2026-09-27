@@ -1,0 +1,56 @@
+{
+  "contract_version": "agent-precore-test-gates/v1",
+  "provenance": "agent_prepack",
+  "ownership": "agent-authored qualification criteria for the independently chosen test scene",
+  "requester_definitions_added": false,
+  "arm": "b",
+  "baseline_prompt_sha256": "d9f2c6648bad070582590d8ba28b91fcaa4ae8c9e718a15d2d6154be59b1a893",
+  "scoring_policy": "partial_is_fail; obscured, unavailable, or blocked pixel evidence is unscored, never pass",
+  "single_generation_only": true,
+  "test_concept": "McBling gift packing in a home sewing corner beside a balcony door",
+  "gates": [
+    {
+      "gate_id": "B1_mcbling_cooccurrence",
+      "required": true,
+      "pass": "Pink velour garment and visible rhinestone embellishment co-occur on the adult, together with at least two of low-rise flared denim, rhinestone belt, large hoop earrings, metallic silver shoulder bag.",
+      "fail": "Only a generic pink or glitter cue is visible, or the required co-occurring signals are missing.",
+      "unscored": "Garments or accessories are too small, obscured, or absent from view to evaluate."
+    },
+    {
+      "gate_id": "B2_era_silhouette",
+      "required": true,
+      "pass": "The low waistband and flared denim leg silhouette are visibly legible with the pink zip hoodie.",
+      "fail": "The visible jeans are high-waisted or straight/tapered, or the outfit changes the independently selected silhouette.",
+      "unscored": "The waistline or legs are occluded or cropped."
+    },
+    {
+      "gate_id": "B3_gift_event",
+      "required": true,
+      "pass": "One adult uses the right hand to place a recognizable beaded bracelet inside the open tissue-lined box while the left hand stabilizes its near rim.",
+      "fail": "The object floats, rests away from the box, has changed owner or lacks the chosen placement/support relation.",
+      "unscored": "Either hand or the box interior is consequentially hidden."
+    },
+    {
+      "gate_id": "B4_complex_scene_trace",
+      "required": true,
+      "pass": "A sewing corner beside a balcony is visible with filled gift boxes, current partly filled box, bead tray and at least two of ribbon, fabric offcuts, unplugged hairdryer, tangled charger cable.",
+      "fail": "The event becomes an unrelated clean portrait or the domestic preparation traces are missing.",
+      "unscored": "The work surface or location cannot be assessed."
+    },
+    {
+      "gate_id": "B5_embodiment",
+      "required": true,
+      "pass": "Both hands visibly belong to the adult, wrist-finger chains and object contacts are plausible, the seated adult has stable chair/floor support.",
+      "fail": "Anatomical ownership, impossible reach, unsupported body or contradictory contact is visible.",
+      "unscored": "The mechanism is too occluded or blurred to inspect."
+    },
+    {
+      "gate_id": "B6_reference_components",
+      "required": true,
+      "pass": "The subject is an explicitly adult realization with visible dark bob or fine fringe and soft facial contour/glossy lips that reflect appearance guidance from the supplied image.",
+      "fail": "The generated subject visibly disregards the reference components.",
+      "unscored": "The face or hair cannot be meaningfully inspected.",
+      "boundary": "This is component guidance only, not identity, age verification, nationality, personality or body-shape matching."
+    }
+  ]
+}

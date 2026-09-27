@@ -1,0 +1,332 @@
+{
+  "schema_version": "image-prompt-skill-improvement/v1",
+  "target": {
+    "skill_path": "skills/reverse-image-prompt",
+    "baseline_revision": "ec198d7bf95d55f84a2644e3f6444d135613dd03",
+    "candidate_revision": "working-tree"
+  },
+  "goal": {
+    "claim_scope": "structural",
+    "request": "Improve source-relative appearance, placement, partial-layer, and regional light-to-form fidelity without overfitting or installing case-specific defaults."
+  },
+  "evidence": [
+    {
+      "id": "e-source",
+      "kind": "source-observation",
+      "claim": "The motivating source has a visibly offset principal subject axis, a cropped secondary illustrated layer, and a broad light-induced value separation across one dark garment surface.",
+      "artifact": "/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/120A03AF-63A5-498A-ABC0-A49BE74B7A5B/1-사진-1.jpg; sha256=a3e2b2dcf5d8aa7b8d78e564452f48c60e579db1282e090bd3dcaa9015e83aa9; 969x1280"
+    },
+    {
+      "id": "e-baseline-render",
+      "kind": "render-observation",
+      "claim": "The prior generated image is more centered and frontal, completes more of the secondary illustrated face, and renders the dark garment with less regional value separation than the source.",
+      "artifact": "/tmp/codex-remote-attachments/01a02a19-1afd-76c3-9b0e-538ad9ac24a9/8FD2BDF4-B49C-47D9-85D5-9594442A5F85/1-사진-1.jpg; sha256=cc1f2b487d5397bbcbebf32f0fdd54c17edfab828666f82885afc1663985a063; 960x1280"
+    },
+    {
+      "id": "e-user-face",
+      "kind": "user-judgment",
+      "claim": "The user judges that the face changed slightly from an East Asian-looking reading toward a Western-looking reading; this is comparative user evidence, not a factual identity inference.",
+      "artifact": "Conversation feedback on 2026-08-23: 얼굴형이 동양 느낌에서 서양 느낌으로 약간 바뀌었음."
+    },
+    {
+      "id": "e-user-placement-light",
+      "kind": "user-judgment",
+      "claim": "The user judges that the generated pose moved toward the frame center and that the source's lighting-driven upper-versus-lower value difference was not preserved.",
+      "artifact": "Conversation feedback on 2026-08-23: 자세가 화면 가운데에 위치하도록 바뀌었고 조명에 의한 음영 차이가 반영되지 않았음."
+    },
+    {
+      "id": "e-prompt-inspection",
+      "kind": "prompt-inspection",
+      "claim": "The prior prompt excerpt repeated compatible rounded-form and near-field silhouette cues while lacking an equally explicit regional light-to-form relation, so cumulative prompt interaction is plausible but generator causality is not established.",
+      "artifact": "Conversation prompt excerpts inspected in this task; exact authored prompt was not persisted in the repository."
+    },
+    {
+      "id": "e-package",
+      "kind": "package-check",
+      "claim": "All 133 reverse-image-prompt tests pass; module validation reports 37 modules, 16879 runtime words, 3786 Tier-0 words, and 0.0014 duplicate ratio; generated files are current; Python compilation and git diff whitespace checks pass.",
+      "artifact": "python -m unittest discover -s skills/reverse-image-prompt/tests -p 'test_*.py'; python skills/reverse-image-prompt/tools/validate_modules.py; python skills/reverse-image-prompt/tools/gen_manifest.py --check; python -m py_compile skills/reverse-image-prompt/tools/salience_plan.py; git diff --check"
+    },
+    {
+      "id": "e-repository-baseline",
+      "kind": "repository-history",
+      "claim": "The worktree was clean at baseline revision and the baseline package passed 124 tests before this intervention.",
+      "artifact": "git revision ec198d7bf95d55f84a2644e3f6444d135613dd03 and pre-intervention validation recorded in this task"
+    }
+  ],
+  "perceptual_contract": {
+    "primary_success_condition": "Represent each material source-relative drift as a bounded effect with one owner and one exact prompt control, while keeping appearance evidence, spatial relations, partial visibility, and light-to-form relations causally distinct.",
+    "user_appeal": null,
+    "invariants": [
+      {
+        "id": "inv-face-gestalt",
+        "statement": "A broad human appearance cue remains non-identifying, provenance-bearing, and subordinate to visible face geometry instead of becoming a reusable category default.",
+        "evidence_ids": [
+          "e-source",
+          "e-user-face"
+        ],
+        "causal_controls": [
+          "generation-prior provenance",
+          "visible-geometry evidence",
+          "single face-gestalt effect ownership"
+        ]
+      },
+      {
+        "id": "inv-spatial-topology",
+        "statement": "Material source offsets and partial secondary layers remain source-relative rather than being centered or completed by a category prior.",
+        "evidence_ids": [
+          "e-source",
+          "e-baseline-render",
+          "e-user-placement-light"
+        ],
+        "causal_controls": [
+          "component relations",
+          "principal-axis offset",
+          "visible-fragment and hidden-counterpart budget"
+        ]
+      },
+      {
+        "id": "inv-regional-light",
+        "statement": "A source-visible relative value difference across one material is represented as a regional light-to-form relation without strengthening intrinsic form, fit, or color.",
+        "evidence_ids": [
+          "e-source",
+          "e-baseline-render",
+          "e-user-placement-light"
+        ],
+        "causal_controls": [
+          "same-surface region relation",
+          "transition event",
+          "Light/Form result-space control"
+        ]
+      },
+      {
+        "id": "inv-control-ownership",
+        "statement": "Synonymous generic pulls merge before emission and every emitted generic claim terminates in exactly one literal final-prompt control distinct from color and lighting controls.",
+        "evidence_ids": [
+          "e-prompt-inspection",
+          "e-repository-baseline"
+        ],
+        "causal_controls": [
+          "aggregate-effect signature",
+          "one-claim one-control reconciliation",
+          "specialized-ledger separation"
+        ]
+      }
+    ],
+    "flexible_dimensions": [
+      "subject category and medium when not source-supported",
+      "exact coordinates and thresholds",
+      "specific region names and lighting directions",
+      "generator-specific wording",
+      "broad appearance labels without new source or user evidence"
+    ]
+  },
+  "mismatches": [
+    {
+      "id": "m-face-reading",
+      "scale": "local",
+      "axis": "face gestalt",
+      "source_state": "The source has one visible face-shape and feature-relation gestalt.",
+      "render_state": "The user perceives a slight shift toward a different broad regional-appearance reading.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-render",
+        "e-user-face"
+      ]
+    },
+    {
+      "id": "m-centering-completion",
+      "scale": "global",
+      "axis": "placement and partial visibility",
+      "source_state": "The main axis is offset and the secondary illustrated layer is partial and cropped.",
+      "render_state": "The main subject is more centered and frontal while more of the secondary face is completed.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-render",
+        "e-user-placement-light"
+      ]
+    },
+    {
+      "id": "m-regional-light",
+      "scale": "regional",
+      "axis": "light-to-form value separation",
+      "source_state": "One dark surface contains a broad lighter region and a materially darker region with a soft transition.",
+      "render_state": "The same surface reads more uniformly dark across those regions.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-render",
+        "e-user-placement-light"
+      ]
+    },
+    {
+      "id": "m-cumulative-form",
+      "scale": "regional",
+      "axis": "prompt salience",
+      "source_state": "Form and light cues should remain bounded by their visible source evidence.",
+      "render_state": "Several compatible form phrases can accumulate while the regional light relation has no equally explicit owner.",
+      "evidence_ids": [
+        "e-prompt-inspection"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "h-generic-ownership",
+      "stage": "representation",
+      "statement": "The prior plan contract did not require non-color and non-light claims to map through deduplicated aggregate effects into exact final-prompt controls.",
+      "evidence_ids": [
+        "e-prompt-inspection",
+        "e-repository-baseline"
+      ],
+      "falsifier": "The baseline validator rejects duplicate generic directions, missing effect links, and claims without exact authored-prompt controls."
+    },
+    {
+      "id": "h-spatial-relation",
+      "stage": "representation",
+      "statement": "The prior plan contract lacked a machine-audited component relation for frame-axis offset and a partial-visibility completion risk.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-render",
+        "e-repository-baseline"
+      ],
+      "falsifier": "The baseline validator requires source-relative component relations for spatial invariants and explicit visible and hidden parts for partial visibility."
+    },
+    {
+      "id": "h-category-prior",
+      "stage": "prompt-priority",
+      "statement": "A broad person-gestalt cue can dominate local visible geometry when its provenance and geometry constraints are not represented.",
+      "evidence_ids": [
+        "e-user-face",
+        "e-prompt-inspection",
+        "e-repository-baseline"
+      ],
+      "falsifier": "Independent prompt evaluation shows the baseline always omits unsupported category cues or binds each cue to source-visible geometry with recorded provenance."
+    },
+    {
+      "id": "h-light-residual",
+      "stage": "prompt-interaction",
+      "statement": "A missing same-surface regional light relation can invite compensation through stronger form, fit, or color language rather than preserving the source value transition.",
+      "evidence_ids": [
+        "e-source",
+        "e-baseline-render",
+        "e-user-placement-light",
+        "e-prompt-inspection"
+      ],
+      "falsifier": "Matched prompt evaluation shows that a generic same-surface regional light relation does not improve relation ownership or reduce compensating intrinsic-form language."
+    }
+  ],
+  "intervention": {
+    "status": "implemented",
+    "target_layers": [
+      "entrypoint",
+      "module",
+      "reference",
+      "tool",
+      "test"
+    ],
+    "general_rule": "Encode material generic drifts as source-relative aggregate effects linked to sparse component relations and one exact prompt control; preserve broad human cues only as provenance-bearing, geometry-constrained priors; route same-surface regional value residuals through Light/Form.",
+    "generalization_basis": "The contracts use axes, directions, regions, relations, provenance, and effect ownership that apply across people, objects, mixed media, and lighting layouts without naming the motivating face type, position, garment region, value, or generator.",
+    "hypothesis_ids": [
+      "h-generic-ownership",
+      "h-spatial-relation",
+      "h-category-prior",
+      "h-light-residual"
+    ],
+    "changed_paths": [
+      "skills/reverse-image-prompt/SKILL.md",
+      "skills/reverse-image-prompt/modules/core.frame-coordinates.md",
+      "skills/reverse-image-prompt/modules/concept.primary-relationship.md",
+      "skills/reverse-image-prompt/modules/core.pre-emit-gate.md",
+      "skills/reverse-image-prompt/modules/core.output-contract.md",
+      "skills/reverse-image-prompt/modules/concept.mixed-media-illusion.md",
+      "skills/reverse-image-prompt/modules/subject.human.md",
+      "skills/reverse-image-prompt/modules/detail.human-face-likeness.md",
+      "skills/reverse-image-prompt/modules/detail.light-form-fidelity.md",
+      "skills/reverse-image-prompt/references/behavior-evaluation.md",
+      "skills/reverse-image-prompt/references/lighting-reproduction-evaluation.md",
+      "skills/reverse-image-prompt/tools/salience_plan.py",
+      "skills/reverse-image-prompt/tests/test_salience_plan.py",
+      "skills/reverse-image-prompt/tests/routing_scenarios.yaml",
+      "skills/reverse-image-prompt/manifest.json",
+      "skills/reverse-image-prompt/modules/_registry.md",
+      "skills/reverse-image-prompt/SKILL.compiled.core.md",
+      "skills/reverse-image-prompt/SKILL.compiled.portrait.md",
+      "skills/reverse-image-prompt/SKILL.compiled.product.md",
+      "skills/reverse-image-prompt/SKILL.compiled.screenshot.md",
+      "skills/reverse-image-prompt/SKILL.compiled.all.md",
+      "skills/reverse-image-prompt/evaluations/2026-08-23-source-relative-control-ownership.json"
+    ],
+    "case_specific_runtime_defaults": []
+  },
+  "evaluation": {
+    "package": {
+      "status": "pass",
+      "evidence_ids": [
+        "e-package"
+      ]
+    },
+    "prompt": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "render": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "user": {
+      "status": "unscored",
+      "evidence_ids": []
+    },
+    "holdouts": [
+      {
+        "id": "holdout-generic-control",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "generic effect ownership",
+          "prompt control exactness",
+          "specialized-ledger separation"
+        ],
+        "evidence_ids": [
+          "e-package"
+        ]
+      },
+      {
+        "id": "holdout-nonhuman-light",
+        "case_role": "held-out",
+        "status": "pass",
+        "covered_axes": [
+          "nonhuman routing",
+          "same-material regional light residual",
+          "absence of body-form routing"
+        ],
+        "evidence_ids": [
+          "e-package"
+        ]
+      },
+      {
+        "id": "motivating-source-render",
+        "case_role": "motivating",
+        "status": "unscored",
+        "covered_axes": [
+          "face gestalt",
+          "placement",
+          "partial visibility",
+          "regional light-to-form"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "decision": {
+    "status": "implemented",
+    "claim_scope": "structural",
+    "rationale": "The reusable schema, validator, routing scenario, documentation, and generated profiles are implemented and package validation passes. Prompt behavior, new rendered pixels, and renewed user preference remain intentionally unscored, so this record does not claim render-fidelity promotion.",
+    "evidence_ids": [
+      "e-package",
+      "e-source",
+      "e-user-face",
+      "e-user-placement-light",
+      "e-repository-baseline"
+    ]
+  }
+}
