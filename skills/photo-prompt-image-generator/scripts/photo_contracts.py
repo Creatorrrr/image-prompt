@@ -34,6 +34,69 @@ AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
 
 AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
 
+LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v1"
+ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v2"
+
+# These are possible carriers, not a requirement to change every dimension.
+# New v6 adult-axis additions preserve explicit locks; other augmentation
+# contracts continue to require explicitly open dimensions.
+LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS = {
+    "sensual_editorial": frozenset({
+        "sexual_tone", "style", "composition", "expression", "pose",
+        "body_geometry", "framing", "lighting", "camera", "action",
+        "color", "atmosphere",
+    }),
+    "fetish_fashion": frozenset({
+        "sexual_tone", "style", "appearance", "material", "action", "pose", "body_geometry",
+    }),
+}
+
+ADULT_APPEAL_AXIS_DIMENSIONS = {
+    **LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
+    "sensual_editorial": LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS["sensual_editorial"] | {"appearance", "material"},
+}
+
+
+def intent_property_locks(intent_lock: dict) -> list[dict]:
+    if intent_lock.get("contract_version") != "photo-intent-lock/v2":
+        return []
+    return [dict(row) for row in intent_lock.get("semantic_anchors", []) if "property" in row]
+
+
+def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
+    """Check declared property effects; semantic truth still needs agent review.
+
+    Unknown/broad effects cannot claim compatibility with a partial lock.
+    Parent paths include their children, so 'wardrobe' cannot bypass a locked
+    'wardrobe.color'. Historical locks keep their coarse dimension contract.
+    """
+    locks = intent_property_locks(intent_lock)
+    if not locks:
+        return True
+    if not isinstance(effects, list):
+        return False
+    seen = set()
+    for row in effects:
+        if not isinstance(row, dict) or set(row) != {"dimension", "target", "property"}:
+            return False
+        key = tuple(row[k] for k in ("dimension", "target", "property"))
+        if any(not isinstance(v, str) or not v.strip() for v in key) or key in seen or key[0] not in dimensions:
+            return False
+        seen.add(key)
+    def overlaps(left, right):
+        return left == "*" or right == "*" or left == right or left.startswith(right + ".") or right.startswith(left + ".")
+    for dimension in set(dimensions) & {row["dimension"] for row in locks}:
+        declared = [row for row in effects if row["dimension"] == dimension]
+        if not declared:
+            return False
+    # A carrier dimension does not change which semantic property is affected.
+    # For example, declaring wardrobe.color as a material effect cannot bypass
+    # a wardrobe.color anchor recorded under appearance.
+    if any(overlaps(effect["target"], lock["target"]) and overlaps(effect["property"], lock["property"])
+           for effect in effects for lock in locks):
+        return False
+    return True
+
 AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v2"
 
 AUTHORIAL_PROMPT_MIN_WORDS = 48
@@ -131,6 +194,7 @@ REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
 REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
 
 INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
+INTENT_LOCK_PROPERTY_CONTRACT_VERSION = "photo-intent-lock/v2"
 
 INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
 

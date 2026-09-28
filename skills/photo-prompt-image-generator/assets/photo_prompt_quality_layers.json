@@ -58,14 +58,27 @@
       "inventory_preset_id": "adult_fetish_fashion_editorial",
       "intensity_min": 0,
       "intensity_max": 3,
-      "default_intensities": {
-        "sensual_editorial": 1,
-        "fetish_fashion": 0
-      },
-      "default_emphasis": "sensual_led",
+      "creative_controls_source": "precore/creative_controls.json",
       "default_eligibility": {
         "subject_categories": ["human"],
         "block_no_people": true
+      },
+      "entry_dimensions": {
+        "action:posing_editorial": ["pose"],
+        "action:over_shoulder_pose": ["pose", "expression"],
+        "action:adjusting_choker_gloves": ["action", "pose", "appearance"],
+        "action:slow_walk_turnaround": ["action", "pose", "body_geometry"],
+        "action:flirtatious_eye_contact": ["expression"],
+        "fetish_styling:glossy_latex_look": ["appearance", "material"],
+        "fetish_styling:black_leather_harness_style": ["appearance", "material"],
+        "fetish_styling:lace_satin_lingerie_inspired": ["appearance", "material"],
+        "fetish_styling:fishnet_thigh_high_boots": ["appearance", "material"],
+        "fetish_styling:mesh_sheer_layering": ["appearance", "material"],
+        "fetish_styling:choker_gloves_high_heels": ["appearance", "material"],
+        "fetish_styling:wet_look_bodycon": ["appearance", "material", "body_geometry"],
+        "fetish_styling:corset_bustier_layered": ["appearance", "material"],
+        "prop:red_ribbon_leg_wrap_adult": ["appearance", "material"],
+        "prop:lanyard_badge": ["appearance", "material"]
       },
       "entry_min_intensity": {
         "black_leather_harness_style": 1,
@@ -83,6 +96,7 @@
       "axes": {
         "sensual_editorial": {
           "carriers": [
+            {"id": "wardrobe_material", "slots": ["fetish_styling"], "required_tags_any": ["suggestive", "lace", "satin"]},
             {"id": "gaze_pose", "slots": ["action"], "required_tags_any": ["portrait", "suggestive", "pose", "motion"]},
             {"id": "framing", "slots": ["body_framing"]},
             {"id": "lighting_optics", "slots": ["lighting", "light_direction", "light_type", "focus"]},

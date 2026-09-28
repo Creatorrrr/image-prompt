@@ -1,0 +1,48 @@
+{
+  "contract_version": "photo-creative-control-definitions/v1",
+  "principle": "These controls guide agent-owned artistic choices within requester meaning. Zero/off disables added treatment, never removes explicitly requested content. Levels are ordinal intentions, not exposure percentages, detail quotas, quality scores, or native image-model parameters.",
+  "controls": {
+    "sensual_editorial": {
+      "type": "integer", "range": [0, 3], "default": 2,
+      "definition": "Sensual editorial presence through portrayal and wardrobe together: gaze, expression, pose, silhouette, fit, cut, neckline, drape, material, visible skin, light, framing and the subject's relation to the scene. These are available means, not a checklist.",
+      "levels": {"0": "No additional sensual direction.", "1": "A subtle supporting sensual quality.", "2": "A clearly readable sensual direction in the portrayal or wardrobe and its relationship with the scene.", "3": "Sensual expression leads the aesthetic direction while preserving the requested subject and event."}
+    },
+    "fetish_fashion": {
+      "type": "integer", "range": [0, 3], "default": 1,
+      "definition": "A recognizable fashion language expressed by garment structure, materials, layering and accessories. A material word alone does not establish this language. One styling decision may serve both adult-appeal axes.",
+      "levels": {"0": "No additional fetish-fashion direction.", "1": "A limited supporting expression of this fashion language.", "2": "This fashion language is clearly readable in styling, construction, materials or accessories.", "3": "This fashion language leads the styling direction while preserving the requested subject and event."}
+    },
+    "adult_appeal_emphasis": {
+      "type": "enum", "choices": ["auto", "sensual_led", "balanced", "fetish_led"], "default": "auto",
+      "definition": "Choose which active axis leads the styling. Auto follows the two intensities; emphasis cannot reactivate an inactive axis. Shared wardrobe may express both axes."
+    },
+    "creativity": {
+      "type": "number", "range": [0, 1], "default": 0.5,
+      "definition": "Freedom to interpret unspecified choices, not artistic quality. Low values favor direct, restrained choices; middle values allow coherent reinterpretation; high values allow more unexpected relationships. Preserve requested meaning at every value. Extra props, surrealism and idea-count quotas are not required."
+    },
+    "viewer_experience": {
+      "type": "boolean", "default": false,
+      "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+    },
+    "reference_edit_mode": {
+      "type": "enum", "choices": ["off", "identity", "younger_self", "brand_board"], "default": "off",
+      "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+    },
+    "surreal_mode": {
+      "type": "enum", "choices": ["off", "auto", "on"], "default": "off",
+      "definition": "Whether to add a surreal treatment to open dimensions. Resolve auto once before authoring. Off preserves any fantasy already requested."
+    },
+    "surreal_probability": {
+      "type": "number", "range": [0, 1], "default": 0.35,
+      "definition": "Probability used only for the one-time auto decision; not artistic intensity."
+    },
+    "surreal_intensity": {
+      "type": "enum", "choices": ["subtle", "moderate", "bold"], "default": "moderate",
+      "definition": "When the added treatment is active: subtle is a supporting departure, moderate is clearly readable, bold leads the treatment. The legacy sampler still uses these labels for slot breadth; slot count is not proof of perceptual intensity."
+    },
+    "trend_layer": {
+      "type": "enum", "choices": ["off", "scrapbook_collage", "action_figure_packaging", "retro_flash", "clean_brand_portrait"], "default": "off",
+      "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+    }
+  }
+}

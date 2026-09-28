@@ -11,6 +11,8 @@ from pathlib import Path
 from typing import Any
 
 from visual_profile_contracts import compile_visual_profile, validate_hard_activation
+from photo_contracts import AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
+import photo_creative_controls as creative_controls
 
 from prompt_generator import (
     DEFAULT_FACET_VOCAB,
@@ -1341,6 +1343,16 @@ def validate_quality_layer_hybrid_augmentation(
         if isinstance(adult.get("default_intensities"), dict)
         else {}
     )
+    if "creative_controls_source" in adult:
+        if adult["creative_controls_source"] != "precore/creative_controls.json":
+            errors.append("adult_appeal.creative_controls_source: must name the neutral pre-core definitions")
+        if "default_intensities" in adult or "default_emphasis" in adult:
+            errors.append("adult_appeal: store default values only in precore/creative_controls.json")
+        try:
+            definitions = creative_controls.load_definitions()["controls"]
+            default_intensities = {axis: definitions[axis]["default"] for axis in creative_controls.AXES}
+        except (ValueError, KeyError, TypeError) as exc:
+            errors.append(f"creative_controls: {exc}")
     if set(default_intensities) != {"sensual_editorial", "fetish_fashion"}:
         errors.append(
             "quality_layers.hybrid_augmentation.adult_appeal.default_intensities: must contain sensual_editorial and fetish_fashion"
@@ -1358,6 +1370,10 @@ def validate_quality_layer_hybrid_augmentation(
                     f"quality_layers.hybrid_augmentation.adult_appeal.default_intensities.{axis_id}: must be between 0 and 3"
                 )
     default_emphasis = str(adult.get("default_emphasis") or "")
+    if "creative_controls_source" in adult:
+        default_emphasis = "balanced" if default_intensities.get("sensual_editorial") == default_intensities.get("fetish_fashion") else (
+            "sensual_led" if default_intensities.get("sensual_editorial", 0) > default_intensities.get("fetish_fashion", 0) else "fetish_led"
+        )
     if default_emphasis not in {"sensual_led", "balanced", "fetish_led"}:
         errors.append(
             "quality_layers.hybrid_augmentation.adult_appeal.default_emphasis: must be sensual_led, balanced, or fetish_led"
@@ -1385,6 +1401,20 @@ def validate_quality_layer_hybrid_augmentation(
                     f"quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.{key}: must be boolean"
                 )
     all_entry_ids = {entry_id for ids in by_slot.values() for entry_id in ids}
+    entry_dimensions = adult.get("entry_dimensions", {})
+    if not isinstance(entry_dimensions, dict):
+        errors.append("adult_appeal.entry_dimensions: must be an object")
+    else:
+        for source_key, dimensions in entry_dimensions.items():
+            slot, separator, entry_id = str(source_key).partition(":")
+            if not separator or entry_id not in by_slot.get(slot, set()):
+                errors.append(f"adult_appeal.entry_dimensions: unknown candidate {source_key}")
+            if (not isinstance(dimensions, list) or not dimensions
+                    or any(not isinstance(value, str) for value in dimensions)):
+                errors.append(f"adult_appeal.entry_dimensions.{source_key}: requires nonempty dimension names")
+            elif (len(dimensions) != len(set(dimensions))
+                    or not set(dimensions).issubset(AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)):
+                errors.append(f"adult_appeal.entry_dimensions.{source_key}: duplicate or unknown dimensions")
     entry_min_intensity = adult.get("entry_min_intensity")
     if not isinstance(entry_min_intensity, dict):
         errors.append(

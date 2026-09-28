@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import ast
 import hashlib
 import json
 import subprocess
@@ -92,7 +93,7 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             skill_text.index("phase 2 — retrieve"),
         )
         self.assertIn(
-            "the `skill.md` procedure and that single named catalog are the only project-local material available before the core",
+            "the `skill.md` procedure, the named neutral catalog, and the named creative-control definition/resolver are the only project-local material available before the core",
             skill_text,
         )
         self.assertIn(
@@ -105,9 +106,19 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
         )
         precore_dir = SKILL_DIR / "precore"
         self.assertEqual(
-            {path.name for path in precore_dir.iterdir() if path.name != ".DS_Store"},
-            {"visual_feature_catalog.json"},
+            {path.name for path in precore_dir.iterdir() if path.name not in {".DS_Store", "__pycache__"}},
+            {"visual_feature_catalog.json", "creative_controls.json", "creative_controls.py"},
         )
+        resolver = (precore_dir / "creative_controls.py").read_text(encoding="utf-8")
+        imports = set()
+        for node in ast.walk(ast.parse(resolver)):
+            if isinstance(node, ast.Import):
+                imports.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                imports.add((node.module or "").split(".")[0])
+        self.assertLessEqual(imports, {"__future__", "argparse", "copy", "hashlib", "json", "math", "pathlib", "random", "secrets"})
+        self.assertNotIn("assets/", resolver)
+        self.assertNotIn("scripts/", resolver)
         catalog_text = (precore_dir / "visual_feature_catalog.json").read_text(
             encoding="utf-8"
         ).casefold()
@@ -131,6 +142,8 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             ),
             [],
         )
+        controls_text = (precore_dir / "creative_controls.json").read_text(encoding="utf-8").casefold()
+        self.assertEqual([profile_id for profile_id in profile_ids if profile_id and profile_id in controls_text], [])
 
     def test_core_requires_a_resolved_ambiguity_boundary_and_auditable_web_basis(self):
         raw = valid_core()
