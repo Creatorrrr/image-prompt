@@ -40,7 +40,7 @@ Use this compatibility contract when a v4 candidate pack contains `hybrid_augmen
 
 ## Activation
 
-In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow uses v6 typed-core creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=2`, `fetish_fashion=1` adult-fashion defaults; no-people and non-human packs do not activate them.
+In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow uses v6 typed-core creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
 
 ## Candidate Routes
 
