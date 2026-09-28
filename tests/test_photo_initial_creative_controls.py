@@ -59,7 +59,7 @@ class CreativeControlResolverTests(unittest.TestCase):
     def test_no_people_and_nonsexual_meaning_keep_requested_values_but_disable_additions(self):
         for context in ({"subject_category": "human", "no_people": True}, {"subject_category": "human", "explicit_nonsexual": True}, {"subject_category": "nonhuman"}):
             snapshot = controls.resolve("A precisely specified scene.", context=context, seed=1)
-            self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["requested_intensity"], 2)
+            self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["requested_intensity"], 1)
             self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["effective_intensity"], 0)
 
     def test_cli_rejects_post_core_control_change_before_loading_candidates(self):
