@@ -20,8 +20,13 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
 try:
     import photo_candidate_semantics
     import photo_embodiment
+    import photo_creative_controls as creative_controls
     import prompt_generator as candidate_semantics_generator
     from photo_contracts import (
+        ADULT_APPEAL_AXIS_DIMENSIONS,
+        ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+        LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+        LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
         AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -41,6 +46,9 @@ try:
         CHARACTER_RESPONSE_REQUIRED_EVIDENCE,
         DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
         INTENT_LOCK_CONTRACT_VERSION,
+        INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
+        intent_property_locks,
+        property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
         LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
@@ -5604,6 +5612,18 @@ def audit_candidate_interpretations(
             )
             continue
         candidate = candidate_objects.get(candidate_id, {})
+        core = pack.get("authorial_core") or {}
+        lock = core.get("intent_lock") or {}
+        if intent_property_locks(lock):
+            effects = candidate.get("affected_dimensions") or []
+            baseline_retained = row.get("realization") == "baseline" and text_contains_term(str(core.get("baseline_prompt_en") or ""), evidence)
+            if not baseline_retained and (
+                not effects
+                or not property_effects_allowed(lock, effects, candidate.get("affected_properties", []))
+                or not property_effects_allowed(lock, effects, row.get("affected_properties", []))
+            ):
+                failures.append({"check": "candidate_interpretation_properties", "candidate_id": candidate_id,
+                                 "reason": "candidate and authored effects must preserve protected properties; broad unknown garment effects are not compatible"})
         source_terms = {
             token
             for item in candidate.get("concept_terms") or []
@@ -5746,7 +5766,7 @@ def authorial_core_v2_intent_contract_valid(
         else INTENT_LOCK_DIMENSIONS
     )
     if (
-        intent_lock.get("contract_version") != INTENT_LOCK_CONTRACT_VERSION
+        intent_lock.get("contract_version") not in {INTENT_LOCK_CONTRACT_VERSION, INTENT_LOCK_PROPERTY_CONTRACT_VERSION}
         or intent_lock.get("priority") != "requesting_user"
         or intent_lock.get("augmentation_policy")
         != "open_dimensions_only_and_subordinate"
@@ -5776,15 +5796,23 @@ def authorial_core_v2_intent_contract_valid(
     if not isinstance(anchors, list) or not 1 <= len(anchors) <= 16:
         return False
     baseline = str(core.get("baseline_prompt_en") or "")
+    property_lock = intent_lock.get("contract_version") == INTENT_LOCK_PROPERTY_CONTRACT_VERSION
+    if property_lock and core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        return False
     seen_anchor_ids: set[str] = set()
     seen_anchor_evidence: set[str] = set()
+    seen_properties = set()
     for item in anchors:
-        if not isinstance(item, dict) or set(item) != {
+        fields = {
             "anchor_id",
             "source_text",
             "dimension",
             "prompt_evidence",
-        }:
+        }
+        is_property = property_lock and isinstance(item, dict) and "property" in item
+        if is_property:
+            fields.update({"target", "property"})
+        if not isinstance(item, dict) or set(item) != fields:
             return False
         anchor_id = str(item.get("anchor_id") or "")
         source_text = str(item.get("source_text") or "")
@@ -5793,17 +5821,22 @@ def authorial_core_v2_intent_contract_valid(
         if (
             re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", anchor_id) is None
             or anchor_id in seen_anchor_ids
-            or dimension not in locked
+            or dimension not in (opened if is_property else locked)
             or len(authorial_general_content_words(source_text)) < 1
             or not authorial_core_active_scope_contains(core, source_text)
             or len(authorial_evidence_tokens(evidence)) < 2
             or not text_contains_term(baseline, evidence)
-            or evidence.casefold() in seen_anchor_evidence
+            or (evidence.casefold() in seen_anchor_evidence and not is_property)
         ):
             return False
+        if is_property:
+            key = (dimension, item["target"], item["property"])
+            if any(not isinstance(item[k], str) or re.fullmatch(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*", item[k]) is None for k in ("target", "property")) or key in seen_properties:
+                return False
+            seen_properties.add(key)
         seen_anchor_ids.add(anchor_id)
         seen_anchor_evidence.add(evidence.casefold())
-    if {str(item.get("dimension") or "") for item in anchors} != {
+    if {str(item.get("dimension") or "") for item in anchors if "property" not in item} != {
         str(item) for item in locked
     }:
         return False
@@ -6709,6 +6742,8 @@ def audit_authorial_core_v5(
         }
         if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
             expected_core_fields.update({"semantic_assertions", "request_lineage"})
+            if "creative_controls_sha256" in core:
+                expected_core_fields.add("creative_controls_sha256")
         modern_core_fields_valid = set(core) == expected_core_fields
     allowed_core_versions = (
         {AUTHORIAL_CORE_V3_CONTRACT_VERSION}
@@ -6752,6 +6787,7 @@ def audit_authorial_core_v5(
                 "reason": "composed prompt is not bound to the governing authorial core hash",
             }
         )
+    failures.extend(audit_creative_controls(pack))
     intent_lock = (
         core.get("intent_lock")
         if isinstance(core.get("intent_lock"), dict)
@@ -6926,9 +6962,12 @@ def audit_authorial_core_v5(
             if isinstance(pack.get("adult_appeal"), dict)
             else {}
         )
+        if adult_appeal.get("dimension_scope") is not None:
+            failures.extend(audit_adult_appeal_dimension_scope(pack, adult_appeal))
         if (
             adult_appeal.get("enabled") is True
             and adult_appeal.get("activation_source") == "skill_default"
+            and not isinstance(adult_appeal.get("dimension_scope"), dict)
             and not ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS.issubset(
                 open_dimensions
             )
@@ -6961,6 +7000,9 @@ def audit_authorial_core_v5(
                     "open_dimensions": sorted(open_dimensions),
                 }
             )
+        for row in decisions:
+            if not property_effects_allowed(intent_lock, [row.get("dimension")], row.get("affected_properties", [])):
+                failures.append({"check": "intent_lock_authorial_properties", "reason": "declare effects on open properties and preserve every requester-owned property", "dimension": row.get("dimension")})
     for exclusion in nonempty_string_list(core.get("user_exclusions")):
         if text_contains_term(prompt_en, exclusion):
             failures.append(
@@ -7253,6 +7295,15 @@ def audit_creative_augmentation_v5(
             open_dimensions = {
                 str(item) for item in intent_lock.get("open_dimensions") or []
             }
+            adult = pack.get("adult_appeal") or {}
+            scope = adult.get("dimension_scope") or {}
+            adult_candidates = {
+                row["id"]: row for row in hybrid_augmentation_candidates_from_pack(pack)
+            }
+            adult_candidate = adult_candidates.get(candidate_id)
+            if (isinstance(adult_candidate, dict)
+                    and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION}):
+                open_dimensions = set((scope.get("axis_allowed_dimensions") or {}).get(adult_candidate.get("axis"), []))
             invalid_dimensions = sorted(
                 set(affected_dimensions) - open_dimensions
             )
@@ -7264,12 +7315,14 @@ def audit_creative_augmentation_v5(
                 failures.append(
                     {
                         "check": "intent_lock_creative_dimensions",
-                        "reason": "a transformed candidate must name distinct affected dimensions and keep them within the intent lock's open dimensions",
+                        "reason": "a transformed candidate must name distinct affected dimensions within its applicable intent-lock or scoped adult-axis boundary",
                         "candidate_id": candidate_id,
                         "invalid_dimensions": invalid_dimensions,
                         "open_dimensions": sorted(open_dimensions),
                     }
                 )
+            if not property_effects_allowed(intent_lock, affected_dimensions, decision.get("affected_properties", [])):
+                failures.append({"check": "intent_lock_creative_properties", "candidate_id": candidate_id, "reason": "a transformed candidate must preserve protected properties and declare its narrower effects"})
         if (
             candidate_id not in chosen
             or not evidence
@@ -7312,6 +7365,85 @@ def audit_creative_augmentation_v5(
     return failures
 
 
+def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    core = pack.get("authorial_core") or {}
+    snapshot = pack.get("creative_controls")
+    bound_sha = core.get("creative_controls_sha256")
+    if snapshot is None and bound_sha is None:
+        return []
+    try:
+        creative_controls.validate(snapshot, core.get("source_request"))
+        if pack.get("contract_version") != "photo-candidate-pack/v6" or bound_sha != snapshot["canonical_sha256"]:
+            raise ValueError("creative controls must be bound into the governing v3 core")
+        runtime = creative_controls.runtime_values(snapshot)
+        provenance = pack.get("provenance") or {}
+        if provenance.get("creative_control_runtime") != runtime or provenance.get("creativity") != runtime["creativity"]:
+            raise ValueError("post-core controls differ from the frozen pre-core settings")
+        adult = pack.get("adult_appeal") or {}
+        for axis in creative_controls.AXES:
+            row = (adult.get("axes") or {}).get(axis) or {}
+            if row.get("requested_intensity") != runtime[axis + "_intensity"]:
+                raise ValueError(f"{axis} differs from the frozen effective intensity")
+            definition = snapshot["definitions"]["controls"][axis]
+            if row.get("definition") != definition["definition"] or row.get("intensity_meaning") != definition["levels"].get(str(row.get("intensity"))):
+                raise ValueError(f"{axis} meaning differs from the frozen definition")
+        if (adult.get("blend") or {}).get("requested_emphasis") != runtime["adult_appeal_emphasis"]:
+            raise ValueError("adult-appeal emphasis differs from the frozen controls")
+    except (ValueError, TypeError, KeyError, AttributeError) as exc:
+        return [{"check": "creative_controls_binding", "reason": str(exc)}]
+    return []
+
+
+def audit_adult_appeal_dimension_scope(
+    pack: dict[str, Any], contract: dict[str, Any],
+) -> list[dict[str, Any]]:
+    """Recompute new v6 axis scope; unmarked historical packs keep their rule."""
+    scope = contract.get("dimension_scope")
+    if scope is None:
+        return []
+    core = pack.get("authorial_core") or {}
+    intent_lock = core.get("intent_lock") or {}
+    locked = set(intent_lock.get("locked_dimensions") or [])
+    version = scope.get("contract_version") if isinstance(scope, dict) else None
+    if version not in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION}:
+        return [{"check": "adult_appeal_dimension_scope", "reason": "unsupported adult-axis scope version"}]
+    dimensions_by_axis = LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS if version == LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION else ADULT_APPEAL_AXIS_DIMENSIONS
+    expected = {
+        "contract_version": version,
+        "policy": "preserve_locked_dimensions",
+        "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
+        "locked_dimensions": sorted(locked),
+        "axis_allowed_dimensions": {
+            axis: sorted(dimensions - locked)
+            for axis, dimensions in dimensions_by_axis.items()
+        },
+    }
+    if version == ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION:
+        expected["protected_properties"] = intent_property_locks(intent_lock)
+    if (pack.get("contract_version") != "photo-candidate-pack/v6"
+            or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
+            or scope != expected):
+        return [{"check": "adult_appeal_dimension_scope", "reason": "adult-axis scope must match the frozen v3 intent lock and versioned axis dimensions"}]
+    failures = []
+    axes = contract.get("axes") or {}
+    if set(axes) != set(ADULT_APPEAL_AXIS_DIMENSIONS):
+        failures.append({"check": "adult_appeal_dimension_scope", "reason": "both independent axis states must be recorded"})
+    for axis_id, axis in axes.items():
+        allowed = set(expected["axis_allowed_dimensions"].get(axis_id, []))
+        requested = axis.get("requested_intensity")
+        if (type(requested) is not int or not 0 <= requested <= 3
+                or axis.get("intensity") != (requested if allowed else 0)
+                or axis.get("active") != (bool(allowed) and bool(requested) and (contract.get("eligibility") or {}).get("status") == "eligible")):
+            failures.append({"check": "adult_appeal_dimension_scope", "axis": axis_id, "reason": "scope may disable only an axis with no permitted dimensions; requested intensity must be preserved otherwise"})
+        for candidate in axis.get("candidate_inventory") or []:
+            affected = candidate.get("affected_dimensions") or []
+            if not affected or len(affected) != len(set(affected)) or not set(affected).issubset(allowed):
+                failures.append({"check": "adult_appeal_candidate_dimensions", "candidate_id": candidate.get("id"), "reason": "an adult candidate must declare its complete effect within this axis's unlocked dimensions"})
+            if not property_effects_allowed(intent_lock, affected, candidate.get("affected_properties", [])):
+                failures.append({"check": "adult_appeal_candidate_properties", "candidate_id": candidate.get("id"), "reason": "candidate effects conflict with a protected property or omit their property scope"})
+    return failures
+
+
 def audit_adult_appeal_v5(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -7326,7 +7458,7 @@ def audit_adult_appeal_v5(
     )
     if not contract.get("enabled"):
         return [], []
-    failures: list[dict[str, Any]] = []
+    failures = audit_adult_appeal_dimension_scope(pack, contract)
     warnings: list[dict[str, Any]] = []
     brief = (
         composed.get("adult_appeal_brief")
@@ -7364,6 +7496,30 @@ def audit_adult_appeal_v5(
         except (TypeError, ValueError):
             actual_intensity = -1
         evidence = str(actual.get("prompt_evidence") or "")
+        scope = contract.get("dimension_scope")
+        if isinstance(scope, dict) and expected_intensity > 0:
+            affected = nonempty_string_list(actual.get("affected_dimensions"))
+            allowed = set((scope.get("axis_allowed_dimensions") or {}).get(axis_id, []))
+            selected_dimensions = {
+                dimension
+                for candidate_id in chosen
+                for candidate in [candidate_objects.get(candidate_id, {})]
+                if candidate.get("axis") == axis_id
+                for dimension in candidate.get("affected_dimensions") or []
+            }
+            realization = actual.get("realization", "refined")
+            retained = realization == "baseline" and scope.get("contract_version") == ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION
+            if retained:
+                if affected or selected_dimensions or not text_contains_term(str((pack.get("authorial_core") or {}).get("baseline_prompt_en") or ""), evidence):
+                    failures.append({"check": "adult_appeal_baseline_realization", "axis": axis_id, "reason": "baseline realization must retain literal baseline evidence and introduce no axis candidate or changed dimension"})
+            elif (not affected or len(affected) != len(set(affected))
+                    or not set(affected).issubset(allowed)
+                    or not selected_dimensions.issubset(set(affected))):
+                failures.append({"check": "adult_appeal_authored_dimensions", "axis": axis_id, "reason": "each active adult-axis interpretation must declare only unlocked dimensions and cover every adopted candidate's effect"})
+            if realization not in {"baseline", "refined"}:
+                failures.append({"check": "adult_appeal_realization", "axis": axis_id, "reason": "realization must be baseline or refined"})
+            if not property_effects_allowed((pack.get("authorial_core") or {}).get("intent_lock") or {}, affected, actual.get("affected_properties", [])):
+                failures.append({"check": "adult_appeal_authored_properties", "axis": axis_id, "reason": "authored styling must declare open property effects and preserve protected properties"})
         if actual_intensity != expected_intensity or (
             expected_intensity > 0
             and (

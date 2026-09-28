@@ -5,7 +5,7 @@ description: Generate image-ready photographic prompts and, when requested, imag
 
 # Photo Prompt Image Generator
 
-Understand the requester first, then make the main artistic decisions before writing the core. The baseline should already be a compelling, complete photograph with a coherent visual direction. Freeze that independent draft before project-local retrieval. The final authorial pass refines, simplifies, or preserves it.
+Understand the requester, resolve the current creative controls, then make the main artistic decisions before writing the core. The baseline should already be a compelling, complete photograph with a coherent visual direction informed by those controls. Freeze that independent draft before project-local retrieval. The final authorial pass refines, simplifies, or preserves it.
 
 Canonical skill path: `skills/photo-prompt-image-generator`.
 
@@ -19,6 +19,7 @@ For an initial request, before `baseline_prompt_en` and its `photo-authorial-cor
 
 - the current user conversation, including definitions, exclusions, modifiers, references, and corrections;
 - the model's general knowledge and independent visual reasoning;
+- this skill's exact `precore/creative_controls.json` and the candidate-free output of `precore/creative_controls.py`, after resolving requester meaning, for the current values, provenance, ranges and artistic meanings;
 - this skill's exact `precore/visual_feature_catalog.json`, only in Phase 1 after resolving the request's meaning, for neutral feature selection;
 - one focused clarification question when different plausible meanings would materially change the image; or
 - focused public-web research about the term's meaning when it is stable and publicly documentable but unfamiliar or uncertain.
@@ -31,7 +32,7 @@ During that pre-core phase, do not open, search, quote, or infer from:
 - tests, fixtures, evaluation cases, snapshots, rendered attempts, or maintenance evidence;
 - private routing, another experiment arm, or a previous prompt produced from project-local knowledge.
 
-The `SKILL.md` procedure and that single named catalog are the only project-local material available before the core. The catalog contains observation categories and illustrative examples, not definitions, execution instructions, request requirements, profile triggers, or defaults. This initial-request rule includes the neutral schemas below; retries have only the explicit exception in the next paragraph. This file intentionally contains no maintained definition for any particular keyword. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
+The `SKILL.md` procedure, the named neutral catalog, and the named creative-control definition/resolver are the only project-local material available before the core. Executing or inspecting that resolver is permitted; it reads no candidate data. The catalog contains observation categories and illustrative examples, not request requirements or profile triggers. The control definitions explain configuration, not the meaning of requester keywords. This initial-request rule includes the neutral schemas below; retries have only the explicit exception in the next paragraph. A profile name, alias, or project glossary must never retroactively supply the initial meaning.
 
 A retry has one narrow exception: inspect the named parent request/core/intent-lock hashes, frozen fields and evidence for dimensions the requester preserves, the effective hard obligations governing those dimensions, and the reported defect relevant to the repair. A previously selected opt-in obligation is part of that effective hard contract. Read only those fields from the parent artifacts; candidate inventories, unselected concepts, previous optional prose, other arms, maintenance examples, and the parent's feature-selection record remain unavailable. The current neutral catalog may be read again for a new selection, but previous selected categories are not inherited as hard obligations. This exception carries an existing obligation and never supplies fresh inspiration. If selective reading is impractical, use a coordinator-created whitelist extract bound to the parent artifact hashes.
 
@@ -51,11 +52,30 @@ Unspecified creative choices are not unresolved meaning. Decide framing, lightin
 
 The requesting user's intended meaning has highest priority. System and image-tool policy still applies. This workflow changes knowledge timing; it does not add a new adult/safety classifier or routing policy.
 
+### Resolve the initial creative controls
+
+Create the byte-exact request envelope described below before drafting. Read `precore/creative_controls.json`: it is the single source of saved defaults and level meanings. Write a small `creative_context.json` with request-resolved `subject_category` (`human`, `nonhuman`, or `unspecified`), `no_people`, and `explicit_nonsexual`. These last two booleans describe explicit requester meaning only; do not infer them from an agent preference, platform policy, or a portrait. Use `creative_overrides.json` only for controls actually selected for this request; omit it to use saved values.
+
+```bash
+.venv/bin/python skills/photo-prompt-image-generator/precore/creative_controls.py \
+  --request-envelope-json request_envelope.json \
+  --context-json creative_context.json \
+  --output creative_controls.json
+```
+
+Add `--overrides-json creative_overrides.json` when applicable. Read the output before writing the baseline and copy its `canonical_sha256` into the core's `creative_controls_sha256`. Resolve values once; the same frozen snapshot goes to the generator. A changed setting requires rebuilding that snapshot and core together. The snapshot embeds its definition for historical verification. It establishes declared inputs and binding, not independent proof of authoring order.
+
+Use active `sensual_editorial`, `fetish_fashion`, their emphasis, and `creativity` when choosing portrayal, wardrobe and the whole frame. Sensual editorial includes fit, cut, neckline, drape, material and visible skin as well as gaze, pose, light and framing; the two axes may share one styling choice. Interpret levels through the supplied anchors: zero adds no treatment, one supports subtly, two reads clearly, three leads the aesthetic direction. These are intentions, not exposure percentages, mandatory garments, detail counts, or an artistic-quality score. Preserve an explicitly requested expression at zero. Do not introduce covering garments or extra linings as hidden defaults.
+
+Consider reference-use scope, intended viewer experience and use, and any active surreal/trend treatment at this same stage. Surreal `auto` is resolved once in the snapshot. Its intensity labels guide portrayal; the legacy sampler's slot breadth is not a perceptual measurement. Optional review toggles do not switch off artistic judgment or explicit request meaning. Keep staging register (such as candid or directed) and scene information density in the existing intent explanation when useful, without adding new required sliders. Prompt length, retrieval weights, candidate budgets and surface `artistic_final_touch` remain later/internal concerns.
+
+Settings and agent staging are separate from requester text: do not insert their prose into `source_request`, user definitions, exclusions or requester-owned anchors. Use the baseline and `interpreted_intent` to realize them coherently. No new decision-count or styling checklist is required.
+
 ## Phase 1 — Write and Freeze the Basic Prompt
 
 ### Primary authorial direction
 
-Before consulting the neutral catalog or specifying mechanics, decide what makes this particular photograph worth looking at and what the viewer should experience. Use the request and independent visual judgment to choose a coherent relationship among the subject, moment, environment, and photographic treatment. Let that whole-image idea govern the details. A precise request may already supply the direction; preserve it without inventing extra freedom.
+Before consulting the neutral catalog or specifying mechanics, decide what makes this particular photograph worth looking at and what the viewer should experience. Use the request, the resolved creative controls, and independent visual judgment to choose a coherent relationship among the subject, moment, wardrobe when relevant, environment, and photographic treatment. Let that whole-image idea govern the details. A precise request may already supply the direction; preserve it without inventing extra freedom.
 
 For a person-centered image, make the portrayal convey the person's distinctive appeal and presence in the requested situation. Expression, bearing, gesture, clothing, light, material, and the relationship with the surroundings can contribute when relevant. Choose camera distance and framing to serve that appeal. A distant figure can carry the image. Preserve requested reference appearance rather than reshaping facial features to fit a generic ideal. For a non-person subject, apply the same attention to the subject's visual character without inventing a person.
 
@@ -118,6 +138,7 @@ Freeze it as:
   "contract_version": "photo-authorial-core/v3",
   "provenance": "agent_prepack",
   "source_request": "<the complete byte-exact request_text from the envelope>",
+  "creative_controls_sha256": "<canonical_sha256 from the frozen pre-core controls>",
   "interpreted_intent": "<contextual meaning and visual purpose>",
   "subject": "<concrete subject>",
   "setting": "<concrete photographic setting>",
@@ -145,7 +166,7 @@ Freeze it as:
   "user_exclusions": ["<only a visual idea the requester explicitly excluded>"],
   "runtime_forbidden_labels": ["<request-grounded label retained for meaning retrieval but omitted from runtime prose>"],
   "intent_lock": {
-    "contract_version": "photo-intent-lock/v1",
+    "contract_version": "photo-intent-lock/v2",
     "priority": "requesting_user",
     "semantic_anchors": [
       {
@@ -184,7 +205,7 @@ Freeze it as:
 Rules:
 
 - `source_request` must byte-equal the envelope's complete `request_text`; the generator derives and hash-binds `request_binding`.
-- Every active span needs both semantic-origin coverage (`user_definitions` or `interpretation_provenance`) and at least one intent anchor. Every locked dimension needs an anchor with substantive requester source text and its own distinct literal baseline evidence phrase. `concept`, `subject`, and `event` are always locked; lock any other user-specified dimension as well. Open and locked dimensions are disjoint. V6 permits zero or one open dimension for precise requests or local repairs; write `open_dimensions: []` explicitly when none are open, and never invent freedom to satisfy a creativity quota.
+- Every active span needs both semantic-origin coverage (`user_definitions` or `interpretation_provenance`) and at least one intent anchor. Every fully locked dimension needs an anchor with substantive requester source text and its own distinct literal baseline evidence phrase. `concept`, `subject`, and `event` are always locked. Fully specified dimensions remain locked; for a partially specified dimension, use the property anchors below and leave its other choices open. Open and fully locked dimensions are disjoint. V6 permits zero or one open dimension for precise requests or local repairs; write `open_dimensions: []` explicitly when none are open, and never invent freedom to satisfy a creativity quota.
 - Use only these v3 dimension names: `concept`, `subject`, `identity`, `count`, `age`, `role`, `species`, `appearance`, `pose`, `body_geometry`, `expression`, `action`, `event`, `setting`, `relationship`, `sexual_tone`, `style`, `reference_use`, `viewer_outcome`, `text`, `format`, `framing`, `composition`, `lighting`, `camera`, `color`, `material`, `timing`, `atmosphere`, `character_response`.
 - Put an actual requester definition or answer to a clarification question in `user_definitions`. Its `source_text` must equal a complete active span and cannot be only the term itself. A bare term is an agent interpretation, not proof that the requester supplied a definition.
 - Use `interpretation_provenance` for material agent/context/web interpretations, not for requester-owned definitions. Web-based entries require at least one source URL; URLs do not enter the retrieval query.
@@ -201,6 +222,10 @@ Rules:
 - `request_lineage` is `null` for an initial request. On a retry it hash-binds the parent request/core and separates preserved dimensions from the explicitly allowed changes; the two sets are non-empty and disjoint. Inspect only the parent fields allowed by the retry exception above before freezing the retry. If `concept` or `character_response` is preserved and the parent had a hard visual obligation, recreate that same obligation as a hash-bound post-core `photo-visual-intent/v1` sourced from an exact current frozen core field. Do not let an elliptical retry phrase demote a preserved hard obligation into an unselected embedding candidate, and do not carry the obligation when the requester changed or excluded the governing meaning.
 - A fidelity complaint about a meaningful interactive prop is not permission to remove, relocate, conceal, or transfer it. On such a retry, use `photo-request-lineage/v2` and one object-agnostic `repair_targets` row. Freeze actor, object, interaction state, expected contact, protected locked dimensions, positive interaction and recognition phrases, and only the local repair axes that may change. Use `relation_origin: parent_preserved` when the parent relation remains intended and `relation_origin: requester_corrected` when the requester explicitly corrects an evasive parent relation. Bind both phrases through one required action assertion in the baseline. Decorative background objects and non-action-bearing ornaments do not need repair targets.
 - Every multi-arm run shares the immutable raw requester text but freezes a separate, exact-span-bound envelope and core for each arm before any arm sees project-local data.
+
+For a partial prescription, `photo-intent-lock/v2` permits a semantic anchor on an open dimension with additional `target` and `property` paths. For example, a requester-specified white garment may have `dimension: appearance`, `target: main_subject`, `property: wardrobe.color`, and literal evidence proving that color. A separate `wardrobe.garment_type` anchor can preserve the garment type while leaving `wardrobe.neckline` open. Use stable lowercase paths for the actual object and property; preserve their meaning across composition. Property anchors may share one economical evidence phrase. Keep complete reference-outfit preservation or a fully specified appearance as a whole-dimension lock. These anchors do not change the existing rules for required typed semantic assertions.
+
+Preserve every property anchor's literal evidence and its meaning. Any authored or candidate change on a partially locked dimension needs `affected_properties` rows containing `dimension`, `target`, and `property`. Broad/unknown candidate effects cannot establish compatibility with a partial lock; reject the candidate or author an independent compatible detail. Changing a parent property includes its children. Do not evade a lock through an alias, another carrier or contradictory added prose. Declarations and literal evidence are mechanically checked; actual semantic consistency remains the agent's responsibility. Historical v1 locks retain their whole-dimension behavior.
 
 ### Neutral assertion wire shape
 
@@ -288,13 +313,15 @@ Generate exactly one pack:
 .venv/bin/python skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py \
   --request-envelope-json request_envelope.json \
   --authorial-core-json authorial_core.json \
+  --creative-controls-json creative_controls.json \
   --embodiment-review-json embodiment_review.json \
   --candidate-pack-version v6 \
-  --creativity 0.5 \
   --emit-candidate-pack --n 1
 ```
 
 The generator derives retrieval from the active requester spans and frozen core, removes true requester exclusions, and retains runtime-forbidden labels for meaning retrieval. `--concept-lock` is normally omitted; if supplied, every value must byte-equal the active spans in order. The pack must not define the baseline after the fact.
+
+The generator takes initial artistic controls from the supplied snapshot. Conflicting later CLI controls are rejected; update the pre-core inputs and rebuild instead of silently changing the creative direction after freezing. New normal runs use this binding. Unbound historical/direct compatibility calls remain readable but do not claim initial control integration.
 
 For v6 slot candidates, the generator keeps the frozen whole-scene query and prepares a separate core-derived focus query only for each active slot with relevant frozen fields. It searches the sampler's eligible pool and may recover additional candidates from the same slot corpus after reapplying request, domain, facet, and exclusion guards. It fuses whole-scene and focused hits into a bounded shortlist, keeping the sampler result available and favoring candidates supported by both queries. This produces one pack, not one pack per slot. A slot hit is optional even when it matches strongly; the composer must keep the subject–action–target and other directed relations intact when choosing across slots. Slots without a grounded focus or a lexical hit retain their existing shortlist. The single visual-profile resolver and its exact-versus-approximate authority rules are unchanged.
 
@@ -302,7 +329,7 @@ Candidate-pack v6 separates three jobs:
 
 - `semantic_assertions` and the baseline are the governing meaning. The v3 core is required and non-revisable inside the pack run. A material correction requires a rebuilt envelope/core/pack; use an already supplied requester correction without asking again, and ask only when requester meaning remains unresolved.
 - `semantic_clarification` and BM25F/embedding retrieval are post-core assistance. Exact request-scoped profile terms may retain their declared hard meaning. BM25F-only, embedding-only, and fused approximate hits are optional and can never create an assertion, required evidence phrase, or render gate.
-- `creative_augmentation` is sampled only after hard applicability, conflict, identity/species/no-people, safety, negative, and requester-exclusion filters. Creativity `0..0.25` permits `near`, `0.25..0.75` permits `near + adjacent`, and `0.75..1` also permits `lateral`; seed selects within the allowed range. Every transformed choice declares `affected_dimensions`, which must all be open and subordinate to the locked meaning.
+- `creative_augmentation` is sampled only after hard applicability, conflict, identity/species/no-people, safety, negative, and requester-exclusion filters. Creativity `0..0.25` permits `near`, `0.25..0.75` permits `near + adjacent`, and `0.75..1` also permits `lateral`; seed selects within the allowed range. Every transformed choice declares `affected_dimensions` within its applicable dimension boundary and remains subordinate to the locked meaning; Phase 3 describes the scoped adult-axis exception.
 
 V6 compiles frozen character-response axes and evidence through `photo-character-response/v1`, and other required assertions through `photo-semantic-assertion-obligations/v1`. It never calls the legacy raw-text moe router. The composed audit recomputes these contracts from the core. Retrieval consistency, labels, scores, and array order never create hard evidence or revise a frozen meaning; every creative candidate may be rejected. Consult `references/retrieval-contract.md` only for retrieval diagnostics or implementation details.
 
@@ -325,6 +352,10 @@ Before rendering, an explicitly focal perceptual meaning needs a required typed 
 
 Read `references/composition-contract.md` for the composed shape and active conditional fields. Refine the independently authored photograph from Phase 1. Judge optional candidates by their contribution to its overall effect, subject appeal, and visual hierarchy; selecting none is valid. The final pass may retain, clarify, remove, or replace agent-authored detail on open dimensions. It need not add a new visual idea when the baseline already works.
 
+When `adult_appeal.dimension_scope` is present, read the adult-axis section of `references/hybrid-augmentation-contract.md`. Those two axes may use their declared unlocked dimensions even if omitted from `open_dimensions`; preserve every locked meaning and record the dimensions actually changed in `adult_appeal_brief`. This scoped exception does not open dimensions for unrelated creative additions or revise the core.
+
+In the new scope, both axes can use open wardrobe/material choices while preserving property anchors. If an axis is already expressed in the baseline, use `realization: baseline`, retain literal baseline evidence, and set `affected_dimensions: []`; no new detail is required. For a refinement, use `realization: refined` and declare actual changes, including `affected_properties` on partially locked dimensions. Assess whether the specified artistic direction is readable in context; generic material words or a valid intensity number alone do not establish that. Explain a constrained realization in the existing artistic interpretation instead of claiming visual success.
+
 Reconsider the whole frame before polishing clauses. If a chosen pose, distance, expression, or prop arrangement weakens the intended experience, revise the unbound staging while preserving every requester-owned anchor and effective hard obligation. Record material refinements in the existing `authorial_decisions`, including subtraction or simplification. Do not change the frozen core in place or silently rewrite required evidence. If a needed change would alter a frozen anchor or assertion, rebuild through the existing request/core path; use clear existing user intent without another approval request.
 
 When `embodiment_preflight` is present, read `references/embodiment-preflight.md`. Recheck the entire final prompt, including new camera, framing, clothing, and contact clauses; preserve the baseline review and bind a fresh `agent_postcomposition` review in `embodiment_review`. A changed prompt invalidates the previous review hash. Fix composition conflicts through unbound staging on open dimensions. Use the existing rebuild or repair lineage when required frozen evidence must change. General defect negatives cannot substitute for a coherent positive realization.
@@ -336,7 +367,7 @@ For every semantic clarification, record exactly one decision:
 
 Never supersede a v2/v3 core or requester definition. Reject optional candidates that suggest a different meaning and continue with the frozen core. If an actual requester ambiguity or a conflict in required evidence prevents faithful composition, stop that run and resolve it before rebuilding the envelope, core, and pack. A clear requester correction already authorizes that rebuild. `superseded_by_revision` exists only for auditing legacy v1 evidence.
 
-For creative candidates, decide each as `transformed` or `rejected`. Rejecting all is valid. Transform at most three, declare `affected_dimensions`, keep them within `intent_lock.open_dimensions`, and add a new relation, cause, material behavior, framing, light, omission, or timing decision instead of copying source terms.
+For creative candidates, decide each as `transformed` or `rejected`. Rejecting all is valid. Transform at most three, declare `affected_dimensions`, keep them within `intent_lock.open_dimensions` or the adult-axis scope above for a scoped adult candidate, and add a new relation, cause, material behavior, framing, light, omission, or timing decision instead of copying source terms.
 
 Bind the exact pack ID, negative, core hash, intent-lock hash, anchor IDs, preserved evidence, candidate choices, all clarification decisions, and creative decisions in the composed object. Set `composer` to `agent`.
 
@@ -365,6 +396,8 @@ Fix every failure. `negative_intent_guard_contract`, `negative_intent_guard_term
 If image generation was requested, read `references/image-runtime.md`, copy `source_intent_lock_sha256` into the exact runtime request, and when present also copy `render_repair_contract_sha256`. Audit it with `scripts/audit_image_render_request.py`, generate, preserve the output and ledger record, then record and audit the exact generic repair hard-gate set with `scripts/audit_image_render_review.py`. Prompt/audit success is preflight evidence, not proof that rendered pixels satisfy the request.
 
 Review the saved image as a whole as well as checking hard gates. Assess whether its main impression, subject presence, and visual hierarchy realize the initial artistic direction, and whether its staging serves the requested genre and feeling. Note image-grounded strengths and weaknesses as supplemental observations, not new universal gates or user acceptance. A person's appeal is assessed in context at the chosen scale, not by face size. If comparisons are available, judge overall preference separately from instruction fidelity. Further generation follows the user's authorized scope; maintenance tests alone cannot establish an artistic improvement.
+
+For control calibration, first describe the image's impression without consulting the intensity labels, then compare it with the frozen intended direction. Report technical binding, perceived expression and user preference separately. Do not promote a prompt phrase or metadata PASS into proof of artistic strength.
 
 ## Post-Core Reference Routing
 

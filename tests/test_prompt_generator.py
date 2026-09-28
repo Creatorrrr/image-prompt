@@ -6308,8 +6308,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         adult = pack["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(adult["enabled"])
         self.assertEqual(adult["activation_source"], "skill_default")
-        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 2)
+        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 1)
         self.assertEqual(pack["safety"]["status"], "pass")
         self.assertFalse(pack["safety"]["requires_user_approval"])
         self.assertLessEqual(len(pack["presets"]), 4)

@@ -41,11 +41,14 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
 try:
     import photo_candidate_semantics
     import photo_embodiment
+    import photo_creative_controls as creative_controls
     from visual_profile_contracts import (
         compile_visual_profile,
         hard_activation_is_supported,
     )
     from photo_contracts import (
+        ADULT_APPEAL_AXIS_DIMENSIONS,
+        ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
         AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -65,6 +68,9 @@ try:
         CHARACTER_RESPONSE_REQUIRED_EVIDENCE,
         DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
         INTENT_LOCK_CONTRACT_VERSION,
+        INTENT_LOCK_PROPERTY_CONTRACT_VERSION,
+        intent_property_locks,
+        property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
         LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -447,9 +453,15 @@ CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS = (
 CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v2"
 CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual_editorial", "fetish_fashion")
 CANDIDATE_PACK_ADULT_APPEAL_EMPHASES = ("sensual_led", "balanced", "fetish_led")
-CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY = 1
-CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY = 0
-CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = "sensual_led"
+CREATIVE_CONTROL_DEFAULTS = {name: definition["default"] for name, definition in creative_controls.load_definitions()["controls"].items()}
+CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["sensual_editorial"]
+CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["fetish_fashion"]
+CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = CREATIVE_CONTROL_DEFAULTS["adult_appeal_emphasis"]
+if CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS == "auto":
+    CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = (
+        "balanced" if CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY == CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY
+        else ("sensual_led" if CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY > CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY else "fetish_led")
+    )
 CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
     (
         "structural_analogy",
@@ -5217,7 +5229,7 @@ def resolve_moe_response_intent(texts: Sequence[str]) -> JsonDict:
         text_explicitly_requests_sensual_tone(text) for text in request_texts
     )
     # Moe and sexual appeal are separate axes.  A plain adult-moe request may
-    # use the skill's low-intensity sensual-editorial default as supporting
+    # use the configured sensual-editorial direction as supporting
     # appeal; only explicit nonsexual wording suppresses it.  Explicit
     # positive sensual wording remains a stronger user-controlled branch.
     sexual_tone = (
@@ -7355,6 +7367,7 @@ def candidate_pack_adult_appeal_eligibility(
 
 def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> JsonDict:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
+    snapshot = provenance.get("creative_controls")
     raw = provenance.get("adult_appeal") if isinstance(provenance.get("adult_appeal"), dict) else {}
     axes_raw = raw.get("axes") if isinstance(raw.get("axes"), dict) else {}
     axes: JsonDict = {}
@@ -7368,6 +7381,14 @@ def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> Jso
     requested_enabled = any(axis["intensity"] > 0 for axis in axes.values())
     activation_source = str(raw.get("activation_source") or "skill_default")
     eligibility = candidate_pack_adult_appeal_eligibility(data, result, activation_source)
+    if isinstance(snapshot, dict):
+        if eligibility.get("reason") == "explicit_no_people" and requested_enabled:
+            raise ValueError("pre-core controls conflict with explicit no-people meaning; resolve context before authoring")
+        reasons = {axis: snapshot["adult_appeal"][axis]["reason"] for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES}
+        eligibility = {"status": "eligible" if "eligible" in reasons.values() else "ineligible",
+                       "reason": "resolved_precore_context", "axis_reasons": reasons,
+                       "subject_category": snapshot["context"]["subject_category"]}
+        activation_source = "precore_controls"
     enabled = requested_enabled and eligibility.get("status") == "eligible"
     emphasis = str((raw.get("blend") or {}).get("emphasis") or "") if isinstance(raw.get("blend"), dict) else ""
     if emphasis not in CANDIDATE_PACK_ADULT_APPEAL_EMPHASES:
@@ -7379,7 +7400,7 @@ def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> Jso
         "requested_enabled": requested_enabled,
         "activation_source": (
             activation_source
-            if requested_enabled or activation_source == "explicit_nonsexual_moe"
+            if requested_enabled or activation_source in {"explicit_nonsexual_moe", "precore_controls"}
             else "explicit_opt_out"
         ),
         "eligibility": eligibility,
@@ -7411,11 +7432,28 @@ def candidate_pack_hybrid_adult_appeal(
     data: JsonDict,
     result: JsonDict,
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+    *,
+    authorial_core: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
     hybrid_policy = candidate_pack_hybrid_policy(data)
     adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
     request = candidate_pack_adult_appeal_request(data, result)
     enabled = bool(request.get("enabled"))
+    dimension_scope = None
+    if isinstance(authorial_core, dict) and authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        intent_lock = authorial_core.get("intent_lock") or {}
+        locked = set(intent_lock.get("locked_dimensions") or [])
+        dimension_scope = {
+            "contract_version": ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+            "policy": "preserve_locked_dimensions",
+            "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
+            "locked_dimensions": sorted(locked),
+            "axis_allowed_dimensions": {
+                axis: sorted(dimensions - locked)
+                for axis, dimensions in ADULT_APPEAL_AXIS_DIMENSIONS.items()
+            },
+            "protected_properties": intent_property_locks(intent_lock),
+        }
     inventory_preset_id = str(
         adult_policy.get("inventory_preset_id")
         or adult_policy.get("source_preset_id")
@@ -7435,6 +7473,13 @@ def candidate_pack_hybrid_adult_appeal(
     axes: JsonDict = {}
     for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
         intensity = int(((request.get("axes") or {}).get(axis_id) or {}).get("intensity", 0) or 0)
+        requested_intensity = intensity
+        allowed_dimensions = (
+            set(dimension_scope["axis_allowed_dimensions"][axis_id])
+            if dimension_scope is not None else None
+        )
+        if allowed_dimensions is not None and not allowed_dimensions:
+            intensity = 0
         axis_policy = configured_axes.get(axis_id) if isinstance(configured_axes.get(axis_id), dict) else {}
         inventory: List[JsonDict] = []
         seen_sources: Set[str] = set()
@@ -7470,6 +7515,21 @@ def candidate_pack_hybrid_adult_appeal(
                         tags = {str(item).lower() for item in entry.get("tags") or []}
                         if required_tags and not (required_tags & tags):
                             continue
+                        affected_dimensions = None
+                        if allowed_dimensions is not None:
+                            # Use the complete declared effect of a candidate;
+                            # never relabel a partially conflicting idea as safe.
+                            dimension_overrides = adult_policy.get("entry_dimensions") or {}
+                            affected_dimensions = sorted(
+                                set(entry.get("affected_dimensions") or [])
+                                | set(dimension_overrides.get(source_key) or [])
+                            ) or photo_candidate_semantics.slot_dimensions(
+                                slot, data.get("candidate_semantic_policy")
+                            )
+                            if not affected_dimensions or not set(affected_dimensions).issubset(allowed_dimensions):
+                                continue
+                            if not property_effects_allowed(intent_lock, affected_dimensions, entry.get("affected_properties", [])):
+                                continue
                         candidate_id = f"augmentation:adult_appeal:{axis_id}:{slot}:{entry_id}"
                         candidate = {
                             "id": candidate_id,
@@ -7490,12 +7550,20 @@ def candidate_pack_hybrid_adult_appeal(
                             "applicability": {
                                 "status": "eligible",
                                 "source": f"{request.get('activation_source')}_adult_appeal_inventory",
-                                "reason": "axis activated by the configured low-intensity default"
+                                "reason": f"axis activated by the configured intensity {intensity}"
                                 if request.get("activation_source") == "skill_default"
                                 else "axis activated by explicit user control",
                             },
                             "conflicts_with": [],
                         }
+                        if affected_dimensions is not None:
+                            candidate["affected_dimensions"] = sorted(set(affected_dimensions))
+                            if entry.get("affected_properties"):
+                                candidate["affected_properties"] = copy.deepcopy(entry["affected_properties"])
+                            candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
+                                dict(entry, affected_dimensions=candidate["affected_dimensions"]),
+                                slot, data.get("candidate_semantic_policy"),
+                            )
                         inventory.append(candidate)
                         candidate_entries[candidate_id] = ("slot", slot, entry)
                         seen_sources.add(source_key)
@@ -7510,28 +7578,37 @@ def candidate_pack_hybrid_adult_appeal(
             ],
             "candidate_inventory": inventory,
         }
+        if dimension_scope is not None:
+            axes[axis_id]["requested_intensity"] = requested_intensity
+        snapshot = (result.get("provenance") or {}).get("creative_controls")
+        definitions = snapshot["definitions"] if isinstance(snapshot, dict) else creative_controls.load_definitions()
+        axes[axis_id]["intensity_meaning"] = definitions["controls"][axis_id]["levels"][str(intensity)]
+        axes[axis_id]["definition"] = definitions["controls"][axis_id]["definition"]
+        if isinstance(snapshot, dict):
+            axes[axis_id]["configured_intensity"] = snapshot["adult_appeal"][axis_id]["requested_intensity"]
+            axes[axis_id]["configuration_source"] = snapshot["controls"][axis_id]["source"]
 
-    return {
+    if dimension_scope is not None:
+        enabled = any(axis["active"] for axis in axes.values())
+
+    configured_defaults = {
+        axis: int((adult_policy.get("default_intensities") or {}).get(axis, definitions["controls"][axis]["default"]))
+        for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES
+    }
+    configured_emphasis = adult_policy.get("default_emphasis") or definitions["controls"]["adult_appeal_emphasis"]["default"]
+    if configured_emphasis == "auto":
+        sensual_default, fetish_default = (configured_defaults[axis] for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES)
+        configured_emphasis = "balanced" if sensual_default == fetish_default else ("sensual_led" if sensual_default > fetish_default else "fetish_led")
+    contract = {
         "enabled": enabled,
         "requested_enabled": bool(request.get("requested_enabled")),
         "contract_version": CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION,
         "activation_source": request.get("activation_source"),
         "eligibility": request.get("eligibility", {}),
         "defaults": {
-            "sensual_editorial_intensity": int(
-                (adult_policy.get("default_intensities") or {}).get(
-                    "sensual_editorial", CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY
-                )
-            ),
-            "fetish_fashion_intensity": int(
-                (adult_policy.get("default_intensities") or {}).get(
-                    "fetish_fashion", CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY
-                )
-            ),
-            "emphasis": str(
-                adult_policy.get("default_emphasis")
-                or CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS
-            ),
+            "sensual_editorial_intensity": configured_defaults["sensual_editorial"],
+            "fetish_fashion_intensity": configured_defaults["fetish_fashion"],
+            "emphasis": configured_emphasis,
         },
         "inventory_preset_id": inventory_preset_id,
         "axes": axes,
@@ -7539,7 +7616,7 @@ def candidate_pack_hybrid_adult_appeal(
             "emphasis": str((request.get("blend") or {}).get("emphasis") or "balanced"),
             "simultaneous_activation_allowed": True,
             "carrier_separation": {
-                "sensual_editorial": ["gaze", "pose", "lighting", "silhouette"],
+                "sensual_editorial": ["gaze", "pose", "lighting", "silhouette", "wardrobe", "material"],
                 "fetish_fashion": ["material", "garment_layering", "accessories", "footwear"],
             },
         },
@@ -7548,7 +7625,9 @@ def candidate_pack_hybrid_adult_appeal(
             "adult_subject_phrase_required": True,
             "agency_phrase_required": True,
             "one_accepted_detail_per_active_axis": True,
-            "configured_low_intensity_default": True,
+            "intensity_is_ordinal_not_exposure_or_detail_count": True,
+            "baseline_expression_may_be_retained": True,
+            "shared_styling_between_axes_allowed": True,
             "appearance_or_popularity_inference_forbidden": True,
         },
         "combination_policy": {
@@ -7556,8 +7635,18 @@ def candidate_pack_hybrid_adult_appeal(
             "hard_combinations": adult_policy.get("hard_combinations", []),
             "warning_combinations": adult_policy.get("warning_combinations", []),
         },
-        "evaluation_boundary": "styling_intent_and_prompt_binding_are_preflight;_popularity_requires_human_or_engagement_evaluation",
+        "evaluation_boundary": "configuration_scope_and_literal_binding_are_preflight;_perceived_intensity_requires_image_review;_appeal_requires_user_judgment",
     }
+    if dimension_scope is not None:
+        contract["dimension_scope"] = dimension_scope
+        contract["composition_requirements"]["affected_dimensions_per_active_axis"] = True
+        contract["blend"]["requested_emphasis"] = contract["blend"]["emphasis"]
+        active_axes = [axis_id for axis_id, axis in axes.items() if axis["active"]]
+        if len(active_axes) == 1:
+            contract["blend"]["emphasis"] = "sensual_led" if active_axes[0] == "sensual_editorial" else "fetish_led"
+        elif not active_axes:
+            contract["blend"]["emphasis"] = "balanced"
+    return contract
 
 
 def candidate_pack_hybrid_adult_candidates(adult_appeal: Optional[JsonDict]) -> List[JsonDict]:
@@ -8717,7 +8806,8 @@ def normalize_intent_lock(
             "authorial core intent_lock contains unsupported fields: "
             + ", ".join(unknown_fields)
         )
-    if payload.get("contract_version") != INTENT_LOCK_CONTRACT_VERSION:
+    property_lock = payload.get("contract_version") == INTENT_LOCK_PROPERTY_CONTRACT_VERSION
+    if payload.get("contract_version") not in {INTENT_LOCK_CONTRACT_VERSION, INTENT_LOCK_PROPERTY_CONTRACT_VERSION}:
         raise ValueError(
             f"authorial core intent_lock contract_version must be {INTENT_LOCK_CONTRACT_VERSION!r}"
         )
@@ -8779,13 +8869,17 @@ def normalize_intent_lock(
     anchors: List[JsonDict] = []
     seen_ids: Set[str] = set()
     seen_evidence: Set[str] = set()
+    seen_properties: Set[tuple] = set()
     for index, item in enumerate(raw_anchors):
-        if not isinstance(item, dict) or set(item) != {
+        anchor_fields = {
             "anchor_id",
             "source_text",
             "dimension",
             "prompt_evidence",
-        }:
+        }
+        if property_lock and isinstance(item, dict) and "property" in item:
+            anchor_fields.update({"target", "property"})
+        if not isinstance(item, dict) or set(item) != anchor_fields:
             raise ValueError(
                 f"authorial core intent anchor {index} must contain only anchor_id, source_text, dimension, and prompt_evidence"
             )
@@ -8806,7 +8900,18 @@ def normalize_intent_lock(
             raise ValueError(
                 f"authorial core intent anchor {index} source_text is not grounded in an active requesting-user span"
             )
-        if dimension not in locked_dimensions:
+        is_property = "property" in item
+        if is_property:
+            if dimension not in open_dimensions or any(
+                re.fullmatch(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*", str(item[key])) is None
+                for key in ("target", "property")
+            ):
+                raise ValueError("a property anchor needs an open dimension and canonical target/property paths")
+            property_key = (dimension, item["target"], item["property"])
+            if property_key in seen_properties:
+                raise ValueError("intent_lock contains duplicate property anchors")
+            seen_properties.add(property_key)
+        elif dimension not in locked_dimensions:
             raise ValueError(
                 f"authorial core intent anchor {index} dimension must be locked"
             )
@@ -8818,7 +8923,7 @@ def normalize_intent_lock(
             raise ValueError(
                 f"authorial core intent anchor {index} prompt_evidence must occur in baseline_prompt_en"
             )
-        if evidence.casefold() in seen_evidence:
+        if evidence.casefold() in seen_evidence and not is_property:
             raise ValueError(
                 "authorial core intent anchors require distinct prompt_evidence for each locked dimension"
             )
@@ -8829,6 +8934,7 @@ def normalize_intent_lock(
                 "source_text": source_text,
                 "dimension": dimension,
                 "prompt_evidence": evidence,
+                **({"target": item["target"], "property": item["property"]} if is_property else {}),
             }
         )
 
@@ -8856,7 +8962,7 @@ def normalize_intent_lock(
         )
 
     normalized: JsonDict = {
-        "contract_version": INTENT_LOCK_CONTRACT_VERSION,
+        "contract_version": payload["contract_version"],
         "priority": "requesting_user",
         "semantic_anchors": anchors,
         "locked_dimensions": locked_dimensions,
@@ -9490,7 +9596,7 @@ def normalize_authorial_core(
     if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         allowed_fields.update({"intent_lock", "runtime_forbidden_labels"})
     if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        allowed_fields.update({"semantic_assertions", "request_lineage"})
+        allowed_fields.update({"semantic_assertions", "request_lineage", "creative_controls_sha256"})
     unknown_fields = sorted(set(payload) - allowed_fields)
     if unknown_fields:
         raise ValueError(
@@ -9568,6 +9674,10 @@ def normalize_authorial_core(
         normalized["runtime_forbidden_labels"] = runtime_forbidden_labels
     if normalized["provenance"] != "agent_prepack":
         raise ValueError("authorial core provenance must be 'agent_prepack'")
+    if "creative_controls_sha256" in payload:
+        if re.fullmatch(r"[0-9a-f]{64}", str(payload["creative_controls_sha256"])) is None:
+            raise ValueError("creative_controls_sha256 must bind the resolved pre-core snapshot")
+        normalized["creative_controls_sha256"] = payload["creative_controls_sha256"]
     if not normalized["source_request"]:
         raise ValueError("authorial core source_request must be non-empty")
 
@@ -9630,6 +9740,8 @@ def normalize_authorial_core(
                 0 if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION else 2
             ),
         )
+        if core_version != AUTHORIAL_CORE_V3_CONTRACT_VERSION and normalized["intent_lock"]["contract_version"] == INTENT_LOCK_PROPERTY_CONTRACT_VERSION:
+            raise ValueError("property-level intent locks require photo-authorial-core/v3")
         leaked_runtime_labels = [
             label
             for label in normalized.get("runtime_forbidden_labels") or []
@@ -16433,6 +16545,8 @@ def candidate_pack_project_v5(
     )
     if "embodiment_preflight_required" in original_provenance:
         public_provenance["embodiment_preflight_required"] = original_provenance["embodiment_preflight_required"]
+    if "creative_control_runtime" in original_provenance:
+        public_provenance["creative_control_runtime"] = copy.deepcopy(original_provenance["creative_control_runtime"])
     projected["provenance"] = public_provenance
 
     hybrid = (
@@ -16513,6 +16627,10 @@ def candidate_pack_project_v5(
             "transformed_dimensions_must_be_open"
         ] = True
     projected["creative_augmentation"] = creative_augmentation
+    if isinstance((projected.get("adult_appeal") or {}).get("dimension_scope"), dict):
+        creative_augmentation.setdefault("selection_contract", {})[
+            "adult_appeal_scope_exception"
+        ] = ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION
     return projected
 
 
@@ -16812,7 +16930,10 @@ def build_candidate_pack(
         candidate_entries,
         japanese_subculture_photo,
     )
-    adult_appeal = candidate_pack_hybrid_adult_appeal(data, result, candidate_entries)
+    adult_appeal = candidate_pack_hybrid_adult_appeal(
+        data, result, candidate_entries,
+        authorial_core=(authorial_core if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6 else None),
+    )
     selected_preset = candidate_pack_selected_preset(data, result)
     private_scene_routing: Optional[JsonDict] = {} if explain_scene_routing else None
     selected_blueprint = candidate_pack_resolve_scene_blueprint(
@@ -17063,6 +17184,9 @@ def build_candidate_pack(
     }
     if creative_exploration is not None:
         pack["creative_exploration"] = creative_exploration
+    if isinstance(provenance.get("creative_controls"), dict):
+        pack["creative_controls"] = copy.deepcopy(provenance["creative_controls"])
+        pack["provenance"]["creative_control_runtime"] = copy.deepcopy(provenance["creative_control_runtime"])
     authorial_request = (
         provenance.get("authorial_request")
         if isinstance(provenance.get("authorial_request"), dict)
@@ -26266,7 +26390,7 @@ def resolve_soft_render_directives(
 
 
 # Keep the low-level API neutral for internal research and holdout callers.
-# ``main`` injects the user-facing CLI defaults (sensual 1, fetish 0) into candidate-pack runs.
+# ``main`` injects the user-facing CLI defaults (sensual 2, fetish 1) into candidate-pack runs.
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -26331,7 +26455,31 @@ def generate_once(
     creativity: Optional[float] = None,
     novelty_explicit: bool = False,
     authorial_core: Optional[JsonDict] = None,
+    creative_control_snapshot: Optional[JsonDict] = None,
 ) -> JsonDict:
+    if creative_control_snapshot is not None:
+        if not isinstance(authorial_core, dict) or authorial_core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+            raise ValueError("pre-core creative controls require a v3 authorial core")
+        creative_controls.validate(creative_control_snapshot, authorial_core["source_request"])
+        if authorial_core.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
+            raise ValueError("authorial core does not bind the supplied pre-core creative controls")
+        control_values = creative_controls.runtime_values(creative_control_snapshot)
+        sensual_editorial_intensity = control_values["sensual_editorial_intensity"]
+        fetish_fashion_intensity = control_values["fetish_fashion_intensity"]
+        adult_appeal_emphasis = control_values["adult_appeal_emphasis"]
+        adult_appeal_activation_source = "precore_controls"
+        surreal_mode = control_values["surreal_mode"]
+        surreal_mode_explicit = True
+        surreal_probability = control_values["surreal_probability"]
+        surreal_intensity = control_values["surreal_intensity"]
+        reference_edit_mode = control_values["reference_edit_mode"]
+        trend_layer = control_values["trend_layer"]
+        viewer_experience_requested = control_values["viewer_experience"]
+        # V6 keeps a broad candidate pool; frozen creativity controls the final
+        # permissible interpretation, not this internal pool breadth.
+        creativity = 1.0
+    elif isinstance(authorial_core, dict) and authorial_core.get("creative_controls_sha256"):
+        raise ValueError("the core's frozen creative controls must be supplied")
     requested_selection_mode = requested_selection_mode or selection_mode
     typed_core_v3 = bool(
         isinstance(authorial_core, dict)
@@ -26527,13 +26675,19 @@ def generate_once(
             == "nonsexual"
         )
     )
+    if (creative_control_snapshot is not None and explicit_nonsexual_moe
+            and not creative_control_snapshot["context"]["explicit_nonsexual"]
+            and any(creative_control_snapshot["controls"][axis]["source"] == "saved_setting"
+                    and creative_control_snapshot["adult_appeal"][axis]["effective_intensity"] > 0
+                    for axis in creative_controls.AXES)):
+        raise ValueError("resolve explicit nonsexual requester meaning in the pre-core context before freezing; do not silently change defaults after authoring")
     if (
         adult_appeal_activation_source == "skill_default"
-        and (explicit_nonsexual_moe or not default_adult_appeal_dimensions_open)
+        and (explicit_nonsexual_moe or (not typed_core_v3 and not default_adult_appeal_dimensions_open))
     ):
-        # Explicit nonsexual intent and the v2 open-dimension boundary both
-        # neutralize the skill default. Explicit user/CLI controls remain
-        # separate, but a skill default cannot author a closed semantic axis.
+        # Preserve explicit nonsexual intent and the historical v2 boundary.
+        # New v3/v6 packs scope each adult axis and candidate to unlocked
+        # dimensions during pack construction instead of clearing both axes.
         sensual_editorial_intensity = 0
         fetish_fashion_intensity = 0
         adult_appeal_emphasis = "balanced"
@@ -26935,12 +27089,13 @@ def generate_once(
             "configured": bool(
                 sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0
             ),
-            "application_scope": "candidate_pack_composition",
+            "application_scope": "precore_authoring_and_candidate_pack_composition" if creative_control_snapshot is not None else "candidate_pack_composition",
             "activation_source": adult_appeal_activation_source
             if (
                 sensual_editorial_intensity > 0
                 or fetish_fashion_intensity > 0
                 or adult_appeal_activation_source == "explicit_nonsexual_moe"
+                or creative_control_snapshot is not None
             )
             else "explicit_opt_out",
             "axes": {
@@ -26949,7 +27104,10 @@ def generate_once(
             },
             "blend": {"emphasis": adult_appeal_emphasis},
         },
-        "creativity": creativity if creativity is not None else (semantic_context or {}).get("creativity"),
+        "creativity": control_values["creativity"] if creative_control_snapshot is not None else (creativity if creativity is not None else (semantic_context or {}).get("creativity")),
+        **({"creative_controls": copy.deepcopy(creative_control_snapshot),
+            "creative_control_runtime": control_values,
+            "candidate_pool_creativity": creativity} if creative_control_snapshot is not None else {}),
         "argv": list(source_argv or []),
         **(
             {"authorial_core": copy.deepcopy(authorial_core)}
@@ -27160,11 +27318,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default="standard",
         help="Prompt rendering detail level. Use detailed for a longer image-ready prompt or compact for a ReactorPrompt-style single paragraph.",
     )
-    parser.add_argument("--surreal-mode", choices=["off", "auto", "on"], default="off", help="Apply a photoreal surreal layer: off disables it, auto applies by probability, on always applies it.")
-    parser.add_argument("--surreal-probability", type=float, default=0.35, help="Probability for --surreal-mode auto. Clamped to 0..1.")
-    parser.add_argument("--surreal-intensity", choices=["subtle", "moderate", "bold"], default="moderate", help="How many surreal layer slots to add when the layer is active.")
-    parser.add_argument("--reference-edit-mode", choices=REFERENCE_EDIT_MODES, default="off", help="Append reference-image editing instructions for uploaded-photo workflows.")
-    parser.add_argument("--trend-layer", choices=TREND_LAYERS, default="off", help="Append a social trend layout layer without changing the base photo preset.")
+    parser.add_argument("--surreal-mode", choices=["off", "auto", "on"], default=CREATIVE_CONTROL_DEFAULTS["surreal_mode"], help="Apply an added surreal layer. Pre-core snapshots resolve auto once; off preserves requested fantasy.")
+    parser.add_argument("--surreal-probability", type=float, default=CREATIVE_CONTROL_DEFAULTS["surreal_probability"], help="Probability for --surreal-mode auto. Clamped to 0..1.")
+    parser.add_argument("--surreal-intensity", choices=["subtle", "moderate", "bold"], default=CREATIVE_CONTROL_DEFAULTS["surreal_intensity"], help="Added treatment strength defined in the pre-core brief; legacy sampling uses these labels for slot breadth.")
+    parser.add_argument("--reference-edit-mode", choices=REFERENCE_EDIT_MODES, default=CREATIVE_CONTROL_DEFAULTS["reference_edit_mode"], help="Use the reference-edit workflow within the requester-defined reference scope.")
+    parser.add_argument("--trend-layer", choices=TREND_LAYERS, default=CREATIVE_CONTROL_DEFAULTS["trend_layer"], help="Selected treatment; frozen pre-core controls integrate it from initial authoring.")
     parser.add_argument("--intent", default=None, help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.")
     parser.add_argument(
         "--concept-lock",
@@ -27247,6 +27405,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         "--viewer-experience",
         action="store_true",
+        default=CREATIVE_CONTROL_DEFAULTS["viewer_experience"],
         help="Expose a topic-neutral viewer-experience composition contract for explicit audience, affect, attachment, commercial, or subculture-response goals. High creative-direction runs include it automatically.",
     )
     parser.add_argument(
@@ -27258,13 +27417,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--sensual-editorial-intensity",
         type=int,
         default=CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY,
-        help="Adult sensual-editorial styling axis intensity from 0 to 3; defaults to 1 for eligible human candidate packs. Use 0 to disable this axis.",
+        help=f"Sensual editorial intensity 0..3; saved default {CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY}. Includes compatible wardrobe and portrayal. Zero disables added treatment.",
     )
     parser.add_argument(
         "--fetish-fashion-intensity",
         type=int,
         default=CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY,
-        help="Adult fetish-fashion styling axis intensity from 0 to 3; defaults to 0 and requires explicit opt-in.",
+        help=f"Fetish-fashion intensity 0..3; saved default {CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY}. Zero disables added treatment.",
     )
     parser.add_argument(
         "--adult-appeal-emphasis",
@@ -27333,7 +27492,31 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--include-virtual", action="store_true", help="Include virtual recipe presets when listing presets.")
     parser.add_argument("--show-slots", action="store_true", help="List slots, tag counts, and priorities then exit.")
     parser.add_argument("--list-tags", metavar="SLOT", help="List tag ids for a slot then exit.")
+    parser.add_argument("--creative-controls-json", help="Frozen candidate-free controls resolved before authoring the v3 core.")
     args = parser.parse_args(raw_args)
+    creative_control_snapshot = None
+    if args.creative_controls_json:
+        if not args.emit_candidate_pack or args.candidate_pack_version != "v6" or not args.request_envelope_json:
+            raise ValueError("--creative-controls-json requires a v6 candidate pack and request envelope")
+        creative_control_snapshot = json.loads(Path(args.creative_controls_json).read_text(encoding="utf-8"))
+        envelope_input = json.loads(Path(args.request_envelope_json).read_text(encoding="utf-8"))
+        creative_controls.validate(creative_control_snapshot, envelope_input.get("request_text"))
+        resolved_controls = creative_controls.runtime_values(creative_control_snapshot)
+        mapping = {
+            "sensual_editorial": "sensual_editorial_intensity", "fetish_fashion": "fetish_fashion_intensity",
+            "adult_appeal_emphasis": "adult_appeal_emphasis", "creativity": "creativity",
+            "viewer_experience": "viewer_experience", "reference_edit_mode": "reference_edit_mode",
+            "surreal_mode": "surreal_mode", "surreal_probability": "surreal_probability",
+            "surreal_intensity": "surreal_intensity", "trend_layer": "trend_layer",
+        }
+        for control, attribute in mapping.items():
+            option = "--" + attribute.replace("_", "-")
+            expected = creative_control_snapshot["controls"][control]["value"]
+            if has_cli_option(raw_args, option) and getattr(args, attribute) != expected:
+                raise ValueError(f"{option} conflicts with the frozen pre-core controls; rebuild the controls and core together")
+            setattr(args, attribute, resolved_controls[attribute])
+        if not (args.sensual_editorial_intensity or args.fetish_fashion_intensity):
+            args.adult_appeal_emphasis = None
 
     for option_name, value in (
         ("--sensual-editorial-intensity", args.sensual_editorial_intensity),
@@ -27624,7 +27807,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     requested_creativity = (
         clamp_unit_interval(args.creativity)
         if args.creativity is not None
-        else (0.5 if args.candidate_pack_version in {"v5", "v6"} else None)
+        else (CREATIVE_CONTROL_DEFAULTS["creativity"] if args.candidate_pack_version in {"v5", "v6"} else None)
     )
     candidate_pool_creativity = (
         1.0 if args.candidate_pack_version in {"v5", "v6"} else args.creativity
@@ -27701,6 +27884,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             creativity=candidate_pool_creativity,
             novelty_explicit=novelty_explicit,
             authorial_core=authorial_core,
+            creative_control_snapshot=creative_control_snapshot,
         )
         if args.candidate_pack_version in {"v5", "v6"}:
             result.setdefault("provenance", {})["creativity"] = requested_creativity

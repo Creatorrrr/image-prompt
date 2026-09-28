@@ -2,7 +2,7 @@
 
 ## V5 Creative Augmentation
 
-The normal `photo-candidate-pack/v5` path does not expose `hybrid_augmentation` or three fixed routes. It exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v2` and `photo-intent-lock/v1` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
+The compatibility `photo-candidate-pack/v5` path does not expose `hybrid_augmentation` or three fixed routes. It exposes `photo-creative-augmentation/v1` only after one request-envelope-bound `photo-authorial-core/v2` and `photo-intent-lock/v1` have established the standalone baseline and locked requester meaning. Every transformed candidate declares affected dimensions and may touch only open dimensions.
 
 The generator forms one advisory pool only after existing applicability, conflict, identity/species/no-people, negative, safety, and explicit user-exclusion guards. Semantic mode ranks that pool from the redacted core query; rule mode uses context and lexical fallback for reproducible offline inspection. Scores remain private. Relative rank partitions the pool into `near`, `adjacent`, and `lateral`; creativity changes only the allowed bands, while seed performs weighted sampling without replacement inside them.
 
@@ -40,7 +40,7 @@ Use this compatibility contract when a v4 candidate pack contains `hybrid_augmen
 
 ## Activation
 
-In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow now uses v5 creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
+In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow uses v6 typed-core creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=2`, `fetish_fashion=1` adult-fashion defaults; no-people and non-human packs do not activate them.
 
 ## Candidate Routes
 
@@ -89,44 +89,50 @@ To reject all routes, set `selected_route_id` to `none`, mark every route reject
 
 ## Adult Appeal Axes
 
-The axes are independent and may run together. For eligible human candidate packs, `sensual_editorial` defaults to intensity `1`, `fetish_fashion` defaults to `0`, and the default emphasis is `sensual_led`:
+Normal v6 runs first resolve `precore/creative_controls.json` using its candidate-free resolver. The core binds the resulting `creative_controls_sha256`; pass that same snapshot with `--creative-controls-json`. Read its current values, source, definitions and ordinal level meanings before authoring wardrobe, portrayal and the photographic direction. The generator and composed audit preserve the binding. Later CLI overrides must agree with the snapshot. Old unbound calls remain compatible and make no claim that their settings informed the initial draft.
 
-- `sensual_editorial` controls gaze, pose, lighting, framing, and silhouette;
-- `fetish_fashion` controls material, garment layering, accessories, and footwear.
+The axes are independent and may share a styling choice:
 
-Use `--sensual-editorial-intensity 0..3` and `--fetish-fashion-intensity 0..3`. Omitted controls resolve to `1` and `0`; fetish fashion therefore requires an explicit positive intensity. Equal positive intensities resolve to `balanced`. When both are active, `--adult-appeal-emphasis sensual_led|balanced|fetish_led` can override the emphasis. The global off state is both intensities at zero; there is no mutually exclusive mode enum.
+- `sensual_editorial` includes wardrobe fit, cut, neckline, drape, material and visible skin, together with gaze, pose, light, framing and the subject's relation to the scene.
+- `fetish_fashion` expresses recognizable fashion language through garment structure, materials, layering and accessories. A generic material word alone is not evidence of its intended visual strength.
 
-These defaults operate in candidate-pack composition. A direct final-prompt CLI call records the configuration but does not claim that the adult-appeal candidates were applied.
+The authoritative defaults and 0–3 meanings live in the pre-core definition file. Zero disables added treatment without deleting requested meaning; positive levels describe supporting, clearly readable or leading aesthetic intent. They are not native image parameters, exposure fractions, item counts, or proof of image quality. Emphasis follows active intensities unless explicitly selected; it cannot reactivate an inactive axis.
 
-The configured default activates only when the resolved subject category is human. Explicit no-people and non-human requests suppress it. This default is policy configuration, never a demographic or popularity inference from the reference image. Explicit controls may increase, reduce, rebalance, or disable the axes; no-people requests remain ineligible.
+New packs use `photo-adult-appeal-dimension-scope/v2`. Each axis may use its declared dimensions except whole-dimension locks. A dimension absent from both lists remains available only under this adult-axis exception. V2 includes wardrobe/material for sensual editorial and preserves the property anchors of `photo-intent-lock/v2`. Whole-look candidates with unknown property effects are rejected when they may replace a protected property; their conflicting dimensions are never silently removed. Independently author a compatible choice instead. Preserve the meaning of explicit style, clothing, reference-use and photographic constraints even across different carriers.
 
-Candidate entries may declare a minimum intensity. When fetish fashion is explicitly enabled at intensity `1`, only its lower tier is eligible; intensities `2` and `3` widen the material and garment inventory. Never reconstruct an entry hidden by the intensity threshold.
+The old scope v1 retains its original dimension sets when auditing archived packs. V4/v5 and unmarked historical packs retain their recorded all-open rule. New property locks are not retroactively inferred for older artifacts.
 
-Candidate adoption is optional even when an axis is active. The agent must instead author one scene-specific interpretation for every active axis, keeping the abstract intensity and blend while avoiding a fixed inventory phrase. Add this block inside `augmentation_brief`:
+Candidate adoption is optional. For each active axis, the existing `adult_appeal_brief` explains how the direction serves this scene. A baseline realization may be retained without inventing a new detail:
 
 ```json
 {
-  "adult_appeal": {
-    "adult_subject_phrase": "literal phrase explicitly identifying an adult original subject",
-    "agency_phrase": "literal phrase showing self-directed agency",
-    "axes": {
-      "sensual_editorial": {
-        "intensity": 2,
-        "artistic_interpretation": "How this axis serves the concept rather than replacing it.",
-        "prompt_evidence": "newly authored literal scene phrase"
-      },
-      "fetish_fashion": {
-        "intensity": 2,
-        "artistic_interpretation": "A separate material-led interpretation.",
-        "prompt_evidence": "newly authored literal material phrase"
-      }
+  "adult_subject_phrase": "literal explicitly adult phrase",
+  "agency_phrase": "literal self-directed action phrase",
+  "axes": {
+    "sensual_editorial": {
+      "intensity": 2,
+      "realization": "baseline",
+      "affected_dimensions": [],
+      "artistic_interpretation": "How the initial portrayal and wardrobe carry this direction.",
+      "prompt_evidence": "literal phrase present in both baseline and final prompt"
     },
-    "blend": {"emphasis": "balanced"}
-  }
+    "fetish_fashion": {
+      "intensity": 1,
+      "realization": "refined",
+      "affected_dimensions": ["material"],
+      "artistic_interpretation": "How a compatible material refinement supports the same photograph.",
+      "prompt_evidence": "literal final prompt phrase"
+    }
+  },
+  "blend": {"emphasis": "sensual_led"}
 }
 ```
 
-Keep the subject unambiguously adult and original. Do not infer adulthood from face, body, clothing, ethnicity, or market origin. Keep adult styling intentional and subordinate to the concept core; do not activate it automatically from a presumed popularity benefit.
+Copy actual values from the pack rather than treating the example as defaults. `baseline` introduces no axis candidate or changed dimensions; its evidence must remain literal in both prompts. `refined` declares every changed dimension, including the complete effects of adopted candidates. For any partially locked dimension, add `affected_properties` rows with `dimension`, `target`, and `property`, using the same canonical paths as the core. Parent properties include their children. Candidate and direct-authoring paths obey the same protected meanings. This also applies to adult candidates selected through `creative_augmentation`.
+
+Keep requested intensity and constraint reasons visible; explain a limited realization in the existing interpretation instead of declaring aesthetic success. The agent must judge coherence and perceptual strength. Mechanical audit checks integrity, scope and literal evidence, not whether a sentence is sufficiently sensual or stylish. Only an axis with no remaining dimensions is disabled by dimension scope; the configured request remains recorded.
+
+The existing subject eligibility, explicit opt-outs, nonsexual requester meaning and combination checks remain applicable. Initial eligibility comes from the declared requester context, never inferred attractiveness or a reference person's presumed traits. Keep the subject unambiguously adult and original. Do not infer adulthood from face, body, clothing, ethnicity, or market origin.
 
 ## Combination Audit and Review Boundary
 
