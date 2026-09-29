@@ -10,17 +10,23 @@ from typing import Any
 
 from bm25f_retrieval import build_bm25f_index, rank_bm25f, tokenize_bm25f_text
 
-VERSION = "photo-contextual-appeal/v1"
-SCOPE_VERSION = "photo-adult-appeal-dimension-scope/v3"
+VERSION = "photo-contextual-appeal/v2"
+SCOPE_VERSION = "photo-adult-appeal-dimension-scope/v4"
 QUERY_CACHE = "_contextual_appeal_query_vectors"
-AXES = ("sensual_editorial", "fetish_fashion")
+AXES = ("sensual", "fetish")
 DIMENSIONS = frozenset({
     "sexual_tone", "style", "appearance", "material", "action", "pose",
     "body_geometry", "expression", "lighting", "framing", "composition",
     "camera", "color", "atmosphere",
 })
 AXIS_DIMENSIONS = {axis: DIMENSIONS for axis in AXES}
+EXPLICIT_OPEN_DIMENSIONS = frozenset({"role", "setting", "relationship", "timing"})
 READINGS = frozenset({"relevant", "potential", "irrelevant", "conflicting", "uncertain"})
+
+
+def allowed_dimensions(lock: dict) -> set[str]:
+    """A broad definition never implicitly unlocks a role or situation."""
+    return (DIMENSIONS | (EXPLICIT_OPEN_DIMENSIONS & set(lock.get("open_dimensions", [])))) - set(lock.get("locked_dimensions", []))
 
 
 def queries(core: dict, definitions: dict, intensities: dict, retrieval_text) -> dict[str, dict[str, str]]:
@@ -40,6 +46,22 @@ def queries(core: dict, definitions: dict, intensities: dict, retrieval_text) ->
     ]
     independent, _ = retrieval_text(request_core)
     baseline, _ = retrieval_text(core)
+    # Select short, requester-owned relations, not a fixed category menu or
+    # agent-authored wardrobe. Their effects still pass the same scope guards.
+    anchors = (core.get("intent_lock") or {}).get("semantic_anchors", [])
+    focuses = []
+    for dimension in ("event", "relationship", "action", "setting", "role", "concept"):
+        phrases = list(dict.fromkeys(str(row.get("prompt_evidence", "")).strip()
+                                    for row in anchors if row.get("dimension") == dimension))
+        text = "; ".join(phrase for phrase in phrases if phrase)
+        if text and len(text.split()) <= 48 and text not in [item[1] for item in focuses]:
+            positive, _ = retrieval_text({**request_core, "request_binding": {"active_spans": []},
+                                          "source_request": "", "user_definitions": [],
+                                          "visual_priorities": [text]})
+            if positive.strip():
+                focuses.append((dimension, positive))
+        if len(focuses) == 2:
+            break
     result = {}
     for axis in AXES:
         if intensities.get(axis, 0) <= 0:
@@ -48,6 +70,9 @@ def queries(core: dict, definitions: dict, intensities: dict, retrieval_text) ->
         meaning = definition["definition"] + " " + definition["levels"][str(intensities[axis])]
         result[axis] = {"coherence": baseline + " " + meaning,
                         "alternatives": independent + " " + meaning}
+        short_meaning = definition["definition"].split(";")[0].split(", including")[0]
+        result[axis].update({"relation_" + dimension: text + " " + short_meaning
+                             for dimension, text in focuses})
     return result
 
 
@@ -68,7 +93,7 @@ def _cosine(left, right):
 
 def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
                     query_vectors: dict | None = None, index: dict | None = None,
-                    limit: int = 12) -> tuple[list[dict], dict]:
+                    limit: int = 12, scene_query: str = "") -> tuple[list[dict], dict]:
     """BM25F + available embedding ranks, with bounded soft diversity.
 
     Stable IDs break ties; source order, preset membership, aesthetic tags and
@@ -119,6 +144,8 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
                     scores[key] = scores.get(key, 0.0) + 0.6 / (30 + rank)
                     evidence.setdefault(key, set()).add(lane + ":semantic_scope")
     tokens = {key: set(tokenize_bm25f_text(" ".join(row["visual_text"]))) for key, row in by_id.items()}
+    scene_ranks = rank_bm25f(lexical_index, {"global_context": scene_query}, limit=max(1, len(rows))) if scene_query else []
+    scene_support = {hit["document_id"]: 1.0 / (1 + rank) for rank, hit in enumerate(scene_ranks)}
     selected = []
     remaining = set(scores)
     maximum = max(scores.values(), default=1.0)
@@ -127,7 +154,7 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
             similarity = max((len(tokens[key] & tokens[other]) / max(1, len(tokens[key] | tokens[other]))
                               for other in selected), default=0.0)
             same_scope = sum(by_id[other]["expression_scope"] == by_id[key]["expression_scope"] for other in selected)
-            return scores[key] / maximum - 0.35 * similarity - 0.06 * same_scope
+            return scores[key] / maximum + 0.12 * scene_support.get(key, 0.0) - 0.35 * similarity - 0.06 * same_scope
         key = min(remaining, key=lambda key: (-utility(key), key))
         remaining.remove(key)
         selected.append(key)
@@ -138,6 +165,7 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
         row.pop("visual_text", None)
         row["retrieval_evidence"] = sorted(evidence[key])
         row["contextual_status"] = "unassessed"
+        row["scene_retrieval_support"] = key in scene_support
         result.append(row)
     return result, {
         "lanes": lane_modes, "semantic_candidate_coverage": semantic_coverage,
@@ -145,6 +173,7 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
         "returned_count": len(result), "ranking": "reciprocal_rank_fusion_with_soft_visual_diversity",
         "classification": "not_performed", "membership_tags_required": False,
         "intensity_admission_thresholds": False,
+        "scene_reranking": "bounded_request_overlap_preference;_not_applicability_proof",
     }
 
 

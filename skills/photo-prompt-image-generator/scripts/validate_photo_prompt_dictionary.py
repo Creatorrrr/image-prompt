@@ -1353,11 +1353,11 @@ def validate_quality_layer_hybrid_augmentation(
             default_intensities = {axis: definitions[axis]["default"] for axis in creative_controls.AXES}
         except (ValueError, KeyError, TypeError) as exc:
             errors.append(f"creative_controls: {exc}")
-    if set(default_intensities) != {"sensual_editorial", "fetish_fashion"}:
+    if set(default_intensities) != {"sensual", "fetish"}:
         errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.default_intensities: must contain sensual_editorial and fetish_fashion"
+            "quality_layers.hybrid_augmentation.adult_appeal.default_intensities: must contain sensual and fetish"
         )
-    for axis_id in ("sensual_editorial", "fetish_fashion"):
+    for axis_id in ("sensual", "fetish"):
         try:
             default_intensity = int(default_intensities.get(axis_id))
         except (TypeError, ValueError):
@@ -1371,8 +1371,8 @@ def validate_quality_layer_hybrid_augmentation(
                 )
     default_emphasis = str(adult.get("default_emphasis") or "")
     if "creative_controls_source" in adult:
-        default_emphasis = "balanced" if default_intensities.get("sensual_editorial") == default_intensities.get("fetish_fashion") else (
-            "sensual_led" if default_intensities.get("sensual_editorial", 0) > default_intensities.get("fetish_fashion", 0) else "fetish_led"
+        default_emphasis = "balanced" if default_intensities.get("sensual") == default_intensities.get("fetish") else (
+            "sensual_led" if default_intensities.get("sensual", 0) > default_intensities.get("fetish", 0) else "fetish_led"
         )
     if default_emphasis not in {"sensual_led", "balanced", "fetish_led"}:
         errors.append(
@@ -1445,9 +1445,9 @@ def validate_quality_layer_hybrid_augmentation(
             "quality_layers.hybrid_augmentation.adult_appeal.emphases: must contain sensual_led, balanced, and fetish_led"
         )
     axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
-    if set(axes) != {"sensual_editorial", "fetish_fashion"}:
+    if set(axes) != {"sensual", "fetish"}:
         errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.axes: must contain sensual_editorial and fetish_fashion"
+            "quality_layers.hybrid_augmentation.adult_appeal.axes: must contain sensual and fetish"
         )
     for axis_id, axis in axes.items():
         label = f"quality_layers.hybrid_augmentation.adult_appeal.axes.{axis_id}"

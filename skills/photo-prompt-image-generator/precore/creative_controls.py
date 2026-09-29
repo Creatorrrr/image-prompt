@@ -14,15 +14,89 @@ import json
 import math
 from pathlib import Path
 import random
+import re
 import secrets
 
-VERSION = "photo-creative-controls/v1"
-DEFINITION_VERSION = "photo-creative-control-definitions/v1"
+VERSION = "photo-creative-controls/v2"
+DEFINITION_VERSION = "photo-creative-control-definitions/v2"
 DEFAULT_PATH = Path(__file__).with_name("creative_controls.json")
-AXES = ("sensual_editorial", "fetish_fashion")
+AXES = ("sensual", "fetish")
 CONTROL_NAMES = {*AXES, "adult_appeal_emphasis", "creativity", "viewer_experience",
                  "reference_edit_mode", "surreal_mode", "surreal_probability",
                  "surreal_intensity", "trend_layer"}
+
+# Deliberately narrow syntax: only explicit name=value/name:value assignments
+# are configuration. Natural-language or mixed visual instructions stay visual.
+ASSIGNMENT = re.compile(
+    r"(?<![\w])`?(?P<name>" + "|".join(sorted(CONTROL_NAMES))
+    + r")`?\s*[:=]\s*`?(?P<value>[A-Za-z0-9_.+\-]+)`?(?![\w])"
+)
+QUOTED_TEXT = re.compile(
+    r'"(?:\\.|[^"\\])*"'
+    r"|(?<!\w)'(?:\\.|[^'\\])*'"
+)
+
+
+def configuration_assignments(text):
+    """Quoted image text is content, not a configuration instruction."""
+    quoted = [(match.start(), match.end()) for match in QUOTED_TEXT.finditer(text)]
+    return [match for match in ASSIGNMENT.finditer(text)
+            if not any(start <= match.start() < end for start, end in quoted)]
+
+
+def strip_assignments(text):
+    for match in reversed(configuration_assignments(text)):
+        text = text[:match.start()] + " " + text[match.end():]
+    return text
+
+
+def split_request_spans(envelope, snapshot=None):
+    """Return visual fragments and verified assignments, leaving raw text intact.
+
+    Only a byte-bound snapshot with matching explicit overrides covers controls.
+    Fragments on either side of assignments each retain their coverage duty.
+    No span ID or caller-authored label grants an exemption.
+    """
+    visual, assignments = [], []
+
+    def add_fragment(span, start, end, index):
+        separators = " \t\r\n,;:|()[]`"
+        raw = span["text"][start:end]
+        left = len(raw) - len(raw.lstrip(separators))
+        fragment = raw.strip(separators)
+        if re.search(r"[^\W_]", fragment):
+            offset = span["start"] + start + left
+            visual.append({**span, "span_id": f"{span['span_id']}:visual{index}",
+                           "source_span_id": span["span_id"], "start": offset,
+                           "end": offset + len(fragment), "text": fragment})
+
+    for span in envelope.get("active_spans", []):
+        text = span["text"]
+        matches = configuration_assignments(text)
+        if not matches:
+            visual.append(dict(span))
+            continue
+        if not assignments:
+            validate(snapshot, envelope.get("request_text"))
+        cursor = 0
+        for index, match in enumerate(matches):
+            name, raw = match.group("name", "value")
+            kind = snapshot["definitions"]["controls"][name]["type"]
+            try:
+                value = raw if kind == "enum" else json.loads(raw)
+            except (ValueError, TypeError) as exc:
+                raise ValueError(f"invalid explicit control assignment: {match.group()}") from exc
+            check_value(name, value, snapshot["definitions"]["controls"][name])
+            resolved = snapshot["controls"][name]
+            if resolved["source"] != "request_override" or resolved["value"] != value:
+                raise ValueError(f"explicit {name} assignment differs from the frozen override")
+            assignments.append({"span_id": span["span_id"], "name": name, "value": value,
+                                "start": span["start"] + match.start(),
+                                "end": span["start"] + match.end(), "text": match.group()})
+            add_fragment(span, cursor, match.start(), index)
+            cursor = match.end()
+        add_fragment(span, cursor, len(text), len(matches))
+    return visual, assignments
 
 
 def digest(value):
@@ -152,6 +226,30 @@ def runtime_values(snapshot):
     return values
 
 
+def authoring_brief(snapshot):
+    """Small writer-facing view of resolved inputs, without candidate examples."""
+    definitions = snapshot["definitions"]["controls"]
+    lines = []
+    for axis in AXES:
+        value = snapshot["adult_appeal"][axis]["effective_intensity"]
+        lines.extend([f"{axis}: {value} (range: 0–3)",
+                      "Meaning: " + definitions[axis]["definition"],
+                      "Level: " + definitions[axis]["levels"][str(value)], ""])
+    lines.extend(["Choose a coherent expression suited to this particular scene.",
+                  "The two controls may share the same expressive choice.",
+                  "Intensity describes prominence, not a required expression category or garment.",
+                  "", "Other resolved controls:"])
+    for name, row in snapshot["controls"].items():
+        if name not in AXES:
+            value = row["value"]
+            if name == "adult_appeal_emphasis":
+                value = snapshot["resolved_emphasis"]
+            elif name == "surreal_mode":
+                value = "on" if snapshot["surreal_active"] else "off"
+            lines.append(f"{name}: {json.dumps(value, ensure_ascii=False)}")
+    return "\n".join(lines)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--request-envelope-json", required=True)
@@ -169,8 +267,10 @@ def main(argv=None):
         raise ValueError("request envelope text/hash mismatch")
     snapshot = resolve(request, overrides=read(args.overrides_json) if args.overrides_json else {},
                        context=read(args.context_json), seed=args.seed)
+    split_request_spans(envelope, snapshot)
     Path(args.output).write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"output": args.output, "canonical_sha256": snapshot["canonical_sha256"]}))
+    print(json.dumps({"output": args.output, "canonical_sha256": snapshot["canonical_sha256"],
+                      "authoring_brief": authoring_brief(snapshot)}, ensure_ascii=False))
     return 0
 
 

@@ -41,19 +41,19 @@ ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-sc
 # New v6 adult-axis additions preserve explicit locks; other augmentation
 # contracts continue to require explicitly open dimensions.
 LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS = {
-    "sensual_editorial": frozenset({
+    "sensual": frozenset({
         "sexual_tone", "style", "composition", "expression", "pose",
         "body_geometry", "framing", "lighting", "camera", "action",
         "color", "atmosphere",
     }),
-    "fetish_fashion": frozenset({
+    "fetish": frozenset({
         "sexual_tone", "style", "appearance", "material", "action", "pose", "body_geometry",
     }),
 }
 
 ADULT_APPEAL_AXIS_DIMENSIONS = {
     **LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
-    "sensual_editorial": LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS["sensual_editorial"] | {"appearance", "material"},
+    "sensual": LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS["sensual"] | {"appearance", "material"},
 }
 
 

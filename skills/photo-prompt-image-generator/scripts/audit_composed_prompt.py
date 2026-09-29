@@ -5667,11 +5667,32 @@ def authorial_core_active_scope_contains(core: dict[str, Any], text: str) -> boo
     )
 
 
+def authorial_core_visual_spans(core: dict[str, Any], snapshot=None) -> list[dict]:
+    """Recompute configuration coverage from bound inputs, never an agent label."""
+    if snapshot is not None:
+        creative_controls.validate(snapshot, core.get("source_request"))
+        if core.get("creative_controls_sha256") != snapshot["canonical_sha256"]:
+            raise ValueError("creative controls do not match the core binding")
+    visual, _ = creative_controls.split_request_spans(
+        {"request_text": core.get("source_request"),
+         "active_spans": (core.get("request_binding") or {}).get("active_spans", [])}, snapshot)
+    return visual
+
+
+def authorial_core_visual_span_texts(core: dict[str, Any], snapshot=None) -> list[str]:
+    return [row["text"] for row in authorial_core_visual_spans(core, snapshot)]
+
+
 def authorial_core_v2_intent_contract_valid(
-    core: dict[str, Any], *, minimum_open_dimensions: int = 2
+    core: dict[str, Any], *, minimum_open_dimensions: int = 2,
+    creative_control_snapshot=None,
 ) -> bool:
     if core.get("contract_version") not in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         return True
+    try:
+        visual_spans = authorial_core_visual_span_texts(core, creative_control_snapshot)
+    except (ValueError, TypeError, KeyError, AttributeError):
+        return False
     source_request = core.get("source_request")
     binding = core.get("request_binding")
     if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
@@ -5824,7 +5845,7 @@ def authorial_core_v2_intent_contract_valid(
             or anchor_id in seen_anchor_ids
             or dimension not in (opened if is_property else locked)
             or len(authorial_general_content_words(source_text)) < 1
-            or not authorial_core_active_scope_contains(core, source_text)
+            or not any(source_text.casefold() in span.casefold() for span in visual_spans)
             or len(authorial_evidence_tokens(evidence)) < 2
             or not text_contains_term(baseline, evidence)
             or (evidence.casefold() in seen_anchor_evidence and not is_property)
@@ -5847,7 +5868,7 @@ def authorial_core_v2_intent_contract_valid(
             in str(span_text).casefold()
             for anchor in anchors
         )
-        for span_text in authorial_core_active_span_texts(core)
+        for span_text in visual_spans
     ):
         return False
     definitions = core.get("user_definitions")
@@ -5870,7 +5891,7 @@ def authorial_core_v2_intent_contract_valid(
             or term.casefold() in seen_definition_terms
             or source_text.casefold()
             not in {
-                span.casefold() for span in authorial_core_active_span_texts(core)
+                span.casefold() for span in visual_spans
             }
             or source_text.casefold() == term.casefold()
             or len(authorial_general_content_words(str(item.get("interpreted_meaning") or ""))) < 4
@@ -5903,7 +5924,7 @@ def authorial_core_v2_intent_contract_valid(
     return True
 
 
-def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
+def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_control_snapshot=None) -> bool:
     if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
         return True
     assertions = core.get("semantic_assertions")
@@ -5919,9 +5940,13 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any]) -> bool:
     )
     if not isinstance(assertions, list) or len(assertions) > 16:
         return False
+    try:
+        visual_spans = authorial_core_visual_spans(core, creative_control_snapshot)
+    except (ValueError, TypeError, KeyError, AttributeError):
+        return False
     span_ids = {
-        str(item.get("span_id") or "")
-        for item in binding.get("active_spans") or []
+        str(item.get("source_span_id", item.get("span_id")) or "")
+        for item in visual_spans
         if isinstance(item, dict)
     }
     locked = {str(value) for value in intent_lock.get("locked_dimensions") or []}
@@ -6288,7 +6313,7 @@ def expected_authorial_core_retrieval_provenance(
 
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         for value in authorial_core_active_span_texts(core):
-            add("source_request_scope", value)
+            add("source_request_scope", creative_controls.strip_assignments(value))
     else:
         add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
@@ -6369,7 +6394,11 @@ def expected_authorial_core_retrieval_provenance(
     return provenance
 
 
-def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
+def authorial_core_interpretation_contract_valid(core: dict[str, Any], *, creative_control_snapshot=None) -> bool:
+    try:
+        visual_spans = authorial_core_visual_span_texts(core, creative_control_snapshot)
+    except (ValueError, TypeError, KeyError, AttributeError):
+        return False
     if core.get("contract_version") not in {
         LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
         AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -6418,7 +6447,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
             or source_text.casefold() not in source_request
             or (
                 core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-                and not authorial_core_active_scope_contains(core, source_text)
+                and not any(source_text.casefold() in span.casefold() for span in visual_spans)
             )
             or basis not in allowed_bases
             or len(authorial_general_content_words(resolution)) < 4
@@ -6451,7 +6480,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any]) -> bool:
                 source.casefold() in span.casefold()
                 for source in semantic_source_texts
             )
-            for span in authorial_core_active_span_texts(core)
+            for span in visual_spans
         ):
             return False
     return True
@@ -6757,11 +6786,12 @@ def audit_authorial_core_v5(
     if (
         core.get("contract_version") not in allowed_core_versions
         or core.get("provenance") != "agent_prepack"
-        or not authorial_core_interpretation_contract_valid(core)
+        or not authorial_core_interpretation_contract_valid(core, creative_control_snapshot=pack.get("creative_controls"))
         or not authorial_core_v2_intent_contract_valid(
-            core, minimum_open_dimensions=minimum_open_dimensions
+            core, minimum_open_dimensions=minimum_open_dimensions,
+            creative_control_snapshot=pack.get("creative_controls"),
         )
-        or not authorial_core_v3_semantic_contract_valid(core)
+        or not authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=pack.get("creative_controls"))
         or not modern_core_fields_valid
         or not canonical_sha
         or canonical_sha != expected_sha
@@ -7414,7 +7444,8 @@ def audit_adult_appeal_dimension_scope(
         return [{"check": "adult_appeal_dimension_scope", "reason": "unsupported adult-axis scope version"}]
     dimensions_by_axis = LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS if version == LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION else ADULT_APPEAL_AXIS_DIMENSIONS
     if version == photo_contextual_appeal.SCOPE_VERSION:
-        dimensions_by_axis = photo_contextual_appeal.AXIS_DIMENSIONS
+        dimensions_by_axis = {axis: photo_contextual_appeal.allowed_dimensions(intent_lock)
+                              for axis in photo_contextual_appeal.AXES}
     expected = {
         "contract_version": version,
         "policy": "preserve_locked_dimensions",

@@ -1,6 +1,6 @@
 # Contextual expression after the independent draft
 
-Use only when the pack declares `photo-contextual-appeal/v1`. Initial authorship
+Use only when the pack declares `photo-contextual-appeal/v2`. Initial authorship
 remains independent of candidate data. The frozen baseline records that starting
 point; agent-chosen clothing, wearing method, gesture or light may still be
 replaced in the final prompt within the declared scope. Requester locks remain
@@ -8,12 +8,13 @@ binding, including garment type, color and condition when specified.
 
 ## Interpret a possibility in this scene
 
-The two axes are independent, overlapping readings of a whole portrayal.
-Sensual editorial can emerge through dress, wearing method, posture, action,
-gaze, light or distance. Fetish fashion can emerge through adult fashion's
-material, construction, symbolic or garment–person–action relationships. Neither
-an ordinary uniform nor a glove, pose or fabric has an intrinsic axis flag.
-Consider what its use and visible relationships actually communicate here.
+The two axes are independent, overlapping readings of a whole portrayal. Use
+the frozen definitions: `sensual` concerns broadly interpreted human attraction
+and desire; `fetish` concerns a distinctive focus across objects, bodies,
+clothing, materials, roles, situations, behaviors and sensory qualities. Neither
+is limited to a fashion genre. An ordinary object, garment or behavior has no
+intrinsic axis flag. Consider its use and visible relationships in this scene.
+One choice may express both controls, including when both lead at level three.
 
 Search returns possibilities, not classifications. `contextual_status:
 unassessed` is deliberate. Inspect full details for the bounded
@@ -57,6 +58,11 @@ scene coherence and readability of the request together. Neither “the baseline
 already reaches 3/3” nor a deliberately weak or excessive foil settles this.
 If every supplied alternative conflicts or adds nothing useful, say why and keep
 the baseline. There is no adoption quota or required outfit family.
+
+Develop viable alternatives into a concrete scene application before comparing
+them with a complete baseline. Keeping, replacing, deleting and recomposing
+agent-owned choices are all available. Reject a change for a real request lock
+or artistic reason, not merely because it differs from the agent's draft.
 
 Levels 0–3 describe no added treatment, supporting, clearly readable and leading
 intent. They never unlock specific items or prescribe exposure. Keep each
