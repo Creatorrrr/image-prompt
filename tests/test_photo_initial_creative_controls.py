@@ -26,7 +26,7 @@ class CreativeControlResolverTests(unittest.TestCase):
 
     def test_defaults_meanings_and_sources_are_available_before_candidates(self):
         snapshot = self.snapshot()
-        self.assertEqual([snapshot["controls"][a]["value"] for a in controls.AXES], [2, 1])
+        self.assertEqual([snapshot["controls"][a]["value"] for a in controls.AXES], [1, 0])
         self.assertIn("wardrobe", snapshot["definitions"]["controls"]["sensual_editorial"]["definition"])
         self.assertIn("clearly readable", snapshot["definitions"]["controls"]["sensual_editorial"]["levels"]["2"])
         self.assertEqual(snapshot["controls"]["sensual_editorial"]["source"], "saved_setting")
@@ -90,7 +90,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
             {"anchor_id": "dress_kind", "dimension": "appearance", "target": "main_subject", "property": "wardrobe.garment_type", "source_text": "torn white dress", "prompt_evidence": "torn white dress"},
             {"anchor_id": "dress_color", "dimension": "appearance", "target": "main_subject", "property": "wardrobe.color", "source_text": "white dress", "prompt_evidence": "white dress"},
         ])
-        cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, seed=73)
+        cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, overrides={"sensual_editorial": 2, "fetish_fashion": 1}, seed=73)
         cls.raw["creative_controls_sha256"] = cls.snapshot["canonical_sha256"]
         cls.core = generator.normalize_authorial_core(cls.raw, request_envelope=cls.envelope)
         cls.result = generator.generate_once(cls.data, random.Random(73), None, ["en"], True, 12, True,
@@ -107,6 +107,11 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
                 "fetish_fashion": {"intensity": 1, "realization": "baseline", "affected_dimensions": [], "artistic_interpretation": "Retain the existing material direction for separate visual assessment", "prompt_evidence": "textured clothing"},
             },
             "blend": {"emphasis": "sensual_led"},
+            "contextual_review": [
+                {"candidate_id": cid, "reading": "irrelevant", "reason": "This optional change does not improve the window portrait's preserved moment."}
+                for cid in self.pack["adult_appeal"]["contextual_retrieval"]["review_candidate_ids"]
+            ],
+            "contextual_comparison": "Retain the baseline at 2/1: alternative presentation and construction would compete with the existing neckline and window gesture.",
         }
         return composed
 
@@ -141,7 +146,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
     def test_whole_garment_candidates_do_not_bypass_partial_property_locks(self):
         for axis in self.pack["adult_appeal"]["axes"].values():
             for candidate in axis["candidate_inventory"]:
-                self.assertNotIn("appearance", candidate["affected_dimensions"])
+                self.assertTrue(property_effects_allowed(self.core["intent_lock"], candidate["affected_dimensions"], candidate.get("affected_properties", [])))
 
     def test_baseline_realization_needs_no_extra_axis_detail(self):
         composed = self.composed()

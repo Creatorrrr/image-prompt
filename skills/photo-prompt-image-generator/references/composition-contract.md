@@ -1,5 +1,11 @@
 # Composition Contract
 
+For `adult_appeal.contextual_retrieval`, add the short conditional review and
+baseline/alternative comparison inside `adult_appeal_brief` as described in
+[contextual appeal](contextual-appeal.md). The general creative sample does not
+replace this expression review. Adopted candidates still use the ordinary
+interpretation/evidence fields; there is no required adoption count.
+
 Post-core only. This reference must not participate in initial meaning resolution or baseline authoring. Follow `SKILL.md` for user authority, retry-only parent access, and the compact composition view. Full source packs remain the audit input; a view never replaces them.
 
 ## Candidate Pack v6: Normal Skill Contract

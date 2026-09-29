@@ -19,6 +19,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import photo_contextual_appeal
     import photo_embodiment
     import photo_creative_controls as creative_controls
     import prompt_generator as candidate_semantics_generator
@@ -7302,7 +7303,7 @@ def audit_creative_augmentation_v5(
             }
             adult_candidate = adult_candidates.get(candidate_id)
             if (isinstance(adult_candidate, dict)
-                    and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION}):
+                    and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}):
                 open_dimensions = set((scope.get("axis_allowed_dimensions") or {}).get(adult_candidate.get("axis"), []))
             invalid_dimensions = sorted(
                 set(affected_dimensions) - open_dimensions
@@ -7409,9 +7410,11 @@ def audit_adult_appeal_dimension_scope(
     intent_lock = core.get("intent_lock") or {}
     locked = set(intent_lock.get("locked_dimensions") or [])
     version = scope.get("contract_version") if isinstance(scope, dict) else None
-    if version not in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION}:
+    if version not in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}:
         return [{"check": "adult_appeal_dimension_scope", "reason": "unsupported adult-axis scope version"}]
     dimensions_by_axis = LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS if version == LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION else ADULT_APPEAL_AXIS_DIMENSIONS
+    if version == photo_contextual_appeal.SCOPE_VERSION:
+        dimensions_by_axis = photo_contextual_appeal.AXIS_DIMENSIONS
     expected = {
         "contract_version": version,
         "policy": "preserve_locked_dimensions",
@@ -7422,7 +7425,7 @@ def audit_adult_appeal_dimension_scope(
             for axis, dimensions in dimensions_by_axis.items()
         },
     }
-    if version == ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION:
+    if version in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}:
         expected["protected_properties"] = intent_property_locks(intent_lock)
     if (pack.get("contract_version") != "photo-candidate-pack/v6"
             or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
@@ -7469,6 +7472,7 @@ def audit_adult_appeal_v5(
         if isinstance(composed.get("adult_appeal_brief"), dict)
         else {}
     )
+    failures.extend(photo_contextual_appeal.audit_review(contract, brief, chosen))
     adult_phrase = str(brief.get("adult_subject_phrase") or "")
     agency_phrase = str(brief.get("agency_phrase") or "")
     if (
@@ -7512,7 +7516,7 @@ def audit_adult_appeal_v5(
                 for dimension in candidate.get("affected_dimensions") or []
             }
             realization = actual.get("realization", "refined")
-            retained = realization == "baseline" and scope.get("contract_version") == ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION
+            retained = realization == "baseline" and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}
             if retained:
                 if affected or selected_dimensions or not text_contains_term(str((pack.get("authorial_core") or {}).get("baseline_prompt_en") or ""), evidence):
                     failures.append({"check": "adult_appeal_baseline_realization", "axis": axis_id, "reason": "baseline realization must retain literal baseline evidence and introduce no axis candidate or changed dimension"})
