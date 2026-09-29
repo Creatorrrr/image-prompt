@@ -15,6 +15,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ASSET = HERE.parents[3] / "skills/photo-prompt-image-generator/assets/photo_prompt_sensual_fetish_fashion_extension.json"
 POOL = HERE / "source_pool.json"
+MAINTENANCE = HERE.parent / "extension-maintenance" / "photo_prompt_sensual_fetish_fashion_extension.json"
 HIDDEN_STRUCTURE = {"XA012", "XA027"}
 
 
@@ -75,6 +76,10 @@ def candidate(row: dict, origin: str, slot: str) -> dict:
             "target": "main_subject",
             "property": "wardrobe",
         }]
+    if row.get("affected_properties"):
+        entry["affected_properties"] = [dict(effect) for effect in row["affected_properties"]]
+    if row.get("contextual_usage"):
+        entry["contextual_usage"] = dict(row["contextual_usage"])
     return entry
 
 
@@ -153,6 +158,20 @@ def main() -> None:
     ids = [row["id"] for rows in slots.values() for row in rows]
     assert len(ids) == len(set(ids)) == 251
     assert len(bundles) == 116 and len({row["id"] for row in bundles}) == len(bundles)
+    maintenance = {
+        "contract_version": "photo-extension-maintenance/v1",
+        "record_id": "photo_prompt_sensual_fetish_fashion_extension",
+        "source_filename": ASSET.name,
+        "authored_source_sha256": hashlib.sha256(POOL.read_bytes()).hexdigest(),
+        "runtime_keys": ["existing_preset_filter_extensions", "slots", "visual_semantics"],
+        "maintenance_only": {
+            "source_pool": "docs/research-evidence/photo-prompt/sensual-fetish-20260928/source_pool.json",
+            "scope": "Source-linked optional visual candidates; property effects and contextual contrasts are authored in the source atoms.",
+            "axis_labels": "Historical research grouping only; contextual retrieval does not use these labels for admission or classification.",
+        },
+    }
+    MAINTENANCE.parent.mkdir(parents=True, exist_ok=True)
+    MAINTENANCE.write_text(json.dumps(maintenance, ensure_ascii=False, indent=2) + "\n")
     output = {
         "schema_version": "photo-prompt-research-extension/v1",
         "existing_preset_filter_extensions": {
@@ -173,7 +192,7 @@ def main() -> None:
         "maintenance_ref": {
             "contract_version": "photo-extension-maintenance-ref/v1",
             "record_id": "photo_prompt_sensual_fetish_fashion_extension",
-            "sha256": hashlib.sha256(POOL.read_bytes()).hexdigest(),
+            "sha256": hashlib.sha256(json.dumps(maintenance, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         },
     }
     ASSET.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")

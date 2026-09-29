@@ -14,7 +14,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-VERSION = "photo-composer-view/v1"
+VERSION = "photo-composer-view/v2"
+LEGACY_VERSION = "photo-composer-view/v1"
 OPTIONAL_PATHS = (
     ("presets",),
     ("photographic_integration", "category_candidates"),
@@ -30,6 +31,7 @@ SUMMARY_FIELDS = (
     "concept_terms", "applicability", "conflicts_with", "affected_dimensions",
     "slot", "axis", "semantic_band", "hard_eligible", "semantic_consistency",
     "concept_units", "relations", "adoption", "semantic_surface_version",
+    "affected_properties", "expression_scope", "contextual_status", "retrieval_evidence",
 )
 
 
@@ -56,10 +58,13 @@ def pointer(path: tuple[str, ...]) -> str:
     return "/" + "/".join(part.replace("~", "~0").replace("/", "~1") for part in path)
 
 
-def inventory_paths(pack: dict[str, Any]) -> list[tuple[str, ...]]:
+def inventory_paths(pack: dict[str, Any], version: str = VERSION) -> list[tuple[str, ...]]:
     paths = list(OPTIONAL_PATHS)
     if isinstance(pack.get("slots"), dict):
         paths.extend(("slots", slot, "candidates") for slot in pack["slots"])
+    if version == VERSION:
+        paths.extend(("adult_appeal", "axes", axis, "candidate_inventory")
+                     for axis in (pack.get("adult_appeal") or {}).get("axes", {}))
     return paths
 
 
@@ -86,12 +91,14 @@ def deferable(rows: Any) -> bool:
     return True
 
 
-def build_view(payload: Any, candidate_ids: list[str] | None = None) -> dict[str, Any]:
+def build_view(payload: Any, candidate_ids: list[str] | None = None, *, version: str = VERSION) -> dict[str, Any]:
+    if version not in {VERSION, LEGACY_VERSION}:
+        raise ValueError("unsupported composer view version")
     pack = source_pack(payload)
     projection = copy.deepcopy(pack)
     catalog: list[dict[str, Any]] = []
     records: dict[str, list[dict[str, Any]]] = {}
-    for path in inventory_paths(pack):
+    for path in inventory_paths(pack, version):
         found = locate(projection, path)
         if found is None:
             continue
@@ -107,7 +114,8 @@ def build_view(payload: Any, candidate_ids: list[str] | None = None) -> dict[str
             record = {"id": candidate_id, "source_pointer": source_pointer, "candidate": copy.deepcopy(row)}
             records.setdefault(candidate_id, []).append(record)
             summary = {"id": candidate_id, "source_pointer": source_pointer}
-            summary.update({field: copy.deepcopy(row[field]) for field in SUMMARY_FIELDS if field in row})
+            fields = SUMMARY_FIELDS if version == VERSION else SUMMARY_FIELDS[:-4]
+            summary.update({field: copy.deepcopy(row[field]) for field in fields if field in row})
             catalog.append(summary)
         parent[key] = {"deferred_candidate_ids": ids, "read_details_before_selection": True}
 
@@ -117,14 +125,14 @@ def build_view(payload: Any, candidate_ids: list[str] | None = None) -> dict[str
         if missing:
             raise ValueError("unknown deferred candidate IDs: " + ", ".join(missing))
         result = {
-            "contract_version": VERSION,
+            "contract_version": version,
             "mode": "candidate_details",
             **binding,
             "candidates": [record for candidate_id in dict.fromkeys(candidate_ids) for record in records[candidate_id]],
         }
     else:
         result = {
-            "contract_version": VERSION,
+            "contract_version": version,
             "mode": "composition_overview",
             **binding,
             "audit_input": "original_candidate_pack_only",
@@ -144,7 +152,7 @@ def verify_view(pack: Any, view: Any) -> None:
         ids = list(dict.fromkeys(row["id"] for row in view.get("candidates", [])))
         if not ids:
             raise ValueError("candidate detail view must contain selected records")
-    if view != build_view(pack, ids):
+    if view != build_view(pack, ids, version=view.get("contract_version")):
         raise ValueError("view differs from its original pack projection")
 
 

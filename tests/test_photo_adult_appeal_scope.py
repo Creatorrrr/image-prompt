@@ -44,8 +44,8 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             cls.data, random.Random(77), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, concept_locks=[source],
             seed=77, creativity=0.0, authorial_core=cls.core,
-            sensual_editorial_intensity=generator.CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY,
-            fetish_fashion_intensity=generator.CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY,
+            sensual_editorial_intensity=2,
+            fetish_fashion_intensity=1,
             adult_appeal_activation_source="skill_default",
         )
         cls.pack = generator.build_candidate_pack(cls.result, cls.data, "v6")
@@ -84,7 +84,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         }
         return composed
 
-    def test_locked_style_and_flash_preserve_both_default_intensities(self):
+    def test_locked_style_and_flash_preserve_both_requested_intensities(self):
         adult = self.pack["adult_appeal"]
         self.assertEqual([adult["axes"][a]["intensity"] for a in ADULT_APPEAL_AXIS_DIMENSIONS], [2, 1])
         self.assertEqual(auditor.audit_adult_appeal_dimension_scope(self.pack, adult), [])
@@ -176,7 +176,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertIn("adult_appeal_candidate_dimensions", {r["check"] for r in auditor.audit_adult_appeal_dimension_scope(pack, pack["adult_appeal"])})
 
     def test_adopted_candidate_requires_its_complete_effect_in_the_brief(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if row["slot"] == "fetish_styling")
+        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
         composed = self.composed()
         failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertIn("adult_appeal_authored_dimensions", {r["check"] for r in failures})
@@ -185,7 +185,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertEqual(failures, [])
 
     def test_sampled_adult_candidate_uses_same_scope_but_other_candidates_do_not(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if row["slot"] == "fetish_styling")
+        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
         pack = copy.deepcopy(self.pack)
         pack["creative_augmentation"]["candidates"] = [dict(candidate, semantic_band="near", source_kind="adult_appeal")]
         evidence = "A narrow band of reflected light traces the existing garment's stitched edge"

@@ -40,6 +40,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import photo_contextual_appeal
     import photo_embodiment
     import photo_creative_controls as creative_controls
     from visual_profile_contracts import (
@@ -7429,7 +7430,7 @@ def candidate_pack_adult_risk_groups(entry_id: str, adult_policy: JsonDict) -> L
     return groups
 
 
-def candidate_pack_hybrid_adult_appeal(
+def candidate_pack_legacy_adult_appeal(
     data: JsonDict,
     result: JsonDict,
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
@@ -7647,6 +7648,150 @@ def candidate_pack_hybrid_adult_appeal(
             contract["blend"]["emphasis"] = "sensual_led" if active_axes[0] == "sensual_editorial" else "fetish_led"
         elif not active_axes:
             contract["blend"]["emphasis"] = "balanced"
+    return contract
+
+
+def prepare_contextual_appeal_queries(data, result, core, snapshot, semantic_context, api_key=None):
+    """Bind private query vectors to the exact post-core lanes and run ID."""
+    retrieval = (candidate_pack_hybrid_policy(data).get("adult_appeal") or {}).get("contextual_retrieval") or {}
+    if (semantic_context is None or not core or not snapshot
+            or retrieval.get("contract_version") != photo_contextual_appeal.VERSION):
+        return
+    queries = photo_contextual_appeal.queries(
+        core, snapshot["definitions"],
+        {axis: snapshot["adult_appeal"][axis]["effective_intensity"] for axis in photo_contextual_appeal.AXES},
+        authorial_core_retrieval_text,
+    )
+    by_axis: JsonDict = {}
+    for axis, lanes in queries.items():
+        for lane, text in lanes.items():
+            # Match the existing single-query path. This provider can treat a
+            # list of strings as one multimodal content rather than a batch.
+            by_axis.setdefault(axis, {})[lane] = embed_single_semantic_text(
+                text, model=semantic_context["embedding_model"],
+                dimensions=semantic_context["embedding_dimensions"], api_key=api_key,
+            )
+    if queries:
+        data.setdefault(photo_contextual_appeal.QUERY_CACHE, {})[result["provenance"]["prompt_id"]] = {
+            "queries": queries, "vectors": by_axis,
+        }
+
+
+def candidate_pack_hybrid_adult_appeal(
+    data: JsonDict, result: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+    *, authorial_core: Optional[JsonDict] = None,
+) -> Optional[JsonDict]:
+    policy = candidate_pack_hybrid_policy(data).get("adult_appeal") or {}
+    retrieval_policy = policy.get("contextual_retrieval") or {}
+    snapshot = (result.get("provenance") or {}).get("creative_controls")
+    modern = bool(authorial_core and authorial_core.get("creative_controls_sha256")
+                  and isinstance(snapshot, dict)
+                  and retrieval_policy.get("contract_version") == photo_contextual_appeal.VERSION)
+    if not modern:
+        return candidate_pack_legacy_adult_appeal(data, result, candidate_entries, authorial_core=authorial_core)
+
+    # Reuse activation/binding/combination metadata, without exposing or using
+    # the legacy preset inventory as the new candidate supply.
+    contract = candidate_pack_legacy_adult_appeal(data, result, {}, authorial_core=authorial_core)
+    core = authorial_core
+    lock = core["intent_lock"]
+    locked = set(lock.get("locked_dimensions") or [])
+    scope = contract["dimension_scope"]
+    scope["contract_version"] = photo_contextual_appeal.SCOPE_VERSION
+    scope["axis_allowed_dimensions"] = {
+        axis: sorted(dimensions - locked) for axis, dimensions in photo_contextual_appeal.AXIS_DIMENSIONS.items()
+    }
+    intensities = {axis: row["requested_intensity"] for axis, row in contract["axes"].items()}
+    queries = photo_contextual_appeal.queries(core, snapshot["definitions"], intensities, authorial_core_retrieval_text)
+    prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
+    cached = (data.get(photo_contextual_appeal.QUERY_CACHE) or {}).get(prompt_id) or {}
+    vectors = cached.get("vectors", {}) if cached.get("queries") == queries else {}
+    constraints = {
+        "subject_category": snapshot["context"]["subject_category"], "preset_domains": [],
+        "adult_allowed": contract["eligibility"]["status"] == "eligible",
+        "intent_constraints": authorial_core_generation_constraints(core),
+    }
+    exclusions = [candidate_pack_v5_relevance_tokens(value) for value in core.get("user_exclusions") or []]
+    excluded_identity_slots = {"subject", "appearance_type", "age", "species", "species_morphology", "face", "body_type", "person_origin"}
+    review_ids = []
+    traces = {}
+    for axis, axis_row in contract["axes"].items():
+        allowed = set(scope["axis_allowed_dimensions"][axis])
+        axis_row["intensity"] = intensities[axis] if allowed else 0
+        axis_row["active"] = bool(axis_row["intensity"] and constraints["adult_allowed"])
+        axis_row["intensity_meaning"] = snapshot["definitions"]["controls"][axis]["levels"][str(axis_row["intensity"])]
+        axis_row["candidate_inventory"] = []
+        axis_row["carrier_ids"] = []
+        if not axis_row["active"]:
+            continue
+        rows = []
+        sources = {}
+        for slot, entries in data.get("slots", {}).items():
+            if slot in excluded_identity_slots or slot_block_reason(data, slot, constraints):
+                continue
+            for entry in entries:
+                source_key = f"{slot}:{entry['id']}"
+                dimensions = sorted(set(entry.get("affected_dimensions") or [])
+                                    | set((policy.get("entry_dimensions") or {}).get(source_key) or []))
+                dimensions = dimensions or photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
+                if (not dimensions or not set(dimensions).issubset(allowed)
+                        or not property_effects_allowed(lock, dimensions, entry.get("affected_properties", []))
+                        or entry_block_reason(entry, slot, constraints)
+                        or not compatible_with_facet_guards(entry, {}, {})):
+                    continue
+                # Requirements that need other garments or scene objects are
+                # supplied as context, never silently presumed to be satisfied.
+                fields = semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
+                text = [str(value) for values in fields.values() for value in values]
+                tokens = candidate_pack_v5_relevance_tokens(" ".join(text))
+                if any(group and group <= tokens for group in exclusions):
+                    continue
+                candidate_id = f"augmentation:adult_appeal:{axis}:{source_key}"
+                sources[candidate_id] = ("slot", slot, entry)
+                rows.append({
+                    "id": candidate_id, "source_candidate_id": f"slot:{source_key}",
+                    "slot": slot, "entry_id": entry["id"], "axis": axis,
+                    "carrier": slot, "label_en": localize(entry, "en") or entry["id"],
+                    "label_ko": localize(entry, "ko") or entry["id"],
+                    "expression_scope": entry.get("expression_scope") or photo_contextual_appeal.expression_scope(slot),
+                    "affected_dimensions": dimensions,
+                    "affected_properties": copy.deepcopy(entry.get("affected_properties") or []),
+                    "contextual_usage": copy.deepcopy(entry.get("contextual_usage") or {}),
+                    "context_requirements": {key: copy.deepcopy(entry[key]) for key in (
+                        "requires_any_tags", "requires_all_tags", "requires_any", "requires_all",
+                        "exclude_any_tags", "requires_primary_any_tags", "hard_guards",
+                        "for_any", "for_all", "not_for") if entry.get(key)},
+                    "applicability": {"status": "eligible", "source": "contextual_corpus_retrieval",
+                                      "reason": "scope compatible; scene and aesthetic interpretation pending"},
+                    "risk_groups": candidate_pack_adult_risk_groups(entry["id"], policy),
+                    "conflicts_with": [], "search_fields": fields, "visual_text": text,
+                    "_v6_semantic_source": photo_candidate_semantics.semantic_source(dict(entry, affected_dimensions=dimensions), slot, data.get("candidate_semantic_policy")),
+                })
+        inventory, traces[axis] = photo_contextual_appeal.rank_candidates(
+            rows, queries[axis], policy=SEMANTIC_BM25F_POLICY,
+            query_vectors=vectors.get(axis), index=data.get(SEMANTIC_INDEX_DATA_KEY),
+            limit=int(retrieval_policy.get("candidate_limit_per_axis", 12)),
+        )
+        axis_row["candidate_inventory"] = inventory
+        axis_row["carrier_ids"] = sorted({row["carrier"] for row in inventory})
+        candidate_entries.update({row["id"]: sources[row["id"]] for row in inventory})
+        review_ids.extend(photo_contextual_appeal.review_ids(inventory, int(retrieval_policy.get("review_limit_per_axis", 4))))
+    active = [axis for axis, row in contract["axes"].items() if row["active"]]
+    contract["enabled"] = bool(active)
+    contract["blend"]["emphasis"] = contract["blend"]["requested_emphasis"] if len(active) == 2 else ("sensual_led" if active == ["sensual_editorial"] else "fetish_led" if active else "balanced")
+    contract["blend"].pop("carrier_separation", None)
+    contract.pop("inventory_preset_id", None)
+    contract["composition_requirements"].pop("one_accepted_detail_per_active_axis", None)
+    contract["contextual_retrieval"] = {
+        "contract_version": photo_contextual_appeal.VERSION, "axes": traces,
+        "review_candidate_ids": review_ids, "candidate_adoption_required": False,
+        "review_location": "adult_appeal_brief.contextual_review",
+        "comparison_location": "adult_appeal_brief.contextual_comparison",
+        "query_sha256": canonical_json_sha256(queries),
+        "interpretation_owner": "composer_in_current_scene",
+        "comparison_policy": "baseline_and_coherent_alternatives_at_same_requested_strengths",
+    }
     return contract
 
 
@@ -16631,7 +16776,7 @@ def candidate_pack_project_v5(
     if isinstance((projected.get("adult_appeal") or {}).get("dimension_scope"), dict):
         creative_augmentation.setdefault("selection_contract", {})[
             "adult_appeal_scope_exception"
-        ] = ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION
+        ] = projected["adult_appeal"]["dimension_scope"]["contract_version"]
     return projected
 
 
@@ -27121,6 +27266,9 @@ def generate_once(
             else {}
         ),
     }
+
+    prepare_contextual_appeal_queries(data, result, authorial_core,
+                                     creative_control_snapshot, semantic_context, gemini_api_key)
 
     if (
         semantic_context is not None
