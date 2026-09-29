@@ -39,12 +39,12 @@ def fixture():
         entry("cuff", "A deliberate glove cuff gesture presents the fastening in adult fashion", "accessories.gloves"),
         entry("whole", "A red leather corset dress leads sensual fashion", "wardrobe"),
     ]}, "presets": [], "candidate_semantic_policy": {"slot_dimensions": {"garment_detail": ["appearance"]}},
-        generator.QUALITY_LAYERS_DATA_KEY: {"hybrid_augmentation": {"adult_appeal": {
+        generator.QUALITY_LAYERS_DATA_KEY: {"adult_appeal": {
             "contextual_retrieval": {"contract_version": contextual.VERSION},
             # These old admission gates must not affect the bound v6 path.
             "entry_min_intensity": {"seam": 3, "cuff": 3},
             "inventory_preset_id": "missing", "axes": {},
-        }}}}
+        }}}
     result = {"provenance": {"prompt_id": "test", "creative_controls": snapshot,
                               "adult_appeal": {"axes": {axis: {"intensity": 1} for axis in contextual.AXES}}}}
     return data, core, result
@@ -53,7 +53,7 @@ def fixture():
 class ContextualAppealTests(unittest.TestCase):
     def adult(self, data=None, core=None, result=None):
         default_data, default_core, default_result = fixture()
-        return generator.candidate_pack_hybrid_adult_appeal(
+        return generator.candidate_pack_contextual_adult_appeal(
             data or default_data, result or default_result, {}, authorial_core=core or default_core)
 
     def test_untagged_candidates_at_level_one_ignore_old_inventory_and_thresholds(self):
@@ -138,9 +138,8 @@ class ContextualAppealTests(unittest.TestCase):
         detail = view.build_view(pack, [ids[0]])
         self.assertEqual(detail["candidates"][0]["candidate"]["id"], ids[0])
         view.verify_view(pack, overview)
-        old = view.build_view(pack, version=view.LEGACY_VERSION)
-        self.assertEqual(old["candidate_catalog"], [])
-        view.verify_view(pack, old)
+        with self.assertRaisesRegex(ValueError, "unsupported composer view"):
+            view.build_view(pack, version="photo-composer-view/v1")
 
     def test_review_requires_context_and_comparison_but_allows_rejection_and_uncertainty(self):
         adult = self.adult()
@@ -187,12 +186,7 @@ class ContextualAppealTests(unittest.TestCase):
             self.assertNotIn(dimension, contextual.allowed_dimensions(lock))
             lock["locked_dimensions"].remove(dimension)
 
-    def test_detail_function_comes_from_effects_not_axis_name(self):
-        for axis in contextual.AXES:
-            self.assertEqual(generator.candidate_pack_hybrid_detail_function(
-                {"axis": axis, "affected_dimensions": ["action"]}, {}, 0), "viewer_hook")
-            self.assertEqual(generator.candidate_pack_hybrid_detail_function(
-                {"axis": axis, "affected_dimensions": ["material"]}, {}, 0), "material_detail")
+
 
     def test_scene_preference_breaks_equal_generic_hits_without_claiming_applicability(self):
         def row(key, words):

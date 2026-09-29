@@ -26,8 +26,6 @@ try:
     from photo_contracts import (
         ADULT_APPEAL_AXIS_DIMENSIONS,
         ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
-        LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
-        LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
         AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
         AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
         AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -52,9 +50,6 @@ try:
         property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
-        LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION,
-        LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION,
-        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
         NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
         RENDER_REPAIR_ALLOWED_AXES,
         RENDER_REPAIR_CONTACT_EXPECTATIONS,
@@ -75,20 +70,9 @@ finally:
         sys.path.remove(_SCRIPTS_IMPORT_DIR)
 
 
-SUPPORTED_CANDIDATE_PACK_VERSIONS = {
-    "photo-candidate-pack/v2",
-    "photo-candidate-pack/v3",
-    "photo-candidate-pack/v4",
-    "photo-candidate-pack/v5",
-    "photo-candidate-pack/v6",
-}
+SUPPORTED_CANDIDATE_PACK_VERSIONS = {"photo-candidate-pack/v6"}
 MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS = 100
 MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS = 240
-LEGACY_AUTHORIAL_PROMPT_MIN_WORDS = 24
-LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS = 180
-LEGACY_AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS = 320
-LEGACY_AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS = 80
-LEGACY_AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION = "photo-authorial-prompt-budget/v1"
 VISUAL_OBLIGATIONS_CONTRACT_VERSION = "photo-visual-obligations/v1"
 VISUAL_INTENT_CONTRACT_VERSION = "photo-visual-intent/v1"
 VISUAL_CONCEPTS_CONTRACT_VERSION = "photo-visual-concepts/v1"
@@ -405,7 +389,7 @@ def audit_negative_intent_guard(
             {
                 "check": "negative_intent_guard_contract",
                 "reason": (
-                    "v5/v6 pack must expose the exact recomputable requester-first negative-intent boundary"
+                    "v6 pack must expose the exact recomputable requester-first negative-intent boundary"
                 ),
                 "expected": expected,
                 "actual": actual,
@@ -505,24 +489,6 @@ def expected_authorial_prompt_budget_contract() -> dict[str, Any]:
     }
 
 
-def legacy_authorial_prompt_budget_contract() -> dict[str, Any]:
-    return {
-        "contract_version": LEGACY_AUTHORIAL_PROMPT_BUDGET_CONTRACT_VERSION,
-        "language": "en",
-        "minimum_words": LEGACY_AUTHORIAL_PROMPT_MIN_WORDS,
-        "recommended_maximum_words": LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-        "absolute_maximum_words": LEGACY_AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
-        "required_evidence_headroom_words": LEGACY_AUTHORIAL_PROMPT_REQUIRED_EVIDENCE_HEADROOM_WORDS,
-        "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
-        "policy": {
-            "recommended_maximum_is_warning": True,
-            "absolute_bounds_are_blocking": True,
-            "required_evidence_expands_advisory_ceiling": True,
-            "requester_meaning_outranks_concision": True,
-        },
-    }
-
-
 def nested_prompt_evidence_strings(value: Any) -> list[str]:
     if isinstance(value, str):
         text = value.strip()
@@ -581,7 +547,6 @@ def authorial_required_prompt_evidence(
         for field, evidence_field in (
             ("character_response", "evidence"),
             ("semantic_assertion_evidence", "evidence"),
-            ("moe_response", "prompt_evidence"),
             ("viewer_experience", "prompt_evidence"),
         ):
             payload = composed.get(field) if isinstance(composed.get(field), dict) else {}
@@ -790,7 +755,7 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
         for candidate in craft.get("dimension_candidates") or []:
             if isinstance(candidate, dict) and candidate.get("id"):
                 ids.add(str(candidate["id"]))
-    for candidate in hybrid_augmentation_candidates_from_pack(pack):
+    for candidate in adult_appeal_candidates_from_pack(pack):
         if candidate.get("id"):
             ids.add(str(candidate["id"]))
     for candidate in creative_augmentation_candidates_from_pack(pack):
@@ -802,28 +767,10 @@ def candidate_ids_from_pack(pack: dict[str, Any]) -> set[str]:
     return ids
 
 
-def hybrid_augmentation_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
-    hybrid = pack.get("hybrid_augmentation") if isinstance(pack.get("hybrid_augmentation"), dict) else {}
-    adult = (
-        pack.get("adult_appeal")
-        if isinstance(pack.get("adult_appeal"), dict)
-        else (
-            hybrid.get("adult_appeal")
-            if isinstance(hybrid.get("adult_appeal"), dict)
-            else {}
-        )
-    )
-    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
-    candidates: list[dict[str, Any]] = []
-    for axis in axes.values():
-        if not isinstance(axis, dict):
-            continue
-        candidates.extend(
-            candidate
-            for candidate in axis.get("candidate_inventory") or []
-            if isinstance(candidate, dict)
-        )
-    return candidates
+def adult_appeal_candidates_from_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    adult = pack.get("adult_appeal") or {}
+    return [row for axis in (adult.get("axes") or {}).values() if isinstance(axis, dict)
+            for row in axis.get("candidate_inventory") or [] if isinstance(row, dict)]
 
 
 def creative_augmentation_candidates_from_pack(
@@ -870,7 +817,7 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
         for candidate in craft.get("dimension_candidates") or []:
             if isinstance(candidate, dict) and candidate.get("id"):
                 candidates[str(candidate["id"])] = candidate
-    for candidate in hybrid_augmentation_candidates_from_pack(pack):
+    for candidate in adult_appeal_candidates_from_pack(pack):
         if candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
     for candidate in creative_augmentation_candidates_from_pack(pack):
@@ -882,12 +829,8 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
     return candidates
 
 
-def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
-    if str(pack.get("contract_version") or "") not in {
-        "photo-candidate-pack/v4",
-        "photo-candidate-pack/v5",
-        "photo-candidate-pack/v6",
-    }:
+def audit_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
+    if str(pack.get("contract_version") or "") not in {"photo-candidate-pack/v6"}:
         return []
     failures: list[dict[str, Any]] = []
     contract = (
@@ -900,34 +843,33 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         not contract.get("enabled")
         or contract.get("candidate_content_form") != "unordered_inspiration_terms"
         or contract.get("candidate_order") != "seed_shuffled_non_preferential"
-        or policy.get("agent_is_final_author") is not True
-        or policy.get("candidate_sentence_copying_forbidden") is not True
-        or policy.get("all_advisory_candidates_may_be_rejected") is not True
-        or policy.get("hard_identity_and_safety_constraints_remain_required") is not True
-        or policy.get("chosen_candidate_interpretations_required") is not True
+        or (policy.get("agent_is_final_author") is not True)
+        or (policy.get("candidate_sentence_copying_forbidden") is not True)
+        or (policy.get("all_advisory_candidates_may_be_rejected") is not True)
+        or (policy.get("hard_identity_and_safety_constraints_remain_required") is not True)
+        or (policy.get("chosen_candidate_interpretations_required") is not True)
     ):
         failures.append(
             {
                 "check": "authorial_pack_contract",
-                "reason": "v4 pack is missing its fail-closed authorial composition policy",
+                "reason": "current pack is missing its fail-closed authorial composition policy",
             }
         )
 
     def contains_key(value: Any, key: str) -> bool:
         if isinstance(value, dict):
-            return key in value or any(contains_key(item, key) for item in value.values())
+            return key in value or any((contains_key(item, key) for item in value.values()))
         if isinstance(value, list):
-            return any(contains_key(item, key) for item in value)
+            return any((contains_key(item, key) for item in value))
         return False
 
     if contains_key(pack, "covered_by"):
         failures.append(
             {
                 "check": "authorial_coverage_answer_key",
-                "reason": "v4 must not expose candidate IDs as precomputed intent-coverage answers",
+                "reason": "current pack must not expose candidate IDs as precomputed intent-coverage answers",
             }
         )
-
     provenance = pack.get("provenance") if isinstance(pack.get("provenance"), dict) else {}
     private_provenance_keys = sorted(
         {
@@ -942,29 +884,24 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         & set(provenance)
     )
     preset_reference = (
-        pack.get("preset_reference")
-        if isinstance(pack.get("preset_reference"), dict)
-        else {}
+        pack.get("preset_reference") if isinstance(pack.get("preset_reference"), dict) else {}
     )
     motif_budget = pack.get("motif_budget") if isinstance(pack.get("motif_budget"), dict) else {}
     if (
         private_provenance_keys
         or "preset_id" in preset_reference
         or len(pack.get("presets") or []) == 1
-        or "selected_motifs" in motif_budget
+        or ("selected_motifs" in motif_budget)
     ):
         failures.append(
             {
                 "check": "authorial_private_routing",
-                "reason": "v4 exposes a private sampled route, singleton preset, or sampled motif answer",
+                "reason": "current pack exposes a private sampled route, singleton preset, or sampled motif answer",
                 "provenance_keys": private_provenance_keys,
             }
         )
-
     quality_profile = (
-        pack.get("quality_profile")
-        if isinstance(pack.get("quality_profile"), dict)
-        else {}
+        pack.get("quality_profile") if isinstance(pack.get("quality_profile"), dict) else {}
     )
     integration = (
         pack.get("photographic_integration")
@@ -972,14 +909,10 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         else {}
     )
     craft = (
-        pack.get("photographic_craft")
-        if isinstance(pack.get("photographic_craft"), dict)
-        else {}
+        pack.get("photographic_craft") if isinstance(pack.get("photographic_craft"), dict) else {}
     )
     proposition = (
-        pack.get("visual_proposition")
-        if isinstance(pack.get("visual_proposition"), dict)
-        else {}
+        pack.get("visual_proposition") if isinstance(pack.get("visual_proposition"), dict) else {}
     )
     leaked_quality_keys = {
         "quality_profile": sorted(
@@ -1010,25 +943,20 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         ),
         "visual_proposition": sorted(
             set(proposition)
-            & {
-                "quality_profile",
-                "subject_class",
-                "subject_classes",
-                "register",
-                "principles",
-            }
+            & {"quality_profile", "subject_class", "subject_classes", "register", "principles"}
         ),
     }
     if quality_profile.get("profile_id") != "authorial" or any(leaked_quality_keys.values()):
         failures.append(
             {
                 "check": "authorial_quality_routing",
-                "reason": "v4 exposes a sampler-selected quality profile, axis, strategy, or proposition",
+                "reason": "current pack exposes a sampler-selected quality profile, axis, strategy, or proposition",
                 "leaked_keys": leaked_quality_keys,
             }
         )
-
-    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    scene_contract = (
+        pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    )
     leaked_scene_groups = [
         str(group.get("group") or "unknown")
         for group in scene_contract.get("groups") or []
@@ -1048,28 +976,18 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
         failures.append(
             {
                 "check": "authorial_scene_selection",
-                "reason": "v4 scene groups expose an internal selected entry or semantic answer key",
+                "reason": "current scene groups expose an internal selected entry or semantic answer key",
                 "groups": leaked_scene_groups,
             }
         )
-
     candidate_surfaces = list(candidate_objects_from_pack(pack).values())
-    proposition = pack.get("visual_proposition") if isinstance(pack.get("visual_proposition"), dict) else {}
+    proposition = (
+        pack.get("visual_proposition") if isinstance(pack.get("visual_proposition"), dict) else {}
+    )
     for key in ("core_candidates", "tension_candidates"):
         candidate_surfaces.extend(
-            candidate
-            for candidate in proposition.get(key) or []
-            if isinstance(candidate, dict)
+            (candidate for candidate in proposition.get(key) or [] if isinstance(candidate, dict))
         )
-    hybrid = pack.get("hybrid_augmentation") if isinstance(pack.get("hybrid_augmentation"), dict) else {}
-    route_contract = hybrid.get("route_contract") if isinstance(hybrid.get("route_contract"), dict) else {}
-    for route in route_contract.get("routes") or []:
-        if isinstance(route, dict):
-            candidate_surfaces.extend(
-                detail
-                for detail in route.get("details") or []
-                if isinstance(detail, dict)
-            )
     visual_concepts = (
         pack.get("visual_concept_candidates")
         if isinstance(pack.get("visual_concept_candidates"), dict)
@@ -1092,18 +1010,22 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
             visual_concepts.get("enabled") is not True
             or visual_concepts.get("contract_version") != VISUAL_CONCEPTS_CONTRACT_VERSION
             or visual_concepts.get("candidate_order") != "seed_shuffled_non_preferential"
-            or visual_concepts.get("selection_field") != "chosen_visual_concept_ids"
-            or not candidate_ids
-            or any(not candidate_id.startswith("visual-concept:") for candidate_id in candidate_ids)
-            or len(candidate_ids) != len(set(candidate_ids))
+            or (visual_concepts.get("selection_field") != "chosen_visual_concept_ids")
+            or (not candidate_ids)
             or any(
-                selection_policy.get(key) is not True
-                for key in (
-                    "all_candidates_optional",
-                    "selection_list_required_even_when_empty",
-                    "unselected_candidates_add_no_prompt_or_review_duty",
-                    "selected_candidates_promote_opt_in_contract_to_hard_obligation",
-                    "matched_terms_scores_and_routing_reasons_not_exposed",
+                (not candidate_id.startswith("visual-concept:") for candidate_id in candidate_ids)
+            )
+            or (len(candidate_ids) != len(set(candidate_ids)))
+            or any(
+                (
+                    selection_policy.get(key) is not True
+                    for key in (
+                        "all_candidates_optional",
+                        "selection_list_required_even_when_empty",
+                        "unselected_candidates_add_no_prompt_or_review_duty",
+                        "selected_candidates_promote_opt_in_contract_to_hard_obligation",
+                        "matched_terms_scores_and_routing_reasons_not_exposed",
+                    )
                 )
             )
         )
@@ -1119,68 +1041,73 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
                 else {}
             )
             obligation = (
-                opt_in.get("obligation")
-                if isinstance(opt_in.get("obligation"), dict)
-                else {}
+                opt_in.get("obligation") if isinstance(opt_in.get("obligation"), dict) else {}
             )
             if (
                 applicability.get("status") != "eligible"
                 or opt_in.get("effect") != "promote_to_hard_visual_obligation"
                 or opt_in.get("visual_obligations_contract_version")
                 != VISUAL_OBLIGATIONS_CONTRACT_VERSION
-                or not str(obligation.get("id") or "")
-                or not obligation.get("render_gates")
+                or (not str(obligation.get("id") or ""))
+                or (not obligation.get("render_gates"))
             ):
                 concept_contract_invalid = True
         if concept_contract_invalid:
             failures.append(
                 {
                     "check": "visual_concept_candidate_contract",
-                    "reason": (
-                        "v4 visual concepts must be optional non-ranked candidates with a complete "
-                        "pre-baked opt-in obligation"
-                    ),
+                    "reason": "current visual concepts must be optional non-ranked candidates with a complete pre-baked opt-in obligation",
                 }
             )
     copyable = [
         str(candidate.get("id") or candidate.get("candidate_id") or "unknown")
         for candidate in candidate_surfaces
-        if any(key in candidate for key in ("label_en", "label_ko", "terms"))
+        if any((key in candidate for key in ("label_en", "label_ko", "terms")))
         or candidate.get("content_form") != "unordered_inspiration_terms"
-        or not isinstance(candidate.get("concept_terms"), list)
-        or not candidate.get("concept_terms")
+        or (not isinstance(candidate.get("concept_terms"), list))
+        or (not candidate.get("concept_terms"))
     ]
     if copyable:
         failures.append(
             {
                 "check": "authorial_candidate_surface",
-                "reason": "v4 candidate surfaces must expose only non-empty unordered concept terms",
+                "reason": "current candidate surfaces must expose only non-empty unordered concept terms",
                 "candidate_ids": sorted(set(copyable)),
             }
         )
-
     slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
     ranked_slots = [
         str(slot)
         for slot, payload in slots.items()
         if isinstance(payload, dict)
         and (
-            any(key in payload for key in ("selected", "weight_floor", "score_window", "selected_filter"))
+            any(
+                (
+                    key in payload
+                    for key in ("selected", "weight_floor", "score_window", "selected_filter")
+                )
+            )
             or payload.get("candidate_order") != "seed_shuffled_non_preferential"
         )
     ]
     if ranked_slots or any(
-        any(key in candidate for key in ("selected_by_sampler", "probability", "weight", "score", "scores"))
-        for candidate in candidate_surfaces
+        (
+            any(
+                (
+                    key in candidate
+                    for key in ("selected_by_sampler", "probability", "weight", "score", "scores")
+                )
+            )
+            for candidate in candidate_surfaces
+        )
     ):
         failures.append(
             {
                 "check": "authorial_candidate_ranking",
-                "reason": "v4 must not expose sampler defaults, probabilities, weights, or ranking handles",
+                "reason": "current pack must not expose sampler defaults, probabilities, weights, or ranking handles",
                 "slots": sorted(ranked_slots),
             }
         )
-
     exploration = (
         pack.get("creative_exploration")
         if isinstance(pack.get("creative_exploration"), dict)
@@ -1189,40 +1116,39 @@ def audit_v4_authorial_pack(pack: dict[str, Any]) -> list[dict[str, Any]]:
     leaked_replacements = [
         str(row.get("candidate_id") or "unknown")
         for row in exploration.get("contrast_candidates") or []
-        if isinstance(row, dict)
-        and ("replaces_candidate_id" in row or "relevance_rank" in row)
+        if isinstance(row, dict) and ("replaces_candidate_id" in row or "relevance_rank" in row)
     ]
     if leaked_replacements:
         failures.append(
             {
                 "check": "authorial_exploration_ranking",
-                "reason": "v4 creative exploration must not expose a sampler replacement answer key",
+                "reason": "current creative exploration must not expose a sampler replacement answer key",
                 "candidate_ids": leaked_replacements,
             }
         )
-
-    render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
-    selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
-    scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    render_contract = (
+        pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
+    )
+    selected_scene = (
+        render_contract.get("selected_scene")
+        if isinstance(render_contract.get("selected_scene"), dict)
+        else {}
+    )
+    scene_contract = (
+        pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
+    )
     authorial_groups = [
         group
         for group in scene_contract.get("groups") or []
         if isinstance(group, dict) and group.get("strategy") == "authorial_scene"
     ]
     if authorial_groups and any(
-        key in selected_scene for key in ("blueprint_id", "source_blueprint_hash", "atomic_scene")
+        (key in selected_scene for key in ("blueprint_id", "source_blueprint_hash", "atomic_scene"))
     ):
         failures.append(
             {
                 "check": "authorial_scene_privacy",
-                "reason": "v4 authorial scene leaks a source handle or reusable atomic prose",
-            }
-        )
-    if hybrid and hybrid.get("contract_version") != "photo-hybrid-augmentation/v2":
-        failures.append(
-            {
-                "check": "authorial_hybrid_contract",
-                "reason": "v4 hybrid augmentation must use the transform-only v2 contract",
+                "reason": "current authorial scene leaks a source handle or reusable atomic prose",
             }
         )
     return failures
@@ -2075,1731 +2001,6 @@ def audit_visual_obligations(
     return failures
 
 
-def expected_moe_intent_precedence(
-    pack: dict[str, Any],
-    contract: dict[str, Any],
-) -> dict[str, Any] | None:
-    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
-    if core.get("contract_version") != AUTHORIAL_CORE_CONTRACT_VERSION:
-        return None
-    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
-    locked_dimensions = [
-        str(item)
-        for item in intent_lock.get("locked_dimensions") or []
-        if str(item) in INTENT_LOCK_DIMENSIONS
-    ]
-    open_dimensions = [
-        str(item)
-        for item in intent_lock.get("open_dimensions") or []
-        if str(item) in INTENT_LOCK_DIMENSIONS
-    ]
-    open_set = set(open_dimensions)
-    applicability = {
-        "aesthetic_style_default": True,
-        "aesthetic_expression_default": True,
-        "affective_balance_default": True,
-        "generic_character_response_mechanism": (
-            str(contract.get("primary_mechanism") or "")
-            == "character_specific_reveal"
-        ),
-        "generic_relationship_register": (
-            str(contract.get("relationship_register") or "")
-            == "character_specific_reveal"
-        ),
-        "default_sensual_support": contract.get("defaulted_sensual_optional") is True,
-        "generic_expression_negative_suppression": True,
-        "generic_style_negative_suppression": True,
-        "generic_appearance_negative_suppression": True,
-        "generic_text_negative_suppression": True,
-    }
-    rules: list[dict[str, Any]] = []
-    for rule_id, affected in MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS.items():
-        affected_dimensions = list(affected)
-        if not applicability.get(rule_id, False):
-            status = "not_applicable"
-            blocked_dimensions: list[str] = []
-        else:
-            blocked_dimensions = sorted(set(affected_dimensions) - open_set)
-            status = (
-                "active"
-                if not blocked_dimensions
-                else "suppressed_requesting_user_priority"
-            )
-        rules.append(
-            {
-                "rule_id": rule_id,
-                "affected_dimensions": affected_dimensions,
-                "status": status,
-                "blocked_dimensions": blocked_dimensions,
-            }
-        )
-    return {
-        "contract_version": DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
-        "priority": "requesting_user",
-        "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
-        "locked_dimensions": locked_dimensions,
-        "open_dimensions": open_dimensions,
-        "closed_dimensions": sorted(INTENT_LOCK_DIMENSIONS - open_set),
-        "default_rule_policy": "active_only_when_all_affected_dimensions_are_explicitly_open",
-        "non_open_evidence_policy": (
-            "reuse_matching_locked_anchor_or_frozen_baseline_only"
-        ),
-        "evidence_field_dimensions": copy.deepcopy(
-            MOE_RESPONSE_EVIDENCE_DIMENSIONS
-        ),
-        "rules": rules,
-    }
-
-
-def moe_intent_rule_status(precedence: Any, rule_id: str) -> str:
-    if not isinstance(precedence, dict):
-        return "legacy_unscoped"
-    for row in precedence.get("rules") or []:
-        if isinstance(row, dict) and row.get("rule_id") == rule_id:
-            return str(row.get("status") or "")
-    return "missing"
-
-
-def audit_moe_intent_precedence(
-    pack: dict[str, Any],
-    contract: dict[str, Any],
-    response: dict[str, Any],
-    prompt_en: str,
-) -> list[dict[str, Any]]:
-    expected = expected_moe_intent_precedence(pack, contract)
-    actual = contract.get("intent_precedence")
-    if expected is None:
-        return []
-    failures: list[dict[str, Any]] = []
-    if actual != expected:
-        return [
-            {
-                "check": "moe_response_intent_precedence",
-                "reason": (
-                    "v2 downstream-default precedence must be an exact recomputable projection of the requesting-user intent lock"
-                ),
-                "expected": expected,
-                "actual": actual,
-            }
-        ]
-
-    composition_guidance = (
-        contract.get("composition_guidance")
-        if isinstance(contract.get("composition_guidance"), dict)
-        else {}
-    )
-    binding = (
-        contract.get("prompt_binding")
-        if isinstance(contract.get("prompt_binding"), dict)
-        else {}
-    )
-    required_evidence_fields = {
-        str(item) for item in binding.get("required_evidence_fields") or []
-    }
-    affective_active = (
-        moe_intent_rule_status(actual, "affective_balance_default") == "active"
-    )
-    aesthetic_active = (
-        moe_intent_rule_status(actual, "aesthetic_style_default") == "active"
-    )
-    generic_mechanism_suppressed = (
-        moe_intent_rule_status(actual, "generic_character_response_mechanism")
-        == "suppressed_requesting_user_priority"
-    )
-    text_default_active = (
-        moe_intent_rule_status(actual, "generic_text_negative_suppression")
-        == "active"
-    )
-    affective_guidance = (
-        composition_guidance.get("affective_balance")
-        if isinstance(composition_guidance.get("affective_balance"), dict)
-        else {}
-    )
-    aesthetic_guidance = (
-        composition_guidance.get("aesthetic_entry_condition")
-        if isinstance(composition_guidance.get("aesthetic_entry_condition"), dict)
-        else {}
-    )
-    structural_mismatches: list[str] = []
-    if affective_guidance.get("required") is not affective_active:
-        structural_mismatches.append("affective_balance.required")
-    if affective_guidance.get("status") != (
-        "active" if affective_active else "suppressed_requesting_user_priority"
-    ):
-        structural_mismatches.append("affective_balance.status")
-    if ("affective_leak_phrase" in required_evidence_fields) is not affective_active:
-        structural_mismatches.append("affective_leak_phrase")
-    if aesthetic_guidance.get("required") is not aesthetic_active:
-        structural_mismatches.append("aesthetic_entry_condition.required")
-    if aesthetic_guidance.get("status") != (
-        "active" if aesthetic_active else "suppressed_requesting_user_priority"
-    ):
-        structural_mismatches.append("aesthetic_entry_condition.status")
-    if ("aesthetic_baseline_phrase" in required_evidence_fields) is not aesthetic_active:
-        structural_mismatches.append("aesthetic_baseline_phrase")
-    causal_evidence_fields = {
-        "baseline_phrase",
-        "event_phase_phrase",
-        "trigger_phrase",
-        "target_phrase",
-        "immediate_consequence_phrase",
-        "continuity_phrase",
-    }
-    if generic_mechanism_suppressed and (
-        causal_evidence_fields & required_evidence_fields
-    ):
-        structural_mismatches.append("generic_causal_evidence_fields")
-    background_expected = (
-        contract.get("explicit_text_requested") is not True and text_default_active
-    )
-    if ("background_control_phrase" in required_evidence_fields) is not background_expected:
-        structural_mismatches.append("background_control_phrase")
-    if structural_mismatches:
-        failures.append(
-            {
-                "check": "moe_response_intent_precedence",
-                "reason": (
-                    "moe-response composition duties do not reflect the recomputed requester-first rule states"
-                ),
-                "fields": structural_mismatches,
-            }
-        )
-
-    evidence = response.get("prompt_evidence")
-    evidence = evidence if isinstance(evidence, dict) else {}
-    core = pack["authorial_core"]
-    baseline_prompt = str(core.get("baseline_prompt_en") or "")
-    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
-    locked_dimensions = set(intent_lock.get("locked_dimensions") or [])
-    open_dimensions = set(intent_lock.get("open_dimensions") or [])
-    anchors_by_dimension: dict[str, set[str]] = {}
-    for anchor in intent_lock.get("semantic_anchors") or []:
-        if not isinstance(anchor, dict):
-            continue
-        dimension = str(anchor.get("dimension") or "")
-        phrase = str(anchor.get("prompt_evidence") or "")
-        if dimension and phrase:
-            anchors_by_dimension.setdefault(dimension, set()).add(phrase)
-
-    for field, raw_phrase in evidence.items():
-        dimension = MOE_RESPONSE_EVIDENCE_DIMENSIONS.get(str(field))
-        phrase = str(raw_phrase or "").strip()
-        if not dimension or not phrase or dimension in open_dimensions:
-            continue
-        if dimension in locked_dimensions:
-            allowed = anchors_by_dimension.get(dimension, set())
-            valid = phrase in allowed
-            required_source = "matching_locked_semantic_anchor"
-        else:
-            allowed = set()
-            valid = text_contains_term(baseline_prompt, phrase)
-            required_source = "frozen_baseline_prompt"
-        if not valid:
-            failures.append(
-                {
-                    "check": "moe_response_intent_precedence",
-                    "reason": (
-                        "moe-response evidence on a non-open dimension introduced semantics outside the requester-first frozen boundary"
-                    ),
-                    "field": field,
-                    "dimension": dimension,
-                    "required_source": required_source,
-                    "allowed_locked_anchor_evidence": sorted(allowed),
-                    "actual": phrase,
-                }
-            )
-
-    negative_en = str(pack.get("negative_en") or "").lower()
-    for rule_id, terms in MOE_NEGATIVE_DEFAULT_TERMS_BY_RULE.items():
-        if moe_intent_rule_status(actual, rule_id) != "suppressed_requesting_user_priority":
-            continue
-        leaked_terms = [term for term in terms if term.lower() in negative_en]
-        if leaked_terms:
-            failures.append(
-                {
-                    "check": "moe_response_intent_precedence",
-                    "reason": (
-                        "negative prompt retained a generic downstream default for a non-open semantic dimension"
-                    ),
-                    "rule_id": rule_id,
-                    "terms": leaked_terms,
-                }
-            )
-
-    if (
-        moe_intent_rule_status(actual, "affective_balance_default")
-        == "suppressed_requesting_user_priority"
-    ):
-        baseline_lower = baseline_prompt.lower()
-        prompt_lower = prompt_en.lower()
-        baseline_has_warm_default = any(
-            cue in baseline_lower for cue in MOE_WARM_EXPRESSION_DEFAULT_MARKERS
-        )
-        prompt_warm_hits = sorted(
-            {
-                cue
-                for cue in MOE_WARM_EXPRESSION_DEFAULT_MARKERS
-                if cue in prompt_lower
-            }
-        )
-        if prompt_warm_hits and not baseline_has_warm_default:
-            failures.append(
-                {
-                    "check": "moe_response_intent_precedence",
-                    "reason": (
-                        "a suppressed warm-affect default leaked into a closed expression dimension without frozen requester evidence"
-                    ),
-                    "rule_id": "affective_balance_default",
-                    "terms": prompt_warm_hits,
-                }
-            )
-
-    return failures
-
-
-def audit_moe_response(
-    pack: dict[str, Any],
-    composed: dict[str, Any],
-    prompt_en: str,
-    warnings: list[dict[str, Any]] | None = None,
-) -> list[dict[str, Any]]:
-    contract = pack.get("moe_response")
-    if not isinstance(contract, dict) or not contract.get("enabled"):
-        return []
-
-    response = composed.get("moe_response")
-    if not isinstance(response, dict):
-        return [
-            {
-                "check": "moe_response",
-                "reason": "enabled moe-response pack requires a moe_response object",
-            }
-        ]
-
-    failures: list[dict[str, Any]] = []
-    failures.extend(
-        audit_moe_intent_precedence(
-            pack,
-            contract,
-            response,
-            prompt_en,
-        )
-    )
-    composition_guidance = (
-        contract.get("composition_guidance")
-        if isinstance(contract.get("composition_guidance"), dict)
-        else {}
-    )
-    prompt_budget = (
-        composition_guidance.get("prompt_budget")
-        if isinstance(composition_guidance.get("prompt_budget"), dict)
-        else {}
-    )
-    if prompt_budget:
-        prompt_word_count = english_prompt_word_count(prompt_en)
-        advisory_budget = all(
-            field in prompt_budget
-            for field in (
-                "recommended_minimum_words",
-                "recommended_maximum_words",
-                "absolute_maximum_words",
-            )
-        )
-        if advisory_budget:
-            try:
-                minimum_prompt_words = int(
-                    prompt_budget.get("minimum_words", AUTHORIAL_PROMPT_MIN_WORDS)
-                )
-                recommended_minimum_words = int(
-                    prompt_budget.get(
-                        "recommended_minimum_words",
-                        MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS,
-                    )
-                )
-                recommended_maximum_words = int(
-                    prompt_budget.get(
-                        "recommended_maximum_words",
-                        MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS,
-                    )
-                )
-                absolute_maximum_words = int(
-                    prompt_budget.get(
-                        "absolute_maximum_words",
-                        AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
-                    )
-                )
-            except (TypeError, ValueError):
-                minimum_prompt_words = AUTHORIAL_PROMPT_MIN_WORDS
-                recommended_minimum_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
-                recommended_maximum_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
-                absolute_maximum_words = AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS
-            if not minimum_prompt_words <= prompt_word_count <= absolute_maximum_words:
-                failures.append(
-                    {
-                        "check": "moe_response_prompt_budget",
-                        "reason": "moe prompt_en exceeds the absolute compatibility bounds",
-                        "minimum_words": minimum_prompt_words,
-                        "absolute_maximum_words": absolute_maximum_words,
-                        "actual_words": prompt_word_count,
-                    }
-                )
-            elif warnings is not None and not (
-                recommended_minimum_words
-                <= prompt_word_count
-                <= recommended_maximum_words
-            ):
-                warnings.append(
-                    {
-                        "check": "moe_response_prompt_budget",
-                        "reason": (
-                            "moe prompt_en is outside the advisory compact range; preserve required "
-                            "meaning before shortening optional prose"
-                        ),
-                        "recommended_minimum_words": recommended_minimum_words,
-                        "recommended_maximum_words": recommended_maximum_words,
-                        "absolute_maximum_words": absolute_maximum_words,
-                        "actual_words": prompt_word_count,
-                    }
-                )
-        else:
-            try:
-                minimum_prompt_words = int(
-                    prompt_budget.get(
-                        "minimum_words", MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
-                    )
-                )
-            except (TypeError, ValueError):
-                minimum_prompt_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MIN_WORDS
-            try:
-                maximum_prompt_words = int(
-                    prompt_budget.get(
-                        "maximum_words", MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
-                    )
-                )
-            except (TypeError, ValueError):
-                maximum_prompt_words = MOE_PROMPT_DEFAULT_RECOMMENDED_MAX_WORDS
-            if not minimum_prompt_words <= prompt_word_count <= maximum_prompt_words:
-                failures.append(
-                    {
-                        "check": "moe_response_prompt_budget",
-                        "reason": (
-                            "legacy moe prompt_en must stay within its recorded compact word budget"
-                        ),
-                        "minimum_words": minimum_prompt_words,
-                        "maximum_words": maximum_prompt_words,
-                        "actual_words": prompt_word_count,
-                    }
-                )
-    required_fields = [str(item) for item in contract.get("required_fields") or [] if str(item)]
-    missing_fields = [field for field in required_fields if field not in response]
-    if missing_fields:
-        failures.append(
-            {
-                "check": "moe_response",
-                "reason": "moe response is missing required fields",
-                "fields": missing_fields,
-            }
-        )
-
-    scalar_fields = tuple(
-        field
-        for field in (
-            "aesthetic_baseline",
-            "mechanism",
-            "relationship_register",
-            "baseline",
-            "event_phase",
-            "trigger",
-            "target",
-            "visible_response",
-            "immediate_consequence",
-            "continuity",
-        )
-        if field in required_fields
-    )
-    invalid_scalars = [
-        field
-        for field in scalar_fields
-        if not isinstance(response.get(field), str) or not str(response.get(field)).strip()
-    ]
-    if invalid_scalars:
-        failures.append(
-            {
-                "check": "moe_response_causal_chain",
-                "reason": "moe response requires one concrete scalar value for every causal field",
-                "fields": invalid_scalars,
-            }
-        )
-
-    aesthetic_baseline = str(response.get("aesthetic_baseline") or "")
-    required_aesthetic = str(contract.get("aesthetic_baseline") or "")
-    if aesthetic_baseline and required_aesthetic and aesthetic_baseline != required_aesthetic:
-        failures.append(
-            {
-                "check": "moe_response_aesthetic_baseline",
-                "reason": "composed response changed the routed adult character aesthetic baseline",
-                "expected": required_aesthetic,
-                "actual": aesthetic_baseline,
-            }
-        )
-
-    mechanism = str(response.get("mechanism") or "")
-    required_mechanism = str(contract.get("primary_mechanism") or "")
-    if mechanism and required_mechanism and mechanism != required_mechanism:
-        failures.append(
-            {
-                "check": "moe_response_mechanism",
-                "reason": "composed response changed the routed primary mechanism",
-                "expected": required_mechanism,
-                "actual": mechanism,
-            }
-        )
-
-    relationship_register = str(response.get("relationship_register") or "")
-    required_relationship_register = str(contract.get("relationship_register") or "")
-    if (
-        relationship_register
-        and required_relationship_register
-        and relationship_register != required_relationship_register
-    ):
-        failures.append(
-            {
-                "check": "moe_response_relationship_register",
-                "reason": "composed response changed the routed relationship register",
-                "expected": required_relationship_register,
-                "actual": relationship_register,
-            }
-        )
-
-    support = response.get("support_mechanisms")
-    if not isinstance(support, list) or any(not isinstance(item, str) for item in support):
-        failures.append(
-            {
-                "check": "moe_response_support",
-                "reason": "support_mechanisms must be a list of strings",
-            }
-        )
-        support_values: list[str] = []
-    else:
-        support_values = [str(item) for item in support if str(item).strip()]
-    allowed_support = {str(item) for item in contract.get("support_mechanisms") or []}
-    unknown_support = sorted(set(support_values) - allowed_support)
-    if unknown_support or len(set(support_values)) > 2 or mechanism in support_values:
-        failures.append(
-            {
-                "check": "moe_response_support",
-                "reason": "use only the routed support mechanisms, at most two, without repeating the primary",
-                "unknown": unknown_support,
-            }
-        )
-
-    causal_fields = (
-        "baseline",
-        "trigger",
-        "target",
-        "visible_response",
-        "immediate_consequence",
-    )
-    causal_values = [
-        str(response.get(field) or "")
-        for field in causal_fields
-        if field in required_fields
-    ]
-    if (
-        len(causal_values) == len(causal_fields)
-        and all(causal_values)
-        and normalized_unique_count(causal_values) < len(causal_fields)
-    ):
-        failures.append(
-            {
-                "check": "moe_response_causal_chain",
-                "reason": "baseline, trigger, target, visible response, and consequence must be distinct evidence",
-            }
-        )
-
-    evidence = response.get("prompt_evidence")
-    if not isinstance(evidence, dict):
-        evidence = {}
-    binding = contract.get("prompt_binding") if isinstance(contract.get("prompt_binding"), dict) else {}
-    evidence_fields = [str(item) for item in binding.get("required_evidence_fields") or [] if str(item)]
-    evidence_phrases: list[str] = []
-    missing_evidence = []
-    for field in evidence_fields:
-        phrase = str(evidence.get(field) or "").strip()
-        if phrase:
-            evidence_phrases.append(phrase)
-        else:
-            missing_evidence.append(field)
-    if missing_evidence:
-        failures.append(
-            {
-                "check": "moe_response_binding",
-                "reason": "moe response is missing literal prompt evidence",
-                "fields": missing_evidence,
-            }
-        )
-    missing_literal = [phrase for phrase in evidence_phrases if not text_contains_term(prompt_en, phrase)]
-    if missing_literal:
-        failures.append(
-            {
-                "check": "moe_response_binding",
-                "reason": "declared moe-response evidence is not literal in prompt_en",
-                "phrases": list(dict.fromkeys(missing_literal)),
-            }
-        )
-
-    aesthetic_phrase = str(evidence.get("aesthetic_baseline_phrase") or "").lower()
-    adult_cues = (
-        "adult",
-        "mid-twenties",
-        "mid twenties",
-        "twenty-five",
-        "twenty five",
-        "late twenties",
-        "thirties",
-    )
-    pretty_cues = (
-        "beautiful",
-        "bishoujo",
-        "bishonen",
-        "handsome",
-        "pretty",
-    )
-    cute_cues = (
-        "adorable",
-        "charming",
-        "cute",
-        "endearing",
-        "kawaii",
-    )
-    design_detail_groups = (
-        ("facial feature", "face", "features"),
-        ("eyes", "eye"),
-        ("mouth", "lips"),
-        ("hair", "grooming"),
-        ("cohesive styling", "cohesive character styling"),
-    )
-    expected_presentation_cues = {
-        "adult_bishoujo": ("woman", "female", "feminine", "bishoujo", "she", "her"),
-        "adult_bishonen": ("man", "male", "masculine", "bishonen", "he", "his"),
-        "adult_beautiful_cute_character": (
-            "androgynous",
-            "nonbinary",
-            "non-binary",
-            "gender-neutral",
-            "character",
-        ),
-    }
-    if aesthetic_phrase:
-        aesthetic_missing = []
-        if not any(cue in aesthetic_phrase for cue in adult_cues):
-            aesthetic_missing.append("explicit_adult_age")
-        if not any(cue in aesthetic_phrase for cue in pretty_cues):
-            aesthetic_missing.append("pretty_or_beautiful_read")
-        if not any(cue in aesthetic_phrase for cue in cute_cues):
-            aesthetic_missing.append("cute_or_charming_read")
-        if sum(
-            1 for group in design_detail_groups if any(cue in aesthetic_phrase for cue in group)
-        ) < 2:
-            aesthetic_missing.append("at_least_two_concrete_character_design_details")
-        presentation_cues = expected_presentation_cues.get(required_aesthetic, ())
-        if presentation_cues and not any(cue in aesthetic_phrase for cue in presentation_cues):
-            aesthetic_missing.append("routed_presentation")
-        if aesthetic_missing:
-            failures.append(
-                {
-                    "check": "moe_response_aesthetic_evidence",
-                    "reason": (
-                        "moe requires a literal adult character-design entry condition that reads "
-                        "as both pretty/beautiful and cute/charming before the causal event"
-                    ),
-                    "missing": aesthetic_missing,
-                    "phrase": evidence.get("aesthetic_baseline_phrase"),
-                }
-            )
-
-    identity_control = (
-        contract.get("reference_identity_control")
-        if isinstance(contract.get("reference_identity_control"), dict)
-        else {}
-    )
-    if identity_control.get("enabled") is True:
-        identity_phrase = str(evidence.get("reference_identity_phrase") or "").lower()
-        identity_action_cues = (
-            "preserve",
-            "same identity",
-            "sole identity reference",
-            "identity unchanged",
-        )
-        identity_source_cues = (
-            "attached portrait",
-            "reference portrait",
-            "source portrait",
-            "uploaded portrait",
-        )
-        identity_detail_groups = (
-            ("eye aperture", "eye shape", "eye spacing"),
-            ("nose",),
-            ("lip", "mouth"),
-            ("face length",),
-            ("lower-face", "lower face"),
-            ("jaw width",),
-            ("cheekbone", "facial geometry"),
-            ("skin tone", "natural asymmetry"),
-            ("hairline",),
-        )
-        anti_reshape_groups = (
-            (
-                "no enlarging",
-                "not enlarge",
-                "do not enlarge",
-                "no eye enlargement",
-                "preserve eye aperture",
-            ),
-            (
-                "no rounding",
-                "not round",
-                "do not round",
-                "no eye rounding",
-                "preserve eye shape",
-            ),
-            (
-                "no shortening",
-                "not shorten",
-                "do not shorten",
-                "preserve face length",
-            ),
-            (
-                "no narrowing",
-                "not narrow",
-                "do not narrow",
-                "preserve jaw width",
-                "preserve lower-face",
-                "preserve lower face",
-            ),
-        )
-        compact_no_reshape_clause = all(
-            cue in identity_phrase
-            for cue in ("no enlarging", "rounding", "shortening", "narrowing")
-        )
-        missing_identity = []
-        if not any(cue in identity_phrase for cue in identity_action_cues):
-            missing_identity.append("preservation_instruction")
-        if not any(cue in identity_phrase for cue in identity_source_cues):
-            missing_identity.append("reference_source")
-        if sum(
-            1
-            for group in identity_detail_groups
-            if any(cue in identity_phrase for cue in group)
-        ) < 6:
-            missing_identity.append("at_least_six_identity_anchors_including_face_proportions")
-        if not compact_no_reshape_clause and any(
-            not any(cue in identity_phrase for cue in group) for group in anti_reshape_groups
-        ):
-            missing_identity.append("explicit_anti_reshape_constraints")
-        if not any(cue in identity_phrase for cue in ("adult age", "do not de-age", "no de-aging")):
-            missing_identity.append("adult_age_preservation")
-        if missing_identity:
-            failures.append(
-                {
-                    "check": "moe_response_reference_identity",
-                    "reason": (
-                        "identity-controlled moe evaluation must hold eye aperture, face length, lower-face and jaw "
-                        "proportions, and adult age constant instead of changing facial appeal and scene direction together"
-                    ),
-                    "missing": missing_identity,
-                    "phrase": evidence.get("reference_identity_phrase"),
-                }
-            )
-
-    affective_phrase = str(evidence.get("affective_leak_phrase") or "").lower()
-    warm_affect_groups = MOE_WARM_AFFECT_GROUPS
-    negative_affect_cues = MOE_NEGATIVE_AFFECT_CUES
-    affective_missing = []
-    if affective_phrase:
-        if not any(any(cue in affective_phrase for cue in group) for group in warm_affect_groups):
-            affective_missing.append("specific_warm_or_pleased_micro_response")
-        if sum(cue in affective_phrase for cue in negative_affect_cues) > 2:
-            affective_missing.append("negative_affect_exceeds_two_cues")
-    if affective_missing:
-        failures.append(
-            {
-                "check": "moe_response_affective_balance",
-                "reason": (
-                    "the face needs one specific warm or pleased micro-response and may use at most "
-                    "two negative-affect cues so guardedness does not collapse into annoyance, sadness, or boredom"
-                ),
-                "missing": affective_missing,
-                "phrase": evidence.get("affective_leak_phrase"),
-            }
-        )
-
-    affective_prompt = prompt_en.lower()
-    affective_contract = (
-        contract.get("composition_guidance", {}).get("affective_balance")
-        if isinstance(contract.get("composition_guidance"), dict)
-        else {}
-    )
-    if isinstance(affective_contract, dict) and affective_contract.get("required") is True:
-        whole_prompt_negative_hits = [
-            cue for cue in negative_affect_cues if cue in affective_prompt
-        ]
-        whole_prompt_warm = any(
-            any(cue in affective_prompt for cue in group) for group in warm_affect_groups
-        )
-        if not whole_prompt_warm or len(whole_prompt_negative_hits) > 2:
-            failures.append(
-                {
-                    "check": "moe_response_affective_balance",
-                    "reason": (
-                        "the full prompt must retain a warm facial countercue and may contain at most "
-                        "two negative-affect cues; splitting extra cold cues across other fields does not pass"
-                    ),
-                    "negative_terms": whole_prompt_negative_hits,
-                    "warm_countercue_present": whole_prompt_warm,
-                }
-            )
-
-    mechanism_guidance = (
-        contract.get("composition_guidance", {}).get("mechanism_specific_evidence", {})
-        if isinstance(contract.get("composition_guidance"), dict)
-        else {}
-    )
-    nurturant_guidance = (
-        mechanism_guidance.get("nurturant_benevolence", {})
-        if isinstance(mechanism_guidance, dict)
-        else {}
-    )
-    if (
-        relationship_register == "nurturant_benevolence"
-        and isinstance(nurturant_guidance, dict)
-        and nurturant_guidance.get("benevolent_affect_phrase_required") is True
-    ):
-        benevolent_affect_phrase = str(
-            evidence.get("benevolent_affect_phrase") or ""
-        ).lower()
-        benevolent_cue_groups = (
-            ("relaxed brow", "relaxed eyebrows", "unfurrowed brow"),
-            ("patient soft eyes", "patient eyes", "soft patient eyes"),
-            ("reassuring mouth", "reassuring smile", "reassuring lips"),
-            (
-                "calm protective attention",
-                "protective attention",
-                "protective focus",
-                "protective gaze",
-            ),
-        )
-        benevolent_missing = [
-            index
-            for index, group in enumerate(benevolent_cue_groups, start=1)
-            if not any(cue in benevolent_affect_phrase for cue in group)
-        ]
-        contradictory_cues = (
-            "mid-protest",
-            "pursed",
-            "huff",
-            "head stays aside",
-            "head stays angled away",
-            "irises return",
-            "private liking",
-            "romantic interest",
-        )
-        if (
-            not benevolent_affect_phrase
-            or not text_contains_term(
-                prompt_en,
-                str(evidence.get("benevolent_affect_phrase") or ""),
-            )
-            or benevolent_missing
-            or any(cue in benevolent_affect_phrase for cue in contradictory_cues)
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_benevolent_affect",
-                    "reason": (
-                        "nurturant_benevolence needs one literal mature expression combining a relaxed brow, "
-                        "patient soft eyes, a reassuring mouth, and calm protective attention without tsundere "
-                        "denial or romantic gaze leakage"
-                    ),
-                    "missing_groups": benevolent_missing,
-                    "phrase": evidence.get("benevolent_affect_phrase"),
-                }
-            )
-    denial_guidance = (
-        mechanism_guidance.get("denial_care_leak", {})
-        if isinstance(mechanism_guidance, dict)
-        else {}
-    )
-    if (
-        mechanism == "denial_care_leak"
-        and isinstance(denial_guidance, dict)
-        and denial_guidance.get("active_denial_phrase_required") is True
-    ):
-        active_denial_phrase = str(evidence.get("active_denial_phrase") or "").lower()
-        active_denial_groups = (
-            ("pursed lip", "pursed mouth", "mouth protest", "mid-protest", "tiny huff", "small huff"),
-            ("chin lift", "lifted chin", "raised chin"),
-            ("half-turned shoulder", "turned shoulder", "shoulder turns away"),
-            ("brisk hand", "briskly", "dismissive hand", "offhand", "small thunk"),
-        )
-        active_denial_present = any(
-            any(cue in active_denial_phrase for cue in group)
-            for group in active_denial_groups
-        )
-        if (
-            not active_denial_phrase
-            or not text_contains_term(prompt_en, str(evidence.get("active_denial_phrase") or ""))
-            or not active_denial_present
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_active_denial",
-                    "reason": (
-                        "denial_care_leak needs a separate visible mouth, chin, shoulder, or "
-                        "helping-hand protest; guardedness, a label, or averted gaze alone can "
-                        "collapse into ordinary quiet kindness"
-                    ),
-                    "phrase": evidence.get("active_denial_phrase"),
-                }
-            )
-
-        concealed_affection_phrase = str(
-            evidence.get("concealed_affection_phrase") or ""
-        ).lower()
-        care_action_anchor_phrase = str(
-            evidence.get("care_action_anchor_phrase") or ""
-        ).lower()
-        relationship_gaze_anchor_phrase = str(
-            evidence.get("relationship_gaze_anchor_phrase") or ""
-        ).lower()
-        affection_cues = (
-            "affection",
-            "fond",
-            "fondness",
-            "likes",
-            "liking",
-            "personal liking",
-            "private liking",
-            "romantic interest",
-            "soften",
-            "softened",
-            "tender",
-            "warmth",
-        )
-        personal_liking_cues = (
-            "personal liking",
-            "private liking",
-            "romantic interest",
-            "personally fond",
-            "special to her",
-            "special to him",
-            "special to them",
-            "likes him",
-            "likes her",
-            "likes them",
-            "attraction",
-        )
-        concealment_cues = (
-            "almost-smile",
-            "almost smile",
-            "barely",
-            "betray",
-            "brief",
-            "conceal",
-            "hidden",
-            "hiding",
-            "nearly",
-            "restrained",
-            "returning",
-            "stolen",
-            "stops it",
-            "suppressed",
-        )
-        recipient_cues = (
-            "customer",
-            "partner",
-            "recipient",
-            "toward her",
-            "toward him",
-            "toward the viewer",
-            "toward their",
-            "their eyes",
-            "viewer",
-        )
-        directional_face_cues = (
-            "eye",
-            "eyes",
-            "gaze",
-            "glance",
-            "lid",
-            "look",
-            "mouth corner",
-            "peek",
-            "smile",
-        )
-        in_frame_cues = (
-            "in frame",
-            "in-frame",
-            "foreground",
-            "frame edge",
-            "near-lens",
-            "near lens",
-            "visible",
-        )
-        care_screen_position_cues = (
-            "left",
-            "right",
-            "lower",
-            "bottom",
-            "foreground",
-            "frame edge",
-        )
-        care_target_cues = (
-            "hand",
-            "arm",
-            "sleeve",
-            "wound",
-            "scrape",
-            "bandage",
-            "knuckle",
-            "pastry",
-            "cup",
-            "gift",
-            "lunchbox",
-            "note",
-            "umbrella",
-            "token",
-            "object",
-            "prop",
-        )
-        relationship_target_cues = (
-            "face-level",
-            "face level",
-            "eye line",
-            "eyeline",
-            "outer eye",
-            "one eye",
-            "eyes",
-            "profile",
-            "face",
-        )
-        relationship_position_cues = (
-            "above",
-            "higher",
-            "upper",
-            "face-level",
-            "face level",
-            "near-lens",
-            "near lens",
-            "frame edge",
-            "in frame",
-            "in-frame",
-            "visible",
-        )
-        partial_landmark_cues = (
-            "partial",
-            "sliver",
-            "outer eye",
-            "one eye",
-        )
-        partial_face_companion_cues = (
-            "temple",
-            "profile",
-            "cheek edge",
-            "brow edge",
-        )
-        blur_cues = (
-            "blurred",
-            "soft-focus",
-            "soft focus",
-            "out-of-focus",
-            "out of focus",
-        )
-        relationship_frame_side_cues = (
-            "upper-left",
-            "upper left",
-            "upper-right",
-            "upper right",
-            "left frame",
-            "right frame",
-            "left edge",
-            "right edge",
-        )
-        full_recipient_face_cues = (
-            "full recipient face",
-            "recipient's full face",
-            "customer's full face",
-            "partner's full face",
-            "second full face",
-            "fully shown face",
-        )
-        off_frame_cues = (
-            "off-frame",
-            "off frame",
-            "out of frame",
-            "outside frame",
-            "outside the frame",
-        )
-        care_action_anchor_present = (
-            any(cue in care_action_anchor_phrase for cue in recipient_cues)
-            and any(cue in care_action_anchor_phrase for cue in care_target_cues)
-            and any(cue in care_action_anchor_phrase for cue in in_frame_cues)
-            and any(cue in care_action_anchor_phrase for cue in care_screen_position_cues)
-            and not any(cue in care_action_anchor_phrase for cue in off_frame_cues)
-        )
-        if (
-            denial_guidance.get("care_action_anchor_phrase_required") is True
-            and (
-                not care_action_anchor_phrase
-                or not text_contains_term(
-                    prompt_en,
-                    str(evidence.get("care_action_anchor_phrase") or ""),
-                )
-                or not care_action_anchor_present
-            )
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_care_action_anchor",
-                    "reason": (
-                        "denial_care_leak needs a visible hand, wound, or carried object at an explicit "
-                        "lower screen position so the helpful action has a concrete endpoint"
-                    ),
-                    "phrase": evidence.get("care_action_anchor_phrase"),
-                }
-            )
-        relationship_gaze_anchor_present = (
-            any(cue in relationship_gaze_anchor_phrase for cue in recipient_cues)
-            and "adult" in relationship_gaze_anchor_phrase
-            and any(cue in relationship_gaze_anchor_phrase for cue in relationship_target_cues)
-            and any(cue in relationship_gaze_anchor_phrase for cue in relationship_position_cues)
-            and not any(cue in relationship_gaze_anchor_phrase for cue in off_frame_cues)
-            and " ".join(relationship_gaze_anchor_phrase.split())
-            != " ".join(care_action_anchor_phrase.split())
-        )
-        partial_recipient_landmark_present = (
-            any(cue in relationship_gaze_anchor_phrase for cue in partial_landmark_cues)
-            and any(
-                cue in relationship_gaze_anchor_phrase
-                for cue in partial_face_companion_cues
-            )
-            and any(cue in relationship_gaze_anchor_phrase for cue in blur_cues)
-            and any(
-                cue in relationship_gaze_anchor_phrase
-                for cue in relationship_frame_side_cues
-            )
-            and not any(
-                cue in relationship_gaze_anchor_phrase
-                for cue in full_recipient_face_cues
-            )
-        )
-        if (
-            denial_guidance.get("relationship_gaze_anchor_phrase_required") is True
-            and (
-                not relationship_gaze_anchor_phrase
-                or not text_contains_term(
-                    prompt_en,
-                    str(evidence.get("relationship_gaze_anchor_phrase") or ""),
-                )
-                or not relationship_gaze_anchor_present
-            )
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_relationship_gaze_anchor",
-                    "reason": (
-                        "denial_care_leak needs a separate face-level eye line for the same adult recipient, "
-                        "spatially distinct from the lower care target; the task anchor alone reads as nurturance"
-                    ),
-                    "phrase": evidence.get("relationship_gaze_anchor_phrase"),
-                }
-            )
-        if (
-            denial_guidance.get("partial_recipient_landmark_required") is True
-            and not partial_recipient_landmark_present
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_partial_recipient_landmark",
-                    "reason": (
-                        "denial_care_leak needs one visible but subordinate landmark from the same adult "
-                        "recipient: a blurred partial outer eye plus temple or profile sliver at a named "
-                        "upper frame edge. An imagined eye line, off-frame person, or second full face "
-                        "does not make the affection endpoint verifiable"
-                    ),
-                    "phrase": evidence.get("relationship_gaze_anchor_phrase"),
-                }
-            )
-        head_away_cues = (
-            "head stays aside",
-            "head stays angled away",
-            "head remains aside",
-            "head remains angled away",
-            "face stays aside",
-            "face stays angled away",
-            "face remains aside",
-            "face remains angled away",
-            "three-quarter head",
-            "three quarter head",
-            "three-quarter face",
-            "three quarter face",
-        )
-        three_quarter_cues = (
-            "three-quarter head",
-            "three quarter head",
-            "three-quarter face",
-            "three quarter face",
-            "three-quarter view",
-            "three quarter view",
-        )
-        nose_off_lens_cues = (
-            "nose axis off the lens",
-            "nose points away from the lens",
-            "nose stays off-axis",
-            "nose remains off-axis",
-            "nose points left",
-            "nose points right",
-        )
-        iris_return_cues = (
-            "iris",
-            "irises",
-            "pupils",
-            "eyes return",
-            "gaze returns",
-            "glance returns",
-            "returning glance",
-            "stolen glance",
-        )
-        lower_lid_cues = (
-            "lower lids soften",
-            "softened lower lids",
-            "lower eyelids soften",
-            "softened lower eyelids",
-        )
-        suppressed_mouth_cues = (
-            "almost-smile",
-            "almost smile",
-            "mouth corner nearly lifts",
-            "mouth corner almost lifts",
-            "mouth corner starts to lift",
-            "mouth corner begins to lift",
-            "one mouth corner starts",
-            "one mouth corner begins",
-            "suppressed smile",
-            "suppresses a smile",
-            "then flattens",
-            "before flattening",
-        )
-        oblique_return_cues = (
-            "small oblique return",
-            "small sideways return",
-            "slight oblique return",
-            "brief oblique return",
-            "only the irises",
-            "irises alone",
-            "pupils alone",
-        )
-        frame_side_cues = (
-            "upper-left",
-            "upper left",
-            "upper-right",
-            "upper right",
-            "left of lens",
-            "right of lens",
-            "left frame",
-            "right frame",
-        )
-        overt_frontal_cues = (
-            "direct eye contact",
-            "direct frontal",
-            "directly at the camera",
-            "directly into the camera",
-            "faces the camera",
-            "facing the camera",
-            "front-facing",
-            "frontal face",
-            "centered face",
-            "selfie gaze",
-            "viewer-facing gaze",
-        )
-        relationship_geometry_terms = (
-            "face-level",
-            "face level",
-            "eye line",
-            "eyeline",
-            "profile",
-            "face",
-            "eyes",
-            "near-lens",
-            "near lens",
-        )
-        care_target_gaze_cues = (
-            "toward the hand",
-            "to the hand",
-            "at the hand",
-            "toward the wound",
-            "toward the scrape",
-            "toward the bandage",
-            "toward the knuckle",
-            "toward the pastry",
-            "toward the cup",
-            "toward the object",
-            "toward the task",
-        )
-        nurturant_affect_cues = (
-            "benevolent",
-            "maternal",
-            "motherly",
-            "mamang",
-            "mommy",
-            "nurturant",
-            "nurturing",
-            "protective concern",
-        )
-        head_left = any(
-            cue in concealed_affection_phrase
-            for cue in (
-                "head turns left",
-                "head turned left",
-                "head angles left",
-                "face turns left",
-                "face angled left",
-            )
-        )
-        head_right = any(
-            cue in concealed_affection_phrase
-            for cue in (
-                "head turns right",
-                "head turned right",
-                "head angles right",
-                "face turns right",
-                "face angled right",
-            )
-        )
-        nose_left = any(
-            cue in concealed_affection_phrase
-            for cue in ("nose points left", "nose axis points left")
-        )
-        nose_right = any(
-            cue in concealed_affection_phrase
-            for cue in ("nose points right", "nose axis points right")
-        )
-        anchor_left = any(
-            cue in relationship_gaze_anchor_phrase
-            for cue in ("upper-left", "upper left", "left frame", "left edge")
-        )
-        anchor_right = any(
-            cue in relationship_gaze_anchor_phrase
-            for cue in ("upper-right", "upper right", "right frame", "right edge")
-        )
-        iris_left = bool(
-            re.search(
-                r"(?:iris|irises|pupil|pupils).{0,80}(?:upper-left|upper left|left frame|left edge)",
-                concealed_affection_phrase,
-            )
-        )
-        iris_right = bool(
-            re.search(
-                r"(?:iris|irises|pupil|pupils).{0,80}(?:upper-right|upper right|right frame|right edge)",
-                concealed_affection_phrase,
-            )
-        )
-        opposed_head_iris_vector_present = (
-            (
-                head_right
-                and nose_right
-                and anchor_left
-                and iris_left
-                and not (head_left or nose_left or anchor_right or iris_right)
-            )
-            or (
-                head_left
-                and nose_left
-                and anchor_right
-                and iris_right
-                and not (head_right or nose_right or anchor_left or iris_left)
-            )
-        )
-        if (
-            denial_guidance.get("opposed_head_iris_vector_required") is True
-            and not opposed_head_iris_vector_present
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_opposed_head_iris_vector",
-                    "reason": (
-                        "the head and nose must name one side while the partial recipient landmark and "
-                        "iris return name the opposite side. Turning head and irises together creates a "
-                        "generic side-look rather than concealed liking"
-                    ),
-                    "anchor_phrase": evidence.get("relationship_gaze_anchor_phrase"),
-                    "concealed_affection_phrase": evidence.get("concealed_affection_phrase"),
-                }
-            )
-        affection_vector_present = (
-            any(cue in concealed_affection_phrase for cue in head_away_cues)
-            and any(cue in concealed_affection_phrase for cue in three_quarter_cues)
-            and any(cue in concealed_affection_phrase for cue in nose_off_lens_cues)
-            and any(cue in concealed_affection_phrase for cue in iris_return_cues)
-            and any(cue in concealed_affection_phrase for cue in oblique_return_cues)
-            and any(cue in concealed_affection_phrase for cue in lower_lid_cues)
-            and any(cue in concealed_affection_phrase for cue in suppressed_mouth_cues)
-            and any(cue in concealed_affection_phrase for cue in frame_side_cues)
-            and (
-                any(
-                    cue in concealed_affection_phrase and cue in relationship_gaze_anchor_phrase
-                    for cue in relationship_geometry_terms
-                )
-                or any(
-                    cue in concealed_affection_phrase and cue in relationship_gaze_anchor_phrase
-                    for cue in frame_side_cues
-                )
-            )
-            and not any(cue in concealed_affection_phrase for cue in care_target_gaze_cues)
-            and not any(cue in concealed_affection_phrase for cue in overt_frontal_cues)
-            and (
-                denial_guidance.get("opposed_head_iris_vector_required") is not True
-                or opposed_head_iris_vector_present
-            )
-        )
-        concealed_affection_present = (
-            any(cue in concealed_affection_phrase for cue in affection_cues)
-            and any(cue in concealed_affection_phrase for cue in personal_liking_cues)
-            and any(cue in concealed_affection_phrase for cue in concealment_cues)
-            and any(cue in concealed_affection_phrase for cue in directional_face_cues)
-            and not any(cue in concealed_affection_phrase for cue in nurturant_affect_cues)
-            and affection_vector_present
-        )
-        if (
-            denial_guidance.get("concealed_affection_phrase_required") is True
-            and (
-                not concealed_affection_phrase
-                or not text_contains_term(
-                    prompt_en,
-                    str(evidence.get("concealed_affection_phrase") or ""),
-                )
-                or not concealed_affection_present
-            )
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_concealed_affection",
-                    "reason": (
-                        "denial_care_leak needs a named three-quarter head turn with the nose axis off the lens, "
-                        "toward the side opposite a visible partial recipient landmark, with only the irises making a "
-                        "small oblique return toward that landmark, softened lower lids, and one mouth corner beginning "
-                        "to lift before suppression. Direct "
-                        "frontal eye contact, care-target gaze, or maternal benevolence is not concealed peer liking"
-                    ),
-                    "phrase": evidence.get("concealed_affection_phrase"),
-                }
-            )
-
-    response_phrase = str(evidence.get("visible_response_phrase") or "").lower()
-    response_action_cues = (
-        "gaze",
-        "look",
-        "blink",
-        "mouth",
-        "lip",
-        "huff",
-        "hand",
-        "finger",
-        "grip",
-        "shoulder",
-        "posture",
-        "turn",
-        "pause",
-        "recoil",
-        "twitch",
-        "flatten",
-        "tilt",
-        "pupil",
-        "tail",
-        "composure",
-    )
-    if response_phrase and not any(cue in response_phrase for cue in response_action_cues):
-        failures.append(
-            {
-                "check": "moe_response_visible_response",
-                "reason": "visible response must show face, gaze, hand, posture, or involuntary reflex evidence",
-                "phrase": evidence.get("visible_response_phrase"),
-            }
-        )
-
-    focal_phrase = str(evidence.get("focal_plane_phrase") or "").lower()
-    if focal_phrase and (
-        "focal" not in focal_phrase
-        or not any(term in focal_phrase for term in ("face", "gaze", "eyes", "mouth"))
-        or not any(term in focal_phrase for term in ("hand", "finger", "posture", "target", "object", "prop"))
-    ):
-        failures.append(
-            {
-                "check": "moe_response_focal_plane",
-                "reason": "focal-plane evidence must bind the facial response with hands/posture and the target",
-                "phrase": evidence.get("focal_plane_phrase"),
-            }
-        )
-
-    event_phase_phrase = str(evidence.get("event_phase_phrase") or "").lower()
-    event_phase_cues = (
-        "as ",
-        "before",
-        "caught",
-        "during",
-        "in the act",
-        "just as",
-        "mid-",
-        "while",
-    )
-    if event_phase_phrase and not any(cue in event_phase_phrase for cue in event_phase_cues):
-        failures.append(
-            {
-                "check": "moe_response_event_phase",
-                "reason": "event-phase evidence must bind the frame to an unfinished transition, not a settled endpoint",
-                "phrase": evidence.get("event_phase_phrase"),
-            }
-        )
-
-    state_geometry_blob = " ".join(
-        str(evidence.get(field) or "").lower()
-        for field in (
-            "event_phase_phrase",
-            "target_phrase",
-            "immediate_consequence_phrase",
-        )
-    )
-    state_geometry_cues = (
-        "above",
-        "below",
-        "broken",
-        "crooked",
-        "gap",
-        "half-",
-        "halfway",
-        "inverted",
-        "kink",
-        "off-center",
-        "open ",
-        "outside",
-        "partway",
-        "slipping",
-        "tilted",
-        "unseated",
-    )
-    if state_geometry_blob and not any(cue in state_geometry_blob for cue in state_geometry_cues):
-        failures.append(
-            {
-                "check": "moe_response_state_geometry",
-                "reason": (
-                    "event, target, and consequence evidence must name a visible physical separation "
-                    "that distinguishes the unfinished state from its settled endpoint"
-                ),
-            }
-        )
-
-    if "nonhuman_reflex_leak" in {mechanism, *support_values}:
-        direction_phrase = response_phrase
-        body_cues = ("ear", "tail", "pupil", "posture")
-        direction_cues = ("toward", "away", "aim", "left", "right", "nearer", "trigger-side")
-        if not any(cue in direction_phrase for cue in body_cues) or not any(
-            cue in direction_phrase for cue in direction_cues
-        ):
-            failures.append(
-                {
-                    "check": "moe_response_reflex_direction",
-                    "reason": "a nonhuman reflex must name the responding body part and its direction toward a visible trigger",
-                    "phrase": evidence.get("visible_response_phrase"),
-                }
-            )
-        if "ear" in direction_phrase:
-            asymmetric_cues = (
-                "one ear",
-                "nearer ear",
-                "trigger-side ear",
-                "left ear",
-                "right ear",
-                "other ear",
-                "far ear",
-                "asymmetric",
-            )
-            if not any(cue in direction_phrase for cue in asymmetric_cues):
-                failures.append(
-                    {
-                        "check": "moe_response_reflex_direction",
-                        "reason": "an ear reflex must be asymmetric rather than two static symmetrical ears",
-                        "phrase": evidence.get("visible_response_phrase"),
-                    }
-                )
-            compact_ear_cues = (
-                "compact ear",
-                "compact ears",
-                "small ear",
-                "small ears",
-                "human-ear-scale",
-                "human ear scale",
-                "no taller than her human ear",
-                "no taller than his human ear",
-                "no taller than the visible human ear",
-                "human-ear height",
-            )
-            angle_difference_cues = (
-                "different angle",
-                "different angles",
-                "unequal angle",
-                "unequal angles",
-                "other ear keeps",
-                "far ear keeps",
-                "baseline angle",
-            )
-            reflex_missing = []
-            if not any(cue in direction_phrase for cue in compact_ear_cues):
-                reflex_missing.append("compact_human_ear_scale")
-            if not any(cue in direction_phrase for cue in angle_difference_cues):
-                reflex_missing.append("clearly_different_ear_angles")
-            if reflex_missing:
-                failures.append(
-                    {
-                        "check": "moe_response_nekomimi_scale_direction",
-                        "reason": (
-                            "a nekomimi ear reflex must keep each living ear compact and make the two "
-                            "ear-tip angles visibly different"
-                        ),
-                        "missing": reflex_missing,
-                        "phrase": evidence.get("visible_response_phrase"),
-                    }
-                )
-
-    text_free_background = (
-        contract.get("composition_guidance", {}).get("render_legibility", {}).get("text_free_background")
-        if isinstance(contract.get("composition_guidance"), dict)
-        else None
-    )
-    if text_free_background:
-        background_phrase = str(evidence.get("background_control_phrase") or "").lower()
-        if not background_phrase:
-            failures.append(
-                {
-                    "check": "moe_response_background_control",
-                    "reason": "moe composition requires literal unlettered-background evidence",
-                    "fields": ["background_control_phrase"],
-                }
-            )
-        else:
-            background_surface_cues = (
-                "plain background",
-                "plain wall",
-                "unlettered",
-                "without text",
-                "no text",
-                "text-free",
-                "unwritten",
-                "unmarked wall",
-                "soft bokeh without signs",
-            )
-            forbidden_background_cues = (
-                "chalkboard",
-                "lettering",
-                "menu board",
-                "pseudo-writing",
-                "signage",
-                "written text",
-            )
-            if (
-                not text_contains_term(prompt_en, str(evidence.get("background_control_phrase") or ""))
-                or not any(cue in background_phrase for cue in background_surface_cues)
-                or any(cue in background_phrase for cue in forbidden_background_cues)
-            ):
-                failures.append(
-                    {
-                        "check": "moe_response_background_control",
-                        "reason": (
-                            "background evidence must literally request a plain or unlettered surface "
-                            "without menus, signs, pseudo-writing, or other generated text"
-                        ),
-                        "phrase": evidence.get("background_control_phrase"),
-                    }
-                )
-
-    weak_only_tokens = {
-        "adorable",
-        "anime",
-        "beautiful",
-        "blush",
-        "blushing",
-        "cat",
-        "cute",
-        "ears",
-        "kawaii",
-        "maid",
-        "moe",
-        "pretty",
-        "shy",
-        "smile",
-    }
-    weak_only = []
-    for phrase in evidence_phrases:
-        tokens = {token for token in re.findall(r"[a-z]+", phrase.lower()) if token}
-        if tokens and tokens <= weak_only_tokens:
-            weak_only.append(phrase)
-    if weak_only:
-        failures.append(
-            {
-                "check": "moe_response_shortcut",
-                "reason": "cute labels, blush, ears, costume, or a shy smile alone are not moe-response evidence",
-                "phrases": weak_only,
-            }
-        )
-
-    youth_fragments = (
-        "baby face",
-        "baby-faced",
-        "childlike",
-        "child-like",
-        "schoolgirl",
-        "schoolboy",
-        "teenage",
-        "youthful proportions",
-        "oversized eyes",
-        "young-looking",
-        "looks underage",
-    )
-    youth_hits = [fragment for fragment in youth_fragments if fragment in prompt_en.lower()]
-    if youth_hits:
-        failures.append(
-            {
-                "check": "moe_response_adult_guard",
-                "reason": "youth morphology or minor coding cannot be used as moe evidence",
-                "terms": youth_hits,
-            }
-        )
-
-    if str(contract.get("sexual_tone") or "") == "nonsexual":
-        sensual_fragments = (
-            "cleavage",
-            "chest-forward",
-            "fetish",
-            "lingerie",
-            "pin-up",
-            "seductive",
-            "sultry",
-            "sensual gaze",
-            "sensual pose",
-            "sexualized",
-            "sexualised",
-        )
-        sensual_hits = [fragment for fragment in sensual_fragments if fragment in prompt_en.lower()]
-        if sensual_hits:
-            failures.append(
-                {
-                    "check": "moe_response_nonsexual_tone",
-                    "reason": "nonsexual moe response contains sensual or body-emphasis direction",
-                    "terms": sensual_hits,
-                }
-            )
-    return failures
-
-
 def audit_viewer_experience(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -4504,441 +2705,6 @@ def audit_creative_direction(
     return failures
 
 
-def audit_hybrid_augmentation(
-    pack: dict[str, Any],
-    composed: dict[str, Any],
-    prompt_en: str,
-    chosen: set[str],
-    candidate_objects: dict[str, dict[str, Any]],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    contract = pack.get("hybrid_augmentation")
-    if not isinstance(contract, dict) or not contract.get("enabled"):
-        return [], []
-
-    failures: list[dict[str, Any]] = []
-    warnings: list[dict[str, Any]] = []
-    authorial_mode = str(contract.get("contract_version") or "") == "photo-hybrid-augmentation/v2"
-    brief = composed.get("augmentation_brief")
-    if not isinstance(brief, dict):
-        return [
-            {
-                "check": "hybrid_augmentation",
-                "reason": "enabled hybrid candidate pack requires augmentation_brief",
-            }
-        ], []
-
-    if not str(brief.get("concept_core") or "").strip():
-        failures.append(
-            {
-                "check": "hybrid_augmentation_core",
-                "reason": "augmentation_brief requires an agent-authored concept_core",
-            }
-        )
-
-    route_contract = contract.get("route_contract") if isinstance(contract.get("route_contract"), dict) else {}
-    routes = [route for route in route_contract.get("routes") or [] if isinstance(route, dict)]
-    route_map = {str(route.get("id") or ""): route for route in routes if str(route.get("id") or "")}
-    expected_route_ids = set(route_map)
-    considered = [row for row in brief.get("routes_considered") or [] if isinstance(row, dict)]
-    considered_ids = [str(row.get("route_id") or "") for row in considered]
-    if set(considered_ids) != expected_route_ids or len(considered_ids) != len(set(considered_ids)):
-        failures.append(
-            {
-                "check": "hybrid_augmentation_routes",
-                "reason": "routes_considered must cover every exposed route exactly once",
-                "expected": sorted(expected_route_ids),
-                "actual": considered_ids,
-            }
-        )
-    selected_route_id = str(brief.get("selected_route_id") or "")
-    selected_rows = [row for row in considered if str(row.get("decision") or "") == "selected"]
-    invalid_route_decisions = [
-        row
-        for row in considered
-        if str(row.get("decision") or "") not in {"selected", "rejected"}
-        or not str(row.get("reason") or "").strip()
-    ]
-    if invalid_route_decisions:
-        failures.append(
-            {
-                "check": "hybrid_augmentation_routes",
-                "reason": "every route requires selected/rejected plus a non-empty reason",
-            }
-        )
-    if selected_route_id == "none":
-        if selected_rows or not str(brief.get("all_rejected_reason") or "").strip():
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_selection",
-                    "reason": "selecting none requires every route rejected and all_rejected_reason",
-                }
-            )
-    elif selected_route_id not in route_map or len(selected_rows) != 1 or str(selected_rows[0].get("route_id") or "") != selected_route_id:
-        failures.append(
-            {
-                "check": "hybrid_augmentation_selection",
-                "reason": "select exactly one exposed route, or use selected_route_id none",
-                "selected_route_id": selected_route_id or None,
-            }
-        )
-
-    adoption = contract.get("adoption_contract") if isinstance(contract.get("adoption_contract"), dict) else {}
-    allowed_states = {str(item) for item in adoption.get("decision_states") or []}
-    allowed_functions = {str(item) for item in adoption.get("detail_functions") or []}
-    decisions = [row for row in brief.get("decisions") or [] if isinstance(row, dict)]
-    decision_ids = [str(row.get("candidate_id") or "") for row in decisions]
-    if len(decision_ids) != len(set(decision_ids)):
-        failures.append(
-            {
-                "check": "hybrid_augmentation_decisions",
-                "reason": "each route candidate may have only one decision",
-            }
-        )
-    selected_candidate_ids = (
-        {str(item) for item in (route_map.get(selected_route_id) or {}).get("candidate_ids") or []}
-        if selected_route_id in route_map
-        else set()
-    )
-    if selected_route_id in route_map and set(decision_ids) != selected_candidate_ids:
-        failures.append(
-            {
-                "check": "hybrid_augmentation_decisions",
-                "reason": "every selected-route candidate requires an explicit decision",
-                "expected": sorted(selected_candidate_ids),
-                "actual": sorted(set(decision_ids)),
-            }
-        )
-    if selected_route_id == "none" and decisions:
-        failures.append(
-            {
-                "check": "hybrid_augmentation_decisions",
-                "reason": "no candidate decisions are allowed when all routes are rejected",
-            }
-        )
-
-    adopted_ids: set[str] = set()
-    adopted_states = {"transformed"} if authorial_mode else {"accepted", "modified"}
-    for decision in decisions:
-        candidate_id = str(decision.get("candidate_id") or "")
-        state = str(decision.get("decision") or "")
-        function = str(decision.get("function") or "")
-        if candidate_id not in selected_candidate_ids:
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_decisions",
-                    "reason": "decision references a candidate outside the selected route",
-                    "candidate_id": candidate_id,
-                }
-            )
-            continue
-        if state not in allowed_states:
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_decisions",
-                    "reason": "unknown augmentation decision state",
-                    "candidate_id": candidate_id,
-                    "decision": state,
-                }
-            )
-        if function not in allowed_functions:
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_decisions",
-                    "reason": "unknown augmentation detail function",
-                    "candidate_id": candidate_id,
-                    "function": function,
-                }
-            )
-        if not str(decision.get("rationale") or "").strip() or not str(
-            decision.get("marginal_contribution") or ""
-        ).strip():
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_marginal_value",
-                    "reason": "every decision requires rationale and marginal_contribution",
-                    "candidate_id": candidate_id,
-                }
-            )
-        if state in adopted_states:
-            adopted_ids.add(candidate_id)
-            evidence = str(decision.get("prompt_evidence") or "").strip()
-            if candidate_id not in chosen:
-                failures.append(
-                    {
-                        "check": "hybrid_augmentation_provenance",
-                        "reason": (
-                            "transformed augmentation candidate is missing from chosen_candidate_ids"
-                            if authorial_mode
-                            else "accepted or modified augmentation candidate is missing from chosen_candidate_ids"
-                        ),
-                        "candidate_id": candidate_id,
-                    }
-                )
-            if not evidence or not text_contains_term(prompt_en, evidence):
-                failures.append(
-                    {
-                        "check": "hybrid_augmentation_binding",
-                        "reason": (
-                            "transformed detail requires newly authored literal prompt_evidence"
-                            if authorial_mode
-                            else "accepted or modified detail requires literal prompt_evidence"
-                        ),
-                        "candidate_id": candidate_id,
-                        "prompt_evidence": evidence or None,
-                    }
-                )
-            if authorial_mode:
-                interpretation = str(decision.get("artistic_interpretation") or "").strip()
-                transformation = str(decision.get("transformation") or "").strip()
-                dimensions = [
-                    str(item)
-                    for item in decision.get("transformation_dimensions") or []
-                    if str(item).strip()
-                ]
-                allowed_dimensions = {
-                    str(item)
-                    for item in adoption.get("transformation_dimensions") or []
-                    if str(item).strip()
-                }
-                if not interpretation or not transformation or not dimensions:
-                    failures.append(
-                        {
-                            "check": "hybrid_augmentation_authorial_transform",
-                            "reason": (
-                                "transformed detail requires artistic_interpretation, transformation, "
-                                "and at least one transformation dimension"
-                            ),
-                            "candidate_id": candidate_id,
-                        }
-                    )
-                unknown_dimensions = sorted(set(dimensions) - allowed_dimensions)
-                if unknown_dimensions:
-                    failures.append(
-                        {
-                            "check": "hybrid_augmentation_authorial_transform",
-                            "reason": "transformed detail uses an unknown transformation dimension",
-                            "candidate_id": candidate_id,
-                            "dimensions": unknown_dimensions,
-                        }
-                    )
-                source_candidate = candidate_objects.get(candidate_id, {})
-                source_terms = {
-                    str(item).lower()
-                    for item in source_candidate.get("concept_terms") or []
-                    if str(item).strip()
-                }
-                evidence_terms = authorial_evidence_tokens(evidence)
-                if (
-                    evidence
-                    and (
-                        len(evidence_terms) < 3
-                        or not (evidence_terms - source_terms)
-                    )
-                ):
-                    failures.append(
-                        {
-                            "check": "hybrid_augmentation_authorial_transform",
-                            "reason": (
-                                "prompt_evidence must add authored context or causality beyond the "
-                                "candidate's unordered source terms"
-                            ),
-                            "candidate_id": candidate_id,
-                            "source_terms": sorted(source_terms),
-                        }
-                    )
-            if not authorial_mode and state == "modified" and not str(
-                decision.get("modification") or ""
-            ).strip():
-                failures.append(
-                    {
-                        "check": "hybrid_augmentation_decisions",
-                        "reason": "modified detail requires a modification description",
-                        "candidate_id": candidate_id,
-                    }
-                )
-        elif state == "rejected" and candidate_id in chosen:
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_provenance",
-                    "reason": "rejected augmentation candidate must not be chosen",
-                    "candidate_id": candidate_id,
-                }
-            )
-
-    if selected_route_id in route_map:
-        try:
-            accepted_min = int(
-                adoption.get(
-                    "minimum_transformed_if_selected" if authorial_mode else "minimum_accepted_if_selected",
-                    1 if authorial_mode else 2,
-                )
-                or (1 if authorial_mode else 2)
-            )
-        except (TypeError, ValueError):
-            accepted_min = 1 if authorial_mode else 2
-        try:
-            accepted_max = int(
-                adoption.get("maximum_transformed" if authorial_mode else "maximum_accepted", 3 if authorial_mode else 5)
-                or (3 if authorial_mode else 5)
-            )
-        except (TypeError, ValueError):
-            accepted_max = 3 if authorial_mode else 5
-        if len(adopted_ids) < accepted_min or len(adopted_ids) > accepted_max:
-            failures.append(
-                {
-                    "check": "hybrid_augmentation_budget",
-                    "reason": (
-                        "transformed augmentation detail count is outside the declared budget"
-                        if authorial_mode
-                        else "accepted augmentation detail count is outside the declared budget"
-                    ),
-                    "minimum": accepted_min,
-                    "maximum": accepted_max,
-                    "actual": len(adopted_ids),
-                }
-            )
-
-    adult_contract = contract.get("adult_appeal") if isinstance(contract.get("adult_appeal"), dict) else {}
-    if adult_contract.get("enabled"):
-        adult_brief = brief.get("adult_appeal")
-        if not isinstance(adult_brief, dict):
-            failures.append(
-                {
-                    "check": "adult_appeal",
-                    "reason": "active adult-appeal axes require augmentation_brief.adult_appeal",
-                }
-            )
-            return failures, warnings
-        adult_subject_phrase = str(adult_brief.get("adult_subject_phrase") or "").strip()
-        agency_phrase = str(adult_brief.get("agency_phrase") or "").strip()
-        if (
-            not adult_subject_phrase
-            or not text_contains_term(prompt_en, adult_subject_phrase)
-            or not re.search(r"\badult\b", adult_subject_phrase, flags=re.IGNORECASE)
-        ):
-            failures.append(
-                {
-                    "check": "adult_appeal_adult_subject",
-                    "reason": "adult_subject_phrase must be literal in prompt_en and explicitly say adult",
-                }
-            )
-        if not agency_phrase or not text_contains_term(prompt_en, agency_phrase):
-            failures.append(
-                {
-                    "check": "adult_appeal_agency",
-                    "reason": "agency_phrase must be literal in prompt_en",
-                }
-            )
-        expected_axes = adult_contract.get("axes") if isinstance(adult_contract.get("axes"), dict) else {}
-        actual_axes = adult_brief.get("axes") if isinstance(adult_brief.get("axes"), dict) else {}
-        for axis_id, axis_contract in expected_axes.items():
-            if not isinstance(axis_contract, dict):
-                continue
-            expected_intensity = int(axis_contract.get("intensity", 0) or 0)
-            actual_axis = actual_axes.get(axis_id) if isinstance(actual_axes.get(axis_id), dict) else {}
-            try:
-                actual_intensity = int(actual_axis.get("intensity", -1))
-            except (TypeError, ValueError):
-                actual_intensity = -1
-            if actual_intensity != expected_intensity:
-                failures.append(
-                    {
-                        "check": "adult_appeal_axes",
-                        "reason": "composed adult-appeal intensity differs from the explicit candidate-pack axis",
-                        "axis": axis_id,
-                        "expected": expected_intensity,
-                        "actual": actual_intensity,
-                    }
-                )
-            if expected_intensity > 0:
-                if authorial_mode:
-                    interpretation = str(actual_axis.get("artistic_interpretation") or "").strip()
-                    axis_evidence = str(actual_axis.get("prompt_evidence") or "").strip()
-                    if (
-                        not interpretation
-                        or not axis_evidence
-                        or not text_contains_term(prompt_en, axis_evidence)
-                    ):
-                        failures.append(
-                            {
-                                "check": "adult_appeal_axes",
-                                "reason": (
-                                    "every active adult-appeal axis requires an agent-authored "
-                                    "interpretation with literal prompt evidence"
-                                ),
-                                "axis": axis_id,
-                            }
-                        )
-                else:
-                    inventory_ids = {
-                        str(candidate.get("id") or "")
-                        for candidate in axis_contract.get("candidate_inventory") or []
-                        if isinstance(candidate, dict) and str(candidate.get("id") or "")
-                    }
-                    if not (adopted_ids & inventory_ids):
-                        failures.append(
-                            {
-                                "check": "adult_appeal_axes",
-                                "reason": "every active adult-appeal axis requires one accepted or modified candidate",
-                                "axis": axis_id,
-                            }
-                        )
-        expected_emphasis = str((adult_contract.get("blend") or {}).get("emphasis") or "")
-        actual_emphasis = str((adult_brief.get("blend") or {}).get("emphasis") or "") if isinstance(adult_brief.get("blend"), dict) else ""
-        if actual_emphasis != expected_emphasis:
-            failures.append(
-                {
-                    "check": "adult_appeal_blend",
-                    "reason": "composed blend emphasis differs from the candidate pack",
-                    "expected": expected_emphasis,
-                    "actual": actual_emphasis or None,
-                }
-            )
-
-        combination = adult_contract.get("combination_policy") if isinstance(adult_contract.get("combination_policy"), dict) else {}
-        risk_hits: set[str] = set()
-        risk_groups = combination.get("risk_groups") if isinstance(combination.get("risk_groups"), dict) else {}
-        chosen_entry_ids = {
-            str(candidate_objects.get(candidate_id, {}).get("entry_id") or "")
-            for candidate_id in chosen
-        }
-        for group_id, group in risk_groups.items():
-            if not isinstance(group, dict):
-                continue
-            entry_ids = {str(item) for item in group.get("entry_ids") or []}
-            prompt_terms = [str(item) for item in group.get("prompt_terms") or []]
-            if chosen_entry_ids & entry_ids or any(text_contains_term(prompt_en, term) for term in prompt_terms):
-                risk_hits.add(str(group_id))
-        for rule in combination.get("hard_combinations") or []:
-            if not isinstance(rule, dict):
-                continue
-            required = {str(item) for item in rule.get("all_of") or []}
-            if required and required <= risk_hits:
-                failures.append(
-                    {
-                        "check": "adult_appeal_combination_risk",
-                        "reason": str(rule.get("reason") or "high-risk styling and camera combination"),
-                        "rule_id": rule.get("id"),
-                        "risk_groups": sorted(required),
-                    }
-                )
-        for rule in combination.get("warning_combinations") or []:
-            if not isinstance(rule, dict):
-                continue
-            required = {str(item) for item in rule.get("all_of") or []}
-            if required and required <= risk_hits:
-                warnings.append(
-                    {
-                        "check": "adult_appeal_combination_risk",
-                        "reason": str(rule.get("reason") or "stacked adult-fashion emphasis"),
-                        "rule_id": rule.get("id"),
-                        "risk_groups": sorted(required),
-                    }
-                )
-
-    return failures, warnings
-
-
 def audit_authorial_scene(
     pack: dict[str, Any],
     composed: dict[str, Any],
@@ -4960,7 +2726,7 @@ def audit_authorial_scene(
         return [
             {
                 "check": "authorial_scene",
-                "reason": "v4 abstract scene contract requires an authored_scene object",
+                "reason": "current abstract scene contract requires an authored_scene object",
             }
         ]
 
@@ -5099,7 +2865,7 @@ def audit_authorial_open_slots(
         return [
             {
                 "check": "authorial_open_slots",
-                "reason": "v4 authorial openings require an authored_slots object",
+                "reason": "current authorial openings require an authored_slots object",
                 "slots": [str(row.get("slot")) for row in contracts],
             }
         ]
@@ -5184,111 +2950,6 @@ def audit_authorial_open_slots(
                 "check": "authorial_open_slots",
                 "reason": "authored_slots contains a slot that was not opened by the pack",
                 "slots": unexpected,
-            }
-        )
-    return failures
-
-
-def audit_authorial_request(
-    pack: dict[str, Any],
-    composed: dict[str, Any],
-    prompt_en: str,
-) -> list[dict[str, Any]]:
-    request = (
-        pack.get("authorial_request")
-        if isinstance(pack.get("authorial_request"), dict)
-        else None
-    )
-    if not isinstance(request, dict):
-        return []
-    failures: list[dict[str, Any]] = []
-    canonical_fields = (
-        "contract_version",
-        "provenance",
-        "subject",
-        "setting",
-        "event",
-        "style_domain",
-        "style_family",
-        "style_evidence",
-        "variation_key",
-    )
-    canonical = {key: request.get(key) for key in canonical_fields}
-    expected_sha = hashlib.sha256(
-        json.dumps(
-            canonical,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-    ).hexdigest()
-    actual_sha = str(request.get("canonical_sha256") or "")
-    if (
-        request.get("contract_version") != "authorial-request/v1"
-        or request.get("provenance") != "agent_prepack"
-        or actual_sha != expected_sha
-        or str(request.get("request_id") or "") != expected_sha[:16]
-    ):
-        failures.append(
-            {
-                "check": "authorial_request_integrity",
-                "reason": "pre-pack authorial request schema, provenance or canonical hash is invalid",
-            }
-        )
-    authored_scene = (
-        composed.get("authored_scene")
-        if isinstance(composed.get("authored_scene"), dict)
-        else {}
-    )
-    if str(authored_scene.get("source_authorial_request_sha256") or "") != actual_sha:
-        failures.append(
-            {
-                "check": "authorial_request_provenance",
-                "reason": "authored_scene is not bound to the frozen pre-pack authorial request hash",
-            }
-        )
-    atoms = authored_scene.get("atoms") if isinstance(authored_scene.get("atoms"), dict) else {}
-    field_atoms = {
-        "subject": "subject",
-        "setting": "location",
-        "event": "action",
-    }
-    for request_field, atom_field in field_atoms.items():
-        source_tokens = authorial_evidence_tokens(str(request.get(request_field) or ""))
-        atom_tokens = authorial_evidence_tokens(str(atoms.get(atom_field) or ""))
-        prompt_tokens = authorial_evidence_tokens(prompt_en)
-        minimum_overlap = min(3, len(source_tokens))
-        if minimum_overlap < 2 or len(source_tokens & atom_tokens) < minimum_overlap:
-            failures.append(
-                {
-                    "check": "authorial_request_binding",
-                    "reason": "authored scene atom does not preserve the pre-pack request meaning",
-                    "request_field": request_field,
-                    "atom_field": atom_field,
-                }
-            )
-        if minimum_overlap >= 2 and len(source_tokens & prompt_tokens) < minimum_overlap:
-            failures.append(
-                {
-                    "check": "authorial_request_binding",
-                    "reason": "prompt_en does not preserve the pre-pack request meaning",
-                    "request_field": request_field,
-                }
-            )
-    style_contract = (
-        pack.get("japanese_subculture_photo")
-        if isinstance(pack.get("japanese_subculture_photo"), dict)
-        else {}
-    )
-    if (
-        str(style_contract.get("source_authorial_request_sha256") or "") != actual_sha
-        or str(style_contract.get("style_family_id") or "")
-        != str(request.get("style_family") or "")
-    ):
-        failures.append(
-            {
-                "check": "authorial_request_style_binding",
-                "reason": "typed Japanese-subculture style is not bound to the pre-pack request",
             }
         )
     return failures
@@ -5421,23 +3082,34 @@ def audit_japanese_subculture_photo(
 
 
 def audit_candidate_semantic_contracts(
-    pack: dict[str, Any], prompt_en: str, chosen: set[str],
-    candidates: dict[str, dict[str, Any]], interpretations: list[dict[str, Any]],
+    pack: dict[str, Any],
+    prompt_en: str,
+    chosen: set[str],
+    candidates: dict[str, dict[str, Any]],
+    interpretations: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     """Bind optional semantic units to full adopted component/relationship evidence."""
     version = pack.get("candidate_semantic_surface_version")
     bundles = pack.get("candidate_bundles")
-    if version is None and bundles is None:
-        return []  # Immutable legacy v4/v5/v6 surfaces retain their contract.
     failures: list[dict[str, Any]] = []
 
     def fail(candidate_id: str, reason: str) -> None:
-        failures.append({"check": "candidate_semantic_contract", "candidate_id": candidate_id, "reason": reason})
+        failures.append(
+            {"check": "candidate_semantic_contract", "candidate_id": candidate_id, "reason": reason}
+        )
 
-    if pack.get("contract_version") != "photo-candidate-pack/v6" or version != photo_candidate_semantics.SURFACE_VERSION:
+    if (
+        pack.get("contract_version") != "photo-candidate-pack/v6"
+        or version != photo_candidate_semantics.SURFACE_VERSION
+    ):
         fail("", "semantic-unit candidates require the declared modern v6 surface version")
         return failures
-    if not isinstance(bundles, dict) or bundles.get("contract_version") != photo_candidate_semantics.BUNDLE_VERSION or bundles.get("adoption") != "optional" or bundles.get("candidate_order") != "seed_shuffled_non_preferential":
+    if (
+        not isinstance(bundles, dict)
+        or bundles.get("contract_version") != photo_candidate_semantics.BUNDLE_VERSION
+        or bundles.get("adoption") != "optional"
+        or bundles.get("candidate_order") != "seed_shuffled_non_preferential"
+    ):
         fail("", "candidate bundles require their versioned optional non-ranked contract")
         return failures
     # Load from this auditor's skill snapshot, never a path asserted by a pack.
@@ -5445,15 +3117,30 @@ def audit_candidate_semantic_contracts(
     try:
         assets = Path(__file__).resolve().parents[1] / "assets"
         source_data = candidate_semantics_generator.load_json(assets / "photo_prompt_tags.json")
-        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = candidate_semantics_generator.load_quality_layers(assets / "photo_prompt_quality_layers.json")
-        expected_bundles = candidate_semantics_generator.candidate_pack_candidate_bundles(source_data, pack)
+        source_data[candidate_semantics_generator.QUALITY_LAYERS_DATA_KEY] = (
+            candidate_semantics_generator.load_quality_layers(
+                assets / "photo_prompt_quality_layers.json"
+            )
+        )
+        expected_bundles = candidate_semantics_generator.candidate_pack_candidate_bundles(
+            source_data, pack
+        )
         if bundles != expected_bundles:
-            fail("", "candidate bundle contents or joint admission differ from the same source snapshot and frozen core")
+            fail(
+                "",
+                "candidate bundle contents or joint admission differ from the same source snapshot and frozen core",
+            )
     except (OSError, TypeError, ValueError, KeyError) as exc:
         fail("", f"candidate bundle source recomputation failed: {exc}")
-    open_dimensions = set(((pack.get("authorial_core") or {}).get("intent_lock") or {}).get("open_dimensions") or [])
-    ordinary = {str(row.get("id") or ""): row for payload in (pack.get("slots") or {}).values()
-                for row in payload.get("candidates") or [] if isinstance(row, dict)}
+    open_dimensions = set(
+        ((pack.get("authorial_core") or {}).get("intent_lock") or {}).get("open_dimensions") or []
+    )
+    ordinary = {
+        str(row.get("id") or ""): row
+        for payload in (pack.get("slots") or {}).values()
+        for row in payload.get("candidates") or []
+        if isinstance(row, dict)
+    }
     bundle_rows = bundles.get("candidates") or []
     bundle_ids = [str(row.get("id") or "") for row in bundle_rows if isinstance(row, dict)]
     if len(bundle_ids) != len(bundle_rows) or len(bundle_ids) != len(set(bundle_ids)):
@@ -5462,63 +3149,152 @@ def audit_candidate_semantic_contracts(
         if not isinstance(bundle, dict):
             continue
         candidate_id = str(bundle.get("id") or "")
-        if (bundle.get("source_contract_sha256") != photo_candidate_semantics.digest(photo_candidate_semantics.bundle_source_material(bundle))
-                or bundle.get("adoption") != "optional"
-                or bundle.get("profile_activation") != "independent_request_evidence_only"
-                or (bundle.get("selection_contract") or {}).get("associated_profiles_are_not_promoted") is not True):
-            fail(candidate_id, "bundle source contract changed or associated profiles acquired automatic authority")
+        if (
+            bundle.get("source_contract_sha256")
+            != photo_candidate_semantics.digest(
+                photo_candidate_semantics.bundle_source_material(bundle)
+            )
+            or bundle.get("adoption") != "optional"
+            or bundle.get("profile_activation") != "independent_request_evidence_only"
+            or (bundle.get("selection_contract") or {}).get("associated_profiles_are_not_promoted")
+            is not True
+        ):
+            fail(
+                candidate_id,
+                "bundle source contract changed or associated profiles acquired automatic authority",
+            )
         members = bundle.get("member_candidates") or []
         member_ids = {str(member.get("id") or "") for member in members if isinstance(member, dict)}
-        dimensions = {dimension for member in members if isinstance(member, dict) for dimension in member.get("affected_dimensions") or []}
+        dimensions = {
+            dimension
+            for member in members
+            if isinstance(member, dict)
+            for dimension in member.get("affected_dimensions") or []
+        }
         joint_admission = bundle.get("joint_admission")
-        if (len(member_ids) != len(members) or not member_ids
-                or any(not member.get("affected_dimensions") for member in members)
-                or dimensions != set(bundle.get("affected_dimensions") or [])
-                or not dimensions.issubset(open_dimensions)
-                or (not joint_admission and (not member_ids.issubset(ordinary) or any((ordinary.get(member_id, {}).get("applicability") or {}).get("status") != "eligible" for member_id in member_ids)))
-                or any(member_ids.intersection(ordinary.get(member_id, {}).get("conflicts_with") or []) for member_id in member_ids)):
-            fail(candidate_id, "all bundle members must remain individually eligible, conflict-free and scoped to open dimensions")
+        if (
+            len(member_ids) != len(members)
+            or not member_ids
+            or any(not member.get("affected_dimensions") for member in members)
+            or dimensions != set(bundle.get("affected_dimensions") or [])
+            or not dimensions.issubset(open_dimensions)
+            or (
+                not joint_admission
+                and (
+                    not member_ids.issubset(ordinary)
+                    or any(
+                        (ordinary.get(member_id, {}).get("applicability") or {}).get("status")
+                        != "eligible"
+                        for member_id in member_ids
+                    )
+                )
+            )
+            or any(
+                member_ids.intersection(ordinary.get(member_id, {}).get("conflicts_with") or [])
+                for member_id in member_ids
+            )
+        ):
+            fail(
+                candidate_id,
+                "all bundle members must remain individually eligible, conflict-free and scoped to open dimensions",
+            )
         components = bundle.get("components") or []
-        component_ids = [str(component.get("id") or "") for component in components if isinstance(component, dict)]
-        if (not components or len(component_ids) != len(components) or len(component_ids) != len(set(component_ids))
-                or any(not component.get("concept_units") or component.get("minimum_realizations") != 1 for component in components)):
-            fail(candidate_id, "bundle component groups must retain every authored alternative group")
-        inherited_conflicts = {conflict for member_id in member_ids for conflict in ordinary.get(member_id, {}).get("conflicts_with") or []}
+        component_ids = [
+            str(component.get("id") or "")
+            for component in components
+            if isinstance(component, dict)
+        ]
+        if (
+            not components
+            or len(component_ids) != len(components)
+            or len(component_ids) != len(set(component_ids))
+            or any(
+                not component.get("concept_units") or component.get("minimum_realizations") != 1
+                for component in components
+            )
+        ):
+            fail(
+                candidate_id, "bundle component groups must retain every authored alternative group"
+            )
+        inherited_conflicts = {
+            conflict
+            for member_id in member_ids
+            for conflict in ordinary.get(member_id, {}).get("conflicts_with") or []
+        }
         if inherited_conflicts != set(bundle.get("conflicts_with") or []):
             fail(candidate_id, "bundle must preserve every member conflict")
         if candidate_id in chosen:
             expanded_chosen = set(chosen)
             for other in bundle_rows:
                 if isinstance(other, dict) and other.get("id") in chosen:
-                    expanded_chosen.update(member["id"] for member in other.get("member_candidates") or [])
+                    expanded_chosen.update(
+                        member["id"] for member in other.get("member_candidates") or []
+                    )
             if inherited_conflicts.intersection(expanded_chosen):
-                fail(candidate_id, "selected bundle conflicts with another selected candidate or bundle member")
+                fail(
+                    candidate_id,
+                    "selected bundle conflicts with another selected candidate or bundle member",
+                )
 
     by_id = {str(row.get("candidate_id") or ""): row for row in interpretations}
     for candidate_id, candidate in candidates.items():
         if candidate.get("semantic_surface_version") != photo_candidate_semantics.SURFACE_VERSION:
             continue
-        if not candidate.get("concept_units") or candidate.get("concept_terms") != candidate.get("concept_units") or candidate.get("adoption") != "optional":
-            fail(candidate_id, "semantic-unit candidates must preserve their unordered authored units and optional adoption")
+        if (
+            not candidate.get("concept_units")
+            or candidate.get("concept_terms") != candidate.get("concept_units")
+            or candidate.get("adoption") != "optional"
+        ):
+            fail(
+                candidate_id,
+                "semantic-unit candidates must preserve their unordered authored units and optional adoption",
+            )
         relations = candidate.get("relations") or []
-        relation_ids = [str(relation.get("id") or "") for relation in relations if isinstance(relation, dict)]
-        if (len(relation_ids) != len(relations) or len(relation_ids) != len(set(relation_ids))
-                or any(not all(str(relation.get(key) or "").strip() for key in ("id", "type", "subject", "object")) for relation in relations)):
-            fail(candidate_id, "candidate relations require unique IDs and explicit direction, subject and object")
+        relation_ids = [
+            str(relation.get("id") or "") for relation in relations if isinstance(relation, dict)
+        ]
+        if (
+            len(relation_ids) != len(relations)
+            or len(relation_ids) != len(set(relation_ids))
+            or any(
+                not all(
+                    str(relation.get(key) or "").strip()
+                    for key in ("id", "type", "subject", "object")
+                )
+                for relation in relations
+            )
+        ):
+            fail(
+                candidate_id,
+                "candidate relations require unique IDs and explicit direction, subject and object",
+            )
         if candidate_id not in chosen:
             continue
         interpretation = by_id.get(candidate_id, {})
         for field, expected_ids in (
-            ("component_evidence", {str(component["id"]) for component in candidate.get("components") or []}),
+            (
+                "component_evidence",
+                {str(component["id"]) for component in candidate.get("components") or []},
+            ),
             ("relation_evidence", set(relation_ids)),
         ):
             evidence = interpretation.get(field)
             if not expected_ids and evidence is None:
                 continue
-            if (not isinstance(evidence, dict) or set(evidence) != expected_ids
-                    or any(not isinstance(value, str) or not value.strip() or not text_contains_term(prompt_en, value)
-                           for value in evidence.values())):
-                fail(candidate_id, f"{field} must cover the entire selected contract with literal final-prompt phrases")
+            if (
+                not isinstance(evidence, dict)
+                or set(evidence) != expected_ids
+                or any(
+                    not isinstance(value, str)
+                    or not value.strip()
+                    or not text_contains_term(prompt_en, value)
+                    for value in evidence.values()
+                )
+            ):
+                fail(
+                    candidate_id,
+                    f"{field} must cover the entire selected contract with literal final-prompt phrases",
+                )
     return failures
 
 
@@ -5529,18 +3305,16 @@ def audit_candidate_interpretations(
     chosen: set[str],
     candidate_objects: dict[str, dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """Require authorship evidence for every ordinary v4 candidate choice."""
+    """Require authorship evidence for every ordinary current candidate choice."""
 
     contract_version = str(pack.get("contract_version") or "")
     if contract_version not in {
-        "photo-candidate-pack/v4",
-        "photo-candidate-pack/v5",
         "photo-candidate-pack/v6",
     }:
         return []
     brief_field = (
         "creative_augmentation_brief"
-        if contract_version in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}
+        if contract_version in {"photo-candidate-pack/v6"}
         else "augmentation_brief"
     )
     augmentation_brief = (
@@ -5683,8 +3457,10 @@ def authorial_core_visual_span_texts(core: dict[str, Any], snapshot=None) -> lis
     return [row["text"] for row in authorial_core_visual_spans(core, snapshot)]
 
 
-def authorial_core_v2_intent_contract_valid(
-    core: dict[str, Any], *, minimum_open_dimensions: int = 2,
+def authorial_core_intent_contract_valid(
+    core: dict[str, Any],
+    *,
+    minimum_open_dimensions: int = 2,
     creative_control_snapshot=None,
 ) -> bool:
     if core.get("contract_version") not in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
@@ -5697,26 +3473,29 @@ def authorial_core_v2_intent_contract_valid(
     binding = core.get("request_binding")
     if not isinstance(source_request, str) or not source_request or not isinstance(binding, dict):
         return False
-    if set(binding) != {
-        "contract_version",
-        "request_id",
-        "request_sha256",
-        "request_envelope_sha256",
-        "active_spans",
-    } or binding.get("contract_version") != REQUEST_BINDING_CONTRACT_VERSION:
+    if (
+        set(binding)
+        != {
+            "contract_version",
+            "request_id",
+            "request_sha256",
+            "request_envelope_sha256",
+            "active_spans",
+        }
+        or binding.get("contract_version") != REQUEST_BINDING_CONTRACT_VERSION
+    ):
         return False
-    if re.fullmatch(
-        r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}",
-        str(binding.get("request_id") or ""),
-    ) is None:
+    if (
+        re.fullmatch(
+            r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}",
+            str(binding.get("request_id") or ""),
+        )
+        is None
+    ):
         return False
-    if binding.get("request_sha256") != hashlib.sha256(
-        source_request.encode("utf-8")
-    ).hexdigest():
+    if binding.get("request_sha256") != hashlib.sha256(source_request.encode("utf-8")).hexdigest():
         return False
-    if re.fullmatch(
-        r"[0-9a-f]{64}", str(binding.get("request_envelope_sha256") or "")
-    ) is None:
+    if re.fullmatch(r"[0-9a-f]{64}", str(binding.get("request_envelope_sha256") or "")) is None:
         return False
     spans = binding.get("active_spans")
     if not isinstance(spans, list) or not 1 <= len(spans) <= 16:
@@ -5758,9 +3537,7 @@ def authorial_core_v2_intent_contract_valid(
         "request_sha256": str(binding.get("request_sha256") or ""),
         "active_spans": spans,
     }
-    if binding.get("request_envelope_sha256") != canonical_json_sha256(
-        reconstructed_envelope
-    ):
+    if binding.get("request_envelope_sha256") != canonical_json_sha256(reconstructed_envelope):
         return False
 
     intent_lock = core.get("intent_lock")
@@ -5788,12 +3565,11 @@ def authorial_core_v2_intent_contract_valid(
         else INTENT_LOCK_DIMENSIONS
     )
     if (
-        intent_lock.get("contract_version") not in {INTENT_LOCK_CONTRACT_VERSION, INTENT_LOCK_PROPERTY_CONTRACT_VERSION}
+        intent_lock.get("contract_version")
+        not in {INTENT_LOCK_CONTRACT_VERSION, INTENT_LOCK_PROPERTY_CONTRACT_VERSION}
         or intent_lock.get("priority") != "requesting_user"
-        or intent_lock.get("augmentation_policy")
-        != "open_dimensions_only_and_subordinate"
-        or intent_lock.get("material_change_policy")
-        != "rebuild_core_after_requester_input"
+        or intent_lock.get("augmentation_policy") != "open_dimensions_only_and_subordinate"
+        or intent_lock.get("material_change_policy") != "rebuild_core_after_requester_input"
         or intent_lock.get("candidate_revision_policy") != "forbidden"
         or lock_sha != canonical_json_sha256(lock_material)
         or lock_id != lock_sha[:16]
@@ -5853,7 +3629,14 @@ def authorial_core_v2_intent_contract_valid(
             return False
         if is_property:
             key = (dimension, item["target"], item["property"])
-            if any(not isinstance(item[k], str) or re.fullmatch(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*", item[k]) is None for k in ("target", "property")) or key in seen_properties:
+            if (
+                any(
+                    not isinstance(item[k], str)
+                    or re.fullmatch(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*", item[k]) is None
+                    for k in ("target", "property")
+                )
+                or key in seen_properties
+            ):
                 return False
             seen_properties.add(key)
         seen_anchor_ids.add(anchor_id)
@@ -5864,8 +3647,7 @@ def authorial_core_v2_intent_contract_valid(
         return False
     if any(
         not any(
-            str(anchor.get("source_text") or "").casefold()
-            in str(span_text).casefold()
+            str(anchor.get("source_text") or "").casefold() in str(span_text).casefold()
             for anchor in anchors
         )
         for span_text in visual_spans
@@ -5889,10 +3671,7 @@ def authorial_core_v2_intent_contract_valid(
         if (
             not term
             or term.casefold() in seen_definition_terms
-            or source_text.casefold()
-            not in {
-                span.casefold() for span in visual_spans
-            }
+            or source_text.casefold() not in {span.casefold() for span in visual_spans}
             or source_text.casefold() == term.casefold()
             or len(authorial_general_content_words(str(item.get("interpreted_meaning") or ""))) < 4
             or len(authorial_evidence_tokens(evidence)) < 4
@@ -5906,20 +3685,14 @@ def authorial_core_v2_intent_contract_valid(
     ):
         return False
     if any(
-        not authorial_core_active_scope_contains(core, label)
-        or text_contains_term(baseline, label)
+        not authorial_core_active_scope_contains(core, label) or text_contains_term(baseline, label)
         for label in runtime_labels
     ):
         return False
     exclusions = nonempty_string_list(core.get("user_exclusions"))
-    if any(
-        not authorial_core_active_scope_contains(core, exclusion)
-        for exclusion in exclusions
-    ):
+    if any(not authorial_core_active_scope_contains(core, exclusion) for exclusion in exclusions):
         return False
-    if {item.casefold() for item in runtime_labels} & {
-        item.casefold() for item in exclusions
-    }:
+    if {item.casefold() for item in runtime_labels} & {item.casefold() for item in exclusions}:
         return False
     return True
 
@@ -6139,7 +3912,7 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
     )
     if not base_valid:
         return False
-    legacy_fields = {
+    retry_fields = {
         "parent_request_id",
         "parent_core_sha256",
         "preserved_dimensions",
@@ -6147,10 +3920,10 @@ def authorial_core_v3_semantic_contract_valid(core: dict[str, Any], *, creative_
     }
     contract_version = str(lineage.get("contract_version") or "")
     if not contract_version:
-        return set(lineage) == legacy_fields
+        return set(lineage) == retry_fields
     if contract_version != REQUEST_LINEAGE_V2_CONTRACT_VERSION or set(
         lineage
-    ) != legacy_fields | {
+    ) != retry_fields | {
         "contract_version",
         "repair_targets",
         "canonical_sha256",
@@ -6399,11 +4172,7 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any], *, creati
         visual_spans = authorial_core_visual_span_texts(core, creative_control_snapshot)
     except (ValueError, TypeError, KeyError, AttributeError):
         return False
-    if core.get("contract_version") not in {
-        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
-        AUTHORIAL_CORE_CONTRACT_VERSION,
-        AUTHORIAL_CORE_V3_CONTRACT_VERSION,
-    }:
+    if core.get("contract_version") not in {AUTHORIAL_CORE_V3_CONTRACT_VERSION}:
         return False
     if "interpretation_provenance" not in core or "unresolved_ambiguities" not in core:
         return False
@@ -6489,26 +4258,12 @@ def authorial_core_interpretation_contract_valid(core: dict[str, Any], *, creati
 def audit_authorial_authorship_policy(
     pack: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], int, int, int]:
-    """Derive decision, open-dimension and extra-evidence minima by version.
-
-    V2 permits a complete authored baseline to survive unchanged. Its optional
-    final refinements do not weaken the separately audited semantic anchors or
-    assertions. V1 and unmarked historical packs retain their original quotas.
-    Never trust serialized minima, even after a caller rehashes a forged policy.
-    """
+    """Recompute current authored-refinement policy; optional work has no quota."""
 
     authorial = pack.get("authorial_composition")
     authorial = authorial if isinstance(authorial, dict) else {}
     binding = authorial.get("core_binding_contract")
     binding = binding if isinstance(binding, dict) else {}
-    marked = (
-        "authorship_policy" in authorial
-        or "contract_version" in binding
-        or "source_authorship_policy_sha256" in binding
-    )
-    if not marked:
-        return [], 2, 2, 3
-
     core = pack.get("authorial_core")
     core = core if isinstance(core, dict) else {}
     intent_lock = core.get("intent_lock")
@@ -6517,17 +4272,10 @@ def audit_authorial_authorship_policy(
     opened = opened if isinstance(opened, list) else []
     policy = authorial.get("authorship_policy")
     policy = policy if isinstance(policy, dict) else {}
-    refinement = policy.get("contract_version") == AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
-    minimum_decisions = 0 if refinement else min(2, len(opened))
-    minimum_evidence = 0 if refinement else 3
-    policy_version = (
-        AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
-        if refinement else LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
-    )
-    binding_version = (
-        AUTHORIAL_CORE_BINDING_CONTRACT_VERSION
-        if refinement else LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION
-    )
+    minimum_decisions = 0
+    minimum_evidence = 0
+    policy_version = AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION
+    binding_version = AUTHORIAL_CORE_BINDING_CONTRACT_VERSION
     expected_policy = {
         "contract_version": policy_version,
         "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
@@ -6561,27 +4309,21 @@ def audit_authorial_authorship_policy(
                 "check": "authorial_authorship_policy_contract",
                 "reason": "the v6 authorship policy and core binding must match the frozen open dimensions and hashes",
             }
-        ], 2, 2, 3
+        ], 0, 0, 0
     return [], minimum_decisions, 0, minimum_evidence
 
 
-def audit_authorial_core_v5(
+def audit_authorial_core(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
     warnings: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
-    pack_version = str(pack.get("contract_version") or "")
+    pack_version = str(pack.get('contract_version') or '')
     failures, minimum_decisions, minimum_open_dimensions, minimum_evidence = (
         audit_authorial_authorship_policy(pack)
     )
-    if pack_version not in {"photo-candidate-pack/v5", "photo-candidate-pack/v6"}:
-        return failures
-    core = (
-        pack.get("authorial_core")
-        if isinstance(pack.get("authorial_core"), dict)
-        else {}
-    )
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
     authorial_composition = (
         pack.get("authorial_composition")
         if isinstance(pack.get("authorial_composition"), dict)
@@ -6593,13 +4335,9 @@ def audit_authorial_core_v5(
         else None
     )
     expected_budget = expected_authorial_prompt_budget_contract()
-    legacy_budget = legacy_authorial_prompt_budget_contract()
     uses_current_advisory_budget = recorded_budget == expected_budget
-    uses_legacy_advisory_budget = recorded_budget == legacy_budget
-    uses_advisory_budget = (
-        uses_current_advisory_budget or uses_legacy_advisory_budget
-    )
-    if recorded_budget is not None and not uses_advisory_budget:
+    uses_advisory_budget = True
+    if recorded_budget != expected_budget:
         failures.append(
             {
                 "check": "authorial_prompt_budget_contract",
@@ -6608,136 +4346,79 @@ def audit_authorial_core_v5(
                 "actual": recorded_budget,
             }
         )
-
-    if uses_advisory_budget:
-        active_budget = expected_budget if uses_current_advisory_budget else legacy_budget
-        minimum_words = int(active_budget["minimum_words"])
-        recommended_maximum_words = int(active_budget["recommended_maximum_words"])
-        absolute_maximum_words = int(active_budget["absolute_maximum_words"])
-        required_evidence_headroom_words = int(
-            active_budget["required_evidence_headroom_words"]
+    active_budget = expected_budget
+    minimum_words = int(active_budget["minimum_words"])
+    recommended_maximum_words = int(active_budget["recommended_maximum_words"])
+    absolute_maximum_words = int(active_budget["absolute_maximum_words"])
+    required_evidence_headroom_words = int(active_budget["required_evidence_headroom_words"])
+    prompt_metrics = authorial_prompt_budget_metrics(
+        pack, composed, prompt_en, budget_contract=active_budget
+    )
+    prompt_word_count = prompt_metrics["actual_words"]
+    if not minimum_words <= prompt_word_count <= absolute_maximum_words:
+        failures.append(
+            {
+                "check": "authorial_core_prompt_budget",
+                "reason": "v6 prompt_en exceeds the absolute photographic prompt bounds",
+                "minimum_words": minimum_words,
+                "recommended_maximum_words": recommended_maximum_words,
+                "absolute_maximum_words": absolute_maximum_words,
+                "actual_words": prompt_word_count,
+            }
         )
-        prompt_metrics = authorial_prompt_budget_metrics(
-            pack,
-            composed,
-            prompt_en,
-            budget_contract=active_budget,
+    elif warnings is not None and prompt_word_count > recommended_maximum_words:
+        warnings.append(
+            {
+                "check": "authorial_prompt_recommended_budget",
+                "reason": "prompt_en exceeds the default concise target; this is advisory because requester meaning and literal hard evidence take priority",
+                "recommended_maximum_words": recommended_maximum_words,
+                "absolute_maximum_words": absolute_maximum_words,
+                **prompt_metrics,
+            }
         )
-        prompt_word_count = prompt_metrics["actual_words"]
-        if not (
-            minimum_words
-            <= prompt_word_count
-            <= absolute_maximum_words
-        ):
-            failures.append(
-                {
-                    "check": "authorial_core_prompt_budget",
-                    "reason": "v5/v6 prompt_en exceeds the absolute photographic prompt bounds",
-                    "minimum_words": minimum_words,
-                    "recommended_maximum_words": recommended_maximum_words,
-                    "absolute_maximum_words": absolute_maximum_words,
-                    "actual_words": prompt_word_count,
-                }
-            )
-        elif (
-            warnings is not None
-            and prompt_word_count > recommended_maximum_words
-        ):
+        if prompt_word_count > prompt_metrics["effective_recommended_maximum_words"]:
             warnings.append(
                 {
-                    "check": "authorial_prompt_recommended_budget",
-                    "reason": (
-                        "prompt_en exceeds the default concise target; this is advisory because "
-                        "requester meaning and literal hard evidence take priority"
-                    ),
-                    "recommended_maximum_words": recommended_maximum_words,
+                    "check": "authorial_prompt_optional_prose_budget",
+                    "reason": "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional candidate, styling, camera, or explanatory prose before hard evidence",
+                    "required_evidence_headroom_words": required_evidence_headroom_words,
                     "absolute_maximum_words": absolute_maximum_words,
                     **prompt_metrics,
                 }
             )
-            if (
-                prompt_word_count
-                > prompt_metrics["effective_recommended_maximum_words"]
-            ):
-                warnings.append(
-                    {
-                        "check": "authorial_prompt_optional_prose_budget",
-                        "reason": (
-                            "prompt_en exceeds the evidence-adjusted advisory ceiling; trim optional "
-                            "candidate, styling, camera, or explanatory prose before hard evidence"
-                        ),
-                        "required_evidence_headroom_words": required_evidence_headroom_words,
-                        "absolute_maximum_words": absolute_maximum_words,
-                        **prompt_metrics,
-                    }
-                )
-
-        baseline_prompt = str(core.get("baseline_prompt_en") or "")
-        baseline_metrics = authorial_prompt_budget_metrics(
-            pack,
-            composed,
-            baseline_prompt,
-            baseline_only=True,
-            budget_contract=active_budget,
+    baseline_prompt = str(core.get('baseline_prompt_en') or '')
+    baseline_metrics = authorial_prompt_budget_metrics(
+        pack, composed, baseline_prompt, baseline_only=True, budget_contract=active_budget
+    )
+    baseline_word_count = baseline_metrics["actual_words"]
+    if not minimum_words <= baseline_word_count <= absolute_maximum_words:
+        failures.append(
+            {
+                "check": "authorial_core_baseline_prompt_budget",
+                "reason": "baseline_prompt_en exceeds the absolute photographic prompt bounds",
+                "minimum_words": minimum_words,
+                "recommended_maximum_words": recommended_maximum_words,
+                "absolute_maximum_words": absolute_maximum_words,
+                "actual_words": baseline_word_count,
+            }
         )
-        baseline_word_count = baseline_metrics["actual_words"]
-        if not (
-            minimum_words
-            <= baseline_word_count
-            <= absolute_maximum_words
-        ):
-            failures.append(
-                {
-                    "check": "authorial_core_baseline_prompt_budget",
-                    "reason": "baseline_prompt_en exceeds the absolute photographic prompt bounds",
-                    "minimum_words": minimum_words,
-                    "recommended_maximum_words": recommended_maximum_words,
-                    "absolute_maximum_words": absolute_maximum_words,
-                    "actual_words": baseline_word_count,
-                }
-            )
-        elif (
-            warnings is not None
-            and baseline_word_count > recommended_maximum_words
-        ):
-            warnings.append(
-                {
-                    "check": "authorial_core_baseline_recommended_budget",
-                    "reason": (
-                        "baseline_prompt_en exceeds the default concise target but remains within "
-                        "the absolute bound"
-                    ),
-                    "recommended_maximum_words": recommended_maximum_words,
-                    "absolute_maximum_words": absolute_maximum_words,
-                    **baseline_metrics,
-                }
-            )
-    else:
-        prompt_word_count = english_prompt_word_count(prompt_en)
-        if not (
-            LEGACY_AUTHORIAL_PROMPT_MIN_WORDS
-            <= prompt_word_count
-            <= LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS
-        ):
-            failures.append(
-                {
-                    "check": "authorial_core_prompt_budget",
-                    "reason": "legacy v5/v6 packs retain their recorded 24 to 180 word hard boundary",
-                    "minimum_words": LEGACY_AUTHORIAL_PROMPT_MIN_WORDS,
-                    "maximum_words": LEGACY_AUTHORIAL_PROMPT_RECOMMENDED_MAX_WORDS,
-                    "actual_words": prompt_word_count,
-                }
-            )
-    canonical_sha = str(core.get("canonical_sha256") or "")
+    elif warnings is not None and baseline_word_count > recommended_maximum_words:
+        warnings.append(
+            {
+                "check": "authorial_core_baseline_recommended_budget",
+                "reason": "baseline_prompt_en exceeds the default concise target but remains within the absolute bound",
+                "recommended_maximum_words": recommended_maximum_words,
+                "absolute_maximum_words": absolute_maximum_words,
+                **baseline_metrics,
+            }
+        )
+    canonical_sha = str(core.get('canonical_sha256') or '')
     canonical_material = copy.deepcopy(core)
     canonical_material.pop("canonical_sha256", None)
     canonical_material.pop("core_id", None)
     expected_sha = hashlib.sha256(
         json.dumps(
-            canonical_material,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
+            canonical_material, ensure_ascii=False, sort_keys=True, separators=(",", ":")
         ).encode("utf-8")
     ).hexdigest()
     retrieval = (
@@ -6775,43 +4456,46 @@ def audit_authorial_core_v5(
             if "creative_controls_sha256" in core:
                 expected_core_fields.add("creative_controls_sha256")
         modern_core_fields_valid = set(core) == expected_core_fields
-    allowed_core_versions = (
-        {AUTHORIAL_CORE_V3_CONTRACT_VERSION}
-        if pack_version == "photo-candidate-pack/v6"
-        else {
-            LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
-            AUTHORIAL_CORE_CONTRACT_VERSION,
-        }
-    )
+    allowed_core_versions = {AUTHORIAL_CORE_V3_CONTRACT_VERSION}
     if (
         core.get("contract_version") not in allowed_core_versions
         or core.get("provenance") != "agent_prepack"
-        or not authorial_core_interpretation_contract_valid(core, creative_control_snapshot=pack.get("creative_controls"))
-        or not authorial_core_v2_intent_contract_valid(
-            core, minimum_open_dimensions=minimum_open_dimensions,
-            creative_control_snapshot=pack.get("creative_controls"),
+        or (
+            not authorial_core_interpretation_contract_valid(
+                core, creative_control_snapshot=pack.get("creative_controls")
+            )
         )
-        or not authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=pack.get("creative_controls"))
-        or not modern_core_fields_valid
-        or not canonical_sha
-        or canonical_sha != expected_sha
-        or str(core.get("core_id") or "") != canonical_sha[:16]
-        or not isinstance(retrieval, dict)
-        or retrieval != expected_retrieval
+        or (
+            not authorial_core_intent_contract_valid(
+                core,
+                minimum_open_dimensions=minimum_open_dimensions,
+                creative_control_snapshot=pack.get("creative_controls"),
+            )
+        )
+        or (
+            not authorial_core_v3_semantic_contract_valid(
+                core, creative_control_snapshot=pack.get("creative_controls")
+            )
+        )
+        or (not modern_core_fields_valid)
+        or (not canonical_sha)
+        or (canonical_sha != expected_sha)
+        or (str(core.get('core_id') or '') != canonical_sha[:16])
+        or (not isinstance(retrieval, dict))
+        or (retrieval != expected_retrieval)
     ):
         failures.append(
             {
                 "check": "authorial_core_integrity",
-                "reason": "v5/v6 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
+                "reason": "v6 pack is not bound to one valid versioned pre-pack authorial core and retrieval query",
             }
         )
-
     binding = (
         composed.get("authorial_core_binding")
         if isinstance(composed.get("authorial_core_binding"), dict)
         else {}
     )
-    if str(binding.get("source_authorial_core_sha256") or "") != canonical_sha:
+    if str(binding.get('source_authorial_core_sha256') or '') != canonical_sha:
         failures.append(
             {
                 "check": "authorial_core_binding",
@@ -6819,15 +4503,9 @@ def audit_authorial_core_v5(
             }
         )
     failures.extend(audit_creative_controls(pack))
-    intent_lock = (
-        core.get("intent_lock")
-        if isinstance(core.get("intent_lock"), dict)
-        else {}
-    )
+    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
     intent_locked = core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-    if intent_locked and str(binding.get("source_intent_lock_sha256") or "") != str(
-        intent_lock.get("canonical_sha256") or ""
-    ):
+    if intent_locked and str(binding.get('source_intent_lock_sha256') or '') != str(intent_lock.get('canonical_sha256') or ''):
         failures.append(
             {
                 "check": "intent_lock_binding",
@@ -6836,17 +4514,14 @@ def audit_authorial_core_v5(
         )
     if intent_locked:
         required_anchor_ids = {
-            str(item.get("anchor_id") or "")
+            str(item.get('anchor_id') or '')
             for item in intent_lock.get("semantic_anchors") or []
-            if isinstance(item, dict) and str(item.get("anchor_id") or "")
+            if isinstance(item, dict) and str(item.get('anchor_id') or '')
         }
-        preserved_anchor_id_list = nonempty_string_list(
-            binding.get("preserved_anchor_ids")
-        )
+        preserved_anchor_id_list = nonempty_string_list(binding.get("preserved_anchor_ids"))
         preserved_anchor_ids = set(preserved_anchor_id_list)
-        if (
-            preserved_anchor_ids != required_anchor_ids
-            or len(preserved_anchor_id_list) != len(preserved_anchor_ids)
+        if preserved_anchor_ids != required_anchor_ids or len(preserved_anchor_id_list) != len(
+            preserved_anchor_ids
         ):
             failures.append(
                 {
@@ -6859,7 +4534,7 @@ def audit_authorial_core_v5(
         for anchor in intent_lock.get("semantic_anchors") or []:
             if not isinstance(anchor, dict):
                 continue
-            phrase = str(anchor.get("prompt_evidence") or "")
+            phrase = str(anchor.get('prompt_evidence') or '')
             if not phrase or not text_contains_term(prompt_en, phrase):
                 failures.append(
                     {
@@ -6887,34 +4562,40 @@ def audit_authorial_core_v5(
                 "material_change_action",
                 "creative_change_boundary",
             }
-            or
-            preservation.get("contract_version")
-            != INTENT_PRESERVATION_CONTRACT_VERSION
+            or preservation.get("contract_version") != INTENT_PRESERVATION_CONTRACT_VERSION
             or preservation.get("source_authorial_core_sha256") != canonical_sha
-            or preservation.get("source_intent_lock_sha256")
-            != intent_lock.get("canonical_sha256")
-            or preservation.get("priority_order")
-            != [
-                "requesting_user_definition",
-                "requesting_user_semantic_anchor",
-                "requesting_user_modifier_or_exclusion",
-                "agent_prepack_interpretation",
-                "creative_augmentation",
-            ]
-            or set(nonempty_string_list(preservation.get("required_anchor_ids")))
-            != required_anchor_ids
-            or preservation.get("locked_dimensions")
-            != intent_lock.get("locked_dimensions")
-            or preservation.get("open_dimensions") != intent_lock.get("open_dimensions")
-            or preservation.get("material_change_action")
-            != "stop_and_rebuild_core_after_requester_input"
-            or preservation.get("creative_change_boundary")
-            != "open_dimensions_only_and_subordinate"
+            or (
+                preservation.get("source_intent_lock_sha256") != intent_lock.get("canonical_sha256")
+            )
+            or (
+                preservation.get("priority_order")
+                != [
+                    "requesting_user_definition",
+                    "requesting_user_semantic_anchor",
+                    "requesting_user_modifier_or_exclusion",
+                    "agent_prepack_interpretation",
+                    "creative_augmentation",
+                ]
+            )
+            or (
+                set(nonempty_string_list(preservation.get("required_anchor_ids")))
+                != required_anchor_ids
+            )
+            or (preservation.get("locked_dimensions") != intent_lock.get("locked_dimensions"))
+            or (preservation.get("open_dimensions") != intent_lock.get("open_dimensions"))
+            or (
+                preservation.get("material_change_action")
+                != "stop_and_rebuild_core_after_requester_input"
+            )
+            or (
+                preservation.get("creative_change_boundary")
+                != "open_dimensions_only_and_subordinate"
+            )
         ):
             failures.append(
                 {
                     "check": "intent_preservation_contract",
-                    "reason": "v5/v6 pack does not preserve the canonical requester-priority intent boundary",
+                    "reason": "v6 pack does not preserve the canonical requester-priority intent boundary",
                 }
             )
     raw_evidence = binding.get("preserved_evidence")
@@ -6926,7 +4607,7 @@ def audit_authorial_core_v5(
             minimum_evidence == 0
             and (
                 not isinstance(raw_evidence, list)
-                or any(not isinstance(item, str) or not item.strip() for item in raw_evidence)
+                or any((not isinstance(item, str) or not item.strip() for item in raw_evidence))
             )
         )
     ):
@@ -6937,20 +4618,17 @@ def audit_authorial_core_v5(
                 "minimum_preserved_evidence_phrases": minimum_evidence,
             }
         )
-    baseline = str(core.get("baseline_prompt_en") or "")
+    baseline = str(core.get('baseline_prompt_en') or '')
     for phrase in evidence:
         if (
             len(authorial_evidence_tokens(phrase)) < 2
             or not text_contains_term(baseline, phrase)
-            or not text_contains_term(prompt_en, phrase)
+            or (not text_contains_term(prompt_en, phrase))
         ):
             failures.append(
                 {
                     "check": "authorial_core_evidence",
-                    "reason": (
-                        "preserved evidence must be substantive and occur literally in both "
-                        "baseline_prompt_en and prompt_en"
-                    ),
+                    "reason": "preserved evidence must be substantive and occur literally in both baseline_prompt_en and prompt_en",
                     "phrase": phrase,
                 }
             )
@@ -6960,21 +4638,20 @@ def audit_authorial_core_v5(
         if isinstance(raw_decisions, list)
         else []
     )
-    dimensions = [str(row.get("dimension") or "") for row in decisions]
+    dimensions = [str(row.get('dimension') or '') for row in decisions]
     if (
         len(decisions) < minimum_decisions
         or (
             minimum_open_dimensions == 0
-            and (
-                not isinstance(raw_decisions, list)
-                or len(decisions) != len(raw_decisions)
-            )
+            and (not isinstance(raw_decisions, list) or len(decisions) != len(raw_decisions))
         )
         or len(dimensions) != len(set(dimensions))
         or any(
-            len(authorial_evidence_tokens(str(row.get("decision") or ""))) < 2
-            or len(authorial_evidence_tokens(str(row.get("rationale") or ""))) < 3
-            for row in decisions
+            (
+                len(authorial_evidence_tokens(str(row.get('decision') or ''))) < 2
+                or len(authorial_evidence_tokens(str(row.get('rationale') or ''))) < 3
+                for row in decisions
+            )
         )
     ):
         failures.append(
@@ -6985,41 +4662,31 @@ def audit_authorial_core_v5(
             }
         )
     if intent_locked:
-        open_dimensions = {
-            str(item) for item in intent_lock.get("open_dimensions") or []
-        }
+        open_dimensions = {str(item) for item in intent_lock.get("open_dimensions") or []}
         adult_appeal = (
-            pack.get("adult_appeal")
-            if isinstance(pack.get("adult_appeal"), dict)
-            else {}
+            pack.get("adult_appeal") if isinstance(pack.get("adult_appeal"), dict) else {}
         )
         if adult_appeal.get("dimension_scope") is not None:
             failures.extend(audit_adult_appeal_dimension_scope(pack, adult_appeal))
         if (
             adult_appeal.get("enabled") is True
             and adult_appeal.get("activation_source") == "skill_default"
-            and not isinstance(adult_appeal.get("dimension_scope"), dict)
-            and not ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS.issubset(
-                open_dimensions
-            )
+            and (not isinstance(adult_appeal.get("dimension_scope"), dict))
+            and (not ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS.issubset(open_dimensions))
         ):
             failures.append(
                 {
                     "check": "intent_lock_adult_appeal_default",
-                    "reason": (
-                        "the skill-default adult-appeal axis may be active only when every semantic dimension it can affect is explicitly open"
-                    ),
-                    "required_open_dimensions": sorted(
-                        ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS
-                    ),
+                    "reason": "the skill-default adult-appeal axis may be active only when every semantic dimension it can affect is explicitly open",
+                    "required_open_dimensions": sorted(ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS),
                     "open_dimensions": sorted(open_dimensions),
                 }
             )
         invalid_dimensions = sorted(
             {
-                str(row.get("dimension") or "")
+                str(row.get('dimension') or '')
                 for row in decisions
-                if str(row.get("dimension") or "") not in open_dimensions
+                if str(row.get('dimension') or '') not in open_dimensions
             }
         )
         if invalid_dimensions:
@@ -7032,8 +4699,16 @@ def audit_authorial_core_v5(
                 }
             )
         for row in decisions:
-            if not property_effects_allowed(intent_lock, [row.get("dimension")], row.get("affected_properties", [])):
-                failures.append({"check": "intent_lock_authorial_properties", "reason": "declare effects on open properties and preserve every requester-owned property", "dimension": row.get("dimension")})
+            if not property_effects_allowed(
+                intent_lock, [row.get("dimension")], row.get("affected_properties", [])
+            ):
+                failures.append(
+                    {
+                        "check": "intent_lock_authorial_properties",
+                        "reason": "declare effects on open properties and preserve every requester-owned property",
+                        "dimension": row.get("dimension"),
+                    }
+                )
     for exclusion in nonempty_string_list(core.get("user_exclusions")):
         if text_contains_term(prompt_en, exclusion):
             failures.append(
@@ -7055,7 +4730,7 @@ def audit_authorial_core_v5(
     return failures
 
 
-def audit_semantic_clarification_v5(
+def audit_semantic_clarification(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -7113,7 +4788,7 @@ def audit_semantic_clarification_v5(
             continue
         state = str(decision.get("decision") or "")
         rationale = str(decision.get("rationale") or "")
-        if state not in {"applied", "rejected", "superseded_by_revision"} or len(
+        if state not in {"applied", "rejected"} or len(
             authorial_evidence_tokens(rationale)
         ) < 2:
             failures.append(
@@ -7125,15 +4800,6 @@ def audit_semantic_clarification_v5(
             )
             continue
         status = str((candidate.get("applicability") or {}).get("status") or "")
-        revisable = candidate.get("revisable") is True
-        if revisable and state == "rejected":
-            failures.append(
-                {
-                    "check": "semantic_clarification_revision",
-                    "reason": "a revisable governing hypothesis must be applied or replaced by a typed revision",
-                    "clarification_id": clarification_id,
-                }
-            )
         if candidate.get("required_in_final_prompt") is True and state != "applied":
             failures.append(
                 {
@@ -7150,42 +4816,6 @@ def audit_semantic_clarification_v5(
                     "clarification_id": clarification_id,
                 }
             )
-        if state == "superseded_by_revision":
-            revised_meaning = str(decision.get("revised_meaning") or "").strip()
-            evidence = str(decision.get("prompt_evidence") or "").strip()
-            source_ids = nonempty_string_list(decision.get("revision_source_ids"))
-            invalid_source_ids = [
-                source_id
-                for source_id in source_ids
-                if source_id == clarification_id or source_id not in pack_candidate_ids
-            ]
-            original_terms = authorial_evidence_tokens(
-                str(candidate.get("interpreted_meaning") or "")
-            )
-            evidence_terms = authorial_evidence_tokens(evidence)
-            if (
-                not revisable
-                or str(decision.get("revision_basis") or "")
-                != "candidate_pack_clarification"
-                or len(authorial_general_content_words(revised_meaning)) < 4
-                or not source_ids
-                or len(source_ids) != len(set(source_ids))
-                or invalid_source_ids
-                or len(evidence_terms) < 4
-                or len(evidence_terms - original_terms) < 2
-                or not text_contains_term(prompt_en, evidence)
-            ):
-                failures.append(
-                    {
-                        "check": "semantic_clarification_revision",
-                        "reason": (
-                            "only an agent hypothesis may be superseded, and its typed revision must "
-                            "cite pack candidates and bind newly authored literal evidence"
-                        ),
-                        "clarification_id": clarification_id,
-                        "invalid_revision_source_ids": invalid_source_ids,
-                    }
-                )
         if state == "applied":
             evidence = str(decision.get("prompt_evidence") or "").strip()
             if not evidence or not text_contains_term(prompt_en, evidence):
@@ -7218,7 +4848,7 @@ def audit_semantic_clarification_v5(
     return failures
 
 
-def audit_creative_augmentation_v5(
+def audit_creative_augmentation(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
@@ -7232,11 +4862,7 @@ def audit_creative_augmentation_v5(
     if not contract or not contract.get("enabled"):
         return []
     failures: list[dict[str, Any]] = []
-    core = (
-        pack.get("authorial_core")
-        if isinstance(pack.get("authorial_core"), dict)
-        else {}
-    )
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
     intent_lock = (
         core.get("intent_lock")
         if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
@@ -7245,13 +4871,10 @@ def audit_creative_augmentation_v5(
     )
     candidates = creative_augmentation_candidates_from_pack(pack)
     candidate_map = {
-        str(row.get("id") or ""): row
-        for row in candidates
-        if str(row.get("id") or "")
+        str(row.get("id") or ""): row for row in candidates if str(row.get("id") or "")
     }
     allowed_bands = {
-        str(item)
-        for item in ((contract.get("distance_policy") or {}).get("allowed_bands") or [])
+        str(item) for item in ((contract.get("distance_policy") or {}).get("allowed_bands") or [])
     }
     if (
         contract.get("contract_version") != CREATIVE_AUGMENTATION_CONTRACT_VERSION
@@ -7262,7 +4885,7 @@ def audit_creative_augmentation_v5(
         failures.append(
             {
                 "check": "creative_augmentation_contract",
-                "reason": "v5 creative augmentation has an invalid pool, guard, or distance-band contract",
+                "reason": "current creative augmentation has an invalid pool, guard, or distance-band contract",
             }
         )
     brief = (
@@ -7270,14 +4893,9 @@ def audit_creative_augmentation_v5(
         if isinstance(composed.get("creative_augmentation_brief"), dict)
         else {}
     )
-    decisions = [
-        row for row in brief.get("decisions") or [] if isinstance(row, dict)
-    ]
+    decisions = [row for row in brief.get("decisions") or [] if isinstance(row, dict)]
     decision_ids = [str(row.get("candidate_id") or "") for row in decisions]
-    if (
-        set(decision_ids) != set(candidate_map)
-        or len(decision_ids) != len(set(decision_ids))
-    ):
+    if set(decision_ids) != set(candidate_map) or len(decision_ids) != len(set(decision_ids)):
         failures.append(
             {
                 "check": "creative_augmentation_decisions",
@@ -7294,9 +4912,10 @@ def audit_creative_augmentation_v5(
             continue
         state = str(decision.get("decision") or "")
         rationale = str(decision.get("rationale") or "")
-        if state not in {"transformed", "rejected"} or len(
-            authorial_evidence_tokens(rationale)
-        ) < 2:
+        if (
+            state not in {"transformed", "rejected"}
+            or len(authorial_evidence_tokens(rationale)) < 2
+        ):
             failures.append(
                 {
                     "check": "creative_augmentation_decisions",
@@ -7319,25 +4938,22 @@ def audit_creative_augmentation_v5(
         evidence = str(decision.get("prompt_evidence") or "").strip()
         interpretation = str(decision.get("artistic_interpretation") or "")
         transformation = str(decision.get("transformation") or "")
-        affected_dimensions = nonempty_string_list(
-            decision.get("affected_dimensions")
-        )
+        affected_dimensions = nonempty_string_list(decision.get("affected_dimensions"))
         if intent_lock:
-            open_dimensions = {
-                str(item) for item in intent_lock.get("open_dimensions") or []
-            }
+            open_dimensions = {str(item) for item in intent_lock.get("open_dimensions") or []}
             adult = pack.get("adult_appeal") or {}
             scope = adult.get("dimension_scope") or {}
-            adult_candidates = {
-                row["id"]: row for row in hybrid_augmentation_candidates_from_pack(pack)
-            }
+            adult_candidates = {row["id"]: row for row in adult_appeal_candidates_from_pack(pack)}
             adult_candidate = adult_candidates.get(candidate_id)
-            if (isinstance(adult_candidate, dict)
-                    and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}):
-                open_dimensions = set((scope.get("axis_allowed_dimensions") or {}).get(adult_candidate.get("axis"), []))
-            invalid_dimensions = sorted(
-                set(affected_dimensions) - open_dimensions
-            )
+            if isinstance(adult_candidate, dict) and scope.get("contract_version") in {
+                photo_contextual_appeal.SCOPE_VERSION
+            }:
+                open_dimensions = set(
+                    (scope.get("axis_allowed_dimensions") or {}).get(
+                        adult_candidate.get("axis"), []
+                    )
+                )
+            invalid_dimensions = sorted(set(affected_dimensions) - open_dimensions)
             if (
                 not affected_dimensions
                 or len(affected_dimensions) != len(set(affected_dimensions))
@@ -7352,8 +4968,16 @@ def audit_creative_augmentation_v5(
                         "open_dimensions": sorted(open_dimensions),
                     }
                 )
-            if not property_effects_allowed(intent_lock, affected_dimensions, decision.get("affected_properties", [])):
-                failures.append({"check": "intent_lock_creative_properties", "candidate_id": candidate_id, "reason": "a transformed candidate must preserve protected properties and declare its narrower effects"})
+            if not property_effects_allowed(
+                intent_lock, affected_dimensions, decision.get("affected_properties", [])
+            ):
+                failures.append(
+                    {
+                        "check": "intent_lock_creative_properties",
+                        "candidate_id": candidate_id,
+                        "reason": "a transformed candidate must preserve protected properties and declare its narrower effects",
+                    }
+                )
         if (
             candidate_id not in chosen
             or not evidence
@@ -7400,8 +5024,6 @@ def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
     core = pack.get("authorial_core") or {}
     snapshot = pack.get("creative_controls")
     bound_sha = core.get("creative_controls_sha256")
-    if snapshot is None and bound_sha is None:
-        return []
     try:
         creative_controls.validate(snapshot, core.get("source_request"))
         if pack.get("contract_version") != "photo-candidate-pack/v6" or bound_sha != snapshot["canonical_sha256"]:
@@ -7430,70 +5052,112 @@ def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def audit_adult_appeal_dimension_scope(
-    pack: dict[str, Any], contract: dict[str, Any],
+    pack: dict[str, Any],
+    contract: dict[str, Any],
 ) -> list[dict[str, Any]]:
-    """Recompute new v6 axis scope; unmarked historical packs keep their rule."""
+    """Recompute the current contextual scope from the frozen intent lock."""
     scope = contract.get("dimension_scope")
-    if scope is None:
-        return []
     core = pack.get("authorial_core") or {}
     intent_lock = core.get("intent_lock") or {}
     locked = set(intent_lock.get("locked_dimensions") or [])
     version = scope.get("contract_version") if isinstance(scope, dict) else None
-    if version not in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}:
-        return [{"check": "adult_appeal_dimension_scope", "reason": "unsupported adult-axis scope version"}]
-    dimensions_by_axis = LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS if version == LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION else ADULT_APPEAL_AXIS_DIMENSIONS
-    if version == photo_contextual_appeal.SCOPE_VERSION:
-        dimensions_by_axis = {axis: photo_contextual_appeal.allowed_dimensions(intent_lock)
-                              for axis in photo_contextual_appeal.AXES}
+    if version != photo_contextual_appeal.SCOPE_VERSION:
+        return [
+            {
+                "check": "adult_appeal_dimension_scope",
+                "reason": "unsupported adult-axis scope version",
+            }
+        ]
+    dimensions_by_axis = {
+        axis: photo_contextual_appeal.allowed_dimensions(intent_lock)
+        for axis in photo_contextual_appeal.AXES
+    }
     expected = {
         "contract_version": version,
         "policy": "preserve_locked_dimensions",
         "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
         "locked_dimensions": sorted(locked),
         "axis_allowed_dimensions": {
-            axis: sorted(dimensions - locked)
-            for axis, dimensions in dimensions_by_axis.items()
+            axis: sorted(dimensions - locked) for axis, dimensions in dimensions_by_axis.items()
         },
     }
-    if version in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}:
-        expected["protected_properties"] = intent_property_locks(intent_lock)
-    if (pack.get("contract_version") != "photo-candidate-pack/v6"
-            or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
-            or scope != expected):
-        return [{"check": "adult_appeal_dimension_scope", "reason": "adult-axis scope must match the frozen v3 intent lock and versioned axis dimensions"}]
+    expected["protected_properties"] = intent_property_locks(intent_lock)
+    if (
+        pack.get("contract_version") != "photo-candidate-pack/v6"
+        or core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
+        or scope != expected
+    ):
+        return [
+            {
+                "check": "adult_appeal_dimension_scope",
+                "reason": "adult-axis scope must match the frozen v3 intent lock and versioned axis dimensions",
+            }
+        ]
     failures = []
     axes = contract.get("axes") or {}
     if set(axes) != set(ADULT_APPEAL_AXIS_DIMENSIONS):
-        failures.append({"check": "adult_appeal_dimension_scope", "reason": "both independent axis states must be recorded"})
+        failures.append(
+            {
+                "check": "adult_appeal_dimension_scope",
+                "reason": "both independent axis states must be recorded",
+            }
+        )
     for axis_id, axis in axes.items():
         allowed = set(expected["axis_allowed_dimensions"].get(axis_id, []))
         requested = axis.get("requested_intensity")
-        if (type(requested) is not int or not 0 <= requested <= 3
-                or axis.get("intensity") != (requested if allowed else 0)
-                or axis.get("active") != (bool(allowed) and bool(requested) and (contract.get("eligibility") or {}).get("status") == "eligible")):
-            failures.append({"check": "adult_appeal_dimension_scope", "axis": axis_id, "reason": "scope may disable only an axis with no permitted dimensions; requested intensity must be preserved otherwise"})
+        if (
+            type(requested) is not int
+            or not 0 <= requested <= 3
+            or axis.get("intensity") != (requested if allowed else 0)
+            or axis.get("active")
+            != (
+                bool(allowed)
+                and bool(requested)
+                and (contract.get("eligibility") or {}).get("status") == "eligible"
+            )
+        ):
+            failures.append(
+                {
+                    "check": "adult_appeal_dimension_scope",
+                    "axis": axis_id,
+                    "reason": "scope may disable only an axis with no permitted dimensions; requested intensity must be preserved otherwise",
+                }
+            )
         for candidate in axis.get("candidate_inventory") or []:
             affected = candidate.get("affected_dimensions") or []
-            if not affected or len(affected) != len(set(affected)) or not set(affected).issubset(allowed):
-                failures.append({"check": "adult_appeal_candidate_dimensions", "candidate_id": candidate.get("id"), "reason": "an adult candidate must declare its complete effect within this axis's unlocked dimensions"})
-            if not property_effects_allowed(intent_lock, affected, candidate.get("affected_properties", [])):
-                failures.append({"check": "adult_appeal_candidate_properties", "candidate_id": candidate.get("id"), "reason": "candidate effects conflict with a protected property or omit their property scope"})
+            if (
+                not affected
+                or len(affected) != len(set(affected))
+                or not set(affected).issubset(allowed)
+            ):
+                failures.append(
+                    {
+                        "check": "adult_appeal_candidate_dimensions",
+                        "candidate_id": candidate.get("id"),
+                        "reason": "an adult candidate must declare its complete effect within this axis's unlocked dimensions",
+                    }
+                )
+            if not property_effects_allowed(
+                intent_lock, affected, candidate.get("affected_properties", [])
+            ):
+                failures.append(
+                    {
+                        "check": "adult_appeal_candidate_properties",
+                        "candidate_id": candidate.get("id"),
+                        "reason": "candidate effects conflict with a protected property or omit their property scope",
+                    }
+                )
     return failures
 
 
-def audit_adult_appeal_v5(
+def audit_adult_appeal(
     pack: dict[str, Any],
     composed: dict[str, Any],
     prompt_en: str,
     chosen: set[str],
     candidate_objects: dict[str, dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    contract = (
-        pack.get("adult_appeal")
-        if isinstance(pack.get("adult_appeal"), dict)
-        else {}
-    )
+    contract = pack.get("adult_appeal") if isinstance(pack.get("adult_appeal"), dict) else {}
     if not contract.get("enabled"):
         return [], []
     failures = audit_adult_appeal_dimension_scope(pack, contract)
@@ -7506,9 +5170,8 @@ def audit_adult_appeal_v5(
     failures.extend(photo_contextual_appeal.audit_review(contract, brief, chosen))
     adult_phrase = str(brief.get("adult_subject_phrase") or "")
     agency_phrase = str(brief.get("agency_phrase") or "")
-    if (
-        not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE)
-        or not text_contains_term(prompt_en, adult_phrase)
+    if not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE) or not text_contains_term(
+        prompt_en, adult_phrase
     ):
         failures.append(
             {
@@ -7547,18 +5210,59 @@ def audit_adult_appeal_v5(
                 for dimension in candidate.get("affected_dimensions") or []
             }
             realization = actual.get("realization", "refined")
-            retained = realization == "baseline" and scope.get("contract_version") in {ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION, photo_contextual_appeal.SCOPE_VERSION}
+            retained = realization == "baseline" and scope.get("contract_version") in {
+                ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+                photo_contextual_appeal.SCOPE_VERSION,
+            }
             if retained:
-                if affected or selected_dimensions or not text_contains_term(str((pack.get("authorial_core") or {}).get("baseline_prompt_en") or ""), evidence):
-                    failures.append({"check": "adult_appeal_baseline_realization", "axis": axis_id, "reason": "baseline realization must retain literal baseline evidence and introduce no axis candidate or changed dimension"})
-            elif (not affected or len(affected) != len(set(affected))
-                    or not set(affected).issubset(allowed)
-                    or not selected_dimensions.issubset(set(affected))):
-                failures.append({"check": "adult_appeal_authored_dimensions", "axis": axis_id, "reason": "each active adult-axis interpretation must declare only unlocked dimensions and cover every adopted candidate's effect"})
+                if (
+                    affected
+                    or selected_dimensions
+                    or not text_contains_term(
+                        str((pack.get("authorial_core") or {}).get("baseline_prompt_en") or ""),
+                        evidence,
+                    )
+                ):
+                    failures.append(
+                        {
+                            "check": "adult_appeal_baseline_realization",
+                            "axis": axis_id,
+                            "reason": "baseline realization must retain literal baseline evidence and introduce no axis candidate or changed dimension",
+                        }
+                    )
+            elif (
+                not affected
+                or len(affected) != len(set(affected))
+                or not set(affected).issubset(allowed)
+                or not selected_dimensions.issubset(set(affected))
+            ):
+                failures.append(
+                    {
+                        "check": "adult_appeal_authored_dimensions",
+                        "axis": axis_id,
+                        "reason": "each active adult-axis interpretation must declare only unlocked dimensions and cover every adopted candidate's effect",
+                    }
+                )
             if realization not in {"baseline", "refined"}:
-                failures.append({"check": "adult_appeal_realization", "axis": axis_id, "reason": "realization must be baseline or refined"})
-            if not property_effects_allowed((pack.get("authorial_core") or {}).get("intent_lock") or {}, affected, actual.get("affected_properties", [])):
-                failures.append({"check": "adult_appeal_authored_properties", "axis": axis_id, "reason": "authored styling must declare open property effects and preserve protected properties"})
+                failures.append(
+                    {
+                        "check": "adult_appeal_realization",
+                        "axis": axis_id,
+                        "reason": "realization must be baseline or refined",
+                    }
+                )
+            if not property_effects_allowed(
+                (pack.get("authorial_core") or {}).get("intent_lock") or {},
+                affected,
+                actual.get("affected_properties", []),
+            ):
+                failures.append(
+                    {
+                        "check": "adult_appeal_authored_properties",
+                        "axis": axis_id,
+                        "reason": "authored styling must declare open property effects and preserve protected properties",
+                    }
+                )
         if actual_intensity != expected_intensity or (
             expected_intensity > 0
             and (
@@ -7570,7 +5274,7 @@ def audit_adult_appeal_v5(
             failures.append(
                 {
                     "check": "adult_appeal_axes",
-                    "reason": "active v5 adult-appeal axes must preserve intensity and authored literal evidence",
+                    "reason": "active current adult-appeal axes must preserve intensity and authored literal evidence",
                     "axis": axis_id,
                 }
             )
@@ -7580,13 +5284,11 @@ def audit_adult_appeal_v5(
         failures.append(
             {
                 "check": "adult_appeal_blend",
-                "reason": "v5 adult-appeal blend differs from the preserved contract",
+                "reason": "current adult-appeal blend differs from the preserved contract",
             }
         )
 
-    # v5 moves the existing adult-appeal contract out of the fixed v4 hybrid
-    # block, but it must preserve the same styling/pose/camera cross-check.
-    # This is compatibility enforcement, not a new policy or routing rule.
+    # Check the combined effects of adopted styling, pose and camera choices.
     combination = (
         contract.get("combination_policy")
         if isinstance(contract.get("combination_policy"), dict)
@@ -7594,9 +5296,7 @@ def audit_adult_appeal_v5(
     )
     risk_hits: set[str] = set()
     risk_groups = (
-        combination.get("risk_groups")
-        if isinstance(combination.get("risk_groups"), dict)
-        else {}
+        combination.get("risk_groups") if isinstance(combination.get("risk_groups"), dict) else {}
     )
     chosen_entry_ids = {
         str(candidate_objects.get(candidate_id, {}).get("entry_id") or "")
@@ -7619,10 +5319,7 @@ def audit_adult_appeal_v5(
             failures.append(
                 {
                     "check": "adult_appeal_combination_risk",
-                    "reason": str(
-                        rule.get("reason")
-                        or "high-risk styling and camera combination"
-                    ),
+                    "reason": str(rule.get("reason") or "high-risk styling and camera combination"),
                     "rule_id": rule.get("id"),
                     "risk_groups": sorted(required),
                 }
@@ -7635,9 +5332,7 @@ def audit_adult_appeal_v5(
             warnings.append(
                 {
                     "check": "adult_appeal_combination_risk",
-                    "reason": str(
-                        rule.get("reason") or "stacked adult-fashion emphasis"
-                    ),
+                    "reason": str(rule.get("reason") or "stacked adult-fashion emphasis"),
                     "rule_id": rule.get("id"),
                     "risk_groups": sorted(required),
                 }
@@ -8170,6 +5865,9 @@ def audit_render_repair_v6(
 
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
+    retired_fields = {"authorial_request", "hybrid_augmentation", "moe_response"} & set(pack)
+    if retired_fields:
+        failures.append({"check": "retired_contract_fields", "reason": "unsupported historical contract fields", "fields": sorted(retired_fields)})
     warnings: list[dict[str, Any]] = []
     prompt_en = str(composed.get("prompt_en") or "")
     search_text = composed_search_text(composed)
@@ -8185,7 +5883,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
                 "actual": contract_version or None,
             }
         )
-    failures.extend(audit_v4_authorial_pack(pack))
+    failures.extend(audit_authorial_pack(pack))
 
     required_fields = ("pack_id", "prompt_en", "negative_en", "chosen_candidate_ids", "composer")
     missing_fields = [field for field in required_fields if field not in composed]
@@ -8217,7 +5915,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failures.extend(audit_negative_intent_guard(pack, prompt_en))
 
     failures.extend(audit_creative_direction(pack, composed, prompt_en))
-    failures.extend(audit_moe_response(pack, composed, prompt_en, warnings))
     failures.extend(audit_character_response_v6(pack, composed, prompt_en))
     failures.extend(
         audit_semantic_assertion_obligations_v6(pack, composed, prompt_en)
@@ -8226,8 +5923,8 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     failures.extend(photo_embodiment.audit_composed(pack, composed))
     failures.extend(audit_visual_obligations(pack, composed, prompt_en))
     failures.extend(audit_viewer_experience(pack, composed, prompt_en))
-    failures.extend(audit_authorial_core_v5(pack, composed, prompt_en, warnings))
-    failures.extend(audit_semantic_clarification_v5(pack, composed, prompt_en))
+    failures.extend(audit_authorial_core(pack, composed, prompt_en, warnings))
+    failures.extend(audit_semantic_clarification(pack, composed, prompt_en))
 
     safety = pack.get("safety") if isinstance(pack.get("safety"), dict) else {}
     if safety.get("status") != "pass" or safety.get("requires_user_approval") is True:
@@ -8357,8 +6054,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     chosen = normalize_chosen_candidate_ids(composed.get("chosen_candidate_ids"))
     valid_ids = candidate_ids_from_pack(pack)
     if not chosen and contract_version not in {
-        "photo-candidate-pack/v4",
-        "photo-candidate-pack/v5",
         "photo-candidate-pack/v6",
     }:
         failures.append({"check": "chosen_candidate_ids", "reason": "no chosen_candidate_ids supplied"})
@@ -8390,27 +6085,19 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             }
         )
 
-    adult_v5_failures, adult_v5_warnings = audit_adult_appeal_v5(
+    adult_failures, adult_warnings = audit_adult_appeal(
         pack,
         composed,
         prompt_en,
         chosen,
         candidate_objects,
     )
-    failures.extend(adult_v5_failures)
-    warnings.extend(adult_v5_warnings)
+    failures.extend(adult_failures)
+    warnings.extend(adult_warnings)
 
-    hybrid_failures, hybrid_warnings = audit_hybrid_augmentation(
-        pack,
-        composed,
-        prompt_en,
-        chosen,
-        candidate_objects,
-    )
-    failures.extend(hybrid_failures)
-    warnings.extend(hybrid_warnings)
+
     failures.extend(
-        audit_creative_augmentation_v5(
+        audit_creative_augmentation(
             pack,
             composed,
             prompt_en,
@@ -8428,7 +6115,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     )
     failures.extend(audit_authorial_scene(pack, composed, prompt_en))
     failures.extend(audit_authorial_open_slots(pack, composed, prompt_en))
-    failures.extend(audit_authorial_request(pack, composed, prompt_en))
     failures.extend(audit_japanese_subculture_photo(pack, prompt_en))
 
     coverage = pack.get("coverage") if isinstance(pack.get("coverage"), dict) else {}
@@ -8584,86 +6270,11 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
 
     chosen_slots = chosen_slot_entry_ids(chosen)
     scene_contract = pack.get("scene_contract") if isinstance(pack.get("scene_contract"), dict) else {}
-    for group in scene_contract.get("groups") or []:
-        if not isinstance(group, dict) or str(group.get("strategy") or "") != "atomic_scene":
-            continue
-        if str(group.get("source") or "") == "selected_render_blueprint":
-            for slot in group.get("required_slots") or []:
-                slot_contract = (group.get("slots") or {}).get(str(slot))
-                if not isinstance(slot_contract, dict):
-                    failures.append(
-                        {
-                            "check": "atomic_scene_contract",
-                            "reason": "resolved render scene is missing a required atomic slot",
-                            "group": group.get("group"),
-                            "slot": str(slot),
-                        }
-                    )
-                    continue
-                terms = [
-                    str(term)
-                    for term in slot_contract.get("audit_terms") or []
-                    if str(term).strip()
-                ]
-                if not terms or not any(text_contains_term(prompt_en, term) for term in terms):
-                    failures.append(
-                        {
-                            "check": "atomic_scene_contract",
-                            "reason": "mandatory resolved render atom is absent from prompt_en",
-                            "group": group.get("group"),
-                            "slot": str(slot),
-                            "accepted_terms": terms,
-                        }
-                    )
-            controlled_slots = {
-                str(slot)
-                for slot in group.get("controlled_candidate_slots") or []
-                if str(slot)
-            }
-            mixed_slots = sorted(slot for slot in controlled_slots if chosen_slots.get(slot))
-            if mixed_slots:
-                failures.append(
-                    {
-                        "check": "atomic_scene_contract",
-                        "reason": "ordinary sampler candidates cannot override resolved render atoms",
-                        "group": group.get("group"),
-                        "slots": mixed_slots,
-                    }
-                )
-            continue
-        for slot in group.get("required_slots") or []:
-            if not chosen_slots.get(str(slot)):
-                failures.append(
-                    {
-                        "check": "atomic_scene_contract",
-                        "reason": "required atomic-scene slot was not chosen",
-                        "group": group.get("group"),
-                        "slot": str(slot),
-                    }
-                )
-        for slot, slot_contract in (group.get("slots") or {}).items():
-            if not isinstance(slot_contract, dict):
-                continue
-            allowed_ids = {str(item) for item in slot_contract.get("allowed_entry_ids") or []}
-            selected_ids = chosen_slots.get(str(slot), set())
-            outside = sorted(selected_ids - allowed_ids) if allowed_ids else sorted(selected_ids)
-            if outside:
-                failures.append(
-                    {
-                        "check": "atomic_scene_contract",
-                        "reason": "chosen candidate crosses the selected scene variant boundary",
-                        "group": group.get("group"),
-                        "slot": str(slot),
-                        "ids": outside,
-                        "allowed_ids": sorted(allowed_ids),
-                    }
-                )
     evidence_budget = pack.get("evidence_budget") if isinstance(pack.get("evidence_budget"), dict) else {}
     if evidence_budget.get("enabled"):
         clue_slots = {str(item) for item in evidence_budget.get("world_clue_slots") or [] if str(item)}
         render_contract = pack.get("render_contract") if isinstance(pack.get("render_contract"), dict) else {}
         selected_scene = render_contract.get("selected_scene") if isinstance(render_contract.get("selected_scene"), dict) else {}
-        atomic_scene = selected_scene.get("atomic_scene") if isinstance(selected_scene.get("atomic_scene"), dict) else {}
         authored_scene = composed.get("authored_scene") if isinstance(composed.get("authored_scene"), dict) else {}
         authored_atoms = authored_scene.get("atoms") if isinstance(authored_scene.get("atoms"), dict) else {}
         authored_slots = composed.get("authored_slots") if isinstance(composed.get("authored_slots"), dict) else {}
@@ -8671,7 +6282,6 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
             slot
             for slot in clue_slots
             if chosen_slots.get(slot)
-            or isinstance(atomic_scene.get(slot), dict)
             or bool(str(authored_atoms.get(slot) or "").strip())
             or isinstance(authored_slots.get(slot), dict)
         )

@@ -61,7 +61,7 @@ class TestPromptExpansionRoutes(unittest.TestCase):
         _args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "1"],
             ["천사 신부 꽃방"],
-            concept_mode="legacy",
+            concept_mode="soft",
         )
         explanation = explanations[0]
         self.assertIsNone(explanation["role"])
@@ -77,7 +77,7 @@ class TestPromptExpansionRoutes(unittest.TestCase):
         _args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "1"],
             ["성인 학생 기차 플랫폼 헤드폰"],
-            concept_mode="legacy",
+            concept_mode="soft",
         )
         recipe = explanations[0]["recipe"]
         forced = explanations[0]["combined_forced_slots"]

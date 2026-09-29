@@ -1217,189 +1217,23 @@ def validate_quality_layer_applicability_guards(quality: dict[str, Any], errors:
             validate_string_list(f"{label}.exclude_slots", guard.get("exclude_slots"), errors)
 
 
-def validate_quality_layer_hybrid_augmentation(
-    quality: dict[str, Any], data: dict[str, Any], errors: list[str]
-) -> None:
-    hybrid = quality.get("hybrid_augmentation")
-    if not isinstance(hybrid, dict):
-        errors.append("quality_layers.hybrid_augmentation: must be an object")
-        return
-    if hybrid.get("schema_version") != 1:
-        errors.append("quality_layers.hybrid_augmentation.schema_version: must be 1")
-    if not isinstance(hybrid.get("enabled"), bool):
-        errors.append("quality_layers.hybrid_augmentation.enabled: must be boolean")
-    for key, minimum, maximum in (
-        ("route_count", 1, 6),
-        ("route_candidate_limit", 2, 6),
-        ("accepted_detail_min", 1, 5),
-        ("accepted_detail_max", 1, 8),
-    ):
-        try:
-            value = int(hybrid.get(key))
-        except (TypeError, ValueError):
-            errors.append(f"quality_layers.hybrid_augmentation.{key}: must be an integer")
-            continue
-        if value < minimum or value > maximum:
-            errors.append(
-                f"quality_layers.hybrid_augmentation.{key}: must be between {minimum} and {maximum}"
-            )
-    try:
-        if int(hybrid.get("accepted_detail_min")) > int(hybrid.get("accepted_detail_max")):
-            errors.append(
-                "quality_layers.hybrid_augmentation: accepted_detail_min must not exceed accepted_detail_max"
-            )
-    except (TypeError, ValueError):
-        pass
-
-    decision_states = normalize_list(hybrid.get("decision_states"))
-    if set(decision_states) != {"accepted", "modified", "rejected"}:
-        errors.append(
-            "quality_layers.hybrid_augmentation.decision_states: must contain accepted, modified, and rejected"
-        )
-    functions = set(normalize_list(hybrid.get("detail_functions")))
-    if not functions:
-        errors.append("quality_layers.hybrid_augmentation.detail_functions: must be non-empty")
-    by_slot = entry_ids_by_slot(data)
-    routes = hybrid.get("routes") or []
-    if not isinstance(routes, list) or not routes:
-        errors.append("quality_layers.hybrid_augmentation.routes: must be a non-empty list")
-        routes = []
-    try:
-        expected_route_count = int(hybrid.get("route_count"))
-    except (TypeError, ValueError):
-        expected_route_count = -1
-    if expected_route_count >= 0 and len(routes) != expected_route_count:
-        errors.append("quality_layers.hybrid_augmentation.routes: count must equal route_count")
-    seen_route_ids: set[str] = set()
-    for index, route in enumerate(routes):
-        label = f"quality_layers.hybrid_augmentation.routes[{index}]"
-        if not isinstance(route, dict):
-            errors.append(f"{label}: must be an object")
-            continue
-        route_id = str(route.get("id") or "").strip()
-        if not route_id:
-            errors.append(f"{label}.id: required")
-        elif route_id in seen_route_ids:
-            errors.append(f"{label}.id: duplicate id {route_id}")
-        else:
-            seen_route_ids.add(route_id)
-        if not str(route.get("label") or "").strip():
-            errors.append(f"{label}.label: required")
-        route_slots = normalize_list(route.get("slots"))
-        if not route_slots:
-            errors.append(f"{label}.slots: at least one slot is required")
-        for slot in route_slots:
-            if slot not in by_slot:
-                errors.append(f"{label}.slots: unknown slot {slot}")
-        route_functions = normalize_list(route.get("functions"))
-        if not route_functions:
-            errors.append(f"{label}.functions: at least one function is required")
-        for function in route_functions:
-            if function not in functions:
-                errors.append(f"{label}.functions: unknown detail function {function}")
-
-    adult = hybrid.get("adult_appeal")
+def validate_quality_layer_adult_appeal(quality: dict[str, Any], data: dict[str, Any], errors: list[str]) -> None:
+    adult = quality.get("adult_appeal")
     if not isinstance(adult, dict):
-        errors.append("quality_layers.hybrid_augmentation.adult_appeal: must be an object")
+        errors.append("quality_layers.adult_appeal: must be an object")
         return
-    if "source_preset_id" in adult:
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.source_preset_id: "
-            "retired; use inventory_preset_id"
-        )
-    preset_id = str(adult.get("inventory_preset_id") or "")
-    source_preset = next(
-        (
-            preset
-            for preset in data.get("presets", [])
-            if isinstance(preset, dict) and str(preset.get("id") or "") == preset_id
-        ),
-        None,
-    )
-    if source_preset is None:
-        errors.append(
-            f"quality_layers.hybrid_augmentation.adult_appeal.inventory_preset_id: unknown preset {preset_id!r}"
-        )
-        source_filters: dict[str, Any] = {}
-    else:
-        source_filters = source_preset.get("filters") if isinstance(source_preset.get("filters"), dict) else {}
-    for key, minimum, maximum in (
-        ("intensity_min", 0, 3),
-        ("intensity_max", 0, 3),
-        ("candidate_limit_per_axis", 1, 24),
-        ("candidate_limit_per_carrier", 1, 12),
-    ):
-        try:
-            value = int(adult.get(key))
-        except (TypeError, ValueError):
-            errors.append(f"quality_layers.hybrid_augmentation.adult_appeal.{key}: must be an integer")
-            continue
-        if value < minimum or value > maximum:
-            errors.append(
-                f"quality_layers.hybrid_augmentation.adult_appeal.{key}: must be between {minimum} and {maximum}"
-            )
-    default_intensities = (
-        adult.get("default_intensities")
-        if isinstance(adult.get("default_intensities"), dict)
-        else {}
-    )
-    if "creative_controls_source" in adult:
-        if adult["creative_controls_source"] != "precore/creative_controls.json":
-            errors.append("adult_appeal.creative_controls_source: must name the neutral pre-core definitions")
-        if "default_intensities" in adult or "default_emphasis" in adult:
-            errors.append("adult_appeal: store default values only in precore/creative_controls.json")
-        try:
-            definitions = creative_controls.load_definitions()["controls"]
-            default_intensities = {axis: definitions[axis]["default"] for axis in creative_controls.AXES}
-        except (ValueError, KeyError, TypeError) as exc:
-            errors.append(f"creative_controls: {exc}")
-    if set(default_intensities) != {"sensual", "fetish"}:
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.default_intensities: must contain sensual and fetish"
-        )
-    for axis_id in ("sensual", "fetish"):
-        try:
-            default_intensity = int(default_intensities.get(axis_id))
-        except (TypeError, ValueError):
-            errors.append(
-                f"quality_layers.hybrid_augmentation.adult_appeal.default_intensities.{axis_id}: must be an integer"
-            )
-        else:
-            if default_intensity < 0 or default_intensity > 3:
-                errors.append(
-                    f"quality_layers.hybrid_augmentation.adult_appeal.default_intensities.{axis_id}: must be between 0 and 3"
-                )
-    default_emphasis = str(adult.get("default_emphasis") or "")
-    if "creative_controls_source" in adult:
-        default_emphasis = "balanced" if default_intensities.get("sensual") == default_intensities.get("fetish") else (
-            "sensual_led" if default_intensities.get("sensual", 0) > default_intensities.get("fetish", 0) else "fetish_led"
-        )
-    if default_emphasis not in {"sensual_led", "balanced", "fetish_led"}:
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.default_emphasis: must be sensual_led, balanced, or fetish_led"
-        )
-    default_eligibility = adult.get("default_eligibility")
-    if not isinstance(default_eligibility, dict):
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.default_eligibility: must be an object"
-        )
-    else:
-        categories = normalize_list(default_eligibility.get("subject_categories"))
-        if not categories:
-            errors.append(
-                "quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.subject_categories: must be non-empty"
-            )
-        for category in categories:
-            if category not in VALID_SUBJECT_CATEGORIES:
-                errors.append(
-                    "quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.subject_categories: "
-                    f"unknown category {category}"
-                )
-        for key in ("block_no_people",):
-            if not isinstance(default_eligibility.get(key), bool):
-                errors.append(
-                    f"quality_layers.hybrid_augmentation.adult_appeal.default_eligibility.{key}: must be boolean"
-                )
+    allowed = {"creative_controls_source", "contextual_retrieval", "entry_dimensions", "risk_groups", "hard_combinations", "warning_combinations"}
+    if set(adult) - allowed:
+        errors.append("quality_layers.adult_appeal: unsupported policy fields")
+    if adult.get("creative_controls_source") != "precore/creative_controls.json":
+        errors.append("adult_appeal.creative_controls_source: must name neutral pre-core definitions")
+    retrieval = adult.get("contextual_retrieval") or {}
+    if retrieval.get("contract_version") != "photo-contextual-appeal/v2":
+        errors.append("adult_appeal.contextual_retrieval: requires current v2 policy")
+    for key in ("candidate_limit_per_axis", "review_limit_per_axis"):
+        if not isinstance(retrieval.get(key), int) or not 1 <= retrieval[key] <= 24:
+            errors.append(f"adult_appeal.contextual_retrieval.{key}: must be in 1..24")
+    by_slot = entry_ids_by_slot(data)
     all_entry_ids = {entry_id for ids in by_slot.values() for entry_id in ids}
     entry_dimensions = adult.get("entry_dimensions", {})
     if not isinstance(entry_dimensions, dict):
@@ -1415,84 +1249,9 @@ def validate_quality_layer_hybrid_augmentation(
             elif (len(dimensions) != len(set(dimensions))
                     or not set(dimensions).issubset(AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)):
                 errors.append(f"adult_appeal.entry_dimensions.{source_key}: duplicate or unknown dimensions")
-    entry_min_intensity = adult.get("entry_min_intensity")
-    if not isinstance(entry_min_intensity, dict):
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.entry_min_intensity: must be an object"
-        )
-    else:
-        for entry_id, raw_intensity in entry_min_intensity.items():
-            if str(entry_id) not in all_entry_ids:
-                errors.append(
-                    "quality_layers.hybrid_augmentation.adult_appeal.entry_min_intensity: "
-                    f"unknown entry id {entry_id}"
-                )
-            try:
-                minimum_intensity = int(raw_intensity)
-            except (TypeError, ValueError):
-                errors.append(
-                    "quality_layers.hybrid_augmentation.adult_appeal.entry_min_intensity."
-                    f"{entry_id}: must be an integer"
-                )
-            else:
-                if minimum_intensity < 1 or minimum_intensity > 3:
-                    errors.append(
-                        "quality_layers.hybrid_augmentation.adult_appeal.entry_min_intensity."
-                        f"{entry_id}: must be between 1 and 3"
-                    )
-    if set(normalize_list(adult.get("emphases"))) != {"sensual_led", "balanced", "fetish_led"}:
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.emphases: must contain sensual_led, balanced, and fetish_led"
-        )
-    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
-    if set(axes) != {"sensual", "fetish"}:
-        errors.append(
-            "quality_layers.hybrid_augmentation.adult_appeal.axes: must contain sensual and fetish"
-        )
-    for axis_id, axis in axes.items():
-        label = f"quality_layers.hybrid_augmentation.adult_appeal.axes.{axis_id}"
-        if not isinstance(axis, dict):
-            errors.append(f"{label}: must be an object")
-            continue
-        carriers = axis.get("carriers") or []
-        if not isinstance(carriers, list) or not carriers:
-            errors.append(f"{label}.carriers: must be a non-empty list")
-            continue
-        seen_carriers: set[str] = set()
-        for index, carrier in enumerate(carriers):
-            carrier_label = f"{label}.carriers[{index}]"
-            if not isinstance(carrier, dict):
-                errors.append(f"{carrier_label}: must be an object")
-                continue
-            carrier_id = str(carrier.get("id") or "").strip()
-            if not carrier_id:
-                errors.append(f"{carrier_label}.id: required")
-            elif carrier_id in seen_carriers:
-                errors.append(f"{carrier_label}.id: duplicate id {carrier_id}")
-            else:
-                seen_carriers.add(carrier_id)
-            carrier_slots = normalize_list(carrier.get("slots"))
-            if not carrier_slots:
-                errors.append(f"{carrier_label}.slots: at least one slot is required")
-            for slot in carrier_slots:
-                if slot not in by_slot:
-                    errors.append(f"{carrier_label}.slots: unknown slot {slot}")
-                if source_preset is not None and slot not in source_filters:
-                    errors.append(f"{carrier_label}.slots: slot {slot} is absent from source preset filters")
-            if "required_tags_any" in carrier:
-                validate_string_list(f"{carrier_label}.required_tags_any", carrier.get("required_tags_any"), errors)
-            if "candidate_limit" in carrier:
-                try:
-                    candidate_limit = int(carrier.get("candidate_limit"))
-                except (TypeError, ValueError):
-                    errors.append(f"{carrier_label}.candidate_limit: must be an integer")
-                else:
-                    if candidate_limit < 1 or candidate_limit > 12:
-                        errors.append(f"{carrier_label}.candidate_limit: must be between 1 and 12")
-
     risk_groups = adult.get("risk_groups") if isinstance(adult.get("risk_groups"), dict) else {}
     for group_id, group in risk_groups.items():
-        label = f"quality_layers.hybrid_augmentation.adult_appeal.risk_groups.{group_id}"
+        label = f"quality_layers.adult_appeal.risk_groups.{group_id}"
         if not isinstance(group, dict):
             errors.append(f"{label}: must be an object")
             continue
@@ -1504,10 +1263,10 @@ def validate_quality_layer_hybrid_augmentation(
     for rule_type in ("hard_combinations", "warning_combinations"):
         rules = adult.get(rule_type) or []
         if not isinstance(rules, list):
-            errors.append(f"quality_layers.hybrid_augmentation.adult_appeal.{rule_type}: must be a list")
+            errors.append(f"quality_layers.adult_appeal.{rule_type}: must be a list")
             continue
         for index, rule in enumerate(rules):
-            label = f"quality_layers.hybrid_augmentation.adult_appeal.{rule_type}[{index}]"
+            label = f"quality_layers.adult_appeal.{rule_type}[{index}]"
             if not isinstance(rule, dict):
                 errors.append(f"{label}: must be an object")
                 continue
@@ -1547,7 +1306,7 @@ def validate_quality_layers(path: Path, data: dict[str, Any], errors: list[str])
         validate_quality_layer_intent_routing(quality, data, errors)
         validate_quality_layer_applicability_guards(quality, errors)
         validate_quality_layer_selection_balance(quality, errors)
-        validate_quality_layer_hybrid_augmentation(quality, data, errors)
+        validate_quality_layer_adult_appeal(quality, data, errors)
     validate_quality_layer_artistic_final_touch(quality, errors)
     vocab = merged_facet_vocab(data)
     validate_quality_layer_photographic_craft(quality, vocab, errors)
@@ -2100,12 +1859,12 @@ def validate_concept_recipe_entry(
     validate_anchor_families(label, recipe, by_slot, errors)
     validate_forbidden_slot_values(label, recipe, by_slot, errors)
     concept_mode_default = recipe.get("concept_mode_default")
-    if concept_mode_default is not None and str(concept_mode_default) not in {"legacy", "soft"}:
-        errors.append(f"{label}.concept_mode_default: must be legacy or soft")
-    if "soft_bypass_legacy_scaffold" in recipe and not isinstance(
-        recipe.get("soft_bypass_legacy_scaffold"), bool
+    if concept_mode_default is not None and str(concept_mode_default) != "soft":
+        errors.append(f"{label}.concept_mode_default: must be soft")
+    if "advisory_only" in recipe and not isinstance(
+        recipe.get("advisory_only"), bool
     ):
-        errors.append(f"{label}.soft_bypass_legacy_scaffold: must be a boolean")
+        errors.append(f"{label}.advisory_only: must be a boolean")
     validate_anchor_expansion(label, recipe.get("anchor_expansion"), errors)
     validate_concept_guide(label, recipe.get("guide"), errors)
     validate_reference_scaffold_schema(label, recipe, by_slot, errors)

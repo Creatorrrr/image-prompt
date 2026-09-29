@@ -8,7 +8,7 @@ Every creative-direction pack also contains `viewer_experience`. Read `viewer-ex
 
 The target is a viewer-side experience: the frame first offers a recognizable scene, then makes one non-default premise discoverable, and finally lets its physical consequences recover one coherent meaning. Novel adjectives, unusual styling, visual busyness, randomness, and distance from other candidate tokens are not sufficient.
 
-Treat the legacy `creative_exploration` field as bounded slot-level search diversity. Treat `creative_direction` as concept development and selection. A run may have both fields, but one does not prove the other.
+Treat the `creative_exploration` field as bounded slot-level search diversity. Treat `creative_direction` as concept development and selection. A run may have both fields, but one does not prove the other.
 
 `artistic_final_touch` is a surface-craft suggestion. Shared light, a quiet imperfection, or a material trace may improve photographic finish, but repeating that sentence is never evidence of an authorial point of view.
 

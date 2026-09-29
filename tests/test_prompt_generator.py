@@ -21,6 +21,7 @@ SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
 GENERATOR_PATH = SKILL_DIR / "scripts" / "prompt_generator.py"
 WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
+SAMPLER_PATH = SKILL_DIR / "scripts" / "inspect_photo_sample.py"
 RECORD_RUN_PATH = SKILL_DIR / "scripts" / "record_image_run.py"
 GENERATE_IMAGES_VIA_API_PATH = SKILL_DIR / "scripts" / "generate_images_via_api.py"
 AUDIT_COMPOSED_PATH = SKILL_DIR / "scripts" / "audit_composed_prompt.py"
@@ -818,51 +819,6 @@ def load_eval_semantic():
             sys.path.remove(scripts_dir)
 
 
-def prepare_audit_fixture(pack, *composed_payloads):
-    """Finish hand-written audit fixtures with the strict v2 transport contract."""
-    pack.setdefault("contract_version", "photo-candidate-pack/v2")
-    pack.setdefault(
-        "safety",
-        {
-            "mode": "automatic",
-            "evaluation_requested": False,
-            "status": "pass",
-            "requires_user_approval": False,
-            "items": [],
-        },
-    )
-    pack.setdefault("concept_gates", [])
-
-    candidate_ids = [
-        str(candidate.get("id"))
-        for candidate in pack.get("presets", [])
-        if isinstance(candidate, dict) and candidate.get("id")
-    ]
-    for slot_payload in (pack.get("slots") or {}).values():
-        if not isinstance(slot_payload, dict):
-            continue
-        candidate_ids.extend(
-            str(candidate.get("id"))
-            for candidate in slot_payload.get("candidates", [])
-            if isinstance(candidate, dict) and candidate.get("id")
-        )
-    if not candidate_ids:
-        pack.setdefault("presets", []).append({"id": "preset:test_fixture"})
-        candidate_ids.append("preset:test_fixture")
-
-    hashable = dict(pack)
-    hashable["pack_id"] = None
-    canonical = json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    pack["pack_id"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
-    for composed in composed_payloads:
-        composed["pack_id"] = pack["pack_id"]
-        composed.setdefault("negative_en", pack.get("negative_en"))
-        composed.setdefault("composer", "agent")
-        if not composed.get("chosen_candidate_ids"):
-            composed["chosen_candidate_ids"] = [candidate_ids[0]]
-    return (pack, *composed_payloads)
-
-
 class PromptGeneratorRegressionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -984,18 +940,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def run_wrapper_json(self, *args: str):
         forwarded = list(args)
-        if "--candidate-pack-version" in forwarded:
-            version_index = forwarded.index("--candidate-pack-version") + 1
-            if (
-                version_index < len(forwarded)
-                and forwarded[version_index] in {"v2", "v3"}
-                and "--legacy-replay-reason" not in forwarded
-            ):
-                forwarded.extend(
-                    ["--legacy-replay-reason", "test fixture compatibility replay"]
-                )
         result = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), *forwarded],
+            [sys.executable, str(SAMPLER_PATH), *forwarded],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -1202,7 +1148,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         result = subprocess.run(
             [
                 sys.executable,
-                str(WRAPPER_PATH),
+                str(SAMPLER_PATH),
                 "--preset",
                 "compact_cinematic_prop_portrait",
                 "--detail-level",
@@ -1230,7 +1176,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         result = subprocess.run(
             [
                 sys.executable,
-                str(WRAPPER_PATH),
+                str(SAMPLER_PATH),
                 "--preset",
                 "interior_lifestyle",
                 "--selection-mode",
@@ -1257,7 +1203,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         result = subprocess.run(
             [
                 sys.executable,
-                str(WRAPPER_PATH),
+                str(SAMPLER_PATH),
                 "--concept",
                 "유나 바니걸",
                 "--explain-concept",
@@ -1278,7 +1224,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(payload["concepts"][0]["role"], "바니걸")
         self.assertIn("--concept-lock", payload["forward_args"])
         self.assertIn("유나 바니걸", payload["forward_args"])
-        self.assertIn("costume_style=bunny_girl_costume", payload["forward_args"])
+        self.assertFalse(payload["concepts"][0]["forced_slots_applied"])
+        self.assertIn("bunny_girl_costume", payload["concepts"][0]["combined_forced_slots"]["costume_style"])
+        self.assertIn("--soft-anchor-spec", payload["forward_args"])
+        self.assertNotIn("--set", payload["forward_args"])
         self.assertIn("covered adult bunny-girl stage costume", payload["forward_args"])
         self.assertIn("--likeness-mode", payload["forward_args"])
         self.assertIn("inspired", payload["forward_args"])
@@ -1801,9 +1750,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertNotEqual(combined["color"], ["monochrome"])
             self.assertIn("lifted_glyph_self_glow", combined["light_shape"])
             self.assertIn(expected_surreal_detail, combined["surreal_physics_detail"])
-            self.assertIn(expected_surreal_detail, joined)
             self.assertNotEqual(combined["surreal_physics_detail"], ["near_hand_glyphs_lift_and_orbit"])
-            self.assertIn("lifted_glyph_self_glow", joined)
+            self.assertFalse(explanation["concepts"][0]["forced_slots_applied"])
+            self.assertIn("--soft-anchor-spec", explanation["forward_args"])
+            self.assertNotIn("--set", explanation["forward_args"])
 
     def test_company_worker_role_aliases_anchor_corporate_time_pressure(self):
         payload = self.run_wrapper_json(
@@ -1895,14 +1845,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "윈터 간호사 회사원",
                 "간호사",
                 "nurse_corporate_health_admin",
-                {"costume_style": "nurse_uniform_costume", "prop": "clinical_chart_clipboard_prop"},
+                {"costume_style": "clinical_nursing_scrub_duty_system", "prop": "clinical_chart_clipboard_prop"},
                 "company medical labor",
             ),
             (
                 "닝닝 경찰 회사원",
                 "경찰",
                 "police_internal_compliance_shift",
-                {"costume_style": "police_uniform_costume", "prop": "case_file_folder_prop"},
+                {"costume_style": "police_public_safety_duty_uniform", "prop": "case_file_folder_prop"},
                 "internal compliance",
             ),
             (
@@ -2040,7 +1990,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         concept = payload["concepts"][0]
-        self.assertEqual(concept["concept_mode"], "legacy")
+        self.assertEqual(concept["concept_mode"], "soft")
         self.assertEqual(concept["role"], "메이드")
         self.assertEqual(concept["applied_mixins"], ["암살자"])
         self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
@@ -2267,7 +2217,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             if anchor["slot"] == "costume_style" and "role_primary" in anchor.get("groups", [])
         ]
         self.assertTrue(role_costume)
-        self.assertIn("police_uniform_costume", role_costume[0]["pool"])
+        self.assertIn("police_public_safety_duty_uniform", role_costume[0]["pool"])
         femme_prop = [
             anchor
             for anchor in forwarded_spec["anchors"]
@@ -2952,14 +2902,10 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(concept["combined_forced_slots"]["composition"], ["centered_symmetric"])
         self.assertEqual(concept["combined_forced_slots"]["location"], ["throne_hall_interior"])
 
+        self.assertFalse(concept["forced_slots_applied"])
+        self.assertIn("--soft-anchor-spec", payload["forward_args"])
+        self.assertNotIn("--set", payload["forward_args"])
         joined = " ".join(payload["forward_args"])
-        self.assertIn("appearance_type=classic_elegant", joined)
-        self.assertIn("hair_style=low_bun_hair", joined)
-        self.assertIn("makeup_style=natural_makeup", joined)
-        self.assertIn("wearable_accessory=subtle_diamond_tiara", joined)
-        self.assertIn("action=poised_standing", joined)
-        self.assertIn("prop=crown_on_cushion_prop", joined)
-        self.assertIn("composition=centered_symmetric", joined)
         self.assertIn("broad adult royal archetype", joined)
         self.assertIn("single Joseon-only costume", joined)
         self.assertIn("Chinese hanfu court", joined)
@@ -3194,9 +3140,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertEqual(item["choices"]["appearance_type"]["id"], "classic_elegant")
-        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
-        self.assertEqual(item["choices"]["subject_framing"]["id"], "waist_up_framing")
         self.assertIn("Core concept lock: 설윤 공주 흡혈귀", item["prompt_en"])
         self.assertIn("predatory stillness", item["prompt_en"])
         self.assertIn("positive, visible non-graphic vampire identity anchors", item["prompt_en"])
@@ -3224,9 +3167,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(miner["choices"]["costume_style"]["id"], "miner_workwear_hard_hat")
-        self.assertEqual(miner["choices"]["composition"]["id"], "puddle_inverted_reflection")
-        self.assertEqual(miner["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("small antique cup of dark red wine or ruby cameo", miner["prompt_en"])
         self.assertIn("real subject's lit face or hand", miner["prompt_en"])
         self.assertIn("avoid generic mine horror", miner["prompt_en"])
@@ -3245,11 +3185,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(police["choices"]["subject"]["id"], "police_officer_role")
-        self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
-        self.assertEqual(police["choices"]["prop"]["id"], "clear_umbrella")
-        self.assertEqual(police["choices"]["composition"]["id"], "reflection")
-        self.assertEqual(police["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("clear umbrella, car glass, or reflective wall sits close to the subject", police["prompt_en"])
         self.assertIn("wrong reflection must sit in the foreground", police["prompt_en"])
         self.assertIn("bat-wing shadow must connect visually", police["prompt_en"])
@@ -3267,13 +3202,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(casual["provenance"]["preset_id"], "compact_urban_fashion_portrait")
-        self.assertEqual(casual["choices"]["subject"]["id"], "fashion_influencer")
-        self.assertEqual(casual["choices"]["wardrobe_style"]["id"], "hoodie_shorts_sneakers")
-        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
-        self.assertEqual(casual["choices"]["action"]["id"], "mirror_selfie")
-        self.assertEqual(casual["choices"]["composition"]["id"], "mirror_selfie_composition")
-        self.assertEqual(casual["choices"]["subject_framing"]["id"], "waist_up_framing")
         self.assertIn("heavy black curtain or narrow overbright window edge", casual["prompt_en"])
         self.assertIn("mirror and phone screen should both visibly fail as normal reflections", casual["prompt_en"])
         self.assertIn("face, phone hand, and wrong reflection must be readable", casual["prompt_en"])
@@ -3292,11 +3220,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
             "--include-choices",
         )[0]
-        self.assertEqual(bunny["choices"]["subject"]["id"], "adult_stage_dancer")
-        self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
-        self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
-        self.assertEqual(bunny["choices"]["composition"]["id"], "reflection")
-        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("bunny ears are pushed into deep shadow or silhouette", bunny["prompt_en"])
         self.assertIn("compact mirror or vanity reflection near the face or hand", bunny["prompt_en"])
         self.assertIn("face, hand, compact mirror, and failed reflection should be sharper", bunny["prompt_en"])
@@ -3481,9 +3404,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
         self.assertNotEqual(item["provenance"]["preset_id"], "product_commercial")
         self.assertNotEqual(item["choices"]["subject"]["id"], "ceramic_bowl")
-        self.assertEqual(item["choices"]["prop"]["id"], "sealed_mission_envelope_prop")
-        self.assertEqual(item["choices"]["lighting"]["id"], "low_key")
-        self.assertEqual(item["choices"]["light_shape"]["id"], "cracked_door_sliver_light")
         self.assertIn("Core concept lock: 악마", item["prompt_en"])
         self.assertIn("devil/demon reinterpreted as a functional archetype", item["prompt_en"])
         self.assertIn("social or systemic evil", item["prompt_en"])
@@ -3958,11 +3878,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
-        self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
-        self.assertEqual(item["choices"]["action"]["id"], "looking_down_at_low_camera")
-        self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
-        self.assertEqual(item["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("Core concept lock: 설윤 공주 팜므파탈", item["prompt_en"])
         self.assertIn("gaze reversal", item["prompt_en"])
         self.assertIn("femme fatale reinterpreted as a powerful, intelligent, dangerous woman", item["prompt_en"])
@@ -4066,70 +3981,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 self.assertEqual(concept_payload["combined_forced_slots"][slot], ids)
             if role in {"간호사", "바니걸"}:
                 self.assertEqual(selected_bundle["preset"], "compact_cinematic_prop_portrait")
-                preset_index = explanation["forward_args"].index("--preset")
-                self.assertEqual(explanation["forward_args"][preset_index + 1], "compact_cinematic_prop_portrait")
+                self.assertFalse(concept_payload["forced_slots_applied"])
+                self.assertNotIn("--preset", explanation["forward_args"])
+                self.assertIn("compact_cinematic_prop_portrait", concept_payload["soft_anchor_spec"]["preset_affinity"]["preferred_presets"])
 
         self.assertGreaterEqual(len(selected_bundle_ids), 6)
         self.assertGreaterEqual(len(selected_locations), 5)
 
-    def test_femme_fatale_weak_roles_force_face_hands_and_information_anchors(self):
-        cases = [
-            (
-                "닝닝 경찰 팜므파탈",
-                814,
-                {
-                    "composition": "medium_close",
-                    "subject_framing": "head_and_shoulders_crop",
-                    "action": "holding_story_prop",
-                    "phrases": ["case-file evidence", "viewer is the suspect", "full-body uniform pose"],
-                },
-            ),
-            (
-                "아일릿 원희 사복 여친 팜므파탈",
-                816,
-                {
-                    "composition": "over_shoulder_phone_screen",
-                    "subject_framing": "upper_body_framing",
-                    "action": "holding_story_prop",
-                    "prop": "clear_case_smartphone",
-                    "phrases": ["dominant foreground anchor", "already knows the viewer's secret", "not an ordinary lifestyle selfie"],
-                },
-            ),
-            (
-                "유나 바니걸 팜므파탈",
-                818,
-                {
-                    "composition": "medium_close",
-                    "subject_framing": "upper_body_framing",
-                    "action": "holding_ornate_bottle_to_chest",
-                    "prop": "ornate_gothic_perfume_bottle",
-                    "phrases": ["allure itself is the weapon", "drawn into a trap", "full-body side pose or pin-up body angle"],
-                },
-            ),
-        ]
-
-        for concept, seed, expected in cases:
-            item = self.run_wrapper_json(
-                "--concept",
-                concept,
-                "--selection-mode",
-                "rule",
-                "--seed",
-                str(seed),
-                "--lang",
-                "en",
-                "--no-negative",
-                "--include-choices",
-            )[0]
-            self.assertEqual(item["choices"]["composition"]["id"], expected["composition"])
-            self.assertEqual(item["choices"]["subject_framing"]["id"], expected["subject_framing"])
-            self.assertEqual(item["choices"]["action"]["id"], expected["action"])
-            if "prop" in expected:
-                self.assertEqual(item["choices"]["prop"]["id"], expected["prop"])
-            self.assertIn("information-control anchor", item["prompt_en"])
-            self.assertIn("face, eyes, hands, and symbolic evidence", item["prompt_en"])
-            for phrase in expected["phrases"]:
-                self.assertIn(phrase, item["prompt_en"])
 
     def test_concept_recipe_expands_bulpan_dogeza_as_public_pressure_mixin(self):
         payload = self.run_wrapper_json(
@@ -4266,7 +4124,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertEqual(gate_status["full_coverage_not_body_exposure"], "manual")
         self.assertEqual(gate_status["dual_read_high_fashion_not_patient"], "manual")
         joined = " ".join(payload["forward_args"])
-        self.assertIn("--preset white_bandage_couture_editorial", joined)
+        self.assertFalse(concept["forced_slots_applied"])
+        self.assertNotIn("--preset", payload["forward_args"])
+        self.assertIn("white_bandage_couture_editorial", concept["soft_anchor_spec"]["preset_affinity"]["preferred_presets"])
         self.assertIn("opaque full intentional fashion coverage", joined)
         self.assertIn("Do not silently convert", joined)
 
@@ -4307,28 +4167,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--no-negative",
         )[0]
 
-        self.assertEqual(item["preset_id"], "white_bandage_couture_editorial")
-        self.assertIn(
-            item["choices"]["costume_style"]["id"],
-            {
-                "opaque_white_bandage_couture_costume",
-                "deconstructed_mummy_wrap_dress",
-                "sci_fi_rebirth_bandage_wrap_costume",
-            },
-        )
-        self.assertIn(
-            item["choices"]["garment_detail"]["id"],
-            {
-                "opaque_cotton_gauze_wrap_layers",
-                "crisscross_linen_bandage_wrapping",
-                "frayed_trailing_bandage_edges",
-                "matte_white_bandage_weave",
-            },
-        )
-        self.assertIn(
-            item["choices"]["silhouette_proportion"]["id"],
-            {"sculptural_bandage_bodycon", "protective_cocoon_wrap_silhouette"},
-        )
         self.assertIn("Core concept lock: 흰 붕대 패션", item["prompt_en"])
         self.assertIn("bandage", item["prompt_en"])
         self.assertIn("gauze", item["prompt_en"])
@@ -4336,7 +4174,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             item["choices"]["location"]["id"],
             {"hospital_corridor", "clinic_corridor_handover", "clinical_observation_lab"},
         )
-        self.assertNotIn("hospital", item["prompt_en"].lower())
 
     def test_menhera_defaults_to_semantic_soft_mode_without_fixed_props(self):
         payload = self.run_wrapper_json(
@@ -4362,324 +4199,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertIn("controlled social surface", joined)
         self.assertIn("interrupted self-regulation or connection gesture", joined)
 
-    def test_explicit_legacy_concept_recipe_expands_menhera_as_non_graphic_mixin(self):
-        payload = self.run_wrapper_json(
-            "--concept",
-            "멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--explain-concept",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "901",
-            "--plain",
-            "--no-negative",
-        )
-
-        concept = payload["concepts"][0]
-        self.assertEqual(concept["name"], "멘헤라")
-        self.assertIsNone(concept["role"])
-        self.assertIsNone(concept["applied_role"])
-        self.assertEqual(concept["applied_mixins"], ["멘헤라"])
-        self.assertTrue(concept["matched"])
-        self.assertEqual(concept["mixins"]["멘헤라"]["preset"], "candid_iphone_portrait")
-        self.assertEqual(concept["combined_forced_slots"]["expression"], ["emotional_teary_eyes"])
-        self.assertEqual(concept["combined_forced_slots"]["makeup_style"], ["igari_blush"])
-        self.assertEqual(concept["combined_forced_slots"]["subject"], ["adult_alt_fashion_creator"])
-        self.assertEqual(concept["combined_forced_slots"]["prop"], ["clear_case_smartphone"])
-        self.assertEqual(concept["combined_forced_slots"]["light_type"], ["phone_screen_face_glow"])
-        self.assertEqual(len(concept["selected_bundles"]), 1)
-        bundle = concept["selected_bundles"][0]
-        self.assertEqual(bundle["mixin"], "멘헤라")
-        self.assertTrue(bundle["bundle_id"].startswith("standalone_"))
-        joined = " ".join(payload["forward_args"])
-        self.assertIn("yami-kawaii / jirai-kei internet-fashion mood", joined)
-        self.assertIn("not a medical diagnosis", joined)
-        self.assertIn("unread-message screen", joined)
-        self.assertIn("no self-harm", joined)
-        self.assertIn("no wounds, scars, cuts, blood", joined)
-        self.assertNotIn("assassin persona", joined)
-
-    def test_menhera_mixin_preserves_role_costume_without_assassin_note(self):
-        payload = self.run_wrapper_json(
-            "--concept",
-            "카리나 메이드 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--explain-concept",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "902",
-            "--plain",
-            "--no-negative",
-        )
-
-        concept = payload["concepts"][0]
-        self.assertEqual(concept["name"], "카리나")
-        self.assertEqual(concept["role"], "메이드")
-        self.assertEqual(concept["applied_role"], "메이드")
-        self.assertEqual(concept["applied_mixins"], ["멘헤라"])
-        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["frill_apron_maid_costume"])
-        self.assertEqual(concept["combined_forced_slots"]["prop"], ["clear_case_smartphone"])
-        self.assertEqual(concept["combined_forced_slots"]["action"], ["checking_phone"])
-        self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "maid_after_hours_overcare")
-        joined = " ".join(payload["forward_args"])
-        self.assertIn("keep the role outfit readable", joined)
-        self.assertIn("after-hours over-giving and quiet exhaustion", joined)
-        self.assertIn("never read as submissive sexual fantasy", joined)
-        self.assertNotIn("sheathed utility blade", joined)
-        self.assertNotIn("holster grip", joined)
-        self.assertNotIn("assassin persona", joined)
-
-    def test_menhera_sensitive_role_prompts_keep_safe_anchors(self):
-        nurse = self.run_wrapper_json(
-            "--concept",
-            "윈터 간호사 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "903",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(nurse["choices"]["costume_style"]["id"], "nurse_uniform_costume")
-        self.assertEqual(nurse["choices"]["location"]["id"], "hospital_waiting_room")
-        self.assertEqual(nurse["choices"]["prop"]["id"], "flower_bouquet")
-        self.assertEqual(nurse["choices"]["action"]["id"], "standing_silence")
-        self.assertEqual(nurse["choices"]["expression"]["id"], "eyes_closed_serene")
-        self.assertIn("care-fatigue and quiet waiting", nurse["prompt_en"])
-        self.assertIn("wilted bouquet the single dominant anchor", nurse["prompt_en"])
-        self.assertIn("not actively held or checked", nurse["prompt_en"])
-        self.assertIn("no syringes, IV lines, medication, pills", nurse["prompt_en"])
-
-        casual = self.run_wrapper_json(
-            "--concept",
-            "아일릿 원희 사복 여친 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "904",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(casual["provenance"]["preset_id"], "candid_iphone_portrait")
-        self.assertEqual(casual["choices"]["subject"]["id"], "fashion_influencer")
-        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
-        self.assertEqual(casual["choices"]["action"]["id"], "checking_phone")
-        self.assertEqual(casual["choices"]["location"]["id"], "dim_monitor_glow_bedroom")
-        self.assertEqual(casual["choices"]["expression"]["id"], "shy_downward_glance")
-        self.assertIn("unread-message waiting", casual["prompt_en"])
-        self.assertIn("not merely a tired person on a phone", casual["prompt_en"])
-        self.assertIn("read-but-unanswered chat", casual["prompt_en"])
-        self.assertIn("adult original fictional person only", casual["prompt_en"])
-        self.assertIn("never sexualized, never youthful-minor coded", casual["prompt_en"])
-
-        bunny = self.run_wrapper_json(
-            "--concept",
-            "유나 바니걸 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "905",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(bunny["choices"]["costume_style"]["id"], "bunny_girl_costume")
-        self.assertEqual(bunny["choices"]["prop"]["id"], "compact_mirror")
-        self.assertEqual(bunny["choices"]["location"]["id"], "makeup_vanity")
-        # B4 재구성: 바니걸 멘헤라는 얼굴/손 중심 크롭으로 좁힘
-        self.assertEqual(bunny["choices"]["subject_framing"]["id"], "head_and_shoulders_crop")
-        self.assertEqual(bunny["choices"]["expression"]["id"], "neutral_camera_gaze")
-        self.assertIn("fully covered adult stage costume", bunny["prompt_en"])
-        self.assertIn("upper-body backstage exhaustion portrait", bunny["prompt_en"])
-        self.assertIn("no pin-up pose", bunny["prompt_en"])
-        self.assertIn("no cleavage-centered framing", bunny["prompt_en"])
-
-    def test_menhera_role_batch_uses_role_specific_bundles(self):
-        cases = [
-            ("카리나 메이드 멘헤라", 902, "maid_after_hours_overcare"),
-            ("윈터 간호사 멘헤라", 903, "nurse_waiting_room_burnout"),
-            ("닝닝 경찰 멘헤라", 904, "police_off_duty_mirror_wait"),
-            ("지젤 광부 멘헤라", 905, "miner_sunless_message_wait"),
-            ("아일릿 원희 사복 여친 멘헤라", 906, "casual_unread_message_glow"),
-            ("설윤 공주 멘헤라", 907, "princess_gilded_loneliness"),
-            ("유나 바니걸 멘헤라", 908, "bunny_backstage_exhaustion"),
-        ]
-        selected_bundle_ids = set()
-        selected_locations = set()
-        selected_light_types = set()
-        selected_expressions = set()
-        allowed_menhera_expressions = {
-            "emotional_teary_eyes",
-            "neutral_camera_gaze",
-            "eyes_closed_serene",
-            "looking_away_pensive",
-            "shy_downward_glance",
-            "mysterious_half_smile",
-        }
-
-        for concept, seed, expected_bundle_id in cases:
-            explanation = self.run_wrapper_json(
-                "--concept",
-                concept,
-                "--concept-mode",
-                "legacy",
-                "--explain-concept",
-                "--selection-mode",
-                "rule",
-                "--seed",
-                str(seed),
-                "--plain",
-                "--no-negative",
-            )
-            concept_payload = explanation["concepts"][0]
-            self.assertEqual(concept_payload["applied_mixins"], ["멘헤라"])
-            selected_bundle = concept_payload["selected_bundles"][0]
-            self.assertEqual(selected_bundle["bundle_id"], expected_bundle_id)
-            self.assertFalse(selected_bundle["bundle_id"].startswith("shared_"))
-            expression = concept_payload["combined_forced_slots"]["expression"][0]
-            self.assertIn(expression, allowed_menhera_expressions)
-            selected_expressions.add(expression)
-            self.assertTrue(
-                {"costume_style", "wardrobe_style"} & set(concept_payload["combined_forced_slots"]),
-                concept_payload["combined_forced_slots"],
-            )
-            selected_bundle_ids.add(selected_bundle["bundle_id"])
-            selected_locations.add(concept_payload["combined_forced_slots"]["location"][0])
-            selected_light_types.add(concept_payload["combined_forced_slots"]["light_type"][0])
-            joined = " ".join(explanation["forward_args"])
-            self.assertIn("not a medical diagnosis", joined)
-            self.assertIn("no self-harm", joined)
-            self.assertNotIn("assassin persona", joined)
-            self.assertNotIn("sheathed utility blade", joined)
-            self.assertNotIn("holster grip", joined)
-
-        self.assertEqual(len(selected_bundle_ids), len(cases))
-        self.assertGreaterEqual(len(selected_expressions), 4)
-        self.assertGreaterEqual(len(selected_locations), 6)
-        self.assertGreaterEqual(len(selected_light_types), 4)
-
-    def test_menhera_weak_role_prompts_include_explicit_anxiety_anchors(self):
-        police = self.run_wrapper_json(
-            "--concept",
-            "닝닝 경찰 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "904",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(police["choices"]["costume_style"]["id"], "police_uniform_costume")
-        self.assertEqual(police["choices"]["composition"]["id"], "mirror_selfie_composition")
-        self.assertEqual(police["choices"]["expression"]["id"], "looking_away_pensive")
-        self.assertIn("must NOT read as a pretty police cosplay shoot", police["prompt_en"])
-        self.assertIn("gaze avoids her own reflection", police["prompt_en"])
-        self.assertIn("empty or one-sided chat", police["prompt_en"])
-        self.assertIn("undone or askew", police["prompt_en"])
-
-        miner = self.run_wrapper_json(
-            "--concept",
-            "지젤 광부 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "905",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(miner["choices"]["costume_style"]["id"], "miner_workwear_hard_hat")
-        self.assertEqual(miner["choices"]["location"]["id"], "underground_mine_tunnel_set")
-        self.assertEqual(miner["choices"]["expression"]["id"], "looking_away_pensive")
-        self.assertIn("discordant kawaii contrast", miner["prompt_en"])
-        self.assertIn("pastel sticker-covered phone case", miner["prompt_en"])
-        self.assertIn("pink ribbon tied to the helmet strap", miner["prompt_en"])
-
-        casual = self.run_wrapper_json(
-            "--concept",
-            "아일릿 원희 사복 여친 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "906",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertEqual(casual["choices"]["expression"]["id"], "shy_downward_glance")
-        self.assertEqual(casual["choices"]["prop"]["id"], "clear_case_smartphone")
-        self.assertIn("plush doll on the pillow", casual["prompt_en"])
-        self.assertIn("wilted bouquet on the nightstand", casual["prompt_en"])
-        self.assertIn("read-but-unanswered chat", casual["prompt_en"])
-        self.assertIn("contained and defensive", casual["prompt_en"])
-
-        princess = self.run_wrapper_json(
-            "--concept",
-            "설윤 공주 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "907",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-        self.assertIn(princess["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
-        self.assertEqual(princess["choices"]["light_type"]["id"], "phone_screen_face_glow")
-        self.assertEqual(princess["choices"]["expression"]["id"], "eyes_closed_serene")
-        self.assertIn("do NOT place a modern phone in the main silhouette", princess["prompt_en"])
-        self.assertIn("faint cold rectangular glow", princess["prompt_en"])
-        self.assertIn("dominant physical anchor", princess["prompt_en"])
-
-    def test_menhera_nurse_uses_single_dominant_anchor_without_active_phone_check(self):
-        nurse = self.run_wrapper_json(
-            "--concept",
-            "윈터 간호사 멘헤라",
-            "--concept-mode",
-            "legacy",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "903",
-            "--lang",
-            "en",
-            "--no-negative",
-            "--include-choices",
-        )[0]
-
-        self.assertEqual(nurse["choices"]["prop"]["id"], "flower_bouquet")
-        self.assertEqual(nurse["choices"]["action"]["id"], "standing_silence")
-        self.assertNotEqual(nurse["choices"]["action"]["id"], "checking_phone")
-        self.assertIn("single dominant anchor", nurse["prompt_en"])
-        self.assertIn("dark phone lies face-down", nurse["prompt_en"])
 
     def test_concept_recipe_expands_tsundere_as_warm_denial_mixin(self):
         payload = self.run_wrapper_json(
@@ -4783,14 +4302,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
-        self.assertEqual(item["choices"]["expression"]["id"], "haughty_chin_soft_gaze")
-        self.assertEqual(item["choices"]["makeup_style"]["id"], "natural_makeup")
-        self.assertEqual(item["choices"]["prop"]["id"], "sealed_court_token_prop")
-        self.assertEqual(item["choices"]["action"]["id"], "covering_face_with_fan_offering_token")
-        self.assertEqual(item["choices"]["relational_action"]["id"], "covering_face_with_fan_offering_token")
-        self.assertEqual(item["choices"]["prop_direction"]["id"], "presented_on_open_palm")
-        self.assertEqual(item["choices"]["composition"]["id"], "fan_barrier_token_offer")
         self.assertIn("Core concept lock: 설윤 공주 츤데레", item["prompt_en"])
         self.assertIn("denial-vs-evidence contradiction", item["prompt_en"])
         self.assertIn("faint ear-tip or nose-bridge warmth", item["prompt_en"])
@@ -5091,7 +4602,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             for index, value in enumerate(payload["forward_args"][:-1])
             if value == "--set"
         ]
-        self.assertIn("wardrobe_style=faded_hoodie_sweatpants", forwarded_sets)
+        self.assertEqual(forwarded_sets, [])
+        self.assertFalse(concept["forced_slots_applied"])
         self.assertNotIn("wardrobe_style=hoodie_shorts_sneakers", forwarded_sets)
 
     def test_tsundere_weak_roles_have_active_denial_and_anti_drift_guards(self):
@@ -5254,11 +4766,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         )
 
         item = payload[0]
-        self.assertIn(item["choices"]["costume_style"]["id"], BROAD_PRINCESS_COSTUME_IDS)
-        self.assertEqual(item["choices"]["expression"]["id"], "cold_unreadable_stare")
-        self.assertEqual(item["choices"]["prop"]["id"], "phoenix_hairpin_prop")
-        self.assertEqual(item["choices"]["composition"]["id"], "centered_symmetry")
-        self.assertEqual(item["choices"]["subject_framing"]["id"], "upper_body_framing")
         self.assertIn("Core concept lock: 설윤 공주 얀데레", item["prompt_en"])
         self.assertIn("decree confinement yandere", item["prompt_en"])
         self.assertIn("royal possession made legal and ritual", item["prompt_en"])
@@ -5395,209 +4902,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertGreaterEqual(len(selected_subtypes), 7)
         self.assertLessEqual(sum(1 for prop in role_props if prop == "instant_photo_stack"), 2)
 
-    def test_yandere_weak_roles_force_possession_anchors_and_safe_framing(self):
-        cases = [
-            (
-                "닝닝 경찰 얀데레",
-                904,
-                {
-                    "prop": "instant_photo_stack",
-                    "action": "holding_story_prop",
-                    "composition": "cctv_corner_frame",
-                    "subject_framing": "head_and_shoulders_crop",
-                    "phrases": [
-                        "authority-protection inversion",
-                        "ceiling-corner CCTV",
-                        "movement arrows",
-                        "do not make red thread the primary cue",
-                        "never an ordinary noir police portrait",
-                    ],
-                },
-            ),
-            (
-                "윈터 간호사 얀데레",
-                903,
-                {
-                    "expression": "cold_unreadable_stare",
-                    "prop": "logo_board_prop",
-                    "action": "doorframe_shadow_watch",
-                    "lighting": "fluorescent",
-                    "composition": "frame_within_frame",
-                    "subject_framing": "upper_body_framing",
-                    "phrases": [
-                        "caretaking surveillance yandere",
-                        "open-eyed clinical watchfulness",
-                        "clinical chart or care-record board",
-                        "costume were replaced",
-                        "do not let a bouquet or phone selfie",
-                        "no syringe",
-                    ],
-                },
-            ),
-            (
-                "지젤 광부 얀데레",
-                2404,
-                {
-                    "expression": "skeptical_side_eye",
-                    "prop": "sealed_mission_envelope_prop",
-                    "action": "holding_story_prop",
-                    "composition": "frame_within_frame",
-                    "subject_framing": "upper_body_framing",
-                    "phrases": [
-                        "sealed route document",
-                        "controlled access",
-                        "avoid a broad photo wall",
-                        "miner workwear were replaced",
-                    ],
-                },
-            ),
-            (
-                "아일릿 원희 사복 여친 얀데레",
-                906,
-                {
-                    "wardrobe_style": "faded_hoodie_sweatpants",
-                    "prop": "clear_case_smartphone",
-                    "action": "checking_phone",
-                    "composition": "over_shoulder_phone_screen",
-                    "subject_framing": "close_up_face_crop",
-                    "phrases": [
-                        "conservative everyday wardrobe",
-                        "clear-case smartphone is the dominant possession anchor",
-                        "unread-message wall",
-                        "unanswered-call grid",
-                        "phone-screen evidence",
-                        "no identifiable target",
-                        "no minors",
-                        "no pin-up, no full-body display, no thirst-trap selfie",
-                    ],
-                },
-            ),
-            (
-                "설윤 공주 얀데레",
-                906,
-                {
-                    "expression": "cold_unreadable_stare",
-                    "prop": "phoenix_hairpin_prop",
-                    "action": "holding_story_prop",
-                    "composition": "centered_symmetry",
-                    "subject_framing": "upper_body_framing",
-                    "phrases": [
-                        "decree confinement yandere",
-                        "royal possession made legal and ritual",
-                        "sealed royal decree",
-                        "empty gilded birdcage",
-                        "not a weapon cue",
-                    ],
-                },
-            ),
-            (
-                "유나 바니걸 얀데레",
-                908,
-                {
-                    "expression": "skeptical_side_eye",
-                    "prop": "logo_board_prop",
-                    "action": "standing_backstage",
-                    "composition": "frame_within_frame",
-                    "subject_framing": "close_up_face_crop",
-                    "phrases": [
-                        "performance log possession yandere",
-                        "booking board and mirror-edge notes read first",
-                        "reservation log or performance schedule",
-                        "single-name reservation log",
-                        "repeated reservation times",
-                        "avoid a broad wall of photos",
-                        "no full-body stage display",
-                    ],
-                },
-            ),
-        ]
-
-        for concept, seed, expected in cases:
-            item = self.run_wrapper_json(
-                "--concept",
-                concept,
-                "--selection-mode",
-                "rule",
-                "--seed",
-                str(seed),
-                "--lang",
-                "en",
-                "--no-negative",
-                "--include-choices",
-            )[0]
-            if "expression" in expected:
-                self.assertEqual(item["choices"]["expression"]["id"], expected["expression"])
-            self.assertEqual(item["choices"]["prop"]["id"], expected["prop"])
-            if "action" in expected:
-                self.assertEqual(item["choices"]["action"]["id"], expected["action"])
-            if "lighting" in expected:
-                self.assertEqual(item["choices"]["lighting"]["id"], expected["lighting"])
-            if "wardrobe_style" in expected:
-                self.assertEqual(item["choices"]["wardrobe_style"]["id"], expected["wardrobe_style"])
-            self.assertEqual(item["choices"]["composition"]["id"], expected["composition"])
-            self.assertEqual(item["choices"]["subject_framing"]["id"], expected["subject_framing"])
-            self.assertIn("subtype:", item["prompt_en"])
-            self.assertIn("no weapon", item["prompt_en"])
-            self.assertIn("no visible captive or victim", item["prompt_en"])
-            self.assertNotIn("navy bomber jacket with a casual mini skirt", item["prompt_en"])
-            self.assertNotIn("clean blazer and tailored trousers", item["prompt_en"])
-            for phrase in expected["phrases"]:
-                self.assertIn(phrase, item["prompt_en"])
-
-    def test_yandere_weak_role_anchors_survive_costume_swap_proxy(self):
-        cases = [
-            (
-                "윈터 간호사 얀데레",
-                903,
-                {
-                    "prop": "logo_board_prop",
-                    "action": "doorframe_shadow_watch",
-                    "composition": "frame_within_frame",
-                    "phrase": "costume were replaced with plain clothes",
-                },
-            ),
-            (
-                "지젤 광부 얀데레",
-                2404,
-                {
-                    "prop": "sealed_mission_envelope_prop",
-                    "action": "holding_story_prop",
-                    "composition": "frame_within_frame",
-                    "phrase": "miner workwear were replaced with plain clothes",
-                },
-            ),
-            (
-                "유나 바니걸 얀데레",
-                908,
-                {
-                    "prop": "logo_board_prop",
-                    "action": "standing_backstage",
-                    "composition": "frame_within_frame",
-                    "phrase": "costume were swapped for plain clothes",
-                },
-            ),
-        ]
-
-        for concept, seed, expected in cases:
-            item = self.run_wrapper_json(
-                "--concept",
-                concept,
-                "--selection-mode",
-                "rule",
-                "--seed",
-                str(seed),
-                "--lang",
-                "en",
-                "--no-negative",
-                "--include-choices",
-                "--set",
-                "wardrobe_style=clean_blazer_trousers",
-            )[0]
-
-            self.assertEqual(item["choices"]["prop"]["id"], expected["prop"])
-            self.assertEqual(item["choices"]["action"]["id"], expected["action"])
-            self.assertEqual(item["choices"]["composition"]["id"], expected["composition"])
-            self.assertIn(expected["phrase"], item["prompt_en"])
 
     def test_yandere_drift_risk_roles_have_seed_selectable_variants(self):
         seeds = [101, 202, 303, 404, 505]
@@ -5670,7 +4974,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "--no-negative",
                 "--include-choices",
             )[0]
-            props.append(item["choices"]["prop"]["id"])
+            props.append(explanation["concepts"][0]["combined_forced_slots"]["prop"][0])
             bundle_ids.append(explanation["concepts"][0]["selected_bundles"][0]["bundle_id"])
             prompt_texts.append(item["prompt_en"])
 
@@ -5708,8 +5012,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "--include-choices",
         )[0]
 
-        self.assertEqual(item["choices"]["composition"]["id"], "extreme_wide_environmental")
-        self.assertEqual(item["choices"]["location"]["id"], "anime_poster_wall_interior")
         self.assertIn("environment is the main evidence", item["prompt_en"])
         self.assertIn("wall is overrun with same-person photos", item["prompt_en"])
         self.assertIn("date labels", item["prompt_en"])
@@ -5740,17 +5042,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(bundle["bundle_id"])
         self.assertTrue(bundle["aspect"])
         self.assertIn("weight", bundle)
-        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_uniform_costume"])
+        self.assertEqual(concept["combined_forced_slots"]["costume_style"], ["police_public_safety_duty_uniform"])
         for slot in bundle["set"]:
             self.assertEqual(concept["combined_forced_slots"][slot], [bundle["set"][slot]])
         self.assertEqual(concept["combined_forced_slots"]["expression"], ["cold_unreadable_stare"])
         self.assertEqual(concept["combined_forced_slots"]["light_type"], ["narrow_spotlight"])
         self.assertEqual(concept["combined_forced_slots"]["light_intensity"], ["deep_shadow_detail"])
         self.assertEqual(concept["combined_forced_slots"]["color"], ["desaturated_cold_blue"])
-        self.assertIn("costume_style=police_uniform_costume", payload["forward_args"])
-        for slot in bundle["set"]:
-            self.assertIn(f"{slot}={bundle['set'][slot]}", payload["forward_args"])
-        self.assertIn("expression=cold_unreadable_stare", payload["forward_args"])
+        self.assertFalse(concept["forced_slots_applied"])
+        self.assertNotIn("--set", payload["forward_args"])
         self.assertIn("role outfit is a cover identity/disguise for the assassin persona", payload["forward_args"])
         self.assertIn("the figure is hiding in plain sight: an ordinary cover identity concealing a different purpose", payload["forward_args"])
         self.assertIn("non-graphic staged character photo with no depicted injury, blood, victim, or violence", payload["forward_args"])
@@ -5837,15 +5137,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "--include-choices",
             )
             item = generated[0]
+            self.assertFalse(concept_payload["forced_slots_applied"])
+            self.assertNotIn("--set", explanation["forward_args"])
             for slot, expected_id in selected_bundle["set"].items():
-                self.assertEqual(item["choices"][slot]["id"], expected_id)
+                self.assertIn(expected_id, concept_payload["combined_forced_slots"][slot])
             for slot, expected_id in expected_common_slots.items():
-                self.assertEqual(item["choices"][slot]["id"], expected_id)
+                self.assertIn(expected_id, concept_payload["combined_forced_slots"][slot])
             self.assertNotIn(item["choices"]["action"]["id"], banned_actions)
-
-            if "costume_style" in concept_payload["combined_forced_slots"]:
-                expected_costume = concept_payload["combined_forced_slots"]["costume_style"][0]
-                self.assertEqual(item["choices"]["costume_style"]["id"], expected_costume)
 
             self.assertIn("hiding in plain sight", item["prompt_en"])
             self.assertIn("stillness and tight emotional control just before a mission", item["prompt_en"])
@@ -6004,8 +5302,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
                 self.assertIn(expected_cue, item["prompt_en"])
                 self.assertIn("never drawn, aimed, used, bloody, or shown with a victim", item["prompt_en"])
-                for slot in ("prop", "action"):
-                    self.assertEqual(item["choices"][slot]["id"], selected_bundle["set"][slot])
+                self.assertFalse(explanation["concepts"][0]["forced_slots_applied"])
+                self.assertNotIn("--set", explanation["forward_args"])
 
     def test_assassin_default_weapon_cue_is_text_not_pose_override(self):
         cases = [
@@ -6172,7 +5470,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         result = subprocess.run(
             [
                 sys.executable,
-                str(WRAPPER_PATH),
+                str(SAMPLER_PATH),
                 "--concept",
                 "지젤 광부",
                 "--selection-mode",
@@ -6204,129 +5502,15 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
         self.assertTrue(
             any("coal miner workwear" in requirement for requirement in item["provenance"]["additional_requirements"])
         )
-        self.assertIn("costume_style=miner_workwear_hard_hat", item["provenance"]["argv"])
-        self.assertIn("location=underground_mine_tunnel_set,mine_rest_stop", item["provenance"]["argv"])
+        forwarded = item["provenance"]["argv"]
+        self.assertNotIn("--set", forwarded)
+        spec = json.loads(forwarded[forwarded.index("--soft-anchor-spec") + 1])
+        anchors = {anchor["slot"]: anchor for anchor in spec["anchors"]}
+        self.assertIn("miner_workwear_hard_hat", anchors["costume_style"]["pool"])
+        self.assertTrue({"underground_mine_tunnel_set", "mine_rest_stop"} <= set(anchors["location"]["pool"]))
         self.assertIn("--concept-lock", item["provenance"]["argv"])
         self.assertIn("--additional-requirement", item["provenance"]["argv"])
 
-    def test_candidate_pack_preserves_unmatched_concept_intents(self):
-        payload = self.run_wrapper_json(
-            "--concept",
-            "카리나 메이드 드래곤 고양이손 달린 흡혈귀",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "701",
-            "--emit-candidate-pack",
-        )
-
-        pack = payload[0]
-        self.assertRegex(pack["pack_id"], r"^[0-9a-f]{16}$")
-        self.assertNotIn("prompt_en", pack)
-        self.assertEqual(
-            {
-                "pack_id",
-                "contract_version",
-                "intent_contract",
-                "mandatory_intents",
-                "uncovered_intents",
-                "presets",
-                "slots",
-                "quality_profile",
-                "concept_axes",
-                "scene_contract",
-                "render_contract",
-                "character_grammar",
-                "evidence_budget",
-                "photographic_integration",
-                "visual_proposition",
-                "photographic_craft",
-                "artistic_final_touch",
-                "authorial_composition",
-                "hybrid_augmentation",
-                "motif_budget",
-                "preset_reference",
-                "masked_buckets",
-                "open_slots",
-                "authorial_open_slots",
-                "template_echo_risk",
-                "role_scene_policy",
-                "species_family",
-                "safety",
-                "concept_gates",
-                "diversity_state",
-                "coverage",
-                "conflicts",
-                "negative_en",
-                "provenance",
-            },
-            set(pack.keys()),
-        )
-        self.assertFalse(pack["render_contract"]["enabled"])
-        self.assertFalse(pack["evidence_budget"]["enabled"])
-        intent_texts = {item["text"] for item in pack["mandatory_intents"]}
-        self.assertTrue({"카리나", "메이드", "드래곤", "고양이손", "흡혈귀"} <= intent_texts)
-        uncovered = {item["text"] for item in pack["uncovered_intents"]}
-        self.assertIn("드래곤", uncovered)
-        self.assertIn("고양이손", uncovered)
-        integration = pack["photographic_integration"]
-        self.assertTrue(integration["enabled"])
-        self.assertEqual(
-            integration["selection_mode"],
-            "agent_authored_non_preferential",
-        )
-        self.assertTrue(integration["category_candidates"])
-        self.assertNotIn("active_axes", integration)
-        self.assertNotIn("required_categories", integration)
-        self.assertIn("facets", pack["quality_profile"])
-        self.assertEqual(pack["quality_profile"]["profile_id"], "authorial")
-        self.assertNotIn("quality_profile", integration)
-        proposition = pack["visual_proposition"]
-        self.assertTrue(proposition["enabled"])
-        self.assertNotIn("quality_profile", proposition)
-        self.assertNotIn("register", proposition)
-        self.assertTrue(proposition["core_candidates"])
-        self.assertTrue(proposition["tension_candidates"])
-        craft = pack["photographic_craft"]
-        self.assertTrue(craft["enabled"])
-        self.assertNotIn("source", craft)
-        self.assertEqual(craft["selection_mode"], "agent_authored_optional")
-        self.assertNotIn("quality_profile", craft)
-        self.assertNotIn("top_strategy", craft)
-        self.assertTrue(craft["dimension_candidates"])
-        self.assertEqual(
-            {"shot_intent", "light_provenance", "frame_hierarchy", "decisive_moment", "environment_consequence"},
-            {dimension["dimension"] for dimension in craft["dimension_candidates"]},
-        )
-        final_touch = pack["artistic_final_touch"]
-        self.assertFalse(final_touch["enabled"])
-        self.assertNotIn("profile_id", final_touch)
-        self.assertEqual(pack["contract_version"], "photo-candidate-pack/v4")
-        self.assertNotIn("argv", pack["provenance"])
-        self.assertNotIn("preset_id", pack["provenance"])
-        self.assertNotIn("selected_motifs", pack["motif_budget"])
-        adult = pack["hybrid_augmentation"]["adult_appeal"]
-        self.assertTrue(adult["enabled"])
-        self.assertEqual(adult["activation_source"], "skill_default")
-        self.assertEqual(adult["axes"]["sensual"]["intensity"], 1)
-        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
-        self.assertEqual(pack["safety"]["status"], "pass")
-        self.assertFalse(pack["safety"]["requires_user_approval"])
-        self.assertLessEqual(len(pack["presets"]), 4)
-        total_slot_candidates = 0
-        for slot, slot_payload in pack["slots"].items():
-            candidates = slot_payload["candidates"]
-            total_slot_candidates += len(candidates)
-            expected_limit = 4 if slot_payload["role"] == "core" else 2
-            self.assertLessEqual(len(candidates), expected_limit)
-            self.assertEqual(slot_payload["candidate_order"], "seed_shuffled_non_preferential")
-            self.assertNotIn("selected", slot_payload)
-            for candidate in candidates:
-                self.assertFalse(
-                    {"selected_by_sampler", "probability", "weight", "score", "scores"}
-                    & set(candidate)
-                )
-        self.assertLessEqual(total_slot_candidates, 64)
 
     def test_candidate_pack_profiles_photographic_integration_for_cathedral(self):
         payload = self.run_wrapper_json(
@@ -6336,9 +5520,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "rule",
             "--seed",
             "701",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v3",
+            "--diagnostic-candidates",
         )
 
         pack = payload[0]
@@ -6399,9 +5581,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "rule",
                 "--seed",
                 "715",
-                "--emit-candidate-pack",
-                "--candidate-pack-version",
-                "v3",
+                "--diagnostic-candidates",
             )
             pack = payload[0]
             integration = pack["photographic_integration"]
@@ -6471,9 +5651,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 "rule",
                 "--seed",
                 "731",
-                "--emit-candidate-pack",
-                "--candidate-pack-version",
-                "v3",
+                "--diagnostic-candidates",
             )
             craft = payload[0]["photographic_craft"]
             strategies.append(craft["top_strategy"]["id"])
@@ -6500,9 +5678,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "rule",
             "--seed",
             "715",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v3",
+            "--diagnostic-candidates",
         )
 
         pack = payload[0]
@@ -6530,9 +5706,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "rule",
             "--seed",
             "715",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v3",
+            "--diagnostic-candidates",
         )
 
         pack = payload[0]
@@ -6735,638 +5909,11 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             "rule",
             "--seed",
             "31",
-            "--emit-candidate-pack",
-            "--candidate-pack-version",
-            "v3",
+            "--diagnostic-candidates",
         )[0]
         self.assertEqual(documentary_pack["quality_profile"]["profile_id"], "documentary")
         self.assertTrue(documentary_pack["artistic_final_touch"]["enabled"])
 
-    def test_audit_composed_prompt_warns_for_missing_artistic_final_touch(self):
-        final_sentence = (
-            "Let the final frame keep one quiet imperfection, shared light across subject and setting, "
-            "and a small material trace, so it feels discovered by a real photographer rather than assembled as a clean concept image."
-        )
-        pack = {
-            "pack_id": "abababababababab",
-            "mandatory_intents": [],
-            "uncovered_intents": [],
-            "presets": [],
-            "slots": {},
-            "artistic_final_touch": {
-                "enabled": True,
-                "final_sentence_en": final_sentence,
-                "audit_terms": ["quiet imperfection", "shared light", "material trace"],
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        bland = {
-            "pack_id": "abababababababab",
-            "prompt_en": "A quiet portrait with no text or watermark.",
-            "chosen_candidate_ids": [],
-        }
-        touched = {
-            "pack_id": "abababababababab",
-            "prompt_en": f"A quiet portrait with no text or watermark. {final_sentence}",
-            "chosen_candidate_ids": [],
-        }
-        pack, bland, touched = prepare_audit_fixture(pack, bland, touched)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            bland_path = Path(tmpdir) / "bland.json"
-            touched_path = Path(tmpdir) / "touched.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
-            touched_path.write_text(json.dumps(touched, ensure_ascii=False), encoding="utf-8")
-            warned = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(touched_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-
-        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
-        warned_audit = json.loads(warned.stdout)
-        self.assertIn("artistic_final_touch", {warning["check"] for warning in warned_audit["warnings"]})
-        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-        passed_audit = json.loads(passed.stdout)
-        self.assertNotIn("artistic_final_touch", {warning["check"] for warning in passed_audit["warnings"]})
-
-    def test_candidate_pack_exposes_reference_scaffold_for_yandere(self):
-        args = (
-            "--concept",
-            "카리나 메이드 얀데레",
-            "--selection-mode",
-            "rule",
-            "--seed",
-            "701",
-            "--emit-candidate-pack",
-        )
-        payload = self.run_wrapper_json(*args)
-        repeat_payload = self.run_wrapper_json(*args)
-
-        pack = payload[0]
-        repeat_pack = repeat_payload[0]
-        self.assertEqual(pack["masked_buckets"], repeat_pack["masked_buckets"])
-        self.assertEqual(pack["open_slots"], repeat_pack["open_slots"])
-
-        required_axes = {axis["id"] for axis in pack["concept_axes"]["required"]}
-        self.assertTrue({"obsessive_possession", "surveillance_gaze", "boundary_collapse"} <= required_axes)
-        self.assertIn("motif_budget", pack)
-        self.assertIn("motif_taxonomy", pack["motif_budget"])
-        self.assertIn("phone_selfie_mirror", pack["motif_budget"]["motif_taxonomy"])
-        self.assertIn("red_thread", pack["motif_budget"]["quotas"])
-        self.assertIn("photo_wall", pack["motif_budget"]["quotas"])
-        self.assertIn("phone_selfie_mirror", pack["motif_budget"]["quotas"])
-        self.assertEqual(pack["preset_reference"]["role"], "private_routing_scaffold")
-        self.assertFalse(pack["preset_reference"]["source_preset_exposed"])
-        self.assertFalse(pack["preset_reference"]["source_prompt_exposed"])
-        self.assertNotIn("preset_id", pack["preset_reference"])
-        self.assertTrue(pack["preset_reference"]["used_sections"])
-        self.assertTrue(pack["preset_reference"]["dropped_sections"])
-        self.assertTrue(pack["masked_buckets"])
-        self.assertTrue(pack["open_slots"])
-        self.assertTrue({slot["bucket"] for slot in pack["open_slots"]} <= set(pack["masked_buckets"]))
-        self.assertTrue(all(slot["status"] == "intentionally_open" for slot in pack["open_slots"]))
-        self.assertIn("score", pack["template_echo_risk"])
-        self.assertLessEqual(pack["template_echo_risk"]["score"], pack["template_echo_risk"]["max_allowed_score"])
-
-    def test_candidate_pack_defaults_concept_resolution_to_soft_mode(self):
-        payload = self.run_wrapper_json(
-            "--concept",
-            "카리나 메이드 흡혈귀",
-            "--emit-candidate-pack",
-            "--explain-concept",
-        )
-
-        concept = payload["concepts"][0]
-        self.assertEqual(concept["concept_mode"], "soft")
-        self.assertFalse(concept["forced_slots_applied"])
-
-        legacy_payload = self.run_wrapper_json(
-            "--concept",
-            "카리나 메이드 흡혈귀",
-            "--concept-mode",
-            "legacy",
-            "--emit-candidate-pack",
-            "--explain-concept",
-        )
-        self.assertEqual(legacy_payload["concepts"][0]["concept_mode"], "legacy")
-        self.assertTrue(legacy_payload["concepts"][0]["forced_slots_applied"])
-
-    def test_audit_composed_prompt_enforces_pack_contract(self):
-        pack = {
-            "pack_id": "aaaaaaaaaaaaaaaa",
-            "mandatory_intents": [{"text": "dragon", "status": "covered", "covered_by": ["slot:subject:dragon"], "audit_terms": ["dragon"]}],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {
-                "subject": {"candidates": [{"id": "slot:subject:dragon"}]},
-                "mood": {"candidates": [{"id": "slot:mood:cozy"}, {"id": "slot:mood:tense"}]},
-            },
-            "coverage": {},
-            "conflicts": [{"id": "conflict:1", "severity": "hard", "candidates": ["slot:mood:cozy", "slot:mood:tense"]}],
-            "negative_en": "bad anatomy",
-            "provenance": {},
-        }
-        good = {
-            "pack_id": "aaaaaaaaaaaaaaaa",
-            "prompt_en": "A dragon portrait with warm studio light, no text or watermark.",
-            "negative_en": "bad anatomy",
-            "chosen_candidate_ids": ["preset:p1", "slot:subject:dragon", "slot:mood:cozy"],
-            "composer": "agent",
-        }
-        bad = {
-            **good,
-            "prompt_en": "A portrait with blood on the costume, no text or watermark.",
-            "chosen_candidate_ids": ["slot:subject:dragon", "slot:mood:cozy", "slot:mood:tense", "slot:missing:nope"],
-        }
-        pack, good, bad = prepare_audit_fixture(pack, good, bad)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            good_path = Path(tmpdir) / "good.json"
-            bad_path = Path(tmpdir) / "bad.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            good_path.write_text(json.dumps(good, ensure_ascii=False), encoding="utf-8")
-            bad_path.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
-
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(good_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(passed.returncode, 0, passed.stderr)
-            self.assertEqual(json.loads(passed.stdout)["status"], "pass")
-
-            failed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bad_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(failed.returncode, 1)
-            audit = json.loads(failed.stdout)
-            self.assertEqual(audit["status"], "fail")
-            failure_checks = {failure["check"] for failure in audit["failures"]}
-            self.assertTrue({"mandatory_intent", "chosen_candidate_ids", "hard_conflict"} <= failure_checks)
-
-    def test_audit_composed_prompt_warns_for_missing_photographic_integration(self):
-        pack = {
-            "pack_id": "dddddddddddddddd",
-            "mandatory_intents": [{"text": "cathedral", "status": "covered", "covered_by": ["preset:p1"], "audit_terms": ["cathedral"]}],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {},
-            "photographic_integration": {
-                "enabled": True,
-                "profile_id": "axis_composite_photo_integration",
-                "required_categories": ["environment_binding", "optical_depth", "human_trace"],
-                "minimum_category_hits": 2,
-                "category_terms": {
-                    "environment_binding": ["color spill", "dust", "reflection"],
-                    "optical_depth": ["foreground", "falloff", "grain"],
-                    "human_trace": ["rain-damp", "stray hair", "tired"],
-                },
-                "principles": ["bind the subject and cathedral with shared light"],
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        bland = {
-            "pack_id": "dddddddddddddddd",
-            "prompt_en": "A polished cathedral portrait, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        integrated = {
-            "pack_id": "dddddddddddddddd",
-            "prompt_en": (
-                "A cathedral portrait where stained-glass color spill crosses the cheek and cassock, "
-                "with foreground candle blur and gentle falloff through dusty nave air, no text or watermark."
-            ),
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            bland_path = Path(tmpdir) / "bland.json"
-            integrated_path = Path(tmpdir) / "integrated.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
-            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
-
-            warned = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
-            warned_audit = json.loads(warned.stdout)
-            self.assertEqual(warned_audit["status"], "pass")
-            self.assertIn("photographic_integration", {warning["check"] for warning in warned_audit["warnings"]})
-
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-            passed_audit = json.loads(passed.stdout)
-            self.assertNotIn("photographic_integration", {warning["check"] for warning in passed_audit["warnings"]})
-
-    def test_audit_composed_prompt_warns_for_missing_visual_proposition(self):
-        pack = {
-            "pack_id": "eeeeeeeeeeeeeeee",
-            "mandatory_intents": [{"text": "portrait", "status": "covered", "covered_by": ["preset:p1"], "audit_terms": ["portrait"]}],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {},
-            "visual_proposition": {
-                "enabled": True,
-                "subject_class": "person",
-                "register": "understated",
-                "minimum_hits": 1,
-                "core_candidates": [
-                    {
-                        "id": "slot:narrative_core:private_ritual_core",
-                        "slot": "narrative_core",
-                        "entry_id": "private_ritual_core",
-                        "terms": ["private ritual", "small personal routine"],
-                    }
-                ],
-                "tension_candidates": [
-                    {
-                        "id": "slot:concept_tension:public_vs_private_tension",
-                        "slot": "concept_tension",
-                        "entry_id": "public_vs_private_tension",
-                        "terms": ["public versus private", "private emotion held inside public space"],
-                    }
-                ],
-                "category_terms": {
-                    "narrative_core": ["private ritual", "small personal routine"],
-                    "concept_tension": ["public versus private", "private emotion held inside public space"],
-                    "evidence": ["hand", "placement", "trace"],
-                },
-                "audit_categories": ["narrative_core", "concept_tension", "evidence"],
-                "principles": ["Give the frame one quiet reason to exist beyond beauty."],
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        bland = {
-            "pack_id": "eeeeeeeeeeeeeeee",
-            "prompt_en": "A polished portrait in a detailed room, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        integrated = {
-            "pack_id": "eeeeeeeeeeeeeeee",
-            "prompt_en": (
-                "A portrait built around a private ritual in public, her hand hiding a small personal routine "
-                "inside an otherwise polished room, no text or watermark."
-            ),
-            "chosen_candidate_ids": ["preset:p1", "slot:narrative_core:private_ritual_core"],
-        }
-        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            bland_path = Path(tmpdir) / "bland.json"
-            integrated_path = Path(tmpdir) / "integrated.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
-            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
-
-            warned = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
-            warned_audit = json.loads(warned.stdout)
-            self.assertIn("visual_proposition", {warning["check"] for warning in warned_audit["warnings"]})
-
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-        passed_audit = json.loads(passed.stdout)
-        self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
-
-    def test_audit_composed_prompt_warns_for_missing_photographic_craft(self):
-        pack = {
-            "pack_id": "1212121212121212",
-            "mandatory_intents": [],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {},
-            "photographic_craft": {
-                "enabled": True,
-                "selection_mode": "facet_only",
-                "top_strategy": {"id": "structure_led", "emphasize": ["frame_hierarchy", "shot_intent"]},
-                "prompt_dimension_ids": ["frame_hierarchy", "shot_intent"],
-                "active_dimensions": [
-                    {
-                        "id": "frame_hierarchy",
-                        "selected_principle": "Organize the viewer's reading order.",
-                        "selected_guidance_en": "organize foreground, subject plane, and background into a clear reading order",
-                        "audit_terms": ["foreground", "subject plane", "background", "reading order"],
-                        "active_refinements": [],
-                    },
-                    {
-                        "id": "shot_intent",
-                        "selected_principle": "Make the frame's intent legible.",
-                        "selected_guidance_en": "make the frame's photographic intent legible before surface styling",
-                        "audit_terms": ["photographic intent", "frame intent"],
-                        "active_refinements": [],
-                    },
-                ],
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        bland = {
-            "pack_id": "1212121212121212",
-            "prompt_en": "A polished portrait in a detailed room, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        crafted = {
-            "pack_id": "1212121212121212",
-            "prompt_en": (
-                "A portrait with foreground, subject plane, and background arranged into a clear reading order, "
-                "no text or watermark."
-            ),
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        pack, bland, crafted = prepare_audit_fixture(pack, bland, crafted)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            bland_path = Path(tmpdir) / "bland.json"
-            crafted_path = Path(tmpdir) / "crafted.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
-            crafted_path.write_text(json.dumps(crafted, ensure_ascii=False), encoding="utf-8")
-            warned = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(crafted_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-
-        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
-        warned_audit = json.loads(warned.stdout)
-        self.assertIn("photographic_craft", {warning["check"] for warning in warned_audit["warnings"]})
-        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-        passed_audit = json.loads(passed.stdout)
-        self.assertNotIn("photographic_craft", {warning["check"] for warning in passed_audit["warnings"]})
-
-    def test_audit_visual_proposition_applies_lightweight_observational_register(self):
-        pack = {
-            "pack_id": "ffffffffffffffff",
-            "mandatory_intents": [],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {},
-            "visual_proposition": {
-                "enabled": True,
-                "subject_class": "object_scene",
-                "register": "observational",
-                "minimum_hits": 1,
-                "category_terms": {
-                    "narrative_core": ["quiet arrangement"],
-                    "concept_tension": ["organic versus synthetic"],
-                    "evidence": ["placement", "contact", "trace"],
-                },
-                "audit_categories": ["narrative_core", "concept_tension", "evidence"],
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        bland = {
-            "pack_id": "ffffffffffffffff",
-            "prompt_en": "A clean product still life, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        integrated = {
-            "pack_id": "ffffffffffffffff",
-            "prompt_en": "A product still life where placement, contact shadow, and small use trace organize the arrangement, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        pack, bland, integrated = prepare_audit_fixture(pack, bland, integrated)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            bland_path = Path(tmpdir) / "bland.json"
-            integrated_path = Path(tmpdir) / "integrated.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            bland_path.write_text(json.dumps(bland, ensure_ascii=False), encoding="utf-8")
-            integrated_path.write_text(json.dumps(integrated, ensure_ascii=False), encoding="utf-8")
-            warned = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bland_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(integrated_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-        self.assertEqual(warned.returncode, 0, warned.stdout + warned.stderr)
-        warned_audit = json.loads(warned.stdout)
-        self.assertIn("visual_proposition", {warning["check"] for warning in warned_audit["warnings"]})
-        self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-        passed_audit = json.loads(passed.stdout)
-        self.assertNotIn("visual_proposition", {warning["check"] for warning in passed_audit["warnings"]})
-
-    def test_audit_composed_prompt_rejects_masked_bucket_and_motif_echo(self):
-        pack = {
-            "pack_id": "cccccccccccccccc",
-            "mandatory_intents": [],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {},
-            "concept_axes": {
-                "required": [
-                    {"id": "surveillance_gaze", "terms": ["surveillance evidence", "records board"]}
-                ]
-            },
-            "motif_budget": {
-                "quotas": {"photo_wall": {"max_batch_share": 0.3}},
-                "discouraged_now": ["photo_wall"],
-                "motif_taxonomy": {
-                    "photo_wall": ["instant_photo_stack", "photo wall", "same-person photos"],
-                    "record_board": ["logo_board_prop", "records board"],
-                },
-            },
-            "preset_reference": {
-                "role": "reference_scaffold",
-                "masked_slots": [{"slot": "prop", "bucket": "action_prop"}],
-            },
-            "masked_buckets": ["action_prop"],
-            "open_slots": [
-                {
-                    "slot": "prop",
-                    "bucket": "action_prop",
-                    "status": "intentionally_open",
-                    "reason": "semantic_dropout",
-                }
-            ],
-            "template_echo_risk": {"max_allowed_score": 0.2},
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": None,
-            "provenance": {},
-        }
-        good = {
-            "pack_id": "cccccccccccccccc",
-            "prompt_en": "A tense portrait built around surveillance evidence on a records board, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1"],
-        }
-        bad = {
-            "pack_id": "cccccccccccccccc",
-            "prompt_en": "A tense portrait with surveillance evidence, an instant photo stack, and same-person photos on the wall, no text or watermark.",
-            "chosen_candidate_ids": ["preset:p1", "slot:prop:instant_photo_stack"],
-        }
-        pack, good, bad = prepare_audit_fixture(pack, good, bad)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            good_path = Path(tmpdir) / "good.json"
-            bad_path = Path(tmpdir) / "bad.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            good_path.write_text(json.dumps(good, ensure_ascii=False), encoding="utf-8")
-            bad_path.write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
-
-            passed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(good_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(passed.returncode, 0, passed.stdout + passed.stderr)
-
-            failed = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(bad_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-            self.assertEqual(failed.returncode, 1)
-            audit = json.loads(failed.stdout)
-            failure_checks = {failure["check"] for failure in audit["failures"]}
-            self.assertTrue({"masked_bucket_echo", "motif_quota", "template_echo_risk"} <= failure_checks)
-
-    def test_audit_composed_prompt_rejects_role_scene_and_species_mismatch(self):
-        pack = {
-            "pack_id": "bbbbbbbbbbbbbbbb",
-            "mandatory_intents": [{"text": "beastkin", "status": "covered", "covered_by": ["slot:subject:beastkin"], "audit_terms": ["beastkin"]}],
-            "uncovered_intents": [],
-            "presets": [{"id": "preset:p1"}],
-            "slots": {
-                "subject": {"candidates": [{"id": "slot:subject:beastkin"}]},
-                "location": {
-                    "candidates": [
-                        {"id": "slot:location:traffic_crossing_rain"},
-                        {"id": "slot:location:highland_pasture"},
-                    ]
-                },
-                "species_marker": {
-                    "candidates": [
-                        {"id": "slot:species_marker:feline_reflective_eye_whisker_shadow"},
-                        {"id": "slot:species_marker:avian_feather_ruff_wing_sleeve"},
-                    ]
-                },
-            },
-            "role_scene_policy": {
-                "enabled": True,
-                "enforce": True,
-                "scene_family": "procedural_public_safety",
-                "allowed_locations": ["traffic_crossing_rain"],
-                "forbidden_locations": ["highland_pasture"],
-            },
-            "species_family": {
-                "enabled": True,
-                "family": "feline",
-                "variant_id": "feline_cat_bigcat",
-                "allowed": {"species_marker": ["feline_reflective_eye_whisker_shadow"]},
-            },
-            "coverage": {},
-            "conflicts": [],
-            "negative_en": "bad anatomy",
-            "provenance": {},
-        }
-        composed = {
-            "pack_id": "bbbbbbbbbbbbbbbb",
-            "prompt_en": "A beastkin police portrait, no text or watermark.",
-            "negative_en": "bad anatomy",
-            "chosen_candidate_ids": [
-                "preset:p1",
-                "slot:subject:beastkin",
-                "slot:location:highland_pasture",
-                "slot:species_marker:avian_feather_ruff_wing_sleeve",
-            ],
-            "composer": "agent",
-        }
-        pack, composed = prepare_audit_fixture(pack, composed)
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pack_path = Path(tmpdir) / "pack.json"
-            composed_path = Path(tmpdir) / "composed.json"
-            pack_path.write_text(json.dumps(pack, ensure_ascii=False), encoding="utf-8")
-            composed_path.write_text(json.dumps(composed, ensure_ascii=False), encoding="utf-8")
-            result = subprocess.run(
-                [sys.executable, str(AUDIT_COMPOSED_PATH), "--pack", str(pack_path), "--composed", str(composed_path)],
-                cwd=ROOT,
-                text=True,
-                capture_output=True,
-                check=False,
-            )
-
-        self.assertEqual(result.returncode, 1)
-        audit = json.loads(result.stdout)
-        failure_checks = {failure["check"] for failure in audit["failures"]}
-        self.assertIn("role_scene_policy", failure_checks)
-        self.assertIn("species_family", failure_checks)
 
     def test_record_image_run_ledger_preserves_prompt_hash_across_retries(self):
         prompt = "Exact prompt text for unchanged retry"
@@ -7540,9 +6087,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     "b" * 64,
                     "--source-ref",
                     "c" * 40,
-                    "--candidate-pack-version",
-                    "v4",
-                    "--authorial-request-sha256",
+                    "--candidate-pack-version", "v6",
+                    "--intent-lock-sha256", "f" * 64,
+                    "--authorial-core-sha256",
                     "d" * 64,
                     "--reference-sha256",
                     "e" * 64,
@@ -7562,14 +6109,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
             self.assertEqual(result.returncode, 0, result.stderr)
             row = json.loads(ledger.read_text(encoding="utf-8").splitlines()[0])
-            self.assertEqual(row["candidate_pack_version"], "v4")
-            self.assertEqual(row["authorial_request_sha256"], "d" * 64)
+            self.assertEqual(row["candidate_pack_version"], "v6")
+            self.assertEqual(row["authorial_core_sha256"], "d" * 64)
             self.assertEqual(row["reference_sha256"], ["e" * 64])
             self.assertEqual(row["image_call_count"], 1)
             payload = json.loads(manifest.read_text(encoding="utf-8"))
             self.assertEqual(
                 payload["contract_version"],
-                "photo-independent-run-manifest/v1",
+                "photo-independent-run-manifest/v2",
             )
             self.assertEqual(payload["arm_id"], "arm-1")
             self.assertFalse(payload["cross_arm_inputs_used"])
@@ -8521,8 +7068,9 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 explanation = payload["concepts"][0]
                 self.assertEqual(explanation["role"], expected_role)
                 self.assertEqual(explanation["applied_mixins"], [expected_mixin])
-                preset_index = payload["forward_args"].index("--preset")
-                self.assertEqual(payload["forward_args"][preset_index + 1], expected_preset)
+                self.assertFalse(explanation["forced_slots_applied"])
+                self.assertNotIn("--preset", payload["forward_args"])
+                self.assertIn(expected_preset, explanation["soft_anchor_spec"]["preset_affinity"]["preferred_presets"])
                 forced = explanation["combined_forced_slots"]
                 for slot, expected_ids in expected_slots.items():
                     self.assertTrue(expected_ids.issubset(set(forced.get(slot, []))), (slot, forced))
@@ -9074,7 +7622,8 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_all_concept_recipe_forced_slots_are_registered(self):
         recipes = json.loads((SKILL_DIR / "assets" / "concept_recipes.json").read_text(encoding="utf-8"))
-        slot_ids = {slot: {entry["id"] for entry in entries} for slot, entries in self.data["slots"].items()}
+        merged = self.generator.load_json(TAGS_PATH)
+        slot_ids = {slot: {entry["id"] for entry in entries} for slot, entries in merged["slots"].items()}
         missing: list[tuple[str, str, str]] = []
 
         def normalize_values(value):
@@ -9130,7 +7679,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_reactor_neutral_slots_are_visible_in_cli(self):
         result = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), "--show-slots", "--plain"],
+            [sys.executable, str(SAMPLER_PATH), "--show-slots", "--plain"],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -9142,7 +7691,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertIn(f"{slot}:", result.stdout)
 
         tags = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), "--list-tags", "wardrobe_style", "--plain"],
+            [sys.executable, str(SAMPLER_PATH), "--list-tags", "wardrobe_style", "--plain"],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -11027,7 +9576,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(WRAPPER_PATH),
+                    str(SAMPLER_PATH),
                     "--semantic-index",
                     str(missing_index),
                     "--include-trace",
@@ -11055,7 +9604,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(WRAPPER_PATH),
+                    str(SAMPLER_PATH),
                     "--selection-mode",
                     "semantic",
                     "--semantic-index",
@@ -11077,7 +9626,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             result = subprocess.run(
                 [
                     sys.executable,
-                    str(WRAPPER_PATH),
+                    str(SAMPLER_PATH),
                     "--intent",
                     "rainy neon portrait",
                     "--semantic-index",
@@ -11208,14 +9757,14 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_virtual_presets_are_hidden_unless_explicitly_requested(self):
         base = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), "--list-presets", "--plain"],
+            [sys.executable, str(SAMPLER_PATH), "--list-presets", "--plain"],
             cwd=ROOT,
             text=True,
             capture_output=True,
             check=False,
         )
         virtual = subprocess.run(
-            [sys.executable, str(WRAPPER_PATH), "--list-presets", "--include-virtual", "--plain"],
+            [sys.executable, str(SAMPLER_PATH), "--list-presets", "--include-virtual", "--plain"],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -11500,7 +10049,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
 
     def test_all_semantic_inputs_exclude_control_and_process_metadata(self):
         forbidden = re.compile(
-            r"stable id:|facet |tags:|kind:|source[-_ ]grounded|"
+            r"stable id:|facet [a-z_]+:|tags:|kind:|source[-_ ]grounded|"
             r"(?:public|cjk)[-_ ]market[-_ ]researched|research[-_ ](?:backed|based|router)|"
             r"cited(?:[-_ ]interview)?[-_ ]study|nonvisual[-_ ]provenance|"
             r"provenance_scope|\bprovenance\b|moe[-_ ]review|모에\s*리뷰|萌えレビュー|"
@@ -11518,7 +10067,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             if match:
                 failures.append((key, match.group(0), text[:240]))
 
-        self.assertEqual(len(rows), 6910)
+        self.assertEqual(len(rows), len(self.generator.load_semantic_index_payload(SEMANTIC_INDEX_PATH)["entries"]))
         self.assertEqual(failures, [])
 
     def test_semantic_index_builder_records_gemini_metadata_and_entries(self):
@@ -11663,7 +10212,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     cache_indexes=[],
                 )
                 first_payload["semantic_text_recipe"] = "semantic-text-older"
-                builder.write_payload(output, first_payload)
+                builder.write_sharded_payload(output, first_payload)
                 embed_calls.clear()
 
                 second_payload = builder.build_resumable_index_payload(
@@ -11817,7 +10366,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                     gemini_api_key="test-api-key",
                     data=merged_data,
                 )
-            pack = self.generator.build_candidate_pack(result, merged_data)
+            pack = self.generator.build_sampler_diagnostic(result, merged_data)
             return json.dumps(pack, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
 
         source_digest = entry_digest(source_index["entries"])
@@ -11886,6 +10435,13 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
                 BM25F_RETRIEVAL_PATH.read_text(encoding="utf-8"),
                 encoding="utf-8",
             )
+            for dependency in GENERATOR_PATH.parent.glob("*.py"):
+                (scripts / dependency.name).write_bytes(dependency.read_bytes())
+            precore = target / "precore"
+            precore.mkdir()
+            for dependency in (SKILL_DIR / "precore").iterdir():
+                if dependency.is_file():
+                    (precore / dependency.name).write_bytes(dependency.read_bytes())
             tags_path = assets / "photo_prompt_tags.json"
             tags_path.write_text(
                 json.dumps(

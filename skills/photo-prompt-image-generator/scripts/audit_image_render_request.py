@@ -94,7 +94,7 @@ def audit_image_render_request(
     intent_lock = (
         authorial_core.get("intent_lock")
         if authorial_core.get("contract_version")
-        in {"photo-authorial-core/v2", "photo-authorial-core/v3"}
+        in {"photo-authorial-core/v3"}
         and isinstance(authorial_core.get("intent_lock"), dict)
         else {}
     )
@@ -103,7 +103,7 @@ def audit_image_render_request(
         failures.append(
             {
                 "check": "source_intent_lock_sha256",
-                "reason": "an intent-locked v5/v6 render request must bind the exact requesting-user-priority intent lock",
+                "reason": "an intent-locked v6 render request must bind the exact requesting-user-priority intent lock",
                 "expected": expected_intent_lock_sha256,
                 "actual": request.get("source_intent_lock_sha256"),
             }
@@ -341,31 +341,12 @@ def audit_image_render_request(
             }
         )
 
-    reference_control = (
-        pack.get("moe_response", {}).get("reference_identity_control")
-        if isinstance(pack.get("moe_response"), dict)
-        else None
-    )
     references = request.get("references")
     if not isinstance(references, list):
         failures.append(
             {"check": "references", "reason": "render request references must be a list"}
         )
         references = []
-    if isinstance(reference_control, dict) and reference_control.get("enabled") is True:
-        identity_rows = [
-            row
-            for row in references
-            if isinstance(row, dict) and row.get("role") == "sole_identity_and_adult_age_reference"
-        ]
-        if len(identity_rows) != 1:
-            failures.append(
-                {
-                    "check": "identity_reference_role",
-                    "reason": "identity-controlled render requires exactly one sole identity and adult-age reference",
-                    "actual": len(identity_rows),
-                }
-            )
     for index, row in enumerate(references):
         if not isinstance(row, dict):
             failures.append(

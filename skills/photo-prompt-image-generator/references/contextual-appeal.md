@@ -72,4 +72,4 @@ permitting a replacement dress, a new color or restoration of its condition.
 
 The audit checks consideration, ownership and evidence binding. It cannot prove
 the contextual reading, perceived strength, artistic success or final pixels.
-Historical packs without this contract retain their original review rules.
+The contextual contract and its review are required by the current adult-appeal path.

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import json
@@ -10,14 +12,12 @@ import unittest
 from unittest.mock import patch
 
 from tests import test_photo_adult_appeal_scope as scope_fixtures
-from tests import test_photo_authorial_core_v5 as v5_fixtures
+from tests import photo_prompt_fixtures as fixtures
 from tests import test_photo_authorship_policy as composition_fixtures
 import prompt_generator as generator
 import audit_composed_prompt as auditor
 import photo_creative_controls as controls
-from photo_contracts import (LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
-                             LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
-                             property_effects_allowed)
+from photo_contracts import property_effects_allowed
 
 
 class CreativeControlResolverTests(unittest.TestCase):
@@ -79,7 +79,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         cls.fixture = scope_fixtures.PhotoAdultAppealScopeTests
         cls.data = cls.fixture.data
         source = cls.fixture.core["source_request"] + " She wears a torn white dress."
-        cls.envelope = generator.normalize_request_envelope(v5_fixtures.PhotoAuthorialCoreV5Tests.envelope(source))
+        cls.envelope = generator.normalize_request_envelope(fixtures.envelope(source))
         cls.raw = {k: copy.deepcopy(v) for k, v in cls.fixture.core.items() if k not in {"request_binding", "canonical_sha256", "core_id"}}
         cls.raw["source_request"] = source
         cls.raw["baseline_prompt_en"] += " She wears a torn white dress with a softly draped neckline."
@@ -93,7 +93,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, overrides={"sensual": 2, "fetish": 1}, seed=73)
         cls.raw["creative_controls_sha256"] = cls.snapshot["canonical_sha256"]
         cls.core = generator.normalize_authorial_core(cls.raw, request_envelope=cls.envelope)
-        cls.result = generator.generate_once(cls.data, random.Random(73), None, ["en"], True, 12, True,
+        cls.result = current_fixtures.generate_once(cls.data, random.Random(73), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, concept_locks=[source], seed=73,
             authorial_core=cls.core, creative_control_snapshot=cls.snapshot)
         cls.pack = generator.build_candidate_pack(cls.result, cls.data, "v6")
@@ -135,12 +135,12 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         self.assertTrue(property_effects_allowed(lock, ["material"], [
             {"dimension": "material", "target": "main_subject", "property": "wardrobe.texture"}
         ]))
-        self.assertTrue(auditor.authorial_core_v2_intent_contract_valid(self.core, minimum_open_dimensions=0))
+        self.assertTrue(auditor.authorial_core_intent_contract_valid(self.core, minimum_open_dimensions=0))
 
     def test_sensual_wardrobe_candidates_exist_when_garment_is_open(self):
         adult = self.fixture.pack["adult_appeal"]
         self.assertIn("appearance", adult["dimension_scope"]["axis_allowed_dimensions"]["sensual"])
-        self.assertTrue(any(c["carrier"] == "wardrobe_material" for c in adult["axes"]["sensual"]["candidate_inventory"]))
+        self.assertTrue(any("appearance" in c["affected_dimensions"] for c in adult["axes"]["sensual"]["candidate_inventory"]))
         self.assertNotIn("configured_low_intensity_default", adult["composition_requirements"])
 
     def test_whole_garment_candidates_do_not_bypass_partial_property_locks(self):
@@ -150,7 +150,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
 
     def test_baseline_realization_needs_no_extra_axis_detail(self):
         composed = self.composed()
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], set(), {})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], set(), {})
         self.assertEqual(failures, [])
         report = auditor.audit_composed_prompt(self.pack, composed)
         self.assertEqual(report["status"], "pass", report["failures"])
@@ -161,13 +161,13 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         composed["prompt_en"] += " " + evidence + "."
         axis = composed["adult_appeal_brief"]["axes"]["sensual"]
         axis.update(realization="refined", affected_dimensions=["appearance"], prompt_evidence=evidence)
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], set(), {})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], set(), {})
         self.assertIn("adult_appeal_authored_properties", {f["check"] for f in failures})
         axis["affected_properties"] = [{"dimension": "appearance", "target": "main_subject", "property": "wardrobe.neckline"}]
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], set(), {})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], set(), {})
         self.assertEqual(failures, [])
         axis["affected_properties"][0]["property"] = "wardrobe.color"
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], set(), {})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], set(), {})
         self.assertIn("adult_appeal_authored_properties", {f["check"] for f in failures})
 
     def test_changed_snapshot_or_missing_binding_fails(self):
@@ -191,18 +191,10 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         row["affected_properties"] = properties
         self.assertNotIn("candidate_interpretation_properties", checks())
 
-    def test_historical_scope_keeps_original_sensual_dimensions(self):
-        pack = copy.deepcopy(self.fixture.pack)
-        adult = pack["adult_appeal"]
-        scope = adult["dimension_scope"]
-        scope["contract_version"] = LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION
-        scope.pop("protected_properties")
-        locked = set(scope["locked_dimensions"])
-        scope["axis_allowed_dimensions"] = {axis: sorted(dimensions - locked) for axis, dimensions in LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS.items()}
-        for axis, value in adult["axes"].items():
-            value["candidate_inventory"] = [row for row in value["candidate_inventory"] if set(row["affected_dimensions"]).issubset(scope["axis_allowed_dimensions"][axis])]
-        self.assertEqual(auditor.audit_adult_appeal_dimension_scope(pack, adult), [])
-        self.assertNotIn("appearance", scope["axis_allowed_dimensions"]["sensual"])
+    def test_historical_axis_scope_is_rejected(self):
+        adult = copy.deepcopy(self.pack["adult_appeal"])
+        adult["dimension_scope"]["contract_version"] = "photo-adult-appeal-dimension-scope/v1"
+        self.assertTrue(auditor.audit_adult_appeal_dimension_scope(self.pack, adult))
 
 
 if __name__ == "__main__":

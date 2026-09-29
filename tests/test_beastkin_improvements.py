@@ -82,7 +82,7 @@ class TestBeastkinImprovements(unittest.TestCase):
 
     def test_role_scene_pools_cover_reviewed_beastkin_roles(self):
         expected = {
-            "경찰": {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+            "경찰": {"controlled_public_safety_perimeter"},
             "사복 여친": {"quiet_cafe", "campus_cafe", "cozy_apartment", "creator_room", "city_bridge", "urban_concrete_stairs"},
             "바니걸": {"backstage_room", "stage_magic_backstage", "backstage_vanity_corner", "costume_workshop_backstage"},
             "고스로리": {"gothic_glass_curio_cabinet", "gothic_candle_studio", "victorian_mansion_parlor"},
@@ -125,7 +125,7 @@ class TestBeastkinImprovements(unittest.TestCase):
         self.assertTrue(spec["role_scene_policy"]["enforce"])
         self.assertEqual(
             set(spec["role_scene_policy"]["allowed_locations"]),
-            {"traffic_crossing_rain", "city_intersection_night", "lost_child_service_desk"},
+            {"controlled_public_safety_perimeter"},
         )
         species_policy = spec["species_family_policy"]
         self.assertTrue(species_policy["enabled"])
@@ -176,10 +176,10 @@ class TestBeastkinImprovements(unittest.TestCase):
         args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", "27"],
             ["유나 바니걸 수인"],
-            concept_mode="legacy",
+            concept_mode="soft",
         )
 
-        self.assertIn("--preset", args)
+        self.assertNotIn("--preset", args)
         concept = explanations[0]
         self.assertEqual(concept["applied_mixins"], ["수인"])
         self.assertEqual(concept["selected_bundles"][0]["bundle_id"], "bunny_stage_living_lagomorph_guard")

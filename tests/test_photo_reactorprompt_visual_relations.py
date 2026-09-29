@@ -196,8 +196,11 @@ class PhotoReactorPromptVisualRelationsTests(unittest.TestCase):
 
     def test_advisory_candidates_cover_research_topics_without_negative_footer(self) -> None:
         raw_extension = json.loads(EXTENSION_PATH.read_text(encoding="utf-8"))
-        self.assertIn("T14 failure prevention", raw_extension["description"])
-        self.assertIn("T15 clause lineage", raw_extension["description"])
+        self.assertNotIn("description", raw_extension)
+        record_path = ROOT / "docs/research-evidence/photo-prompt/extension-maintenance/photo_prompt_reactorprompt_visual_relations_extension_metadata_20260929.json"
+        description = json.loads(record_path.read_text())["maintenance_only"]["description"]
+        self.assertIn("T14 failure prevention", description)
+        self.assertIn("T15 clause lineage", description)
         for slot, expected_ids in TOPIC_CANDIDATES.items():
             with self.subTest(slot=slot):
                 actual = {row["id"] for row in self.tags["slots"][slot]}

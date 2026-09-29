@@ -1,17 +1,19 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import random
 import unittest
 from unittest import mock
 
-from tests import test_photo_authorial_core_v5 as v5_fixtures
+from tests import photo_prompt_fixtures as fixtures
 from tests import test_photo_authorial_core_v6 as v6_fixtures
 
 
-generator = v5_fixtures.prompt_generator
-auditor = v5_fixtures.audit_composed_prompt
+generator = fixtures.prompt_generator
+auditor = fixtures.audit_composed_prompt
 
 REQUEST = (
     "A blue porcelain teacup rests on a dark counter, with rising steam and "
@@ -27,7 +29,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
 
     @staticmethod
     def raw_core(opened: tuple[str, ...], version: str = "v3") -> dict:
-        payload = v5_fixtures.PhotoAuthorialCoreV5Tests.core(
+        payload = fixtures.core(
             REQUEST, open_dimensions=opened
         )
         if version == "v3":
@@ -41,14 +43,14 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
     @staticmethod
     def normalize(payload: dict) -> dict:
         envelope = generator.normalize_request_envelope(
-            v5_fixtures.PhotoAuthorialCoreV5Tests.envelope(REQUEST)
+            fixtures.envelope(REQUEST)
         )
         return generator.normalize_authorial_core(payload, request_envelope=envelope)
 
     def pack(self, opened: tuple[str, ...]) -> dict:
         if opened not in self.packs:
             core = self.normalize(self.raw_core(opened))
-            result = generator.generate_once(
+            result = current_fixtures.generate_once(
                 self.data,
                 random.Random(9100),
                 None,
@@ -85,6 +87,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
             "chosen_candidate_ids": [],
             "chosen_visual_concept_ids": [],
             "composer": "agent",
+            "embodiment_review": fixtures.composition_review(pack, core["baseline_prompt_en"]),
             "candidate_interpretations": [],
             "authorial_core_binding": {
                 "source_authorial_core_sha256": core["canonical_sha256"],
@@ -124,7 +127,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
     def core_failures(pack: dict, composed: dict) -> set[str]:
         return {
             row["check"]
-            for row in auditor.audit_authorial_core_v5(
+            for row in auditor.audit_authorial_core(
                 pack, composed, composed["prompt_en"]
             )
         }
@@ -212,6 +215,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
             "decision": "replace the shallow focus with legible room depth",
             "rationale": "lets the still life draw its presence from the surrounding room",
         }]
+        composed["embodiment_review"] = fixtures.composition_review(pack, composed["prompt_en"])
         audit = auditor.audit_composed_prompt(pack, composed)
         self.assertEqual(audit["status"], "pass", audit["failures"])
         self.assertEqual(pack["authorial_core"], original_core)
@@ -278,68 +282,29 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
                 audit = auditor.audit_composed_prompt(pack, composed)
                 self.assertIn("authorial_authorship_policy_contract", {row["check"] for row in audit["failures"]})
 
-    def test_unmarked_serialized_v6_retains_the_two_decision_minimum(self):
-        pack = self.pack(("framing", "lighting", "camera"))
-        authorial = pack["authorial_composition"]
-        del authorial["authorship_policy"]
-        binding = authorial["core_binding_contract"]
-        del binding["contract_version"]
-        del binding["source_authorship_policy_sha256"]
+    def test_missing_current_policy_is_rejected(self):
+        pack = self.pack(())
+        del pack["authorial_composition"]["authorship_policy"]
         generator.candidate_pack_recompute_id(pack)
-        composed = self.composed(pack, legacy=True)
-        audit = auditor.audit_composed_prompt(pack, composed)
-        self.assertEqual(audit["status"], "pass", audit["failures"])
-        binding["minimum_authorial_decisions"] = 0
-        composed["authorial_core_binding"]["authorial_decisions"] = []
-        self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
+        self.assertIn("authorial_authorship_policy_contract", self.core_failures(pack, self.composed(pack)))
 
-        no_freedom = self.pack(())
-        del no_freedom["authorial_composition"]["authorship_policy"]
-        del no_freedom["authorial_composition"]["core_binding_contract"]["contract_version"]
-        del no_freedom["authorial_composition"]["core_binding_contract"]["source_authorship_policy_sha256"]
-        failures = self.core_failures(no_freedom, self.composed(no_freedom))
-        self.assertIn("authorial_core_integrity", failures)
-        self.assertIn("authorial_core_decisions", failures)
+    def test_serialized_v1_policy_is_rejected(self):
+        pack = self.pack(())
+        pack["authorial_composition"]["authorship_policy"]["contract_version"] = "photo-authorial-authorship-policy/v1"
+        generator.candidate_pack_recompute_id(pack)
+        self.assertIn("authorial_authorship_policy_contract", self.core_failures(pack, self.composed(pack)))
 
-    def test_serialized_v1_policy_retains_original_quotas(self):
-        for opened in ((), ("framing",), ("framing", "lighting", "camera")):
-            with self.subTest(opened=opened):
-                pack = self.pack(opened)
-                authorial = pack["authorial_composition"]
-                policy = authorial["authorship_policy"]
-                policy["contract_version"] = "photo-authorial-authorship-policy/v1"
-                policy["minimum_authorial_decisions"] = min(2, len(opened))
-                policy["minimum_preserved_evidence_phrases"] = 3
-                del policy["canonical_sha256"]
-                policy["canonical_sha256"] = generator.canonical_json_sha256(policy)
-                binding = authorial["core_binding_contract"]
-                binding.update(
-                    contract_version="photo-authorial-core-binding/v2",
-                    source_authorship_policy_sha256=policy["canonical_sha256"],
-                    minimum_authorial_decisions=min(2, len(opened)),
-                    minimum_preserved_evidence_phrases=3,
-                )
-                generator.candidate_pack_recompute_id(pack)
-                composed = self.composed(pack, legacy=True)
-                audit = auditor.audit_composed_prompt(pack, composed)
-                self.assertEqual(audit["status"], "pass", audit["failures"])
-                composed["authorial_core_binding"]["preserved_evidence"] = []
-                self.assertIn("authorial_core_evidence", self.core_failures(pack, composed))
-                if opened:
-                    composed = self.composed(pack, legacy=True)
-                    composed["authorial_core_binding"]["authorial_decisions"].pop()
-                    self.assertIn("authorial_core_decisions", self.core_failures(pack, composed))
-
-    def test_legacy_versions_cannot_opt_in_and_v2_core_keeps_minimum(self):
+    def test_obsolete_pack_and_core_versions_are_rejected(self):
         for version in ("v2", "v3", "v4", "v5"):
             with self.subTest(pack_version=version):
                 pack = self.pack(())
                 pack["contract_version"] = f"photo-candidate-pack/{version}"
                 self.assertIn("authorial_authorship_policy_contract", self.core_failures(pack, self.composed(pack)))
-        for opened in ((), ("framing",)):
-            with self.subTest(opened=opened):
-                with self.assertRaisesRegex(ValueError, "at least two distinct open_dimensions"):
-                    self.normalize(self.raw_core(opened, version="v2"))
+        for version in ("v1", "v2"):
+            raw = self.raw_core(())
+            raw["contract_version"] = f"photo-authorial-core/{version}"
+            with self.assertRaisesRegex(ValueError, "contract_version"):
+                self.normalize(raw)
 
     def test_audit_does_not_call_producer_policy_or_core_normalizers(self):
         pack = self.pack(())
@@ -357,7 +322,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
             ),
             mock.patch.object(
                 generator,
-                "candidate_pack_project_v6",
+                "candidate_pack_compose_current",
                 side_effect=AssertionError("producer used by audit"),
             ),
         ):

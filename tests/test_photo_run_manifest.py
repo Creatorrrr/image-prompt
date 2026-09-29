@@ -31,11 +31,8 @@ class PhotoRunManifestTests(unittest.TestCase):
             "--manifest": str(directory / "manifest.json"),
             "--ledger": str(directory / "ledger.ndjson"),
         }
-        if version in {"v5", "v6"}:
-            values["--authorial-core-sha256"] = "b" * 64
-            values["--intent-lock-sha256"] = "c" * 64
-        else:
-            values["--authorial-request-sha256"] = "d" * 64
+        values["--authorial-core-sha256"] = "b" * 64
+        values["--intent-lock-sha256"] = "c" * 64
         if status == "success":
             image = directory / "returned-image.png"
             image.write_bytes(b"delivered image fixture")
@@ -51,7 +48,7 @@ class PhotoRunManifestTests(unittest.TestCase):
         return subprocess.run(argv, cwd=ROOT, capture_output=True, text=True)
 
     def test_text_only_success_and_blocked_attempts_write_one_manifest_and_ledger_row(self):
-        for version in ("v4", "v5", "v6"):
+        for version in ("v6",):
             for status in ("success", "safety_block"):
                 with self.subTest(version=version, status=status), tempfile.TemporaryDirectory() as tmp:
                     result = self.run_recorder(tmp, version=version, status=status)

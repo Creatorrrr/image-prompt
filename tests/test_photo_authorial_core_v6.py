@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import json
@@ -101,7 +103,7 @@ def core() -> dict:
         "user_exclusions": [],
         "runtime_forbidden_labels": [],
         "intent_lock": {
-            "contract_version": "photo-intent-lock/v1",
+            "contract_version": "photo-intent-lock/v2",
             "priority": "requesting_user",
             "semantic_anchors": [
                 {
@@ -263,7 +265,7 @@ def yandere_core() -> dict:
         "user_exclusions": [],
         "runtime_forbidden_labels": ["얀데레"],
         "intent_lock": {
-            "contract_version": "photo-intent-lock/v1",
+            "contract_version": "photo-intent-lock/v2",
             "priority": "requesting_user",
             "semantic_anchors": [
                 {
@@ -439,7 +441,7 @@ def reality_error_core() -> dict:
         "user_exclusions": [],
         "runtime_forbidden_labels": [],
         "intent_lock": {
-            "contract_version": "photo-intent-lock/v1",
+            "contract_version": "photo-intent-lock/v2",
             "priority": "requesting_user",
             "semantic_anchors": [
                 {
@@ -643,7 +645,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
 
         data = self.runtime_data()
         normalized = self.normalize(core())
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1416),
             "character_attribute_composition_scene",
@@ -694,7 +696,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             ],
         }
         warnings = []
-        failures = audit_composed_prompt.audit_authorial_core_v5(
+        failures = audit_composed_prompt.audit_authorial_core(
             pack,
             {"authorial_core_binding": binding},
             advisory_prompt,
@@ -717,50 +719,20 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             {row["check"] for row in warnings},
         )
 
-        legacy_pack = copy.deepcopy(pack)
-        legacy_pack["authorial_composition"].pop("prompt_budget")
-        legacy_failures = audit_composed_prompt.audit_authorial_core_v5(
-            legacy_pack,
-            {"authorial_core_binding": binding},
-            advisory_prompt,
-            [],
-        )
-        legacy_budget_failure = next(
-            row
-            for row in legacy_failures
-            if row["check"] == "authorial_core_prompt_budget"
-        )
-        self.assertEqual(legacy_budget_failure["maximum_words"], 180)
-        self.assertEqual(legacy_budget_failure["actual_words"], 361)
-
-        legacy_v1_pack = copy.deepcopy(pack)
-        legacy_v1_pack["authorial_composition"]["prompt_budget"] = (
-            audit_composed_prompt.legacy_authorial_prompt_budget_contract()
-        )
-        legacy_v1_prompt = BASELINE + " " + " ".join(
-            ["detail"] * (181 - prompt_count)
-        )
-        legacy_v1_warnings = []
-        legacy_v1_failures = audit_composed_prompt.audit_authorial_core_v5(
-            legacy_v1_pack,
-            {"authorial_core_binding": binding},
-            legacy_v1_prompt,
-            legacy_v1_warnings,
-        )
-        self.assertNotIn(
-            "authorial_prompt_budget_contract",
-            {row["check"] for row in legacy_v1_failures},
-        )
-        self.assertIn(
-            "authorial_prompt_recommended_budget",
-            {row["check"] for row in legacy_v1_warnings},
-        )
+        for budget in (None, {"contract_version": "photo-authorial-prompt-budget/v1"}):
+            obsolete = copy.deepcopy(pack)
+            if budget is None:
+                obsolete["authorial_composition"].pop("prompt_budget")
+            else:
+                obsolete["authorial_composition"]["prompt_budget"] = budget
+            failures = audit_composed_prompt.audit_authorial_core(obsolete, {"authorial_core_binding": binding}, advisory_prompt, [])
+            self.assertIn("authorial_prompt_budget_contract", {row["check"] for row in failures})
 
         mutated_pack = copy.deepcopy(pack)
         mutated_pack["authorial_composition"]["prompt_budget"][
             "recommended_maximum_words"
         ] = 400
-        mutated_failures = audit_composed_prompt.audit_authorial_core_v5(
+        mutated_failures = audit_composed_prompt.audit_authorial_core(
             mutated_pack,
             {"authorial_core_binding": binding},
             BASELINE,
@@ -774,7 +746,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         absolute_prompt = BASELINE + " " + " ".join(
             ["detail"] * (641 - prompt_count)
         )
-        failures = audit_composed_prompt.audit_authorial_core_v5(
+        failures = audit_composed_prompt.audit_authorial_core(
             pack,
             {"authorial_core_binding": binding},
             absolute_prompt,
@@ -896,7 +868,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         self.assertEqual(identity_suppressed, [])
 
         data = self.runtime_data()
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1415),
             "character_attribute_composition_scene",
@@ -1085,7 +1057,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             yandere_core(),
             request_envelope=normalized_envelope,
         )
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1415),
             "character_attribute_composition_scene",
@@ -1145,7 +1117,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             reality_error_core(),
             request_envelope=normalized_envelope,
         )
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1421),
             "character_attribute_composition_scene",
@@ -1293,7 +1265,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             data[prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY],
             data[prompt_generator.VISUAL_PROFILE_INDEX_DATA_KEY],
         )
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1417),
             "character_attribute_composition_scene",
@@ -1403,7 +1375,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         }
         with mock.patch.object(
             prompt_generator,
-            "resolve_moe_response_intent",
+            "resolve_moe_response_intent", create=True,
             side_effect=AssertionError("legacy raw router must not run"),
         ):
             resolved = prompt_generator.resolve_request_intent_constraints(
@@ -1414,7 +1386,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             )
         self.assertEqual(resolved["routing_input"], "authorial_core_typed_semantics")
         self.assertFalse(resolved["character_response"]["enabled"])
-        self.assertNotIn(prompt_generator.MOE_RESPONSE_DOMAIN, resolved["domains"])
+        self.assertNotIn("character_moe_grammar", resolved["domains"])
 
     def test_v6_generation_and_pack_never_call_legacy_raw_moe_router(self):
         data = self.runtime_data()
@@ -1425,10 +1397,10 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
         )
         with mock.patch.object(
             prompt_generator,
-            "resolve_moe_response_intent",
+            "resolve_moe_response_intent", create=True,
             side_effect=AssertionError("legacy raw router must not run"),
         ):
-            result = prompt_generator.generate_once(
+            result = current_fixtures.generate_once(
                 data,
                 random.Random(42),
                 "character_attribute_composition_scene",
@@ -1482,7 +1454,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             ],
         }
         self.assertEqual(
-            audit_composed_prompt.audit_authorial_core_v5(
+            audit_composed_prompt.audit_authorial_core(
                 pack,
                 {"authorial_core_binding": core_binding},
                 BASELINE,
@@ -1557,17 +1529,13 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             {failure["check"] for failure in mutated_failures},
         )
 
-    def test_cjk_exact_matching_is_boundary_aware(self):
-        for text in ("외모에 어울리는", "규모에 맞는", "용모에 관한", "부모에게 전한"):
-            self.assertFalse(
-                prompt_generator.resolve_moe_response_intent([text])["requested"],
-                text,
-            )
-        for text in ("모에", "모에하게", "모에를 강조"):
-            self.assertTrue(
-                prompt_generator.resolve_moe_response_intent([text])["requested"],
-                text,
-            )
+    def test_raw_character_labels_never_create_typed_response(self):
+        self.assertFalse(hasattr(prompt_generator, "resolve_moe_response_intent"))
+        for text in ("외모에 어울리는", "모에", "모에하게", "모에를 강조"):
+            self.assertFalse(prompt_generator.resolve_character_response_intent({
+                "contract_version": "photo-authorial-core/v3", "source_request": text,
+                "semantic_assertions": [],
+            })["enabled"], text)
 
 
 if __name__ == "__main__":

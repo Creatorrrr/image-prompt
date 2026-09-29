@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import json
@@ -107,7 +109,8 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
 
     def test_maintenance_prose_is_external_and_hash_bound(self):
         count = 0
-        for path in ASSETS.glob("*extension.json"):
+        for filename in generator.RESEARCH_EXTENSION_FILENAMES:
+            path = ASSETS / filename
             extension = json.loads(path.read_text())
             reference = extension.get("maintenance_ref")
             if not reference:
@@ -189,7 +192,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
                     "active_spans": [{"span_id": "topic", "start": 0, "end": len(request), "text": request}]}
         core = generator.normalize_authorial_core(raw, request_envelope=generator.normalize_request_envelope(envelope))
         data = v6.PhotoAuthorialCoreV6Tests().runtime_data()
-        result = generator.generate_once(data, random.Random(919), None, ["en"], True, 12, True,
+        result = current_fixtures.generate_once(data, random.Random(919), None, ["en"], True, 12, True,
                                          selection_mode="rule", include_trace=True, concept_locks=[request],
                                          seed=919, creativity=0.0, authorial_core=core)
         pack = generator.build_candidate_pack(result, data, "v6")
@@ -239,6 +242,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
             decision["rationale"] = "preserves the requested facial modeling and studio subject"
         for decision in full_composed["semantic_clarification_decisions"]:
             decision["rationale"] = "the frozen baseline preserves the requested adult studio portrait"
+        full_composed["embodiment_review"] = current_fixtures.composition_review(pack, prompt)
         full_audit = auditor.audit_composed_prompt(pack, full_composed)
         self.assertEqual(full_audit["status"], "pass", full_audit["failures"])
         self.integration_artifacts = {"pack": pack, "detail": detail,
@@ -292,13 +296,8 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
                 generator.candidate_pack_recompute_id(pack)
                 self.assertTrue(self.check(pack))
 
-    def test_v4_v5_token_surfaces_and_legacy_v6_are_not_reinterpreted(self):
-        row = {"id": "slot:light_intensity:test", "label_en": "low key-fill difference with shadows still present", "tags": ["lighting"]}
-        generator.candidate_pack_v4_project_candidate(row, salt="old")
-        self.assertNotIn("concept_units", row)
-        self.assertNotIn("semantic_surface_version", row)
-        self.assertNotIn("low key-fill difference with shadows still present", row["concept_terms"])
-        self.assertFalse(self.check({"contract_version": "photo-candidate-pack/v6"}))
+    def test_missing_current_semantic_surface_is_rejected(self):
+        self.assertTrue(self.check({"contract_version": "photo-candidate-pack/v6"}))
 
     def test_canonical_street_link_and_storefront_label_keep_stable_ids(self):
         street = generator.candidate_pack_slot_entry_by_id(self.data, "genre", "street_photography")

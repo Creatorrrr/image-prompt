@@ -21,13 +21,14 @@ if str(SCRIPT_DIR) not in sys.path:
 
 import audit_composed_prompt  # noqa: E402
 import prompt_generator  # noqa: E402
+from tests import photo_prompt_fixtures as fixtures
 
 
 def valid_core() -> dict:
-    return {
-        "contract_version": "photo-authorial-core/v1",
+    raw = {
+        "contract_version": "photo-authorial-core/v3",
         "provenance": "agent_prepack",
-        "source_request": "A cloud bread editorial still life with a quiet morning atmosphere",
+        "source_request": "A cloud bread editorial still life with a quiet morning atmosphere without people",
         "interpreted_intent": (
             "A quiet editorial still life translating cloud bread into airy hand-shaped food"
         ),
@@ -62,8 +63,22 @@ def valid_core() -> dict:
         "variation_key": "prepack-isolation-test",
     }
 
+    current = fixtures.core(raw["source_request"], baseline_prompt_en=raw["baseline_prompt_en"])
+    current.update(raw)
+    current["contract_version"] = "photo-authorial-core/v3"
+    return current
 
-class PhotoPrepackIsolationV5Tests(unittest.TestCase):
+
+def normalize_core(raw):
+    return prompt_generator.normalize_authorial_core(
+        raw,
+        request_envelope=prompt_generator.normalize_request_envelope(
+            fixtures.envelope(raw["source_request"])
+        ),
+    )
+
+
+class PhotoPrepackIsolationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
@@ -106,7 +121,11 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
         )
         precore_dir = SKILL_DIR / "precore"
         self.assertEqual(
-            {path.name for path in precore_dir.iterdir() if path.name not in {".DS_Store", "__pycache__"}},
+            {
+                path.name
+                for path in precore_dir.iterdir()
+                if path.name not in {".DS_Store", "__pycache__"}
+            },
             {"visual_feature_catalog.json", "creative_controls.json", "creative_controls.py"},
         )
         resolver = (precore_dir / "creative_controls.py").read_text(encoding="utf-8")
@@ -116,12 +135,26 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
                 imports.update(alias.name.split(".")[0] for alias in node.names)
             elif isinstance(node, ast.ImportFrom):
                 imports.add((node.module or "").split(".")[0])
-        self.assertLessEqual(imports, {"__future__", "argparse", "copy", "hashlib", "json", "math", "pathlib", "random", "secrets"})
+        self.assertLessEqual(
+            imports,
+            {
+                "__future__",
+                "argparse",
+                "copy",
+                "hashlib",
+                "json",
+                "math",
+                "pathlib",
+                "random",
+                "secrets",
+                "re",
+            },
+        )
         self.assertNotIn("assets/", resolver)
         self.assertNotIn("scripts/", resolver)
-        catalog_text = (precore_dir / "visual_feature_catalog.json").read_text(
-            encoding="utf-8"
-        ).casefold()
+        catalog_text = (
+            (precore_dir / "visual_feature_catalog.json").read_text(encoding="utf-8").casefold()
+        )
         profile_ids = {
             str(profile.get("id") or "").casefold()
             for profile in self.registry.get("profiles") or []
@@ -131,9 +164,7 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        profile_ids.update(
-            str(profile_id).casefold() for profile_id in profile_index["entries"]
-        )
+        profile_ids.update(str(profile_id).casefold() for profile_id in profile_index["entries"])
         self.assertEqual(
             sorted(
                 profile_id
@@ -142,12 +173,21 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             ),
             [],
         )
-        controls_text = (precore_dir / "creative_controls.json").read_text(encoding="utf-8").casefold()
-        self.assertEqual([profile_id for profile_id in profile_ids if profile_id and profile_id in controls_text], [])
+        controls_text = (
+            (precore_dir / "creative_controls.json").read_text(encoding="utf-8").casefold()
+        )
+        self.assertEqual(
+            [
+                profile_id
+                for profile_id in profile_ids
+                if profile_id and profile_id in controls_text
+            ],
+            [],
+        )
 
     def test_core_requires_a_resolved_ambiguity_boundary_and_auditable_web_basis(self):
         raw = valid_core()
-        normalized = prompt_generator.normalize_authorial_core(raw)
+        normalized = normalize_core(raw)
         self.assertEqual(normalized["unresolved_ambiguities"], [])
         self.assertTrue(
             audit_composed_prompt.authorial_core_interpretation_contract_valid(normalized)
@@ -160,17 +200,17 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
         missing_boundary = copy.deepcopy(raw)
         missing_boundary.pop("unresolved_ambiguities")
         with self.assertRaisesRegex(ValueError, "requires unresolved_ambiguities"):
-            prompt_generator.normalize_authorial_core(missing_boundary)
+            normalize_core(missing_boundary)
 
         unresolved = copy.deepcopy(raw)
         unresolved["unresolved_ambiguities"] = ["whether cloud names food or weather"]
         with self.assertRaisesRegex(ValueError, "ask the requester or research"):
-            prompt_generator.normalize_authorial_core(unresolved)
+            normalize_core(unresolved)
 
         unsourced_web = copy.deepcopy(raw)
         unsourced_web["interpretation_provenance"][0]["sources"] = []
         with self.assertRaisesRegex(ValueError, "requires at least one HTTP"):
-            prompt_generator.normalize_authorial_core(unsourced_web)
+            normalize_core(unsourced_web)
 
     def test_visual_intent_profile_resolution_occurs_without_a_precore_profile_id(self):
         source_text = "성인 여성의 절대공역 사진"
@@ -212,10 +252,10 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, r"matched \[\]"):
             prompt_generator.normalize_visual_intent(context_mismatch, self.registry)
 
-    def test_public_v5_flow_resolves_profile_only_after_receiving_a_frozen_core(self):
+    def test_public_current_flow_resolves_profile_only_after_receiving_a_frozen_core(self):
         source_text = "성인 여성의 절대공역 사진"
         core = {
-            "contract_version": "photo-authorial-core/v2",
+            "contract_version": "photo-authorial-core/v3",
             "provenance": "agent_prepack",
             "source_request": source_text,
             "interpreted_intent": (
@@ -250,7 +290,7 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             "user_exclusions": [],
             "runtime_forbidden_labels": ["절대공역"],
             "intent_lock": {
-                "contract_version": "photo-intent-lock/v1",
+                "contract_version": "photo-intent-lock/v2",
                 "priority": "requesting_user",
                 "semantic_anchors": [
                     {
@@ -314,35 +354,15 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
                 }
             ],
         }
-        completed = subprocess.run(
-            [
-                sys.executable,
-                str(WRAPPER_PATH),
-                "--selection-mode",
-                "rule",
-                "--seed",
-                "19",
-                "--emit-candidate-pack",
-                "--candidate-pack-version",
-                "v5",
-                "--request-envelope-json",
-                json.dumps(envelope, ensure_ascii=False),
-                "--authorial-core-json",
-                json.dumps(core, ensure_ascii=False),
-                "--visual-intent-json",
-                json.dumps(visual_intent, ensure_ascii=False),
-                "--creativity",
-                "0",
-                "--n",
-                "1",
-            ],
-            cwd=ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
+        core["semantic_assertions"] = []
+        core["request_lineage"] = None
+        pack = fixtures.run_current(
+            core,
+            seed=19,
+            creativity=0,
+            envelope_input=envelope,
+            extra_args=("--visual-intent-json", json.dumps(visual_intent)),
         )
-        self.assertEqual(completed.returncode, 0, completed.stderr)
-        pack = json.loads(completed.stdout)[0]
         self.assertEqual(
             pack["visual_intent"]["obligations"][0]["profile_id"],
             "inner_thigh_negative_space",
@@ -368,86 +388,31 @@ class PhotoPrepackIsolationV5Tests(unittest.TestCase):
             {},
         )
 
-    def test_only_agent_hypothesis_accepts_a_pack_cited_typed_revision(self):
-        core_id = "clarification:authorial-core:interpreted-intent"
-        user_id = "clarification:user-definition:immutable"
-        creative_id = "slot:lighting:fog-refraction"
+    def test_frozen_core_revision_decisions_are_rejected(self):
         pack = {
             "semantic_clarification": {
-                "contract_version": "photo-semantic-clarification/v1",
-                "affected_by_creativity": False,
-                "affected_by_seed": False,
                 "candidates": [
                     {
-                        "id": core_id,
+                        "id": "core",
                         "source": "agent_prepack_interpretation",
-                        "interpreted_meaning": "a quiet blue porcelain domestic study",
-                        "applicability": {"status": "review_required"},
-                        "required_in_final_prompt": False,
-                        "revisable": True,
-                    },
-                    {
-                        "id": user_id,
-                        "source": "requesting_user_definition",
-                        "interpreted_meaning": "the requester's exact visible definition",
-                        "required_prompt_evidence": "soft steam rises beside the loaf",
-                        "applicability": {"status": "required"},
-                        "required_in_final_prompt": True,
                         "revisable": False,
-                    },
-                ],
-            },
-            "creative_augmentation": {"candidates": [{"id": creative_id}]},
+                        "required_in_final_prompt": True,
+                        "applicability": {"status": "required"},
+                    }
+                ]
+            }
         }
-        prompt = (
-            "Tactile fog curls around fractured amber glass while soft steam rises beside the loaf."
-        )
         composed = {
             "semantic_clarification_decisions": [
                 {
-                    "clarification_id": core_id,
+                    "clarification_id": "core",
                     "decision": "superseded_by_revision",
-                    "revision_basis": "candidate_pack_clarification",
-                    "revision_source_ids": [creative_id],
-                    "revised_meaning": "an amber material study shaped by refracted fog",
-                    "rationale": "pack context resolves the material relationship",
-                    "prompt_evidence": "Tactile fog curls around fractured amber glass",
-                },
-                {
-                    "clarification_id": user_id,
-                    "decision": "applied",
-                    "rationale": "requester definition remains governing",
-                    "prompt_evidence": "soft steam rises beside the loaf",
-                },
+                    "rationale": "replace frozen meaning",
+                    "prompt_evidence": "bread",
+                }
             ]
         }
-        self.assertEqual(
-            audit_composed_prompt.audit_semantic_clarification_v5(
-                pack,
-                composed,
-                prompt,
-            ),
-            [],
-        )
-
-        illegal = copy.deepcopy(composed)
-        illegal["semantic_clarification_decisions"][1].update(
-            {
-                "decision": "superseded_by_revision",
-                "revision_basis": "candidate_pack_clarification",
-                "revision_source_ids": [creative_id],
-                "revised_meaning": "an agent replacement for the requester definition",
-            }
-        )
-        failures = audit_composed_prompt.audit_semantic_clarification_v5(
-            pack,
-            illegal,
-            prompt,
-        )
-        self.assertIn(
-            "semantic_clarification_revision",
-            {row["check"] for row in failures},
-        )
+        self.assertTrue(audit_composed_prompt.audit_semantic_clarification(pack, composed, "bread"))
 
 
 if __name__ == "__main__":

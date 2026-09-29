@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import json
@@ -109,7 +111,7 @@ def repair_core(
         "user_exclusions": [],
         "runtime_forbidden_labels": [],
         "intent_lock": {
-            "contract_version": "photo-intent-lock/v1",
+            "contract_version": "photo-intent-lock/v2",
             "priority": "requesting_user",
             "semantic_anchors": [
                 {
@@ -596,7 +598,7 @@ class PhotoRenderRepairTests(unittest.TestCase):
                 assets / "photo_prompt_semantic_index.json"
             )
         )
-        result = prompt_generator.generate_once(
+        result = current_fixtures.generate_once(
             data,
             random.Random(1919),
             "character_attribute_composition_scene",

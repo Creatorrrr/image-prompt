@@ -107,7 +107,7 @@ class ResearchIntegrationTests(unittest.TestCase):
         data["slots"] = {slot: [copy.deepcopy(row)]}
         core["baseline_prompt_en"] = "An adult removes a protective arm sleeve after work while meeting another adult's gaze."
         def ids():
-            adult = generator.candidate_pack_hybrid_adult_appeal(data, result, {}, authorial_core=core)
+            adult = generator.candidate_pack_contextual_adult_appeal(data, result, {}, authorial_core=core)
             return {candidate["entry_id"] for axis in adult["axes"].values() for candidate in axis["candidate_inventory"]}
         self.assertIn(row["id"], ids())
         core["intent_lock"]["semantic_anchors"].append({"dimension": "appearance", "target": "main_subject", "property": "wardrobe.wearing_state", "prompt_evidence": "sleeves remain on"})
@@ -125,7 +125,7 @@ class ResearchIntegrationTests(unittest.TestCase):
         data, core, result = fixture()
         data["slots"] = {"anatomical_connection": [self.entries["ctx_c035"][1]]}
         core["intent_lock"]["semantic_anchors"].append({"dimension": "appearance", "target": "main_subject", "property": "face", "prompt_evidence": "the supplied reference face"})
-        adult = generator.candidate_pack_hybrid_adult_appeal(data, result, {}, authorial_core=core)
+        adult = generator.candidate_pack_contextual_adult_appeal(data, result, {}, authorial_core=core)
         self.assertTrue(all(not axis["candidate_inventory"] for axis in adult["axes"].values()))
 
 

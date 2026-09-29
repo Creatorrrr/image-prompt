@@ -38,7 +38,7 @@ If the core's meaning is clear but the proposed realization is inconsistent, rep
 
 Copy `source_embodiment_preflight_sha256` from the policy into `photo-image-render-request/v2`. With this policy, the runtime prompt is exactly `prompt_en`, optionally followed by `\n\nAvoid: ` and the unchanged nonempty `negative_en`. Additional positive runtime prose must first be incorporated into composition and reviewed. This closes the path where a reviewed prompt is embedded in a larger, unreviewed pose instruction.
 
-Older packs without this policy retain their historical audit behavior. The opt-in flag is required by the normal skill procedure, not retroactively imposed on saved v6 files or direct compatibility callers. Omitting or mutating the policy in a marked pack fails audit.
+Every current pack requires the review and policy marker. Missing policies fail validation; non-body scenes provide an explicit `not_applicable` review. Omitting or mutating the policy in a marked pack fails audit.
 
 ## Pixel review
 

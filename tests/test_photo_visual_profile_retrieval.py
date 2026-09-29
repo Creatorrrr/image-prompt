@@ -15,6 +15,7 @@ INDEX_PATH = SKILL_DIR / "assets" / "photo_prompt_visual_profile_index.json"
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
+from tests import photo_prompt_fixtures as fixtures
 import prompt_generator  # noqa: E402
 
 
@@ -44,52 +45,11 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
 
     @staticmethod
     def core(source: str) -> dict:
-        return prompt_generator.normalize_authorial_core(
-            {
-                "contract_version": "photo-authorial-core/v1",
-                "provenance": "agent_prepack",
-                "source_request": source,
-                "interpreted_intent": (
-                    "An adult fashion portrait emphasizing an attractive narrow pocket of "
-                    "background between close upper inner-thigh contours"
-                ),
-                "subject": "one self-possessed adult woman",
-                "setting": "a quiet neutral fashion studio",
-                "event": "she keeps her legs close in a balanced standing pose",
-                "visual_priorities": [
-                    "attractive inner-thigh negative space",
-                    "clear close-leg geometry",
-                ],
-                "baseline_prompt_en": (
-                    "A self-possessed adult woman stands in a quiet neutral fashion studio, "
-                    "keeping her legs close while a narrow pocket of background between the "
-                    "actual upper inner-thigh contours becomes deliberate focal geometry. "
-                    "Soft side lighting separates the visible leg contours from the neutral "
-                    "background, while an eye-level camera preserves natural proportions and "
-                    "keeps the silhouette clearly readable in a composed editorial photograph."
-                ),
-                "user_definitions": [],
-                "interpretation_provenance": [
-                    {
-                        "term": "허벅지 사이의 공간",
-                        "source_text": "허벅지 사이의 공간",
-                        "basis": "request_context",
-                        "resolution": (
-                            "a visually attractive background opening bounded by close upper inner thighs"
-                        ),
-                        "sources": [],
-                    }
-                ],
-                "unresolved_ambiguities": [],
-                "user_exclusions": [],
-                "style": {
-                    "domain": "general_photo",
-                    "family": "restrained adult fashion editorial",
-                    "evidence": ["clean soft light", "balanced close-leg framing"],
-                },
-                "variation_key": "visual-profile-retrieval-test",
-            }
-        )
+        raw = {'contract_version': 'photo-authorial-core/v1', 'provenance': 'agent_prepack', 'source_request': source, 'interpreted_intent': 'An adult fashion portrait emphasizing an attractive narrow pocket of background between close upper inner-thigh contours', 'subject': 'one self-possessed adult woman', 'setting': 'a quiet neutral fashion studio', 'event': 'she keeps her legs close in a balanced standing pose', 'visual_priorities': ['attractive inner-thigh negative space', 'clear close-leg geometry'], 'baseline_prompt_en': 'A self-possessed adult woman stands in a quiet neutral fashion studio, keeping her legs close while a narrow pocket of background between the actual upper inner-thigh contours becomes deliberate focal geometry. Soft side lighting separates the visible leg contours from the neutral background, while an eye-level camera preserves natural proportions and keeps the silhouette clearly readable in a composed editorial photograph.', 'user_definitions': [], 'interpretation_provenance': [{'term': '허벅지 사이의 공간', 'source_text': '허벅지 사이의 공간', 'basis': 'request_context', 'resolution': 'a visually attractive background opening bounded by close upper inner thighs', 'sources': []}], 'unresolved_ambiguities': [], 'user_exclusions': [], 'style': {'domain': 'general_photo', 'family': 'restrained adult fashion editorial', 'evidence': ['clean soft light', 'balanced close-leg framing']}, 'variation_key': 'visual-profile-retrieval-test'}
+        current = fixtures.core(source, baseline_prompt_en=raw["baseline_prompt_en"])
+        current.update(raw)
+        current["contract_version"] = "photo-authorial-core/v3"
+        return prompt_generator.normalize_authorial_core(current, request_envelope=prompt_generator.normalize_request_envelope(fixtures.envelope(source)))
 
     def test_index_is_registry_bound_and_separates_exact_from_semantic_text(self):
         exact_terms = {
@@ -198,7 +158,7 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
                 self.assertFalse(hit["hard_eligible"])
                 self.assertTrue(hit["optional_eligible"])
 
-    def test_embedding_only_paraphrase_projects_optional_candidate_from_one_resolution(self):
+    def test_hybrid_paraphrase_projects_optional_candidate_from_one_resolution(self):
         source = "허벅지 사이의 공간이 매력적인 여성의 패션 사진"
         core = self.core(source)
         fake_index = self.fake_index()
@@ -227,7 +187,7 @@ class PhotoVisualProfileRetrievalTests(unittest.TestCase):
             for row in resolution["hits"]
             if row["profile_id"] == "inner_thigh_negative_space"
         )
-        self.assertEqual(hit["match_basis"], "embedding")
+        self.assertEqual(hit["match_basis"], "bm25f+embedding")
         self.assertFalse(hit["hard_eligible"])
         self.assertTrue(hit["optional_eligible"])
 

@@ -1,3 +1,5 @@
+
+from tests import photo_prompt_fixtures as current_fixtures
 import json
 import random
 import sys
@@ -141,7 +143,7 @@ class PunkAestheticSemanticsTests(unittest.TestCase):
             ("cyberpunk", "decopunk", "lunarpunk", "crystalpunk"), start=31
         ):
             contract = self.contracts[concept_id]
-            result = prompt_generator.generate_once(
+            result = current_fixtures.generate_once(
                 self.data,
                 random.Random(offset),
                 contract["runtime_preset_id"],

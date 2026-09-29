@@ -23,7 +23,7 @@ DEFAULT_SEMANTIC_INTENT = (
     "photorealistic image-ready photo prompt with coherent subject, location, "
     "lighting, mood, camera, composition, texture, and format"
 )
-CONCEPT_MODES = {"legacy", "soft"}
+CONCEPT_MODES = {"soft"}
 SAFETY_EVALUATION_FLAG = "--safety-evaluation"
 SAFETY_TRANSFORM_TEXT_TOKENS = (
     "adult",
@@ -1150,18 +1150,7 @@ def merge_affine_presets(spec: dict[str, Any], preset_ids: Sequence[str]) -> dic
     return spec
 
 
-def natural_moe_request_route_id(concept: str) -> str:
-    """Resolve the public natural-moe route without duplicating its grammar.
 
-    The wrapper owns legacy role/mixin recipes, while ``prompt_generator`` owns
-    the current multilingual moe intent contract. Loading that module here
-    keeps preset precedence aligned with the same resolver used by the engine.
-    """
-    generator = load_generator()
-    response = generator.resolve_moe_response_intent([str(concept or "")])
-    if response.get("requested") is not True or response.get("eligible") is not True:
-        return ""
-    return str(response.get("route_id") or "")
 
 
 def anchor_expansion_config(
@@ -1335,9 +1324,9 @@ def soft_anchor_spec_has_runtime_controls(spec: dict[str, Any]) -> bool:
 
 
 def resolve_concept_mode(values: Sequence[str]) -> str:
-    mode = str(values[-1]).strip() if values else "legacy"
+    mode = str(values[-1]).strip() if values else "soft"
     if mode not in CONCEPT_MODES:
-        raise ValueError("--concept-mode must be one of: legacy, soft")
+        raise ValueError("--concept-mode only supports soft")
     return mode
 
 
@@ -1914,16 +1903,14 @@ def add_recipe_requirement_options(args: list[str], requirements: Sequence[str])
 def resolve_concepts(
     args: Sequence[str],
     concepts: Sequence[str],
-    concept_mode: str = "legacy",
-    concept_mode_explicit: bool = True,
+    concept_mode: str = "soft",
     safety_evaluation_requested: bool = False,
     enforce_gates: bool = True,
 ) -> tuple[list[str], list[dict[str, Any]]]:
     if concept_mode not in CONCEPT_MODES:
-        raise ValueError("--concept-mode must be one of: legacy, soft")
+        raise ValueError("--concept-mode only supports soft")
     if not concepts:
-        return list(args), []
-
+        return (list(args), [])
     _, explicit_user_sets = extract_option_values(args, "--set")
     explicit_user_set_slots = forced_set_slots(explicit_user_sets)
     recipes = load_concept_recipes()
@@ -1937,7 +1924,6 @@ def resolve_concepts(
         has_option(resolved_args, "--emit-candidate-pack")
         or option_value(resolved_args, "--detail-level") == "compact"
     )
-
     for concept in concepts:
         concept = concept.strip()
         if not concept:
@@ -1947,24 +1933,7 @@ def resolve_concepts(
         mixin_matches = filter_role_duplicate_mixins(concept, roles, mixin_matches)
         role_concept = concept_without_mixins(concept, [mixin for mixin, _ in mixin_matches])
         role, name, recipe = match_concept_role(role_concept or concept, roles)
-
-        # Per-recipe gradual soft promotion: an explicit --concept-mode always
-        # wins; otherwise a recipe that passed the soft benchmark gate may opt
-        # into soft mode via concept_mode_default.
-        effective_mode = concept_mode
-        if not concept_mode_explicit:
-            recipe_default = str((recipe or {}).get("concept_mode_default") or "")
-            if not recipe_default:
-                recipe_default = next(
-                    (
-                        str(mixin_recipe.get("concept_mode_default") or "")
-                        for _, mixin_recipe in mixin_matches
-                        if mixin_recipe.get("concept_mode_default")
-                    ),
-                    "",
-                )
-            if recipe_default in CONCEPT_MODES:
-                effective_mode = recipe_default
+        effective_mode = "soft"
         selected_bundles: list[dict[str, Any]] = []
         selected_species_variants: list[dict[str, Any]] = []
         selected_scene_variants: list[dict[str, Any]] = []
@@ -1979,16 +1948,17 @@ def resolve_concepts(
         intent_axes: list[str] = []
         soft_anchor_specs: list[dict[str, Any]] = []
         soft_min_anchor_candidates: list[int] = []
-
         if recipe:
             role_scene_variant = select_recipe_scene_variant(concept, recipe, args)
             if role_scene_variant:
                 scaffold_recipes.append(role_scene_variant)
-                add_option(resolved_args, "--concept-scene-variant", str(role_scene_variant.get("id") or ""))
+                add_option(
+                    resolved_args, "--concept-scene-variant", str(role_scene_variant.get('id') or '')
+                )
                 selected_scene_variants.append(
                     {
                         "role": role or concept,
-                        "id": str(role_scene_variant.get("id") or ""),
+                        "id": str(role_scene_variant.get('id') or ''),
                         "weight": role_scene_variant.get("weight", 1),
                         "set": role_scene_variant.get("set", {}),
                     }
@@ -1999,8 +1969,7 @@ def resolve_concepts(
             if role_scene_variant:
                 safety_evaluation_items.extend(
                     safety_transform_items_for_recipe(
-                        str(role_scene_variant.get("id") or f"{role}_scene"),
-                        role_scene_variant,
+                        str(role_scene_variant.get("id") or f"{role}_scene"), role_scene_variant
                     )
                 )
             role_set = resolved_role_set(recipe, role_scene_variant)
@@ -2028,7 +1997,9 @@ def resolve_concepts(
             )
             soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(recipe, 1))
             additional_requirements.extend(normalize_list(recipe.get("additional")))
-            additional_requirements.extend(normalize_list((role_scene_variant or {}).get("additional")))
+            additional_requirements.extend(
+                normalize_list((role_scene_variant or {}).get("additional"))
+            )
             soft_safety_requirements.extend(soft_safety_requirements_for_recipe(recipe))
             soft_salience_cues.extend(soft_salience_cues_for_recipe(recipe))
             budget = mixin_cue_budget_for_recipe(recipe)
@@ -2036,47 +2007,27 @@ def resolve_concepts(
                 soft_mixin_cue_budgets.append(budget)
             additional_requirements.extend(
                 conditional_additional_requirements(
-                    recipe,
-                    role=role,
-                    explicit_user_set_slots=explicit_user_set_slots,
+                    recipe, role=role, explicit_user_set_slots=explicit_user_set_slots
                 )
             )
             intent_axes.extend(normalize_list(recipe.get("intent_axis")))
             intent_axes.extend(normalize_list((role_scene_variant or {}).get("intent_axis")))
-
         for mixin, mixin_recipe in mixin_matches:
             applied_recipes.append(mixin_recipe)
-            soft_bypass_legacy_scaffold = bool(
-                effective_mode == "soft"
-                and mixin_recipe.get("soft_bypass_legacy_scaffold") is True
-            )
-            if not soft_bypass_legacy_scaffold:
+            advisory_only = bool(mixin_recipe.get("advisory_only") is True)
+            if not advisory_only:
                 scaffold_recipes.append(mixin_recipe)
-            safety_evaluation_items.extend(
-                safety_transform_items_for_recipe(mixin, mixin_recipe)
-            )
+            safety_evaluation_items.extend(safety_transform_items_for_recipe(mixin, mixin_recipe))
             selected_bundle = (
                 None
-                if soft_bypass_legacy_scaffold
-                else select_bundle_for_mixin(
-                    concept,
-                    mixin,
-                    mixin_recipe,
-                    args,
-                    role,
-                )
+                if advisory_only
+                else select_bundle_for_mixin(concept, mixin, mixin_recipe, args, role)
             )
-            mixin_base_set = (
-                []
-                if soft_bypass_legacy_scaffold
-                else set_values_to_forced(mixin_recipe.get("set"))
-            )
-            if not soft_bypass_legacy_scaffold:
-                additional_requirements.extend(
-                    normalize_list(mixin_recipe.get("additional"))
-                )
+            mixin_base_set = [] if advisory_only else set_values_to_forced(mixin_recipe.get("set"))
+            if not advisory_only:
+                additional_requirements.extend(normalize_list(mixin_recipe.get("additional")))
             soft_safety_requirements.extend(soft_safety_requirements_for_recipe(mixin_recipe))
-            if soft_bypass_legacy_scaffold:
+            if advisory_only:
                 intent_axes.extend(normalize_list(mixin_recipe.get("soft_intent_axis")))
             else:
                 soft_salience_cues.extend(soft_salience_cues_for_recipe(mixin_recipe))
@@ -2090,16 +2041,17 @@ def resolve_concepts(
             if (
                 role
                 and isinstance(weapon_cues, dict)
-                and not (explicit_user_set_slots & {"prop", "action"})
+                and (not explicit_user_set_slots & {"prop", "action"})
             ):
                 additional_requirements.extend(normalize_list(weapon_cues.get(role)))
-            species_variant = select_mixin_species_variant(concept, mixin, mixin_recipe, args, role=role or "")
+            species_variant = select_mixin_species_variant(
+                concept, mixin, mixin_recipe, args, role=role or ""
+            )
             if species_variant:
                 scaffold_recipes.append(species_variant)
                 safety_evaluation_items.extend(
                     safety_transform_items_for_recipe(
-                        str(species_variant.get("id") or f"{mixin}_variant"),
-                        species_variant,
+                        str(species_variant.get("id") or f"{mixin}_variant"), species_variant
                     )
                 )
                 species_variant_set = set_values_to_forced(species_variant.get("set"))
@@ -2120,20 +2072,24 @@ def resolve_concepts(
                                 spec["variant_group"] = "species_family"
                                 spec["variant_strategy"] = "locked_family"
                     soft_anchor_specs.extend(variant_specs)
-                    soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(species_variant, 1))
+                    soft_min_anchor_candidates.append(
+                        soft_min_anchors_for_recipe(species_variant, 1)
+                    )
                 additional_requirements.extend(normalize_list(species_variant.get("additional")))
-                soft_safety_requirements.extend(soft_safety_requirements_for_recipe(species_variant))
+                soft_safety_requirements.extend(
+                    soft_safety_requirements_for_recipe(species_variant)
+                )
                 soft_salience_cues.extend(soft_salience_cues_for_recipe(species_variant))
                 intent_axes.extend(normalize_list(species_variant.get("intent_axis")))
                 selected_species_variants.append(
                     {
                         "mixin": mixin,
-                        "variant_id": str(species_variant.get("id") or ""),
-                        "family": str(species_variant.get("family") or species_variant.get("id") or ""),
-                        "tier": str(species_variant.get("tier") or ""),
+                        "variant_id": str(species_variant.get('id') or ''),
+                        "family": str(species_variant.get('family') or species_variant.get('id') or ''),
+                        "tier": str(species_variant.get('tier') or ''),
                         "weight": species_variant.get("weight", 1),
                         "opt_in_activated": bool(species_variant.get("opt_in_activated")),
-                        "activation": str(species_variant.get("activation") or "weighted"),
+                        "activation": str(species_variant.get('activation') or 'weighted'),
                         "species_family_policy": species_family_policy,
                     }
                 )
@@ -2141,14 +2097,10 @@ def resolve_concepts(
                 scaffold_recipes.append(selected_bundle)
                 safety_evaluation_items.extend(
                     safety_transform_items_for_recipe(
-                        str(selected_bundle.get("id") or f"{mixin}_bundle"),
-                        selected_bundle,
+                        str(selected_bundle.get("id") or f"{mixin}_bundle"), selected_bundle
                     )
                 )
-                bundle_preset = str(selected_bundle.get("preset") or "")
-                if effective_mode == "legacy" and bundle_preset and not has_preset_value:
-                    add_option(resolved_args, "--preset", bundle_preset)
-                    has_preset_value = True
+                bundle_preset = str(selected_bundle.get('preset') or '')
                 if mixin_base_set:
                     set_groups.append((mixin_base_set, set()))
                     soft_anchor_specs.extend(
@@ -2161,9 +2113,15 @@ def resolve_concepts(
                         )
                     )
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
-                bundle_set = selected_bundle.get("set") if isinstance(selected_bundle.get("set"), dict) else {}
+                bundle_set = (
+                    selected_bundle.get("set")
+                    if isinstance(selected_bundle.get("set"), dict)
+                    else {}
+                )
                 bundle_forced = set_values_to_forced(bundle_set)
-                set_groups.append((bundle_forced, recipe_override_slots(recipes, mixin_recipe, selected_bundle)))
+                set_groups.append(
+                    (bundle_forced, recipe_override_slots(recipes, mixin_recipe, selected_bundle))
+                )
                 soft_anchor_specs.extend(
                     soft_anchor_specs_from_mapping(
                         recipes,
@@ -2177,7 +2135,9 @@ def resolve_concepts(
                     soft_min_anchors_for_recipe(selected_bundle, 2 if role else 1)
                 )
                 additional_requirements.extend(normalize_list(selected_bundle.get("additional")))
-                soft_safety_requirements.extend(soft_safety_requirements_for_recipe(selected_bundle))
+                soft_safety_requirements.extend(
+                    soft_safety_requirements_for_recipe(selected_bundle)
+                )
                 soft_salience_cues.extend(soft_salience_cues_for_recipe(selected_bundle))
                 budget = mixin_cue_budget_for_recipe(selected_bundle)
                 if budget > 0:
@@ -2195,12 +2155,12 @@ def resolve_concepts(
                 selected_bundles.append(
                     {
                         "mixin": mixin,
-                        "bundle_id": str(selected_bundle.get("id") or ""),
-                        "aspect": str(selected_bundle.get("aspect") or ""),
+                        "bundle_id": str(selected_bundle.get('id') or ''),
+                        "aspect": str(selected_bundle.get('aspect') or ''),
                         "preset": bundle_preset,
                         "set": bundle_set,
                         "weight": selected_bundle.get("weight", 1),
-                        "subtype": str(selected_bundle.get("subtype") or ""),
+                        "subtype": str(selected_bundle.get('subtype') or ''),
                     }
                 )
             else:
@@ -2216,67 +2176,16 @@ def resolve_concepts(
                         )
                     )
                     soft_min_anchor_candidates.append(soft_min_anchors_for_recipe(mixin_recipe, 1))
-
         combined_sets = merge_forced_set_groups(set_groups)
         expansion_config = anchor_expansion_config(recipes, applied_recipes)
         safety_evaluation = safety_evaluation_payload(
-            safety_evaluation_items,
-            requested=safety_evaluation_requested,
+            safety_evaluation_items, requested=safety_evaluation_requested
         )
         add_option(resolved_args, "--concept-lock", concept)
-
-        natural_moe_route = natural_moe_request_route_id(concept)
-        preset = str(recipe.get("preset") or "")
-        if not preset:
-            preset = next(
-                (str(mixin_recipe.get("preset") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("preset")),
-                "",
-            )
-        if natural_moe_route and role is None:
-            # A roleless natural request belongs to the current mechanism
-            # route. Legacy mixin presets such as candid_iphone_portrait are
-            # styling fallbacks, not stronger semantic owners. Keep their
-            # expression/prop anchors, but leave preset selection open so the
-            # engine records and applies its natural-moe route contract.
-            preset = ""
-            affine_presets: list[str] = []
-        else:
-            affine_presets = [str(recipe.get("preset") or "")] if recipe else []
-            affine_presets += [str(m.get("preset") or "") for _, m in mixin_matches]
-            affine_presets += [str(b.get("preset") or "") for b in selected_bundles]
-        if effective_mode == "legacy" and preset and not has_preset_value:
-            add_option(resolved_args, "--preset", preset)
-            has_preset_value = True
-        if effective_mode == "legacy":
-            for forced in combined_sets:
-                add_option(resolved_args, "--set", forced)
-            if soft_anchor_specs:
-                soft_anchor_spec = apply_reference_scaffold_fields(
-                    build_soft_anchor_spec(
-                        soft_anchor_specs,
-                        soft_min_anchor_candidates,
-                        concept,
-                        expansion_config,
-                        safety_evaluation,
-                    ),
-                    scaffold_recipes,
-                )
-                if (
-                    soft_anchor_spec["anchors"]
-                    and soft_anchor_spec["min_anchors"] > 0
-                    and soft_anchor_spec_has_runtime_controls(soft_anchor_spec)
-                ):
-                    add_option(
-                        resolved_args,
-                        "--soft-anchor-spec",
-                        json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
-                    )
-            if typed_requirement_routing:
-                add_recipe_requirement_options(resolved_args, additional_requirements)
-            else:
-                for requirement in additional_requirements:
-                    add_option(resolved_args, "--additional-requirement", requirement)
-        elif soft_anchor_specs:
+        affine_presets = [str(recipe.get('preset') or '')] if recipe else []
+        affine_presets += [str(m.get('preset') or '') for _, m in mixin_matches]
+        affine_presets += [str(b.get('preset') or '') for b in selected_bundles]
+        if soft_anchor_specs:
             soft_anchor_spec = apply_reference_scaffold_fields(
                 build_soft_anchor_spec(
                     soft_anchor_specs,
@@ -2294,9 +2203,6 @@ def resolve_concepts(
                     "--soft-anchor-spec",
                     json.dumps(soft_anchor_spec, ensure_ascii=False, separators=(",", ":")),
                 )
-                # Role/mixin/bundle descriptive guidance is identity-bearing
-                # (e.g. Joseon-court styling); soft mode keeps it alongside the
-                # safety floor instead of dropping it with the forced slots.
                 if typed_requirement_routing:
                     add_recipe_requirement_options(resolved_args, additional_requirements)
                     for requirement in dict.fromkeys(soft_safety_requirements):
@@ -2306,13 +2212,17 @@ def resolve_concepts(
                     effective_requirements.extend(soft_safety_requirements)
                     for requirement in dict.fromkeys(effective_requirements):
                         add_option(resolved_args, "--additional-requirement", requirement)
-                defaults = recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
-                max_salience = normalize_int(defaults.get("max_salience_cues") if isinstance(defaults, dict) else None, 2)
+                defaults = (
+                    recipes.get("soft_anchor_defaults", {}) if isinstance(recipes, dict) else {}
+                )
+                max_salience = normalize_int(
+                    defaults.get("max_salience_cues") if isinstance(defaults, dict) else None, 2
+                )
                 if soft_mixin_cue_budgets:
                     max_salience = min(max_salience, min(soft_mixin_cue_budgets))
                 for cue in list(dict.fromkeys(soft_salience_cues))[: max(0, max_salience)]:
                     add_option(resolved_args, "--soft-requirement", cue)
-        elif effective_mode == "soft" and soft_safety_requirements:
+        elif soft_safety_requirements:
             if typed_requirement_routing:
                 for requirement in dict.fromkeys(soft_safety_requirements):
                     add_option(resolved_args, "--negative-requirement", requirement)
@@ -2321,42 +2231,38 @@ def resolve_concepts(
                     add_option(resolved_args, "--additional-requirement", requirement)
         for axis in intent_axes:
             add_option(resolved_args, "--intent-axis", axis)
-
-        likeness_mode = str(recipe.get("likeness_mode") or "")
+        likeness_mode = str(recipe.get('likeness_mode') or '')
         if not likeness_mode:
             likeness_mode = next(
-                (str(mixin_recipe.get("likeness_mode") or "") for _, mixin_recipe in mixin_matches if mixin_recipe.get("likeness_mode")),
+                (
+                    str(mixin_recipe.get('likeness_mode') or '')
+                    for _, mixin_recipe in mixin_matches
+                    if mixin_recipe.get("likeness_mode")
+                ),
                 "",
             )
-        # ``수인`` exact-input likeness inference is frozen by the historical
-        # explain snapshot.  Do not extend that quirk to new descriptor
-        # mixins such as ``네코미미`` or to natural request sentences.
-        exact_legacy_mixin_name = (
+        exact_mixin_name = (
             role is None
             and len(mixin_matches) == 1
-            and mixin_matches[0][0] == "수인"
-            and name.strip() == "수인"
+            and (mixin_matches[0][0] == "수인")
+            and (name.strip() == "수인")
         )
         inferred_likeness_reference = (
-            name.strip()
-            if exact_legacy_mixin_name
-            else sanitize_inferred_likeness_reference(name)
+            name.strip() if exact_mixin_name else sanitize_inferred_likeness_reference(name)
         )
-        if likeness_mode and inferred_likeness_reference and not has_likeness_value:
+        if likeness_mode and inferred_likeness_reference and (not has_likeness_value):
             add_option(resolved_args, "--likeness-mode", likeness_mode)
             add_option(resolved_args, "--likeness-reference", inferred_likeness_reference)
             has_likeness_value = True
-
         if not applied_recipes:
             add_option(resolved_args, "--intent-axis", concept)
-
         applied_named: list[tuple[str, dict[str, Any]]] = []
         if recipe:
             applied_named.append((role or concept, recipe))
         applied_named.extend(mixin_matches)
         explanation = {
             "concept": concept,
-            "concept_mode": effective_mode,
+            "concept_mode": "soft",
             "name": name,
             "inferred_likeness_reference": inferred_likeness_reference,
             "role": role,
@@ -2382,7 +2288,7 @@ def resolve_concepts(
                 ),
                 affine_presets,
             ),
-            "forced_slots_applied": effective_mode == "legacy",
+            "forced_slots_applied": False,
         }
         explanation["safety"] = safety_evaluation
         explanation["guide"] = collect_concept_guides(applied_named)
@@ -2405,11 +2311,9 @@ def resolve_concepts(
                 f"concept review gate failed for '{concept}': {', '.join(failed_gates)}"
             )
         explanations.append(explanation)
-
     for forced in explicit_user_sets:
         add_option(resolved_args, "--set", forced)
-
-    return resolved_args, explanations
+    return (resolved_args, explanations)
 
 
 def load_project_env() -> None:
@@ -2438,7 +2342,7 @@ def load_generator():
     return module
 
 
-def build_forward_args(argv: Sequence[str]) -> list[str]:
+def build_forward_args(argv: Sequence[str], *, candidate_diagnostic: bool = False) -> list[str]:
     args = list(argv)
 
     plain = "--plain" in args
@@ -2448,14 +2352,13 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     args = remove_flag(remove_flag(args, "--plain"), "--no-negative")
     args, concepts = extract_option_values(args, "--concept")
     args, concept_mode_values = extract_option_values(args, "--concept-mode")
-    emit_candidate_pack = has_option(args, "--emit-candidate-pack")
+    emit_candidate_pack = candidate_diagnostic or has_option(args, "--emit-candidate-pack")
     concept_mode = resolve_concept_mode(concept_mode_values or (["soft"] if emit_candidate_pack else []))
     args, explain_concept = extract_flag(args, "--explain-concept")
     args, _ = resolve_concepts(
         args,
         concepts,
         concept_mode,
-        concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack,
         safety_evaluation_requested=safety_evaluation_requested,
         enforce_gates=not explain_concept,
     )
@@ -2491,7 +2394,7 @@ def build_forward_args(argv: Sequence[str]) -> list[str]:
     return args
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Sequence[str] | None = None, *, diagnostic: bool = False, diagnostic_candidates: bool = False) -> int:
     load_project_env()
     raw_args = list(argv or sys.argv[1:])
     concept_args, concepts = extract_option_values(raw_args, "--concept")
@@ -2506,14 +2409,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             explain_args,
             concepts,
             concept_mode,
-            concept_mode_explicit=bool(concept_mode_values) or emit_candidate_pack,
             safety_evaluation_requested=SAFETY_EVALUATION_FLAG in raw_args,
             enforce_gates=False,
         )
         print(json.dumps({"concepts": explanations, "forward_args": forward_args}, ensure_ascii=False, indent=2))
         return 0
     generator = load_generator()
-    return generator.main(build_forward_args(raw_args))
+    return generator.main(build_forward_args(raw_args, candidate_diagnostic=diagnostic_candidates), diagnostic=diagnostic, diagnostic_candidates=diagnostic_candidates)
 
 
 if __name__ == "__main__":

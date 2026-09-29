@@ -23,14 +23,12 @@ def load_generator():
     return module
 
 
-def make_source(slot_conflicts=None, slot_context_rules=None, builtin=None):
+def make_source(slot_conflicts=None, slot_context_rules=None):
     rules = {}
     if slot_conflicts is not None:
         rules["slot_conflicts"] = slot_conflicts
     if slot_context_rules is not None:
         rules["slot_context_rules"] = slot_context_rules
-    if builtin is not None:
-        rules["builtin_slot_context_rules"] = builtin
     return {"coherence_rules": rules}
 
 
@@ -164,7 +162,7 @@ class SlotContextRuleTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.generator = load_generator()
 
-    def test_declared_rule_replicates_builtin_moonlight_guard(self) -> None:
+    def test_declared_moonlight_rule_requires_scene_context(self) -> None:
         source = make_source(
             slot_context_rules=[
                 {
@@ -176,7 +174,6 @@ class SlotContextRuleTests(unittest.TestCase):
                     "severity": "hard",
                 }
             ],
-            builtin=False,
         )
         moonlight = {"id": "moonlight", "tags": []}
         urban_picked = {
@@ -205,7 +202,6 @@ class SlotContextRuleTests(unittest.TestCase):
                     "severity": "hard",
                 }
             ],
-            builtin=False,
         )
         phone_picked = {
             "subject": {"id": "person", "tags": ["human"]},
@@ -225,14 +221,11 @@ class SlotContextRuleTests(unittest.TestCase):
             self.generator.compatible_with_slot_context("lens", telephoto, plain_picked, source)
         )
 
-    def test_builtin_rules_still_apply_without_source(self) -> None:
+    def test_missing_rules_do_not_inject_old_python_scene_guards(self) -> None:
         moonlight = {"id": "moonlight", "tags": []}
-        urban_picked = {
-            "subject": {"id": "person", "tags": ["human"]},
-            "location": {"id": "office", "tags": ["indoor", "office"]},
-        }
-        self.assertFalse(
-            self.generator.compatible_with_slot_context("lighting", moonlight, urban_picked)
+        picked = {"location": {"id": "office", "tags": ["indoor", "office"]}}
+        self.assertTrue(
+            self.generator.compatible_with_slot_context("lighting", moonlight, picked)
         )
 
 
@@ -244,9 +237,9 @@ class ShippedDictionaryConflictTests(unittest.TestCase):
         cls.generator = load_generator()
         cls.data = json.loads(TAGS_PATH.read_text(encoding="utf-8"))
 
-    def test_builtin_rules_migrated_and_disabled(self) -> None:
+    def test_shipped_dictionary_declares_slot_context_guards(self) -> None:
         rules = self.data["coherence_rules"]
-        self.assertFalse(rules["builtin_slot_context_rules"])
+        self.assertNotIn("builtin_slot_context_rules", rules)
         rule_ids = {rule["id"] for rule in rules["slot_context_rules"]}
         self.assertIn("moonlight_needs_night_nature", rule_ids)
         self.assertIn("phone_context_lens", rule_ids)

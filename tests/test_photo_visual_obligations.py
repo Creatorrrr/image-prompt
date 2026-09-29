@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
@@ -34,6 +35,7 @@ import audit_composed_prompt  # noqa: E402
 import audit_image_render_request  # noqa: E402
 import audit_moe_render_review  # noqa: E402
 import prompt_generator  # noqa: E402
+from tests import photo_prompt_fixtures as fixtures
 import record_image_run  # noqa: E402
 import validate_photo_prompt_dictionary  # noqa: E402
 
@@ -58,15 +60,37 @@ class PhotoVisualObligationTests(unittest.TestCase):
         return payload[0]
 
     def moe_pack(self, concept: str, *, seed: int = 1401, extra: tuple[str, ...] = ()) -> dict:
-        return self.run_wrapper(
-            "--selection-mode",
-            "rule",
-            "--seed",
-            str(seed),
-            "--emit-candidate-pack",
-            "--concept-lock",
-            concept,
-            *extra,
+        additional = [extra[index + 1] for index, value in enumerate(extra) if value == "--additional-requirement"]
+        source = " ".join([concept, *additional])
+        baseline = (
+            "An unmistakably adult woman stands in a quiet neutral photographic studio, "
+            "holding a balanced self-directed pose while soft side lighting reveals natural "
+            "surface texture, clear spatial depth and controlled material reflections. A "
+            "restrained camera angle keeps the subject fully legible, with quiet background "
+            "separation, coherent shadows, grounded detail and a deliberate focal hierarchy."
+        )
+        raw = fixtures.core(
+            source, interpreted_intent=source, subject="one adult woman",
+            setting="a quiet neutral photographic studio",
+            event="the adult subject holds a balanced self-directed pose",
+            visual_priorities=("natural surface texture", "clear spatial depth", "coherent shadows"),
+            baseline_prompt_en=baseline,
+            interpretations=tuple({
+                "term": f"request detail {index + 1}", "source_text": text,
+                "basis": "request_context", "resolution": text, "sources": [],
+            } for index, text in enumerate([concept, *additional])),
+        )
+        for anchor in raw["intent_lock"]["semantic_anchors"]:
+            anchor["source_text"] = concept
+        for index, text in enumerate(additional):
+            raw["baseline_prompt_en"] += " " + text
+            raw["intent_lock"]["semantic_anchors"].append({
+                "anchor_id": f"additional_{index + 1}", "source_text": text,
+                "dimension": "event", "prompt_evidence": text,
+            })
+        return fixtures.run_current(
+            raw, seed=seed, creativity=0, extra_args=extra,
+            envelope_input=fixtures.envelope(source, tuple([concept, *additional])),
         )
 
     @staticmethod
@@ -96,6 +120,24 @@ class PhotoVisualObligationTests(unittest.TestCase):
         return prefix + "; ".join(evidence.values()) + "."
 
     def assert_routing_fixture(self, path: Path) -> None:
+        # Exhaustive cases share one immutable registry. Build the real index once
+        # and return isolated copies; assertions and request resolution stay unchanged.
+        index = prompt_generator.build_visual_profile_index_payload(self.registry)
+        registry_hash = prompt_generator.visual_profile_registry_sha256(self.registry)
+
+        def generated_index(registry, **kwargs):
+            self.assertFalse(kwargs)
+            self.assertEqual(
+                prompt_generator.visual_profile_registry_sha256(registry), registry_hash
+            )
+            return copy.deepcopy(index)
+
+        with mock.patch.object(
+            prompt_generator, "build_visual_profile_index_payload", side_effect=generated_index
+        ):
+            self.assert_routing_fixture_cases(path)
+
+    def assert_routing_fixture_cases(self, path: Path) -> None:
         cases = [
             json.loads(line)
             for line in path.read_text(encoding="utf-8").splitlines()
@@ -129,19 +171,14 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     sorted(case["expected_candidate_profile_ids"]),
                 )
 
-                moe_response = {
-                    "enabled": True,
-                    "render_qualification": {
-                        "required_hard_gates": ["adult_role_identity"]
-                    },
-                }
+                character_response = None
                 data = {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry}
                 result = {"provenance": {"concept_lock": [case["text"]]}}
                 materialized = prompt_generator.candidate_pack_visual_obligations(
                     data,
                     result,
                     {},
-                    moe_response,
+                    character_response,
                 )
                 actual_ids = (
                     [item["id"] for item in materialized["obligations"]]
@@ -156,7 +193,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     data,
                     result,
                     {},
-                    moe_response,
+                    character_response,
                     materialized,
                 )
                 actual_candidate_ids = (
@@ -171,17 +208,6 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     sorted(actual_candidate_ids),
                     sorted(case["expected_candidate_profile_ids"]),
                 )
-                prompt_generator.candidate_pack_merge_visual_render_gates(
-                    moe_response,
-                    materialized,
-                )
-                if materialized is not None:
-                    self.assertTrue(
-                        set(materialized["required_hard_gates"])
-                        <= set(
-                            moe_response["render_qualification"]["required_hard_gates"]
-                        )
-                    )
 
     def test_registry_and_request_scoped_routing_fixture(self):
         errors: list[str] = []
@@ -396,7 +422,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "woman, mid-twenties or older, doing a bubble tea challenge"
         )
         visual = pack["visual_obligations"]
-        self.assertEqual(audit_composed_prompt.audit_v4_authorial_pack(pack), [])
+        self.assertEqual(audit_composed_prompt.audit_authorial_pack(pack), [])
         self.assertEqual(visual["contract_version"], "photo-visual-obligations/v1")
         self.assertTrue(visual["strict_gate_set"])
         self.assertEqual(
@@ -404,9 +430,8 @@ class PhotoVisualObligationTests(unittest.TestCase):
             ["hands_free_supported_drink_load"],
         )
         visual_gates = visual["required_hard_gates"]
-        qualification = pack["moe_response"]["render_qualification"]
-        self.assertEqual(qualification["request_specific_hard_gates"], visual_gates)
-        self.assertTrue(set(visual_gates) <= set(qualification["required_hard_gates"]))
+        self.assertTrue(visual_gates)
+        self.assertNotIn("moe_response", pack)
 
         ordinary = self.moe_pack(
             "Photorealistic explicitly nonsexual behavior-led moe cafe portrait of an "
@@ -569,7 +594,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             ),
         )
         visual = pack["visual_obligations"]
-        self.assertEqual(audit_composed_prompt.audit_v4_authorial_pack(pack), [])
+        self.assertEqual(audit_composed_prompt.audit_authorial_pack(pack), [])
         obligation = visual["obligations"][0]
         self.assertEqual(obligation["id"], "inner_thigh_negative_space")
         self.assertEqual(
@@ -594,6 +619,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "visual_obligation_evidence": {
                 obligation["id"]: composed_evidence,
             },
+            "chosen_visual_concept_ids": [],
         }
         self.assertEqual(
             audit_composed_prompt.audit_visual_obligations(
@@ -617,27 +643,12 @@ class PhotoVisualObligationTests(unittest.TestCase):
 
         ungrounded = copy.deepcopy(visual_intent)
         ungrounded["obligations"][0]["source_text"] = "A sentence absent from the request."
-        completed = subprocess.run(
-            [
-                sys.executable,
-                str(WRAPPER_PATH),
-                "--selection-mode",
-                "rule",
-                "--seed",
-                "1404",
-                "--emit-candidate-pack",
-                "--concept-lock",
-                "Photorealistic explicitly nonsexual adult behavior-led moe portrait",
-                "--visual-intent-json",
-                json.dumps(ungrounded, ensure_ascii=False),
-            ],
-            cwd=ROOT,
-            text=True,
-            capture_output=True,
-            check=False,
-        )
-        self.assertNotEqual(completed.returncode, 0)
-        self.assertIn("source_text must exactly match", completed.stderr)
+        with self.assertRaisesRegex(ValueError, "source_text must exactly match"):
+            prompt_generator.candidate_pack_visual_obligations(
+                {prompt_generator.VISUAL_OBLIGATIONS_DATA_KEY: self.registry},
+                {"provenance": {"concept_lock": ["A different user request"],
+                                "visual_intent": prompt_generator.normalize_visual_intent(ungrounded, self.registry)}},
+                {}, None)
 
     def test_composed_prompt_must_bind_every_distinct_visual_duty(self):
         profile = prompt_generator.visual_obligation_profile_by_id(
@@ -709,8 +720,8 @@ class PhotoVisualObligationTests(unittest.TestCase):
         concepts = pack["visual_concept_candidates"]
         self.assertEqual(concepts["contract_version"], "photo-visual-concepts/v1")
         self.assertEqual(concepts["candidate_order"], "seed_shuffled_non_preferential")
-        self.assertEqual(len(concepts["candidates"]), 1)
-        candidate = concepts["candidates"][0]
+        candidate = next(row for row in concepts["candidates"]
+                         if row["opt_in_contract"]["obligation"]["id"] == "inner_thigh_negative_space")
         self.assertEqual(candidate["content_form"], "unordered_inspiration_terms")
         self.assertNotIn("score", candidate)
         self.assertNotIn("matched_terms", candidate)
@@ -782,7 +793,8 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "comic composure loss",
             seed=1411,
         )
-        candidate = pack["visual_concept_candidates"]["candidates"][0]
+        candidate = next(row for row in pack["visual_concept_candidates"]["candidates"]
+                         if row["opt_in_contract"]["obligation"]["id"] == "composite_overwhelmed_expression")
         obligation = candidate["opt_in_contract"]["obligation"]
         self.assertEqual(obligation["id"], "composite_overwhelmed_expression")
         evidence = self.visual_evidence_for_obligation(obligation)
@@ -871,9 +883,12 @@ class PhotoVisualObligationTests(unittest.TestCase):
             ),
             [],
         )
-        runtime_prompt = prompt_en + f"\nAvoid: {pack['negative_en']}"
+        composed["embodiment_review"] = fixtures.composition_review(pack, prompt_en)
+        runtime_prompt = prompt_en + f"\n\nAvoid: {pack['negative_en']}"
         request = {
             "schema_version": "photo-image-render-request/v2",
+            "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+            "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
             "pack_id": pack["pack_id"],
             "runtime_prompt_en": runtime_prompt,
             "runtime_negative_en": pack["negative_en"],
@@ -910,7 +925,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
         negative_request = copy.deepcopy(request)
         negative_request["runtime_negative_en"] = negative_pack["negative_en"]
         negative_request["runtime_prompt_en"] = (
-            prompt_en + f"\nAvoid: {negative_pack['negative_en']}"
+            prompt_en + f"\n\nAvoid: {negative_pack['negative_en']}"
         )
         negative_audit = audit_image_render_request.audit_image_render_request(
             negative_pack,
@@ -1104,11 +1119,14 @@ class PhotoVisualObligationTests(unittest.TestCase):
         effective_sha = audit_composed_prompt.effective_visual_obligation_sha256(
             effective
         )
+        composed["embodiment_review"] = fixtures.composition_review(pack, prompt_en)
         runtime_prompt = prompt_en
         if pack["negative_en"] is not None:
-            runtime_prompt += f"\nAvoid: {pack['negative_en']}"
+            runtime_prompt += f"\n\nAvoid: {pack['negative_en']}"
         request = {
             "schema_version": "photo-image-render-request/v2",
+            "source_intent_lock_sha256": pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+            "source_embodiment_preflight_sha256": pack["embodiment_preflight"]["canonical_sha256"],
             "pack_id": pack["pack_id"],
             "runtime_prompt_en": runtime_prompt,
             "runtime_negative_en": pack["negative_en"],
@@ -1137,8 +1155,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
 
         required_gates = list(
             dict.fromkeys(
-                pack["moe_response"]["render_qualification"]["required_hard_gates"]
-                + effective["required_hard_gates"]
+                effective["required_hard_gates"]
             )
         )
         with tempfile.TemporaryDirectory() as tmp:
@@ -1147,7 +1164,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
             review = {
                 "schema_version": "moe-render-review/v1",
                 "pack_id": pack["pack_id"],
-                "contract_version": pack["moe_response"]["contract_version"],
+                "contract_version": "photo-visual-obligations/v1",
                 "reviewer": "test pixel reviewer",
                 "result_image": str(image_path),
                 "result_sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
@@ -1240,10 +1257,10 @@ class PhotoVisualObligationTests(unittest.TestCase):
             None,
         )
         self.assertIsNotNone(visual_contract)
-        pack = {
-            "pack_id": "visual-only-render-pack",
-            "visual_obligations": visual_contract,
-        }
+        pack = self.moe_pack("adult portrait with a twin-tail hairstyle")
+        pack["visual_obligations"] = visual_contract
+        composed = {"prompt_en": pack["authorial_core"]["baseline_prompt_en"], "chosen_visual_concept_ids": []}
+        composed["embodiment_review"] = fixtures.composition_review(pack, composed["prompt_en"])
         required_gates = visual_contract["required_hard_gates"]
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / "candidate.png"
@@ -1270,7 +1287,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     "evidence": "",
                 },
             }
-            audited = audit_moe_render_review.audit_moe_render_review(pack, review)
+            audited = audit_moe_render_review.audit_moe_render_review(pack, review, composed=composed)
             self.assertTrue(audited["technical_qualified"], audited)
             self.assertFalse(audited["representative_eligible"])
             self.assertEqual(audited["schema_failures"], [])
@@ -1314,16 +1331,16 @@ class PhotoVisualObligationTests(unittest.TestCase):
             "woman, mid-twenties or older, doing a bubble tea challenge",
             seed=1405,
         )
-        required_gates = pack["moe_response"]["render_qualification"][
-            "required_hard_gates"
-        ]
+        composed = {"prompt_en": pack["authorial_core"]["baseline_prompt_en"], "chosen_visual_concept_ids": []}
+        composed["embodiment_review"] = fixtures.composition_review(pack, composed["prompt_en"])
+        required_gates = pack["visual_obligations"]["required_hard_gates"]
         with tempfile.TemporaryDirectory() as tmp:
             image_path = Path(tmp) / "candidate.png"
             image_path.write_bytes(b"visual-obligation-test-image")
             review = {
                 "schema_version": "moe-render-review/v1",
                 "pack_id": pack["pack_id"],
-                "contract_version": pack["moe_response"]["contract_version"],
+                "contract_version": "photo-visual-obligations/v1",
                 "reviewer": "test pixel reviewer",
                 "result_image": str(image_path),
                 "result_sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
@@ -1342,7 +1359,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                     "evidence": "",
                 },
             }
-            passed = audit_moe_render_review.audit_moe_render_review(pack, review)
+            passed = audit_moe_render_review.audit_moe_render_review(pack, review, composed=composed)
             self.assertTrue(passed["technical_qualified"], passed)
 
             failed = copy.deepcopy(review)
@@ -1350,7 +1367,7 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "status": "fail",
                 "evidence": "The cup base floats above the fabric in native pixels.",
             }
-            failed_result = audit_moe_render_review.audit_moe_render_review(pack, failed)
+            failed_result = audit_moe_render_review.audit_moe_render_review(pack, failed, composed=composed)
             self.assertFalse(failed_result["technical_qualified"])
             self.assertEqual(
                 [row["gate"] for row in failed_result["failed_hard_gates"]],
@@ -1362,32 +1379,17 @@ class PhotoVisualObligationTests(unittest.TestCase):
                 "status": "pass",
                 "evidence": "This gate was never declared in the candidate pack.",
             }
-            extra_result = audit_moe_render_review.audit_moe_render_review(pack, extra)
+            extra_result = audit_moe_render_review.audit_moe_render_review(pack, extra, composed=composed)
             self.assertFalse(extra_result["technical_qualified"])
             self.assertIn(
                 "hard_gates",
                 {failure["check"] for failure in extra_result["schema_failures"]},
             )
 
-    def test_mamang_keeps_existing_nurturant_contract_without_new_profile(self):
-        pack = self.moe_pack(
-            "Photorealistic explicitly nonsexual behavior-led moe scene of an adult "
-            "woman, mid-twenties or older, with calm protective 마망 warmth",
-            seed=1406,
-        )
-        self.assertEqual(
-            pack["moe_response"]["relationship_register"],
-            "nurturant_benevolence",
-        )
-        self.assertEqual(
-            pack["moe_response"]["render_qualification"]["mechanism_hard_gates"],
-            [
-                "relaxed_brow",
-                "patient_soft_eyes",
-                "reassuring_mouth",
-                "calm_protective_attention",
-            ],
-        )
+    def test_raw_character_label_does_not_introduce_a_fixed_render_contract(self):
+        pack = self.moe_pack("Photorealistic nonsexual adult portrait with calm protective 마망 warmth")
+        self.assertNotIn("moe_response", pack)
+        self.assertNotIn("character_response", pack)
         self.assertNotIn("visual_obligations", pack)
 
     def test_kuudere_profile_requires_stable_composure_and_same_target_care(self):

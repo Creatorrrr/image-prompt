@@ -52,7 +52,7 @@ JsonDict = Dict[str, Any]
 DEFAULT_TAGS = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_tags.json"
 DEFAULT_INDEX = Path(__file__).resolve().parents[1] / "assets" / "photo_prompt_semantic_index.json"
 DEFAULT_CONCEPT_RECIPES = Path(__file__).resolve().parents[1] / "assets" / "concept_recipes.json"
-WRAPPER_PATH = Path(__file__).resolve().with_name("generate_photo_prompt.py")
+SAMPLER_INSPECTOR_PATH = Path(__file__).resolve().with_name("inspect_photo_sample.py")
 PROJECT_ROOT = Path(__file__).resolve().parents[1].parents[1]
 DEFAULT_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "photo_prompt"
 DEFAULT_GENERALIZATION_CASES = DEFAULT_FIXTURE_DIR / "generalization_cases.jsonl"
@@ -334,73 +334,41 @@ CONCEPT_BENCHMARK_CASES: List[JsonDict] = [
         "name": "karina_maid_vampire",
         "concept": "카리나 메이드 흡혈귀",
         "prompt_terms": ["maid", "vampire", "reflection"],
-        "required_legacy_choices": {
-            "costume_style": ["frill_apron_maid_costume"],
-            "location": ["maid_cafe_interior"],
-        },
     },
     {
         "name": "karina_maid_succubus",
         "concept": "카리나 메이드 서큐버스",
         "prompt_terms": ["maid", "succubus", "invitation", "life-drain"],
-        "required_legacy_choices": {
-            "costume_style": ["frill_apron_maid_costume"],
-            "location": ["maid_cafe_interior"],
-            "prop": ["soul_contract_scroll_prop"],
-        },
     },
     {
         "name": "winter_nurse_yandere",
         "concept": "윈터 간호사 얀데레",
         "prompt_terms": ["nurse", "yandere", "hospital"],
-        "required_legacy_choices": {
-            "costume_style": ["nurse_uniform_costume"],
-            "location": ["hospital_corridor"],
-        },
     },
     {
         "name": "ningning_police_femme_fatale",
         "concept": "닝닝 경찰 팜므파탈",
         "prompt_terms": ["police", "uniform"],
-        "required_legacy_choices": {
-            "costume_style": ["police_uniform_costume"],
-        },
     },
     {
         "name": "giselle_miner_devil",
         "concept": "지젤 광부 악마",
         "prompt_terms": ["miner", "devil", "mine"],
-        "required_legacy_choices": {
-            "costume_style": ["miner_workwear_hard_hat"],
-            "location": ["underground_mine_tunnel_set"],
-            "prop": ["nonfunctional_pickaxe_prop", "sealed_mission_envelope_prop"],
-        },
     },
     {
         "name": "illit_wonhee_casual_girlfriend_angel",
         "concept": "아일릿 원희 사복 여친 천사",
         "prompt_terms": ["girlfriend", "angel", "casual"],
-        "required_legacy_choices": {
-            "wardrobe_style": ["hoodie_shorts_sneakers"],
-            "prop": ["angel_halo_wings_tail_set"],
-        },
     },
     {
         "name": "sullyoon_princess_vampire",
         "concept": "설윤 공주 흡혈귀",
         "prompt_terms": ["princess", "vampire", "royal"],
-        "required_legacy_choices": {
-            "costume_style": ["royal_ball_gown", "royal_princess_hanbok", "ornate_hanfu_court_dress"],
-            "location": ["throne_hall_interior"],
-        },
     },
     {
         "name": "yuna_bunnygirl_menhera",
         "concept": "유나 바니걸 멘헤라",
         "prompt_terms": ["bunny", "menhera"],
-        "required_legacy_choices": {
-            "costume_style": ["bunny_girl_costume"],
-        },
     },
 ]
 
@@ -1251,7 +1219,7 @@ def run_wrapper_concept(
 ) -> JsonDict:
     command = [
         sys.executable,
-        str(WRAPPER_PATH),
+        str(SAMPLER_INSPECTOR_PATH),
         "--tags",
         str(tags_path),
         "--semantic-index",
@@ -1302,252 +1270,72 @@ def run_wrapper_concept(
     raise RuntimeError(f"Unexpected concept wrapper payload for {concept!r}: {type(payload).__name__}")
 
 
-def evaluate_concept_benchmark(
-    cases: Sequence[JsonDict],
-    seed: int,
-    tags_path: Path,
-    semantic_index_path: Path,
-    runs: int = 2,
-    include_soft: bool = True,
-) -> JsonDict:
-    modes = ["legacy"] + (["soft"] if include_soft else [])
+def evaluate_concept_benchmark(cases: Sequence[JsonDict], seed: int, tags_path: Path, semantic_index_path: Path, runs: int=2, include_soft: bool=True) -> JsonDict:
+    modes = ['soft']
     minimum_coverage = 0.85
     minimum_prompt_anchor = 0.5
-    minimum_legacy_choice_anchor = 0.75
-    minimum_soft_selected_anchor = 0.60
-    minimum_soft_average_selected_anchor = 0.80
-    minimum_soft_body_anchor = 0.60
+    minimum_soft_selected_anchor = 0.6
+    minimum_soft_average_selected_anchor = 0.8
+    minimum_soft_body_anchor = 0.6
     rows: List[JsonDict] = []
-    by_mode: Dict[str, List[JsonDict]] = {mode: [] for mode in modes}
+    by_mode: Dict[str, List[JsonDict]] = {'soft': [] for mode in modes}
     for case_index, case in enumerate(cases):
-        # Soft batch runs share an anchor-diversity ledger so anchor-variant
-        # rotation is measured the way real multi-run batches are documented
-        # to operate (the engine's repeat decay needs cross-run state).
-        ledger_dir = Path(tempfile.mkdtemp(prefix="soft_ledger_"))
-        soft_ledger = ledger_dir / f"case_{case_index}.json"
+        ledger_dir = Path(tempfile.mkdtemp(prefix='soft_ledger_'))
+        soft_ledger = ledger_dir / f'case_{case_index}.json'
         for run_index in range(max(1, runs)):
-            run_seed = seed + 8000 + (case_index * 100) + run_index
+            run_seed = seed + 8000 + case_index * 100 + run_index
             for mode in modes:
-                result = run_wrapper_concept(
-                    concept=case["concept"],
-                    concept_mode=mode,
-                    seed=run_seed,
-                    tags_path=tags_path,
-                    semantic_index_path=semantic_index_path,
-                    anchor_diversity_ledger=soft_ledger if mode == "soft" else None,
-                )
-                trace = result.get("semantic_trace", {}) or {}
-                contract = trace.get("generation_contract", {}) or {}
+                result = run_wrapper_concept(concept=case['concept'], concept_mode='soft', seed=run_seed, tags_path=tags_path, semantic_index_path=semantic_index_path, anchor_diversity_ledger=soft_ledger)
+                trace = result.get('semantic_trace', {}) or {}
+                contract = trace.get('generation_contract', {}) or {}
                 coverage_rate = coverage_preservation_rate(contract)
-                prompt_rate, prompt_hits = prompt_term_rate(str(result.get("prompt_en", "")), case.get("prompt_terms", []))
-                choice_rate, choice_rows = choice_anchor_rate(result, case.get("required_legacy_choices", {}) or {})
-                (
-                    selected_anchor_rate,
-                    selected_anchor_rows,
-                    body_anchor_rate,
-                    body_anchor_hits,
-                    body_anchor_missing,
-                    soft_failures,
-                    soft_anchor_detail,
-                ) = soft_anchor_metrics(result)
-                choice_threshold = minimum_legacy_choice_anchor if mode == "legacy" else 0.0
-                if mode == "soft":
-                    passed = (
-                        coverage_rate >= minimum_coverage
-                        and selected_anchor_rate >= minimum_soft_selected_anchor
-                        and body_anchor_rate >= minimum_soft_body_anchor
-                        and soft_anchor_detail["critical_anchor_match_rate"] >= 1.0
-                        and soft_anchor_detail["role_anchor_match_rate"] >= 0.90
-                        and soft_anchor_detail["mixin_salience_match_rate"] >= 0.80
-                        and soft_anchor_detail["primary_anchor_match_rate"] >= 0.85
-                        and soft_anchor_detail["anchor_group_match_rate"] >= 0.85
-                        and soft_anchor_detail["visual_guard_violation_count"] == 0
-                        and soft_anchor_detail["render_priority_term_rate"] >= 0.60
-                        and soft_anchor_detail["required_render_priority_pass_rate"] >= 0.90
-                        and soft_anchor_detail["soft_repair_success_rate"] >= 0.80
-                        and soft_anchor_detail["active_denial_pass_rate"] >= 1.0
-                        and soft_anchor_detail["robot_deep_structural_pass_rate"] >= 1.0
-                        and soft_anchor_detail["free_slot_constraint_violation_count"] == 0
-                        and soft_anchor_detail["body_first_drift_rate"] <= 0.05
-                        and not soft_anchor_detail["critical_missing"]
-                        and not soft_anchor_detail["source_floor_misses"]
-                        and not soft_anchor_detail["anchor_group_misses"]
-                    )
-                    if selected_anchor_rate < minimum_soft_selected_anchor:
-                        soft_failures.append("selected_anchor_rate_below_threshold")
-                    if body_anchor_rate < minimum_soft_body_anchor:
-                        soft_failures.append("body_anchor_term_rate_below_threshold")
-                    if soft_anchor_detail["critical_anchor_match_rate"] < 1.0:
-                        soft_failures.append("critical_anchor_missing")
-                    if soft_anchor_detail["role_anchor_match_rate"] < 0.90:
-                        soft_failures.append("role_anchor_floor_missed")
-                    if soft_anchor_detail["mixin_salience_match_rate"] < 0.80:
-                        soft_failures.append("mixin_salience_floor_missed")
-                    if soft_anchor_detail["source_floor_misses"]:
-                        soft_failures.append("source_floor_missed")
-                    if soft_anchor_detail["anchor_group_misses"]:
-                        soft_failures.append("anchor_group_floor_missed")
-                    if soft_anchor_detail["visual_guard_violation_count"] > 0:
-                        soft_failures.append("visual_guard_violation")
-                    if soft_anchor_detail["primary_anchor_match_rate"] < 0.85:
-                        soft_failures.append("primary_anchor_rate_below_threshold")
-                    if soft_anchor_detail["render_priority_term_rate"] < 0.60:
-                        soft_failures.append("render_priority_term_rate_below_threshold")
-                    if soft_anchor_detail["required_render_priority_pass_rate"] < 0.90:
-                        soft_failures.append("required_render_priority_rate_below_threshold")
-                    if soft_anchor_detail["soft_repair_success_rate"] < 0.80:
-                        soft_failures.append("soft_repair_failed")
-                    if soft_anchor_detail["active_denial_pass_rate"] < 1.0:
-                        soft_failures.append("active_denial_missing")
-                    if soft_anchor_detail["robot_deep_structural_pass_rate"] < 1.0:
-                        soft_failures.append("robot_deep_structural_missing")
-                    if soft_anchor_detail["free_slot_constraint_violation_count"] > 0:
-                        soft_failures.append("free_slot_constraint_violation")
-                    if soft_anchor_detail["body_first_drift_rate"] > 0.05:
-                        soft_failures.append("body_first_framing_present")
-                else:
-                    passed = (
-                        coverage_rate >= minimum_coverage
-                        and prompt_rate >= minimum_prompt_anchor
-                        and choice_rate >= choice_threshold
-                    )
-                row = {
-                    "name": case.get("name", case["concept"]),
-                    "concept": case["concept"],
-                    "concept_mode": mode,
-                    "seed": run_seed,
-                    "preset_id": result.get("preset_id"),
-                    "coverage_rate": round(coverage_rate, 4),
-                    "minimum_coverage_rate": minimum_coverage,
-                    "prompt_anchor_rate": round(prompt_rate, 4),
-                    "minimum_prompt_anchor_rate": minimum_prompt_anchor,
-                    "prompt_anchor_hits": prompt_hits,
-                    "choice_anchor_rate": round(choice_rate, 4),
-                    "minimum_choice_anchor_rate": choice_threshold,
-                    "choice_anchors": choice_rows,
-                    "selected_anchor_rate": round(selected_anchor_rate, 4),
-                    "minimum_selected_anchor_rate": minimum_soft_selected_anchor if mode == "soft" else 0.0,
-                    "selected_anchors": selected_anchor_rows,
-                    "body_anchor_term_rate": round(body_anchor_rate, 4),
-                    "minimum_body_anchor_term_rate": minimum_soft_body_anchor if mode == "soft" else 0.0,
-                    "body_anchor_hits": body_anchor_hits,
-                    "body_anchor_missing": body_anchor_missing,
-                    "critical_anchor_match_rate": round(soft_anchor_detail["critical_anchor_match_rate"], 4),
-                    "role_anchor_match_rate": round(soft_anchor_detail["role_anchor_match_rate"], 4),
-                    "mixin_salience_match_rate": round(soft_anchor_detail["mixin_salience_match_rate"], 4),
-                    "primary_anchor_match_rate": round(soft_anchor_detail["primary_anchor_match_rate"], 4),
-                    "anchor_group_match_rate": round(soft_anchor_detail["anchor_group_match_rate"], 4),
-                    "visual_guard_violation_count": soft_anchor_detail["visual_guard_violation_count"],
-                    "render_priority_term_rate": round(soft_anchor_detail["render_priority_term_rate"], 4),
-                    "required_render_priority_pass_rate": round(soft_anchor_detail["required_render_priority_pass_rate"], 4),
-                    "soft_repair_success_rate": round(soft_anchor_detail["soft_repair_success_rate"], 4),
-                    "active_denial_pass_rate": round(soft_anchor_detail["active_denial_pass_rate"], 4),
-                    "robot_deep_structural_pass_rate": round(soft_anchor_detail["robot_deep_structural_pass_rate"], 4),
-                    "free_slot_constraint_violation_count": soft_anchor_detail["free_slot_constraint_violation_count"],
-                    "body_first_drift_rate": round(soft_anchor_detail["body_first_drift_rate"], 4),
-                    "critical_term_missing": soft_anchor_detail["critical_term_missing"],
-                    "critical_anchor_missing": soft_anchor_detail["critical_missing"],
-                    "source_floor_misses": soft_anchor_detail["source_floor_misses"],
-                    "anchor_group_misses": soft_anchor_detail["anchor_group_misses"],
-                    "soft_anchor_failure_reasons": sorted(set(soft_failures)),
-                    "anchor_variants": selected_anchor_variants(result),
-                    "coverage_gaps": contract.get("coverage_gaps", []),
-                    "render_suppressed_slots": contract.get("render_suppressed_slots", []),
-                    "passed": passed,
-                }
+                prompt_rate, prompt_hits = prompt_term_rate(str(result.get('prompt_en', '')), case.get('prompt_terms', []))
+                selected_anchor_rate, selected_anchor_rows, body_anchor_rate, body_anchor_hits, body_anchor_missing, soft_failures, soft_anchor_detail = soft_anchor_metrics(result)
+                passed = coverage_rate >= minimum_coverage and selected_anchor_rate >= minimum_soft_selected_anchor and (body_anchor_rate >= minimum_soft_body_anchor) and (soft_anchor_detail['critical_anchor_match_rate'] >= 1.0) and (soft_anchor_detail['role_anchor_match_rate'] >= 0.9) and (soft_anchor_detail['mixin_salience_match_rate'] >= 0.8) and (soft_anchor_detail['primary_anchor_match_rate'] >= 0.85) and (soft_anchor_detail['anchor_group_match_rate'] >= 0.85) and (soft_anchor_detail['visual_guard_violation_count'] == 0) and (soft_anchor_detail['render_priority_term_rate'] >= 0.6) and (soft_anchor_detail['required_render_priority_pass_rate'] >= 0.9) and (soft_anchor_detail['soft_repair_success_rate'] >= 0.8) and (soft_anchor_detail['active_denial_pass_rate'] >= 1.0) and (soft_anchor_detail['robot_deep_structural_pass_rate'] >= 1.0) and (soft_anchor_detail['free_slot_constraint_violation_count'] == 0) and (soft_anchor_detail['body_first_drift_rate'] <= 0.05) and (not soft_anchor_detail['critical_missing']) and (not soft_anchor_detail['source_floor_misses']) and (not soft_anchor_detail['anchor_group_misses'])
+                if selected_anchor_rate < minimum_soft_selected_anchor:
+                    soft_failures.append('selected_anchor_rate_below_threshold')
+                if body_anchor_rate < minimum_soft_body_anchor:
+                    soft_failures.append('body_anchor_term_rate_below_threshold')
+                if soft_anchor_detail['critical_anchor_match_rate'] < 1.0:
+                    soft_failures.append('critical_anchor_missing')
+                if soft_anchor_detail['role_anchor_match_rate'] < 0.9:
+                    soft_failures.append('role_anchor_floor_missed')
+                if soft_anchor_detail['mixin_salience_match_rate'] < 0.8:
+                    soft_failures.append('mixin_salience_floor_missed')
+                if soft_anchor_detail['source_floor_misses']:
+                    soft_failures.append('source_floor_missed')
+                if soft_anchor_detail['anchor_group_misses']:
+                    soft_failures.append('anchor_group_floor_missed')
+                if soft_anchor_detail['visual_guard_violation_count'] > 0:
+                    soft_failures.append('visual_guard_violation')
+                if soft_anchor_detail['primary_anchor_match_rate'] < 0.85:
+                    soft_failures.append('primary_anchor_rate_below_threshold')
+                if soft_anchor_detail['render_priority_term_rate'] < 0.6:
+                    soft_failures.append('render_priority_term_rate_below_threshold')
+                if soft_anchor_detail['required_render_priority_pass_rate'] < 0.9:
+                    soft_failures.append('required_render_priority_rate_below_threshold')
+                if soft_anchor_detail['soft_repair_success_rate'] < 0.8:
+                    soft_failures.append('soft_repair_failed')
+                if soft_anchor_detail['active_denial_pass_rate'] < 1.0:
+                    soft_failures.append('active_denial_missing')
+                if soft_anchor_detail['robot_deep_structural_pass_rate'] < 1.0:
+                    soft_failures.append('robot_deep_structural_missing')
+                if soft_anchor_detail['free_slot_constraint_violation_count'] > 0:
+                    soft_failures.append('free_slot_constraint_violation')
+                if soft_anchor_detail['body_first_drift_rate'] > 0.05:
+                    soft_failures.append('body_first_framing_present')
+                row = {'name': case.get('name', case['concept']), 'concept': case['concept'], 'concept_mode': 'soft', 'seed': run_seed, 'preset_id': result.get('preset_id'), 'coverage_rate': round(coverage_rate, 4), 'minimum_coverage_rate': minimum_coverage, 'prompt_anchor_rate': round(prompt_rate, 4), 'minimum_prompt_anchor_rate': minimum_prompt_anchor, 'prompt_anchor_hits': prompt_hits, 'selected_anchor_rate': round(selected_anchor_rate, 4), 'minimum_selected_anchor_rate': minimum_soft_selected_anchor, 'selected_anchors': selected_anchor_rows, 'body_anchor_term_rate': round(body_anchor_rate, 4), 'minimum_body_anchor_term_rate': minimum_soft_body_anchor, 'body_anchor_hits': body_anchor_hits, 'body_anchor_missing': body_anchor_missing, 'critical_anchor_match_rate': round(soft_anchor_detail['critical_anchor_match_rate'], 4), 'role_anchor_match_rate': round(soft_anchor_detail['role_anchor_match_rate'], 4), 'mixin_salience_match_rate': round(soft_anchor_detail['mixin_salience_match_rate'], 4), 'primary_anchor_match_rate': round(soft_anchor_detail['primary_anchor_match_rate'], 4), 'anchor_group_match_rate': round(soft_anchor_detail['anchor_group_match_rate'], 4), 'visual_guard_violation_count': soft_anchor_detail['visual_guard_violation_count'], 'render_priority_term_rate': round(soft_anchor_detail['render_priority_term_rate'], 4), 'required_render_priority_pass_rate': round(soft_anchor_detail['required_render_priority_pass_rate'], 4), 'soft_repair_success_rate': round(soft_anchor_detail['soft_repair_success_rate'], 4), 'active_denial_pass_rate': round(soft_anchor_detail['active_denial_pass_rate'], 4), 'robot_deep_structural_pass_rate': round(soft_anchor_detail['robot_deep_structural_pass_rate'], 4), 'free_slot_constraint_violation_count': soft_anchor_detail['free_slot_constraint_violation_count'], 'body_first_drift_rate': round(soft_anchor_detail['body_first_drift_rate'], 4), 'critical_term_missing': soft_anchor_detail['critical_term_missing'], 'critical_anchor_missing': soft_anchor_detail['critical_missing'], 'source_floor_misses': soft_anchor_detail['source_floor_misses'], 'anchor_group_misses': soft_anchor_detail['anchor_group_misses'], 'soft_anchor_failure_reasons': sorted(set(soft_failures)), 'anchor_variants': selected_anchor_variants(result), 'coverage_gaps': contract.get('coverage_gaps', []), 'render_suppressed_slots': contract.get('render_suppressed_slots', []), 'passed': passed}
                 rows.append(row)
-                by_mode[mode].append(row)
+                by_mode['soft'].append(row)
     mode_summaries: List[JsonDict] = []
     for mode, mode_rows in by_mode.items():
-        variant_diversity = anchor_variant_diversity(mode_rows) if mode == "soft" else {}
-        mode_summaries.append(
-            {
-                "concept_mode": mode,
-                "run_count": len(mode_rows),
-                "average_coverage_rate": round(
-                    sum(row["coverage_rate"] for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_prompt_anchor_rate": round(
-                    sum(row["prompt_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_choice_anchor_rate": round(
-                    sum(row["choice_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_selected_anchor_rate": round(
-                    sum(row["selected_anchor_rate"] for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_body_anchor_term_rate": round(
-                    sum(row["body_anchor_term_rate"] for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_body_first_drift_rate": round(
-                    sum(row.get("body_first_drift_rate", 0.0) for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_required_render_priority_pass_rate": round(
-                    sum(row.get("required_render_priority_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_soft_repair_success_rate": round(
-                    sum(row.get("soft_repair_success_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_active_denial_pass_rate": round(
-                    sum(row.get("active_denial_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "average_robot_deep_structural_pass_rate": round(
-                    sum(row.get("robot_deep_structural_pass_rate", 1.0) for row in mode_rows) / max(len(mode_rows), 1),
-                    4,
-                ),
-                "free_slot_constraint_violation_count": sum(row.get("free_slot_constraint_violation_count", 0) for row in mode_rows),
-                **variant_diversity,
-                "failed_run_count": sum(1 for row in mode_rows if not row["passed"]),
-            }
-        )
-    legacy_summary = next((item for item in mode_summaries if item["concept_mode"] == "legacy"), {})
-    soft_summary = next((item for item in mode_summaries if item["concept_mode"] == "soft"), None)
-    soft_coverage_drop = None
+        variant_diversity = anchor_variant_diversity(mode_rows)
+        mode_summaries.append({'concept_mode': 'soft', 'run_count': len(mode_rows), 'average_coverage_rate': round(sum((row['coverage_rate'] for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_prompt_anchor_rate': round(sum((row['prompt_anchor_rate'] for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_selected_anchor_rate': round(sum((row['selected_anchor_rate'] for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_body_anchor_term_rate': round(sum((row['body_anchor_term_rate'] for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_body_first_drift_rate': round(sum((row.get('body_first_drift_rate', 0.0) for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_required_render_priority_pass_rate': round(sum((row.get('required_render_priority_pass_rate', 1.0) for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_soft_repair_success_rate': round(sum((row.get('soft_repair_success_rate', 1.0) for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_active_denial_pass_rate': round(sum((row.get('active_denial_pass_rate', 1.0) for row in mode_rows)) / max(len(mode_rows), 1), 4), 'average_robot_deep_structural_pass_rate': round(sum((row.get('robot_deep_structural_pass_rate', 1.0) for row in mode_rows)) / max(len(mode_rows), 1), 4), 'free_slot_constraint_violation_count': sum((row.get('free_slot_constraint_violation_count', 0) for row in mode_rows)), **variant_diversity, 'failed_run_count': sum((1 for row in mode_rows if not row['passed']))})
+    soft_summary = next((item for item in mode_summaries if item['concept_mode'] == 'soft'), None)
     soft_promotion_ready = None
     if soft_summary:
-        soft_coverage_drop = round(
-            float(legacy_summary.get("average_coverage_rate", 0.0))
-            - float(soft_summary.get("average_coverage_rate", 0.0)),
-            4,
-        )
-        soft_promotion_ready = (
-            soft_summary["average_coverage_rate"] >= minimum_coverage
-            and soft_summary["average_selected_anchor_rate"] >= minimum_soft_average_selected_anchor
-            and soft_summary["average_body_anchor_term_rate"] >= minimum_soft_body_anchor
-            and soft_summary.get("average_body_first_drift_rate", 0.0) <= 0.05
-            and soft_summary.get("average_required_render_priority_pass_rate", 1.0) >= 0.90
-            and soft_summary.get("average_soft_repair_success_rate", 1.0) >= 0.80
-            and soft_summary.get("average_active_denial_pass_rate", 1.0) >= 1.0
-            and soft_summary.get("average_robot_deep_structural_pass_rate", 1.0) >= 1.0
-            and soft_summary.get("free_slot_constraint_violation_count", 0) == 0
-            and soft_summary.get("anchor_variant_diversity_rate", 1.0) >= 0.70
-            and soft_coverage_drop <= 0.05
-            and soft_summary["failed_run_count"] == 0
-        )
-    return {
-        "case_count": len(cases),
-        "runs_per_case": max(1, runs),
-        "minimum_coverage_rate": minimum_coverage,
-        "minimum_prompt_anchor_rate": minimum_prompt_anchor,
-        "minimum_legacy_choice_anchor_rate": minimum_legacy_choice_anchor,
-        "minimum_soft_selected_anchor_rate": minimum_soft_selected_anchor,
-        "minimum_soft_average_selected_anchor_rate": minimum_soft_average_selected_anchor,
-        "minimum_soft_body_anchor_term_rate": minimum_soft_body_anchor,
-        "mode_summaries": mode_summaries,
-        "legacy_failed_run_count": int(legacy_summary.get("failed_run_count", 0)),
-        "soft_coverage_drop": soft_coverage_drop,
-        "soft_promotion_ready": soft_promotion_ready,
-        "results": rows,
-    }
+        soft_promotion_ready = soft_summary['average_coverage_rate'] >= minimum_coverage and soft_summary['average_selected_anchor_rate'] >= minimum_soft_average_selected_anchor and (soft_summary['average_body_anchor_term_rate'] >= minimum_soft_body_anchor) and (soft_summary.get('average_body_first_drift_rate', 0.0) <= 0.05) and (soft_summary.get('average_required_render_priority_pass_rate', 1.0) >= 0.9) and (soft_summary.get('average_soft_repair_success_rate', 1.0) >= 0.8) and (soft_summary.get('average_active_denial_pass_rate', 1.0) >= 1.0) and (soft_summary.get('average_robot_deep_structural_pass_rate', 1.0) >= 1.0) and (soft_summary.get('free_slot_constraint_violation_count', 0) == 0) and (soft_summary.get('anchor_variant_diversity_rate', 1.0) >= 0.7) and (soft_summary['failed_run_count'] == 0)
+    return {'case_count': len(cases), 'runs_per_case': max(1, runs), 'minimum_coverage_rate': minimum_coverage, 'minimum_prompt_anchor_rate': minimum_prompt_anchor, 'minimum_soft_selected_anchor_rate': minimum_soft_selected_anchor, 'minimum_soft_average_selected_anchor_rate': minimum_soft_average_selected_anchor, 'minimum_soft_body_anchor_term_rate': minimum_soft_body_anchor, 'mode_summaries': mode_summaries, 'soft_promotion_ready': soft_promotion_ready, 'results': rows}
 
 
 BEASTKIN_ROLE_SCENE_EXPECTATIONS: Dict[str, Set[str]] = {
@@ -2064,7 +1852,7 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
     for index, case in enumerate(cases):
         cmd = [
             sys.executable,
-            str(WRAPPER_PATH),
+            str(SAMPLER_INSPECTOR_PATH),
             "--tags",
             str(tags_path),
             "--concept",
@@ -2073,7 +1861,7 @@ def evaluate_candidate_pack_coverage(tags_path: Path, seed: int, cases: Sequence
             str(case.get("selection_mode") or "rule"),
             "--seed",
             str(seed + index),
-            "--emit-candidate-pack",
+            "--diagnostic-candidates",
         ]
         result = subprocess.run(
             cmd,
@@ -2362,21 +2150,14 @@ def evaluate_generalization_check(
     for index, case in enumerate(cases):
         cmd = [
             sys.executable,
-            str(WRAPPER_PATH),
+            str(SAMPLER_INSPECTOR_PATH),
             "--tags",
             str(tags_path),
             "--selection-mode",
             "rule",
             "--seed",
             str(seed + index),
-            "--emit-candidate-pack",
-            # This evaluator measures the sampler's selected rows.  The v4
-            # authorial projection intentionally removes that answer key, so
-            # use the explicit replay projection as a diagnostic view.
-            "--candidate-pack-version",
-            "v3",
-            "--legacy-replay-reason",
-            "semantic-generalization-diagnostic-selected-row-audit",
+            "--diagnostic-candidates",
         ]
         if case.get("preset"):
             cmd.extend(["--preset", str(case["preset"])])
@@ -2419,8 +2200,8 @@ def evaluate_generalization_check(
             failures.append("default_safety_contract")
         if "approval_required_safety_transforms" in pack:
             failures.append("legacy_safety_contract_exposed")
-        if pack.get("contract_version") != "photo-candidate-pack/v3":
-            failures.append("candidate_pack_version")
+        if pack.get("schema_version") != "photo-sampler-diagnostic/v1" or pack.get("diagnostic_only") is not True:
+            failures.append("sampler_diagnostic_schema")
 
         presets = pack.get("presets", []) or []
         slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
@@ -2659,7 +2440,7 @@ def evaluate_retrieval_holdout(
     for index, case in enumerate(cases):
         cmd = [
             sys.executable,
-            str(WRAPPER_PATH),
+            str(SAMPLER_INSPECTOR_PATH),
             "--tags",
             str(tags_path),
             "--semantic-index",
@@ -2674,14 +2455,7 @@ def evaluate_retrieval_holdout(
             str(case["intent"]),
             "--seed",
             str(seed + index),
-            "--emit-candidate-pack",
-            # The holdout audits the internally selected semantic route and
-            # quality profile. The public v4 projection intentionally removes
-            # those answer keys, so inspect the explicit replay projection.
-            "--candidate-pack-version",
-            "v3",
-            "--legacy-replay-reason",
-            "semantic-retrieval-holdout-diagnostic-selected-route-audit",
+            "--diagnostic-candidates",
         ]
         result = subprocess.run(cmd, cwd=PROJECT_ROOT, text=True, capture_output=True, check=False)
         failures: List[str] = []
@@ -2810,7 +2584,7 @@ def compact_quality_gate_summary(summary: JsonDict) -> JsonDict:
             "case_count",
             "failed_case_count",
             "failed_run_count",
-            "legacy_failed_run_count",
+
             "blacklisted_case_count",
             "violation_count",
             "soft_promotion_ready",
@@ -3138,7 +2912,6 @@ def main() -> int:
             }
             if visual_review_result is not None:
                 summary["visual_review"] = visual_review_result
-            legacy_passed = summary["concept_benchmark"]["legacy_failed_run_count"] == 0
             soft_ready = bool(summary["concept_benchmark"].get("soft_promotion_ready"))
             rule_golden = next(item for item in golden_modes if item["mode"] == "rule")
             semantic_golden = next(item for item in golden_modes if item["mode"] == "semantic")
@@ -3148,8 +2921,7 @@ def main() -> int:
                 or semantic_golden["average_coverage"] < rule_golden["average_coverage"]
             )
             failed = (
-                not legacy_passed
-                or golden_failed
+                golden_failed
                 or summary["diversity_check"]["failed_case_count"] > 0
                 or summary["bleed_check"]["failed_case_count"] > 0
                 or summary["candidate_pack_coverage"]["failed_case_count"] > 0
@@ -3162,7 +2934,6 @@ def main() -> int:
                 or (args.quality_require_soft and not soft_ready)
                 or (args.acceptance_gate and not bool((visual_review_result or {}).get("passed")))
             )
-            summary["quality_gate"]["legacy_passed"] = legacy_passed
             summary["quality_gate"]["golden_passed"] = not golden_failed
             summary["quality_gate"]["soft_promotion_ready"] = soft_ready
             summary["quality_gate"]["passed"] = not failed

@@ -2,9 +2,9 @@
 
 Use this contract only when the candidate pack contains `viewer_experience.enabled: true`. It is a composition and local image-review procedure, not a score predicting human emotion, purchase, virality, or long-term attachment.
 
-When the pack also contains a typed v6 `character_response`, read `moe-response-contract.md` and bind the viewer promise to that frozen event and its relations. For a compatibility pack with `moe_response.enabled: true`, read `moe-response-legacy.md` and use its recorded active fields. The viewer promise and affect evidence must describe the same baseline, event phase, visible response, and consequence without adding a second emotional scene.
+When the pack also contains a typed v6 `character_response`, read `moe-response-contract.md` and bind the viewer promise to that frozen event and its relations. The viewer promise and affect evidence must describe the same baseline, event phase, visible response, and consequence without adding a second emotional scene.
 
-Preserve an aesthetic entry condition only when the frozen core or an active pack requirement declares one. Compatibility defaults are subject to intent precedence and cannot add pretty/cute casting, facial treatment, styling, or warmth to a closed dimension. An appearance cue never replaces required actor/action/target/consequence evidence.
+Preserve an aesthetic entry condition only when the frozen core or an active pack requirement declares one. Configured defaults are subject to intent precedence and cannot add pretty/cute casting, facial treatment, styling, or warmth to a closed dimension. An appearance cue never replaces required actor/action/target/consequence evidence.
 
 ## Compose One Viewer Promise
 
@@ -63,7 +63,7 @@ Preserve an aesthetic entry condition only when the frozen core or an active pac
 - `causal_second_reading` requires a concrete description and `reinspection_reward_phrase` tied to the same event. Noncommercial creative-direction runs require it.
 - `comprehend`, `remember`, and `act` require `commercial_legibility_phrase`. Keep product identity and function immediately readable; do not hide them behind a puzzle.
 - A face, gaze, or expression may support affect but cannot replace action, target, and consequence.
-- Preserve the frozen relationship target, directed action, affect, and consequence, including declared same-target or contrast relations. A character label never adds a fixed eye line, facial landmark, head direction, pose, or relationship register. For a historical moe pack, use only the corresponding recorded active requirements in `moe-response-legacy.md`.
+- Preserve the frozen relationship target, directed action, affect, and consequence, including declared same-target or contrast relations. A character label never adds a fixed eye line, facial landmark, head direction, pose, or relationship register.
 - For a moe-response pack, a settled endpoint is insufficient even when the action and consequence are recognizable. Preserve the unfinished `event_phase` so the involuntary leak or attempted recovery remains visible.
 - Do not use baby face, childlike proportions, oversized eyes, or other youth morphology as attachment evidence. Adult character routes retain explicit-adult and non-inference guards.
 - Do not use `cute`, `moe`, `anime`, `cinematic`, `emotional`, or similar labels alone as evidence. Show what the character or object does.
