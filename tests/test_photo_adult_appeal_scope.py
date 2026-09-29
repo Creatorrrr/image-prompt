@@ -44,8 +44,8 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             cls.data, random.Random(77), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, concept_locks=[source],
             seed=77, creativity=0.0, authorial_core=cls.core,
-            sensual_editorial_intensity=2,
-            fetish_fashion_intensity=1,
+            sensual_intensity=2,
+            fetish_intensity=1,
             adult_appeal_activation_source="skill_default",
         )
         cls.pack = generator.build_candidate_pack(cls.result, cls.data, "v6")
@@ -67,13 +67,13 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             "adult_subject_phrase": "An adult woman",
             "agency_phrase": "stands confidently",
             "axes": {
-                "sensual_editorial": {
+                "sensual": {
                     "intensity": 2,
                     "artistic_interpretation": "Use a relaxed shoulder to support her composed presence",
                     "affected_dimensions": ["pose"],
                     "prompt_evidence": sensual,
                 },
-                "fetish_fashion": {
+                "fetish": {
                     "intensity": 1,
                     "artistic_interpretation": "Give the existing fabric a tactile surface response",
                     "affected_dimensions": ["material"],
@@ -89,19 +89,19 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertEqual([adult["axes"][a]["intensity"] for a in ADULT_APPEAL_AXIS_DIMENSIONS], [2, 1])
         self.assertEqual(auditor.audit_adult_appeal_dimension_scope(self.pack, adult), [])
         allowed = adult["dimension_scope"]["axis_allowed_dimensions"]
-        self.assertIn("expression", allowed["sensual_editorial"])
+        self.assertIn("expression", allowed["sensual"])
         self.assertNotIn("expression", self.core["intent_lock"]["open_dimensions"])
         candidates = generator.candidate_pack_hybrid_adult_candidates(adult)
         self.assertTrue(candidates)
-        self.assertTrue(adult["axes"]["fetish_fashion"]["candidate_inventory"])
+        self.assertTrue(adult["axes"]["fetish"]["candidate_inventory"])
         for row in candidates:
             self.assertTrue(row["affected_dimensions"])
             self.assertFalse(set(row["affected_dimensions"]) & {"style", "lighting"})
 
     def test_locked_garment_excludes_whole_conflicting_candidates(self):
         adult = self.adult(locked=[*self.core["intent_lock"]["locked_dimensions"], "appearance"])
-        self.assertTrue(adult["axes"]["fetish_fashion"]["active"])
-        self.assertIn("material", adult["dimension_scope"]["axis_allowed_dimensions"]["fetish_fashion"])
+        self.assertTrue(adult["axes"]["fetish"]["active"])
+        self.assertIn("material", adult["dimension_scope"]["axis_allowed_dimensions"]["fetish"])
         for row in generator.candidate_pack_hybrid_adult_candidates(adult):
             self.assertNotIn("appearance", row["affected_dimensions"])
             self.assertNotEqual(row["slot"], "fetish_styling")
@@ -117,10 +117,10 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertFalse(any(row["id"].endswith(":posing_editorial") for row in generator.candidate_pack_hybrid_adult_candidates(adult)))
 
     def test_only_exhausted_axis_is_disabled_and_requested_value_survives(self):
-        adult = self.adult(locked=ADULT_APPEAL_AXIS_DIMENSIONS["fetish_fashion"])
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["requested_intensity"], 1)
-        self.assertTrue(adult["axes"]["sensual_editorial"]["active"])
+        adult = self.adult(locked=ADULT_APPEAL_AXIS_DIMENSIONS["fetish"])
+        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["fetish"]["requested_intensity"], 1)
+        self.assertTrue(adult["axes"]["sensual"]["active"])
         self.assertEqual(adult["blend"]["emphasis"], "sensual_led")
         both = self.adult(locked=set.union(*(set(v) for v in ADULT_APPEAL_AXIS_DIMENSIONS.values())))
         self.assertFalse(both["enabled"])
@@ -162,30 +162,30 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
     def test_composed_audit_rejects_locked_and_undeclared_effects(self):
         for dimensions in (["lighting"], []):
             composed = self.composed()
-            composed["adult_appeal_brief"]["axes"]["sensual_editorial"]["affected_dimensions"] = dimensions
+            composed["adult_appeal_brief"]["axes"]["sensual"]["affected_dimensions"] = dimensions
             report = auditor.audit_composed_prompt(self.pack, composed)
             self.assertIn("adult_appeal_authored_dimensions", {r["check"] for r in report["failures"]})
 
     def test_scope_and_candidate_tampering_fail(self):
         pack = copy.deepcopy(self.pack)
-        pack["adult_appeal"]["dimension_scope"]["axis_allowed_dimensions"]["sensual_editorial"].append("lighting")
+        pack["adult_appeal"]["dimension_scope"]["axis_allowed_dimensions"]["sensual"].append("lighting")
         self.assertTrue(auditor.audit_adult_appeal_dimension_scope(pack, pack["adult_appeal"]))
         pack = copy.deepcopy(self.pack)
-        candidate = pack["adult_appeal"]["axes"]["sensual_editorial"]["candidate_inventory"][0]
+        candidate = pack["adult_appeal"]["axes"]["sensual"]["candidate_inventory"][0]
         candidate["affected_dimensions"] = ["lighting"]
         self.assertIn("adult_appeal_candidate_dimensions", {r["check"] for r in auditor.audit_adult_appeal_dimension_scope(pack, pack["adult_appeal"])})
 
     def test_adopted_candidate_requires_its_complete_effect_in_the_brief(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
+        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
         composed = self.composed()
         failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertIn("adult_appeal_authored_dimensions", {r["check"] for r in failures})
-        composed["adult_appeal_brief"]["axes"]["fetish_fashion"]["affected_dimensions"] = candidate["affected_dimensions"]
+        composed["adult_appeal_brief"]["axes"]["fetish"]["affected_dimensions"] = candidate["affected_dimensions"]
         failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertEqual(failures, [])
 
     def test_sampled_adult_candidate_uses_same_scope_but_other_candidates_do_not(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish_fashion"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
+        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
         pack = copy.deepcopy(self.pack)
         pack["creative_augmentation"]["candidates"] = [dict(candidate, semantic_band="near", source_kind="adult_appeal")]
         evidence = "A narrow band of reflected light traces the existing garment's stitched edge"

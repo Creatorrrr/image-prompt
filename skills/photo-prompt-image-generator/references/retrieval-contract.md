@@ -1,6 +1,6 @@
 # Retrieval Contract
 
-Bound v6 adult-axis search uses `photo-contextual-appeal/v1`: one lane keeps the
+Bound v6 adult-axis search uses `photo-contextual-appeal/v2`: one lane keeps the
 baseline context, while the alternatives lane uses active requester spans,
 requester definitions/anchors and the frozen control meanings without copying
 agent-selected wardrobe. BM25F and available embeddings rank the compatible
@@ -8,6 +8,13 @@ corpus, with soft fusion across whole directions, construction/material and
 portrayal/scene relations. Those are expression scopes, not aesthetic membership
 classes. No preset list, axis tag or item-specific intensity threshold admits a
 candidate. Scope/property locks and requester exclusions still apply.
+
+Up to two short requester-owned event/relationship/action/situation anchors add
+relation-focused queries; absent anchors produce no extra queries. Configuration
+assignments are not search text. A bounded request-overlap preference helps scene
+relevance after rank fusion; it is neither an applicability proof nor a source-ID
+boost. Inspect every candidate's conditions before adoption. Role, setting,
+relationship and timing effects are admitted only when explicitly open.
 
 The pack records actual keyword/hybrid lanes and semantic coverage. Scores
 identify candidates for contextual review; they never establish sensual or

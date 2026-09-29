@@ -40,7 +40,7 @@ Use this compatibility contract when a v4 candidate pack contains `hybrid_augmen
 
 ## Activation
 
-In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow uses v6 typed-core creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual_editorial=1`, `fetish_fashion=0` adult-fashion default; no-people and non-human packs do not activate it.
+In v4, the contract is present when `--hybrid-augmentation` is explicit, when high creative direction requires it, or when an eligible adult-appeal axis is active. The normal skill workflow uses v6 typed-core creative augmentation instead. Eligible human v4 candidate packs also activate the configured `sensual=1`, `fetish=0` adult-fashion default; no-people and non-human packs do not activate it.
 
 ## Candidate Routes
 
@@ -91,18 +91,27 @@ To reject all routes, set `selected_route_id` to `none`, mark every route reject
 
 Normal v6 runs first resolve `precore/creative_controls.json` using its candidate-free resolver. The core binds the resulting `creative_controls_sha256`; pass that same snapshot with `--creative-controls-json`. Read its current values, source, definitions and ordinal level meanings before authoring wardrobe, portrayal and the photographic direction. The generator and composed audit preserve the binding. Later CLI overrides must agree with the snapshot. Old unbound calls remain compatible and make no claim that their settings informed the initial draft.
 
-The axes are independent and may share a styling choice:
-
-- `sensual_editorial` includes wardrobe fit, cut, neckline, drape, material and visible skin, together with gaze, pose, light, framing and the subject's relation to the scene.
-- `fetish_fashion` includes adult fashion's construction, materials, layering, accessories, symbolic styling, wearing methods and garment–person–action relationships. These acquire their reading in context; an ordinary item or generic material word alone is not evidence of the intended direction.
+The axes are independent and may share one expressive choice. Use the frozen
+short definitions and level meanings from the pre-core snapshot. `sensual`
+expresses broadly interpreted human attraction and desire. `fetish` expresses a
+distinctive focus of attraction or fascination across objects, bodies, clothing,
+materials, roles, situations, behaviors and sensory qualities. Neither control
+is confined to fashion; contextual use supplies the interpretation.
 
 The authoritative defaults and 0–3 meanings live in the pre-core definition file. Zero disables added treatment without deleting requested meaning; positive levels describe supporting, clearly readable or leading aesthetic intent. They are not native image parameters, exposure fractions, item counts, or proof of image quality. Emphasis follows active intensities unless explicitly selected; it cannot reactivate an inactive axis.
 
-Bound v6 packs use `photo-contextual-appeal/v1` and dimension scope v3. Both axes can express contextual relationships through their declared unlocked portrayal, clothing, action and photographic dimensions. Read [contextual appeal](contextual-appeal.md) for the conditional review fields. Legacy preset/tag/minimum-intensity admission remains only for unbound or older calls; archived scope v1/v2 packs retain their original meanings.
+Bound v6 packs use `photo-contextual-appeal/v2` and dimension scope v4. Both axes can express contextual relationships through their declared unlocked portrayal, clothing, action and photographic dimensions. Read [contextual appeal](contextual-appeal.md) for the conditional review fields. Legacy preset/tag/minimum-intensity admission remains only for unbound or older calls; archived scope v1/v2 packs retain their original meanings.
 
-Scope v2 and v3 let each axis use its declared dimensions except whole-dimension locks. A dimension absent from both lists remains available only under this adult-axis exception. Both preserve the property anchors of `photo-intent-lock/v2`; v3 extends contextual portrayal and photographic carriers to both axes. Whole-look candidates with unknown property effects are rejected when they may replace a protected property; their conflicting dimensions are never silently removed. Independently author a compatible choice instead. Preserve the meaning of explicit style, clothing, reference-use and photographic constraints even across different carriers.
+Current scope v4 preserves whole-dimension and property locks. Role, setting,
+relationship and timing effects additionally require an explicit open dimension;
+other declared portrayal dimensions retain the adult-axis scope exception.
+Whole-look candidates with unknown property effects are rejected when they may
+replace a protected property. Keep the full affected scope; independently author
+a compatible choice rather than silently narrowing a candidate's effects.
 
-The old scope v1 retains its original dimension sets when auditing archived packs. V4/v5 and unmarked historical packs retain their recorded all-open rule. New property locks are not retroactively inferred for older artifacts.
+Old run artifacts remain unchanged. Previous control names and v1 control
+snapshots are not accepted by the current resolver; use the retained historical
+implementation for old runs. No input aliases or artifact migration are provided.
 
 Candidate adoption is optional. For each active axis, the existing `adult_appeal_brief` explains how the direction serves this scene. A baseline realization may be retained without inventing a new detail:
 
@@ -111,14 +120,14 @@ Candidate adoption is optional. For each active axis, the existing `adult_appeal
   "adult_subject_phrase": "literal explicitly adult phrase",
   "agency_phrase": "literal self-directed action phrase",
   "axes": {
-    "sensual_editorial": {
+    "sensual": {
       "intensity": 2,
       "realization": "baseline",
       "affected_dimensions": [],
       "artistic_interpretation": "How the initial portrayal and wardrobe carry this direction.",
       "prompt_evidence": "literal phrase present in both baseline and final prompt"
     },
-    "fetish_fashion": {
+    "fetish": {
       "intensity": 1,
       "realization": "refined",
       "affected_dimensions": ["material"],

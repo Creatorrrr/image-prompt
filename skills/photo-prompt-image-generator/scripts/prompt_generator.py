@@ -213,6 +213,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_portrait_composition_extension.json",
     "photo_prompt_portrait_fashion_exposure_extension.json",
     "photo_prompt_sensual_fetish_fashion_extension.json",
+    "photo_prompt_contextual_appeal_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"
@@ -453,16 +454,16 @@ CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS = (
     "prop",
 )
 CANDIDATE_PACK_ADULT_APPEAL_CONTRACT_VERSION = "photo-adult-appeal/v2"
-CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual_editorial", "fetish_fashion")
+CANDIDATE_PACK_ADULT_APPEAL_AXES = ("sensual", "fetish")
 CANDIDATE_PACK_ADULT_APPEAL_EMPHASES = ("sensual_led", "balanced", "fetish_led")
 CREATIVE_CONTROL_DEFAULTS = {name: definition["default"] for name, definition in creative_controls.load_definitions()["controls"].items()}
-CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["sensual_editorial"]
-CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["fetish_fashion"]
+CANDIDATE_PACK_SENSUAL_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["sensual"]
+CANDIDATE_PACK_FETISH_DEFAULT_INTENSITY = CREATIVE_CONTROL_DEFAULTS["fetish"]
 CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = CREATIVE_CONTROL_DEFAULTS["adult_appeal_emphasis"]
 if CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS == "auto":
     CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS = (
-        "balanced" if CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY == CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY
-        else ("sensual_led" if CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY > CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY else "fetish_led")
+        "balanced" if CANDIDATE_PACK_SENSUAL_DEFAULT_INTENSITY == CANDIDATE_PACK_FETISH_DEFAULT_INTENSITY
+        else ("sensual_led" if CANDIDATE_PACK_SENSUAL_DEFAULT_INTENSITY > CANDIDATE_PACK_FETISH_DEFAULT_INTENSITY else "fetish_led")
     )
 CANDIDATE_PACK_CREATIVE_DIRECTION_OPERATORS = (
     (
@@ -1795,6 +1796,9 @@ def merge_research_extension(data: JsonDict, extension: JsonDict) -> JsonDict:
     slots = data.setdefault("slots", {})
     for slot, entries in (extension.get("slots") or {}).items():
         append_unique_id_entries(slots.setdefault(str(slot), []), entries, f"slots.{slot}")
+
+    photo_candidate_semantics.extend_slot_contexts(
+        slots, extension.get("existing_slot_context_extensions"))
 
     extension_coherence = extension.get("coherence_rules") or {}
     if not isinstance(extension_coherence, dict):
@@ -5231,7 +5235,7 @@ def resolve_moe_response_intent(texts: Sequence[str]) -> JsonDict:
         text_explicitly_requests_sensual_tone(text) for text in request_texts
     )
     # Moe and sexual appeal are separate axes.  A plain adult-moe request may
-    # use the configured sensual-editorial direction as supporting
+    # use the configured sensual direction as supporting
     # appeal; only explicit nonsexual wording suppresses it.  Explicit
     # positive sensual wording remains a stronger user-controlled branch.
     sexual_tone = (
@@ -6644,7 +6648,7 @@ def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
         )
     sexual_tone_instructions = {
         "nonsexual": (
-            "Use explicitly nonsexual framing and suppress sensual-editorial and fetish-fashion styling. "
+            "Use explicitly nonsexual framing and suppress added sensual and fetish treatment. "
             "Warmth, closeness, embarrassment, and tactile care may remain without body-display emphasis."
         ),
         "sensual_optional": (
@@ -7394,8 +7398,8 @@ def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> Jso
     enabled = requested_enabled and eligibility.get("status") == "eligible"
     emphasis = str((raw.get("blend") or {}).get("emphasis") or "") if isinstance(raw.get("blend"), dict) else ""
     if emphasis not in CANDIDATE_PACK_ADULT_APPEAL_EMPHASES:
-        sensual = axes["sensual_editorial"]["intensity"]
-        fetish = axes["fetish_fashion"]["intensity"]
+        sensual = axes["sensual"]["intensity"]
+        fetish = axes["fetish"]["intensity"]
         emphasis = "balanced" if sensual == fetish else ("sensual_led" if sensual > fetish else "fetish_led")
     return {
         "enabled": enabled,
@@ -7608,8 +7612,8 @@ def candidate_pack_legacy_adult_appeal(
         "activation_source": request.get("activation_source"),
         "eligibility": request.get("eligibility", {}),
         "defaults": {
-            "sensual_editorial_intensity": configured_defaults["sensual_editorial"],
-            "fetish_fashion_intensity": configured_defaults["fetish_fashion"],
+            "sensual_intensity": configured_defaults["sensual"],
+            "fetish_intensity": configured_defaults["fetish"],
             "emphasis": configured_emphasis,
         },
         "inventory_preset_id": inventory_preset_id,
@@ -7618,8 +7622,8 @@ def candidate_pack_legacy_adult_appeal(
             "emphasis": str((request.get("blend") or {}).get("emphasis") or "balanced"),
             "simultaneous_activation_allowed": True,
             "carrier_separation": {
-                "sensual_editorial": ["gaze", "pose", "lighting", "silhouette", "wardrobe", "material"],
-                "fetish_fashion": ["material", "garment_layering", "accessories", "footwear"],
+                "sensual": ["gaze", "pose", "lighting", "silhouette", "wardrobe", "material"],
+                "fetish": ["material", "garment_layering", "accessories", "footwear"],
             },
         },
         "composition_requirements": {
@@ -7645,7 +7649,7 @@ def candidate_pack_legacy_adult_appeal(
         contract["blend"]["requested_emphasis"] = contract["blend"]["emphasis"]
         active_axes = [axis_id for axis_id, axis in axes.items() if axis["active"]]
         if len(active_axes) == 1:
-            contract["blend"]["emphasis"] = "sensual_led" if active_axes[0] == "sensual_editorial" else "fetish_led"
+            contract["blend"]["emphasis"] = "sensual_led" if active_axes[0] == "sensual" else "fetish_led"
         elif not active_axes:
             contract["blend"]["emphasis"] = "balanced"
     return contract
@@ -7700,10 +7704,14 @@ def candidate_pack_hybrid_adult_appeal(
     scope = contract["dimension_scope"]
     scope["contract_version"] = photo_contextual_appeal.SCOPE_VERSION
     scope["axis_allowed_dimensions"] = {
-        axis: sorted(dimensions - locked) for axis, dimensions in photo_contextual_appeal.AXIS_DIMENSIONS.items()
+        axis: sorted(photo_contextual_appeal.allowed_dimensions(lock)) for axis in photo_contextual_appeal.AXES
     }
     intensities = {axis: row["requested_intensity"] for axis, row in contract["axes"].items()}
     queries = photo_contextual_appeal.queries(core, snapshot["definitions"], intensities, authorial_core_retrieval_text)
+    scene_query, _ = authorial_core_retrieval_text({
+        key: value for key, value in core.items()
+        if key in {"contract_version", "request_binding", "source_request", "user_definitions", "user_exclusions"}
+    })
     prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
     cached = (data.get(photo_contextual_appeal.QUERY_CACHE) or {}).get(prompt_id) or {}
     vectors = cached.get("vectors", {}) if cached.get("queries") == queries else {}
@@ -7772,6 +7780,7 @@ def candidate_pack_hybrid_adult_appeal(
             rows, queries[axis], policy=SEMANTIC_BM25F_POLICY,
             query_vectors=vectors.get(axis), index=data.get(SEMANTIC_INDEX_DATA_KEY),
             limit=int(retrieval_policy.get("candidate_limit_per_axis", 12)),
+            scene_query=scene_query,
         )
         axis_row["candidate_inventory"] = inventory
         axis_row["carrier_ids"] = sorted({row["carrier"] for row in inventory})
@@ -7779,7 +7788,7 @@ def candidate_pack_hybrid_adult_appeal(
         review_ids.extend(photo_contextual_appeal.review_ids(inventory, int(retrieval_policy.get("review_limit_per_axis", 4))))
     active = [axis for axis, row in contract["axes"].items() if row["active"]]
     contract["enabled"] = bool(active)
-    contract["blend"]["emphasis"] = contract["blend"]["requested_emphasis"] if len(active) == 2 else ("sensual_led" if active == ["sensual_editorial"] else "fetish_led" if active else "balanced")
+    contract["blend"]["emphasis"] = contract["blend"]["requested_emphasis"] if len(active) == 2 else ("sensual_led" if active == ["sensual"] else "fetish_led" if active else "balanced")
     contract["blend"].pop("carrier_separation", None)
     contract.pop("inventory_preset_id", None)
     contract["composition_requirements"].pop("one_accepted_detail_per_active_axis", None)
@@ -7820,12 +7829,14 @@ def candidate_pack_hybrid_candidates_compatible(candidate: JsonDict, selected: S
 
 
 def candidate_pack_hybrid_detail_function(candidate: JsonDict, route: JsonDict, index: int) -> str:
-    axis = str(candidate.get("axis") or "")
     carrier = str(candidate.get("carrier") or "")
-    if axis == "fetish_fashion":
+    dimensions = set(candidate.get("affected_dimensions") or [])
+    if dimensions & {"action", "relationship", "role", "event", "timing"}:
+        return "viewer_hook"
+    if carrier in {"gaze_pose", "framing"} or dimensions & {"pose", "camera", "framing", "composition"}:
+        return "pose_camera"
+    if dimensions & {"material", "appearance"}:
         return "material_detail"
-    if axis == "sensual_editorial":
-        return "pose_camera" if carrier in {"gaze_pose", "framing"} else "viewer_hook"
     functions = [str(item) for item in route.get("functions") or [] if str(item).strip()]
     return functions[index % len(functions)] if functions else "material_detail"
 
@@ -9136,7 +9147,7 @@ def normalize_semantic_assertions(
             "authorial core v3 semantic_assertions must be a list of at most sixteen rows"
         )
     span_ids = {
-        str(item.get("span_id") or "")
+        str(item.get("source_span_id", item.get("span_id")) or "")
         for item in envelope.get("active_spans") or []
         if isinstance(item, dict)
     }
@@ -9702,6 +9713,7 @@ def normalize_authorial_core(
     payload: Any,
     *,
     request_envelope: Optional[JsonDict] = None,
+    creative_control_snapshot: Optional[JsonDict] = None,
 ) -> JsonDict:
     """Validate an agent-authored concept core frozen before candidate retrieval.
 
@@ -9712,6 +9724,14 @@ def normalize_authorial_core(
 
     if not isinstance(payload, dict):
         raise ValueError("--authorial-core-json must contain one JSON object")
+    visual_envelope = request_envelope
+    if creative_control_snapshot is not None:
+        creative_controls.validate(creative_control_snapshot, payload.get("source_request"))
+        if payload.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
+            raise ValueError("authorial core must bind the supplied creative-control snapshot")
+    if request_envelope is not None:
+        visual_spans, _ = creative_controls.split_request_spans(request_envelope, creative_control_snapshot)
+        visual_envelope = {**request_envelope, "active_spans": visual_spans}
     core_version = str(payload.get("contract_version") or "")
     if core_version not in {
         LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
@@ -9875,7 +9895,7 @@ def normalize_authorial_core(
         assert request_envelope is not None
         normalized["intent_lock"] = normalize_intent_lock(
             payload.get("intent_lock"),
-            envelope=request_envelope,
+            envelope=visual_envelope,
             baseline_prompt_en=normalized["baseline_prompt_en"],
             allowed_dimensions=(
                 AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
@@ -9905,7 +9925,7 @@ def normalize_authorial_core(
                 )
             normalized["semantic_assertions"] = normalize_semantic_assertions(
                 payload.get("semantic_assertions"),
-                envelope=request_envelope,
+                envelope=visual_envelope,
                 intent_lock=normalized["intent_lock"],
                 baseline_prompt_en=normalized["baseline_prompt_en"],
             )
@@ -9963,7 +9983,7 @@ def normalize_authorial_core(
             and source_text.casefold()
             not in {
                 text.casefold()
-                for text in request_envelope_active_texts(request_envelope)
+                for text in request_envelope_active_texts(visual_envelope)
             }
         ):
             raise ValueError(
@@ -10049,7 +10069,7 @@ def normalize_authorial_core(
         if (
             core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
             and request_envelope is not None
-            and not request_scope_contains(request_envelope, source_text)
+            and not request_scope_contains(visual_envelope, source_text)
         ):
             raise ValueError(
                 f"authorial core interpretation provenance {index} source_text is not grounded in an active requesting-user span"
@@ -10106,7 +10126,7 @@ def normalize_authorial_core(
         ]
         uncovered_interpretation_spans = [
             str(span.get("span_id") or "")
-            for span in request_envelope.get("active_spans") or []
+            for span in visual_envelope.get("active_spans") or []
             if isinstance(span, dict)
             and not any(
                 source.casefold() in str(span.get("text") or "").casefold()
@@ -10216,6 +10236,7 @@ def load_authorial_core_arg(
     raw: Optional[str],
     *,
     request_envelope: Optional[JsonDict] = None,
+    creative_control_snapshot: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
     if not raw:
         return None
@@ -10230,7 +10251,8 @@ def load_authorial_core_arg(
         payload = json.loads(candidate.read_text(encoding="utf-8"))
     else:
         payload = json.loads(raw)
-    return normalize_authorial_core(payload, request_envelope=request_envelope)
+    return normalize_authorial_core(payload, request_envelope=request_envelope,
+                                   creative_control_snapshot=creative_control_snapshot)
 
 
 def authorial_core_retrieval_text(
@@ -10288,7 +10310,7 @@ def authorial_core_retrieval_text(
     ]
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         for item in active_spans:
-            add("source_request_scope", item.get("text"))
+            add("source_request_scope", creative_controls.strip_assignments(str(item.get("text") or "")))
     else:
         add("source_request", core.get("source_request"))
     add("interpreted_intent", core.get("interpreted_intent"))
@@ -26589,8 +26611,8 @@ def generate_once(
     safety_evaluation_requested: bool = False,
     viewer_experience_requested: bool = False,
     hybrid_augmentation_requested: bool = False,
-    sensual_editorial_intensity: int = 0,
-    fetish_fashion_intensity: int = 0,
+    sensual_intensity: int = 0,
+    fetish_intensity: int = 0,
     adult_appeal_emphasis: str = CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS,
     adult_appeal_activation_source: str = "none",
     adult_appeal_candidate_pack_requested: bool = False,
@@ -26610,8 +26632,8 @@ def generate_once(
         if authorial_core.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
             raise ValueError("authorial core does not bind the supplied pre-core creative controls")
         control_values = creative_controls.runtime_values(creative_control_snapshot)
-        sensual_editorial_intensity = control_values["sensual_editorial_intensity"]
-        fetish_fashion_intensity = control_values["fetish_fashion_intensity"]
+        sensual_intensity = control_values["sensual_intensity"]
+        fetish_intensity = control_values["fetish_intensity"]
         adult_appeal_emphasis = control_values["adult_appeal_emphasis"]
         adult_appeal_activation_source = "precore_controls"
         surreal_mode = control_values["surreal_mode"]
@@ -26834,8 +26856,8 @@ def generate_once(
         # Preserve explicit nonsexual intent and the historical v2 boundary.
         # New v3/v6 packs scope each adult axis and candidate to unlocked
         # dimensions during pack construction instead of clearing both axes.
-        sensual_editorial_intensity = 0
-        fetish_fashion_intensity = 0
+        sensual_intensity = 0
+        fetish_intensity = 0
         adult_appeal_emphasis = "balanced"
         adult_appeal_activation_source = (
             "explicit_nonsexual_moe"
@@ -27230,23 +27252,23 @@ def generate_once(
         "adult_appeal": {
             "enabled": bool(
                 adult_appeal_candidate_pack_requested
-                and (sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0)
+                and (sensual_intensity > 0 or fetish_intensity > 0)
             ),
             "configured": bool(
-                sensual_editorial_intensity > 0 or fetish_fashion_intensity > 0
+                sensual_intensity > 0 or fetish_intensity > 0
             ),
             "application_scope": "precore_authoring_and_candidate_pack_composition" if creative_control_snapshot is not None else "candidate_pack_composition",
             "activation_source": adult_appeal_activation_source
             if (
-                sensual_editorial_intensity > 0
-                or fetish_fashion_intensity > 0
+                sensual_intensity > 0
+                or fetish_intensity > 0
                 or adult_appeal_activation_source == "explicit_nonsexual_moe"
                 or creative_control_snapshot is not None
             )
             else "explicit_opt_out",
             "axes": {
-                "sensual_editorial": {"intensity": int(sensual_editorial_intensity)},
-                "fetish_fashion": {"intensity": int(fetish_fashion_intensity)},
+                "sensual": {"intensity": int(sensual_intensity)},
+                "fetish": {"intensity": int(fetish_intensity)},
             },
             "blend": {"emphasis": adult_appeal_emphasis},
         },
@@ -27563,16 +27585,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Expose three candidate-sourced idea-augmentation routes while preserving an agent-authored concept core. High creative-direction and adult-appeal runs enable it automatically.",
     )
     parser.add_argument(
-        "--sensual-editorial-intensity",
+        "--sensual-intensity",
         type=int,
-        default=CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY,
-        help=f"Sensual editorial intensity 0..3; saved default {CANDIDATE_PACK_SENSUAL_EDITORIAL_DEFAULT_INTENSITY}. Includes compatible wardrobe and portrayal. Zero disables added treatment.",
+        default=CANDIDATE_PACK_SENSUAL_DEFAULT_INTENSITY,
+        help=f"Sensual expression intensity 0..3; saved default {CANDIDATE_PACK_SENSUAL_DEFAULT_INTENSITY}. Guides attraction and desire throughout the scene. Zero disables added treatment.",
     )
     parser.add_argument(
-        "--fetish-fashion-intensity",
+        "--fetish-intensity",
         type=int,
-        default=CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY,
-        help=f"Fetish-fashion intensity 0..3; saved default {CANDIDATE_PACK_FETISH_FASHION_DEFAULT_INTENSITY}. Zero disables added treatment.",
+        default=CANDIDATE_PACK_FETISH_DEFAULT_INTENSITY,
+        help=f"Distinctive attraction-focus intensity 0..3; saved default {CANDIDATE_PACK_FETISH_DEFAULT_INTENSITY}. Zero disables added treatment.",
     )
     parser.add_argument(
         "--adult-appeal-emphasis",
@@ -27652,7 +27674,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         creative_controls.validate(creative_control_snapshot, envelope_input.get("request_text"))
         resolved_controls = creative_controls.runtime_values(creative_control_snapshot)
         mapping = {
-            "sensual_editorial": "sensual_editorial_intensity", "fetish_fashion": "fetish_fashion_intensity",
+            "sensual": "sensual_intensity", "fetish": "fetish_intensity",
             "adult_appeal_emphasis": "adult_appeal_emphasis", "creativity": "creativity",
             "viewer_experience": "viewer_experience", "reference_edit_mode": "reference_edit_mode",
             "surreal_mode": "surreal_mode", "surreal_probability": "surreal_probability",
@@ -27664,23 +27686,23 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             if has_cli_option(raw_args, option) and getattr(args, attribute) != expected:
                 raise ValueError(f"{option} conflicts with the frozen pre-core controls; rebuild the controls and core together")
             setattr(args, attribute, resolved_controls[attribute])
-        if not (args.sensual_editorial_intensity or args.fetish_fashion_intensity):
+        if not (args.sensual_intensity or args.fetish_intensity):
             args.adult_appeal_emphasis = None
 
     for option_name, value in (
-        ("--sensual-editorial-intensity", args.sensual_editorial_intensity),
-        ("--fetish-fashion-intensity", args.fetish_fashion_intensity),
+        ("--sensual-intensity", args.sensual_intensity),
+        ("--fetish-intensity", args.fetish_intensity),
     ):
         if value < 0 or value > 3:
             raise ValueError(f"{option_name} must be between 0 and 3")
     adult_appeal_enabled = bool(
-        args.sensual_editorial_intensity > 0 or args.fetish_fashion_intensity > 0
+        args.sensual_intensity > 0 or args.fetish_intensity > 0
     )
     explicit_adult_control = any(
         has_cli_option(raw_args, option)
         for option in (
-            "--sensual-editorial-intensity",
-            "--fetish-fashion-intensity",
+            "--sensual-intensity",
+            "--fetish-intensity",
             "--adult-appeal-emphasis",
         )
     )
@@ -27731,19 +27753,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         raise ValueError("--adult-appeal-emphasis requires an active adult-appeal axis")
     if args.adult_appeal_emphasis:
         adult_appeal_emphasis = args.adult_appeal_emphasis
-    elif args.sensual_editorial_intensity == args.fetish_fashion_intensity:
+    elif args.sensual_intensity == args.fetish_intensity:
         adult_appeal_emphasis = "balanced"
-    elif args.sensual_editorial_intensity > args.fetish_fashion_intensity:
+    elif args.sensual_intensity > args.fetish_intensity:
         adult_appeal_emphasis = "sensual_led"
     else:
         adult_appeal_emphasis = "fetish_led"
     if adult_appeal_enabled:
-        if adult_appeal_emphasis == "sensual_led" and args.sensual_editorial_intensity == 0:
-            raise ValueError("sensual_led emphasis requires sensual_editorial intensity above 0")
-        if adult_appeal_emphasis == "fetish_led" and args.fetish_fashion_intensity == 0:
-            raise ValueError("fetish_led emphasis requires fetish_fashion intensity above 0")
+        if adult_appeal_emphasis == "sensual_led" and args.sensual_intensity == 0:
+            raise ValueError("sensual_led emphasis requires sensual intensity above 0")
+        if adult_appeal_emphasis == "fetish_led" and args.fetish_intensity == 0:
+            raise ValueError("fetish_led emphasis requires fetish intensity above 0")
         if adult_appeal_emphasis == "balanced" and (
-            args.sensual_editorial_intensity == 0 or args.fetish_fashion_intensity == 0
+            args.sensual_intensity == 0 or args.fetish_intensity == 0
         ):
             raise ValueError("balanced adult appeal requires both axes above 0")
     adult_appeal_activation_source = (
@@ -27756,6 +27778,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     authorial_core = load_authorial_core_arg(
         args.authorial_core_json,
         request_envelope=request_envelope,
+        creative_control_snapshot=creative_control_snapshot,
     )
     embodiment_preflight = (
         photo_embodiment.build_policy(
@@ -28021,8 +28044,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             safety_evaluation_requested=args.safety_evaluation,
             viewer_experience_requested=args.viewer_experience,
             hybrid_augmentation_requested=args.hybrid_augmentation,
-            sensual_editorial_intensity=args.sensual_editorial_intensity,
-            fetish_fashion_intensity=args.fetish_fashion_intensity,
+            sensual_intensity=args.sensual_intensity,
+            fetish_intensity=args.fetish_intensity,
             adult_appeal_emphasis=adult_appeal_emphasis,
             adult_appeal_activation_source=adult_appeal_activation_source,
             adult_appeal_candidate_pack_requested=args.emit_candidate_pack,

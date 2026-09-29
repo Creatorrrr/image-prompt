@@ -1,0 +1,23 @@
+{
+  "method": "Read-only in-memory calls to normalize_intent_lock with production v3 allowed_dimensions and minimum_open_dimensions=0. No saved run/skill/prompt mutation, no generation.",
+  "source_run": "artifacts/photo-prompt-runs/integrated-original-four-3-3-20260929-151603/moon",
+  "core_sha256": "323d662055d0345209d21b5515a2a3ab1c29321f0be48253b785aac559a61be4",
+  "controls_definitions_equal_current": true,
+  "results": {
+    "saved_original": {
+      "validator_status": "accepted"
+    },
+    "remove_appeal_anchor_and_unlock_tone": {
+      "validator_status": "rejected",
+      "error": "authorial core intent_lock requires semantic-anchor coverage for every active requesting-user span: controls"
+    },
+    "counterfactual_unrelated_literal_as_control_evidence": {
+      "validator_status": "accepted"
+    }
+  },
+  "interpretation": "Every active span, including settings, requires a literal anchor. This validator checks source presence and baseline presence but not semantic entailment between the control value and the chosen garment.",
+  "limits": [
+    "The unrelated-literal case is an in-memory diagnostic, not an actual authored prompt.",
+    "Acceptance does not mean that a garment or phrase realizes the requested aesthetic."
+  ]
+}

@@ -27,21 +27,21 @@ class CreativeControlResolverTests(unittest.TestCase):
     def test_defaults_meanings_and_sources_are_available_before_candidates(self):
         snapshot = self.snapshot()
         self.assertEqual([snapshot["controls"][a]["value"] for a in controls.AXES], [1, 0])
-        self.assertIn("wardrobe", snapshot["definitions"]["controls"]["sensual_editorial"]["definition"])
-        self.assertIn("clearly readable", snapshot["definitions"]["controls"]["sensual_editorial"]["levels"]["2"])
-        self.assertEqual(snapshot["controls"]["sensual_editorial"]["source"], "saved_setting")
+        self.assertIn("human attraction and desire", snapshot["definitions"]["controls"]["sensual"]["definition"])
+        self.assertIn("clearly readable", snapshot["definitions"]["controls"]["sensual"]["levels"]["2"])
+        self.assertEqual(snapshot["controls"]["sensual"]["source"], "saved_setting")
         self.assertEqual(snapshot["resolved_emphasis"], "sensual_led")
 
     def test_override_zero_is_an_addition_control_not_a_request_rewrite(self):
         request = "An adult woman wearing a sensual dress."
-        snapshot = controls.resolve(request, context={"subject_category": "human"}, overrides={"sensual_editorial": 0, "fetish_fashion": 0}, seed=1)
+        snapshot = controls.resolve(request, context={"subject_category": "human"}, overrides={"sensual": 0, "fetish": 0}, seed=1)
         self.assertEqual(snapshot["source_request_sha256"], hashlib.sha256(request.encode()).hexdigest())
-        self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["effective_intensity"], 0)
-        self.assertEqual(snapshot["controls"]["sensual_editorial"]["source"], "request_override")
+        self.assertEqual(snapshot["adult_appeal"]["sensual"]["effective_intensity"], 0)
+        self.assertEqual(snapshot["controls"]["sensual"]["source"], "request_override")
         self.assertNotIn("negative", json.dumps(snapshot))
 
     def test_invalid_values_and_emphasis_fail(self):
-        for overrides in ({"sensual_editorial": True}, {"sensual_editorial": 4}, {"creativity": float("nan")}, {"unknown": 1}, {"fetish_fashion": 0, "adult_appeal_emphasis": "fetish_led"}):
+        for overrides in ({"sensual": True}, {"sensual": 4}, {"creativity": float("nan")}, {"unknown": 1}, {"fetish": 0, "adult_appeal_emphasis": "fetish_led"}):
             with self.subTest(overrides=overrides), self.assertRaises(ValueError):
                 self.snapshot(overrides=overrides)
 
@@ -59,8 +59,8 @@ class CreativeControlResolverTests(unittest.TestCase):
     def test_no_people_and_nonsexual_meaning_keep_requested_values_but_disable_additions(self):
         for context in ({"subject_category": "human", "no_people": True}, {"subject_category": "human", "explicit_nonsexual": True}, {"subject_category": "nonhuman"}):
             snapshot = controls.resolve("A precisely specified scene.", context=context, seed=1)
-            self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["requested_intensity"], 1)
-            self.assertEqual(snapshot["adult_appeal"]["sensual_editorial"]["effective_intensity"], 0)
+            self.assertEqual(snapshot["adult_appeal"]["sensual"]["requested_intensity"], 1)
+            self.assertEqual(snapshot["adult_appeal"]["sensual"]["effective_intensity"], 0)
 
     def test_cli_rejects_post_core_control_change_before_loading_candidates(self):
         request = "An adult woman beside a window."
@@ -69,7 +69,7 @@ class CreativeControlResolverTests(unittest.TestCase):
             (root / "controls.json").write_text(json.dumps(self.snapshot()))
             (root / "request.json").write_text(json.dumps({"request_text": request}))
             with self.assertRaisesRegex(ValueError, "conflicts with the frozen"):
-                generator.main(["--emit-candidate-pack", "--candidate-pack-version", "v6", "--request-envelope-json", str(root / "request.json"), "--creative-controls-json", str(root / "controls.json"), "--sensual-editorial-intensity", "3"])
+                generator.main(["--emit-candidate-pack", "--candidate-pack-version", "v6", "--request-envelope-json", str(root / "request.json"), "--creative-controls-json", str(root / "controls.json"), "--sensual-intensity", "3"])
 
 
 class InitialDirectionIntegrationTests(unittest.TestCase):
@@ -90,7 +90,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
             {"anchor_id": "dress_kind", "dimension": "appearance", "target": "main_subject", "property": "wardrobe.garment_type", "source_text": "torn white dress", "prompt_evidence": "torn white dress"},
             {"anchor_id": "dress_color", "dimension": "appearance", "target": "main_subject", "property": "wardrobe.color", "source_text": "white dress", "prompt_evidence": "white dress"},
         ])
-        cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, overrides={"sensual_editorial": 2, "fetish_fashion": 1}, seed=73)
+        cls.snapshot = controls.resolve(source, context={"subject_category": "human"}, overrides={"sensual": 2, "fetish": 1}, seed=73)
         cls.raw["creative_controls_sha256"] = cls.snapshot["canonical_sha256"]
         cls.core = generator.normalize_authorial_core(cls.raw, request_envelope=cls.envelope)
         cls.result = generator.generate_once(cls.data, random.Random(73), None, ["en"], True, 12, True,
@@ -103,8 +103,8 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         composed["adult_appeal_brief"] = {
             "adult_subject_phrase": "An adult woman", "agency_phrase": "stands confidently",
             "axes": {
-                "sensual_editorial": {"intensity": 2, "realization": "baseline", "affected_dimensions": [], "artistic_interpretation": "Retain the coherent initial wardrobe and portrait direction", "prompt_evidence": "a softly draped neckline"},
-                "fetish_fashion": {"intensity": 1, "realization": "baseline", "affected_dimensions": [], "artistic_interpretation": "Retain the existing material direction for separate visual assessment", "prompt_evidence": "textured clothing"},
+                "sensual": {"intensity": 2, "realization": "baseline", "affected_dimensions": [], "artistic_interpretation": "Retain the coherent initial wardrobe and portrait direction", "prompt_evidence": "a softly draped neckline"},
+                "fetish": {"intensity": 1, "realization": "baseline", "affected_dimensions": [], "artistic_interpretation": "Retain the existing material direction for separate visual assessment", "prompt_evidence": "textured clothing"},
             },
             "blend": {"emphasis": "sensual_led"},
             "contextual_review": [
@@ -139,8 +139,8 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
 
     def test_sensual_wardrobe_candidates_exist_when_garment_is_open(self):
         adult = self.fixture.pack["adult_appeal"]
-        self.assertIn("appearance", adult["dimension_scope"]["axis_allowed_dimensions"]["sensual_editorial"])
-        self.assertTrue(any(c["carrier"] == "wardrobe_material" for c in adult["axes"]["sensual_editorial"]["candidate_inventory"]))
+        self.assertIn("appearance", adult["dimension_scope"]["axis_allowed_dimensions"]["sensual"])
+        self.assertTrue(any(c["carrier"] == "wardrobe_material" for c in adult["axes"]["sensual"]["candidate_inventory"]))
         self.assertNotIn("configured_low_intensity_default", adult["composition_requirements"])
 
     def test_whole_garment_candidates_do_not_bypass_partial_property_locks(self):
@@ -159,7 +159,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         composed = self.composed()
         evidence = "The existing neckline drapes softly toward her relaxed shoulder"
         composed["prompt_en"] += " " + evidence + "."
-        axis = composed["adult_appeal_brief"]["axes"]["sensual_editorial"]
+        axis = composed["adult_appeal_brief"]["axes"]["sensual"]
         axis.update(realization="refined", affected_dimensions=["appearance"], prompt_evidence=evidence)
         failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], set(), {})
         self.assertIn("adult_appeal_authored_properties", {f["check"] for f in failures})
@@ -172,7 +172,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
 
     def test_changed_snapshot_or_missing_binding_fails(self):
         pack = copy.deepcopy(self.pack)
-        pack["creative_controls"]["controls"]["sensual_editorial"]["value"] = 3
+        pack["creative_controls"]["controls"]["sensual"]["value"] = 3
         self.assertTrue(auditor.audit_creative_controls(pack))
         pack = copy.deepcopy(self.pack)
         pack.pop("creative_controls")
@@ -202,7 +202,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
         for axis, value in adult["axes"].items():
             value["candidate_inventory"] = [row for row in value["candidate_inventory"] if set(row["affected_dimensions"]).issubset(scope["axis_allowed_dimensions"][axis])]
         self.assertEqual(auditor.audit_adult_appeal_dimension_scope(pack, adult), [])
-        self.assertNotIn("appearance", scope["axis_allowed_dimensions"]["sensual_editorial"])
+        self.assertNotIn("appearance", scope["axis_allowed_dimensions"]["sensual"])
 
 
 if __name__ == "__main__":

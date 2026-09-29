@@ -25,7 +25,7 @@ RUNTIME_EXTENSION_KEYS = frozenset({
     "existing_preset_metadata_overrides", "existing_preset_render_contract_extensions",
     "existing_preset_filter_extensions", "existing_preset_filter_overrides",
     "slots", "coherence_rules", "character_mechanism_graph", "slot_applicability",
-    "visual_semantics", "maintenance_ref",
+    "visual_semantics", "maintenance_ref", "existing_slot_context_extensions",
 })
 # These legacy declarations are explicitly documentation, never runtime policy.
 LEGACY_MAINTENANCE_KEYS = frozenset({"contract_version", "description"})
@@ -69,6 +69,52 @@ def validate_extension_keys(extension: dict[str, Any]) -> None:
         or not re.fullmatch(r"[0-9a-f]{64}", str(reference.get("sha256") or ""))
     ):
         raise ValueError("extension maintenance_ref requires its declared schema, record id and SHA-256")
+
+
+def extend_slot_contexts(slots: dict[str, Any], updates: Any) -> None:
+    """Append reviewed equivalent paraphrases and optional interpretation context.
+
+    This surface cannot replace an entry, broaden its effects, or remove guards.
+    A different object, owner or action needs its own authored candidate.
+    Interpretation notes are deliberately excluded from search projections.
+    """
+    if updates is None:
+        return
+    if not isinstance(updates, dict):
+        raise ValueError("existing_slot_context_extensions must be an object")
+    for slot, entries in updates.items():
+        if slot not in slots or not isinstance(entries, dict):
+            raise ValueError(f"context extension references unknown slot {slot}")
+        targets = {row["id"]: row for row in slots[slot]}
+        for entry_id, addition in entries.items():
+            if entry_id not in targets:
+                raise ValueError(f"context extension references unknown entry {slot}.{entry_id}")
+            if (not isinstance(addition, dict) or not addition
+                    or set(addition) - {"paraphrases", "contexts"}):
+                raise ValueError("context extension allows only paraphrases and contexts")
+            paraphrases = strings(addition.get("paraphrases"))
+            contexts = addition.get("contexts", [])
+            if (not isinstance(contexts, list) or any(
+                    not isinstance(row, dict) or not str(row.get("id") or "").strip()
+                    for row in contexts)):
+                raise ValueError("context extension contexts need non-empty IDs")
+            target = targets[entry_id]
+            if paraphrases:
+                target["paraphrases"] = list(dict.fromkeys(
+                    strings(target.get("paraphrases")) + paraphrases))
+            if contexts:
+                usage = target.setdefault("contextual_usage", {})
+                if not isinstance(usage, dict):
+                    raise ValueError("contextual_usage target must be an object")
+                existing = usage.setdefault("contexts", [])
+                if not isinstance(existing, list):
+                    raise ValueError("contextual_usage.contexts must be an array")
+                ids = {row["id"] for row in existing}
+                for row in contexts:
+                    if row["id"] in ids:
+                        raise ValueError(f"duplicate contextual usage ID {row['id']}")
+                    existing.append(copy.deepcopy(row))
+                    ids.add(row["id"])
 
 
 def validate_semantic_policy(policy: dict[str, Any], allowed_dimensions: set[str]) -> None:

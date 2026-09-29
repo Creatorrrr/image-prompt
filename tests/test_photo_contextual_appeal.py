@@ -17,7 +17,7 @@ import prompt_generator as generator
 def fixture():
     source = "An adult woman offers a handwritten letter in a white dress."
     snapshot = controls.resolve(source, context={"subject_category": "human"},
-                                overrides={"sensual_editorial": 1, "fetish_fashion": 1}, seed=7)
+                                overrides={"sensual": 1, "fetish": 1}, seed=7)
     core = {
         "contract_version": "photo-authorial-core/v3", "source_request": source,
         "creative_controls_sha256": snapshot["canonical_sha256"],
@@ -102,9 +102,9 @@ class ContextualAppealTests(unittest.TestCase):
             "slot:garment_detail:seam": {"vector": [1., 0.]},
             "slot:garment_detail:cuff": {"vector": [0., 1.]}}}
         adult = self.adult(data, core, result)
-        self.assertEqual(adult["contextual_retrieval"]["axes"]["sensual_editorial"]["lanes"]["alternatives"], "hybrid")
+        self.assertEqual(adult["contextual_retrieval"]["axes"]["sensual"]["lanes"]["alternatives"], "hybrid")
         data[contextual.QUERY_CACHE]["test"]["queries"] = {}
-        self.assertEqual(self.adult(data, core, result)["contextual_retrieval"]["axes"]["sensual_editorial"]["lanes"]["alternatives"], "keyword")
+        self.assertEqual(self.adult(data, core, result)["contextual_retrieval"]["axes"]["sensual"]["lanes"]["alternatives"], "keyword")
 
     def test_embedding_runtime_uses_one_query_per_call_and_binds_all_active_lanes(self):
         data, core, result = fixture()
@@ -116,7 +116,7 @@ class ContextualAppealTests(unittest.TestCase):
         cached = data[contextual.QUERY_CACHE]["test"]
         self.assertEqual(set(cached["vectors"]), set(contextual.AXES))
         self.assertTrue(all(isinstance(call.args[0], str) for call in embed.call_args_list))
-        self.assertNotIn("corset", cached["queries"]["fetish_fashion"]["alternatives"])
+        self.assertNotIn("corset", cached["queries"]["fetish"]["alternatives"])
         data.pop(contextual.QUERY_CACHE)
         with patch.object(generator, "embed_single_semantic_text", side_effect=AssertionError("keyword run must not embed")):
             generator.prepare_contextual_appeal_queries(data, result, core, snapshot, None)
@@ -163,6 +163,48 @@ class ContextualAppealTests(unittest.TestCase):
                "contextual_usage": {"limits": "fetish uniform school", "ordinary": "work glove"}}
         self.assertNotIn("fetish", generator.semantic_text_for_entry(row, "wearable_accessory"))
         self.assertNotIn("fetish", str(generator.semantic_bm25f_fields_for_entry(row, "wearable_accessory")))
+
+    def test_short_relation_queries_keep_request_action_without_agent_outfit_or_control_syntax(self):
+        _, core, result = fixture()
+        core["request_binding"]["active_spans"].append({"text": "sensual=3, fetish=3"})
+        core["intent_lock"]["semantic_anchors"].append({"dimension": "event",
+            "source_text": "offers a handwritten letter", "prompt_evidence": "offers a handwritten letter"})
+        queries = contextual.queries(core, result["provenance"]["creative_controls"]["definitions"],
+                                     {axis: 3 for axis in contextual.AXES}, generator.authorial_core_retrieval_text)
+        for lanes in queries.values():
+            self.assertIn("offers a handwritten letter", lanes["relation_event"])
+            self.assertNotIn("corset", lanes["relation_event"])
+            self.assertNotIn("sensual=3", " ".join(lanes.values()))
+            self.assertLess(len(lanes["relation_event"].split()), 60)
+
+    def test_role_and_setting_effects_require_explicit_open_scope(self):
+        lock = {"locked_dimensions": ["subject", "event"], "open_dimensions": []}
+        for dimension in ("role", "setting", "relationship", "timing"):
+            self.assertNotIn(dimension, contextual.allowed_dimensions(lock))
+            lock["open_dimensions"] = [dimension]
+            self.assertIn(dimension, contextual.allowed_dimensions(lock))
+            lock["locked_dimensions"].append(dimension)
+            self.assertNotIn(dimension, contextual.allowed_dimensions(lock))
+            lock["locked_dimensions"].remove(dimension)
+
+    def test_detail_function_comes_from_effects_not_axis_name(self):
+        for axis in contextual.AXES:
+            self.assertEqual(generator.candidate_pack_hybrid_detail_function(
+                {"axis": axis, "affected_dimensions": ["action"]}, {}, 0), "viewer_hook")
+            self.assertEqual(generator.candidate_pack_hybrid_detail_function(
+                {"axis": axis, "affected_dimensions": ["material"]}, {}, 0), "material_detail")
+
+    def test_scene_preference_breaks_equal_generic_hits_without_claiming_applicability(self):
+        def row(key, words):
+            return {"source_candidate_id": key, "search_fields": {"labels": [words]},
+                    "visual_text": [words], "expression_scope": "portrayal_or_scene_relation"}
+        rows = [row("a", "adult shared scene glass pouring"), row("z", "adult shared scene letter handoff")]
+        ranked, trace = contextual.rank_candidates(rows, {"coherence": "adult shared scene"},
+            policy=generator.SEMANTIC_BM25F_POLICY, scene_query="letter handoff", limit=2)
+        self.assertEqual(ranked[0]["source_candidate_id"], "z")
+        self.assertTrue(ranked[0]["scene_retrieval_support"])
+        self.assertEqual(ranked[0]["contextual_status"], "unassessed")
+        self.assertIn("not_applicability_proof", trace["scene_reranking"])
 
 
 if __name__ == "__main__":

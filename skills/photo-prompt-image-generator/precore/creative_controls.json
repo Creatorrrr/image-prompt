@@ -1,20 +1,20 @@
 {
-  "contract_version": "photo-creative-control-definitions/v1",
-  "principle": "These controls guide agent-owned artistic choices within requester meaning. Zero/off disables added treatment, never removes explicitly requested content. Levels are ordinal intentions, not exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and wardrobe direction are separate choices: higher intensity does not prescribe a garment family, palette, or material. Choose a coherent realization for the particular scene at the requested strength.",
+  "contract_version": "photo-creative-control-definitions/v2",
+  "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content. Levels describe prominence in the whole image, not exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. The two controls may share the same expressive choice.",
   "controls": {
-    "sensual_editorial": {
+    "sensual": {
       "type": "integer", "range": [0, 3], "default": 1,
-      "definition": "Sensual editorial presence through portrayal, wearing choices and wardrobe together: gaze, expression, posture, action, silhouette, fit, cut, neckline, drape, material, visible skin, light, distance and the subject's relation to the scene. These are available means, not a checklist. A garment or pose has no fixed sensual classification outside its context.",
-      "levels": {"0": "No additional sensual direction.", "1": "A subtle supporting sensual quality.", "2": "A clearly readable sensual direction in the portrayal or wardrobe and its relationship with the scene.", "3": "Sensual expression leads the aesthetic direction while preserving the requested subject and event."}
+      "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+      "levels": {"0": "No added sensual treatment; preserve explicitly requested content.", "1": "This expression is a subtle supporting quality.", "2": "This expression is clearly readable in the image.", "3": "This expression leads the image's appeal and direction."}
     },
-    "fetish_fashion": {
+    "fetish": {
       "type": "integer", "range": [0, 3], "default": 0,
-      "definition": "Adult fetish-fashion language may emerge through garment structure, tactile materials, layering, accessories, symbolic styling, ways of wearing, posture, gesture, action and their relationship to the person, light and scene. Ordinary clothing or a material word alone does not establish this reading; describe the visible contextual relationship. One expressive choice may serve both adult-appeal axes.",
-      "levels": {"0": "No additional fetish-fashion direction.", "1": "A limited supporting expression of this fashion language.", "2": "This fashion language is clearly readable through styling, wearing method, construction, material or garment-person-action relationships.", "3": "This fashion language leads the portrayal while preserving the requested subject and event."}
+      "definition": "Any distinctive focus of sexual attraction or fascination; interpret broadly across objects, bodies, clothing, materials, roles, situations, behaviors, and sensory qualities, not just conventional fetish aesthetics.",
+      "levels": {"0": "No added fetish treatment; preserve explicitly requested content.", "1": "This focus is a subtle supporting quality.", "2": "This focus is clearly readable in the image.", "3": "This focus leads the image's appeal and direction."}
     },
     "adult_appeal_emphasis": {
       "type": "enum", "choices": ["auto", "sensual_led", "balanced", "fetish_led"], "default": "auto",
-      "definition": "Choose which active axis leads the styling. Auto follows the two intensities; emphasis cannot reactivate an inactive axis. Shared wardrobe may express both axes."
+      "definition": "Choose which active axis leads the whole expression. Auto follows the two intensities; emphasis cannot reactivate an inactive axis. One expressive choice may serve both axes."
     },
     "creativity": {
       "type": "number", "range": [0, 1], "default": 0.5,

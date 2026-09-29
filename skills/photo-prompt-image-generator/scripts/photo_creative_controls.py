@@ -12,3 +12,6 @@ load_definitions = _module.load_definitions
 resolve = _module.resolve
 validate = _module.validate
 runtime_values = _module.runtime_values
+authoring_brief = _module.authoring_brief
+split_request_spans = _module.split_request_spans
+strip_assignments = _module.strip_assignments

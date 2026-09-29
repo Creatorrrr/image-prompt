@@ -1327,9 +1327,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         )
         ordinary = self.run_wrapper(
             *base_args,
-            "--sensual-editorial-intensity",
+            "--sensual-intensity",
             "0",
-            "--fetish-fashion-intensity",
+            "--fetish-intensity",
             "0",
         )[0]
         hybrid_pack = self.run_wrapper(*base_args, "--hybrid-augmentation")[0]
@@ -1654,13 +1654,13 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertEqual(adult["activation_source"], "skill_default")
         self.assertEqual(adult["eligibility"]["status"], "eligible")
         self.assertEqual(adult["contract_version"], "photo-adult-appeal/v2")
-        self.assertEqual(adult["defaults"]["sensual_editorial_intensity"], 1)
-        self.assertEqual(adult["defaults"]["fetish_fashion_intensity"], 0)
+        self.assertEqual(adult["defaults"]["sensual_intensity"], 1)
+        self.assertEqual(adult["defaults"]["fetish_intensity"], 0)
         self.assertEqual(adult["defaults"]["emphasis"], "sensual_led")
-        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
-        self.assertFalse(adult["axes"]["fetish_fashion"]["active"])
-        self.assertEqual(adult["axes"]["fetish_fashion"]["candidate_inventory"], [])
+        self.assertEqual(adult["axes"]["sensual"]["intensity"], 1)
+        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
+        self.assertFalse(adult["axes"]["fetish"]["active"])
+        self.assertEqual(adult["axes"]["fetish"]["candidate_inventory"], [])
         self.assertEqual(adult["blend"]["emphasis"], "sensual_led")
         self.assertEqual(
             set(adult["eligibility"]),
@@ -1677,9 +1677,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "--seed",
             "20260809",
             *common,
-            "--sensual-editorial-intensity",
+            "--sensual-intensity",
             "0",
-            "--fetish-fashion-intensity",
+            "--fetish-intensity",
             "0",
         )[0]
         self.assertNotIn("hybrid_augmentation", opted_out)
@@ -1865,9 +1865,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
 
             adult = pack["hybrid_augmentation"]["adult_appeal"]
             expected_axes = (
-                {"sensual_editorial": 0, "fetish_fashion": 0}
+                {"sensual": 0, "fetish": 0}
                 if expected["sexual_tone"] == "nonsexual"
-                else {"sensual_editorial": 1, "fetish_fashion": 0}
+                else {"sensual": 1, "fetish": 0}
             )
             self.assertEqual(
                 {axis_id: axis["intensity"] for axis_id, axis in adult["axes"].items()},
@@ -2306,8 +2306,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             adult["eligibility"]["reason"],
             "explicit_nonsexual_moe_request_suppresses_configured_default",
         )
-        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 0)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["sensual"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
         mandatory = {row["text"] for row in pack["mandatory_intents"]}
         self.assertTrue({"성인", "네코미미", "츤데레", "메이드"} <= mandatory)
         self.assertFalse({"고양이", "수인"} & mandatory)
@@ -2332,8 +2332,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         generic_adult = generic["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(generic_adult["enabled"])
         self.assertEqual(generic_adult["activation_source"], "skill_default")
-        self.assertEqual(generic_adult["axes"]["sensual_editorial"]["intensity"], 1)
-        self.assertEqual(generic_adult["axes"]["fetish_fashion"]["intensity"], 0)
+        self.assertEqual(generic_adult["axes"]["sensual"]["intensity"], 1)
+        self.assertEqual(generic_adult["axes"]["fetish"]["intensity"], 0)
 
         text_pack = self.run_wrapper(
             "--concept",
@@ -2455,8 +2455,8 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertIn("second full recipient face", pack["negative_en"])
         adult = pack["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(adult["enabled"])
-        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 1)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 0)
+        self.assertEqual(adult["axes"]["sensual"]["intensity"], 1)
+        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
 
         prompt = (
             "Adult woman, pretty and cute: refined face, lively eyes, glossy hair. Preserve uploaded portrait: eye "
@@ -3726,7 +3726,7 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         self.assertGreaterEqual(evidence_counts.get("earnest_effort", 0), 3)
         self.assertGreaterEqual(sum(scene.get("static_portrait") is True for scene in scenes), 4)
 
-    def test_sensual_editorial_and_fetish_fashion_axes_combine_and_risky_camera_pair_fails(self):
+    def test_sensual_and_fetish_axes_combine_and_risky_camera_pair_fails(self):
         pack = self.run_wrapper(
             "--preset",
             "adult_fetish_fashion_editorial",
@@ -3736,9 +3736,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "20260809",
             "--emit-candidate-pack",
             "--hybrid-augmentation",
-            "--sensual-editorial-intensity",
+            "--sensual-intensity",
             "2",
-            "--fetish-fashion-intensity",
+            "--fetish-intensity",
             "2",
             "--adult-appeal-emphasis",
             "balanced",
@@ -3746,14 +3746,14 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
         adult = pack["hybrid_augmentation"]["adult_appeal"]
         self.assertTrue(adult["enabled"])
         self.assertTrue(adult["blend"]["simultaneous_activation_allowed"])
-        self.assertEqual(adult["axes"]["sensual_editorial"]["intensity"], 2)
-        self.assertEqual(adult["axes"]["fetish_fashion"]["intensity"], 2)
-        self.assertGreater(len(adult["axes"]["sensual_editorial"]["candidate_inventory"]), 0)
-        self.assertGreaterEqual(len(adult["axes"]["fetish_fashion"]["candidate_inventory"]), 8)
+        self.assertEqual(adult["axes"]["sensual"]["intensity"], 2)
+        self.assertEqual(adult["axes"]["fetish"]["intensity"], 2)
+        self.assertGreater(len(adult["axes"]["sensual"]["candidate_inventory"]), 0)
+        self.assertGreaterEqual(len(adult["axes"]["fetish"]["candidate_inventory"]), 8)
         for route in pack["hybrid_augmentation"]["route_contract"]["routes"]:
             self.assertEqual(
                 {detail["axis"] for detail in route["details"] if detail.get("axis")},
-                {"sensual_editorial", "fetish_fashion"},
+                {"sensual", "fetish"},
             )
 
         safe = self.composed_from_hybrid_route(pack, "material_world")
@@ -3765,7 +3765,9 @@ class PhotoPromptContractV2Tests(unittest.TestCase):
             "material_world",
             extra_chosen=("slot:camera_direction:low_ground_angle",),
         )
-        risky["prompt_en"] += " Ground-level low angle."
+        # A seeded route need not select sheer styling. Supply both factors
+        # explicitly so the check tests the combination, not sampler order.
+        risky["prompt_en"] += " Sheer layering with a ground-level low angle."
         risky_result = audit_composed_prompt.audit_composed_prompt(pack, risky)
         self.assertIn(
             "adult_appeal_combination_risk",
