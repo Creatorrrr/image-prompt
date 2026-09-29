@@ -743,9 +743,9 @@ class PhotoSamplerContractsTests(unittest.TestCase):
             "--diagnostic-candidates",
         )
         base_pack = self.run_wrapper(*base_args)[0]
-        low_pack = self.run_wrapper(*base_args, "--creativity", "0.74")[0]
-        creative_pack = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
-        repeated_pack = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
+        low_pack = self.run_wrapper(*base_args, "--creativity", "2")[0]
+        creative_pack = self.run_wrapper(*base_args, "--creativity", "3")[0]
+        repeated_pack = self.run_wrapper(*base_args, "--creativity", "3")[0]
 
         self.assertNotIn("creative_exploration", base_pack)
         self.assertNotIn("creative_exploration", low_pack)
@@ -1003,7 +1003,7 @@ class PhotoSamplerContractsTests(unittest.TestCase):
 
     def test_creative_direction_audit_binds_one_developed_concept_and_rejects_contract_gaming(self):
         contract = prompt_generator.candidate_pack_creative_direction(
-            {"provenance": {"creativity": 0.85}}
+            {"provenance": {"creativity": 3}}
         )
         self.assertIsNotNone(contract)
         pack = {
@@ -1195,7 +1195,7 @@ class PhotoSamplerContractsTests(unittest.TestCase):
         )
         ordinary = self.run_wrapper(*base_args)[0]
         requested = self.run_wrapper(*base_args, "--viewer-experience")[0]
-        creative = self.run_wrapper(*base_args, "--creativity", "0.85")[0]
+        creative = self.run_wrapper(*base_args, "--creativity", "3")[0]
 
         self.assertNotIn("viewer_experience", ordinary)
         requested_contract = requested["viewer_experience"]

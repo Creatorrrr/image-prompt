@@ -657,7 +657,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             include_trace=True,
             concept_locks=[REQUEST],
             seed=1416,
-            creativity=0.0,
+            creativity=0,
             authorial_core=normalized,
         )
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
@@ -880,7 +880,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             include_trace=True,
             concept_locks=[REQUEST],
             seed=1415,
-            creativity=0.0,
+            creativity=0,
             authorial_core=normalized,
         )
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
@@ -1069,7 +1069,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             include_trace=True,
             concept_locks=[YANDERE_REQUEST],
             seed=1415,
-            creativity=0.0,
+            creativity=0,
             authorial_core=normalized_core,
         )
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
@@ -1129,7 +1129,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             include_trace=True,
             concept_locks=[REALITY_ERROR_REQUEST],
             seed=1421,
-            creativity=0.0,
+            creativity=0,
             authorial_core=normalized_core,
         )
         pack = prompt_generator.build_candidate_pack(result, data, "v6")
@@ -1277,7 +1277,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
             include_trace=True,
             concept_locks=[retry_request],
             seed=1417,
-            creativity=0.0,
+            creativity=0,
             authorial_core=normalized_core,
         )
         result.setdefault("provenance", {})["visual_intent"] = visual_intent
@@ -1412,7 +1412,7 @@ class PhotoAuthorialCoreV6Tests(unittest.TestCase):
                 include_trace=True,
                 concept_locks=[normalized_envelope["request_text"]],
                 seed=42,
-                creativity=0.0,
+                creativity=0,
                 authorial_core=normalized_core,
             )
             pack = prompt_generator.build_candidate_pack(result, data, "v6")

@@ -115,10 +115,12 @@ SURREAL_LAYER_SLOTS = (
     "surreal_physics_detail",
 )
 
-SURREAL_INTENSITY_SLOTS = {
-    "subtle": ("surreal_concept", "surreal_physics_detail"),
-    "moderate": ("surreal_concept", "surreal_anchor", "surreal_physics_detail"),
-    "bold": SURREAL_LAYER_SLOTS,
+# Internal candidate breadth only; the pre-core definition owns visual prominence.
+SURREAL_LEVEL_SLOTS = {
+    0: (),
+    1: ("surreal_concept", "surreal_physics_detail"),
+    2: ("surreal_concept", "surreal_anchor", "surreal_physics_detail"),
+    3: SURREAL_LAYER_SLOTS,
 }
 
 REFERENCE_EDIT_MODES = ("off", "identity", "younger_self", "brand_board")
@@ -256,10 +258,10 @@ CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
 CANDIDATE_PACK_CONTRACT_V6 = "photo-candidate-pack/v6"
 CANDIDATE_PACK_VERSIONS = ("v6",)
 DEFAULT_CANDIDATE_PACK_VERSION = "v6"
-CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 0.75
+CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
-CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
+CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 3
 CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
@@ -5670,13 +5672,20 @@ def candidate_pack_creative_feature_distance(left: JsonDict, right: JsonDict) ->
     return round(1.0 - (len(shared) / len(union)), 6), len(shared), len(union)
 
 
+def candidate_pack_creativity_level(provenance: JsonDict) -> Optional[int]:
+    value = provenance.get("creativity")
+    if value is not None:
+        creativity_sampling_strength(value)
+    return value
+
+
 def candidate_pack_creative_exploration(
     result: JsonDict,
     slots: JsonDict,
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
 ) -> Optional[JsonDict]:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    creativity = candidate_pack_float(provenance.get("creativity"))
+    creativity = candidate_pack_creativity_level(provenance)
     if creativity is None or creativity < CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR:
         return None
 
@@ -5771,7 +5780,7 @@ def candidate_pack_creative_direction(result: JsonDict) -> Optional[JsonDict]:
     how the agent develops and binds one idea; it does not enlarge or mutate the candidate pool.
     """
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    creativity = candidate_pack_float(provenance.get("creativity"))
+    creativity = candidate_pack_creativity_level(provenance)
     if creativity is None or creativity < CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR:
         return None
 
@@ -5917,7 +5926,7 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
     response.
     """
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    creativity = candidate_pack_float(provenance.get("creativity"))
+    creativity = candidate_pack_creativity_level(provenance)
     explicitly_requested = provenance.get("viewer_experience_requested") is True
     creative_direction_required = bool(
         creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR
@@ -14185,15 +14194,14 @@ def candidate_pack_creative_augmentation(
         else:
             row["_band"] = "lateral"
 
-    try:
-        creativity = clamp_unit_interval(float(provenance.get("creativity", 0.5)))
-    except (TypeError, ValueError):
-        creativity = 0.5
-    if creativity <= 0.25:
+    creativity = candidate_pack_creativity_level(provenance)
+    if creativity is None:
+        creativity = CREATIVE_CONTROL_DEFAULTS["creativity"]
+    if creativity <= 1:
         allowed_bands = ["near"]
         band_weights = {"near": 1.0}
         sample_limit = 5
-    elif creativity < 0.75:
+    elif creativity < 3:
         allowed_bands = ["near", "adjacent"]
         band_weights = {"near": 0.68, "adjacent": 0.32}
         sample_limit = 6
@@ -14340,7 +14348,7 @@ def candidate_pack_bind_authorial_core(
     )
     public_provenance.update(
         {
-            "creativity": original_provenance.get("creativity", 0.5),
+            "creativity": original_provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"]),
             "candidate_pool_creativity": original_provenance.get("candidate_pool_creativity"),
             "retrieval_query": retrieval_provenance,
         }
@@ -14924,7 +14932,7 @@ def build_candidate_pack(
         pack["authorial_core"] = copy.deepcopy(authorial_core)
     if authorial_core is None:
         raise ValueError("v6 candidate pack requires a pre-pack authorial core")
-    pack["provenance"]["creativity"] = provenance.get("creativity", 0.5)
+    pack["provenance"]["creativity"] = provenance.get("creativity", CREATIVE_CONTROL_DEFAULTS["creativity"])
     pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
     pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
     if (
@@ -15908,7 +15916,15 @@ CREATIVITY_PROFILE_ANCHORS: tuple[tuple[float, str, str], ...] = (
     (0.5, "balanced", "medium"),
     (1.0, "exploratory", "high"),
 )
+CREATIVITY_SAMPLING_STRENGTHS = (0.0, 0.25, 0.5, 1.0)
 CREATIVITY_INTEGER_CONFIG_KEYS = {"preset_candidate_limit", "slot_candidate_limit"}
+
+
+def creativity_sampling_strength(level: int) -> float:
+    """Convert an authored 0..3 level to private numeric sampling coefficients."""
+    if type(level) is not int or level not in range(4):
+        raise ValueError("creativity must be an integer in 0..3")
+    return CREATIVITY_SAMPLING_STRENGTHS[level]
 
 
 def clamp_unit_interval(value: float) -> float:
@@ -15935,14 +15951,15 @@ def interpolate_numeric_config(
     return merged
 
 
-def creativity_settings(creativity: float, source: Optional[JsonDict] = None) -> JsonDict:
-    """Map a single 0..1 creativity lever onto the layered diversity knobs.
+def creativity_settings(creativity: int, source: Optional[JsonDict] = None) -> JsonDict:
+    """Map the authored 0..3 level onto private diversity coefficients.
 
-    0.0 anchors at conservative/low-novelty, 0.5 at balanced/medium, 1.0 at
-    exploratory/high. Coherence knobs (semantic_weight, filter_strictness)
+    Levels 0, 2 and 3 retain the conservative, balanced and exploratory anchors;
+    level 1 is restrained variation between the first two. Coherence knobs
+    (semantic_weight, filter_strictness)
     are deliberately not touched: they trade off correctness, not creativity.
     """
-    value = clamp_unit_interval(creativity)
+    value = creativity_sampling_strength(creativity)
     anchors = CREATIVITY_PROFILE_ANCHORS
     for (low_pos, low_profile, low_novelty), (high_pos, high_profile, high_novelty) in zip(anchors, anchors[1:]):
         if value <= high_pos:
@@ -15968,7 +15985,7 @@ def creativity_settings(creativity: float, source: Optional[JsonDict] = None) ->
     nearest_profile = high_profile if fraction >= 0.5 else low_profile
     nearest_novelty = high_novelty if fraction >= 0.5 else low_novelty
     return {
-        "creativity": value,
+        "creativity": creativity,
         "profile_config": profile_config,
         "novelty_settings": (
             low_temp + (high_temp - low_temp) * fraction,
@@ -16188,7 +16205,7 @@ def make_batch_context(
     novelty: str,
     total_count: int = 1,
     source: Optional[JsonDict] = None,
-    creativity: Optional[float] = None,
+    creativity: Optional[int] = None,
 ) -> Optional[JsonDict]:
     if selection_mode not in {"semantic", "hybrid"} or total_count <= 1:
         return None
@@ -17034,7 +17051,7 @@ def make_semantic_context(
     intent_source: str = "user",
     semantic_defaulted: bool = False,
     batch_context: Optional[JsonDict] = None,
-    creativity: Optional[float] = None,
+    creativity: Optional[int] = None,
     novelty_explicit: bool = False,
     retrieval_text: Optional[str] = None,
     retrieval_provenance: Optional[JsonDict] = None,
@@ -17100,10 +17117,10 @@ def make_semantic_context(
             }
         )
     family_set = sorted({family for item in axis_vectors for family in item.get("families", [])})
-    creativity_value: Optional[float] = None
+    creativity_value: Optional[int] = None
     creativity_overrides: JsonDict = {}
     if creativity is not None:
-        creativity_value = clamp_unit_interval(creativity)
+        creativity_value = creativity
         derived = creativity_settings(creativity_value, {"semantic_policy": semantic_policy})
         # Explicit --novelty / --semantic-profile always win over the lever.
         if semantic_profile is None:
@@ -18552,48 +18569,16 @@ def preset_uses_adult_context(preset: JsonDict) -> bool:
     return bool(required & {"adult_context", "fetish_styling", "body_framing", "caption_context"})
 
 
-def has_forced_surreal_slot(forced_choices: Optional[Dict[str, List[str]]]) -> bool:
-    return bool(set((forced_choices or {}).keys()) & set(SURREAL_LAYER_SLOTS))
-
-
 def should_activate_surreal_layer(
-    preset: JsonDict,
-    rng: random.Random,
-    mode: str,
-    probability: float,
-    forced_choices: Optional[Dict[str, List[str]]] = None,
+    surreal: int,
     semantic_context: Optional[JsonDict] = None,
-    mode_explicit: bool = False,
 ) -> bool:
-    active = False
-    reason = "off"
-    if has_forced_surreal_slot(forced_choices):
-        active = True
-        reason = "forced_slot"
-    elif mode == "on":
-        active = True
-        reason = "explicit"
-    elif preset_uses_adult_context(preset):
-        active = False
-        reason = "adult_preset_blocked"
-    elif (
-        semantic_context
-        and intent_steering_enabled(semantic_context)
-        and not mode_explicit
-        and mode == "off"
-        and "fantasy" in context_axis_families(semantic_context)
-    ):
-        active = True
-        reason = "semantic_axis"
-    elif mode == "auto":
-        active = rng.random() < max(0.0, min(1.0, probability))
-        reason = "probability"
-    elif mode == "off" and mode_explicit:
-        active = False
-        reason = "explicit_off"
-
+    """Only the resolved level activates additions; requested fantasy stays authored."""
+    if type(surreal) is not int or surreal not in SURREAL_LEVEL_SLOTS:
+        raise ValueError("surreal must be an integer in 0..3")
+    active = surreal > 0
     if semantic_context is not None:
-        semantic_context["surreal_activation_reason"] = reason
+        semantic_context["surreal_activation_reason"] = f"level_{surreal}"
         semantic_context["surreal_activation_active"] = active
     return active
 
@@ -18604,11 +18589,13 @@ def apply_surreal_layer(
     rng: random.Random,
     picked: Dict[str, Entry],
     forced_choices: Optional[Dict[str, List[str]]] = None,
-    intensity: str = "moderate",
+    surreal: int = 0,
     semantic_context: Optional[JsonDict] = None,
     generation_contract: Optional[JsonDict] = None,
 ) -> None:
-    for slot in SURREAL_INTENSITY_SLOTS[intensity]:
+    if not should_activate_surreal_layer(surreal):
+        return
+    for slot in SURREAL_LEVEL_SLOTS[surreal]:
         if slot in picked:
             continue
         entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
@@ -19969,7 +19956,7 @@ def anchor_expansion_settings(policy: JsonDict, semantic_context: Optional[JsonD
     creativity = (semantic_context or {}).get("creativity")
     if creativity is not None:
         # Higher creativity widens the semantic neighborhood slightly.
-        value = clamp_unit_interval(creativity)
+        value = creativity_sampling_strength(creativity)
         if value >= 0.75:
             top_k += 1
         min_similarity = max(0.5, min_similarity - 0.06 * value)
@@ -23913,7 +23900,7 @@ def resolve_soft_render_directives(
 
 
 # Keep the low-level API neutral for internal research and holdout callers.
-# ``main`` injects the user-facing CLI defaults (sensual 2, fetish 1) into candidate-pack runs.
+# ``main`` injects the configured user-facing CLI defaults into candidate-pack runs.
 def generate_once(
     data: JsonDict,
     rng: random.Random,
@@ -23925,9 +23912,7 @@ def generate_once(
     forced_choices: Optional[Dict[str, List[str]]] = None,
     priority_bias: Optional[float] = None,
     detail_level: str = "standard",
-    surreal_mode: str = "off",
-    surreal_probability: float = 0.35,
-    surreal_intensity: str = "moderate",
+    surreal: int = 0,
     reference_edit_mode: str = "off",
     trend_layer: str = "off",
     intent: Optional[str] = None,
@@ -23948,7 +23933,6 @@ def generate_once(
     semantic_axis_mode: str = "auto",
     intent_axes: Optional[Sequence[str]] = None,
     intent_steering: Optional[str] = None,
-    surreal_mode_explicit: bool = False,
     semantic_defaulted: bool = False,
     intent_source: str = "user",
     requested_selection_mode: Optional[str] = None,
@@ -23974,7 +23958,7 @@ def generate_once(
     source_argv: Optional[Sequence[str]] = None,
     seed: Optional[int] = None,
     anchor_diversity_ledger: Optional[JsonDict] = None,
-    creativity: Optional[float] = None,
+    creativity: Optional[int] = None,
     novelty_explicit: bool = False,
     authorial_core: Optional[JsonDict] = None,
     creative_control_snapshot: Optional[JsonDict] = None,
@@ -23996,16 +23980,15 @@ def generate_once(
         fetish_intensity = control_values["fetish_intensity"]
         adult_appeal_emphasis = control_values["adult_appeal_emphasis"]
         adult_appeal_activation_source = "precore_controls"
-        surreal_mode = control_values["surreal_mode"]
-        surreal_mode_explicit = True
-        surreal_probability = control_values["surreal_probability"]
-        surreal_intensity = control_values["surreal_intensity"]
+        surreal = control_values["surreal"]
         reference_edit_mode = control_values["reference_edit_mode"]
         trend_layer = control_values["trend_layer"]
         viewer_experience_requested = control_values["viewer_experience"]
-        creativity = 1.0
+        creativity = 3
     elif isinstance(authorial_core, dict) and authorial_core.get("creative_controls_sha256"):
         raise ValueError("the core's frozen creative controls must be supplied")
+    if creativity is not None:
+        creativity_sampling_strength(creativity)
     requested_selection_mode = requested_selection_mode or selection_mode
     typed_core_v3 = bool(
         isinstance(authorial_core, dict)
@@ -24255,15 +24238,7 @@ def generate_once(
         soft_anchor_spec=soft_anchor_spec,
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-    surreal_active = should_activate_surreal_layer(
-        preset,
-        rng,
-        surreal_mode,
-        surreal_probability,
-        forced_choices,
-        semantic_context,
-        surreal_mode_explicit,
-    )
+    surreal_active = should_activate_surreal_layer(surreal, semantic_context)
     refresh_generation_contract(
         generation_contract,
         data,
@@ -24290,7 +24265,7 @@ def generate_once(
             rng,
             picked,
             forced_choices,
-            surreal_intensity,
+            surreal,
             semantic_context,
             generation_contract,
         )
@@ -24779,22 +24754,11 @@ def main(
         help="Prompt rendering detail level. Use detailed for a longer image-ready prompt or compact for a ReactorPrompt-style single paragraph.",
     )
     parser.add_argument(
-        "--surreal-mode",
-        choices=["off", "auto", "on"],
-        default=CREATIVE_CONTROL_DEFAULTS["surreal_mode"],
-        help="Apply an added surreal layer. Pre-core snapshots resolve auto once; off preserves requested fantasy.",
-    )
-    parser.add_argument(
-        "--surreal-probability",
-        type=float,
-        default=CREATIVE_CONTROL_DEFAULTS["surreal_probability"],
-        help="Probability for --surreal-mode auto. Clamped to 0..1.",
-    )
-    parser.add_argument(
-        "--surreal-intensity",
-        choices=["subtle", "moderate", "bold"],
-        default=CREATIVE_CONTROL_DEFAULTS["surreal_intensity"],
-        help="Added treatment strength defined in the pre-core brief; diagnostic sampling uses these labels for slot breadth.",
+        "--surreal",
+        type=int,
+        choices=range(4),
+        default=CREATIVE_CONTROL_DEFAULTS["surreal"],
+        help="Added surreal prominence: 0 off, 1 supporting, 2 clearly readable, 3 leading. Zero preserves requested fantasy; use the frozen pre-core value.",
     )
     parser.add_argument(
         "--reference-edit-mode",
@@ -24930,9 +24894,9 @@ def main(
     )
     parser.add_argument(
         "--adult-appeal-emphasis",
-        choices=CANDIDATE_PACK_ADULT_APPEAL_EMPHASES,
+        choices=("auto", *CANDIDATE_PACK_ADULT_APPEAL_EMPHASES),
         default=None,
-        help="Blend emphasis when one or both adult-appeal axes are active. Equal default intensities resolve to balanced.",
+        help="Leadership of active sensual/fetish expression: auto, sensual_led, balanced, or fetish_led. The frozen pre-core brief records the selected meaning, effective result, and reason without changing either intensity.",
     )
     parser.add_argument(
         "--selection-mode",
@@ -24950,9 +24914,10 @@ def main(
     )
     parser.add_argument(
         "--creativity",
-        type=float,
+        type=int,
+        choices=range(4),
         default=None,
-        help="Single 0..1 creativity control: 0 maps to conservative/low-novelty, 0.5 to balanced exploration, and 0.75..1 adds a creative-direction composition contract alongside exploratory candidate breadth. Explicit --novelty or --semantic-profile values win over the corresponding diversity settings. Coherence controls (semantic weight, filter strictness) are not affected.",
+        help="Interpretive freedom 0..3: 0 direct, 1 restrained variation, 2 coherent reinterpretation, 3 unexpected exploration with the high creative-direction workflow. Read the pre-core meaning and selected level before authoring. Explicit --novelty or --semantic-profile values override only their internal sampling settings; coherence guards stay unchanged.",
     )
     parser.add_argument(
         "--scene-function",
@@ -25129,9 +25094,7 @@ def main(
             "creativity": "creativity",
             "viewer_experience": "viewer_experience",
             "reference_edit_mode": "reference_edit_mode",
-            "surreal_mode": "surreal_mode",
-            "surreal_probability": "surreal_probability",
-            "surreal_intensity": "surreal_intensity",
+            "surreal": "surreal",
             "trend_layer": "trend_layer",
         }
         for control, attribute in mapping.items():
@@ -25405,15 +25368,13 @@ def main(
         )
         data[SEMANTIC_INDEX_DATA_KEY] = v6_semantic_index
 
-    if args.creativity is not None and not 0.0 <= args.creativity <= 1.0:
-        raise ValueError("--creativity must be between 0 and 1")
     novelty_explicit = has_cli_option(raw_args, "--novelty")
     requested_creativity = (
-        clamp_unit_interval(args.creativity)
+        args.creativity
         if args.creativity is not None
         else (CREATIVE_CONTROL_DEFAULTS["creativity"] if args.emit_candidate_pack else None)
     )
-    candidate_pool_creativity = 1.0 if args.emit_candidate_pack else args.creativity
+    candidate_pool_creativity = 3 if args.emit_candidate_pack else args.creativity
     batch_context = make_batch_context(
         selection_mode,
         args.novelty,
@@ -25438,9 +25399,7 @@ def main(
             forced_choices=forced_choices,
             priority_bias=args.priority_bias,
             detail_level=args.detail_level,
-            surreal_mode=args.surreal_mode,
-            surreal_probability=args.surreal_probability,
-            surreal_intensity=args.surreal_intensity,
+            surreal=args.surreal,
             reference_edit_mode=args.reference_edit_mode,
             trend_layer=args.trend_layer,
             intent=resolved_intent,
@@ -25453,7 +25412,6 @@ def main(
             semantic_axis_mode=args.semantic_axis_mode,
             intent_axes=args.intent_axes,
             intent_steering=args.intent_steering,
-            surreal_mode_explicit=has_cli_option(raw_args, "--surreal-mode"),
             semantic_defaulted=semantic_defaulted,
             intent_source=intent_source,
             requested_selection_mode=selection_mode,

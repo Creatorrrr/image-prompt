@@ -19,7 +19,7 @@ For the normal skill path, the byte-exact request envelope and `photo-authorial-
 
 ## Route Explicit Creative Intent
 
-At the agent layer, explicit requests for a creative, original, ingenious, inventive, surprising, or authorially distinctive result automatically set `--creativity 0.85` or higher. Korean triggers include `창의적`, `독창적`, `기발한`, `참신한`, `작가적`, and `작가의 터치`; interpret clear equivalents by meaning rather than requiring an exact keyword. This activates the generic `creative_direction` composition contract. Do not ask the user to repeat the request or add topic-specific candidates.
+Resolve explicit requests for a creative, original, ingenious, inventive, surprising, or authorially distinctive result as `creativity=3` before baseline authoring, unless the requester selected a different level. Interpret intent by meaning rather than an exact keyword. This activates the generic `creative_direction` composition contract after the core is frozen. Post-core routing reads that frozen value and must not raise it retroactively or add topic-specific candidates.
 
 Requests for several safe variations or wider candidate exploration without an explicit originality/authorial goal may use a lower creativity value and remain outside creative direction. Ordinary prompt and image requests keep the default path.
 

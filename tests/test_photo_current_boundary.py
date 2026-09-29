@@ -39,7 +39,8 @@ class PhotoCurrentBoundaryTests(unittest.TestCase):
             generator.normalize_authorial_core(old, request_envelope=envelope)
 
     def test_old_cli_options_are_unknown(self):
-        for flag in ("--legacy-replay-reason", "--authorial-request-json", "--hybrid-augmentation"):
+        for flag in ("--legacy-replay-reason", "--authorial-request-json", "--hybrid-augmentation",
+                     "--surreal-mode", "--surreal-probability", "--surreal-intensity"):
             with self.subTest(flag=flag), contextlib.redirect_stderr(
                 io.StringIO()
             ), self.assertRaises(SystemExit) as exc:

@@ -194,7 +194,7 @@ class PhotoCandidateSemanticsTests(unittest.TestCase):
         data = v6.PhotoAuthorialCoreV6Tests().runtime_data()
         result = current_fixtures.generate_once(data, random.Random(919), None, ["en"], True, 12, True,
                                          selection_mode="rule", include_trace=True, concept_locks=[request],
-                                         seed=919, creativity=0.0, authorial_core=core)
+                                         seed=919, creativity=0, authorial_core=core)
         pack = generator.build_candidate_pack(result, data, "v6")
         bundles = pack["candidate_bundles"]["candidates"]
         self.assertTrue(bundles, "the normal generator must expose a usable bundle, not only compile a dead catalog")

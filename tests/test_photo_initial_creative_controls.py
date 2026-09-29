@@ -3,7 +3,9 @@ from __future__ import annotations
 from tests import photo_prompt_fixtures as current_fixtures
 
 import copy
+import contextlib
 import hashlib
+import io
 import json
 from pathlib import Path
 import random
@@ -31,6 +33,9 @@ class CreativeControlResolverTests(unittest.TestCase):
         self.assertIn("clearly readable", snapshot["definitions"]["controls"]["sensual"]["levels"]["2"])
         self.assertEqual(snapshot["controls"]["sensual"]["source"], "saved_setting")
         self.assertEqual(snapshot["resolved_emphasis"], "sensual_led")
+        self.assertEqual(snapshot["controls"]["surreal"], {"value": 0, "source": "saved_setting"})
+        self.assertEqual(snapshot["controls"]["creativity"], {"value": 2, "source": "saved_setting"})
+        self.assertEqual(snapshot["authoring_brief"], controls.authoring_brief(snapshot))
 
     def test_override_zero_is_an_addition_control_not_a_request_rewrite(self):
         request = "An adult woman wearing a sensual dress."
@@ -45,16 +50,129 @@ class CreativeControlResolverTests(unittest.TestCase):
             with self.subTest(overrides=overrides), self.assertRaises(ValueError):
                 self.snapshot(overrides=overrides)
 
-    def test_auto_is_frozen_once_and_replay_uses_embedded_definitions(self):
-        snapshot = self.snapshot(overrides={"surreal_mode": "auto", "surreal_probability": 1.0})
-        self.assertTrue(snapshot["surreal_active"])
-        self.assertEqual(controls.runtime_values(snapshot)["surreal_mode"], "on")
+    def test_surreal_is_frozen_and_validation_uses_embedded_definitions(self):
+        snapshot = self.snapshot(overrides={"surreal": 3})
+        self.assertEqual(controls.runtime_values(snapshot)["surreal"], 3)
         with patch.object(controls._module, "load_definitions", side_effect=AssertionError("must not reload settings")):
             self.assertEqual(controls.validate(snapshot, "An adult woman beside a window."), snapshot)
         broken = copy.deepcopy(snapshot)
-        broken["surreal_active"] = False
+        broken["controls"]["surreal"]["value"] = 1
         with self.assertRaises(ValueError):
             controls.validate(broken, "An adult woman beside a window.")
+
+    def test_surreal_levels_are_not_probabilistic_or_adult_eligibility_controls(self):
+        for level in range(4):
+            for seed in (0, 1, 42):
+                with self.subTest(level=level, seed=seed):
+                    snapshot = controls.resolve("A floating glass house without people.",
+                        context={"subject_category": "nonhuman", "no_people": True, "explicit_nonsexual": True},
+                        overrides={"surreal": level}, seed=seed)
+                    self.assertEqual(controls.runtime_values(snapshot)["surreal"], level)
+                    self.assertEqual(snapshot["adult_appeal"]["sensual"]["effective_intensity"], 0)
+                    definition = snapshot["definitions"]["controls"]["surreal"]
+                    self.assertIn(f"surreal: {level} (range: 0–3)", snapshot["authoring_brief"])
+                    self.assertIn(definition["definition"], snapshot["authoring_brief"])
+                    self.assertIn(definition["levels"][str(level)], snapshot["authoring_brief"])
+
+    def test_surreal_rejects_removed_inputs_and_invalid_levels(self):
+        for name, value in (("surreal_mode", "on"), ("surreal_probability", 1.0), ("surreal_intensity", "bold")):
+            with self.subTest(name=name), self.assertRaisesRegex(ValueError, "unsupported"):
+                self.snapshot(overrides={name: value})
+        for value in (-1, 4, True, 1.5, "auto"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.snapshot(overrides={"surreal": value})
+
+    def test_creativity_levels_preserve_values_and_selected_meanings(self):
+        for level in range(4):
+            with self.subTest(level=level):
+                snapshot = self.snapshot(overrides={"creativity": level})
+                self.assertEqual(controls.runtime_values(snapshot)["creativity"], level)
+                definition = snapshot["definitions"]["controls"]["creativity"]
+                brief = snapshot["authoring_brief"]
+                self.assertIn(f"creativity: {level} (range: 0–3)", brief)
+                self.assertIn(definition["definition"], brief)
+                self.assertIn(definition["levels"][str(level)], brief)
+                self.assertEqual(snapshot["controls"]["viewer_experience"]["value"], False)
+                self.assertEqual(snapshot["controls"]["reference_edit_mode"]["value"], "off")
+                self.assertEqual(snapshot["controls"]["trend_layer"]["value"], "off")
+        for value in (-1, 4, True, 0.5, 1.0, "3"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.snapshot(overrides={"creativity": value})
+
+    def test_emphasis_stores_selected_and_effective_choices_without_changing_intensities(self):
+        cases = [(3, 1, "auto", "sensual_led"), (1, 3, "auto", "fetish_led"),
+                 (2, 2, "auto", "balanced"), (3, 1, "balanced", "balanced"),
+                 (1, 3, "sensual_led", "sensual_led"), (3, 1, "fetish_led", "fetish_led"),
+                 (0, 0, "auto", "balanced")]
+        for sensual, fetish, selected, effective in cases:
+            with self.subTest(sensual=sensual, fetish=fetish, selected=selected):
+                snapshot = self.snapshot(overrides={"sensual": sensual, "fetish": fetish,
+                                                   "adult_appeal_emphasis": selected})
+                runtime = controls.runtime_values(snapshot)
+                self.assertEqual((runtime["sensual_intensity"], runtime["fetish_intensity"]), (sensual, fetish))
+                self.assertEqual(snapshot["controls"]["adult_appeal_emphasis"]["value"], selected)
+                self.assertEqual(runtime["adult_appeal_emphasis"], effective)
+                self.assertEqual(snapshot["emphasis_resolution"]["active"], bool(sensual or fetish))
+                brief = snapshot["authoring_brief"]
+                definition = snapshot["definitions"]["controls"]["adult_appeal_emphasis"]
+                self.assertIn(definition["definition"], brief)
+                self.assertIn(definition["choice_descriptions"][selected], brief)
+                self.assertIn(snapshot["emphasis_resolution"]["reason"], brief)
+                self.assertIn("Effective: " + (effective if sensual or fetish else "inactive"), brief)
+                if sensual or fetish:
+                    self.assertIn(definition["choice_descriptions"][effective], brief)
+                controls.validate(snapshot, "An adult woman beside a window.")
+
+    def test_level_and_choice_definitions_must_be_complete(self):
+        for name, field, key in (("creativity", "levels", "2"),
+                                 ("adult_appeal_emphasis", "choice_descriptions", "auto")):
+            definitions = controls.load_definitions()
+            del definitions["controls"][name][field][key]
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                controls.resolve("A portrait.", definitions=definitions)
+
+    def test_saved_brief_cannot_be_changed_even_with_a_recomputed_hash(self):
+        snapshot = self.snapshot(overrides={"surreal": 2})
+        snapshot["authoring_brief"] = "surreal: 0"
+        snapshot.pop("canonical_sha256")
+        snapshot["canonical_sha256"] = controls.digest(snapshot)
+        with self.assertRaisesRegex(ValueError, "stale, malformed"):
+            controls.validate(snapshot, "An adult woman beside a window.")
+
+    def test_emphasis_resolution_is_hash_bound_and_recomputed(self):
+        snapshot = self.snapshot(overrides={"sensual": 3, "fetish": 1})
+        snapshot["emphasis_resolution"]["active"] = False
+        snapshot.pop("canonical_sha256")
+        snapshot["canonical_sha256"] = controls.digest(snapshot)
+        with self.assertRaisesRegex(ValueError, "stale, malformed"):
+            controls.validate(snapshot, "An adult woman beside a window.")
+
+    def test_cli_rejects_fractional_creativity_before_loading_candidates(self):
+        for value in ("0.5", "1.0", "-1", "4"):
+            with self.subTest(value=value), contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as exc:
+                generator.main(["--creativity", value])
+            self.assertEqual(exc.exception.code, 2)
+
+    def test_resolver_cli_saves_the_same_complete_brief_it_returns(self):
+        request = "A glass house above a lake. surreal=2"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for name, value in {"request": fixtures.envelope(request),
+                                "context": {"subject_category": "nonhuman"},
+                                "overrides": {"surreal": 2}}.items():
+                (root / f"{name}.json").write_text(json.dumps(value))
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                controls._module.main(["--request-envelope-json", str(root / "request.json"),
+                    "--context-json", str(root / "context.json"), "--overrides-json", str(root / "overrides.json"),
+                    "--output", str(root / "controls.json"), "--seed", "7"])
+            saved = json.loads((root / "controls.json").read_text())
+            self.assertEqual(saved["authoring_brief"], json.loads(output.getvalue())["authoring_brief"])
+            controls.validate(saved, request)
+            for name in controls.LEVEL_CONTROLS:
+                definition = saved["definitions"]["controls"][name]
+                self.assertIn(definition["definition"], saved["authoring_brief"])
+            self.assertIn("surreal: 2 (range: 0–3)", saved["authoring_brief"])
 
     def test_no_people_and_nonsexual_meaning_keep_requested_values_but_disable_additions(self):
         for context in ({"subject_category": "human", "no_people": True}, {"subject_category": "human", "explicit_nonsexual": True}, {"subject_category": "nonhuman"}):
@@ -68,8 +186,10 @@ class CreativeControlResolverTests(unittest.TestCase):
             root = Path(directory)
             (root / "controls.json").write_text(json.dumps(self.snapshot()))
             (root / "request.json").write_text(json.dumps({"request_text": request}))
-            with self.assertRaisesRegex(ValueError, "conflicts with the frozen"):
-                generator.main(["--emit-candidate-pack", "--candidate-pack-version", "v6", "--request-envelope-json", str(root / "request.json"), "--creative-controls-json", str(root / "controls.json"), "--sensual-intensity", "3"])
+            for flag, value in (("--sensual-intensity", "3"), ("--surreal", "3"),
+                                ("--creativity", "3"), ("--adult-appeal-emphasis", "sensual_led")):
+                with self.subTest(flag=flag), self.assertRaisesRegex(ValueError, "conflicts with the frozen"):
+                    generator.main(["--emit-candidate-pack", "--candidate-pack-version", "v6", "--request-envelope-json", str(root / "request.json"), "--creative-controls-json", str(root / "controls.json"), flag, value])
 
 
 class InitialDirectionIntegrationTests(unittest.TestCase):
@@ -118,8 +238,55 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
     def test_frozen_controls_survive_generator_and_public_composer_pack(self):
         self.assertEqual(self.pack["creative_controls"], self.snapshot)
         self.assertEqual(auditor.audit_creative_controls(self.pack), [])
-        self.assertEqual(self.pack["provenance"]["creativity"], 0.5)
-        self.assertEqual(self.pack["provenance"]["candidate_pool_creativity"], 1.0)
+        self.assertEqual(self.pack["provenance"]["creativity"], 2)
+        self.assertEqual(self.pack["provenance"]["candidate_pool_creativity"], 3)
+
+    def test_surreal_level_and_saved_brief_survive_sampler_and_public_pack(self):
+        for level in range(4):
+            with self.subTest(level=level):
+                raw = copy.deepcopy(self.raw)
+                snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"},
+                    overrides={"surreal": level, "sensual": 2, "fetish": 1}, seed=73)
+                raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+                core = generator.normalize_authorial_core(raw, request_envelope=self.envelope,
+                                                          creative_control_snapshot=snapshot)
+                with patch.object(generator, "apply_surreal_layer", wraps=generator.apply_surreal_layer) as apply:
+                    result = current_fixtures.generate_once(self.data, random.Random(73), None, ["en"], True, 12, True,
+                        selection_mode="rule", include_trace=True, seed=73,
+                        authorial_core=core, creative_control_snapshot=snapshot)
+                self.assertEqual(apply.call_count, int(level > 0))
+                if level:
+                    self.assertEqual(apply.call_args.args[5], level)
+                pack = generator.build_candidate_pack(result, self.data, "v6")
+                self.assertEqual(pack["creative_controls"], snapshot)
+                self.assertEqual(pack["provenance"]["creative_control_runtime"]["surreal"], level)
+                self.assertEqual(pack["authorial_core"]["baseline_prompt_en"], raw["baseline_prompt_en"])
+                self.assertEqual(auditor.audit_creative_controls(pack), [])
+
+    def test_creativity_and_emphasis_reach_public_pack_with_their_initial_brief(self):
+        cases = [(0, "auto", ["near"]), (1, "fetish_led", ["near"]),
+                 (2, "balanced", ["near", "adjacent"]),
+                 (3, "sensual_led", ["near", "adjacent", "lateral"])]
+        for level, emphasis, bands in cases:
+            with self.subTest(level=level, emphasis=emphasis):
+                raw = copy.deepcopy(self.raw)
+                snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"},
+                    overrides={"creativity": level, "adult_appeal_emphasis": emphasis, "sensual": 2, "fetish": 1}, seed=73)
+                raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+                core = generator.normalize_authorial_core(raw, request_envelope=self.envelope,
+                                                          creative_control_snapshot=snapshot)
+                result = current_fixtures.generate_once(self.data, random.Random(73), None, ["en"], True, 12, True,
+                    selection_mode="rule", include_trace=True, seed=73,
+                    authorial_core=core, creative_control_snapshot=snapshot)
+                pack = generator.build_candidate_pack(result, self.data, "v6")
+                self.assertEqual(pack["creative_controls"], snapshot)
+                self.assertEqual(pack["provenance"]["creative_control_runtime"], controls.runtime_values(snapshot))
+                self.assertEqual(pack["provenance"]["creativity"], level)
+                self.assertEqual(pack["creative_augmentation"]["requested_creativity"], level)
+                self.assertEqual(pack["creative_augmentation"]["distance_policy"]["allowed_bands"], bands)
+                self.assertEqual(bool(pack.get("creative_direction")), level == 3)
+                self.assertEqual(pack["authorial_core"]["baseline_prompt_en"], raw["baseline_prompt_en"])
+                self.assertEqual(auditor.audit_creative_controls(pack), [])
 
     def test_property_lock_preserves_color_and_type_but_allows_neckline(self):
         lock = self.core["intent_lock"]

@@ -13,17 +13,17 @@ import hashlib
 import json
 import math
 from pathlib import Path
-import random
 import re
 import secrets
 
-VERSION = "photo-creative-controls/v2"
-DEFINITION_VERSION = "photo-creative-control-definitions/v2"
+VERSION = "photo-creative-controls/v4"
+DEFINITION_VERSION = "photo-creative-control-definitions/v4"
 DEFAULT_PATH = Path(__file__).with_name("creative_controls.json")
 AXES = ("sensual", "fetish")
-CONTROL_NAMES = {*AXES, "adult_appeal_emphasis", "creativity", "viewer_experience",
-                 "reference_edit_mode", "surreal_mode", "surreal_probability",
-                 "surreal_intensity", "trend_layer"}
+INTENSITY_CONTROLS = (*AXES, "surreal")
+LEVEL_CONTROLS = (*INTENSITY_CONTROLS, "creativity")
+CONTROL_NAMES = {*LEVEL_CONTROLS, "adult_appeal_emphasis", "viewer_experience",
+                 "reference_edit_mode", "trend_layer"}
 
 # Deliberately narrow syntax: only explicit name=value/name:value assignments
 # are configuration. Natural-language or mixed visual instructions stay visual.
@@ -126,7 +126,7 @@ def validate_definitions(spec):
     if not isinstance(spec["controls"], dict) or set(spec["controls"]) != CONTROL_NAMES:
         raise ValueError("creative-control definitions must contain exactly the supported controls")
     for name, definition in spec["controls"].items():
-        if not isinstance(definition, dict) or set(definition) - {"type", "range", "choices", "default", "definition", "levels"}:
+        if not isinstance(definition, dict) or set(definition) - {"type", "range", "choices", "default", "definition", "levels", "choice_descriptions"}:
             raise ValueError(f"unsupported creative-control definition: {name}")
         if definition.get("type") not in {"integer", "number", "boolean", "enum"}:
             raise ValueError(f"invalid creative-control type: {name}")
@@ -136,8 +136,18 @@ def validate_definitions(spec):
             bounds = definition.get("range")
             if not isinstance(bounds, list) or len(bounds) != 2 or bounds[0] > bounds[1]:
                 raise ValueError(f"invalid creative-control range: {name}")
-        if name in AXES and (definition.get("range") != [0, 3] or set(definition.get("levels", {})) != {"0", "1", "2", "3"}):
-            raise ValueError(f"{name} requires all four intensity anchors")
+        if name in LEVEL_CONTROLS:
+            levels = definition.get("levels", {})
+            if (definition["type"] != "integer" or definition.get("range") != [0, 3]
+                    or not isinstance(levels, dict) or set(levels) != {"0", "1", "2", "3"}
+                    or any(not isinstance(text, str) or not text.strip() for text in levels.values())):
+                raise ValueError(f"{name} requires all four level descriptions")
+        if name == "adult_appeal_emphasis":
+            descriptions = definition.get("choice_descriptions", {})
+            if (not isinstance(descriptions, dict)
+                    or set(descriptions) != set(definition.get("choices", []))
+                    or any(not isinstance(text, str) or not text.strip() for text in descriptions.values())):
+                raise ValueError("adult_appeal_emphasis requires a description for every choice")
         check_value(name, definition.get("default"), definition)
     return spec
 
@@ -194,15 +204,22 @@ def resolve(request_text, *, overrides=None, context=None, seed=None, definition
                 or (requested_emphasis == "balanced" and not (sensual and fetish))):
             raise ValueError("adult_appeal_emphasis conflicts with the active axes")
         emphasis = requested_emphasis
-    surreal_active = values["surreal_mode"] == "on" or (
-        values["surreal_mode"] == "auto" and random.Random(seed).random() < values["surreal_probability"]
-    )
+    if not (sensual or fetish):
+        emphasis_reason = "Both effective intensities are zero; no added emphasis is active."
+    elif requested_emphasis != "auto":
+        emphasis_reason = "The selected emphasis leads without changing either effective intensity."
+    elif sensual == fetish:
+        emphasis_reason = f"Both effective intensities are {sensual}; the active axes share leadership."
+    else:
+        emphasis_reason = f"Effective sensual={sensual}, fetish={fetish}; the higher intensity leads."
     result = {"contract_version": VERSION, "provenance": "resolved_precore",
               "source_request_sha256": hashlib.sha256(request_text.encode()).hexdigest(),
               "definitions": spec, "definitions_sha256": digest(spec),
               "overrides": overrides, "context": context, "seed": seed,
               "controls": controls, "adult_appeal": eligibility,
-              "resolved_emphasis": emphasis, "surreal_active": surreal_active}
+              "resolved_emphasis": emphasis,
+              "emphasis_resolution": {"active": bool(sensual or fetish), "reason": emphasis_reason}}
+    result["authoring_brief"] = authoring_brief(result)
     result["canonical_sha256"] = digest(result)
     return result
 
@@ -222,7 +239,6 @@ def runtime_values(snapshot):
     for axis in AXES:
         values[axis + "_intensity"] = snapshot["adult_appeal"][axis]["effective_intensity"]
     values["adult_appeal_emphasis"] = snapshot["resolved_emphasis"]
-    values["surreal_mode"] = "on" if snapshot["surreal_active"] else "off"
     return values
 
 
@@ -230,22 +246,32 @@ def authoring_brief(snapshot):
     """Small writer-facing view of resolved inputs, without candidate examples."""
     definitions = snapshot["definitions"]["controls"]
     lines = []
-    for axis in AXES:
-        value = snapshot["adult_appeal"][axis]["effective_intensity"]
-        lines.extend([f"{axis}: {value} (range: 0–3)",
-                      "Meaning: " + definitions[axis]["definition"],
-                      "Level: " + definitions[axis]["levels"][str(value)], ""])
-    lines.extend(["Choose a coherent expression suited to this particular scene.",
-                  "The two controls may share the same expressive choice.",
-                  "Intensity describes prominence, not a required expression category or garment.",
+    for name in LEVEL_CONTROLS:
+        value = (snapshot["adult_appeal"][name]["effective_intensity"]
+                 if name in AXES else snapshot["controls"][name]["value"])
+        bounds = definitions[name]["range"]
+        lines.extend([f"{name}: {value} (range: {bounds[0]}–{bounds[1]})",
+                      "Meaning: " + definitions[name]["definition"],
+                      "Level: " + definitions[name]["levels"][str(value)], ""])
+    name = "adult_appeal_emphasis"
+    definition = definitions[name]
+    selected = snapshot["controls"][name]["value"]
+    resolution = snapshot["emphasis_resolution"]
+    resolved = snapshot["resolved_emphasis"]
+    lines.extend([f"{name}: {selected} (choices: {', '.join(definition['choices'])})",
+                  "Meaning: " + definition["definition"],
+                  "Selected: " + definition["choice_descriptions"][selected],
+                  "Effective: " + (resolved if resolution["active"] else "inactive"),
+                  "Resolution: " + resolution["reason"]])
+    if resolution["active"]:
+        lines.append("Effective meaning: " + definition["choice_descriptions"][resolved])
+    lines.extend(["", "Choose a coherent expression suited to this particular scene.",
+                  "Sensual and fetish may share the same expressive choice.",
+                  "Expression levels describe prominence; creativity describes interpretive freedom. Neither requires a garment or detail count.",
                   "", "Other resolved controls:"])
     for name, row in snapshot["controls"].items():
-        if name not in AXES:
+        if name not in (*LEVEL_CONTROLS, "adult_appeal_emphasis"):
             value = row["value"]
-            if name == "adult_appeal_emphasis":
-                value = snapshot["resolved_emphasis"]
-            elif name == "surreal_mode":
-                value = "on" if snapshot["surreal_active"] else "off"
             lines.append(f"{name}: {json.dumps(value, ensure_ascii=False)}")
     return "\n".join(lines)
 
@@ -270,7 +296,7 @@ def main(argv=None):
     split_request_spans(envelope, snapshot)
     Path(args.output).write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"output": args.output, "canonical_sha256": snapshot["canonical_sha256"],
-                      "authoring_brief": authoring_brief(snapshot)}, ensure_ascii=False))
+                      "authoring_brief": snapshot["authoring_brief"]}, ensure_ascii=False))
     return 0
 
 

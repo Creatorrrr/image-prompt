@@ -7,6 +7,8 @@ _module = module_from_spec(_spec)
 _spec.loader.exec_module(_module)
 VERSION = _module.VERSION
 AXES = _module.AXES
+INTENSITY_CONTROLS = _module.INTENSITY_CONTROLS
+LEVEL_CONTROLS = _module.LEVEL_CONTROLS
 digest = _module.digest
 load_definitions = _module.load_definitions
 resolve = _module.resolve

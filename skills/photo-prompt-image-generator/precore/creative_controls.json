@@ -1,6 +1,6 @@
 {
-  "contract_version": "photo-creative-control-definitions/v2",
-  "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content. Levels describe prominence in the whole image, not exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. The two controls may share the same expressive choice.",
+  "contract_version": "photo-creative-control-definitions/v4",
+  "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content or artistic judgment. Expression levels describe prominence in the whole image; creativity levels describe interpretive freedom. Neither measures exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Creativity leaves style, extra props and surreal treatment open to the request and artistic judgment. Emphasis directs only active sensual and fetish axes without changing their intensities. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. Sensual and fetish may share the same expressive choice.",
   "controls": {
     "sensual": {
       "type": "integer", "range": [0, 3], "default": 1,
@@ -14,11 +14,23 @@
     },
     "adult_appeal_emphasis": {
       "type": "enum", "choices": ["auto", "sensual_led", "balanced", "fetish_led"], "default": "auto",
-      "definition": "Choose which active axis leads the whole expression. Auto follows the two intensities; emphasis cannot reactivate an inactive axis. One expressive choice may serve both axes."
+      "definition": "Relative leadership of the active sensual and fetish axes within one coherent expression.",
+      "choice_descriptions": {
+        "auto": "Let the higher effective intensity lead; equal active intensities share leadership. Add no emphasis when both axes are inactive.",
+        "sensual_led": "Let broad attraction and desire lead, with any active distinctive fascination supporting the expression.",
+        "balanced": "Give both active axes comparable influence within one coherent expression; separate styling details are not required.",
+        "fetish_led": "Let the distinctive focus of attraction or fascination lead, with any active sensual expression supporting it."
+      }
     },
     "creativity": {
-      "type": "number", "range": [0, 1], "default": 0.5,
-      "definition": "Freedom to interpret unspecified choices, not artistic quality. Low values favor direct, restrained choices; middle values allow coherent reinterpretation; high values allow more unexpected relationships. Preserve requested meaning at every value. Extra props, surrealism and idea-count quotas are not required."
+      "type": "integer", "range": [0, 3], "default": 2,
+      "definition": "Freedom to interpret unspecified choices and explore relationships within the request.",
+      "levels": {
+        "0": "Realize the request directly, filling only what is needed for a coherent image.",
+        "1": "Introduce restrained variations close to the requested direction.",
+        "2": "Actively reinterpret open choices into a coherent authorial direction.",
+        "3": "Boldly explore unexpected relationships and interpretations while preserving the request's core meaning."
+      }
     },
     "viewer_experience": {
       "type": "boolean", "default": false,
@@ -28,17 +40,10 @@
       "type": "enum", "choices": ["off", "identity", "younger_self", "brand_board"], "default": "off",
       "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
     },
-    "surreal_mode": {
-      "type": "enum", "choices": ["off", "auto", "on"], "default": "off",
-      "definition": "Whether to add a surreal treatment to open dimensions. Resolve auto once before authoring. Off preserves any fantasy already requested."
-    },
-    "surreal_probability": {
-      "type": "number", "range": [0, 1], "default": 0.35,
-      "definition": "Probability used only for the one-time auto decision; not artistic intensity."
-    },
-    "surreal_intensity": {
-      "type": "enum", "choices": ["subtle", "moderate", "bold"], "default": "moderate",
-      "definition": "When the added treatment is active: subtle is a supporting departure, moderate is clearly readable, bold leads the treatment. The legacy sampler still uses these labels for slot breadth; slot count is not proof of perceptual intensity."
+    "surreal": {
+      "type": "integer", "range": [0, 3], "default": 0,
+      "definition": "Added departures from ordinary reality, interpreted broadly across space, scale, causality, materials, and atmosphere, including dreamlike, uncanny, symbolic, and impossible relationships.",
+      "levels": {"0": "No added surreal treatment; preserve explicitly requested fantasy and impossible elements.", "1": "Surreal qualities are a subtle supporting presence.", "2": "Surreal qualities are clearly readable in the image.", "3": "Surreal qualities lead the image's main impression and direction; a single coherent relationship may carry this prominence."}
     },
     "trend_layer": {
       "type": "enum", "choices": ["off", "scrapbook_collage", "action_figure_packaging", "retro_flash", "clean_brand_portrait"], "default": "off",

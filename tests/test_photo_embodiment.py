@@ -262,7 +262,7 @@ class EmbodimentPipelineTests(unittest.TestCase):
     def test_wrapper_emits_bound_policy_without_retrieving_review_prose(self):
         from tests import test_photo_authorial_core_v6 as fixtures
         raw = fixtures.core()
-        controls = prompt_generator.creative_controls.resolve(raw["source_request"], overrides={"sensual": 0, "fetish": 0, "creativity": 0, "surreal_mode": "off"}, seed=9501)
+        controls = prompt_generator.creative_controls.resolve(raw["source_request"], overrides={"sensual": 0, "fetish": 0, "creativity": 0, "surreal": 0}, seed=9501)
         raw["creative_controls_sha256"] = controls["canonical_sha256"]
         r = review(raw["baseline_prompt_en"])
         r["summary"] = "REVIEW_ONLY_SENTINEL: synthetic record outside semantic retrieval."

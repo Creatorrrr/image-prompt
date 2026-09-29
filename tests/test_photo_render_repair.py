@@ -610,7 +610,7 @@ class PhotoRenderRepairTests(unittest.TestCase):
             include_trace=True,
             concept_locks=[REQUEST],
             seed=1919,
-            creativity=0.0,
+            creativity=0,
             authorial_core=core,
         )
         pack = prompt_generator.build_candidate_pack(result, data, "v6")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import gc
 import hashlib
 import importlib.util
@@ -837,9 +838,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             forced_choices=kwargs.pop("forced_choices", None),
             priority_bias=kwargs.pop("priority_bias", None),
             detail_level=kwargs.pop("detail_level", "detailed"),
-            surreal_mode=kwargs.pop("surreal_mode", "off"),
-            surreal_probability=kwargs.pop("surreal_probability", 0.35),
-            surreal_intensity=kwargs.pop("surreal_intensity", "moderate"),
+            surreal=kwargs.pop("surreal", 0),
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
             intent=kwargs.pop("intent", None),
@@ -856,7 +855,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             semantic_axis_mode=kwargs.pop("semantic_axis_mode", "auto"),
             intent_axes=kwargs.pop("intent_axes", None),
             intent_steering=kwargs.pop("intent_steering", None),
-            surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
             semantic_defaulted=kwargs.pop("semantic_defaulted", False),
             intent_source=kwargs.pop("intent_source", "user"),
             requested_selection_mode=kwargs.pop("requested_selection_mode", None),
@@ -881,9 +879,7 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             forced_choices=kwargs.pop("forced_choices", None),
             priority_bias=kwargs.pop("priority_bias", None),
             detail_level=kwargs.pop("detail_level", "detailed"),
-            surreal_mode=kwargs.pop("surreal_mode", "off"),
-            surreal_probability=kwargs.pop("surreal_probability", 0.35),
-            surreal_intensity=kwargs.pop("surreal_intensity", "moderate"),
+            surreal=kwargs.pop("surreal", 0),
             reference_edit_mode=kwargs.pop("reference_edit_mode", "off"),
             trend_layer=kwargs.pop("trend_layer", "off"),
             intent=kwargs.pop("intent", None),
@@ -900,7 +896,6 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             semantic_axis_mode=kwargs.pop("semantic_axis_mode", "auto"),
             intent_axes=kwargs.pop("intent_axes", None),
             intent_steering=kwargs.pop("intent_steering", None),
-            surreal_mode_explicit=kwargs.pop("surreal_mode_explicit", False),
             semantic_defaulted=kwargs.pop("semantic_defaulted", False),
             intent_source=kwargs.pop("intent_source", "user"),
             requested_selection_mode=kwargs.pop("requested_selection_mode", None),
@@ -9213,36 +9208,26 @@ class PromptGeneratorRegressionTests(unittest.TestCase):
             self.assertGreaterEqual(len(ids), minimum)
             self.assertFalse(ids & drift_ids)
 
-    def test_semantic_surreal_axis_auto_activates_unless_explicit_off(self):
+    def test_surreal_level_alone_controls_additions_without_erasing_fantasy(self):
         context = {
             "intent_steering": {"mode": "auto", "enabled": True, "families": ["fantasy"], "decisions": []},
             "axis_vectors": [{"text": "fantasy surreal", "families": ["fantasy"], "vector": [1.0]}],
         }
-        active = self.generator.should_activate_surreal_layer(
-            {},
-            random.Random(1),
-            "off",
-            0.0,
-            semantic_context=context,
-            mode_explicit=False,
-        )
-        self.assertTrue(active)
-        self.assertEqual(context["surreal_activation_reason"], "semantic_axis")
+        for level in range(4):
+            with self.subTest(level=level):
+                active = self.generator.should_activate_surreal_layer(level, context)
+                self.assertEqual(active, level > 0)
+                self.assertEqual(context["surreal_activation_reason"], f"level_{level}")
+                self.assertEqual(context["axis_vectors"][0]["families"], ["fantasy"])
+        for value in (-1, 4, True, 1.5, "on"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.generator.should_activate_surreal_layer(value)
 
-        explicit_context = {
-            "intent_steering": {"mode": "auto", "enabled": True, "families": ["fantasy"], "decisions": []},
-            "axis_vectors": [{"text": "fantasy surreal", "families": ["fantasy"], "vector": [1.0]}],
-        }
-        active = self.generator.should_activate_surreal_layer(
-            {},
-            random.Random(1),
-            "off",
-            0.0,
-            semantic_context=explicit_context,
-            mode_explicit=True,
-        )
-        self.assertFalse(active)
-        self.assertEqual(explicit_context["surreal_activation_reason"], "explicit_off")
+    def test_surreal_zero_keeps_authored_picks_without_sampling_additions(self):
+        picked = {"surreal_concept": {"id": "requested_floating_house", "en": "a floating house"}}
+        expected = copy.deepcopy(picked)
+        self.generator.apply_surreal_layer({}, {}, random.Random(9), picked, surreal=0)
+        self.assertEqual(picked, expected)
 
     def test_intent_axis_extraction_modes(self):
         explicit = self.generator.extract_intent_axes(

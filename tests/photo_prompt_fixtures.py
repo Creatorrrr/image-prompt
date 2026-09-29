@@ -194,9 +194,9 @@ def generate_once(*args, **kwargs):
                 "sensual": kwargs.get("sensual_intensity", 0),
                 "fetish": kwargs.get("fetish_intensity", 0),
                 "creativity": (
-                    kwargs.get("creativity") if kwargs.get("creativity") is not None else 0.5
+                    kwargs.get("creativity") if kwargs.get("creativity") is not None else 2
                 ),
-                "surreal_mode": "off",
+                "surreal": kwargs.get("surreal", 0),
             }
             if kwargs.get("adult_appeal_emphasis"):
                 overrides["adult_appeal_emphasis"] = kwargs["adult_appeal_emphasis"]
@@ -257,7 +257,7 @@ def run_current(
     core_input: dict,
     *,
     seed: int = 91,
-    creativity: float = 0.5,
+    creativity: int = 2,
     envelope_input: dict | None = None,
     extra_args: tuple = (),
 ) -> dict:
@@ -271,7 +271,7 @@ def run_current(
     request = envelope_input or envelope(raw["source_request"])
     snapshot = prompt_generator.creative_controls.resolve(
         raw["source_request"],
-        overrides={"sensual": 0, "fetish": 0, "creativity": creativity, "surreal_mode": "off"},
+        overrides={"sensual": 0, "fetish": 0, "creativity": creativity, "surreal": 0},
         seed=7,
     )
     raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
