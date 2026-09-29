@@ -169,6 +169,38 @@ class ControlSpanOwnershipTests(unittest.TestCase):
         inactive = controls.resolve("no people", overrides={"sensual": 3, "fetish": 3}, context={"no_people": True}, seed=1)
         self.assertIn("sensual: 0", controls.authoring_brief(inactive))
 
+    def test_surreal_setting_is_bound_configuration_not_a_visual_anchor(self):
+        raw, envelope, _ = self.inputs("surreal=3")
+        snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"},
+                                    overrides={"surreal": 3}, seed=9)
+        raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+        core = self.normalize(raw, envelope, snapshot)
+        self.assertEqual(core["source_request"], envelope["request_text"])
+        self.assertEqual(core["intent_lock"]["semantic_anchors"], raw["intent_lock"]["semantic_anchors"])
+        visual, settings = controls.split_request_spans(envelope, snapshot)
+        self.assertEqual(len(visual), 1)
+        self.assertEqual([(r["name"], r["value"]) for r in settings], [("surreal", 3)])
+        self.assertTrue(auditor.authorial_core_intent_contract_valid(
+            core, minimum_open_dimensions=0, creative_control_snapshot=snapshot))
+        mismatch = controls.resolve(raw["source_request"], overrides={"surreal": 2}, seed=9)
+        with self.assertRaisesRegex(ValueError, "frozen override"):
+            controls.split_request_spans(envelope, mismatch)
+
+    def test_creativity_and_emphasis_assignments_do_not_become_visual_requirements(self):
+        raw, envelope, _ = self.inputs("creativity=3, adult_appeal_emphasis=balanced")
+        snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"},
+            overrides={"sensual": 3, "fetish": 3, "creativity": 3, "adult_appeal_emphasis": "balanced"}, seed=9)
+        raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+        core = self.normalize(raw, envelope, snapshot)
+        visual, settings = controls.split_request_spans(envelope, snapshot)
+        self.assertEqual(len(visual), 1)
+        self.assertEqual([(r["name"], r["value"]) for r in settings],
+                         [("creativity", 3), ("adult_appeal_emphasis", "balanced")])
+        self.assertEqual(core["source_request"], envelope["request_text"])
+        self.assertEqual(core["intent_lock"]["semantic_anchors"], raw["intent_lock"]["semantic_anchors"])
+        self.assertTrue(auditor.authorial_core_intent_contract_valid(
+            core, minimum_open_dimensions=0, creative_control_snapshot=snapshot))
+
 
 if __name__ == "__main__":
     unittest.main()

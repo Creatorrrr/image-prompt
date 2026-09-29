@@ -46,7 +46,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         cls.result = current_fixtures.generate_once(
             cls.data, random.Random(77), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, concept_locks=[source],
-            seed=77, creativity=0.0, authorial_core=cls.core, fixture_context={"subject_category": "human"},
+            seed=77, creativity=0, authorial_core=cls.core, fixture_context={"subject_category": "human"},
             sensual_intensity=2,
             fetish_intensity=1,
             adult_appeal_activation_source="skill_default",

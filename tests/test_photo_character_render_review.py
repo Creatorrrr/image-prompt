@@ -28,7 +28,7 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         result = current_fixtures.generate_once(
             data, random.Random(9501), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True,
-            concept_locks=[fixtures.REQUEST], seed=9501, creativity=0.0,
+            concept_locks=[fixtures.REQUEST], seed=9501, creativity=0,
             authorial_core=core,
         )
         cls.pack = generator.build_candidate_pack(result, data, "v6")

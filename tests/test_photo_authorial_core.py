@@ -51,7 +51,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             check=False,
         )
 
-    def run_current(self, core, *, seed=91, creativity=0.5):
+    def run_current(self, core, *, seed=91, creativity=2):
         return fixtures.run_current(core, seed=seed, creativity=creativity)
 
     @staticmethod
@@ -438,9 +438,9 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
     def test_clarification_is_stable_while_creativity_widens_seeded_augmentation(self):
         source = "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen"
         core = self.core(source)
-        low = self.run_current(core, seed=401, creativity=0.0)
-        medium = self.run_current(core, seed=401, creativity=0.5)
-        high = self.run_current(core, seed=401, creativity=1.0)
+        low = self.run_current(core, seed=401, creativity=0)
+        medium = self.run_current(core, seed=401, creativity=2)
+        high = self.run_current(core, seed=401, creativity=3)
 
         clarifications = [
             {
@@ -484,7 +484,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             tuple(
                 sorted(
                     row["id"]
-                    for row in self.run_current(core, seed=seed, creativity=1.0)[
+                    for row in self.run_current(core, seed=seed, creativity=3)[
                         "creative_augmentation"
                     ]["candidates"]
                 )
@@ -536,7 +536,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     "actual upper inner-thigh contours",
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         thigh = self.obligation(absolute, "inner_thigh_negative_space")
         self.assertIsNotNone(thigh)
@@ -590,7 +590,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     "relaxed brows, a small rounded open mouth",
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         overwhelmed = self.obligation(ahegao, "composite_overwhelmed_expression")
         self.assertIsNotNone(overwhelmed)
@@ -638,7 +638,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     "upward-directed eyes, relaxed brows",
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         self.assertIsNone(self.obligation(bare, "composite_overwhelmed_expression"))
         self.assertEqual(
@@ -676,7 +676,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     },
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         corruption_obligation = self.obligation(corruption, "embodied_corruption_transition")
         self.assertIsNotNone(corruption_obligation)
@@ -717,7 +717,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     },
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         self.assertIsNone(self.obligation(elegance, "embodied_corruption_transition"))
         self.assertEqual(
@@ -772,7 +772,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
                     "fresh youthful adult styling",
                 ),
             ),
-            creativity=0.0,
+            creativity=0,
         )
         status_play = self.obligation(mesugaki, "adult_mesugaki_status_play")
         self.assertIsNotNone(status_play)
@@ -790,7 +790,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
         pack = self.run_current(
             self.core(source, exclusions=("people", "bright sunlight")),
             seed=91,
-            creativity=0.5,
+            creativity=2,
         )
         prompt = (
             "Photorealistic blue porcelain teacup still life in a quiet rainlit kitchen. A blue "
@@ -1042,7 +1042,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             ),
             runtime_forbidden_labels=("아헤가오",),
         )
-        pack = self.run_current(core, creativity=0.0)
+        pack = self.run_current(core, creativity=0)
         retrieval_text, retrieval = prompt_generator.authorial_core_retrieval_text(
             pack["authorial_core"]
         )

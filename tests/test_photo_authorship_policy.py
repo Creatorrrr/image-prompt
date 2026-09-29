@@ -62,7 +62,7 @@ class PhotoAuthorshipPolicyTests(unittest.TestCase):
                 include_trace=True,
                 concept_locks=[REQUEST],
                 seed=9100,
-                creativity=0.0,
+                creativity=0,
                 authorial_core=core,
             )
             self.packs[opened] = generator.build_candidate_pack(result, self.data, "v6")

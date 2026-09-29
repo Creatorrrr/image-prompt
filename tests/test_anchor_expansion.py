@@ -104,11 +104,11 @@ class AnchorExpansionTests(unittest.TestCase):
     def test_creativity_relaxes_similarity_floor(self) -> None:
         settings_low = self.g.anchor_expansion_settings(
             {"anchor_expansion": {"enabled": True, "top_k": 3, "min_similarity": 0.8}},
-            {"creativity": 0.0},
+            {"creativity": 0},
         )
         settings_high = self.g.anchor_expansion_settings(
             {"anchor_expansion": {"enabled": True, "top_k": 3, "min_similarity": 0.8}},
-            {"creativity": 1.0},
+            {"creativity": 3},
         )
         self.assertLess(settings_high["min_similarity"], settings_low["min_similarity"])
         self.assertEqual(settings_high["top_k"], 4)

@@ -25,7 +25,7 @@ class CreativitySettingsTests(unittest.TestCase):
         cls.g = load_generator()
 
     def test_anchor_points_match_named_profiles(self) -> None:
-        for value, profile, novelty in ((0.0, "conservative", "low"), (0.5, "balanced", "medium"), (1.0, "exploratory", "high")):
+        for value, profile, novelty in ((0, "conservative", "low"), (2, "balanced", "medium"), (3, "exploratory", "high")):
             derived = self.g.creativity_settings(value)
             self.assertEqual(derived["profile_label"], profile)
             self.assertEqual(derived["novelty_label"], novelty)
@@ -40,22 +40,39 @@ class CreativitySettingsTests(unittest.TestCase):
             self.assertAlmostEqual(derived["novelty_settings"][1], expected_novelty[1], places=6)
 
     def test_interpolation_is_monotonic(self) -> None:
-        values = [self.g.creativity_settings(c) for c in (0.0, 0.25, 0.5, 0.75, 1.0)]
+        values = [self.g.creativity_settings(c) for c in range(4)]
         temperatures = [v["novelty_settings"][0] for v in values]
         windows = [v["profile_config"]["preset_window"] for v in values]
         self.assertEqual(temperatures, sorted(temperatures, reverse=True))
         self.assertEqual(windows, sorted(windows))
 
     def test_candidate_limits_stay_integers(self) -> None:
-        derived = self.g.creativity_settings(0.3)
+        derived = self.g.creativity_settings(1)
         self.assertIsInstance(derived["profile_config"]["preset_candidate_limit"], int)
         self.assertIsInstance(derived["profile_config"]["slot_candidate_limit"], int)
 
-    def test_out_of_range_values_are_clamped(self) -> None:
-        low = self.g.creativity_settings(-1.0)
-        high = self.g.creativity_settings(5.0)
-        self.assertEqual(low["profile_label"], "conservative")
-        self.assertEqual(high["profile_label"], "exploratory")
+    def test_fractional_boolean_and_out_of_range_values_are_rejected(self) -> None:
+        for value in (-1, 4, True, 0.5, 1.0, "3"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                self.g.creativity_settings(value)
+
+    def test_restrained_level_retains_the_intermediate_sampling_strength(self) -> None:
+        low, restrained, middle = (self.g.creativity_settings(c) for c in (0, 1, 2))
+        self.assertEqual(restrained["creativity"], 1)
+        self.assertAlmostEqual(restrained["profile_config"]["preset_window"],
+            (low["profile_config"]["preset_window"] + middle["profile_config"]["preset_window"]) / 2)
+
+    def test_high_composition_workflows_follow_only_level_three(self) -> None:
+        for level in range(4):
+            with self.subTest(level=level):
+                result = {"provenance": {"creativity": level}}
+                direction = self.g.candidate_pack_creative_direction(result)
+                viewer = self.g.candidate_pack_viewer_experience(result)
+                self.assertEqual(direction is not None, level == 3)
+                self.assertEqual(viewer is not None, level == 3)
+                if direction:
+                    self.assertEqual(direction["creativity"], level)
+                    self.assertEqual(direction["activation_floor"], 3)
 
     def test_creativity_override_takes_precedence_in_lookups(self) -> None:
         source = {
@@ -126,7 +143,7 @@ class SemanticPolicyOverrideTests(unittest.TestCase):
         self.assertEqual(self.g.soft_anchor_weight_multipliers(source)[2], 80.0)
 
     def test_make_batch_context_uses_creativity_config(self) -> None:
-        context = self.g.make_batch_context("semantic", "medium", 4, creativity=1.0)
+        context = self.g.make_batch_context("semantic", "medium", 4, creativity=3)
         self.assertIsNotNone(context)
         self.assertEqual(
             context["config"]["exact_decay"],
