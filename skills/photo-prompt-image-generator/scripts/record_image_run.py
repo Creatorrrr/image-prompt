@@ -18,8 +18,7 @@ DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
 VALID_AUDIT_STATUSES = {"pass", "warn", "fail", "not_run"}
-VALID_CANDIDATE_PACK_VERSIONS = {"v2", "v3", "v4", "v5", "v6"}
-LEGACY_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v1"
+VALID_CANDIDATE_PACK_VERSIONS = {"v6"}
 MODERN_INDEPENDENT_RUN_MANIFEST_VERSION = "photo-independent-run-manifest/v2"
 
 
@@ -145,7 +144,6 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         entry["augmentation_brief"] = augmentation_brief
     for field in (
         "skill_sha256",
-        "authorial_request_sha256",
         "authorial_core_sha256",
         "intent_lock_sha256",
         "render_repair_contract_sha256",
@@ -175,7 +173,6 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         "skill_sha256": args.skill_sha256,
         "source_ref": args.source_ref,
         "candidate_pack_version": args.candidate_pack_version,
-        "authorial_request_sha256": args.authorial_request_sha256,
         "authorial_core_sha256": args.authorial_core_sha256,
         "intent_lock_sha256": args.intent_lock_sha256,
         "render_repair_contract_sha256": args.render_repair_contract_sha256,
@@ -191,81 +188,25 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
     return entry
 
 
-def build_independent_manifest(
-    entry: dict[str, object],
-    args: argparse.Namespace,
-) -> dict[str, object]:
-    common_required_values = {
-        "arm_id": args.arm_id,
-        "worktree_id": args.worktree_id,
-        "skill_sha256": args.skill_sha256,
-        "source_ref": args.source_ref,
-        "candidate_pack_version": args.candidate_pack_version,
-        "image_call_count": args.image_call_count,
-    }
-    is_modern = args.candidate_pack_version in {"v5", "v6"}
-    contract_version = (
-        MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
-        if is_modern
-        else LEGACY_INDEPENDENT_RUN_MANIFEST_VERSION
-    )
-    required_values = {
-        **common_required_values,
-        **(
-            {
-                "authorial_core_sha256": args.authorial_core_sha256,
-                "intent_lock_sha256": args.intent_lock_sha256,
-            }
-            if is_modern
-            else {"authorial_request_sha256": args.authorial_request_sha256}
-        ),
-    }
-    missing = [
-        key
-        for key, value in required_values.items()
-        if value in (None, "", [])
-    ]
+def build_independent_manifest(entry: dict[str, object], args: argparse.Namespace) -> dict[str, object]:
+    if args.candidate_pack_version != 'v6':
+        raise ValueError('independent manifests require candidate-pack version v6')
+    common_required_values = {'arm_id': args.arm_id, 'worktree_id': args.worktree_id, 'skill_sha256': args.skill_sha256, 'source_ref': args.source_ref, 'candidate_pack_version': args.candidate_pack_version, 'image_call_count': args.image_call_count}
+    contract_version = MODERN_INDEPENDENT_RUN_MANIFEST_VERSION
+    required_values = {**common_required_values, **{'authorial_core_sha256': args.authorial_core_sha256, 'intent_lock_sha256': args.intent_lock_sha256}}
+    missing = [key for key, value in required_values.items() if value in (None, '', [])]
     if missing:
-        raise ValueError(
-            "--manifest requires independent-run provenance fields: "
-            + ", ".join(missing)
-        )
+        raise ValueError('--manifest requires independent-run provenance fields: ' + ', '.join(missing))
     if not args.independent_no_cross_arm_inputs:
-        raise ValueError(
-            "--manifest requires --independent-no-cross-arm-inputs"
-        )
+        raise ValueError('--manifest requires --independent-no-cross-arm-inputs')
     image_hashes: list[dict[str, str]] = []
-    for raw_path in entry.get("image_paths") or []:
+    for raw_path in entry.get('image_paths') or []:
         image_path = Path(str(raw_path))
         if not image_path.exists() or not image_path.is_file():
             continue
-        image_hashes.append(
-            {
-                "path": str(image_path),
-                "sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
-            }
-        )
-    manifest: dict[str, object] = {
-        "contract_version": contract_version,
-        **required_values,
-        # A text-only generation has no reference inputs. Keep that fact explicit
-        # without treating an empty list as missing independent-run provenance.
-        "reference_sha256": list(args.reference_sha256 or []),
-        "cross_arm_inputs_used": False,
-        "ledger_run_id": entry["run_id"],
-        "pack_id": entry.get("pack_id"),
-        "prompt_id": entry["prompt_id"],
-        "status": entry["status"],
-        "tool": entry.get("tool"),
-        "image_paths": list(entry.get("image_paths") or []),
-        "image_hashes": image_hashes,
-    }
-    for field in (
-        "chosen_visual_concept_ids",
-        "effective_visual_contract_sha256",
-        "render_repair_contract_sha256",
-        "failed_repair_gate_ids",
-    ):
+        image_hashes.append({'path': str(image_path), 'sha256': hashlib.sha256(image_path.read_bytes()).hexdigest()})
+    manifest: dict[str, object] = {'contract_version': contract_version, **required_values, 'reference_sha256': list(args.reference_sha256 or []), 'cross_arm_inputs_used': False, 'ledger_run_id': entry['run_id'], 'pack_id': entry.get('pack_id'), 'prompt_id': entry['prompt_id'], 'status': entry['status'], 'tool': entry.get('tool'), 'image_paths': list(entry.get('image_paths') or []), 'image_hashes': image_hashes}
+    for field in ('chosen_visual_concept_ids', 'effective_visual_contract_sha256', 'render_repair_contract_sha256', 'failed_repair_gate_ids'):
         if field in entry:
             manifest[field] = entry[field]
     return manifest
@@ -304,9 +245,8 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--skill-sha256", default=None, help="SHA-256 of the frozen skill snapshot used by the arm.")
     parser.add_argument("--source-ref", default=None, help="Commit or source-snapshot identity used by the arm.")
     parser.add_argument("--candidate-pack-version", choices=sorted(VALID_CANDIDATE_PACK_VERSIONS), default=None, help="Candidate-pack version used by the arm.")
-    parser.add_argument("--authorial-request-sha256", default=None, help="Canonical pre-pack authorial request SHA-256.")
-    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v5/v6.")
-    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v5/v6.")
+    parser.add_argument("--authorial-core-sha256", default=None, help="Canonical pre-pack authorial core SHA-256 for v6.")
+    parser.add_argument("--intent-lock-sha256", default=None, help="Canonical requesting-user intent-lock SHA-256 for v6.")
     parser.add_argument("--render-repair-contract-sha256", default=None, help="Canonical generic render-repair contract SHA-256, when enabled.")
     parser.add_argument("--failed-repair-gate-id", action="append", default=[], help="Failed generic repair hard-gate ID. Repeatable.")
     parser.add_argument("--reference-sha256", action="append", default=[], help="SHA-256 for an attached reference input. Repeatable.")

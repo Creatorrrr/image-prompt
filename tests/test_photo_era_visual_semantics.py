@@ -94,7 +94,7 @@ class PhotoEraVisualSemanticsTests(unittest.TestCase):
             row["profile_id"]
             for row in self.photo_era_exact_lookup
             if prompt_generator.intent_alias_matches(text, row["term"])
-            and not prompt_generator.candidate_pack_intent_term_is_negated(
+            and not prompt_generator.intent_term_is_negated(
                 text, row["term"]
             )
         }

@@ -6284,7 +6284,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
 
     historical_path = asset_dir / "photo_regression_baseline_v1.json"
     prior_path = asset_dir / "photo_regression_baseline_v2.json"
-    baseline_path = asset_dir / "photo_regression_baseline_v3.json"
+    intermediate_path = asset_dir / "photo_regression_baseline_v3.json"
+    baseline_path = asset_dir / "photo_regression_baseline_v4.json"
     universal_baseline = _load_json(asset_dir / "universal_scene_baseline_v1.json")
     photo_boundary = universal_baseline.get("photo_boundary")
     _require(
@@ -6314,15 +6315,26 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
         },
         "prior photo baseline lineage mismatch",
     )
-    baseline = _load_json(baseline_path)
+    intermediate = _load_json(intermediate_path)
     _require(
-        baseline.get("schema") == "photo_regression_baseline/v3"
-        and baseline.get("status") == "current"
-        and baseline.get("historical_baseline")
+        intermediate.get("schema") == "photo_regression_baseline/v3"
+        and intermediate.get("historical_baseline")
         == {
             "path": prior_path.name,
             "schema": "photo_regression_baseline/v2",
             "sha256": _sha256(prior_path),
+        },
+        "intermediate photo baseline lineage mismatch",
+    )
+    baseline = _load_json(baseline_path)
+    _require(
+        baseline.get("schema") == "photo_regression_baseline/v4"
+        and baseline.get("status") == "current"
+        and baseline.get("historical_baseline")
+        == {
+            "path": intermediate_path.name,
+            "schema": "photo_regression_baseline/v3",
+            "sha256": _sha256(intermediate_path),
         },
         "current photo baseline lineage mismatch",
     )
@@ -6334,8 +6346,8 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
     _require(command.count("--output-file") == 1, "photo baseline output flag mismatch")
     _require(
         command.count("--candidate-pack-version") == 1
-        and command[command.index("--candidate-pack-version") + 1] == "v4",
-        "photo baseline candidate-pack version must be explicitly pinned to v4",
+        and command[command.index("--candidate-pack-version") + 1] == "v6",
+        "photo baseline candidate-pack version must be explicitly pinned to v6",
     )
     output_index = command.index("--output-file") + 1
     repo_root = Path(__file__).resolve().parents[3]
@@ -6353,7 +6365,7 @@ def validate_photo_regression_baseline(asset_dir: Path) -> dict[str, Any]:
             check=False,
             capture_output=True,
             text=True,
-            timeout=30,
+            timeout=60,
         )
         _require(
             completed.returncode == 0,

@@ -157,53 +157,27 @@ def audit_moe_render_review(
     review_path: Path | None = None,
 ) -> dict[str, Any]:
     """Return a deterministic promotion decision from declared review gates."""
-
     schema_failures: list[dict[str, Any]] = []
     failed_hard_gates: list[dict[str, Any]] = []
-
-    raw_contract = pack.get("moe_response")
-    has_moe_contract = (
-        isinstance(raw_contract, dict) and raw_contract.get("enabled") is True
-    )
-    contract = raw_contract if has_moe_contract else {}
-    qualification = contract.get("render_qualification")
-    if has_moe_contract:
-        if not isinstance(qualification, dict) or qualification.get("required") is not True:
-            schema_failures.append(
-                {
-                    "check": "render_qualification",
-                    "reason": "moe_response contract does not require render qualification",
-                }
-            )
-            qualification = {}
-    else:
-        qualification = {}
-
-    base_required_gates = [
-        str(value)
-        for value in qualification.get("required_hard_gates") or []
-        if isinstance(value, str) and value.strip()
-    ]
+    qualification = {}
+    base_required_gates: list[str] = []
     character_contract, character_gates, character_failures = (
         derive_character_response_render_gates(pack, composed)
     )
-    embodiment_gates, embodiment_failures = (
-        audit_composed_prompt.photo_embodiment.render_gate_ids(pack, composed)
+    embodiment_gates, embodiment_failures = audit_composed_prompt.photo_embodiment.render_gate_ids(
+        pack, composed
     )
     schema_failures.extend(embodiment_failures)
     has_embodiment_contract = bool(embodiment_gates)
     has_character_contract = character_contract is not None
     schema_failures.extend(character_failures)
     character_contract_sha256 = (
-        str(character_contract.get("canonical_sha256") or "")
-        if has_character_contract
-        else None
+        str(character_contract.get("canonical_sha256") or "") if has_character_contract else None
     )
     if (
         has_character_contract
         and "source_character_response_contract_sha256" in review
-        and review["source_character_response_contract_sha256"]
-        != character_contract_sha256
+        and (review["source_character_response_contract_sha256"] != character_contract_sha256)
     ):
         schema_failures.append(
             {
@@ -212,22 +186,17 @@ def audit_moe_render_review(
             }
         )
     effective_visual_contract, visual_selection_failures = (
-        audit_composed_prompt.derive_effective_visual_obligation_contract(
-            pack,
-            composed,
-        )
+        audit_composed_prompt.derive_effective_visual_obligation_contract(pack, composed)
     )
     schema_failures.extend(
-        {
-            "check": f"effective_visual_contract.{failure.get('check')}",
-            "reason": failure.get("reason"),
-            **{
-                key: value
-                for key, value in failure.items()
-                if key not in {"check", "reason"}
-            },
-        }
-        for failure in visual_selection_failures
+        (
+            {
+                "check": f"effective_visual_contract.{failure.get('check')}",
+                "reason": failure.get("reason"),
+                **{key: value for key, value in failure.items() if key not in {"check", "reason"}},
+            }
+            for failure in visual_selection_failures
+        )
     )
     effective_visual_gates = [
         str(value)
@@ -235,58 +204,44 @@ def audit_moe_render_review(
         if isinstance(value, str) and value.strip()
     ]
     has_visual_contract = bool(effective_visual_gates)
-    if not has_moe_contract and not has_character_contract and not has_visual_contract and not has_embodiment_contract:
+    if not has_character_contract and (not has_visual_contract) and (not has_embodiment_contract):
         schema_failures.append(
             {
                 "check": "render_qualification_contract",
-                "reason": (
-                    "candidate pack contains no enabled moe-response or typed character-response "
-                    "contract and no effective visual-obligations gate set"
-                ),
+                "reason": "candidate pack contains no enabled moe-response or typed character-response contract and no effective visual-obligations gate set",
             }
         )
     required_gates = list(
-        dict.fromkeys(base_required_gates + character_gates + effective_visual_gates + embodiment_gates)
+        dict.fromkeys(
+            base_required_gates + character_gates + effective_visual_gates + embodiment_gates
+        )
     )
     if not required_gates:
         schema_failures.append(
-            {
-                "check": "required_hard_gates",
-                "reason": "render qualification exposes no hard gates",
-            }
+            {"check": "required_hard_gates", "reason": "render qualification exposes no hard gates"}
         )
-
     if review.get("schema_version") != REVIEW_SCHEMA_VERSION:
         schema_failures.append(
-            {
-                "check": "schema_version",
-                "reason": f"render review must use {REVIEW_SCHEMA_VERSION}",
-            }
+            {"check": "schema_version", "reason": f"render review must use {REVIEW_SCHEMA_VERSION}"}
         )
     if str(review.get("pack_id") or "") != str(pack.get("pack_id") or ""):
         schema_failures.append(
-            {
-                "check": "pack_id",
-                "reason": "render review pack_id differs from candidate pack",
-            }
+            {"check": "pack_id", "reason": "render review pack_id differs from candidate pack"}
         )
     expected_review_contract_version = (
-        str(contract.get("contract_version") or "")
-        if has_moe_contract
-        else audit_composed_prompt.CHARACTER_RESPONSE_CONTRACT_VERSION
+        audit_composed_prompt.CHARACTER_RESPONSE_CONTRACT_VERSION
         if has_character_contract
-        else str((effective_visual_contract or {}).get("contract_version") or "")
-        if has_visual_contract
-        else audit_composed_prompt.photo_embodiment.POLICY_VERSION
+        else (
+            str((effective_visual_contract or {}).get("contract_version") or "")
+            if has_visual_contract
+            else audit_composed_prompt.photo_embodiment.POLICY_VERSION
+        )
     )
     if str(review.get("contract_version") or "") != expected_review_contract_version:
         schema_failures.append(
             {
                 "check": "contract_version",
-                "reason": (
-                    "render review contract_version differs from the active moe-response, "
-                    "typed character-response, or visual-obligations qualification contract"
-                ),
+                "reason": "render review contract_version differs from the active typed character-response, visual-obligations, or embodiment qualification contract",
             }
         )
     if not isinstance(review.get("reviewer"), str) or not str(review.get("reviewer") or "").strip():
@@ -296,14 +251,13 @@ def audit_moe_render_review(
                 "reason": "render review requires a named human or agent pixel reviewer",
             }
         )
-
     result_image = str(review.get("result_image") or "").strip()
     result_sha256 = str(review.get("result_sha256") or "").strip().lower()
     if not result_image:
         schema_failures.append(
             {"check": "result_image", "reason": "render review requires an exact result image path"}
         )
-    if re.fullmatch(r"[0-9a-f]{64}", result_sha256) is None:
+    if re.fullmatch("[0-9a-f]{64}", result_sha256) is None:
         schema_failures.append(
             {"check": "result_sha256", "reason": "result_sha256 must be a 64-character hex digest"}
         )
@@ -317,7 +271,7 @@ def audit_moe_render_review(
                     "path": str(resolved_result),
                 }
             )
-        elif re.fullmatch(r"[0-9a-f]{64}", result_sha256) is not None:
+        elif re.fullmatch("[0-9a-f]{64}", result_sha256) is not None:
             actual_sha256 = sha256_path(resolved_result)
             if actual_sha256 != result_sha256:
                 schema_failures.append(
@@ -328,7 +282,6 @@ def audit_moe_render_review(
                         "actual": actual_sha256,
                     }
                 )
-
     hard_gates = review.get("hard_gates")
     if not isinstance(hard_gates, dict):
         schema_failures.append(
@@ -349,20 +302,14 @@ def audit_moe_render_review(
             for value in visual_contract.get("required_hard_gates") or []
             if isinstance(value, str) and value.strip()
         ]
-        missing_from_qualification = sorted(
-            set(visual_required_gates) - set(base_required_gates)
+        missing_from_qualification = sorted(set(visual_required_gates) - set(base_required_gates))
+    if (
+        has_character_contract
+        or has_embodiment_contract
+        or (
+            isinstance(effective_visual_contract, dict)
+            and effective_visual_contract.get("strict_gate_set") is True
         )
-        if has_moe_contract and missing_from_qualification:
-            schema_failures.append(
-                {
-                    "check": "visual_obligations.required_hard_gates",
-                    "reason": "visual hard gates were not merged into moe render qualification",
-                    "missing": missing_from_qualification,
-                }
-            )
-    if has_character_contract or has_embodiment_contract or (
-        isinstance(effective_visual_contract, dict)
-        and effective_visual_contract.get("strict_gate_set") is True
     ):
         missing_review_gates = sorted(set(required_gates) - set(hard_gates))
         extra_hard_gates = sorted(set(hard_gates) - set(required_gates))
@@ -370,10 +317,7 @@ def audit_moe_render_review(
             schema_failures.append(
                 {
                     "check": "hard_gates",
-                    "reason": (
-                        "strict character-response or visual-obligation reviews must exactly equal the effective "
-                        "pack-plus-composed hard-gate set; supplemental observations belong outside hard_gates"
-                    ),
+                    "reason": "strict character-response or visual-obligation reviews must exactly equal the effective pack-plus-composed hard-gate set; supplemental observations belong outside hard_gates",
                     "missing": missing_review_gates,
                     "extra": extra_hard_gates,
                 }
@@ -405,7 +349,6 @@ def audit_moe_render_review(
             failed_hard_gates.append(
                 {"gate": gate, "status": status or "missing", "evidence": evidence}
             )
-
     user_judgment = review.get("user_judgment")
     if not isinstance(user_judgment, dict):
         schema_failures.append(
@@ -453,19 +396,12 @@ def audit_moe_render_review(
     if (
         genuinely_moe == "pending"
         and better_than_baseline in {"pending", "not_applicable"}
-        and user_judgment_source != "not_yet_received"
+        and (user_judgment_source != "not_yet_received")
     ):
         schema_failures.append(
             {
                 "check": "user_judgment.source",
                 "reason": "fully pending judgment must be recorded as not_yet_received",
-            }
-        )
-    if has_moe_contract and genuinely_moe == "not_applicable":
-        schema_failures.append(
-            {
-                "check": "user_judgment.genuinely_moe",
-                "reason": "genuine moe acceptance is always required for representative promotion",
             }
         )
     if baseline_available and better_than_baseline == "not_applicable":
@@ -482,32 +418,23 @@ def audit_moe_render_review(
                 "reason": "without a baseline, better_than_baseline must be not_applicable or pending",
             }
         )
-
-    technical_qualified = not schema_failures and not failed_hard_gates
+    technical_qualified = not schema_failures and (not failed_hard_gates)
     comparison_accepted = (
         better_than_baseline == "accepted"
         if baseline_available
         else better_than_baseline == "not_applicable"
     )
-    representative_eligible = (
-        technical_qualified
-        and has_moe_contract
-        and genuinely_moe == "accepted"
-        and comparison_accepted
-    )
+    representative_eligible = False
     if not technical_qualified:
         qualification_status = "failed_technical_hard_gates"
     elif genuinely_moe == "rejected" or better_than_baseline == "rejected":
         qualification_status = "rejected_by_requesting_user"
     elif representative_eligible:
         qualification_status = "representative_eligible"
-    elif has_character_contract and not has_moe_contract:
+    elif has_character_contract:
         qualification_status = "character_response_technical_qualified_user_judgment_pending"
-    elif not has_moe_contract:
-        qualification_status = "visual_technical_qualified_user_judgment_pending"
     else:
-        qualification_status = "pending_requesting_user_judgment"
-
+        qualification_status = "visual_technical_qualified_user_judgment_pending"
     return {
         "schema_version": REVIEW_SCHEMA_VERSION,
         "pack_id": str(pack.get("pack_id") or ""),
@@ -518,17 +445,12 @@ def audit_moe_render_review(
         "required_hard_gate_count": len(required_gates),
         "required_hard_gates": required_gates,
         "source_character_response_contract_sha256": character_contract_sha256,
-        "effective_visual_contract_sha256": (
-            audit_composed_prompt.effective_visual_obligation_sha256(
-                effective_visual_contract
-            )
+        "effective_visual_contract_sha256": audit_composed_prompt.effective_visual_obligation_sha256(
+            effective_visual_contract
         ),
         "selected_visual_concept_ids": [
             str(value)
-            for value in (effective_visual_contract or {}).get(
-                "selected_visual_concept_ids"
-            )
-            or []
+            for value in (effective_visual_contract or {}).get("selected_visual_concept_ids") or []
             if str(value).strip()
         ],
         "failed_hard_gates": failed_hard_gates,
@@ -540,11 +462,7 @@ def audit_moe_render_review(
             "source": user_judgment_source,
             "evidence": user_judgment_evidence,
         },
-        "boundary": (
-            "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; "
-            "it does not infer visual truth from metadata, authenticate who authored a review, "
-            "or declare moe on the user's behalf."
-        ),
+        "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf.",
     }
 
 

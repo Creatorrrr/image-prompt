@@ -221,7 +221,8 @@ class PhotoLuxurySemanticsTests(unittest.TestCase):
             with self.subTest(term=term):
                 explanation = self.explain(term)
                 self.assertEqual(explanation["applied_mixins"], [mixin_name])
-                self.assertTrue(explanation["forced_slots_applied"])
+                self.assertFalse(explanation["forced_slots_applied"])
+                self.assertTrue(explanation["soft_anchor_spec"]["anchors"])
                 self.assertGreaterEqual(
                     len(explanation["combined_forced_slots"]),
                     3,

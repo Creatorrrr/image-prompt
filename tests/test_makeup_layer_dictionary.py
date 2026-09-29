@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
 TAGS_PATH = SKILL_DIR / "assets" / "photo_prompt_tags.json"
-WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
+WRAPPER_PATH = SKILL_DIR / "scripts" / "inspect_photo_sample.py"
 
 NEW_LAYER_SLOTS = {
     "brow_style",

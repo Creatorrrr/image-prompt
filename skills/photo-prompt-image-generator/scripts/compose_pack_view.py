@@ -15,7 +15,6 @@ from pathlib import Path
 from typing import Any
 
 VERSION = "photo-composer-view/v2"
-LEGACY_VERSION = "photo-composer-view/v1"
 OPTIONAL_PATHS = (
     ("presets",),
     ("photographic_integration", "category_candidates"),
@@ -62,9 +61,8 @@ def inventory_paths(pack: dict[str, Any], version: str = VERSION) -> list[tuple[
     paths = list(OPTIONAL_PATHS)
     if isinstance(pack.get("slots"), dict):
         paths.extend(("slots", slot, "candidates") for slot in pack["slots"])
-    if version == VERSION:
-        paths.extend(("adult_appeal", "axes", axis, "candidate_inventory")
-                     for axis in (pack.get("adult_appeal") or {}).get("axes", {}))
+    paths.extend(("adult_appeal", "axes", axis, "candidate_inventory")
+                 for axis in (pack.get("adult_appeal") or {}).get("axes", {}))
     return paths
 
 
@@ -92,7 +90,7 @@ def deferable(rows: Any) -> bool:
 
 
 def build_view(payload: Any, candidate_ids: list[str] | None = None, *, version: str = VERSION) -> dict[str, Any]:
-    if version not in {VERSION, LEGACY_VERSION}:
+    if version != VERSION:
         raise ValueError("unsupported composer view version")
     pack = source_pack(payload)
     projection = copy.deepcopy(pack)
@@ -114,7 +112,7 @@ def build_view(payload: Any, candidate_ids: list[str] | None = None, *, version:
             record = {"id": candidate_id, "source_pointer": source_pointer, "candidate": copy.deepcopy(row)}
             records.setdefault(candidate_id, []).append(record)
             summary = {"id": candidate_id, "source_pointer": source_pointer}
-            fields = SUMMARY_FIELDS if version == VERSION else SUMMARY_FIELDS[:-4]
+            fields = SUMMARY_FIELDS
             summary.update({field: copy.deepcopy(row[field]) for field in fields if field in row})
             catalog.append(summary)
         parent[key] = {"deferred_candidate_ids": ids, "read_details_before_selection": True}

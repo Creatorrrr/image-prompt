@@ -1,6 +1,8 @@
 """Configuration proves a value, never the clothing chosen to express it."""
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import contextlib
 import copy
 import hashlib
@@ -47,16 +49,16 @@ class ControlSpanOwnershipTests(unittest.TestCase):
         self.assertEqual(core["source_request"], envelope["request_text"])
         self.assertEqual(core["request_binding"]["active_spans"], envelope["active_spans"])
         self.assertEqual(core["intent_lock"]["semantic_anchors"], raw["intent_lock"]["semantic_anchors"])
-        self.assertTrue(auditor.authorial_core_v2_intent_contract_valid(
+        self.assertTrue(auditor.authorial_core_intent_contract_valid(
             core, minimum_open_dimensions=0, creative_control_snapshot=snapshot))
         self.assertTrue(auditor.authorial_core_interpretation_contract_valid(core, creative_control_snapshot=snapshot))
-        self.assertFalse(auditor.authorial_core_v2_intent_contract_valid(core, minimum_open_dimensions=0))
+        self.assertFalse(auditor.authorial_core_intent_contract_valid(core, minimum_open_dimensions=0))
 
     def test_control_spans_survive_pack_composition_and_retrieval_hash_audit(self):
         raw, envelope, snapshot = self.inputs()
         core = self.normalize(raw, envelope, snapshot)
         data = initial_fixtures.InitialDirectionIntegrationTests.data
-        result = generator.generate_once(data, random.Random(9), None, ["en"], True, 12, True,
+        result = current_fixtures.generate_once(data, random.Random(9), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, seed=9,
             authorial_core=core, creative_control_snapshot=snapshot)
         pack = generator.build_candidate_pack(result, data, "v6")
@@ -110,7 +112,7 @@ class ControlSpanOwnershipTests(unittest.TestCase):
             "polarity": "advisory", "source_span_ids": ["settings"], "axes": {"color": "red"},
             "evidence": {"color_phrase": "Her red scarf"}, "affected_dimensions": ["appearance"]})
         core = self.normalize(raw, envelope, snapshot)
-        self.assertTrue(auditor.authorial_core_v2_intent_contract_valid(
+        self.assertTrue(auditor.authorial_core_intent_contract_valid(
             core, minimum_open_dimensions=0, creative_control_snapshot=snapshot))
         self.assertTrue(auditor.authorial_core_interpretation_contract_valid(core, creative_control_snapshot=snapshot))
         self.assertTrue(auditor.authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=snapshot))

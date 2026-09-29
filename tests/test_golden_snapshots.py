@@ -4,7 +4,7 @@ Rule-mode generation and concept resolution are fully deterministic for a
 fixed seed, so these tests pin byte-stable snapshots of the CLI surface.
 Any intentional data or behavior change must regenerate the fixtures:
 
-    UPDATE_GOLDEN=1 .venv/bin/python -m pytest tests/test_golden_snapshots.py
+    UPDATE_GOLDEN=1 .venv/bin/python -m unittest tests.test_golden_snapshots
 
 and the resulting fixture diff is reviewed like code.
 """
@@ -21,8 +21,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIR = ROOT / "skills" / "photo-prompt-image-generator"
-WRAPPER_PATH = SKILL_DIR / "scripts" / "generate_photo_prompt.py"
-GOLDEN_DIR = Path(__file__).resolve().parent / "golden"
+WRAPPER_PATH = SKILL_DIR / "scripts" / "inspect_photo_sample.py"
+GOLDEN_DIR = Path(__file__).resolve().parent / "golden" / "current_sampler"
 
 UPDATE_GOLDEN = os.environ.get("UPDATE_GOLDEN") == "1"
 
@@ -154,7 +154,7 @@ class GoldenSnapshotTests(unittest.TestCase):
             expected,
             actual,
             msg=(
-                f"golden snapshot mismatch: tests/golden/{name}.json. "
+                f"golden snapshot mismatch: tests/golden/current_sampler/{name}.json. "
                 "If this change is intentional, regenerate with UPDATE_GOLDEN=1 "
                 "and review the fixture diff."
             ),

@@ -48,7 +48,7 @@ class PhotoRoleGarmentCandidateExpansionTests(unittest.TestCase):
         _args, explanations = generate_photo_prompt.resolve_concepts(
             ["--selection-mode", "rule", "--seed", str(seed)],
             [concept],
-            concept_mode="legacy",
+            concept_mode="soft",
         )
         self.assertEqual(len(explanations), 1)
         return explanations[0]

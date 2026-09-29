@@ -28,32 +28,25 @@ CHARACTER_RESPONSE_RELATION_MEMBERS = {
     "event_phase",
 }
 
-LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v1"
 
-AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v2"
+AUTHORIAL_CORE_CONTRACT_VERSION = "photo-authorial-core/v3"
 
 AUTHORIAL_CORE_V3_CONTRACT_VERSION = "photo-authorial-core/v3"
 
-LEGACY_ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v1"
-ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v2"
+ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION = "photo-adult-appeal-dimension-scope/v4"
 
 # These are possible carriers, not a requirement to change every dimension.
 # New v6 adult-axis additions preserve explicit locks; other augmentation
 # contracts continue to require explicitly open dimensions.
-LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS = {
+ADULT_APPEAL_AXIS_DIMENSIONS = {
     "sensual": frozenset({
         "sexual_tone", "style", "composition", "expression", "pose",
         "body_geometry", "framing", "lighting", "camera", "action",
-        "color", "atmosphere",
+        "color", "atmosphere", "appearance", "material",
     }),
     "fetish": frozenset({
         "sexual_tone", "style", "appearance", "material", "action", "pose", "body_geometry",
     }),
-}
-
-ADULT_APPEAL_AXIS_DIMENSIONS = {
-    **LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS,
-    "sensual": LEGACY_ADULT_APPEAL_AXIS_DIMENSIONS["sensual"] | {"appearance", "material"},
 }
 
 
@@ -68,7 +61,7 @@ def property_effects_allowed(intent_lock: dict, dimensions, effects) -> bool:
 
     Unknown/broad effects cannot claim compatibility with a partial lock.
     Parent paths include their children, so 'wardrobe' cannot bypass a locked
-    'wardrobe.color'. Historical locks keep their coarse dimension contract.
+    'wardrobe.color'. Whole-dimension locks remain independent of properties.
     """
     locks = intent_property_locks(intent_lock)
     if not locks:
@@ -193,7 +186,7 @@ REQUEST_ENVELOPE_CONTRACT_VERSION = "photo-request-envelope/v1"
 
 REQUEST_BINDING_CONTRACT_VERSION = "photo-request-binding/v1"
 
-INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v1"
+INTENT_LOCK_CONTRACT_VERSION = "photo-intent-lock/v2"
 INTENT_LOCK_PROPERTY_CONTRACT_VERSION = "photo-intent-lock/v2"
 
 INTENT_PRESERVATION_CONTRACT_VERSION = "photo-intent-preservation/v1"
@@ -286,8 +279,6 @@ AUTHORIAL_IDENTITY_PRESERVATION_NEGATIVE_TERMS = {
     "shortened face compared with the identity reference",
 }
 
-LEGACY_AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v1"
-LEGACY_AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v2"
 AUTHORIAL_AUTHORSHIP_POLICY_CONTRACT_VERSION = "photo-authorial-authorship-policy/v2"
 AUTHORIAL_CORE_BINDING_CONTRACT_VERSION = "photo-authorial-core-binding/v3"
 

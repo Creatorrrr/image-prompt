@@ -86,9 +86,8 @@ def metadata_matches(payload: dict, expected: dict, require_dictionary_hash: boo
 
 
 def load_payload(path: Path) -> dict | None:
-    if not path.exists():
-        return None
-    return load_semantic_index_payload(path)
+    """Load a completed sharded index for vector reuse."""
+    return load_semantic_index_payload(path) if path.exists() else None
 
 
 def load_reusable_entries(paths: Sequence[Path], expected: dict) -> dict:
@@ -109,8 +108,16 @@ def load_reusable_entries(paths: Sequence[Path], expected: dict) -> dict:
 
 
 def load_checkpoint(path: Path, expected: dict, cache_indexes: Sequence[Path] = ()) -> dict:
+    """Read the private resumable payload separately from completed indexes."""
     payload = dict(expected)
-    payload["entries"] = load_reusable_entries([*cache_indexes, path], expected)
+    entries = load_reusable_entries(cache_indexes, expected)
+    if path.exists():
+        checkpoint = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(checkpoint, dict) or not isinstance(checkpoint.get("entries"), dict):
+            raise ValueError("invalid semantic build checkpoint")
+        if metadata_matches(checkpoint, expected):
+            entries.update({key: row for key, row in checkpoint["entries"].items() if isinstance(row, dict)})
+    payload["entries"] = entries
     return payload
 
 
@@ -302,7 +309,6 @@ def main() -> int:
     parser.add_argument("--checkpoint", default=None, help="Partial index path used for resumable builds. Defaults to OUTPUT.partial.")
     parser.add_argument("--keep-checkpoint", action="store_true", help="Keep the partial checkpoint after a successful final write.")
     parser.add_argument("--shard-count", type=int, default=16, help="Stable hash-shard count for the final index (default: 16).")
-    parser.add_argument("--monolithic", action="store_true", help="Write a legacy single-file index instead of the default sharded format.")
     parser.add_argument(
         "--keep-stale-generations",
         action="store_true",
@@ -326,8 +332,8 @@ def main() -> int:
                     "embedding_model": args.model,
                     "embedding_dimensions": args.dimensions,
                     "entries": entry_count,
-                    "storage_format": "monolithic" if args.monolithic else SEMANTIC_INDEX_SHARDED_FORMAT,
-                    "shard_count": 0 if args.monolithic else args.shard_count,
+                    "storage_format": SEMANTIC_INDEX_SHARDED_FORMAT,
+                    "shard_count": args.shard_count,
                     "output": str(args.output),
                 },
                 ensure_ascii=False,
@@ -364,17 +370,9 @@ def main() -> int:
     payload["created_at"] = datetime.now(timezone.utc).isoformat()
 
     out = Path(args.output)
-    if args.monolithic:
-        write_payload(out, payload)
-        storage_description = "monolithic JSON"
-    else:
-        write_sharded_payload(
-            out,
-            payload,
-            shard_count=args.shard_count,
-            keep_stale_generations=args.keep_stale_generations,
-        )
-        storage_description = f"{args.shard_count} JSON shards"
+    write_sharded_payload(out, payload, shard_count=args.shard_count,
+                          keep_stale_generations=args.keep_stale_generations)
+    storage_description = f"{args.shard_count} JSON shards"
     checkpoint = checkpoint_path_for(out, args.checkpoint)
     if checkpoint.exists() and not args.keep_checkpoint:
         checkpoint.unlink()

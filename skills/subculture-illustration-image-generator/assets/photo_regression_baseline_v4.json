@@ -1,0 +1,50 @@
+{
+  "schema": "photo_regression_baseline/v4",
+  "created_at": "2026-09-29",
+  "status": "current",
+  "historical_baseline": {
+    "path": "photo_regression_baseline_v3.json",
+    "schema": "photo_regression_baseline/v3",
+    "sha256": "f5330bcee1a8bfdf92861152ab941cded669269cda4de4d6a7183c3933dfacd5"
+  },
+  "change_scope": "current_bound_photo_v6_boundary",
+  "command": [
+    ".venv/bin/python",
+    "skills/photo-prompt-image-generator/scripts/generate_photo_prompt.py",
+    "--preset",
+    "product_commercial",
+    "--seed",
+    "910000",
+    "--selection-mode",
+    "rule",
+    "--candidate-pack-version",
+    "v6",
+    "--emit-candidate-pack",
+    "--json-output",
+    "--authorial-core-json",
+    "tests/fixtures/photo_prompt/current_boundary/core.json",
+    "--request-envelope-json",
+    "tests/fixtures/photo_prompt/current_boundary/envelope.json",
+    "--creative-controls-json",
+    "tests/fixtures/photo_prompt/current_boundary/controls.json",
+    "--embodiment-review-json",
+    "tests/fixtures/photo_prompt/current_boundary/review.json",
+    "--output-file",
+    "/tmp/subculture-illustration-photo-baseline-v4.json"
+  ],
+  "sha256": "fbe8a2501f5962b76664e79fb65d4464a37e928ba7d10978648dd1a6417862de",
+  "pack_id": "756bf8ed16658513",
+  "contract_version": "photo-candidate-pack/v6",
+  "public_candidate_count": 58,
+  "private_fields_absent": [
+    "argv",
+    "preset_id",
+    "sample_prompt_id",
+    "concept_gate_results",
+    "concept_scene_variants",
+    "character_response",
+    "adult_appeal"
+  ],
+  "negative_en": "3D render look, illustration look, over-processed retouching, fake-looking background, cartoon style, excessive HDR, warped product geometry, low resolution, inaccurate reflections",
+  "purpose": "Verify current bound V6 output and private-routing isolation; preserve V1–V3 historical evidence."
+}

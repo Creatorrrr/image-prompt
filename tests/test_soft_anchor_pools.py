@@ -113,29 +113,14 @@ class ConceptModeDefaultTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.wrapper = load_module("ppg_wrapper_mode", WRAPPER_PATH)
 
-    def test_recipe_default_soft_applies_when_mode_not_explicit(self) -> None:
-        recipes = self.wrapper.load_concept_recipes()
-        recipes["roles"]["회사원"]["concept_mode_default"] = "soft"
-        with mock.patch.object(self.wrapper, "load_concept_recipes", return_value=recipes):
-            _, explanations = self.wrapper.resolve_concepts(
-                ["--seed", "42"], ["회사원"], "legacy", concept_mode_explicit=False
-            )
-            self.assertEqual(explanations[0]["concept_mode"], "soft")
-            self.assertFalse(explanations[0]["forced_slots_applied"])
+    def test_current_default_is_soft_without_recipe_promotion(self):
+        _, explanations = self.wrapper.resolve_concepts(["--seed", "42"], ["회사원"])
+        self.assertEqual(explanations[0]["concept_mode"], "soft")
+        self.assertFalse(explanations[0]["forced_slots_applied"])
 
-            # Explicit --concept-mode always wins over the recipe default.
-            _, explanations = self.wrapper.resolve_concepts(
-                ["--seed", "42"], ["회사원"], "legacy", concept_mode_explicit=True
-            )
-            self.assertEqual(explanations[0]["concept_mode"], "legacy")
-            self.assertTrue(explanations[0]["forced_slots_applied"])
-
-    def test_without_recipe_default_mode_stays_legacy(self) -> None:
-        _, explanations = self.wrapper.resolve_concepts(
-            ["--seed", "42"], ["회사원"], "legacy", concept_mode_explicit=False
-        )
-        self.assertEqual(explanations[0]["concept_mode"], "legacy")
-        self.assertTrue(explanations[0]["forced_slots_applied"])
+    def test_legacy_concept_mode_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "only supports soft"):
+            self.wrapper.resolve_concepts(["--seed", "42"], ["회사원"], "legacy")
 
 
 if __name__ == "__main__":

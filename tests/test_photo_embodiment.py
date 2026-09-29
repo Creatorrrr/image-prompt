@@ -188,10 +188,9 @@ class EmbodimentContractTests(unittest.TestCase):
         request.pop("source_embodiment_preflight_sha256")
         self.assertTrue(embodiment.audit_runtime(pack, composed, request))
 
-    def test_legacy_packs_stay_replayable_without_a_new_review_claim(self):
-        self.assertEqual(embodiment.audit_composed({}, {"prompt_en": BASELINE}), [])
-        self.assertEqual(embodiment.render_gate_ids({}, None), ([], []))
-        self.assertTrue(embodiment.audit_composed({}, {"embodiment_review": {}}))
+    def test_missing_current_review_policy_is_rejected(self):
+        self.assertTrue(embodiment.audit_composed({}, {"prompt_en": BASELINE}))
+        self.assertTrue(embodiment.render_gate_ids({}, None)[1])
 
     def test_applicable_pixel_gates_are_derived_from_final_review(self):
         pack, composed = fixture()
@@ -263,13 +262,15 @@ class EmbodimentPipelineTests(unittest.TestCase):
     def test_wrapper_emits_bound_policy_without_retrieving_review_prose(self):
         from tests import test_photo_authorial_core_v6 as fixtures
         raw = fixtures.core()
+        controls = prompt_generator.creative_controls.resolve(raw["source_request"], overrides={"sensual": 0, "fetish": 0, "creativity": 0, "surreal_mode": "off"}, seed=9501)
+        raw["creative_controls_sha256"] = controls["canonical_sha256"]
         r = review(raw["baseline_prompt_en"])
         r["summary"] = "REVIEW_ONLY_SENTINEL: synthetic record outside semantic retrieval."
         for row in r["checks"].values():
             row["prompt_evidence"] = ["wraps the coworker's scraped wrist with practical care"]
         with tempfile.TemporaryDirectory() as tmp:
             paths = {}
-            for name, value in (("core", raw), ("envelope", fixtures.envelope()), ("review", r)):
+            for name, value in (("core", raw), ("envelope", fixtures.envelope()), ("review", r), ("controls", controls)):
                 # A review filename must not invoke the dictionary loader's special
                 # extension handling, even if it happens to match its basename.
                 paths[name] = Path(tmp) / ("photo_prompt_tags.json" if name == "review" else name + ".json")
@@ -280,7 +281,7 @@ class EmbodimentPipelineTests(unittest.TestCase):
                 "--emit-candidate-pack", "--candidate-pack-version", "v6",
                 "--authorial-core-json", str(paths["core"]),
                 "--request-envelope-json", str(paths["envelope"]),
-                "--embodiment-review-json", str(paths["review"]), "--n", "1",
+                "--embodiment-review-json", str(paths["review"]), "--creative-controls-json", str(paths["controls"]), "--n", "1",
             ], cwd=ROOT, capture_output=True, text=True, timeout=180)
         self.assertEqual(completed.returncode, 0, completed.stderr)
         pack = json.loads(completed.stdout)[0]

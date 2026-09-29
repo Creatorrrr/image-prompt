@@ -1,0 +1,188 @@
+{
+  "contract_version": "photo-creative-controls/v2",
+  "provenance": "resolved_precore",
+  "source_request_sha256": "6597507b8f68bcb8cf31f3a4ce12f255c5de4280c7eb6dab3f2adf0849c14281",
+  "definitions": {
+    "contract_version": "photo-creative-control-definitions/v2",
+    "principle": "These creative definitions guide agent-owned choices within requester meaning, not clinical classifications. Zero/off disables added treatment, never removes explicitly requested content. Levels describe prominence in the whole image, not exposure percentages, detail quotas, quality scores, or native image-model parameters. Intensity and expression are separate choices; higher intensity does not prescribe a garment, material or expression category. Popular permits familiar appeal without requiring trend search; overt is an available expression, not the mandatory meaning of level three. Choose a coherent expression suited to this particular scene. The two controls may share the same expressive choice.",
+    "controls": {
+      "sensual": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 1,
+        "definition": "Broadly interpreted human attraction and desire, including everyday, popular, intimate, suggestive, seductive, and overt expressions.",
+        "levels": {
+          "0": "No added sensual treatment; preserve explicitly requested content.",
+          "1": "This expression is a subtle supporting quality.",
+          "2": "This expression is clearly readable in the image.",
+          "3": "This expression leads the image's appeal and direction."
+        }
+      },
+      "fetish": {
+        "type": "integer",
+        "range": [
+          0,
+          3
+        ],
+        "default": 0,
+        "definition": "Any distinctive focus of sexual attraction or fascination; interpret broadly across objects, bodies, clothing, materials, roles, situations, behaviors, and sensory qualities, not just conventional fetish aesthetics.",
+        "levels": {
+          "0": "No added fetish treatment; preserve explicitly requested content.",
+          "1": "This focus is a subtle supporting quality.",
+          "2": "This focus is clearly readable in the image.",
+          "3": "This focus leads the image's appeal and direction."
+        }
+      },
+      "adult_appeal_emphasis": {
+        "type": "enum",
+        "choices": [
+          "auto",
+          "sensual_led",
+          "balanced",
+          "fetish_led"
+        ],
+        "default": "auto",
+        "definition": "Choose which active axis leads the whole expression. Auto follows the two intensities; emphasis cannot reactivate an inactive axis. One expressive choice may serve both axes."
+      },
+      "creativity": {
+        "type": "number",
+        "range": [
+          0,
+          1
+        ],
+        "default": 0.5,
+        "definition": "Freedom to interpret unspecified choices, not artistic quality. Low values favor direct, restrained choices; middle values allow coherent reinterpretation; high values allow more unexpected relationships. Preserve requested meaning at every value. Extra props, surrealism and idea-count quotas are not required."
+      },
+      "viewer_experience": {
+        "type": "boolean",
+        "default": false,
+        "definition": "Expose the detailed viewer-experience review when enabled. Always consider the intended impression in interpreted_intent, even when this additional review is off."
+      },
+      "reference_edit_mode": {
+        "type": "enum",
+        "choices": [
+          "off",
+          "identity",
+          "younger_self",
+          "brand_board"
+        ],
+        "default": "off",
+        "definition": "Use the selected reference-edit workflow only within the requester's reference-use scope. Record that scope in the core; a face/hair reference does not lock clothing, body shape or composition and does not prove identity. Off does not discard a supplied reference."
+      },
+      "surreal_mode": {
+        "type": "enum",
+        "choices": [
+          "off",
+          "auto",
+          "on"
+        ],
+        "default": "off",
+        "definition": "Whether to add a surreal treatment to open dimensions. Resolve auto once before authoring. Off preserves any fantasy already requested."
+      },
+      "surreal_probability": {
+        "type": "number",
+        "range": [
+          0,
+          1
+        ],
+        "default": 0.35,
+        "definition": "Probability used only for the one-time auto decision; not artistic intensity."
+      },
+      "surreal_intensity": {
+        "type": "enum",
+        "choices": [
+          "subtle",
+          "moderate",
+          "bold"
+        ],
+        "default": "moderate",
+        "definition": "When the added treatment is active: subtle is a supporting departure, moderate is clearly readable, bold leads the treatment. The legacy sampler still uses these labels for slot breadth; slot count is not proof of perceptual intensity."
+      },
+      "trend_layer": {
+        "type": "enum",
+        "choices": [
+          "off",
+          "scrapbook_collage",
+          "action_figure_packaging",
+          "retro_flash",
+          "clean_brand_portrait"
+        ],
+        "default": "off",
+        "definition": "Consider the chosen treatment from the initial composition. Refine it later without adding it twice. Off does not remove a treatment explicitly present in the request."
+      }
+    }
+  },
+  "definitions_sha256": "eb4521873e4b82123cc9a63b22b082e33a7ead083c1588fd0d38c525b8e64cf1",
+  "overrides": {
+    "sensual": 0,
+    "fetish": 0,
+    "creativity": 0,
+    "surreal_mode": "off"
+  },
+  "context": {
+    "subject_category": "unspecified",
+    "no_people": false,
+    "explicit_nonsexual": false
+  },
+  "seed": 7,
+  "controls": {
+    "sensual": {
+      "value": 0,
+      "source": "request_override"
+    },
+    "fetish": {
+      "value": 0,
+      "source": "request_override"
+    },
+    "adult_appeal_emphasis": {
+      "value": "auto",
+      "source": "saved_setting"
+    },
+    "creativity": {
+      "value": 0,
+      "source": "request_override"
+    },
+    "viewer_experience": {
+      "value": false,
+      "source": "saved_setting"
+    },
+    "reference_edit_mode": {
+      "value": "off",
+      "source": "saved_setting"
+    },
+    "surreal_mode": {
+      "value": "off",
+      "source": "request_override"
+    },
+    "surreal_probability": {
+      "value": 0.35,
+      "source": "saved_setting"
+    },
+    "surreal_intensity": {
+      "value": "moderate",
+      "source": "saved_setting"
+    },
+    "trend_layer": {
+      "value": "off",
+      "source": "saved_setting"
+    }
+  },
+  "adult_appeal": {
+    "sensual": {
+      "requested_intensity": 0,
+      "effective_intensity": 0,
+      "reason": "eligible"
+    },
+    "fetish": {
+      "requested_intensity": 0,
+      "effective_intensity": 0,
+      "reason": "eligible"
+    }
+  },
+  "resolved_emphasis": "balanced",
+  "surreal_active": false,
+  "canonical_sha256": "e79a4e486b87406a2550e212630f0abecd1b1e4b0be9314ed5ffd17152a9761a"
+}

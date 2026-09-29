@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import hashlib
 import random
@@ -23,7 +25,7 @@ class PhotoCharacterRenderReviewTests(unittest.TestCase):
         fixture = fixtures.PhotoAuthorialCoreV6Tests()
         core = fixture.normalize(fixtures.core())
         data = fixture.runtime_data()
-        result = generator.generate_once(
+        result = current_fixtures.generate_once(
             data, random.Random(9501), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True,
             concept_locks=[fixtures.REQUEST], seed=9501, creativity=0.0,

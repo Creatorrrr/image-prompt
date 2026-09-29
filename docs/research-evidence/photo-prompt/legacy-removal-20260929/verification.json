@@ -1,0 +1,140 @@
+{
+  "base_commit": "c432b515b37739b04f88555b9802040c1fbd8921",
+  "scope": "Current V6 public boundary and removal of old skill-version compatibility",
+  "verified_checks": [
+    {
+      "check": "current contracts",
+      "tests": 86,
+      "status": "pass",
+      "modules": [
+        "tests.test_photo_current_boundary",
+        "tests.test_photo_authorial_core",
+        "tests.test_photo_authorial_core_v6",
+        "tests.test_photo_authorship_policy",
+        "tests.test_photo_character_render_review",
+        "tests.test_photo_adult_appeal_scope",
+        "tests.test_photo_embodiment"
+      ]
+    },
+    {
+      "check": "illustration photo boundary and universal scene",
+      "tests": 47,
+      "status": "pass",
+      "targets": [
+        "tests.test_subculture_illustration_photo_boundary",
+        "tests.test_subculture_illustration_universal_scene_v3",
+        "tests.test_subculture_illustration_contract_v1.SubcultureIllustrationContractV1Tests.test_aggregate_validator_does_not_hide_partial_pixel_qualification"
+      ]
+    },
+    {
+      "check": "additional active callers",
+      "tests": 9,
+      "status": "pass"
+    },
+    {
+      "check": "current golden snapshots",
+      "tests": 3,
+      "status": "pass"
+    },
+    {
+      "check": "sampler high-creativity diagnostic contract",
+      "tests": 1,
+      "status": "pass"
+    },
+    {
+      "check": "generalization",
+      "cases": 79,
+      "status": "pass"
+    },
+    {
+      "check": "semantic retrieval holdout",
+      "cases": 22,
+      "status": "pass"
+    },
+    {
+      "check": "scene structure",
+      "routes": 112,
+      "status": "pass"
+    },
+    {
+      "check": "dictionary validation",
+      "status": "pass"
+    },
+    {
+      "check": "semantic index",
+      "entries": 9650,
+      "status": "pass",
+      "dictionary_hash": "b48bacd2edc7727f00c98ffa5bf6949ad0b1db338ab4c7fdf4b71a4e35461a2c",
+      "reused_vectors": 9650,
+      "new_embeddings": 0
+    },
+    {
+      "check": "visual profile index",
+      "profiles": 988,
+      "exact_terms": 2509,
+      "status": "pass"
+    },
+    {
+      "check": "syntax",
+      "python_files": 48,
+      "status": "pass"
+    },
+    {
+      "check": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "check": "visual obligations module",
+      "tests": 26,
+      "passed_tests": 25,
+      "failed_tests": 1,
+      "failed_subcases": 8,
+      "status": "existing_failures_only",
+      "comparison": "All eight case IDs and returned optional candidate lists exactly match original HEAD."
+    }
+  ],
+  "preexisting_failures": [
+    {
+      "test": "test_semantic_index_ranks_new_keyword_families_near_the_top",
+      "finding": "Original and current indexes both rank multi_observer_recognition_cue seventh; frozen assertion requires top six."
+    },
+    {
+      "test": "test_skill_fail_closes_uncovered_focal_meaning",
+      "finding": "The four asserted sentences are absent in the original HEAD skill document too."
+    },
+    {
+      "test": "test_retrieval_holdout_and_research_evidence_contracts_are_versioned",
+      "finding": "Forty unchanged historical reuse_note records do not contain both expected literal fragments."
+    },
+    {
+      "test": "test_exact_candidate_and_hard_negative_routing_fixture",
+      "finding": "Six traditional-clothing cases return the same extra optional profiles under original HEAD code."
+    },
+    {
+      "test": "test_registry_and_request_scoped_routing_fixture",
+      "finding": "Eight of 134 frozen cases return the same extra optional candidates with original HEAD and current code. The separate 14-case holdout passes."
+    }
+  ],
+  "pending": [],
+  "unverified": [
+    {
+      "check": "external semantic quality gate",
+      "reason": "Network is unreachable"
+    }
+  ],
+  "historical_preservation": {
+    "tracked_runs_research_and_frozen_fixtures_changed": false,
+    "universal_scene_baseline_original_sha256": "06570f2411f076be676701a05f05fff261ba04b9290a46ab255f54f920a02b6c"
+  },
+  "notes": [
+    "Counts describe separate focused runs and must not be summed as distinct tests.",
+    "The initial whole-suite attempt was not a clean pass. See full-suite-attempt.json.",
+    "No image generation or pixel quality evaluation was performed."
+  ],
+  "test_runtime_notes": [
+    "Frozen routing compares original HEAD and current code against unchanged fixture expectations.",
+    "Exhaustive visual checks reuse the real generated index with registry-hash checks.",
+    "A profile of one route took 17.059 seconds, of which regex compilation took 15.916 seconds. The final exhaustive run expands the CPython regex cache to 65536 and its FIFO cache to 32768; matching code and expected values are unchanged."
+  ],
+  "status": "implementation_and_local_regression_review_complete"
+}

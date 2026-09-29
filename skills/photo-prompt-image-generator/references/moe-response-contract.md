@@ -1,6 +1,6 @@
 # Moe Response Contract
 
-For the normal v6 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; do not run the raw moe router or use any named-archetype mechanism/register below to reinterpret them. Only for a compatibility pack with `moe_response.enabled: true`, load [moe-response-legacy.md](moe-response-legacy.md). Its historical scene prescriptions are unavailable to the normal typed v6 workflow.
+For the normal v6 workflow, use `character_response` when the candidate pack contains `photo-character-response/v1`. Its semantics were authored and frozen in `photo-authorial-core/v3`; use its typed axes and frozen evidence directly. The removed raw-text router supplies no runtime interpretation.
 
 ## Typed V6 Character Response
 

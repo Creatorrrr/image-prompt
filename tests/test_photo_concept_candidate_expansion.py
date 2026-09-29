@@ -16,7 +16,7 @@ RECIPES_PATH = SKILL_DIR / "assets" / "concept_recipes.json"
 RESEARCH_EVIDENCE_PATH = (
     ROOT / "docs" / "research-evidence" / "photo-prompt" / "research_evidence.jsonl"
 )
-WRAPPER_PATH = SCRIPT_DIR / "generate_photo_prompt.py"
+WRAPPER_PATH = SCRIPT_DIR / "inspect_photo_sample.py"
 SEMANTIC_INDEX_PATH = SKILL_DIR / "assets" / "photo_prompt_semantic_index.json"
 
 if str(SCRIPT_DIR) not in sys.path:
@@ -99,7 +99,7 @@ class PhotoConceptCandidateExpansionTests(unittest.TestCase):
 
     def explain(self, concept: str, seed: int = 42) -> dict[str, Any]:
         _args, explanations = generate_photo_prompt.resolve_concepts(
-            ["--seed", str(seed), "--selection-mode", "rule", "--emit-candidate-pack"],
+            ["--seed", str(seed), "--selection-mode", "rule", "--diagnostic-candidates"],
             [concept],
         )
         self.assertEqual(len(explanations), 1)
@@ -116,7 +116,7 @@ class PhotoConceptCandidateExpansionTests(unittest.TestCase):
                 "rule",
                 "--seed",
                 str(seed),
-                "--emit-candidate-pack",
+                "--diagnostic-candidates",
             ],
             cwd=ROOT,
             text=True,
@@ -336,7 +336,7 @@ class PhotoConceptCandidateExpansionTests(unittest.TestCase):
                 self.assertIn("no ", reuse_note)
                 self.assertIn("copied", reuse_note)
 
-    def test_candidate_packs_cover_each_concept_and_surface_new_semantics(self) -> None:
+    def test_sampler_candidates_cover_each_concept_and_surface_new_semantics(self) -> None:
         cases = (
             ("마녀", 11, {"surreal_physics_detail", "aftermath_trace"}),
             ("트레저헌터", 12, {"narrative_phase", "aftermath_trace"}),
@@ -357,9 +357,15 @@ class PhotoConceptCandidateExpansionTests(unittest.TestCase):
         for concept, seed, expected_slots in cases:
             with self.subTest(concept=concept):
                 pack = self.candidate_pack(concept, seed)
-                self.assertEqual(pack["uncovered_intents"], [])
-                self.assertTrue(all(row["status"] == "covered" for row in pack["mandatory_intents"]))
-                self.assertLessEqual(expected_slots, set(pack["slots"]))
+                self.assertEqual(pack["schema_version"], "photo-sampler-diagnostic/v1")
+                requested = [row for row in pack["mandatory_intents"] if row["source"] == "concept_lock"]
+                self.assertTrue(requested)
+                self.assertTrue(all(row["status"] == "covered" for row in requested))
+                # Authored recipe prose remains a composition task; diagnostics
+                # never claim that sampled nouns satisfy full visible relations.
+                anchors = self.explain(concept, seed)["soft_anchor_spec"]["anchors"]
+                self.assertLessEqual(expected_slots, {row["slot"] for row in anchors})
+                self.assertTrue(expected_slots & set(pack["slots"]))
 
     def test_semantic_index_ranks_new_keyword_families_near_the_top(self) -> None:
         index = prompt_generator.load_semantic_index_payload(SEMANTIC_INDEX_PATH)

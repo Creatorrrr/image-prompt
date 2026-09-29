@@ -7,14 +7,14 @@ Photo prompt generator
 - Uses presets, slot filters, weights, subject compatibility, priority-biased optional slots,
   and user-forced slot selections.
 
-Usage examples:
-  python prompt_generator.py --tags photo_prompt_tags.json --n 5 --lang both
-  python prompt_generator.py --tags photo_prompt_tags.json --preset street_documentary --n 3 --seed 42
-  python prompt_generator.py --tags photo_prompt_tags.json --list-presets
-  python prompt_generator.py --tags photo_prompt_tags.json --show-slots
-  python prompt_generator.py --tags photo_prompt_tags.json --list-tags camera_type
-  python prompt_generator.py --tags photo_prompt_tags.json --preset tiktok_vertical_snapshot --set subject=influencer_creator --set person_origin=south_korea --set appearance_type=idol_like
-  python prompt_generator.py --tags photo_prompt_tags.json --json-output --include-negative --include-choices --n 10 > prompts.json
+Usage:
+  prompt_generator.py --list-presets
+  prompt_generator.py --list-tags camera_type
+  generate_photo_prompt.py --emit-candidate-pack --authorial-core-json core.json
+      --request-envelope-json envelope.json --creative-controls-json controls.json
+      --embodiment-review-json review.json --selection-mode rule --json-output
+
+For private sampler inspection use inspect_photo_sample.py.
 """
 
 from __future__ import annotations
@@ -74,7 +74,6 @@ try:
         property_effects_allowed,
         INTENT_LOCK_DIMENSIONS,
         INTENT_PRESERVATION_CONTRACT_VERSION,
-        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
         NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
         RENDER_REPAIR_ALLOWED_AXES,
         RENDER_REPAIR_CONTACT_EXPECTATIONS,
@@ -254,70 +253,20 @@ CANDIDATE_PACK_PRESET_LIMIT = 4
 CANDIDATE_PACK_CORE_SLOT_LIMIT = 4
 CANDIDATE_PACK_SUPPORT_SLOT_LIMIT = 2
 CANDIDATE_PACK_TOTAL_CANDIDATE_LIMIT = 64
-CANDIDATE_PACK_CONTRACT_V2 = "photo-candidate-pack/v2"
-CANDIDATE_PACK_CONTRACT_V3 = "photo-candidate-pack/v3"
-CANDIDATE_PACK_CONTRACT_V4 = "photo-candidate-pack/v4"
-CANDIDATE_PACK_CONTRACT_V5 = "photo-candidate-pack/v5"
 CANDIDATE_PACK_CONTRACT_V6 = "photo-candidate-pack/v6"
-CANDIDATE_PACK_VERSIONS = ("v2", "v3", "v4", "v5", "v6")
-DEFAULT_CANDIDATE_PACK_VERSION = "v4"
-CANDIDATE_PACK_V3_PROFILE_ALIASES = {
-    "character_moe_grammar": "character_scene_grammar",
-}
-CANDIDATE_PACK_V3_ID_ALIASES = {
-    "aligning_rights_cleared_original_vehicle_wrap": "aligning_original_graphics_vehicle_wrap",
-}
+CANDIDATE_PACK_VERSIONS = ("v6",)
+DEFAULT_CANDIDATE_PACK_VERSION = "v6"
 CANDIDATE_PACK_CREATIVE_EXPLORATION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_EXPLORATION_MIN_DISTANCE = 0.45
 CANDIDATE_PACK_CREATIVE_EXPLORATION_LIMIT = 6
 CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR = 0.75
 CANDIDATE_PACK_CREATIVE_DIRECTION_MIN_PROPOSALS = 4
-CANDIDATE_PACK_HYBRID_CONTRACT_VERSION = "photo-hybrid-augmentation/v1"
-CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION = "photo-hybrid-augmentation/v2"
 CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION = "photo-authorial-composition/v1"
 CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION = "photo-authorial-scene/v1"
-AUTHORIAL_REQUEST_CONTRACT_VERSION = "authorial-request/v1"
 
-# These maps describe semantic impact, not topic meaning.  They let the v5
+# These maps describe semantic impact, not topic meaning.  They let the current
 # request lock govern downstream defaults without special-casing any named
 # archetype, expression, culture, or genre.
-MOE_RESPONSE_EVIDENCE_DIMENSIONS = {
-    "actor_phrase": "subject",
-    "aesthetic_baseline_phrase": "style",
-    "affective_leak_phrase": "expression",
-    "active_denial_phrase": "expression",
-    "care_action_anchor_phrase": "relationship",
-    "relationship_gaze_anchor_phrase": "relationship",
-    "concealed_affection_phrase": "expression",
-    "benevolent_affect_phrase": "expression",
-    "baseline_phrase": "role",
-    "event_phase_phrase": "event",
-    "trigger_phrase": "event",
-    "target_phrase": "event",
-    "visible_response_phrase": "expression",
-    "immediate_consequence_phrase": "event",
-    "continuity_phrase": "event",
-    "background_control_phrase": "setting",
-    "focal_plane_phrase": "composition",
-    "reference_identity_phrase": "identity",
-}
-MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS = {
-    "aesthetic_style_default": ("style",),
-    "aesthetic_expression_default": ("expression",),
-    "affective_balance_default": ("expression",),
-    "generic_character_response_mechanism": (
-        "event",
-        "expression",
-        "pose",
-        "relationship",
-    ),
-    "generic_relationship_register": ("relationship", "expression"),
-    "default_sensual_support": ("sexual_tone", "style", "composition"),
-    "generic_expression_negative_suppression": ("expression",),
-    "generic_style_negative_suppression": ("style",),
-    "generic_appearance_negative_suppression": ("appearance",),
-    "generic_text_negative_suppression": ("text",),
-}
 ADULT_APPEAL_DEFAULT_AFFECTED_DIMENSIONS = {
     "sexual_tone",
     "style",
@@ -447,7 +396,7 @@ CANDIDATE_PACK_AUTHORIAL_LENSES = (
     "aftermath_and_trace",
     "framing_and_withheld_information",
 )
-CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS = (
+CANDIDATE_PACK_AUTHORIAL_SCENE_SLOTS = (
     "subject",
     "action",
     "location",
@@ -541,15 +490,6 @@ CANDIDATE_PACK_VIEWER_COMMERCIAL_OBJECTIVES = (
     "share",
     "return",
 )
-MOE_RESPONSE_CONTRACT_VERSION = "moe_response_contract/v10"
-MOE_RESPONSE_PROMPT_RECOMMENDED_MIN_WORDS = 100
-MOE_RESPONSE_PROMPT_RECOMMENDED_MAX_WORDS = 240
-MOE_RESPONSE_DOMAIN = "character_moe_grammar"
-MOE_RESPONSE_DEFAULT_ROUTE = "character_attribute_composition_scene"
-MOE_RESPONSE_GAP_ROUTE = "character_gap_contrast_scene"
-MOE_RESPONSE_NONHUMAN_ROUTE = "character_nonhuman_expression_scene"
-MOE_RESPONSE_EFFORT_ROUTE = "character_competence_vulnerability_scene"
-MOE_RESPONSE_CARE_ROUTE = "character_quiet_care_daily_scene"
 MOE_AESTHETIC_BISHOUJO = "adult_bishoujo"
 MOE_AESTHETIC_BISHONEN = "adult_bishonen"
 MOE_AESTHETIC_ANDROGYNOUS = "adult_beautiful_cute_character"
@@ -1420,7 +1360,7 @@ VALID_PRESET_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
-    "character_moe_grammar",
+    "character_scene_grammar",
     "surreal",
     "adult",
 }
@@ -1961,7 +1901,7 @@ def validate_character_mechanism_graph(data: JsonDict) -> None:
             f"Unsupported character mechanism graph schema: {graph.get('schema_version')!r}"
         )
     domain = str(graph.get("domain") or "")
-    if domain != "character_moe_grammar":
+    if domain != "character_scene_grammar":
         raise ValueError(f"Unsupported character mechanism domain: {domain!r}")
     priority_order = normalize_list(graph.get("priority_order"))
     expected_priority = [
@@ -3027,7 +2967,7 @@ def authorial_negative_term_allowed(
     *,
     identity_preservation_enabled: bool,
 ) -> bool:
-    """Return whether a v5/v6 runtime-negative item is intent-safe.
+    """Return whether a v6 runtime-negative item is intent-safe.
 
     Generic safety, taste, count, action, relationship, expression, wardrobe,
     and genre suppressions are intentionally absent from the automatic lane.
@@ -3121,7 +3061,7 @@ def build_negative_intent_guard(
     *,
     identity_preservation_enabled: bool,
 ) -> JsonDict:
-    """Build the public, recomputable v5/v6 negative-intent boundary."""
+    """Build the public, recomputable v6 negative-intent boundary."""
 
     guard: JsonDict = {
         "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -4354,8 +4294,8 @@ def candidate_pack_rank_slot_rows(
     )
     if can_expand:
         existing_ids = {str(row["id"]) for row in original}
-        core_tokens = candidate_pack_v5_relevance_tokens(global_query)
-        subject_tokens = candidate_pack_v5_relevance_tokens(
+        core_tokens = candidate_pack_relevance_tokens(global_query)
+        subject_tokens = candidate_pack_relevance_tokens(
             str(core.get("subject") or "")
         ) | set(normalize_list((contract.get("intent_constraints") or {}).get("subject_categories")))
         subject_categories = set(normalize_list(
@@ -4634,7 +4574,7 @@ def candidate_pack_build_slots(
             source_rows = exact_rows
         else:
             source_rows = [
-                {**dict(row), "applicability_source": "legacy_score_trace"}
+                {**dict(row), "applicability_source": "score_trace_fallback"}
                 for row in score_row.get("top") or []
                 if isinstance(row, dict)
             ]
@@ -4714,8 +4654,7 @@ def candidate_pack_build_slots(
             }
             pool = [by_id[item_id] for item_id in eligible_ids if item_id in by_id]
         else:
-            # Compatibility fallback for older/synthetic result objects.
-            pool = apply_filter(data.get("slots", {}).get(str(slot), []) or [], filters.get(str(slot)))
+            raise ValueError(f"candidate pack requires the recorded eligible pool for slot {slot}")
         if not any(str(entry.get("id") or "") == raw_id for entry in pool):
             selected_entry = candidate_pack_slot_entry_by_id(data, str(slot), raw_id)
             if selected_entry:
@@ -4729,7 +4668,7 @@ def candidate_pack_build_slots(
                 0 if str(entry.get("id") or "") == raw_id else 1,
                 -candidate_pack_rule_context_score(entry, pack_request_text, core_context_tokens),
                 -float(eligible_weights.get(str(entry.get("id") or ""), entry.get("weight", 1)) or 0)
-                * (1.0 if eligible_ids else selection_balance_multiplier(data, entry, pack_request_text)[0]),
+               ,
                 str(entry.get("id") or ""),
             ),
         )
@@ -4747,13 +4686,13 @@ def candidate_pack_build_slots(
             {
                 "id": str(entry.get("id") or ""),
                 "weight": float(eligible_weights.get(str(entry.get("id") or ""), entry.get("weight", 1.0)) or 1.0)
-                * (1.0 if eligible_ids else selection_balance_multiplier(data, entry, pack_request_text)[0]),
+               ,
                 "rule_selected": str(entry.get("id") or "") == raw_id,
                 "rule_context_score": candidate_pack_rule_context_score(
                     entry, pack_request_text, core_context_tokens
                 ),
                 "applicability_status": "eligible",
-                "applicability_source": "sampler_eligible_pool" if eligible_ids else "legacy_filter_fallback",
+                "applicability_source": "sampler_eligible_pool",
             }
             for entry in ranked
             if str(entry.get("id") or "")
@@ -5008,28 +4947,6 @@ def text_matches_any_pattern(text: str, patterns: Sequence[str]) -> bool:
     return any(re.search(pattern, str(text or ""), flags=re.IGNORECASE) for pattern in patterns)
 
 
-def moe_text_is_metadata_reference(text: str) -> bool:
-    """Return true when ``moe`` is a name, label, or term being documented.
-
-    The ordinary image route must not turn a dictionary page, shop sign, named
-    person, or research record into a character-response request merely because
-    the bytes ``moe``/``모에``/``萌え`` occur in it.
-    """
-    value = clean_spaces(str(text or ""))
-    if not value:
-        return False
-    patterns = (
-        r"(?<![a-z0-9])(?:named|called)\s+[\"']?moe(?![a-z0-9])",
-        r"(?<![a-z0-9])moe(?![a-z0-9])\s+(?:as\s+)?(?:a\s+)?(?:name|word|term|definition|entry|label|sign|restaurant|shop)",
-        r"(?:dictionary|glossary|definition|etymology|meaning|research\s+(?:book|record)|term|word)\b[^.]{0,80}(?<![a-z0-9])moe(?![a-z0-9])",
-        r"모에(?:라는|란|이라고\s*하는)\s*(?:단어|용어|이름|상호|표기)",
-        r"(?:단어|용어|이름|상호|표기|사전|정의|뜻|어원|연구서|간판|식당)[^。.!?]{0,40}모에",
-        r"[「『\"']?萌え[」』\"']?\s*(?:という|と呼ばれる)?\s*(?:用語|言葉|名前|定義|表記)",
-        r"(?:辞書|用語|言葉|定義|意味|語源|研究書|看板|店名)[^。.!?]{0,40}萌え",
-    )
-    return text_matches_any_pattern(value, patterns)
-
-
 def text_explicitly_requests_nonsexual_moe(text: str) -> bool:
     return text_matches_any_pattern(text, MOE_NONSEXUAL_PATTERNS)
 
@@ -5039,11 +4956,6 @@ def mask_patterns(text: str, patterns: Sequence[str]) -> str:
     for pattern in patterns:
         masked = re.sub(pattern, " ", masked, flags=re.IGNORECASE)
     return clean_spaces(masked)
-
-
-def strip_moe_request_controls(text: str) -> str:
-    """Remove response/tone controls while keeping renderable identity words."""
-    return mask_patterns(mask_patterns(text, MOE_NONSEXUAL_PATTERNS), MOE_GOAL_PATTERNS)
 
 
 def text_explicitly_requests_sensual_tone(text: str) -> bool:
@@ -5114,157 +5026,6 @@ def resolve_moe_aesthetic_baseline(texts: Sequence[str]) -> JsonDict:
     }
 
 
-def resolve_moe_response_intent(texts: Sequence[str]) -> JsonDict:
-    """Resolve a natural-language moe request into one visible response route.
-
-    Moe requires both an adult beautiful/cute character-design entry condition
-    and a character-specific response hypothesis.  Neither layer substitutes
-    for the other.
-    """
-    active_texts = [clean_spaces(text) for text in texts if clean_spaces(text)]
-    request_texts = [
-        text
-        for text in active_texts
-        if text_matches_any_pattern(text, MOE_GOAL_PATTERNS)
-        and not moe_text_is_metadata_reference(text)
-    ]
-    if not request_texts:
-        return {
-            "requested": False,
-            "eligible": False,
-            "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
-        }
-
-    combined = " ".join(request_texts)
-    gap_requested = text_matches_any_pattern(
-        combined,
-        (
-            r"갭\s*모에",
-            r"ギャップ\s*萌え",
-            r"(?<![a-z0-9])gap\s+moe(?![a-z0-9])",
-        ),
-    )
-    tsundere_requested = text_matches_any_pattern(
-        combined,
-        (
-            r"츤데레",
-            r"ツンデレ",
-            r"(?<![a-z0-9])tsundere(?![a-z0-9])",
-        ),
-    )
-    nonhuman_requested = text_matches_any_pattern(
-        combined,
-        (
-            r"네코\s*미미|고양이\s*귀|동물\s*귀|케모노미미|수인",
-            r"猫耳|ケモノミミ|獣耳",
-            r"(?<![a-z0-9])(?:cat[-\s]?(?:earred|eared|ears)|kemonomimi|beastkin)(?![a-z0-9])",
-        ),
-    )
-    effort_requested = text_matches_any_pattern(
-        combined,
-        (
-            r"서툴|실수|허둥|열심|애쓰|노력",
-            r"不器用|失敗|一生懸命|頑張",
-            r"(?<![a-z0-9])(?:clumsy|mistake|earnest|trying\s+hard|tries\s+hard)(?![a-z0-9])",
-        ),
-    )
-    nurturant_requested = text_matches_any_pattern(
-        combined,
-        (
-            r"마망|모성적|어머니\s*같|엄마\s*같|인자한\s*(?:어머니|엄마)",
-            r"ママみ|母性的|母親\s*らし|お母さん\s*らし",
-            r"(?<![a-z0-9])(?:mamang|mommy|motherly|maternal|nurturant)(?![a-z0-9])",
-        ),
-    )
-    care_requested = nurturant_requested or text_matches_any_pattern(
-        combined,
-        (
-            r"챙겨|돌봐|배려|다정|보살핌|치유계",
-            r"世話|気遣|優し|癒やし|癒し",
-            r"(?<![a-z0-9])(?:care|caring|kindness|looks?\s+after|iyashikei|helping\s+(?:a|the|their)\s+(?:friend|housemate|partner))(?![a-z0-9])",
-        ),
-    )
-
-    relationship_register = (
-        "peer_liking_under_denial"
-        if tsundere_requested
-        else (
-            "nurturant_benevolence"
-            if nurturant_requested
-            else (
-                "directed_care_without_role_inference"
-                if care_requested
-                else "character_specific_reveal"
-            )
-        )
-    )
-    support_mechanisms: List[str] = []
-    if tsundere_requested:
-        route_id = MOE_RESPONSE_GAP_ROUTE
-        primary_mechanism = "denial_care_leak"
-        if nonhuman_requested:
-            support_mechanisms.append("nonhuman_reflex_leak")
-    elif gap_requested:
-        route_id = MOE_RESPONSE_GAP_ROUTE
-        primary_mechanism = "baseline_break_reveal"
-        if effort_requested:
-            support_mechanisms.append("earnest_effort_recovery")
-        if nonhuman_requested:
-            support_mechanisms.append("nonhuman_reflex_leak")
-    elif care_requested:
-        route_id = MOE_RESPONSE_CARE_ROUTE
-        primary_mechanism = "quiet_care_trace"
-        if nonhuman_requested:
-            support_mechanisms.append("nonhuman_reflex_leak")
-        if effort_requested:
-            support_mechanisms.append("earnest_effort_recovery")
-    elif nonhuman_requested:
-        route_id = MOE_RESPONSE_NONHUMAN_ROUTE
-        primary_mechanism = "nonhuman_reflex_leak"
-    elif effort_requested:
-        route_id = MOE_RESPONSE_EFFORT_ROUTE
-        primary_mechanism = "earnest_effort_recovery"
-    else:
-        route_id = MOE_RESPONSE_DEFAULT_ROUTE
-        primary_mechanism = "character_specific_reveal"
-
-    explicit_nonsexual = any(
-        text_explicitly_requests_nonsexual_moe(text) for text in request_texts
-    )
-    explicit_sensual = any(
-        text_explicitly_requests_sensual_tone(text) for text in request_texts
-    )
-    # Moe and sexual appeal are separate axes.  A plain adult-moe request may
-    # use the configured sensual direction as supporting
-    # appeal; only explicit nonsexual wording suppresses it.  Explicit
-    # positive sensual wording remains a stronger user-controlled branch.
-    sexual_tone = (
-        "nonsexual"
-        if explicit_nonsexual
-        else ("sensual" if explicit_sensual else "sensual_optional")
-    )
-    aesthetic = resolve_moe_aesthetic_baseline(request_texts)
-    text_requested = text_matches_any_pattern(combined, MOE_TEXT_REQUEST_PATTERNS)
-    return {
-        "requested": True,
-        "eligible": True,
-        "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
-        "activation_source": "explicit_natural_language_moe_request",
-        "response_goal": "character_specific_moe",
-        "route_id": route_id,
-        "primary_mechanism": primary_mechanism,
-        "relationship_register": relationship_register,
-        "support_mechanisms": support_mechanisms,
-        **aesthetic,
-        "sexual_tone": sexual_tone,
-        "defaulted_nonsexual": False,
-        "defaulted_sensual_optional": sexual_tone == "sensual_optional",
-        "explicit_nonsexual": explicit_nonsexual,
-        "explicit_sensual": explicit_sensual,
-        "explicit_text_requested": text_requested,
-    }
-
-
 def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
     # Keep negative-presence phrases atomic. Splitting ``사람 없는`` into a
     # positive ``사람`` token used to activate the human axis and invert the
@@ -5288,106 +5049,6 @@ def candidate_pack_tokenize_intent_text(text: str) -> List[str]:
             continue
         normalized.append(token)
     return normalized or ([text.strip()] if text.strip() else [])
-
-
-def candidate_pack_moe_identity_terms(text: str) -> List[str]:
-    """Keep identity/appearance constraints out of natural moe request prose.
-
-    The response contract owns baseline, trigger, reaction, and consequence.
-    Mandatory-intent audit should therefore preserve renderable identity words,
-    not particles or boilerplate such as ``photo``, ``moment``, or ``hiding a
-    small mistake``.
-    """
-    positive = strip_moe_request_controls(text)
-    terms: List[str] = []
-
-    # Japanese does not use whitespace, so extract the few identity markers
-    # that survive alias canonicalization instead of treating the whole clause
-    # as one literal audit token.
-    for marker in (
-        "成人",
-        "美少女",
-        "美少年",
-        "女性",
-        "男性",
-        "中性的",
-        "ノンバイナリー",
-        "猫耳",
-        "ケモノミミ",
-        "獣耳",
-        "ツンデレ",
-        "メイド",
-        "バリスタ",
-        "警備員",
-        "ボディーガード",
-    ):
-        if marker in positive and marker not in terms:
-            terms.append(marker)
-
-    request_stopwords = {
-        "평소",
-        "냉정한",
-        "작은",
-        "실수",
-        "사진",
-        "순간",
-        "모습",
-        "장면",
-        "요청",
-        "캐릭터",
-        "계열",
-        "오리지널",
-        "창작",
-        "photo",
-        "photograph",
-        "portrait",
-        "picture",
-        "moment",
-        "scene",
-        "original",
-        "fictional",
-        "character",
-    }
-    response_stems = ("감추", "숨기", "trying", "hiding", "hide")
-    korean_particles = (
-        "에게서",
-        "에게",
-        "께서",
-        "에서",
-        "으로",
-        "처럼",
-        "은",
-        "는",
-        "이",
-        "가",
-        "을",
-        "를",
-        "의",
-        "와",
-        "과",
-        "로",
-        "도",
-        "만",
-    )
-    particle_ending_identity_words = {"고양이"}
-    raw_tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9_+-]*|[가-힣]+", positive)
-    for raw_token in raw_tokens:
-        token = raw_token
-        if re.fullmatch(r"[가-힣]+", token) and token not in particle_ending_identity_words:
-            for particle in korean_particles:
-                if token.endswith(particle) and len(token) - len(particle) >= 2:
-                    token = token[: -len(particle)]
-                    break
-        lowered = token.lower()
-        if lowered in CANDIDATE_PACK_INTENT_STOPWORDS or lowered in request_stopwords:
-            continue
-        if any(lowered.startswith(stem) for stem in response_stems):
-            continue
-        if len(token) <= 1 and not token.isascii():
-            continue
-        if token not in terms:
-            terms.append(token)
-    return terms
 
 
 def intent_explicitly_excludes_people(text: str) -> bool:
@@ -5512,10 +5173,8 @@ def intent_alias_matches(text: str, alias: str) -> bool:
             + r"(?![a-z0-9])"
         )
         return re.search(pattern, normalized_text) is not None
-    # Compatibility-only v2/v5 routing retains its historical CJK substring
-    # behavior. New v6 routing never calls this raw-text router: it consumes
-    # typed, source-grounded authorial assertions and uses BM25F only for
-    # optional post-core candidates.
+    # General sampler aliases retain CJK substring matching. Typed character
+    # response activation is owned by the frozen core, not this helper.
     return normalized_alias in normalized_text
 
 
@@ -5524,26 +5183,22 @@ def resolve_request_intent_constraints(
     semantic_context: Optional[JsonDict],
     generation_contract: Optional[JsonDict],
     *,
-    authorial_core: Optional[JsonDict] = None,
+    authorial_core: Optional[JsonDict] = None
 ) -> JsonDict:
     if not isinstance(authorial_core, dict):
         embedded_core = (generation_contract or {}).get("_authorial_core")
         authorial_core = embedded_core if isinstance(embedded_core, dict) else None
     typed_v3 = bool(
         isinstance(authorial_core, dict)
-        and authorial_core.get("contract_version")
-        == AUTHORIAL_CORE_V3_CONTRACT_VERSION
+        and authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
     )
     if typed_v3:
         assert isinstance(authorial_core, dict)
-        # v6 routes only from the pre-retrieval interpretation.  The exact
-        # requester bytes remain preserved in the envelope, but are not
-        # reclassified by substring or regex rules downstream.
         values = [
-            str(authorial_core.get("interpreted_intent") or ""),
-            str(authorial_core.get("subject") or ""),
-            str(authorial_core.get("setting") or ""),
-            str(authorial_core.get("event") or ""),
+            str(authorial_core.get('interpreted_intent') or ''),
+            str(authorial_core.get('subject') or ''),
+            str(authorial_core.get('setting') or ''),
+            str(authorial_core.get('event') or ''),
             *normalize_list(authorial_core.get("visual_priorities")),
         ]
         for assertion in authorial_core.get("semantic_assertions") or []:
@@ -5553,12 +5208,8 @@ def resolve_request_intent_constraints(
             for value in axes.values():
                 values.extend(normalize_list(value))
     else:
-        values = [str((semantic_context or {}).get("intent") or "")]
-        for key in (
-            "concept_locks",
-            "user_mandatory_intents",
-            "additional_requirements",
-        ):
+        values = [str((semantic_context or {}).get('intent') or '')]
+        for key in ("concept_locks", "user_mandatory_intents", "additional_requirements"):
             values.extend(normalize_list((generation_contract or {}).get(key)))
     texts: List[str] = []
     seen_texts: Set[str] = set()
@@ -5569,7 +5220,7 @@ def resolve_request_intent_constraints(
             texts.append(normalized)
             seen_texts.add(dedupe_key)
     subject_texts = (
-        [typed_core_routing_text(str(authorial_core.get("subject") or ""))]
+        [typed_core_routing_text(str(authorial_core.get('subject') or ''))]
         if typed_v3 and isinstance(authorial_core, dict)
         else texts
     )
@@ -5580,17 +5231,24 @@ def resolve_request_intent_constraints(
     domains: Set[str] = set()
     matched: List[JsonDict] = []
     catalog_subject_ids = {
-        str(entry.get("id"))
-        for entry in ((data.get("slots") or {}).get("subject") or [])
-        if isinstance(entry, dict) and str(entry.get("id") or "")
+        str(entry.get('id') or '')
+        for entry in (data.get("slots") or {}).get("subject") or []
+        if isinstance(entry, dict) and str(entry.get('id') or '')
     }
     for rule in policy.get("subject_routes") or []:
         if not isinstance(rule, dict):
             continue
-        entry_id = str(rule.get("entry_id") or "")
-        category = str(rule.get("category") or "")
+        entry_id = str(rule.get('entry_id') or '')
+        category = str(rule.get('category') or '')
         aliases = normalize_list(rule.get("aliases"))
-        hits = sorted({alias for text in subject_texts for alias in aliases if intent_alias_matches(text, alias)})
+        hits = sorted(
+            {
+                alias
+                for text in subject_texts
+                for alias in aliases
+                if intent_alias_matches(text, alias)
+            }
+        )
         if entry_id in catalog_subject_ids and category in VALID_SUBJECT_CATEGORIES and hits:
             subject_entry_ids.add(entry_id)
             subject_entry_categories[entry_id] = category
@@ -5606,36 +5264,47 @@ def resolve_request_intent_constraints(
     for rule in policy.get("subject_categories") or []:
         if not isinstance(rule, dict):
             continue
-        category = str(rule.get("category") or "")
+        category = str(rule.get('category') or '')
         aliases = normalize_list(rule.get("aliases"))
-        hits = sorted({alias for text in subject_texts for alias in aliases if intent_alias_matches(text, alias)})
+        hits = sorted(
+            {
+                alias
+                for text in subject_texts
+                for alias in aliases
+                if intent_alias_matches(text, alias)
+            }
+        )
         if category in VALID_SUBJECT_CATEGORIES and hits:
             categories.add(category)
             matched.append({"axis": "subject_category", "value": category, "aliases": hits[:8]})
     for rule in policy.get("domains") or []:
         if not isinstance(rule, dict):
             continue
-        domain = str(rule.get("domain") or "")
+        domain = str(rule.get('domain') or '')
         aliases = normalize_list(rule.get("aliases"))
-        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        hits = sorted(
+            {alias for text in texts for alias in aliases if intent_alias_matches(text, alias)}
+        )
         if domain in VALID_PRESET_DOMAINS and hits:
             domains.add(domain)
             matched.append({"axis": "domain", "value": domain, "aliases": hits[:8]})
     catalog_presets = {
-        str(preset.get("id"))
+        str(preset.get('id') or '')
         for preset in data.get("presets", [])
-        if isinstance(preset, dict) and str(preset.get("id") or "")
+        if isinstance(preset, dict) and str(preset.get('id') or '')
     }
     scoped_routes: Set[str] = set()
     for rule in policy.get("scoped_routes") or []:
         if not isinstance(rule, dict):
             continue
-        domain = str(rule.get("domain") or "")
-        preset_id = str(rule.get("preset_id") or "")
+        domain = str(rule.get('domain') or '')
+        preset_id = str(rule.get('preset_id') or '')
         if domain not in domains or preset_id not in catalog_presets:
             continue
         aliases = normalize_list(rule.get("aliases"))
-        hits = sorted({alias for text in texts for alias in aliases if intent_alias_matches(text, alias)})
+        hits = sorted(
+            {alias for text in texts for alias in aliases if intent_alias_matches(text, alias)}
+        )
         if hits:
             required_context_aliases = normalize_list(rule.get("requires_any_context_aliases"))
             context_hits = sorted(
@@ -5646,7 +5315,7 @@ def resolve_request_intent_constraints(
                     if intent_alias_matches(text, alias)
                 }
             )
-            if required_context_aliases and not context_hits:
+            if required_context_aliases and (not context_hits):
                 continue
             scoped_routes.add(preset_id)
             match = {
@@ -5661,15 +5330,16 @@ def resolve_request_intent_constraints(
     for rule in policy.get("domains") or []:
         if not isinstance(rule, dict):
             continue
-        domain = str(rule.get("domain") or "")
+        domain = str(rule.get('domain') or '')
         standalone_aliases = normalize_list(rule.get("standalone_aliases"))
         if domain not in domains or not standalone_aliases:
             continue
         domain_has_scoped_route = any(
-            str(route.get("domain") or "") == domain
-            and str(route.get("preset_id") or "") in scoped_routes
-            for route in policy.get("scoped_routes") or []
-            if isinstance(route, dict)
+            (
+                str(route.get('domain') or '') == domain and str(route.get('preset_id') or '') in scoped_routes
+                for route in policy.get("scoped_routes") or []
+                if isinstance(route, dict)
+            )
         )
         standalone_hits = {
             alias
@@ -5677,7 +5347,7 @@ def resolve_request_intent_constraints(
             for alias in standalone_aliases
             if intent_alias_matches(text, alias)
         }
-        if not domain_has_scoped_route and not standalone_hits:
+        if not domain_has_scoped_route and (not standalone_hits):
             domains.discard(domain)
             matched = [
                 row
@@ -5689,63 +5359,18 @@ def resolve_request_intent_constraints(
         if isinstance((generation_contract or {}).get("authorial_core_constraints"), dict)
         else {}
     )
-    no_people = any(intent_explicitly_excludes_people(text) for text in texts) or bool(
+    no_people = any((intent_explicitly_excludes_people(text) for text in texts)) or bool(
         authorial_core_constraints.get("no_people")
     )
-    character_response = (
-        resolve_character_response_intent(authorial_core)
-        if typed_v3
-        else resolve_moe_response_intent(texts)
-    )
+    character_response = resolve_character_response_intent(authorial_core)
     if typed_v3 and character_response.get("enabled") is True:
         matched.append(
             {
                 "axis": "character_response",
-                "value": str(character_response.get("source_assertion_id") or ""),
+                "value": str(character_response.get('source_assertion_id') or ''),
                 "source": "authorial_core_semantic_assertion",
             }
         )
-    elif character_response.get("requested") is True:
-        if no_people:
-            character_response = {
-                **character_response,
-                "eligible": False,
-                "blocked_reason": "character_response_requires_a_visible_character",
-            }
-        else:
-            character_route_ids = {
-                str(preset.get("id") or "")
-                for preset in data.get("presets", [])
-                if isinstance(preset, dict)
-                and MOE_RESPONSE_DOMAIN in preset_domains(preset, data)
-            }
-            existing_character_routes = sorted(scoped_routes & character_route_ids)
-            if len(existing_character_routes) == 1:
-                # Exact research/scoped aliases remain authoritative. Natural
-                # response routing only fills the gap when no narrower route
-                # has already matched.
-                character_response = {
-                    **character_response,
-                    "route_id": existing_character_routes[0],
-                }
-            route_id = str(character_response.get("route_id") or "")
-            domains.add(MOE_RESPONSE_DOMAIN)
-            if route_id in catalog_presets:
-                scoped_routes.add(route_id)
-            if not any(
-                row.get("axis") == "character_response"
-                and row.get("value") == route_id
-                for row in matched
-            ):
-                matched.append(
-                    {
-                        "axis": "character_response",
-                        "value": route_id,
-                        "domain": MOE_RESPONSE_DOMAIN,
-                        "mechanism": character_response.get("primary_mechanism"),
-                        "sexual_tone": character_response.get("sexual_tone"),
-                    }
-                )
     if no_people:
         categories.discard("human")
         subject_entry_ids = {
@@ -5757,17 +5382,14 @@ def resolve_request_intent_constraints(
             row
             for row in matched
             if not (
-                (row.get("axis") == "subject_category" and row.get("value") == "human")
+                row.get("axis") == "subject_category"
+                and row.get("value") == "human"
                 or (row.get("axis") == "subject_entry" and row.get("category") == "human")
             )
         ]
     resolved = {
         "no_people": no_people,
-        **(
-            {"subject_entry_ids": sorted(subject_entry_ids)}
-            if subject_entry_ids
-            else {}
-        ),
+        **({"subject_entry_ids": sorted(subject_entry_ids)} if subject_entry_ids else {}),
         "subject_categories": sorted(categories),
         "domains": sorted(domains),
         "scoped_routes": sorted(scoped_routes),
@@ -5775,36 +5397,24 @@ def resolve_request_intent_constraints(
         "matched": matched,
         "source_text_count": len(texts),
     }
-    # Do not perturb the byte/hash surface of v2/v5 and earlier replay
-    # contracts.  This provenance field belongs only to the new typed route.
     if typed_v3:
         resolved["routing_input"] = "authorial_core_typed_semantics"
     return resolved
 
 
 def candidate_pack_intent_contract(
-    data: JsonDict,
-    result: JsonDict,
-    trace: JsonDict,
-    candidate_blobs: Dict[str, str],
+    data: JsonDict, result: JsonDict, trace: JsonDict, candidate_blobs: Dict[str, str]
 ) -> List[JsonDict]:
     rows: List[JsonDict] = []
     seen: Set[tuple[str, str]] = set()
     policy = candidate_pack_intent_routing_policy(data)
-    provenance = (
-        result.get("provenance")
-        if isinstance(result.get("provenance"), dict)
-        else {}
-    )
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     authorial_core = (
         provenance.get("authorial_core")
         if isinstance(provenance.get("authorial_core"), dict)
         else {}
     )
-    typed_v3 = (
-        authorial_core.get("contract_version")
-        == AUTHORIAL_CORE_V3_CONTRACT_VERSION
-    )
+    typed_v3 = authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
     generation_contract = (
         trace.get("generation_contract")
         if isinstance(trace.get("generation_contract"), dict)
@@ -5812,22 +5422,20 @@ def candidate_pack_intent_contract(
     )
     typed_constraints = (
         generation_contract.get("intent_constraints")
-        if typed_v3
-        and isinstance(generation_contract.get("intent_constraints"), dict)
+        if typed_v3 and isinstance(generation_contract.get("intent_constraints"), dict)
         else {}
     )
     typed_facets = [
         f"{item.get('axis')}:{item.get('value')}"
         for item in typed_constraints.get("matched") or []
         if isinstance(item, dict)
-        and str(item.get("axis") or "")
-        in {"subject_entry", "subject_category", "domain"}
-        and str(item.get("value") or "")
+        and str(item.get('axis') or '') in {"subject_entry", "subject_category", "domain"}
+        and str(item.get('value') or '')
     ]
     typed_character_response = resolve_character_response_intent(authorial_core)
     for source_row in candidate_pack_source_texts(result, trace):
-        source = str(source_row.get("source") or "")
-        source_text = str(source_row.get("text") or "")
+        source = str(source_row.get('source') or '')
+        source_text = str(source_row.get('text') or '')
         key = (source, source_text.lower())
         if key in seen:
             continue
@@ -5842,13 +5450,15 @@ def candidate_pack_intent_contract(
             for rule in policy.get("subject_routes") or []:
                 if not isinstance(rule, dict):
                     continue
-                entry_id = str(rule.get("entry_id") or "")
-                category = str(rule.get("category") or "")
+                entry_id = str(rule.get('entry_id') or '')
+                category = str(rule.get('category') or '')
                 if no_people and category == "human":
                     continue
                 if entry_id and any(
-                    intent_alias_matches(source_text, alias)
-                    for alias in normalize_list(rule.get("aliases"))
+                    (
+                        intent_alias_matches(source_text, alias)
+                        for alias in normalize_list(rule.get("aliases"))
+                    )
                 ):
                     facets.append(f"subject_entry:{entry_id}")
             for axis, name_key, value_key in (
@@ -5858,35 +5468,28 @@ def candidate_pack_intent_contract(
                 for rule in policy.get(name_key) or []:
                     if not isinstance(rule, dict):
                         continue
-                    value = str(rule.get(value_key) or "")
-                    if no_people and axis == "subject_category" and value == "human":
+                    value = str(rule.get(value_key) or '')
+                    if no_people and axis == "subject_category" and (value == "human"):
                         continue
                     if value and any(
-                        intent_alias_matches(source_text, alias)
-                        for alias in normalize_list(rule.get("aliases"))
+                        (
+                            intent_alias_matches(source_text, alias)
+                            for alias in normalize_list(rule.get("aliases"))
+                        )
                     ):
                         facets.append(f"{axis}:{value}")
         character_response = (
             typed_character_response
             if typed_v3
-            else resolve_moe_response_intent([source_text])
+            else resolve_character_response_intent(authorial_core)
         )
         if typed_v3 and character_response.get("enabled") is True:
-            facets.append(
-                f"character_response:{character_response.get('source_assertion_id')}"
-            )
-        elif character_response.get("requested") is True:
-            facets.extend(
-                [
-                    f"domain:{MOE_RESPONSE_DOMAIN}",
-                    f"character_response:{character_response.get('route_id')}",
-                ]
-            )
+            facets.append(f"character_response:{character_response.get('source_assertion_id')}")
         meaningful_terms = candidate_pack_tokenize_intent_text(source_text)
         covered_by = [
             candidate_id
             for candidate_id, blob in candidate_blobs.items()
-            if any(str(term).lower() in blob for term in meaningful_terms)
+            if any((str(term).lower() in blob for term in meaningful_terms))
         ][:12]
         constraints = ["no_people"] if no_people else []
         if not typed_v3 and text_explicitly_requests_nonsexual_moe(source_text):
@@ -5896,15 +5499,6 @@ def candidate_pack_intent_contract(
                 [
                     "character_response:typed_semantic_assertion",
                     "retrieval_candidates:advisory_only",
-                ]
-            )
-        elif character_response.get("requested") is True:
-            constraints.extend(
-                [
-                    "moe_response_goal",
-                    f"moe_aesthetic:{character_response.get('aesthetic_baseline')}",
-                    f"moe_mechanism:{character_response.get('primary_mechanism')}",
-                    f"sexual_tone:{character_response.get('sexual_tone')}",
                 ]
             )
         rows.append(
@@ -5953,28 +5547,19 @@ def candidate_pack_candidate_blobs(presets: Sequence[JsonDict], slots: JsonDict)
 
 
 def candidate_pack_mandatory_intents(
-    result: JsonDict,
-    trace: JsonDict,
-    candidate_blobs: Dict[str, str],
+    result: JsonDict, trace: JsonDict, candidate_blobs: Dict[str, str]
 ) -> tuple[List[JsonDict], List[JsonDict]]:
     intents: List[JsonDict] = []
     seen: Set[tuple[str, str]] = set()
-    provenance = (
-        result.get("provenance")
-        if isinstance(result.get("provenance"), dict)
-        else {}
-    )
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     authorial_core = (
         provenance.get("authorial_core")
         if isinstance(provenance.get("authorial_core"), dict)
         else {}
     )
-    typed_v3 = (
-        authorial_core.get("contract_version")
-        == AUTHORIAL_CORE_V3_CONTRACT_VERSION
-    )
+    typed_v3 = authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
     intent_anchors = (
-        ((authorial_core.get("intent_lock") or {}).get("semantic_anchors") or [])
+        (authorial_core.get("intent_lock") or {}).get("semantic_anchors") or []
         if authorial_core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
         and isinstance(authorial_core.get("intent_lock"), dict)
         else []
@@ -5982,25 +5567,16 @@ def candidate_pack_mandatory_intents(
     for source_row in candidate_pack_source_texts(result, trace):
         if source_row.get("mandatory") is not True:
             continue
-        source = str(source_row.get("source") or "")
-        source_text = str(source_row.get("text") or "")
-        character_response = (
-            resolve_character_response_intent(authorial_core)
-            if typed_v3
-            else resolve_moe_response_intent([source_text])
-        )
-        positive_source_text = (
-            strip_moe_request_controls(source_text)
-            if not typed_v3 and character_response.get("requested") is True
-            else source_text
-        )
+        source = str(source_row.get('source') or '')
+        source_text = str(source_row.get('text') or '')
+        character_response = resolve_character_response_intent(authorial_core)
+        positive_source_text = source_text
         anchored_terms = [
-            clean_spaces(str(anchor.get("prompt_evidence") or ""))
+            clean_spaces(str(anchor.get('prompt_evidence') or ''))
             for anchor in intent_anchors
             if isinstance(anchor, dict)
-            and str(anchor.get("source_text") or "").casefold()
-            in source_text.casefold()
-            and clean_spaces(str(anchor.get("prompt_evidence") or ""))
+            and str(anchor.get('source_text') or '').casefold() in source_text.casefold()
+            and clean_spaces(str(anchor.get('prompt_evidence') or ''))
         ]
         if anchored_terms and source in {
             "concept_lock",
@@ -6008,14 +5584,7 @@ def candidate_pack_mandatory_intents(
             "user_requirement",
             "additional_requirement",
         }:
-            # An intent-locked v5 request audits the frozen positive evidence,
-            # not every token in raw natural language.  This keeps user
-            # negatives and connective words from being inverted into
-            # mandatory positive prompt terms while retaining the untouched
-            # raw span for routing and profile activation.
             intent_terms = list(dict.fromkeys(anchored_terms))
-        elif not typed_v3 and character_response.get("requested") is True:
-            intent_terms = candidate_pack_moe_identity_terms(source_text)
         elif source in {"concept_lock", "intent"} or intent_explicitly_excludes_people(source_text):
             intent_terms = [
                 term
@@ -6035,9 +5604,6 @@ def candidate_pack_mandatory_intents(
                 for candidate_id, blob in candidate_blobs.items()
                 if token_lower in blob
             ][:12]
-            # Audit terms are literal user intent only. Candidate labels are
-            # discovery metadata, not proof that the composed text preserved
-            # the request.
             audit_terms = [token]
             intents.append(
                 {
@@ -6046,11 +5612,13 @@ def candidate_pack_mandatory_intents(
                     "source_text": source_text,
                     "status": "covered" if covered_by else "uncovered",
                     "covered_by": covered_by,
-                    "audit_terms": list(dict.fromkeys(term for term in audit_terms if str(term).strip()))[:12],
+                    "audit_terms": list(
+                        dict.fromkeys((term for term in audit_terms if str(term).strip()))
+                    )[:12],
                 }
             )
     uncovered = [intent for intent in intents if intent.get("status") == "uncovered"]
-    return intents, uncovered
+    return (intents, uncovered)
 
 
 def candidate_pack_diversity_state(trace: JsonDict) -> JsonDict:
@@ -6328,78 +5896,6 @@ def authorial_core_intent_dimension_scope(core: Any) -> JsonDict:
     }
 
 
-def candidate_pack_moe_intent_precedence(
-    core: Any,
-    response: JsonDict,
-) -> Optional[JsonDict]:
-    """Bind generic character defaults to the v2 requester's open dimensions.
-
-    This is intentionally dimension-based.  A downstream rule is active only
-    when every semantic dimension it can change was explicitly left open.  The
-    policy therefore applies to arbitrary requests without keyword exceptions.
-    """
-
-    scope = authorial_core_intent_dimension_scope(core)
-    if scope.get("enabled") is not True:
-        return None
-    open_dimensions = set(scope.get("open_dimensions") or [])
-    applicability = {
-        "aesthetic_style_default": True,
-        "aesthetic_expression_default": True,
-        "affective_balance_default": True,
-        "generic_character_response_mechanism": (
-            str(response.get("primary_mechanism") or "")
-            == "character_specific_reveal"
-        ),
-        "generic_relationship_register": (
-            str(response.get("relationship_register") or "")
-            == "character_specific_reveal"
-        ),
-        "default_sensual_support": response.get("defaulted_sensual_optional") is True,
-        "generic_expression_negative_suppression": True,
-        "generic_style_negative_suppression": True,
-        "generic_appearance_negative_suppression": True,
-        "generic_text_negative_suppression": True,
-    }
-    rules: List[JsonDict] = []
-    for rule_id, affected in MOE_RESPONSE_DEFAULT_RULE_DIMENSIONS.items():
-        affected_dimensions = list(affected)
-        if not applicability.get(rule_id, False):
-            status = "not_applicable"
-            blocked_dimensions: List[str] = []
-        else:
-            blocked_dimensions = sorted(set(affected_dimensions) - open_dimensions)
-            status = (
-                "active"
-                if not blocked_dimensions
-                else "suppressed_requesting_user_priority"
-            )
-        rules.append(
-            {
-                "rule_id": rule_id,
-                "affected_dimensions": affected_dimensions,
-                "status": status,
-                "blocked_dimensions": blocked_dimensions,
-            }
-        )
-    return {
-        "contract_version": DOWNSTREAM_INTENT_PRECEDENCE_CONTRACT_VERSION,
-        "priority": "requesting_user",
-        "source_intent_lock_sha256": scope["source_intent_lock_sha256"],
-        "locked_dimensions": scope["locked_dimensions"],
-        "open_dimensions": scope["open_dimensions"],
-        "closed_dimensions": scope["closed_dimensions"],
-        "default_rule_policy": "active_only_when_all_affected_dimensions_are_explicitly_open",
-        "non_open_evidence_policy": (
-            "reuse_matching_locked_anchor_or_frozen_baseline_only"
-        ),
-        "evidence_field_dimensions": copy.deepcopy(
-            MOE_RESPONSE_EVIDENCE_DIMENSIONS
-        ),
-        "rules": rules,
-    }
-
-
 def downstream_intent_rule_active(precedence: Any, rule_id: str) -> bool:
     if not isinstance(precedence, dict):
         return True
@@ -6409,775 +5905,6 @@ def downstream_intent_rule_active(precedence: Any, rule_id: str) -> bool:
         and row.get("status") == "active"
         for row in precedence.get("rules") or []
     )
-
-
-def candidate_pack_moe_response(result: JsonDict) -> Optional[JsonDict]:
-    """Expose a character-response composition contract for explicit moe intent."""
-    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    response = (
-        provenance.get("character_response")
-        if isinstance(provenance.get("character_response"), dict)
-        else {}
-    )
-    if response.get("requested") is not True or response.get("eligible") is not True:
-        return None
-
-    authorial_core = (
-        provenance.get("authorial_core")
-        if isinstance(provenance.get("authorial_core"), dict)
-        else None
-    )
-    intent_precedence = candidate_pack_moe_intent_precedence(
-        authorial_core,
-        response,
-    )
-
-    mechanism = str(response.get("primary_mechanism") or "character_specific_reveal")
-    relationship_register = str(
-        response.get("relationship_register") or "character_specific_reveal"
-    )
-    identity_controlled = str(provenance.get("reference_edit_mode") or "off") == "identity"
-    mechanism_instructions = {
-        "character_specific_reveal": (
-            "Choose one trait-specific intention, interrupt it with one concrete trigger, "
-            "and show the involuntary face, hand, gaze, or posture response plus its immediate consequence."
-        ),
-        "denial_care_leak": (
-            "Show a mild active denial or guarded front contradicted by a directed helpful action. "
-            "The prompt must bind one separate active_denial_phrase: a visible mouth or posture protest "
-            "such as pursed lips caught mid-protest, a small chin lift, a half-turned shoulder, or a brisk "
-            "hand that keeps helping. Guardedness, a label, or averted gaze alone does not qualify. "
-            "Bind care_action_anchor_phrase to the recipient's visible hand, wound, or carried object at a named lower "
-            "screen position so the helpful action has a concrete endpoint. Separately bind relationship_gaze_anchor_phrase "
-            "to one small blurred partial face landmark from the same adult recipient at a named upper frame edge: an outer "
-            "eye with a temple or profile sliver, never a second full face or an imagined off-frame eye line. Then bind "
-            "concealed_affection_phrase as an oblique gaze geometry: name a three-quarter head turn toward the side opposite "
-            "that landmark, keep the nose axis off the lens, and let only the irises make a small return toward the relationship "
-            "anchor—not the hand, wound, object, or camera lens. A barely visible flash of private personal liking must "
-            "soften the lower lids and start one mouth corner lifting before she suppresses it. Generic warmth aimed only at the care task reads as "
-            "nurturance or mamang, not tsundere. An off-frame or fully shown second face does not qualify. "
-            "Direct frontal eye contact, a centered face, or a selfie-like viewer gaze is too overt and does not qualify. "
-            "The face must also leak one warm or pleased micro-response—softened eyes, an almost-smile, "
-            "relieved mouth corner, or similarly specific positive cue—so irritation never becomes the "
-            "dominant emotion. The caring target and both sides of the contradiction must be legible in the same crop."
-        ),
-        "baseline_break_reveal": (
-            "Establish one recognizable habitual baseline, break it with one concrete trigger, and show "
-            "the brief involuntary face, hand, gaze, or posture change plus the character's recovery attempt."
-        ),
-        "nonhuman_reflex_leak": (
-            "Tie one involuntary ear, tail, pupil, or posture reflex to a visible trigger while the "
-            "adult character's face and hands show how they try to manage that reflex. For ears, "
-            "make the trigger-side response asymmetric: one ear turns toward the cause while the "
-            "other retains its baseline angle."
-        ),
-        "earnest_effort_recovery": (
-            "Show competent or earnest action interrupted by a small recoverable mistake, followed by "
-            "a visible attempt to correct it without humiliation or helplessness."
-        ),
-        "quiet_care_trace": (
-            "Show a specific caring action directed at a visible recipient or used object, with a small "
-            "state change that proves the care rather than a generic kind expression. For a mamang or maternal "
-            "request, make mature benevolence visible through a relaxed brow, patient soft eyes, a reassuring mouth, "
-            "and protective attention; do not add active denial or a romantic eye-line contradiction."
-        ),
-    }
-    relationship_register_instructions = {
-        "peer_liking_under_denial": (
-            "The concealed positive cue is peer-level personal or romantic liking, not general kindness or caregiving. "
-            "Keep one small blurred partial recipient eye-and-temple landmark at a named upper frame edge. Turn the head "
-            "three-quarter toward the opposite side, return only the irises obliquely to that landmark, soften the lower lids, "
-            "and flatten one mouth corner that starts to lift; reject direct frontal eye contact or a second full face."
-        ),
-        "nurturant_benevolence": (
-            "Use mature, benevolent protective warmth: relaxed brow, patient soft eyes, reassuring mouth, and calm "
-            "attention toward the cared-for person or object. Do not force tsundere denial or romantic gaze leakage."
-        ),
-        "directed_care_without_role_inference": (
-            "Show the requested specific act of care and a mild warm response without inferring motherhood, romance, "
-            "dependency, or a hierarchy that the request did not establish."
-        ),
-        "character_specific_reveal": (
-            "Keep the relationship reading subordinate to the routed character-specific reveal; do not invent a "
-            "romantic, maternal, or dependent relationship without request evidence."
-        ),
-    }
-    sexual_tone = str(response.get("sexual_tone") or "sensual_optional")
-    aesthetic_baseline = str(
-        response.get("aesthetic_baseline") or MOE_AESTHETIC_BISHOUJO
-    )
-    aesthetic_instructions = {
-        MOE_AESTHETIC_BISHOUJO: (
-            "Cast one unmistakably adult original woman, mid-twenties or older, with a polished "
-            "bishoujo-inspired character-design read: harmonious delicate adult facial features, "
-            "clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept glossy "
-            "hair, and cohesive styling. She must read as both pretty and cute at first glance, "
-            "without childlike morphology. Any adult sexual appeal must remain subordinate to "
-            "her face, expression, agency, and character-specific response."
-        ),
-        MOE_AESTHETIC_BISHONEN: (
-            "Cast one unmistakably adult original man, mid-twenties or older, with a polished "
-            "bishonen-inspired character-design read: refined harmonious adult facial features, "
-            "clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept glossy "
-            "hair, and cohesive styling. He must read as both beautiful and cute at first glance, "
-            "without childlike morphology. Any adult sexual appeal must remain subordinate to "
-            "his face, expression, agency, and character-specific response."
-        ),
-        MOE_AESTHETIC_ANDROGYNOUS: (
-            "Cast one unmistakably adult original character, mid-twenties or older, preserving the "
-            "requested androgynous or nonbinary presentation. Use harmonious refined adult facial "
-            "features, clear lively eyes at realistic adult scale, a softly expressive mouth, well-kept "
-            "glossy hair, and cohesive styling. The character must read as both beautiful and cute at "
-            "first glance, without childlike morphology. Any adult sexual appeal must remain subordinate "
-            "to the face, expression, agency, and character-specific response."
-        ),
-    }
-    if identity_controlled:
-        identity_aesthetic_instructions = {
-            MOE_AESTHETIC_BISHOUJO: (
-                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult woman. "
-                "Preserve her facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, "
-                "lower-face and jaw width, cheekbones, skin tone, natural asymmetry, hairline, and adult age. Do not "
-                "substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the face, narrow the "
-                "jaw, or de-age her. Make the preserved identity read as both pretty and cute through "
-                "adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual appeal must "
-                "remain subordinate to her face, agency, and character-specific response."
-            ),
-            MOE_AESTHETIC_BISHONEN: (
-                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult man. "
-                "Preserve his facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, "
-                "lower-face and jaw width, cheekbones, skin tone, natural asymmetry, hairline, and adult age. Do not "
-                "substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the face, narrow the "
-                "jaw, or de-age him. Make the preserved identity read as both beautiful and cute through "
-                "adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual appeal must "
-                "remain subordinate to his face, agency, and character-specific response."
-            ),
-            MOE_AESTHETIC_ANDROGYNOUS: (
-                "Use the uploaded portrait as the sole identity reference for the same unmistakably adult character. "
-                "Preserve facial geometry, eye aperture, eye shape and spacing, brows, nose, lips, face length, lower-face "
-                "and jaw width, cheekbones, skin tone, natural asymmetry, hairline, adult age, and the requested androgynous "
-                "presentation. Do not substitute, average, beautify by reshaping, enlarge or round the eyes, shorten the "
-                "face, narrow the jaw, or de-age it. Make the preserved identity read as both beautiful "
-                "and cute through adult micro-expression, grooming, cohesive styling, pose, and light; any adult sexual "
-                "appeal must remain subordinate to the face, agency, and character-specific response."
-            ),
-        }
-        aesthetic_instructions = identity_aesthetic_instructions
-    if aesthetic_baseline not in aesthetic_instructions:
-        aesthetic_baseline = MOE_AESTHETIC_BISHOUJO
-
-    aesthetic_style_default_active = downstream_intent_rule_active(
-        intent_precedence,
-        "aesthetic_style_default",
-    )
-    aesthetic_expression_default_active = downstream_intent_rule_active(
-        intent_precedence,
-        "aesthetic_expression_default",
-    )
-    affective_balance_default_active = downstream_intent_rule_active(
-        intent_precedence,
-        "affective_balance_default",
-    )
-    generic_mechanism_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_character_response_mechanism",
-    )
-    generic_relationship_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_relationship_register",
-    )
-    default_sensual_support_active = downstream_intent_rule_active(
-        intent_precedence,
-        "default_sensual_support",
-    )
-    generic_expression_negative_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_expression_negative_suppression",
-    )
-    generic_style_negative_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_style_negative_suppression",
-    )
-    generic_appearance_negative_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_appearance_negative_suppression",
-    )
-    generic_text_negative_active = downstream_intent_rule_active(
-        intent_precedence,
-        "generic_text_negative_suppression",
-    )
-    generic_causal_default_active = not (
-        mechanism == "character_specific_reveal" and not generic_mechanism_active
-    )
-
-    aesthetic_instruction = aesthetic_instructions[aesthetic_baseline]
-    if not aesthetic_style_default_active:
-        aesthetic_instruction = (
-            "Do not add a generic bishoujo, bishonen, cute, beautiful, grooming, or styling default. "
-            "Preserve the frozen baseline and requesting-user semantic anchors exactly; only open "
-            "dimensions may receive new photographic treatment."
-        )
-    elif not aesthetic_expression_default_active:
-        aesthetic_instruction = (
-            "Use the routed adult presentation only for grooming, hair finish, outfit cohesion, and "
-            "other explicitly open style choices. Do not add, soften, warm, sweeten, intensify, or "
-            "otherwise reinterpret the eyes, mouth, gaze, or affect; every expression cue comes only "
-            "from the frozen baseline and requesting-user semantic anchors."
-        )
-
-    mechanism_instruction = mechanism_instructions.get(
-        mechanism,
-        mechanism_instructions["character_specific_reveal"],
-    )
-    if mechanism == "character_specific_reveal" and not generic_mechanism_active:
-        mechanism_instruction = (
-            "Do not invent a generic character-response mechanism. Restate only the frozen event and "
-            "expression evidence; all new action, pose, relationship, or reaction semantics are forbidden "
-            "unless their dimensions are explicitly open."
-        )
-
-    relationship_instruction = relationship_register_instructions.get(
-        relationship_register,
-        relationship_register_instructions["character_specific_reveal"],
-    )
-    if relationship_register == "character_specific_reveal" and not generic_relationship_active:
-        relationship_instruction = (
-            "Do not infer a new relationship or facial response. Preserve the frozen baseline and "
-            "requesting-user semantic anchors; use relationship or expression details only when those "
-            "dimensions are explicitly open."
-        )
-    sexual_tone_instructions = {
-        "nonsexual": (
-            "Use explicitly nonsexual framing and suppress added sensual and fetish treatment. "
-            "Warmth, closeness, embarrassment, and tactile care may remain without body-display emphasis."
-        ),
-        "sensual_optional": (
-            "Subtle adult sensual appeal may support gaze, pose, silhouette, styling, or light at low intensity, "
-            "but it must not replace the pretty-and-cute first read, visible agency, or character-specific event."
-        ),
-        "sensual": (
-            "Honor the explicit adult sensual direction with self-directed agency; keep it integrated with the "
-            "pretty-and-cute character design and the character-specific event rather than making a generic pin-up."
-        ),
-    }
-    sexual_tone_instruction = sexual_tone_instructions.get(
-        sexual_tone,
-        sexual_tone_instructions["sensual_optional"],
-    )
-    if response.get("defaulted_sensual_optional") is True and not default_sensual_support_active:
-        sexual_tone_instruction = (
-            "Do not add the skill's sensual-support default. Preserve only sexual tone, styling, and "
-            "composition evidence already present in the frozen baseline or requesting-user anchors."
-        )
-    explicit_text_requested = response.get("explicit_text_requested") is True
-    required_evidence_fields = [
-        "actor_phrase",
-        "aesthetic_baseline_phrase",
-        "affective_leak_phrase",
-        "baseline_phrase",
-        "event_phase_phrase",
-        "trigger_phrase",
-        "target_phrase",
-        "visible_response_phrase",
-        "immediate_consequence_phrase",
-        "continuity_phrase",
-        "focal_plane_phrase",
-    ]
-    if not aesthetic_style_default_active:
-        required_evidence_fields.remove("aesthetic_baseline_phrase")
-    if not affective_balance_default_active:
-        required_evidence_fields.remove("affective_leak_phrase")
-    if not explicit_text_requested and generic_text_negative_active:
-        required_evidence_fields.insert(3, "background_control_phrase")
-    if not generic_causal_default_active:
-        for field in (
-            "baseline_phrase",
-            "event_phase_phrase",
-            "trigger_phrase",
-            "target_phrase",
-            "immediate_consequence_phrase",
-            "continuity_phrase",
-        ):
-            required_evidence_fields.remove(field)
-    if identity_controlled:
-        required_evidence_fields.append("reference_identity_phrase")
-    response_evidence_boundary_index = min(
-        (
-            required_evidence_fields.index(field)
-            for field in ("affective_leak_phrase", "baseline_phrase")
-            if field in required_evidence_fields
-        ),
-        default=len(required_evidence_fields),
-    )
-    if mechanism == "denial_care_leak":
-        for field in reversed(
-            (
-                "active_denial_phrase",
-                "care_action_anchor_phrase",
-                "relationship_gaze_anchor_phrase",
-                "concealed_affection_phrase",
-            )
-        ):
-            required_evidence_fields.insert(response_evidence_boundary_index, field)
-    if relationship_register == "nurturant_benevolence":
-        required_evidence_fields.insert(
-            response_evidence_boundary_index,
-            "benevolent_affect_phrase",
-        )
-    general_render_gates = [
-        "adult_role_identity",
-        "pretty_and_cute_entry",
-        "causal_event_legibility",
-        "requested_sexual_tone",
-        "background_and_shortcut_integrity",
-    ]
-    if not aesthetic_style_default_active:
-        general_render_gates.remove("pretty_and_cute_entry")
-    if (
-        response.get("defaulted_sensual_optional") is True
-        and not default_sensual_support_active
-    ):
-        general_render_gates.remove("requested_sexual_tone")
-    if not generic_text_negative_active and not generic_style_negative_active:
-        general_render_gates.remove("background_and_shortcut_integrity")
-    if relationship_register == "peer_liking_under_denial":
-        mechanism_render_gates = [
-            "active_denial",
-            "separate_care_action_anchor",
-            "same_adult_recipient_face_level_anchor",
-            "visible_partial_recipient_face_landmark",
-            "head_turn_opposes_recipient_anchor",
-            "three_quarter_head_away",
-            "nose_axis_off_lens",
-            "small_oblique_iris_return_to_recipient",
-            "softened_lower_lids",
-            "suppressed_starting_mouth_corner_lift",
-            "no_direct_frontal_eye_contact",
-            "denial_care_affection_contradiction",
-        ]
-    elif relationship_register == "nurturant_benevolence":
-        mechanism_render_gates = [
-            "relaxed_brow",
-            "patient_soft_eyes",
-            "reassuring_mouth",
-            "calm_protective_attention",
-        ]
-    else:
-        mechanism_render_gates = (
-            ["primary_mechanism_legibility"]
-            if generic_mechanism_active
-            else ["requesting_user_locked_response_legibility"]
-        )
-    support_render_gates = []
-    if (
-        mechanism == "nonhuman_reflex_leak"
-        or "nonhuman_reflex_leak" in normalize_list(response.get("support_mechanisms"))
-    ):
-        support_render_gates = [
-            "nonhuman_trait_anatomy",
-            "nonhuman_reflex_trigger_direction",
-            "nonhuman_trait_scale_and_asymmetry",
-        ]
-    identity_render_gates = (
-        [
-            "adult_age_continuity",
-            "same_person_identity",
-            "eye_aperture_shape_and_spacing_continuity",
-            "face_length_lower_face_and_jaw_width_continuity",
-            "no_de_aging_or_dollification",
-        ]
-        if identity_controlled
-        else []
-    )
-    required_render_gates = list(
-        dict.fromkeys(
-            general_render_gates
-            + mechanism_render_gates
-            + support_render_gates
-            + identity_render_gates
-        )
-    )
-    contract = {
-        "enabled": True,
-        "contract_version": MOE_RESPONSE_CONTRACT_VERSION,
-        "source": str(response.get("activation_source") or "explicit_natural_language_moe_request"),
-        "purpose": "character_specific_moe_response_hypothesis_with_visible_causal_evidence",
-        "response_goal": str(response.get("response_goal") or "character_specific_moe"),
-        "route_id": str(response.get("route_id") or MOE_RESPONSE_DEFAULT_ROUTE),
-        "primary_mechanism": mechanism,
-        "relationship_register": relationship_register,
-        "relationship_register_instruction": relationship_instruction,
-        "support_mechanisms": normalize_list(response.get("support_mechanisms"))[:2],
-        "aesthetic_baseline": aesthetic_baseline,
-        "aesthetic_presentation_source": str(
-            response.get("aesthetic_presentation_source") or "default_bishoujo"
-        ),
-        "aesthetic_instruction": aesthetic_instruction,
-        "sexual_tone": sexual_tone,
-        "explicit_nonsexual": response.get("explicit_nonsexual") is True,
-        "explicit_sensual": response.get("explicit_sensual") is True,
-        "explicit_text_requested": explicit_text_requested,
-        "defaulted_sensual_optional": response.get("defaulted_sensual_optional") is True,
-        "sexual_tone_instruction": sexual_tone_instruction,
-        "mechanism_instruction": mechanism_instruction,
-        "required_fields": [
-            "aesthetic_baseline",
-            "mechanism",
-            "relationship_register",
-            "baseline",
-            "event_phase",
-            "trigger",
-            "target",
-            "visible_response",
-            "immediate_consequence",
-            "continuity",
-            "support_mechanisms",
-            "prompt_evidence",
-        ],
-        "prompt_binding": {
-            "literal": True,
-            "required_evidence_fields": required_evidence_fields,
-        },
-        "composition_guidance": {
-            "prompt_budget": {
-                "language": "en",
-                "minimum_words": AUTHORIAL_PROMPT_MIN_WORDS,
-                "recommended_minimum_words": MOE_RESPONSE_PROMPT_RECOMMENDED_MIN_WORDS,
-                "recommended_maximum_words": MOE_RESPONSE_PROMPT_RECOMMENDED_MAX_WORDS,
-                "absolute_maximum_words": AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS,
-                "counting_rule": "ascii_words_with_internal_hyphens_or_apostrophes",
-                "rule": (
-                    "Prefer 100 to 240 English words, but treat that range as advisory. Keep prompt_en "
-                    "between the absolute 48 and 640 word bounds, preserve required evidence, and reuse "
-                    "short literal phrases across moe, viewer, identity, and augmentation evidence instead "
-                    "of stacking explanations."
-                ),
-            },
-            "aesthetic_entry_condition": {
-                "required": aesthetic_style_default_active,
-                "status": (
-                    "active"
-                    if aesthetic_style_default_active
-                    else "suppressed_requesting_user_priority"
-                ),
-                "rule": (
-                    "The character must first read as an attractive adult bishoujo, bishonen, or "
-                    "explicitly requested androgynous equivalent. Pretty and cute are both required; "
-                    "this entry condition cannot replace the causal character event."
-                ),
-                "thumbnail_priority": "face_hair_grooming_and_cohesive_character_styling",
-            },
-            "affective_balance": {
-                "required": affective_balance_default_active,
-                "status": (
-                    "active"
-                    if affective_balance_default_active
-                    else "suppressed_requesting_user_priority"
-                ),
-                "rule": (
-                    (
-                        "The face must show one specific warm, pleased, relieved, fond, or playfully embarrassed "
-                        "micro-response in addition to any guarded, annoyed, or flustered cue. Negative affect may "
-                        "frame the contradiction but must not dominate the first facial read."
-                    )
-                    if affective_balance_default_active
-                    else (
-                        "Do not add a generic warm, pleased, relieved, fond, embarrassed, softened-eye, or "
-                        "almost-smile countercue. Preserve only expression evidence from the frozen baseline "
-                        "and requesting-user semantic anchors."
-                    )
-                ),
-                "positive_cue_count": 1 if affective_balance_default_active else 0,
-                "maximum_negative_cue_count": (
-                    2 if affective_balance_default_active else None
-                ),
-                "reject": [
-                    "pure_annoyance_or_sadness",
-                    "blank_bored_or_listless_face",
-                    "scowl_without_warm_leak",
-                    "pout_plus_averted_gaze_without_positive_countercue",
-                ],
-            },
-            "mechanism_specific_evidence": {
-                "denial_care_leak": {
-                    "active_denial_phrase_required": mechanism == "denial_care_leak",
-                    "care_action_anchor_phrase_required": mechanism == "denial_care_leak",
-                    "relationship_gaze_anchor_phrase_required": mechanism == "denial_care_leak",
-                    "partial_recipient_landmark_required": mechanism == "denial_care_leak",
-                    "concealed_affection_phrase_required": mechanism == "denial_care_leak",
-                    "off_axis_gaze_geometry_required": mechanism == "denial_care_leak",
-                    "opposed_head_iris_vector_required": mechanism == "denial_care_leak",
-                    "dual_positive_microcue_required": mechanism == "denial_care_leak",
-                    "rule": (
-                        "Bind a separate visible mouth, chin, shoulder, or helping-hand protest; "
-                        "guardedness, the tsundere label, or averted gaze alone is not active denial. "
-                        "Place the care target—hand, wound, or carried object—in-frame at an explicit lower screen "
-                        "position. Separately establish one small blurred partial landmark from the same adult recipient—"
-                        "an outer eye plus temple or profile sliver—at a named upper frame edge above that task anchor. "
-                        "Turn the head and nose three-quarter toward the opposite side while only the irises make a small "
-                        "oblique return toward the landmark. Pair softened lower lids with one mouth corner that starts to lift and is "
-                        "suppressed. Looking only at the task, direct frontal eye contact, a centered face, or a selfie-like "
-                        "viewer gaze does not read as peer liking under denial; neither does a second full recipient face."
-                    ),
-                },
-                "nurturant_benevolence": {
-                    "benevolent_affect_phrase_required": (
-                        relationship_register == "nurturant_benevolence"
-                    ),
-                    "rule": (
-                        "For an explicit mamang, maternal, or motherly request, bind one literal benevolent-affect "
-                        "phrase that combines a relaxed brow, patient soft eyes, a reassuring mouth, and calm protective "
-                        "attention. Do not substitute tsundere denial, romantic gaze leakage, or generic kindness."
-                    ),
-                },
-            },
-            "causal_chain": [
-                "adult_beautiful_and_cute_character_entry_condition",
-                "character_behavioral_baseline",
-                "one_primary_mechanism",
-                "concrete_trigger_and_target",
-                "involuntary_visible_response",
-                "immediate_state_change",
-                "identity_continuity",
-            ],
-            "focal_priority": [
-                "face_or_gaze_response",
-                "hands_or_posture_action",
-                "trigger_target_or_changed_object",
-                "role_costume_and_species_markers_as_support",
-            ],
-            "same_focal_plane": ["face_or_gaze", "hands_or_posture", "trigger_target"],
-            "render_legibility": {
-                "unfinished_state": (
-                    "Name one physical separation that cannot be mistaken for the settled endpoint, "
-                    "such as an open gap, a partway contact boundary, an object outside its destination, "
-                    "or an off-center trace."
-                ),
-                "directional_reflex": (
-                    "For a nonhuman reflex, keep the visible trigger and responding body part in-frame; "
-                    "an ear response must be asymmetric and aimed toward that trigger. For nekomimi, each ear "
-                    "must remain compact—no taller than the visible human ear from base to tip—and the two ear tips "
-                    "must occupy clearly different angles."
-                ),
-                "split_care_and_relationship_vectors": (
-                    "For denial_care_leak, keep the visible care-action target low in-frame, but direct the concealed "
-                    "affection toward one small blurred partial eye-and-temple landmark from the same adult recipient "
-                    "at a named upper frame edge. Keep the head angled toward the opposite side in a named three-quarter "
-                    "orientation, keep the nose axis off the lens, return only the irises in a small oblique movement "
-                    "toward that landmark, and suppress the lower-lid softness "
-                    "plus one starting mouth-corner lift. Direct frontal eye contact is too overt."
-                ),
-                "intermediate_prop_scale": (
-                    "Keep an intermediate sleeve, tool, vessel, or other prop at ordinary real-world "
-                    "scale so it does not hide the hands or contact state that carry the event."
-                ),
-                **(
-                    {
-                        "text_free_background": (
-                            "Use a plain material background or unlettered decor: no menu board, chalkboard "
-                            "writing, signage, captions, pseudo-writing, or decorative heart/sparkle symbols."
-                        )
-                    }
-                    if not explicit_text_requested
-                    else {
-                        "requested_text_boundary": (
-                            "Preserve only the explicitly requested readable text; do not add decorative, "
-                            "pseudo-written, or unrelated background lettering."
-                        )
-                    }
-                ),
-            },
-            "keep": [
-                "explicitly_adult_original_character",
-                "routed_adult_bishoujo_bishonen_or_androgynous_aesthetic_baseline",
-                "user_requested_role",
-                "user_requested_species_or_nonhuman_traits",
-                "one_primary_mechanism",
-                "negative_en_bytes",
-                "selected_scene_and_safety_contracts",
-            ],
-            "reject": [
-                "ordinary_or_generic_casting_without_both_pretty_and_cute_first_read",
-                "aesthetic_only_without_character_specific_event",
-                "cute_or_moe_label_as_evidence",
-                "blush_only",
-                "oversized_eyes_or_youth_morphology",
-                "animal_ears_or_costume_only",
-                "generic_shy_smile_or_pretty_pose_only",
-                "unrelated_prosocial_task_or_technical_activity",
-                "full_body_costume_display",
-                "body_emphasis_or_sultry_gaze_when_nonsexual",
-                "multiple_unrelated_moe_mechanisms",
-                "unrequested_heart_sparkle_or_cartoon_reaction_shorthand",
-                "unrequested_background_text_or_pseudo_writing",
-                "negative_facial_affect_without_one_warm_countercue",
-                "off_frame_recipient_or_unverifiable_affection_gaze_vector",
-                "imagined_recipient_eye_line_without_visible_partial_face_landmark",
-                "second_full_recipient_face_competing_with_primary_subject",
-                "head_and_irises_turning_together_toward_the_same_side",
-                "care_target_and_relationship_gaze_collapsed_into_one_anchor",
-                "task_warmth_or_maternal_benevolence_substituted_for_peer_liking",
-                "direct_frontal_eye_contact_or_centered_selfie_gaze_used_as_concealed_liking",
-                "nekomimi_ears_larger_than_visible_human_ear",
-                "symmetric_nonhuman_traits_without_trigger_direction",
-                "oversized_intermediate_prop_that_hides_contact_state",
-                "deliberate_placement_substituted_for_a_catch",
-            ],
-        },
-        "evaluation_boundary": (
-            "prompt_binding_is_preflight; metadata_free_thumbnail_and_native_pixels_are_local_product_evidence; "
-            "whether_the_result_feels_moe_requires_direct_human_judgment"
-        ),
-        "render_qualification": {
-            "required": True,
-            "review_schema_version": "moe-render-review/v1",
-            "general_hard_gates": general_render_gates,
-            "mechanism_hard_gates": mechanism_render_gates,
-            "support_hard_gates": support_render_gates,
-            "identity_hard_gates": identity_render_gates,
-            "required_hard_gates": required_render_gates,
-            "promotion_policy": (
-                "all_technical_hard_gates_pass_and_requesting_user_accepts_genuine_moe"
-                "_and_when_available_improvement_over_baseline"
-            ),
-            "user_judgment_fields": [
-                "baseline_available",
-                "genuinely_moe",
-                "better_than_baseline",
-                "source",
-                "evidence",
-            ],
-            "failure_action": (
-                "preserve_render_review_and_ledger_as_failed_evidence_without_representative_promotion"
-            ),
-        },
-    }
-    if not aesthetic_style_default_active:
-        contract["composition_guidance"]["aesthetic_entry_condition"]["rule"] = (
-            "No generic aesthetic entry condition may be added. Preserve the frozen baseline and "
-            "requesting-user semantic anchors for subject and style."
-        )
-        contract["composition_guidance"]["aesthetic_entry_condition"][
-            "thumbnail_priority"
-        ] = "requesting_user_locked_subject_and_style"
-        contract["composition_guidance"]["keep"] = [
-            item
-            for item in contract["composition_guidance"]["keep"]
-            if item
-            != "routed_adult_bishoujo_bishonen_or_androgynous_aesthetic_baseline"
-        ]
-    if not affective_balance_default_active:
-        contract["composition_guidance"]["affective_balance"]["reject"] = []
-    if not generic_causal_default_active:
-        for field in (
-            "baseline",
-            "event_phase",
-            "trigger",
-            "target",
-            "immediate_consequence",
-            "continuity",
-        ):
-            contract["required_fields"].remove(field)
-        contract["composition_guidance"]["causal_chain"] = [
-            "frozen_requesting_user_event_anchor",
-            "frozen_requesting_user_expression_anchor_when_present",
-            "literal_authorial_core_continuity",
-        ]
-        contract["composition_guidance"]["render_legibility"].pop(
-            "unfinished_state",
-            None,
-        )
-        contract["composition_guidance"]["keep"] = [
-            item
-            for item in contract["composition_guidance"]["keep"]
-            if item != "one_primary_mechanism"
-        ]
-    if not generic_text_negative_active and not explicit_text_requested:
-        contract["composition_guidance"]["render_legibility"].pop(
-            "text_free_background",
-            None,
-        )
-
-    inactive_rejects: Set[str] = set()
-    if not aesthetic_style_default_active:
-        inactive_rejects.update(
-            {
-                "ordinary_or_generic_casting_without_both_pretty_and_cute_first_read",
-                "aesthetic_only_without_character_specific_event",
-                "cute_or_moe_label_as_evidence",
-            }
-        )
-    if not generic_expression_negative_active:
-        inactive_rejects.update(
-            {
-                "blush_only",
-                "generic_shy_smile_or_pretty_pose_only",
-                "negative_facial_affect_without_one_warm_countercue",
-            }
-        )
-    if not generic_appearance_negative_active:
-        inactive_rejects.add("oversized_eyes_or_youth_morphology")
-    if not generic_style_negative_active:
-        inactive_rejects.update(
-            {
-                "animal_ears_or_costume_only",
-                "unrequested_heart_sparkle_or_cartoon_reaction_shorthand",
-            }
-        )
-    if not generic_text_negative_active:
-        inactive_rejects.add("unrequested_background_text_or_pseudo_writing")
-    if inactive_rejects:
-        contract["composition_guidance"]["reject"] = [
-            item
-            for item in contract["composition_guidance"]["reject"]
-            if item not in inactive_rejects
-        ]
-    if intent_precedence is not None:
-        contract["intent_precedence"] = intent_precedence
-    if identity_controlled:
-        contract["reference_identity_control"] = {
-            "enabled": True,
-            "mode": "identity",
-            "source": "uploaded_portrait",
-            "preserve": [
-                "facial_geometry",
-                "eye_aperture",
-                "eye_shape_and_spacing",
-                "eyebrows",
-                "nose",
-                "lips",
-                "face_length",
-                "lower_face_and_jaw_width",
-                "jawline_and_cheekbones",
-                "skin_tone_and_natural_asymmetry",
-                "hairline",
-                "adult_age",
-            ],
-            "editable": ["micro_expression", "pose", "outfit", "lighting", "setting"],
-            "forbidden": [
-                "face_substitution",
-                "identity_averaging",
-                "facial_geometry_beautification",
-                "eye_enlargement_or_rounding",
-                "face_shortening",
-                "jaw_narrowing",
-                "de_aging",
-                "youth_morphology",
-            ],
-            "render_qualification": {
-                "required": True,
-                "promotion_policy": "all_hard_gates_pass_before_representative_candidate",
-                "hard_gates": identity_render_gates,
-                "comparison_order": [
-                    "source_portrait",
-                    "current_user_preferred_baseline_when_available",
-                    "new_result",
-                ],
-                "failure_action": "preserve_as_failed_evidence_do_not_promote_or_claim_moe_improvement",
-            },
-            "evaluation_role": "hold_identity_constant_while_testing_moe_direction",
-        }
-    return contract
 
 
 def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
@@ -7206,24 +5933,20 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
         else {}
     )
     typed_response = resolve_character_response_intent(core)
-    moe_response_required = bool(
-        (response.get("requested") is True and response.get("eligible") is True)
-        or typed_response.get("enabled") is True
-    )
-    if not explicitly_requested and not creative_direction_required and not moe_response_required:
+    character_response_required = bool(typed_response.get("enabled") is True)
+    if (
+        not explicitly_requested
+        and (not creative_direction_required)
+        and (not character_response_required)
+    ):
         return None
-
     activation_sources = []
     if explicitly_requested:
         activation_sources.append("explicit_viewer_experience_control")
     if creative_direction_required:
         activation_sources.append("creative_direction_required")
-    if moe_response_required:
-        activation_sources.append(
-            "typed_character_response_required"
-            if typed_response.get("enabled") is True
-            else "moe_response_required"
-        )
+    if character_response_required:
+        activation_sources.append("typed_character_response_required")
     return {
         "enabled": True,
         "contract_version": "photo-viewer-experience/v1",
@@ -7276,11 +5999,15 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
             "product_clarity_can_override_reinspection": True,
         },
         "composition_guidance": {
-            "select_exactly_one": ["primary_viewer_need", "intended_experience", "commercial_objective"],
+            "select_exactly_one": [
+                "primary_viewer_need",
+                "intended_experience",
+                "commercial_objective",
+            ],
             "bind_visible_causes_not_outcome_claims": True,
             "keep": [
                 "creative_direction",
-                "moe_response",
+                "character_response",
                 "scene_contract",
                 "character_grammar",
                 "product_or_subject_legibility",
@@ -7299,120 +6026,26 @@ def candidate_pack_viewer_experience(result: JsonDict) -> Optional[JsonDict]:
     }
 
 
-def candidate_pack_hybrid_policy(data: JsonDict) -> JsonDict:
-    layers = candidate_pack_quality_layers(data)
-    policy = layers.get("hybrid_augmentation") if isinstance(layers.get("hybrid_augmentation"), dict) else {}
-    return policy if policy.get("enabled", True) else {}
-
-
-def candidate_pack_hybrid_activation_sources(
-    result: JsonDict,
-    adult_appeal: Optional[JsonDict],
-) -> List[str]:
-    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    sources: List[str] = []
-    if provenance.get("hybrid_augmentation_requested") is True:
-        sources.append("explicit_hybrid_augmentation_control")
-    creativity = candidate_pack_float(provenance.get("creativity"))
-    if creativity is not None and creativity >= CANDIDATE_PACK_CREATIVE_DIRECTION_FLOOR:
-        sources.append("creative_direction_required")
-    if isinstance(adult_appeal, dict) and adult_appeal.get("enabled") is True:
-        if adult_appeal.get("activation_source") == "skill_default":
-            sources.append("configured_default_adult_appeal")
-        else:
-            sources.append("explicit_adult_appeal_control")
-    return sources
-
-
-def candidate_pack_adult_appeal_eligibility(
-    data: JsonDict,
-    result: JsonDict,
-    activation_source: str,
-) -> JsonDict:
-    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
-    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
-    constraints = contract.get("intent_constraints") if isinstance(contract.get("intent_constraints"), dict) else {}
-    subject_category_value = str(contract.get("subject_category") or "generic")
-    hybrid_policy = candidate_pack_hybrid_policy(data)
-    adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
-    default_eligibility = (
-        adult_policy.get("default_eligibility")
-        if isinstance(adult_policy.get("default_eligibility"), dict)
-        else {}
-    )
-    if activation_source == "explicit_nonsexual_moe":
-        return {
-            "status": "ineligible",
-            "reason": "explicit_nonsexual_moe_request_suppresses_configured_default",
-            "subject_category": subject_category_value,
-        }
-    if bool(default_eligibility.get("block_no_people", True)) and constraints.get("no_people") is True:
-        return {
-            "status": "ineligible",
-            "reason": "explicit_no_people",
-            "subject_category": subject_category_value,
-        }
-    allowed_default_categories = {
-        str(item) for item in default_eligibility.get("subject_categories") or ["human"]
-    }
-    if activation_source == "skill_default" and subject_category_value not in allowed_default_categories:
-        return {
-            "status": "ineligible",
-            "reason": "default_requires_eligible_human_subject",
-            "subject_category": subject_category_value,
-            "allowed_subject_categories": sorted(allowed_default_categories),
-        }
-    return {
-        "status": "eligible",
-        "reason": "eligible_human_default"
-        if activation_source == "skill_default"
-        else "explicit_control",
-        "subject_category": subject_category_value,
-    }
+def candidate_pack_adult_policy(data: JsonDict) -> JsonDict:
+    policy = candidate_pack_quality_layers(data).get("adult_appeal")
+    return policy if isinstance(policy, dict) else {}
 
 
 def candidate_pack_adult_appeal_request(data: JsonDict, result: JsonDict) -> JsonDict:
-    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    snapshot = provenance.get("creative_controls")
-    raw = provenance.get("adult_appeal") if isinstance(provenance.get("adult_appeal"), dict) else {}
-    axes_raw = raw.get("axes") if isinstance(raw.get("axes"), dict) else {}
-    axes: JsonDict = {}
-    for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
-        axis = axes_raw.get(axis_id) if isinstance(axes_raw.get(axis_id), dict) else {}
-        try:
-            intensity = int(axis.get("intensity", 0) or 0)
-        except (TypeError, ValueError):
-            intensity = 0
-        axes[axis_id] = {"intensity": max(0, min(3, intensity))}
-    requested_enabled = any(axis["intensity"] > 0 for axis in axes.values())
-    activation_source = str(raw.get("activation_source") or "skill_default")
-    eligibility = candidate_pack_adult_appeal_eligibility(data, result, activation_source)
-    if isinstance(snapshot, dict):
-        if eligibility.get("reason") == "explicit_no_people" and requested_enabled:
-            raise ValueError("pre-core controls conflict with explicit no-people meaning; resolve context before authoring")
-        reasons = {axis: snapshot["adult_appeal"][axis]["reason"] for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES}
-        eligibility = {"status": "eligible" if "eligible" in reasons.values() else "ineligible",
-                       "reason": "resolved_precore_context", "axis_reasons": reasons,
-                       "subject_category": snapshot["context"]["subject_category"]}
-        activation_source = "precore_controls"
-    enabled = requested_enabled and eligibility.get("status") == "eligible"
-    emphasis = str((raw.get("blend") or {}).get("emphasis") or "") if isinstance(raw.get("blend"), dict) else ""
-    if emphasis not in CANDIDATE_PACK_ADULT_APPEAL_EMPHASES:
-        sensual = axes["sensual"]["intensity"]
-        fetish = axes["fetish"]["intensity"]
-        emphasis = "balanced" if sensual == fetish else ("sensual_led" if sensual > fetish else "fetish_led")
-    return {
-        "enabled": enabled,
-        "requested_enabled": requested_enabled,
-        "activation_source": (
-            activation_source
-            if requested_enabled or activation_source in {"explicit_nonsexual_moe", "precore_controls"}
-            else "explicit_opt_out"
-        ),
-        "eligibility": eligibility,
-        "axes": axes,
-        "blend": {"emphasis": emphasis},
-    }
+    snapshot = (result.get("provenance") or {}).get("creative_controls")
+    if not isinstance(snapshot, dict):
+        raise ValueError("adult appeal requires a bound current creative-control snapshot")
+    axes = {axis: {"intensity": snapshot["adult_appeal"][axis]["effective_intensity"]}
+            for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES}
+    requested = any(row["intensity"] > 0 for row in axes.values())
+    reasons = {axis: snapshot["adult_appeal"][axis]["reason"] for axis in axes}
+    eligible = "eligible" in reasons.values()
+    return {"enabled": requested and eligible, "requested_enabled": requested,
+            "activation_source": "precore_controls", "axes": axes,
+            "eligibility": {"status": "eligible" if eligible else "ineligible",
+                "reason": "resolved_precore_context", "axis_reasons": reasons,
+                "subject_category": snapshot["context"]["subject_category"]},
+            "blend": {"emphasis": snapshot["resolved_emphasis"]}}
 
 
 def candidate_pack_filter_ids(preset: JsonDict, slot: str) -> List[str]:
@@ -7434,15 +6067,14 @@ def candidate_pack_adult_risk_groups(entry_id: str, adult_policy: JsonDict) -> L
     return groups
 
 
-def candidate_pack_legacy_adult_appeal(
+def candidate_pack_adult_appeal_metadata(
     data: JsonDict,
     result: JsonDict,
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
     *,
     authorial_core: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
-    hybrid_policy = candidate_pack_hybrid_policy(data)
-    adult_policy = hybrid_policy.get("adult_appeal") if isinstance(hybrid_policy.get("adult_appeal"), dict) else {}
+    adult_policy = candidate_pack_adult_policy(data)
     request = candidate_pack_adult_appeal_request(data, result)
     enabled = bool(request.get("enabled"))
     dimension_scope = None
@@ -7450,32 +6082,16 @@ def candidate_pack_legacy_adult_appeal(
         intent_lock = authorial_core.get("intent_lock") or {}
         locked = set(intent_lock.get("locked_dimensions") or [])
         dimension_scope = {
-            "contract_version": ADULT_APPEAL_DIMENSION_SCOPE_CONTRACT_VERSION,
+            "contract_version": photo_contextual_appeal.SCOPE_VERSION,
             "policy": "preserve_locked_dimensions",
             "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
             "locked_dimensions": sorted(locked),
             "axis_allowed_dimensions": {
-                axis: sorted(dimensions - locked)
-                for axis, dimensions in ADULT_APPEAL_AXIS_DIMENSIONS.items()
+                axis: sorted(photo_contextual_appeal.allowed_dimensions(intent_lock))
+                for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES
             },
             "protected_properties": intent_property_locks(intent_lock),
         }
-    inventory_preset_id = str(
-        adult_policy.get("inventory_preset_id")
-        or adult_policy.get("source_preset_id")
-        or "adult_fetish_fashion_editorial"
-    )
-    source_preset = candidate_pack_preset_by_id(data, inventory_preset_id) or {}
-    try:
-        per_axis_limit = max(1, int(adult_policy.get("candidate_limit_per_axis", 12) or 12))
-    except (TypeError, ValueError):
-        per_axis_limit = 12
-    try:
-        per_carrier_limit = max(1, int(adult_policy.get("candidate_limit_per_carrier", 3) or 3))
-    except (TypeError, ValueError):
-        per_carrier_limit = 3
-
-    configured_axes = adult_policy.get("axes") if isinstance(adult_policy.get("axes"), dict) else {}
     axes: JsonDict = {}
     for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
         intensity = int(((request.get("axes") or {}).get(axis_id) or {}).get("intensity", 0) or 0)
@@ -7486,108 +6102,17 @@ def candidate_pack_legacy_adult_appeal(
         )
         if allowed_dimensions is not None and not allowed_dimensions:
             intensity = 0
-        axis_policy = configured_axes.get(axis_id) if isinstance(configured_axes.get(axis_id), dict) else {}
         inventory: List[JsonDict] = []
-        seen_sources: Set[str] = set()
-        if enabled and intensity > 0:
-            for carrier in axis_policy.get("carriers") or []:
-                if not isinstance(carrier, dict) or len(inventory) >= per_axis_limit:
-                    continue
-                carrier_id = str(carrier.get("id") or "detail")
-                required_tags = {str(item).lower() for item in carrier.get("required_tags_any") or []}
-                try:
-                    carrier_limit = max(1, int(carrier.get("candidate_limit", per_carrier_limit) or per_carrier_limit))
-                except (TypeError, ValueError):
-                    carrier_limit = per_carrier_limit
-                carrier_count = 0
-                for slot in [str(item) for item in carrier.get("slots") or [] if str(item).strip()]:
-                    for entry_id in candidate_pack_filter_ids(source_preset, slot):
-                        if carrier_count >= carrier_limit or len(inventory) >= per_axis_limit:
-                            break
-                        source_key = f"{slot}:{entry_id}"
-                        if source_key in seen_sources:
-                            continue
-                        entry = candidate_pack_slot_entry_by_id(data, slot, entry_id)
-                        if not isinstance(entry, dict):
-                            continue
-                        try:
-                            minimum_intensity = int(
-                                (adult_policy.get("entry_min_intensity") or {}).get(entry_id, 1)
-                            )
-                        except (TypeError, ValueError):
-                            minimum_intensity = 1
-                        if intensity < minimum_intensity:
-                            continue
-                        tags = {str(item).lower() for item in entry.get("tags") or []}
-                        if required_tags and not (required_tags & tags):
-                            continue
-                        affected_dimensions = None
-                        if allowed_dimensions is not None:
-                            # Use the complete declared effect of a candidate;
-                            # never relabel a partially conflicting idea as safe.
-                            dimension_overrides = adult_policy.get("entry_dimensions") or {}
-                            affected_dimensions = sorted(
-                                set(entry.get("affected_dimensions") or [])
-                                | set(dimension_overrides.get(source_key) or [])
-                            ) or photo_candidate_semantics.slot_dimensions(
-                                slot, data.get("candidate_semantic_policy")
-                            )
-                            if not affected_dimensions or not set(affected_dimensions).issubset(allowed_dimensions):
-                                continue
-                            if not property_effects_allowed(intent_lock, affected_dimensions, entry.get("affected_properties", [])):
-                                continue
-                        candidate_id = f"augmentation:adult_appeal:{axis_id}:{slot}:{entry_id}"
-                        candidate = {
-                            "id": candidate_id,
-                            "source_candidate_id": candidate_pack_candidate_id("slot", entry_id, slot),
-                            "slot": slot,
-                            "entry_id": entry_id,
-                            "axis": axis_id,
-                            "carrier": carrier_id,
-                            "minimum_intensity": minimum_intensity,
-                            "label_en": localize(entry, "en") or entry_id,
-                            "label_ko": localize(entry, "ko") or entry_id,
-                            "weight": candidate_pack_float(entry.get("weight")),
-                            "selected_by_sampler": False,
-                            "tags": candidate_pack_public_tags(data, entry),
-                            "kind": normalize_list(entry.get("kind"))[:8],
-                            "facets": candidate_pack_public_facets(entry),
-                            "risk_groups": candidate_pack_adult_risk_groups(entry_id, adult_policy),
-                            "applicability": {
-                                "status": "eligible",
-                                "source": f"{request.get('activation_source')}_adult_appeal_inventory",
-                                "reason": f"axis activated by the configured intensity {intensity}"
-                                if request.get("activation_source") == "skill_default"
-                                else "axis activated by explicit user control",
-                            },
-                            "conflicts_with": [],
-                        }
-                        if affected_dimensions is not None:
-                            candidate["affected_dimensions"] = sorted(set(affected_dimensions))
-                            if entry.get("affected_properties"):
-                                candidate["affected_properties"] = copy.deepcopy(entry["affected_properties"])
-                            candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
-                                dict(entry, affected_dimensions=candidate["affected_dimensions"]),
-                                slot, data.get("candidate_semantic_policy"),
-                            )
-                        inventory.append(candidate)
-                        candidate_entries[candidate_id] = ("slot", slot, entry)
-                        seen_sources.add(source_key)
-                        carrier_count += 1
         axes[axis_id] = {
             "intensity": intensity,
             "active": enabled and intensity > 0,
-            "carrier_ids": [
-                str(carrier.get("id"))
-                for carrier in axis_policy.get("carriers") or []
-                if isinstance(carrier, dict) and str(carrier.get("id") or "")
-            ],
+            "carrier_ids": [],
             "candidate_inventory": inventory,
         }
         if dimension_scope is not None:
             axes[axis_id]["requested_intensity"] = requested_intensity
         snapshot = (result.get("provenance") or {}).get("creative_controls")
-        definitions = snapshot["definitions"] if isinstance(snapshot, dict) else creative_controls.load_definitions()
+        definitions = snapshot["definitions"]
         axes[axis_id]["intensity_meaning"] = definitions["controls"][axis_id]["levels"][str(intensity)]
         axes[axis_id]["definition"] = definitions["controls"][axis_id]["definition"]
         if isinstance(snapshot, dict):
@@ -7598,10 +6123,10 @@ def candidate_pack_legacy_adult_appeal(
         enabled = any(axis["active"] for axis in axes.values())
 
     configured_defaults = {
-        axis: int((adult_policy.get("default_intensities") or {}).get(axis, definitions["controls"][axis]["default"]))
+        axis: int(definitions["controls"][axis]["default"])
         for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES
     }
-    configured_emphasis = adult_policy.get("default_emphasis") or definitions["controls"]["adult_appeal_emphasis"]["default"]
+    configured_emphasis = definitions["controls"]["adult_appeal_emphasis"]["default"]
     if configured_emphasis == "auto":
         sensual_default, fetish_default = (configured_defaults[axis] for axis in CANDIDATE_PACK_ADULT_APPEAL_AXES)
         configured_emphasis = "balanced" if sensual_default == fetish_default else ("sensual_led" if sensual_default > fetish_default else "fetish_led")
@@ -7616,7 +6141,6 @@ def candidate_pack_legacy_adult_appeal(
             "fetish_intensity": configured_defaults["fetish"],
             "emphasis": configured_emphasis,
         },
-        "inventory_preset_id": inventory_preset_id,
         "axes": axes,
         "blend": {
             "emphasis": str((request.get("blend") or {}).get("emphasis") or "balanced"),
@@ -7630,7 +6154,6 @@ def candidate_pack_legacy_adult_appeal(
             "explicit_adult_original_subject": True,
             "adult_subject_phrase_required": True,
             "agency_phrase_required": True,
-            "one_accepted_detail_per_active_axis": True,
             "intensity_is_ordinal_not_exposure_or_detail_count": True,
             "baseline_expression_may_be_retained": True,
             "shared_styling_between_axes_allowed": True,
@@ -7657,7 +6180,7 @@ def candidate_pack_legacy_adult_appeal(
 
 def prepare_contextual_appeal_queries(data, result, core, snapshot, semantic_context, api_key=None):
     """Bind private query vectors to the exact post-core lanes and run ID."""
-    retrieval = (candidate_pack_hybrid_policy(data).get("adult_appeal") or {}).get("contextual_retrieval") or {}
+    retrieval = (candidate_pack_adult_policy(data)).get("contextual_retrieval") or {}
     if (semantic_context is None or not core or not snapshot
             or retrieval.get("contract_version") != photo_contextual_appeal.VERSION):
         return
@@ -7681,54 +6204,86 @@ def prepare_contextual_appeal_queries(data, result, core, snapshot, semantic_con
         }
 
 
-def candidate_pack_hybrid_adult_appeal(
-    data: JsonDict, result: JsonDict,
+def candidate_pack_contextual_adult_appeal(
+    data: JsonDict,
+    result: JsonDict,
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
-    *, authorial_core: Optional[JsonDict] = None,
+    *,
+    authorial_core: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
-    policy = candidate_pack_hybrid_policy(data).get("adult_appeal") or {}
+    policy = candidate_pack_adult_policy(data)
     retrieval_policy = policy.get("contextual_retrieval") or {}
     snapshot = (result.get("provenance") or {}).get("creative_controls")
-    modern = bool(authorial_core and authorial_core.get("creative_controls_sha256")
-                  and isinstance(snapshot, dict)
-                  and retrieval_policy.get("contract_version") == photo_contextual_appeal.VERSION)
+    modern = bool(
+        authorial_core
+        and authorial_core.get("creative_controls_sha256")
+        and isinstance(snapshot, dict)
+        and retrieval_policy.get("contract_version") == photo_contextual_appeal.VERSION
+    )
     if not modern:
-        return candidate_pack_legacy_adult_appeal(data, result, candidate_entries, authorial_core=authorial_core)
+        raise ValueError(
+            "current adult appeal requires the frozen core, creative-control snapshot and contextual policy"
+        )
 
-    # Reuse activation/binding/combination metadata, without exposing or using
-    # the legacy preset inventory as the new candidate supply.
-    contract = candidate_pack_legacy_adult_appeal(data, result, {}, authorial_core=authorial_core)
+    contract = candidate_pack_adult_appeal_metadata(data, result, {}, authorial_core=authorial_core)
     core = authorial_core
     lock = core["intent_lock"]
     locked = set(lock.get("locked_dimensions") or [])
     scope = contract["dimension_scope"]
     scope["contract_version"] = photo_contextual_appeal.SCOPE_VERSION
     scope["axis_allowed_dimensions"] = {
-        axis: sorted(photo_contextual_appeal.allowed_dimensions(lock)) for axis in photo_contextual_appeal.AXES
+        axis: sorted(photo_contextual_appeal.allowed_dimensions(lock))
+        for axis in photo_contextual_appeal.AXES
     }
     intensities = {axis: row["requested_intensity"] for axis, row in contract["axes"].items()}
-    queries = photo_contextual_appeal.queries(core, snapshot["definitions"], intensities, authorial_core_retrieval_text)
-    scene_query, _ = authorial_core_retrieval_text({
-        key: value for key, value in core.items()
-        if key in {"contract_version", "request_binding", "source_request", "user_definitions", "user_exclusions"}
-    })
+    queries = photo_contextual_appeal.queries(
+        core, snapshot["definitions"], intensities, authorial_core_retrieval_text
+    )
+    scene_query, _ = authorial_core_retrieval_text(
+        {
+            key: value
+            for key, value in core.items()
+            if key
+            in {
+                "contract_version",
+                "request_binding",
+                "source_request",
+                "user_definitions",
+                "user_exclusions",
+            }
+        }
+    )
     prompt_id = str((result.get("provenance") or {}).get("prompt_id") or "")
     cached = (data.get(photo_contextual_appeal.QUERY_CACHE) or {}).get(prompt_id) or {}
     vectors = cached.get("vectors", {}) if cached.get("queries") == queries else {}
     constraints = {
-        "subject_category": snapshot["context"]["subject_category"], "preset_domains": [],
+        "subject_category": snapshot["context"]["subject_category"],
+        "preset_domains": [],
         "adult_allowed": contract["eligibility"]["status"] == "eligible",
         "intent_constraints": authorial_core_generation_constraints(core),
     }
-    exclusions = [candidate_pack_v5_relevance_tokens(value) for value in core.get("user_exclusions") or []]
-    excluded_identity_slots = {"subject", "appearance_type", "age", "species", "species_morphology", "face", "body_type", "person_origin"}
+    exclusions = [
+        candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []
+    ]
+    excluded_identity_slots = {
+        "subject",
+        "appearance_type",
+        "age",
+        "species",
+        "species_morphology",
+        "face",
+        "body_type",
+        "person_origin",
+    }
     review_ids = []
     traces = {}
     for axis, axis_row in contract["axes"].items():
         allowed = set(scope["axis_allowed_dimensions"][axis])
         axis_row["intensity"] = intensities[axis] if allowed else 0
         axis_row["active"] = bool(axis_row["intensity"] and constraints["adult_allowed"])
-        axis_row["intensity_meaning"] = snapshot["definitions"]["controls"][axis]["levels"][str(axis_row["intensity"])]
+        axis_row["intensity_meaning"] = snapshot["definitions"]["controls"][axis]["levels"][
+            str(axis_row["intensity"])
+        ]
         axis_row["candidate_inventory"] = []
         axis_row["carrier_ids"] = []
         if not axis_row["active"]:
@@ -7740,61 +6295,111 @@ def candidate_pack_hybrid_adult_appeal(
                 continue
             for entry in entries:
                 source_key = f"{slot}:{entry['id']}"
-                dimensions = sorted(set(entry.get("affected_dimensions") or [])
-                                    | set((policy.get("entry_dimensions") or {}).get(source_key) or []))
-                dimensions = dimensions or photo_candidate_semantics.slot_dimensions(slot, data.get("candidate_semantic_policy"))
-                if (not dimensions or not set(dimensions).issubset(allowed)
-                        or not property_effects_allowed(lock, dimensions, entry.get("affected_properties", []))
-                        or entry_block_reason(entry, slot, constraints)
-                        or not compatible_with_facet_guards(entry, {}, {})):
+                dimensions = sorted(
+                    set(entry.get("affected_dimensions") or [])
+                    | set((policy.get("entry_dimensions") or {}).get(source_key) or [])
+                )
+                dimensions = dimensions or photo_candidate_semantics.slot_dimensions(
+                    slot, data.get("candidate_semantic_policy")
+                )
+                if (
+                    not dimensions
+                    or not set(dimensions).issubset(allowed)
+                    or not property_effects_allowed(
+                        lock, dimensions, entry.get("affected_properties", [])
+                    )
+                    or entry_block_reason(entry, slot, constraints)
+                    or not compatible_with_facet_guards(entry, {}, {})
+                ):
                     continue
                 # Requirements that need other garments or scene objects are
                 # supplied as context, never silently presumed to be satisfied.
                 fields = semantic_bm25f_fields_for_entry(entry, slot, kind="slot")
                 text = [str(value) for values in fields.values() for value in values]
-                tokens = candidate_pack_v5_relevance_tokens(" ".join(text))
+                tokens = candidate_pack_relevance_tokens(" ".join(text))
                 if any(group and group <= tokens for group in exclusions):
                     continue
                 candidate_id = f"augmentation:adult_appeal:{axis}:{source_key}"
                 sources[candidate_id] = ("slot", slot, entry)
-                rows.append({
-                    "id": candidate_id, "source_candidate_id": f"slot:{source_key}",
-                    "slot": slot, "entry_id": entry["id"], "axis": axis,
-                    "carrier": slot, "label_en": localize(entry, "en") or entry["id"],
-                    "label_ko": localize(entry, "ko") or entry["id"],
-                    "expression_scope": entry.get("expression_scope") or photo_contextual_appeal.expression_scope(slot),
-                    "affected_dimensions": dimensions,
-                    "affected_properties": copy.deepcopy(entry.get("affected_properties") or []),
-                    "contextual_usage": copy.deepcopy(entry.get("contextual_usage") or {}),
-                    "context_requirements": {key: copy.deepcopy(entry[key]) for key in (
-                        "requires_any_tags", "requires_all_tags", "requires_any", "requires_all",
-                        "exclude_any_tags", "requires_primary_any_tags", "hard_guards",
-                        "for_any", "for_all", "not_for") if entry.get(key)},
-                    "applicability": {"status": "eligible", "source": "contextual_corpus_retrieval",
-                                      "reason": "scope compatible; scene and aesthetic interpretation pending"},
-                    "risk_groups": candidate_pack_adult_risk_groups(entry["id"], policy),
-                    "conflicts_with": [], "search_fields": fields, "visual_text": text,
-                    "_v6_semantic_source": photo_candidate_semantics.semantic_source(dict(entry, affected_dimensions=dimensions), slot, data.get("candidate_semantic_policy")),
-                })
+                rows.append(
+                    {
+                        "id": candidate_id,
+                        "source_candidate_id": f"slot:{source_key}",
+                        "slot": slot,
+                        "entry_id": entry["id"],
+                        "axis": axis,
+                        "carrier": slot,
+                        "label_en": localize(entry, "en") or entry["id"],
+                        "label_ko": localize(entry, "ko") or entry["id"],
+                        "expression_scope": entry.get("expression_scope")
+                        or photo_contextual_appeal.expression_scope(slot),
+                        "affected_dimensions": dimensions,
+                        "affected_properties": copy.deepcopy(
+                            entry.get("affected_properties") or []
+                        ),
+                        "contextual_usage": copy.deepcopy(entry.get("contextual_usage") or {}),
+                        "context_requirements": {
+                            key: copy.deepcopy(entry[key])
+                            for key in (
+                                "requires_any_tags",
+                                "requires_all_tags",
+                                "requires_any",
+                                "requires_all",
+                                "exclude_any_tags",
+                                "requires_primary_any_tags",
+                                "hard_guards",
+                                "for_any",
+                                "for_all",
+                                "not_for",
+                            )
+                            if entry.get(key)
+                        },
+                        "applicability": {
+                            "status": "eligible",
+                            "source": "contextual_corpus_retrieval",
+                            "reason": "scope compatible; scene and aesthetic interpretation pending",
+                        },
+                        "risk_groups": candidate_pack_adult_risk_groups(entry["id"], policy),
+                        "conflicts_with": [],
+                        "search_fields": fields,
+                        "visual_text": text,
+                        "_v6_semantic_source": photo_candidate_semantics.semantic_source(
+                            dict(entry, affected_dimensions=dimensions),
+                            slot,
+                            data.get("candidate_semantic_policy"),
+                        ),
+                    }
+                )
         inventory, traces[axis] = photo_contextual_appeal.rank_candidates(
-            rows, queries[axis], policy=SEMANTIC_BM25F_POLICY,
-            query_vectors=vectors.get(axis), index=data.get(SEMANTIC_INDEX_DATA_KEY),
+            rows,
+            queries[axis],
+            policy=SEMANTIC_BM25F_POLICY,
+            query_vectors=vectors.get(axis),
+            index=data.get(SEMANTIC_INDEX_DATA_KEY),
             limit=int(retrieval_policy.get("candidate_limit_per_axis", 12)),
             scene_query=scene_query,
         )
         axis_row["candidate_inventory"] = inventory
         axis_row["carrier_ids"] = sorted({row["carrier"] for row in inventory})
         candidate_entries.update({row["id"]: sources[row["id"]] for row in inventory})
-        review_ids.extend(photo_contextual_appeal.review_ids(inventory, int(retrieval_policy.get("review_limit_per_axis", 4))))
+        review_ids.extend(
+            photo_contextual_appeal.review_ids(
+                inventory, int(retrieval_policy.get("review_limit_per_axis", 4))
+            )
+        )
     active = [axis for axis, row in contract["axes"].items() if row["active"]]
     contract["enabled"] = bool(active)
-    contract["blend"]["emphasis"] = contract["blend"]["requested_emphasis"] if len(active) == 2 else ("sensual_led" if active == ["sensual"] else "fetish_led" if active else "balanced")
+    contract["blend"]["emphasis"] = (
+        contract["blend"]["requested_emphasis"]
+        if len(active) == 2
+        else ("sensual_led" if active == ["sensual"] else "fetish_led" if active else "balanced")
+    )
     contract["blend"].pop("carrier_separation", None)
-    contract.pop("inventory_preset_id", None)
-    contract["composition_requirements"].pop("one_accepted_detail_per_active_axis", None)
     contract["contextual_retrieval"] = {
-        "contract_version": photo_contextual_appeal.VERSION, "axes": traces,
-        "review_candidate_ids": review_ids, "candidate_adoption_required": False,
+        "contract_version": photo_contextual_appeal.VERSION,
+        "axes": traces,
+        "review_candidate_ids": review_ids,
+        "candidate_adoption_required": False,
         "review_location": "adult_appeal_brief.contextual_review",
         "comparison_location": "adult_appeal_brief.contextual_comparison",
         "query_sha256": canonical_json_sha256(queries),
@@ -7804,7 +6409,7 @@ def candidate_pack_hybrid_adult_appeal(
     return contract
 
 
-def candidate_pack_hybrid_adult_candidates(adult_appeal: Optional[JsonDict]) -> List[JsonDict]:
+def candidate_pack_adult_candidates(adult_appeal: Optional[JsonDict]) -> List[JsonDict]:
     candidates: List[JsonDict] = []
     if not isinstance(adult_appeal, dict):
         return candidates
@@ -7815,196 +6420,6 @@ def candidate_pack_hybrid_adult_candidates(adult_appeal: Optional[JsonDict]) -> 
             candidate for candidate in axis.get("candidate_inventory") or [] if isinstance(candidate, dict)
         )
     return candidates
-
-
-def candidate_pack_hybrid_candidates_compatible(candidate: JsonDict, selected: Sequence[JsonDict]) -> bool:
-    candidate_id = str(candidate.get("id") or "")
-    candidate_conflicts = {str(item) for item in candidate.get("conflicts_with") or []}
-    for other in selected:
-        other_id = str(other.get("id") or "")
-        other_conflicts = {str(item) for item in other.get("conflicts_with") or []}
-        if other_id in candidate_conflicts or candidate_id in other_conflicts:
-            return False
-    return True
-
-
-def candidate_pack_hybrid_detail_function(candidate: JsonDict, route: JsonDict, index: int) -> str:
-    carrier = str(candidate.get("carrier") or "")
-    dimensions = set(candidate.get("affected_dimensions") or [])
-    if dimensions & {"action", "relationship", "role", "event", "timing"}:
-        return "viewer_hook"
-    if carrier in {"gaze_pose", "framing"} or dimensions & {"pose", "camera", "framing", "composition"}:
-        return "pose_camera"
-    if dimensions & {"material", "appearance"}:
-        return "material_detail"
-    functions = [str(item) for item in route.get("functions") or [] if str(item).strip()]
-    return functions[index % len(functions)] if functions else "material_detail"
-
-
-def candidate_pack_hybrid_route_details(
-    route: JsonDict,
-    route_index: int,
-    slots: JsonDict,
-    masked_slot_names: Set[str],
-    adult_appeal: Optional[JsonDict],
-    limit: int,
-    variation_offset: int = 0,
-) -> List[JsonDict]:
-    selected: List[JsonDict] = []
-    selected_sources: Set[str] = set()
-    selected_slots: Set[str] = set()
-
-    adult_axes = adult_appeal.get("axes") if isinstance(adult_appeal, dict) and isinstance(adult_appeal.get("axes"), dict) else {}
-    for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES:
-        axis = adult_axes.get(axis_id) if isinstance(adult_axes.get(axis_id), dict) else {}
-        inventory = [candidate for candidate in axis.get("candidate_inventory") or [] if isinstance(candidate, dict)]
-        if not inventory or len(selected) >= limit:
-            continue
-        offset = (route_index + variation_offset) % len(inventory)
-        rotated = inventory[offset:] + inventory[:offset]
-        for candidate in rotated:
-            source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
-            if source in selected_sources or not candidate_pack_hybrid_candidates_compatible(candidate, selected):
-                continue
-            selected.append(candidate)
-            selected_sources.add(source)
-            selected_slots.add(str(candidate.get("slot") or ""))
-            break
-
-    route_slots = [str(item) for item in route.get("slots") or [] if str(item).strip()]
-    for slot_index, slot in enumerate(route_slots):
-        if len(selected) >= limit or slot in masked_slot_names or slot in selected_slots:
-            continue
-        payload = slots.get(slot) if isinstance(slots.get(slot), dict) else {}
-        candidates = [
-            candidate
-            for candidate in payload.get("candidates") or []
-            if isinstance(candidate, dict)
-            and (candidate.get("applicability") or {}).get("status", "eligible") == "eligible"
-        ]
-        alternatives = [candidate for candidate in candidates if not candidate.get("selected_by_sampler")]
-        anchors = [candidate for candidate in candidates if candidate.get("selected_by_sampler")]
-        ordered = alternatives + anchors
-        if ordered:
-            offset = (route_index + slot_index + variation_offset) % len(ordered)
-            ordered = ordered[offset:] + ordered[:offset]
-        for candidate in ordered:
-            source = str(candidate.get("source_candidate_id") or candidate.get("id") or "")
-            if source in selected_sources or not candidate_pack_hybrid_candidates_compatible(candidate, selected):
-                continue
-            selected.append(candidate)
-            selected_sources.add(source)
-            selected_slots.add(slot)
-            break
-
-    details: List[JsonDict] = []
-    for index, candidate in enumerate(selected[:limit]):
-        details.append(
-            {
-                "candidate_id": str(candidate.get("id") or ""),
-                "slot": str(candidate.get("slot") or ""),
-                "function": candidate_pack_hybrid_detail_function(candidate, route, index),
-                "label_en": str(candidate.get("label_en") or candidate.get("entry_id") or ""),
-                "label_ko": str(candidate.get("label_ko") or candidate.get("entry_id") or ""),
-                "source": "adult_appeal_inventory" if candidate.get("axis") else "candidate_pack_slot",
-                "axis": candidate.get("axis"),
-                "carrier": candidate.get("carrier"),
-                "minimum_intensity": candidate.get("minimum_intensity"),
-                "selected_by_sampler": bool(candidate.get("selected_by_sampler")),
-                "marginal_value_question": "Would removing this detail make the image less distinctive or less legible?",
-            }
-        )
-    return details
-
-
-def candidate_pack_hybrid_augmentation(
-    data: JsonDict,
-    result: JsonDict,
-    slots: JsonDict,
-    masked_slot_names: Set[str],
-    adult_appeal: Optional[JsonDict],
-    variation_seed: Optional[str] = None,
-) -> Optional[JsonDict]:
-    policy = candidate_pack_hybrid_policy(data)
-    activation_sources = candidate_pack_hybrid_activation_sources(result, adult_appeal)
-    if not policy or not activation_sources:
-        return None
-    try:
-        route_limit = max(2, int(policy.get("route_candidate_limit", 4) or 4))
-    except (TypeError, ValueError):
-        route_limit = 4
-    routes: List[JsonDict] = []
-    for route_index, route in enumerate(policy.get("routes") or []):
-        if not isinstance(route, dict):
-            continue
-        route_id = str(route.get("id") or f"route_{route_index + 1}")
-        variation_offset = 0
-        if variation_seed is not None:
-            digest = hashlib.sha256(
-                f"hybrid-authorial-rotation|{variation_seed}".encode("utf-8")
-            ).digest()
-            variation_offset = int.from_bytes(digest[:8], "big")
-        details = candidate_pack_hybrid_route_details(
-            route,
-            route_index,
-            slots,
-            masked_slot_names,
-            adult_appeal,
-            route_limit,
-            variation_offset,
-        )
-        routes.append(
-            {
-                "id": route_id,
-                "strategy": route_id,
-                "label": str(route.get("label") or route.get("id") or "augmentation route"),
-                "candidate_ids": [detail["candidate_id"] for detail in details],
-                "details": details,
-            }
-        )
-    try:
-        accepted_min = max(1, int(policy.get("accepted_detail_min", 2) or 2))
-    except (TypeError, ValueError):
-        accepted_min = 2
-    try:
-        accepted_max = max(accepted_min, int(policy.get("accepted_detail_max", 5) or 5))
-    except (TypeError, ValueError):
-        accepted_max = 5
-    return {
-        "enabled": True,
-        "contract_version": CANDIDATE_PACK_HYBRID_CONTRACT_VERSION,
-        "source": "candidate_pack_bounded_idea_amplifier",
-        "activation_sources": activation_sources,
-        "purpose": "preserve_an_agent_authored_concept_core_while_adding_optional_candidate_sourced_specificity",
-        "core_policy": {
-            "agent_authored_concept_core": True,
-            "candidate_pack_may_expand_but_not_overwrite": True,
-            "unconditional_candidate_acceptance_forbidden": True,
-        },
-        "route_contract": {
-            "route_count": len(routes),
-            "select_exactly": 1,
-            "allow_select_none": True,
-            "all_routes_must_be_considered": True,
-            "routes": routes,
-        },
-        "adoption_contract": {
-            "decision_states": policy.get("decision_states", ["accepted", "modified", "rejected"]),
-            "detail_functions": policy.get(
-                "detail_functions",
-                ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
-            ),
-            "minimum_accepted_if_selected": accepted_min,
-            "maximum_accepted": accepted_max,
-            "every_selected_route_candidate_requires_a_decision": True,
-            "accepted_or_modified_candidate_must_be_chosen": True,
-            "rejected_candidate_must_not_be_chosen": True,
-            "accepted_or_modified_prompt_evidence_must_be_literal": True,
-            "marginal_contribution_required": True,
-        },
-        "adult_appeal": adult_appeal or {"enabled": False},
-        "evaluation_boundary": "audit_pass_proves_contract_and_literal_binding_only;_rendered_detail_and_audience_response_require_pixel_and_human_evaluation",
-    }
 
 
 def candidate_pack_concept_axes(soft_policy: JsonDict) -> JsonDict:
@@ -8309,21 +6724,11 @@ def render_contract_resolved_scene_blueprints(data: JsonDict, preset: JsonDict) 
             "policy_ids": normalize_list(raw.get("policy_ids")),
             "relationship_mode": str(raw.get("relationship_mode") or ""),
             "static_portrait": bool(raw.get("static_portrait")),
-            # Generic natural-language moe requests need a small everyday
-            # scene pool that is independent from the strongly authored
-            # profession/relationship exemplars of the research preset.
-            # These flags stay internal to selection and are intentionally
-            # omitted from the public render contract projection.
-            "natural_moe_default": bool(raw.get("natural_moe_default")),
-            "natural_moe_default_only": bool(raw.get("natural_moe_default_only")),
-            "natural_moe_relationship_registers": normalize_list(
-                raw.get("natural_moe_relationship_registers")
-            ),
             # Scene relevance is opt-in control-plane metadata.  Long scene
             # prose contains generic words such as ``adult`` and ``scene``;
             # deriving relevance terms from that prose made control language
             # look like a user-requested event.  These cues remain private and
-            # are never projected as v4 authoring answers.
+            # are never exposed as public authoring answers.
             "selection_cues": normalize_list(raw.get("selection_cues")),
             "requires_selection_cue": bool(raw.get("requires_selection_cue")),
             "subject": str(raw.get("subject") or "").strip(),
@@ -8362,16 +6767,6 @@ def candidate_pack_scene_blueprint_request_text(result: JsonDict) -> str:
         *normalize_list(provenance.get("user_mandatory_intents")),
         *normalize_list(provenance.get("additional_requirements")),
     ]
-    authorial_request = (
-        provenance.get("authorial_request")
-        if isinstance(provenance.get("authorial_request"), dict)
-        else {}
-    )
-    values.extend(
-        str(authorial_request.get(key) or "")
-        for key in ("subject", "setting", "event", "style_family")
-    )
-    values.extend(normalize_list(authorial_request.get("style_evidence")))
     return " ".join(values).lower()
 
 
@@ -8398,25 +6793,7 @@ def candidate_pack_scene_blueprint_request_channels(result: JsonDict) -> List[Js
         }
         for key, role in channel_specs
         if normalize_list(provenance.get(key))
-    ] + (
-        [
-            {
-                "channel": "authorial_request",
-                "role": "agent_prepack_scene_and_style",
-                "values": [
-                    str(authorial_request.get(key) or "")
-                    for key in ("subject", "setting", "event", "style_family")
-                    if str(authorial_request.get(key) or "").strip()
-                ]
-                + normalize_list(authorial_request.get("style_evidence")),
-            }
-        ]
-        if isinstance(
-            (authorial_request := provenance.get("authorial_request")),
-            dict,
-        )
-        else []
-    )
+    ]
 
 
 def candidate_pack_scene_blueprint_cue_matches(
@@ -8497,25 +6874,8 @@ def candidate_pack_japanese_subculture_photo(
     result: JsonDict,
 ) -> Optional[JsonDict]:
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
-    authorial_request = (
-        provenance.get("authorial_request")
-        if isinstance(provenance.get("authorial_request"), dict)
-        else None
-    )
     request_text = candidate_pack_scene_blueprint_request_text(result)
-    if (
-        isinstance(authorial_request, dict)
-        and authorial_request.get("style_domain") == "japanese_subculture_photo"
-    ):
-        explicit_family = candidate_pack_preset_by_id(
-            data,
-            str(authorial_request.get("style_family") or ""),
-        )
-    else:
-        explicit_family = candidate_pack_japanese_subculture_explicit_family(
-            data,
-            request_text,
-        )
+    explicit_family = candidate_pack_japanese_subculture_explicit_family(data, request_text)
     if explicit_family is None and not candidate_pack_japanese_subculture_photo_requested(
         request_text
     ):
@@ -8530,11 +6890,7 @@ def candidate_pack_japanese_subculture_photo(
         raise ValueError("Japanese-subculture photo style presets are unavailable")
     if explicit_family is not None:
         selected = explicit_family
-        selection_source = (
-            "agent_prepack_authorial_request"
-            if isinstance(authorial_request, dict)
-            else "explicit_style_family"
-        )
+        selection_source = "explicit_style_family"
     else:
         provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
         seed = str(provenance.get("seed") or "0")
@@ -8543,19 +6899,7 @@ def candidate_pack_japanese_subculture_photo(
         ).digest()
         selected = available[int.from_bytes(digest[:8], "big") % len(available)]
         selection_source = "deterministic_generic_family"
-    if isinstance(authorial_request, dict):
-        visible_cues = [
-            {
-                "cue_id": f"authorial_style_evidence_{index + 1}",
-                "source_slot": "authorial_request",
-                "prompt_phrase": phrase,
-            }
-            for index, phrase in enumerate(
-                normalize_list(authorial_request.get("style_evidence"))
-            )
-        ]
-    else:
-        visible_cues = candidate_pack_japanese_subculture_visible_cues(data, selected)
+    visible_cues = candidate_pack_japanese_subculture_visible_cues(data, selected)
     if len(visible_cues) < 2:
         raise ValueError(
             f"Japanese-subculture style {selected.get('id')!r} has fewer than two visible cues"
@@ -8567,15 +6911,6 @@ def candidate_pack_japanese_subculture_photo(
         "style_family_id": str(selected.get("id") or ""),
         "style_family_label": str(selected.get("en") or selected.get("id") or ""),
         "selection_source": selection_source,
-        **(
-            {
-                "source_authorial_request_sha256": str(
-                    authorial_request.get("canonical_sha256") or ""
-                )
-            }
-            if isinstance(authorial_request, dict)
-            else {}
-        ),
         "visible_cues": visible_cues,
         "minimum_visible_cues": 2,
         "identity_policy": {
@@ -8708,102 +7043,6 @@ def authorial_prompt_budget_contract() -> JsonDict:
             "requester_meaning_outranks_concision": True,
         },
     }
-
-
-def normalize_authorial_request(payload: Any, data: JsonDict) -> JsonDict:
-    if not isinstance(payload, dict):
-        raise ValueError("--authorial-request-json must contain one JSON object")
-    allowed_fields = {
-        "contract_version",
-        "provenance",
-        "subject",
-        "setting",
-        "event",
-        "style_domain",
-        "style_family",
-        "style_evidence",
-        "variation_key",
-    }
-    unknown_fields = sorted(set(payload) - allowed_fields)
-    if unknown_fields:
-        raise ValueError(
-            "authorial request contains pack-derived or unsupported fields: "
-            + ", ".join(unknown_fields)
-        )
-    normalized: JsonDict = {
-        "contract_version": str(payload.get("contract_version") or ""),
-        "provenance": str(payload.get("provenance") or ""),
-        "subject": clean_spaces(str(payload.get("subject") or "")),
-        "setting": clean_spaces(str(payload.get("setting") or "")),
-        "event": clean_spaces(str(payload.get("event") or "")),
-        "style_domain": str(payload.get("style_domain") or "").strip(),
-        "style_family": str(payload.get("style_family") or "").strip(),
-        "style_evidence": [
-            clean_spaces(item)
-            for item in normalize_list(payload.get("style_evidence"))
-            if clean_spaces(item)
-        ],
-        "variation_key": str(payload.get("variation_key") or "").strip(),
-    }
-    if normalized["contract_version"] != AUTHORIAL_REQUEST_CONTRACT_VERSION:
-        raise ValueError(
-            f"authorial request contract_version must be {AUTHORIAL_REQUEST_CONTRACT_VERSION!r}"
-        )
-    if normalized["provenance"] != "agent_prepack":
-        raise ValueError("authorial request provenance must be 'agent_prepack'")
-    if normalized["style_domain"] != "japanese_subculture_photo":
-        raise ValueError(
-            "authorial request style_domain must be 'japanese_subculture_photo'"
-        )
-    if normalized["style_family"] not in JAPANESE_SUBCULTURE_PHOTO_STYLE_PRESET_IDS:
-        raise ValueError("authorial request style_family is not a supported typed family")
-    if candidate_pack_preset_by_id(data, normalized["style_family"]) is None:
-        raise ValueError("authorial request style_family is unavailable in the current dictionary")
-    minimum_words = {"subject": 4, "setting": 4, "event": 5}
-    for field, minimum in minimum_words.items():
-        if len(authorial_request_content_words(normalized[field])) < minimum:
-            raise ValueError(
-                f"authorial request {field} needs at least {minimum} concrete content words"
-            )
-    if len(normalized["style_evidence"]) < 2:
-        raise ValueError("authorial request requires at least two style_evidence phrases")
-    if len({item.lower() for item in normalized["style_evidence"]}) != len(
-        normalized["style_evidence"]
-    ):
-        raise ValueError("authorial request style_evidence phrases must be distinct")
-    for phrase in normalized["style_evidence"]:
-        if len(authorial_request_content_words(phrase)) < 4:
-            raise ValueError(
-                "each authorial request style_evidence phrase needs at least four concrete content words"
-            )
-    if not normalized["variation_key"]:
-        raise ValueError("authorial request variation_key must be non-empty")
-    canonical_bytes = json.dumps(
-        normalized,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
-    ).encode("utf-8")
-    normalized["canonical_sha256"] = hashlib.sha256(canonical_bytes).hexdigest()
-    normalized["request_id"] = normalized["canonical_sha256"][:16]
-    return normalized
-
-
-def load_authorial_request_arg(raw: Optional[str], data: JsonDict) -> Optional[JsonDict]:
-    if not raw:
-        return None
-    payload: Any
-    try:
-        candidate = Path(raw)
-        is_file = candidate.exists()
-    except OSError:
-        is_file = False
-        candidate = Path(".")
-    if is_file:
-        payload = json.loads(candidate.read_text(encoding="utf-8"))
-    else:
-        payload = json.loads(raw)
-    return normalize_authorial_request(payload, data)
 
 
 def normalize_request_envelope(payload: Any) -> JsonDict:
@@ -9730,17 +7969,14 @@ def normalize_authorial_core(
         if payload.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
             raise ValueError("authorial core must bind the supplied creative-control snapshot")
     if request_envelope is not None:
-        visual_spans, _ = creative_controls.split_request_spans(request_envelope, creative_control_snapshot)
+        visual_spans, _ = creative_controls.split_request_spans(
+            request_envelope, creative_control_snapshot
+        )
         visual_envelope = {**request_envelope, "active_spans": visual_spans}
     core_version = str(payload.get("contract_version") or "")
-    if core_version not in {
-        LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION,
-        AUTHORIAL_CORE_CONTRACT_VERSION,
-        AUTHORIAL_CORE_V3_CONTRACT_VERSION,
-    }:
+    if core_version != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
         raise ValueError(
-            "authorial core contract_version must be one of "
-            f"{[LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION, AUTHORIAL_CORE_CONTRACT_VERSION, AUTHORIAL_CORE_V3_CONTRACT_VERSION]!r}"
+            f"authorial core contract_version must be {AUTHORIAL_CORE_V3_CONTRACT_VERSION}"
         )
     allowed_fields = {
         "contract_version",
@@ -9759,10 +7995,8 @@ def normalize_authorial_core(
         "style",
         "variation_key",
     }
-    if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        allowed_fields.update({"intent_lock", "runtime_forbidden_labels"})
-    if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-        allowed_fields.update({"semantic_assertions", "request_lineage", "creative_controls_sha256"})
+    allowed_fields.update({"intent_lock", "runtime_forbidden_labels"})
+    allowed_fields.update({"semantic_assertions", "request_lineage", "creative_controls_sha256"})
     unknown_fields = sorted(set(payload) - allowed_fields)
     if unknown_fields:
         raise ValueError(
@@ -9774,12 +8008,9 @@ def normalize_authorial_core(
             raise ValueError(
                 f"authorial core requires {required_field}; resolve meaning before freezing the baseline"
             )
-
     source_request = str(payload.get("source_request") or "")
-    if core_version == LEGACY_AUTHORIAL_CORE_CONTRACT_VERSION:
-        source_request = clean_spaces(source_request)
     normalized: JsonDict = {
-        "contract_version": core_version,
+        "contract_version": "photo-authorial-core/v3",
         "provenance": str(payload.get("provenance") or ""),
         "source_request": source_request,
         "interpreted_intent": clean_spaces(str(payload.get("interpreted_intent") or "")),
@@ -9803,56 +8034,45 @@ def normalize_authorial_core(
         "style": None,
         "variation_key": str(payload.get("variation_key") or "").strip(),
     }
-    if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        if request_envelope is None:
+    if request_envelope is None:
+        raise ValueError("photo-authorial-core/v3 requires --request-envelope-json")
+    if source_request != str(request_envelope.get("request_text") or ""):
+        raise ValueError(
+            "authorial core source_request must exactly match request envelope request_text bytes"
+        )
+    normalized["request_binding"] = {
+        "contract_version": REQUEST_BINDING_CONTRACT_VERSION,
+        "request_id": str(request_envelope.get("request_id") or ""),
+        "request_sha256": str(request_envelope.get("request_sha256") or ""),
+        "request_envelope_sha256": str(request_envelope.get("canonical_sha256") or ""),
+        "active_spans": copy.deepcopy(request_envelope.get("active_spans") or []),
+    }
+    runtime_forbidden_labels = [
+        str(item).strip()
+        for item in normalize_list(payload.get("runtime_forbidden_labels"))
+        if str(item).strip()
+    ]
+    if len(runtime_forbidden_labels) > 12 or len(
+        {item.casefold() for item in runtime_forbidden_labels}
+    ) != len(runtime_forbidden_labels):
+        raise ValueError(
+            "authorial core runtime_forbidden_labels must contain at most twelve distinct phrases"
+        )
+    for label in runtime_forbidden_labels:
+        if not request_scope_contains(request_envelope, label):
             raise ValueError(
-                "photo-authorial-core/v2 or v3 requires --request-envelope-json"
+                "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span"
             )
-        if source_request != str(request_envelope.get("request_text") or ""):
-            raise ValueError(
-                "authorial core source_request must exactly match request envelope request_text bytes"
-            )
-        normalized["request_binding"] = {
-            "contract_version": REQUEST_BINDING_CONTRACT_VERSION,
-            "request_id": str(request_envelope.get("request_id") or ""),
-            "request_sha256": str(request_envelope.get("request_sha256") or ""),
-            "request_envelope_sha256": str(
-                request_envelope.get("canonical_sha256") or ""
-            ),
-            "active_spans": copy.deepcopy(request_envelope.get("active_spans") or []),
-        }
-        runtime_forbidden_labels = [
-            str(item).strip()
-            for item in normalize_list(payload.get("runtime_forbidden_labels"))
-            if str(item).strip()
-        ]
-        if len(runtime_forbidden_labels) > 12 or len(
-            {item.casefold() for item in runtime_forbidden_labels}
-        ) != len(runtime_forbidden_labels):
-            raise ValueError(
-                "authorial core runtime_forbidden_labels must contain at most twelve distinct phrases"
-            )
-        for label in runtime_forbidden_labels:
-            if not request_scope_contains(request_envelope, label):
-                raise ValueError(
-                    "authorial core runtime_forbidden_labels must be grounded in an active requesting-user span"
-                )
-        normalized["runtime_forbidden_labels"] = runtime_forbidden_labels
+    normalized["runtime_forbidden_labels"] = runtime_forbidden_labels
     if normalized["provenance"] != "agent_prepack":
         raise ValueError("authorial core provenance must be 'agent_prepack'")
     if "creative_controls_sha256" in payload:
-        if re.fullmatch(r"[0-9a-f]{64}", str(payload["creative_controls_sha256"])) is None:
+        if re.fullmatch("[0-9a-f]{64}", str(payload["creative_controls_sha256"])) is None:
             raise ValueError("creative_controls_sha256 must bind the resolved pre-core snapshot")
         normalized["creative_controls_sha256"] = payload["creative_controls_sha256"]
     if not normalized["source_request"]:
         raise ValueError("authorial core source_request must be non-empty")
-
-    minimum_words = {
-        "interpreted_intent": 4,
-        "subject": 2,
-        "setting": 3,
-        "event": 3,
-    }
+    minimum_words = {"interpreted_intent": 4, "subject": 2, "setting": 3, "event": 3}
     for field, minimum in minimum_words.items():
         if len(authorial_request_content_words(normalized[field])) < minimum:
             raise ValueError(
@@ -9868,78 +8088,53 @@ def normalize_authorial_core(
             raise ValueError(
                 "each authorial core visual priority needs at least two concrete content words"
             )
-
     baseline_words = re.findall(
-        r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*",
-        normalized["baseline_prompt_en"],
+        "[A-Za-z0-9]+(?:['’\\-][A-Za-z0-9]+)*", normalized["baseline_prompt_en"]
     )
-    if not AUTHORIAL_PROMPT_MIN_WORDS <= len(
-        baseline_words
-    ) <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS:
+    if not AUTHORIAL_PROMPT_MIN_WORDS <= len(baseline_words) <= AUTHORIAL_PROMPT_ABSOLUTE_MAX_WORDS:
         raise ValueError(
-            "authorial core baseline_prompt_en must contain 48 to 640 English words; "
-            "360 is the recommended maximum"
+            "authorial core baseline_prompt_en must contain 48 to 640 English words; 360 is the recommended maximum"
         )
-    if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        blanket_negative_directives = find_blanket_negative_directives(
-            normalized["baseline_prompt_en"]
+    blanket_negative_directives = find_blanket_negative_directives(normalized["baseline_prompt_en"])
+    if blanket_negative_directives:
+        raise ValueError(
+            "authorial core baseline_prompt_en contains blanket negative directives; keep semantic exclusions in request-grounded user_exclusions, keep platform policy outside prompt prose, and express local boundaries as positive geometry or visible state: "
+            + " | ".join(blanket_negative_directives)
         )
-        if blanket_negative_directives:
-            raise ValueError(
-                "authorial core baseline_prompt_en contains blanket negative directives; "
-                "keep semantic exclusions in request-grounded user_exclusions, keep "
-                "platform policy outside prompt prose, and express local boundaries as "
-                "positive geometry or visible state: "
-                + " | ".join(blanket_negative_directives)
-            )
-        assert request_envelope is not None
-        normalized["intent_lock"] = normalize_intent_lock(
-            payload.get("intent_lock"),
-            envelope=visual_envelope,
-            baseline_prompt_en=normalized["baseline_prompt_en"],
-            allowed_dimensions=(
-                AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS
-                if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION
-                else INTENT_LOCK_DIMENSIONS
-            ),
-            minimum_open_dimensions=(
-                0 if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION else 2
-            ),
+    assert request_envelope is not None
+    normalized["intent_lock"] = normalize_intent_lock(
+        payload.get("intent_lock"),
+        envelope=visual_envelope,
+        baseline_prompt_en=normalized["baseline_prompt_en"],
+        allowed_dimensions=AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS,
+        minimum_open_dimensions=0,
+    )
+    leaked_runtime_labels = [
+        label
+        for label in normalized.get("runtime_forbidden_labels") or []
+        if str(label).casefold() in normalized["baseline_prompt_en"].casefold()
+    ]
+    if leaked_runtime_labels:
+        raise ValueError(
+            "authorial core baseline_prompt_en contains runtime-only labels: "
+            + ", ".join(leaked_runtime_labels)
         )
-        if core_version != AUTHORIAL_CORE_V3_CONTRACT_VERSION and normalized["intent_lock"]["contract_version"] == INTENT_LOCK_PROPERTY_CONTRACT_VERSION:
-            raise ValueError("property-level intent locks require photo-authorial-core/v3")
-        leaked_runtime_labels = [
-            label
-            for label in normalized.get("runtime_forbidden_labels") or []
-            if str(label).casefold() in normalized["baseline_prompt_en"].casefold()
-        ]
-        if leaked_runtime_labels:
-            raise ValueError(
-                "authorial core baseline_prompt_en contains runtime-only labels: "
-                + ", ".join(leaked_runtime_labels)
-            )
-        if core_version == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
-            if "semantic_assertions" not in payload:
-                raise ValueError(
-                    "photo-authorial-core/v3 requires an explicit semantic_assertions list"
-                )
-            normalized["semantic_assertions"] = normalize_semantic_assertions(
-                payload.get("semantic_assertions"),
-                envelope=visual_envelope,
-                intent_lock=normalized["intent_lock"],
-                baseline_prompt_en=normalized["baseline_prompt_en"],
-            )
-            normalized["request_lineage"] = normalize_request_lineage(
-                payload.get("request_lineage"),
-                current_request_id=str(
-                    normalized.get("request_binding", {}).get("request_id") or ""
-                ),
-                envelope=request_envelope,
-                intent_lock=normalized["intent_lock"],
-                baseline_prompt_en=normalized["baseline_prompt_en"],
-                semantic_assertions=normalized["semantic_assertions"],
-            )
-
+    if "semantic_assertions" not in payload:
+        raise ValueError("photo-authorial-core/v3 requires an explicit semantic_assertions list")
+    normalized["semantic_assertions"] = normalize_semantic_assertions(
+        payload.get("semantic_assertions"),
+        envelope=visual_envelope,
+        intent_lock=normalized["intent_lock"],
+        baseline_prompt_en=normalized["baseline_prompt_en"],
+    )
+    normalized["request_lineage"] = normalize_request_lineage(
+        payload.get("request_lineage"),
+        current_request_id=str(normalized.get("request_binding", {}).get("request_id") or ""),
+        envelope=request_envelope,
+        intent_lock=normalized["intent_lock"],
+        baseline_prompt_en=normalized["baseline_prompt_en"],
+        semantic_assertions=normalized["semantic_assertions"],
+    )
     raw_definitions = payload.get("user_definitions", [])
     if raw_definitions is None:
         raw_definitions = []
@@ -9977,22 +8172,13 @@ def normalize_authorial_core(
             raise ValueError(
                 f"authorial core user definition {index} source_text is not grounded in source_request"
             )
-        if (
-            core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-            and request_envelope is not None
-            and source_text.casefold()
-            not in {
-                text.casefold()
-                for text in request_envelope_active_texts(visual_envelope)
-            }
-        ):
+        if request_envelope is not None and source_text.casefold() not in {
+            text.casefold() for text in request_envelope_active_texts(visual_envelope)
+        }:
             raise ValueError(
                 f"authorial core user definition {index} source_text must equal one complete active requesting-user span"
             )
-        if (
-            core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-            and source_text.casefold() == term.casefold()
-        ):
+        if source_text.casefold() == term.casefold():
             raise ValueError(
                 f"authorial core user definition {index} cannot infer a requesting-user definition from a bare term; use interpretation_provenance instead"
             )
@@ -10016,7 +8202,6 @@ def normalize_authorial_core(
                 "prompt_evidence": prompt_evidence,
             }
         )
-
     raw_interpretations = payload.get("interpretation_provenance")
     if not isinstance(raw_interpretations, list) or len(raw_interpretations) > 8:
         raise ValueError(
@@ -10030,16 +8215,8 @@ def normalize_authorial_core(
     seen_interpretation_terms: Set[str] = set()
     for index, item in enumerate(raw_interpretations):
         if not isinstance(item, dict):
-            raise ValueError(
-                f"authorial core interpretation provenance {index} must be an object"
-            )
-        allowed_interpretation_fields = {
-            "term",
-            "source_text",
-            "basis",
-            "resolution",
-            "sources",
-        }
+            raise ValueError(f"authorial core interpretation provenance {index} must be an object")
+        allowed_interpretation_fields = {"term", "source_text", "basis", "resolution", "sources"}
         item_unknown = sorted(set(item) - allowed_interpretation_fields)
         if item_unknown:
             raise ValueError(
@@ -10066,18 +8243,15 @@ def normalize_authorial_core(
             raise ValueError(
                 f"authorial core interpretation provenance {index} source_text is not grounded in source_request"
             )
-        if (
-            core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-            and request_envelope is not None
-            and not request_scope_contains(visual_envelope, source_text)
+        if request_envelope is not None and (
+            not request_scope_contains(visual_envelope, source_text)
         ):
             raise ValueError(
                 f"authorial core interpretation provenance {index} source_text is not grounded in an active requesting-user span"
             )
         if basis not in allowed_interpretation_bases:
             raise ValueError(
-                f"authorial core interpretation provenance {index} basis must be one of "
-                f"{sorted(allowed_interpretation_bases)}"
+                f"authorial core interpretation provenance {index} basis must be one of {sorted(allowed_interpretation_bases)}"
             )
         if len(authorial_request_content_words(resolution)) < 4:
             raise ValueError(
@@ -10088,14 +8262,16 @@ def normalize_authorial_core(
                 f"authorial core interpretation provenance {index} sources must be a list of at most four URLs"
             )
         sources = [clean_spaces(str(value)) for value in raw_sources]
-        if any(not value for value in sources) or len(set(sources)) != len(sources):
+        if any((not value for value in sources)) or len(set(sources)) != len(sources):
             raise ValueError(
                 f"authorial core interpretation provenance {index} sources must be non-empty and distinct"
             )
         if basis == "public_web_research":
             if not sources or any(
-                re.fullmatch(r"https?://[^\s]+", value, flags=re.IGNORECASE) is None
-                for value in sources
+                (
+                    re.fullmatch("https?://[^\\s]+", value, flags=re.IGNORECASE) is None
+                    for value in sources
+                )
             ):
                 raise ValueError(
                     f"authorial core interpretation provenance {index} public web research requires at least one HTTP(S) source"
@@ -10113,85 +8289,69 @@ def normalize_authorial_core(
                 "sources": sources,
             }
         )
-
-    if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        assert request_envelope is not None
-        semantic_source_texts = [
-            str(item.get("source_text") or "")
-            for item in [
-                *normalized["user_definitions"],
-                *normalized["interpretation_provenance"],
-            ]
-            if isinstance(item, dict) and str(item.get("source_text") or "")
-        ]
-        uncovered_interpretation_spans = [
-            str(span.get("span_id") or "")
-            for span in visual_envelope.get("active_spans") or []
-            if isinstance(span, dict)
-            and not any(
-                source.casefold() in str(span.get("text") or "").casefold()
-                for source in semantic_source_texts
+    assert request_envelope is not None
+    semantic_source_texts = [
+        str(item.get("source_text") or "")
+        for item in [*normalized["user_definitions"], *normalized["interpretation_provenance"]]
+        if isinstance(item, dict) and str(item.get("source_text") or "")
+    ]
+    uncovered_interpretation_spans = [
+        str(span.get("span_id") or "")
+        for span in visual_envelope.get("active_spans") or []
+        if isinstance(span, dict)
+        and (
+            not any(
+                (
+                    source.casefold() in str(span.get("text") or "").casefold()
+                    for source in semantic_source_texts
+                )
             )
-        ]
-        if uncovered_interpretation_spans:
-            raise ValueError(
-                "photo-authorial-core/v2 or v3 requires requesting-user definition or interpretation provenance coverage for every active span: "
-                + ", ".join(uncovered_interpretation_spans)
-            )
-
+        )
+    ]
+    if uncovered_interpretation_spans:
+        raise ValueError(
+            "photo-authorial-core/v3 requires requesting-user definition or interpretation provenance coverage for every active span: "
+            + ", ".join(uncovered_interpretation_spans)
+        )
     raw_unresolved = payload.get("unresolved_ambiguities")
     if not isinstance(raw_unresolved, list):
         raise ValueError("authorial core unresolved_ambiguities must be a list")
-    unresolved = [
-        clean_spaces(str(item))
-        for item in raw_unresolved
-        if clean_spaces(str(item))
-    ]
+    unresolved = [clean_spaces(str(item)) for item in raw_unresolved if clean_spaces(str(item))]
     if unresolved:
         raise ValueError(
-            "authorial core cannot be frozen with unresolved ambiguities; ask the requester "
-            "or research the public meaning first: "
+            "authorial core cannot be frozen with unresolved ambiguities; ask the requester or research the public meaning first: "
             + "; ".join(unresolved)
         )
-
     exclusions = normalized["user_exclusions"]
     if len(exclusions) > 12:
         raise ValueError("authorial core user_exclusions must contain at most twelve phrases")
     if len({item.lower() for item in exclusions}) != len(exclusions):
         raise ValueError("authorial core user_exclusions must be distinct")
-    if core_version in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
-        assert request_envelope is not None
-        ungrounded_exclusions = [
-            item
-            for item in exclusions
-            if not request_scope_contains(request_envelope, item)
-        ]
-        if ungrounded_exclusions:
-            raise ValueError(
-                "photo-authorial-core/v2 or v3 user_exclusions must be grounded in active requesting-user spans: "
-                + ", ".join(ungrounded_exclusions)
-            )
-        runtime_label_keys = {
-            str(item).casefold()
-            for item in normalized.get("runtime_forbidden_labels") or []
-        }
-        overlap = [item for item in exclusions if item.casefold() in runtime_label_keys]
-        if overlap:
-            raise ValueError(
-                "a runtime-only label cannot also be a semantic user exclusion: "
-                + ", ".join(overlap)
-            )
+    assert request_envelope is not None
+    ungrounded_exclusions = [
+        item for item in exclusions if not request_scope_contains(request_envelope, item)
+    ]
+    if ungrounded_exclusions:
+        raise ValueError(
+            "photo-authorial-core/v3 user_exclusions must be grounded in active requesting-user spans: "
+            + ", ".join(ungrounded_exclusions)
+        )
+    runtime_label_keys = {
+        str(item).casefold() for item in normalized.get("runtime_forbidden_labels") or []
+    }
+    overlap = [item for item in exclusions if item.casefold() in runtime_label_keys]
+    if overlap:
+        raise ValueError(
+            "a runtime-only label cannot also be a semantic user exclusion: " + ", ".join(overlap)
+        )
     leaked_exclusions = [
-        item
-        for item in exclusions
-        if item.lower() in normalized["baseline_prompt_en"].lower()
+        item for item in exclusions if item.lower() in normalized["baseline_prompt_en"].lower()
     ]
     if leaked_exclusions:
         raise ValueError(
             "authorial core baseline_prompt_en contains excluded phrases: "
             + ", ".join(leaked_exclusions)
         )
-
     raw_style = payload.get("style")
     if raw_style is not None:
         if not isinstance(raw_style, dict):
@@ -10215,17 +8375,9 @@ def normalize_authorial_core(
             )
         if len({item.lower() for item in evidence}) != len(evidence):
             raise ValueError("authorial core style evidence phrases must be distinct")
-        normalized["style"] = {
-            "domain": domain,
-            "family": family,
-            "evidence": evidence,
-        }
-
+        normalized["style"] = {"domain": domain, "family": family, "evidence": evidence}
     canonical_bytes = json.dumps(
-        normalized,
-        ensure_ascii=False,
-        sort_keys=True,
-        separators=(",", ":"),
+        normalized, ensure_ascii=False, sort_keys=True, separators=(",", ":")
     ).encode("utf-8")
     normalized["canonical_sha256"] = hashlib.sha256(canonical_bytes).hexdigest()
     normalized["core_id"] = normalized["canonical_sha256"][:16]
@@ -10578,7 +8730,7 @@ def semantic_character_response_document_ids(data: JsonDict) -> Set[str]:
             allowed.add(key)
             continue
         tags = {str(value) for value in normalize_list(entry.get("tags"))}
-        if tags & {"character_moe_grammar", "character_scene_grammar"}:
+        if tags & {"character_scene_grammar", "character_scene_grammar"}:
             allowed.add(key)
     return allowed
 
@@ -10757,13 +8909,13 @@ def retrieve_character_response_behavior_candidates(
             f"character_mechanism_node:{runtime_id}"
             for runtime_id in normalize_list(profile.get("optional_runtime_node_ids"))
         )
-    legacy_behavior_ids = {
+    unlinked_behavior_ids = {
         key
         for key in behavior_ids
         if (entries_by_key.get(key) or (None, None, None))[0]
         != "character_mechanism_node"
     }
-    ranked_behavior_ids = linked_behavior_ids if concept_rows else legacy_behavior_ids
+    ranked_behavior_ids = linked_behavior_ids if concept_rows else unlinked_behavior_ids
     remaining = max(0, int(limit) - len(concept_rows))
     behavior_rows = (
         rank_bm25f(
@@ -11139,7 +9291,7 @@ def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
 
     Exclusions never become positive retrieval text.  Reusing the established
     no-people parser keeps this adapter generic and avoids introducing a new
-    adult/safety classifier for the v5 path.
+    adult/safety classifier.
     """
 
     exclusions = [
@@ -11317,8 +9469,8 @@ def resolve_visual_profile_hits(
 
     Exact terms may preserve the existing request-scoped hard behavior.
     BM25F- and embedding-only hits are structurally incapable of becoming hard
-    here.  Fielded lexical retrieval is opt-in so compatibility callers retain
-    their historical exact+embedding result until a typed core supplies it.
+    here. Fielded lexical retrieval uses the structured query supplied by the
+    frozen core; exact-only diagnostic calls need no fielded query.
     """
 
     index = visual_profile_index or build_visual_profile_index_payload(registry)
@@ -11367,7 +9519,7 @@ def resolve_visual_profile_hits(
             profile_id = str(lookup_row.get("profile_id") or "")
             term = str(lookup_row.get("term") or "")
             term_is_negated = bool(
-                term and candidate_pack_intent_term_is_negated(text, term)
+                term and intent_term_is_negated(text, term)
             )
             if (
                 not profile_id
@@ -11415,7 +9567,7 @@ def resolve_visual_profile_hits(
             profile,
             requesting_user_text,
             matches=intent_alias_matches,
-            is_negated=candidate_pack_intent_term_is_negated,
+            is_negated=intent_term_is_negated,
         )
         hard_eligible = bool(
             not user_override
@@ -11953,28 +10105,6 @@ def load_visual_intent_arg(
     return normalize_visual_intent(payload, registry, visual_profile_index)
 
 
-def candidate_pack_uses_natural_moe_route_preset(
-    result: JsonDict,
-    preset: JsonDict,
-) -> bool:
-    """Return true only for the wrapper's pre-sample natural-moe route.
-
-    A direct research-preset request must retain its frozen authored scene
-    cycle.  The internal generation-contract event lets a broad natural
-    request use a separate everyday scene pool without changing that public
-    preset or relying on a favorable seed.
-    """
-    trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
-    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
-    preset_id = str(preset.get("id") or "")
-    return any(
-        isinstance(event, dict)
-        and str(event.get("preset_id") or "") == preset_id
-        and str(event.get("source") or "") == "pre_sample_natural_language_moe_route"
-        for event in contract.get("natural_moe_route_preset") or []
-    )
-
-
 def render_scene_blueprint_supports_no_people(blueprint: JsonDict) -> bool:
     """Return true only when a scene explicitly declares a non-human subject.
 
@@ -12006,64 +10136,6 @@ def candidate_pack_select_scene_blueprint(
         return {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     request_text = candidate_pack_scene_blueprint_request_text(result)
-    if candidate_pack_uses_natural_moe_route_preset(result, preset):
-        character_response = (
-            provenance.get("character_response")
-            if isinstance(provenance.get("character_response"), dict)
-            else {}
-        )
-        relationship_register = str(
-            character_response.get("relationship_register") or ""
-        )
-        natural_defaults = [
-            blueprint
-            for blueprint in blueprints
-            if blueprint.get("natural_moe_default") is True
-        ]
-        relationship_defaults = [
-            blueprint
-            for blueprint in natural_defaults
-            if relationship_register
-            in normalize_list(blueprint.get("natural_moe_relationship_registers"))
-        ]
-        unscoped_defaults = [
-            blueprint
-            for blueprint in natural_defaults
-            if not normalize_list(blueprint.get("natural_moe_relationship_registers"))
-        ]
-        if relationship_defaults:
-            natural_defaults = relationship_defaults
-        elif unscoped_defaults:
-            natural_defaults = unscoped_defaults
-        if (
-            not natural_defaults
-            and relationship_register
-            in {"nurturant_benevolence", "directed_care_without_role_inference"}
-        ):
-            # A natural-language care request already routes to the authored
-            # quiet-care preset. Its own bounded adult care scenes are the
-            # intended route, not generic natural-moe fallback scenes. The
-            # relationship register separately decides whether the affect is
-            # explicitly mamang/maternal or merely directed care.
-            natural_defaults = [
-                blueprint
-                for blueprint in blueprints
-                if blueprint.get("natural_moe_default_only") is not True
-            ]
-        if not natural_defaults:
-            preset_id = str(preset.get("id") or "")
-            raise ValueError(
-                f"Preset {preset_id!r} has no everyday render scene for its natural moe route"
-            )
-        blueprints = natural_defaults
-    else:
-        # Additive default-only scenes must not perturb direct preset replay,
-        # semantic research fixtures, or earlier frozen render packs.
-        blueprints = [
-            blueprint
-            for blueprint in blueprints
-            if blueprint.get("natural_moe_default_only") is not True
-        ]
     if intent_explicitly_excludes_people(request_text):
         no_people_blueprints = [
             blueprint
@@ -12098,18 +10170,8 @@ def candidate_pack_select_scene_blueprint(
         blueprints = matching
     scored: List[tuple[int, str, JsonDict, List[str]]] = []
     for blueprint in blueprints:
-        matched_cues = candidate_pack_scene_blueprint_cue_matches(
-            request_text,
-            blueprint,
-        )
-        scored.append(
-            (
-                len(matched_cues),
-                str(blueprint.get("id") or ""),
-                blueprint,
-                matched_cues,
-            )
-        )
+        matched_cues = candidate_pack_scene_blueprint_cue_matches(request_text, blueprint)
+        scored.append((len(matched_cues), str(blueprint.get("id") or ""), blueprint, matched_cues))
     scored.sort(key=lambda row: (-row[0], row[1]))
     if routing_trace is not None:
         routing_trace.clear()
@@ -12130,9 +10192,7 @@ def candidate_pack_select_scene_blueprint(
                         "blueprint_id": blueprint_id,
                         "score": score,
                         "matched_selection_cues": list(matched_cues),
-                        "requires_selection_cue": bool(
-                            blueprint.get("requires_selection_cue")
-                        ),
+                        "requires_selection_cue": bool(blueprint.get("requires_selection_cue")),
                     }
                     for score, blueprint_id, blueprint, matched_cues in scored
                 ],
@@ -12157,11 +10217,7 @@ def candidate_pack_select_scene_blueprint(
         cue_matches_by_id = {row[1]: list(row[3]) for row in scored}
         cue_tie = True
     else:
-        blueprints = [
-            row[2]
-            for row in scored
-            if not bool(row[2].get("requires_selection_cue"))
-        ]
+        blueprints = [row[2] for row in scored if not bool(row[2].get("requires_selection_cue"))]
         cue_matches_by_id = {}
         cue_tie = False
         if not blueprints:
@@ -12175,14 +10231,18 @@ def candidate_pack_select_scene_blueprint(
     offset = int.from_bytes(preset_digest[:8], "big") % len(blueprints)
     try:
         index = (int(seed) + offset) % len(blueprints)
-        selection_source = "requested_scene_function" if requested_function else (
-            "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_cycle"
+        selection_source = (
+            "requested_scene_function"
+            if requested_function
+            else "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_cycle"
         )
     except (TypeError, ValueError):
         digest = hashlib.sha256(f"scene-blueprint|{seed}|{preset_id}".encode("utf-8")).digest()
         index = int.from_bytes(digest[:8], "big") % len(blueprints)
-        selection_source = "requested_scene_function" if requested_function else (
-            "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_hash"
+        selection_source = (
+            "requested_scene_function"
+            if requested_function
+            else "explicit_selection_cue_tie" if cue_tie else "deterministic_seed_hash"
         )
     selected = dict(blueprints[index])
     selected["selection_source"] = selection_source
@@ -12191,10 +10251,7 @@ def candidate_pack_select_scene_blueprint(
             {
                 "selection_source": selection_source,
                 "selected_blueprint_id": str(selected.get("id") or ""),
-                "matched_selection_cues": cue_matches_by_id.get(
-                    str(selected.get("id") or ""),
-                    [],
-                ),
+                "matched_selection_cues": cue_matches_by_id.get(str(selected.get("id") or ""), []),
             }
         )
     return selected
@@ -12816,12 +10873,6 @@ def selection_balance_multiplier(data: JsonDict, entry: JsonDict, request_text: 
     return (implicit_multiplier ** len(matched) if matched else 1.0), matched
 
 
-def candidate_pack_intent_term_is_negated(text: str, term: str) -> bool:
-    """Compatibility wrapper for the shared request-negation policy."""
-
-    return intent_term_is_negated(text, term)
-
-
 def candidate_pack_visual_obligation_request_sources(
     result: JsonDict,
     trace: JsonDict,
@@ -12849,7 +10900,7 @@ def candidate_pack_auto_visual_obligation_matches(
     registry: JsonDict,
     source_rows: Sequence[JsonDict],
 ) -> Dict[str, List[JsonDict]]:
-    """Compatibility projection of the resolver's exact activation lane."""
+    """Project the resolver's exact activation lane into source records."""
 
     resolution = resolve_visual_profile_hits(
         registry,
@@ -13212,21 +11263,7 @@ def candidate_pack_visual_obligations(
         in {"concept_lock", "user_requirement", "additional_requirement", "intent"}
         if clean_spaces(str(row.get("text") or ""))
     }
-    authorial_request = (
-        provenance.get("authorial_request")
-        if isinstance(provenance.get("authorial_request"), dict)
-        else {}
-    )
-    authorial_source_texts = {
-        clean_spaces(str(value)).lower()
-        for value in [
-            authorial_request.get("subject"),
-            authorial_request.get("setting"),
-            authorial_request.get("event"),
-            *(authorial_request.get("style_evidence") or []),
-        ]
-        if clean_spaces(str(value or ""))
-    }
+    authorial_source_texts: Set[str] = set()
     authorial_core = (
         provenance.get("authorial_core")
         if isinstance(provenance.get("authorial_core"), dict)
@@ -13365,7 +11402,7 @@ def candidate_pack_visual_concept_candidates(
     visual_obligations: Optional[JsonDict],
     visual_profile_resolution: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
-    """Expose indirect concepts as optional, non-ranked v4 candidates.
+    """Expose indirect concepts as optional, non-ranked candidates.
 
     The public candidate omits scores, matched terms, and routing reasons.  If
     the composer selects it, its pre-baked opt-in obligation becomes hard in
@@ -13499,12 +11536,7 @@ def candidate_pack_semantic_clarification(
     visual_profile_resolution: Optional[JsonDict] = None,
 ) -> Optional[JsonDict]:
     """Expose deterministic meaning aids separately from creative material."""
-
-    provenance = (
-        result.get("provenance")
-        if isinstance(result.get("provenance"), dict)
-        else {}
-    )
+    provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     core = (
         provenance.get("authorial_core")
         if isinstance(provenance.get("authorial_core"), dict)
@@ -13512,34 +11544,22 @@ def candidate_pack_semantic_clarification(
     )
     candidates: List[JsonDict] = []
     if core:
-        intent_locked = (
-            core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-            and isinstance(core.get("intent_lock"), dict)
-        )
+        if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+            raise ValueError("semantic clarification requires the current authorial core")
         candidates.append(
             {
                 "id": "clarification:authorial-core:interpreted-intent",
-                "source": (
-                    "agent_prepack_interpretation_bound_by_requesting_user_intent"
-                    if intent_locked
-                    else "agent_prepack_interpretation"
-                ),
-                "interpreted_meaning": str(core.get("interpreted_intent") or ""),
+                "source": "agent_prepack_interpretation_bound_by_requesting_user_intent",
+                "interpreted_meaning": str(core.get('interpreted_intent') or ''),
                 "meaning_components": [
-                    str(item)
-                    for item in core.get("visual_priorities") or []
-                    if str(item).strip()
+                    str(item) for item in core.get("visual_priorities") or [] if str(item).strip()
                 ],
                 "applicability": {
-                    "status": "required" if intent_locked else "review_required",
-                    "reason": (
-                        "requesting_user_intent_lock_requires_a_new_core_for_any_material_change"
-                        if intent_locked
-                        else "prepack_agent_hypothesis_governs_unless_a_typed_pack_clarification_supersedes_it"
-                    ),
+                    "status": "required",
+                    "reason": "requesting_user_intent_lock_requires_a_new_core_for_any_material_change",
                 },
-                "required_in_final_prompt": intent_locked,
-                "revisable": not intent_locked,
+                "required_in_final_prompt": True,
+                "revisable": False,
                 "creative_sampling": False,
                 **(
                     {
@@ -13555,26 +11575,18 @@ def candidate_pack_semantic_clarification(
     for definition in core.get("user_definitions") or []:
         if not isinstance(definition, dict):
             continue
-        term = str(definition.get("term") or "")
+        term = str(definition.get('term') or '')
         definition_id = hashlib.sha256(
-            f"user-definition|{term.lower()}|{definition.get('source_text')}".encode(
-                "utf-8"
-            )
+            f"user-definition|{term.lower()}|{definition.get('source_text')}".encode("utf-8")
         ).hexdigest()[:16]
         candidates.append(
             {
                 "id": f"clarification:user-definition:{definition_id}",
                 "source": "requesting_user_definition",
                 "term": term,
-                "interpreted_meaning": str(
-                    definition.get("interpreted_meaning") or ""
-                ),
-                "meaning_components": [
-                    str(definition.get("prompt_evidence") or "")
-                ],
-                "required_prompt_evidence": str(
-                    definition.get("prompt_evidence") or ""
-                ),
+                "interpreted_meaning": str(definition.get('interpreted_meaning') or ''),
+                "meaning_components": [str(definition.get('prompt_evidence') or '')],
+                "required_prompt_evidence": str(definition.get('prompt_evidence') or ''),
                 "applicability": {
                     "status": "required",
                     "reason": "requesting_user_definition_has_precedence",
@@ -13584,7 +11596,6 @@ def candidate_pack_semantic_clarification(
                 "creative_sampling": False,
             }
         )
-
     registry = (
         data.get(VISUAL_OBLIGATIONS_DATA_KEY)
         if isinstance(data.get(VISUAL_OBLIGATIONS_DATA_KEY), dict)
@@ -13592,25 +11603,21 @@ def candidate_pack_semantic_clarification(
     )
     if isinstance(visual_profile_resolution, dict):
         resolution_hits = {
-            str(hit.get("profile_id") or ""): hit
+            str(hit.get('profile_id') or ''): hit
             for hit in visual_profile_resolution.get("hits") or []
-            if isinstance(hit, dict) and str(hit.get("profile_id") or "")
+            if isinstance(hit, dict) and str(hit.get('profile_id') or '')
         }
     else:
         source_rows = candidate_pack_visual_obligation_request_sources(result, trace)
-        direct_matches = candidate_pack_auto_visual_obligation_matches(
-            registry,
-            source_rows,
-        )
+        direct_matches = candidate_pack_auto_visual_obligation_matches(registry, source_rows)
         raw_trigger_rows = [
             row
             for row in source_rows
-            if str(row.get("source") or "")
+            if str(row.get('source') or '')
             in {"concept_lock", "user_requirement", "additional_requirement", "intent"}
         ]
         raw_direct_matches = candidate_pack_auto_visual_obligation_matches(
-            registry,
-            raw_trigger_rows,
+            registry, raw_trigger_rows
         )
         resolution_hits = {
             profile_id: {
@@ -13621,30 +11628,29 @@ def candidate_pack_semantic_clarification(
             for profile_id in set(direct_matches) | set(raw_direct_matches)
         }
     active_ids = {
-        str(item.get("id") or "")
+        str(item.get('id') or '')
         for item in (visual_obligations or {}).get("obligations") or []
         if isinstance(item, dict)
     }
     optional_ids = {
-        str(((item.get("opt_in_contract") or {}).get("obligation") or {}).get("id") or "")
+        str(((item.get('opt_in_contract') or {}).get('obligation') or {}).get('id') or '')
         for item in (visual_concept_candidates or {}).get("candidates") or []
         if isinstance(item, dict)
     }
     for profile in registry.get("profiles") or []:
         if not isinstance(profile, dict):
             continue
-        profile_id = str(profile.get("id") or "")
+        profile_id = str(profile.get('id') or '')
         resolution_hit = resolution_hits.get(profile_id)
         if (
             resolution_hit is None
             and profile_id not in active_ids
-            and profile_id not in optional_ids
+            and (profile_id not in optional_ids)
         ):
             continue
         if (
             isinstance(resolution_hit, dict)
-            and resolution_hit.get("applicability_status")
-            == "user_definition_override"
+            and resolution_hit.get("applicability_status") == "user_definition_override"
         ):
             continue
         runtime = (
@@ -13675,43 +11681,30 @@ def candidate_pack_semantic_clarification(
             and resolution_hit.get("applicability_status") == "context_mismatch"
         ):
             status = "context_mismatch"
-            reason = (
-                "the_authorial_core_resolved_the_term_to_a_different_contextual_sense"
-            )
+            reason = "the_authorial_core_resolved_the_term_to_a_different_contextual_sense"
             required = False
         else:
             status = "requires_existing_adult_context"
-            reason = (
-                "meaning_is_exposed_but_the_existing_adult_context_gate_did_not_activate"
-            )
+            reason = "meaning_is_exposed_but_the_existing_adult_context_gate_did_not_activate"
             required = False
         candidates.append(
             {
                 "id": f"clarification:visual-profile:{profile_id}",
                 "source": "visual_meaning_registry",
                 "profile_id": profile_id,
-                "interpreted_meaning": str(
-                    ((profile.get("semantics") or {}).get("definition"))
-                    or profile.get("composition_instruction")
-                    or ""
-                ),
+                "interpreted_meaning": str((profile.get('semantics') or {}).get('definition') or profile.get('composition_instruction') or ''),
                 "meaning_components": [
                     str(item)
                     for item in concept_candidate.get("concept_terms") or []
                     if str(item).strip()
                 ],
-                "runtime_expression_mode": str(
-                    runtime.get("default_mode") or "definition_only"
-                ),
+                "runtime_expression_mode": str(runtime.get('default_mode') or 'definition_only'),
                 "forbidden_runtime_labels": [
                     str(item)
                     for item in runtime.get("runtime_forbidden_labels") or []
                     if str(item).strip()
                 ],
-                "applicability": {
-                    "status": status,
-                    "reason": reason,
-                },
+                "applicability": {"status": status, "reason": reason},
                 "required_in_final_prompt": required,
                 "revisable": False,
                 "creative_sampling": False,
@@ -13719,11 +11712,11 @@ def candidate_pack_semantic_clarification(
         )
     if not candidates:
         return None
-    candidates.sort(key=lambda item: str(item.get("id") or ""))
+    candidates.sort(key=lambda item: str(item.get('id') or ''))
     return {
         "enabled": True,
         "contract_version": SEMANTIC_CLARIFICATION_CONTRACT_VERSION,
-        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_authorial_core_sha256": str(core.get('canonical_sha256') or ''),
         "selection": "deterministic_contextual_meaning_resolution",
         "affected_by_creativity": False,
         "affected_by_seed": False,
@@ -13733,48 +11726,11 @@ def candidate_pack_semantic_clarification(
             "composed_field": "semantic_clarification_decisions",
             "every_candidate_requires_a_typed_decision": True,
             "required_candidates_cannot_be_rejected": True,
-            "only_revisable_agent_hypotheses_may_be_superseded": True,
-            "revision_must_cite_pack_candidate_ids": True,
+            "governing_meaning_change_requires_new_core": True,
             "applied_evidence_must_be_literal": True,
             "forbidden_runtime_labels_must_remain_absent": True,
         },
     }
-
-
-def candidate_pack_merge_visual_render_gates(
-    moe_response: Optional[JsonDict],
-    visual_obligations: Optional[JsonDict],
-) -> None:
-    if not isinstance(moe_response, dict) or not isinstance(visual_obligations, dict):
-        return
-    qualification = (
-        moe_response.get("render_qualification")
-        if isinstance(moe_response.get("render_qualification"), dict)
-        else None
-    )
-    if qualification is None:
-        return
-    visual_gates = [
-        str(gate)
-        for gate in visual_obligations.get("required_hard_gates") or []
-        if str(gate).strip()
-    ]
-    existing_request_specific = [
-        str(gate)
-        for gate in qualification.get("request_specific_hard_gates") or []
-        if str(gate).strip()
-    ]
-    qualification["request_specific_hard_gates"] = list(
-        dict.fromkeys(existing_request_specific + visual_gates)
-    )
-    existing_required = [
-        str(gate)
-        for gate in qualification.get("required_hard_gates") or []
-        if str(gate).strip()
-    ]
-    qualification["required_hard_gates"] = list(
-        dict.fromkeys(existing_required + visual_gates)
-    )
 
 
 def request_relevance_match_terms(entry: JsonDict, request_text: str, minimum_length: int) -> List[str]:
@@ -13782,7 +11738,7 @@ def request_relevance_match_terms(entry: JsonDict, request_text: str, minimum_le
     matched: List[str] = []
     for term in candidate_pack_tokenize_intent_text(request_text):
         normalized = str(term).lower().strip()
-        if len(normalized) < minimum_length or candidate_pack_intent_term_is_negated(request_text, normalized):
+        if len(normalized) < minimum_length or intent_term_is_negated(request_text, normalized):
             continue
         if normalized in blob and normalized not in matched:
             matched.append(normalized)
@@ -13970,9 +11926,6 @@ def candidate_pack_artistic_final_touch(data: JsonDict, quality_profile: JsonDic
     return {
         "enabled": True,
         "profile_id": profile_id,
-        # Retain the v2 compatibility value in the internal pack. The v3
-        # projection removes this nonfunctional trace entirely.
-        "source": str(policy.get("source") or "agent_final_photo_art_touch"),
         "final_sentence_en": final_sentence,
         "audit_terms": normalize_list(policy.get("audit_terms"))[:12],
     }
@@ -14046,7 +11999,7 @@ STRICT_TAG_FACET_SOURCE_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
-    "character_moe_grammar",
+    "character_scene_grammar",
 }
 
 # These packs are deliberately broad in subject matter but operationally
@@ -14069,12 +12022,12 @@ INTENT_SCOPED_PRESET_DOMAINS = {
     "subculture_practice",
     "worldbuilding_system",
     "cjk_narrative_world",
-    "character_moe_grammar",
+    "character_scene_grammar",
 }
 
 # Slot entries in the new packs already carry one of these authored tags. The
 # mapping prevents a generic overlap such as ``food`` or ``documentary`` from
-# making a fermentation batch or camera-trap record eligible in a legacy
+# making a fermentation batch or camera-trap record eligible in a generic
 # portrait, while preserving direct preset filters and semantic discovery.
 INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "biodiversity": "biodiversity_monitoring",
@@ -14091,7 +12044,7 @@ INTENT_SCOPED_ENTRY_DOMAIN_TAGS = {
     "subculture_practice": "subculture_practice",
     "worldbuilding_system": "worldbuilding_system",
     "cjk_narrative_world": "cjk_narrative_world",
-    "character_moe_grammar": "character_moe_grammar",
+    "character_scene_grammar": "character_scene_grammar",
 }
 
 
@@ -14100,12 +12053,12 @@ def candidate_pack_quality_inferred_tag_facet_keys(
     slot: str,
     strict: bool = False,
 ) -> Set[str]:
-    """Limit implicit tag-to-facet inference for migrated typed domains.
+    """Limit implicit tag-to-facet inference for typed domains.
 
     Explicit ``facets`` remain valid on every entry. The slot boundary only
     prevents incidental tokens such as ``street`` in a focus-mode tag from
-    being misread as the scene's actual place type. Legacy domains retain
-    their historical inference until their dictionaries are facet-migrated.
+    being misread as the scene's actual place type. Untyped domains use
+    the full vocabulary for tag-to-facet inference.
     """
     allowed = set(vocab)
     if not strict:
@@ -14314,8 +12267,8 @@ def candidate_pack_quality_profile_id(data: JsonDict, preset: JsonDict, facets: 
         return "visual_structure"
     if "cjk_narrative_world" in domains:
         return "cjk_narrative_world"
-    if "character_moe_grammar" in domains:
-        return "character_moe_grammar"
+    if "character_scene_grammar" in domains:
+        return "character_scene_grammar"
     if "food" in subject_kinds or "food" in domains:
         return "food"
     if "architecture" in domains or "real_estate" in domains or any(term in blob for term in ("architecture", "interior", "building")):
@@ -15127,24 +13080,9 @@ def candidate_pack_visual_proposition(
 
 
 def candidate_pack_contract_version(version: str) -> str:
-    normalized = str(version or DEFAULT_CANDIDATE_PACK_VERSION).strip().lower()
-    aliases = {
-        "v2": CANDIDATE_PACK_CONTRACT_V2,
-        CANDIDATE_PACK_CONTRACT_V2: CANDIDATE_PACK_CONTRACT_V2,
-        "v3": CANDIDATE_PACK_CONTRACT_V3,
-        CANDIDATE_PACK_CONTRACT_V3: CANDIDATE_PACK_CONTRACT_V3,
-        "v4": CANDIDATE_PACK_CONTRACT_V4,
-        CANDIDATE_PACK_CONTRACT_V4: CANDIDATE_PACK_CONTRACT_V4,
-        "v5": CANDIDATE_PACK_CONTRACT_V5,
-        CANDIDATE_PACK_CONTRACT_V5: CANDIDATE_PACK_CONTRACT_V5,
-        "v6": CANDIDATE_PACK_CONTRACT_V6,
-        CANDIDATE_PACK_CONTRACT_V6: CANDIDATE_PACK_CONTRACT_V6,
-    }
-    if normalized not in aliases:
-        raise ValueError(
-            f"Unsupported candidate-pack version {version!r}; expected one of {CANDIDATE_PACK_VERSIONS}"
-        )
-    return aliases[normalized]
+    if version not in {"v6", CANDIDATE_PACK_CONTRACT_V6}:
+        raise ValueError(f"unsupported candidate-pack version: {version!r}; expected v6")
+    return CANDIDATE_PACK_CONTRACT_V6
 
 
 def candidate_pack_recompute_id(pack: JsonDict) -> JsonDict:
@@ -15154,22 +13092,6 @@ def candidate_pack_recompute_id(pack: JsonDict) -> JsonDict:
         json.dumps(hashable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     ) or ""
     return pack
-
-
-def candidate_pack_v3_alias_value(value: Any) -> Any:
-    if isinstance(value, dict):
-        return {
-            str(key): candidate_pack_v3_alias_value(item)
-            for key, item in value.items()
-        }
-    if isinstance(value, list):
-        return [candidate_pack_v3_alias_value(item) for item in value]
-    if not isinstance(value, str):
-        return value
-    aliased = CANDIDATE_PACK_V3_PROFILE_ALIASES.get(value, value)
-    for old_id, new_id in CANDIDATE_PACK_V3_ID_ALIASES.items():
-        aliased = aliased.replace(old_id, new_id)
-    return aliased
 
 
 def candidate_pack_remove_quality_profile_sources(value: Any) -> None:
@@ -15183,7 +13105,7 @@ def candidate_pack_remove_quality_profile_sources(value: Any) -> None:
             candidate_pack_remove_quality_profile_sources(item)
 
 
-CANDIDATE_PACK_V4_CONCEPT_STOPWORDS = {
+CANDIDATE_PACK_CONCEPT_STOPWORDS = {
     "a",
     "an",
     "and",
@@ -15216,7 +13138,7 @@ CANDIDATE_PACK_V4_CONCEPT_STOPWORDS = {
 }
 
 
-def candidate_pack_v4_concept_terms(
+def candidate_pack_concept_terms(
     values: Sequence[Any],
     *,
     salt: str,
@@ -15224,7 +13146,7 @@ def candidate_pack_v4_concept_terms(
 ) -> List[str]:
     """Reduce copyable candidate prose to an unordered vocabulary.
 
-    v4 deliberately does not expose a source sentence that can be pasted into
+    The public pack does not expose a source sentence that can be pasted into
     a prompt.  Technical terms and semantic cues remain available, but their
     source order is destroyed so the composer must decide how they relate.
     """
@@ -15248,7 +13170,7 @@ def candidate_pack_v4_concept_terms(
     unique: Dict[str, str] = {}
     for token in tokens:
         normalized = token.strip().lower()
-        if not normalized or normalized in CANDIDATE_PACK_V4_CONCEPT_STOPWORDS:
+        if not normalized or normalized in CANDIDATE_PACK_CONCEPT_STOPWORDS:
             continue
         unique.setdefault(normalized, normalized if token.isascii() else token.strip())
     ordered = sorted(
@@ -15260,7 +13182,7 @@ def candidate_pack_v4_concept_terms(
     return ordered[: max(1, limit)]
 
 
-def candidate_pack_v4_project_candidate(candidate: JsonDict, *, salt: str) -> None:
+def candidate_pack_project_candidate(candidate: JsonDict, *, salt: str) -> None:
     values: List[Any] = [
         candidate.pop("label_en", None),
         candidate.pop("label_ko", None),
@@ -15270,7 +13192,7 @@ def candidate_pack_v4_project_candidate(candidate: JsonDict, *, salt: str) -> No
         candidate.get("candidate_id"),
         candidate.get("tags"),
     ]
-    concept_terms = candidate_pack_v4_concept_terms(values, salt=salt)
+    concept_terms = candidate_pack_concept_terms(values, salt=salt)
     if concept_terms:
         candidate["concept_terms"] = concept_terms
     candidate["content_form"] = "unordered_inspiration_terms"
@@ -15278,13 +13200,10 @@ def candidate_pack_v4_project_candidate(candidate: JsonDict, *, salt: str) -> No
         candidate.pop(key, None)
 
 
-def candidate_pack_v4_project_candidate_surfaces(projected: JsonDict) -> None:
+def candidate_pack_project_candidate_surfaces(projected: JsonDict) -> None:
     for candidate in projected.get("presets") or []:
         if isinstance(candidate, dict):
-            candidate_pack_v4_project_candidate(
-                candidate,
-                salt=str(candidate.get("id") or "preset"),
-            )
+            candidate_pack_project_candidate(candidate, salt=str(candidate.get("id") or "preset"))
     slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
     for slot_payload in slots.values():
         if not isinstance(slot_payload, dict):
@@ -15294,9 +13213,8 @@ def candidate_pack_v4_project_candidate_surfaces(projected: JsonDict) -> None:
         slot_payload["candidate_order"] = "seed_shuffled_non_preferential"
         for candidate in slot_payload.get("candidates") or []:
             if isinstance(candidate, dict):
-                candidate_pack_v4_project_candidate(
-                    candidate,
-                    salt=str(candidate.get("id") or slot_payload.get("slot") or "slot"),
+                candidate_pack_project_candidate(
+                    candidate, salt=str(candidate.get("id") or slot_payload.get("slot") or "slot")
                 )
     proposition = (
         projected.get("visual_proposition")
@@ -15306,41 +13224,17 @@ def candidate_pack_v4_project_candidate_surfaces(projected: JsonDict) -> None:
     for key in ("core_candidates", "tension_candidates"):
         for candidate in proposition.get(key) or []:
             if isinstance(candidate, dict):
-                candidate_pack_v4_project_candidate(
-                    candidate,
-                    salt=str(candidate.get("id") or key),
-                )
-    hybrid = (
-        projected.get("hybrid_augmentation")
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else {}
-    )
-    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
+                candidate_pack_project_candidate(candidate, salt=str(candidate.get("id") or key))
+    adult = projected.get("adult_appeal") or {}
     axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
     for axis in axes.values():
         if not isinstance(axis, dict):
             continue
         for candidate in axis.get("candidate_inventory") or []:
             if isinstance(candidate, dict):
-                candidate_pack_v4_project_candidate(
-                    candidate,
-                    salt=str(candidate.get("id") or "adult-axis"),
+                candidate_pack_project_candidate(
+                    candidate, salt=str(candidate.get("id") or "adult-axis")
                 )
-    route_contract = (
-        hybrid.get("route_contract")
-        if isinstance(hybrid.get("route_contract"), dict)
-        else {}
-    )
-    for route in route_contract.get("routes") or []:
-        if not isinstance(route, dict):
-            continue
-        for detail in route.get("details") or []:
-            if isinstance(detail, dict):
-                candidate_pack_v4_project_candidate(
-                    detail,
-                    salt=str(detail.get("candidate_id") or route.get("id") or "route"),
-                )
-
     exploration = (
         projected.get("creative_exploration")
         if isinstance(projected.get("creative_exploration"), dict)
@@ -15365,11 +13259,11 @@ def candidate_pack_v4_project_candidate_surfaces(projected: JsonDict) -> None:
         }
 
 
-def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
+def candidate_pack_project_quality_surfaces(projected: JsonDict) -> None:
     """Turn sampler-derived quality choices into optional authorial pools.
 
     The private generator may use a sampled prompt to discover relevant craft
-    material.  v4 must not reveal which axes, strategy, or refinement won that
+    material.  The public pack must not reveal which axes, strategy, or refinement won that
     internal ranking, because those fields become a second prompt template.
     """
 
@@ -15381,7 +13275,7 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
     suggested = integration.pop("suggested_phrases", None)
     if isinstance(suggested, dict):
         integration["suggested_concepts"] = {
-            str(category): candidate_pack_v4_concept_terms(
+            str(category): candidate_pack_concept_terms(
                 phrases if isinstance(phrases, list) else [phrases],
                 salt=f"integration:{category}",
             )
@@ -15402,7 +13296,7 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
         {
             "id": f"integration:{category}",
             "category": category,
-            "concept_terms": candidate_pack_v4_concept_terms(
+            "concept_terms": candidate_pack_concept_terms(
                 [category, category_terms.get(category)],
                 salt=f"integration-category:{category}",
                 limit=40,
@@ -15445,7 +13339,7 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
         else {}
     )
     proposition["category_terms"] = {
-        str(category): candidate_pack_v4_concept_terms(
+        str(category): candidate_pack_concept_terms(
             terms if isinstance(terms, list) else [terms],
             salt=f"proposition:{category}",
             limit=40,
@@ -15486,7 +13380,7 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
             {
                 "id": f"craft:{dimension_id}",
                 "dimension": dimension_id,
-                "concept_terms": candidate_pack_v4_concept_terms(
+                "concept_terms": candidate_pack_concept_terms(
                     [
                         dimension_id,
                         dimension.get("label"),
@@ -15537,7 +13431,7 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
         else {}
     )
     final_sentence = final_touch.pop("final_sentence_en", None)
-    final_touch_terms = candidate_pack_v4_concept_terms(
+    final_touch_terms = candidate_pack_concept_terms(
         [final_sentence, final_touch.get("audit_terms")],
         salt="artistic-final-touch",
     )
@@ -15555,21 +13449,10 @@ def candidate_pack_v4_project_quality_surfaces(projected: JsonDict) -> None:
         )
 
 
-def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
-    prepack_authorial_request = (
-        projected.get("authorial_request")
-        if isinstance(projected.get("authorial_request"), dict)
-        else None
-    )
-    governing_request_sha256 = (
-        str(prepack_authorial_request.get("canonical_sha256") or "")
-        if isinstance(prepack_authorial_request, dict)
-        else ""
-    )
+def candidate_pack_project_scene(projected: JsonDict) -> bool:
+    governing_request_sha256 = ""
     scene_contract = (
-        projected.get("scene_contract")
-        if isinstance(projected.get("scene_contract"), dict)
-        else {}
+        projected.get("scene_contract") if isinstance(projected.get("scene_contract"), dict) else {}
     )
     render_contract = (
         projected.get("render_contract")
@@ -15588,24 +13471,24 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
         if not isinstance(group, dict):
             continue
         if group.get("source") != "selected_render_blueprint":
-            if str(group.get("strategy") or "") != "atomic_scene":
+            if str(group.get("strategy")) != "atomic_scene":
                 continue
             optional_slots: JsonDict = {}
             for slot, slot_contract in (group.get("slots") or {}).items():
                 if not isinstance(slot_contract, dict):
                     continue
-                slot_payload = slots.get(str(slot)) if isinstance(slots.get(str(slot)), dict) else {}
+                slot_payload = (
+                    slots.get(str(slot)) if isinstance(slots.get(str(slot)), dict) else {}
+                )
                 exposed_ids = {
-                    str(candidate.get("entry_id") or ""): str(candidate.get("id") or "")
+                    str(candidate.get("entry_id")): str(candidate.get("id"))
                     for candidate in slot_payload.get("candidates") or []
                     if isinstance(candidate, dict)
-                    and str(candidate.get("entry_id") or "")
-                    and str(candidate.get("id") or "")
+                    and str(candidate.get("entry_id"))
+                    and str(candidate.get("id"))
                 }
                 allowed_entries = {
-                    str(item)
-                    for item in slot_contract.get("allowed_entry_ids") or []
-                    if str(item)
+                    str(item) for item in slot_contract.get("allowed_entry_ids") or [] if str(item)
                 }
                 allowed_candidate_ids = [
                     candidate_id
@@ -15641,55 +13524,20 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
             {
                 "group": "authorial_scene",
                 "strategy": "authorial_scene",
-                "source": (
-                    "prepack_authorial_request"
-                    if governing_request_sha256
-                    else "selected_render_blueprint_abstraction"
-                ),
+                "source": "selected_render_blueprint_abstraction",
                 "fail_closed": True,
                 "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
                 "required_authored_slots": required_slots,
-                "scene_functions": (
-                    ["agent_authored_event"]
-                    if governing_request_sha256
-                    else normalize_list(selected_scene.get("scene_functions"))
+                "scene_functions": normalize_list(selected_scene.get("scene_functions")),
+                "diegetic_visual_provenance": normalize_list(
+                    selected_scene.get("diegetic_visual_provenance")
                 ),
-                "diegetic_visual_provenance": (
-                    ["agent_prepack_authorial_request"]
-                    if governing_request_sha256
-                    else normalize_list(selected_scene.get("diegetic_visual_provenance"))
+                "relationship_stakes": normalize_list(selected_scene.get("relationship_stakes")),
+                "genre_anchors": normalize_list(selected_scene.get("genre_anchors")),
+                "visual_evidence_types": normalize_list(
+                    selected_scene.get("visual_evidence_types")
                 ),
-                "relationship_stakes": (
-                    []
-                    if governing_request_sha256
-                    else normalize_list(selected_scene.get("relationship_stakes"))
-                ),
-                "genre_anchors": (
-                    ["photographic_scene", "agent_prepack_authored_concept"]
-                    if governing_request_sha256
-                    else normalize_list(selected_scene.get("genre_anchors"))
-                ),
-                "visual_evidence_types": (
-                    ["subject", "event", "setting", "style_evidence"]
-                    if governing_request_sha256
-                    else normalize_list(selected_scene.get("visual_evidence_types"))
-                ),
-                **(
-                    {
-                        "governing_request_sha256": governing_request_sha256,
-                        "governing_request_fields": [
-                            "subject",
-                            "setting",
-                            "event",
-                            "style_domain",
-                            "style_family",
-                            "style_evidence",
-                            "variation_key",
-                        ],
-                    }
-                    if governing_request_sha256
-                    else {}
-                ),
+                **{},
                 "composition_policy": {
                     "invent_scene_atoms_instead_of_copying_a_source_scene": True,
                     "source_sentence_reuse_forbidden": True,
@@ -15706,9 +13554,7 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
                         "relationship",
                     ],
                     "prompt_evidence_must_be_literal": True,
-                    "prepack_authorial_request_is_governing": bool(
-                        governing_request_sha256
-                    ),
+                    "prepack_authorial_request_is_governing": bool(""),
                 },
             }
         )
@@ -15720,18 +13566,9 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
             "enabled": True,
             "contract_version": CANDIDATE_PACK_AUTHORIAL_SCENE_VERSION,
             "required_authored_slots": ["subject", "action", "location", "prop"],
-            **(
-                {
-                    "governing_request_sha256": governing_request_sha256,
-                    "instruction": (
-                        "Realize the frozen pre-pack authorial request as one coherent scene; preserve its subject, event, setting and style evidence without reconstructing a private source blueprint."
-                    ),
-                }
-                if governing_request_sha256
-                else {
-                    "instruction": "Invent one coherent scene from the abstract functions and stakes; do not reconstruct or imitate a source blueprint."
-                }
-            ),
+            **{
+                "instruction": "Invent one coherent scene from the abstract functions and stakes; do not reconstruct or imitate a source blueprint."
+            },
         }
     if authored_scene_enabled and optional_group_count:
         scene_contract["strategy"] = "authorial_scene_with_optional_inspiration"
@@ -15742,72 +13579,17 @@ def candidate_pack_v4_project_scene(projected: JsonDict) -> bool:
     return authored_scene_enabled
 
 
-def candidate_pack_v4_project_hybrid(projected: JsonDict) -> None:
-    hybrid = (
-        projected.get("hybrid_augmentation")
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else None
-    )
-    if not isinstance(hybrid, dict):
-        return
-    hybrid["contract_version"] = CANDIDATE_PACK_HYBRID_AUTHORIAL_CONTRACT_VERSION
-    hybrid["source"] = "candidate_pack_authorial_inspiration_pool"
-    hybrid["purpose"] = "offer_optional_concept_vocabulary_that_the_agent_may_reject_or_artistically_transform"
-    hybrid["core_policy"] = {
-        "agent_authored_concept_core": True,
-        "candidate_pack_may_inspire_but_not_prescribe": True,
-        "candidate_source_phrases_are_not_exposed": True,
-        "verbatim_candidate_adoption_forbidden": True,
-        "agent_may_reject_every_route": True,
-    }
-    adoption = hybrid.get("adoption_contract") if isinstance(hybrid.get("adoption_contract"), dict) else {}
-    hybrid["adoption_contract"] = {
-        "decision_states": ["transformed", "rejected"],
-        "detail_functions": adoption.get(
-            "detail_functions",
-            ["concept_bridge", "material_detail", "pose_camera", "viewer_hook", "second_reading"],
-        ),
-        "minimum_transformed_if_selected": 1,
-        "maximum_transformed": 3,
-        "every_selected_route_candidate_requires_a_decision": True,
-        "transformed_candidate_must_be_chosen": True,
-        "rejected_candidate_must_not_be_chosen": True,
-        "artistic_interpretation_required": True,
-        "transformation_description_required": True,
-        "transformation_dimensions": [
-            "context",
-            "causality",
-            "gesture",
-            "material",
-            "framing",
-            "light",
-            "mood",
-            "timing",
-        ],
-        "prompt_evidence_must_be_literal_and_newly_authored": True,
-        "source_term_only_evidence_forbidden": True,
-        "marginal_contribution_required": True,
-    }
-    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
-    requirements = (
-        adult.get("composition_requirements")
-        if isinstance(adult.get("composition_requirements"), dict)
-        else {}
-    )
+def candidate_pack_project_adult_requirements(projected: JsonDict) -> None:
+    adult = projected.get('adult_appeal') or {}
+    requirements = adult.get('composition_requirements') if isinstance(adult.get('composition_requirements'), dict) else {}
     if requirements:
-        requirements.pop("one_accepted_detail_per_active_axis", None)
-        requirements["authorial_axis_interpretation_per_active_axis"] = True
-        requirements["candidate_adoption_per_active_axis"] = "optional"
-    hybrid["evaluation_boundary"] = (
-        "audit_pass_proves_authorial_decisions_provenance_and_literal_binding_only;_"
-        "rendered_detail_taste_and_audience_response_require_pixel_and_human_evaluation"
-    )
+        requirements.pop('one_accepted_detail_per_active_axis', None)
+        requirements['authorial_axis_interpretation_per_active_axis'] = True
+        requirements['candidate_adoption_per_active_axis'] = 'optional'
 
 
-def candidate_pack_v4_project_authorial_open_slots(
-    projected: JsonDict,
-    *,
-    authored_scene_enabled: bool,
+def candidate_pack_project_authorial_open_slots(
+    projected: JsonDict, *, authored_scene_enabled: bool
 ) -> Set[str]:
     slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
     role_policy = (
@@ -15817,7 +13599,7 @@ def candidate_pack_v4_project_authorial_open_slots(
     )
     opened: List[JsonDict] = []
     removed_candidate_ids: Set[str] = set()
-    for slot in CANDIDATE_PACK_V4_AUTHORIAL_SCENE_SLOTS:
+    for slot in CANDIDATE_PACK_AUTHORIAL_SCENE_SLOTS:
         payload = slots.get(slot) if isinstance(slots.get(slot), dict) else None
         candidates = payload.get("candidates") if isinstance(payload, dict) else None
         should_open = bool(
@@ -15828,28 +13610,30 @@ def candidate_pack_v4_project_authorial_open_slots(
         if not should_open:
             continue
         removed_candidate_ids.update(
-            str(candidate.get("id") or "")
-            for candidate in candidates
-            if isinstance(candidate, dict) and str(candidate.get("id") or "")
+            (
+                str(candidate.get("id") or "")
+                for candidate in candidates
+                if isinstance(candidate, dict) and str(candidate.get("id") or "")
+            )
         )
         if not authored_scene_enabled:
-            constraints: JsonDict = {
-                "preserve_user_intent_and_hard_contracts": True,
-            }
+            constraints: JsonDict = {"preserve_user_intent_and_hard_contracts": True}
             intent_constraints = (
-                ((projected.get("coverage") or {}).get("intent_constraints") or {})
+                (projected.get("coverage") or {}).get("intent_constraints") or {}
                 if isinstance(projected.get("coverage"), dict)
                 else {}
             )
-            if slot == "subject" and isinstance(intent_constraints, dict) and intent_constraints.get("no_people"):
+            if (
+                slot == "subject"
+                and isinstance(intent_constraints, dict)
+                and intent_constraints.get("no_people")
+            ):
                 constraints["no_people"] = True
             if slot == "location" and role_policy.get("enabled"):
                 constraints.update(
                     {
                         "scene_family": str(role_policy.get("scene_family") or ""),
-                        "forbidden_concepts": normalize_list(
-                            role_policy.get("forbidden_locations")
-                        )
+                        "forbidden_concepts": normalize_list(role_policy.get("forbidden_locations"))
                         + normalize_list(role_policy.get("discouraged_generic_locations")),
                     }
                 )
@@ -15864,11 +13648,9 @@ def candidate_pack_v4_project_authorial_open_slots(
                 }
             )
         slots.pop(slot, None)
-
     if opened:
         projected["authorial_open_slots"] = opened
-
-    if role_policy.get("enabled") and any(row.get("slot") == "location" for row in opened):
+    if role_policy.get("enabled") and any((row.get("slot") == "location" for row in opened)):
         projected["role_scene_policy"] = {
             "enabled": True,
             "enforce": bool(role_policy.get("enforce")),
@@ -15879,50 +13661,29 @@ def candidate_pack_v4_project_authorial_open_slots(
             + normalize_list(role_policy.get("discouraged_generic_locations")),
             "reason": str(role_policy.get("reason") or "role-compatible authored location"),
         }
-
     if not removed_candidate_ids:
         return removed_candidate_ids
-    hybrid = (
-        projected.get("hybrid_augmentation")
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else {}
-    )
-    route_contract = (
-        hybrid.get("route_contract")
-        if isinstance(hybrid.get("route_contract"), dict)
-        else {}
-    )
-    for route in route_contract.get("routes") or []:
-        if not isinstance(route, dict):
-            continue
-        route["details"] = [
-            detail
-            for detail in route.get("details") or []
-            if isinstance(detail, dict)
-            and str(detail.get("candidate_id") or "") not in removed_candidate_ids
-        ]
-        route["candidate_ids"] = [
-            str(detail.get("candidate_id") or "")
-            for detail in route["details"]
-            if str(detail.get("candidate_id") or "")
-        ]
     projected["conflicts"] = [
         conflict
         for conflict in projected.get("conflicts") or []
         if isinstance(conflict, dict)
-        and not any(
-            str(candidate_id) in removed_candidate_ids
-            for candidate_id in conflict.get("candidates") or []
+        and (
+            not any(
+                (
+                    str(candidate_id) in removed_candidate_ids
+                    for candidate_id in conflict.get("candidates") or []
+                )
+            )
         )
     ]
     return removed_candidate_ids
 
 
-def candidate_pack_v4_prune_removed_candidate_references(
+def candidate_pack_prune_removed_candidate_references(
     projected: JsonDict,
     removed_candidate_ids: Set[str],
 ) -> None:
-    """Remove indirect handles to scene candidates withheld from v4."""
+    """Remove indirect handles to scene candidates withheld from the public pack."""
 
     if not removed_candidate_ids:
         return
@@ -15993,7 +13754,7 @@ def candidate_pack_v4_prune_removed_candidate_references(
         scene_contract["strategy"] = "optional_inspiration_groups"
 
 
-def candidate_pack_v4_project_private_routing(projected: JsonDict) -> None:
+def candidate_pack_project_private_routing(projected: JsonDict) -> None:
     """Keep replay metadata without publishing the private sampled recipe."""
 
     presets = projected.get("presets") if isinstance(projected.get("presets"), list) else []
@@ -16068,7 +13829,7 @@ def candidate_pack_v4_project_private_routing(projected: JsonDict) -> None:
     }
 
 
-def candidate_pack_v4_project_quality_profile(projected: JsonDict) -> None:
+def candidate_pack_project_quality_profile(projected: JsonDict) -> None:
     """Expose only request-critical subject kind, not a sampled style profile."""
 
     profile = (
@@ -16087,7 +13848,7 @@ def candidate_pack_v4_project_quality_profile(projected: JsonDict) -> None:
     }
 
 
-def candidate_pack_v4_shuffle(items: List[Any], *, seed: str, scope: str) -> None:
+def candidate_pack_shuffle(items: List[Any], *, seed: str, scope: str) -> None:
     items.sort(
         key=lambda item: hashlib.sha256(
             f"authorial-order|{seed}|{scope}|{json.dumps(item, ensure_ascii=False, sort_keys=True, separators=(',', ':'))}".encode(
@@ -16097,139 +13858,62 @@ def candidate_pack_v4_shuffle(items: List[Any], *, seed: str, scope: str) -> Non
     )
 
 
-def candidate_pack_v4_remove_selection_answer_keys(value: Any) -> None:
+def candidate_pack_remove_selection_answer_keys(value: Any) -> None:
     if isinstance(value, dict):
         value.pop("covered_by", None)
         for item in value.values():
-            candidate_pack_v4_remove_selection_answer_keys(item)
+            candidate_pack_remove_selection_answer_keys(item)
     elif isinstance(value, list):
         for item in value:
-            candidate_pack_v4_remove_selection_answer_keys(item)
+            candidate_pack_remove_selection_answer_keys(item)
 
 
-def candidate_pack_v4_shuffle_candidate_surfaces(projected: JsonDict, *, seed: str) -> None:
-    presets = projected.get("presets") if isinstance(projected.get("presets"), list) else []
-    candidate_pack_v4_shuffle(presets, seed=seed, scope="presets")
-    slots = projected.get("slots") if isinstance(projected.get("slots"), dict) else {}
+def candidate_pack_shuffle_candidate_surfaces(projected: JsonDict, *, seed: str) -> None:
+    presets = projected.get('presets') if isinstance(projected.get('presets'), list) else []
+    candidate_pack_shuffle(presets, seed=seed, scope='presets')
+    slots = projected.get('slots') if isinstance(projected.get('slots'), dict) else {}
     for slot, payload in slots.items():
-        if not isinstance(payload, dict) or not isinstance(payload.get("candidates"), list):
+        if not isinstance(payload, dict) or not isinstance(payload.get('candidates'), list):
             continue
-        candidate_pack_v4_shuffle(payload["candidates"], seed=seed, scope=f"slot:{slot}")
-    proposition = (
-        projected.get("visual_proposition")
-        if isinstance(projected.get("visual_proposition"), dict)
-        else {}
-    )
-    for key in ("core_candidates", "tension_candidates"):
+        candidate_pack_shuffle(payload['candidates'], seed=seed, scope=f'slot:{slot}')
+    proposition = projected.get('visual_proposition') if isinstance(projected.get('visual_proposition'), dict) else {}
+    for key in ('core_candidates', 'tension_candidates'):
         if isinstance(proposition.get(key), list):
-            candidate_pack_v4_shuffle(proposition[key], seed=seed, scope=f"proposition:{key}")
-    visual_concepts = (
-        projected.get("visual_concept_candidates")
-        if isinstance(projected.get("visual_concept_candidates"), dict)
-        else {}
-    )
-    visual_candidates = (
-        visual_concepts.get("candidates")
-        if isinstance(visual_concepts.get("candidates"), list)
-        else []
-    )
+            candidate_pack_shuffle(proposition[key], seed=seed, scope=f'proposition:{key}')
+    visual_concepts = projected.get('visual_concept_candidates') if isinstance(projected.get('visual_concept_candidates'), dict) else {}
+    visual_candidates = visual_concepts.get('candidates') if isinstance(visual_concepts.get('candidates'), list) else []
     for candidate in visual_candidates:
-        if isinstance(candidate, dict) and isinstance(candidate.get("concept_terms"), list):
-            candidate_pack_v4_shuffle(
-                candidate["concept_terms"],
-                seed=seed,
-                scope=f"visual-concept-terms:{candidate.get('id') or ''}",
-            )
-    candidate_pack_v4_shuffle(
-        visual_candidates,
-        seed=seed,
-        scope="visual-concepts",
-    )
-    integration = (
-        projected.get("photographic_integration")
-        if isinstance(projected.get("photographic_integration"), dict)
-        else {}
-    )
-    if isinstance(integration.get("category_candidates"), list):
-        candidate_pack_v4_shuffle(
-            integration["category_candidates"],
-            seed=seed,
-            scope="photographic-integration",
-        )
-    craft = (
-        projected.get("photographic_craft")
-        if isinstance(projected.get("photographic_craft"), dict)
-        else {}
-    )
-    if isinstance(craft.get("dimension_candidates"), list):
-        candidate_pack_v4_shuffle(
-            craft["dimension_candidates"],
-            seed=seed,
-            scope="photographic-craft",
-        )
-    motif_budget = (
-        projected.get("motif_budget")
-        if isinstance(projected.get("motif_budget"), dict)
-        else {}
-    )
-    motif_taxonomy = (
-        motif_budget.get("motif_taxonomy")
-        if isinstance(motif_budget.get("motif_taxonomy"), dict)
-        else {}
-    )
+        if isinstance(candidate, dict) and isinstance(candidate.get('concept_terms'), list):
+            candidate_pack_shuffle(candidate['concept_terms'], seed=seed, scope=f"visual-concept-terms:{candidate.get('id') or ''}")
+    candidate_pack_shuffle(visual_candidates, seed=seed, scope='visual-concepts')
+    integration = projected.get('photographic_integration') if isinstance(projected.get('photographic_integration'), dict) else {}
+    if isinstance(integration.get('category_candidates'), list):
+        candidate_pack_shuffle(integration['category_candidates'], seed=seed, scope='photographic-integration')
+    craft = projected.get('photographic_craft') if isinstance(projected.get('photographic_craft'), dict) else {}
+    if isinstance(craft.get('dimension_candidates'), list):
+        candidate_pack_shuffle(craft['dimension_candidates'], seed=seed, scope='photographic-craft')
+    motif_budget = projected.get('motif_budget') if isinstance(projected.get('motif_budget'), dict) else {}
+    motif_taxonomy = motif_budget.get('motif_taxonomy') if isinstance(motif_budget.get('motif_taxonomy'), dict) else {}
     for motif, terms in motif_taxonomy.items():
         if isinstance(terms, list):
-            candidate_pack_v4_shuffle(
-                terms,
-                seed=seed,
-                scope=f"motif:{motif}",
-            )
-    hybrid = (
-        projected.get("hybrid_augmentation")
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else {}
-    )
-    adult = hybrid.get("adult_appeal") if isinstance(hybrid.get("adult_appeal"), dict) else {}
-    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
+            candidate_pack_shuffle(terms, seed=seed, scope=f'motif:{motif}')
+    adult = projected.get('adult_appeal') or {}
+    axes = adult.get('axes') if isinstance(adult.get('axes'), dict) else {}
     for axis_id, axis in axes.items():
-        if isinstance(axis, dict) and isinstance(axis.get("candidate_inventory"), list):
-            candidate_pack_v4_shuffle(
-                axis["candidate_inventory"],
-                seed=seed,
-                scope=f"adult-axis:{axis_id}",
-            )
-    route_contract = (
-        hybrid.get("route_contract")
-        if isinstance(hybrid.get("route_contract"), dict)
-        else {}
-    )
-    routes = route_contract.get("routes") if isinstance(route_contract.get("routes"), list) else []
-    for route in routes:
-        if not isinstance(route, dict) or not isinstance(route.get("details"), list):
-            continue
-        candidate_pack_v4_shuffle(
-            route["details"],
-            seed=seed,
-            scope=f"hybrid-route:{route.get('id') or ''}",
-        )
-        route["candidate_ids"] = [
-            str(detail.get("candidate_id") or "")
-            for detail in route["details"]
-            if str(detail.get("candidate_id") or "")
-        ]
-    candidate_pack_v4_shuffle(routes, seed=seed, scope="hybrid-routes")
+        if isinstance(axis, dict) and isinstance(axis.get('candidate_inventory'), list):
+            candidate_pack_shuffle(axis['candidate_inventory'], seed=seed, scope=f'adult-axis:{axis_id}')
 
 
-def candidate_pack_project_v4(projected: JsonDict) -> JsonDict:
-    candidate_pack_v4_project_candidate_surfaces(projected)
-    candidate_pack_v4_project_quality_surfaces(projected)
-    authored_scene_enabled = candidate_pack_v4_project_scene(projected)
-    candidate_pack_v4_project_hybrid(projected)
-    removed_candidate_ids = candidate_pack_v4_project_authorial_open_slots(
+def candidate_pack_prepare_authorial_surfaces(projected: JsonDict) -> JsonDict:
+    candidate_pack_project_candidate_surfaces(projected)
+    candidate_pack_project_quality_surfaces(projected)
+    authored_scene_enabled = candidate_pack_project_scene(projected)
+    candidate_pack_project_adult_requirements(projected)
+    removed_candidate_ids = candidate_pack_project_authorial_open_slots(
         projected,
         authored_scene_enabled=authored_scene_enabled,
     )
-    candidate_pack_v4_prune_removed_candidate_references(
+    candidate_pack_prune_removed_candidate_references(
         projected,
         removed_candidate_ids,
     )
@@ -16247,10 +13931,10 @@ def candidate_pack_project_v4(projected: JsonDict) -> JsonDict:
     variation_index = int.from_bytes(variation_digest[:8], "big") % len(
         CANDIDATE_PACK_AUTHORIAL_LENSES
     )
-    candidate_pack_v4_remove_selection_answer_keys(projected)
-    candidate_pack_v4_project_private_routing(projected)
-    candidate_pack_v4_project_quality_profile(projected)
-    candidate_pack_v4_shuffle_candidate_surfaces(projected, seed=variation_material)
+    candidate_pack_remove_selection_answer_keys(projected)
+    candidate_pack_project_private_routing(projected)
+    candidate_pack_project_quality_profile(projected)
+    candidate_pack_shuffle_candidate_surfaces(projected, seed=variation_material)
     projected["authorial_composition"] = {
         "enabled": True,
         "contract_version": CANDIDATE_PACK_AUTHORIAL_COMPOSITION_VERSION,
@@ -16283,73 +13967,33 @@ def candidate_pack_project_v4(projected: JsonDict) -> JsonDict:
             "augmentation_candidates_use_augmentation_brief": True,
         },
         "authored_scene_required": authored_scene_enabled,
-        "prepack_authorial_request_bound": bool(
-            isinstance(projected.get("authorial_request"), dict)
-        ),
-        **(
-            {
-                "governing_request_sha256": str(
-                    projected["authorial_request"].get("canonical_sha256") or ""
-                )
-            }
-            if isinstance(projected.get("authorial_request"), dict)
-            else {}
-        ),
+
     }
     return projected
 
 
-def candidate_pack_v5_private_relevance(pack: JsonDict) -> JsonDict:
-    """Capture ranking evidence before v4 privacy removes score traces."""
-
+def candidate_pack_private_relevance(pack: JsonDict) -> JsonDict:
+    """Capture private ranking evidence before applying the public privacy boundary."""
     rows: List[JsonDict] = []
-    rows.extend(
-        candidate
-        for candidate in pack.get("presets") or []
-        if isinstance(candidate, dict)
-    )
-    slots = pack.get("slots") if isinstance(pack.get("slots"), dict) else {}
+    rows.extend((candidate for candidate in pack.get('presets') or [] if isinstance(candidate, dict)))
+    slots = pack.get('slots') if isinstance(pack.get('slots'), dict) else {}
     for payload in slots.values():
         if isinstance(payload, dict):
-            rows.extend(
-                candidate
-                for candidate in payload.get("candidates") or []
-                if isinstance(candidate, dict)
-            )
-    hybrid = (
-        pack.get("hybrid_augmentation")
-        if isinstance(pack.get("hybrid_augmentation"), dict)
-        else {}
-    )
-    adult = (
-        hybrid.get("adult_appeal")
-        if isinstance(hybrid.get("adult_appeal"), dict)
-        else {}
-    )
-    axes = adult.get("axes") if isinstance(adult.get("axes"), dict) else {}
+            rows.extend((candidate for candidate in payload.get('candidates') or [] if isinstance(candidate, dict)))
+    adult = pack.get('adult_appeal') or {}
+    axes = adult.get('axes') if isinstance(adult.get('axes'), dict) else {}
     for axis in axes.values():
         if isinstance(axis, dict):
-            rows.extend(
-                candidate
-                for candidate in axis.get("candidate_inventory") or []
-                if isinstance(candidate, dict)
-            )
-
+            rows.extend((candidate for candidate in axis.get('candidate_inventory') or [] if isinstance(candidate, dict)))
     relevance: JsonDict = {}
-    score_keys = (
-        "relevance",
-        "effective_query",
-        "semantic_score",
-        "query",
-        "rule_context_score",
-    )
+    score_keys = ('relevance', 'effective_query', 'semantic_score', 'query', 'rule_context_score')
     for candidate in rows:
-        candidate_id = str(candidate.get("id") or "")
+        candidate_id = str(candidate.get('id') or '')
         if not candidate_id:
             continue
-        scores = candidate.get("scores") if isinstance(candidate.get("scores"), dict) else {}
+        scores = candidate.get('scores') if isinstance(candidate.get('scores'), dict) else {}
         value: Optional[float] = None
-        source = "lexical_fallback"
+        source = 'lexical_fallback'
         for key in score_keys:
             raw = scores.get(key)
             try:
@@ -16358,26 +14002,23 @@ def candidate_pack_v5_private_relevance(pack: JsonDict) -> JsonDict:
                 continue
             source = key
             break
-        relevance[candidate_id] = {
-            "value": value,
-            "source": source,
-        }
+        relevance[candidate_id] = {'value': value, 'source': source}
     return relevance
 
 
-def candidate_pack_v5_relevance_tokens(text: str) -> Set[str]:
+def candidate_pack_relevance_tokens(text: str) -> Set[str]:
     return {
         token.lower()
         for token in re.findall(
             r"[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*|[가-힣]{2,}|[ぁ-んァ-ヶ一-龠々]{2,}",
             str(text or ""),
         )
-        if token.lower() not in CANDIDATE_PACK_V4_CONCEPT_STOPWORDS
+        if token.lower() not in CANDIDATE_PACK_CONCEPT_STOPWORDS
         and len(token.strip()) >= 2
     }
 
 
-def candidate_pack_v5_creative_augmentation(
+def candidate_pack_creative_augmentation(
     projected: JsonDict,
     private_relevance: JsonDict,
 ) -> JsonDict:
@@ -16392,11 +14033,11 @@ def candidate_pack_v5_creative_augmentation(
         else {}
     )
     query_text, _ = authorial_core_retrieval_text(core)
-    query_tokens = candidate_pack_v5_relevance_tokens(query_text)
+    query_tokens = candidate_pack_relevance_tokens(query_text)
     exclusion_token_groups = [
-        candidate_pack_v5_relevance_tokens(str(item))
+        candidate_pack_relevance_tokens(str(item))
         for item in core.get("user_exclusions") or []
-        if candidate_pack_v5_relevance_tokens(str(item))
+        if candidate_pack_relevance_tokens(str(item))
     ]
     excluded_identity_slots = {
         "subject",
@@ -16431,7 +14072,7 @@ def candidate_pack_v5_creative_augmentation(
             for item in candidate.get("concept_terms") or []
             if str(item).strip()
         ]
-        candidate_tokens = candidate_pack_v5_relevance_tokens(
+        candidate_tokens = candidate_pack_relevance_tokens(
             " ".join([candidate_id, slot, *concept_terms])
         )
         if any(group <= candidate_tokens for group in exclusion_token_groups):
@@ -16679,54 +14320,41 @@ def candidate_pack_v5_creative_augmentation(
     }
 
 
-def candidate_pack_project_v5(
-    projected: JsonDict,
-    private_relevance: JsonDict,
+def candidate_pack_bind_authorial_core(
+    projected: JsonDict, private_relevance: JsonDict
 ) -> JsonDict:
     original_provenance = copy.deepcopy(
-        projected.get("provenance")
-        if isinstance(projected.get("provenance"), dict)
-        else {}
+        projected.get("provenance") if isinstance(projected.get("provenance"), dict) else {}
     )
-    projected = candidate_pack_project_v4(projected)
+    projected = candidate_pack_prepare_authorial_surfaces(projected)
     core = (
         projected.get("authorial_core")
         if isinstance(projected.get("authorial_core"), dict)
         else None
     )
     if core is None:
-        raise ValueError("v5 candidate pack is missing its pre-pack authorial core")
+        raise ValueError("candidate pack is missing its pre-pack authorial core")
     _, retrieval_provenance = authorial_core_retrieval_text(core)
     public_provenance = (
-        projected.get("provenance")
-        if isinstance(projected.get("provenance"), dict)
-        else {}
+        projected.get("provenance") if isinstance(projected.get("provenance"), dict) else {}
     )
     public_provenance.update(
         {
             "creativity": original_provenance.get("creativity", 0.5),
-            "candidate_pool_creativity": original_provenance.get(
-                "candidate_pool_creativity"
-            ),
+            "candidate_pool_creativity": original_provenance.get("candidate_pool_creativity"),
             "retrieval_query": retrieval_provenance,
         }
     )
     if "embodiment_preflight_required" in original_provenance:
-        public_provenance["embodiment_preflight_required"] = original_provenance["embodiment_preflight_required"]
+        public_provenance["embodiment_preflight_required"] = original_provenance[
+            "embodiment_preflight_required"
+        ]
     if "creative_control_runtime" in original_provenance:
-        public_provenance["creative_control_runtime"] = copy.deepcopy(original_provenance["creative_control_runtime"])
+        public_provenance["creative_control_runtime"] = copy.deepcopy(
+            original_provenance["creative_control_runtime"]
+        )
     projected["provenance"] = public_provenance
-
-    hybrid = (
-        projected.pop("hybrid_augmentation")
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else {}
-    )
-    adult = (
-        hybrid.get("adult_appeal")
-        if isinstance(hybrid.get("adult_appeal"), dict)
-        else None
-    )
+    adult = projected.get("adult_appeal")
     if adult is not None:
         projected["adult_appeal"] = adult
     authorial = (
@@ -16740,15 +14368,11 @@ def candidate_pack_project_v5(
     authorial["prompt_budget"] = authorial_prompt_budget_contract()
     authorial["core_binding_contract"] = {
         "composed_field": "authorial_core_binding",
-        "minimum_preserved_evidence_phrases": 3,
-        "minimum_authorial_decisions": 2,
+        "minimum_preserved_evidence_phrases": 0,
+        "minimum_authorial_decisions": 0,
         "evidence_must_be_literal_in_baseline_and_final_prompt": True,
     }
-    intent_lock = (
-        core.get("intent_lock")
-        if isinstance(core.get("intent_lock"), dict)
-        else {}
-    )
+    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         authorial["core_binding_contract"].update(
             {
@@ -16760,9 +14384,7 @@ def candidate_pack_project_v5(
         projected["intent_preservation"] = {
             "contract_version": INTENT_PRESERVATION_CONTRACT_VERSION,
             "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
-            "source_intent_lock_sha256": str(
-                intent_lock.get("canonical_sha256") or ""
-            ),
+            "source_intent_lock_sha256": str(intent_lock.get("canonical_sha256") or ""),
             "priority_order": [
                 "requesting_user_definition",
                 "requesting_user_semantic_anchor",
@@ -16775,25 +14397,18 @@ def candidate_pack_project_v5(
                 for item in intent_lock.get("semantic_anchors") or []
                 if isinstance(item, dict) and str(item.get("anchor_id") or "")
             ],
-            "locked_dimensions": copy.deepcopy(
-                intent_lock.get("locked_dimensions") or []
-            ),
+            "locked_dimensions": copy.deepcopy(intent_lock.get("locked_dimensions") or []),
             "open_dimensions": copy.deepcopy(intent_lock.get("open_dimensions") or []),
             "material_change_action": "stop_and_rebuild_core_after_requester_input",
             "creative_change_boundary": "open_dimensions_only_and_subordinate",
         }
     projected["authorial_composition"] = authorial
-    creative_augmentation = candidate_pack_v5_creative_augmentation(
-        projected,
-        private_relevance,
-    )
+    creative_augmentation = candidate_pack_creative_augmentation(projected, private_relevance)
     if core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS:
         creative_augmentation.setdefault("selection_contract", {})[
             "transformed_affected_dimensions_required"
         ] = True
-        creative_augmentation["selection_contract"][
-            "transformed_dimensions_must_be_open"
-        ] = True
+        creative_augmentation["selection_contract"]["transformed_dimensions_must_be_open"] = True
     projected["creative_augmentation"] = creative_augmentation
     if isinstance((projected.get("adult_appeal") or {}).get("dimension_scope"), dict):
         creative_augmentation.setdefault("selection_contract", {})[
@@ -16802,11 +14417,11 @@ def candidate_pack_project_v5(
     return projected
 
 
-def candidate_pack_project_v6(
+def candidate_pack_compose_current(
     projected: JsonDict,
     private_relevance: JsonDict,
 ) -> JsonDict:
-    """Reuse v5 authorial surfaces while requiring the typed v3 boundary."""
+    """Compose the current typed core, optional candidates, and authorship policy."""
 
     core = (
         projected.get("authorial_core")
@@ -16834,7 +14449,7 @@ def candidate_pack_project_v6(
                 capture_semantic_sources(item)
 
     capture_semantic_sources(projected)
-    projected = candidate_pack_project_v5(projected, private_relevance)
+    projected = candidate_pack_bind_authorial_core(projected, private_relevance)
     photo_candidate_semantics.apply_public_semantics(projected, semantic_sources)
     intent_lock = core["intent_lock"]
     open_dimensions = copy.deepcopy(intent_lock["open_dimensions"])
@@ -16862,7 +14477,6 @@ def candidate_pack_project_v6(
             ],
         }
     )
-    projected.pop("moe_response", None)
     provenance = (
         projected.get("provenance")
         if isinstance(projected.get("provenance"), dict)
@@ -16873,57 +14487,20 @@ def candidate_pack_project_v6(
     return projected
 
 
-def candidate_pack_project(pack: JsonDict, version: str) -> JsonDict:
-    contract_version = candidate_pack_contract_version(version)
+def candidate_pack_project(pack: JsonDict, version: str = "v6") -> JsonDict:
+    candidate_pack_contract_version(version)
     projected = copy.deepcopy(pack)
-    private_relevance = (
-        projected.pop("_v5_candidate_relevance")
-        if isinstance(projected.get("_v5_candidate_relevance"), dict)
-        else {}
-    )
-    projected["contract_version"] = contract_version
-    adult = (
-        ((projected.get("hybrid_augmentation") or {}).get("adult_appeal"))
-        if isinstance(projected.get("hybrid_augmentation"), dict)
-        else None
-    )
-    if contract_version == CANDIDATE_PACK_CONTRACT_V2:
-        if isinstance(adult, dict) and "inventory_preset_id" in adult:
-            adult["source_preset_id"] = adult.pop("inventory_preset_id")
-        return candidate_pack_recompute_id(projected)
-
+    private_relevance = projected.pop("_candidate_relevance", {})
+    projected["contract_version"] = CANDIDATE_PACK_CONTRACT_V6
     grammar = projected.get("character_grammar")
     if isinstance(grammar, dict):
         for key in ("domain", "topic_id", "family_id"):
             grammar.pop(key, None)
     candidate_pack_remove_quality_profile_sources(projected)
-    craft = projected.get("photographic_craft")
-    if isinstance(craft, dict):
-        craft.pop("source", None)
-    final_touch = projected.get("artistic_final_touch")
-    if isinstance(final_touch, dict):
-        final_touch.pop("source", None)
-    if isinstance(adult, dict):
-        adult.pop("inventory_preset_id", None)
-        adult.pop("source_preset_id", None)
-    projected = candidate_pack_v3_alias_value(projected)
-    if contract_version == CANDIDATE_PACK_CONTRACT_V4:
-        projected = candidate_pack_project_v4(projected)
-    elif contract_version == CANDIDATE_PACK_CONTRACT_V5:
-        projected = candidate_pack_project_v5(projected, private_relevance)
-    elif contract_version == CANDIDATE_PACK_CONTRACT_V6:
-        projected = candidate_pack_project_v6(projected, private_relevance)
-    # This private source is carried only until modern projection. Old pack
-    # versions retain their established unordered-token public representation.
-    def remove_private_semantic_sources(value: Any) -> None:
-        if isinstance(value, dict):
-            value.pop("_v6_semantic_source", None)
-            for item in value.values():
-                remove_private_semantic_sources(item)
-        elif isinstance(value, list):
-            for item in value:
-                remove_private_semantic_sources(item)
-    remove_private_semantic_sources(projected)
+    for field in ("photographic_craft", "artistic_final_touch"):
+        if isinstance(projected.get(field), dict):
+            projected[field].pop("source", None)
+    projected = candidate_pack_compose_current(projected, private_relevance)
     return candidate_pack_recompute_id(projected)
 
 
@@ -17007,8 +14584,8 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     if not policy:
         return photo_candidate_semantics.public_bundles(data, pack)
     query, _ = authorial_core_retrieval_text(core)
-    query_tokens = candidate_pack_v5_relevance_tokens(query)
-    exclusions = [candidate_pack_v5_relevance_tokens(value) for value in core.get("user_exclusions") or []]
+    query_tokens = candidate_pack_relevance_tokens(query)
+    exclusions = [candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []]
     opened = set((core.get("intent_lock") or {}).get("open_dimensions") or [])
     constraints = {
         "subject_category": "generic", "preset_domains": [],
@@ -17025,9 +14602,9 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
                 or not dimensions.issubset(opened)):
             continue
         units = [unit for member in members for unit in member.get("concept_units") or []]
-        tokens = candidate_pack_v5_relevance_tokens(" ".join(units))
+        tokens = candidate_pack_relevance_tokens(" ".join(units))
         if (len(tokens & query_tokens) < policy["minimum_shared_content_words"]
-                or not any(len(candidate_pack_v5_relevance_tokens(unit)) >= 2 and intent_alias_matches(query, unit) for unit in units)
+                or not any(len(candidate_pack_relevance_tokens(unit)) >= 2 and intent_alias_matches(query, unit) for unit in units)
                 or any(exclusion and exclusion.issubset(tokens) for exclusion in exclusions)):
             continue
         picked = {member["slot"]: candidate_pack_slot_entry_by_id(data, member["slot"], member["entry_id"]) for member in members}
@@ -17054,6 +14631,57 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     return photo_candidate_semantics.public_bundles(data, pack, admissions)
 
 
+def build_sampler_diagnostic(result: JsonDict, data: JsonDict) -> JsonDict:
+    """Private sampler observations for deterministic maintenance evaluations.
+
+    This record exposes selected answers intentionally and is never accepted by
+    composition, render, viewer or run-manifest consumers.
+    """
+    trace = result.get("semantic_trace") or {}
+    provenance = result.get("provenance") or {}
+    contract = trace.get("generation_contract") or {}
+    soft_policy = contract.get("soft_anchor_policy") or {}
+    entries = {}
+    presets = candidate_pack_build_presets(data, trace, result, entries)
+    slots = candidate_pack_build_slots(data, trace, result, entries)
+    selected = candidate_pack_selected_preset(data, result)
+    blueprint = candidate_pack_resolve_scene_blueprint(data, result, selected)
+    scene = candidate_pack_scene_contract(soft_policy, slots, blueprint)
+    render = candidate_pack_render_contract(selected, scene, blueprint)
+    blobs = candidate_pack_candidate_blobs(presets, slots)
+    mandatory, uncovered = candidate_pack_mandatory_intents(result, trace, blobs)
+    mandatory.extend(candidate_pack_render_mandatory_intents(render, str(selected.get("id"))))
+    quality_profile = candidate_pack_quality_profile(data, result, slots, mandatory)
+    extra = {
+        "photographic_integration": candidate_pack_photographic_integration(data, result, trace, presets, slots, mandatory, quality_profile),
+        "visual_proposition": candidate_pack_visual_proposition(data, result, trace, presets, slots, mandatory, quality_profile),
+        "photographic_craft": candidate_pack_photographic_craft(data, quality_profile),
+        "artistic_final_touch": candidate_pack_artistic_final_touch(data, quality_profile),
+        "creative_exploration": candidate_pack_creative_exploration(result, slots, entries),
+        "creative_direction": candidate_pack_creative_direction(result),
+        "viewer_experience": candidate_pack_viewer_experience(result),
+        "negative_en": result.get("negative_en"),
+        "uncovered_intents": uncovered,
+        "evidence_budget": render.get("evidence_budget", {"enabled": False}),
+        "concept_gates": contract.get("concept_gate_results", []),
+    }
+    return {
+        **{key: value for key, value in extra.items() if value is not None},
+        "schema_version": "photo-sampler-diagnostic/v1",
+        "diagnostic_only": True,
+        "presets": presets, "slots": slots,
+        "mandatory_intents": mandatory,
+        "intent_contract": candidate_pack_intent_contract(data, result, trace, blobs),
+        "coverage": {"intent_constraints": contract.get("intent_constraints", {}),
+                     "uncovered_intents": uncovered},
+        "scene_contract": scene, "render_contract": render,
+        "character_grammar": candidate_pack_character_grammar(data, selected, blueprint),
+        "quality_profile": candidate_pack_quality_profile(data, result, slots, mandatory),
+        "safety": provenance.get("safety", contract.get("safety", {})),
+        "provenance": copy.deepcopy(provenance),
+    }
+
+
 def build_candidate_pack(
     result: JsonDict,
     data: JsonDict,
@@ -17061,7 +14689,7 @@ def build_candidate_pack(
     *,
     explain_scene_routing: bool = False,
 ) -> JsonDict:
-    requested_contract_version = candidate_pack_contract_version(candidate_pack_version)
+    candidate_pack_contract_version(candidate_pack_version)
     trace = result.get("semantic_trace") if isinstance(result.get("semantic_trace"), dict) else {}
     provenance = result.get("provenance") if isinstance(result.get("provenance"), dict) else {}
     authorial_core = (
@@ -17069,20 +14697,29 @@ def build_candidate_pack(
         if isinstance(provenance.get("authorial_core"), dict)
         else None
     )
-    contract = trace.get("generation_contract") if isinstance(trace.get("generation_contract"), dict) else {}
-    soft_policy = contract.get("soft_anchor_policy") if isinstance(contract.get("soft_anchor_policy"), dict) else {}
+    if (
+        not isinstance(authorial_core, dict)
+        or authorial_core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
+    ):
+        raise ValueError("candidate pack requires a current v3 authorial core")
+    if not isinstance(provenance.get("creative_controls"), dict) or not isinstance(
+        provenance.get("embodiment_preflight"), dict
+    ):
+        raise ValueError("candidate pack requires bound creative controls and embodiment review")
+    contract = (
+        trace.get("generation_contract")
+        if isinstance(trace.get("generation_contract"), dict)
+        else {}
+    )
+    soft_policy = (
+        contract.get("soft_anchor_policy")
+        if isinstance(contract.get("soft_anchor_policy"), dict)
+        else {}
+    )
     candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]] = {}
     presets = candidate_pack_build_presets(data, trace, result, candidate_entries)
     slots = candidate_pack_build_slots(
-        data,
-        trace,
-        result,
-        candidate_entries,
-        authorial_core=(
-            authorial_core
-            if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
-            else None
-        ),
+        data, trace, result, candidate_entries, authorial_core=authorial_core
     )
     candidate_pack_ensure_species_policy_candidates(
         data,
@@ -17092,50 +14729,33 @@ def build_candidate_pack(
     )
     japanese_subculture_photo = candidate_pack_japanese_subculture_photo(data, result)
     candidate_pack_apply_japanese_subculture_candidate_guard(
-        data,
-        result,
-        slots,
-        candidate_entries,
-        japanese_subculture_photo,
+        data, result, slots, candidate_entries, japanese_subculture_photo
     )
-    adult_appeal = candidate_pack_hybrid_adult_appeal(
-        data, result, candidate_entries,
-        authorial_core=(authorial_core if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6 else None),
+    adult_appeal = candidate_pack_contextual_adult_appeal(
+        data, result, candidate_entries, authorial_core=authorial_core
     )
     selected_preset = candidate_pack_selected_preset(data, result)
     private_scene_routing: Optional[JsonDict] = {} if explain_scene_routing else None
     selected_blueprint = candidate_pack_resolve_scene_blueprint(
-        data,
-        result,
-        selected_preset,
-        routing_trace=private_scene_routing,
+        data, result, selected_preset, routing_trace=private_scene_routing
     )
     conflicts = candidate_pack_conflicts(data, candidate_entries)
     candidate_pack_apply_conflicts(slots, conflicts)
     candidate_pack_apply_conflicts_to_candidates(
-        candidate_pack_hybrid_adult_candidates(adult_appeal), conflicts
+        candidate_pack_adult_candidates(adult_appeal), conflicts
     )
     candidate_blobs = candidate_pack_candidate_blobs(presets, slots)
     mandatory_intents, uncovered_intents = candidate_pack_mandatory_intents(
-        result,
-        trace,
-        candidate_blobs,
+        result, trace, candidate_blobs
     )
     intent_contract = candidate_pack_intent_contract(data, result, trace, candidate_blobs)
     scene_contract = candidate_pack_scene_contract(soft_policy, slots, selected_blueprint)
     render_contract = candidate_pack_render_contract(
-        selected_preset,
-        scene_contract,
-        selected_blueprint,
+        selected_preset, scene_contract, selected_blueprint
     )
-    character_grammar = candidate_pack_character_grammar(
-        data,
-        selected_preset,
-        selected_blueprint,
-    )
+    character_grammar = candidate_pack_character_grammar(data, selected_preset, selected_blueprint)
     render_intents = candidate_pack_render_mandatory_intents(
-        render_contract,
-        str(selected_preset.get("id") or ""),
+        render_contract, str(selected_preset.get('id') or '')
     )
     mandatory_intents.extend(render_intents)
     uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
@@ -17144,11 +14764,16 @@ def build_candidate_pack(
     open_slots = candidate_pack_open_slots(result, slots, masked_buckets)
     masked_slot_names = {str(item.get("slot")) for item in open_slots if isinstance(item, dict)}
     if masked_slot_names:
-        masked_prefixes = tuple(f"slot:{slot}:" for slot in sorted(masked_slot_names))
+        masked_prefixes = tuple((f"slot:{slot}:" for slot in sorted(masked_slot_names)))
         conflicts = [
             conflict
             for conflict in conflicts
-            if not any(str(candidate_id).startswith(masked_prefixes) for candidate_id in conflict.get("candidates", []))
+            if not any(
+                (
+                    str(candidate_id).startswith(masked_prefixes)
+                    for candidate_id in conflict.get("candidates", [])
+                )
+            )
         ]
         for intent_row in mandatory_intents:
             covered_by = [
@@ -17161,89 +14786,35 @@ def build_candidate_pack(
         uncovered_intents = [row for row in mandatory_intents if row.get("status") == "uncovered"]
     creative_exploration = candidate_pack_creative_exploration(result, slots, candidate_entries)
     creative_direction = candidate_pack_creative_direction(result)
-    character_response = (
-        compile_character_response_contract(
-            authorial_core,
-            data=data,
-            semantic_index=(
-                data.get(SEMANTIC_INDEX_DATA_KEY)
-                if isinstance(data.get(SEMANTIC_INDEX_DATA_KEY), dict)
-                else None
-            ),
-        )
-        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
-        else None
+    character_response = compile_character_response_contract(
+        authorial_core,
+        data=data,
+        semantic_index=(
+            data.get(SEMANTIC_INDEX_DATA_KEY)
+            if isinstance(data.get(SEMANTIC_INDEX_DATA_KEY), dict)
+            else None
+        ),
     )
-    semantic_assertion_obligations = (
-        compile_semantic_assertion_obligations(authorial_core)
-        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
-        else None
+    semantic_assertion_obligations = compile_semantic_assertion_obligations(authorial_core)
+    render_repair = compile_render_repair_contract(authorial_core)
+    response_context = character_response
+    visual_profile_resolution = candidate_pack_resolve_visual_profiles(
+        data, result, trace, response_context
     )
-    render_repair = (
-        compile_render_repair_contract(authorial_core)
-        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
-        else None
+    visual_obligations = candidate_pack_visual_obligations(
+        data, result, trace, response_context, visual_profile_resolution
     )
-    moe_response = (
-        None
-        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6
-        else candidate_pack_moe_response(result)
+    visual_concept_candidates = candidate_pack_visual_concept_candidates(
+        data, result, trace, response_context, visual_obligations, visual_profile_resolution
     )
-    response_context = character_response or moe_response
-    visual_profile_resolution = (
-        candidate_pack_resolve_visual_profiles(data, result, trace, response_context)
-        if requested_contract_version
-        in {CANDIDATE_PACK_CONTRACT_V5, CANDIDATE_PACK_CONTRACT_V6}
-        else None
+    semantic_clarification = candidate_pack_semantic_clarification(
+        data,
+        result,
+        trace,
+        visual_obligations,
+        visual_concept_candidates,
+        visual_profile_resolution,
     )
-    visual_obligations = (
-        candidate_pack_visual_obligations(
-            data,
-            result,
-            trace,
-            response_context,
-            visual_profile_resolution,
-        )
-        if requested_contract_version
-        in {
-            CANDIDATE_PACK_CONTRACT_V4,
-            CANDIDATE_PACK_CONTRACT_V5,
-            CANDIDATE_PACK_CONTRACT_V6,
-        }
-        else None
-    )
-    visual_concept_candidates = (
-        candidate_pack_visual_concept_candidates(
-            data,
-            result,
-            trace,
-            response_context,
-            visual_obligations,
-            visual_profile_resolution,
-        )
-        if requested_contract_version
-        in {
-            CANDIDATE_PACK_CONTRACT_V4,
-            CANDIDATE_PACK_CONTRACT_V5,
-            CANDIDATE_PACK_CONTRACT_V6,
-        }
-        else None
-    )
-    semantic_clarification = (
-        candidate_pack_semantic_clarification(
-            data,
-            result,
-            trace,
-            visual_obligations,
-            visual_concept_candidates,
-            visual_profile_resolution,
-        )
-        if requested_contract_version
-        in {CANDIDATE_PACK_CONTRACT_V5, CANDIDATE_PACK_CONTRACT_V6}
-        else None
-    )
-    if moe_response is not None:
-        candidate_pack_merge_visual_render_gates(moe_response, visual_obligations)
     viewer_experience = candidate_pack_viewer_experience(result)
     intent_constraints = copy.deepcopy(contract.get("intent_constraints", {}))
     if isinstance(intent_constraints, dict):
@@ -17255,22 +14826,9 @@ def build_candidate_pack(
                 or response_constraint.get("enabled") is True
             )
         ):
-            # Keep the internal fail-closed routing result available to tests
-            # and later generation stages without changing ordinary public
-            # candidate-pack bytes.
             intent_constraints.pop("character_response", None)
-    hybrid_augmentation = candidate_pack_hybrid_augmentation(
-        data,
-        result,
-        slots,
-        masked_slot_names,
-        adult_appeal,
-        str(provenance.get("seed"))
-        if requested_contract_version == CANDIDATE_PACK_CONTRACT_V4
-        else None,
-    )
     pack: JsonDict = {
-        "contract_version": CANDIDATE_PACK_CONTRACT_V2,
+        "contract_version": "photo-candidate-pack/v6",
         "pack_id": "",
         "intent_contract": intent_contract,
         "mandatory_intents": mandatory_intents,
@@ -17292,13 +14850,18 @@ def build_candidate_pack(
         "photographic_craft": candidate_pack_photographic_craft(data, quality_profile),
         "artistic_final_touch": candidate_pack_artistic_final_touch(data, quality_profile),
         "motif_budget": candidate_pack_motif_budget(result, trace, soft_policy),
-        "preset_reference": candidate_pack_preset_reference(result, soft_policy, masked_buckets, open_slots),
+        "preset_reference": candidate_pack_preset_reference(
+            result, soft_policy, masked_buckets, open_slots
+        ),
         "masked_buckets": masked_buckets,
         "open_slots": open_slots,
         "template_echo_risk": candidate_pack_template_echo_risk(open_slots),
         "role_scene_policy": soft_policy.get("role_scene_policy", {"enabled": False}),
-        "species_family": soft_policy.get("species_family_policy", {"enabled": False, "allowed": {}}),
-        "safety": contract.get("safety") or {
+        "species_family": soft_policy.get(
+            "species_family_policy", {"enabled": False, "allowed": {}}
+        ),
+        "safety": contract.get("safety")
+        or {
             "mode": "automatic",
             "evaluation_requested": False,
             "status": "pass",
@@ -17333,7 +14896,8 @@ def build_candidate_pack(
             "batch_index": provenance.get("batch_index"),
             "preset_id": provenance.get("preset_id") or result.get("preset_id"),
             "selection_mode": provenance.get("selection_mode") or trace.get("selection_mode"),
-            "requested_selection_mode": provenance.get("requested_selection_mode") or trace.get("requested_selection_mode"),
+            "requested_selection_mode": provenance.get("requested_selection_mode")
+            or trace.get("requested_selection_mode"),
             "tags_hash": provenance.get("tags_hash") or trace.get("dictionary_hash"),
             "concept_lock": provenance.get("concept_lock", []),
             "additional_requirements": provenance.get("additional_requirements", []),
@@ -17344,7 +14908,6 @@ def build_candidate_pack(
             "concept_gate_results": provenance.get("concept_gate_results", []),
             "concept_scene_variants": provenance.get("concept_scene_variants", []),
             "requested_scene_function": provenance.get("requested_scene_function"),
-            "legacy_replay_reason": provenance.get("legacy_replay_reason"),
             "safety": provenance.get("safety", contract.get("safety", {})),
             "argv": provenance.get("argv", []),
             "sample_prompt_id": provenance.get("prompt_id"),
@@ -17354,46 +14917,28 @@ def build_candidate_pack(
         pack["creative_exploration"] = creative_exploration
     if isinstance(provenance.get("creative_controls"), dict):
         pack["creative_controls"] = copy.deepcopy(provenance["creative_controls"])
-        pack["provenance"]["creative_control_runtime"] = copy.deepcopy(provenance["creative_control_runtime"])
-    authorial_request = (
-        provenance.get("authorial_request")
-        if isinstance(provenance.get("authorial_request"), dict)
-        else None
-    )
-    if authorial_request is not None:
-        pack["authorial_request"] = copy.deepcopy(authorial_request)
+        pack["provenance"]["creative_control_runtime"] = copy.deepcopy(
+            provenance["creative_control_runtime"]
+        )
     if authorial_core is not None:
         pack["authorial_core"] = copy.deepcopy(authorial_core)
-    if requested_contract_version in {
-        CANDIDATE_PACK_CONTRACT_V5,
-        CANDIDATE_PACK_CONTRACT_V6,
-    }:
-        if authorial_core is None:
-            raise ValueError("v5/v6 candidate pack requires a pre-pack authorial core")
-        pack["provenance"]["creativity"] = provenance.get("creativity", 0.5)
-        pack["provenance"]["candidate_pool_creativity"] = provenance.get(
-            "candidate_pool_creativity"
+    if authorial_core is None:
+        raise ValueError("v6 candidate pack requires a pre-pack authorial core")
+    pack["provenance"]["creativity"] = provenance.get("creativity", 0.5)
+    pack["provenance"]["candidate_pool_creativity"] = provenance.get("candidate_pool_creativity")
+    pack["provenance"]["retrieval_query"] = copy.deepcopy(provenance.get("retrieval_query", {}))
+    if (
+        isinstance(authorial_core, dict)
+        and authorial_core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+    ):
+        negative_intent_guard = (
+            result.get("negative_intent_guard")
+            if isinstance(result.get("negative_intent_guard"), dict)
+            else None
         )
-        pack["provenance"]["retrieval_query"] = copy.deepcopy(
-            provenance.get("retrieval_query", {})
-        )
-        if (
-            isinstance(authorial_core, dict)
-            and authorial_core.get("contract_version")
-            in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
-        ):
-            negative_intent_guard = (
-                result.get("negative_intent_guard")
-                if isinstance(result.get("negative_intent_guard"), dict)
-                else None
-            )
-            if negative_intent_guard is None:
-                raise ValueError(
-                    "modern v5/v6 candidate pack requires the negative-intent guard"
-                )
-            pack["negative_intent_guard"] = copy.deepcopy(
-                negative_intent_guard
-            )
+        if negative_intent_guard is None:
+            raise ValueError("modern v6 candidate pack requires the negative-intent guard")
+        pack["negative_intent_guard"] = copy.deepcopy(negative_intent_guard)
     visual_intent = (
         provenance.get("visual_intent")
         if isinstance(provenance.get("visual_intent"), dict)
@@ -17409,14 +14954,6 @@ def build_candidate_pack(
         pack["semantic_clarification"] = semantic_clarification
     if creative_direction is not None:
         pack["creative_direction"] = creative_direction
-    if moe_response is not None:
-        pack["moe_response"] = moe_response
-        legacy_character_response = provenance.get("character_response")
-        if (
-            isinstance(legacy_character_response, dict)
-            and legacy_character_response.get("requested") is True
-        ):
-            pack["provenance"]["character_response"] = legacy_character_response
     if character_response is not None:
         pack["character_response"] = character_response
     if semantic_assertion_obligations is not None:
@@ -17424,19 +14961,14 @@ def build_candidate_pack(
     if render_repair is not None:
         pack["render_repair"] = render_repair
     if "embodiment_preflight" in provenance:
-        if requested_contract_version != CANDIDATE_PACK_CONTRACT_V6:
-            raise ValueError("embodiment preflight requires candidate-pack v6")
         pack["embodiment_preflight"] = copy.deepcopy(provenance["embodiment_preflight"])
         pack["provenance"]["embodiment_preflight_required"] = True
-        photo_embodiment.policy_from_pack({**pack, "contract_version": requested_contract_version})
+        photo_embodiment.policy_from_pack({**pack, "contract_version": "photo-candidate-pack/v6"})
     if viewer_experience is not None:
         pack["viewer_experience"] = viewer_experience
     if japanese_subculture_photo is not None:
         pack["japanese_subculture_photo"] = japanese_subculture_photo
-    if hybrid_augmentation is not None:
-        pack["provenance"]["hybrid_augmentation_requested"] = bool(
-            provenance.get("hybrid_augmentation_requested")
-        )
+    if adult_appeal is not None:
         adult_axes = (
             adult_appeal.get("axes")
             if isinstance(adult_appeal, dict) and isinstance(adult_appeal.get("axes"), dict)
@@ -17449,28 +14981,25 @@ def build_candidate_pack(
             "eligibility": (adult_appeal or {}).get("eligibility", {}),
             "axes": {
                 axis_id: {
-                    "intensity": int((adult_axes.get(axis_id) or {}).get("intensity", 0) or 0),
+                    "intensity": int((adult_axes.get(axis_id) or {}).get('intensity', 0) or 0),
                     "active": bool((adult_axes.get(axis_id) or {}).get("active")),
                 }
                 for axis_id in CANDIDATE_PACK_ADULT_APPEAL_AXES
             },
             "blend": {"emphasis": ((adult_appeal or {}).get("blend") or {}).get("emphasis")},
         }
-        pack["hybrid_augmentation"] = hybrid_augmentation
+        pack["adult_appeal"] = adult_appeal
     if private_scene_routing is not None:
         pack["private_scene_routing"] = private_scene_routing
-    if requested_contract_version in {
-        CANDIDATE_PACK_CONTRACT_V5,
-        CANDIDATE_PACK_CONTRACT_V6,
-    }:
-        pack["_v5_candidate_relevance"] = candidate_pack_v5_private_relevance(pack)
-    if requested_contract_version == CANDIDATE_PACK_CONTRACT_V6:
-        for slot, payload in (pack.get("slots") or {}).items():
-            for candidate in payload.get("candidates") or []:
-                entry = candidate_pack_slot_entry_by_id(data, slot, str(candidate.get("entry_id") or ""))
-                if entry:
-                    candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(entry, slot, data.get("candidate_semantic_policy"))
-        pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
+    pack["_candidate_relevance"] = candidate_pack_private_relevance(pack)
+    for slot, payload in (pack.get("slots") or {}).items():
+        for candidate in payload.get("candidates") or []:
+            entry = candidate_pack_slot_entry_by_id(data, slot, str(candidate.get('entry_id') or ''))
+            if entry:
+                candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
+                    entry, slot, data.get("candidate_semantic_policy")
+                )
+    pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
     candidate_pack_recompute_id(pack)
     return candidate_pack_project(pack, candidate_pack_version)
 
@@ -17566,7 +15095,7 @@ def semantic_policy_float(source: Optional[JsonDict], path: Sequence[str], defau
 
 
 def semantic_policy_id(source: Optional[JsonDict], family: str) -> str:
-    return str(semantic_policy_family_config(source, family).get("policy_id") or f"{family}-legacy-code-policy")
+    return str(semantic_policy_family_config(source, family).get("policy_id") or f"{family}-unconfigured-policy")
 
 
 def semantic_family_keywords(source: Optional[JsonDict], family: str) -> tuple[str, ...]:
@@ -18087,7 +15616,7 @@ SEMANTIC_INDEX_SHARDED_FORMAT = "sharded-json-v1"
 
 
 def load_semantic_index_payload(path: str | Path) -> JsonDict:
-    """Load either a legacy monolith or a sharded index with identical entry order.
+    """Load the sharded final index with its exact logical entry order.
 
     Sharding is a storage concern only. Callers continue to receive the same
     materialized ``entries`` mapping used by scoring, tie-breaking, and audit
@@ -18097,7 +15626,7 @@ def load_semantic_index_payload(path: str | Path) -> JsonDict:
     payload = json.loads(index_path.read_text(encoding="utf-8"))
     storage = payload.get("storage") if isinstance(payload.get("storage"), dict) else {}
     if storage.get("format") != SEMANTIC_INDEX_SHARDED_FORMAT:
-        return payload
+        raise ValueError("final semantic index must use the sharded manifest format")
 
     entry_order = payload.get("entry_order")
     shard_rows = payload.get("shards")
@@ -18236,7 +15765,7 @@ def load_semantic_index(
         provider,
         model,
         dimensions,
-        # In-memory indexes are a public test/embedding seam used by legacy v5
+        # In-memory indexes are a public test/embedding seam used by deterministic
         # callers. File-backed indexes are repository artifacts and must carry
         # the current hash-bound BM25F derivation.
         require_bm25f=semantic_index is None,
@@ -18960,15 +16489,6 @@ def slot_context_rules_from_source(source: Optional[JsonDict]) -> List[JsonDict]
     if not isinstance(declared, list):
         return []
     return [rule for rule in declared if isinstance(rule, dict)]
-
-
-def builtin_slot_context_rules_enabled(source: Optional[JsonDict]) -> bool:
-    # Legacy escape hatch: dictionaries that migrated the built-in Python
-    # slot-context rules to coherence_rules.slot_context_rules set this false.
-    if not source:
-        return True
-    rules = coherence_rules_from_source(source)
-    return bool(rules.get("builtin_slot_context_rules", True))
 
 
 def rule_slots(rule: JsonDict) -> Set[str]:
@@ -20594,7 +18114,7 @@ def preset_matches_automatic_intent_scope(
         and semantic_context.get("intent_source") == "user"
         and matched_routes
         and requested_domains
-        & {"subculture_practice", "worldbuilding_system", "cjk_narrative_world", "character_moe_grammar"}
+        & {"subculture_practice", "worldbuilding_system", "cjk_narrative_world", "character_scene_grammar"}
     ):
         # An explicit scoped-route alias is a stronger signal than embedding
         # similarity. Keep generic presets from competing with the named route
@@ -21506,9 +19026,6 @@ def evaluate_generation_quality(
 
         guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
         guard_slots = normalize_list(guard_policy.get("slots"))
-        legacy_guard_slot = str(guard_policy.get("slot") or "").strip()
-        if legacy_guard_slot and legacy_guard_slot not in guard_slots:
-            guard_slots.append(legacy_guard_slot)
         if not guard_slots:
             guard_slots = ["body_framing"]
         body_emphasis_survivors = soft_body_first_survivors(soft_policy, render_picked, semantic_context)
@@ -22908,9 +20425,6 @@ def apply_soft_body_first_guard(
         return list(pool)
     guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
     guard_slots = normalize_list(guard_policy.get("slots"))
-    legacy_slot = str(guard_policy.get("slot") or "").strip()
-    if legacy_slot and legacy_slot not in guard_slots:
-        guard_slots.append(legacy_slot)
     if not guard_slots:
         guard_slots = ["body_framing"]
     if slot not in guard_slots:
@@ -23515,8 +21029,8 @@ def semantic_intent_hint_slots(context: Optional[JsonDict], data: Optional[JsonD
     if not context or not intent_steering_enabled(context):
         return []
     if context.get("authorial_core_mode") is True:
-        # A v5 authorial core already supplies the retrieval query and visible
-        # priorities.  Legacy curated hint IDs may softly help an existing
+        # The authorial core already supplies the retrieval query and visible
+        # priorities.  Curated sampler hint IDs may softly help an existing
         # slot, but must not force extra slots into the candidate surface.
         return []
     text = normalized_intent_hint_text(context)
@@ -24172,12 +21686,9 @@ def compatible_with_slot_context(
     source: Optional[JsonDict] = None,
 ) -> bool:
     context = picked_context_tokens(picked)
-    scene_context = picked_scene_context_tokens(picked)
     primary_context = picked_core_context_tokens(picked)
     if picked.get("action"):
         primary_context |= entry_context_tokens(picked["action"])
-    item_tokens = entry_context_tokens(item)
-    item_id = str(item.get("id", ""))
 
     if values_as_set(item, "requires_any_tags", "requires_any") and not (
         values_as_set(item, "requires_any_tags", "requires_any") & context
@@ -24201,47 +21712,6 @@ def compatible_with_slot_context(
             return False
         if slot_conflict_violations(slot, item, picked, source, "hard"):
             return False
-        if not builtin_slot_context_rules_enabled(source):
-            return True
-
-    if slot in {"camera_type", "composition", "lens", "motion"}:
-        if "surveillance" in item_tokens and not (context & {"surveillance", "cctv_frame", "dashcam_still", "bodycam_frame"}):
-            return False
-        if "vehicle" in item_tokens and not (context & {"vehicle", "automotive", "dashcam_still", "highway_dashcam"}):
-            return False
-
-    if slot == "lens" and context & {"phone", "front_facing_phone", "smartphone_camera", "selfie_camera_photo"}:
-        if not (item_tokens & {"phone", "selfie", "social", "wide", "general"}):
-            return False
-
-    if slot in {"lighting", "light_type"}:
-        if item_id == "headlights" and not (scene_context & {"street", "urban", "vehicle", "night", "surveillance"}):
-            return False
-        if item_id == "moonlight" and not (scene_context & {"nature", "night", "landscape", "wild"}):
-            return False
-        if item_id == "underwater_caustics" and not (scene_context & {"nature", "aquatic", "wild", "travel", "landscape"}):
-            return False
-        if item_id == "streetlamp" and not (scene_context & {"street", "urban", "night"}):
-            return False
-        if item_id == "lab_led" and not (context & {"science", "technology", "laboratory", "biolab", "data_center"}):
-            return False
-        if item_id == "monitor_glow" and not (context & {"technology", "gaming", "creator", "creator_room", "esports_room", "glass_office"}):
-            return False
-        if item_id in {"studio_strobe", "studio_flash", "softbox"} and not (
-            context & {"studio", "commercial", "fashion", "beauty", "product", "portrait"}
-        ):
-            return False
-
-    if slot == "light_shape":
-        if item_id == "small_point_light" and not (context & {"flash", "night", "stage", "concert"}):
-            return False
-        if item_id in {"large_softbox_shape", "strip_light_shape", "gobo_pattern"} and not (
-            context & {"studio", "commercial", "fashion", "beauty", "product", "portrait"}
-        ):
-            return False
-
-    if slot == "body_framing" and "adult" in item_tokens and "adult" not in context:
-        return False
 
     return True
 
@@ -24752,9 +22222,6 @@ def soft_body_first_survivors(
         return []
     guard_policy = (semantic_policy_from_source(semantic_context).get("soft_body_first_guard", {}) or {})
     guard_slots = normalize_list(guard_policy.get("slots"))
-    legacy_guard_slot = str(guard_policy.get("slot") or "").strip()
-    if legacy_guard_slot and legacy_guard_slot not in guard_slots:
-        guard_slots.append(legacy_guard_slot)
     if not guard_slots:
         guard_slots = ["body_framing"]
     demote_facets = normalize_list(guard_policy.get("demote_facets")) or ["soft_body_role:body_emphasis"]
@@ -26340,118 +23807,6 @@ def soft_render_suppress_negative_entries(policy: Optional[JsonDict]) -> List[En
     return entries
 
 
-def moe_response_default_negative_entries(
-    character_response: Optional[JsonDict],
-    generation_contract: Optional[JsonDict],
-    reference_edit_mode: str = "off",
-) -> List[Entry]:
-    """Suppress generic cute shorthand that competes with causal moe evidence."""
-    if not isinstance(character_response, dict) or character_response.get("requested") is not True:
-        return []
-    contract = generation_contract if isinstance(generation_contract, dict) else {}
-    source_text = " ".join(
-        [
-            *normalize_list(contract.get("concept_locks")),
-            *normalize_list(contract.get("user_mandatory_intents")),
-            *normalize_list(contract.get("additional_requirements")),
-        ]
-    )
-    heart_requested = text_matches_any_pattern(
-        source_text,
-        (r"하트", r"ハート|♡|♥", r"(?<![a-z0-9])hearts?(?![a-z0-9])"),
-    )
-    graphic_requested = text_matches_any_pattern(
-        source_text,
-        (r"만화|망가|코믹", r"漫画|マンガ", r"(?<![a-z0-9])(?:manga|comic)(?![a-z0-9])"),
-    )
-    text_requested = text_matches_any_pattern(source_text, MOE_TEXT_REQUEST_PATTERNS)
-    intent_precedence = (
-        contract.get("authorial_core_constraints", {}).get("intent_precedence")
-        if isinstance(contract.get("authorial_core_constraints"), dict)
-        and isinstance(
-            contract.get("authorial_core_constraints", {}).get("intent_precedence"),
-            dict,
-        )
-        else None
-    )
-    explicitly_open_dimensions = (
-        set(intent_precedence.get("open_dimensions") or [])
-        if isinstance(intent_precedence, dict)
-        else None
-    )
-
-    def default_dimensions_open(*dimensions: str) -> bool:
-        return (
-            True
-            if explicitly_open_dimensions is None
-            else set(dimensions).issubset(explicitly_open_dimensions)
-        )
-
-    terms = [
-        "childlike facial morphology",
-        "minor appearance",
-        "school-age coding",
-    ]
-    if default_dimensions_open("style"):
-        terms.append("generic sparkle overlays")
-    if default_dimensions_open("style", "expression"):
-        terms.append("decorative blush circles")
-    if default_dimensions_open("appearance"):
-        terms.append("oversized anime eyes")
-    if default_dimensions_open("expression"):
-        terms.extend(
-            [
-                "blank bored expression",
-                "listless expression",
-                "pure scowl without a warm micro-expression",
-            ]
-        )
-    if str(reference_edit_mode or "off") == "identity":
-        terms.extend(
-            [
-                "enlarged or rounder eyes than the identity reference",
-                "shortened face compared with the identity reference",
-                "narrowed jaw compared with the identity reference",
-                "dollified facial proportions",
-                "de-aged identity",
-            ]
-        )
-    if not heart_requested and default_dimensions_open("style"):
-        terms.extend(
-            [
-                "unrequested heart symbols",
-                "heart-shaped pupils",
-                "heart-shaped latte art",
-            ]
-        )
-    if not graphic_requested and default_dimensions_open("style"):
-        terms.extend(
-            [
-                "cartoon motion lines",
-                "manga reaction marks",
-                "comic emphasis marks",
-            ]
-        )
-    if not text_requested and default_dimensions_open("text"):
-        terms.extend(
-            [
-                "readable background text",
-                "pseudo-writing",
-                "menu board lettering",
-                "chalkboard writing",
-                "signage behind the subject",
-            ]
-        )
-    return [
-        {
-            "id": f"moe_response_default_suppress_{stable_text_id(term)}",
-            "en": term,
-            "ko": term,
-        }
-        for term in terms
-    ]
-
-
 def render_directive_match_blob(picked: Dict[str, Entry], policy: Optional[JsonDict]) -> str:
     parts: List[str] = []
     for slot, entry in picked.items():
@@ -26610,7 +23965,6 @@ def generate_once(
     concept_scene_variants: Optional[Sequence[str]] = None,
     safety_evaluation_requested: bool = False,
     viewer_experience_requested: bool = False,
-    hybrid_augmentation_requested: bool = False,
     sensual_intensity: int = 0,
     fetish_intensity: int = 0,
     adult_appeal_emphasis: str = CANDIDATE_PACK_ADULT_APPEAL_DEFAULT_EMPHASIS,
@@ -26626,10 +23980,16 @@ def generate_once(
     creative_control_snapshot: Optional[JsonDict] = None,
 ) -> JsonDict:
     if creative_control_snapshot is not None:
-        if not isinstance(authorial_core, dict) or authorial_core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        if (
+            not isinstance(authorial_core, dict)
+            or authorial_core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION
+        ):
             raise ValueError("pre-core creative controls require a v3 authorial core")
         creative_controls.validate(creative_control_snapshot, authorial_core["source_request"])
-        if authorial_core.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
+        if (
+            authorial_core.get("creative_controls_sha256")
+            != creative_control_snapshot["canonical_sha256"]
+        ):
             raise ValueError("authorial core does not bind the supplied pre-core creative controls")
         control_values = creative_controls.runtime_values(creative_control_snapshot)
         sensual_intensity = control_values["sensual_intensity"]
@@ -26643,16 +24003,13 @@ def generate_once(
         reference_edit_mode = control_values["reference_edit_mode"]
         trend_layer = control_values["trend_layer"]
         viewer_experience_requested = control_values["viewer_experience"]
-        # V6 keeps a broad candidate pool; frozen creativity controls the final
-        # permissible interpretation, not this internal pool breadth.
         creativity = 1.0
     elif isinstance(authorial_core, dict) and authorial_core.get("creative_controls_sha256"):
         raise ValueError("the core's frozen creative controls must be supplied")
     requested_selection_mode = requested_selection_mode or selection_mode
     typed_core_v3 = bool(
         isinstance(authorial_core, dict)
-        and authorial_core.get("contract_version")
-        == AUTHORIAL_CORE_V3_CONTRACT_VERSION
+        and authorial_core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION
     )
     effective_selection_mode = selection_mode
     fallback_reason: Optional[str] = None
@@ -26661,10 +24018,7 @@ def generate_once(
     retrieval_text: Optional[str] = None
     retrieval_provenance: Optional[JsonDict] = None
     if isinstance(authorial_core, dict):
-        retrieval_text, retrieval_provenance = authorial_core_retrieval_text(
-            authorial_core,
-            intent,
-        )
+        retrieval_text, retrieval_provenance = authorial_core_retrieval_text(authorial_core, intent)
     try:
         semantic_context = make_semantic_context(
             data,
@@ -26698,56 +24052,15 @@ def generate_once(
             fallback_reason = str(exc)
             effective_selection_mode = "rule"
             semantic_context = None
-            print(f"Warning: semantic default fell back to rule mode: {fallback_reason}", file=sys.stderr)
+            print(
+                f"Warning: semantic default fell back to rule mode: {fallback_reason}",
+                file=sys.stderr,
+            )
         else:
             raise
-    # Natural-language moe routing must constrain the preset before rule-mode
-    # sampling.  Previously the response contract was resolved only after a
-    # generic preset and subject had already been sampled, so an explicit
-    # adult-bishonen request could inherit an elderly commuter.  Keep an
-    # explicit preset or a narrower role/mixin recipe authoritative; only fill
-    # the otherwise-unconstrained natural-language gap here.
     routed_preset_id = preset_id
-    natural_moe_route_preset_id: Optional[str] = None
-    if not routed_preset_id and not typed_core_v3:
-        pre_route_texts = [
-            *normalize_list(concept_locks),
-            *normalize_list(additional_requirements),
-            *normalize_list(role_requirements),
-            *normalize_list(user_mandatory_intents),
-            *([str(intent)] if intent else []),
-        ]
-        pre_route_response = resolve_moe_response_intent(pre_route_texts)
-        pre_route_policy = normalize_soft_anchor_spec(soft_anchor_spec)
-        preferred_presets = set(
-            normalize_list((pre_route_policy.get("preset_affinity") or {}).get("preferred_presets"))
-        )
-        no_people_pre_route = any(
-            intent_explicitly_excludes_people(text) for text in pre_route_texts
-        ) or bool(
-            authorial_core_generation_constraints(authorial_core).get("no_people")
-            if isinstance(authorial_core, dict)
-            else False
-        )
-        route_id = str(pre_route_response.get("route_id") or "")
-        route_exists = bool(route_id) and (
-            any(str(item.get("id") or "") == route_id for item in data.get("presets", []))
-            or materialize_virtual_preset(data, route_id) is not None
-        )
-        if (
-            pre_route_response.get("requested") is True
-            and not no_people_pre_route
-            and not preferred_presets
-            and route_exists
-        ):
-            routed_preset_id = route_id
-            natural_moe_route_preset_id = route_id
     preset = choose_preset(
-        data,
-        rng,
-        routed_preset_id,
-        semantic_context,
-        soft_anchor_spec=soft_anchor_spec,
+        data, rng, routed_preset_id, semantic_context, soft_anchor_spec=soft_anchor_spec
     )
     picked: Dict[str, Entry] = {}
     generation_contract = make_generation_contract(
@@ -26771,8 +24084,8 @@ def generate_once(
     )
     if isinstance(authorial_core, dict):
         generation_contract["_authorial_core"] = authorial_core
-        generation_contract["authorial_core_constraints"] = (
-            authorial_core_generation_constraints(authorial_core)
+        generation_contract["authorial_core_constraints"] = authorial_core_generation_constraints(
+            authorial_core
         )
         generation_contract["intent_constraints"] = resolve_request_intent_constraints(
             data,
@@ -26780,23 +24093,10 @@ def generate_once(
             generation_contract,
             authorial_core=authorial_core,
         )
-    if natural_moe_route_preset_id:
-        record_generation_contract_event(
-            generation_contract,
-            "natural_moe_route_preset",
-            {
-                "preset_id": natural_moe_route_preset_id,
-                "source": "pre_sample_natural_language_moe_route",
-                "narrower_recipe_preserved": False,
-            },
-        )
     if semantic_context is not None and intent_source == "user":
-        generation_contract["semantic_intent"] = str(semantic_context.get("intent") or "")
+        generation_contract["semantic_intent"] = str(semantic_context.get('intent') or '')
         generation_contract["intent_constraints"] = resolve_request_intent_constraints(
-            data,
-            semantic_context,
-            generation_contract,
-            authorial_core=authorial_core,
+            data, semantic_context, generation_contract, authorial_core=authorial_core
         )
     character_response_intent = (
         generation_contract.get("intent_constraints", {}).get("character_response", {})
@@ -26804,15 +24104,10 @@ def generate_once(
         else {}
     )
     authorial_intent_precedence = (
-        generation_contract.get("authorial_core_constraints", {}).get(
-            "intent_precedence"
-        )
+        generation_contract.get("authorial_core_constraints", {}).get("intent_precedence")
         if isinstance(generation_contract.get("authorial_core_constraints"), dict)
         and isinstance(
-            generation_contract.get("authorial_core_constraints", {}).get(
-                "intent_precedence"
-            ),
-            dict,
+            generation_contract.get("authorial_core_constraints", {}).get("intent_precedence"), dict
         )
         else None
     )
@@ -26831,31 +24126,26 @@ def generate_once(
         else {}
     )
     explicit_nonsexual_moe = bool(
-        (
-            isinstance(character_response_intent, dict)
-            and character_response_intent.get("requested") is True
-            and character_response_intent.get("eligible") is True
-            and character_response_intent.get("explicit_nonsexual") is True
-        )
-        or (
-            typed_core_v3
-            and str(typed_response_axes.get("sexual_tone") or "")
-            == "nonsexual"
-        )
+        typed_core_v3 and str(typed_response_axes.get('sexual_tone') or '') == "nonsexual"
     )
-    if (creative_control_snapshot is not None and explicit_nonsexual_moe
-            and not creative_control_snapshot["context"]["explicit_nonsexual"]
-            and any(creative_control_snapshot["controls"][axis]["source"] == "saved_setting"
-                    and creative_control_snapshot["adult_appeal"][axis]["effective_intensity"] > 0
-                    for axis in creative_controls.AXES)):
-        raise ValueError("resolve explicit nonsexual requester meaning in the pre-core context before freezing; do not silently change defaults after authoring")
     if (
-        adult_appeal_activation_source == "skill_default"
-        and (explicit_nonsexual_moe or (not typed_core_v3 and not default_adult_appeal_dimensions_open))
+        creative_control_snapshot is not None
+        and explicit_nonsexual_moe
+        and (not creative_control_snapshot["context"]["explicit_nonsexual"])
+        and any(
+            (
+                creative_control_snapshot["controls"][axis]["source"] == "saved_setting"
+                and creative_control_snapshot["adult_appeal"][axis]["effective_intensity"] > 0
+                for axis in creative_controls.AXES
+            )
+        )
     ):
-        # Preserve explicit nonsexual intent and the historical v2 boundary.
-        # New v3/v6 packs scope each adult axis and candidate to unlocked
-        # dimensions during pack construction instead of clearing both axes.
+        raise ValueError(
+            "resolve explicit nonsexual requester meaning in the pre-core context before freezing; do not silently change defaults after authoring"
+        )
+    if adult_appeal_activation_source == "skill_default" and (
+        explicit_nonsexual_moe or (not typed_core_v3 and (not default_adult_appeal_dimensions_open))
+    ):
         sensual_intensity = 0
         fetish_intensity = 0
         adult_appeal_emphasis = "balanced"
@@ -26866,10 +24156,7 @@ def generate_once(
         )
     expand_soft_anchor_pools(generation_contract, semantic_context, data)
     affinity_status = soft_preset_affinity_status(
-        preset,
-        generation_contract.get("soft_anchor_policy"),
-        data,
-        forced=bool(preset_id),
+        preset, generation_contract.get("soft_anchor_policy"), data, forced=bool(preset_id)
     )
     if affinity_status.get("status") == "warn":
         generation_contract.setdefault("policy_conflicts", []).append(
@@ -26885,12 +24172,13 @@ def generate_once(
             semantic_context["anchor_diversity_ledger"] = anchor_diversity_ledger
         semantic_context["generation_contract"] = generation_contract
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-
     slots_to_pick = selected_slots_for_preset(preset, data, rng, forced_choices, priority_bias)
     for slot in soft_anchor_slots(generation_contract.get("soft_anchor_policy")):
         if slot in data.get("slots", {}) and slot not in slots_to_pick:
             slots_to_pick.append(slot)
-    for slot in (generation_contract.get("soft_anchor_policy", {}) or {}).get("free_slot_constraints", {}) or {}:
+    for slot in (generation_contract.get("soft_anchor_policy", {}) or {}).get(
+        "free_slot_constraints", {}
+    ) or {}:
         if slot in data.get("slots", {}) and slot not in slots_to_pick:
             slots_to_pick.append(slot)
     for slot in semantic_steering_slots(semantic_context, data):
@@ -26899,7 +24187,12 @@ def generate_once(
             if semantic_context:
                 record_intent_steering(
                     semantic_context,
-                    {"slot": slot, "reason": "required_by_axis", "before": len(slots_to_pick) - 1, "after": len(slots_to_pick)},
+                    {
+                        "slot": slot,
+                        "reason": "required_by_axis",
+                        "before": len(slots_to_pick) - 1,
+                        "after": len(slots_to_pick),
+                    },
                 )
     for slot in semantic_intent_hint_slots(semantic_context, data):
         if slot not in slots_to_pick:
@@ -26914,9 +24207,10 @@ def generate_once(
                         "after": len(slots_to_pick),
                     },
                 )
-
     for slot in slots_to_pick:
-        entry = choose_slot(slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+        entry = choose_slot(
+            slot, data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+        )
         if entry is not None:
             picked[slot] = entry
             refresh_generation_contract(
@@ -26937,11 +24231,12 @@ def generate_once(
                 soft_anchor_spec=soft_anchor_spec,
             )
             sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-
     reconcile_contract_blocked_picks(
         data, preset, rng, picked, forced_choices, semantic_context, generation_contract
     )
-    apply_soft_anchor_repair(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+    apply_soft_anchor_repair(
+        data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+    )
     refresh_generation_contract(
         generation_contract,
         data,
@@ -26960,7 +24255,6 @@ def generate_once(
         soft_anchor_spec=soft_anchor_spec,
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-
     surreal_active = should_activate_surreal_layer(
         preset,
         rng,
@@ -26990,15 +24284,27 @@ def generate_once(
     )
     sync_generation_contract_axis_coverage(generation_contract, semantic_context)
     if surreal_active:
-        apply_surreal_layer(data, preset, rng, picked, forced_choices, surreal_intensity, semantic_context, generation_contract)
-
-    apply_weak_horror_compensation(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
-    apply_axis_coverage_compensation(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
-
+        apply_surreal_layer(
+            data,
+            preset,
+            rng,
+            picked,
+            forced_choices,
+            surreal_intensity,
+            semantic_context,
+            generation_contract,
+        )
+    apply_weak_horror_compensation(
+        data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+    )
+    apply_axis_coverage_compensation(
+        data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+    )
     if detail_level == "detailed":
-        reinforce_detail_slots(data, preset, rng, picked, forced_choices, semantic_context, generation_contract)
+        reinforce_detail_slots(
+            data, preset, rng, picked, forced_choices, semantic_context, generation_contract
+        )
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
-
     direct_render_requirements = normalize_additional_requirements(additional_requirements)
     if detail_level != "compact":
         direct_render_requirements = normalize_additional_requirements(
@@ -27014,17 +24320,12 @@ def generate_once(
         )
     render_picked = render_guarded_picked(data, preset, picked, generation_contract)
     directive_events, effective_additional_requirements = resolve_soft_render_directives(
-        generation_contract,
-        render_picked,
-        additional_requirements,
-        direct_render_requirements,
+        generation_contract, render_picked, additional_requirements, direct_render_requirements
     )
-
     result: JsonDict = {
         "preset_id": preset.get("id"),
         "preset": {lang: localize(preset, lang) for lang in langs},
     }
-
     for lang in langs:
         result[f"prompt_{lang}"] = render_prompt(
             data,
@@ -27039,16 +24340,8 @@ def generate_once(
             effective_additional_requirements,
             likeness_mode,
         )
-
     if apply_soft_post_render_repair(
-        data,
-        preset,
-        rng,
-        picked,
-        result,
-        forced_choices,
-        semantic_context,
-        generation_contract,
+        data, preset, rng, picked, result, forced_choices, semantic_context, generation_contract
     ):
         refresh_generation_contract(
             generation_contract,
@@ -27071,10 +24364,7 @@ def generate_once(
         sync_generation_contract_axis_coverage(generation_contract, semantic_context)
         render_picked = render_guarded_picked(data, preset, picked, generation_contract)
         directive_events, effective_additional_requirements = resolve_soft_render_directives(
-            generation_contract,
-            render_picked,
-            additional_requirements,
-            direct_render_requirements,
+            generation_contract, render_picked, additional_requirements, direct_render_requirements
         )
         for lang in langs:
             result[f"prompt_{lang}"] = render_prompt(
@@ -27090,7 +24380,6 @@ def generate_once(
                 effective_additional_requirements,
                 likeness_mode,
             )
-
     record_batch_generation(
         semantic_context,
         preset,
@@ -27098,7 +24387,6 @@ def generate_once(
         forced_choices=forced_choices,
         preset_forced=bool(preset_id),
     )
-
     if llm_polish == "strict":
         for lang in langs:
             result[f"polished_prompt_{lang}"] = result[f"prompt_{lang}"]
@@ -27110,74 +24398,35 @@ def generate_once(
             "preserved_anchors": [
                 f"{slot}:{entry.get('id')}"
                 for slot, entry in picked.items()
-                if entry.get("anchor") or slot in {"subject", "location", "lens", "lighting", "format"}
+                if entry.get("anchor")
+                or slot in {"subject", "location", "lens", "lighting", "format"}
             ],
         }
-
     if include_negative:
         negative_entries = choose_negative_entries(
-            data,
-            rng,
-            negative_count,
-            has_surreal_layer(render_picked),
-            render_picked,
+            data, rng, negative_count, has_surreal_layer(render_picked), render_picked
         )
-        if (
-            isinstance(character_response_intent, dict)
-            and character_response_intent.get("relationship_register")
-            == "peer_liking_under_denial"
-        ):
-            # V10 requires one deliberately visible, blurred recipient eye-and-temple
-            # edge landmark. The generic single-subject safeguard otherwise suppresses
-            # that relationship endpoint even though a second full face is still banned.
-            negative_entries = [
-                entry
-                for entry in negative_entries
-                if localize(entry, "en").strip().lower() != "duplicate faces"
-            ]
-            negative_entries.extend(
-                [
-                    {
-                        "id": "moe_peer_liking_duplicate_primary_subject",
-                        "en": "duplicate primary subject",
-                        "ko": "duplicate primary subject",
-                    },
-                    {
-                        "id": "moe_peer_liking_second_full_recipient_face",
-                        "en": "second full recipient face",
-                        "ko": "second full recipient face",
-                    },
-                ]
-            )
-        soft_suppress_entries = soft_render_suppress_negative_entries(generation_contract.get("soft_anchor_policy"))
+        soft_suppress_entries = soft_render_suppress_negative_entries(
+            generation_contract.get("soft_anchor_policy")
+        )
         soft_suppress_entries.extend(soft_render_directive_negative_entries(directive_events))
-        soft_suppress_entries.extend(
-            moe_response_default_negative_entries(
-                character_response_intent,
-                generation_contract,
-                reference_edit_mode,
-            )
-        )
         if soft_suppress_entries:
             existing = {localize(entry, "en").lower() for entry in negative_entries}
             for entry in soft_suppress_entries:
                 if localize(entry, "en").lower() not in existing:
                     negative_entries.append(entry)
                     existing.add(localize(entry, "en").lower())
-            generation_contract["soft_render_suppress_terms"] = [localize(entry, "en") for entry in soft_suppress_entries]
+            generation_contract["soft_render_suppress_terms"] = [
+                localize(entry, "en") for entry in soft_suppress_entries
+            ]
         if (
             isinstance(authorial_core, dict)
-            and authorial_core.get("contract_version")
-            in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+            and authorial_core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
         ):
-            negative_entries, suppressed_negative_terms = (
-                filter_authorial_negative_entries(
-                    negative_entries,
-                    authorial_core,
-                    identity_preservation_enabled=(
-                        str(reference_edit_mode or "off") == "identity"
-                    ),
-                )
+            negative_entries, suppressed_negative_terms = filter_authorial_negative_entries(
+                negative_entries,
+                authorial_core,
+                identity_preservation_enabled=str(reference_edit_mode or 'off') == "identity",
             )
             generation_contract["negative_intent_guard"] = {
                 "contract_version": NEGATIVE_INTENT_GUARD_CONTRACT_VERSION,
@@ -27186,23 +24435,21 @@ def generate_once(
             }
         for lang in langs:
             result[f"negative_{lang}"] = render_negative_prompt(negative_entries, lang)
-
     if (
         isinstance(authorial_core, dict)
-        and authorial_core.get("contract_version")
-        in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
+        and authorial_core.get("contract_version") in AUTHORIAL_CORE_MODERN_CONTRACT_VERSIONS
     ):
         result["negative_intent_guard"] = build_negative_intent_guard(
             authorial_core,
             result.get("negative_en"),
-            identity_preservation_enabled=(
-                str(reference_edit_mode or "off") == "identity"
-            ),
+            identity_preservation_enabled=str(reference_edit_mode or 'off') == "identity",
         )
-
-    result["quality"] = evaluate_generation_quality(generation_contract, render_picked, result, semantic_context)
-
-    prompt_for_id = result.get("prompt_en") or next((result.get(f"prompt_{lang}") for lang in langs if result.get(f"prompt_{lang}")), "")
+    result["quality"] = evaluate_generation_quality(
+        generation_contract, render_picked, result, semantic_context
+    )
+    prompt_for_id = result.get("prompt_en") or next(
+        (result.get(f"prompt_{lang}") for lang in langs if result.get(f"prompt_{lang}")), ""
+    )
     negative_for_id = result.get("negative_en") if include_negative else None
     result["provenance"] = {
         "generator_version": GENERATOR_VERSION,
@@ -27244,38 +24491,51 @@ def generate_once(
         ],
         "concept_scene_variants": normalize_list(concept_scene_variants),
         "safety": generation_contract.get("safety", {}),
-        "character_response": dict(character_response_intent)
-        if isinstance(character_response_intent, dict)
-        else {},
+        "character_response": (
+            dict(character_response_intent) if isinstance(character_response_intent, dict) else {}
+        ),
         "viewer_experience_requested": bool(viewer_experience_requested),
-        "hybrid_augmentation_requested": bool(hybrid_augmentation_requested),
         "adult_appeal": {
             "enabled": bool(
                 adult_appeal_candidate_pack_requested
                 and (sensual_intensity > 0 or fetish_intensity > 0)
             ),
-            "configured": bool(
-                sensual_intensity > 0 or fetish_intensity > 0
+            "configured": bool(sensual_intensity > 0 or fetish_intensity > 0),
+            "application_scope": (
+                "precore_authoring_and_candidate_pack_composition"
+                if creative_control_snapshot is not None
+                else "candidate_pack_composition"
             ),
-            "application_scope": "precore_authoring_and_candidate_pack_composition" if creative_control_snapshot is not None else "candidate_pack_composition",
-            "activation_source": adult_appeal_activation_source
-            if (
-                sensual_intensity > 0
+            "activation_source": (
+                adult_appeal_activation_source
+                if sensual_intensity > 0
                 or fetish_intensity > 0
                 or adult_appeal_activation_source == "explicit_nonsexual_moe"
-                or creative_control_snapshot is not None
-            )
-            else "explicit_opt_out",
+                or (creative_control_snapshot is not None)
+                else "explicit_opt_out"
+            ),
             "axes": {
                 "sensual": {"intensity": int(sensual_intensity)},
                 "fetish": {"intensity": int(fetish_intensity)},
             },
             "blend": {"emphasis": adult_appeal_emphasis},
         },
-        "creativity": control_values["creativity"] if creative_control_snapshot is not None else (creativity if creativity is not None else (semantic_context or {}).get("creativity")),
-        **({"creative_controls": copy.deepcopy(creative_control_snapshot),
-            "creative_control_runtime": control_values,
-            "candidate_pool_creativity": creativity} if creative_control_snapshot is not None else {}),
+        "creativity": (
+            control_values["creativity"]
+            if creative_control_snapshot is not None
+            else (
+                creativity if creativity is not None else (semantic_context or {}).get("creativity")
+            )
+        ),
+        **(
+            {
+                "creative_controls": copy.deepcopy(creative_control_snapshot),
+                "creative_control_runtime": control_values,
+                "candidate_pool_creativity": creativity,
+            }
+            if creative_control_snapshot is not None
+            else {}
+        ),
         "argv": list(source_argv or []),
         **(
             {"authorial_core": copy.deepcopy(authorial_core)}
@@ -27288,21 +24548,19 @@ def generate_once(
             else {}
         ),
     }
-
-    prepare_contextual_appeal_queries(data, result, authorial_core,
-                                     creative_control_snapshot, semantic_context, gemini_api_key)
-
+    prepare_contextual_appeal_queries(
+        data, result, authorial_core, creative_control_snapshot, semantic_context, gemini_api_key
+    )
     if (
         semantic_context is not None
         and isinstance(data.get(VISUAL_PROFILE_INDEX_DATA_KEY), dict)
         and isinstance(semantic_context.get("query_vector"), list)
     ):
-        prompt_id = str(result["provenance"].get("prompt_id") or "")
+        prompt_id = str(result['provenance'].get('prompt_id') or '')
         if prompt_id:
-            data.setdefault(VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY, {})[
-                prompt_id
-            ] = list(semantic_context["query_vector"])
-
+            data.setdefault(VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY, {})[prompt_id] = list(
+                semantic_context["query_vector"]
+            )
     if include_choices:
         result["choices"] = {
             slot: {
@@ -27314,17 +24572,16 @@ def generate_once(
             }
             for slot, entry in picked.items()
         }
-
     if include_trace and semantic_context:
         result["semantic_trace"] = {
             "selection_mode": effective_selection_mode,
             "requested_selection_mode": requested_selection_mode,
             "intent": intent,
-            "retrieval_query": copy.deepcopy(
-                semantic_context.get("retrieval_provenance", {})
-            ),
+            "retrieval_query": copy.deepcopy(semantic_context.get("retrieval_provenance", {})),
             "intent_source": semantic_context.get("intent_source", intent_source),
-            "semantic_defaulted": bool(semantic_context.get("semantic_defaulted", semantic_defaulted)),
+            "semantic_defaulted": bool(
+                semantic_context.get("semantic_defaulted", semantic_defaulted)
+            ),
             "novelty": novelty,
             "filter_strictness": semantic_context.get("filter_strictness"),
             "semantic_weight": semantic_context.get("semantic_weight"),
@@ -27338,10 +24595,24 @@ def generate_once(
             "axis_coverage": semantic_axis_coverage_trace(semantic_context),
             "semantic_groups": selected_semantic_metadata_summary(picked, semantic_context),
             "coherence_scope": {
-                "family_conflicts": sorted((semantic_context.get("coherence_rules", {}).get("family_conflicts", {}) or {}).keys()),
-                "tone_conflicts": sorted((semantic_context.get("semantic_metadata", {}).get("family_tone_conflicts", {}) or {}).keys()),
+                "family_conflicts": sorted(
+                    (
+                        semantic_context.get("coherence_rules", {}).get("family_conflicts", {})
+                        or {}
+                    ).keys()
+                ),
+                "tone_conflicts": sorted(
+                    (
+                        semantic_context.get("semantic_metadata", {}).get(
+                            "family_tone_conflicts", {}
+                        )
+                        or {}
+                    ).keys()
+                ),
             },
-            "weak_horror_compensation": semantic_context.get("weak_horror_compensation", {"status": "not_evaluated"}),
+            "weak_horror_compensation": semantic_context.get(
+                "weak_horror_compensation", {"status": "not_evaluated"}
+            ),
             "surreal_activation_reason": semantic_context.get("surreal_activation_reason"),
             "surreal_activation_active": semantic_context.get("surreal_activation_active"),
             "dictionary_hash": semantic_context.get("dictionary_hash"),
@@ -27353,7 +24624,9 @@ def generate_once(
             "embedding_dimensions": semantic_context.get("embedding_dimensions"),
             "hard_rejected_count": semantic_context.get("hard_rejected_count", 0),
             "hard_rejected": semantic_context.get("hard_rejected", []),
-            "soft_out_of_filter_selected_count": semantic_context.get("soft_out_of_filter_selected_count", 0),
+            "soft_out_of_filter_selected_count": semantic_context.get(
+                "soft_out_of_filter_selected_count", 0
+            ),
             "preset_score": semantic_context.get("preset_score"),
             "slot_scores": semantic_context.get("slot_scores", []),
             "batch_index": batch_index,
@@ -27366,7 +24639,11 @@ def generate_once(
                 "enabled": bool((semantic_context.get("batch_context") or {}).get("enabled")),
                 "tracked_scopes": ["subject_group", "location_tone", "lighting"],
                 "counts": {
-                    scope: dict(((semantic_context.get("batch_context") or {}).get("counts", {}) or {}).get(scope, {}))
+                    scope: dict(
+                        ((semantic_context.get("batch_context") or {}).get("counts", {}) or {}).get(
+                            scope, {}
+                        )
+                    )
                     for scope in ("subject_group", "location_tone", "lighting")
                 },
             },
@@ -27415,9 +24692,10 @@ def generate_once(
             },
             "batch_repetition_penalty": [],
             "batch_history_summary": batch_history_summary(batch_context),
-            "anchor_diversity_ledger_summary": anchor_diversity_ledger_summary(anchor_diversity_ledger),
+            "anchor_diversity_ledger_summary": anchor_diversity_ledger_summary(
+                anchor_diversity_ledger
+            ),
         }
-
     return result
 
 
@@ -27474,27 +24752,67 @@ def list_tags(data: JsonDict, slot: str) -> None:
         print(f"{item.get('id')}: {localize(item, 'ko')} / {localize(item, 'en')}")
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(
+    argv: Optional[Sequence[str]] = None,
+    *,
+    diagnostic: bool = False,
+    diagnostic_candidates: bool = False,
+) -> int:
     raw_args = list(argv or sys.argv[1:])
-    parser = argparse.ArgumentParser(description="Random photo prompt generator using JSON-managed tags.")
+    parser = argparse.ArgumentParser(
+        description="Random photo prompt generator using JSON-managed tags."
+    )
     parser.add_argument("--tags", default="photo_prompt_tags.json", help="Path to tag JSON file.")
     parser.add_argument("--quality-layers", default=None, help=argparse.SUPPRESS)
-    parser.add_argument("--lang", choices=["ko", "en", "both"], default="both", help="Output language.")
+    parser.add_argument(
+        "--lang", choices=["ko", "en", "both"], default="both", help="Output language."
+    )
     parser.add_argument("--n", type=int, default=5, help="Number of prompts to generate.")
     parser.add_argument("--preset", default=None, help="Preset id. Omit for random preset.")
-    parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducible output.")
+    parser.add_argument(
+        "--seed", type=int, default=None, help="Random seed for reproducible output."
+    )
     parser.add_argument(
         "--detail-level",
         choices=["standard", "detailed", "compact"],
         default="standard",
         help="Prompt rendering detail level. Use detailed for a longer image-ready prompt or compact for a ReactorPrompt-style single paragraph.",
     )
-    parser.add_argument("--surreal-mode", choices=["off", "auto", "on"], default=CREATIVE_CONTROL_DEFAULTS["surreal_mode"], help="Apply an added surreal layer. Pre-core snapshots resolve auto once; off preserves requested fantasy.")
-    parser.add_argument("--surreal-probability", type=float, default=CREATIVE_CONTROL_DEFAULTS["surreal_probability"], help="Probability for --surreal-mode auto. Clamped to 0..1.")
-    parser.add_argument("--surreal-intensity", choices=["subtle", "moderate", "bold"], default=CREATIVE_CONTROL_DEFAULTS["surreal_intensity"], help="Added treatment strength defined in the pre-core brief; legacy sampling uses these labels for slot breadth.")
-    parser.add_argument("--reference-edit-mode", choices=REFERENCE_EDIT_MODES, default=CREATIVE_CONTROL_DEFAULTS["reference_edit_mode"], help="Use the reference-edit workflow within the requester-defined reference scope.")
-    parser.add_argument("--trend-layer", choices=TREND_LAYERS, default=CREATIVE_CONTROL_DEFAULTS["trend_layer"], help="Selected treatment; frozen pre-core controls integrate it from initial authoring.")
-    parser.add_argument("--intent", default=None, help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.")
+    parser.add_argument(
+        "--surreal-mode",
+        choices=["off", "auto", "on"],
+        default=CREATIVE_CONTROL_DEFAULTS["surreal_mode"],
+        help="Apply an added surreal layer. Pre-core snapshots resolve auto once; off preserves requested fantasy.",
+    )
+    parser.add_argument(
+        "--surreal-probability",
+        type=float,
+        default=CREATIVE_CONTROL_DEFAULTS["surreal_probability"],
+        help="Probability for --surreal-mode auto. Clamped to 0..1.",
+    )
+    parser.add_argument(
+        "--surreal-intensity",
+        choices=["subtle", "moderate", "bold"],
+        default=CREATIVE_CONTROL_DEFAULTS["surreal_intensity"],
+        help="Added treatment strength defined in the pre-core brief; diagnostic sampling uses these labels for slot breadth.",
+    )
+    parser.add_argument(
+        "--reference-edit-mode",
+        choices=REFERENCE_EDIT_MODES,
+        default=CREATIVE_CONTROL_DEFAULTS["reference_edit_mode"],
+        help="Use the reference-edit workflow within the requester-defined reference scope.",
+    )
+    parser.add_argument(
+        "--trend-layer",
+        choices=TREND_LAYERS,
+        default=CREATIVE_CONTROL_DEFAULTS["trend_layer"],
+        help="Selected treatment; frozen pre-core controls integrate it from initial authoring.",
+    )
+    parser.add_argument(
+        "--intent",
+        default=None,
+        help="Free-text visual intent for semantic selection. A broad photo intent is used when semantic/hybrid mode has no explicit intent.",
+    )
     parser.add_argument(
         "--concept-lock",
         dest="concept_locks",
@@ -27510,14 +24828,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Concrete requirement not represented by tags. Repeatable; rendered into the final prompt before prompt_id is computed.",
     )
     parser.add_argument(
-        "--authorial-request-json",
-        default=None,
-        help="Inline JSON or path for an agent-authored pre-pack subject, setting, event and Japanese-subculture style contract. Requires v4 candidate-pack output.",
-    )
-    parser.add_argument(
         "--authorial-core-json",
         default=None,
-        help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept, requester-priority intent lock, and baseline prompt. Required for v5 candidate-pack output.",
+        help="Inline JSON or path for the domain-neutral agent-authored pre-pack concept, requester-priority intent lock, and baseline prompt. Required for v6 candidate-pack output.",
     )
     parser.add_argument(
         "--embodiment-review-json",
@@ -27527,12 +24840,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         "--request-envelope-json",
         default=None,
-        help="Inline JSON or path containing the exact requesting-user text and byte-grounded active spans. Required for v5 candidate-pack output.",
+        help="Inline JSON or path containing the exact requesting-user text and byte-grounded active spans. Required for v6 candidate-pack output.",
     )
     parser.add_argument(
         "--visual-intent-json",
         default=None,
-        help="Inline JSON or path for request-scoped hard visual geometry, mechanics, expression, transition, or behavior bindings. Requires v4 or v5 candidate-pack output.",
+        help="Inline JSON or path for request-scoped hard visual geometry, mechanics, expression, transition, or behavior bindings. Requires V6 candidate-pack output.",
     )
     parser.add_argument(
         "--visual-obligation-registry",
@@ -27564,10 +24877,34 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default="off",
         help="Prompt-level real-person likeness handling. Use inspired for an original fictional person inspired by styling/vibe.",
     )
-    parser.add_argument("--likeness-reference", dest="likeness_references", action="append", default=[], help=argparse.SUPPRESS)
-    parser.add_argument("--user-mandatory-intent", dest="user_mandatory_intents", action="append", default=[], help=argparse.SUPPRESS)
-    parser.add_argument("--concept-gates-json", dest="concept_gate_payloads", action="append", default=[], help=argparse.SUPPRESS)
-    parser.add_argument("--concept-scene-variant", dest="concept_scene_variants", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--likeness-reference",
+        dest="likeness_references",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--user-mandatory-intent",
+        dest="user_mandatory_intents",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--concept-gates-json",
+        dest="concept_gate_payloads",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--concept-scene-variant",
+        dest="concept_scene_variants",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument(
         "--safety-evaluation",
         action="store_true",
@@ -27578,11 +24915,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         action="store_true",
         default=CREATIVE_CONTROL_DEFAULTS["viewer_experience"],
         help="Expose a topic-neutral viewer-experience composition contract for explicit audience, affect, attachment, commercial, or subculture-response goals. High creative-direction runs include it automatically.",
-    )
-    parser.add_argument(
-        "--hybrid-augmentation",
-        action="store_true",
-        help="Expose three candidate-sourced idea-augmentation routes while preserving an agent-authored concept core. High creative-direction and adult-appeal runs enable it automatically.",
     )
     parser.add_argument(
         "--sensual-intensity",
@@ -27602,36 +24934,139 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=None,
         help="Blend emphasis when one or both adult-appeal axes are active. Equal default intensities resolve to balanced.",
     )
-    parser.add_argument("--selection-mode", choices=SELECTION_MODES, default=DEFAULT_SELECTION_MODE, help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.")
+    parser.add_argument(
+        "--selection-mode",
+        choices=SELECTION_MODES,
+        default=DEFAULT_SELECTION_MODE,
+        help="Selection mode. semantic is the default; use rule for the original deterministic weighted path.",
+    )
     parser.add_argument("--default-intent", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--semantic-default", action="store_true", help=argparse.SUPPRESS)
-    parser.add_argument("--novelty", choices=NOVELTY_LEVELS, default="medium", help="Semantic sampling diversity level. Used only with semantic or hybrid selection.")
-    parser.add_argument("--creativity", type=float, default=None, help="Single 0..1 creativity control: 0 maps to conservative/low-novelty, 0.5 to balanced exploration, and 0.75..1 adds a creative-direction composition contract alongside exploratory candidate breadth. Explicit --novelty or --semantic-profile values win over the corresponding diversity settings. Coherence controls (semantic weight, filter strictness) are not affected.")
+    parser.add_argument(
+        "--novelty",
+        choices=NOVELTY_LEVELS,
+        default="medium",
+        help="Semantic sampling diversity level. Used only with semantic or hybrid selection.",
+    )
+    parser.add_argument(
+        "--creativity",
+        type=float,
+        default=None,
+        help="Single 0..1 creativity control: 0 maps to conservative/low-novelty, 0.5 to balanced exploration, and 0.75..1 adds a creative-direction composition contract alongside exploratory candidate breadth. Explicit --novelty or --semantic-profile values win over the corresponding diversity settings. Coherence controls (semantic weight, filter strictness) are not affected.",
+    )
     parser.add_argument(
         "--scene-function",
         default=None,
         help="Select one supported render scene function for a direct taxonomy preset without adding user intent text.",
     )
-    parser.add_argument("--filter-strictness", choices=FILTER_STRICTNESS_MODES, default=None, help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.")
-    parser.add_argument("--semantic-weight", type=float, default=None, help="0..1 blend weight for semantic scoring. Defaults by selection mode.")
-    parser.add_argument("--semantic-profile", choices=SEMANTIC_PROFILES, default=None, help="Semantic candidate window/profile. Defaults by selection mode.")
-    parser.add_argument("--semantic-axis-mode", choices=SEMANTIC_AXIS_MODES, default="auto", help="Intent-axis decomposition for semantic preset scoring. Use off to keep a single intent axis.")
-    parser.add_argument("--intent-axis", dest="intent_axes", action="append", default=[], help="Explicit semantic intent axis. Repeat to replace automatic axis extraction.")
-    parser.add_argument("--intent-steering", choices=INTENT_STEERING_MODES, default=None, help="Semantic axis-based slot steering. Defaults to auto for semantic/hybrid and off for rule.")
-    parser.add_argument("--semantic-index", default=None, help="Path to a precomputed semantic index JSON. Defaults to a sibling asset when present.")
-    parser.add_argument("--semantic-model", default=SEMANTIC_MODEL_ID, help="Gemini embedding model required by the semantic index.")
-    parser.add_argument("--semantic-dimensions", type=int, default=DEFAULT_SEMANTIC_DIMENSIONS, help="Gemini embedding dimensions required by the semantic index.")
-    parser.add_argument("--soft-anchor-spec", dest="soft_anchor_specs", action="append", default=[], help=argparse.SUPPRESS)
-    parser.add_argument("--soft-requirement", dest="soft_requirements", action="append", default=[], help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--filter-strictness",
+        choices=FILTER_STRICTNESS_MODES,
+        default=None,
+        help="Preset filter behavior for semantic/hybrid selection. Defaults to soft for semantic and hard for hybrid/rule.",
+    )
+    parser.add_argument(
+        "--semantic-weight",
+        type=float,
+        default=None,
+        help="0..1 blend weight for semantic scoring. Defaults by selection mode.",
+    )
+    parser.add_argument(
+        "--semantic-profile",
+        choices=SEMANTIC_PROFILES,
+        default=None,
+        help="Semantic candidate window/profile. Defaults by selection mode.",
+    )
+    parser.add_argument(
+        "--semantic-axis-mode",
+        choices=SEMANTIC_AXIS_MODES,
+        default="auto",
+        help="Intent-axis decomposition for semantic preset scoring. Use off to keep a single intent axis.",
+    )
+    parser.add_argument(
+        "--intent-axis",
+        dest="intent_axes",
+        action="append",
+        default=[],
+        help="Explicit semantic intent axis. Repeat to replace automatic axis extraction.",
+    )
+    parser.add_argument(
+        "--intent-steering",
+        choices=INTENT_STEERING_MODES,
+        default=None,
+        help="Semantic axis-based slot steering. Defaults to auto for semantic/hybrid and off for rule.",
+    )
+    parser.add_argument(
+        "--semantic-index",
+        default=None,
+        help="Path to a precomputed semantic index JSON. Defaults to a sibling asset when present.",
+    )
+    parser.add_argument(
+        "--semantic-model",
+        default=SEMANTIC_MODEL_ID,
+        help="Gemini embedding model required by the semantic index.",
+    )
+    parser.add_argument(
+        "--semantic-dimensions",
+        type=int,
+        default=DEFAULT_SEMANTIC_DIMENSIONS,
+        help="Gemini embedding dimensions required by the semantic index.",
+    )
+    parser.add_argument(
+        "--soft-anchor-spec",
+        dest="soft_anchor_specs",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "--soft-requirement",
+        dest="soft_requirements",
+        action="append",
+        default=[],
+        help=argparse.SUPPRESS,
+    )
     parser.add_argument("--anchor-diversity-ledger", default=None, help=argparse.SUPPRESS)
-    parser.add_argument("--include-trace", action="store_true", help="Include semantic/rewrite trace metadata in JSON output.")
-    parser.add_argument("--llm-polish", choices=LLM_POLISH_MODES, default="off", help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.")
-    parser.add_argument("--priority-bias", type=float, default=None, help="Optional-slot priority boost. Omit to use JSON setting.")
-    parser.add_argument("--set", dest="set_values", action="append", default=[], help="Force a slot id, e.g. --set subject=fashion_model. Repeatable. Use commas to randomly choose among ids.")
-    parser.add_argument("--set-json", default=None, help="Inline JSON or path to JSON file for forced slots, e.g. '{\"subject\":\"fashion_model\"}'.")
-    parser.add_argument("--include-negative", action="store_true", help="Also output a negative prompt.")
-    parser.add_argument("--negative-count", type=int, default=12, help="Number of negative tags to sample.")
-    parser.add_argument("--include-choices", action="store_true", help="Include chosen slot details in plain or JSON output.")
+    parser.add_argument(
+        "--include-trace",
+        action="store_true",
+        help="Include semantic/rewrite trace metadata in JSON output.",
+    )
+    parser.add_argument(
+        "--llm-polish",
+        choices=LLM_POLISH_MODES,
+        default="off",
+        help="Optional strict prompt polish contract. strict currently preserves the deterministic prompt unless a provider is wired explicitly.",
+    )
+    parser.add_argument(
+        "--priority-bias",
+        type=float,
+        default=None,
+        help="Optional-slot priority boost. Omit to use JSON setting.",
+    )
+    parser.add_argument(
+        "--set",
+        dest="set_values",
+        action="append",
+        default=[],
+        help="Force a slot id, e.g. --set subject=fashion_model. Repeatable. Use commas to randomly choose among ids.",
+    )
+    parser.add_argument(
+        "--set-json",
+        default=None,
+        help='Inline JSON or path to JSON file for forced slots, e.g. \'{"subject":"fashion_model"}\'.',
+    )
+    parser.add_argument(
+        "--include-negative", action="store_true", help="Also output a negative prompt."
+    )
+    parser.add_argument(
+        "--negative-count", type=int, default=12, help="Number of negative tags to sample."
+    )
+    parser.add_argument(
+        "--include-choices",
+        action="store_true",
+        help="Include chosen slot details in plain or JSON output.",
+    )
     parser.add_argument(
         "--emit-candidate-pack",
         action="store_true",
@@ -27641,12 +25076,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "--candidate-pack-version",
         choices=CANDIDATE_PACK_VERSIONS,
         default=DEFAULT_CANDIDATE_PACK_VERSION,
-        help="Candidate-pack contract to emit. v6 uses a typed v3 authorial core and BM25F advisory retrieval; v5 preserves the prior core contract; v4 is the compatibility default.",
-    )
-    parser.add_argument(
-        "--legacy-replay-reason",
-        default=None,
-        help="Required reason when explicitly replaying a v3 or v2 candidate-pack contract.",
+        help="Candidate-pack contract to emit. Only v6 is supported, using a typed v3 authorial core and current policies.",
     )
     parser.add_argument(
         "--explain-scene-routing",
@@ -27660,31 +25090,57 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help="Write the exact generated output bytes to this file instead of stdout.",
     )
     parser.add_argument("--list-presets", action="store_true", help="List preset ids and exit.")
-    parser.add_argument("--include-virtual", action="store_true", help="Include virtual recipe presets when listing presets.")
-    parser.add_argument("--show-slots", action="store_true", help="List slots, tag counts, and priorities then exit.")
+    parser.add_argument(
+        "--include-virtual",
+        action="store_true",
+        help="Include virtual recipe presets when listing presets.",
+    )
+    parser.add_argument(
+        "--show-slots",
+        action="store_true",
+        help="List slots, tag counts, and priorities then exit.",
+    )
     parser.add_argument("--list-tags", metavar="SLOT", help="List tag ids for a slot then exit.")
-    parser.add_argument("--creative-controls-json", help="Frozen candidate-free controls resolved before authoring the v3 core.")
+    parser.add_argument(
+        "--creative-controls-json",
+        help="Frozen candidate-free controls resolved before authoring the v3 core.",
+    )
     args = parser.parse_args(raw_args)
     creative_control_snapshot = None
     if args.creative_controls_json:
-        if not args.emit_candidate_pack or args.candidate_pack_version != "v6" or not args.request_envelope_json:
-            raise ValueError("--creative-controls-json requires a v6 candidate pack and request envelope")
-        creative_control_snapshot = json.loads(Path(args.creative_controls_json).read_text(encoding="utf-8"))
+        if (
+            not args.emit_candidate_pack
+            or args.candidate_pack_version != "v6"
+            or not args.request_envelope_json
+        ):
+            raise ValueError(
+                "--creative-controls-json requires a v6 candidate pack and request envelope"
+            )
+        creative_control_snapshot = json.loads(
+            Path(args.creative_controls_json).read_text(encoding="utf-8")
+        )
         envelope_input = json.loads(Path(args.request_envelope_json).read_text(encoding="utf-8"))
         creative_controls.validate(creative_control_snapshot, envelope_input.get("request_text"))
         resolved_controls = creative_controls.runtime_values(creative_control_snapshot)
         mapping = {
-            "sensual": "sensual_intensity", "fetish": "fetish_intensity",
-            "adult_appeal_emphasis": "adult_appeal_emphasis", "creativity": "creativity",
-            "viewer_experience": "viewer_experience", "reference_edit_mode": "reference_edit_mode",
-            "surreal_mode": "surreal_mode", "surreal_probability": "surreal_probability",
-            "surreal_intensity": "surreal_intensity", "trend_layer": "trend_layer",
+            "sensual": "sensual_intensity",
+            "fetish": "fetish_intensity",
+            "adult_appeal_emphasis": "adult_appeal_emphasis",
+            "creativity": "creativity",
+            "viewer_experience": "viewer_experience",
+            "reference_edit_mode": "reference_edit_mode",
+            "surreal_mode": "surreal_mode",
+            "surreal_probability": "surreal_probability",
+            "surreal_intensity": "surreal_intensity",
+            "trend_layer": "trend_layer",
         }
         for control, attribute in mapping.items():
             option = "--" + attribute.replace("_", "-")
             expected = creative_control_snapshot["controls"][control]["value"]
             if has_cli_option(raw_args, option) and getattr(args, attribute) != expected:
-                raise ValueError(f"{option} conflicts with the frozen pre-core controls; rebuild the controls and core together")
+                raise ValueError(
+                    f"{option} conflicts with the frozen pre-core controls; rebuild the controls and core together"
+                )
             setattr(args, attribute, resolved_controls[attribute])
         if not (args.sensual_intensity or args.fetish_intensity):
             args.adult_appeal_emphasis = None
@@ -27695,9 +25151,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     ):
         if value < 0 or value > 3:
             raise ValueError(f"{option_name} must be between 0 and 3")
-    adult_appeal_enabled = bool(
-        args.sensual_intensity > 0 or args.fetish_intensity > 0
-    )
+    adult_appeal_enabled = bool(args.sensual_intensity > 0 or args.fetish_intensity > 0)
     explicit_adult_control = any(
         has_cli_option(raw_args, option)
         for option in (
@@ -27706,49 +25160,26 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "--adult-appeal-emphasis",
         )
     )
-    if (args.hybrid_augmentation or explicit_adult_control) and not args.emit_candidate_pack:
-        raise ValueError(
-            "--hybrid-augmentation and explicit adult-appeal controls require --emit-candidate-pack"
-        )
+    if explicit_adult_control and not args.emit_candidate_pack:
+        raise ValueError("explicit adult-appeal controls require --emit-candidate-pack")
     if args.explain_scene_routing and not args.emit_candidate_pack:
         raise ValueError("--explain-scene-routing requires --emit-candidate-pack")
-    if args.authorial_request_json and not args.emit_candidate_pack:
-        raise ValueError("--authorial-request-json requires --emit-candidate-pack")
-    if args.authorial_request_json and args.candidate_pack_version != "v4":
-        raise ValueError("--authorial-request-json requires --candidate-pack-version v4")
-    if args.authorial_core_json and not args.emit_candidate_pack:
-        raise ValueError("--authorial-core-json requires --emit-candidate-pack")
-    if args.embodiment_review_json and (not args.emit_candidate_pack or args.candidate_pack_version != "v6"):
-        raise ValueError("--embodiment-review-json requires --emit-candidate-pack and --candidate-pack-version v6")
-    if args.authorial_core_json and args.candidate_pack_version not in {"v5", "v6"}:
-        raise ValueError(
-            "--authorial-core-json requires --candidate-pack-version v5 or v6"
-        )
-    if args.candidate_pack_version in {"v5", "v6"} and not args.authorial_core_json:
-        raise ValueError(
-            "--candidate-pack-version v5/v6 requires --authorial-core-json"
-        )
-    if args.request_envelope_json and args.candidate_pack_version not in {"v5", "v6"}:
-        raise ValueError(
-            "--request-envelope-json requires --candidate-pack-version v5 or v6"
-        )
-    if args.candidate_pack_version in {"v5", "v6"} and not args.request_envelope_json:
-        raise ValueError(
-            "--candidate-pack-version v5/v6 requires --request-envelope-json"
-        )
-    if args.visual_intent_json and not args.emit_candidate_pack:
-        raise ValueError("--visual-intent-json requires --emit-candidate-pack")
-    if args.visual_intent_json and args.candidate_pack_version not in {"v4", "v5", "v6"}:
-        raise ValueError(
-            "--visual-intent-json requires --candidate-pack-version v4, v5, or v6"
-        )
-    if args.candidate_pack_version in {"v2", "v3"}:
-        if not str(args.legacy_replay_reason or "").strip():
+    inspecting = bool(args.list_presets or args.show_slots or args.list_tags)
+    if not diagnostic and not inspecting:
+        if not args.emit_candidate_pack:
             raise ValueError(
-                "--candidate-pack-version v2/v3 requires --legacy-replay-reason"
+                "generation requires --emit-candidate-pack and a frozen current authorial core"
             )
-    elif args.legacy_replay_reason:
-        raise ValueError("--legacy-replay-reason is valid only with v2 or v3")
+        for field in (
+            "authorial_core_json",
+            "request_envelope_json",
+            "creative_controls_json",
+            "embodiment_review_json",
+        ):
+            if not getattr(args, field):
+                raise ValueError("current generation requires --" + field.replace("_", "-"))
+    if diagnostic and args.emit_candidate_pack:
+        raise ValueError("sampler diagnostics cannot emit a composition candidate pack")
     if args.adult_appeal_emphasis and not adult_appeal_enabled:
         raise ValueError("--adult-appeal-emphasis requires an active adult-appeal axis")
     if args.adult_appeal_emphasis:
@@ -27773,7 +25204,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
 
     data = load_json(args.tags)
-    authorial_request = load_authorial_request_arg(args.authorial_request_json, data)
     request_envelope = load_request_envelope_arg(args.request_envelope_json)
     authorial_core = load_authorial_core_arg(
         args.authorial_core_json,
@@ -27785,18 +25215,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             authorial_core,
             json.loads(Path(args.embodiment_review_json).read_text(encoding="utf-8")),
         )
-        if args.embodiment_review_json else None
+        if args.embodiment_review_json
+        else None
     )
-    quality_layers_path = Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
+    quality_layers_path = (
+        Path(args.quality_layers) if args.quality_layers else default_quality_layers_path(args.tags)
+    )
     data[QUALITY_LAYERS_DATA_KEY] = load_quality_layers(quality_layers_path)
     visual_obligation_registry_path = (
         Path(args.visual_obligation_registry)
         if args.visual_obligation_registry
         else default_visual_obligation_registry_path(args.tags)
     )
-    visual_obligation_registry = load_visual_obligation_registry(
-        visual_obligation_registry_path
-    )
+    visual_obligation_registry = load_visual_obligation_registry(visual_obligation_registry_path)
     data[VISUAL_OBLIGATIONS_DATA_KEY] = visual_obligation_registry
     visual_profile_index_path = (
         Path(args.visual_profile_index)
@@ -27810,9 +25241,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             model=args.semantic_model,
             dimensions=args.semantic_dimensions,
         )
-    elif args.candidate_pack_version in {"v5", "v6"} and args.selection_mode != "rule":
+    elif args.emit_candidate_pack and args.selection_mode != "rule":
         raise FileNotFoundError(
-            "v5/v6 semantic visual-profile retrieval requires the generated visual "
+            "v6 semantic visual-profile retrieval requires the generated visual "
             "profile index; build it with build_visual_profile_index.py"
         )
     else:
@@ -27832,9 +25263,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     for preset in data.get("presets", []):
         for blueprint in render_contract_resolved_scene_blueprints(data, preset):
-            available_scene_functions.update(
-                normalize_list(blueprint.get("scene_functions"))
-            )
+            available_scene_functions.update(normalize_list(blueprint.get("scene_functions")))
     if args.scene_function and args.scene_function not in available_scene_functions:
         raise ValueError(
             f"Unknown --scene-function {args.scene_function!r}; available values: "
@@ -27865,9 +25294,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         load_forced_choices_from_json(args.set_json),
     )
     soft_anchor_spec = parse_soft_anchor_specs(args.soft_anchor_specs)
-    concept_gate_results = parse_json_object_list(args.concept_gate_payloads, "--concept-gates-json")
+    concept_gate_results = parse_json_object_list(
+        args.concept_gate_payloads, "--concept-gates-json"
+    )
     typed_requirement_routing = bool(
         args.emit_candidate_pack
+        or diagnostic_candidates
         or args.detail_level == "compact"
         or args.role_requirements
         or args.negative_requirements
@@ -27903,7 +25335,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if selection_mode != "rule" and not resolved_intent:
         resolved_intent = DEFAULT_SEMANTIC_INTENT
         intent_source = "default"
-    elif selection_mode != "rule" and resolved_intent == DEFAULT_SEMANTIC_INTENT and (args.default_intent or semantic_defaulted or not intent_explicit):
+    elif (
+        selection_mode != "rule"
+        and resolved_intent == DEFAULT_SEMANTIC_INTENT
+        and (args.default_intent or semantic_defaulted or not intent_explicit)
+    ):
         intent_source = "default"
     if isinstance(authorial_core, dict):
         expected_core_version = (
@@ -27923,7 +25359,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         supplied_concept_locks = normalize_list(args.concept_locks)
         if supplied_concept_locks and supplied_concept_locks != active_request_texts:
             raise ValueError(
-                "v5/v6 --concept-lock values must exactly equal the request-envelope active spans in order; omit them to derive the values safely"
+                "v6 --concept-lock values must exactly equal the request-envelope active spans in order; omit them to derive the values safely"
             )
         args.concept_locks = list(active_request_texts)
         ungrounded_request_controls = [
@@ -27931,17 +25367,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             for value in [
                 *normalize_list(args.user_mandatory_intents),
                 *normalize_list(args.additional_requirements),
-                *(
-                    [str(resolved_intent)]
-                    if intent_source == "user" and resolved_intent
-                    else []
-                ),
+                *([str(resolved_intent)] if intent_source == "user" and resolved_intent else []),
             ]
             if str(value) not in active_request_texts
         ]
         if ungrounded_request_controls:
             raise ValueError(
-                "v5/v6 user-priority request controls must be exact active request-envelope spans: "
+                "v6 user-priority request controls must be exact active request-envelope spans: "
                 + "; ".join(ungrounded_request_controls)
             )
     filter_strictness, semantic_weight, semantic_profile = resolve_semantic_runtime_options(
@@ -27958,7 +25390,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         candidate = Path(args.tags).resolve().with_name("photo_prompt_semantic_index.json")
         if candidate.exists():
             semantic_index_path = str(candidate)
-    if args.candidate_pack_version == "v6":
+    if args.emit_candidate_pack:
         if semantic_index_path is None or not Path(semantic_index_path).exists():
             raise FileNotFoundError(
                 "v6 requires the generated BM25F semantic index; build it with "
@@ -27979,11 +25411,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     requested_creativity = (
         clamp_unit_interval(args.creativity)
         if args.creativity is not None
-        else (CREATIVE_CONTROL_DEFAULTS["creativity"] if args.candidate_pack_version in {"v5", "v6"} else None)
+        else (CREATIVE_CONTROL_DEFAULTS["creativity"] if args.emit_candidate_pack else None)
     )
-    candidate_pool_creativity = (
-        1.0 if args.candidate_pack_version in {"v5", "v6"} else args.creativity
-    )
+    candidate_pool_creativity = 1.0 if args.emit_candidate_pack else args.creativity
     batch_context = make_batch_context(
         selection_mode,
         args.novelty,
@@ -28002,7 +25432,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             langs=langs,
             include_negative=args.include_negative or args.emit_candidate_pack,
             negative_count=args.negative_count,
-            include_choices=args.include_choices or args.emit_candidate_pack,
+            include_choices=args.include_choices
+            or args.emit_candidate_pack
+            or diagnostic_candidates,
             forced_choices=forced_choices,
             priority_bias=args.priority_bias,
             detail_level=args.detail_level,
@@ -28027,15 +25459,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             requested_selection_mode=selection_mode,
             batch_context=batch_context,
             batch_index=batch_index,
-            include_trace=args.include_trace or args.emit_candidate_pack,
+            include_trace=args.include_trace or args.emit_candidate_pack or diagnostic_candidates,
             llm_polish=args.llm_polish,
             semantic_index_path=semantic_index_path,
             semantic_model=args.semantic_model,
             semantic_dimensions=args.semantic_dimensions,
             additional_requirements=effective_additional_requirements,
-            role_requirements=(args.role_requirements or None) if typed_requirement_routing else None,
-            negative_requirements=(args.negative_requirements or None) if typed_requirement_routing else None,
-            soft_requirements=(args.soft_requirements or None) if typed_requirement_routing else None,
+            role_requirements=(
+                (args.role_requirements or None) if typed_requirement_routing else None
+            ),
+            negative_requirements=(
+                (args.negative_requirements or None) if typed_requirement_routing else None
+            ),
+            soft_requirements=(
+                (args.soft_requirements or None) if typed_requirement_routing else None
+            ),
             likeness_mode=args.likeness_mode,
             likeness_references=args.likeness_references,
             user_mandatory_intents=args.user_mandatory_intents,
@@ -28043,7 +25481,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             concept_scene_variants=args.concept_scene_variants,
             safety_evaluation_requested=args.safety_evaluation,
             viewer_experience_requested=args.viewer_experience,
-            hybrid_augmentation_requested=args.hybrid_augmentation,
             sensual_intensity=args.sensual_intensity,
             fetish_intensity=args.fetish_intensity,
             adult_appeal_emphasis=adult_appeal_emphasis,
@@ -28052,33 +25489,27 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             soft_anchor_spec=soft_anchor_spec,
             source_argv=raw_args,
             seed=args.seed,
-            anchor_diversity_ledger=anchor_diversity_ledger if args.anchor_diversity_ledger else None,
+            anchor_diversity_ledger=(
+                anchor_diversity_ledger if args.anchor_diversity_ledger else None
+            ),
             creativity=candidate_pool_creativity,
             novelty_explicit=novelty_explicit,
             authorial_core=authorial_core,
             creative_control_snapshot=creative_control_snapshot,
         )
-        if args.candidate_pack_version in {"v5", "v6"}:
+        if args.emit_candidate_pack:
             result.setdefault("provenance", {})["creativity"] = requested_creativity
             result.setdefault("provenance", {})[
                 "candidate_pool_creativity"
             ] = candidate_pool_creativity
         if args.scene_function:
             result.setdefault("provenance", {})["requested_scene_function"] = args.scene_function
-        if authorial_request is not None:
-            result.setdefault("provenance", {})["authorial_request"] = copy.deepcopy(
-                authorial_request
-            )
         if embodiment_preflight is not None:
-            result.setdefault("provenance", {})["embodiment_preflight"] = copy.deepcopy(embodiment_preflight)
+            result.setdefault("provenance", {})["embodiment_preflight"] = copy.deepcopy(
+                embodiment_preflight
+            )
         if visual_intent is not None:
-            result.setdefault("provenance", {})["visual_intent"] = copy.deepcopy(
-                visual_intent
-            )
-        if args.legacy_replay_reason:
-            result.setdefault("provenance", {})["legacy_replay_reason"] = clean_spaces(
-                str(args.legacy_replay_reason)
-            )
+            result.setdefault("provenance", {})["visual_intent"] = copy.deepcopy(visual_intent)
         results.append(result)
         if args.anchor_diversity_ledger:
             update_anchor_diversity_ledger(anchor_diversity_ledger, result)
@@ -28101,6 +25532,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         else:
             print(output, end="")
     elif args.json_output:
+        if diagnostic_candidates:
+            results = [build_sampler_diagnostic(result, data) for result in results]
         output = json.dumps(results, ensure_ascii=False, indent=2) + "\n"
         if args.output_file:
             Path(args.output_file).write_text(output, encoding="utf-8")

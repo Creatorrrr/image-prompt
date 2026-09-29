@@ -27,8 +27,6 @@ RUNTIME_EXTENSION_KEYS = frozenset({
     "slots", "coherence_rules", "character_mechanism_graph", "slot_applicability",
     "visual_semantics", "maintenance_ref", "existing_slot_context_extensions",
 })
-# These legacy declarations are explicitly documentation, never runtime policy.
-LEGACY_MAINTENANCE_KEYS = frozenset({"contract_version", "description"})
 BUNDLE_SOURCE_KEYS = frozenset({
     "id", "primary_visual_proposition", "hard_profile_id", "hard_profile_ids",
     "component_groups", "candidate_ids", "confusion_boundaries", "source_keywords",
@@ -57,7 +55,7 @@ def strings(value: Any) -> list[str]:
 
 
 def validate_extension_keys(extension: dict[str, Any]) -> None:
-    unknown = set(extension) - RUNTIME_EXTENSION_KEYS - LEGACY_MAINTENANCE_KEYS
+    unknown = set(extension) - RUNTIME_EXTENSION_KEYS
     if unknown:
         raise ValueError(f"research extension has unsupported runtime keys: {sorted(unknown)}")
     reference = extension.get("maintenance_ref")

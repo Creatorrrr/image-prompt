@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from tests import photo_prompt_fixtures as current_fixtures
+
 import copy
 import random
 import unittest
 
-from tests import test_photo_authorial_core_v5 as v5_fixtures
+from tests import photo_prompt_fixtures as fixtures
 from tests import test_photo_authorial_core_v6 as v6_fixtures
 from tests import test_photo_authorship_policy as composition_fixtures
 import prompt_generator as generator
@@ -12,6 +14,7 @@ import audit_composed_prompt as auditor
 import audit_image_render_request as runtime_auditor
 import validate_photo_prompt_dictionary as dictionary_validator
 from photo_contracts import ADULT_APPEAL_AXIS_DIMENSIONS
+import photo_contextual_appeal as contextual
 
 
 class PhotoAdultAppealScopeTests(unittest.TestCase):
@@ -19,7 +22,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
     def setUpClass(cls):
         cls.data = v6_fixtures.PhotoAuthorialCoreV6Tests().runtime_data()
         source = "An adult woman in a Gothic portrait with CCD direct flash."
-        raw = v5_fixtures.PhotoAuthorialCoreV5Tests.core(
+        raw = fixtures.core(
             source,
             interpreted_intent="A poised adult portrait keeps Gothic styling and CCD direct flash.",
             subject="one adult woman",
@@ -38,12 +41,12 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         )
         raw["contract_version"] = "photo-authorial-core/v3"
         raw["semantic_assertions"] = []
-        envelope = generator.normalize_request_envelope(v5_fixtures.PhotoAuthorialCoreV5Tests.envelope(source))
+        envelope = generator.normalize_request_envelope(fixtures.envelope(source))
         cls.core = generator.normalize_authorial_core(raw, request_envelope=envelope)
-        cls.result = generator.generate_once(
+        cls.result = current_fixtures.generate_once(
             cls.data, random.Random(77), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, concept_locks=[source],
-            seed=77, creativity=0.0, authorial_core=cls.core,
+            seed=77, creativity=0.0, authorial_core=cls.core, fixture_context={"subject_category": "human"},
             sensual_intensity=2,
             fetish_intensity=1,
             adult_appeal_activation_source="skill_default",
@@ -54,7 +57,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         core = copy.deepcopy(self.core)
         if locked is not None:
             core["intent_lock"]["locked_dimensions"] = list(locked)
-        return generator.candidate_pack_hybrid_adult_appeal(
+        return generator.candidate_pack_contextual_adult_appeal(
             self.data, result or self.result, {}, authorial_core=core,
         )
 
@@ -82,6 +85,12 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             },
             "blend": {"emphasis": self.pack["adult_appeal"]["blend"]["emphasis"]},
         }
+        composed["adult_appeal_brief"]["contextual_review"] = [
+            {"candidate_id": cid, "reading": "irrelevant", "reason": "Retain the authored shoulder and satin evidence; the alternative adds a competing scene detail."}
+            for cid in self.pack["adult_appeal"]["contextual_retrieval"]["review_candidate_ids"]
+        ]
+        composed["adult_appeal_brief"]["contextual_comparison"] = "At the same requested strengths, the baseline shoulder and satin seam preserve the quiet portrait; the alternatives distract from its composed presence."
+        composed["embodiment_review"] = fixtures.composition_review(self.pack, composed["prompt_en"])
         return composed
 
     def test_locked_style_and_flash_preserve_both_requested_intensities(self):
@@ -91,7 +100,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         allowed = adult["dimension_scope"]["axis_allowed_dimensions"]
         self.assertIn("expression", allowed["sensual"])
         self.assertNotIn("expression", self.core["intent_lock"]["open_dimensions"])
-        candidates = generator.candidate_pack_hybrid_adult_candidates(adult)
+        candidates = generator.candidate_pack_adult_candidates(adult)
         self.assertTrue(candidates)
         self.assertTrue(adult["axes"]["fetish"]["candidate_inventory"])
         for row in candidates:
@@ -102,7 +111,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         adult = self.adult(locked=[*self.core["intent_lock"]["locked_dimensions"], "appearance"])
         self.assertTrue(adult["axes"]["fetish"]["active"])
         self.assertIn("material", adult["dimension_scope"]["axis_allowed_dimensions"]["fetish"])
-        for row in generator.candidate_pack_hybrid_adult_candidates(adult):
+        for row in generator.candidate_pack_adult_candidates(adult):
             self.assertNotIn("appearance", row["affected_dimensions"])
             self.assertNotEqual(row["slot"], "fetish_styling")
             self.assertNotIn("adjusting_choker_gloves", row["id"])
@@ -113,28 +122,25 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             dict(row, affected_dimensions=["lighting"]) if row["id"] == "posing_editorial" else row
             for row in self.data["slots"]["action"]
         ]
-        adult = generator.candidate_pack_hybrid_adult_appeal(data, self.result, {}, authorial_core=self.core)
-        self.assertFalse(any(row["id"].endswith(":posing_editorial") for row in generator.candidate_pack_hybrid_adult_candidates(adult)))
+        adult = generator.candidate_pack_contextual_adult_appeal(data, self.result, {}, authorial_core=self.core)
+        self.assertFalse(any(row["id"].endswith(":posing_editorial") for row in generator.candidate_pack_adult_candidates(adult)))
 
-    def test_only_exhausted_axis_is_disabled_and_requested_value_survives(self):
-        adult = self.adult(locked=ADULT_APPEAL_AXIS_DIMENSIONS["fetish"])
-        self.assertEqual(adult["axes"]["fetish"]["intensity"], 0)
-        self.assertEqual(adult["axes"]["fetish"]["requested_intensity"], 1)
-        self.assertTrue(adult["axes"]["sensual"]["active"])
-        self.assertEqual(adult["blend"]["emphasis"], "sensual_led")
-        both = self.adult(locked=set.union(*(set(v) for v in ADULT_APPEAL_AXIS_DIMENSIONS.values())))
-        self.assertFalse(both["enabled"])
-        self.assertFalse(generator.candidate_pack_hybrid_adult_candidates(both))
+    def test_exhausted_current_scope_disables_axes_without_losing_requested_strengths(self):
+        adult = self.adult(locked=set(self.core["intent_lock"]["locked_dimensions"]) | contextual.allowed_dimensions(self.core["intent_lock"]))
+        self.assertFalse(adult["enabled"])
+        for axis, requested in (("sensual", 2), ("fetish", 1)):
+            self.assertEqual(adult["axes"][axis]["intensity"], 0)
+            self.assertEqual(adult["axes"][axis]["requested_intensity"], requested)
+        self.assertFalse(generator.candidate_pack_adult_candidates(adult))
 
     def test_explicit_opt_out_remains_off(self):
         result = copy.deepcopy(self.result)
-        raw = result["provenance"]["adult_appeal"]
-        raw["activation_source"] = "explicit_control"
-        for axis in raw["axes"].values():
-            axis["intensity"] = 0
+        result["provenance"]["creative_controls"] = generator.creative_controls.resolve(
+            self.core["source_request"], overrides={"sensual": 0, "fetish": 0},
+            context={"subject_category": "human"}, seed=77)
         adult = self.adult(result=result)
         self.assertFalse(adult["enabled"])
-        self.assertFalse(generator.candidate_pack_hybrid_adult_candidates(adult))
+        self.assertFalse(generator.candidate_pack_adult_candidates(adult))
 
     def test_full_composed_audit_accepts_unlocked_pose_and_material(self):
         report = auditor.audit_composed_prompt(self.pack, self.composed())
@@ -147,6 +153,7 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             "schema_version": runtime_auditor.SCHEMA_VERSION,
             "pack_id": self.pack["pack_id"],
             "source_intent_lock_sha256": self.pack["authorial_core"]["intent_lock"]["canonical_sha256"],
+            "source_embodiment_preflight_sha256": self.pack["embodiment_preflight"]["canonical_sha256"],
             "runtime_prompt_en": composed["prompt_en"] + "\n\nAvoid: " + composed["negative_en"],
             "runtime_negative_en": composed["negative_en"],
             "references": [],
@@ -176,16 +183,26 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertIn("adult_appeal_candidate_dimensions", {r["check"] for r in auditor.audit_adult_appeal_dimension_scope(pack, pack["adult_appeal"])})
 
     def test_adopted_candidate_requires_its_complete_effect_in_the_brief(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
+        candidate = copy.deepcopy(self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"][0])
+        # Unit fixture proves the complete-effect requirement independently of retrieval rank.
+        candidate["affected_dimensions"] = ["appearance", "material"]
         composed = self.composed()
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
+        reviews = composed["adult_appeal_brief"]["contextual_review"]
+        reviews[:] = [row for row in reviews if row["candidate_id"] != candidate["id"]]
+        reviews.append({"candidate_id": candidate["id"], "reading": "relevant", "reason": "A tactile seam supports the composed Gothic portrait.", "proposed_application": "Keep the existing garment and express the effect as the narrow satin highlight."})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertIn("adult_appeal_authored_dimensions", {r["check"] for r in failures})
         composed["adult_appeal_brief"]["axes"]["fetish"]["affected_dimensions"] = candidate["affected_dimensions"]
-        failures, _ = auditor.audit_adult_appeal_v5(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
+        reviews = composed["adult_appeal_brief"]["contextual_review"]
+        reviews[:] = [row for row in reviews if row["candidate_id"] != candidate["id"]]
+        reviews.append({"candidate_id": candidate["id"], "reading": "relevant", "reason": "A tactile seam supports the composed Gothic portrait.", "proposed_application": "Keep the existing garment and express the effect as the narrow satin highlight."})
+        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertEqual(failures, [])
 
     def test_sampled_adult_candidate_uses_same_scope_but_other_candidates_do_not(self):
-        candidate = next(row for row in self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"] if {"appearance", "material"}.issubset(row["affected_dimensions"]))
+        candidate = copy.deepcopy(self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"][0])
+        # Unit fixture proves the complete-effect requirement independently of retrieval rank.
+        candidate["affected_dimensions"] = ["appearance", "material"]
         pack = copy.deepcopy(self.pack)
         pack["creative_augmentation"]["candidates"] = [dict(candidate, semantic_band="near", source_kind="adult_appeal")]
         evidence = "A narrow band of reflected light traces the existing garment's stitched edge"
@@ -197,28 +214,28 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
             "affected_dimensions": candidate["affected_dimensions"], "prompt_evidence": evidence,
         }
         composed = {"creative_augmentation_brief": {"decisions": [decision]}}
-        failures = auditor.audit_creative_augmentation_v5(pack, composed, evidence, {candidate["id"]})
+        failures = auditor.audit_creative_augmentation(pack, composed, evidence, {candidate["id"]})
         self.assertEqual(failures, [])
         decision["affected_dimensions"] = ["lighting"]
-        failures = auditor.audit_creative_augmentation_v5(pack, composed, evidence, {candidate["id"]})
+        failures = auditor.audit_creative_augmentation(pack, composed, evidence, {candidate["id"]})
         self.assertIn("intent_lock_creative_dimensions", {r["check"] for r in failures})
         decision["affected_dimensions"] = ["material"]
         decision["candidate_id"] = "slot:texture:ordinary-test-candidate"
         pack["creative_augmentation"]["candidates"][0]["id"] = decision["candidate_id"]
-        failures = auditor.audit_creative_augmentation_v5(pack, composed, evidence, {decision["candidate_id"]})
+        failures = auditor.audit_creative_augmentation(pack, composed, evidence, {decision["candidate_id"]})
         self.assertIn("intent_lock_creative_dimensions", {r["check"] for r in failures})
 
-    def test_unmarked_historical_pack_keeps_all_open_boundary(self):
+    def test_missing_current_dimension_scope_is_rejected(self):
         pack = copy.deepcopy(self.pack)
         pack["adult_appeal"].pop("dimension_scope")
         report = auditor.audit_composed_prompt(pack, self.composed())
-        self.assertIn("intent_lock_adult_appeal_default", {r["check"] for r in report["failures"]})
+        self.assertIn("adult_appeal_dimension_scope", {r["check"] for r in report["failures"]})
 
     def test_dimension_policy_rejects_unknown_source_and_dimension(self):
         quality = copy.deepcopy(self.data[generator.QUALITY_LAYERS_DATA_KEY])
-        quality["hybrid_augmentation"]["adult_appeal"]["entry_dimensions"]["action:missing-entry"] = ["invented_dimension"]
+        quality["adult_appeal"]["entry_dimensions"]["action:missing-entry"] = ["invented_dimension"]
         errors = []
-        dictionary_validator.validate_quality_layer_hybrid_augmentation(quality, self.data, errors)
+        dictionary_validator.validate_quality_layer_adult_appeal(quality, self.data, errors)
         self.assertTrue(any("unknown candidate" in e for e in errors))
         self.assertTrue(any("unknown dimensions" in e for e in errors))
 

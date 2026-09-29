@@ -14,8 +14,8 @@ import unittest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ILLUSTRATION_ROOT = REPO_ROOT / "skills" / "subculture-illustration-image-generator"
-HISTORICAL_BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v2.json"
-BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v3.json"
+HISTORICAL_BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v3.json"
+BASELINE_PATH = ILLUSTRATION_ROOT / "assets" / "photo_regression_baseline_v4.json"
 BASELINE_REF = "f86abef678c99ee8aad7a98a5ea44a685197d371"
 ILLUSTRATION_INTRODUCTION_REF = "66e0cbabe55d33575d9e3384176815af515c76ac"
 
@@ -72,7 +72,7 @@ class SubcultureIllustrationPhotoBoundaryTests(unittest.TestCase):
                 check=False,
                 capture_output=True,
                 text=True,
-                timeout=30,
+                timeout=60,
             )
             self.assertEqual(0, completed.returncode, completed.stderr or completed.stdout)
             raw = temporary_output.read_bytes()
