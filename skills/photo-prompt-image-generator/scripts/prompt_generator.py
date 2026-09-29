@@ -211,6 +211,7 @@ RESEARCH_EXTENSION_FILENAMES = (
     "photo_prompt_y2k_extension.json",
     "photo_prompt_portrait_composition_extension.json",
     "photo_prompt_portrait_fashion_exposure_extension.json",
+    "photo_prompt_sensual_fetish_fashion_extension.json",
 )
 RESEARCH_EXTENSION_SCHEMA = "photo-prompt-research-extension/v1"
 CHARACTER_MECHANISM_GRAPH_SCHEMA = "photo-character-mechanism-graph/v2"

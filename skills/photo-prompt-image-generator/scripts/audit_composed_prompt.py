@@ -7380,6 +7380,10 @@ def audit_creative_controls(pack: dict[str, Any]) -> list[dict[str, Any]]:
         if provenance.get("creative_control_runtime") != runtime or provenance.get("creativity") != runtime["creativity"]:
             raise ValueError("post-core controls differ from the frozen pre-core settings")
         adult = pack.get("adult_appeal") or {}
+        if not adult and all(
+            runtime[axis + "_intensity"] == 0 for axis in creative_controls.AXES
+        ):
+            return []
         for axis in creative_controls.AXES:
             row = (adult.get("axes") or {}).get(axis) or {}
             if row.get("requested_intensity") != runtime[axis + "_intensity"]:
