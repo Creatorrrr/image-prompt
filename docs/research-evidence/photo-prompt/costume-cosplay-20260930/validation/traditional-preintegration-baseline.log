@@ -1,0 +1,30 @@
+BASELINE registry verified 63c791c9631908b657e42ffd2814109b33c265490adb8ad8b44d7688d0349e11 profiles 988
+test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) ... 
+  test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_en') ... FAIL
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_wrapcover'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_wrapcover'
+
+- ['sw_wrapcover']
++ []
+
+----------------------------------------------------------------------
+Ran 1 test in 46.030s
+
+FAILED (failures=1)

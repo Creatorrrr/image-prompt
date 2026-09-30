@@ -11,9 +11,11 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
-
 SKILL_DIR = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = SKILL_DIR.parents[1]
+if str(SKILL_DIR / "scripts") not in sys.path:
+    sys.path.insert(0, str(SKILL_DIR / "scripts"))
+from image_attempt_evidence import validate_evidence
 DEFAULT_LEDGER = PROJECT_ROOT / "runs" / "image_runs.ndjson"
 VALID_STATUSES = {"success", "safety_block", "error"}
 VALID_COMPOSERS = {"agent", "auto"}
@@ -113,6 +115,23 @@ def build_entry(args: argparse.Namespace) -> dict[str, object]:
         "image_paths": list(args.image_path or []),
         "tool": args.tool,
     }
+    generation_environment = getattr(args, "generation_environment", None)
+    evidence_path = getattr(args, "attempt_evidence_json", None)
+    evidence_sha256 = getattr(args, "attempt_evidence_sha256", None)
+    if generation_environment:
+        entry["generation_environment"] = generation_environment
+    if evidence_sha256 and not evidence_path:
+        raise ValueError("--attempt-evidence-sha256 requires --attempt-evidence-json")
+    if evidence_path:
+        if evidence_sha256 and not re.fullmatch(r"[0-9a-f]{64}", evidence_sha256):
+            raise ValueError("--attempt-evidence-sha256 must be a 64-character SHA-256")
+        entry.update(validate_evidence(
+            evidence_path, expected_sha256=evidence_sha256,
+            attempt=args.attempt, tool=args.tool, status=args.status,
+            prompt_en=args.prompt_en, negative_en=args.negative_en,
+            generation_environment=generation_environment,
+            failure_reason=args.failure_reason,
+        ))
     if args.pack_id:
         entry["pack_id"] = args.pack_id
     chosen_candidate_ids = parse_chosen_candidate_ids(args.chosen_candidate_ids_json)
@@ -206,7 +225,7 @@ def build_independent_manifest(entry: dict[str, object], args: argparse.Namespac
             continue
         image_hashes.append({'path': str(image_path), 'sha256': hashlib.sha256(image_path.read_bytes()).hexdigest()})
     manifest: dict[str, object] = {'contract_version': contract_version, **required_values, 'reference_sha256': list(args.reference_sha256 or []), 'cross_arm_inputs_used': False, 'ledger_run_id': entry['run_id'], 'pack_id': entry.get('pack_id'), 'prompt_id': entry['prompt_id'], 'status': entry['status'], 'tool': entry.get('tool'), 'image_paths': list(entry.get('image_paths') or []), 'image_hashes': image_hashes}
-    for field in ('chosen_visual_concept_ids', 'effective_visual_contract_sha256', 'render_repair_contract_sha256', 'failed_repair_gate_ids'):
+    for field in ('chosen_visual_concept_ids', 'effective_visual_contract_sha256', 'render_repair_contract_sha256', 'failed_repair_gate_ids', 'generation_environment', 'attempt_evidence_path', 'attempt_evidence_sha256', 'error_capture_fidelity', 'error_details'):
         if field in entry:
             manifest[field] = entry[field]
     return manifest
@@ -232,6 +251,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--failure-reason", default=None, help="Safety/filter/tool error detail, if any.")
     parser.add_argument("--image-path", action="append", default=[], help="Generated image path. Repeatable.")
     parser.add_argument("--tool", default=None, help="External image tool name.")
+    parser.add_argument("--generation-environment", default=None, help="Observed execution environment; external imports are separate provenance records.")
+    parser.add_argument("--attempt-evidence-json", type=Path, default=None, help="Versioned raw error evidence JSON for this exact attempt.")
+    parser.add_argument("--attempt-evidence-sha256", default=None, help="Expected SHA-256 of the evidence file; verified before recording.")
     parser.add_argument("--argv-json", default=None, help="Prompt-generation argv as a JSON string array.")
     parser.add_argument("--pack-id", default=None, help="Candidate pack id used for agent composition.")
     parser.add_argument("--chosen-candidate-ids-json", default=None, help="JSON array or slot map of candidate ids chosen by the composer.")

@@ -1,0 +1,32 @@
+test_approximate_vector_discovery_stays_optional (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_approximate_vector_discovery_stays_optional) ... ERROR
+test_broad_roles_characters_and_styles_do_not_select_a_relation (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_broad_roles_characters_and_styles_do_not_select_a_relation) ... ok
+test_exact_relation_does_not_impose_the_rest_of_a_costume_family (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_exact_relation_does_not_impose_the_rest_of_a_costume_family) ... ok
+test_negated_relation_and_changed_owner_do_not_reuse_exact_meaning (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_negated_relation_and_changed_owner_do_not_reuse_exact_meaning) ... ok
+test_real_candidates_and_joint_bundles_preserve_scope (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_real_candidates_and_joint_bundles_preserve_scope) ... ok
+test_source_record_and_generated_indexes_bind_the_actual_runtime_data (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_source_record_and_generated_indexes_bind_the_actual_runtime_data) ... ERROR
+
+======================================================================
+ERROR: test_approximate_vector_discovery_stays_optional (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_approximate_vector_discovery_stays_optional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_costume_cosplay_semantics.py", line 69, in test_approximate_vector_discovery_stays_optional
+    hit = next(h for h in result["hits"] if h["profile_id"] == pid)
+StopIteration
+
+======================================================================
+ERROR: test_source_record_and_generated_indexes_bind_the_actual_runtime_data (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_source_record_and_generated_indexes_bind_the_actual_runtime_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_costume_cosplay_semantics.py", line 108, in test_source_record_and_generated_indexes_bind_the_actual_runtime_data
+    pg.validate_semantic_index_metadata(semantic_index, self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 15723, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+----------------------------------------------------------------------
+Ran 6 tests in 61.881s
+
+FAILED (errors=2)

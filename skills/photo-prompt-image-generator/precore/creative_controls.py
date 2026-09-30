@@ -29,7 +29,7 @@ CONTROL_NAMES = {*LEVEL_CONTROLS, "adult_appeal_emphasis", "viewer_experience",
 # are configuration. Natural-language or mixed visual instructions stay visual.
 ASSIGNMENT = re.compile(
     r"(?<![\w])`?(?P<name>" + "|".join(sorted(CONTROL_NAMES))
-    + r")`?\s*[:=]\s*`?(?P<value>[A-Za-z0-9_.+\-]+)`?(?![\w])"
+    + r")`?\s*[:=]\s*`?(?P<value>[A-Za-z0-9_.+\-]*[A-Za-z0-9_+\-])`?(?![\w])"
 )
 QUOTED_TEXT = re.compile(
     r'"(?:\\.|[^"\\])*"'

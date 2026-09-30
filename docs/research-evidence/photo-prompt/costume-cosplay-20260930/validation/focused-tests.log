@@ -1,0 +1,203 @@
+E....E..................E...FFFFFF...F.....F...............
+======================================================================
+ERROR: test_approximate_vector_discovery_stays_optional (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_approximate_vector_discovery_stays_optional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_costume_cosplay_semantics.py", line 69, in test_approximate_vector_discovery_stays_optional
+    hit = next(h for h in result["hits"] if h["profile_id"] == pid)
+StopIteration
+
+======================================================================
+ERROR: test_source_record_and_generated_indexes_bind_the_actual_runtime_data (tests.test_photo_costume_cosplay_semantics.CostumeCosplaySemanticsTests.test_source_record_and_generated_indexes_bind_the_actual_runtime_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_costume_cosplay_semantics.py", line 108, in test_source_record_and_generated_indexes_bind_the_actual_runtime_data
+    pg.validate_semantic_index_metadata(semantic_index, self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 15723, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+ERROR: test_source_binding_and_real_index (tests.test_photo_historical_womenswear_semantics.HistoricalWomenswearTests.test_source_binding_and_real_index)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_historical_womenswear_semantics.py", line 94, in test_source_binding_and_real_index
+    pg.validate_semantic_index_metadata(index,self.data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/chasoik/Projects/image-prompt/skills/photo-prompt-image-generator/scripts/prompt_generator.py", line 15723, in validate_semantic_index_metadata
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Semantic index dictionary_hash does not match the tag dictionary. Regenerate it with build_semantic_index.py.
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_wrapcover'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_wrapcover'
+
+- ['sw_wrapcover']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_kebaya_ko')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_wrapcover'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_wrapcover'
+
+- ['sw_wrapcover']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_qipao_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['pfe_slit'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'pfe_slit'
+
+- ['pfe_slit']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='exact_nivi_sari_en')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['sw_pleats'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'sw_pleats'
+
+- ['sw_pleats']
++ []
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='candidate_nivi_components')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['nivi_sari_continuous_pleat_pallu_system', 'sw_pleats'] != ['nivi_sari_continuous_pleat_pallu_system']
+
+First list contains 1 additional elements.
+First extra element 1:
+'sw_pleats'
+
+- ['nivi_sari_continuous_pleat_pallu_system', 'sw_pleats']
+?                                           -------------
+
++ ['nivi_sari_continuous_pleat_pallu_system']
+
+======================================================================
+FAIL: test_exact_candidate_and_hard_negative_routing_fixture (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_exact_candidate_and_hard_negative_routing_fixture) (case='negative_qipao_collar_only')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 274, in test_exact_candidate_and_hard_negative_routing_fixture
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        sorted(optional_matches),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        sorted(case["expected_candidate_profile_ids"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Lists differ: ['pfe_opaque_fit', 'y2kr_bodycon'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'pfe_opaque_fit'
+
+- ['pfe_opaque_fit', 'y2kr_bodycon']
++ []
+
+======================================================================
+FAIL: test_registry_schema_is_valid_apart_from_generated_index_refresh (tests.test_photo_traditional_clothing_semantics.PhotoTraditionalClothingSemanticsTests.test_registry_schema_is_valid_apart_from_generated_index_refresh)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_traditional_clothing_semantics.py", line 349, in test_registry_schema_is_valid_apart_from_generated_index_refresh
+    self.assertEqual(errors, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: ["visual obligation registry.profiles[403][12000 chars]계']"] != []
+
+First list contains 87 additional elements.
+First extra element 0:
+"visual obligation registry.profiles[403].semantics.paraphrase_examples: must not duplicate exact activation terms ['어깨끈과 가슴판이 이어진 앞치마']"
+
+Diff is 12835 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_registry_schema_accepts_professional_uniform_profiles (tests.test_photo_womens_professional_uniform_visual_semantics.WomensProfessionalUniformVisualSemanticsTests.test_registry_schema_accepts_professional_uniform_profiles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chasoik/Projects/image-prompt/tests/test_photo_womens_professional_uniform_visual_semantics.py", line 370, in test_registry_schema_accepts_professional_uniform_profiles
+    self.assertEqual(errors, [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: Lists differ: ["visual obligation registry.profiles[403][12000 chars]계']"] != []
+
+First list contains 87 additional elements.
+First extra element 0:
+"visual obligation registry.profiles[403].semantics.paraphrase_examples: must not duplicate exact activation terms ['어깨끈과 가슴판이 이어진 앞치마']"
+
+Diff is 12835 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 54 tests in 2322.618s
+
+FAILED (failures=8, errors=3)

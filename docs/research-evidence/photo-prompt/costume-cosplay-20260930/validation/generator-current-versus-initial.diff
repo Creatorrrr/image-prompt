@@ -1,0 +1,197 @@
+--- initial-uncommitted-generator
++++ current-working-generator
+@@ -160,6 +160,7 @@
+     "photo_prompt_visual_obligations_poverty.json",
+     "photo_prompt_visual_obligations_opening_era.json",
+     "photo_prompt_visual_obligations_historical_womenswear.json",
++    "photo_prompt_visual_obligations_costume_cosplay.json",
+     "photo_prompt_visual_obligations_palace_fortification.json",
+     "photo_prompt_visual_obligations_swimwear.json",
+     "photo_prompt_visual_obligations_color_relations.json",
+@@ -191,6 +192,7 @@
+     "photo_prompt_poverty_extension.json",
+     "photo_prompt_opening_era_extension.json",
+     "photo_prompt_historical_womenswear_extension.json",
++    "photo_prompt_costume_cosplay_extension.json",
+     "photo_prompt_palace_fortification_extension.json",
+     "photo_prompt_swimwear_extension.json",
+     "photo_prompt_color_relations_extension.json",
+@@ -6368,25 +6370,10 @@
+                             entry.get("affected_properties") or []
+                         ),
+                         "contextual_usage": copy.deepcopy(entry.get("contextual_usage") or {}),
+-                        "context_requirements": {
+-                            key: copy.deepcopy(entry[key])
+-                            for key in (
+-                                "requires_any_tags",
+-                                "requires_all_tags",
+-                                "requires_any",
+-                                "requires_all",
+-                                "exclude_any_tags",
+-                                "requires_primary_any_tags",
+-                                "hard_guards",
+-                                "for_any",
+-                                "for_all",
+-                                "not_for",
+-                            )
+-                            if entry.get(key)
+-                        },
+                         "applicability": {
+                             "status": "eligible",
+                             "source": "contextual_corpus_retrieval",
++                            "basis": "writable_scope",
+                             "reason": "scope compatible; scene and aesthetic interpretation pending",
+                         },
+                         "risk_groups": candidate_pack_adult_risk_groups(entry["id"], policy),
+@@ -6409,6 +6396,12 @@
+             limit=int(retrieval_policy.get("candidate_limit_per_axis", 12)),
+             scene_query=scene_query,
+         )
++        for row in inventory:
++            _, slot, entry = sources[row["id"]]
++            row.update(photo_contextual_appeal.compile_context(
++                entry, row["source_candidate_id"],
++                quality_layer_primary_context_requirement_sources(data, slot, entry),
++            ))
+         axis_row["candidate_inventory"] = inventory
+         axis_row["carrier_ids"] = sorted({row["carrier"] for row in inventory})
+         candidate_entries.update({row["id"]: sources[row["id"]] for row in inventory})
+@@ -6435,6 +6428,7 @@
+         "query_sha256": canonical_json_sha256(queries),
+         "interpretation_owner": "composer_in_current_scene",
+         "comparison_policy": "baseline_and_coherent_alternatives_at_same_requested_strengths",
++        "adoption_context_contract_version": photo_contextual_appeal.CONTEXT_VERSION,
+     }
+     return contract
+ 
+@@ -11557,6 +11551,49 @@
+     }
+ 
+ 
++def authorial_meaning_clarification(core: JsonDict) -> JsonDict:
++    """Project requester duties without promoting the whole authored direction."""
++    intent_lock = core.get("intent_lock") if isinstance(core.get("intent_lock"), dict) else {}
++    phrases = [
++        str(anchor.get("prompt_evidence") or "")
++        for anchor in intent_lock.get("semantic_anchors") or []
++        if isinstance(anchor, dict)
++    ]
++    for assertion in core.get("semantic_assertions") or []:
++        if isinstance(assertion, dict) and assertion.get("polarity") == "required":
++            evidence = assertion.get("evidence")
++            if isinstance(evidence, dict):
++                phrases.extend(value for value in evidence.values() if isinstance(value, str))
++    return {
++        "id": "clarification:authorial-core:interpreted-intent",
++        "source": "requester_meaning_bound_by_authorial_core",
++        "interpreted_meaning": "Preserve the requester-owned meaning expressed by the frozen anchors and required assertions.",
++        "meaning_components": list(dict.fromkeys(phrase for phrase in phrases if phrase.strip())),
++        "applicability": {
++            "status": "required",
++            "reason": "requester_owned_meaning_is_fixed_while_unbound_authorial_choices_remain_editable",
++        },
++        "required_in_final_prompt": True,
++        "revisable": False,
++        "creative_sampling": False,
++        **(
++            {"forbidden_runtime_labels": copy.deepcopy(core["runtime_forbidden_labels"])}
++            if core.get("runtime_forbidden_labels") else {}
++        ),
++    }
++
++
++def authorial_direction_context(core: JsonDict) -> JsonDict:
++    """Keep the initial whole-image judgment visible as context, not a new lock."""
++    return {
++        "source": "agent_prepack",
++        "interpreted_intent": str(core.get("interpreted_intent") or ""),
++        "visual_priorities": copy.deepcopy(core.get("visual_priorities") or []),
++        "creates_additional_locks": False,
++        "revision_policy": "recompose_agent_choices_within_requester_locks",
++    }
++
++
+ def candidate_pack_semantic_clarification(
+     data: JsonDict,
+     result: JsonDict,
+@@ -11576,32 +11613,7 @@
+     if core:
+         if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+             raise ValueError("semantic clarification requires the current authorial core")
+-        candidates.append(
+-            {
+-                "id": "clarification:authorial-core:interpreted-intent",
+-                "source": "agent_prepack_interpretation_bound_by_requesting_user_intent",
+-                "interpreted_meaning": str(core.get('interpreted_intent') or ''),
+-                "meaning_components": [
+-                    str(item) for item in core.get("visual_priorities") or [] if str(item).strip()
+-                ],
+-                "applicability": {
+-                    "status": "required",
+-                    "reason": "requesting_user_intent_lock_requires_a_new_core_for_any_material_change",
+-                },
+-                "required_in_final_prompt": True,
+-                "revisable": False,
+-                "creative_sampling": False,
+-                **(
+-                    {
+-                        "forbidden_runtime_labels": copy.deepcopy(
+-                            core.get("runtime_forbidden_labels") or []
+-                        )
+-                    }
+-                    if core.get("runtime_forbidden_labels")
+-                    else {}
+-                ),
+-            }
+-        )
++        candidates.append(authorial_meaning_clarification(core))
+     for definition in core.get("user_definitions") or []:
+         if not isinstance(definition, dict):
+             continue
+@@ -11752,6 +11764,7 @@
+         "affected_by_seed": False,
+         "user_definition_precedence": True,
+         "candidates": candidates,
++        **({"authorial_direction": authorial_direction_context(core)} if core else {}),
+         "composition_contract": {
+             "composed_field": "semantic_clarification_decisions",
+             "every_candidate_requires_a_typed_decision": True,
+@@ -14139,6 +14152,8 @@
+                 "source_kind": source_kind,
+                 "concept_terms": concept_terms,
+                 "applicability": copy.deepcopy(applicability),
++                **{key: copy.deepcopy(candidate[key])
++                   for key in photo_contextual_appeal.PRESERVED_FIELDS if key in candidate},
+                 "conflicts_with": [
+                     str(item)
+                     for item in candidate.get("conflicts_with") or []
+@@ -21661,8 +21676,8 @@
+     return wanted
+ 
+ 
+-def quality_layer_primary_context_requirements(data: JsonDict, slot: str, item: Entry) -> Set[str]:
+-    requirements: Set[str] = set()
++def quality_layer_primary_context_requirement_sources(data: JsonDict, slot: str, item: Entry) -> List[JsonDict]:
++    sources: List[JsonDict] = []
+     item_tokens = {str(token) for token in entry_context_tokens(item)}
+     item_blob = candidate_pack_entry_blob(item)
+     for guard in candidate_pack_quality_layers(data).get("applicability_guards", []) or []:
+@@ -21683,8 +21698,16 @@
+             term_match = any(term in item_blob for term in match_terms)
+             if not tag_match and not term_match:
+                 continue
+-        requirements.update(str(value) for value in normalize_list(guard.get("requires_primary_any_tags")))
+-    return requirements
++        values = sorted({str(value) for value in normalize_list(guard.get("requires_primary_any_tags"))})
++        if values:
++            sources.append({"id": str(guard.get("id") or f"quality_guard:{len(sources)}"),
++                            "requires_primary_any_tags": values})
++    return sources
++
++
++def quality_layer_primary_context_requirements(data: JsonDict, slot: str, item: Entry) -> Set[str]:
++    return {value for row in quality_layer_primary_context_requirement_sources(data, slot, item)
++            for value in row["requires_primary_any_tags"]}
+ 
+ 
+ def compatible_with_slot_context(

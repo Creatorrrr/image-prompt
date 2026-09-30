@@ -11,6 +11,12 @@
     "status"
   ],
   "additionalProperties": false,
+  "dependencies": {
+    "attempt_evidence_path": ["attempt_evidence_sha256", "error_capture_fidelity", "error_details", "generation_environment"],
+    "attempt_evidence_sha256": ["attempt_evidence_path"],
+    "error_capture_fidelity": ["attempt_evidence_path"],
+    "error_details": ["attempt_evidence_path"]
+  },
   "properties": {
     "ts": {
       "type": "string",
@@ -92,6 +98,38 @@
         "string",
         "null"
       ]
+    },
+    "generation_environment": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Observed execution surface; requesting-user external image provenance remains separate from a native attempt"
+    },
+    "attempt_evidence_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Versioned raw error evidence file bound to the exact attempt, tool, prompt, negative and outcome"
+    },
+    "attempt_evidence_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "error_capture_fidelity": {
+      "enum": ["exact_string", "exact_bytes", "typed_capture", "limited_capture", "unavailable"]
+    },
+    "error_details": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["http_status", "error_code", "error_type", "request_id", "request_id_source", "moderation_stage", "categories", "classification_source"],
+      "properties": {
+        "http_status": {"type": ["integer", "null"], "minimum": 100, "maximum": 599},
+        "error_code": {"type": ["string", "null"]},
+        "error_type": {"type": ["string", "null"]},
+        "request_id": {"type": ["string", "null"]},
+        "request_id_source": {"type": ["string", "null"]},
+        "moderation_stage": {"type": ["string", "null"]},
+        "categories": {"type": "array", "items": {"type": "string"}},
+        "classification_source": {"enum": ["structured_error_code", "unclassified"]}
+      }
     },
     "pack_id": {
       "type": "string",

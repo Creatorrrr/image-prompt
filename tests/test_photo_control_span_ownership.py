@@ -60,8 +60,12 @@ class ControlSpanOwnershipTests(unittest.TestCase):
         data = initial_fixtures.InitialDirectionIntegrationTests.data
         result = current_fixtures.generate_once(data, random.Random(9), None, ["en"], True, 12, True,
             selection_mode="rule", include_trace=True, seed=9,
+            concept_locks=generator.request_envelope_active_texts(envelope),
             authorial_core=core, creative_control_snapshot=snapshot)
         pack = generator.build_candidate_pack(result, data, "v6")
+        self.assertFalse({"sensual", "fetish", "3"} & {
+            row["text"] for row in pack["mandatory_intents"]
+        })
         composing = initial_fixtures.InitialDirectionIntegrationTests()
         composing.pack = pack
         composed = composing.composed()
@@ -117,6 +121,31 @@ class ControlSpanOwnershipTests(unittest.TestCase):
         self.assertTrue(auditor.authorial_core_interpretation_contract_valid(core, creative_control_snapshot=snapshot))
         self.assertTrue(auditor.authorial_core_v3_semantic_contract_valid(core, creative_control_snapshot=snapshot))
         self.assertIn("Her red scarf", auditor.authorial_required_prompt_evidence({"authorial_core": core}, {}))
+        sources = generator.candidate_pack_source_texts({"provenance": {
+            "authorial_core": core, "creative_controls": snapshot,
+            "concept_lock": generator.request_envelope_active_texts(envelope),
+        }}, {})
+        required = [row["text"] for row in sources if row["mandatory"]]
+        self.assertEqual(required, [envelope["active_spans"][0]["text"], "her red scarf", "she waves"])
+
+    def test_all_four_controls_never_supply_visual_source_requirements(self):
+        raw, envelope, _ = self.inputs("sensual=3, fetish=3, creativity=3, surreal=3")
+        snapshot = controls.resolve(raw["source_request"], context={"subject_category": "human"},
+            overrides={"sensual": 3, "fetish": 3, "creativity": 3, "surreal": 3}, seed=9)
+        raw["creative_controls_sha256"] = snapshot["canonical_sha256"]
+        core = self.normalize(raw, envelope, snapshot)
+        for channel in ("concept_lock", "user_mandatory_intents", "additional_requirements"):
+            provenance = {"authorial_core": core, "creative_controls": snapshot,
+                          channel: generator.request_envelope_active_texts(envelope)}
+            with self.subTest(channel=channel):
+                rows = generator.candidate_pack_source_texts({"provenance": provenance}, {})
+                self.assertEqual([row["text"] for row in rows if row["mandatory"]],
+                                 [envelope["active_spans"][0]["text"]])
+        wrong = copy.deepcopy(snapshot)
+        wrong["controls"]["surreal"]["value"] = 0
+        provenance["creative_controls"] = wrong
+        with self.assertRaises(ValueError):
+            generator.candidate_pack_source_texts({"provenance": provenance}, {})
 
     def test_missing_stale_or_mismatched_settings_do_not_exempt_spans(self):
         raw, envelope, snapshot = self.inputs()

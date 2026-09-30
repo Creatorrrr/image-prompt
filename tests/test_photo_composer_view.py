@@ -8,6 +8,7 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "skills/photo-prompt-image-generator/scripts"
 sys.path.insert(0, str(SCRIPT_DIR))
 import compose_pack_view as view
+import photo_candidate_context as candidate_context
 
 
 def fixture():
@@ -72,6 +73,27 @@ class PhotoComposerViewTests(unittest.TestCase):
         pack["contract_version"] = "photo-candidate-pack/v5"
         with self.assertRaises(ValueError):
             view.build_view(pack)
+
+    def test_overview_exposes_requirements_and_detail_recovers_exact_source(self):
+        pack = fixture()
+        candidate = pack["visual_concept_candidates"]["candidates"][0]
+        candidate.update(candidate_context.compile_context(
+            {"requires_any_tags": ["direct_flash_y2k_snapshot"]}, "slot:color:ordinary"))
+        candidate.update(source_candidate_id="slot:color:ordinary", retrieval_status="returned",
+                         contextual_status="unassessed", scene_retrieval_support=False)
+        candidate["applicability"]["basis"] = "writable_scope"
+        pack["pack_id"] = view.digest(dict(pack, pack_id=None))[:16]
+        original = copy.deepcopy(pack)
+        overview = view.build_view(pack)
+        summary = overview["candidate_catalog"][0]
+        for key in ("context_requirements", "context_prerequisites", "context_preflight",
+                    "source_candidate_id", "retrieval_status", "scene_retrieval_support"):
+            self.assertEqual(summary[key], candidate[key])
+        detail = view.build_view(pack, [candidate["id"]])
+        self.assertEqual(detail["candidates"][0]["candidate"], candidate)
+        view.verify_view(pack, overview)
+        view.verify_view(pack, detail)
+        self.assertEqual(pack, original)
 
 
 if __name__ == "__main__":

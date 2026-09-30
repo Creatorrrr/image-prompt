@@ -1,0 +1,126 @@
+{
+  "status": "runtime_integrated_change_scoped_gates_passed_independent_pixel_tests_completed",
+  "counts": {
+    "family_groups": 42,
+    "independent_visual_profiles": 87,
+    "slot_candidates": 94,
+    "optional_bundles": 27,
+    "merged_visual_profiles": 1075,
+    "semantic_index_entries": 9744
+  },
+  "runtime_checks": {
+    "costume_tests": {
+      "status": "PASS",
+      "tests": 7,
+      "adjacent_index_binding_tests": 1,
+      "log": "validation/costume-tests-v2-final.log"
+    },
+    "semantic_index": {
+      "status": "ok",
+      "dictionary_hash": "b5611577336a98a6cdd11fbecee3cbc1cd6e61b823a3b4fc5b2e78cc15006f6d",
+      "policy_schema_version": 1,
+      "semantic_policy_hash": "92eca47f35d8b8fe",
+      "semantic_text_recipe": "semantic-text-v5",
+      "expected_semantic_text_recipe": "semantic-text-v5",
+      "embedding_model": "gemini-embedding-2",
+      "embedding_dimensions": 768,
+      "entry_count": 9744
+    },
+    "visual_index": {
+      "status": "PASS",
+      "profiles": 1075,
+      "exact_terms": 2683,
+      "log": "validation/visual-index-v2-check.log"
+    },
+    "existing_visual_vectors": {
+      "existing_profile_count": 988,
+      "added_profile_count": 87,
+      "removed_profile_ids": [],
+      "existing_embedding_text_changes": [],
+      "existing_vector_changes": [],
+      "compared_epoch": "pre-integration vs final integration-v2"
+    },
+    "preexisting_test_file_preserved": true,
+    "generator_authorized_changes": "Two extension filename registrations; original working changes preserved.",
+    "merged_registry_schema": {
+      "status": "PASS",
+      "log": "validation/registry-schema-final.log",
+      "adjacent_schema_tests_passed": 2,
+      "adjacent_log": "validation/adjacent-schema-final.log"
+    },
+    "preexisting_test_file_observation": {
+      "path": "tests/test_photo_control_span_ownership.py",
+      "before_sha256": "4cdf2e7eeec7c3ac3e779d6255fa73e5737242b893f3a44f048deb0b61770c9f",
+      "final_sha256": "4cdf2e7eeec7c3ac3e779d6255fa73e5737242b893f3a44f048deb0b61770c9f",
+      "modified_by_this_task": false
+    }
+  },
+  "broader_regression_checks": {
+    "status": "completed_with_remaining_fixture_failures",
+    "initial_run": {
+      "tests": 54,
+      "failures": 8,
+      "errors": 3,
+      "log": "validation/focused-tests.log"
+    },
+    "resolved": "Three early fixture/index errors and two merged-schema failures corrected; their final targeted checks passed.",
+    "remaining_fixture_cases": [
+      "exact_kebaya_en",
+      "exact_kebaya_ko",
+      "exact_qipao_en",
+      "exact_nivi_sari_en",
+      "candidate_nivi_components",
+      "negative_qipao_collar_only"
+    ],
+    "baseline_confirmed_case": "exact_kebaya_en",
+    "baseline_registry_sha256": "63c791c9631908b657e42ffd2814109b33c265490adb8ad8b44d7688d0349e11",
+    "baseline_log": "validation/traditional-preintegration-baseline.log",
+    "boundary": "Only the first remaining failure was independently reproduced against the pre-integration registry. The whole broad suite was not rerun after correction and is not claimed PASS."
+  },
+  "pixel_qualification": {
+    "status": "COMPLETED_WITH_ONE_STRICT_PASS_TWO_STRICT_FAILURES",
+    "experiment": "/Users/chasoik/Projects/image-prompt/runs/costume-cosplay-20260930-independent",
+    "results": "/Users/chasoik/Projects/image-prompt/runs/costume-cosplay-20260930-independent/results-summary.json",
+    "arms": 3,
+    "image_tool_calls": 3,
+    "generation_retries": 0,
+    "policy": "partial_is_fail",
+    "not_exhaustive_for_all_added_data": true,
+    "new_profile_pixel_coverage": 0,
+    "final_optional_discovery_surface_rendered": false
+  },
+  "runtime_files": [
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_costume_cosplay_extension.json",
+      "sha256": "9bb399251a1f88ec3f2f72589d136c2d3e5424ec9f78b849395d2468d5e1f28f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_obligations_costume_cosplay.json",
+      "sha256": "c5ca41f0ebb8e5f312260e87039dd81dd01563de9fe5312073e654f6b59268a4"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_tags.json",
+      "sha256": "8b3424447faf4af925a01ede803a80c57cec220e740d4da7d8834189b04bab28"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_semantic_index.json",
+      "sha256": "4c8825cc78ec9e43b674b62d5e860bf277b32df3a5b0db7986ac69e29879fe7f"
+    },
+    {
+      "path": "skills/photo-prompt-image-generator/assets/photo_prompt_visual_profile_index.json",
+      "sha256": "d7f6e06b92ff633241eba11bcfda3bd8b7f57e798a54132b8ec5d17c93b58a45"
+    }
+  ],
+  "source_drift": {
+    "record": "/Users/chasoik/Projects/image-prompt/runs/costume-cosplay-20260930-independent/coordinator_source_drift.json",
+    "fixed_code_causal_claim": false,
+    "data_match_statement": "Data/index snapshots matched integration-v1 during the recorded experiment phase; final sources and visual index reflect the documented v2 correction."
+  },
+  "data_epochs": {
+    "rendered": "integration-v1",
+    "final_runtime": "integration-v2 optional paraphrase correction",
+    "unchanged": "All 87 exact activations, hard assertions and render gates; 94 candidate contents/IDs; 27 bundle contents/IDs",
+    "changed": "87 optional semantic-discovery paraphrases and maintenance-reference binding hash, followed by index refresh",
+    "final_discovery_surface_pixel_qualified": false
+  }
+}

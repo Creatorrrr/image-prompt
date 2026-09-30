@@ -1,0 +1,518 @@
+{
+  "schema_version": "costume-cosplay-qualification-plan/v1",
+  "researched_date": "2026-09-30",
+  "status": "research_proposal_not_integrated_not_render_qualified",
+  "execution_status": "not_run",
+  "fixture_activation_unit": "independently_supported_component",
+  "fixture_policy": "Profile eligibility is discovery only. Each hard component still requires its own independent request evidence; the other components do not activate automatically.",
+  "pipeline_gates": [
+    "Resolve source versions and semantic overlaps with existing profiles/candidates.",
+    "Compile research proposals through an explicit runtime adapter.",
+    "Run activation, exclusions, ownership and optional-bundle regression fixtures.",
+    "Rebuild only affected indexes and verify source/candidate bindings.",
+    "Freeze per-arm core, request evidence, source snapshot and native pixel gates before candidate exposure.",
+    "Retain first outputs, prompts, tool records and native images; review every required relation.",
+    "Record user judgment separately from structural gate results."
+  ],
+  "schema_and_routing_fixtures": [
+    {
+      "id": "T01",
+      "request": "간호사 코스튬 촬영",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "clinical_nursing_duty_system"
+      ],
+      "reason": "clothing name does not supply clinical duty",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T02",
+      "request": "경찰복 코스튬 스튜디오 사진",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "police_public_safety_duty_system"
+      ],
+      "reason": "costume is not operational policing",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T03",
+      "request": "금속처럼 칠한 EVA 소품 갑옷",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "wearable_protective_armor_system"
+      ],
+      "reason": "finish is not protective performance",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T04",
+      "request": "마녀 코스프레",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC11"
+      ],
+      "reason": "family term does not select a hat variant",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T05",
+      "request": "가슴판과 어깨끈이 있는 앞치마가 드레스 바깥에 묶임",
+      "expected_eligible_profiles_or_contracts": [
+        "CC01"
+      ],
+      "must_not_activate": [],
+      "reason": "explicit topology supports the proposed apron contract",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T06",
+      "request": "가슴판 없는 허리 앞치마",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC01"
+      ],
+      "reason": "waist apron must not become bib apron",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T07",
+      "request": "Yelan 코스프레",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC10"
+      ],
+      "reason": "unresolved character/version name alone is insufficient for a hard narrow contract",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T08",
+      "request": "한 팔은 긴 천 소매, 다른 팔은 별도 커프이며 좌우 치마 패널 길이가 다름",
+      "expected_eligible_profiles_or_contracts": [
+        "CC10"
+      ],
+      "must_not_activate": [],
+      "reason": "explicit asymmetric component relations",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T09",
+      "request": "아리 코스프레",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC19"
+      ],
+      "reason": "a character label does not force the transparent-tail version",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T10",
+      "request": "투명 꼬리의 뿌리가 노출된 외부 허리 지지부에 연결됨",
+      "expected_eligible_profiles_or_contracts": [
+        "CC19"
+      ],
+      "must_not_activate": [],
+      "reason": "explicit support and surface variant",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T11",
+      "request": "고딕 로리타 패션 코디",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC31"
+      ],
+      "reason": "independent fashion coordinate is not vampire cosplay",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T12",
+      "request": "한복",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC25"
+      ],
+      "reason": "traditional family label does not select cropped stagewear",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T13",
+      "request": "짧은 저고리풍 상의 아래 겹친 무대 치마와 독립 허리 장식",
+      "expected_eligible_profiles_or_contracts": [
+        "CC25"
+      ],
+      "must_not_activate": [],
+      "reason": "explicit stage interpretation",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T14",
+      "request": "커다란 치마",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "hw_lateral_pannier",
+        "hw_shelf_bustle"
+      ],
+      "reason": "generic volume does not select its directional support",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T15",
+      "request": "뒤쪽으로만 돌출된 버슬 변형",
+      "expected_eligible_profiles_or_contracts": [
+        "hw_shelf_bustle"
+      ],
+      "must_not_activate": [
+        "hw_lateral_pannier"
+      ],
+      "reason": "posterior versus lateral volume",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T16",
+      "request": "후보팩 B11을 검색 결과로 얻음; 사용자 요청은 평범한 재킷",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC17",
+        "CC18"
+      ],
+      "reason": "retrieval alone supplies no hard appendage obligations",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T17",
+      "request": "A의 머리띠 귀와 B의 벨트 꼬리",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "B11_same_owner_contract"
+      ],
+      "reason": "different owners cannot satisfy one-wearer bundle",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T18",
+      "request": "갑옷 패널 가장자리만 발광하며 관절 천은 비발광",
+      "expected_eligible_profiles_or_contracts": [
+        "CC35"
+      ],
+      "must_not_activate": [],
+      "reason": "localized appearance without electrical-function claim",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T19",
+      "request": "전체 화면의 노란 빛 필터",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC35"
+      ],
+      "reason": "global grading is not an attached costume glow strip",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T20",
+      "request": "겉층을 손으로 벌려 독립 내부층이 보이는 한 순간",
+      "expected_eligible_profiles_or_contracts": [
+        "CC38"
+      ],
+      "must_not_activate": [],
+      "reason": "a visible opening does not prove the complete change sequence",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T21",
+      "request": "기모노",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "hw_kosode_small_opening",
+        "CC24"
+      ],
+      "reason": "broad family does not establish a historical opening or collaboration variant",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T22",
+      "request": "코르셋 후보만 선택됨; 요청에는 구조 상의가 없음",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC26"
+      ],
+      "reason": "candidate selection cannot supply independent request evidence",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T23",
+      "request": "Arcane Jinx 의상과 LoL Jinx 소품을 하나의 공식 버전으로 자동 합침",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "canonical_version_merge"
+      ],
+      "reason": "version scopes need explicit alignment or mashup intent",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "T24",
+      "request": "옆 인물의 소품이 주인공 손 근처에 있음",
+      "expected_eligible_profiles_or_contracts": [],
+      "must_not_activate": [
+        "CC36"
+      ],
+      "reason": "proximity is not contact or ownership",
+      "result": "NOT_RUN"
+    }
+  ],
+  "native_pixel_arms": [
+    {
+      "id": "RN01",
+      "label_ko": "가슴판 앞치마",
+      "proposed_profile_refs": [
+        "CC01"
+      ],
+      "core_brief_ko": "성인 착용자: 두 어깨끈이 가슴판에 이어지고, 드레스 바깥 허리띠가 옆 매듭까지 이어지며, 앞치마 밑단이 드레스 밑단보다 위에서 끝남; 앞쪽 3/4 구도",
+      "inspect": "apron strap-to-bib continuity, waistband owner, separate lower hems",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "two apron shoulder straps join a separate chest bib above the waist band",
+        "the apron waist band crosses over the dress and continues into visible side ties",
+        "the apron lower panel ends separately above the underlying dress hem"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc01_01",
+        "vo_ccx_cc01_02",
+        "vo_ccx_cc01_03"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN02",
+      "label_ko": "비대칭 의상과 소품",
+      "proposed_profile_refs": [
+        "CC10",
+        "CC36"
+      ],
+      "core_brief_ko": "성인 착용자: 한 팔의 긴 소매와 다른 팔의 별도 커프, 길이가 다른 치마 패널, 몸통 위의 독립된 밝은 모피 칼라, 장갑 손가락이 연속된 소품 손잡이를 감쌈; 전신 사진",
+      "inspect": "asymmetric arm/skirt relations and exact fingers-to-handle contact",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "one arm has a long fabric sleeve while the other uses a separate cuff",
+        "the two outer skirt panels end at different heights around the legs",
+        "the pale fur collar remains a separate outer piece above the bodice",
+        "gloved fingers curl around the costume prop handle with visible contact",
+        "the prop handle continues into one distinct sculpted prop body"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc10_01",
+        "vo_ccx_cc10_02",
+        "vo_ccx_cc10_03",
+        "vo_ccx_cc36_01",
+        "vo_ccx_cc36_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN03",
+      "label_ko": "소품 갑옷의 관절",
+      "proposed_profile_refs": [
+        "CC13",
+        "CC15"
+      ],
+      "core_brief_ko": "성인 착용자: 금속처럼 칠한 패널은 구부린 관절 앞에서 겹침을 끝내고 관절 천은 무광으로 노출됨; 헬멧 아래 목 천과 쉘 안쪽의 독립 바이저 가장자리가 보임",
+      "inspect": "panel/fabric boundaries, visible bend clearance and separate neck covering",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "dark flexible fabric remains visible between the rigid armor panels at the joints",
+        "overlapping armor edges stop around the bent joint instead of merging across it",
+        "metal-like painted highlights remain on the costume panels while the joint fabric stays matte",
+        "the helmet lower edge ends above a separate fabric neck covering",
+        "the dark visor is bounded by the helmet shell with a visible edge"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc13_01",
+        "vo_ccx_cc13_02",
+        "vo_ccx_cc13_03",
+        "vo_ccx_cc15_01",
+        "vo_ccx_cc15_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN04",
+      "label_ko": "귀와 꼬리의 부착",
+      "proposed_profile_refs": [
+        "CC17",
+        "CC18"
+      ],
+      "core_brief_ko": "성인 착용자: 안쪽 대비 패널을 가진 모피 귀의 바탕이 머리띠에 붙고 꼬리 뿌리는 뒤 허리 벨트에 연결됨; 꼬리는 하의와 떨어져 휘며 독립된 끝까지 보임; 뒤쪽 3/4 전신 사진",
+      "inspect": "same-wearer ownership, exposed ear bases and tail root",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "two faux-fur costume ears have visible bases attached to a hair band",
+        "contrasting inner ear panels remain inside the costume ear outlines above the wig",
+        "the costume tail root connects visibly to a belt at the rear waist",
+        "the tail curves away from the lower garment and ends at a separate visible tip"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc17_01",
+        "vo_ccx_cc17_02",
+        "vo_ccx_cc18_01",
+        "vo_ccx_cc18_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN05",
+      "label_ko": "한복풍 무대 변형",
+      "proposed_profile_refs": [
+        "CC25"
+      ],
+      "core_brief_ko": "성인 착용자의 짧은 저고리풍 상의, 별도 겹친 무대 치마, 허리에 따로 붙은 노리개와 리본",
+      "inspect": "jacket/skirt separation and pendant/ribbon attachment ownership",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "the short jacket ends above a separate layered stage skirt",
+        "a pendant ornament and ribbons hang from separate visible waist attachments"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc25_01",
+        "vo_ccx_cc25_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN06",
+      "label_ko": "퀵체인지 순간",
+      "proposed_profile_refs": [
+        "CC38"
+      ],
+      "core_brief_ko": "성인 착용자가 겉 의상 가장자리를 손으로 벌려 내부 의상이 드러나는 한 순간",
+      "inspect": "hand/edge contact and distinct inner/outer layers",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "the wearer holds the opened outer costume edge away from the torso",
+        "a separate inner costume layer is visible through the opened outer garment"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc38_01",
+        "vo_ccx_cc38_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN07",
+      "label_ko": "자수와 전사의 근접 비교",
+      "proposed_profile_refs": [
+        "CC34"
+      ],
+      "core_brief_ko": "의상의 같은 구역에서 높이가 있는 실 문양과 평평한 전사 문양을 함께 기록한 근접 사진",
+      "inspect": "raised stitches versus flat neighboring transfer",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "raised thread lines form the embroidered motif above the base fabric",
+        "the neighboring transfer motif stays flat against the fabric without raised stitches"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc34_01",
+        "vo_ccx_cc34_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    },
+    {
+      "id": "RN08",
+      "label_ko": "착용 조형물",
+      "proposed_profile_refs": [
+        "CC40"
+      ],
+      "core_brief_ko": "성인 착용자: 몸통 바깥으로 확장된 조형 외피에 착용 개구부가 보이고, 외피 가장자리 밖 팔다리가 별도로 읽힘; 외피 전체를 포함한 전신 사진",
+      "inspect": "wearable envelope versus background sculpture and readable wearer openings",
+      "result": "NOT_RUN",
+      "proposed_core_component_clauses": [
+        "a sculptural costume envelope extends beyond the wearer torso with visible garment openings",
+        "the wearer limbs remain separately readable outside the sculptural costume edges"
+      ],
+      "proposed_generation_limit": 1,
+      "proposed_retry_count": 0,
+      "gate_ids": [
+        "vo_ccx_cc40_01",
+        "vo_ccx_cc40_02"
+      ],
+      "evidence_required": [
+        "frozen request/core",
+        "source and data hashes",
+        "exact prompt/tool record",
+        "retained native image",
+        "per-gate pixel review"
+      ],
+      "image_workflow": "future image task; no generation was performed by this research"
+    }
+  ],
+  "pixel_rules": {
+    "aggregate": "partial_is_fail",
+    "occluded_required_visible_relation": "FAIL",
+    "hidden_physical_function_without_visual_contract": "UNSCORED",
+    "prompt_runtime_pass": "does_not_establish_pixel_pass",
+    "causal_improvement": "requires separately frozen baseline/comparison; no effect-size claim from isolated examples"
+  }
+}

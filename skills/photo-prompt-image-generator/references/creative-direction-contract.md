@@ -19,7 +19,7 @@ Write a `creative_brief` beside the ordinary composed fields.
 1. Name at least three likely first-answer clichés in `ordinary_baseline` and explicitly reject them in `rejected_cliches`.
 2. Develop at least four proposals using distinct operator IDs exposed in the pack. Do not write four variations of the same anomaly.
 3. Give every proposal a familiar anchor, the viewer's expected reading, exactly one changed rule, at least two visible consequences, one aboutness, and a short unique `signature_phrase` that could appear naturally in the final prompt.
-4. Critique the proposals for topic fidelity, consequence legibility, reveal economy, photographic realizability, and cliché distance. Select exactly one; do not average or stack the others.
+4. Critique the proposals for topic fidelity, consequence legibility, reveal economy, photographic realizability, and cliché distance, judging their effect on the whole photograph and subject presence. Evaluate the initial direction by the same criteria as alternatives: preserving its chosen motif is not itself an advantage. Large spatial transformations can be effective, but scale or an operator label does not establish expressive variety or the requested intensity. Select exactly one; do not average or stack the others.
 5. Give the selected proposal an authorial grammar: where the camera is, which instant it withholds or catches, what the frame deliberately omits, and what physical/material relation repeats across the image.
 
 The operator IDs are abstract moves. They do not prescribe a genre:
