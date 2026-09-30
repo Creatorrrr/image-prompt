@@ -155,6 +155,7 @@ QUALITY_LAYERS_FILENAME = "photo_prompt_quality_layers.json"
 VISUAL_OBLIGATION_REGISTRY_FILENAME = "photo_prompt_visual_obligations.json"
 VISUAL_PROFILE_INDEX_FILENAME = "photo_prompt_visual_profile_index.json"
 VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
+    "photo_prompt_visual_obligations_tactile_reality.json",
     "photo_prompt_visual_obligations_reactorprompt.json",
     "photo_prompt_visual_obligations_photo_era.json",
     "photo_prompt_visual_obligations_poverty.json",
@@ -177,6 +178,7 @@ VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
 VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
+    "photo_prompt_tactile_reality_extension.json",
     RESEARCH_EXTENSION_FILENAME,
     "photo_prompt_reactorprompt_visual_relations_extension.json",
     "photo_prompt_natural_environment_extension.json",
