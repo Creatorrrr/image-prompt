@@ -1,0 +1,240 @@
+{
+  "artifact_label": "Independent synthetic open-dimension evaluation drafted before project-candidate inspection",
+  "provenance": {
+    "type": "independent_synthetic_evaluation",
+    "drafted_before_project_candidate_inspection": true,
+    "project_files_dictionaries_profiles_previous_examples_and_generated_packs_read": false,
+    "actual_user_quotes": false,
+    "note": "All requests, baselines, and review evidence were independently authored. No repository or project-candidate data was inspected."
+  },
+  "evaluation_purpose": "Test optional refinement adoption when the synthetic request specifies only the adult, environmental surface, flexible-sheet concept, broad handling event, and photorealistic rendering",
+  "holdout_separation": "The three strict fidelity holdouts in tactile-independent-cases.json remain unchanged. This separate artifact does not revise or supersede them.",
+  "dimension_policy": "Only the requested_locked_dimensions are request-imposed constraints. Each complete baseline selects one possible staging solution. Its action, pose, material response, composition, camera, lighting, and framing remain agent-chosen refinements and may be changed coherently. Such refinements must preserve the locked concept, adult subject, actual environmental surface, and broad handling event. Required physical coherence is an evaluation criterion, not a reason to mislabel a particular baseline pose or fold as user-requested.",
+  "review_interpretation": "The supported statuses assess explicit textual support in the independent baseline prompt before packing. They do not claim a generated image has passed visual review, and they do not make the baseline's optional staging choices immutable.",
+  "positive_cases": [
+    {
+      "id": "independent_open_sky_handling",
+      "synthetic_request": "Make a photorealistic image of an adult handling the sky itself like a flexible sheet.",
+      "subject": "An adult physically handling the sky itself",
+      "setting": "A broad rooftop terrace beneath blue sky, chosen for this baseline only",
+      "event": "An adult physically handles a continuous region of sky as a flexible sheet",
+      "conceptual_meaning": "The sky itself is tangible and flexible enough for an adult to handle",
+      "requested_locked_dimensions": {
+        "subject": "An adult and the sky itself",
+        "concept": "The sky behaves as a flexible, physically handleable sheet",
+        "broad_event": "The adult physically handles the sky",
+        "rendering_mode": "Photorealistic image"
+      },
+      "agent_chosen_staging_is_optional": true,
+      "agent_chosen_staging": "For this baseline only, the adult supports a lowered sky fold on two open palms while standing on a rooftop terrace. The rooftop, support action, fold shape, stance, and photographic treatment are chosen staging refinements, not additional request constraints.",
+      "priorities": [
+        "Keep the handled region identifiable as the sky itself and continuous with its surrounding region",
+        "Make the adult's hand contact and anatomically plausible support visible",
+        "Use a readable material response and depth without locking a particular fold design"
+      ],
+      "open_dimensions": [
+        {
+          "axis": "action",
+          "freedom": "Choose the particular hand operation, grip type, hand roles, and direction of manipulation while preserving physical handling of the sky",
+          "baseline_choice": "Support a lowered fold across two open palms"
+        },
+        {
+          "axis": "pose",
+          "freedom": "Choose a coherent adult pose, stance, limb arrangement, and reach",
+          "baseline_choice": "Stand with planted feet apart, hips centered, elbows bent, and palms facing upward at waist height"
+        },
+        {
+          "axis": "material_response",
+          "freedom": "Choose the sky's fold geometry, tension, thickness cues, and cloud deformation while preserving its flexible-sheet identity and continuous connection",
+          "baseline_choice": "A descending band with one cupped fold, curved cloud streaks, and a softly shaded underside"
+        },
+        {
+          "axis": "composition",
+          "freedom": "Choose setting, subject placement, background details, and visual balance",
+          "baseline_choice": "A broad rooftop terrace with a visible attachment to the sky above"
+        },
+        {
+          "axis": "camera",
+          "freedom": "Choose viewpoint, focal length, and perspective while retaining legible physical interaction",
+          "baseline_choice": "A front three-quarter view"
+        },
+        {
+          "axis": "lighting",
+          "freedom": "Choose time, weather, light direction, and photographic color treatment",
+          "baseline_choice": "Clear afternoon light"
+        },
+        {
+          "axis": "framing",
+          "freedom": "Choose crop, scale, aspect ratio, and surrounding space so the interaction remains understandable",
+          "baseline_choice": "A full-body frame retaining face, hands, feet, and the sky attachment"
+        }
+      ],
+      "baseline_photographic_prompt": "A full-body photograph shows an adult and the sky itself. The sky becomes a flexible sheet; the adult physically handles the sky. On a broad rooftop terrace, the person supports a lowered blue fold across two open palms. Both feet are planted apart on level paving, knees soft, with hips centered between the feet. Each visible forearm leads to its own upward-facing palm at waist height; elbows stay bent beside the torso and fingers cup the fold from beneath. One continuous band descends from the sky above, its upper attachment and curved edges visible. Cloud streaks follow the fold; underside shadow reveals thickness. A front three-quarter view leaves face, limbs, hands, feet, and gaps between neighboring fingers unobstructed in afternoon light.",
+      "prepack_body_review": [
+        {
+          "check": "ownership",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Each visible forearm leads to its own upward-facing palm"
+          ],
+          "reason": "The explicit forearm-to-palm connection assigns both contact hands to the single adult and prevents an unowned supporting hand in the written staging."
+        },
+        {
+          "check": "joint/reach",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "at waist height; elbows stay bent beside the torso"
+          ],
+          "reason": "Waist-height palms and bent elbows beside the torso establish a comfortable supporting reach without requiring extended or reversed joints."
+        },
+        {
+          "check": "support/balance",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Both feet are planted apart on level paving, knees soft, with hips centered between the feet."
+          ],
+          "reason": "The planted feet and centered hips provide a stable base on level ground for the optional supporting gesture."
+        },
+        {
+          "check": "contact/space",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "the person supports a lowered blue fold across two open palms",
+            "fingers cup the fold from beneath",
+            "One continuous band descends from the sky above"
+          ],
+          "reason": "The fold rests across the upward palms with fingers beneath it, rather than passing through them, and the descending band joins the contact region to the environmental sky."
+        },
+        {
+          "check": "visibility/projection",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "its upper attachment and curved edges visible",
+            "A front three-quarter view leaves face, limbs, hands, feet, and gaps between neighboring fingers unobstructed",
+            "underside shadow reveals thickness"
+          ],
+          "reason": "The optional viewpoint preserves limb paths, finger separation, and the attached boundary; underside shading gives the sky fold visible depth."
+        }
+      ],
+      "baseline_word_count": 121,
+      "locked_anchor_evidence": {
+        "concept": "The sky becomes a flexible sheet",
+        "subject": "an adult and the sky itself",
+        "event": "the adult physically handles the sky"
+      }
+    },
+    {
+      "id": "independent_open_architectural_wall_handling",
+      "synthetic_request": "Make a photorealistic image of an adult handling an architectural wall surface itself like a flexible sheet.",
+      "subject": "An adult physically handling an architectural wall surface itself",
+      "setting": "A smooth concrete building wall beside flat pavement, chosen for this baseline only",
+      "event": "An adult physically handles a continuous region of an architectural wall as a flexible sheet",
+      "conceptual_meaning": "An architectural wall surface itself becomes flexible and physically handleable",
+      "requested_locked_dimensions": {
+        "subject": "An adult and an architectural wall surface itself",
+        "concept": "The wall surface behaves as a flexible, physically handleable sheet",
+        "broad_event": "The adult physically handles the wall surface",
+        "rendering_mode": "Photorealistic image"
+      },
+      "agent_chosen_staging_is_optional": true,
+      "agent_chosen_staging": "For this baseline only, the adult draws a diagonal fold from a concrete wall with one hand while the other palm steadies its lower slope. Concrete, the two different hand roles, diagonal geometry, staggered stance, and photographic treatment are chosen staging refinements, not additional request constraints.",
+      "priorities": [
+        "Keep the manipulated material identifiable as the architectural wall itself with an unbroken surrounding connection",
+        "Make the adult's contact, limb ownership, reach, and support coherent",
+        "Show flexible deformation with legible surface depth while allowing different actions and fold designs"
+      ],
+      "open_dimensions": [
+        {
+          "axis": "action",
+          "freedom": "Choose the particular hand operation, grip type, hand roles, and direction of manipulation while preserving physical handling of the wall surface",
+          "baseline_choice": "Draw one fold outward with a left-hand ridge grip while the right palm presses the lower slope"
+        },
+        {
+          "axis": "pose",
+          "freedom": "Choose an anatomically coherent adult pose, stance, limb arrangement, and reach",
+          "baseline_choice": "Stand with staggered feet, centered weight, level shoulders, and bent arms"
+        },
+        {
+          "axis": "material_response",
+          "freedom": "Choose architectural surface material, fold geometry, tension, texture deformation, and thickness cues while keeping the surface flexible and continuously connected",
+          "baseline_choice": "Concrete skin with aggregate following a broad diagonal fold, rounded ridge, and compressed crease"
+        },
+        {
+          "axis": "composition",
+          "freedom": "Choose architecture, surrounding setting, subject placement, and visual balance",
+          "baseline_choice": "An adult beside a smooth concrete building wall on flat pavement"
+        },
+        {
+          "axis": "camera",
+          "freedom": "Choose viewpoint, focal length, and perspective while retaining readable physical interaction",
+          "baseline_choice": "A three-quarter view of the adult and wall"
+        },
+        {
+          "axis": "lighting",
+          "freedom": "Choose time, light direction, softness, weather, and photographic color treatment",
+          "baseline_choice": "Low side lighting that models the ridge and its shadow"
+        },
+        {
+          "axis": "framing",
+          "freedom": "Choose crop, scale, aspect ratio, and surrounding space so the contact and deformation remain understandable",
+          "baseline_choice": "A wide frame retaining both hands, both feet, and the surrounding surface connection"
+        }
+      ],
+      "baseline_photographic_prompt": "A photographic portrait frames an adult and an actual architectural wall. The wall surface becomes a flexible sheet; the adult physically handles the wall surface. Beside level pavement, the person draws the concrete surface into a diagonal fold. Their left hand grips its ridge at chest height; their right palm presses its lower slope against the wall. Both hands connect visibly to bent arms, shoulders level and wrists following the contacted planes. Staggered feet bear centered weight on flat pavement. Concrete skin remains continuous with the wall above, below, and beside the fold; aggregate follows its bend. Low side lighting reveals a rounded ridge, compressed crease, and cast shadow on adjoining wall. A wide three-quarter frame preserves both hands, both feet, and the unbroken connection.",
+      "prepack_body_review": [
+        {
+          "check": "ownership",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Their left hand grips its ridge at chest height; their right palm presses its lower slope against the wall.",
+            "Both hands connect visibly to bent arms"
+          ],
+          "reason": "The left and right hands have distinct roles and visible arm connections belonging to the single adult."
+        },
+        {
+          "check": "joint/reach",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "at chest height",
+            "Both hands connect visibly to bent arms, shoulders level and wrists following the contacted planes."
+          ],
+          "reason": "The upper grip remains within chest-height reach; bent arms, level shoulders, and wrists aligned with the contact planes avoid an overextended or twisted pose."
+        },
+        {
+          "check": "support/balance",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Staggered feet bear centered weight on flat pavement."
+          ],
+          "reason": "Both grounded feet form a staggered base, with centered weight supporting the optional asymmetric pull-and-press action."
+        },
+        {
+          "check": "contact/space",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Their left hand grips its ridge",
+            "their right palm presses its lower slope against the wall",
+            "Concrete skin remains continuous with the wall above, below, and beside the fold"
+          ],
+          "reason": "The ridge grip and lower palm press identify separate contacts on one fold. The surrounding connection distinguishes deformation of the actual wall surface from handling a loose sheet or detached panel."
+        },
+        {
+          "check": "visibility/projection",
+          "status": "supported",
+          "literal_baseline_evidence": [
+            "Low side lighting reveals a rounded ridge, compressed crease, and cast shadow on adjoining wall.",
+            "A wide three-quarter frame preserves both hands, both feet, and the unbroken connection."
+          ],
+          "reason": "The optional framing retains hand contacts, grounded supports, and the continuous wall connection, while side light and crease-shadow cues make the fold depth legible."
+        }
+      ],
+      "baseline_word_count": 125,
+      "locked_anchor_evidence": {
+        "concept": "The wall surface becomes a flexible sheet",
+        "subject": "an adult and an actual architectural wall",
+        "event": "the adult physically handles the wall surface"
+      }
+    }
+  ],
+  "locked_anchor_policy": "Each locked_anchor_evidence value is a distinct literal phrase of at least four words from that case's baseline. These anchors ground only the requested concept, subject, and broad handling event. The particular support or drawing gesture and all other baseline staging remain optional agent-chosen refinements."
+}
