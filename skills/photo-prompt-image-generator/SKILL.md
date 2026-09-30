@@ -85,6 +85,19 @@ When meaningful expressive choices remain open, briefly compare coherent directi
 
 For a person-centered image, make the portrayal convey the person's distinctive appeal and presence in the requested situation. Expression, bearing, gesture, clothing, light, material, and the relationship with the surroundings can contribute when relevant. Choose camera distance and framing to serve that appeal. A distant figure can carry the image. Preserve requested reference appearance rather than reshaping facial features to fit a generic ideal. For a non-person subject, apply the same attention to the subject's visual character without inventing a person.
 
+For person-centered photography, briefly establish a theme through these questions before choosing camera mechanics:
+
+- **WHO:** What observable presence, expression, behavior, or presentation makes this particular subject worth seeing?
+- **WHERE:** How does the place contribute to the requested action, role, atmosphere, or relationship?
+- **HOW:** From what viewer position and psychological distance is the subject seen, and how is the camera acknowledged when relevant?
+- **WHY NOW:** What makes this visible state or moment matter? Where transition serves the request, show a compatible trace of the preceding action or an emerging next action; a requested still pose remains a valid moment.
+
+Consider SIR—symbolicity, individuality, and relationship—as complementary lenses for the frame. Use relevant visible cues for social or situational meaning, particular presence, and the camera-subject relationship, with emphasis suited to the request. These are choices within the authored photograph, not a fixed axis count or a reason to add biography, props, facial differences, or another person. Reference appearance alone establishes no actual personality, memory, preference, or desired self-presentation.
+
+Choose the action, expression, interaction, or detail that carries the photograph's meaning, then include the surrounding context needed to read it. Derive distance, crop, lens, and light from that purpose while preserving requested framing and consequential contact. Keep emotional interest and formal restraint distinct: restraint organizes attention and information rather than lowering the resolved creative-control strengths. Leave interpretive space when it serves the request without obscuring required evidence.
+
+These questions are part of this pre-core procedure, using only the permitted inputs. Record material choices in the existing intent and priorities; they introduce no new fields, sliders, candidate count, individuality quota, score threshold, or requester-owned locks. Detailed methodology references remain post-core only.
+
 Use the existing `interpreted_intent` to state the intended experience concisely, distinguishing your artistic choice from requester-specified meaning. Use `visual_priorities` for the few visible relationships that carry it, with a clear focal hierarchy. These planning aids create no additional locks: an authorial motif may be replaced within the request's open scope. Where they serve the request, sensory specificity, emotional tension, or selective ambiguity should come from the scene rather than praise adjectives or unrelated embellishments. Formal staging and clarity can themselves be the intended artistic effect.
 
 Then select the observation categories below and author a coherent 48–640 word English photographic prompt that can stand alone. Treat 360 words as the default recommended maximum, not a hard cap. Exceed it only when requester meaning or literal hard evidence cannot be represented cleanly within 360 words; never pad toward the limit. It must already specify a concrete subject, setting, visible event or state, and two to six distinct visual priorities. Write it as a photograph with an artistic point of view, not a search query, tag bag, or placeholder.
@@ -360,6 +373,8 @@ Before rendering, an explicitly focal perceptual meaning needs a required typed 
 
 Read `references/composition-contract.md` for the composed shape and active conditional fields. Refine the independently authored photograph from Phase 1. Judge optional candidates by their contribution to its overall effect, subject appeal, and visual hierarchy; selecting none is valid. The final pass may retain, clarify, remove, or replace agent-authored detail on open dimensions. It need not add a new visual idea when the baseline already works.
 
+When the requester asks for the photographic methodology, or a person-centered frame would benefit from clearer relationship, moment, individuality, or meaning-led framing, read the relevant sections of this skill's internal [photographic-methodology.md](references/photographic-methodology.md). It contains the integrated theme, SIR, psychological-distance, framing, camera, and review guidance. Apply useful refinements within the existing open dimensions and property locks, recording material changes in the existing `authorial_decisions`; preserve the baseline when it already works. This skill owns the methodology, final prompt, pack-approved negative, audit, and render.
+
 When `adult_appeal.dimension_scope` is present, read the adult-axis section of `references/hybrid-augmentation-contract.md`. Those two axes may use their declared unlocked dimensions even if omitted from `open_dimensions`; preserve every locked meaning and record the dimensions actually changed in `adult_appeal_brief`. This scoped exception does not open dimensions for unrelated creative additions or revise the core.
 
 When `adult_appeal.contextual_retrieval` is present, use [contextual appeal](references/contextual-appeal.md). Its expression shortlist is visible independently of the general creative sample. Interpret these candidates in the current scene and compare viable alternatives with the baseline at the same strengths; retain either on artistic grounds. Record a concise review in the existing adult brief. Candidate adoption remains optional, and the final prompt contains only the selected direction.
@@ -414,6 +429,7 @@ For control calibration, first describe the image's impression without consultin
 All references below are post-core only. Load only what the frozen request and returned pack require:
 
 - Candidate composition, audit, hard obligations, and quality fields: `references/composition-contract.md`
+- Requested photographic-methodology review, or person-centered relationship, moment, individuality, and meaning-led framing: [photographic-methodology.md](references/photographic-methodology.md)
 - Retrieval internals, indexes, and diagnostic boundaries: `references/retrieval-contract.md`
 - Candidate idea routes and composable adult-appeal axes: `references/hybrid-augmentation-contract.md`
 - High-creativity proposals and authorial selection: `references/creative-direction-contract.md`
