@@ -51,7 +51,7 @@ class PhotoAuthorialCoreTests(unittest.TestCase):
             check=False,
         )
 
-    def run_current(self, core, *, seed=91, creativity=2):
+    def run_current(self, core, *, seed=91, creativity=1):
         return fixtures.run_current(core, seed=seed, creativity=creativity)
 
     @staticmethod
