@@ -194,7 +194,7 @@ def generate_once(*args, **kwargs):
                 "sensual": kwargs.get("sensual_intensity", 0),
                 "fetish": kwargs.get("fetish_intensity", 0),
                 "creativity": (
-                    kwargs.get("creativity") if kwargs.get("creativity") is not None else 2
+                    kwargs.get("creativity") if kwargs.get("creativity") is not None else 1
                 ),
                 "surreal": kwargs.get("surreal", 0),
             }
@@ -257,7 +257,7 @@ def run_current(
     core_input: dict,
     *,
     seed: int = 91,
-    creativity: int = 2,
+    creativity: int = 1,
     envelope_input: dict | None = None,
     extra_args: tuple = (),
 ) -> dict:

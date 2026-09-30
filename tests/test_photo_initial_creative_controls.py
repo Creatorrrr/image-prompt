@@ -34,7 +34,7 @@ class CreativeControlResolverTests(unittest.TestCase):
         self.assertEqual(snapshot["controls"]["sensual"]["source"], "saved_setting")
         self.assertEqual(snapshot["resolved_emphasis"], "sensual_led")
         self.assertEqual(snapshot["controls"]["surreal"], {"value": 0, "source": "saved_setting"})
-        self.assertEqual(snapshot["controls"]["creativity"], {"value": 2, "source": "saved_setting"})
+        self.assertEqual(snapshot["controls"]["creativity"], {"value": 1, "source": "saved_setting"})
         self.assertEqual(snapshot["authoring_brief"], controls.authoring_brief(snapshot))
 
     def test_override_zero_is_an_addition_control_not_a_request_rewrite(self):
@@ -238,7 +238,7 @@ class InitialDirectionIntegrationTests(unittest.TestCase):
     def test_frozen_controls_survive_generator_and_public_composer_pack(self):
         self.assertEqual(self.pack["creative_controls"], self.snapshot)
         self.assertEqual(auditor.audit_creative_controls(self.pack), [])
-        self.assertEqual(self.pack["provenance"]["creativity"], 2)
+        self.assertEqual(self.pack["provenance"]["creativity"], 1)
         self.assertEqual(self.pack["provenance"]["candidate_pool_creativity"], 3)
 
     def test_surreal_level_and_saved_brief_survive_sampler_and_public_pack(self):
