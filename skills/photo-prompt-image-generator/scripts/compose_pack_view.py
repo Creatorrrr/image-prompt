@@ -28,9 +28,11 @@ OPTIONAL_PATHS = (
 )
 SUMMARY_FIELDS = (
     "concept_terms", "applicability", "conflicts_with", "affected_dimensions",
-    "slot", "axis", "semantic_band", "hard_eligible", "semantic_consistency",
+    "slot", "axis", "source_candidate_id", "semantic_band", "hard_eligible", "semantic_consistency",
     "concept_units", "relations", "adoption", "semantic_surface_version",
     "affected_properties", "expression_scope", "contextual_status", "retrieval_evidence",
+    "context_requirements", "context_prerequisites", "context_preflight",
+    "scene_retrieval_support", "retrieval_status",
 )
 
 

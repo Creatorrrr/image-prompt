@@ -171,6 +171,51 @@ def _active_spans(envelope: dict[str, Any]) -> tuple[str, dict[str, str]]:
     return request, by_id
 
 
+def _required_evidence_phrases(core: dict[str, Any]) -> list[tuple[str, str]]:
+    """Read explicit literal locks; full core schema validation remains separate."""
+    phrases: list[tuple[str, str]] = []
+    definitions = core.get("user_definitions")
+    if isinstance(definitions, list):
+        for index, definition in enumerate(definitions):
+            if isinstance(definition, dict):
+                phrase = definition.get("prompt_evidence")
+                if isinstance(phrase, str) and phrase.strip():
+                    phrases.append((f"user_definitions[{index}].prompt_evidence", phrase))
+    intent_lock = core.get("intent_lock")
+    anchors = intent_lock.get("semantic_anchors") if isinstance(intent_lock, dict) else None
+    if isinstance(anchors, list):
+        for index, anchor in enumerate(anchors):
+            if isinstance(anchor, dict):
+                phrase = anchor.get("prompt_evidence")
+                if isinstance(phrase, str) and phrase.strip():
+                    phrases.append(
+                        (f"intent_lock.semantic_anchors[{index}].prompt_evidence", phrase)
+                    )
+    assertions = core.get("semantic_assertions")
+    if isinstance(assertions, list):
+        for index, assertion in enumerate(assertions):
+            if not isinstance(assertion, dict) or assertion.get("polarity") != "required":
+                continue
+            evidence = assertion.get("evidence")
+            if isinstance(evidence, dict):
+                for key, phrase in evidence.items():
+                    if isinstance(phrase, str) and phrase.strip():
+                        phrases.append((f"semantic_assertions[{index}].evidence.{key}", phrase))
+    return phrases
+
+
+def _contains_literal_phrase(text: str, phrase: str) -> bool:
+    """Match normalized literals with the auditor's case and ASCII boundaries."""
+    lowered = re.sub(r"\s+", " ", text).strip().lower()
+    phrase_lower = re.sub(r"\s+", " ", phrase).strip().lower()
+    if not phrase_lower:
+        return False
+    if phrase_lower.isascii() and re.search(r"[A-Za-z0-9]", phrase_lower):
+        pattern = r"(?<![A-Za-z0-9])" + re.escape(phrase_lower) + r"(?![A-Za-z0-9])"
+        return re.search(pattern, lowered) is not None
+    return phrase_lower in lowered
+
+
 def validate_selection(
     catalog: Any,
     catalog_bytes: bytes,
@@ -255,6 +300,7 @@ def validate_selection(
     reasons: list[str] = []
     evidence_phrases: list[str] = []
     evidence_pairs: list[tuple[str, str]] = []
+    required_evidence = _required_evidence_phrases(authorial_core)
     technique_count = 0
     for index, raw in enumerate(selected):
         item = _object(raw, f"selected item {index}")
@@ -311,6 +357,17 @@ def validate_selection(
         )
         if evidence not in baseline:
             _fail(f"selected item {index} evidence is absent from baseline_prompt_en")
+        if basis == "agent_visual_choice":
+            for path, required_phrase in required_evidence:
+                # Only the complete authored phrase being locked is a conflict.
+                # A narrower requester meaning inside an authored realization is allowed.
+                if _contains_literal_phrase(required_phrase, evidence):
+                    _fail(
+                        f"selected item {index} ({category_id}) agent_visual_choice "
+                        f"baseline_evidence is locked by authorial core {path}; "
+                        "narrow required evidence to requester meaning, or use requester "
+                        "provenance when the complete phrase is actually requested"
+                    )
         normalized_reason = clean_spaces(reason).casefold()
         normalized_evidence = clean_spaces(evidence).casefold()
         reasons.append(normalized_reason)

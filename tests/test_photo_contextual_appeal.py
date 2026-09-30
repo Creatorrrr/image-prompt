@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import sys
 import unittest
 from unittest.mock import patch
@@ -10,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills/photo-promp
 import audit_composed_prompt as auditor
 import compose_pack_view as view
 import photo_contextual_appeal as contextual
+import photo_candidate_context as candidate_context
 import photo_creative_controls as controls
 import prompt_generator as generator
 
@@ -199,6 +201,207 @@ class ContextualAppealTests(unittest.TestCase):
         self.assertTrue(ranked[0]["scene_retrieval_support"])
         self.assertEqual(ranked[0]["contextual_status"], "unassessed")
         self.assertIn("not_applicability_proof", trace["scene_reranking"])
+
+
+class FinalCandidateContextTests(unittest.TestCase):
+    """Use an ordinary authored lighting candidate, not an appeal membership flag."""
+
+    def scenario(self, *, slot="color", entry_id="lit_direct_flash_neutral_cool_balance",
+                 asset="photo_prompt_lighting_extension.json", quality=None):
+        data, core, result = fixture()
+        path = Path(__file__).resolve().parents[1] / "skills/photo-prompt-image-generator/assets" / asset
+        entry = next(row for row in json.loads(path.read_text())["slots"][slot]
+                     if row["id"] == entry_id)
+        data["slots"] = {slot: [entry]}
+        dimensions = ["color"] if slot == "color" else ["action", "pose"]
+        data["candidate_semantic_policy"]["slot_dimensions"] = {slot: dimensions}
+        if quality:
+            data[generator.QUALITY_LAYERS_DATA_KEY]["applicability_guards"] = quality
+        adult = generator.candidate_pack_contextual_adult_appeal(data, result, {}, authorial_core=core)
+        candidate = adult["axes"]["sensual"]["candidate_inventory"][0]
+        brief = {"adult_subject_phrase": "An adult woman",
+                 "axes": {"sensual": {"affected_dimensions": [*dimensions, "lighting"]}},
+                 "contextual_review": [
+                     {"candidate_id": cid, "reading": "irrelevant", "reason": "Keep the baseline."}
+                     for cid in adult["contextual_retrieval"]["review_candidate_ids"]],
+                 "contextual_comparison": "Preserve the letter and dress while comparing coherent lighting treatments."}
+        review = next(row for row in brief["contextual_review"] if row["candidate_id"] == candidate["id"])
+        review.update(reading="potential", proposed_application="Use the ordinary flash balance to connect the figure with the scene.")
+        return data, core, adult, candidate, brief, review
+
+    def witness(self, candidate, phrase, *, origin="authored", dimensions=None, rid=None, fact=None):
+        requirement = next(row for row in candidate["context_prerequisites"]["requirements"]
+                           if rid is None or row["id"] == rid)
+        return {"requirement_id": requirement["id"], "fact": fact or requirement["values"][0],
+                "state": "present", "prompt_evidence": phrase,
+                "reason": "The final scene realizes the declared context.", "origin": origin,
+                "affected_dimensions": dimensions if dimensions is not None else ["lighting"],
+                "affected_properties": []}
+
+    def audit(self, adult, core, candidate, brief, prompt):
+        return contextual.audit_review(adult, brief, {candidate["id"]}, prompt_en=prompt,
+                                       core=core, subject_category="human")
+
+    def test_search_scope_and_final_conditions_are_distinct(self):
+        _, core, adult, candidate, brief, _ = self.scenario()
+        self.assertEqual(candidate["retrieval_status"], "returned")
+        self.assertEqual(candidate["applicability"]["basis"], "writable_scope")
+        self.assertEqual(candidate["context_preflight"]["status"], "unassessed")
+        self.assertNotIn("direct_flash_y2k_snapshot", core["baseline_prompt_en"])
+        self.assertEqual(candidate["context_requirements"], {"requires_any_tags": ["direct_flash_y2k_snapshot"]})
+        self.assertTrue(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"]))
+        for row in brief["contextual_review"]:
+            row["reading"] = "irrelevant"
+        self.assertEqual(contextual.audit_review(adult, brief, set()), [])
+
+    def test_new_final_context_can_support_adoption_without_initial_tags(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        phrase = "Direct on-camera flash casts a hard-edged shadow behind her against the wall"
+        review["requirement_evidence"] = [self.witness(candidate, phrase)]
+        self.assertEqual(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"] + " " + phrase), [])
+        # Evidence in the draft cannot certify a final realization that omits it.
+        core["baseline_prompt_en"] += " " + phrase
+        self.assertTrue(self.audit(adult, core, candidate, brief, "An adult woman in a white dress offers a letter."))
+
+    def test_short_real_scene_phrases_are_supported(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        review["requirement_evidence"] = [self.witness(candidate, "direct flash")]
+        self.assertEqual(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"] + " Photograph with direct flash."), [])
+        glove = {"id": "ordinary-glove-detail", "axis": "sensual", "source_candidate_id": "slot:garment_detail:ordinary",
+                 **candidate_context.compile_context({"requires_any_tags": ["cotton_gloves"]}, "slot:garment_detail:ordinary")}
+        witness = self.witness(glove, "cotton gloves", dimensions=["appearance"])
+        witness["affected_properties"] = [{"dimension": "appearance", "target": "main_subject", "property": "accessories.gloves"}]
+        brief["axes"]["sensual"]["affected_dimensions"] = ["appearance"]
+        self.assertEqual(candidate_context.audit_context(glove, {"requirement_evidence": [witness]},
+                         prompt_en="She wears cotton gloves.", core=core, brief=brief,
+                         subject_category="human", allowed=contextual.allowed_dimensions(core["intent_lock"])), [])
+
+    def test_retained_context_must_be_literal_in_both_baseline_and_final(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        core["baseline_prompt_en"] += " Photograph with direct flash."
+        review["requirement_evidence"] = [self.witness(candidate, "direct flash", origin="retained", dimensions=[])]
+        self.assertEqual(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"]), [])
+        core["baseline_prompt_en"] = core["baseline_prompt_en"].replace("direct flash", "diffuse daylight")
+        self.assertTrue(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"] + " direct flash"))
+
+    def test_new_context_respects_dimension_and_property_locks(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        phrase = "Direct flash casts a compact shadow behind her"
+        review["requirement_evidence"] = [self.witness(candidate, phrase)]
+        prompt = core["baseline_prompt_en"] + " " + phrase
+        core["intent_lock"]["locked_dimensions"].append("lighting")
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+        core["intent_lock"]["locked_dimensions"].remove("lighting")
+        review["requirement_evidence"][0]["affected_properties"] = [
+            {"dimension": "lighting", "target": "main_subject", "property": "wardrobe.color"}]
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+
+    def test_machine_tag_and_pending_context_cannot_certify_adoption(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        tag = candidate["context_prerequisites"]["requirements"][0]["values"][0]
+        review["requirement_evidence"] = [self.witness(candidate, tag)]
+        self.assertTrue(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"] + " " + tag))
+        review["requirement_evidence"] = [self.witness(candidate, "direct flash")]
+        for state in ("pending", "unsupported"):
+            with self.subTest(state=state):
+                review["requirement_evidence"][0]["state"] = state
+                failures = self.audit(adult, core, candidate, brief, core["baseline_prompt_en"] + " direct flash")
+                self.assertIn(state, {row.get("status") for row in failures})
+
+    def test_primary_requirement_uses_new_open_context_but_not_an_unopened_relation(self):
+        _, core, adult, candidate, brief, review = self.scenario(slot="action",
+            entry_id="des_longing_incomplete_reach_action", asset="photo_prompt_desire_extension.json")
+        phrase = "Her free hand reaches toward the photograph beyond a closed glass panel, stopping before contact while the visible gap keeps that target inaccessible"
+        core["intent_lock"]["open_dimensions"] = ["relationship"]
+        brief["axes"]["sensual"]["affected_dimensions"] = ["action", "pose", "relationship"]
+        review["requirement_evidence"] = [self.witness(candidate, phrase, dimensions=["action", "pose", "relationship"])]
+        prompt = core["baseline_prompt_en"] + " " + phrase
+        self.assertEqual(self.audit(adult, core, candidate, brief, prompt), [])
+        core["intent_lock"]["open_dimensions"] = []
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+
+    def test_derived_quality_guards_keep_source_and_any_semantics(self):
+        quality = json.loads((Path(__file__).resolve().parents[1] /
+            "skills/photo-prompt-image-generator/assets/photo_prompt_quality_layers.json").read_text())
+        guard = next(row for row in quality["applicability_guards"]
+                     if row["id"] == "underwater_modifier_requires_primary_context")
+        data, core, result = fixture()
+        data["slots"]["garment_detail"][0]["tags"] = ["underwater"]
+        data[generator.QUALITY_LAYERS_DATA_KEY]["applicability_guards"] = [guard]
+        adult = generator.candidate_pack_contextual_adult_appeal(data, result, {}, authorial_core=core)
+        candidate = next(row for row in adult["axes"]["sensual"]["candidate_inventory"] if row["entry_id"] == "seam")
+        contract = candidate["context_prerequisites"]
+        self.assertEqual(contract["quality_layer_sources"], [{"id": guard["id"], "requires_primary_any_tags": sorted(guard["requires_primary_any_tags"])}])
+        self.assertEqual(contract["requirements"][0]["operator"], "any")
+        self.assertEqual(contract["requirements"][0]["sources"][0]["kind"], "quality_guard")
+        # A matching source tag triggers a guard; it does not satisfy the guard.
+        self.assertTrue(candidate_context.audit_context(candidate, {}, prompt_en=core["baseline_prompt_en"],
+            core=core, brief={}, subject_category="human", allowed=contextual.allowed_dimensions(core["intent_lock"])))
+        core["intent_lock"]["open_dimensions"] = ["setting"]
+        brief = {"axes": {"sensual": {"affected_dimensions": ["appearance", "setting"]}}}
+        witness = self.witness(candidate, "water surface", fact="water", dimensions=["setting"])
+        pending = dict(witness, fact="ocean", state="pending")
+        self.assertEqual(candidate_context.audit_context(candidate, {"requirement_evidence": [witness, pending]},
+            prompt_en="She floats below the water surface.", core=core, brief=brief, subject_category="human",
+            allowed=contextual.allowed_dimensions(core["intent_lock"])), [])
+
+    def test_all_and_exclusion_require_explicit_supported_final_evidence(self):
+        _, core, adult, candidate, brief, review = self.scenario()
+        candidate.update(candidate_context.compile_context({
+            "requires_any_tags": ["direct_flash_y2k_snapshot"],
+            "requires_all_tags": ["wall_shadow", "neutral_skin"],
+            "exclude_any_tags": ["color_shifted_skin"]}, candidate["source_candidate_id"]))
+        phrase = "Direct flash leaves a compact wall shadow while the natural skin remains color-neutral"
+        prompt = core["baseline_prompt_en"] + " " + phrase
+        review["requirement_evidence"] = [self.witness(candidate, "Direct flash", rid="entry:any")]
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+        review["requirement_evidence"].extend([
+            self.witness(candidate, "a compact wall shadow", rid="entry:all", fact="wall_shadow"),
+            self.witness(candidate, "natural skin", rid="entry:all", fact="neutral_skin")])
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+        absent = self.witness(candidate, "skin remains color-neutral", rid="entry:exclude", fact="color_shifted_skin")
+        absent["state"] = "absent"
+        review["requirement_evidence"].append(absent)
+        self.assertEqual(self.audit(adult, core, candidate, brief, prompt), [])
+        absent["state"] = "present"
+        self.assertTrue(self.audit(adult, core, candidate, brief, prompt))
+
+    def test_sampled_and_canonical_paths_keep_original_metadata(self):
+        _, core, adult, candidate, _, _ = self.scenario()
+        original = copy.deepcopy(candidate)
+        pack = {"authorial_core": core, "adult_appeal": adult}
+        sample = generator.candidate_pack_creative_augmentation(pack, {})
+        self.assertTrue(sample["candidates"])
+        pack["creative_augmentation"] = sample
+        for row in sample["candidates"]:
+            source = auditor.candidate_objects_from_pack({"adult_appeal": adult})[row["id"]]
+            for field in candidate_context.PRESERVED_FIELDS:
+                self.assertEqual(row.get(field), source.get(field), field)
+        self.assertEqual(contextual.audit_context_copies(adult, sample["candidates"]), [])
+        row = sample["candidates"][0]
+        row.pop("context_requirements")
+        row["affected_dimensions"] = []
+        self.assertTrue(contextual.audit_context_copies(adult, sample["candidates"]))
+        canonical = auditor.candidate_objects_from_pack(pack)[row["id"]]
+        self.assertTrue(canonical["context_requirements"])
+        self.assertEqual(canonical["affected_dimensions"], ["color"])
+        self.assertEqual(candidate, original)
+        legacy = copy.deepcopy(pack)
+        for axis in legacy["adult_appeal"]["axes"].values():
+            for source in axis["candidate_inventory"]:
+                source.pop("context_prerequisites")
+        self.assertTrue(auditor.candidate_objects_from_pack(legacy)[row["id"]]["context_requirements"])
+
+    def test_rehashed_missing_condition_and_missing_current_contract_fail(self):
+        _, core, adult, candidate, brief, _ = self.scenario()
+        contract = candidate["context_prerequisites"]
+        contract["requirements"] = []
+        contract["canonical_sha256"] = candidate_context.digest({key: value for key, value in contract.items()
+                                                                 if key != "canonical_sha256"})
+        self.assertTrue(self.audit(adult, core, candidate, brief, core["baseline_prompt_en"]))
+        candidate.pop("context_prerequisites")
+        failures = self.audit(adult, core, candidate, brief, core["baseline_prompt_en"])
+        self.assertIn("adult_contextual_metadata", {row["check"] for row in failures})
 
 
 if __name__ == "__main__":

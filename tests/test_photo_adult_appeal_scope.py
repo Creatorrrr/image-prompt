@@ -15,6 +15,7 @@ import audit_image_render_request as runtime_auditor
 import validate_photo_prompt_dictionary as dictionary_validator
 from photo_contracts import ADULT_APPEAL_AXIS_DIMENSIONS
 import photo_contextual_appeal as contextual
+import photo_candidate_semantics as candidate_semantics
 
 
 class PhotoAdultAppealScopeTests(unittest.TestCase):
@@ -60,6 +61,17 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         return generator.candidate_pack_contextual_adult_appeal(
             self.data, result or self.result, {}, authorial_core=core,
         )
+
+    def scope_candidate(self):
+        # Complete-effect tests need a controlled source, not the first ranked
+        # historical/scene candidate whose unrelated necessities may be absent.
+        source_id = "slot:garment_detail:scope_fixture"
+        return {"id": "augmentation:adult_appeal:fetish:garment_detail:scope_fixture",
+                "source_candidate_id": source_id, "entry_id": "scope_fixture",
+                "slot": "garment_detail", "axis": "fetish",
+                "affected_dimensions": ["appearance", "material"],
+                "applicability": {"status": "eligible", "basis": "writable_scope"},
+                **contextual.compile_context({"for_any": ["human"]}, source_id)}
 
     def composed(self):
         composed = composition_fixtures.PhotoAuthorshipPolicyTests.composed(self.pack)
@@ -146,6 +158,47 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         report = auditor.audit_composed_prompt(self.pack, self.composed())
         self.assertEqual(report["status"], "pass", report["failures"])
 
+    def test_full_audit_requires_final_context_for_an_ordinary_candidate(self):
+        entry = next(row for row in self.data["slots"]["color"]
+                     if row["id"] == "lit_direct_flash_neutral_cool_balance")
+        data = dict(self.data, slots={"color": [entry]})
+        adult = generator.candidate_pack_contextual_adult_appeal(data, self.result, {}, authorial_core=self.core)
+        candidate = adult["axes"]["sensual"]["candidate_inventory"][0]
+        source = candidate.pop("_v6_semantic_source")
+        generator.candidate_pack_project_candidate(candidate, salt=candidate["id"])
+        candidate_semantics.apply_public_semantics({"candidates": [candidate]}, {candidate["id"]: source})
+        pack = copy.deepcopy(self.pack)
+        pack["adult_appeal"]["axes"]["sensual"]["candidate_inventory"].append(candidate)
+        pack["adult_appeal"]["contextual_retrieval"]["review_candidate_ids"].append(candidate["id"])
+        pack["pack_id"] = generator.canonical_json_sha256(dict(pack, pack_id=None))[:16]
+        composed = self.composed()
+        composed["pack_id"] = pack["pack_id"]
+        phrase = "Cool reflected tones remain localized on the pale wall behind her shoulders"
+        composed["prompt_en"] += " " + phrase + "."
+        composed["chosen_candidate_ids"] = [candidate["id"]]
+        composed["candidate_interpretations"] = [{
+            "candidate_id": candidate["id"], "artistic_interpretation": "Keep the requested flash while balancing the wall reflection",
+            "transformation": "Translate the ordinary color balance into a localized background tone",
+            "prompt_evidence": phrase}]
+        composed["adult_appeal_brief"]["axes"]["sensual"]["affected_dimensions"].append("color")
+        review = {"candidate_id": candidate["id"], "reading": "potential",
+                  "reason": "The ordinary color treatment supports the composed portrait.",
+                  "proposed_application": "Connect the wall color to the already requested direct flash."}
+        composed["adult_appeal_brief"]["contextual_review"].append(review)
+        composed["embodiment_review"] = fixtures.composition_review(pack, composed["prompt_en"])
+        report = auditor.audit_composed_prompt(pack, composed)
+        self.assertIn("adult_contextual_prerequisites", {row["check"] for row in report["failures"]})
+        requirement = candidate["context_prerequisites"]["requirements"][0]
+        review["requirement_evidence"] = [{"requirement_id": requirement["id"], "fact": requirement["values"][0],
+            "state": "present", "prompt_evidence": "CCD direct flash",
+            "reason": "The preserved requester illumination supplies the direct flash context.",
+            "origin": "retained", "affected_dimensions": [], "affected_properties": []}]
+        report = auditor.audit_composed_prompt(pack, composed)
+        self.assertEqual(report["status"], "pass", report["failures"])
+        review["requirement_evidence"][0].update(origin="authored", affected_dimensions=["lighting"])
+        report = auditor.audit_composed_prompt(pack, composed)
+        self.assertIn("adult_contextual_prerequisites", {row["check"] for row in report["failures"]})
+
     def test_exact_runtime_accepts_the_scoped_composition(self):
         composed = self.composed()
         report = auditor.audit_composed_prompt(self.pack, composed)
@@ -183,27 +236,26 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertIn("adult_appeal_candidate_dimensions", {r["check"] for r in auditor.audit_adult_appeal_dimension_scope(pack, pack["adult_appeal"])})
 
     def test_adopted_candidate_requires_its_complete_effect_in_the_brief(self):
-        candidate = copy.deepcopy(self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"][0])
-        # Unit fixture proves the complete-effect requirement independently of retrieval rank.
-        candidate["affected_dimensions"] = ["appearance", "material"]
+        candidate = self.scope_candidate()
+        pack = copy.deepcopy(self.pack)
+        pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"].append(candidate)
         composed = self.composed()
         reviews = composed["adult_appeal_brief"]["contextual_review"]
         reviews[:] = [row for row in reviews if row["candidate_id"] != candidate["id"]]
         reviews.append({"candidate_id": candidate["id"], "reading": "relevant", "reason": "A tactile seam supports the composed Gothic portrait.", "proposed_application": "Keep the existing garment and express the effect as the narrow satin highlight."})
-        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
+        failures, _ = auditor.audit_adult_appeal(pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertIn("adult_appeal_authored_dimensions", {r["check"] for r in failures})
         composed["adult_appeal_brief"]["axes"]["fetish"]["affected_dimensions"] = candidate["affected_dimensions"]
         reviews = composed["adult_appeal_brief"]["contextual_review"]
         reviews[:] = [row for row in reviews if row["candidate_id"] != candidate["id"]]
         reviews.append({"candidate_id": candidate["id"], "reading": "relevant", "reason": "A tactile seam supports the composed Gothic portrait.", "proposed_application": "Keep the existing garment and express the effect as the narrow satin highlight."})
-        failures, _ = auditor.audit_adult_appeal(self.pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
+        failures, _ = auditor.audit_adult_appeal(pack, composed, composed["prompt_en"], {candidate["id"]}, {candidate["id"]: candidate})
         self.assertEqual(failures, [])
 
     def test_sampled_adult_candidate_uses_same_scope_but_other_candidates_do_not(self):
-        candidate = copy.deepcopy(self.pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"][0])
-        # Unit fixture proves the complete-effect requirement independently of retrieval rank.
-        candidate["affected_dimensions"] = ["appearance", "material"]
+        candidate = self.scope_candidate()
         pack = copy.deepcopy(self.pack)
+        pack["adult_appeal"]["axes"]["fetish"]["candidate_inventory"].append(candidate)
         pack["creative_augmentation"]["candidates"] = [dict(candidate, semantic_band="near", source_kind="adult_appeal")]
         evidence = "A narrow band of reflected light traces the existing garment's stitched edge"
         decision = {

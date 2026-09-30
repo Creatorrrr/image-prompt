@@ -39,6 +39,64 @@ When API use is authorized, use:
 
 The script forwards prompt and negative bytes unchanged, saves successful images, and records every `tool: openai_images_api` attempt. It forwards available `pack_id`, chosen candidate IDs, composer, audit status, augmentation brief, and source argv; retry rows link to the immediately preceding attempt. A recorder failure makes the run fail instead of silently leaving an untraceable success.
 
+Failed API attempts also save a `photo-image-attempt-evidence/v1` file beside the output. It retains the complete HTTP response bytes as base64, the observed request ID header, and separately parsed error fields. `failure_reason` is only a short display message. Invalid UTF-8 affects that display, not the retained bytes; a failed body read is explicitly `unavailable`. Only explicit `moderation_blocked` or `content_policy_violation` codes classify a safety block. A generic `safety` word, HTTP 400, or a malformed response stays `error`. Evidence or recorder failures stop the run before another API call.
+
+If the API returns image bytes but their local save fails, record the failure with `invocation_outcome: returned` and stop. A local persistence failure does not trigger another image generation.
+
+## Native Error Capture
+
+Use the actual shared `scripts/capture_image_tool_error.js` function for native failures. It is a pure function expression with no imports or image calls, so the native V8 code-mode can evaluate the same file that offline Node tests exercise. Set `photo_runtime_workdir` to the current arm's absolute checkout directory and load its helper before invoking the image tool; do not rewrite a catch that only reads `error.name` and `error.message`.
+
+```javascript
+const source = await tools.exec_command({
+  cmd: "cat skills/photo-prompt-image-generator/scripts/capture_image_tool_error.js",
+  workdir: load("photo_runtime_workdir"), login: false, max_output_tokens: 10000
+});
+if (source.exit_code !== 0) throw new Error("Native capture helper unavailable");
+store("photo_error_capture_source", source.output);
+```
+
+With the exact audited inputs already loaded, the invocation cell can use this template. `photo_native_args`, `photo_composed`, `photo_attempt`, and the unique absolute `photo_error_evidence_path` are caller-prepared values from the current arm. The catch surrounds only the tool invocation; saving or displaying a successful result happens afterward.
+
+```javascript
+const capture = eval(load("photo_error_capture_source"));
+const args = load("photo_native_args");
+const composed = load("photo_composed");
+const attempt = load("photo_attempt");
+const started_at = new Date().toISOString();
+let result;
+try {
+  result = await tools.image_gen__imagegen(args);
+} catch (thrown) {
+  const evidence = capture(thrown, {
+    tool: "image_gen.imagegen", generation_environment: "codex_native", attempt,
+    started_at, ended_at: new Date().toISOString(),
+    prompt_en: composed.prompt_en, negative_en: composed.negative_en ?? null,
+    runtime_prompt_en: args.prompt
+  });
+  // Retain the serializable value even if the following file write fails.
+  store("photo_attempt_error_evidence", evidence);
+  const quote = value => "'" + value.replaceAll("'", "'\\''") + "'";
+  const saved = await tools.exec_command({
+    cmd: "python3 skills/photo-prompt-image-generator/scripts/image_attempt_evidence.py --write-json " +
+      quote(load("photo_error_evidence_path")) + " <<'PHOTO_NATIVE_ERROR_JSON'\n" +
+      JSON.stringify(evidence) + "\nPHOTO_NATIVE_ERROR_JSON",
+    workdir: load("photo_runtime_workdir"), login: false, max_output_tokens: 1000
+  });
+  if (saved.exit_code !== 0) throw new Error("Error evidence save failed; do not retry the image call");
+  store("photo_attempt_error_file", JSON.parse(saved.output));
+  text({attempt, status: evidence.outcome.status,
+    request_id: evidence.outcome.request_id, fidelity: evidence.raw_error.fidelity});
+}
+// Handle the concrete successful result using the saving/review rules above.
+```
+
+Keep normal image-tool timeout/yield handling around this cell. For an error returned as a value rather than thrown, capture the actual error object with `invocation_outcome: "returned"`. Do not interpret a missing image path alone as a moderation error. Strings are retained exactly. Other values use a tagged, JSON-serializable snapshot of own properties; Error message/stack/cause, null, undefined, BigInt, symbols, nonfinite numbers and cyclic references are represented. Getters are never evaluated. Accessors, enumeration failures and depth/property limits are declared in `raw_error.limitations` and `fidelity`; `typed_capture` is a representation, not an exact reconstruction of object prototypes or internal slots.
+
+The evidence writer uses lossless JSON escapes, including lone UTF-16 surrogates. Such a surrogate is replaced only in the display message and that display limitation is declared; the raw string stays exact.
+
+After saving, pass the actual file to `record_image_run.py` with `--attempt-evidence-json <file>` and the writer's `--attempt-evidence-sha256 <digest>`. Use the evidence's `outcome.status` and display message, the same tool name, attempt, exact prompt and negative. The recorder verifies the file hash when supplied and always binds its computed SHA-256, checks those fields and the complete runtime prompt, then copies environment, capture fidelity and structured error details to the ledger and independent manifest. Missing/mismatched evidence fails before any ledger append. Evidence files must be unique per actual attempt; the shared writer refuses replacement. Neither the helper nor a logger failure authorizes another image call.
+
 ## Retries and Ledger
 
 For unchanged retries, preserve `prompt_en`, `negative_en`, authorial-core hash, intent-lock hash, semantic-anchor IDs/evidence, and request-envelope binding byte-for-byte, and keep the same prompt ID. Increment `attempt`; link retries with `retry_of` when available.
@@ -52,6 +110,8 @@ Record saved native attempts with `scripts/record_image_run.py` in `runs/image_r
 For an independent multi-arm qualification, keep one ledger and one `run_manifest.json` inside each arm. V6 arms use `photo-independent-run-manifest/v2` with the canonical authorial-core and intent-lock SHA-256 values. Call the recorder with `--arm-id`, `--worktree-id`, the frozen skill SHA-256, source snapshot identity, candidate-pack version, every reference SHA-256, the actual image-call count, `--independent-no-cross-arm-inputs`, and `--manifest <path>`. When repair is active, also preserve `--render-repair-contract-sha256` and every failed `--failed-repair-gate-id`. The manifest records exact pack/prompt/run IDs, image paths and hashes, tool, source, and the fact that no other arm output was used. Never claim independence from visual diversity alone, and never pass another arm's prompt, pack, message, or image into the current arm.
 
 For a text-only attempt, omit `--reference-sha256`; the independent manifest records `reference_sha256: []`. A blocked attempt still records its actual call and outcome with no delivered image paths. Neither case needs a fabricated reference hash or a second image call to complete the manifest.
+
+Count actual tool invocations, keeping preparation/audit failures and unknown interruption outcomes separate. `image_call_count` is cumulative within an arm; do not sum successive cumulative values. Preserve failed outcomes and immediate `retry_of` links. A user-supplied successful image from ChatGPT or another surface has separate `origin: user_supplied` provenance, user-reported prompt/reference bindings and observed file hashes. It is not a new native retry or a revision of earlier failed outcomes. Record an unobserved external model, timestamp or attempt count as unknown; the prompt-authoring model is not an image-model identifier.
 
 `assets/run_ledger.schema.json` is the public record contract. Keep its required keys, optional provenance fields, and enums synchronized with `record_image_run.py`; focused tests compare recorder output against that schema.
 

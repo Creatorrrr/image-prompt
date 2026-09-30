@@ -9,6 +9,9 @@ import math
 from typing import Any
 
 from bm25f_retrieval import build_bm25f_index, rank_bm25f, tokenize_bm25f_text
+from photo_candidate_context import (
+    VERSION as CONTEXT_VERSION, PRESERVED_FIELDS, audit_context, compile_context,
+)
 
 VERSION = "photo-contextual-appeal/v2"
 SCOPE_VERSION = "photo-adult-appeal-dimension-scope/v4"
@@ -166,6 +169,7 @@ def rank_candidates(rows: list[dict], lane_queries: dict, *, policy: dict,
         row["retrieval_evidence"] = sorted(evidence[key])
         row["contextual_status"] = "unassessed"
         row["scene_retrieval_support"] = key in scene_support
+        row["retrieval_status"] = "returned"
         result.append(row)
     return result, {
         "lanes": lane_modes, "semantic_candidate_coverage": semantic_coverage,
@@ -194,7 +198,28 @@ def review_ids(rows: list[dict], limit: int = 4) -> list[str]:
     return selected[:limit]
 
 
-def audit_review(contract: dict, brief: dict, chosen: set[str]) -> list[dict[str, Any]]:
+def audit_context_copies(contract: dict, copies: list[dict]) -> list[dict]:
+    """A sampled projection must not replace its canonical scene conditions."""
+    if (contract.get("contextual_retrieval") or {}).get("adoption_context_contract_version") != CONTEXT_VERSION:
+        return []
+    originals = {row["id"]: row for axis in contract.get("axes", {}).values()
+                 for row in axis.get("candidate_inventory", [])}
+    failures = []
+    for row in copies:
+        original = originals.get(row.get("id"))
+        if not original:
+            continue
+        missing = [field for field in PRESERVED_FIELDS
+                   if field in original and row.get(field) != original[field]]
+        if missing:
+            failures.append({"check": "adult_contextual_metadata", "candidate_id": row.get("id"),
+                             "reason": "sampled context must preserve its canonical source metadata",
+                             "fields": missing})
+    return failures
+
+
+def audit_review(contract: dict, brief: dict, chosen: set[str], *, prompt_en: str = "",
+                 core: dict | None = None, subject_category: str = "") -> list[dict[str, Any]]:
     """Check recorded consideration, not whether an interpretation is true."""
     retrieval = contract.get("contextual_retrieval") or {}
     if retrieval.get("contract_version") != VERSION:
@@ -226,6 +251,16 @@ def audit_review(contract: dict, brief: dict, chosen: set[str]) -> list[dict[str
             failures.append({"check": "adult_contextual_review", "reason": "potential relevance needs a concrete application within open properties"})
         if candidate_id in chosen and reading not in {"relevant", "potential"}:
             failures.append({"check": "adult_contextual_review", "reason": "uncertain, irrelevant or conflicting candidates cannot be adopted"})
+        if candidate_id in chosen:
+            if (retrieval.get("adoption_context_contract_version") == CONTEXT_VERSION
+                    and not isinstance(inventory[candidate_id].get("context_prerequisites"), dict)):
+                failures.append({"check": "adult_contextual_metadata", "candidate_id": candidate_id,
+                                 "reason": "current adoption needs its canonical prerequisite contract"})
+            failures.extend(audit_context(
+                inventory[candidate_id], row, prompt_en=prompt_en, core=core or {},
+                brief=brief, subject_category=subject_category,
+                allowed=allowed_dimensions((core or {}).get("intent_lock") or {}),
+            ))
         seen.add(candidate_id)
     if required - seen:
         failures.append({"check": "adult_contextual_review", "reason": "expression shortlist and adopted candidates must be considered", "missing_candidate_ids": sorted(required - seen)})

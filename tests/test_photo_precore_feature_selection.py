@@ -21,6 +21,7 @@ if str(VALIDATOR_PATH.parent) not in sys.path:
 
 import prompt_generator  # noqa: E402
 import validate_precore_feature_selection as feature_selection  # noqa: E402
+from tests import photo_prompt_fixtures  # noqa: E402
 
 
 SOURCE_CATEGORIES_SHA256 = "2ba9349110a52be0decff94f0efcb57502db3e7c5846a3a46f4a5b9475b5aecd"
@@ -32,6 +33,88 @@ BASELINE = (
     "of the frame, with passing commuters visible behind them. Soft daylight "
     "from the station windows keeps the exchange readable as one candid moment."
 )
+CONVENIENCE_ACTION = (
+    "she draws that same companion's bare left hand against her left cheek "
+    "with her gloved right hand"
+)
+CONVENIENCE_OUTFIT = (
+    "a black satin slip dress with a low square neckline and long mirror-gloss black latex gloves"
+)
+
+
+def convenience_artifacts(
+    *, action: str = CONVENIENCE_ACTION, outfit: str = CONVENIENCE_OUTFIT
+) -> tuple[dict, bytes, dict, dict, dict, dict]:
+    catalog, catalog_bytes, selection, envelope, _, review = artifacts()
+    request = "An adult convenience-store girlfriend shows soft mock-scolding affection toward her companion."
+    baseline = (
+        "An adult convenience-store girlfriend shows soft mock-scolding affection toward "
+        "her companion at a convenience-store entrance. While making an affectionate "
+        f"demand, {action}. She wears {outfit}. Direct flash makes the contact readable "
+        "against the softly glowing shop windows during their night outing."
+    )
+    core = photo_prompt_fixtures.core(
+        request,
+        interpreted_intent="The affectionate demand is requested; the hand arrangement and clothing are editable choices.",
+        subject="an adult convenience-store girlfriend",
+        setting="a convenience-store entrance during a night outing",
+        event="making an affectionate demand",
+        visual_priorities=("soft mock-scolding affection", "a legible affectionate demand"),
+        baseline_prompt_en=baseline,
+        anchor_evidence=(
+            "soft mock-scolding affection",
+            "An adult convenience-store girlfriend",
+            "making an affectionate demand",
+        ),
+        open_dimensions=("appearance", "action", "pose", "relationship", "composition", "lighting"),
+    )
+    core["semantic_assertions"] = [{
+        "assertion_id": "affectionate_demand",
+        "dimension": "event",
+        "polarity": "required",
+        "source_span_ids": ["topic"],
+        "affected_dimensions": ["event"],
+        "axes": {"interaction": "affectionate_demand_toward_companion"},
+        "evidence": {
+            "primary_action_phrase": "making an affectionate demand",
+            "target_phrase": "that same companion",
+        },
+    }]
+    request_sha = hashlib.sha256(request.encode()).hexdigest()
+    baseline_sha = hashlib.sha256(core["baseline_prompt_en"].encode()).hexdigest()
+    envelope.update(
+        request_text=request,
+        request_sha256=request_sha,
+        active_spans=[{"span_id": "topic", "start": 0, "end": len(request), "text": request}],
+    )
+    selection.update(request_sha256=request_sha, baseline_prompt_sha256=baseline_sha)
+    review["prompt_sha256"] = baseline_sha
+    selection["selected"] = [
+        {
+            "category_id": category_id,
+            "basis": basis,
+            "source_span_ids": [] if basis == "agent_visual_choice" else ["topic"],
+            "source_text": source_text,
+            "derivation": derivation,
+            "reason": reason,
+            "baseline_evidence": evidence,
+        }
+        for category_id, basis, source_text, derivation, reason, evidence in (
+            ("feature.subject", "explicit_request", "adult convenience-store girlfriend", None,
+             "The requested adult girlfriend is the subject.", "An adult convenience-store girlfriend"),
+            ("feature.situation", "request_derived", None,
+             "The requested mock-scolding affection is shown as an affectionate demand.",
+             "The affectionate demand carries the requested relationship.", "making an affectionate demand"),
+            ("feature.location", "request_derived", None,
+             "The requested convenience-store setting is staged at its entrance.",
+             "The shop entrance provides a readable place.", "a convenience-store entrance"),
+            ("feature.interaction", "agent_visual_choice", None, None,
+             "The chosen touch stages the demand with a concrete consequence.", action),
+            ("feature.clothing", "agent_visual_choice", None, None,
+             "The chosen outfit creates a material contrast during the touch.", outfit),
+        )
+    ]
+    return catalog, catalog_bytes, selection, envelope, core, review
 
 
 def artifacts() -> tuple[dict, bytes, dict, dict, dict, dict]:
@@ -380,6 +463,178 @@ class PhotoPrecoreFeatureSelectionTests(unittest.TestCase):
                     feature_selection.validate_selection(
                         catalog, catalog_bytes, record, env, authored, body
                     )
+
+    def test_rejects_complete_agent_action_at_each_required_evidence_boundary(self) -> None:
+        for boundary in ("definition", "anchor", "assertion"):
+            for wrapped in (False, True):
+                with self.subTest(boundary=boundary, wrapped=wrapped):
+                    args = convenience_artifacts()
+                    core = args[4]
+                    phrase = CONVENIENCE_ACTION
+                    if wrapped:
+                        phrase = "making an affectionate demand, " + phrase
+                    if boundary == "definition":
+                        core["user_definitions"] = [{
+                            "term": "affectionate demand",
+                            "source_text": core["source_request"],
+                            "interpreted_meaning": "Soft mock-scolding affection directed toward the same adult companion",
+                            "prompt_evidence": phrase,
+                        }]
+                        expected_path = "user_definitions[0].prompt_evidence"
+                    elif boundary == "anchor":
+                        core["intent_lock"]["semantic_anchors"][-1]["prompt_evidence"] = phrase
+                        expected_path = "intent_lock.semantic_anchors[2].prompt_evidence"
+                    else:
+                        core["semantic_assertions"][0]["evidence"]["primary_action_phrase"] = phrase
+                        expected_path = "semantic_assertions[0].evidence.primary_action_phrase"
+                    with self.assertRaises(feature_selection.SelectionValidationError) as raised:
+                        feature_selection.validate_selection(*args)
+                    self.assertIn("feature.interaction", str(raised.exception))
+                    self.assertIn("agent_visual_choice", str(raised.exception))
+                    self.assertIn(expected_path, str(raised.exception))
+
+    def test_property_anchor_in_an_open_dimension_still_binds_literal_evidence(self) -> None:
+        args = convenience_artifacts()
+        core = args[4]
+        core["intent_lock"]["semantic_anchors"].append({
+            "anchor_id": "requested_outfit",
+            "source_text": core["source_request"],
+            "dimension": "appearance",
+            "target": "main_subject",
+            "property": "clothing",
+            "prompt_evidence": CONVENIENCE_OUTFIT,
+        })
+        with self.assertRaises(feature_selection.SelectionValidationError) as raised:
+            feature_selection.validate_selection(*args)
+        self.assertIn("feature.clothing", str(raised.exception))
+        self.assertIn("intent_lock.semantic_anchors[3].prompt_evidence", str(raised.exception))
+
+    def test_narrow_requester_meaning_allows_glove_handedness_and_outfit_choices(self) -> None:
+        for action, outfit in (
+            (CONVENIENCE_ACTION, CONVENIENCE_OUTFIT),
+            (CONVENIENCE_ACTION.replace("gloved right hand", "bare right hand"), CONVENIENCE_OUTFIT),
+            (CONVENIENCE_ACTION.replace("bare left hand", "bare right hand")
+             .replace("left cheek", "right cheek").replace("gloved right hand", "gloved left hand"),
+             "a fitted cotton T-shirt and high-rise jeans"),
+        ):
+            with self.subTest(action=action, outfit=outfit):
+                args = convenience_artifacts(action=action, outfit=outfit)
+                before = copy.deepcopy(args[4])
+                self.assertTrue(feature_selection.validate_selection(*args)["valid"])
+                self.assertEqual(args[4], before)
+                # The required target phrase is inside the longer authored gesture.
+                self.assertIn(before["semantic_assertions"][0]["evidence"]["target_phrase"], action)
+
+    def test_advisory_excluded_and_nonliteral_direction_do_not_create_locks(self) -> None:
+        args = convenience_artifacts()
+        core = args[4]
+        core["interpreted_intent"] += " " + CONVENIENCE_ACTION
+        core["visual_priorities"].append(CONVENIENCE_OUTFIT)
+        core["semantic_assertions"][0]["axes"]["primary_action"] = CONVENIENCE_ACTION
+        for polarity in ("advisory", "excluded"):
+            core["semantic_assertions"].append({
+                "assertion_id": polarity + "_gesture",
+                "dimension": "action",
+                "polarity": polarity,
+                "source_span_ids": ["topic"],
+                "affected_dimensions": ["action"],
+                "axes": {"action": "hand_contact"},
+                "evidence": {"action_phrase": CONVENIENCE_ACTION},
+            })
+        self.assertTrue(feature_selection.validate_selection(*args)["valid"])
+
+    def test_shared_words_and_paraphrases_do_not_establish_literal_ownership_conflict(self) -> None:
+        for phrase in (
+            "bare left hand",
+            "with her gloved right hand",
+            "she brings her companion's hand to her cheek",
+        ):
+            with self.subTest(phrase=phrase):
+                args = convenience_artifacts()
+                args[4]["semantic_assertions"][0]["evidence"]["primary_action_phrase"] = phrase
+                self.assertTrue(feature_selection.validate_selection(*args)["valid"])
+
+    def test_case_and_whitespace_variants_still_conflict_with_complete_agent_evidence(self) -> None:
+        for phrase in (
+            CONVENIENCE_ACTION.capitalize(),
+            CONVENIENCE_ACTION.upper(),
+            "  " + CONVENIENCE_ACTION.replace(" ", "  \n\t") + "  ",
+            "Making an affectionate demand, " + CONVENIENCE_ACTION.upper().replace(" ", "\n"),
+        ):
+            with self.subTest(phrase=phrase):
+                args = convenience_artifacts()
+                args[4]["intent_lock"]["semantic_anchors"][-1]["prompt_evidence"] = phrase
+                with self.assertRaises(feature_selection.SelectionValidationError) as raised:
+                    feature_selection.validate_selection(*args)
+                self.assertIn("intent_lock.semantic_anchors[2].prompt_evidence", str(raised.exception))
+
+        args = convenience_artifacts(action=CONVENIENCE_ACTION.upper())
+        args[4]["semantic_assertions"][0]["evidence"]["primary_action_phrase"] = CONVENIENCE_ACTION
+        with self.assertRaises(feature_selection.SelectionValidationError):
+            feature_selection.validate_selection(*args)
+
+    def test_ascii_word_boundaries_prevent_hand_from_matching_handmade(self) -> None:
+        for required_phrase, conflicts in (
+            ("handmade fabric", False),
+            ("offhand gesture", False),
+            ("hand2 print", False),
+            ("2hand print", False),
+            ("a held hand", True),
+            ("(hand)", True),
+            ("hand-held", True),
+            ("hand's grip", True),
+        ):
+            with self.subTest(required_phrase=required_phrase):
+                args = convenience_artifacts(
+                    outfit="a black satin dress carrying the words " + required_phrase
+                )
+                args[2]["selected"][3]["baseline_evidence"] = "hand"
+                args[4]["semantic_assertions"][0]["evidence"]["primary_action_phrase"] = required_phrase
+                self.assertEqual(
+                    photo_prompt_fixtures.audit_composed_prompt.text_contains_term(required_phrase, "hand"),
+                    conflicts,
+                )
+                if conflicts:
+                    with self.assertRaises(feature_selection.SelectionValidationError):
+                        feature_selection.validate_selection(*args)
+                else:
+                    self.assertTrue(feature_selection.validate_selection(*args)["valid"])
+
+    def test_explicit_requested_gesture_keeps_its_existing_hard_binding(self) -> None:
+        catalog, catalog_bytes, selection, envelope, core, review = convenience_artifacts()
+        request = core["source_request"] + " Preserve this action: " + CONVENIENCE_ACTION + "."
+        request_sha = hashlib.sha256(request.encode()).hexdigest()
+        envelope.update(
+            request_text=request, request_sha256=request_sha,
+            active_spans=[{"span_id": "topic", "start": 0, "end": len(request), "text": request}],
+        )
+        core["source_request"] = request
+        selection["request_sha256"] = request_sha
+        gesture = selection["selected"][3]
+        gesture.update(basis="explicit_request", source_span_ids=["topic"], source_text=CONVENIENCE_ACTION)
+        core["intent_lock"]["semantic_anchors"][-1]["prompt_evidence"] = CONVENIENCE_ACTION
+        core["semantic_assertions"][0]["evidence"]["primary_action_phrase"] = CONVENIENCE_ACTION
+        normalized = prompt_generator.normalize_authorial_core(
+            core, request_envelope=prompt_generator.normalize_request_envelope(envelope)
+        )
+        self.assertTrue(feature_selection.validate_selection(
+            catalog, catalog_bytes, selection, envelope, normalized, review
+        )["valid"])
+        # Inspect the existing literal anchor check without claiming a complete pack audit.
+        def anchor_failures(prompt: str) -> list[dict]:
+            return [row for row in photo_prompt_fixtures.audit_composed_prompt.audit_authorial_core(
+                {"authorial_core": normalized}, {}, prompt
+            ) if row["check"] == "intent_lock_prompt_evidence"]
+
+        baseline = normalized["baseline_prompt_en"]
+        self.assertEqual(anchor_failures(baseline), [])
+        self.assertEqual(len(anchor_failures(baseline.replace("gloved right hand", "bare right hand"))), 1)
+
+        gesture.update(basis="agent_visual_choice", source_span_ids=[], source_text=None)
+        with self.assertRaises(feature_selection.SelectionValidationError):
+            feature_selection.validate_selection(
+                catalog, catalog_bytes, selection, envelope, normalized, review
+            )
 
     def test_cli_accepts_records_without_echoing_source_examples(self) -> None:
         _, _, selection, envelope, core, review = artifacts()

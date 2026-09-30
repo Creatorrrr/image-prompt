@@ -822,7 +822,14 @@ def candidate_objects_from_pack(pack: dict[str, Any]) -> dict[str, dict[str, Any
             candidates[str(candidate["id"])] = candidate
     for candidate in creative_augmentation_candidates_from_pack(pack):
         if candidate.get("id"):
-            candidates[str(candidate["id"])] = candidate
+            candidate_id = str(candidate["id"])
+            original = candidates.get(candidate_id)
+            candidates[candidate_id] = (
+                {**candidate, **original} if original and (
+                    "context_prerequisites" in original or "context_requirements" in original
+                )
+                else candidate
+            )
     for candidate in (pack.get("candidate_bundles") or {}).get("candidates") or []:
         if isinstance(candidate, dict) and candidate.get("id"):
             candidates[str(candidate["id"])] = candidate
@@ -4762,6 +4769,18 @@ def audit_semantic_clarification(
         for row in candidates
         if str(row.get("id") or "")
     }
+    core = pack.get("authorial_core") if isinstance(pack.get("authorial_core"), dict) else {}
+    if core.get("contract_version") == AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+        expected = candidate_semantics_generator.authorial_meaning_clarification(core)
+        if (
+            candidate_map.get(expected["id"]) != expected
+            or contract.get("authorial_direction")
+            != candidate_semantics_generator.authorial_direction_context(core)
+        ):
+            failures.append({
+                "check": "semantic_clarification_authority",
+                "reason": "required clarification must project frozen requester evidence; the authored direction is separate context",
+            })
     pack_candidate_ids = candidate_ids_from_pack(pack) | set(candidate_map)
     decisions = [
         row
@@ -5167,7 +5186,12 @@ def audit_adult_appeal(
         if isinstance(composed.get("adult_appeal_brief"), dict)
         else {}
     )
-    failures.extend(photo_contextual_appeal.audit_review(contract, brief, chosen))
+    failures.extend(photo_contextual_appeal.audit_context_copies(
+        contract, creative_augmentation_candidates_from_pack(pack)))
+    failures.extend(photo_contextual_appeal.audit_review(
+        contract, brief, chosen, prompt_en=prompt_en, core=pack.get("authorial_core") or {},
+        subject_category=((pack.get("creative_controls") or {}).get("context") or {}).get("subject_category", ""),
+    ))
     adult_phrase = str(brief.get("adult_subject_phrase") or "")
     agency_phrase = str(brief.get("agency_phrase") or "")
     if not re.search(r"\badult\b", adult_phrase, flags=re.IGNORECASE) or not text_contains_term(

@@ -29,6 +29,9 @@ from pathlib import Path
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parents[2]
 RECORD = SCRIPT_DIR / "record_image_run.py"
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+from image_attempt_evidence import capture_api_error, write_evidence
 
 
 def load_api_key() -> str:
@@ -133,38 +136,52 @@ def generate_for_file(
     resolved_slug = slug_for(prompt_file, slug)
     resolved_concept = concept or str((provenance.get("concept_lock") or [""])[0] or resolved_slug)
     out_dir = out_base / f"{resolved_slug}-{timestamp}"
+    try:
+        out_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as error:
+        print(f"[{resolved_slug}] output preparation failed before any API call: {error}", file=sys.stderr)
+        return False
 
     previous_run_id: str | None = None
     for attempt in range(1, max(1, attempts) + 1):
-        status, failure, dest = None, None, None
+        status, failure, dest, evidence = None, None, None, None
+        started_at = datetime.datetime.now().astimezone().isoformat(timespec="microseconds")
+        call_returned = False
         try:
             image = call_api(key, model, full_prompt, size)
-            out_dir.mkdir(parents=True, exist_ok=True)
+            call_returned = True
             dest = out_dir / f"{prompt_id}-seed{seed}-attempt{attempt}.png"
             dest.write_bytes(image)
             status = "success"
             print(f"[{resolved_slug}] attempt {attempt} OK → {repo_ledger_path(dest)}")
-        except urllib.error.HTTPError as error:
-            body = error.read().decode()[:300]
-            lowered = body.lower()
-            status = (
-                "safety_block"
-                if ("safety" in lowered or "moderation" in lowered or "content_policy" in lowered)
-                else "error"
-            )
-            failure = body.replace("\n", " ")[:280]
-            print(f"[{resolved_slug}] attempt {attempt} {status}: {failure[:120]}")
         except Exception as error:  # noqa: BLE001 - 네트워크/디코딩 등 모든 실패를 레저에 기록
-            status, failure = "error", str(error)[:280]
-            print(f"[{resolved_slug}] attempt {attempt} error: {failure[:120]}")
+            evidence = capture_api_error(error, {
+                "tool": "openai_images_api", "generation_environment": "openai_images_api", "attempt": attempt,
+                "started_at": started_at, "ended_at": datetime.datetime.now().astimezone().isoformat(timespec="microseconds"),
+                "invocation_outcome": "returned" if call_returned else "rejected",
+                "request": {"prompt_en": prompt_en, "negative_en": negative_en, "runtime_prompt_en": full_prompt, "requested_model": model, "size": size},
+            })
+
+        evidence_path, evidence_sha256 = None, None
+        if evidence is not None:
+            status = evidence["outcome"]["status"]
+            failure = evidence["outcome"]["display_message"]
+            evidence_path = out_dir / f"{prompt_id}-seed{seed}-attempt{attempt}.error.json"
+            try:
+                evidence_sha256 = write_evidence(evidence_path, evidence)
+            except OSError as error:
+                print(f"[{resolved_slug}] attempt {attempt} evidence save failed; stopping: {error}", file=sys.stderr)
+                return False
+            print(f"[{resolved_slug}] attempt {attempt} {status}: {failure[:120]}")
 
         ledger_args = [
-            "--ts", datetime.datetime.now().astimezone().isoformat(timespec="seconds"),
+            "--ts", started_at,
             "--concept", resolved_concept,
             "--prompt-en", prompt_en,
             "--attempt", str(attempt),
             "--status", status,
             "--tool", "openai_images_api",
+            "--generation-environment", "openai_images_api",
         ]
         ledger_args += ["--prompt-id", prompt_id]
         if seed is not None:
@@ -175,6 +192,8 @@ def generate_for_file(
             ledger_args += ["--image-path", repo_ledger_path(dest)]
         if failure:
             ledger_args += ["--failure-reason", failure]
+        if evidence_path is not None:
+            ledger_args += ["--attempt-evidence-json", str(evidence_path), "--attempt-evidence-sha256", evidence_sha256]
         if pack_id:
             ledger_args += ["--pack-id", pack_id]
         if chosen_candidate_ids is not None:
@@ -207,6 +226,10 @@ def generate_for_file(
         previous_run_id = ledger_result["run_id"]
         if status == "success":
             return True
+        if call_returned:
+            # The provider returned an image; retrying a local save failure would
+            # generate another image rather than repair its persistence.
+            return False
     return False
 
 

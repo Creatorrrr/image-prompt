@@ -25,6 +25,13 @@ Read `contextual_usage` as optional examples and contrasts, and check
 `context_requirements` before adoption. Ordinary readings and limits do not
 count as positive retrieval prototypes or proof of the requested aesthetic.
 
+Keep retrieval, writable scope and final context separate. `retrieval_status:
+returned` records search; `applicability.basis: writable_scope` explains the
+existing `eligible` value; `context_preflight.status: unassessed` leaves final
+scene requirements pending. Scene overlap is a retrieval hint. It cannot satisfy
+a prerequisite. The overview exposes those requirements; inventory, general
+sample and full details preserve the same source contract.
+
 Use the existing `adult_appeal_brief` to record:
 
 ```json
@@ -34,7 +41,19 @@ Use the existing `adult_appeal_brief` to record:
       "candidate_id": "<supplied ID>",
       "reading": "potential",
       "reason": "What this candidate means in the current scene.",
-      "proposed_application": "The concrete relationship possible within open properties."
+      "proposed_application": "The concrete relationship possible within open properties.",
+      "requirement_evidence": [
+        {
+          "requirement_id": "<ID from context_prerequisites.requirements>",
+          "fact": "<one declared requirement value>",
+          "state": "present",
+          "prompt_evidence": "<concrete literal final-scene phrase>",
+          "reason": "Explain how the phrase realizes this condition in its declared context.",
+          "origin": "authored",
+          "affected_dimensions": ["<actual unlocked dimension>"],
+          "affected_properties": []
+        }
+      ]
     }
   ],
   "contextual_comparison": "Compare the baseline with viable alternatives at the requested strengths and explain the selected direction."
@@ -45,8 +64,31 @@ Readings are `relevant`, `potential`, `irrelevant`, `conflicting` or `uncertain`
 Potential requires a concrete application, not just relabeling an object.
 Uncertainty can remain unresolved and the candidate can be rejected. Only
 relevant or concretely developed potential candidates may be adopted. Existing
-`candidate_interpretations` bind adopted ideas to final prompt evidence; do not
-duplicate that evidence or add a separate score sheet here.
+`candidate_interpretations` bind adopted ideas to final prompt evidence.
+`requirement_evidence` is needed only for declared prerequisites on an adopted
+candidate; it binds the necessary context, rather than scoring appeal again.
+
+`photo-candidate-context/v1` preserves explicit entry requirements and matching
+quality-layer prerequisite sources. It keeps their existing any/all/exclusion
+semantics; tags, similarity, `contextual_usage` and search matching hints do not
+become necessities. Do not waive an explicit condition by treating it as a hint.
+If a source condition is ambiguous, leave it pending or reject the candidate.
+
+Evaluate necessities against the **final proposed scene**, including required
+primary context. Their absence from the starting draft is not an immutable lock.
+An authored witness may introduce or recompose agent-owned context within the
+current scope. Its complete effects must be covered by the axis brief and must
+respect dimension and property locks. A `retained` witness must occur literally
+in both baseline and final prompt and declare no new effects. Known human/adult
+subject facts use the bound requester context and literal adult-subject brief.
+Other conditions need concrete phrase-and-reason witnesses; a candidate's own
+tags or a bare condition label cannot certify them.
+
+Use `present` for positive requirements and `absent` for each excluded fact;
+absence needs an explicit grounded explanation, not an omitted word. An `any`
+group needs one supported value and an `all` group needs every value. `pending`
+or `unsupported` does not authorize adoption. If the phrase actually contradicts
+the condition, reject the candidate or change the final scene within scope.
 
 ## Make the alternatives consequential
 
@@ -70,6 +112,8 @@ candidate's full affected-property scope; do not narrow it merely to pass a
 lock. A torn white dress can admit a compatible seam or drape change without
 permitting a replacement dress, a new color or restoration of its condition.
 
-The audit checks consideration, ownership and evidence binding. It cannot prove
+The audit checks source preservation, prerequisite completeness, consideration,
+ownership and literal evidence binding. The composer owns the truth of the
+phrase-to-condition explanation, including primary relevance. It cannot prove
 the contextual reading, perceived strength, artistic success or final pixels.
 The contextual contract and its review are required by the current adult-appeal path.
