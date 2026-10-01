@@ -22,10 +22,16 @@ The quiet-home commute near-miss remains disclosed. Within-slot cosine rank chan
 
 ### Texture cycle
 
-Frozen evidence: `../texture-data-cleanup-20261001/`. The immutable inventory covers 44 texture rows with nine proposed minimal corrections and 35 keeps, evaluated with 18 positives and nine diagnostic near-misses. Results and publication status are recorded in that directory and the next run-ledger update.
+Frozen evidence: `../texture-data-cleanup-20261001/`. The immutable inventory covers 44 texture rows with nine proposed minimal corrections and 35 keeps, evaluated with 18 positives and nine diagnostic near-misses. Published and remote-verified commit: `9cc812523ca2ab0dd1301cbff11d3315dde1ac71`. The fresh pull was up to date, and the final post-pull run passed all 89 related tests. Sparse-checkout capture fixtures were restored from their exact baseline bytes with 24 matching hash references. GitHub reported zero check runs and zero commit-status contexts. Both retrieval methods preserved all 18 positive rank-one results; reverse near-misses remain documented. All 36 one-attempt embeddings succeeded, for an additional conservative bound of $0.0589824 and cumulative tracked bound of $0.8290304.
 
 ## Cost accounting
 
 The prior tracked cleanup conservative upper bound is $0.770048. The texture cycle is limited to at most 40 one-attempt text-embedding calls, an additional $0.065536 conservative bound. Actual attempted-call bounds are recorded per cycle. These are not measured invoices; unrelated upstream spending was not reconciled with billing. The project authorization remains $10, with exact-text caches reused and automatic retries disabled.
 
 Prices and limits were checked against official documentation on 2026-10-01: https://ai.google.dev/gemini-api/docs/pricing and https://ai.google.dev/gemini-api/docs/embeddings.
+
+### Film/capture ownership cycle
+
+Frozen evidence: `../capture-owner-data-cleanup-20261001/`. The inventory has 54 rows, 16 minimal proposed corrections and 38 keeps. Thirty-two English diagnostic queries were frozen before editing. The maximum 56 one-attempt embeddings have an additional conservative bound of $0.0917504; nominal workload is 48 uncached texts. Valid model/format shorthand, authored optical alternatives, and disposable-camera frontal lighting remain preserved.
+
+The capture cycle accepted 13 corrections after retaining HP5, 400H and compact CCD in their original state. All positive ranks and the five dense/one lexical improvements survive, and all three reverse probes return to baseline. Final accepted-source validation passed 137 related tests. Actual cost history remains 48 one-attempt calls, including three unused proposal document vectors, adding $0.0786432 to the tracked conservative bound ($0.9076736 cumulative).
