@@ -1,0 +1,279 @@
+{
+  "derived_from": "exact immutable pack plus audited composed selection",
+  "effective_visual_contract_sha256": "f8f37ca4f9b2e3cbc59186ce2afc01911ad5f7b568df313a45dada369bb501e7",
+  "visual_contract": {
+    "enabled": true,
+    "contract_version": "photo-visual-obligations/v1",
+    "scope": "request_only",
+    "strict_gate_set": true,
+    "obligations": [
+      {
+        "id": "clothing_ct116_v1",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Preserve this requested visible owner relation: a small bail is visibly attached at the top of the pendant Preserve this requested visible owner relation: the necklace chain visibly passes through the bail opening",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "bail_pendant",
+            "chain_loop"
+          ],
+          "groups": [
+            {
+              "id": "bail_pendant",
+              "any_terms": [
+                "a necklace chain passes through the bail attached to a pendant",
+                "펜던트 윗고리를 통과하는 목걸이 체인",
+                "a small bail is visibly attached at the top of the pendant"
+              ]
+            },
+            {
+              "id": "chain_loop",
+              "any_terms": [
+                "a necklace chain passes through the bail attached to a pendant",
+                "펜던트 윗고리를 통과하는 목걸이 체인",
+                "the necklace chain visibly passes through the bail opening"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "bail_pendant_phrase",
+            "chain_loop_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "bail_pendant_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "a small bail is visibly attached at the top of the pendant"
+            ]
+          },
+          "chain_loop_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the necklace chain visibly passes through the bail opening"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_clt_ct116_v1_bail_pendant",
+            "review_scale": "native",
+            "description": "Inspect the declared relation at native resolution: a small bail is visibly attached at the top of the pendant. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+          },
+          {
+            "id": "vo_clt_ct116_v1_chain_loop",
+            "review_scale": "native",
+            "description": "Inspect the declared relation at native resolution: the necklace chain visibly passes through the bail opening. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+          }
+        ],
+        "reject_substitutes": [
+          "머리에 쓰는 veil과 분리한다. jump ring이 bail 전체와 항상 동의어는 아니다"
+        ]
+      },
+      {
+        "id": "clothing_ct109_v2",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Realize this selected visible construction on its stated owner: a pendant suspended at the center of a neck chain",
+        "component_semantics": {
+          "minimum_component_groups": 1,
+          "required_group_ids": [
+            "visible_relation"
+          ],
+          "groups": [
+            {
+              "id": "visible_relation",
+              "any_terms": [
+                "a pendant suspended at the center of a neck chain",
+                "목 체인 중앙에 매달린 펜던트"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "visible_relation_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 1,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "visible_relation_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "a pendant suspended at the center of a neck chain"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_clt_ct109_v2_visible_relation",
+            "review_scale": "native",
+            "description": "a pendant suspended at the center of a neck chain; inspect the stated owner, boundary and connection at native resolution. Occlusion or a nearby substitute fails this visible relation."
+          }
+        ],
+        "reject_substitutes": [
+          "고정 cm·모든 라리엇의 동일 clasp·성적 용례를 자동으로 붙이지 않는다"
+        ]
+      },
+      {
+        "id": "clothing_ct036_v1",
+        "category": "clothing_visible_relation",
+        "activation": {
+          "source": "composer_opt_in",
+          "scope": "request_only",
+          "source_intent_ids": []
+        },
+        "composition_instruction": "Preserve this requested visible owner relation: the bodice upper edge forms two rounded arcs Preserve this requested visible owner relation: the two curved arcs meet at a visible central dip",
+        "component_semantics": {
+          "minimum_component_groups": 2,
+          "required_group_ids": [
+            "paired_lobes",
+            "center_dip"
+          ],
+          "groups": [
+            {
+              "id": "paired_lobes",
+              "any_terms": [
+                "a sweetheart bodice edge has two rounded lobes and a center dip",
+                "두 둥근 곡선과 중앙 골이 있는 스위트하트 넥라인",
+                "the bodice upper edge forms two rounded arcs"
+              ]
+            },
+            {
+              "id": "center_dip",
+              "any_terms": [
+                "a sweetheart bodice edge has two rounded lobes and a center dip",
+                "두 둥근 곡선과 중앙 골이 있는 스위트하트 넥라인",
+                "the two curved arcs meet at a visible central dip"
+              ]
+            }
+          ]
+        },
+        "prompt_binding": {
+          "composed_field": "visual_obligation_evidence",
+          "required_evidence_fields": [
+            "paired_lobes_phrase",
+            "center_dip_phrase"
+          ],
+          "minimum_distinct_evidence_phrases": 2,
+          "prompt_evidence_must_be_literal": true,
+          "maximum_pairwise_content_token_overlap_ratio": 0.82,
+          "forbidden_filler_phrases": [
+            "visible evidence",
+            "visual evidence",
+            "required cue",
+            "prompt phrase"
+          ]
+        },
+        "evidence_requirements": {
+          "paired_lobes_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the bodice upper edge forms two rounded arcs"
+            ]
+          },
+          "center_dip_phrase": {
+            "min_content_words": 3,
+            "must_mention_any": [
+              "the two curved arcs meet at a visible central dip"
+            ]
+          }
+        },
+        "runtime_expression": {
+          "default_mode": "definition_with_optional_label",
+          "prompt_label_terms": [],
+          "forbidden_prompt_terms": [],
+          "runtime_forbidden_labels": []
+        },
+        "render_gates": [
+          {
+            "id": "vo_clt_ct036_v1_paired_lobes",
+            "review_scale": "native",
+            "description": "Inspect the declared relation at native resolution: the bodice upper edge forms two rounded arcs. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+          },
+          {
+            "id": "vo_clt_ct036_v1_center_dip",
+            "review_scale": "native",
+            "description": "Inspect the declared relation at native resolution: the two curved arcs meet at a visible central dip. A nearby substitute, printed imitation or occluded connection does not satisfy this gate."
+          }
+        ],
+        "reject_substitutes": [
+          "원단의 하트 무늬나 단순 깊은 V로 대체하지 않는다"
+        ]
+      }
+    ],
+    "required_hard_gates": [
+      "vo_clt_ct116_v1_bail_pendant",
+      "vo_clt_ct116_v1_chain_loop",
+      "vo_clt_ct109_v2_visible_relation",
+      "vo_clt_ct036_v1_paired_lobes",
+      "vo_clt_ct036_v1_center_dip"
+    ],
+    "selected_visual_concept_ids": [
+      "visual-concept:clothing_ct116_v1",
+      "visual-concept:clothing_ct109_v2",
+      "visual-concept:clothing_ct036_v1"
+    ]
+  },
+  "embodiment_gate_ids": [
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "required_hard_gate_ids": [
+    "vo_clt_ct116_v1_bail_pendant",
+    "vo_clt_ct116_v1_chain_loop",
+    "vo_clt_ct109_v2_visible_relation",
+    "vo_clt_ct036_v1_paired_lobes",
+    "vo_clt_ct036_v1_center_dip",
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ]
+}

@@ -3147,10 +3147,12 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                         "must be a non-empty subset of groups"
                     )
         concept_candidate = profile.get("concept_candidate")
-        if not isinstance(concept_candidate, dict) or set(concept_candidate) != {
-            "concept_terms"
-        }:
-            errors.append(f"{label}.concept_candidate: must contain only concept_terms")
+        candidate_keys = {"concept_terms", "core_assertion_discovery",
+                          "affected_dimensions", "affected_properties"}
+        if (not isinstance(concept_candidate, dict)
+                or "concept_terms" not in concept_candidate
+                or set(concept_candidate) - candidate_keys):
+            errors.append(f"{label}.concept_candidate: has missing or unsupported candidate fields")
         else:
             concept_terms = normalize_list(concept_candidate.get("concept_terms"))
             if not concept_terms or len(
@@ -3159,6 +3161,18 @@ def validate_visual_obligation_registry(path: Path, errors: list[str]) -> None:
                 errors.append(
                     f"{label}.concept_candidate.concept_terms: must be non-empty and distinct"
                 )
+            # Use the same scoped opt-in contract as the registry loader.
+            # A discoverable candidate still creates no requester obligation.
+            if set(concept_candidate) - {"concept_terms"}:
+                import photo_candidate_semantics
+                try:
+                    photo_candidate_semantics.validate_candidate_entries(
+                        {"slots": {"profile": [{
+                            **concept_candidate, "id": profile["id"],
+                            "concept_units": (profile.get("semantics") or {}).get("visual_components") or [],
+                        }]}}, AUTHORIAL_CORE_V3_INTENT_LOCK_DIMENSIONS)
+                except ValueError as exc:
+                    errors.append(f"{label}.concept_candidate: {exc}")
         runtime_expression = profile.get("runtime_expression")
         if not isinstance(runtime_expression, dict) or set(runtime_expression) != {
             "default_mode",

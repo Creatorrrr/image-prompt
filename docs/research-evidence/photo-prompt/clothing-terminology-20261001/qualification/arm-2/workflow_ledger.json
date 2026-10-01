@@ -1,0 +1,123 @@
+{
+  "schema": "arm-workflow-ledger/v1",
+  "arm": "arm-2",
+  "events": [
+    {
+      "stage": "precore",
+      "outcome": "frozen",
+      "file_manifest": "core_freeze_manifest.json"
+    },
+    {
+      "stage": "neutral_feature_validation",
+      "attempt": 1,
+      "outcome": "command_argument_error",
+      "detail": "--output unsupported; no artifact/content mutation"
+    },
+    {
+      "stage": "neutral_feature_validation",
+      "attempt": 2,
+      "outcome": "pass",
+      "valid": true,
+      "warnings": [],
+      "artifact": "precore_validation.json"
+    },
+    {
+      "stage": "freeze_integrity",
+      "outcome": "pass",
+      "artifact": "freeze_integrity.json"
+    },
+    {
+      "stage": "phase2",
+      "outcome": "waiting_for_DATA_READY"
+    },
+    {
+      "stage": "prepack_procedural_anchor_validation",
+      "outcome": "re-frozen",
+      "reason": "Topic-neutral composition contract requires distinct anchor evidence for each fully locked dimension. Split the same existing literal reference clause into distinct subject/reference_use phrases; baseline, meaning, controls, test case and all other fields unchanged. No candidate/profile data read.",
+      "core_file_sha256": "2c3dadca7435eb786bc53fe44c614beb26b9cd08e13dd240f4a16d204d9784d4"
+    },
+    {
+      "stage": "phase2",
+      "outcome": "DATA_READY_received",
+      "source_snapshot_file_sha256": "e23595f3daa1f4600e6607b1eb224805c18a1c4a9a0e611d695d2b5a4f52cf22",
+      "selection_mode_requested": "semantic",
+      "candidate_pack_invocations": 1,
+      "seed": 884213793
+    },
+    {
+      "stage": "reference_metadata",
+      "outcome": "stdlib-only_saved",
+      "preparation_error": "system python PIL unavailable; no generation attempted"
+    },
+    {
+      "stage": "candidate_pack",
+      "outcome": "pass",
+      "pack_id": "adab834e713b0be1",
+      "actual_selection_mode": "semantic",
+      "new_exposure_count": 14,
+      "new_adoption_count": 5
+    },
+    {
+      "stage": "composed_audit",
+      "outcome": "pass",
+      "quality_status": "warn",
+      "warnings": "four mandatory intents were preserved by free description/assertion; failures=[]"
+    },
+    {
+      "stage": "runtime_audit",
+      "outcome": "pass",
+      "exact_call_args_verified": true
+    },
+    {
+      "stage": "native_image_generation",
+      "outcome": "success",
+      "image_call_count": 1,
+      "image_sha256": "a1bc52a67306ab4359ce7372eb1637e9af6dd0219a122a1d447dacbc9ddf8bd9"
+    },
+    {
+      "stage": "native_pixel_inspection",
+      "outcome": "FAIL",
+      "partial_is_fail": true,
+      "keyword_counts": {
+        "PASS": 5,
+        "PARTIAL": 3,
+        "FAIL": 0
+      },
+      "profile_counts": {
+        "PASS": 2,
+        "PARTIAL": 2,
+        "FAIL": 0
+      },
+      "physical_counts": {
+        "PASS": 5,
+        "PARTIAL": 0,
+        "FAIL": 0
+      }
+    },
+    {
+      "stage": "independent_ledger",
+      "outcome": "pass",
+      "manifest": "run_manifest.json",
+      "ledger": "image_runs.ndjson"
+    },
+    {
+      "stage": "exposure_count_reconciliation",
+      "outcome": "corrected_report_only",
+      "prior_commentary_count": 15,
+      "actual_catalog_count": 14,
+      "source": "exposure_adoption.json was already generated from the authoritative catalog and held count=14; corrected supplemental prose/workflow count."
+    },
+    {
+      "stage": "render_review_audit",
+      "outcome": "failed_technical_hard_gates",
+      "schema_failures": [],
+      "hard_gate_count": 9,
+      "failed_hard_gates": [
+        "vo_clt_ct044_v1_neck_underarm",
+        "vo_clt_ct057_v1_visible_relation"
+      ],
+      "user_judgment": "not_yet_received"
+    }
+  ],
+  "image_generation_attempts": 1
+}

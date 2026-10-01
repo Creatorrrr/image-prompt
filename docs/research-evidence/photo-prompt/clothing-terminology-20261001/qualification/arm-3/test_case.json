@@ -1,0 +1,239 @@
+{
+  "contract_version": "independent-clothing-keyword-test/v1",
+  "arm_id": "arm-3",
+  "request_envelope_file_sha256": "39f2df773a3af4c9325a004494305159cf14c90bb84232cb1c54df0e53f70eb2",
+  "seed": 1372153937,
+  "random_selection": {
+    "seed": 1372153937,
+    "prng": "Python random.Random Mersenne Twister; randrange sequential draws",
+    "scenarios": [
+      {
+        "id": "gallery_loading_corridor",
+        "scene": "contemporary gallery loading corridor before opening",
+        "action": "turning from a wall-mounted shipping list toward the camera with an open hand beside the skirt",
+        "light": "large loading-door daylight with warm work lamps"
+      },
+      {
+        "id": "transit_roof_platform",
+        "scene": "glass-roof transit waiting platform just after rain",
+        "action": "pausing beside a wheeled case and looking up from a phone held below the waist",
+        "light": "cool overcast sky and reflected platform lights"
+      },
+      {
+        "id": "conservation_workroom",
+        "scene": "modern museum conservation workroom during a garment inspection break",
+        "action": "releasing a gently lifted chima pleat while looking toward a bright window",
+        "light": "north window and small warm inspection lamp"
+      },
+      {
+        "id": "laundromat_dawn",
+        "scene": "quiet contemporary laundromat at dawn after a clothes-care appointment",
+        "action": "stepping away from an open folding table, right hand carrying a folded cloth low beside her hip",
+        "light": "blue dawn glazing and soft overhead fluorescents"
+      },
+      {
+        "id": "botanical_atrium",
+        "scene": "modern botanical atrium with rain on its glass roof",
+        "action": "standing after easing open a glass door with one hand on its handle and the free hand low beside her skirt",
+        "light": "filtered cloud light and reflected green foliage"
+      },
+      {
+        "id": "station_locker",
+        "scene": "contemporary station locker hall in an early evening interval",
+        "action": "taking a moment after closing a locker, one hand relaxed at her side while the other holds a small case low",
+        "light": "continuous warm ceiling bars and blue skylight"
+      },
+      {
+        "id": "riverside_bookshop",
+        "scene": "riverside bookshop after an evening reading event",
+        "action": "standing beside a book trolley with a book held low in one hand and turning her head toward the window",
+        "light": "warm reading lamps and cool dusk window light"
+      },
+      {
+        "id": "rooftop_film_set",
+        "scene": "contemporary rooftop documentary set during a pause between takes",
+        "action": "settling a lifted skirt pleat, left hand dropping back to her side as she glances toward the camera",
+        "light": "late sun grazing cloth and soft sky fill"
+      }
+    ],
+    "selection_trace": [
+      {
+        "draw": 1,
+        "operation": "randrange(8)",
+        "result": 5,
+        "selected_id": "station_locker"
+      },
+      {
+        "draw": 2,
+        "operation": "randrange(3)",
+        "result": 2,
+        "selected_id": "sage_cream_ink"
+      }
+    ],
+    "wardrobe_variants": [
+      {
+        "id": "indigo_ivory_plum",
+        "jeogori": "pale ivory silk jeogori",
+        "chima": "deep plum chima",
+        "goreum": "indigo goreum",
+        "jewelry": "small sea-green oval stone in a silver bezel"
+      },
+      {
+        "id": "mist_blue_charcoal_copper",
+        "jeogori": "mist blue silk jeogori",
+        "chima": "charcoal silk chima",
+        "goreum": "muted copper goreum",
+        "jewelry": "small blue oval stone in a silver bezel"
+      },
+      {
+        "id": "sage_cream_ink",
+        "jeogori": "muted sage silk jeogori",
+        "chima": "ink-blue chima",
+        "goreum": "cream goreum",
+        "jewelry": "small pale-green oval stone in a silver bezel"
+      }
+    ],
+    "selected_scenario": {
+      "id": "station_locker",
+      "scene": "contemporary station locker hall in an early evening interval",
+      "action": "taking a moment after closing a locker, one hand relaxed at her side while the other holds a small case low",
+      "light": "continuous warm ceiling bars and blue skylight"
+    },
+    "selected_variant": {
+      "id": "sage_cream_ink",
+      "jeogori": "muted sage silk jeogori",
+      "chima": "ink-blue chima",
+      "goreum": "cream goreum",
+      "jewelry": "small pale-green oval stone in a silver bezel"
+    },
+    "keywords": [
+      "jeogori",
+      "dongjeong",
+      "goreum",
+      "norigae",
+      "chima",
+      "layer order",
+      "bezel setting",
+      "pendant bail"
+    ],
+    "selection_owner": "agent; not requester definitions or locks"
+  },
+  "reference_path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+  "reference_scope": {
+    "adult_generation": "explicitly adult independently chosen; reference does not prove age",
+    "used": [
+      "visible face appearance",
+      "visible dark bob and wispy fringe"
+    ],
+    "not_inferred": [
+      "identity",
+      "ethnicity",
+      "personality",
+      "actual age",
+      "body shape"
+    ]
+  },
+  "definitions_owner": "agent_general_knowledge; no requester definitions",
+  "test_gates": [
+    {
+      "gate_id": "kw_jeogori",
+      "keyword": "jeogori",
+      "owner": "main subject upper torso",
+      "connection": "upper garment occupies shoulders, sleeves and torso above chima",
+      "pass": "Distinct short jacket with sleeves and crossing front above lower skirt.",
+      "partial": "Jacket-like form exists but upper/lower boundary is unreadable.",
+      "fail": "Continuous dress, misplaced separate scarf, or missing upper jacket.",
+      "alternative_misread": "An undifferentiated robe or shirt without jacket boundary."
+    },
+    {
+      "gate_id": "kw_dongjeong",
+      "keyword": "dongjeong",
+      "owner": "jeogori collar edge",
+      "connection": "white strip follows the overlapping collar line",
+      "pass": "White collar strip visibly attached along both sides of jeogori neckline.",
+      "partial": "A white area appears but cannot be separated from undershirt or neckline fill.",
+      "fail": "Missing strip or detached white necklace/lining mistaken for collar.",
+      "alternative_misread": "White undershirt neckline."
+    },
+    {
+      "gate_id": "kw_goreum",
+      "keyword": "goreum",
+      "owner": "jeogori front closure",
+      "connection": "ribbons emerge from upper garment and are tied at chest",
+      "pass": "Readable garment-attached ribbon knot or loop and two tails at the chest.",
+      "partial": "Ribbons visible but attachment/tie or separate tails ambiguous.",
+      "fail": "Belt, necktie, independent scarf, or missing tie.",
+      "alternative_misread": "Waist sash or necktie."
+    },
+    {
+      "gate_id": "kw_norigae",
+      "keyword": "norigae",
+      "owner": "main subject jeogori goreum",
+      "connection": "suspension cord from garment knot descends through ornament to tassel",
+      "pass": "Garment attachment, cord/knot, pendant and tassel appear as one connected hanging ornament.",
+      "partial": "Ornament appears but attachment, knot or chain is occluded/indistinct.",
+      "fail": "Floating pendant, hair ornament, neck necklace, or missing pendant/tassel chain.",
+      "alternative_misread": "Brooch, earring or long necklace."
+    },
+    {
+      "gate_id": "kw_chima",
+      "keyword": "chima",
+      "owner": "main subject lower body",
+      "connection": "skirt starts at high waist under jacket and falls in broad folds",
+      "pass": "High-waisted skirt with continuous broad drape and vertical pleats below jeogori.",
+      "partial": "Lower drape exists but waist ownership or skirt form is unclear.",
+      "fail": "Trousers, detached cape, or missing lower skirt.",
+      "alternative_misread": "Outer cape or jacket continuation."
+    },
+    {
+      "gate_id": "kw_layer_order",
+      "keyword": "layer order",
+      "owner": "jeogori/chima overlap junction",
+      "connection": "jeogori hem lies over chima high waist",
+      "pass": "Visible upper hem edge occludes skirt waistband/top with a distinct overlap or shadow boundary.",
+      "partial": "Different colors suggest two pieces but junction does not establish order.",
+      "fail": "Reversed order or merged continuous garment.",
+      "alternative_misread": "Color-blocked one-piece dress."
+    },
+    {
+      "gate_id": "kw_bezel_setting",
+      "keyword": "bezel setting",
+      "owner": "norigae oval pendant stone",
+      "connection": "continuous metal rim retains the stone around its perimeter",
+      "pass": "Pale-green stone visibly surrounded and held by continuous silver metal rim.",
+      "partial": "Stone and rim exist but continuity/retention is unresolved at native scale.",
+      "fail": "Prongs, floating stone, painted silver edge or absent stone.",
+      "alternative_misread": "Prong mounting or flat decorative silver outline."
+    },
+    {
+      "gate_id": "kw_pendant_bail",
+      "keyword": "pendant bail",
+      "owner": "upper edge of norigae pendant",
+      "connection": "separate metal loop bridges suspension cord to pendant body",
+      "pass": "Distinct upper metal bail with visible connection to cord and pendant.",
+      "partial": "Small metallic connection is present but loop/bridge cannot be read.",
+      "fail": "Direct cord drilled through pendant, disconnected ornament, or absent bail.",
+      "alternative_misread": "Decorative knot or the bezel rim itself."
+    }
+  ],
+  "shared_physical_gates": [
+    {
+      "gate_id": "body_owner",
+      "pass": "Visible arms and hands connect to the main subject with plausible anatomy."
+    },
+    {
+      "gate_id": "support",
+      "pass": "Standing body has plausible balance; held case and garment ornament are supported by their declared owners."
+    },
+    {
+      "gate_id": "contact",
+      "pass": "Left hand grips case handle; ornament cord/pendant/bail connections appear physically joined."
+    },
+    {
+      "gate_id": "visibility",
+      "pass": "All eight keyword gates can be directly judged at native resolution with necessary junctions in frame."
+    }
+  ],
+  "overall_rule": "All gates must be PASS; PARTIAL is overall FAIL. Prompt/runtime passes are separate from pixel success and user acceptance.",
+  "user_acceptance": "not established"
+}

@@ -1,0 +1,173 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "fea4aa92d12a2d3dc1a13c5a6b8b6de8dabad80160a71defc84d5afdf98dcc15",
+  "interpreted_intent": "The requester asks for an independent random complex photographic test of adopted clothing keywords using the supplied image. Agent-owned selection: a warm ceramics-studio working moment combining knit construction and utilitarian trouser structure. The visible face/hair reference establishes appearance only. Subtle sensual=1 is expressed through personal presence and tactile warmth, fetish=0 adds no specific focus, surreal=0 stays physical, and creativity=1 keeps the chosen moment coherent. WHO is an adult subject with a softly concentrated presence; WHERE provides a practical clay-work context; HOW observes from a nearby three-quarter front view; WHY NOW is the board settling onto support. These choices, wardrobe and detailed action remain editable open staging, not requester definitions.",
+  "subject": "An adult woman with supplied-reference face/hair appearance only.",
+  "setting": "Agent-selected small ceramics studio with timber table and softly receding shelves.",
+  "event": "Garment features read together during the visible placement of a board of unfired bowls; detailed action is agent-owned.",
+  "visual_priorities": [
+    "Personal presence and visible face/hair appearance at a full-figure scale.",
+    "The collarless placket, raglan diagonals, cable relief and rib-knit finishes belong to one pullover.",
+    "Cargo-pocket gussets, front drawstring and asymmetric half tuck are readable at their actual trouser/waist positions.",
+    "Connected hands support a board whose near edge is already supported by the side table."
+  ],
+  "baseline_prompt_en": "A complex clothing photograph in a small ceramics studio: an adult woman with face and hair appearance guided by the supplied reference is placing a wooden board of unfired bowls onto a timber worktable. Her garment features remain readable together during the working moment. Her short dark bob and a softly concentrated expression give the everyday scene a quiet personal appeal. She wears an ochre cable-knit Henley pullover: a collarless round neck continues into a short three-button center-chest placket, its top button open. A cream jersey undershirt neckline is visible inside that opening, beneath the ochre outer knit. Diagonal raglan seams run from the neckline toward each underarm, while raised interlacing cable braids occupy the front panel and fine parallel rib-knit bands finish the cuffs and lower hem. Charcoal drawstring cargo trousers have a front-waist casing with two cords emerging together and tied into a loose bow; each thigh carries a separate flap-topped patch pocket with a visible expanding side gusset. Only the pullover's left front hem is caught inside the trouser waistband; its right front hem hangs free below the waist. The board is on her right side, with its near edge already resting on the tabletop while her two hands still support its outer corners from underneath. Both elbows connect visibly to the sweater sleeves; her boots are planted apart on the floor and her torso inclines slightly toward the table. Observe her from a three-quarter front view on her left, showing the whole figure from head to boots, with the working board to the side of her waist. Warm low window light rakes across the knit relief and the matte clay. Keep natural skin texture and the clothing construction sharply readable, with soft shelves receding behind her.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "random complex concept",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Generate a multi-part but coherent photographic test; select its particular place/action/light independently through the stored seed. The selected scene is agent staging.",
+      "sources": []
+    },
+    {
+      "term": "keyword realization",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "Inspect the visible form and placement of test clothing features in the first output. Specific selected garment terms are agent-owned test dimensions, not a verbatim user definition.",
+      "sources": []
+    },
+    {
+      "term": "reference use",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use supplied-reference visible face/hair appearance for an adult generated subject, without claiming identity, biography, ethnicity, personality, real age or body shape.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A complex clothing photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "subject",
+        "prompt_evidence": "face and hair appearance guided by the supplied reference"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "Her garment features remain readable together during the working moment"
+      },
+      {
+        "anchor_id": "reference_scope",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "face and hair appearance guided by the supplied reference"
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "appearance",
+      "material",
+      "setting",
+      "action",
+      "pose",
+      "body_geometry",
+      "expression",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "timing",
+      "atmosphere",
+      "style"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "knit_structure_test",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "keywords"
+      ],
+      "affected_dimensions": [
+        "appearance",
+        "material"
+      ],
+      "axes": {
+        "garment_type": "Henley pullover",
+        "sleeve_construction": "raglan",
+        "body_structure": "cable knit",
+        "edge_structure": "rib knit"
+      },
+      "evidence": {
+        "placket": "a collarless round neck continues into a short three-button center-chest placket",
+        "raglan": "Diagonal raglan seams run from the neckline toward each underarm",
+        "cable": "raised interlacing cable braids occupy the front panel",
+        "rib": "fine parallel rib-knit bands finish the cuffs and lower hem"
+      }
+    },
+    {
+      "assertion_id": "utility_waist_test",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "keywords"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "trousers": "cargo",
+        "closure": "drawstring",
+        "wearing_method": "half tuck"
+      },
+      "evidence": {
+        "cargo": "each thigh carries a separate flap-topped patch pocket with a visible expanding side gusset",
+        "drawstring": "a front-waist casing with two cords emerging together and tied into a loose bow",
+        "half_tuck": "Only the pullover's left front hem is caught inside the trouser waistband; its right front hem hangs free below the waist"
+      }
+    },
+    {
+      "assertion_id": "layer_order_test",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "keywords"
+      ],
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "axes": {
+        "inner_layer": "cream jersey undershirt",
+        "outer_layer": "ochre knit pullover",
+        "order": "inner neckline lies beneath opened outer placket"
+      },
+      "evidence": {
+        "order": "A cream jersey undershirt neckline is visible inside that opening, beneath the ochre outer knit"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "photography",
+    "family": "observational ceramics-work clothing photograph",
+    "evidence": [
+      "warm low window side light",
+      "full figure and visible worktable contact"
+    ]
+  },
+  "variation_key": "arm-2-884213793-ceramics_board"
+}

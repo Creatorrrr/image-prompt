@@ -1,0 +1,113 @@
+{
+  "schema_version": "moe-render-review/v1",
+  "pack_id": "db2dfdab414f2089",
+  "contract_version": "photo-visual-obligations/v1",
+  "qualification_status": "failed_technical_hard_gates",
+  "technical_qualified": false,
+  "representative_eligible": false,
+  "required_hard_gate_count": 7,
+  "required_hard_gates": [
+    "vo_clt_ct114_v2_visible_relation",
+    "vo_clt_ct136_v1_visible_relation",
+    "embodiment_body_ownership",
+    "embodiment_joint_chain_and_reach",
+    "embodiment_support_and_balance",
+    "embodiment_contact_and_space",
+    "embodiment_visibility_and_projection"
+  ],
+  "source_character_response_contract_sha256": null,
+  "effective_visual_contract_sha256": "846c2426bddad52df5c53919605b2e50a0f0495d7d276d75ef28c0b9d44b319f",
+  "selected_visual_concept_ids": [
+    "visual-concept:clothing_ct114_v2",
+    "visual-concept:clothing_ct136_v1"
+  ],
+  "failed_hard_gates": [
+    {
+      "gate": "vo_clt_ct114_v2_visible_relation",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "vo_clt_ct136_v1_visible_relation",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "embodiment_body_ownership",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "embodiment_joint_chain_and_reach",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "embodiment_support_and_balance",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "embodiment_contact_and_space",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    },
+    {
+      "gate": "embodiment_visibility_and_projection",
+      "status": "missing",
+      "reason": "required hard gate is missing"
+    }
+  ],
+  "schema_failures": [
+    {
+      "check": "reviewer",
+      "reason": "render review requires a named human or agent pixel reviewer"
+    },
+    {
+      "check": "result_image",
+      "reason": "render review requires an exact result image path"
+    },
+    {
+      "check": "result_sha256",
+      "reason": "result_sha256 must be a 64-character hex digest"
+    },
+    {
+      "check": "hard_gates",
+      "reason": "render review requires a hard_gates object"
+    },
+    {
+      "check": "hard_gates",
+      "reason": "strict character-response or visual-obligation reviews must exactly equal the effective pack-plus-composed hard-gate set; supplemental observations belong outside hard_gates",
+      "missing": [
+        "embodiment_body_ownership",
+        "embodiment_contact_and_space",
+        "embodiment_joint_chain_and_reach",
+        "embodiment_support_and_balance",
+        "embodiment_visibility_and_projection",
+        "vo_clt_ct114_v2_visible_relation",
+        "vo_clt_ct136_v1_visible_relation"
+      ],
+      "extra": []
+    },
+    {
+      "check": "user_judgment.genuinely_moe",
+      "reason": "user judgment must be accepted, rejected, pending, or not_applicable"
+    },
+    {
+      "check": "user_judgment.better_than_baseline",
+      "reason": "user judgment must be accepted, rejected, pending, or not_applicable"
+    },
+    {
+      "check": "user_judgment.better_than_baseline",
+      "reason": "without a baseline, better_than_baseline must be not_applicable or pending"
+    }
+  ],
+  "user_judgment": {
+    "baseline_available": false,
+    "genuinely_moe": "",
+    "better_than_baseline": "",
+    "source": "not_yet_received",
+    "evidence": ""
+  },
+  "boundary": "This audit validates recorded pixel-review evidence and, when applicable, user acceptance; it does not infer visual truth from metadata, authenticate who authored a review, or declare moe on the user's behalf."
+}
