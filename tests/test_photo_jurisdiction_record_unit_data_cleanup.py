@@ -29,8 +29,14 @@ class JurisdictionRecordUnitDataCleanupTests(unittest.TestCase):
     def test_raw_extension_changes_only_one_new_verbatim_unit(self):
         before=json.loads((EVIDENCE/'baseline-raw-extension.json').read_text());expected=copy.deepcopy(before)
         row=next(r for r in expected['slots']['capture_context']if r['id']==self.target['id']);row['concept_units']=[row['en']]
+        # The next frozen baseline is the immutable published cycle10 source.
+        # Reproduce the historical one-field delta without rejecting later,
+        # independently frozen changes elsewhere in this same extension.
+        historical=ROOT/'docs/research-evidence/photo-prompt/narrative-unit-data-cleanup-20261001/baseline-raw-extension.json'
+        self.assertEqual(json.loads(historical.read_text()),expected)
         current=json.loads((ASSETS/'photo_prompt_cjk_worldbuilding_extension.json').read_text())
-        self.assertEqual(current,expected)
+        current_target=next(r for r in current['slots']['capture_context']if r['id']==self.target['id'])
+        self.assertEqual(current_target,row)
         self.assertNotIn('maintenance_ref',current)
 
     def test_all_nine_keeps_and_every_existing_target_field_are_exact(self):
