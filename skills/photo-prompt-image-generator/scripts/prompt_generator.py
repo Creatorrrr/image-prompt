@@ -40,6 +40,9 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import slot_retrieval as slot_retrieval_evidence
+    import semantic_constraints
+    from recall_lanes import reserve_lane_leaders
     import photo_contextual_appeal
     import photo_embodiment
     import photo_creative_controls as creative_controls
@@ -243,6 +246,10 @@ VISUAL_OBLIGATIONS_DATA_KEY = "_visual_obligations"
 VISUAL_PROFILE_INDEX_DATA_KEY = "_visual_profile_index"
 VISUAL_PROFILE_QUERY_VECTORS_DATA_KEY = "_visual_profile_query_vectors"
 SEMANTIC_INDEX_DATA_KEY = "_semantic_index"
+SLOT_QUERY_VECTORS_DATA_KEY = "_slot_query_vectors"
+SLOT_RETRIEVAL_POLICY_DATA_KEY = "_slot_retrieval_policy"
+SEMANTIC_CONSTRAINT_POLICY_DATA_KEY = "_semantic_constraint_policy"
+RECALL_LANE_POLICY_DATA_KEY = "_recall_lane_policy"
 SOFT_ANCHOR_WEIGHT_MULTIPLIER = 24.0
 SOFT_ANCHOR_PROMOTED_WEIGHT_MULTIPLIER = 36.0
 SOFT_ANCHOR_PRIMARY_WEIGHT_MULTIPLIER = 48.0
@@ -4153,13 +4160,14 @@ def candidate_pack_summarize_slot_candidate(
 def candidate_pack_rows_with_selected(rows: Sequence[JsonDict], selected_id: str, limit: int) -> List[JsonDict]:
     selected_id = str(selected_id or "")
     normalized = [dict(row) for row in rows if isinstance(row, dict) and row.get("id")]
-    if selected_id and selected_id not in {str(row.get("id")) for row in normalized}:
-        selected_row = {"id": selected_id, "weight": 0.0, "selected_fallback": True}
-        if len(normalized) >= limit:
-            normalized = normalized[: max(0, limit - 1)] + [selected_row]
-        else:
-            normalized.append(selected_row)
-    return normalized[:limit]
+    limited = normalized[:max(0, limit)]
+    if limit > 0 and selected_id and selected_id not in {str(row.get("id")) for row in limited}:
+        # Preserve membership, not first-place preference. The selected row may
+        # exist below the cutoff; keep its eligibility/provenance in that case.
+        selected_row = next((row for row in normalized if str(row.get("id")) == selected_id),
+                            {"id": selected_id, "weight": 0.0, "selected_fallback": True})
+        limited = limited[:max(0, limit - 1)] + [selected_row]
+    return limited
 
 
 def candidate_pack_build_presets(
@@ -4237,6 +4245,11 @@ def candidate_pack_slot_focus_text(core: JsonDict, slot: str) -> tuple[str, List
         if field in core:
             projection[field] = core[field]
     focus_text, _ = authorial_core_retrieval_text(projection)
+    evidence = slot_retrieval_evidence.positive_evidence(slot_retrieval_evidence.project(core, slot))
+    if evidence:
+        projection["baseline_prompt_en"] = " ".join(evidence)
+        focus_text, _ = authorial_core_retrieval_text(projection)
+        fields = [*fields, "baseline_prompt_en"]
     return focus_text, fields if focus_text else []
 
 
@@ -4258,7 +4271,64 @@ def candidate_pack_age_only_subject_match(entry: Entry, slot: str, core: JsonDic
     })
 
 
-def candidate_pack_rank_slot_rows(
+def candidate_pack_slot_focus_text_stable(core: JsonDict, slot: str) -> tuple[str, List[str]]:
+    """Project only relevant frozen-core fields into one advisory slot query."""
+
+    fields: List[str] = []
+    if slot in SLOT_FOCUS_SUBJECT_SLOTS:
+        fields = ["subject"]
+    elif slot in SLOT_FOCUS_SETTING_SLOTS:
+        fields = ["setting", "event"] if slot == "situation_context" else ["setting"]
+    elif slot in SLOT_FOCUS_EVENT_SLOTS:
+        fields = ["event", "subject"] if slot in {"body_pose", "prop"} else ["event"]
+    elif slot in SLOT_FOCUS_AFFECT_SLOTS:
+        fields = ["event", "visual_priorities"]
+    elif slot in SLOT_FOCUS_LIGHT_SLOTS:
+        fields = ["setting"]
+    elif slot in SLOT_FOCUS_STYLE_SLOTS:
+        fields = ["style", "visual_priorities"]
+    if not fields:
+        return "", []
+    projection: JsonDict = {
+        "contract_version": core.get("contract_version"),
+        "request_binding": {"active_spans": []},
+        "user_exclusions": core.get("user_exclusions") or [],
+    }
+    for field in fields:
+        if field in core:
+            projection[field] = core[field]
+    focus_text, _ = authorial_core_retrieval_text(projection)
+    return focus_text, fields if focus_text else []
+
+
+def candidate_pack_normalized_slot_contract(data: JsonDict, core: Optional[JsonDict], generation_contract: Optional[JsonDict]) -> JsonDict:
+    contract = generation_contract if isinstance(generation_contract, dict) else {}
+    if not core:
+        return contract
+    # Normalize applicability from the same frozen subject evidence used by
+    # intent routing, before any slot/entry guards. Never infer identity from
+    # the sampler's selected portrait or from a candidate's own tags.
+    frozen_constraints = resolve_request_intent_constraints(data, None, {}, authorial_core=core)
+    subject_categories = set(normalize_list(frozen_constraints.get("subject_categories")))
+    subject_categories.update(normalize_list((contract.get("intent_constraints") or {}).get("subject_categories")))
+    if not subject_categories:
+        subject_categories.update(slot_retrieval_evidence.direct_subject_categories(str(core.get("subject") or "")))
+    no_people = bool(contract.get("no_people") or (contract.get("intent_constraints") or {}).get("no_people") or frozen_constraints.get("no_people"))
+    if no_people:
+        subject_categories.discard("human")
+    if contract:
+        contract = {**contract, "intent_constraints": {
+            **(contract.get("intent_constraints") or {}),
+            "subject_categories": sorted(subject_categories), "no_people": no_people,
+        }}
+        if len(subject_categories) == 1:
+            contract["subject_category"] = next(iter(subject_categories))
+        elif no_people and contract.get("subject_category") == "human":
+            contract["subject_category"] = "generic"
+    return contract
+
+
+def candidate_pack_rank_slot_rows_stable(
     data: JsonDict,
     slot: str,
     source_rows: Sequence[JsonDict],
@@ -4275,11 +4345,13 @@ def candidate_pack_rank_slot_rows(
     original = [dict(row) for row in source_rows if isinstance(row, dict) and row.get("id")]
     if not core or not bm25f_payload or not original or not global_query:
         return original, None
-    focus_query, source_fields = candidate_pack_slot_focus_text(core, slot)
+    focus_query, source_fields = candidate_pack_slot_focus_text_stable(core, slot)
     if not focus_query or focus_query == global_query:
         return original, None
     base_rows = list(original)
     original_count = len(original)
+    prior_expansion_count = 0
+    normalization_only_ids: List[str] = []
     entries_by_id = {
         str(entry.get("id") or ""): entry
         for entry in data.get("slots", {}).get(slot, []) or []
@@ -4298,6 +4370,16 @@ def candidate_pack_rank_slot_rows(
         and not soft_anchor_atomic_pool_for_slot(soft_policy, slot)
         and not slot_block_reason(data, slot, contract)
     )
+    prior_eligibility = contract.get("_slot_prior_eligibility") or {}
+    prior_subject_tokens = candidate_pack_relevance_tokens(str(core.get("subject") or "")) | set(
+        normalize_list(prior_eligibility.get("subject_categories"))
+    )
+    picked_for_guards = {
+        other_slot: entry for other_slot, choice in choices.items()
+        if other_slot != slot and isinstance(choice, dict)
+        for entry in [candidate_pack_slot_entry_by_id(data, other_slot, str(choice.get("id") or ""))]
+        if entry is not None
+    }
     if can_expand:
         existing_ids = {str(row["id"]) for row in original}
         core_tokens = candidate_pack_relevance_tokens(global_query)
@@ -4348,6 +4430,20 @@ def candidate_pack_rank_slot_rows(
                 allow_adult_item=age_only_subject,
             ):
                 continue
+            # Preserve the previous eligible pool, but category normalization
+            # must not newly unlock a context-bound motif without its guards.
+            newly_eligible = bool(prior_eligibility) and (
+                bool(prior_eligibility.get("slot_blocked"))
+                or (bool(entry_block_reason(entry, slot, prior_eligibility.get("contract") or {}))
+                    and not (age_only_subject and entry_block_reason(entry, slot, prior_eligibility.get("contract") or {}) == "adult_not_allowed"))
+                or (slot == "subject" and bool(normalize_list(prior_eligibility.get("subject_categories")))
+                    and subject_category({"subject": entry}, data) not in set(normalize_list(prior_eligibility.get("subject_categories"))))
+                or bool(set(normalize_list(entry.get("exclude_for_any"))) & prior_subject_tokens)
+                or (bool(normalize_list(entry.get("for_any")))
+                    and not (set(normalize_list(entry.get("for_any"))) & prior_subject_tokens))
+            )
+            if newly_eligible and not compatible_with_slot_context(slot, entry, picked_for_guards, data):
+                continue
             if set(normalize_list(entry.get("for_any"))) and not (
                 set(normalize_list(entry.get("for_any"))) & subject_tokens
             ):
@@ -4381,6 +4477,10 @@ def candidate_pack_rank_slot_rows(
                 "applicability_source": "slot_focus_hard_guarded_pool",
             })
             existing_ids.add(entry_id)
+            if newly_eligible:
+                normalization_only_ids.append(entry_id)
+            else:
+                prior_expansion_count += 1
     by_id = {str(row["id"]): row for row in original}
     doc_to_id = {f"slot:{slot}:{entry_id}": entry_id for entry_id in by_id}
     search_limit = min(len(doc_to_id), max(12, candidate_pack_slot_limit(slot) * 6))
@@ -4403,7 +4503,7 @@ def candidate_pack_rank_slot_rows(
     global_lane = [str(row["document_id"]) for row in global_hits]
     focus_lane = [str(row["document_id"]) for row in focus_hits]
     fused = reciprocal_rank_fusion(
-        ([global_lane, focus_lane] if len(original) > original_count
+        ([global_lane, focus_lane] if prior_expansion_count > 0
          else [original_lane, global_lane, focus_lane]),
         k=30,
     )
@@ -4454,7 +4554,7 @@ def candidate_pack_rank_slot_rows(
     ordered_ids: List[str] = []
     if selected_id in by_id:
         ordered_ids.append(selected_id)
-    if len(original) > original_count:
+    if prior_expansion_count > 0:
         # A broad catalog search should expose candidates supported by both
         # the focal and whole-scene query, without padding from arbitrary
         # sampler or source ordering. One focal fallback is allowed when the
@@ -4480,7 +4580,10 @@ def candidate_pack_rank_slot_rows(
                 break
         ordered_ids.extend(doc_to_id[str(row["document_id"])] for row in ranked_docs)
         ordered_ids.extend(str(row["id"]) for row in original)
-    deduped_ids = list(dict.fromkeys(ordered_ids))
+    ordered_ids.extend(doc_to_id[str(row["document_id"])] for row in ranked_docs
+                       if doc_to_id[str(row["document_id"])] in normalization_only_ids)
+    deduped_ids = [entry_id for entry_id in dict.fromkeys(ordered_ids)
+                   if entry_id not in normalization_only_ids or f"slot:{slot}:{entry_id}" in focus_lane]
     metadata: JsonDict = {
         "contract_version": "photo-slot-query-fusion/v1",
         "method": "eligible_pool_global_and_slot_bm25f_with_scene_rerank",
@@ -4491,6 +4594,312 @@ def candidate_pack_rank_slot_rows(
         "advisory_only": True,
         "candidate_budget_unchanged": True,
         "hard_guarded_expansion_count": len(original) - original_count,
+        "_diagnostics": {"normalization_only_expansion_count": len(normalization_only_ids),
+                         "prior_eligible_expansion_count": prior_expansion_count},
+    }
+    return [by_id[entry_id] for entry_id in deduped_ids], metadata
+
+
+def candidate_pack_rank_slot_rows(
+    data: JsonDict, slot: str, source_rows: Sequence[JsonDict], selected_id: str,
+    choices: JsonDict, core: Optional[JsonDict], bm25f_payload: Optional[JsonDict],
+    global_query: str, generation_contract: Optional[JsonDict] = None,
+    preset: Optional[JsonDict] = None,
+) -> tuple[List[JsonDict], Optional[JsonDict]]:
+    """Stable eligibility repair by default; evidence union requires opt-in.
+
+    Development final-pack evaluation found wider recall but camera and conflict
+    regressions in the new reranker. Keep that algorithm independently testable
+    without silently promoting it to the normal composition path.
+    """
+    policy = str(data.get(SLOT_RETRIEVAL_POLICY_DATA_KEY) or "stable")
+    if policy not in {"stable", "evidence-union"}:
+        raise ValueError("unsupported slot retrieval policy")
+    contract = candidate_pack_normalized_slot_contract(data, core, generation_contract)
+    if contract and policy == "stable":
+        prior = generation_contract or {}
+        contract = {**contract, "_slot_prior_eligibility": {
+            "subject_categories": normalize_list((prior.get("intent_constraints") or {}).get("subject_categories")),
+            "slot_blocked": bool(slot_block_reason(data, slot, prior)),
+            "contract": prior,
+        }}
+    ranker = (candidate_pack_rank_slot_rows_evidence if policy == "evidence-union"
+              else candidate_pack_rank_slot_rows_stable)
+    rows, metadata = ranker(data, slot, source_rows, selected_id, choices, core,
+                            bm25f_payload, global_query, contract, preset)
+    if metadata is not None:
+        metadata["policy"] = policy
+        metadata["experimental"] = policy == "evidence-union"
+        diagnostics = metadata.setdefault("_diagnostics", {})
+        diagnostics.setdefault("sampler_pool_count", len(source_rows))
+        diagnostics.setdefault("catalog_count", len((data.get("slots") or {}).get(slot) or []))
+        diagnostics.setdefault("ranking_ids", [str(row["id"]) for row in rows])
+        diagnostics.setdefault("coverage_status", "unjudged_catalog_coverage")
+        diagnostics["normalized_subject_categories"] = normalize_list((contract.get("intent_constraints") or {}).get("subject_categories"))
+    return rows, metadata
+
+
+def candidate_pack_slot_vector_key(index: JsonDict, query: str) -> Optional[str]:
+    """Bind private cached query vectors to their complete validated space."""
+    provider = str(index.get("provider") or "")
+    model = str(index.get("embedding_model") or "")
+    dimensions = index.get("embedding_dimensions")
+    if not provider or not model or type(dimensions) is not int or dimensions <= 0:
+        return None
+    return canonical_json_sha256({"provider": provider, "model": model,
+                                  "dimensions": dimensions,
+                                  "query_sha256": hashlib.sha256(query.encode("utf-8")).hexdigest()})
+
+
+def cache_candidate_pack_slot_vector(data: JsonDict, index: JsonDict, query: str, vector: Sequence[float]) -> None:
+    key = candidate_pack_slot_vector_key(index, query)
+    if key is None or len(vector) != index["embedding_dimensions"]:
+        return
+    cache = data.setdefault(SLOT_QUERY_VECTORS_DATA_KEY, {})
+    cache.pop(key, None)
+    cache[key] = list(vector)
+    # A data object may live across requests; retain only a bounded recent set.
+    while len(cache) > 64:
+        cache.pop(next(iter(cache)))
+
+
+def candidate_pack_rank_slot_rows_evidence(
+    data: JsonDict,
+    slot: str,
+    source_rows: Sequence[JsonDict],
+    selected_id: str,
+    choices: JsonDict,
+    core: Optional[JsonDict],
+    bm25f_payload: Optional[JsonDict],
+    global_query: str,
+    generation_contract: Optional[JsonDict] = None,
+    preset: Optional[JsonDict] = None,
+) -> tuple[List[JsonDict], Optional[JsonDict]]:
+    """Fuse core-grounded hits after reapplying hard guards to new options."""
+
+    original = [dict(row) for row in source_rows if isinstance(row, dict) and row.get("id")]
+    if not core or not bm25f_payload or not global_query:
+        return original, None
+    focus_query, source_fields = candidate_pack_slot_focus_text(core, slot)
+    if not focus_query or focus_query == global_query:
+        return original, None
+    base_rows = list(original)
+    original_count = len(original)
+    entries_by_id = {
+        str(entry.get("id") or ""): entry
+        for entry in data.get("slots", {}).get(slot, []) or []
+        if isinstance(entry, dict) and str(entry.get("id") or "")
+    }
+    contract = generation_contract if isinstance(generation_contract, dict) else {}
+    subject_categories = set(normalize_list((contract.get("intent_constraints") or {}).get("subject_categories")))
+    no_people = bool(contract.get("no_people") or (contract.get("intent_constraints") or {}).get("no_people"))
+    soft_policy = contract.get("soft_anchor_policy") or {}
+    pool_trace = contract.get("candidate_pool_trace") or {}
+    pool_record = pool_trace.get(slot) if isinstance(pool_trace, dict) else {}
+    # Retrieval must not prune or reorder policy-constrained sampler pools.
+    if ((pool_record or {}).get("forced") or slot in normalize_list(contract.get("forced_slots"))
+            or soft_anchor_critical_slot(soft_policy, slot)
+            or soft_anchor_atomic_pool_for_slot(soft_policy, slot)):
+        return original, None
+    can_expand = bool(
+        slot in SLOT_FOCUS_EXPANSION_SLOTS
+        and contract
+        and preset is not None
+        and not (pool_record or {}).get("forced")
+        and not soft_anchor_critical_slot(soft_policy, slot)
+        and not soft_anchor_atomic_pool_for_slot(soft_policy, slot)
+        and not slot_block_reason(data, slot, contract)
+    )
+    picked_others = {
+        other_slot: entry
+        for other_slot, choice in choices.items()
+        if other_slot != slot and isinstance(choice, dict)
+        for entry in [candidate_pack_slot_entry_by_id(data, other_slot, str(choice.get("id") or ""))]
+        if entry is not None
+    }
+    if can_expand:
+        existing_ids = {str(row["id"]) for row in original}
+        core_tokens = candidate_pack_relevance_tokens(global_query)
+        subject_tokens = candidate_pack_relevance_tokens(
+            str(core.get("subject") or "")
+        ) | subject_categories
+        if no_people:
+            subject_tokens.discard("human")
+        required_subject_ids = set(normalize_list(
+            (contract.get("intent_constraints") or {}).get("subject_entry_ids")
+        ))
+        excluded_phrases = [
+            clean_spaces(str(value))
+            for value in core.get("user_exclusions") or []
+            if clean_spaces(str(value))
+        ]
+        role_policy = normalize_role_scene_policy(
+            (soft_policy or {}).get("role_scene_policy")
+        ) if slot == "location" else {}
+        allowed_locations = set(normalize_list(role_policy.get("allowed_locations")))
+        forbidden_locations = set(normalize_list(role_policy.get("forbidden_locations")))
+        if role_policy.get("enforce"):
+            forbidden_locations.update(
+                normalize_list(role_policy.get("discouraged_generic_locations"))
+            )
+        for entry in data.get("slots", {}).get(slot, []) or []:
+            entry_id = str(entry.get("id") or "")
+            if not entry_id or entry_id in existing_ids:
+                continue
+            if slot == "subject":
+                if required_subject_ids and entry_id not in required_subject_ids:
+                    continue
+                if subject_categories and subject_category({"subject": entry}, data) not in subject_categories:
+                    continue
+            if allowed_locations and role_policy.get("enforce") and entry_id not in allowed_locations:
+                continue
+            if entry_id in forbidden_locations:
+                continue
+            if not entry_matches_preset_domain_scope(entry, preset or {}, data):
+                continue
+            age_only_subject = candidate_pack_age_only_subject_match(entry, slot, core)
+            block_reason = entry_block_reason(entry, slot, contract)
+            if block_reason and not (age_only_subject and block_reason == "adult_not_allowed"):
+                continue
+            if not compatible_with_semantic_hard_guards(
+                entry, preset or {}, {}, slot,
+                allow_adult_item=age_only_subject,
+            ):
+                continue
+            if not compatible_with_slot_context(slot, entry, picked_others, data):
+                continue
+            if set(normalize_list(entry.get("for_any"))) and not (
+                set(normalize_list(entry.get("for_any"))) & subject_tokens
+            ):
+                continue
+            if set(normalize_list(entry.get("exclude_for_any"))) & subject_tokens:
+                continue
+            if values_as_set(entry, "requires_any_tags", "requires_any") and not (
+                values_as_set(entry, "requires_any_tags", "requires_any") & core_tokens
+            ):
+                continue
+            if not values_as_set(entry, "requires_all_tags", "requires_all").issubset(core_tokens):
+                continue
+            if values_as_set(entry, "exclude_any_tags", "exclude_any") & core_tokens:
+                continue
+            blob = candidate_pack_entry_blob(
+                entry,
+                extra=[
+                    str(entry.get("semantic_caption") or ""),
+                    str(entry.get("embedding_text") or ""),
+                    str(entry.get("definition") or ""),
+                    *normalize_list(entry.get("concept_units")),
+                    *normalize_list(entry.get("manifestations")),
+                ],
+            )
+            if any(intent_alias_matches(blob, phrase) for phrase in excluded_phrases):
+                continue
+            original.append({
+                "id": entry_id,
+                "weight": item_base_weight(entry),
+                "applicability_status": "eligible",
+                "applicability_source": "slot_focus_hard_guarded_pool",
+            })
+            existing_ids.add(entry_id)
+    by_id = {str(row["id"]): row for row in original}
+    if not by_id:
+        return base_rows, None
+    doc_to_id = {f"slot:{slot}:{entry_id}": entry_id for entry_id in by_id}
+    # Search a bounded UNION. A focused hit must not disappear merely because
+    # the whole-scene lane spends its capacity on a different scene component.
+    search_limit = min(len(doc_to_id), max(32, candidate_pack_slot_limit(slot) * 12))
+    query_options = {"query_term_cap": 1.0, "function_word_weight": 0.15}
+    global_hits = rank_bm25f(
+        bm25f_payload, {"global_context": global_query},
+        allowed_ids=doc_to_id, limit=search_limit, **query_options,
+    )
+    focus_hits = rank_bm25f(
+        bm25f_payload, {"slot_focus": focus_query},
+        allowed_ids=doc_to_id, limit=search_limit, **query_options,
+    )
+    meaning = slot_retrieval_evidence.project(core, slot)
+    evidence = slot_retrieval_evidence.positive_evidence(meaning)
+    global_lane = [str(row["document_id"]) for row in global_hits]
+    focus_lane = [str(row["document_id"]) for row in focus_hits]
+    # Reuse the already-paid whole-scene query vector and validated catalogue
+    # vectors. Missing vectors use lexical lanes; retrieval never calls an API.
+    semantic_index = data.get(SEMANTIC_INDEX_DATA_KEY) or {}
+    vector_key = candidate_pack_slot_vector_key(semantic_index, global_query)
+    vector = (data.get(SLOT_QUERY_VECTORS_DATA_KEY) or {}).get(vector_key) if vector_key else None
+    index_entries = semantic_index.get("entries") or {}
+    dense_scores = {}
+    if isinstance(vector, list) and vector:
+        for document_id in doc_to_id:
+            candidate_vector = (index_entries.get(document_id) or {}).get("vector")
+            if isinstance(candidate_vector, list) and len(candidate_vector) == len(vector):
+                dense_scores[document_id] = cosine_similarity(vector, candidate_vector)
+    dense_lane = sorted(dense_scores, key=lambda key: (-dense_scores[key], key))[:search_limit]
+    lanes = [global_lane, focus_lane]
+    if dense_lane:
+        lanes.append(dense_lane)
+    fused = reciprocal_rank_fusion(lanes, k=30)
+    fused_scores = {str(row["document_id"]): float(row["score"]) for row in fused}
+    union = set(fused_scores)
+    if not union:
+        return base_rows, None
+    conflicts = {}
+    for document_id in union:
+        entry = entries_by_id.get(doc_to_id[document_id], {})
+        reasons = slot_retrieval_evidence.conflict_reasons(core, entry, slot)
+        if reasons:
+            conflicts[document_id] = reasons
+    # Partial grammatical evidence is advisory: lower suspected conflicts but
+    # never delete eligible candidates on the strength of a regex recognizer.
+    ranked_docs = sorted(
+        union,
+        key=lambda document_id: (
+            document_id in conflicts,
+            -(fused_scores[document_id]
+              + 0.06 * slot_retrieval_evidence.evidence_overlap(entries_by_id.get(doc_to_id[document_id], {}), evidence)
+              + (0.001 if not slot_conflict_violations(slot, entries_by_id.get(doc_to_id[document_id], {}), picked_others, data, "hard") else 0.0)),
+            document_id,
+        ),
+    )
+    recall_policy = str(data.get(RECALL_LANE_POLICY_DATA_KEY) or "off")
+    if recall_policy not in {"off", "reserve-leaders"}:
+        raise ValueError("unsupported recall lane policy")
+    if recall_policy == "reserve-leaders":
+        # Independent ablation: keep pool size, eligibility and candidate
+        # judgments unchanged; only reserve each lane's first member.
+        budget = candidate_pack_slot_limit(slot)
+        head = reserve_lane_leaders(ranked_docs, lanes, budget)
+        ranked_docs = head + [doc for doc in ranked_docs if doc not in head]
+    # Relevance selection does not inherit sampler diversity or random order.
+    # Creativity remains in its separate open-dimension exploration path;
+    # public non-preferential display shuffling remains a later operation.
+    ordered_ids = [doc_to_id[document_id] for document_id in ranked_docs]
+    # Zero-hit sampler rows remain fallback alternatives. Pack construction
+    # reserves a non-preferential place for the selected member within budget.
+    ordered_ids.extend(str(row["id"]) for row in base_rows)
+    deduped_ids = list(dict.fromkeys(ordered_ids))
+    metadata: JsonDict = {
+        "contract_version": "photo-slot-query-fusion/v2",
+        "method": "bounded_eligible_union_frozen_evidence_rerank",
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "global_query_sha256": hashlib.sha256(global_query.encode("utf-8")).hexdigest(),
+        "slot_query_sha256": hashlib.sha256(focus_query.encode("utf-8")).hexdigest(),
+        "slot_query_source_fields": source_fields,
+        "advisory_only": True,
+        "candidate_budget_unchanged": True,
+        "hard_guarded_expansion_count": len(original) - original_count,
+        "_diagnostics": {
+            "catalog_count": len(entries_by_id), "sampler_pool_count": original_count,
+            "eligible_count": len(original), "expansion_enabled": can_expand,
+            "global_lane_count": len(global_lane), "focus_lane_count": len(focus_lane),
+            "embedding_lane_count": len(dense_lane), "union_count": len(union),
+            "recall_lane_policy": recall_policy,
+            "lane_leaders": [lane[0] for lane in lanes if lane],
+            "conflict_demotions": {doc_to_id[key]: value for key, value in sorted(conflicts.items())},
+            "post_advisory_count": len(deduped_ids),
+            "ranking_ids": deduped_ids, "meaning": meaning,
+            "coverage_status": "unjudged_catalog_coverage",
+            "selection_policy": "relevance_before_public_shuffle",
+        },
     }
     return [by_id[entry_id] for entry_id in deduped_ids], metadata
 
@@ -4522,6 +4931,18 @@ def candidate_pack_build_slots(
     preset = candidate_pack_preset_by_id(data, str(result.get("preset_id") or "")) or {}
     total = 0
     score_rows = [row for row in trace.get("slot_scores") or [] if isinstance(row, dict)]
+    if authorial_core:
+        active_slots = {str(row.get("slot") or "") for row in score_rows} | set(choices)
+        for inactive_slot in ("prop", "body_pose", "lighting", "composition"):
+            meaning = slot_retrieval_evidence.project(authorial_core, inactive_slot)
+            if inactive_slot not in active_slots and slot_retrieval_evidence.positive_evidence(meaning):
+                trace.setdefault("slot_retrieval_diagnostics", {})[inactive_slot] = {
+                    "status": "frozen_evidence_in_inactive_slot",
+                    "slot_block_reason": slot_block_reason(data, inactive_slot, contract),
+                    "catalog_count": len((data.get("slots") or {}).get(inactive_slot) or []),
+                    "coverage_status": "inactive_not_a_ranking_failure",
+                    "exposed_count": 0,
+                }
     for score_index, score_row in enumerate(score_rows):
         if not isinstance(score_row, dict):
             continue
@@ -4589,7 +5010,13 @@ def candidate_pack_build_slots(
             authorial_core, bm25f_payload, global_query,
             contract, preset,
         )
-        rows = candidate_pack_rows_with_selected(source_rows, selected_id, min(limit, available))
+        if slot_retrieval:
+            diagnostics = slot_retrieval.pop("_diagnostics", {})
+            rows = candidate_pack_rows_with_selected(source_rows, selected_id, min(limit, available))
+            diagnostics.update(exposed_count=len(rows), budget_loss_count=max(0, len(source_rows) - len(rows)))
+            trace.setdefault("slot_retrieval_diagnostics", {})[slot] = diagnostics
+        else:
+            rows = candidate_pack_rows_with_selected(source_rows, selected_id, min(limit, available))
         if not rows:
             continue
         probabilities = candidate_pack_normalized_probabilities(rows)
@@ -4709,7 +5136,13 @@ def candidate_pack_build_slots(
             contract, preset,
         )
         ranked_count = len(rows)
-        rows = candidate_pack_rows_with_selected(rows, raw_id, min(limit, remaining))
+        if slot_retrieval:
+            diagnostics = slot_retrieval.pop("_diagnostics", {})
+            rows = candidate_pack_rows_with_selected(rows, raw_id, min(limit, remaining))
+            diagnostics.update(exposed_count=len(rows), budget_loss_count=max(0, ranked_count - len(rows)))
+            trace.setdefault("slot_retrieval_diagnostics", {})[str(slot)] = diagnostics
+        else:
+            rows = candidate_pack_rows_with_selected(rows, raw_id, min(limit, remaining))
         probabilities = candidate_pack_normalized_probabilities(rows)
         candidates: List[JsonDict] = []
         for row, probability in zip(rows, probabilities):
@@ -6294,7 +6727,7 @@ def candidate_pack_contextual_adult_appeal(
         "subject_category": snapshot["context"]["subject_category"],
         "preset_domains": [],
         "adult_allowed": contract["eligibility"]["status"] == "eligible",
-        "intent_constraints": authorial_core_generation_constraints(core),
+        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=snapshot),
     }
     exclusions = [
         candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []
@@ -9312,12 +9745,15 @@ def compile_render_repair_contract(core: Any) -> Optional[JsonDict]:
     return contract
 
 
-def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
+def authorial_core_generation_constraints(
+    core: JsonDict, *, creative_control_snapshot: Optional[JsonDict] = None,
+) -> JsonDict:
     """Translate only explicit structural exclusions into existing guards.
 
-    Exclusions never become positive retrieval text.  Reusing the established
-    no-people parser keeps this adapter generic and avoids introducing a new
-    adult/safety classifier.
+    Exclusions never become positive retrieval text. A supplied pre-core
+    snapshot must bind the same request/core and may only strengthen this
+    existing guard through its explicit no_people context. Neither nonhuman
+    category inference nor candidate metadata supplies that boolean.
     """
 
     exclusions = [
@@ -9336,10 +9772,28 @@ def authorial_core_generation_constraints(core: JsonDict) -> JsonDict:
             f"{exclusion}なし",
         )
     )
+    exclusion_no_people = no_people
+    bound_no_people = False
+    if creative_control_snapshot is not None:
+        if core.get("contract_version") != AUTHORIAL_CORE_V3_CONTRACT_VERSION:
+            raise ValueError("bound creative context requires a v3 authorial core")
+        # Context is an explicit requester interpretation frozen before local
+        # retrieval, not a candidate-derived or inferred subject preference.
+        creative_controls.validate(creative_control_snapshot, core.get("source_request"))
+        if core.get("creative_controls_sha256") != creative_control_snapshot["canonical_sha256"]:
+            raise ValueError("authorial core does not bind the supplied pre-core creative controls")
+        bound_no_people = (creative_control_snapshot.get("context") or {}).get("no_people") is True
+    no_people = exclusion_no_people or bound_no_people
     dimension_scope = authorial_core_intent_dimension_scope(core)
     return {
         "no_people": no_people,
-        "source": "explicit_authorial_core_user_exclusions",
+        "source": ("explicit_request_exclusions_and_bound_creative_context" if bound_no_people
+                   else "explicit_authorial_core_user_exclusions"),
+        **({"no_people_sources": [
+                *(["user_exclusions"] if exclusion_no_people else []),
+                "bound_creative_controls.context.no_people",
+            ], "creative_controls_sha256": creative_control_snapshot["canonical_sha256"]}
+           if bound_no_people else {}),
         "excluded_term_count": len(exclusions),
         **(
             {
@@ -14617,6 +15071,39 @@ def candidate_pack_ensure_species_policy_candidates(
         payload["candidate_count"] = max(int(payload.get("candidate_count") or 0), len(candidates))
 
 
+def candidate_pack_semantic_bundle_admission(data: JsonDict, pack: JsonDict, bundles: JsonDict) -> JsonDict:
+    """Recompute opt-in eligibility for immutable, whole authored bundles.
+
+    Called identically by generation and the source-recomputing auditor.
+    Bundle-only members are read from their dictionary entries, not from a
+    published eligibility assertion or the already filtered ordinary inventory.
+    """
+    if (pack.get("semantic_constraint_validation") or {}).get("policy") != "structured-v1":
+        return bundles
+    core = pack.get("authorial_core") or {}
+    decisions: JsonDict = {}
+    retained = []
+    for bundle in bundles.get("candidates") or []:
+        member_decisions: JsonDict = {}
+        for member in bundle.get("member_candidates") or []:
+            slot = str(member.get("slot") or "")
+            if slot not in {"lighting", "camera_direction", "camera_height"}:
+                continue
+            entry = candidate_pack_slot_entry_by_id(data, slot, str(member.get("entry_id") or "")) or {}
+            member_decisions[str(member.get("id") or "")] = semantic_constraints.assess_candidate(core, entry, slot)
+        if member_decisions:
+            decisions[str(bundle.get("id") or "")] = member_decisions
+        if all(row.get("status") == "compatible" for row in member_decisions.values()):
+            retained.append(bundle)
+    return {**bundles, "candidates": retained,
+            "semantic_constraint_admission": {
+                "contract_version": "photo-semantic-bundle-admission/v1",
+                "policy": "structured-v1", "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+                "before_count": len(bundles.get("candidates") or []),
+                "retained_count": len(retained), "bundle_member_decisions": decisions,
+                "unit": "whole_authored_bundle_no_partial_rewrite_no_refill"}}
+
+
 def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict:
     """Admit self-contained optional bundles without exposing sampler choices.
 
@@ -14628,7 +15115,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     core = pack.get("authorial_core") or {}
     policy = (data.get("candidate_semantic_policy") or {}).get("joint_adoption") or {}
     if not policy:
-        return photo_candidate_semantics.public_bundles(data, pack)
+        return candidate_pack_semantic_bundle_admission(data, pack, photo_candidate_semantics.public_bundles(data, pack))
     query, _ = authorial_core_retrieval_text(core)
     query_tokens = candidate_pack_relevance_tokens(query)
     exclusions = [candidate_pack_relevance_tokens(value) for value in core.get("user_exclusions") or []]
@@ -14636,7 +15123,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
     constraints = {
         "subject_category": "generic", "preset_domains": [],
         "adult_allowed": candidate_pack_visual_obligation_adult_context([{"text": query}], None),
-        "intent_constraints": authorial_core_generation_constraints(core),
+        "intent_constraints": authorial_core_generation_constraints(core, creative_control_snapshot=pack.get("creative_controls")),
     }
     admissions: JsonDict = {}
     for bundle in data.get("candidate_bundles") or []:
@@ -14674,7 +15161,7 @@ def candidate_pack_candidate_bundles(data: JsonDict, pack: JsonDict) -> JsonDict
             "all_member_guards_satisfied": True,
             "external_context_assumed": False,
         }
-    return photo_candidate_semantics.public_bundles(data, pack, admissions)
+    return candidate_pack_semantic_bundle_admission(data, pack, photo_candidate_semantics.public_bundles(data, pack, admissions))
 
 
 def build_sampler_diagnostic(result: JsonDict, data: JsonDict) -> JsonDict:
@@ -15045,9 +15532,74 @@ def build_candidate_pack(
                 candidate["_v6_semantic_source"] = photo_candidate_semantics.semantic_source(
                     entry, slot, data.get("candidate_semantic_policy")
                 )
+    # Freeze the ordinary candidate inventory before authored bundle admission.
+    # Filtering individual members after this point would invalidate bundle hashes.
+    if str(data.get(SEMANTIC_CONSTRAINT_POLICY_DATA_KEY) or "off") == "structured-v1":
+        pack = candidate_pack_apply_semantic_constraints(pack, candidate_entries)
+    elif str(data.get(SEMANTIC_CONSTRAINT_POLICY_DATA_KEY) or "off") != "off":
+        raise ValueError("unsupported semantic constraint policy")
     pack["candidate_bundles"] = candidate_pack_candidate_bundles(data, pack)
     candidate_pack_recompute_id(pack)
     return candidate_pack_project(pack, candidate_pack_version)
+
+
+def candidate_pack_apply_semantic_constraints(
+    pack: JsonDict,
+    candidate_entries: Dict[str, tuple[str, Optional[str], JsonDict]],
+) -> JsonDict:
+    """Experimental partial semantic gate, applied before whole-bundle admission.
+
+    The frozen core and source catalogue remain immutable. Unknown candidates
+    abstain rather than masquerading as compatible; no arbitrary replacements
+    are drawn to refill the budget. The audit checks actual final prompt text.
+    """
+    core = pack.get("authorial_core") or {}
+    target_slots = {"lighting", "camera_direction", "camera_height"}
+    decisions: JsonDict = {}
+    removed: Set[str] = set()
+    before_counts: JsonDict = {}
+    for slot, payload in (pack.get("slots") or {}).items():
+        if slot not in target_slots:
+            continue
+        candidates = payload.get("candidates") or []
+        before_counts[slot] = len(candidates)
+        for candidate in candidates:
+            candidate_id = str(candidate.get("id") or "")
+            original = candidate_entries.get(candidate_id)
+            entry = original[2] if original else {}
+            decision = semantic_constraints.assess_candidate(core, entry, slot)
+            decisions[candidate_id] = decision
+            if decision.get("status") != "compatible":
+                removed.add(candidate_id)
+    for bundle in (pack.get("candidate_bundles") or {}).get("candidates") or []:
+        member_ids = {str(member.get("id") or "") if isinstance(member, dict) else str(member)
+                      for member in bundle.get("member_candidates") or []}
+        if member_ids.intersection(removed):
+            removed.add(str(bundle.get("id") or ""))
+    frozen_core = copy.deepcopy(core)
+    candidate_pack_prune_removed_candidate_references(pack, removed)
+    # Candidate-reference pruning is never allowed to mutate requester facts,
+    # even if an evidence string happens to equal a removed catalogue ID.
+    pack["authorial_core"] = frozen_core
+    for slot, payload in (pack.get("slots") or {}).items():
+        if slot in target_slots:
+            payload["candidate_count"] = len(payload.get("candidates") or [])
+            payload["semantic_abstention_count"] = before_counts.get(slot, 0) - payload["candidate_count"]
+    pack["semantic_constraint_validation"] = {
+        "contract_version": "photo-semantic-constraint-gate/v1",
+        "policy": "structured-v1", "experimental": True,
+        "source_authorial_core_sha256": str(core.get("canonical_sha256") or ""),
+        "source_intent_lock_sha256": str((core.get("intent_lock") or {}).get("canonical_sha256") or ""),
+        "constraints": semantic_constraints.extract_constraints(core),
+        "candidate_decisions": decisions,
+        "before_slot_counts": before_counts,
+        "unknown_policy": "abstain_preserve_baseline_no_arbitrary_refill",
+        "final_validation_required": True,
+        "external_semantic_model_configured": False,
+        "scope": "partial_english_lighting_camera_and_cross_slot_presence",
+        "general_semantic_or_image_quality_guarantee": False,
+    }
+    return candidate_pack_recompute_id(pack)
 
 
 def semantic_description_for_entry(entry: Entry) -> str:
@@ -17131,6 +17683,7 @@ def make_semantic_context(
         dimensions=dimensions,
         api_key=gemini_api_key,
     )
+    cache_candidate_pack_slot_vector(data, index, effective_retrieval_text, query_vector)
     axis_vectors = []
     for item in axis_payload["items"]:
         text = str(item["text"])
@@ -24046,8 +24599,12 @@ def generate_once(
         raise ValueError("--intent cannot be used with --selection-mode rule")
     retrieval_text: Optional[str] = None
     retrieval_provenance: Optional[JsonDict] = None
+    frozen_generation_constraints = None
     if isinstance(authorial_core, dict):
         retrieval_text, retrieval_provenance = authorial_core_retrieval_text(authorial_core, intent)
+        frozen_generation_constraints = authorial_core_generation_constraints(
+            authorial_core, creative_control_snapshot=creative_control_snapshot,
+        )
     try:
         semantic_context = make_semantic_context(
             data,
@@ -24087,6 +24644,28 @@ def generate_once(
             )
         else:
             raise
+    if semantic_context is not None and (frozen_generation_constraints or {}).get("no_people"):
+        # Explicit frozen no-people meaning must reach preset selection too,
+        # not only the later slot guards. Never let a false context weaken it.
+        # Keep the existing user/default routing boundary. Re-resolving the
+        # entire core here would activate unrelated domains/scoped routes for
+        # a default intent and could empty the guarded preset pool.
+        constraints = copy.deepcopy(semantic_context.get("intent_constraints") or {})
+        constraints["no_people"] = True
+        if "subject_categories" in constraints:
+            constraints["subject_categories"] = [category for category in constraints["subject_categories"]
+                                                  if category != "human"]
+        human_entry_ids = {str(row.get("value") or "") for row in constraints.get("matched") or []
+                           if row.get("axis") == "subject_entry" and row.get("category") == "human"}
+        if "subject_entry_ids" in constraints:
+            constraints["subject_entry_ids"] = [entry_id for entry_id in constraints["subject_entry_ids"]
+                                                if entry_id not in human_entry_ids]
+        if "matched" in constraints:
+            constraints["matched"] = [row for row in constraints["matched"] if not (
+                (row.get("axis") == "subject_category" and row.get("value") == "human")
+                or (row.get("axis") == "subject_entry" and row.get("category") == "human")
+            )]
+        semantic_context["intent_constraints"] = constraints
     routed_preset_id = preset_id
     preset = choose_preset(
         data, rng, routed_preset_id, semantic_context, soft_anchor_spec=soft_anchor_spec
@@ -24113,9 +24692,7 @@ def generate_once(
     )
     if isinstance(authorial_core, dict):
         generation_contract["_authorial_core"] = authorial_core
-        generation_contract["authorial_core_constraints"] = authorial_core_generation_constraints(
-            authorial_core
-        )
+        generation_contract["authorial_core_constraints"] = frozen_generation_constraints
         generation_contract["intent_constraints"] = resolve_request_intent_constraints(
             data,
             semantic_context if intent_source == "user" else None,
@@ -25084,6 +25661,18 @@ def main(
         help="Emit candidate-pack JSON for agent composition instead of final prompt JSON/plain text.",
     )
     parser.add_argument(
+        "--slot-retrieval-policy", choices=("stable", "evidence-union"), default="stable",
+        help="Slot retrieval: stable preserves legacy ranking with eligibility fixes; evidence-union is experimental and may regress relevance/conflicts.",
+    )
+    parser.add_argument(
+        "--semantic-constraint-policy", choices=("off", "structured-v1"), default="off",
+        help="Experimental partial lighting/camera constraints and final-text validation; unknown candidates abstain.",
+    )
+    parser.add_argument(
+        "--recall-lane-policy", choices=("off", "reserve-leaders"), default="off",
+        help="Independent evidence-union recall ablation reserving lane leaders within the existing budget.",
+    )
+    parser.add_argument(
         "--candidate-pack-version",
         choices=CANDIDATE_PACK_VERSIONS,
         default=DEFAULT_CANDIDATE_PACK_VERSION,
@@ -25213,6 +25802,9 @@ def main(
     )
 
     data = load_json(args.tags)
+    data[SLOT_RETRIEVAL_POLICY_DATA_KEY] = args.slot_retrieval_policy
+    data[SEMANTIC_CONSTRAINT_POLICY_DATA_KEY] = args.semantic_constraint_policy
+    data[RECALL_LANE_POLICY_DATA_KEY] = args.recall_lane_policy
     request_envelope = load_request_envelope_arg(args.request_envelope_json)
     authorial_core = load_authorial_core_arg(
         args.authorial_core_json,
