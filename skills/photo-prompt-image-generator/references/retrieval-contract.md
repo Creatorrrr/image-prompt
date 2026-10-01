@@ -32,14 +32,24 @@ V6 projects those frozen fields into a versioned BM25F query. Tokenization is NF
 
 ## Slot-focused candidate lookup
 
-The v6 candidate-pack slot shortlist now uses a whole-scene BM25F lane and one slot-focused BM25F lane for each active slot whose frozen core has a relevant subject, setting, event, affect, light, or style field. The focused text is constructed solely from the frozen core and uses the same requester-exclusion redaction as the whole-scene query. It starts with the sampler's eligible pool and may retrieve from the wider same-slot corpus after reapplying request, domain, facet, and exclusion guards. Forced and atomic anchor pools stay closed. This is an advisory candidate search, not a new meaning decision. There is no focused lookup for an inactive slot, a slot without a grounded focus, or a slot with no lexical hit.
+Default `--slot-retrieval-policy stable` preserves the existing field-focused BM25F fusion, global/focused intersection and sampler-selected availability. It repairs frozen-subject category normalization before eligibility and adds private inactive-slot/selection diagnostics. The existing narrow-pool ranking branch remains in use when expansion is solely due to normalization; those additions cannot alone switch it into the broad-search intersection branch. Public retrieval metadata includes policy/experimental markers, so pack bytes and pack IDs may differ from earlier revisions. Candidates newly admitted by normalized eligibility must still pass declared/primary-context guards; this does not globally refilter the legacy pool. Direct adult woman/man noun phrases are recognized only at the subject head, not inside descriptions of statues, photos or nonhuman subjects; explicit no-person constraints still take precedence. A hash-validated pre-core snapshot can also supply its explicit requester-owned context.no_people to the existing slot, bundle and optional adult-inventory guards. In an existing semantic context only people-related fields are updated; domain/scoped routing and other intent-source policies are preserved. This is additive: false or absent context cannot cancel user exclusions, nonhuman category alone creates no ban, and stale/mutated snapshots are rejected. The legacy English no-people parser is not widened by this change. It does not silently turn on the new query weights or wider-union reranker.
 
-The existing sampler order, whole-scene hits, and focused hits are fused within the same candidate budget. Wider-pool candidates are exposed when both query lanes support them; the sampler-selected candidate stays available. Other sampler choices are soft context because the composer may replace multiple coupled slots together. The composer selects jointly across action, pose, prop, subject, setting, and visual style, preserving the frozen relations and all hard gates. A focused match remains advisory and may be rejected. The public slot metadata carries source-core and query hashes plus source field names, but no matched terms or private scores. This path does not run the visual-profile resolver per slot.
+`--slot-retrieval-policy evidence-union` explicitly opts into the experimental `photo-slot-query-fusion/v2`: whole-scene and focused BM25F lanes plus the existing whole-scene embedding vector when available. The focused projection starts with slot-relevant frozen core fields and adds source-bound baseline clauses, literal matching-dimension anchors and required typed assertion evidence. Its `photo-slot-meaning/v1` record preserves role, state, relation evidence and declared locked/open ownership; it neither reads the pre-core feature-selection audit nor creates new meaning or locks. Negative/contrast, depicted and carried-object spans are retained diagnostically but excluded from positive evidence. Camera subslots use separate photographic cues while ownership follows the v3 camera/framing dimensions; literal evidence matching is case-insensitive. The English grammatical projection is deliberately partial. Unrecognized prose remains in the whole-scene lane; this is not a general multilingual semantic parser.
+
+Experimental slot queries cap total repeated-token contribution at 1 and damp articles/copulas to 0.15. Negation and relational words (including off, without and under) remain intact. These are explicit query-time options: document tokenization, generated index recipes and other callers' default scores are unchanged.
+
+Search starts with the recorded sampler pool and may expand the same-slot corpus only after request, domain, facet, subject, declared context/primary-context and exclusion guards. Forced, critical and atomic pools stay closed and bypass the experimental reranker. Frozen subject routing supplies category evidence before eligibility checks; a sampler-selected human is not proof of a human request. Normalization-only stable additions must be focused hits and are appended in fused relevance order, never raw catalog order. Each lane is bounded at `max(32, 12 × slot budget)`, capped by eligible corpus size. The bounded union replaces destructive global/focused intersection. Existing catalogue vectors and authored positive relation cues are reused; this stage never calls an embedding API or paid reranker. Private query-vector keys bind provider, model, dimensions and query hash, with at most 64 recent cached vectors; unknown or mismatched spaces do not activate the dense lane.
+
+Relevance reranking combines rank fusion with bounded, length-normalized evidence overlap. The sampler-selected candidate remains a non-preferential member within the existing pack budget, preserving pointer coherence and creative-exploration/scene-contract inputs. Partial grammatical checks demote suspected inactive-source or explicit multi-token-exclusion conflicts without deleting eligible rows; distinct entities, negated emission, off-camera/off-white and external-light shadows must not be conflated. On an explicitly open dimension, an authorial baseline choice cannot itself penalize an alternative: conflict evidence requires requester evidence. Active requester spans are considered on locked dimensions too. Demotion reorders the retrieved union; zero-hit sampler rows remain fallback alternatives, and selected membership is still reserved within budget. These checks are incomplete and do not replace the composer's joint review or existing audit gates.
+
+In the experimental policy, relevance selection stays separate from open-dimension creative exploration and the later public `seed_shuffled_non_preferential` order. Candidate budgets remain unchanged. Public metadata contains source/query hashes and source fields, not scores, ranked IDs or query evidence. Private `slot_retrieval_diagnostics` distinguishes catalogue size, guarded eligibility, bounded-lane union, conflict demotion and final budget loss. Frozen evidence in an inactive slot is diagnosed without activating the slot past its preset/subject guards. A coverage status of `unjudged_catalog_coverage` is intentional: candidate availability and semantic gold coverage require separate evaluation, and inactive/unsupported slots are not ranking failures.
 
 For v6 typed request routing, subject category and exact subject-entry routes read the frozen subject field. An animal-ear modifier in that field is not treated as a standalone animal subject. Authored human role aliases such as witch can supply the human category when the field does not literally say human; a nearby person in the event cannot reclassify an animal subject.
 For subject candidates only, an explicit adult human in the frozen core may expose a human role tagged `adult` when that tag describes age alone. Adult-content and suggestive tags retain their existing guards.
 
 Visual-profile retrieval uses one generated index derived from the single authored registry: boundary-aware exact lookup rows, a fielded BM25F derivation, and one embedding vector per profile. Runtime rejects stale registry hashes, BM25F recipes or policies, and semantic text recipes. One private resolution is projected into `visual_obligations`, `visual_concept_candidates`, and `semantic_clarification`. Scores, vectors, matched terms, and rank remain private. This lookup is independent of creativity and seed.
+
+The experimental policy is not a recommended default: frozen development final-pack evaluation found higher primary-slot recall alongside lower camera recall and increased known conflicts. Preserve those findings rather than equating wider candidate recall with improved selection. Callers constructing packs directly may set `data[SLOT_RETRIEVAL_POLICY_DATA_KEY] = "evidence-union"`; otherwise they receive the stable policy. Both paths retain public non-preferential shuffling and existing composition/audit authority.
 
 ## Meaning authority
 
@@ -92,3 +102,48 @@ On a lineage-bound retry, a parent hard obligation is not a new inference when i
 Visual-profile text recipe `photo-visual-profile-text/v2` and BM25F policy `photo-visual-profile-bm25f-policy/v2` share one allowlist in `photo_visual_retrieval.py`: positive definition, paraphrases, visual components, and support concept units. Exact aliases remain in the exact/lexical alias lane. Category IDs, component IDs, claim limits, interpretation scope, contrast examples, and orchestration instructions are not positive prototypes. Negation is not removed by a word filter; authored visual meanings may legitimately contain negative-form language. A data editor moves actual limitations into their owning fields and keeps positive fields accurate.
 
 Dictionary text recipe `semantic-text-v5` and lexical policy `photo-semantic-bm25f-policy/v3` also consume authored `concept_units` and directed `relations` alongside the existing public visual-language fields. Relation IDs remain control metadata; subject, relation type, and object retain their direction in both retrieval lanes. Source-data or policy changes require a generated index refresh. Cache reuse is allowed only for byte-identical input text in the same vector space.
+
+## Evaluation scope
+
+Idealized agent-authored slot queries and slot-specific embeddings are separate experiments, not measurements of this automatic projector or production ranker. New pipeline checks must freeze independent inputs before candidate inspection, validate v3 cores, and call the actual pack builder with guards and sampler pools. Lexical-only checks do not establish dense-lane or semantic-judge quality. A small AI-authored holdout supports regression diagnosis, not promotion of evidence-union to default or human relevance claims.
+
+The automatic projector is conservative, not a general English parser. Coordinated explicit negative enumerations retain negative scope, while independent positive clauses after an inactive source can re-enter. Some compound or prefixed sentences can still omit evidence (for example, an inactive lamp after a no-visitors clause or an eye-level camera phrase after an opening lighting adjunct). Such omissions do not grant permission to override a user exclusion or a locked dimension; they remain limitations of the opt-in experiment.
+
+### Experimental structured constraints and independent recall ablation
+
+`--semantic-constraint-policy structured-v1` is opt-in; `off` remains the default.
+It extracts a partial, source-bound English meaning footprint from the already
+frozen v3 core and the public candidate label. Every recognized constraint carries
+its evidence and ownership. No pre-core feature audit, candidate ID, topic ID, or
+private catalogue tag supplies the meaning of the request.
+
+The ordinary candidate inventory is filtered before bundle construction, within
+the existing exposed budget, for lighting and camera families. Authored bundles
+are admitted atomically using the same source-based function in generation and
+audit; bundle-only members in the scoped slots receive the same semantic check.
+Rejected bundles are removed whole, never partially rewritten or rehashed. Explicitly contradictory candidates are
+withheld from selectable inventories (diagnostics still retain their source
+evidence); unknown candidates abstain rather than being called safe or replaced by
+arbitrary fillers. This can substantially reduce candidate coverage, which must
+be reported alongside any conflict improvement. Open creative attributes remain
+editable. The core and its requester-owned facts are never rewritten.
+
+The pack carries `semantic_constraint_validation`, and `audit_composed_prompt.py`
+checks actual `prompt_en` after composition, including recognized internal
+combination conflicts. A recognized contradiction or an
+unresolved governing constraint blocks this experimental audit. The composer
+must revise only the violating addition and re-audit, retaining locked facts;
+the validator does not silently rewrite prose. Chosen candidate IDs alone do not
+prove that their final realization is compatible. The repository's normal writer
+is still an external authoring agent. No external semantic model is configured
+or silently purchased by this flag. The partial recognizer cannot guarantee
+arbitrary natural-language consistency or image quality.
+
+`--recall-lane-policy reserve-leaders` is a separate opt-in ablation for
+`evidence-union`. It reserves the leading eligible item from each lexical/dense
+lane before the same budget cutoff, then fills from the original fused ranking.
+It never expands the eligible set or changes a semantic verdict. If capacity is
+insufficient, existing lane order breaks ties; existing selected-member placement
+can still consume capacity. Compare recall-only separately from constraints and
+report catalogue absence, pool miss, rejection, unknown, and final adoption as
+different outcomes. Neither flag promotes the experimental retrieval policy.

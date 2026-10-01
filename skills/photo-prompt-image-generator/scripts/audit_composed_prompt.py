@@ -19,6 +19,7 @@ if _SCRIPTS_IMPORT_DIR_ADDED:
     sys.path.insert(0, _SCRIPTS_IMPORT_DIR)
 try:
     import photo_candidate_semantics
+    import semantic_constraints
     import photo_contextual_appeal
     import photo_embodiment
     import photo_creative_controls as creative_controls
@@ -5887,6 +5888,24 @@ def audit_render_repair_v6(
     return failures
 
 
+def audit_semantic_constraint_gate(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
+    """Check actual final prose, including arbitrary additions beyond chosen IDs.
+
+    This opt-in partial validator never rewrites a frozen baseline or claims an
+    absent recognizer proves safety. Repairs belong to the composer: remove or
+    rephrase only the violating addition, then rerun this audit.
+    """
+    policy = pack.get("semantic_constraint_validation") or {}
+    if policy.get("policy") != "structured-v1":
+        return {"enabled": False, "status": "not_run"}
+    core = pack.get("authorial_core") or {}
+    if policy.get("source_authorial_core_sha256") != core.get("canonical_sha256"):
+        return {"enabled": True, "status": "contradiction", "violations": [{"reason": "core_hash_binding_mismatch"}]}
+    report = semantic_constraints.validate_final(core, str(composed.get("prompt_en") or ""))
+    return {"enabled": True, **report,
+            "repair_policy": "revise_violating_additions_only_preserve_requester_locks_then_reaudit"}
+
+
 def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     retired_fields = {"authorial_request", "hybrid_augmentation", "moe_response"} & set(pack)
@@ -6535,6 +6554,11 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     if final_touch_warning:
         warnings.append(final_touch_warning)
 
+    semantic_report = audit_semantic_constraint_gate(pack, composed)
+    if semantic_report.get("enabled") and semantic_report.get("status") != "compatible":
+        failures.append({"check": "semantic_constraint_final_text",
+                         "reason": "final text conflicts with a recognized lock or needs unresolved semantic review",
+                         "details": semantic_report})
     status = "fail" if failures else "pass"
     quality_status = "warn" if warnings else "pass"
     effective_visual_contract, _ = derive_effective_visual_obligation_contract(
@@ -6544,6 +6568,7 @@ def audit_composed_prompt(pack: dict[str, Any], composed: dict[str, Any]) -> dic
     return {
         "status": status,
         "quality_status": quality_status,
+        **({"semantic_constraint_validation": semantic_report} if semantic_report.get("enabled") else {}),
         "pack_id": pack_id or None,
         "chosen_candidate_count": len(chosen),
         "chosen_visual_concept_ids": [
