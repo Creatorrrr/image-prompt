@@ -70,7 +70,7 @@ class OccupationKoreanLabelDataCleanupTests(unittest.TestCase):
             self.assertEqual(current['tags'], row['before']['tags'])
             self.assertFalse(re.search('남성|여성|노인|청년|소년|소녀', current['ko']))
 
-    def test_v6_projection_adds_korean_terms_without_losing_baseline_terms(self):
+    def test_intermediate_projection_adds_korean_terms_without_losing_baseline_terms(self):
         for row in self.frozen['inventory']:
             current, source = generator.candidate_pack_summarize_slot_candidate(self.data, 'subject', {'id': row['id']}, 0.0, '')
             expected = row['proposed_after'] if row['id'] in self.acceptance['accepted_ids'] else row['before']
