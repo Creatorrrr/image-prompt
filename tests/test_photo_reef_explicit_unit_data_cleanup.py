@@ -1,6 +1,7 @@
 """Source-only reef process correction, with historical deferral preserved."""
 from pathlib import Path
 import copy
+import gzip
 import hashlib
 import importlib.util
 import json
@@ -10,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'skills/photo-prompt-image-generator/assets'
 E = ROOT / 'docs/research-evidence/photo-prompt/reef-wave-explicit-unit-data-cleanup-20261001'
 PUBLIC = ROOT / 'docs/research-evidence/photo-prompt/published-data-v6-surface-audit-20261001'
+NEXT = ROOT / 'docs/research-evidence/photo-prompt/krummholz-korean-alias-data-cleanup-20261001'
 
 
 def load_module(name, path):
@@ -31,6 +33,10 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         cls.states = common.states_from_freeze(cls.frozen)
         cls.target = next(row for row in cls.frozen['inventory'] if row['decision'] == 'fix')
         cls.current = common.g.load_json(ASSETS / 'photo_prompt_tags.json')
+        # The following cycle froze the exact published reef state before any
+        # further edits. Keep this historical acceptance immutable while the
+        # new cycle enforces its own complete current-source delta.
+        cls.accepted_snapshot = json.loads(gzip.decompress((NEXT / 'baseline-merged-data.json.gz').read_bytes()))
         cls.runtime = surface.runtime_data()
         cls.contract = json.loads((PUBLIC / 'generated-contract-result.json').read_text())
         cls.preflight = json.loads((E / 'source-and-public-preflight.json').read_text())
@@ -48,7 +54,7 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         self.assertEqual(self.frozen['fresh_document']['sha256'],
                          'ea93ec6f75d76cd12e942ba6b4326abd69337466149e254be242d03bbc6841f1')
 
-    def test_raw_extension_has_exactly_the_three_approved_field_changes(self):
+    def test_historical_raw_delta_and_current_reef_fields_are_exact(self):
         before = json.loads((E / 'baseline-raw-extension.json').read_text())
         expected = copy.deepcopy(before)
         rows = expected['slots'][self.target['slot']]
@@ -56,16 +62,18 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         self.assertEqual(rows[i], self.target['before'])
         rows[i] = copy.deepcopy(self.target['fresh_explicit_unit'])
         current = json.loads((ROOT / self.frozen['source_file']).read_text())
-        self.assertEqual(current, expected)
+        self.assertEqual(json.loads((NEXT / 'baseline-raw-extension.json').read_text()), expected)
+        current_reef = next(row for row in current['slots'][self.target['slot']] if row['id'] == self.target['id'])
+        self.assertEqual(current_reef, self.target['fresh_explicit_unit'])
         self.assertEqual(current['maintenance_ref'], before['maintenance_ref'])
         old, new = self.target['before'], self.target['fresh_explicit_unit']
         self.assertEqual({k: v for k, v in old.items() if k not in ('en', 'ko')},
                          {k: v for k, v in new.items() if k not in ('en', 'ko', 'concept_units')})
         self.assertEqual({k: v for k, v in new.items() if k != 'concept_units'}, self.target['old_corrected_labels'])
 
-    def test_complete_merged_data_bundles_and_sixteen_controls_are_exact(self):
-        self.assertEqual(self.current, self.states['fresh_explicit_unit'])
-        self.assertEqual(self.current['candidate_bundles'], self.states['baseline']['candidate_bundles'])
+    def test_historical_merged_delta_and_current_sixteen_controls_are_exact(self):
+        self.assertEqual(self.accepted_snapshot, self.states['fresh_explicit_unit'])
+        self.assertEqual(self.accepted_snapshot['candidate_bundles'], self.states['baseline']['candidate_bundles'])
         for item in self.frozen['inventory']:
             if item['decision'] != 'keep':
                 continue
@@ -133,7 +141,7 @@ class ReefExplicitUnitDataCleanupTests(unittest.TestCase):
         decision = json.loads(raw)
         self.assertEqual(decision['accepted_ids'], [self.target['id']])
         self.assertEqual(set(decision['accepted_fields']), {'en', 'ko', 'concept_units'})
-        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.current))
+        self.assertEqual(decision['accepted_dictionary_hash'], common.g.dictionary_hash(self.accepted_snapshot))
         self.assertEqual(decision['measured_limits']['top5_membership_changes'], 0)
         self.assertEqual(decision['measured_limits']['top12_membership_changes'], 0)
         adverse = {(row['method'], row['query_id']): row for row in decision['adverse_cases']}

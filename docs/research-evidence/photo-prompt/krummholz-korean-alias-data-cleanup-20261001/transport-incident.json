@@ -1,0 +1,50 @@
+{
+  "status": "single_failed_or_uncertain_transport_attempt_manual_recovery_prepared_only",
+  "failure_utc": "2026-10-01T20:48:49.676999+00:00",
+  "session_reported_by_coordinator": {
+    "session_id": 54112,
+    "terminal_exit_code": 1
+  },
+  "expected": "Embed exactly the frozen 618-byte proposed krummholz document with gemini-embedding-2 at768 dimensions, then save one vector before any query requests.",
+  "observed": {
+    "attempts": 1,
+    "attempt_status": "failed_or_uncertain_no_retry",
+    "exception_class": "URLError",
+    "reason_type": "not captured by original runner",
+    "errno": "not captured by original runner",
+    "successful_new_vector_cache_exists": false,
+    "query_attempts": 0,
+    "measured_rankings_exist": false
+  },
+  "root_cause": "Unknown. No evidence establishes whether the request was sent or billed.",
+  "credential_free_get_checks_reported_by_coordinator": {
+    "official_gemini_root_http_status": 404,
+    "github_http_status": 200,
+    "interpretation": "These GET responses show later endpoint reachability only; they do not diagnose the failed embedding POST or prove it was unbilled."
+  },
+  "unchanged_during_recovery": {
+    "expected_proposed_raw_source_sha256": "5a3f0aaee3d811378d4f9af189acd779442b8509a3902a7b6e25cbc9580a49d3",
+    "observed_raw_source_sha256": "5a3f0aaee3d811378d4f9af189acd779442b8509a3902a7b6e25cbc9580a49d3",
+    "expected_baseline_index_manifest_sha256": "497744985bb2421632bfd323258956170f3e6613ab7c3f4a1e559f679d7a2e9a",
+    "observed_index_manifest_sha256": "497744985bb2421632bfd323258956170f3e6613ab7c3f4a1e559f679d7a2e9a",
+    "runtime_source_hashes_exact": true,
+    "original_attempt_file_sha256": "a0495c0426109994593915d960be74b00945456b83560eb26267d310c48654ae",
+    "original_attempt_object_sha256": "8eff38482718467084c14bbd10128263e7cc628f3ed5e18a72226d8ef6ee3b65",
+    "all_inventory_queries_inputs_source_acceptance_unchanged": true
+  },
+  "accounting": {
+    "original_pre_attempt_tracked_upper_usd": 1.2091392,
+    "original_failure_upper_usd": 0.0016384,
+    "ledger_upper_after_charging_failure_usd": 1.2107776,
+    "planned_total_attempts_including_failure": 13,
+    "planned_total_attempt_upper_usd": 0.0212992,
+    "planned_cumulative_upper_usd": 1.2304384,
+    "ceiling_attempts": 15,
+    "ceiling_cycle_upper_usd": 0.024576,
+    "rule": "max(live tracked ledger, original baseline + all recorded attempts), then add only prospective new attempts; no double counting"
+  },
+  "recovery_rationale_file": "manual-recovery-rationale.json",
+  "recovery_scope": "Exactly one explicit flag-gated retry of the same document hash. Failed record remains verbatim. Any further failed/uncertain attempt blocks all continuation. No automatic retry.",
+  "new_failure_diagnostics": "Exception class, underlying reason type, and numeric errno only; message/reason text, URLs, headers, response bodies and secrets are suppressed.",
+  "central_failure_report": "docs/failed-reports/2026-10-01-krummholz-embedding-transport-recovery.md"
+}

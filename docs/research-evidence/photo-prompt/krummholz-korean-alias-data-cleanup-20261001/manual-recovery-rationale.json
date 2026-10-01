@@ -1,0 +1,41 @@
+{
+  "id": "cycle13-first-document-manual-recovery-20261001",
+  "original_freeze_sha256": "a230261b40b655517f04700f814d077d9bff53af6c3c390b6b639966aa170938",
+  "original_failure_snapshot_file": "recovery-revisions/pre-manual-retry/api-attempts.json",
+  "original_failure_snapshot_sha256": "a0495c0426109994593915d960be74b00945456b83560eb26267d310c48654ae",
+  "failed_attempt": {
+    "number": 1,
+    "kind": "document",
+    "key": "slot:surface_material:treeline_wind_pruned_krummholz_surface",
+    "sha256": "7559ea2349bd286fdb5b6f52bfe2a499444df76ddb471c9278dc122e5eeacec2",
+    "input_utf8_bytes": 618,
+    "status": "failed_or_uncertain_no_retry",
+    "utc": "2026-10-01T20:48:49.676999+00:00",
+    "per_attempt_upper_usd": 0.0016384,
+    "budget_guard": {
+      "ledger_tracked_upper_usd": 1.2091392,
+      "accounted_tracked_upper_usd": 1.2091392,
+      "budget_usd": 10.0,
+      "deadline_utc": "2026-10-02T11:46:56+00:00"
+    },
+    "error_class": "URLError"
+  },
+  "retry_input_sha256": "7559ea2349bd286fdb5b6f52bfe2a499444df76ddb471c9278dc122e5eeacec2",
+  "retry_input_kind": "document",
+  "retry_input_key": "slot:surface_material:treeline_wind_pruned_krummholz_surface",
+  "retry_attempt_number": 2,
+  "maximum_manual_retries": 1,
+  "required_execute_flag": "--manual-retry-first-document",
+  "planned_total_attempts_including_original_failure": 13,
+  "planned_total_attempt_upper_usd": 0.0212992,
+  "planned_cumulative_upper_usd": 1.2304384,
+  "original_failure_counted_as_charged": true,
+  "automatic_retries": 0,
+  "pre_measurement_state": "No successful new vector, no query sent and no rankings measured before recovery revision. Source proposal was already applied by coordinator; preserve source/index/current tests unchanged.",
+  "transport_diagnostics": "Log exception class, reason type and numeric errno only; never message/reason text, URL, headers, response body or credentials.",
+  "invariant_scope": "All inventory/query/input/cache/source/acceptance values and original15-attempt/$0.024576 ceiling remain exact.",
+  "failed_attempt_object_sha256": "8eff38482718467084c14bbd10128263e7cc628f3ed5e18a72226d8ef6ee3b65",
+  "billing_status": "Unknown; conservatively charge the full upper bound for original failed/uncertain attempt. No claim that the failure was pre-send or unbilled.",
+  "transport_incident_file": "transport-incident.json",
+  "recovery_scope": "Explicit one manual same-input retry after terminal first-document URLError; original failure remains charged; no automatic retries or additional uncertain retries."
+}
