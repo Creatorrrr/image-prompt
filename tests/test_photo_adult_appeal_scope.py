@@ -146,11 +146,18 @@ class PhotoAdultAppealScopeTests(unittest.TestCase):
         self.assertFalse(generator.candidate_pack_adult_candidates(adult))
 
     def test_explicit_opt_out_remains_off(self):
-        result = copy.deepcopy(self.result)
-        result["provenance"]["creative_controls"] = generator.creative_controls.resolve(
-            self.core["source_request"], overrides={"sensual": 0, "fetish": 0},
-            context={"subject_category": "human"}, seed=77)
-        adult = self.adult(result=result)
+        # Changing frozen controls requires a fresh core binding, even when
+        # the requested axes are disabled. A stale snapshot is tested separately.
+        core = copy.deepcopy(self.core)
+        result = current_fixtures.generate_once(
+            self.data, random.Random(77), None, ["en"], True, 12, True,
+            selection_mode="rule", include_trace=True, seed=77, creativity=0,
+            authorial_core=core, fixture_context={"subject_category": "human"},
+            sensual_intensity=0, fetish_intensity=0,
+        )
+        adult = generator.candidate_pack_contextual_adult_appeal(
+            self.data, result, {}, authorial_core=core,
+        )
         self.assertFalse(adult["enabled"])
         self.assertFalse(generator.candidate_pack_adult_candidates(adult))
 
