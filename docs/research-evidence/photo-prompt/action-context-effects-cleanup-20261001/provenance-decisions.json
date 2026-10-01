@@ -1,0 +1,112 @@
+{
+  "method": "Review actual labels, concept units, relation ownership, affected properties, authored components, proposal groups, source ledger and implementation script. No genericization based on ID alone.",
+  "editing_effect_source_root": "../photo-editing-effects-20261001/",
+  "source_files": [
+    "concept-proposals.json",
+    "implementation-disposition-ledger.json",
+    "sources.md",
+    "implementation-report.md",
+    "integrate_editing_effects.py"
+  ],
+  "demonstrated_cause": "integrate_editing_effects.py lines228-229 copies proposal-group owner_scope into narrower implemented candidates. Historical research and qualification artifacts are preserved; this cleanup corrects runtime DATA only.",
+  "owner_rows": [
+    {
+      "id": "pe_uniform_image_blur",
+      "proposal_group": "edit_38",
+      "reference_rows": [
+        101,
+        102
+      ],
+      "reason": "Depth-independent image softness is not depth-mask blur."
+    },
+    {
+      "id": "pe_fabric_detail",
+      "proposal_group": "edit_52",
+      "reference_rows": [
+        129,
+        130
+      ],
+      "reason": "Woven/knitted fabric detail is not the full skin/fabric/surface family."
+    },
+    {
+      "id": "pe_wide_tonal_detail",
+      "proposal_group": "edit_69",
+      "reference_rows": [
+        180,
+        181
+      ],
+      "reason": "Finished bright/dark detail is visible; bracketed source-image provenance is not."
+    },
+    {
+      "id": "pe_red_edge_halation",
+      "proposal_group": "edit_29",
+      "reference_rows": [
+        84
+      ],
+      "reason": "Red-orange film-like edge halo is the specialized film branch, distinct from neutral diffusion."
+    },
+    {
+      "id": "pe_watercolor_print",
+      "proposal_group": "edit_76",
+      "reference_rows": [
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "reason": "Watercolor marks belong to a depicted paper artifact."
+    },
+    {
+      "id": "pe_charcoal_print",
+      "proposal_group": "edit_76",
+      "reference_rows": [
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "reason": "Charcoal marks belong to a depicted paper artifact."
+    },
+    {
+      "id": "pe_pencil_print",
+      "proposal_group": "edit_76",
+      "reference_rows": [
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "reason": "Pencil lines belong to a depicted paper artifact."
+    },
+    {
+      "id": "pe_torn_paper_edge",
+      "proposal_group": "edit_76",
+      "reference_rows": [
+        205,
+        206,
+        207,
+        208,
+        209
+      ],
+      "reason": "The tear belongs to the paper edge, not the overall image border."
+    },
+    {
+      "id": "pe_cyanotype_paper",
+      "proposal_group": "edit_78",
+      "reference_rows": [
+        217
+      ],
+      "reason": "Prussian-blue print belongs to the depicted paper, not an image-wide color cast."
+    }
+  ],
+  "intentional_specialization": "See each KEEP rationale and actual preset IDs in frozen-inventory-queries.json. English boarding permits the source moving-or-poised condition; page turning at a library table permits book support on lap or table. The apartment, pet-closeup, royal/confinement and privacy variants are supported by authored presets.",
+  "limitations": [
+    "Some source labels are intrinsically compound; absence of a facet is not itself a defect.",
+    "No visual-profile change is justified; all22 discovery/affected-property profiles remain untouched.",
+    "Bilingual relational-detail edits restore existing Korean semantics rather than creating a new relationship.",
+    "Compound alias cleanup retains broad keywords; it does not introduce a hard exclusion."
+  ]
+}

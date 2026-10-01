@@ -1,0 +1,282 @@
+{
+  "stage": 2,
+  "before_dictionary_hash": "700d872067dd31e0535521c0f691c273711864fbe7cff04a1ba688585189fb2c",
+  "after_dictionary_hash": "395d90986982169707e2cc3329a9942915bb1a9a28f9509f75ce22c0086e4907",
+  "changes": [
+    {
+      "stage": 2,
+      "slot": "relational_action",
+      "id": "holding_umbrella_over_partner",
+      "file": "photo_prompt_tags.json",
+      "before": {
+        "id": "holding_umbrella_over_partner",
+        "ko": "상대 쪽으로 우산을 기울여 씌워주는",
+        "en": "holding an umbrella over the partner",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "umbrella",
+          "rain"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      "after": {
+        "id": "holding_umbrella_over_partner",
+        "ko": "상대 쪽으로 우산을 기울여 씌워주는",
+        "en": "holding an umbrella tilted toward the partner to shelter them",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "umbrella",
+          "rain"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      "fields": [
+        "en"
+      ],
+      "reason": "English rendering omits the Korean authored tilt toward the other person. Align the English action while preserving relational specialization."
+    },
+    {
+      "stage": 2,
+      "slot": "relational_action",
+      "id": "two_people_sitting_without_words",
+      "file": "photo_prompt_tags.json",
+      "before": {
+        "id": "two_people_sitting_without_words",
+        "ko": "두 사람이 말없이 마주 앉아 있는",
+        "en": "two people sitting without words",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "silence"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      "after": {
+        "id": "two_people_sitting_without_words",
+        "ko": "두 사람이 말없이 마주 앉아 있는",
+        "en": "two people sitting face to face without words",
+        "weight": 0.82,
+        "tags": [
+          "human",
+          "relationship",
+          "relational",
+          "narrative_safe",
+          "silence"
+        ],
+        "for_any": [
+          "human"
+        ]
+      },
+      "fields": [
+        "en"
+      ],
+      "reason": "English rendering omits the Korean authored face-to-face seating geometry. Restore that relation, without inferring romance or emotion."
+    },
+    {
+      "stage": 2,
+      "slot": "situation_context",
+      "id": "morning_commute_rush",
+      "file": "photo_prompt_tags.json",
+      "before": {
+        "id": "morning_commute_rush",
+        "ko": "아침 출근길 러시 상황",
+        "en": "morning commute rush scene grammar",
+        "phrase_en": "during a morning commute rush",
+        "phrase_ko": "아침 출근길 러시 상황으로",
+        "tags": [
+          "situation",
+          "commute",
+          "rush",
+          "transit"
+        ],
+        "weight": 1.2,
+        "embedding_text": "morning commute rush scene grammar",
+        "aliases": [
+          "morning",
+          "commute",
+          "rush"
+        ],
+        "keywords": [
+          "situation",
+          "commute",
+          "rush",
+          "transit",
+          "morning"
+        ]
+      },
+      "after": {
+        "id": "morning_commute_rush",
+        "ko": "아침 출근길 러시 상황",
+        "en": "morning commute rush scene grammar",
+        "phrase_en": "during a morning commute rush",
+        "phrase_ko": "아침 출근길 러시 상황으로",
+        "tags": [
+          "situation",
+          "commute",
+          "rush",
+          "transit"
+        ],
+        "weight": 1.2,
+        "embedding_text": "morning commute rush scene grammar",
+        "aliases": [
+          "morning commute rush",
+          "아침 출근길 러시"
+        ],
+        "keywords": [
+          "situation",
+          "commute",
+          "rush",
+          "transit",
+          "morning"
+        ]
+      },
+      "fields": [
+        "aliases"
+      ],
+      "reason": "Single-word aliases morning/commute/rush are fragments rather than equivalent names for this compound situation. Replace aliases with complete bilingual names; preserve keywords and render prose."
+    },
+    {
+      "stage": 2,
+      "slot": "situation_context",
+      "id": "last_train_wait",
+      "file": "photo_prompt_tags.json",
+      "before": {
+        "id": "last_train_wait",
+        "ko": "막차를 기다리는 상황",
+        "en": "last-train waiting situation",
+        "phrase_en": "while waiting for the last train",
+        "phrase_ko": "막차를 기다리는 상황으로",
+        "tags": [
+          "situation",
+          "transit",
+          "night",
+          "waiting"
+        ],
+        "weight": 1.0,
+        "embedding_text": "last-train waiting situation",
+        "aliases": [
+          "last",
+          "train",
+          "wait"
+        ],
+        "keywords": [
+          "situation",
+          "transit",
+          "night",
+          "waiting",
+          "last",
+          "train",
+          "wait"
+        ]
+      },
+      "after": {
+        "id": "last_train_wait",
+        "ko": "막차를 기다리는 상황",
+        "en": "last-train waiting situation",
+        "phrase_en": "while waiting for the last train",
+        "phrase_ko": "막차를 기다리는 상황으로",
+        "tags": [
+          "situation",
+          "transit",
+          "night",
+          "waiting"
+        ],
+        "weight": 1.0,
+        "embedding_text": "last-train waiting situation",
+        "aliases": [
+          "last-train waiting",
+          "last train waiting",
+          "막차 대기",
+          "막차를 기다리는 상황"
+        ],
+        "keywords": [
+          "situation",
+          "transit",
+          "night",
+          "waiting",
+          "last",
+          "train",
+          "wait"
+        ]
+      },
+      "fields": [
+        "aliases"
+      ],
+      "reason": "Single-word aliases last/train/wait are fragments rather than equivalent names for last-train waiting. Replace aliases with complete bilingual names; preserve keywords and render prose."
+    },
+    {
+      "stage": 2,
+      "slot": "situation_context",
+      "id": "rain_walk",
+      "file": "photo_prompt_tags.json",
+      "before": {
+        "id": "rain_walk",
+        "ko": "비 오는 산책 상황",
+        "en": "rain-walk scene with wet pavement and quiet movement",
+        "phrase_en": "during a rain walk over wet pavement",
+        "phrase_ko": "젖은 길 위를 걷는 rain walk 상황으로",
+        "tags": [
+          "situation",
+          "rain",
+          "walk"
+        ],
+        "weight": 0.85,
+        "embedding_text": "rain-walk scene with wet pavement and quiet movement",
+        "aliases": [
+          "rain",
+          "walk"
+        ],
+        "keywords": [
+          "situation",
+          "rain",
+          "walk"
+        ]
+      },
+      "after": {
+        "id": "rain_walk",
+        "ko": "비 오는 산책 상황",
+        "en": "rain-walk scene with wet pavement and quiet movement",
+        "phrase_en": "during a rain walk over wet pavement",
+        "phrase_ko": "젖은 길 위를 걷는 rain walk 상황으로",
+        "tags": [
+          "situation",
+          "rain",
+          "walk"
+        ],
+        "weight": 0.85,
+        "embedding_text": "rain-walk scene with wet pavement and quiet movement",
+        "aliases": [
+          "rain walk",
+          "rainy walk",
+          "비 오는 산책"
+        ],
+        "keywords": [
+          "situation",
+          "rain",
+          "walk"
+        ]
+      },
+      "fields": [
+        "aliases"
+      ],
+      "reason": "Single-word aliases rain/walk omit the compound rain-walk situation. Replace with complete names; preserve wet-pavement, quiet-motion specialization and keywords."
+    }
+  ]
+}
