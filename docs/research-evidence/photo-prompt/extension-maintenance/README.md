@@ -6,6 +6,14 @@ references its immutable maintenance record by ID and canonical JSON SHA-256.
 The records include the pre-migration source-file hash. They are documentation,
 not a second executable policy source, and their prose is not copied into packs.
 
+Later extensions can have an extension-specific current-source binding. The
+realistic-background builder (2026-09-12, lines 167–176) hashes its runtime source
+before adding `maintenance_ref`, and its dedicated test checks that binding.
+The 2026-10-01 cycle03 realistic-background record is a new version for reviewed
+owner corrections; it links the unchanged original record and retains its
+research coverage. This does not redefine or refresh the ten historical
+pre-migration hashes above, and adds no rendered-quality claim.
+
 The original extension `visual_semantics` rows remain the authored source for
 102 optional candidate bundles. The loader validates and compiles those rows;
 the pack, compact view, selected component evidence, and relation evidence use
