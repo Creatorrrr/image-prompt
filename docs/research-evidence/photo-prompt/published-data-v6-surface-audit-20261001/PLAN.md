@@ -1,0 +1,7 @@
+# Post-publication V6 surface audit
+
+Scope:58 accepted DATA rows from the initial completed cleanup and cycles1–7, at published source/index snapshot e70ad9109ba0a16f3f9236ad1c83106d60128581. This is a retrospective diagnostic audit and correction of reporting scope, not a newly preregistered retrieval experiment. No candidate source, schema, runtime logic, index or paid embedding change is proposed.
+
+Compare each historical frozen row against its published row under the same current code and policy. Distinguish the intermediate20-term projection from the final semantic overlay. Run actual build_candidate_pack and hash-verified compose_pack_view details, using a real rule-mode-generated contract and controlled trace candidate exposure. Preserve mandatory core locks and record intentional singleton-to-authorial-opening cases. Use an unchanged second candidate to exercise the normal multiple-choice surface for those cases; do not disable that policy. These fixtures test serialization, not natural retrieval, eligibility, adoption or rendered outcomes.
+
+Correct earlier wording about Korean terms reaching the final V6 surface only after the final path is demonstrated. Preserve original raw intermediate outputs and label their stage clearly. Record independent replay, run relevant tests, commit, fresh main pull, revalidate the unchanged dictionary/index and use a normal push. No API calls are needed; the tracked cost remains $1.1517952, including a separate unpublished deferred trial.

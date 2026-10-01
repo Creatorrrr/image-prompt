@@ -13,3 +13,7 @@ Nominal paid scope is five changed documents and20 queries,25 inputs, with a28-a
 Acceptance requires faithful Korean meaning, exact preservation of all non-ko fields, validated bilingual projections, matching source/index/cache, independent read-only review, and paired query diagnostics. Inspect English/Korean ranking tradeoffs and actual top-k effects together. Require concrete label/coverage benefit rather than accepting avoidable regressions by disclosure alone. Retain original trial results and restore an unhelpful proposal to its exact baseline if needed. Do not tune frozen queries, change weights or add hard filters.
 
 Run related tests, commit, pull fresh main while preserving both intents, recheck, then normal push and verify the exact remote SHA/checks. Reproduction is against this cycle's publication snapshot, not arbitrary later main. No rendered-image quality or automatic final-prompt-adoption claim is made.
+
+## Post-publication scope correction
+
+The label-to-20-term check above covers an intermediate projection only. The final semantic overlay overwrites those terms with English concept_units. Source localization and lexical benefits remain, but final V6 Korean-term coverage did not increase. Original raw intermediate outputs and frozen evidence are retained; see `../published-data-v6-surface-audit-20261001/` for actual production pack/detail verification.

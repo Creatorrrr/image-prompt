@@ -27,7 +27,7 @@
 
 ## 로컬라이제이션과 V6 표현
 
-`localize`와 중간 후보 요약은 한국어 라벨을 반환한다. 현재 V6는 `label_en`/`label_ko`를 그대로 노출하지 않고, 두 라벨에서 순서 없는 `concept_terms`를 만든 뒤 라벨 필드를 제거한다. 최종 어부 행은 기존 영어 용어 6개를 모두 보존하고 한국어 용어 5개를 더한다. 20개 제한 안에 들어가므로 기존 용어가 잘려 나가지 않는다. 영어 semantic description도 정확히 이전과 같다.
+`localize`와 중간 후보 요약은 한국어 라벨을 반환한다. 중간20-term projection에서는 기존 영어 용어6개를 유지하고 한국어5개를 더한다. 그러나 이것이 최종 public V6 표면은 아니다. 뒤의 semantic overlay가 변경되지 않은 영어 label로 만든 concept_units를 적용해 중간 단어를 덮어쓴다. 실제 production pack/detail에서 어부의 최종 단위는 수정 전후 모두 `a harbor fisherman at dawn`이다. 따라서 이 변경의 효과는 source 한국어 라벨과 검색 index coverage이며, 최종 V6 한국어 concept coverage 증가라는 이전 설명은 철회한다. 원래 중간 projection JSON은 그 단계의 원시 기록으로 보존하고, 전체 경로 검증은 `../published-data-v6-surface-audit-20261001/`에 기록했다.
 
 ## 검증과 남은 실패
 
