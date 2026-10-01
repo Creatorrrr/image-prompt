@@ -1,0 +1,22 @@
+{
+  "status": "pre-call-test-harness-only-revision",
+  "prior_freeze_sha256": "c40e9b6659fb8daedcf21eb0497395f7b2a82c10180abcc05c43f2924613a0f1",
+  "defect": "Missing-vector replay test mocked proposal bytes to baseline but read live applied source, reaching the source-scope guard instead of the intended missing-vector guard; mutable live attempts/cache also made it dependent on measurement state.",
+  "fix": "Only that test now uses temporary exact proposed-source and baseline-evidence files with no new cache or attempt log, while preserving real raw-proposal derivation and the exact missing-vector/no-network/no-write assertion. Temporary file contents are asserted unchanged after replay.",
+  "unchanged": [
+    "source proposal",
+    "inventory",
+    "queries",
+    "approved inputs",
+    "cached vectors",
+    "model",
+    "dimensions",
+    "pending bytes",
+    "cost limits",
+    "acceptance",
+    "all runtime/apply/evaluate/V6 helpers"
+  ],
+  "saved_revision_directory": "preparation-revisions/pre-replay-test-isolation",
+  "paid_calls": 0,
+  "central_failure_record": "docs/failed-reports/2026-10-01-frozen-replay-test-live-source-dependency.md"
+}
