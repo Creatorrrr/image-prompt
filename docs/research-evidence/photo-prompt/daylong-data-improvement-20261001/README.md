@@ -35,3 +35,19 @@ Prices and limits were checked against official documentation on 2026-10-01: htt
 Frozen evidence: `../capture-owner-data-cleanup-20261001/`. The inventory has 54 rows, 16 minimal proposed corrections and 38 keeps. Thirty-two English diagnostic queries were frozen before editing. The maximum 56 one-attempt embeddings have an additional conservative bound of $0.0917504; nominal workload is 48 uncached texts. Valid model/format shorthand, authored optical alternatives, and disposable-camera frontal lighting remain preserved.
 
 The capture cycle accepted 13 corrections after retaining HP5, 400H and compact CCD in their original state. All positive ranks and the five dense/one lexical improvements survive, and all three reverse probes return to baseline. Final accepted-source validation passed 137 related tests. Actual cost history remains 48 one-attempt calls, including three unused proposal document vectors, adding $0.0786432 to the tracked conservative bound ($0.9076736 cumulative).
+
+The capture publication was verified on remote main at `8420bdcddf1e6b220f5fd3c5b64ece603c0076d2`; the pull was up to date and all 97 post-pull related tests passed. GitHub reported zero check runs and zero commit-status contexts.
+
+### Material and grain-owner cycle
+
+Frozen evidence: `../material-data-cleanup-20261001/`. Of 32 inspected rows, nine repairs were accepted and 23 retained. Three proposed alias consolidations were restored to exact baseline rows/vectors because their reverse near-misses had no positive-rank benefit. All 13 dense positive rank-one results survived; three dense near-misses moved lower and ten remained equal, with none higher. Korean crochet exact-label coverage improved from no lexical hit to rank one, but English/Korean knitting ambiguity remains and this does not establish general bilingual improvement.
+
+A dedicated background test exposed a stale source binding introduced in the preceding capture owner edits. The current-source contract was repaired with a new versioned maintenance record covering those four capture/material owner corrections; the original and ten historical migration records remain unchanged. This provenance-only repair did not alter runtime semantic text or require another embedding.
+
+Published and remote-verified commit: `749e6c1a19674c1667785bd2a6d1d65539ffbf7d`. All 155 related final tests and 115 post-pull tests passed. GitHub reported zero check runs and zero commit-status contexts. All 38 original one-attempt embeddings are retained, including three unused proposal vectors; the additional conservative bound is $0.0622592, cumulative $0.9699328. These counts are related checks, not a claim that the whole repository suite or rendered-image qualification passed.
+
+### Motion and digital-artifact owner cycle
+
+Frozen evidence: `../motion-artifact-owner-data-cleanup-20261001/`. Forty inspected rows yielded four accepted owner corrections and36 exact keeps after four proposals were restored. All positive target ranks are unchanged. Three dense near-misses improve; two residual relative-rank rises retain exact baseline target vectors/scores and result from source-correct demotions of other wrong candidates. The report explicitly records light trails entering top ten on q04; it does not claim every top-k exposure is unchanged. Independent read-only review reproduced all120 baseline/proposal/accepted result rows and verified the source, derived bundles, index and cached vectors. All164 related final tests passed.
+
+The28 frozen input texts completed over30 attempts, including one interrupted/unknown and one failed attempt followed by separately reviewed recoveries. Both unsuccessful attempts are conservatively counted; no automatic retry or frozen-input change occurred. Additional cost upper bound $0.049152; cumulative tracked upper $1.0190848. Publication receipts and post-pull checks remain separate from these pre-publication results.

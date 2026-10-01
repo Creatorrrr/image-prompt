@@ -1,0 +1,64 @@
+{
+  "frozen_plan_sha256": "8268cabc6289f8be2acaf06215895cf7c66b55abb3948a4c221db09dcf2041f3",
+  "accepted_ids": [
+    "pe_moire_on_pattern",
+    "pe_camera_sweep",
+    "pe_radial_zoom",
+    "pe_rotation_arc"
+  ],
+  "reverted_to_baseline": [
+    "pe_moving_subject_streak",
+    "pe_light_trails",
+    "pe_jpeg_edge_blocks",
+    "pe_gradient_banding"
+  ],
+  "accepted_dictionary_hash": "1520a1ea709ac77e0b29cd53b45d026c46c829a485315db9f7c8e2c730675df8",
+  "rationale": "Restore four proposals whose changed vectors introduce avoidable direct or collateral reversals without positive-rank benefit. Keep four source-supported repairs with all positive ranks preserved and three diagnostic demotions.",
+  "residual_rank_crossings": [
+    {
+      "query": "q04",
+      "target": "pe_light_trails",
+      "baseline_rank": 11,
+      "accepted_rank": 10,
+      "target_vector_and_score": "exact baseline",
+      "target_score": 0.644406971162,
+      "crossing_competitor": "pe_camera_sweep",
+      "competitor_rank": [
+        10,
+        13
+      ],
+      "competitor_score": [
+        0.649257519428,
+        0.642061021836
+      ],
+      "interpretation": "The wrong stationary-scene camera-sweep mechanism is demoted for a running person under steady daylight. Correct moving-subject candidate stays first, and top-five IDs and scores are exactly baseline. Light trails newly enters top ten; broader top-k exposure is not claimed unchanged."
+    },
+    {
+      "query": "q12",
+      "target": "pe_jpeg_edge_blocks",
+      "baseline_rank": 34,
+      "accepted_rank": 33,
+      "target_vector_and_score": "exact baseline",
+      "target_score": 0.522237317225,
+      "crossing_competitor": "pe_moire_on_pattern",
+      "competitor_rank": [
+        32,
+        38
+      ],
+      "competitor_score": [
+        0.523794100974,
+        0.518753202489
+      ],
+      "interpretation": "The wrong patterned-region interference mechanism is demoted for a smooth sky fade. Correct gradient banding stays first and top-five IDs/scores are exactly baseline."
+    }
+  ],
+  "independent_review": "Four accepted source repairs recommended after exact baseline/proposal replay, four-row variant, crossing-candidate and top-five review.",
+  "preserved_trial_inputs": 28,
+  "all_attempts_retained": 30,
+  "new_paid_calls_for_acceptance": 0,
+  "limitations": [
+    "Authored diagnostics do not prove blind/general retrieval gains or rendered quality.",
+    "Existing q01 dense rank2 and weaker lexical positives remain unchanged.",
+    "New top-ten exposure at q04 is explicit; acceptance rests on source-correct competitor demotion and unchanged bad-target score, not a blanket no-regression claim."
+  ]
+}
