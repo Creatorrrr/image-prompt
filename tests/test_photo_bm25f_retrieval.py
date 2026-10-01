@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import sys
 import unittest
 from pathlib import Path
@@ -95,6 +96,53 @@ class PhotoBm25fRetrievalTests(unittest.TestCase):
             {"request": "츤데레를 행동으로 표현"},
         )
         self.assertEqual(ranking[0]["document_id"], "direct")
+
+    def test_cjk_segmentation_preserves_longest_matches_and_unmatched_gaps(self):
+        cases = [
+            (
+                "aツンデレメイドや猫耳b",
+                ["デレ", "ツンデレ", "メイド", "猫耳", "ツンデレメイド"],
+                ["a", "ツンデレメイドや猫耳", "ツンデレメイド", "猫耳", "b"],
+            ),
+            (
+                "甲乙丙丁甲乙戊",
+                ["甲", "甲乙", "甲乙丙", "乙丙丁", "丁", "戊"],
+                ["甲乙丙丁甲乙戊", "甲乙丙", "丁", "甲乙", "戊"],
+            ),
+            ("甲乙戊丁", ["甲乙丙", "丁"], ["甲乙戊丁", "丁"]),
+            ("甲乙", ["甲 乙"], ["甲乙", "甲", "乙"]),
+            ("ガラス窓", ["ガラス", "窓"], ["ガラス窓", "ガラス", "窓"]),
+        ]
+        for text, lexicon, expected in cases:
+            with self.subTest(text=text):
+                self.assertEqual(
+                    bm25f_retrieval.tokenize_bm25f_text(text, lexicon=lexicon),
+                    expected,
+                )
+
+    def test_reused_lexicon_tracks_changed_content(self):
+        lexicon = ["甲", "乙"]
+        self.assertEqual(
+            bm25f_retrieval.tokenize_bm25f_text("甲乙", lexicon=lexicon),
+            ["甲乙", "甲", "乙"],
+        )
+        lexicon.append("甲乙")
+        self.assertEqual(
+            bm25f_retrieval.tokenize_bm25f_text("甲乙", lexicon=lexicon),
+            ["甲乙", "甲乙"],
+        )
+
+    def test_validation_is_read_only_and_rejects_a_later_index_edit(self):
+        documents = {"one": {"aliases": ["care"], "definition": ["practical care"]}}
+        index = bm25f_retrieval.build_bm25f_index(documents, policy=POLICY)
+        original_documents = copy.deepcopy(documents)
+        original_index = copy.deepcopy(index)
+        bm25f_retrieval.validate_bm25f_index(index, documents, policy=POLICY)
+        self.assertEqual(documents, original_documents)
+        self.assertEqual(index, original_index)
+        index["documents"]["one"]["fields"]["aliases"]["term_frequencies"]["care"] += 1
+        with self.assertRaisesRegex(ValueError, "stale"):
+            bm25f_retrieval.validate_bm25f_index(index, documents, policy=POLICY)
 
     def test_index_validation_detects_stale_authored_fields(self):
         documents = {

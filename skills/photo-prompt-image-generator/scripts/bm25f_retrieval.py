@@ -124,6 +124,31 @@ def _normalized_lexicon(terms: Iterable[Any]) -> tuple[str, ...]:
     return _normalized_lexicon_cached(tuple(str(term) for term in terms))
 
 
+class _PreparedLexicon:
+    def __init__(self, terms: tuple[str, ...]) -> None:
+        self.terms = terms
+        self.trie: dict[str, Any] = {}
+        for term in terms:
+            # Only these terms can match the Japanese/Han tokens segmented below.
+            if not _JAPANESE_OR_HAN_RE.fullmatch(term):
+                continue
+            node = self.trie
+            for character in term:
+                node = node.setdefault(character, {})
+            node[""] = term
+
+
+@lru_cache(maxsize=16)
+def _prepared_lexicon_cached(terms: tuple[str, ...]) -> _PreparedLexicon:
+    return _PreparedLexicon(_normalized_lexicon_cached(terms))
+
+
+def _prepare_lexicon(terms: Iterable[Any] | _PreparedLexicon) -> _PreparedLexicon:
+    if isinstance(terms, _PreparedLexicon):
+        return terms
+    return _prepared_lexicon_cached(tuple(str(term) for term in terms))
+
+
 def _korean_stem(token: str) -> Optional[str]:
     for suffix in _KOREAN_SUFFIXES:
         if not token.endswith(suffix):
@@ -134,22 +159,22 @@ def _korean_stem(token: str) -> Optional[str]:
     return None
 
 
-def _lexicon_segments(token: str, lexicon: Sequence[str]) -> list[str]:
+def _lexicon_segments(token: str, lexicon: _PreparedLexicon) -> list[str]:
     """Greedily segment Japanese/Han compounds with a caller-owned lexicon."""
 
-    if not token or not lexicon:
+    if not token or not lexicon.trie:
         return []
     results: list[str] = []
     cursor = 0
     while cursor < len(token):
-        match = next(
-            (
-                term
-                for term in lexicon
-                if " " not in term and token.startswith(term, cursor)
-            ),
-            None,
-        )
+        node = lexicon.trie
+        match = None
+        for position in range(cursor, len(token)):
+            node = node.get(token[position])
+            if node is None:
+                break
+            if "" in node:
+                match = node[""]
         if match is None:
             cursor += 1
             continue
@@ -170,8 +195,17 @@ def tokenize_bm25f_text(
     supplied authored lexicon.  The behavior is deterministic and versioned.
     """
 
+    return _tokenize_bm25f_text(value, lexicon=lexicon)
+
+
+def _tokenize_bm25f_text(
+    value: Any,
+    *,
+    lexicon: Sequence[str] | _PreparedLexicon,
+) -> list[str]:
     normalized = normalize_bm25f_text(value)
     tokens: list[str] = []
+    prepared_lexicon = None
     for match in _SEGMENT_RE.finditer(normalized):
         token = match.group(0)
         tokens.append(token)
@@ -185,8 +219,9 @@ def tokenize_bm25f_text(
             elif token.endswith("들") and len(token[:-1]) >= 2:
                 tokens.append(token[:-1])
         elif _JAPANESE_OR_HAN_RE.fullmatch(token):
-            normalized_lexicon = _normalized_lexicon(lexicon)
-            tokens.extend(_lexicon_segments(token, normalized_lexicon))
+            if prepared_lexicon is None:
+                prepared_lexicon = _prepare_lexicon(lexicon)
+            tokens.extend(_lexicon_segments(token, prepared_lexicon))
     return tokens
 
 
@@ -248,7 +283,8 @@ def build_bm25f_index(
 
     canonical_policy = canonical_bm25f_policy(policy)
     field_configs = canonical_policy["fields"]
-    normalized_lexicon = list(_normalized_lexicon(lexicon))
+    prepared_lexicon = _prepare_lexicon(lexicon)
+    normalized_lexicon = list(prepared_lexicon.terms)
     indexed_documents: dict[str, Any] = {}
     field_length_totals = {field: 0 for field in field_configs}
     document_frequencies: Counter[str] = Counter()
@@ -261,7 +297,7 @@ def build_bm25f_index(
             values = _as_values(source.get(field))
             tokens: list[str] = []
             for value in values:
-                tokens.extend(tokenize_bm25f_text(value, lexicon=normalized_lexicon))
+                tokens.extend(_tokenize_bm25f_text(value, lexicon=prepared_lexicon))
             frequencies = Counter(tokens)
             length = len(tokens)
             field_length_totals[field] += length
