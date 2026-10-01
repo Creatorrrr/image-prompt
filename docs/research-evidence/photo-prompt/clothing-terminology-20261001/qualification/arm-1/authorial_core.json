@@ -1,0 +1,157 @@
+{
+  "contract_version": "photo-authorial-core/v3",
+  "provenance": "agent_prepack",
+  "source_request": "시각 의미 데이터와 후보팩에 반영해줘. 그 다음 독립된 서브에이전트 3개에서 각각 서로 다른 컨셉으로 반영한 키워드가 이미지에 실제로 반영되는지까지 테스트할 수 있는 랜덤한 복잡한 컨셉을 정하여 테스트케이스를 마련하고 첨부한 이미지를 활용하여 프롬프트 작성하고 이미지 생성하도록 하여 잘 반영되었는지 테스트해줘.",
+  "creative_controls_sha256": "a9005c9015a0da7e44fb0004c6756c05b7ad53328068466539dc9a8893a04f91",
+  "interpreted_intent": "The requesting user asks for an independently randomized complex image test of the newly reflected keywords using the attached image. The library architecture-tour pause, adult subject, contemporary teal tailoring, all eight terminology choices, and their visible construction are agent-owned test realizations, not requester definitions. The attached portrait supplies visible face and hair appearance only, with no claim of identity, ethnicity, character, body shape, or actual age. I chose a composed near-frontal presence and soft raking light to make tailored structure quietly attractive at sensual 1 while preserving a plausible human pause. WHO is an adult wearer with attentive gaze; WHERE is a contemporary library vestibule whose concrete geometry echoes the seams; HOW is an acknowledged camera at moderate distance; WHY NOW is the settled pause before the tour begins. The eight clothing constructions remain advisory appearance choices until any later explicit profile opt-in.",
+  "subject": "An adult woman using only visible face and hair appearance from the supplied portrait, wearing a contemporary tailored dress, necklace, and Derby shoes.",
+  "setting": "A new civic library concrete entrance vestibule in late morning.",
+  "event": "The wearer pauses at the beginning of an architecture tour; clothing construction is visibly readable in one frame.",
+  "visual_priorities": [
+    "A composed adult wearer with reference-scoped visible face and dark bob appearance in a credible tour-opening pause.",
+    "The fitted bodice shows separate seam, neckline, sleeve, pocket, and raised-edge constructions with their garment ownership clear.",
+    "The center skirt fold and open-laced shoe construction remain simultaneously visible below the bodice.",
+    "The necklace chain visibly passes through the bail that supports its pendant.",
+    "Soft directional daylight makes structural edges readable against restrained concrete surroundings."
+  ],
+  "baseline_prompt_en": "A coherent complex fashion photograph shows a person wearing visibly constructed clothing, an explicitly adult woman pausing in the concrete entrance vestibule of a new civic library at the beginning of an architecture tour. The visible face and dark bob haircut follow the attached appearance reference. Her calmly attentive gaze meets the camera with a faint, relaxed smile; the portrayal emphasizes her composed presence. She stands almost frontal with her weight on the rear leg and the other foot slightly forward, both soles resting on the level floor, arms relaxed slightly away from her hips. Her contemporary dark teal knee-length tailored dress has curved princess seams running from the armholes across the bust into the fitted waist, a sweetheart neckline with two rounded lobes and a distinct center dip, and long gigot sleeves with generous shoulder-and-upper-arm volume tapering closely from the elbows to the wrists. Narrow raised ivory piping follows the sweetheart edge and both cuffs. Each hip welt pocket is a narrow horizontal opening framed by two slim fabric lips; both openings remain exposed beside her relaxed hands. An inverted box pleat at the center front of the skirt has two inward-facing folded edges meeting at the center, with a recessed fold and soft shadow beneath them. On her bare upper chest a silver necklace chain passes visibly through the open oval pendant bail, which joins and supports a small rectangular pendant. Black leather Derby shoes have open lacing: separate eyelet-bearing quarters sit on top of each vamp, their loose edges opening into a clear V around the tongues. The clothing construction is visibly readable. Soft late-morning skylight and a narrow side-window beam rake across the stitched seams and folds. Head-to-toe portrait framing gives the woman most of the image height, keeps the neckline and pendant connection, both sleeve silhouettes, pocket mouths, skirt folds and both shoe uppers legible together, and leaves quiet concrete geometry around her.",
+  "user_definitions": [],
+  "interpretation_provenance": [
+    {
+      "term": "랜덤한 복잡한 컨셉",
+      "source_text": "랜덤한 복잡한 컨셉",
+      "basis": "request_context",
+      "resolution": "Create one coherent complex concept independently, using the supplied random seed to choose among separately authored scene possibilities; scene details are agent-owned.",
+      "sources": []
+    },
+    {
+      "term": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+      "basis": "request_context",
+      "resolution": "Evaluate visible construction, ownership, and connection in the generated pixels instead of counting keyword mentions; selected technical terms are agent-owned test choices.",
+      "sources": []
+    },
+    {
+      "term": "첨부한 이미지를 활용하여",
+      "source_text": "첨부한 이미지를 활용하여",
+      "basis": "request_context",
+      "resolution": "Use the attached image as a visible face and hairstyle appearance reference only, without inferring identity, ethnicity, personality, body shape, or actual age.",
+      "sources": []
+    }
+  ],
+  "unresolved_ambiguities": [],
+  "user_exclusions": [],
+  "runtime_forbidden_labels": [],
+  "intent_lock": {
+    "contract_version": "photo-intent-lock/v2",
+    "priority": "requesting_user",
+    "semantic_anchors": [
+      {
+        "anchor_id": "core_concept",
+        "source_text": "랜덤한 복잡한 컨셉",
+        "dimension": "concept",
+        "prompt_evidence": "A coherent complex fashion photograph"
+      },
+      {
+        "anchor_id": "core_subject",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "subject",
+        "prompt_evidence": "a person wearing visibly constructed clothing"
+      },
+      {
+        "anchor_id": "core_event",
+        "source_text": "반영한 키워드가 이미지에 실제로 반영되는지",
+        "dimension": "event",
+        "prompt_evidence": "The clothing construction is visibly readable."
+      },
+      {
+        "anchor_id": "reference_use",
+        "source_text": "첨부한 이미지를 활용하여",
+        "dimension": "reference_use",
+        "prompt_evidence": "The visible face and dark bob haircut follow the attached appearance reference."
+      }
+    ],
+    "locked_dimensions": [
+      "concept",
+      "subject",
+      "event",
+      "reference_use"
+    ],
+    "open_dimensions": [
+      "identity",
+      "count",
+      "age",
+      "role",
+      "appearance",
+      "pose",
+      "body_geometry",
+      "expression",
+      "action",
+      "setting",
+      "relationship",
+      "sexual_tone",
+      "style",
+      "viewer_outcome",
+      "text",
+      "format",
+      "framing",
+      "composition",
+      "lighting",
+      "camera",
+      "color",
+      "material",
+      "timing",
+      "atmosphere"
+    ]
+  },
+  "semantic_assertions": [
+    {
+      "assertion_id": "agent_clothing_construction_test",
+      "dimension": "appearance",
+      "polarity": "advisory",
+      "source_span_ids": [
+        "keywords"
+      ],
+      "affected_dimensions": [
+        "appearance",
+        "material"
+      ],
+      "axes": {
+        "construction_terms": [
+          "princess seam",
+          "sweetheart neckline",
+          "gigot sleeve",
+          "welt pocket",
+          "piping",
+          "inverted box pleat",
+          "pendant bail",
+          "Derby"
+        ],
+        "garment_owner": "main_subject",
+        "garment": "tailored_dress",
+        "necklace_connection": "chain_through_bail_supporting_pendant",
+        "shoe_structure": "open_lacing_quarters_above_vamp"
+      },
+      "evidence": {
+        "princess_seam": "curved princess seams running from the armholes across the bust into the fitted waist",
+        "sweetheart_neckline": "a sweetheart neckline with two rounded lobes and a distinct center dip",
+        "gigot_sleeve": "long gigot sleeves with generous shoulder-and-upper-arm volume tapering closely from the elbows to the wrists",
+        "welt_pocket": "Each hip welt pocket is a narrow horizontal opening framed by two slim fabric lips",
+        "piping": "Narrow raised ivory piping follows the sweetheart edge and both cuffs",
+        "inverted_box_pleat": "An inverted box pleat at the center front of the skirt has two inward-facing folded edges meeting at the center",
+        "pendant_bail": "a silver necklace chain passes visibly through the open oval pendant bail, which joins and supports a small rectangular pendant",
+        "derby": "Black leather Derby shoes have open lacing: separate eyelet-bearing quarters sit on top of each vamp, their loose edges opening into a clear V around the tongues"
+      }
+    }
+  ],
+  "request_lineage": null,
+  "style": {
+    "domain": "fashion_editorial",
+    "family": "contemporary architectural fashion portrait",
+    "evidence": [
+      "quiet concrete geometry",
+      "soft directional daylight"
+    ]
+  },
+  "variation_key": "clothing-20261001-arm-1-civic-library"
+}

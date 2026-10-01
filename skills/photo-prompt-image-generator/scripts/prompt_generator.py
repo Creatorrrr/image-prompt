@@ -173,6 +173,10 @@ VISUAL_OBLIGATION_EXTENSION_FILENAMES = (
     "photo_prompt_visual_obligations_portrait_composition.json",
     "photo_prompt_visual_obligations_portrait_fashion_exposure.json",
     "photo_prompt_visual_obligations_editing_effects.json",
+    "photo_prompt_visual_obligations_clothing_structure.json",
+    "photo_prompt_visual_obligations_textile_surface.json",
+    "photo_prompt_visual_obligations_accessory_structure.json",
+    "photo_prompt_visual_obligations_traditional_clothing_detail.json",
 )
 VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
     "photo-visual-obligation-registry-extension/v1"
@@ -180,6 +184,10 @@ VISUAL_OBLIGATION_EXTENSION_SCHEMA_VERSION = (
 VISUAL_RELATION_CONTRACT_VERSION = "photo-visual-relation/v1"
 RESEARCH_EXTENSION_FILENAME = "photo_prompt_research_extension.json"
 RESEARCH_EXTENSION_FILENAMES = (
+    "photo_prompt_clothing_structure_extension.json",
+    "photo_prompt_textile_surface_extension.json",
+    "photo_prompt_accessory_structure_extension.json",
+    "photo_prompt_traditional_clothing_detail_extension.json",
     "photo_prompt_tactile_reality_extension.json",
     RESEARCH_EXTENSION_FILENAME,
     "photo_prompt_reactorprompt_visual_relations_extension.json",

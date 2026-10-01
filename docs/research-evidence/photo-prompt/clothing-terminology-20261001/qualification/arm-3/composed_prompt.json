@@ -1,0 +1,288 @@
+{
+  "contract_version": "photo-composed-prompt/v1",
+  "pack_id": "db2dfdab414f2089",
+  "composer": "agent",
+  "prompt_en": "A complex clothing photograph of an explicitly adult woman in a contemporary station locker hall during an early evening interval. She has just closed a locker and pauses with her weight settled evenly through both feet. Her face turns three-quarters toward the photographer, a quiet, softly attentive gaze and relaxed lips giving the practical pause a little intimacy. The reference informs her visible facial appearance and chin-length dark bob with wispy fringe. She wears a muted sage silk jeogori with a white dongjeong strip following the overlapping neckline, cream goreum tied at the chest with its two ribbon tails distinct, and an ink-blue skirt that is a long chima joined to its upper waist band, descending in broad vertical pleats. The jeogori sits above the chima, its short hem visibly overlapping the skirt's high waist. A narrow lower strip of the chima waist band remains visible below that overlap, with stitched pleats beginning directly beneath it. A norigae hangs from the goreum knot at her right-front chest: its upper loop hooks around the tie at that knot, and its suspension cord, decorative knot, oval pendant and tassel form a readable descending chain. The pendant's pale-green oval stone is held by a continuous bezel rim encircling the stone perimeter, the silver wall rising around its edge; a separate small silver bail connects the pendant's upper edge to that suspension cord. Her left hand holds a compact hard case by its handle low beside her left thigh; her right arm rests clear of the norigae, with relaxed fingers below the skirt waist. Warm ceiling light bars and cool skylight pick out cloth folds and small metal edges; recently shut locker doors repeat behind her. Frame from head to mid-calf at chest height, a nearly frontal view with mild three-quarter turn, keeping the collar, tie, ornament and layer junction large and readable. Natural facial texture, silk grain, and soft contact shadows organize the frame around her presence first, the garment construction second, and the modern setting third.",
+  "negative_en": "body distortion, fake-looking background, plastic-looking skin, distorted fingers, broken facial features, illustration look, unrealistic hands, excessive HDR, over-processed retouching",
+  "chosen_candidate_ids": [
+    "slot:wearable_accessory:clt_ct137_v1",
+    "slot:wearable_accessory:clt_ct114_v2"
+  ],
+  "chosen_visual_concept_ids": [
+    "visual-concept:clothing_ct114_v2",
+    "visual-concept:clothing_ct136_v1"
+  ],
+  "coverage_assertions": {
+    "keeping the collar, tie, ornament and layer junction large and readable": "keeping the collar, tie, ornament and layer junction large and readable",
+    "A complex clothing photograph": "A complex clothing photograph",
+    "an explicitly adult woman": "an explicitly adult woman",
+    "The reference informs her visible facial appearance and chin-length dark bob with wispy fringe": "The reference informs her visible facial appearance and chin-length dark bob with wispy fringe"
+  },
+  "candidate_interpretations": [
+    {
+      "candidate_id": "slot:wearable_accessory:clt_ct137_v1",
+      "artistic_interpretation": "The garment-mounted norigae becomes a readable small descending assembly during the pause beside modern lockers. Its owner remains the goreum on the same adult's jeogori.",
+      "transformation": "Retain the independently authored cord, knot, pale-green pendant and tassel, adding an upper loop around the existing tie knot so attachment is testable.",
+      "prompt_evidence": "its upper loop hooks around the tie at that knot, and its suspension cord, decorative knot, oval pendant and tassel form a readable descending chain",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.accessories.norigae_attachment"
+        }
+      ],
+      "relation_evidence": {
+        "norigae_attachment_upper_attachment": "A norigae hangs from the goreum knot at her right-front chest: its upper loop hooks around the tie at that knot",
+        "norigae_attachment_hanging_order": "its suspension cord, decorative knot, oval pendant and tassel form a readable descending chain"
+      }
+    },
+    {
+      "candidate_id": "slot:wearable_accessory:clt_ct114_v2",
+      "artistic_interpretation": "The same norigae pendant retains its pale-green stone in a readable continuous silver setting, independently distinct from its top bail.",
+      "transformation": "Clarify the pre-authored continuous bezel as a retaining metal wall around the chosen oval stone, leaving the separately authored bail and cord connection intact.",
+      "prompt_evidence": "The pendant's pale-green oval stone is held by a continuous bezel rim encircling the stone perimeter, the silver wall rising around its edge",
+      "affected_dimensions": [
+        "appearance"
+      ],
+      "affected_properties": [
+        {
+          "dimension": "appearance",
+          "target": "main_subject",
+          "property": "wardrobe.accessories.prong_bezel_flush"
+        }
+      ],
+      "relation_evidence": {
+        "visible_owner_relation": "The pendant's pale-green oval stone is held by a continuous bezel rim encircling the stone perimeter"
+      }
+    }
+  ],
+  "authorial_core_binding": {
+    "source_authorial_core_sha256": "f4c876bee801e57074fcf21113459b758a16551f2b8aea2ee00a79edb91fc8fb",
+    "source_intent_lock_sha256": "169cdb48c4881d53c71d9dbf4171bc09aabd1814f5774b221c1c8d87f8c295e5",
+    "preserved_anchor_ids": [
+      "test_concept",
+      "referenced_subject",
+      "visible_test_state",
+      "reference_scope"
+    ],
+    "preserved_evidence": [],
+    "authorial_decisions": [
+      {
+        "dimension": "appearance",
+        "decision": "Clarify the exposed lower chima band strip and the norigae upper loop while preserving the independent jacket-over-skirt layer and all original keywords.",
+        "rationale": "Open appearance permits local construction clarification; this makes the selected profiles assessable without adding people or changing the scene.",
+        "prompt_evidence": "A narrow lower strip of the chima waist band remains visible below that overlap, with stitched pleats beginning directly beneath it."
+      }
+    ]
+  },
+  "semantic_clarification_decisions": [
+    {
+      "decision": "applied",
+      "prompt_evidence": "A complex clothing photograph",
+      "rationale": "The independently frozen anchors remain literal; no optional detailed outfit choice is relabeled as requester definition.",
+      "clarification_id": "clarification:authorial-core:interpreted-intent"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:aircraft_pilot_operation"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "The clarification defines selected trousers. The authored lower garment is a chima skirt; similarity of waist position does not authorize changing the owner.",
+      "clarification_id": "clarification:visual-profile:clothing_ct014_v1"
+    },
+    {
+      "decision": "applied",
+      "prompt_evidence": "a continuous bezel rim encircling the stone perimeter",
+      "rationale": "The independent baseline already specifies a continuous metal bezel around the norigae stone; opt in to this exact visible relation.",
+      "clarification_id": "clarification:visual-profile:clothing_ct114_v2"
+    },
+    {
+      "decision": "applied",
+      "prompt_evidence": "a long chima joined to its upper waist band",
+      "rationale": "The independently selected chima is a long skirt joined to its high waist band; clarify its exposed lower band edge in open appearance.",
+      "clarification_id": "clarification:visual-profile:clothing_ct136_v1"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:commercial_appeal_revealing_armor"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:hourglass_silhouette_relation"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:inverted_triangle_upper_body_dominant_relation"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:pfe_back_face"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:pfe_face_garment"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:pfe_navel"
+    },
+    {
+      "decision": "rejected",
+      "rationale": "Optional interpretation changes the selected garment, bodily silhouette or modern locker pause, or adds no needed exact keyword coverage; preserve the independent authored scene.",
+      "clarification_id": "clarification:visual-profile:rectangle_silhouette_relation"
+    }
+  ],
+  "creative_augmentation_brief": {
+    "decisions": [
+      {
+        "candidate_id": "slot:hand_pose:pc_pc12_component_1",
+        "decision": "rejected",
+        "rationale": "The independent station pause already supplies a coherent photographic event. This optional idea adds no needed clothing keyword evidence or would change the scene, support state or light."
+      },
+      {
+        "candidate_id": "slot:genre:portrait",
+        "decision": "rejected",
+        "rationale": "The independent station pause already supplies a coherent photographic event. This optional idea adds no needed clothing keyword evidence or would change the scene, support state or light."
+      },
+      {
+        "candidate_id": "slot:composition:layered_foreground_midground_background",
+        "decision": "rejected",
+        "rationale": "The independent station pause already supplies a coherent photographic event. This optional idea adds no needed clothing keyword evidence or would change the scene, support state or light."
+      },
+      {
+        "candidate_id": "slot:light_type:long_exposure_drag",
+        "decision": "rejected",
+        "rationale": "The independent station pause already supplies a coherent photographic event. This optional idea adds no needed clothing keyword evidence or would change the scene, support state or light."
+      },
+      {
+        "candidate_id": "slot:action:waiting_train",
+        "decision": "rejected",
+        "rationale": "The independent station pause already supplies a coherent photographic event. This optional idea adds no needed clothing keyword evidence or would change the scene, support state or light."
+      }
+    ]
+  },
+  "visual_obligation_evidence": {
+    "clothing_ct114_v2": {
+      "visible_relation_phrase": "a continuous bezel rim encircling the stone perimeter"
+    },
+    "clothing_ct136_v1": {
+      "visible_relation_phrase": "a long chima joined to its upper waist band"
+    }
+  },
+  "adult_appeal_brief": {
+    "adult_subject_phrase": "an explicitly adult woman",
+    "agency_phrase": "She has just closed a locker and pauses with her weight settled evenly through both feet",
+    "axes": {
+      "sensual": {
+        "intensity": 1,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "Subtle human attraction comes from the attentive three-quarter glance, relaxed lips and silk in mixed station light. Garment construction remains a subordinate readable interest rather than an inferred trait or prominence quota.",
+        "prompt_evidence": "a quiet, softly attentive gaze and relaxed lips giving the practical pause a little intimacy"
+      },
+      "fetish": {
+        "intensity": 0,
+        "realization": "baseline",
+        "affected_dimensions": [],
+        "artistic_interpretation": "At zero, the silk garments and small metal ornament retain their functional construction roles from the independent draft. No fetish treatment is added; construction visibility serves keyword qualification.",
+        "prompt_evidence": "She wears a muted sage silk jeogori"
+      }
+    },
+    "blend": {
+      "emphasis": "sensual_led"
+    },
+    "contextual_review": [
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:composition:pfe_face_garment_candidate",
+        "reading": "potential",
+        "reason": "Face and garment can share attention at this existing head-to-calf distance without changing the adult subject.",
+        "proposed_application": "At the same supporting sensual level, retain the face as first glance and keep the collar, tie and ornament clear at the second inspection."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:costume_style:hanbok_jeogori_lower_layer_system",
+        "reading": "relevant",
+        "reason": "The short upper garment and separate chima agree with the independent ensemble.",
+        "proposed_application": "One alternative would shorten the upper hem slightly so the band edge takes more visual weight; preserve the authored longer cloth hierarchy for the existing pause."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:wearable_accessory:clt_ct137_v1",
+        "reading": "relevant",
+        "reason": "A visible loop and descending ornament already fit the selected garment. The base slot candidate is adopted as construction qualification, without treating the ornament as intrinsically sensual.",
+        "proposed_application": "At supporting sensual level, let restrained metal glints complement the gaze while keeping the loop and cord readable."
+      },
+      {
+        "candidate_id": "augmentation:adult_appeal:sensual:mood:ominous_seduction",
+        "reading": "irrelevant",
+        "reason": "An ominous invitation would change the ordinary station interval and compete with the quietly attentive glance. It does not strengthen the same practical moment."
+      }
+    ],
+    "contextual_comparison": "The baseline uses a practical stop after closing a locker, a softly attentive glance, mixed station light and silk at sensual 1. A face-and-garment treatment could bring the collar closer and give the portrait more direct intimacy; a shorter upper layer could make garment junctions dominate. Both are viable at the same strength, but the existing head-to-calf hierarchy keeps the case, pause and wearer connected to the station while supporting inspection of eight terms. Retain that direction and add only local loop, bezel-wall and band-edge clarity. The ominous mood alternative would add a different event premise and is declined."
+  },
+  "embodiment_review": {
+    "source_contract_sha256": "af8ad337b3be3fb2873f64d23de950c6798435752402037eca54a85fffdbab7a",
+    "review": {
+      "contract_version": "photo-embodiment-review/v1",
+      "provenance": "agent_postcomposition",
+      "prompt_sha256": "98b67b270430a0fec43cf05eb1f4c169dbc1f7b68f24ecaddb45688822006ced",
+      "scope": "body_action",
+      "summary": "Final prompt re-reviewed after upper-loop, continuous bezel and lower waist-band visibility refinements. The standing subject, low case handle and free right arm remain coherent. Exposed lower band strip is continuous with pleats beneath the upper overlapping jeogori; no extra limb or garment is introduced.",
+      "checks": {
+        "body_ownership": {
+          "status": "supported",
+          "reason": "Each arm is the main subject's own arm. The case is held by her left hand; right fingers are relaxed beside her skirt. The norigae belongs to the goreum on the same garment.",
+          "prompt_evidence": [
+            "Her left hand holds a compact hard case by its handle low beside her left thigh",
+            "her right arm rests clear of the norigae"
+          ]
+        },
+        "joint_chain_and_reach": {
+          "status": "supported",
+          "reason": "Shoulders and elbows can remain mostly extended while holding a small handle below hip level. Relaxed right wrist and fingers need no unusual reach.",
+          "prompt_evidence": [
+            "Her left hand holds a compact hard case by its handle low beside her left thigh",
+            "with relaxed fingers below the skirt waist"
+          ]
+        },
+        "support_and_balance": {
+          "status": "supported",
+          "reason": "Both feet support a stationary upright subject; a compact case is a small unilateral load. Garment knot supports the descending norigae; bezel rim supports the stone and bail bridges pendant to cord.",
+          "prompt_evidence": [
+            "pauses with her weight settled evenly through both feet",
+            "A norigae hangs from the goreum knot at her right-front chest"
+          ]
+        },
+        "contact_and_space": {
+          "status": "supported",
+          "reason": "Left fingers curl around the handle, separate from torso ornaments. The cloth tie suspends the norigae; the bail and cord make a physical connection. The short jeogori hem occludes the skirt waist rather than being merged with it. The upper norigae loop wraps the goreum knot, rather than floating; only the lower portion of the chima band is exposed below the jacket overlap.",
+          "prompt_evidence": [
+            "by its handle low beside her left thigh",
+            "a separate small silver bail connects the pendant's upper edge to that suspension cord",
+            "its short hem visibly overlapping the skirt's high waist",
+            "its upper loop hooks around the tie at that knot"
+          ]
+        },
+        "visibility_and_projection": {
+          "status": "supported",
+          "reason": "A nearly frontal mid-calf frame keeps head, neckline, tie, torso ornament and upper skirt inside view. The right hand and case stay below the ornament. Fine bail remains the critical size challenge and will be judged as partial if indistinct. The lower waistband edge and pleat join are now specified as visible. The bezel wall and separate small bail remain native-scale challenges, not claimed pixel successes.",
+          "prompt_evidence": [
+            "Frame from head to mid-calf at chest height",
+            "keeping the collar, tie, ornament and layer junction large and readable",
+            "her right arm rests clear of the norigae",
+            "A narrow lower strip of the chima waist band remains visible below that overlap"
+          ]
+        }
+      }
+    }
+  }
+}

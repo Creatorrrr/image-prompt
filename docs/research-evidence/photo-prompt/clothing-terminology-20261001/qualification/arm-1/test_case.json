@@ -1,0 +1,104 @@
+{
+  "contract_version": "clothing-qualification-test/v1",
+  "arm": "arm-1",
+  "design_owner": "agent",
+  "request_envelope_sha256": "53dad6e32b3e25691540b7db387a4b1403b01823ee054d9e37b8e93d16188e96",
+  "randomization_file": "concept_randomization.json",
+  "concept": {
+    "id": "civic_library",
+    "location": "new civic library concrete entrance vestibule",
+    "moment": "waiting at the beginning of an architecture tour",
+    "light": "soft late-morning skylight crossed by a narrow side window beam",
+    "pose": "frontal stance with one foot slightly forward and gaze toward the camera"
+  },
+  "concept_family": "contemporary structural tailoring",
+  "selected_keywords": [
+    "princess seam",
+    "sweetheart neckline",
+    "gigot sleeve",
+    "welt pocket",
+    "piping",
+    "inverted box pleat",
+    "pendant bail",
+    "Derby"
+  ],
+  "reference": {
+    "path": "/Users/chasoik/Downloads/0CB25F47-BB90-4DBD-8993-733BA8282851(20260927-041323).jpeg",
+    "viewed_directly": true,
+    "scope": "visible_face_and_hair_appearance_only",
+    "subject_adulthood": "explicitly adult generation choice, not reference-age inference"
+  },
+  "success_policy": "Every predeclared keyword gate and every adopted profile hard gate must PASS from native pixels; PARTIAL counts as overall failure. Prompt/runtime pass is reported separately; user acceptance remains pending. Exactly one first generation, preserved even when unattractive or defective.",
+  "keyword_gates": [
+    {
+      "term": "princess seam",
+      "gate_id": "keyword_princess_seam",
+      "pass_condition": "PASS only if curving stitched seam lines on the dress connect armhole/upper bodice across bust to fitted waist; owner and garment continuity must be visible.",
+      "confusion_boundary": "Flat printed lines, piping alone, or short isolated darts.",
+      "prompt_evidence": "curved princess seams running from the armholes across the bust into the fitted waist"
+    },
+    {
+      "term": "sweetheart neckline",
+      "gate_id": "keyword_sweetheart_neckline",
+      "pass_condition": "PASS only if the upper dress edge forms two rounded lobes with a visible dip at center, continuously attached to this bodice.",
+      "confusion_boundary": "V neck, scoop neck, separate necklace arcs, or hidden center dip.",
+      "prompt_evidence": "a sweetheart neckline with two rounded lobes and a distinct center dip"
+    },
+    {
+      "term": "gigot sleeve",
+      "gate_id": "keyword_gigot_sleeve",
+      "pass_condition": "PASS only if both worn sleeves show distinctly fuller shoulders and upper arms, tapering into fitted elbow-to-wrist portions.",
+      "confusion_boundary": "Uniform balloon sleeves, elbow puffs, detached volume, or sleeves fully loose to the cuff.",
+      "prompt_evidence": "long gigot sleeves with generous shoulder-and-upper-arm volume tapering closely from the elbows to the wrists"
+    },
+    {
+      "term": "welt pocket",
+      "gate_id": "keyword_welt_pocket",
+      "pass_condition": "PASS only if at least one hip pocket has an opening visibly framed by slim fabric welt lips and belongs to the dress; both requested pocket sites remain visible for coverage.",
+      "confusion_boundary": "Patch pocket, flap pocket, seam decoration, or hands/arms concealing the opening.",
+      "prompt_evidence": "Each hip welt pocket is a narrow horizontal opening framed by two slim fabric lips"
+    },
+    {
+      "term": "piping",
+      "gate_id": "keyword_piping",
+      "pass_condition": "PASS only if narrow raised cord-like ivory edging follows the sweetheart boundary and cuff boundaries, physically joined to the dress.",
+      "confusion_boundary": "Flat paint, broad binding, seam lines mistaken for cord, or disconnected trim.",
+      "prompt_evidence": "Narrow raised ivory piping follows the sweetheart edge and both cuffs"
+    },
+    {
+      "term": "inverted box pleat",
+      "gate_id": "keyword_inverted_box_pleat",
+      "pass_condition": "PASS only if two front-skirt folds face inward and meet toward the center with a recessed fold/depth between or beneath; the inward relation must be pixel-legible.",
+      "confusion_boundary": "Outward box pleat, flat slit, simple seam, gathered skirt, or ambiguous fold direction.",
+      "prompt_evidence": "An inverted box pleat at the center front of the skirt has two inward-facing folded edges meeting at the center"
+    },
+    {
+      "term": "pendant bail",
+      "gate_id": "keyword_pendant_bail",
+      "pass_condition": "PASS only if chain passes through a separately visible open loop joined to the pendant so the support connection is readable.",
+      "confusion_boundary": "Chain terminating at pendant, decorative circle with no passage, suspended disconnected pendant, or hidden attachment.",
+      "prompt_evidence": "a silver necklace chain passes visibly through the open oval pendant bail, which joins and supports a small rectangular pendant"
+    },
+    {
+      "term": "Derby",
+      "gate_id": "keyword_derby",
+      "pass_condition": "PASS only if at least one shoe upper visibly has open lacing with eyelet-bearing quarters layered over the vamp and open edges around its tongue; both shoes must remain in frame.",
+      "confusion_boundary": "Oxford closed lacing, featureless black shoes, purely toe silhouettes, or hidden quarter-vamp relation.",
+      "prompt_evidence": "Black leather Derby shoes have open lacing: separate eyelet-bearing quarters sit on top of each vamp, their loose edges opening into a clear V around the tongues"
+    }
+  ],
+  "additional_gates": [
+    {
+      "gate_id": "same_frame",
+      "pass_condition": "All eight chosen constructions belong to the one wearer and are visible simultaneously in the same photograph."
+    },
+    {
+      "gate_id": "embodiment",
+      "pass_condition": "Body-part ownership, arm/leg continuity, standing floor contact, and garment/jewelry attachment remain anatomically and spatially coherent."
+    },
+    {
+      "gate_id": "reference_scope",
+      "pass_condition": "Visible short dark bob with fine fringe and face appearance are used without transferring portrait wardrobe or asserting identity."
+    }
+  ]
+}
